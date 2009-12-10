@@ -1,0 +1,1 @@
+{* Replaces email validator template *}

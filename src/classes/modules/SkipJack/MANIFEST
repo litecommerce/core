@@ -1,0 +1,6 @@
+module_id=1405
+name=SkipJack
+description=SkipJack credit card payment processor
+enabled=1
+version=2.3.RC2
+dependencies=

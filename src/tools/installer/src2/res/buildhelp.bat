@@ -1,0 +1,1 @@
+brcc32 -fo ../help.res help.rc > reslog.txt

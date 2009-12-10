@@ -1,0 +1,44 @@
+package dclindy;
+{$R *.res}
+{$ALIGN ON}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{ DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{ LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{ OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{ STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST ON}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $600000}
+{$DESCRIPTION 'Internet Direct "Indy" for Kylix Property and Component Editors'}
+{$SONAME 'dclindy.so.6'}
+{$SOPREFIX ''}
+{$SOVERSION '.6.0'}
+{$DESIGNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  baseclx,
+  designide,
+  indy;
+
+contains
+    IdAbout in 'IdAbout.pas',
+  IdAntiFreeze in 'IdAntiFreeze.pas',
+  IdDsnBaseCmpEdt in 'IdDsnBaseCmpEdt.pas',
+  IdDsnPropEdBinding in 'IdDsnPropEdBinding.pas',
+  IdDsnRegister in 'IdDsnRegister.pas',
+  IdRegister in 'IdRegister.pas';
+
+end.

@@ -1,0 +1,7 @@
+module_id=1330
+name=PaySystems
+description=PaySystems Payment Gateway
+enabled=1
+version=2.1
+dependencies=
+

@@ -1,0 +1,5 @@
+<select name="name">
+<option value="xyz" selected="{isSelected()}">
+<option value="xyz" selected="{isSelected(#param#)}">
+<option value="xyz" selected="{isSelected}">
+</select>

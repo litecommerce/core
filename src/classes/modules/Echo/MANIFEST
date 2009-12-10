@@ -1,0 +1,6 @@
+module_id=1400
+name=Echo
+description=Echo credit card payment processor
+enabled=1
+version=2.5
+dependencies=
