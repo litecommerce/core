@@ -59,6 +59,9 @@
         <exec executable="php" dir="${buildDir}/src">
             <arg line="${sourceDir}/.dev/build/devcode_postprocess.php" />
         </exec>
+        <exec executable="php" dir="${buildDir}/src">
+            <arg line="${sourceDir}/src/build_classes.php" />
+        </exec>
 	</target>
 
 	<target name="create-build">
