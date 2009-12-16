@@ -3,8 +3,7 @@
 
 	<taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" />
 
-	<!--target name="build" depends="set-properties,clean,update,prepare,php-documentor,tests,analysis,create-build" /-->
-	<target name="build" depends="set-properties,php-documentor,tests,analysis,create-build" />
+	<target name="build" depends="set-properties,clean,update,prepare,php-documentor,tests,analysis,create-build" />
 
 	<target name="cc" depends="set-properties-cc,clean,update,prepare,php-documentor,tests-cc,analysis,create-build" />
 
