@@ -93,6 +93,9 @@ $includes .= "." . DIRECTORY_SEPARATOR . PATH_SEPARATOR;
 ini_set("include_path", $includes);
 
 // reads configuration file(s)
+
+// TODO - this 'global' added for PHPUnit tests
+global $options;
 $options_main  = parse_ini_file("./etc/config.php", true);
 if (file_exists("./etc/config.local.php")) {
     $options_local = @parse_ini_file("./etc/config.local.php", true);

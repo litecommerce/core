@@ -23,12 +23,22 @@ if (false === defined('PHPUnit_MAIN_METHOD')) {
 // PHPUnit classes
 set_include_path(get_include_path() . PATH_SEPARATOR . '/usr/local/share/pear/');
 
+define('PATH_TESTS', realpath(dirname(__FILE__)));
+define('PATH_ROOT', realpath(dirname(__FILE__) . '/../..'));
+
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
+require_once PATH_TESTS . '/PHPUnit/TestSuite.php';
+require_once PATH_TESTS . '/PHPUnit/TestCase.php';
+require_once PATH_TESTS . '/PHPUnit/MetricWriter.php';
+require_once PATH_TESTS . '/PHPUnit/SeleniumTestCase.php';
+
 // X-Lite classes
-define('PATH_TESTS', realpath(dirname(__FILE__)));
-define('PATH_ROOT', realpath(dirname(__FILE__) . '/../..'));
+
+chdir(PATH_ROOT . '/src');
+
+require_once PATH_ROOT . '/src/includes/prepend.php';
 
 if (!defined('SELENIUM_SOURCE_URL')) {
     $arr = explode('/', realpath(__DIR__ . '/../..'));
@@ -42,11 +52,6 @@ if (!defined('SELENIUM_SOURCE_URL')) {
     unset($arr);
 }
 
-require_once PATH_TESTS . '/PHPUnit/TestSuite.php';
-require_once PATH_TESTS . '/PHPUnit/TestCase.php';
-require_once PATH_TESTS . '/PHPUnit/MetricWriter.php';
-require_once PATH_TESTS . '/PHPUnit/SeleniumTestCase.php';
-
 if (isset($_SERVER['argv']) && preg_match('/--log-xml\s+(\S+)\s/s', implode(' ', $_SERVER['argv']), $match)) {
     XLite_Tests_MetricWriter::init($match[1] . '.speed');
     unset($match);
@@ -56,10 +61,57 @@ PHPUnit_Util_Filter::addDirectoryToFilter(PATH_ROOT . '/.dev');
 PHPUnit_Util_Filter::addDirectoryToFilter(PATH_ROOT . '/src/etc');
 
 // File to check coverage
-/*
-$excludeDirs = array();
 
-foreach (new DirectoryIterator(PATH_ROOT . '/src/lib/XLite') as $handler) {
+$excludeDirs = array(
+    '.svn'
+);
+
+PHPUnit_Util_Filter::addFileToWhitelist(PATH_ROOT . '/src/classes/base/Object.php');
+PHPUnit_Util_Filter::addFileToWhitelist(PATH_ROOT . '/src/classes/base/Widget.php');
+PHPUnit_Util_Filter::addFileToWhitelist(PATH_ROOT . '/src/classes/base/Component.php');
+PHPUnit_Util_Filter::addFileToWhitelist(PATH_ROOT . '/src/classes/base/Dialog.php');
+PHPUnit_Util_Filter::addFileToWhitelist(PATH_ROOT . '/src/classes/base/LObject.php');
+PHPUnit_Util_Filter::addFileToWhitelist(PATH_ROOT . '/src/classes/base/Base.php');
+PHPUnit_Util_Filter::addDirectoryToWhitelist(PATH_ROOT . '/src/classes/dialog');
+
+PHPUnit_Util_Filter::addFileToWhitelist(PATH_ROOT . '/src/classes/kernel/FileNode.php');
+PHPUnit_Util_Filter::addFileToWhitelist(PATH_ROOT . '/src/classes/kernel/FlexyCompiler.php');
+
+PHPUnit_Util_Filter::addFileToFilter(PATH_ROOT . '/src/classes/kernel/ModulesManager.php');
+
+
+$dir = opendir(PATH_ROOT . '/src/classes/kernel');
+while ($file = readdir($dir)) {
+    if (preg_match('/^[^_][a-z]+\.php$/Ss', $file)) {
+        PHPUnit_Util_Filter::addFileToWhitelist(PATH_ROOT . '/src/classes/kernel/' . $file);
+    }
+}
+closedir($dir);
+
+$dir = opendir(PATH_ROOT . '/src/classes/kernel');
+while ($file = readdir($dir)) {
+    if (preg_match('/^[^_].+\.php$/Ss', $file) && $file != 'ModulesManager.php') {
+        PHPUnit_Util_Filter::addFileToWhitelist(PATH_ROOT . '/src/classes/kernel/' . $file);
+    }
+}
+closedir($dir);
+
+$dir = opendir(PATH_ROOT . '/src/classes/kernel');
+while ($file = readdir($dir)) {
+    if (preg_match('/^_.+\.php$/Ss', $file)) {
+        PHPUnit_Util_Filter::addFileToWhitelist(PATH_ROOT . '/src/classes/kernel/' . $file);
+    } elseif (is_dir(PATH_ROOT . '/src/classes/kernel/' . $file)) {
+//        PHPUnit_Util_Filter::addDirectoryToWhitelist(PATH_ROOT . '/src/classes/kernel/' . $file);
+    }
+}
+closedir($dir);
+
+unset($dir, $file);
+
+PHPUnit_Util_Filter::addFileToWhitelist(PATH_ROOT . '/src/classes/XLite.php');
+
+/*
+foreach (new DirectoryIterator(PATH_ROOT . '/src/classes') as $handler) {
 
     if (!$handler->isDot()) {
 
@@ -67,15 +119,18 @@ foreach (new DirectoryIterator(PATH_ROOT . '/src/lib/XLite') as $handler) {
 
 		if (in_array($fileName, $excludeDirs)) {
 			$filterMethod = 'addDirectoryToFilter';
+
 		} elseif ($handler->isDir()) {
 			$filterMethod = 'addDirectoryToWhitelist';
+
 		} elseif (preg_match('/\.php$/Ss', $fileName)) {
 			$filterMethod = 'addFileToWhitelist';
+
 		} else {
             $filterMethod = 'addFileToFilter';
         }
 
-  	    PHPUnit_Util_Filter::$filterMethod(PATH_ROOT . '/src/' . $fileName);
+  	    PHPUnit_Util_Filter::$filterMethod(PATH_ROOT . '/src/classes/' . $fileName);
 	}
 }
 
@@ -173,8 +228,8 @@ class XLite_Tests_AllTests
             }
         } 
 
-
-        error_reporting(E_ALL | E_STRICT);
+//        error_reporting(E_ERROR | E_NOTICE | E_PARSE);
+        error_reporting(E_ALL);
 
         return $suite;
     }
