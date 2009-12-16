@@ -210,7 +210,8 @@ function license_check($get_license_data = false, $retcode = false) // {{{
         	if (isset($xlite) && is_object($xlite) && $xlite->is("adminZone")) {
         		$license_check_debug = false;
         	}
-            close_shop("license_inactive" . (($license_check_debug)?"2":""));
+			// TODO - license checking is partially disabled - reworked
+            // close_shop("license_inactive" . (($license_check_debug)?"2":""));
             return array("modules" => array());
         } else {
 
