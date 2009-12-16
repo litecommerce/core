@@ -3,7 +3,8 @@
 
 	<taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" />
 
-	<target name="build" depends="set-properties,clean,update,prepare,php-documentor,tests,analysis,create-build" />
+	<!--target name="build" depends="set-properties,clean,update,prepare,php-documentor,tests,analysis,create-build" /-->
+	<target name="build" depends="set-properties,php-documentor,tests,analysis,create-build" />
 
 	<target name="cc" depends="set-properties-cc,clean,update,prepare,php-documentor,tests-cc,analysis,create-build" />
 
@@ -11,10 +12,10 @@
 
 	<target name="set-properties" depends="set-properties-common">
 		<property name="mode" value="manual" />
-		<property name="root" location="${basedir}/.." />
+		<property name="root" location="${basedir}/../.." />
 		<property name="buildDir" location="${root}/build" />
 		<property name="sourceDir" location="${root}" />
-		<property name="jmeterDir" location="${sourceDir}/.dev/build/lib/jmeter" />
+		<property name="jmeterDir" location="${sourceDir}/.dev/lib/jmeter" />
 	</target>
 
     <target name="set-properties-cc" depends="set-properties-common">
@@ -52,9 +53,12 @@
 			<fileset dir="${buildDir}/src" includes="**/*.swp" />
 			<fileset dir="${buildDir}/src" includes="**/*.rej" />
 			<fileset dir="${buildDir}/src" includes="**/*.orig" />
-			<fileset dir="${buildDir}/trial" />
-            <fileset dir="${buildDir}/tools" />
-            <fileset dir="${buildDir}/tests" />
+			<fileset dir="${buildDir}/src/trial" />
+            <fileset dir="${buildDir}/src/tools" />
+            <fileset dir="${buildDir}/src/tests" />
+            <fileset dir="${buildDir}/src/upgrade" />
+            <fileset dir="${buildDir}/src/lib5" />
+            <fileset dir="${buildDir}/src/share" />
 		</delete>
         <exec executable="php" dir="${buildDir}/src">
             <arg line="${sourceDir}/.dev/build/devcode_postprocess.php" />
@@ -74,7 +78,7 @@
             <arg line="${sourceDir}/.dev/build/phpdoc_postprocess.php ${apiUrl}" />
         </exec>
 		<exec executable="phpdoc" dir="${buildDir}">
-			<arg line="-ct type -ue on -t ${buildDir}/api -d src -i config/ -it @see -dn LiteCommecrce -dc LiteCommerce" />
+			<arg line="-ct type -ue on -t ${buildDir}/api -d src/classes -it @see -dn LiteCommecrce -dc LiteCommerce" />
 		</exec>
 	</target>
 
@@ -135,7 +139,7 @@
 	</target>
 
 	<target name="plint">
-		<exec executable="${sourceDir}/.dev/phpl.sh" dir="${sourceDir}" failonerror="true" output="${buildDir}/reports/plint.html" />
+		<exec executable="${sourceDir}/.dev/phpl.sh" dir="${buildDir}/src" failonerror="true" output="${buildDir}/reports/plint.html" />
 	</target>
 
 	<target name="pdepend">

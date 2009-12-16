@@ -42,8 +42,6 @@ if (!defined('SELENIUM_SOURCE_URL')) {
     unset($arr);
 }
 
-require_once PATH_ROOT . '/src/top.inc.php';
-
 require_once PATH_TESTS . '/PHPUnit/TestSuite.php';
 require_once PATH_TESTS . '/PHPUnit/TestCase.php';
 require_once PATH_TESTS . '/PHPUnit/MetricWriter.php';
@@ -55,7 +53,7 @@ if (isset($_SERVER['argv']) && preg_match('/--log-xml\s+(\S+)\s/s', implode(' ',
 }
 
 PHPUnit_Util_Filter::addDirectoryToFilter(PATH_ROOT . '/.dev');
-PHPUnit_Util_Filter::addDirectoryToFilter(PATH_ROOT . '/src/config');
+PHPUnit_Util_Filter::addDirectoryToFilter(PATH_ROOT . '/src/etc');
 
 // File to check coverage
 /*
@@ -128,7 +126,7 @@ class XLite_Tests_AllTests
         $classesDir  = dirname( __FILE__ );
         $pattern     = '/^' . preg_quote($classesDir, '/') . '.*\/Abstract\.php$/';
 
-        $dirIterator = new RecursiveDirectoryIterator($classesDir . XP_DS);
+        $dirIterator = new RecursiveDirectoryIterator($classesDir . DIRECTORY_SEPARATOR);
         $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
 
         foreach ($iterator as $filePath => $fileObject) {
@@ -138,7 +136,7 @@ class XLite_Tests_AllTests
         }
 
         // Classes tests
-		$classesDir  = dirname( __FILE__ ) . XP_DS . 'Classes' . XP_DS;
+		$classesDir  = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'Classes' . DIRECTORY_SEPARATOR;
 		$pattern     = '/^' . str_replace('/', '\/', preg_quote($classesDir)) . '(.*)\.php$/';
 
         $dirIterator = new RecursiveDirectoryIterator($classesDir);
@@ -152,12 +150,12 @@ class XLite_Tests_AllTests
                 && (!$includes || in_array($matches[1], $includes))
             ) {
                 require_once $filePath;
-                $suite->addTestSuite(XLite_Tests_TestCase::CLASS_PREFIX . str_replace(XP_DS, '_', $matches[1]));
+                $suite->addTestSuite(XLite_Tests_TestCase::CLASS_PREFIX . str_replace(DIRECTORY_SEPARATOR, '_', $matches[1]));
             }
         }	
 
         // Web tests
-        $classesDir  = dirname( __FILE__ ) . XP_DS . 'Web' . XP_DS;
+        $classesDir  = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'Web' . DIRECTORY_SEPARATOR;
         $pattern     = '/^' . str_replace('/', '\/', preg_quote($classesDir)) . '(.*)\.php$/';
 
         $dirIterator = new RecursiveDirectoryIterator($classesDir);
@@ -171,7 +169,7 @@ class XLite_Tests_AllTests
                 && (!$includes || in_array($matches[1], $includes))
             ) {
                 require_once $filePath;
-                $suite->addTestSuite(XLite_Tests_SeleniumTestCase::CLASS_PREFIX . str_replace(XP_DS, '_', $matches[1]));
+                $suite->addTestSuite(XLite_Tests_SeleniumTestCase::CLASS_PREFIX . str_replace(DIRECTORY_SEPARATOR, '_', $matches[1]));
             }
         } 
 

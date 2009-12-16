@@ -528,6 +528,9 @@ class PHP_CodeSniffer_File
     {
         // Work out which sniff generated the error.
         $parts = explode('_', $this->_activeListener);
+		if (3 > count($parts)) {
+			return;
+		}
         $sniff = $parts[0].'.'.$parts[2].'.'.$parts[3];
 
         if ($stackPtr === null) {
