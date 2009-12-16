@@ -1330,7 +1330,7 @@ function UPSOnlineTools_solve_binpack($width, $length, $height, $weight, &$items
 	$oversize_items = array();
 	foreach ($presets as $preset) {
 		$items = $back_items;
-		$result = UPSOnlineTools_packItems($width, $length, $height, $weight, &$items, $preset);
+		$result = UPSOnlineTools_packItems($width, $length, $height, $weight, $items, $preset);
 		if ($result === false) {
 			continue;
 		}

@@ -62,80 +62,80 @@ PHPUnit_Util_Filter::addDirectoryToFilter(PATH_ROOT . '/src/etc');
 
 // File to check coverage
 
-$excludeDirs = array(
-    '.svn'
-);
+$classes = array();
+$files = array();
 
-PHPUnit_Util_Filter::addFileToWhitelist(PATH_ROOT . '/src/classes/base/Object.php');
-PHPUnit_Util_Filter::addFileToWhitelist(PATH_ROOT . '/src/classes/base/Widget.php');
-PHPUnit_Util_Filter::addFileToWhitelist(PATH_ROOT . '/src/classes/base/Component.php');
-PHPUnit_Util_Filter::addFileToWhitelist(PATH_ROOT . '/src/classes/base/Dialog.php');
-PHPUnit_Util_Filter::addFileToWhitelist(PATH_ROOT . '/src/classes/base/LObject.php');
-PHPUnit_Util_Filter::addFileToWhitelist(PATH_ROOT . '/src/classes/base/Base.php');
-PHPUnit_Util_Filter::addDirectoryToWhitelist(PATH_ROOT . '/src/classes/dialog');
+$dirIterator = new RecursiveDirectoryIterator(PATH_ROOT . '/src/lib5');
+$iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
+foreach ($iterator as $filePath => $fileObject) {
+    if ($fileObject->isFile() && preg_match('/\.php$/Ss', $fileObject->getFilename()) && $fileObject->getFilename() != 'Var_Dump.php') {
+        $data = file_get_contents($filePath);
+        if (preg_match_all('/^\s*class\s+(\S+)(?:\s+extends\s+(\S+))?\s*(?:$|\{)/USm', $data, $match)) {
+            foreach ($match[1] as $k => $v) {
+                $classes[strtolower($v)] = array(
+                    'path' => $filePath,
+                    'parent' => isset($match[2][$k]) ? strtolower($match[2][$k]) : false,
+                    'childs' => array(),
+                    'added' => false,
+                );
 
-PHPUnit_Util_Filter::addFileToWhitelist(PATH_ROOT . '/src/classes/kernel/FileNode.php');
-PHPUnit_Util_Filter::addFileToWhitelist(PATH_ROOT . '/src/classes/kernel/FlexyCompiler.php');
-
-PHPUnit_Util_Filter::addFileToFilter(PATH_ROOT . '/src/classes/kernel/ModulesManager.php');
-
-
-$dir = opendir(PATH_ROOT . '/src/classes/kernel');
-while ($file = readdir($dir)) {
-    if (preg_match('/^[^_][a-z]+\.php$/Ss', $file)) {
-        PHPUnit_Util_Filter::addFileToWhitelist(PATH_ROOT . '/src/classes/kernel/' . $file);
-    }
-}
-closedir($dir);
-
-$dir = opendir(PATH_ROOT . '/src/classes/kernel');
-while ($file = readdir($dir)) {
-    if (preg_match('/^[^_].+\.php$/Ss', $file) && $file != 'ModulesManager.php') {
-        PHPUnit_Util_Filter::addFileToWhitelist(PATH_ROOT . '/src/classes/kernel/' . $file);
-    }
-}
-closedir($dir);
-
-$dir = opendir(PATH_ROOT . '/src/classes/kernel');
-while ($file = readdir($dir)) {
-    if (preg_match('/^_.+\.php$/Ss', $file)) {
-        PHPUnit_Util_Filter::addFileToWhitelist(PATH_ROOT . '/src/classes/kernel/' . $file);
-    } elseif (is_dir(PATH_ROOT . '/src/classes/kernel/' . $file)) {
-//        PHPUnit_Util_Filter::addDirectoryToWhitelist(PATH_ROOT . '/src/classes/kernel/' . $file);
-    }
-}
-closedir($dir);
-
-unset($dir, $file);
-
-PHPUnit_Util_Filter::addFileToWhitelist(PATH_ROOT . '/src/classes/XLite.php');
-
-/*
-foreach (new DirectoryIterator(PATH_ROOT . '/src/classes') as $handler) {
-
-    if (!$handler->isDot()) {
-
-		$fileName = $handler->getFilename();
-
-		if (in_array($fileName, $excludeDirs)) {
-			$filterMethod = 'addDirectoryToFilter';
-
-		} elseif ($handler->isDir()) {
-			$filterMethod = 'addDirectoryToWhitelist';
-
-		} elseif (preg_match('/\.php$/Ss', $fileName)) {
-			$filterMethod = 'addFileToWhitelist';
-
-		} else {
-            $filterMethod = 'addFileToFilter';
+            }
         }
-
-  	    PHPUnit_Util_Filter::$filterMethod(PATH_ROOT . '/src/classes/' . $fileName);
-	}
+        $files[$filePath] = array_map('strtolower', $match[1]);
+    }
 }
 
-unset($handler);
-*/
+$dirIterator = new RecursiveDirectoryIterator(PATH_ROOT . '/src/classes');
+$iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
+
+$excludeModules = array('Promotion', 'DetailedImages', 'InventoryTracking', 'ProductOptions', 'WholesaleTrading', 'Egoods', 'AdvancedSecurity', 'ProductAdviser', 'AOM');
+foreach ($iterator as $filePath => $fileObject) {
+    if (
+        $fileObject->isFile()
+        && preg_match('/\.php$/Ss', $fileObject->getFilename())
+        && !preg_match('/modules\/(' . implode('|', $excludeModules) . ')\//Ss', $filePath)
+    ) {
+        $data = file_get_contents($filePath);
+        if (preg_match_all('/^\s*class\s+(\S+)(?:\s+extends\s+(\S+))?\s*$/USm', $data, $match)) {
+            foreach ($match[1] as $k => $v) {
+                $classes[strtolower($v)] = array(
+                    'path' => $filePath,
+                    'parent' => isset($match[2][$k]) ? strtolower($match[2][$k]) : false,
+                    'childs' => array(),
+                    'added' => false,
+                );
+                
+            }
+        }
+        $files[$filePath] = array_map('strtolower', $match[1]);
+    }
+}
+
+foreach ($classes as $k => $v) {
+    foreach ($files[$v['path']] as $sub) {
+        if ($classes[$sub]['parent'] && isset($classes[$classes[$sub]['parent']])) {
+        
+            $parent = $classes[$sub]['parent'];
+            $parents = array();
+            while ($parent) {
+                $parents[] = $parent;
+                $parent = $classes[$parent]['parent'];
+            }
+
+            foreach (array_reverse($parents) as $p) {
+                if (!$classes[$p]['added']) {
+                    PHPUnit_Util_Filter::addFileToWhitelist($classes[$p]['path']);
+                    $classes[$p]['added'] = true;
+                }
+            }
+        }
+    }
+    PHPUnit_Util_Filter::addFileToWhitelist($v['path']);
+    $classes[$k]['added'] = true;
+}
+
+unset($classes, $data, $k, $v, $p, $filePath, $fileObject, $match, $parent, $parents, $files, $sub);
+
 
 /**
  * Class to run all the tests

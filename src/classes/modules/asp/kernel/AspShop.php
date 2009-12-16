@@ -43,7 +43,9 @@ define('SHOP_URL_WRONG', 		207);
 define('SHOP_PATH_SYMLINK', 	208);
 define('SHOP_DB_USERNAME_EXISTS', 209);
 
-define('IMAGES_DIR', 'images');
+if (!defined('IMAGES_DIR')) {
+	define('IMAGES_DIR', 'images');
+}
 
 define('DATABASE_USAGE_CREATE', 1);
 define('DATABASE_USAGE_EXISTS', 2);

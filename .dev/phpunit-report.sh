@@ -12,7 +12,8 @@
 cd $(dirname $0)
 cd ..
 RP=`realpath .dev/tests/AllTests.php`
-/u/xcart/bin/phpunit-report --coverage-html coverage xliteAllTests $RP $1
+CP=`realpath ./coverage`
+/u/xcart/bin/phpunit-report --coverage-html $CP xliteAllTests $RP $1
 
 P=`realpath ./ | replace '/u/'$USER'/public_html' ''`
 echo 'Open coverage report http://xcart2.crtdev.local/~'$USER$P'/coverage link';
