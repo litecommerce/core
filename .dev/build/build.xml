@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="xlite" default="build" basedir=".">
+
+	<taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" />
+
+	<target name="build" depends="set-properties,clean,update,prepare,php-documentor,tests,analysis,create-build" />
+
+	<target name="cc" depends="set-properties-cc,clean,update,prepare,php-documentor,tests-cc,analysis,create-build" />
+
+	<target name="pure-build" depends="set-properties,clean,update,prepare,php-documentor,create-build" />
+
+	<target name="set-properties" depends="set-properties-common">
+		<property name="mode" value="manual" />
+		<property name="root" location="${basedir}/.." />
+		<property name="buildDir" location="${root}/build" />
+		<property name="sourceDir" location="${root}" />
+		<property name="jmeterDir" location="${sourceDir}/.dev/build/lib/jmeter" />
+	</target>
+
+    <target name="set-properties-cc" depends="set-properties-common">
+		<property name="mode" value="cc" />
+		<property name="root" location="${basedir}" />
+        <property name="buildDir" location="${root}/build" />
+        <property name="sourceDir" location="${root}/source" />
+		<property name="jmeterDir" location="/u/xcart/jakarta-jmeter-2.3.4" />
+    </target>
+
+    <target name="set-properties-common">
+        <property name="version" value="3.0-ee" />
+		<property name="apiUrl" value="http://xcart2-530.crtdev.local/~max/xlite/build/api" />
+    </target>
+
+    <target name="clean">
+        <delete dir="${buildDir}" />
+        <mkdir dir="${buildDir}" />
+        <mkdir dir="${buildDir}/logs" />
+		<mkdir dir="${buildDir}/api" />
+		<mkdir dir="${buildDir}/reports" />
+    </target>
+
+	<target name="update">
+		<exec executable="svn" dir="${sourceDir}">
+			<arg line="up" />
+		</exec>
+	</target>
+
+    <target name="prepare">
+        <copy todir="${buildDir}/src">
+			<fileset dir="${sourceDir}/src" />
+		</copy>
+		<delete>
+			<fileset dir="${buildDir}/src" includes="**/*.swp" />
+			<fileset dir="${buildDir}/src" includes="**/*.rej" />
+			<fileset dir="${buildDir}/src" includes="**/*.orig" />
+			<fileset dir="${buildDir}/trial" />
+            <fileset dir="${buildDir}/tools" />
+            <fileset dir="${buildDir}/tests" />
+		</delete>
+        <exec executable="php" dir="${buildDir}/src">
+            <arg line="${sourceDir}/.dev/build/devcode_postprocess.php" />
+        </exec>
+	</target>
+
+	<target name="create-build">
+		<tar destfile="${buildDir}/xlite-${version}.tgz" basedir="${buildDir}/src" compression="gzip" />
+		<tar destfile="${buildDir}/xlite-${version}-api.tgz" basedir="${buildDir}/api" compression="gzip" />
+    </target>
+
+	<target name="php-documentor">
+        <exec executable="php" dir="${buildDir}/src">
+            <arg line="${sourceDir}/.dev/build/phpdoc_postprocess.php ${apiUrl}" />
+        </exec>
+		<exec executable="phpdoc" dir="${buildDir}">
+			<arg line="-ct type -ue on -t ${buildDir}/api -d src -i config/ -it @see -dn LiteCommecrce -dc LiteCommerce" />
+		</exec>
+	</target>
+
+	<target name="tests" depends="plint,php-codesniffer,phpunit,jmeter,pdepend" />
+
+	<target name="tests-cc" depends="prepare-db,plint,php-codesniffer-cc,phpunit-cc,jmeter,pdepend" />
+
+	<target name="prepare-db">
+        <copy todir="${sourceDir}/src/etc">
+            <fileset file="${sourceDir}/.dev/build/config.local.php" />
+        </copy>
+		<exec executable="${sourceDir}/.dev/db.import" dir="${sourceDir}" failonerror="on" />
+	</target>
+
+	<target name="php-codesniffer">
+		<exec executable="${sourceDir}/.dev/phpcs" dir="${sourceDir}" output="${buildDir}/reports/checkstyle.txt">
+			<arg line="--report=full --standard=${sourceDir}/.dev/code-sniffs/PEAR --ignore=.dev,src/etc src" />
+		</exec>
+	</target>
+
+    <target name="php-codesniffer-cc">
+        <exec executable="${sourceDir}/.dev/phpcs" dir="${sourceDir}" output="${buildDir}/logs/checkstyle.xml">
+            <arg line="--report=checkstyle --standard=${sourceDir}/.dev/cs/PEAR --ignore=.dev,src/etc src" />
+        </exec>
+    </target>
+
+	<target name="phpunit">
+        <copy todir="${sourceDir}">
+            <fileset file="${sourceDir}/.dev/tests/PHPUnit/phpunit_coverage.php" />
+        </copy>
+		<exec executable="phpunit" dir="${sourceDir}" failonerror="on" output="${buildDir}/reports/phpunit.txt">
+			<arg line="--log-xml ${buildDir}/logs/phpunit.xml --coverage-html ${buildDir}/logs/coverage xliteAllTests .dev/tests/AllTests.php" />
+		</exec>
+        <exec executable="/usr/local/php-530/bin/php" dir="${sourceDir}">
+            <arg line=".dev/tests/graph.php ${buildDir}/logs/phpunit.xml.speed ${buildDir}/reports ../../../artifacts/xlite" />
+        </exec>
+	</target>
+
+    <target name="phpunit-cc">
+        <copy todir="${sourceDir}">
+            <fileset file="${sourceDir}/.dev/tests/PHPUnit/phpunit_coverage.php" />
+        </copy>
+        <exec executable="/u/xcart/bin/phpunit" dir="${sourceDir}" failonerror="on">
+            <arg line="--log-xml ${buildDir}/logs/phpunit.xml --log-pmd ${buildDir}/logs/phpunit.pmd.xml --log-metrics ${buildDir}/logs/phpunit.metrics.xml --coverage-xml ${buildDir}/logs/phpunit.coverage.xml --coverage-html ${buildDir}/coverage xliteAllTests .dev/tests/AllTests.php" />
+        </exec>
+		<exec executable="php" dir="${sourceDir}">
+			<arg line=".dev/tests/graph.php ${buildDir}/logs/phpunit.xml.speed ${buildDir}/reports ../../../artifacts/xlite" />
+		</exec>
+    </target>
+
+	<target name="jmeter">
+		<jmeter jmeterhome="${jmeterDir}" testplan="${sourceDir}/.dev/loadtests/JMeterLoadTest.jmx" resultlog="${buildDir}/logs/JMeterResults.jtl">
+		</jmeter>
+		<xslt in="${buildDir}/logs/JMeterResults.jtl" out="${buildDir}/reports/jmeter.html" style="${sourceDir}/.dev/loadtests/jmeter-results-report.xsl" />
+		<exec executable="php" dir="${sourceDir}">
+			<arg line=".dev/loadtests/graph.php ${buildDir}/logs/JMeterResults.jtl ${buildDir}/reports ../../../artifacts/xlite" />
+		</exec>
+	</target>
+
+	<target name="plint">
+		<exec executable="${sourceDir}/.dev/phpl.sh" dir="${sourceDir}" failonerror="true" output="${buildDir}/reports/plint.html" />
+	</target>
+
+	<target name="pdepend">
+		<exec executable="php" dir="${sourceDir}">
+			<arg line="${sourceDir}/.dev/pdepend.php --jdepend-chart=${buildDir}/reports/pdepend.svg --overview-pyramid=${buildDir}/reports/pyramid.svg --optimization=best --ignore=${buildDir}/src/etc ${buildDir}/src" />
+		</exec>
+	</target>
+
+	<target name="analysis">
+		<exec executable="svn" dir="${sourceDir}" output="${buildDir}/reports/xlite-svn.log">
+			<arg line="log --verbose --xml" />
+		</exec>
+
+		<exec executable="python" dir="${sourceDir}" output="${buildDir}/reports/xlite.gource">
+			<arg line="${sourceDir}/.dev/build/svn-gource.py --filter-dirs ${buildDir}/reports/xlite-svn.log" />
+		</exec>
+
+		<mkdir dir="${buildDir}/reports/statsvn" />
+        <exec executable="java" dir="${sourceDir}" output="/dev/null">
+            <arg line="-jar ${sourceDir}/.dev/build/statsvn/statsvn.jar -title LiteCommerce -output-dir ${buildDir}/reports/statsvn ${buildDir}/reports/xlite-svn.log ${sourceDir}" />
+        </exec>
+
+        <delete>
+            <fileset file="${buildDir}/reports/xlite-svn.log" />
+        </delete>
+	</target>
+
+</project>

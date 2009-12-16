@@ -1,0 +1,13 @@
+#!/usr/local/bin/php
+<?php
+error_reporting(E_ALL | E_STRICT);
+
+set_include_path(realpath(dirname(realpath(__FILE__)) . '/lib/PEAR') . PATH_SEPARATOR . get_include_path());
+
+require_once 'lib/PEAR/PHP/CodeSniffer/CLI.php';
+
+$phpcs = new PHP_CodeSniffer_CLI();
+$phpcs->checkRequirements();
+
+$numErrors = $phpcs->process();
+exit($numErrors === 0 ? 0 : 1);
