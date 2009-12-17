@@ -260,7 +260,7 @@ EOT;
     <TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0>
     <TR>
     <TD><IMG SRC="images/rect_button_1.gif" WIDTH=11 HEIGHT=18 BORDER="0"></TD>
-    <TD background="images/rect_button_bg.gif"><a href="javascript: document.search_form.submit()" title="Search"><FONT class="FormButton">Go</FONT></a></TD>
+    <TD background="images/rect_button_bg.gif"><A href="javascript:void(0);" onclick="javascript: document.search_form.submit();" title="Search"><FONT class="FormButton">Go</FONT></A></TD>
     <TD><IMG SRC="images/rect_button_2.gif" WIDTH=11 HEIGHT=18 BORDER="0"></TD>
     </TR>
 	</TABLE>
