@@ -45,7 +45,7 @@
 	</target>
 
     <target name="prepare">
-        <exec executable="php" dir="${buildDir}/src">
+        <exec executable="php" dir="${sourceDir}/src">
             <arg line="${sourceDir}/src/build_classes.php" />
         </exec>
         <copy todir="${buildDir}/src">
