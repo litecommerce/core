@@ -109,7 +109,7 @@
             <fileset file="${sourceDir}/.dev/tests/PHPUnit/phpunit_coverage.php" />
         </copy>
 		<exec executable="phpunit" dir="${sourceDir}" failonerror="on" output="${buildDir}/reports/phpunit.txt">
-			<arg line="--log-xml ${buildDir}/logs/phpunit.xml --coverage-html ${buildDir}/logs/coverage xliteAllTests .dev/tests/AllTests.php" />
+			<arg line="--log-xml ${buildDir}/logs/phpunit.xml --coverage-html ${buildDir}/logs/coverage xliteAllTests ${sourceDir}/.dev/tests/AllTests.php" />
 		</exec>
         <exec executable="/usr/local/php-530/bin/php" dir="${sourceDir}">
             <arg line=".dev/tests/graph.php ${buildDir}/logs/phpunit.xml.speed ${buildDir}/reports ../../../artifacts/xlite" />
@@ -121,7 +121,7 @@
             <fileset file="${sourceDir}/.dev/tests/PHPUnit/phpunit_coverage.php" />
         </copy>
         <exec executable="/u/xcart/bin/phpunit" dir="${sourceDir}" failonerror="on">
-            <arg line="--log-xml ${buildDir}/logs/phpunit.xml --log-pmd ${buildDir}/logs/phpunit.pmd.xml --log-metrics ${buildDir}/logs/phpunit.metrics.xml --coverage-xml ${buildDir}/logs/phpunit.coverage.xml --coverage-html ${buildDir}/coverage xliteAllTests .dev/tests/AllTests.php" />
+            <arg line="--log-xml ${buildDir}/logs/phpunit.xml --log-pmd ${buildDir}/logs/phpunit.pmd.xml --log-metrics ${buildDir}/logs/phpunit.metrics.xml --coverage-xml ${buildDir}/logs/phpunit.coverage.xml --coverage-html ${buildDir}/coverage xliteAllTests {$sourceDir}/.dev/tests/AllTests.php" />
         </exec>
 		<exec executable="php" dir="${sourceDir}">
 			<arg line=".dev/tests/graph.php ${buildDir}/logs/phpunit.xml.speed ${buildDir}/reports ../../../artifacts/xlite" />
