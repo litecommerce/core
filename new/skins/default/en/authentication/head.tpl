@@ -1,0 +1,2 @@
+{* Authentication menu title *}
+Authentication

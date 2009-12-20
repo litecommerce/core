@@ -1,0 +1,1 @@
+<span IF="priceNotificationEnabled&widget.product.priceNotificationAllowed">&nbsp;(<a href="javascript: PriceNotifyMe('{widget.product.product_id}','{widget.product.price}')"><u>Notify me</u></a> when the price drops)</span>
