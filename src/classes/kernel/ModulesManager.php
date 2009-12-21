@@ -325,7 +325,7 @@ EOT;
         
         require_once "Archive/Tar.php";
 		
-		$ar =& new Archive_Tar($dest_file);
+		$ar = new Archive_Tar($dest_file);
         $files = $ar->listContent();
         if (!$files) {
             $this->error = "archive is corrupted";
