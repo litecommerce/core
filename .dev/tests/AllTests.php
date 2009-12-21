@@ -21,10 +21,12 @@ if (false === defined('PHPUnit_MAIN_METHOD')) {
 }
 
 // PHPUnit classes
-set_include_path(get_include_path() . PATH_SEPARATOR . '/usr/local/share/pear/');
-
 define('PATH_TESTS', realpath(dirname(__FILE__)));
 define('PATH_ROOT', realpath(dirname(__FILE__) . '/../..'));
+
+set_include_path(get_include_path()
+    . PATH_SEPARATOR . '/usr/local/share/pear/'
+    . PATH_SEPARATOR . PATH_ROOT . '/src/lib5');
 
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
@@ -65,6 +67,7 @@ PHPUnit_Util_Filter::addDirectoryToFilter(PATH_ROOT . '/src/etc');
 $classes = array();
 $files = array();
 
+/*
 $dirIterator = new RecursiveDirectoryIterator(PATH_ROOT . '/src/lib5');
 $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
 foreach ($iterator as $filePath => $fileObject) {
@@ -84,6 +87,15 @@ foreach ($iterator as $filePath => $fileObject) {
         $files[$filePath] = array_map('strtolower', $match[1]);
     }
 }
+*/
+
+$classes['log'] = array(
+    'path' => realpath(PATH_ROOT . '/src/lib5/Log.php'),
+    'parent' => false,
+    'childs' => array(),
+    'added' => false,
+);
+$files[realpath(PATH_ROOT . '/src/lib5/Log.php')] = array('log');
 
 $dirIterator = new RecursiveDirectoryIterator(PATH_ROOT . '/src/classes');
 $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
