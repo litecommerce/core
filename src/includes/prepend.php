@@ -89,8 +89,8 @@ if (func_is_php5()) {
 } else {
 	$includes .= "." . DIRECTORY_SEPARATOR . "lib" . PATH_SEPARATOR;
 }
-$includes .= "." . DIRECTORY_SEPARATOR . PATH_SEPARATOR;
-ini_set("include_path", $includes);
+$includes .= "." . DIRECTORY_SEPARATOR;
+set_include_path(get_include_path() . PATH_SEPARATOR . $includes);
 
 // reads configuration file(s)
 
