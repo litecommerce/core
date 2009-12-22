@@ -51,8 +51,6 @@ class Module_Affiliate extends Module
     
     function init()
     {
-        if(!check_module_license("Affiliate", true)) return;
-
         parent::init();
 
         $image = func_get_instance("Image");

@@ -693,9 +693,6 @@ function func_starts_with($str, $start) { // {{{
 } // }}}
 
 function func_cleanup_cache($cache, $verbose = false) { // {{{
-	if (!function_exists("license_check")) {
-		return;
-	}
     $cacheDir = "var/run";
     if ($verbose) {
     	echo "Cleaning up $cache cache ";

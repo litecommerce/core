@@ -51,9 +51,6 @@ class Module_Egoods extends Module
 	
     function init()
     {
-		if (!check_module_license("Egoods", true)) {
-			return;
-		}
 
         parent::init();
 

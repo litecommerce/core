@@ -1,8 +1,6 @@
 <?php
     function func_PaymentMethod_worldpay_handleRequest(&$_this, &$cart)
     {    
-        check_module_license("WorldPay");
-
         $status = "P";
 
         $cart->set("details.transStatus", $_POST['transStatus']);

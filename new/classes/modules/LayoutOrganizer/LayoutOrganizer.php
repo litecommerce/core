@@ -43,9 +43,6 @@ class Module_LayoutOrganizer extends Module
 
     function init()
     {
-    	if (!check_module_license("LayoutOrganizer", true)) {
-        	return;
-       	}
 
         parent::init();
 

@@ -56,26 +56,6 @@ function LiveUpdating_get_version(&$_this)
 	return $version;
 }
 
-function LiveUpdating_get_ld()
-{
-    if (function_exists('license_check')) {
-		$license_data = license_check();
-        if (isset($license_data["modules"])) {
-                unset($license_data["modules"]);
-        }
-        if (isset($license_data["modulesString"])) {
-                unset($license_data["modulesString"]);
-        }
-        if (isset($license_data["access_key"])) {
-                unset($license_data["access_key"]);
-        }
-    } else {
-    	$license_data["license_no"] = "FRAUD?!";
-    }
-
-    return $license_data;
-}
-
 function LiveUpdating_getModulesUpdateInfo(&$_this)
 {
 	$mlist = $_this->get("config.LiveUpdating.modules_last_update");
@@ -180,7 +160,6 @@ function LiveUpdating_getUpdates(&$_this)
 		if (isset($lastChecked["next_check"]) && (time() < $lastChecked["next_check"]) && isset($lastChecked["updates_announcement"])) {
         	$_this->_updatesNumber = $lastChecked["updates_number"];
         	$_this->_updates = $lastChecked["updates_announcement"];
-			$_this->_license_data = $lastChecked["license_data"];
         	return $_this->_updates;
 		}
 	}
@@ -197,11 +176,6 @@ function LiveUpdating_getUpdates(&$_this)
     $http->addPostData("action", "get_updates_announcement");
     $http->addPostData("version", LiveUpdating_get_version($_this));
     $http->addPostData("last_update", $_this->getLastUpdate());
-    $license_data = LiveUpdating_get_ld();
-	$license_data = base64_encode(serialize($license_data));
-    $http->addPostData("ud[0]", strlen($license_data));
-    $http->addPostData("ud[1]", md5($license_data));
-    $http->addPostData("ud[2]", $license_data);
 	$http->addPostData("modules", base64_encode(serialize($modules)));
 
 	if ($_this->session->get("lu_test_mode")) {
@@ -247,7 +221,6 @@ function LiveUpdating_getUpdates(&$_this)
 
 	$_this->_updatesNumber = $data["updates_number"];
 	$_this->_updates = $data["updates"];
-	$_this->_license_data = $data["license_data"];
 
 	if (!(isset($lastChecked) && is_array($lastChecked))) {
 		$lastChecked = array();
@@ -257,7 +230,6 @@ function LiveUpdating_getUpdates(&$_this)
 	$lastChecked["next_check"] = mktime(0, 0, 0, date("m", $currTime), date("d", $currTime) + 1, date("Y", $currTime));
 	$lastChecked["updates_number"] = $_this->_updatesNumber;
 	$lastChecked["updates_announcement"] = $_this->_updates;
-	$lastChecked["license_data"] = $_this->_license_data;
 	$config =& func_new("Config");
 	$config->createOption("LiveUpdating", "last_checked", serialize($lastChecked), "serialized");
 
@@ -290,11 +262,6 @@ function LiveUpdating_getUpdateData(&$_this, $update_id, $update_item_id=0)
     $http->addPostData("version", LiveUpdating_get_version($_this));
     $http->addPostData("updates[0]", $update_id);
 	$http->addPostData("update_item_id", $update_item_id);
-    $license_data = LiveUpdating_get_ld();
-	$license_data = base64_encode(serialize($license_data));
-    $http->addPostData("ud[0]", strlen($license_data));
-    $http->addPostData("ud[1]", md5($license_data));
-    $http->addPostData("ud[2]", $license_data);
 
 	if ($_this->session->get("lu_test_mode")) {
 		$http->addPostData("test_mode", 1);

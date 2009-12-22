@@ -50,9 +50,6 @@ class Module_Promotion extends Module
 
     function init()
     {
-        if(!check_module_license("Promotion", true)) {
-        	return;
-        }
         
         parent::init();
 

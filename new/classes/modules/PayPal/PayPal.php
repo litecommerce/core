@@ -56,9 +56,6 @@ class Module_PayPal extends Module
 
     function init()
     {
-        // license check
-        if(!check_module_license("PayPal", true)) return;
-
         parent::init();
         // plug in the kernel/PaymentMethod/paypal.php module
         $pm =& func_new("PaymentMethod");

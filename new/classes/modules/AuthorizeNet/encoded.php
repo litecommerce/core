@@ -4,9 +4,6 @@
 */
 function AuthorizeNet_processor_process(&$_this, &$cart, &$paymentMethod)
 {
-    // license check
-    check_module_license("AuthorizeNet");
-
     // AuthorizeNet_processor::process() method code
     
     $params = $paymentMethod->get("params");

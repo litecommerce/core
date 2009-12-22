@@ -8,9 +8,6 @@
 
 function func_in_category_recursive($product, $category)
 {
-    // check for module license
-	check_module_license("Promotion");
-
     if (is_null($category)) return false;
     if (is_null($product)) return false;
     if ($product->inCategory($category)) return true;
@@ -22,9 +19,6 @@ function func_in_category_recursive($product, $category)
 
 function func_calc_discount(&$order)
 {
-    // check for module license
-	check_module_license("Promotion");
-
     $d = 0;
     if ($order->call("DC.checkCondition", $order)) {
         if ($order->get("DC.applyTo") == "total") {

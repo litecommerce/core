@@ -57,9 +57,6 @@ class Module_USPS extends Module
     
     function init()
     {
-        // check license
-        if(!check_module_license("USPS", true)) return;
-
         parent::init();
         $shipping = func_new("Shipping");
         $shipping->registerShippingModule("usps");

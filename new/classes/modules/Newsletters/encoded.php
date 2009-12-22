@@ -41,12 +41,10 @@
 /* encrypted part of Newsletters module */
 
 function func_newsletters_gen_code($email) {
-    check_module_license("Newsletters");
     return md5(strtolower($email) . "kjasd(*&QW#4llrM");
 }
 
 function func_newsletters_check_code($email, $code) {
-    check_module_license("Newsletters");
     return md5(strtolower($email) . "kjasd(*&QW#4llrM") === $code;
 }
 

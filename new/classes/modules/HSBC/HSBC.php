@@ -56,9 +56,6 @@ class Module_HSBC extends Module
 
     function init()
     {
-        if (!check_module_license("HSBC", true)) {
-            return;
-        }
         
         parent::init();
         $pm =& func_new('PaymentMethod');

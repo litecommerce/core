@@ -1,7 +1,6 @@
 <?php
 function func_wholesaleTrading_selections($src, &$result, $tmp_val = null)
 {
-	check_module_license("WholesaleTrading");
 	if (is_null($tmp_val)) {
 		$tmp_val = array();
 	}	
@@ -23,7 +22,6 @@ function func_wholesaleTrading_selections($src, &$result, $tmp_val = null)
 
 function func_wholesaleTrading_parse_access($groups)
 {
-	check_module_license("WholesaleTrading");
 	if (empty($groups)) {
 		return "";
 	}	
@@ -41,13 +39,11 @@ function func_wholesaleTrading_parse_access($groups)
 
 function func_wholesaleTrading_get_access_list($access)
 {
-	check_module_license("WholesaleTrading");
 	return split(",", $access);
 }
 
 function func_wholesaleTrading_set_membership(&$_this, &$profile, $product)
 {
-	check_module_license("WholesaleTrading");
 	$membership = $profile->get("membership");
 	$membership_exp_date = $profile->get("membership_exp_date");
 
@@ -125,7 +121,6 @@ function func_wholesaleTrading_set_membership(&$_this, &$profile, $product)
 
 function func_wholesaleTrading_calc_global_discount(&$_this, $subtotal)
 {
-	check_module_license("WholesaleTrading");
 	$global_discount = 0;
 	$gd =& func_new('GlobalDiscount');
 	$gd->set('defaultOrder', 'subtotal');

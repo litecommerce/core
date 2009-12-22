@@ -126,12 +126,8 @@ class ModulesManager extends Object
             $mod =& func_new("Module");
             $mod->setProperties($modProperties);
             $mod->isRead = true;
-            if ($mod->is("enabled") && ($mod->get('type') & MODULE_FREE != 0 || check_module_license($name, true))) {
+            if ($mod->is("enabled")) {
             	$origType = $mod->get("type");
-                if (strtolower($name) == "demomode" || $this->trialMode) { // turn off safe_mode
-                    $this->set("safeMode", false);
-                    $this->session->set("safe_mode", null);
-                }
                 $deps = trim(str_replace(" ", "", $mod->get("dependencies")));
                 if (!empty($deps)) {
                     $dependencies = explode(',', $deps);
@@ -157,14 +153,7 @@ class ModulesManager extends Object
                 	$mod->init();
                 }
 				$mod->set("type", $moduleType);
-				$mod->checkModuleType();
-				if (($mod->get("type") & MODULE_3RD_PARTY) != 0) {
-					$mod->set("type", $mod->get("type") & (MODULE_3RD_PARTY+MODULE_COMMERCIAL_SHIPPING+MODULE_COMMERCIAL_PAYMENT));
-				}
-    			if ($mod->get("type") != $origType) {
-    				$mod->update();
-    			}
-            	if ($mod->is("enabled") && !$this->get("safeMode")) {
+            	if ($mod->is("enabled")) {
                 	$this->activeModules[$name] =& $mod;
                 }
             }
@@ -176,96 +165,7 @@ class ModulesManager extends Object
 
     function getPredefinedModuleType($moduleName)
     {
-    	switch($moduleName) {
-    		case "2CheckoutCom":
-    		case "AuthorizeNet":
-    		case "BankOfAmerica":
-    		case "CyberSource":
-    		case "Echo":
-    		case "ePDQ":
-    		case "eProc":
-    		case "eSelect":
-    		case "eWAYxml":
-    		case "HSBC":
-    		case "LinkPoint":
-    		case "NetRegistry":
-    		case "Netbilling":
-    		case "NetworkMerchants":
-    		case "Nochex":
-    		case "Ogone":
-    		case "PHPCyberSource":
-    		case "ParentPay":
-    		case "PayPal":
-    		case "PayPalPro":
-    		case "PaySystems":
-    		case "PlugnPay":
-    		case "ProtxDirect":
-    		case "Protx":
-    		case "SagePay":
-    		case "SecureTrading":
-    		case "SkipJack":
-    		case "TrustCommerce":
-    		case "VeriSign":
-    		case "VerisignLink":
-    		case "PayFlowPro":
-    		case "PayFlowLink":
-    		case "WellsFargo":
-    		case "WorldPay":
-			case "ChronoPay":
-			case "BeanStream":
-    		return (MODULE_COMMERCIAL_PAYMENT);
-    		case "GiftCertificates":
-    		case "Promotion":
-    		return (MODULE_COMMERCIAL_OTHER | MODULE_COMMERCIAL_PAYMENT);
-    		case "AustraliaPost":
-    		case "CanadaPost":
-    		case "Intershipper":
-    		case "UPS":
-    		case "USPS":
-			case "UPSOnlineTools":
-    		return (MODULE_COMMERCIAL_SHIPPING);
-    		case "AOM":
-    		case "Affiliate":
-    		case "AutoUpdateCatalog":
-    		case "CardinalCommerce":
-    		case "EcommerceReports":
-    		case "Egoods":
-    		case "InventoryTracking":
-    		case "LayoutOrganizer":
-    		case "Newsletters":
-    		case "ProductAdviser":
-    		case "ProductOptions":
-    		case "WholesaleTrading":
-    		case "WishList":
-			case "FlyoutCategories":
-            case "GoogleCheckout":
-    		return MODULE_COMMERCIAL_OTHER;
-    		case "AdvancedSearch":
-    		case "AdvancedSecurity":
-    		case "AntiFraud":
-    		case "Bestsellers":
-    		case "DemoMode":
-    		case "DetailedImages":
-    		case "FeaturedProducts":
-    		case "Froogle":
-    		case "GreetVisitor":
-    		case "HTMLCatalog":
-    		case "LiveUpdating":
-    		case "MultiCategories":
-    		case "MultiCurrency":
-    		case "ShowcaseOrganizer":
-            case "SnsIntegration":
-            case "AccountingPackage":
-    		case "XCartImport":
-    		return MODULE_FREE;
-			case "FashionBoutique":
-			case "GiftsShop":
-			case "SummerSports":
-			case "WinterSports":
-			return MODULE_COMMERCIAL_SKIN;
-    		default:
-    		return MODULE_3RD_PARTY;
-    	}
+		return MODULE_FREE;
     }
 
     /**
@@ -276,9 +176,6 @@ class ModulesManager extends Object
     {
 		if ($_REQUEST["target"] == "upgrade" && ($_REQUEST["action"] == "upgrade") || $_REQUEST["action"] == "upgrade_force") {
 			return;
-		}
-		if (function_exists("func_is_trial_mode")) {
-			$this->trialMode = func_is_trial_mode();
 		}
         if ($this->xlite->get("adminZone") && isset($_GET["safe_mode"])) {
         	$auth_code = $this->xlite->get("options.installer_details.auth_code");
@@ -302,9 +199,6 @@ class ModulesManager extends Object
 
     function install() // {{{
     {
-    	if ($this->trialMode) {
-    		return;
-    	}
         if (!is_writable("classes/modules")) {
             $msg =<<<EOT
 <br><font color=red>FAILED!</font><br>
@@ -325,7 +219,7 @@ EOT;
         
         require_once "Archive/Tar.php";
 		
-		$ar =& new Archive_Tar($dest_file);
+		$ar = new Archive_Tar($dest_file);
         $files = $ar->listContent();
         if (!$files) {
             $this->error = "archive is corrupted";
@@ -411,9 +305,6 @@ EOT;
 
     function changeModuleStatus(&$module, $status) // {{{
     {
-    	if ($this->trialMode) {
-    		return;
-    	}
         if ($status) {
             $module->enable();
         } else {
@@ -426,13 +317,11 @@ EOT;
 
     function updateModules($ids) // {{{
     {
-    	if ($this->trialMode) {
-    		return;
-    	}
         if (!func_is_locked("cache") && !($_lock_cache = func_lock("cache"))) {
             $this->errorLockingCache = true;
             return false;
         }
+
         foreach ($this->get("modules") as $module) {
             if (in_array($module->get("module_id"), $ids)) {
                 $this->changeModuleStatus($module, true);
@@ -448,9 +337,6 @@ EOT;
 
     function uninstallModule($moduleName) // {{{
     {
-    	if ($this->trialMode) {
-    		return;
-    	}
         $this->moduleName = $moduleName;
         $module =& func_get_instance("Module_$moduleName", $moduleName);
         if (!is_object($module)) {
@@ -482,9 +368,6 @@ EOT;
 
     function cleanupCompileCache($cleanupClasses=true,$cleanupSkins=true) // {{{
     {
-    	if ($this->trialMode) {
-    		return;
-    	}
         func_cleanup_cache("classes", (bool)$this->get("verboseCleanup"));
 		func_cleanup_cache("skins", (bool)$this->get("verboseCleanup"));
     } // }}}

@@ -56,9 +56,6 @@ class Module_PlugnPay extends Module
 
 	function init()
 	{
-		if (!check_module_license("PlugnPay", true)) {
-			return;
-		}
 
 		parent::init();
 		$pm =& func_new("PaymentMethod");

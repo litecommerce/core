@@ -46,10 +46,6 @@ class Module_AOM extends Module // {{{
 
 	function init() // {{{
 	{
-    	if (!check_module_license("AOM", true)) {
-        	return;
-       	}
-
 		parent::init();
 
 		$this->addDecorator("Order","Module_AOM_Order");

@@ -1,9 +1,6 @@
 <?php
     function func_eWAYxml_process(&$lite_cart, &$paymentMethod, $debug = false)
     {
-        // license check
-        check_module_license("eWAYxml");
-
         //
         // *********************** PREPARE ************************
         //

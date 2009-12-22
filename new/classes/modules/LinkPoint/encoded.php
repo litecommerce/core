@@ -1,8 +1,6 @@
 <?php
     function func_LinkPoint_process(&$lite_cart, &$paymentMethod, $debug = false)
     {
-        // license check
-        check_module_license("LinkPoint");
         //
         // *********************** PREPARE ************************
         //

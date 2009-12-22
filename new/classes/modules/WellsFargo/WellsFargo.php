@@ -50,10 +50,6 @@ class Module_WellsFargo extends Module
 
     function init()
     {
-        if (!check_module_license("WellsFargo", true)) {
-            return;
-        }
-        
         parent::init();
         $pm =& func_new('PaymentMethod');
 	    // plug in  kernel/PaymentMethod/wells_fargo_cc.php module

@@ -10,8 +10,6 @@
  
  	function Payment_method_paypalpro_checkServiceURL(&$_this)
  	{
-		check_module_license("PayPalPro");
-
 		$params = $_this->get("params");
 		switch($params["solution"]) 
 		{
@@ -38,8 +36,6 @@
 
  	function Payment_method_paypalpro_process(&$_this,&$order) // {{{ 
 	{
-		check_module_license("PayPalPro");
-		
 		switch($_this->get("params.solution")) 
 		{
 			case "standard": 
@@ -53,8 +49,6 @@
 
 	function standardRequest(&$_this, $order) // {{{ 
 	{
-		check_module_license("PayPalPro");
-
 	    if (strcasecmp($_this->get("params.standard.login"),$_POST["business"]) != 0) {
         	die("IPN validation error: PayPal account doesn't match: ".$_POST["business"]. ". Please contact administrator.");
 		}
@@ -179,8 +173,6 @@
 
     function proRequest(&$_this,&$order) // {{{
     {
-   		check_module_license("PayPalPro");
-	
 		$response = PayPalPro_sendRequest($_this->get("params.pro"),$_this->getDirectPaymentRequest($order));
 		if (is_null($response)) {
 			$order->set("details.error", $response);
@@ -224,8 +216,6 @@
 
   function paypalExpressHandleRequest(&$_this,&$order) // {{{ 
   {
-    check_module_license("PayPalPro");
-		  
 	$request =& func_new("HTTPS");
 	if(is_null($order->get("details.token"))) {
 		$express_checkout =& func_new("Dialog_express_checkout");	
@@ -283,8 +273,6 @@
  
 	function PayPalPro_sendRequest(&$payment, &$data) // {{{
 	{
-	    check_module_license("PayPalPro");
-
 /*
 global $xlite;
 $xlite->logger->log("\nREQUEST:\n".var_export($data, true));

@@ -5,9 +5,6 @@
 
 function CardinalCommerce_isSupported(&$_this, $pm)
 {
-    // license check
-    check_module_license("CardinalCommerce");
-
 	if (!isset($pm)) {
     	$pm =& $_this->cart->get("paymentMethod");
     	if (is_null($pm)) {
@@ -29,9 +26,6 @@ function CardinalCommerce_isSupported(&$_this, $pm)
 
 function CardinalCommerce_checkout_cmpi(&$_this)
 {
-    // license check
-    check_module_license("CardinalCommerce");
-
 	if (!($_this->session->isRegistered("cmpiRequest") && $_this->session->get("cmpiRequest"))) {
 		$_this->redirect("cart.php?target=cart");
 		return;
@@ -157,9 +151,6 @@ function CardinalCommerce_checkout_cmpi(&$_this)
 
 if (!function_exists("func_array2fields")) {
 function func_array2fields($arrValue, $prefix="") {
-    // license check
-    check_module_license("CardinalCommerce");
-
 	foreach($arrValue as $key => $value) {
 		if (!is_array($value)) {
 			echo "<INPUT type=hidden name=\"";
@@ -184,9 +175,6 @@ function func_array2fields($arrValue, $prefix="") {
 // Covert XML string to hash array
 if (!function_exists("func_xml2hash")) {
 function func_xml2hash($str) {
-    // license check
-    check_module_license("CardinalCommerce");
-
 	$str = (string) $str;
 	$hash = array();
 	for($x = 0; $x < strlen($str); $x++) {
@@ -236,9 +224,6 @@ function func_xml2hash($str) {
 // Convert hash array to XML string
 if (!function_exists("func_hash2xml")) {
 function func_hash2xml($hash, $level = 0) {
-    // license check
-    check_module_license("CardinalCommerce");
-
 	if(!is_array($hash) || empty($hash)) {
 		return $hash;
 	}	
@@ -256,9 +241,6 @@ function func_hash2xml($hash, $level = 0) {
 
 if (!function_exists("func_https_request2")) {
 function func_https_request2 ($method, $url, $vars) {
-    // license check
-    check_module_license("CardinalCommerce");
-
 	$request = func_new('HTTPS');
 
     $_vars = array ();

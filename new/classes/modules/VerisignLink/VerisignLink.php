@@ -52,8 +52,6 @@ class Module_VerisignLink extends Module
 
     function init()
     {
-        if(!check_module_license("VerisignLink",true)) return;
-
         parent::init();
 
         $pm =& func_new("PaymentMethod");

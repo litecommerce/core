@@ -11,9 +11,6 @@
 */
 function GiftCertificates_changeGCdebit(&$_this, $sign)
 {
-    // check for module license
-    check_module_license("GiftCertificates");
-
 	if (!is_null($_this->get("gc"))) {
 		$gc =& $_this->get("gc");
 		$gc->set("debit", $gc->get("debit")+$sign*$_this->get("payedByGC"));

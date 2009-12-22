@@ -25,9 +25,6 @@ function func_Protx_getTxCode($pm, $order)
 /////////////////////////////////// Protx VSP Direct ////////////////////////////////////
 function func_ProtxDirect_process(&$_this, &$order)
 {
-// license check
-check_module_license("Protx");
-
 	$vendor = $_this->get("params.vendor_name");
 	$vendorTxCode = func_Protx_getTxCode($_this, $order);
 	$currency = (($_this->get("params.currency")) ? $_this->get("params.currency") : "USD");
@@ -98,9 +95,6 @@ check_module_license("Protx");
 
 function func_ProtxDirect_action_return(&$_this, &$order, $payment)
 {
-// license check
-check_module_license("Protx");
-
 	$trxData = array(
 		"MD"	=> $_this->get("MD"),
 		"PaRes"	=> $_this->get("PaRes")
@@ -116,9 +110,6 @@ check_module_license("Protx");
 
 function func_Protx_response_handling($response, &$order, &$payment)
 {
-// license check
-check_module_license("Protx");
-
 	$detailLabels = array();
 
 	// Process response
@@ -256,9 +247,6 @@ check_module_license("Protx");
 /////////////////////////////////// Protx VSP Form ////////////////////////////////////
 function func_ProtxForm_compileInfoCrypt($_this, $order)
 {
-// license check
-check_module_license("Protx");
-
 	$vendorTxCode = func_Protx_getTxCode($_this, $order);
 	$currency = (($_this->get("params.currency")) ? $_this->get("params.currency") : "USD");
 
@@ -298,9 +286,6 @@ $_this->xlite->logger->log("Protx VSP Form crypt:".var_export($trxData, true));
 
 function func_ProtxForm_action_return($_this, $paymentMethod)
 {
-// license check
-check_module_license("Protx");
-
 	$crypt = array();
 	$vars = (array)$_REQUEST;
 	foreach ($vars as $key=>$value) {
@@ -362,9 +347,6 @@ $_this->xlite->logger->log("Protx VSP Form response Error: Order #$order_id not 
 ///////////////////////////////////////// Transport //////////////////////////////
 function func_ProtxDirect_sendRequestDirect(&$payment, $post, $url=null)
 {
-// license check
-check_module_license("Protx");
-
 	if (is_null($url)) {
 		$url = $payment->get("serviceUrl");
 	}

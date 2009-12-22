@@ -20,8 +20,6 @@ function func_eSelect_getXID()
 
 function func_eSelect_process(&$cart, &$_this)
 {
-	check_module_license('eSelect');
-
 	// get eSelect params
 	$params = $_this->get("params");
 
@@ -116,8 +114,6 @@ function func_eSelect_process(&$cart, &$_this)
 
 function func_eSelect_action_return(&$_this, &$order, &$payment)
 {
-  check_module_license('eSelect');
-
 	parse_str($_this->get("MD"), $data);
 
 	$cc_info = array(
@@ -156,8 +152,6 @@ function func_eSelect_action_return(&$_this, &$order, &$payment)
 
 function func_eSelect_performAuthPurchase(&$order, $cc_info, &$payment, $amount, $crypt_type=null, $cavv=null)
 {
-  check_module_license('eSelect');
-
 	// get eSelect params
 	$params = $payment->get("params");
 
@@ -340,8 +334,6 @@ function func_eSelect_performAuthPurchase(&$order, $cc_info, &$payment, $amount,
 
 function func_eSelect_xmlToArray($xmlData)
 {
-  check_module_license('eSelect');
-
 	$xmlData = substr($xmlData, 0, strrpos($xmlData, ">")+1);
 
 	$xml = func_new("XML");
@@ -403,8 +395,6 @@ function _stripTagsXML($data, $name="")
 
 function func_eSelect_mpgTransactionXML($txn, $custInfo=null, $avsInfo=null, $cvdInfo=null, $recurInfo=null, $pre="us_")
 {
-  check_module_license('eSelect');
-
 	$txnTypes =array(
 		$pre."preauth"	=> array('order_id','cust_id', 'amount', 'pan', 'expdate', 'crypt_type'),
 		$pre."completion"	=> array('order_id', 'comp_amount','txn_number', 'crypt_type', 'commcard_invoice','commcard_tax_amount'),
@@ -469,8 +459,6 @@ function func_eSelect_mpgTransactionXML($txn, $custInfo=null, $avsInfo=null, $cv
 
 function func_eSelect_mpgCustInfo($params)
 {
-  check_module_license('eSelect');
-
 	$txnType = "cust_info";
 
 	$level3template = array(
@@ -487,8 +475,6 @@ function func_eSelect_mpgCustInfo($params)
 
 function _toXML_low($level3data, $template, $txnType)
 {
-  check_module_license('eSelect');
-
 	$xmlString = "";
 
 	for ($x = 0; $x < count($level3data[$txnType]); $x++) {
@@ -536,8 +522,6 @@ function _toXML_low($level3data, $template, $txnType)
 
 function func_eSelect_mpgRecurringInfo($params)
 {
-  check_module_license('eSelect');
-
 	$recurTemplate = array('recur_unit','start_now','start_date','num_recurs','period','recur_amount');
 
 	$xmlString = "";
@@ -550,8 +534,6 @@ function func_eSelect_mpgRecurringInfo($params)
 
 function func_eSelect_mpgAvsInfo($params)
 {
-  check_module_license('eSelect');
-
 	$avsTemplate = array('avs_street_number','avs_street_name','avs_zipcode');
 
 	$xmlString = "";
@@ -564,8 +546,6 @@ function func_eSelect_mpgAvsInfo($params)
 
 function func_eSelect_mpgCvdInfo($params)
 {
-  check_module_license('eSelect');
-
 	$cvdTemplate = array('cvd_indicator','cvd_value');
 
 	$xmlString = "";
@@ -579,8 +559,6 @@ function func_eSelect_mpgCvdInfo($params)
 
 function func_eSelect_mpgSendRequest(&$payment, &$data)
 {
-  check_module_license('eSelect');
-
 	$params = $payment->get("params");
 
 	$xmlString .= "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?><request><store_id>".$params["store_id"]."</store_id><api_token>".$params["api_token"]."</api_token>$data</request>";
@@ -629,8 +607,6 @@ EOT;
 
 function func_eSelect_mpiTransactionXML(/*$transactions*/$txn)
 {
-  check_module_license('eSelect');
-
 	$txnTypes =array(
 		txn	=> array('xid', 'amount', 'pan', 'expdate','MD', 'merchantUrl','accept','userAgent','currency','recurFreq', 'recurEnd','install'),
 		acs	=> array('PaRes','MD')
@@ -662,8 +638,6 @@ function func_eSelect_mpiTransactionXML(/*$transactions*/$txn)
 
 function func_eSelect_mpiSendRequest(&$payment, &$data)
 {
-  check_module_license('eSelect');
-
 	$params = $payment->get("params");
 
 	$xmlString = "<?xml version=\"1.0\"?><MpiRequest><store_id>".$params["store_id"]."</store_id><api_token>".$params["api_token"]."</api_token>$data</MpiRequest>";
@@ -711,8 +685,6 @@ EOT;
 
 function func_eSelect_getMpiInLineForm($responseData)
 {
-  check_module_license('eSelect');
-
 $inLineForm ='
 <html>
 <head>

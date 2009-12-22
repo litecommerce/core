@@ -11,9 +11,6 @@
 */
 function PaymentMethod_chronopay_handleRequest(&$_this, &$cart)
 {
-    // license check
-	check_module_license("ChronoPay");
-
 	$answer = array(
 		'onetime' => 'One time payment has been made, no repayment required',
 		'initial' => 'First payment has been made, repayment required in corresponding period',
@@ -56,9 +53,6 @@ function PaymentMethod_chronopay_handleRequest(&$_this, &$cart)
 
 function PaymentMethod_chronopay_callback()
 {
-    // license check
-	check_module_license("ChronoPay");
-
 	if (isset($_REQUEST["cs1"]) && is_numeric($_REQUEST["cs1"]) && $_REQUEST["cs1"] > 0 && isset($_REQUEST["cs2"]) && $_REQUEST["cs2"] == "chronopay") {
 		$cart =& func_new("Order", $_REQUEST["cs1"]);
 		$pm = $cart->get("paymentMethod");

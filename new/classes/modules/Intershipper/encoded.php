@@ -5,9 +5,6 @@
 
 function &Shipping_intershipper_parseResponse(&$_this, $response, $destination)
 {
-    // license check
-    check_module_license("Intershipper");
-
     // original code of Shipping_intershipper::_parseResponse()
     $_this->error = "";
     $_this->xmlError = false;
@@ -62,9 +59,6 @@ function &Shipping_intershipper_parseResponse(&$_this, $response, $destination)
 
 function &Shipping_intershipper_getRates(&$_this, $order)
 {
-    // license check
-    check_module_license("Intershipper");
-    
     // original code of Shipping_intershipper::getRates()
     
     if (is_null($order->get("profile")) && !$_this->config->get("General.def_calc_shippings_taxes")) {

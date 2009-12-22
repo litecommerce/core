@@ -1,9 +1,6 @@
 <?php
 	function func_BankOfAmerica_process(&$lite_cart, &$paymentMethod, $debug = false)
 	{
-		// license check
-		check_module_license("BankOfAmerica");
-		
 		//global $options;
 		/*
 		$http_host = $lite_cartoptions["host_details"]["http_host"];

@@ -1,8 +1,6 @@
 <?php
     function func_NetRegistry_process(&$lite_cart, &$paymentMethod, $debug = false)
     {
-        // license check
-        check_module_license("NetRegistry");
         //
         // *********************** PREPARE ************************
         //

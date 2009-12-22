@@ -10,9 +10,6 @@
 
 function func_NetworkMerchants_process(&$lite_cart, &$paymentMethod, $debug = false)
 {
-    // license check
-    check_module_license("NetworkMerchants");
-
     //
     // *********************** PREPARE ************************
     //

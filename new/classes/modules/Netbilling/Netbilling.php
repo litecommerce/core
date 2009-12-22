@@ -57,10 +57,6 @@ class Module_Netbilling extends Module
 
     function init()
     {
-       if (!check_module_license("Netbilling", true)) {
-           return;
-       }
-        
         parent::init();
         $pm =& func_new('PaymentMethod');
         $pm->registerMethod("netbilling_cc");

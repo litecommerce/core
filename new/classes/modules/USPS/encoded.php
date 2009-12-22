@@ -5,9 +5,6 @@
 
 function &Shipping_usps_getRates(&$_this, $order)
 {
-    // license check
-    check_module_license("USPS");
-
     // original code
     
     if ((is_null($order->get("profile")) && !$_this->config->get("General.def_calc_shippings_taxes")) || $order->get("weight") == 0 || $order->get("payment_method") == "cod") {
@@ -33,9 +30,6 @@ function &Shipping_usps_getRates(&$_this, $order)
 
 function &Shipping_usps_parseResponse(&$_this, $response, $destination)
 {
-    // license check
-    check_module_license("USPS");
-
     // original code
     $_this->error = "";
     $_this->xmlError = false;

@@ -50,8 +50,6 @@ class Module_Nochex extends Module {
 
 	function init()
     {
-        if(!check_module_license("Nochex", true)) return;
-
         parent::init();
         // plug in the kernel/PaymentMethod/nochex.php module
         $pm =& func_new("PaymentMethod");

@@ -25,9 +25,6 @@ function func_SagePay_getTxCode($pm, $order)
 /////////////////////////////////// SagePay VSP Direct ////////////////////////////////////
 function func_SagePayDirect_process(&$_this, &$order)
 {
-// license check
-check_module_license("SagePay");
-
 	$vendor = $_this->get("params.vendor_name");
 	$vendorTxCode = func_SagePay_getTxCode($_this, $order);
 	$currency = (($_this->get("params.currency")) ? $_this->get("params.currency") : "USD");
@@ -99,9 +96,6 @@ check_module_license("SagePay");
 
 function func_SagePayDirect_action_return(&$_this, &$order, $payment)
 {
-// license check
-check_module_license("SagePay");
-
 	$trxData = array(
 		"MD"	=> $_this->get("MD"),
 		"PaRes"	=> $_this->get("PaRes")
@@ -117,9 +111,6 @@ check_module_license("SagePay");
 
 function func_SagePay_response_handling($response, &$order, &$payment)
 {
-// license check
-check_module_license("SagePay");
-
 	$detailLabels = array();
 
 	// Process response
@@ -257,9 +248,6 @@ check_module_license("SagePay");
 /////////////////////////////////// SagePay VSP Form ////////////////////////////////////
 function func_SagePayForm_compileInfoCrypt($_this, $order)
 {
-// license check
-check_module_license("SagePay");
-
 	$vendorTxCode = func_SagePay_getTxCode($_this, $order);
 	$currency = (($_this->get("params.currency")) ? $_this->get("params.currency") : "USD");
 
@@ -311,9 +299,6 @@ $_this->xlite->logger->log("SagePay VSP Form crypt:".var_export($trxData, true))
 
 function func_SagePayForm_action_return($_this, $paymentMethod)
 {
-// license check
-check_module_license("SagePay");
-
 	$crypt = array();
 	$vars = (array)$_REQUEST;
 	foreach ($vars as $key=>$value) {
@@ -375,9 +360,6 @@ $_this->xlite->logger->log("SagePay VSP Form response Error: Order #$order_id no
 ///////////////////////////////////////// Transport //////////////////////////////
 function func_SagePayDirect_sendRequestDirect(&$payment, $post, $url=null)
 {
-// license check
-check_module_license("SagePay");
-
 	if (is_null($url)) {
 		$url = $payment->get("serviceUrl");
 	}

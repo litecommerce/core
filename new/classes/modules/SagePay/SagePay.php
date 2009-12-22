@@ -57,9 +57,6 @@ class Module_SagePay extends Module
 
     function init()
     {
-		if (!check_module_license("SagePay", true)) {
-			return;
-		}
         
         parent::init();
         $pm =& func_new('PaymentMethod', "sagepaydirect_cc");

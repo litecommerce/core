@@ -45,9 +45,6 @@
 
 function func_get_product_options(&$_this)
 {
-    // check for module license
-    check_module_license("ProductOptions");
-
     $result = array();
 
     if ($_this->is("empty")) {

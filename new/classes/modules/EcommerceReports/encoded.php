@@ -1,8 +1,6 @@
 <?php
 function &func_EcommerceReports_getRawProducts(&$dlg)
 {
-    check_module_license("EcommerceReports");
-
     if (is_null($dlg->rawProducts)) {
         $dlg->rawProducts = array();
         $product_ids = $dlg->getProductIDs();
@@ -30,8 +28,6 @@ function &func_EcommerceReports_getRawProducts(&$dlg)
 
 function &func_EcommerceReports_getRawItems(&$dlg, $unique=true)
 {
-    check_module_license("EcommerceReports");
-
     if (is_null($dlg->rawItems)) {
         $dlg->rawItems = array();
         $rawProducts = $dlg->get("rawProducts");

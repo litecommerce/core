@@ -50,9 +50,6 @@ class Module_NetRegistry extends Module
 
     function init()
     {
-       if (!check_module_license("NetRegistry", true)) {
-           return;
-       }
         
         parent::init();
         $pm =& func_new('PaymentMethod');

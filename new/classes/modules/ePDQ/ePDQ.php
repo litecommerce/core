@@ -56,9 +56,6 @@ class Module_ePDQ extends Module
 
     function init()
     {
-        if (!check_module_license("ePDQ", true)) {
-            return;
-        }
         
         parent::init();
         $pm =& func_new('PaymentMethod');

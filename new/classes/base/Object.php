@@ -56,19 +56,6 @@ class Object
         global $xlite;
 		static $__ignoreConstructor;
         if (isset($xlite)) {
-			if (function_exists("license_check")) {
-            	if (!$__ignoreConstructor && is_object($xlite) && is_object($xlite->license)) {
-            		if (strtolower(get_class($xlite->license)) != "lobject__") {
-    					$__ignoreConstructor = true;
-                        $xlite->license =& func_new("LObject");
-                        $license_check = $xlite->license->get("license");
-                        if (strcasecmp($license_check, md5("L!i@t#e$C%o^m&m*e(r)c_e+ |2.X")) != 0) {
-    						close_shop("license_invalid");
-                        }
-                        $__ignoreConstructor = false;
-            		}
-            	}
-            }
             $this->xlite =& $xlite;
             $this->auth =& $xlite->get('auth');
             $this->session =& $xlite->get('session');

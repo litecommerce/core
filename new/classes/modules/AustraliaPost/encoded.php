@@ -2,9 +2,6 @@
 
 function &Shipping_aupost_getRates(&$_this, &$order)
 {
-    // license check
-    check_module_license("AustraliaPost");
-
 	if ((is_null($order->get("profile")) && !$_this->config->get("General.def_calc_shippings_taxes")) || $order->get("weight") == 0 || $_this->config->get("Company.location_country") != "AU") {
         return array();
     }
@@ -47,9 +44,6 @@ function &Shipping_aupost_getRates(&$_this, &$order)
 
 function &Shipping_aupost_queryRates(&$_this, $options, $originalZipcode, $destinationZipcode, $destinationCountry, $weight, $weight_unit=null) // {{{
 {
-    // license check
-    check_module_license("AustraliaPost");
-
     global $php_errormsg;
 	
 	$ap_host = "http://drc.edeliver.com.au";
@@ -138,9 +132,6 @@ function &Shipping_aupost_queryRates(&$_this, $options, $originalZipcode, $desti
 
 function &Shipping_aupost_parseResponse(&$_this, $response, $destination) 
 {
-    // license check
-    check_module_license("AustraliaPost");
-
 	$rates = array();
 	$options = $_this->get("options");
 	$currency_rate = ($options->currency_rate) ? $options->currency_rate : 1;

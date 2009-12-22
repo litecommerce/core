@@ -2,9 +2,6 @@
 
 	function &PaymentMethod_nochex_handleRequest(&$order,&$_this)
 	{
-		// license check
-		check_module_license("Nochex");
-		
         $order->set("details.error", null);
         $order->set("detailLabels.error", null);
         $order->set("details.errorDescription", null);

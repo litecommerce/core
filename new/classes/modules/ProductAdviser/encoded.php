@@ -8,8 +8,6 @@
 
 function ProductAdviser_updateInventory(&$_this, &$item)
 {
-	check_module_license("ProductAdviser");
-
 	if ($_this->xlite->get("PA_InventorySupport") && $_this->config->get("ProductAdviser.customer_notifications_enabled")) {
 		if ($item->get("outOfStock")) {
 			$rejectedItemInfo =& func_new("stdClass");
@@ -34,8 +32,6 @@ function ProductAdviser_updateInventory(&$_this, &$item)
 
 function ProductAdviser_checkedOut(&$products)
 {
-	check_module_license("ProductAdviser");
-
     $products = array_keys($products); 
     sort($products);
 
@@ -68,8 +64,6 @@ function ProductAdviser_checkedOut(&$products)
 
 function &ProductAdviser_getRelatedProducts(&$_this)
 {
-	check_module_license("ProductAdviser");
-
 	if (isset($_this->_RelatedProducts)) {
 		return $_this->_RelatedProducts; 
 	}
@@ -107,8 +101,6 @@ function &ProductAdviser_getRelatedProducts(&$_this)
 
 function &ProductAdviser_getProductsAlsoBuy(&$_this)
 {
-	check_module_license("ProductAdviser");
-
 	if (isset($_this->_ProductsAlsoBuy)) {
 		return $_this->_ProductsAlsoBuy; 
 	}
@@ -146,8 +138,6 @@ function &ProductAdviser_getProductsAlsoBuy(&$_this)
 
 function ProductAdviser_updateProduct(&$_this)
 {
-	check_module_license("ProductAdviser");
-
     if (!$_this->config->get("ProductAdviser.customer_notifications_enabled")) {
     	return;
     }
@@ -171,8 +161,6 @@ function ProductAdviser_updateProduct(&$_this)
 
 function ProductAdviser_action_add(&$_this)
 {
-	check_module_license("ProductAdviser");
-
 	if ($_this->xlite->get("PA_InventorySupport") && $_this->config->get("ProductAdviser.customer_notifications_enabled")) {
 		if (!is_null($_this->cart->get("outOfStock"))) {
 			$rejectedItemInfo =& func_new("stdClass");

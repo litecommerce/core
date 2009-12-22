@@ -1,7 +1,6 @@
 <?php
 function func_moduleEgoods_send_files(&$order)
 {
-	check_module_license('Egoods');
 	$items =& $order->get('items');
 
 	for ($i = 0; $i < count($items); $i++) {
@@ -47,7 +46,6 @@ function func_moduleEgoods_send_files(&$order)
 
 function func_moduleEgoods_getPinCodes($item)
 {
-	check_module_license('Egoods');
 	$result = array();
 	
 	if (!$item->is('pin')) {
@@ -70,7 +68,6 @@ function func_moduleEgoods_getPinCodes($item)
 
 function func_moduleEgoods_parseCmdLine($item, $cmd_line)
 {
-	check_module_license('Egoods');
 	$cmd_line = str_replace("%d", escapeshellarg($item->get('order.order_id')), $cmd_line);
 	$cmd_line = str_replace("%m", escapeshellarg($item->get('order.profile.login')), $cmd_line);
 	$cmd_line = str_replace("%f", escapeshellarg($item->get('order.profile.billing_firstname')), $cmd_line);
@@ -83,7 +80,6 @@ function func_moduleEgoods_parseCmdLine($item, $cmd_line)
 
 function func_moduleEgoods_send_pins(&$order)
 {
-	check_module_license('Egoods');
 	$items =& $order->get('items');
 
 	for ($i = 0; $i < count($items); $i++) {

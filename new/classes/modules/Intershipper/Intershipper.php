@@ -57,9 +57,6 @@ class Module_Intershipper extends Module
     
     function init()
     {
-        // check license
-        if(!check_module_license("Intershipper", true)) return;
-
         parent::init();
         $shipping = func_new("Shipping");
         $shipping->registerShippingModule("intershipper");

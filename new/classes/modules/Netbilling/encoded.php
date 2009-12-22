@@ -8,9 +8,6 @@
 
 function func_Netbilling_processor_process(&$cart, &$_this, $debug = false)
 {
-	// license check
-	check_module_license("Netbilling");
-
 	$module_params = $_this->get('params');
 
 	$REMOTE_ADDR = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : "";

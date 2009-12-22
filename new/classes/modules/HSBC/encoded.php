@@ -1,10 +1,7 @@
 <?php
 
     function func_PaymentMethod_cc_hsbc_getUserId(&$_this, &$cart)
-    {    
-        // license check
-        check_module_license("HSBC");
-
+    {
 		return strrev(md5($cart->get("profile.login")));
 	}
 
@@ -24,10 +21,7 @@
 	}
 
     function func_PaymentMethod_cc_hsbc_handleRequest(&$_this, &$cart)
-    {    
-        // license check
-        check_module_license("HSBC");
-
+    {
 //////////////////////////////////
 // debug code
 //////////////////////////////////

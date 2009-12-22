@@ -56,10 +56,6 @@ class Module_WorldPay extends Module
 	
     function init()
     {
-        if (!check_module_license("WorldPay", true)) {
-            return;
-        }
-        
         parent::init();
         $pm =& func_new('PaymentMethod');
 	    // plug in  kernel/PaymentMethod/worldpay.php module

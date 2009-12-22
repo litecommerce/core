@@ -58,8 +58,6 @@ class Module_ChronoPay extends Module
 
 	function init() // {{{
 	{
-		if(!check_module_license("ChronoPay",true)) return;
-
 		$this->addDecorator("Dialog_callback", "Module_ChronoPay_Dialog_callback");
 
 		parent::init();

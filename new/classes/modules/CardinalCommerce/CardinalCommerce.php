@@ -46,8 +46,6 @@ class Module_CardinalCommerce extends Module
 
     function init()
     {
-        if(!check_module_license("CardinalCommerce",true)) return;
-
         parent::init();
 
         if ($this->xlite->mm->get("activeModules.VeriSign")) {

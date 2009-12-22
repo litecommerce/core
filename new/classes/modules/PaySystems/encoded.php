@@ -1,9 +1,6 @@
 <?php
     function func_PaymentMethod_pay_systems_web_cc_handleRequest(&$_this, &$cart)
-    {    
-        // license check
-        check_module_license("PaySystems");
-
+    {
 		if (isset($_POST["cc_status"])) {
 			if ($_POST["cc_status"] != "pass") {
 				$status = "F";

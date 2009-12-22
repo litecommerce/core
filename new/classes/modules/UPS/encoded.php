@@ -5,9 +5,6 @@
 
 function &Shipping_ups_getRates(&$_this, $order)
 {
-    // license check
-    check_module_license("UPS");
-
     // original code of Shipping_ups::getRates()
     
     if ((is_null($order->get("profile")) && !$_this->config->get("General.def_calc_shippings_taxes")) || $order->get("weight") == 0) {
@@ -71,9 +68,6 @@ function &Shipping_ups_getRates(&$_this, $order)
 
 function &Shipping_ups_parseResponse(&$_this, $response, $destination, $originCountry)
 {
-    // license check
-    check_module_license("UPS");
-
     // original code
     $_this->error = "";
     $_this->xmlError = false;

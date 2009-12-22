@@ -51,9 +51,6 @@ class Module_Newsletters extends Module
     function init()
     {
         parent::init();
-        if (!check_module_license("Newsletters", true)) {
-            return;
-        }
 
         parent::init();
 

@@ -1,9 +1,6 @@
 <?php
     function func_CyberSource_process(&$lite_cart, &$paymentMethod, $debug = false)
     {
-        // license check
-        check_module_license("CyberSource");
-
         //
         // *********************** PREPARE ************************
         //

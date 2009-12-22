@@ -8,8 +8,6 @@
 
 function LayoutOrganizer_updateChildrenTemplates(&$_this, $only_categories = false)
 {
-	check_module_license("LayoutOrganizer");
-
 	if (!$only_categories) {
     	$products = $_this->getProducts("custom_template < '0'");
     	$p_custom_template = $_this->getTemplate("p_custom_template");
@@ -44,8 +42,6 @@ function LayoutOrganizer_updateChildrenTemplates(&$_this, $only_categories = fal
 
 function LayoutOrganizer_enableChildren(&$_this, $only_categories = false)
 {
-	check_module_license("LayoutOrganizer");
-
 	if (!$only_categories) {
         $kernelVersion = $_this->xlite->config->get("Version.version");
         if (version_compare($kernelVersion, "2.2", ">=")) {
@@ -95,8 +91,6 @@ function LayoutOrganizer_enableChildren(&$_this, $only_categories = false)
 
 function LayoutOrganizer_isReadOnly($scheme_id)
 {
-	check_module_license("LayoutOrganizer");
-
 	switch($scheme_id) {
 		case "0":
 		case "1":
@@ -110,8 +104,6 @@ function LayoutOrganizer_isReadOnly($scheme_id)
 
 function LayoutOrganizer_isInvariable($scheme_id)
 {
-	check_module_license("LayoutOrganizer");
-
 	switch($scheme_id) {
 		case "0":
 		return true;

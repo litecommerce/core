@@ -240,10 +240,10 @@ $location = "skins/admin/en/location.tpl";
 if (!is_template_patched($location, "AOM"))
 {
     $find_str = <<<EOT
-<span IF="target=#license#">&nbsp;::&nbsp;<a href="admin.php?target=license" class="NavigationPath">License</a></span>
+
 EOT;
     $replace_str = <<<EOT
-<span IF="target=#license#">&nbsp;::&nbsp;<a href="admin.php?target=license" class="NavigationPath">License</a></span>
+
 <widget module="AOM" template="modules/AOM/location.tpl">
 EOT;
     patch_template($location, null, $find_str, $replace_str);

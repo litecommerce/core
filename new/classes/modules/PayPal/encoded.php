@@ -5,9 +5,6 @@
 
 function PaymentMethod_paypal_handleRequest(&$_this, &$order)
 {
-    // license check
-    check_module_license("PayPal");
-
     // original code of PaymentMethod_paypal::handleRequest()
 
     // validate IPN

@@ -3,10 +3,7 @@
 * Hidden methods
 */
 function PaymentMethod_VerisignLink_handleRequest(&$_this, &$cart)
-{    
-    // license check
-    check_module_license("VerisignLink");
-
+{
     $params = $_this->params;
     $error = null;
 

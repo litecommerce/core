@@ -56,9 +56,6 @@ class Module_PayFlowPro extends Module
 
     function init()
     {
-       if (!check_module_license("PayFlowPro", true)) {
-           return;
-       }
         
         parent::init();
         $pm =& func_new('PaymentMethod');

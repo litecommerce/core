@@ -51,10 +51,6 @@ class Module_ProductAdviser extends Module
 
 	function init() 
 	{
-    	if (!check_module_license("ProductAdviser", true)) {
-        	return;
-       	}
-
 		parent::init();
 
 		$w =& func_new ("Widget");

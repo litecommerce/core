@@ -3,10 +3,7 @@
 * Hidden methods
 */
 function PaymentMethod_2checkout_handleRequest(&$_this, &$cart)
-{    
-    // license check
-    check_module_license("2CheckoutCom");
-    
+{
     // PaymentMethod::2checkout_handleRequest() code
     
     $params = $_this->params;
@@ -103,10 +100,7 @@ function PaymentMethod_2checkout_handleRequest(&$_this, &$cart)
 }
 
 function PaymentMethod_2checkout_v2_handleRequest(&$_this, &$cart, $security_check=true)
-{    
-    // license check
-    check_module_license("2CheckoutCom");
-    
+{
     // PaymentMethod::2checkout_handleRequest() code
     
     $params = $_this->params;

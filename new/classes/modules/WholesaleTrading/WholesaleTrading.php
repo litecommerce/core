@@ -56,8 +56,6 @@ class Module_WholesaleTrading extends Module
 	
     function init()
     {
-		if(!check_module_license("WholesaleTrading", true)) return;
-		
         parent::init();
 
         // common class decorations

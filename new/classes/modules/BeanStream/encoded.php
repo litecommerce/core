@@ -42,9 +42,6 @@ function BeanStream_get_order_id($order_number)
 
 function BeanStream_processor_process(&$_this, &$cart)
 {
-	// license check
-	check_module_license("BeanStream");
-
     $params  = $_this->get("params");
 	$profile = $cart->get("profile");
 	$order_id = BeanStream_get_order_number($cart);
@@ -117,9 +114,6 @@ function BeanStream_processor_process(&$_this, &$cart)
 
 function func_BeanStream_action_return(&$_this, &$cart, $pm)
 {
-	// license check
-	check_module_license("BeanStream");
-
 	$request =& func_new('HTTPS');
 	$request->url = $pm->get("authorizationUrl");
 	$request->data = array(
@@ -153,9 +147,6 @@ function func_BeanStream_action_return(&$_this, &$cart, $pm)
 
 function BeanStream_parse_response(&$cart, $response=array(), $pm)
 {
-	// license check
-	check_module_license("BeanStream");
-
 	$result = false;
     $status = $pm->get("orderFailStatus");
 	$order_id = BeanStream_get_order_id($response["trnOrderNumber"]);

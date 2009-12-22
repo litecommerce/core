@@ -7,10 +7,6 @@
 function FlyoutCategories_processTreeChunk(&$_this, &$chunk)
 {
 	static $count = 0;
-
-    // check for module license
-	check_module_license("FlyoutCategories");
-
 	$count++;
 	foreach($chunk as $chunk_item) {
 		$_this->processTreeItem($chunk_item);
@@ -27,9 +23,6 @@ function FlyoutCategories_processTreeChunk(&$_this, &$chunk)
 
 function FlyoutCategories_processTreeItem(&$_this, &$item)
 {
-    // check for module license
-	check_module_license("FlyoutCategories");
-
 	$_this->_categories_processed++;
 
 	switch ($_this->categoriesMenuMode) {
@@ -48,9 +41,6 @@ function FlyoutCategories_processTreeItem(&$_this, &$item)
 
 function &FlyoutCategories_buildTree(&$_this, &$parent)
 {
-    // check for module license
-	check_module_license("FlyoutCategories");
-
 	if (!isset($_this->categoryClass)) {
 		$_this->categoryClass =& func_new("Category");
 	}
@@ -120,9 +110,6 @@ function &FlyoutCategories_buildTree(&$_this, &$parent)
 
 function FlyoutCategories_isReadOnly($scheme_id)
 {
-    // check for module license
-	check_module_license("FlyoutCategories");
-
 	switch($scheme_id) {
 		case "1":
 		case "2":
@@ -136,9 +123,6 @@ function FlyoutCategories_isReadOnly($scheme_id)
 
 function FlyoutCategories_isInvariable($scheme_id)
 {
-    // check for module license
-	check_module_license("FlyoutCategories");
-
 	switch($scheme_id) {
 		case "1":
 		case "2":
@@ -152,9 +136,6 @@ function FlyoutCategories_isInvariable($scheme_id)
 
 function FlyoutCategories_action_update(&$_this)
 {
-    // check for module license
-	check_module_license("FlyoutCategories");
-
 	if (!(isset($_this->schemes_list) && is_array($_this->schemes_list))) {
     	$_this->params[] = "status";
         $_this->set("status" , "update_failed");
@@ -208,9 +189,6 @@ function FlyoutCategories_action_update(&$_this)
 
 function FlyoutCategories_action_delete(&$_this)
 {
-    // check for module license
-	check_module_license("FlyoutCategories");
-
 	if (!isset($_this->modified_scheme_id) || strlen($_this->modified_scheme_id) == 0) {
     	$_this->params[] = "status";
         $_this->set("status" , "delete_failed");
@@ -255,9 +233,6 @@ function FlyoutCategories_action_delete(&$_this)
 
 function FlyoutCategories_action_fc_update_templates(&$_this)
 {
-    // check for module license
-	check_module_license("FlyoutCategories");
-
 	if (!$_this->isSchemeAvailable() || $_this->scheme_id == 0) {
 		$_this->params[] = "status";
 		$_this->set("status" , "update_failed");
@@ -284,9 +259,6 @@ function FlyoutCategories_action_fc_update_templates(&$_this)
 
 function FlyoutCategories_action_fc_clone(&$_this)
 {
-    // check for module license
-	check_module_license("FlyoutCategories");
-
 	if (!isset($_this->modified_scheme_id) || strlen($_this->modified_scheme_id) == 0) {
 		$_this->params[] = "status";
 		$_this->set("status" , "clone_failed");
@@ -337,9 +309,6 @@ function FlyoutCategories_action_fc_clone(&$_this)
 
 function FlyoutCategories_action_rebuild_tree(&$_this)
 {
-    // check for module license
-	check_module_license("FlyoutCategories");
-
 	$dialog = &func_new("admin_dialog_categories");
 	$dialog->set("silent", true);
 	$dialog->action_build_categories();
@@ -349,9 +318,6 @@ function FlyoutCategories_action_rebuild_tree(&$_this)
 
 function FlyoutCategories_action_delete_option(&$_this)
 {
-    // check for module license
-	check_module_license("FlyoutCategories");
-
 	$keyname = $_REQUEST["keyname"];
 	if ( empty($keyname) )
 		return;
@@ -366,9 +332,6 @@ function FlyoutCategories_action_delete_option(&$_this)
 
 function FlyoutCategories_action_add_option(&$_this)
 {
-    // check for module license
-	check_module_license("FlyoutCategories");
-
 	$scheme = $_this->get("currentScheme");
 	$options = $scheme->get("options");
 
@@ -428,9 +391,6 @@ function FlyoutCategories_action_add_option(&$_this)
 
 function FlyoutCategories_action_update_option(&$_this)
 {
-    // check for module license
-	check_module_license("FlyoutCategories");
-
     $keyname = preg_replace("/[^A-Za-z0-9_]+/", "_", $_this->option_keyname);
 
     // get options from current scheme
@@ -485,9 +445,6 @@ function FlyoutCategories_action_update_option(&$_this)
 
 function FlyoutCategories_getSchemeManagerDialog(&$_this)
 {
-    // check for module license
-	check_module_license("FlyoutCategories");
-
 	$dialog = null;
 
 	if ($_this->xlite->LayoutOrganizerEnabled) {
@@ -501,9 +458,6 @@ function FlyoutCategories_getSchemeManagerDialog(&$_this)
 
 function FlyoutCategories_getDefaultScheme(&$_this)
 {
-    // check for module license
-	check_module_license("FlyoutCategories");
-
 	$_this->initLayout();
 
 	$scheme =& func_new("FCategoriesScheme");
@@ -517,9 +471,6 @@ function FlyoutCategories_getDefaultScheme(&$_this)
 
 function FlyoutCategories_getSchemes(&$_this, $all_schemes=true)
 {
-    // check for module license
-	check_module_license("FlyoutCategories");
-
 	$_this->schemes = null;
 
 	$scheme =& func_new("FCategoriesScheme");
@@ -537,9 +488,6 @@ function FlyoutCategories_getSchemes(&$_this, $all_schemes=true)
 
 function FlyoutCategories_isSchemeAvailable(&$_this)
 {
-    // check for module license
-	check_module_license("FlyoutCategories");
-
 	if (!isset($_this->scheme_id)) {
 		return false;
 	}
@@ -552,9 +500,6 @@ function FlyoutCategories_isSchemeAvailable(&$_this)
 
 function FlyoutCategories_getCurrentScheme(&$_this)
 {
-    // check for module license
-	check_module_license("FlyoutCategories");
-
 	if (!$_this->isSchemeAvailable()) {
 		return null;
 	}
@@ -577,9 +522,6 @@ function FlyoutCategories_getCurrentScheme(&$_this)
 
 function FlyoutCategories_checkUpdateCategories(&$_this)
 {
-    // check for module license
-	check_module_license("FlyoutCategories");
-
 	if ( $_this->get("config.FlyoutCategories.scheme") > 0 ) {
 		$config = &func_new("Config");
 		$config->createOption("FlyoutCategories", "category_changed", 1);
@@ -595,9 +537,6 @@ function FlyoutCategories_checkUpdateCategories(&$_this)
 
 function FlyoutCategories_copy_scheme_nodes(&$_this, &$fNode, &$scheme, &$new_scheme)
 {
-    // check for module license
-	check_module_license("FlyoutCategories");
-
 	$files = $_this->getSchemeNodesList();
 	foreach($files as $file) {
 		$fNode->path = $scheme->get("templates") . "/" . $file;
@@ -608,17 +547,11 @@ function FlyoutCategories_copy_scheme_nodes(&$_this, &$fNode, &$scheme, &$new_sc
 
 function FlyoutCategories_getSchemeNodesList()
 {
-    // check for module license
-	check_module_license("FlyoutCategories");
-
 	return array("categories.tpl", "cat_template.tpl", "scat_template.tpl", "body_template.tpl", "style.css", "script.js", "image.tpl", "images", "styles");
 }
 
 function FlyoutCategories_gdLibEnabled()
 {
-    // check for module license
-	check_module_license("FlyoutCategories");
-
 	// Check if GD lib loaded
 	$gd_found = false;
 	foreach (get_loaded_extensions() as $name) {

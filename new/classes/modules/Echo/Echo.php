@@ -56,9 +56,6 @@ class Module_Echo extends Module
 
     function init()
     {
-       if (!check_module_license("Echo", true)) {
-           return;
-       }
         
         parent::init();
         $pm =& func_new('PaymentMethod');

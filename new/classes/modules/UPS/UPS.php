@@ -55,8 +55,6 @@ class Module_UPS extends Module
     
     function init()
     {
-        if(!check_module_license("UPS", true)) return;
-
         parent::init();
         $shipping = func_new("Shipping");
         $shipping->registerShippingModule("ups");

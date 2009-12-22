@@ -90,11 +90,6 @@ class XLite extends Object
         
         $this->auth =& func_get_instance("Auth");
 
-        $this->license =& func_new("Object");
-        if (function_exists('license_check')) {
-            $this->license->set("properties", license_check());
-        }
-
         $this->profiler->log("init_time");
 
         //check memory_limit_changeable

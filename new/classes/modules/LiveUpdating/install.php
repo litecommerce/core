@@ -172,13 +172,6 @@ patch_template($location, $check_str, $find_str, $replace_str);
 // patching "skins/admin/en/main.tpl"
 $location = "skins/admin/en/main.tpl";
 if (!is_template_patched($location, "LiveUpdating")) {
-	$find_str = <<<EOT
-<widget target="main" template="common/dialog.tpl" head="License warning" body="license_warning.tpl" visible="{licenseWarning}">
-EOT;
-	$replace_str = <<<EOT
-<widget target="main" template="common/dialog.tpl" head="License warning" body="license_warning.tpl" visible="{licenseWarning}">
-<widget module="LiveUpdating" target="main" template="common/dialog.tpl" head="New Updates" body="modules/LiveUpdating/autocheck_updates.tpl" visible="{!updatesNumber=#0#}">
-EOT;
 	patch_template($location, null, $find_str, $replace_str);
 
 	$find_str = <<<EOT

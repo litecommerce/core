@@ -57,8 +57,6 @@ class Module_GoogleCheckout extends Module
 
     function init()
     {
-        if(!check_module_license("GoogleCheckout",true)) return;
-        
         parent::init();
 
         $webDir = $this->xlite->get("options.host_details.web_dir");

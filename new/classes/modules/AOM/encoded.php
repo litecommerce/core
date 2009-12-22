@@ -10,9 +10,6 @@
 
 function aom_order_clone(&$_this, &$clone) 
 {
-    // check for module license
-	check_module_license("AOM");
-
 	if ($_this->xlite->get("mm.activeModules.Promotion")) {
 		foreach ($_this->getAppliedBonuses() as $specialOffer) {
 			if ( function_exists("func_is_clone_deprecated") && func_is_clone_deprecated() ) {
@@ -64,9 +61,6 @@ function aom_order_clone(&$_this, &$clone)
 
 function aom_get_clone_order(&$_this)
 {
-    // check for module license
-	check_module_license("AOM");
-
 	if (is_null($_this->clone_order)) {
 		$aom_orders = $_this->session->get("aom_orders");
 		$found = true;
@@ -99,9 +93,6 @@ function aom_get_clone_order(&$_this)
 
 function aom_get_profile(&$_this)
 {
-    // check for module license
-	check_module_license("AOM");
-
     if (is_null($_this->profile)) {  
         $order =& func_new("Order", $_this->get("order_id"));
         $_this->profile = $order->get("profile");
@@ -118,9 +109,6 @@ function aom_get_profile(&$_this)
 
 function aom_split_order(&$_this)
 {
-    // check for module license
-	check_module_license("AOM");
-
 	if ($_this->get("split_items")) {
 		$order = $_this->get("order");
         $splitOrder = &func_new("Order");

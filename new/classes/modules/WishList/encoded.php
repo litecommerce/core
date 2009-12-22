@@ -8,7 +8,6 @@
 
     function Module_WishList_action_add(&$_this) // {{{
     {
-	    // check for module license
 
 		if (!$_this->auth->is("logged"))	{
 			 $_this->set("returnUrl","cart.php?target=login&mode=wishlist");

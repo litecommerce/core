@@ -50,9 +50,6 @@ class Module_BankOfAmerica extends Module
 	
 	function init()
 	{
-		if (!check_module_license("BankOfAmerica", true)) {
-			return;
-		}
 
 		parent::init();
 		$pm =& func_new('PaymentMethod');

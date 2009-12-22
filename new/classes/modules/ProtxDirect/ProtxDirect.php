@@ -57,9 +57,6 @@ class Module_ProtxDirect extends Module
 
     function init()
     {
-       if (!check_module_license("ProtxDirect", true)) {
-           return;
-       }
         
         parent::init();
         $pm =& func_new('PaymentMethod');

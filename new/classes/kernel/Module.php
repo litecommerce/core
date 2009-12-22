@@ -170,16 +170,6 @@ class Module extends Base
             $this->failure();
             return;
         }
-        // check module license
-        if (function_exists("check_module_license")) {
-            if ($this->get("isFree")) {
-                $this->license_ok();
-            } elseif (!check_module_license($name, true)) {
-                $this->license_invalid();
-            } else {
-                $this->license_ok();
-            }
-        }
         // execute PHP install code
         @include "classes/modules/$name/install.php";
         // execute SQL install code
@@ -197,32 +187,6 @@ class Module extends Base
         $this->success();
     } // }}}
 
-    function license_ok() // {{{
-    {
-        $this->print_msg("Checking module license .. [<font color=green>OK</font>]<br><br>");
-    } // }}}
-
-    function license_invalid() // {{{
-    {
-        $msg =<<<EOT
-</pre><b>WARNING!</b><br>LiteCommerce license certificate that is currently installed does not permit you to use this module. If you have purchased this module please log into your personal members area at <a href="https://secure.qtmsoft.com">https://secure.qtmsoft.com</a>, go to Licenses section, download updated license certificate and install it using License menu item in the LiteCommerce admin interface.<br><br><pre>
-EOT;
-
-        $this->print_msg("Checking module license .. [<font color=red>NOT FOUND</font>]<br><br>");
-        $this->print_msg($msg);
-    } // }}}
-
-    function isLicenseValid() // {{{
-    {
-		if ($this->xlite->mm->get("safeMode")) {
-            return true;
-		}
-        if ($this->get("isFree")) {
-            return true;
-        }
-        return check_module_license($this->get("name"), true);
-    } // }}}
-    
 // print_msg {{{
     function print_msg($msg)
     {

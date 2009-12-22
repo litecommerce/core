@@ -52,8 +52,6 @@ class Module_CanadaPost extends Module // {{{
 
 	function init() // {{{ 
 	{
-		if(!check_module_license("CanadaPost", true)) return;
-
 		parent::init();
 		$shipping = func_new("Shipping");
 		$shipping->registerShippingModule("cps");

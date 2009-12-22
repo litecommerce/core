@@ -105,7 +105,6 @@ if (isset($_ENV['TMPDIR'])) {
 }
 
 $reportFName = $tmpdir . DIRECTORY_SEPARATOR . REPORT_FILENAME;
-$is_trial = false;
 
  // Predefined common variables {{{
 $templates_repository = "skins_original";
@@ -374,11 +373,7 @@ function ShowNotes(status)
 
 ?>
 
-<?php if ($is_trial) {
-?><FORM method="POST" name="report_form" action="https://secure.qtmsoft.com/service.php?target=install_feedback_report"><?php
-} else {
-?><FORM method="POST" name="report_form" action="https://secure.qtmsoft.com/customer.php?target=customer_info&action=install_feedback_report"><?php
-} ?>
+<FORM method="POST" name="report_form" action="https://secure.qtmsoft.com/customer.php?target=customer_info&action=install_feedback_report">
 <input type="hidden" name="product_type" value="LC">
 
 <table border="0" cellpadding="1" cellspacing="2" align=center width=90%>
@@ -393,25 +388,6 @@ function ShowNotes(status)
 	<tr>
 		<td colspan=2>&nbsp;</td>
 	</tr>
-<?php
-if ($is_trial) {
-?>
-	<tr>
-		<td nowrap width=10%><b>Your contact e-mail:&nbsp;</b></td>
-		<td width=100%><input type="text" name="user_email" size=33 value=""></td>
-	</tr>
-<?php
-} else {
-/*
-?>
-	<tr>
-		<td nowrap width=20%><b>Support Helpdesk account e-mail:&nbsp;</b></td>
-		<td><input type="text" name="user_email" size=33 value=""></td>
-	</tr>
-<?php
-//*/
-}
-?>
 	<tr>
 		<td colspan=2>&nbsp;</td>
 	</tr>
@@ -443,17 +419,7 @@ if ($is_trial) {
 		<td colspan=2>
         <table border="0" cellpadding="1" cellspacing="2" align=center width=100%>
         	<tr>
-<?php
-if ($is_trial) {
-?>
-        		<td align=left><input type="submit" class="DialogMainButton" value="Send report"></td>
-<?php
-} else {
-?>
         		<td align=left><input type="submit" class="DialogMainButton" value="Send report (*)"></td>
-<?php
-}
-?>
         		<td align=right><input type="button" value="Close window" onClick="javascript: window.close();"></td>
         		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
         	</tr>
@@ -461,9 +427,6 @@ if ($is_trial) {
 		</td>
 	</tr>
 <?php if (!$is_original) { ?><SCRIPT language="javascript">showWaitingAlert(false, "report_");</SCRIPT><?php } ?>
-<?php
-if (!$is_trial) {
-?>
 	<tr>
 		<td colspan=2>
 		<b>(*)</b> The report will be sent to our support HelpDesk. A regular support ticket will be created on your behalf. <br>
@@ -471,9 +434,6 @@ if (!$is_trial) {
 		<br><br>
 		</td>
 	</tr>
-<?php
-}
-?>
 </table>
 </FORM>
 </center>
@@ -686,7 +646,7 @@ A:active  {
 if ($current == 0) {
 ?>
 .background {
-	BACKGROUND-COLOR: #FFFFFF; BACKGROUND-IMAGE: URL('<?php echo (isHTTPS() ? 'https://' : 'http://'); ?>www.litecommerce.com/img/logo_lite<?php echo (($is_trial) ? "_trial" : ""); ?>.gif');
+	BACKGROUND-COLOR: #FFFFFF; BACKGROUND-IMAGE: URL('<?php echo (isHTTPS() ? 'https://' : 'http://'); ?>www.litecommerce.com/img/logo_lite.gif');
 }
 <?php
 }else {
@@ -1385,11 +1345,9 @@ function inst_http_request($url_request) // {{{
 
 function make_check_report($check_list) // {{{
 {
-	global $is_trial;
-
 	$phpinfo_disabled = false;
 
-	$report = "LiteCommerce".(($is_trial) ? " trial " : " ")."version 2.2.41\n";
+	$report = "LiteCommerce version 3\n";
 	$report .= "Report time stamp: ". date("d, M Y  H:i"). "\n\n";
 
 	foreach ($check_list as $key=>$item) {
@@ -2297,7 +2255,6 @@ if (!is_null(get_authcode())) { ?>
 } else {
     $error = true;
 ?>
-<P class="install_error">Could not find license agreement file.<br>Aborting installation.</P>
 <?php } ?>
 
 <BR><BR>
@@ -3394,7 +3351,6 @@ The configuration of the server where LiteCommerce will be installed makes sendi
 <?php
 $perms = array(); 
 global $modules_path, $templates_repository, $schemas_repository;
-global $is_trial;
 global $others_directories;
 global $suphp_mode;
 if (substr(PHP_OS, 0, 3) != 'WIN') {
@@ -3406,13 +3362,6 @@ if (substr(PHP_OS, 0, 3) != 'WIN') {
             if (!@is_writable($dir)) $perms[] = "&gt; chmod 0777 " . $dir;
         }
     }
-
-if ($is_trial) {
-	//if (!is_writable($schemas_repository)) $perms[] = "&gt; chmod 0777 " . $schemas_repository;
-	//if (!is_writable($templates_repository)) $perms[] = "&gt; chmod 0777 " . $templates_repository;
-	if (!@is_writable("var")) $perms[] = "&gt; chmod 0777 var";
-	if (!@is_writable("var/run")) $perms[] = "&gt; chmod 0777 var/run";
-}
 
     if ($dh = opendir("bin")) {
         while (($file = readdir($dh)) !== false) {
@@ -3509,7 +3458,7 @@ if ($is_trial) {
 function module_cfg_install_db(&$params) {
 	global $HTTP_SERVER_VARS, $error, $schemas_repository; 
 	global $report_uid, $reportFName;
-	global $modules_path, $is_trial, $templates_repository, $schemas_repository;
+	global $modules_path, $templates_repository, $schemas_repository;
 	$clrNumber = 2;
 
 	if (@file_exists($reportFName)) {
@@ -3540,13 +3489,6 @@ function module_cfg_install_db(&$params) {
                 ftpChmod($ftp_connection, "etc/config.php", $ftpUser, '0644', '0666');
                 ftpChmod($ftp_connection, "LICENSE", $ftpUser, '0644', '0666');
                 ftpChmod($ftp_connection, "cart.html", $ftpUser, '0644', '0666');
-
-                if ($is_trial) {
-                	//ftpChmod($ftp_connection, $schemas_repository, $ftpUser, '0755', '0777');
-                	//ftpChmod($ftp_connection, $templates_repository, $ftpUser, '0755', '0777');
-                	ftpChmod($ftp_connection, "var", $ftpUser, '0755', '0777');
-                	ftpChmod($ftp_connection, "var/run", $ftpUser, '0755', '0777');
-                }
             }
 
 /*			ftp_site($ftp_connection,"CHMOD 0777 schemas");
@@ -3827,7 +3769,7 @@ function module_cfg_install_db_js_next() {
 // Install_db module {{{
 
 function module_install_db(&$params) {
-	global $error, $is_trial;
+	global $error;
 	$clrNumber = 2;
 	//global $installation_auth_code;
 
@@ -3907,48 +3849,6 @@ function module_install_db(&$params) {
 
 		if (!$ck_res)
 			fatal_error("Fatal error encountered while importing database. The possible reason is insufficient access rights to the database.<BR> This unexpected error has canceled the installation. To install the software, please correct the problem and start the installation again.");
-		else
-			@mysql_query("INSERT INTO xlite_config VALUES ('license','','','License',0,'text')");
-
-		if ($is_trial) {
-			// Importing modules
-			global $modules_path;        
-			$modules = opendir($modules_path);
-			while (($dir = readdir($modules)) !== false) {
-				if ($dir{0}!='.' && @is_dir($modules_path."/$dir")) {
-					$manifest = $modules_path."/$dir/MANIFEST";
-					if (@file_exists($manifest)) {
-						$cm_params = parse_ini_file($manifest);
-						$cm_params["enabled"] = 1;
-						$list = array();
-						foreach ($cm_params as $name=>$val) {
-							$list[] = "$name='" . addslashes($val) . "'";
-						}
-						echo "<BR><B>Adding module $dir...</B><BR>\n"; flush();
-						mysql_query("REPLACE INTO xlite_modules SET " . join(',', $list));
-						$sqlFile = $modules_path."/$dir/install.sql";
-						if (@file_exists($sqlFile)) {
-							ob_start();
-							query_upload($sqlFile, null, true);
-							ob_end_clean();
-						}
-					}
-				}
-			}
-			closedir($modules);
-
-			if ($params["demo"] == 1) {
-				ob_start();
-				$ck_res &= query_upload("sql/xlite_modules.sql", null, true);
-				ob_end_clean();
-			}
-
-			if (check_exp_date(true)) {
-				$exp_date = dechex(mktime (0, 0, 0, date("m") + 1, date("d"), date("Y")));
-				$exp_date_md5 = encodeMD5($exp_date);
-				mysql_query("INSERT INTO xlite_config VALUES('tax_code', '$exp_date_md5', '$exp_date', 'Tax', 50, NULL)");
-			}
-		}
 
         // Move all images to the file system XXXXX
         if ( !empty($params["images_to_fs"]) )
@@ -4125,89 +4025,6 @@ if (schemas_list) {
 <BR><?php message("Push the \"Next\" button below to begin the installation");?><BR><BR>
 <?php
  } // }}}
-
-// Install License Certificate module {{{
-
-function module_install_license(&$params) { // {{{
-    global $license_error;
-	$clrNumber = 2;
-
-    if (isset($license_error)) {
-?>
-<P><FONT color="red">&gt;&gt; Unable to install License Certificate: <?php print $license_error ?></FONT></P>
-<?php
-    } else {
-        // create/update admin account from the previous step
-        module_create_admin($params);
-    }
-?>
-<P align="center"><FONT style="COLOR: darkgreen; FONT-WEIGHT: bold;">Installing License Certificate</FONT></P>
-
-<P>To make your LiteCommerce software operational, you must supply it with a valid License Certificate.</P>
-
-<P>License Certificate is a text file with a digital signature which confirms your rights for the license. Certificate is protected with strong industry standard cryptography methods and is issued by our company during the software purchase.</P>
-
-<P>You can download your License Certificate from LiteCommerce member area at <a href="https://secure.qtmsoft.com" style="COLOR: #000055; TEXT-DECORATION: underline;">https://secure.qtmsoft.com</a> where you have downloaded your copy of LiteCommerce software. Paste the contents of the License Certificate file in the text area below or provide the path to the file in the 'Select license file' field.</P>
-
-<P><B>Note:</B> Both development license certificates and commercial license certificates can be used here. Please consult LiteCommerce software user reference manual for the explanation of our licensing policy and details on different types of license certificates and their limitations.</P>
-
-<P>
-Select license file: <input type="file" name="license_file">
-</P>
-<P>
-Or copy/paste your license certificate text below:<br>
-<textarea name="license" cols="82" rows="15" style="FONT-FAMILY: 'Courier New', Courier; FONT-SIZE: 12px;"></textarea>
-</P>
-
-<P align="center"><B><FONT class="WelcomeTitle">Push the "Next" button below to install License Certificate</FONT></B></P>
-
-<br>
-
-<?php 
-    return false;
-} // }}}
-
-function module_install_license_js_next() { // {{{
-?>
-	function step_next() {
-		if (document.ifrm.license_file.value != "" || document.ifrm.license.value != "") {
-			return true;
-		} else if (confirm("If you do not upload the valid License Cerificate, the Customer Zone of your store will not be available.\n\nAre you sure you want to continue?")) {
-            return true;
-		}
-		return false;
-	}
-<?php
-} // }}}
-
-function module_install_license_post_func() { // {{{
-    global $current, $license_error;
-    $license = "";
-    if (@is_uploaded_file($_FILES["license_file"]["tmp_name"])) {
-        $license = @file_get_contents($_FILES["license_file"]["tmp_name"]);
-    } elseif (!empty($_POST["license"])) {
-        $license = trim($_POST["license"]);
-    } else {
-        // attempt to create empty fake LICENSE file (for installing license
-        // from admin zone)
-        @touch("LICENSE");
-        @chmod("LICENSE", 0666);
-        return;
-    }
-    if (strlen($license) < 300 || !strpos($license, "LiteCommerce License Certificate. DO NOT EDIT.")) {
-        $license_error = "Invalid license file";
-    } elseif (!$fd = @fopen("LICENSE", "w")) {
-        $license_error = "Permission denied";
-    } else {
-        fwrite($fd, $license);
-        fclose($fd);
-        @chmod("LICENSE", 0666);
-        return;
-    }
-    $current--;
-} // }}}
-
-// }}}
 
 // Install_dirs module {{{
 function module_install_dirs(&$params) {
@@ -4518,11 +4335,11 @@ function module_create_admin(&$params) {
 // Install_done module {{{
 
 function module_install_done(&$params) {
-	global $error, $templates_repository, $config_file, $license_file, $is_trial;
+	global $error, $templates_repository, $config_file;
 	$clrNumber = 2;
 
     // if authcode IS NULL, then this is probably the first install, skip
-    if ($is_trial || isset($params["auth_code"]) && isset($params["login"]) && isset($params["password"]) && isset($params["confirm_password"]) && strlen($params["login"].$params["password"].$params["confirm_password"]) > 0) {
+    if (isset($params["auth_code"]) && isset($params["login"]) && isset($params["password"]) && isset($params["confirm_password"]) && strlen($params["login"].$params["password"].$params["confirm_password"]) > 0) {
         // create/update admin account from the previous step
         module_create_admin($params);
     }

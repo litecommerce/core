@@ -51,10 +51,6 @@ class Module_PHPCyberSource extends Module // {{{
 	
 	function init() // {{{ 
     {
-		// license check
-		if (!check_module_license("PHPCyberSource", true)) {
-			return;
-		}
 
         parent::init();
 

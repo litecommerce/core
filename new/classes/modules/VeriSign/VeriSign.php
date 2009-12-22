@@ -55,9 +55,6 @@ class Module_VeriSign extends Module
 
     function init()
     {
-       if (!check_module_license("VeriSign", true)) {
-           return;
-       }
         
         parent::init();
         $pm =& func_new('PaymentMethod');

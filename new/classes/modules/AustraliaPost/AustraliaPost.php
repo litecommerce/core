@@ -52,9 +52,6 @@ class Module_AustraliaPost extends Module // {{{
 
 	function init() // {{{ 
 	{
-    	// license check
-		if(!check_module_license("AustraliaPost", true)) return;
-
 		parent::init();
 		$shipping = func_new("Shipping");
 		$shipping->registerShippingModule("aupost");

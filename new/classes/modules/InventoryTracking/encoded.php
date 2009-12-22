@@ -39,9 +39,6 @@
 
 function func_update_inventory(&$order, &$inventory, &$items)
 {
-    // license check
-    check_module_license("InventoryTracking");
-    
     $amount = $inventory->get("amount");
     // check inventory
     if ($amount <= 0) { // shouldn't be < 0 ..
@@ -76,9 +73,6 @@ function func_update_inventory(&$order, &$inventory, &$items)
 
 function func_change_inventory(&$order, $status, &$inventory, &$item)
 {
-    // license check
-    check_module_license("InventoryTracking");
-
     $amount = $status ? $inventory->get("amount") - $item->get("amount") : $inventory->get("amount") + $item->get("amount");
     $inventory->set("amount", $amount);
     $inventory->update();

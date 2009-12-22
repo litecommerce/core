@@ -52,8 +52,6 @@ class Module_PayFlowLink extends Module
 
     function init()
     {
-        if(!check_module_license("PayFlowLink",true)) return;
-
         parent::init();
 
         $pm =& func_new("PaymentMethod");

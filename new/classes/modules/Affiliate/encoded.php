@@ -39,9 +39,6 @@
 
 function func_Affiliate_charge(&$payment, &$order) // {{{
 {
-    // check for module license
-    check_module_license("Affiliate");
-
     $commissions = 0;
     // process current partner
     $planCommission =& func_new("PlanCommission");
@@ -87,9 +84,6 @@ function func_Affiliate_charge(&$payment, &$order) // {{{
 
 function func_Affiliate_calc_order_commissions(&$planCommission) // {{{
 {
-    // check for module license
-    check_module_license("Affiliate");
-
     $orderCommissions = 0;
     foreach ($planCommission->get("order.items") as $item) {
         // search for iitem product commission
@@ -117,9 +111,6 @@ function func_Affiliate_calc_order_commissions(&$planCommission) // {{{
 
 function func_Affiliate_calc_commission_rate($pc, $item) // {{{
 {
-    // check for module license
-    check_module_license("Affiliate");
-
     $result = 0;
     if ($pc->get("commission_type") == "$") {
         // absolute commission type, return value

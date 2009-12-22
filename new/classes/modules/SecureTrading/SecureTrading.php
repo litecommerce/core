@@ -55,9 +55,6 @@ class Module_SecureTrading extends Module
 	}
 
 	function init() {
-        if (!check_module_license("SecureTrading", true)) {
-            return;
-        }
 
 		parent::init();
 		$pm = &func_new("PaymentMethod");

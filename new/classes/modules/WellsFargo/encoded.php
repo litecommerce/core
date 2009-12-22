@@ -1,9 +1,6 @@
 <?php
     function func_PaymentMethod_wells_fargo_cc_handleRequest(&$_this, &$cart)
-    {    
-        // license check
-        check_module_license("WellsFargo");
-		
+    {
         $status = $cart->get("status");
 		
 		if ($status != "I" && $status != "F") {

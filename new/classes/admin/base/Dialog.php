@@ -45,16 +45,6 @@
 */
 class Admin_Dialog extends Dialog
 {
-    function getLicenseWarningParam()
-    {
-        return !empty($GLOBALS["license_warning_param"]) ? $GLOBALS["license_warning_param"] : null;
-    }
-
-    function getLicenseWarning()
-    {
-        return !empty($GLOBALS["license_warning"]) ? $GLOBALS["license_warning"] : null;
-    }
-
     function getCustomerZoneWarning()
     {
         if ($this->get("xlite.config.General.shop_closed") == "Y")

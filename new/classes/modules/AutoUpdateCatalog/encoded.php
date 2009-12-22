@@ -39,8 +39,6 @@
 
 function func_categories_update(&$dialog, $category_id) // {{{
 {
-    // license check
-    check_module_license("AutoUpdateCatalog");
     $catalog =& $dialog->get("catalog");
     // switch catalog to customer's zone
     $catalog->goCustomer();
@@ -64,8 +62,6 @@ function func_categories_update(&$dialog, $category_id) // {{{
 
 function func_category_add(&$dialog, $category_id) // {{{
 {
-    // license check
-    check_module_license("AutoUpdateCatalog");
     $catalog =& $dialog->get("catalog");
     // switch catalog to customer's zone
     $catalog->goCustomer();
@@ -79,8 +75,6 @@ function func_category_add(&$dialog, $category_id) // {{{
 
 function func_categories_delete(&$dialog, $category_id, $deleteParents = true) // {{{
 {
-    // license check
-    check_module_license("AutoUpdateCatalog");
     $catalog =& $dialog->get("catalog");
     // switch catalog to customer's zone
     $catalog->goCustomer();
@@ -108,9 +102,6 @@ function func_categories_delete(&$dialog, $category_id, $deleteParents = true) /
 
 function func_category_update(&$dialog, $category_id, $product_id=null, $callback=false, $ignoreAlreadyGenerated=false) // {{{
 {
-    // license check
-    check_module_license("AutoUpdateCatalog");
-
     if ($ignoreAlreadyGenerated) {
 		$dialog->xlite->session->set("categoriesAlreadyGenerated", null);
 		$dialog->xlite->session->set("productsAlreadyGenerated", null);
@@ -146,8 +137,6 @@ function func_category_update(&$dialog, $category_id, $product_id=null, $callbac
 
 function func_product_update(&$dialog, $product_id, $category_id, $callback=false) // {{{
 {
-    // license check
-    check_module_license("AutoUpdateCatalog");
     $catalog =& $dialog->get("catalog");
     // switch catalog to customer's zone
     $catalog->goCustomer();
@@ -177,8 +166,6 @@ function func_product_update(&$dialog, $product_id, $category_id, $callback=fals
 
 function func_product_delete(&$dialog, $product_id, $category_id, $callback=false) // {{{
 {
-    // license check
-    check_module_license("AutoUpdateCatalog");
     $catalog =& $dialog->get("catalog");
     // switch catalog to customer's zone
     $catalog->goCustomer();

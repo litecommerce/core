@@ -173,10 +173,10 @@ $location = "skins/admin/en/location.tpl";
 if (!is_template_patched($location, "Affiliate"))
 {
     $find_str = <<<EOT
-<span IF="target=#license#">&nbsp;::&nbsp;<a href="admin.php?target=license" class="NavigationPath">License</a></span>
+
 EOT;
     $replace_str = <<<EOT
-<span IF="target=#license#">&nbsp;::&nbsp;<a href="admin.php?target=license" class="NavigationPath">License</a></span>
+
 <widget module="Affiliate" template="modules/Affiliate/location.tpl">
 EOT;
     patch_template($location, null, $find_str, $replace_str);

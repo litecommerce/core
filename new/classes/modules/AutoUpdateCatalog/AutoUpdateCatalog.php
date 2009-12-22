@@ -48,8 +48,6 @@ class Module_AutoUpdateCatalog extends Module
 
     function init()
     {
-        if(!check_module_license("AutoUpdateCatalog",true)) return;
-
         parent::init();
 
         $this->addDecorator("Product", "Module_AutoUpdateCatalog_Product");

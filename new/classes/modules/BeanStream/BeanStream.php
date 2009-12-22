@@ -57,8 +57,6 @@ class Module_BeanStream extends Module
 
     function init()
     {
-		if(!check_module_license("BeanStream",true)) return;
-
         parent::init();
         $pm =& func_new("PaymentMethod");
         $pm->registerMethod("beanstream_cc");

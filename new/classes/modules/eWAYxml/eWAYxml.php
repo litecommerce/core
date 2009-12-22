@@ -50,9 +50,6 @@ class Module_eWAYxml extends Module
 
 	function init()
 	{
-   		if (!check_module_license("eWAYxml", true)) {
-	   		return;
-   		}
 	
 		parent::init();
 	

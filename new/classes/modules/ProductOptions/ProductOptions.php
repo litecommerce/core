@@ -51,8 +51,6 @@ class Module_ProductOptions extends Module
 
     function init()
     {
-        if(!check_module_license("ProductOptions", true)) return;
-
         parent::init();
 
         // add common class decorators

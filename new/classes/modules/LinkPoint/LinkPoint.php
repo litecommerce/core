@@ -50,10 +50,6 @@ class Module_LinkPoint extends Module
 
     function init()
     {
-       if (!check_module_license("LinkPoint", true)) {
-           return;
-       }
-        
         parent::init();
         $pm =& func_new('PaymentMethod');
         $pm->registerMethod("linkpoint_cc");

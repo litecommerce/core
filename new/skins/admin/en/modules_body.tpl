@@ -49,15 +49,11 @@
 					</table>
 				</td>
 
-				<td align=center><input id="active_module_{widget.key}" type="checkbox" name="active_modules[]" value="{module.module_id}" checked="{module.enabled&module.licenseValid}" onClick="javascript:this.blur();checkUpdated('{widget.key}')"><input type="hidden" name="installed_modules[]" value="{module.module_id}"></td>
+				<td align=center><input id="active_module_{widget.key}" type="checkbox" name="active_modules[]" value="{module.module_id}" checked="{module.enabled}" onClick="javascript:this.blur();checkUpdated('{widget.key}')"><input type="hidden" name="installed_modules[]" value="{module.module_id}"></td>
 				<td>{module.description}</td>
 				<td align=center>{module.version}<widget module="LiveUpdating" template="modules/LiveUpdating/module_version.tpl" moduleValue="{module}"></td>
 				<td><input type="button" value=" Uninstall " onClick="uninstallModule(modules_form_{widget.key}, '{module.module_id}', '{addSlashes(module.name)}')"></td>
 			</tr>    
-
-			<tr IF="module.enabled&!module.licenseValid">
-				<td colspan=4 class=ErrorMessage>&gt;&gt;Cannot initialize module {module.name:h}: the module license is invalid</td>
-			</tr>
 
 			<tr IF="module.brokenDependencies">
 				<td colspan=4 class=ErrorMessage valign=top>&gt;&gt;Cannot initialize module {module.name:h}: dependency modules are not available<br>{foreach:module.brokenDependencies,idx,dep}<li> {dep:h}<br>{end:}</td>

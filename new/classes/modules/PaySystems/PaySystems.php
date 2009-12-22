@@ -50,9 +50,6 @@ class Module_PaySystems extends Module
 
     function init()
     {
-        if (!check_module_license("PaySystems", true)) {
-            return;
-        }
         
         parent::init();
         $pm =& func_new ('PaymentMethod');

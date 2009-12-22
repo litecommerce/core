@@ -51,7 +51,7 @@ class Admin_Dialog_main extends Admin_Dialog
     function handleRequest()
     {
         if ($this->auth->is("logged")) {
-            if ($this->auth->get("profile.billing_firstname") == "" && !isset($GLOBALS["license_warning"])) {
+            if ($this->auth->get("profile.billing_firstname") == "") {
                 // switch first-time logged admin to edit profile page
                 $this->redirect("admin.php?target=profile&profile_id=".$this->auth->get("profile.profile_id"));
                 return;

@@ -50,8 +50,6 @@ class Module_UPSOnlineTools extends Module
 
     function init()
 	{
-		if(!check_module_license("UPSOnlineTools",true)) return;
-
         parent::init();
 
         if ($this->disable_ups()) {

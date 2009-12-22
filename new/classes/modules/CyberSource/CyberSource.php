@@ -54,9 +54,6 @@ class Module_CyberSource extends Module
 
     function init()
     {
-        if (!check_module_license("CyberSource", true)) {
-            return;
-        }
 
         parent::init();
 

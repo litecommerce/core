@@ -45,11 +45,6 @@ class Module_FlyoutCategories extends Module
 
     function init()
     {
-    	// check for module license
-    	if (!check_module_license("FlyoutCategories", true)) {
-        	return;
-       	}
-
         parent::init();
 
 		$image = func_get_instance("Image");

@@ -2,9 +2,6 @@
 
 function PaymentMethod_cybersource_process(&$_this, &$cart, $debug = false)
 {
-	// license check
-	check_module_license("PHPCyberSource");
- 
 	if (PHP_OS == "FreeBSD")
 		return FreeBSD_cybersource_process($_this, &$cart);
 
@@ -34,9 +31,6 @@ function PaymentMethod_cybersource_process(&$_this, &$cart, $debug = false)
 
 function FreeBSD_cybersource_process(&$_this, &$cart) 
 {
-	// license check
-	check_module_license("PHPCyberSource");
-	
 	$order 	= $cart->get("properties");
 	$profile = $cart->get("profile");
     $params = $_this->get("params");    

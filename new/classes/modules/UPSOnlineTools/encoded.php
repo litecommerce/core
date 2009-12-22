@@ -53,9 +53,6 @@ define("PACKING_EXECUTION_TIME", 3600);
 
 function &UPSOnlineTools_getRates(&$_this, $order)
 {
-// license check
-check_module_license("UPSOnlineTools");
-
     // original code of Shipping_ups::getRates()
 
 	// drop error semapfores
@@ -170,9 +167,6 @@ check_module_license("UPSOnlineTools");
 
 function &UPSOnlineTools_parseResponse(&$_this, $response, $destination, $originCountry)
 {
-    // license check
-	check_module_license("UPSOnlineTools");
-
     // original code
     $_this->error = "";
     $_this->xmlError = false;
@@ -232,9 +226,6 @@ function &UPSOnlineTools_parseResponse(&$_this, $response, $destination, $origin
 
 function UPSOnlineTools_getNameUPS($name)
 {
-	// license check
-	check_module_license("UPSOnlineTools");
-
 	if (in_array($name, array("UPS Express Plus", "UPS Today Express Saver")))
 		return $name;
 
@@ -261,9 +252,6 @@ function UPSOnlineTools_getNameUPS($name)
 
 function UPSOnlineTools_setAccount(&$_this, $userinfo, &$error)
 {
-	// license check
-	check_module_license("UPSOnlineTools");
-
 	$devlicense = $_this->config->get("UPSOnlineTools.devlicense");
 	if ($_this->getLicense($ups_licensetext)) return 2;
 		$version = $_this->xlite->get("config.Version.version");
@@ -401,9 +389,6 @@ function UPSOnlineTools_getKey($pos, $length)
 
 function UPSOnlineTools_checkAddress(&$_this, $shipping_country, $shipping_state, $shipping_custom_state, $shipping_city, $shipping_zipcode, &$av_result, &$request_result)
 {
-	// license check
-	check_module_license("UPSOnlineTools");
-
 	$options = $_this->getOptions();
 	if ($options->get("av_status") == "Y" && $shipping_country == "US") {
 		if ($shipping_state > 0) {
@@ -493,11 +478,6 @@ EOT;
 function UPSOnlineTools_getOptions(&$_this)
 {
 	static $options = null;
-
-	// license check
-	check_module_license("UPSOnlineTools");
-
-
 	if (!is_null($options)) {
 		return $options;
 	}
@@ -514,9 +494,6 @@ function UPSOnlineTools_getOptions(&$_this)
 
 function UPSOnlineTools_setConfig(&$_this, $name, $value)
 {
-	// license check
-	check_module_license("UPSOnlineTools");
-
 	if (in_array($name, array('UPS_username', 'UPS_password', 'UPS_accesskey')))
 		$value = UPSOnlineTools_encode($value);
 
@@ -534,9 +511,6 @@ function UPSOnlineTools__encode_char($c)
     
 function UPSOnlineTools_encode($s)
 {
-	// license check
-	check_module_license("UPSOnlineTools");
-
 	$enc = rand(1,255);
 	$result = UPSOnlineTools__encode_char($enc);
 	$enc ^= CRYPT_SALT;
@@ -558,9 +532,6 @@ function UPSOnlineTools__decode_char($s, $i)
 
 function UPSOnlineTools_decode($s)
 {
-	// license check
-	check_module_license("UPSOnlineTools");
-
 	$enc = CRYPT_SALT ^ UPSOnlineTools__decode_char($s, 0);
 	$result = "";
 	for ($i = 2; $i < strlen($s); $i+=2) { # $i=2 to skip salt
@@ -633,9 +604,6 @@ function UPSOnlineTools_sort_by_square($a, $b)
 
 function UPSOnlineTools_orientItems($width, $length, $height, &$items)
 {
-	// license check
-	check_module_license("UPSOnlineTools");
-
 	$refine_items = array();
 	$skipped_items = array();
 
@@ -766,9 +734,6 @@ function UPSOnlineTools_optimize_subspaces(&$subspaces, $optimize_method)
 
 function UPSOnlineTools_combine_subspaces(&$subspaces)
 {
-	// license check
-	check_module_license("UPSOnlineTools");
-
 	$h = $subspaces;
 	$v = $subspaces;
 
@@ -812,9 +777,6 @@ function UPSOnlineTools_combine_subspaces(&$subspaces)
 
 function UPSOnlineTools_divide_subspaces_h(&$subspaces)
 {
-	// license check
-	check_module_license("UPSOnlineTools");
-
 	$is_divide = false;
 
 	do {
@@ -933,9 +895,6 @@ function UPSOnlineTools_divide_subspaces_h(&$subspaces)
 // divide all subspaces by vertical 
 function UPSOnlineTools_divide_subspaces_v(&$subspaces)
 {
-	// license check
-	check_module_license("UPSOnlineTools");
-
     $is_divide = false;
 
     do {
@@ -1079,9 +1038,6 @@ function UPSOnlineTools_combine_similar_subspaces_v(&$subspaces)
 
 function UPSOnlineTools_combine_horizontal(&$subspaces)
 {
-	// license check
-	check_module_license("UPSOnlineTools");
-
 	$is_combine = false;
 
 	$ignore = array();
@@ -1148,9 +1104,6 @@ function UPSOnlineTools_combine_horizontal(&$subspaces)
 
 function UPSOnlineTools_combine_vertical(&$subspaces)
 {
-	// license check
-	check_module_license("UPSOnlineTools");
-
 	$ignore = array();
 	$combined_spaces = array();
 
@@ -1220,9 +1173,6 @@ function UPSOnlineTools_combine_vertical(&$subspaces)
 //function func_weight_convert($weight, $from_unit="lbs", $to_unit="kg", $precision=null)
 function UPSOnlineTools_convertWeight($weight, $from_unit="lbs", $to_unit="kg", $precision=null)
 {
-	// license check
-	check_module_license("UPSOnlineTools");
-
 	$from_unit = strtolower($from_unit);
 	$to_unit = strtolower($to_unit);
 
@@ -1253,9 +1203,6 @@ function UPSOnlineTools_convertWeight($weight, $from_unit="lbs", $to_unit="kg", 
 
 function UPSOnlineTools_packItems($width, $length, $height, $weight, &$items, $optimize_method)
 {
-	// license check
-	check_module_license("UPSOnlineTools");
-
 	$index = 1;
 	$last_count = count($items);
 
@@ -1310,9 +1257,6 @@ function UPSOnlineTools_packItems($width, $length, $height, $weight, &$items, $o
 
 function UPSOnlineTools_solve_binpack($width, $length, $height, $weight, &$items)
 {
-	// license check
-	check_module_license("UPSOnlineTools");
-
 	$back_items = $items;
 
 	$_max_execution_time = ini_get("max_execution_time");
@@ -1354,9 +1298,6 @@ function UPSOnlineTools_solve_binpack($width, $length, $height, $weight, &$items
 // Solver's classes hiden methods
 function UPSOnlineTools_placeBox(&$_this, $_width, $_length)
 {
-	// license check
-	check_module_license("UPSOnlineTools");
-
 	if (!$_this->isPlaceable($_width, $_length))
 		return false;
 
@@ -1388,9 +1329,6 @@ function UPSOnlineTools_placeBox(&$_this, $_width, $_length)
 
 function UPSOnlineTools_progressive_solve(&$_this, &$items)
 {
-	// license check
-	check_module_license("UPSOnlineTools");
-
 	$use_overlaped = true;
 	do {
 		$level = $_this->getNextLevel($use_overlaped);
@@ -1434,9 +1372,6 @@ function UPSOnlineTools_progressive_solve(&$_this, &$items)
 
 function UPSOnlineTools_progressive_placeItem(&$_this, &$level, &$items, $item_weight_limit)
 {
-	// license check
-	check_module_license("UPSOnlineTools");
-
 	// sorting...
 	$avg_height = ceil($_this->height * 0.5);
 
@@ -1583,9 +1518,6 @@ function UPSOnlineTools_progressive_placeItem(&$_this, &$level, &$items, $item_w
 
 function UPSOnlineTools_getNextLevel(&$_this, $overlaped=true)
 {
-	// license check
-	check_module_license("UPSOnlineTools");
-
 	if ($_this->getLevelsCount() <= 0) {
 		$level =& func_new("ContainerLevel");
 		$level->init(0, $_this->width, $_this->length, $_this->height);
@@ -1661,9 +1593,6 @@ function UPSOnlineTools_getLayoutSkinPath()
 
 function UPSOnlineTools_displayLevel_gdlib($width, $length, $items, $dirt_regions, $_width)
 {
-	// license check
-	check_module_license("UPSOnlineTools");
-
     $scale = ($_width < $width) ? $width / $_width : $_width / $width;
     $_length = $length * $scale;
 
@@ -1725,9 +1654,6 @@ function UPSOnlineTools_displayLevel_gdlib($width, $length, $items, $dirt_region
 
 function UPSOnlineTools_displayContainer_div($_this, $container, $_left, $_top, $_width, $_height)
 {
-	// license check
-	check_module_license("UPSOnlineTools");
-
 	if (!isset($container["levels"]) || count($container["levels"]) <= 0 || $_this->xlite->config->get("UPSOnlineTools.display_gdlib")) {
 		return;
 	}
@@ -1770,9 +1696,6 @@ function UPSOnlineTools_displayContainer_div($_this, $container, $_left, $_top, 
 
 function UPSOnlineTools_displayLevel_div($width, $length, $items, $dirt_regions, $_width, $level_id)
 {
-	// license check
-	check_module_license("UPSOnlineTools");
-
 	// get layout path
 	$layout_path = UPSOnlineTools_getLayoutSkinPath();
 

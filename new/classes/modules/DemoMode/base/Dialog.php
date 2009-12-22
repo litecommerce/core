@@ -71,7 +71,6 @@ class Module_DemoMode_Dialog extends Dialog
             $target == "wysiwyg" && $action != "default" ||
             $target == "import_catalog" && $action == "import_products" && isset($_REQUEST["delete_products"]) ||
             $target == "profile" && $action == "delete" ||
-            $target == "license" && $action == "setup" ||
             $target == "db" && $action != "default" ||
 			$target == "image_files" && $action != "default" ||
 			$target == "image_edit" && $action != "default" ||

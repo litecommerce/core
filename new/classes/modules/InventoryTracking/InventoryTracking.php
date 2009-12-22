@@ -49,7 +49,6 @@ class Module_InventoryTracking extends Module
 	
     function init()
     {
-        if(!check_module_license("InventoryTracking", true)) return;
         parent::init();
         
         $this->addDecorator("Product",   "Module_InventoryTracking_Product");

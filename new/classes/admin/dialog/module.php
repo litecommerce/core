@@ -50,36 +50,6 @@ class Admin_Dialog_module extends Admin_Dialog
 {
     var $params = array("target", "page");
     
-    function _InvalidModule()
-    {
-		$this->set("target", "modules");
-		$this->set("page", null);
-		$this->redirect();
-		exit;
-    }
-
-    function init()
-    {
-    	if (!isset($_REQUEST["page"])) {
-    		$this->_InvalidModule();
-    	}
-
-    	$activeModules = $this->xlite->mm->getActiveModules();
-    	if (!isset($activeModules[$_REQUEST["page"]]) || (isset($activeModules[$_REQUEST["page"]]) && !$activeModules[$_REQUEST["page"]])) {
-    		$this->_InvalidModule();
-    	}
-    	$modules =& $this->xlite->mm->getModules();
-    	foreach ($modules as $module) {
-    		if ($module->get("name") == $_REQUEST["page"]) {
-    			if (!$module->isLicenseValid()) {
-					$this->_InvalidModule();
-				}
-    		}
-    	}
-
-        parent::init(); 
-    }
-
     function &getOptions()
     {
         $config =& func_new("Config"); 

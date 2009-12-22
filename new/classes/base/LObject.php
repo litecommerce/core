@@ -57,24 +57,6 @@ class LObject extends Object
 
 	function &get($name)
     {
-    	static $license_check = "1097446386679cf7eb240a0b064335fb";
-		if (!function_exists("license_check")) {
-			close_shop("license_invalid");
-		}
-
-        if (function_exists('license_check')) {
-            foreach (license_check() as $lname => $lvalue) {
-            	$skippedNames = array("signature");
-            	if (!in_array($lname, $skippedNames)) {
-					$this->$lname = $lvalue;
-				}
-            }
-        }
-
-        if ($name == "license") {
-        	return $license_check;
-        }
-
         if (strpos($name, '.')) {
             $obj =& $this;
             foreach (explode('.', $name) as $n) {

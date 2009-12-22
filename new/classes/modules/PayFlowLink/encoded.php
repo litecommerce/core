@@ -7,10 +7,7 @@
 */
 
 function PaymentMethod_PayFlowLink_handleRequest(&$_this, &$cart)
-{    
-    // license check
-    check_module_license("PayFlowLink");
-
+{
     $params = $_this->params;
     $error = null;
 

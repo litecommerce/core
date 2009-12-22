@@ -51,9 +51,6 @@ class Module_GiftCertificates extends Module
 
     function init()
     {
-        if (!check_module_license("GiftCertificates", true)) {
-            return;
-        }
 
         parent::init();
 

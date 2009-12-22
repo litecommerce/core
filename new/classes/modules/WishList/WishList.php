@@ -50,8 +50,6 @@ class Module_WishList extends Module
 	
     function init()
     {
-		if(!check_module_license("WishList", true)) return;
-		
         parent::init();
 
 		$this->addDecorator("Dialog", "WishList_Dialog");

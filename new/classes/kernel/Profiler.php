@@ -75,8 +75,7 @@ class Profiler extends Object
         if (!$this->enabled) return;
 
         $this->stop_time = getmicrotime();
-        global $licenseTime, $parserTime;
-        $this->licenseTime = $licenseTime;
+        global $parserTime;
         $this->parserTime = $parserTime;
         $this->includedFilesCount = count(get_included_files());
         $this->includedFiles = array();
@@ -144,7 +143,6 @@ foreach ($this->queries as $query => $count) {
 PHP parser time: {profiler.parserTime} sec.,
 Included files: {profiler.includedFilesCount},
 Included files total size: {profiler.includedFilesTotal},
-License check time: {profiler.licenseTime} sec.,
 Database connect time: {profiler.dbConnectTime} sec.
 <br>
 <b>XLite init time:</b><br>

@@ -2,9 +2,6 @@
 
 function PaymentMethod_securetrading_handleRequest(&$pm, &$order, $debug = false)
 {
-    // license check
-    check_module_license("SecureTrading");
-
 	$order->xlite->logger->log("SecureTrading: STResult=" . $_REQUEST["stresult"] . ", RemoteAddr=" . $_SERVER['REMOTE_ADDR']);
 
 	$order->set("details.error", null);

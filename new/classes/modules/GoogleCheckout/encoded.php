@@ -27,9 +27,6 @@ function GoogleCheckout_text_encryption($text)
 
 function GoogleCheckout_encode_utf8_string($str)
 {
-	// check for module license
-	check_module_license("GoogleCheckout");
-
 	$value = strval($str);
 	$value = str_replace("\n", " ", $value);
 	$value = str_replace("\r", " ", $value);
@@ -52,9 +49,6 @@ function GoogleCheckout_encode_utf8_string($str)
 
 function GoogleCheckout_parseResponse($_this, $response)
 {
-	// check for module license
-	check_module_license("GoogleCheckout");
-
 	preg_match("/<.*[^>].*>/msx", $response, $res);
 	$response = $res[0];
 
@@ -75,9 +69,6 @@ function GoogleCheckout_parseResponse($_this, $response)
 
 function GoogleCheckout_sendRequest(&$_this, &$payment, &$data)
 {
-	// check for module license
-	check_module_license("GoogleCheckout");
-
 	$auth = base64_encode($payment["merchant_id"].":".$payment["merchant_key"]);
 	$h = array(
 		"Authorization" => "Basic ".$auth,
@@ -139,9 +130,6 @@ function GoogleCheckout_getXML_Object()
 
 function GoogleCheckout_sendGoogleCheckoutRequest(&$_this, &$order)
 {
-	// check for module license
-	check_module_license("GoogleCheckout");
-
 	$params = $_this->get("params");
 
 	$session_id = base64_encode(strrev($_this->session->getID()));
@@ -161,9 +149,6 @@ function GoogleCheckout_sendGoogleCheckoutRequest(&$_this, &$order)
 
 function GoogleCheckout_getGoogleCheckoutXML_Calculation(&$_this, $address, $shipping, $discounts)
 {
-	// check for module license
-	check_module_license("GoogleCheckout");
-
 	// switch to customer area
 	$_old_admin_zone = $_this->xlite->get("adminZone");
 	$_this->xlite->set("adminZone", false);
@@ -471,9 +456,6 @@ function GoogleCheckout_getShippingClassesSQL_STRING()
 
 function GoogleCheckout_new_order_notification(&$_this, $xmlData)
 {
-	// check for module license
-	check_module_license("GoogleCheckout");
-
 	if ($_this->getXMLDataByPath($xmlData, "NEW-ORDER-NOTIFICATION/FINANCIAL-ORDER-STATE" != "REVIEWING")) {
 		return false;
 	}
@@ -676,9 +658,6 @@ if ($is_new_profile) {
 
 function GoogleCheckout_risk_information_notification(&$_this, $xmlData)
 {
-	// check for module license
-	check_module_license("GoogleCheckout");
-
 	$xmlData = $_this->getXMLDataByPath($xmlData, "RISK-INFORMATION-NOTIFICATION");
 	$googleId = $xmlData["GOOGLE-ORDER-NUMBER"];
 
@@ -719,9 +698,6 @@ function GoogleCheckout_risk_information_notification(&$_this, $xmlData)
 
 function GoogleCheckout_order_state_change_notification(&$_this, $xmlData)
 {
-	// check for module license
-	check_module_license("GoogleCheckout");
-
 	$xmlData = $_this->getXMLDataByPath($xmlData, "ORDER-STATE-CHANGE-NOTIFICATION");
 	$googleId = $xmlData["GOOGLE-ORDER-NUMBER"];
 
@@ -779,9 +755,6 @@ function GoogleCheckout_order_state_change_notification(&$_this, $xmlData)
 
 function GoogleCheckout_order_charge_amount_notification(&$_this, $xmlData)
 {
-	// check for module license
-	check_module_license("GoogleCheckout");
-
 	$xmlData = $_this->getXMLDataByPath($xmlData, "CHARGE-AMOUNT-NOTIFICATION");
 	$googleId = $xmlData["GOOGLE-ORDER-NUMBER"];
 
@@ -799,9 +772,6 @@ function GoogleCheckout_order_charge_amount_notification(&$_this, $xmlData)
 
 function GoogleCheckout_order_refund_amount_notification(&$_this, $xmlData)
 {
-	// check for module license
-	check_module_license("GoogleCheckout");
-
 	$xmlData = $_this->getXMLDataByPath($xmlData, "REFUND-AMOUNT-NOTIFICATION");
 	$googleId = $xmlData["GOOGLE-ORDER-NUMBER"];
 
@@ -831,9 +801,6 @@ function GoogleCheckout_order_refund_amount_notification(&$_this, $xmlData)
 
 function GoogleCheckout_OrderCancel(&$_this, $googleId, $_reason, $_comment)
 {
-	// check for module license
-	check_module_license("GoogleCheckout");
-
 	$params = $_this->get("params");
 
 	$reason = GoogleCheckout_encode_utf8_string($_reason);
@@ -856,9 +823,6 @@ EOT;
 
 function GoogleCheckout_OrderCharge(&$_this, $googleId, $_amount)
 {
-	// check for module license
-	check_module_license("GoogleCheckout");
-
 	$params = $_this->get("params");
 	$currency = $params["currency"];
 
@@ -878,9 +842,6 @@ EOT;
 
 function GoogleCheckout_OrderSendMessage(&$_this, $googleId, $_message, $_send_email)
 {
-	// check for module license
-	check_module_license("GoogleCheckout");
-
 	$params = $_this->get("params");
 
 	$send_email = (($_send_email == true) ? "true" : "false");
@@ -902,9 +863,6 @@ EOT;
 
 function GoogleCheckout_OrderArchive(&$_this, $googleId)
 {
-	// check for module license
-	check_module_license("GoogleCheckout");
-
 	$params = $_this->get("params");
 
 	$xmlRequest = <<<EOT
@@ -918,9 +876,6 @@ EOT;
 
 function GoogleCheckout_OrderUnArchive(&$_this, $googleId)
 {
-	// check for module license
-	check_module_license("GoogleCheckout");
-
 	$params = $_this->get("params");
 
 	$xmlRequest = <<<EOT
@@ -934,9 +889,6 @@ EOT;
 
 function GoogleCheckout_OrderProcess(&$_this, $googleId)
 {
-	// check for module license
-	check_module_license("GoogleCheckout");
-
 	$params = $_this->get("params");
 
 	$xmlRequest = <<<EOT
@@ -950,9 +902,6 @@ EOT;
 
 function GoogleCheckout_OrderMerchantOrderNumber(&$_this, $googleId, $_number)
 {
-	// check for module license
-	check_module_license("GoogleCheckout");
-
 	$params = $_this->get("params");
 
 	$number = GoogleCheckout_encode_utf8_string($_number);
@@ -970,9 +919,6 @@ EOT;
 
 function GoogleCheckout_OrderAddTrackingData(&$_this, $googleId, $_tracking, $_carrier)
 {
-	// check for module license
-	check_module_license("GoogleCheckout");
-
 	$params = $_this->get("params");
 
 	$order = GoogleCheckout_getOrderByGoogleId($googleId);
@@ -995,9 +941,6 @@ EOT;
 
 function GoogleCheckout_OrderDeliver(&$_this, $googleId, $_send_email)
 {
-	// check for module license
-	check_module_license("GoogleCheckout");
-
     $params = $_this->get("params");
 
 	$order = GoogleCheckout_getOrderByGoogleId($googleId);
@@ -1022,9 +965,6 @@ EOT;
 
 function GoogleCheckout_OrderRefund(&$_this, $googleId, $_amount, $_reason, $_comment)
 {
-	// check for module license
-	check_module_license("GoogleCheckout");
-
 	$params = $_this->get("params");
 	$currency = $params["currency"];
 
@@ -1061,9 +1001,6 @@ function &GoogleCheckout_getOrderByGoogleId($googleId)
 
 function GoogleCheckout_process_chargeable_order(&$_this, $order)
 {
-	// check for module license
-	check_module_license("GoogleCheckout");
-
 	if ($order->get("google_details.risks_set") && $order->get("google_details.chargeable_set")) {
 		// Deferred notifications order-state-change-notification and
 		// risk-information-notification both received.
