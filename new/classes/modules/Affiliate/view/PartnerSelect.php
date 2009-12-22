@@ -56,10 +56,10 @@ class CPartnerSelect extends Component
         }
     }
     
-    function &getPartners()
+    function getPartners()
     {
         if (is_null($this->partners)) {
-            $profile =& func_new("Profile");
+            $profile = func_new("Profile");
             $this->partners = $profile->findAll('access_level='.$this->auth->get("partnerAccessLevel"));
         }
         return $this->partners;

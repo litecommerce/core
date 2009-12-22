@@ -93,7 +93,7 @@ class Module_UPSOnlineTools extends Module
 	{
         $mods = $this->xlite->mm->getActiveModules();
         if ($mods["UPS"]) {
-            $mod = &func_new("Module", "UPS");
+            $mod = func_new("Module", "UPS");
             $this->xlite->mm->changeModuleStatus($mod, false);
             $mod->update();
             func_cleanup_cache("classes");

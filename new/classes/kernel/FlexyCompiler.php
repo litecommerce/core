@@ -505,7 +505,7 @@ class FlexyCompiler extends Object
             $wName = $attrs['name'];
             $class = $attrs['class'];
             $result .= '$t->' . $wName . ' = func_new(\'' . $class . "');\n";
-            $result .= '$t->' . $wName . '->component =& $t;' . "\n";
+            $result .= '$t->' . $wName . '->component = $t;' . "\n";
             $result .= '$t->widget->addWidget($t->' . $wName . ");\n";
             if (func_is_a($class, "Component")) {
                 $result .= '$t->addComponent($t->' . $wName . ");\n";
@@ -713,7 +713,7 @@ class FlexyCompiler extends Object
 			$str = substr($str, $len);
 			return $result;
 		}
-		$len = strcspn($str, '=&|,)(:');
+		$len = strcspn($str, ' = |,)(:');
 		if ($len<strlen($str) && $str{$len} == '(') { // method call
 			$result = '$t->call(\'' . substr($str, 0, $len) . '\'';
 			$str = substr($str, $len);

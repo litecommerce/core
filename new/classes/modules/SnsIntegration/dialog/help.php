@@ -57,8 +57,8 @@ class Module_SnsIntegration_Dialog_help extends Dialog_help
 		
 		$actions = array();
 		$action = "name=FillContactForm";
-        $country =& func_new("Country", $this->get("country_id"));
-        $state =& func_new("State", $this->get("state_id"));
+        $country = func_new("Country", $this->get("country_id"));
+        $state = func_new("State", $this->get("state_id"));
         $action .= "&billing_country=" . urlencode($country->get("country"));
 		$action .= "&billing_city=" . urlencode($this->get("city"));
 		$action .= "&billing_fax=" . urlencode($this->get("fax"));

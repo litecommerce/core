@@ -53,7 +53,7 @@ class Module_eWAYxml extends Module
 	
 		parent::init();
 	
-		$pm =& func_new('PaymentMethod');
+		$pm = func_new('PaymentMethod');
 		$pm->registerMethod("eway_xml");
 	}
 
@@ -69,7 +69,7 @@ class Module_eWAYxml extends Module
 
 
 function ewx_func_https_request ($method, $url, $vars) {
-	$request =& func_new('HTTPS');
+	$request = func_new('HTTPS');
 
 	$request->url = $url;
 	$request->data = $vars;

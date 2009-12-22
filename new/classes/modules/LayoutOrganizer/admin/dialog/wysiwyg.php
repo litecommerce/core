@@ -48,7 +48,7 @@ class Admin_Dialog_wysiwyg_LayoutOrganizer extends Admin_Dialog_wysiwyg
 {
     function constructor()
     {
-    	$sm =& func_new("Admin_Dialog_Scheme_Manager");
+    	$sm = func_new("Admin_Dialog_Scheme_Manager");
 		$sm->initLayout();
     	$sm->getSchemes();
     	foreach($sm->schemes as $scheme) {

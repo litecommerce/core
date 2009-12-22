@@ -53,7 +53,7 @@ class Admin_Dialog_payment_method extends Admin_Dialog
     var $error = '';
     var $updated = false;
 
-    function &getPM()
+    function getPM()
     {
         if (is_null($this->pm)) {
             $this->pm = func_new("PaymentMethod", $_REQUEST["payment_method"]);

@@ -91,17 +91,17 @@ class Admin_Dialog_usps extends Admin_Dialog_shipping_settings
         $this->set("updated","1");
     }
 
-    function &getOunces()
+    function getOunces()
     {
         return isset($this->ounces) ? $this->ounces : 1;
     }
     
-    function &getDestinationCountry()
+    function getDestinationCountry()
     {
         return isset($this->destinationCountry) ? $this->destinationCountry : "United Kingdom (Great Britain)";
     }
     
-    function &getZipDestination()
+    function getZipDestination()
     {
         return isset($this->ZipDestination) ? $this->ZipDestination : "73003";
     }

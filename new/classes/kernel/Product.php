@@ -77,14 +77,14 @@ class Product extends Base
     /**
     * Return the Image instance for this product.
     *
-    * Example: $image =& $product->getImage();
+    * Example: $image = $product->getImage();
     * $image->show();
     * $image->set("image", file_get_contents($upload_file));
     */
-    function &getImage() // {{{
+    function getImage() // {{{
     {
         if (is_null($this->image)) {
-            $this->image =& func_new("Image", 'product_image', $this->get("product_id"));
+            $this->image = func_new("Image", 'product_image', $this->get("product_id"));
         }
         return $this->image;
     } // }}}
@@ -92,10 +92,10 @@ class Product extends Base
     /**
     * Return the Thumbnai image instance for this product.
     */
-    function &getThumbnail() // {{{
+    function getThumbnail() // {{{
     {
         if (is_null($this->thumbnail)) {
-            $this->thumbnail =& func_new("Image","product_thumbnail", $this->get("product_id"));
+            $this->thumbnail = func_new("Image","product_thumbnail", $this->get("product_id"));
         }
         return $this->thumbnail;
     } // }}}
@@ -114,11 +114,11 @@ class Product extends Base
                "WHERE l.product_id IS NULL";
         $result = $this->db->getAll($sql);
         foreach ($result as $info) {
-            $product =& func_new("Product", $info["product_id"]);
+            $product = func_new("Product", $info["product_id"]);
             $product->_collectGarbage();
         }
 
-        $ef =& func_new("ExtraField");
+        $ef = func_new("ExtraField");
         $ef->collectGarbage();
     } // }}}
 
@@ -136,16 +136,16 @@ class Product extends Base
         $sql="DELETE FROM $table WHERE product_id='" . $this->get("product_id") . "'";
         $this->db->query($sql);
 		if ($this->hasThumbnail()) {
-			$tn =& $this->getThumbnail();
+			$tn = $this->getThumbnail();
 			$tn->delete();
 		}
 		if ($this->hasImage()) {
-			$image =& $this->getImage();
+			$image = $this->getImage();
 			$image->delete();
 		}
         parent::delete();
         // delete extra fields 
-        $fv =& func_new("FieldValue");
+        $fv = func_new("FieldValue");
         $table = $this->db->getTableByAlias($fv->alias);
         $sql = "DELETE FROM $table WHERE product_id='". $this->get("product_id") . "'";
         $this->db->query($sql);
@@ -159,7 +159,7 @@ class Product extends Base
         $sql = "SELECT product_id FROM " . $this->getTable();
         $result = $this->db->getAll($sql);
         foreach ($result as $p) {
-            $product =& func_new("Product", $p["product_id"]);
+            $product = func_new("Product", $p["product_id"]);
             if ($product->isExists()) {
                 $product->delete();
             }
@@ -169,22 +169,22 @@ class Product extends Base
     /**
     * Returns the product clone copy.
     */
-    function &cloneObject() // {{{
+    function cloneObject() // {{{
     {
-        $p =& parent::cloneObject();
+        $p = parent::cloneObject();
         $id = $p->get("product_id");
         $image = $this->getImage();
         $image->copyTo($id);
         $image = $this->getThumbnail();
         $image->copyTo($id);
-        $ef =& func_new("ExtraField");
-        $it =& $ef->findAll("product_id='". $this->get("product_id")."'");
+        $ef = func_new("ExtraField");
+        $it = $ef->findAll("product_id='". $this->get("product_id")."'");
         foreach($it as $extra_field) {
-			$ef =& $extra_field->cloneObject();
+			$ef = $extra_field->cloneObject();
             $ef->set("product_id", $id);
             $ef->update();
 
-        	$fv =& func_new("FieldValue");
+        	$fv = func_new("FieldValue");
         	if ($fv->find("field_id='".$extra_field->get("field_id")."' AND product_id='".$this->get("product_id")."'")) {
             	$fv->read();
             	$fv_new = $fv;
@@ -206,7 +206,7 @@ class Product extends Base
     *
     * @param $subcategory_search boolean search subcategories of $category_id
     */
-    function &advancedSearch($substring, $sku = null, $category_id = null, $subcategory_search = false, $fulltext = false, $onlyindexes = false) // {{{
+    function advancedSearch($substring, $sku = null, $category_id = null, $subcategory_search = false, $fulltext = false, $onlyindexes = false) // {{{
     {
     	$this->_beforeAdvancedSearch($substring, $sku, $category_id, $subcategory_search, $fulltext, $onlyindexes);
 
@@ -233,24 +233,24 @@ class Product extends Base
             $query = "$table.sku LIKE '%$sku%'";
         }
         if (!is_null($category_id)) {
-            $category =& func_new("Category", $category_id);
-            $result =& $category->getProducts($query, null, false);
-            $result =& $this->_assocArray($result, "product_id");
-            $categories =& $category->getSubcategories();
+            $category = func_new("Category", $category_id);
+            $result = $category->getProducts($query, null, false);
+            $result = $this->_assocArray($result, "product_id");
+            $categories = $category->getSubcategories();
             if ($subcategory_search) {
                 for ($i=0; $i<count($categories); $i++) {
-                    $res1 =& $this->advancedSearch($substring, $sku, $categories[$i]->get("category_id"), true, true, $onlyindexes);
+                    $res1 = $this->advancedSearch($substring, $sku, $categories[$i]->get("category_id"), true, true, $onlyindexes);
                     $result = array_merge($result, $this->_assocArray($res1, "product_id"));
                 }
             }
             return array_values($result);
         } else {
-            $p =& func_new("Product");
+            $p = func_new("Product");
             $p->fetchKeysOnly = true;
             if ($onlyindexes) {
             	$p->fetchObjIdxOnly = true;
             }
-            $result =& $p->findAll($query);
+            $result = $p->findAll($query);
         }
         return $result;
     } // }}}
@@ -280,10 +280,10 @@ class Product extends Base
             } 
             if ($this->isPersistent) {
             	if (!isset($this->_CategoriesFromProducts)) {
-            		$this->_CategoriesFromProducts =& func_new("_CategoriesFromProducts");
+            		$this->_CategoriesFromProducts = func_new("_CategoriesFromProducts");
             	}
                 $this->_CategoriesFromProducts->prodId = $this->get("product_id");
-                $result =& $this->_CategoriesFromProducts->findAll($where, $orderby);
+                $result = $this->_CategoriesFromProducts->findAll($where, $orderby);
         		if (!$this->xlite->is("adminZone") || $useCache) {
                 	$categories[$id][$where][$orderby] = $result;
                 }
@@ -338,7 +338,7 @@ class Product extends Base
                 $categoriesNumber[$id][$where][$orderby] = array();
             } 
             if ($this->isPersistent) {
-                $p =& func_new("_CategoriesFromProducts");
+                $p = func_new("_CategoriesFromProducts");
                 $p->prodId = $this->get("product_id");
                 $categoriesNumber[$id][$where][$orderby] = $p->count($where);
             } else {
@@ -374,7 +374,7 @@ class Product extends Base
 	function inCategory($c) // {{{
 	{
 		if ($this->isPersistent && is_object($c)) {
-			$p =& func_new("_CategoriesFromProducts");
+			$p = func_new("_CategoriesFromProducts");
 			$p->prodId = $this->get("product_id");
 			if ($p->findAll("links.category_id='" . $c->get("category_id") . "'")) {
 				return true;
@@ -442,22 +442,22 @@ class Product extends Base
         }
 
         if (!isset($this->_taxRates)) {
-            $this->_taxRates =& func_new("TaxRates");
+            $this->_taxRates = func_new("TaxRates");
         }
         if ($this->auth->is("logged")) {
-            $cart =& func_get_instance("Cart");
+            $cart = func_get_instance("Cart");
             if (!$cart->isEmpty()) {
-            	$profile =& $cart->get("profile");
+            	$profile = $cart->get("profile");
     		} else {
-            	$profile =& $this->auth->get("profile");
+            	$profile = $this->auth->get("profile");
             }
         } else {
-            $profile =& func_new("Profile");
+            $profile = func_new("Profile");
             $profile->set("shipping_country", $this->config->get("General.default_country"));
             $profile->set("billing_country", $this->config->get("General.default_country"));
         }
         // setup customer's info
-        $order =& func_new("Order");
+        $order = func_new("Order");
         $order->set("profile", $profile);
         $this->_taxRates->set("order", $order);
         $this->_taxRates->_conditionValues["product class"] = $this->get("tax_class");
@@ -532,7 +532,7 @@ class Product extends Base
     function populateExtraFields()
     {
 		$product_categories = $this->getCategories();
-		$ef =& func_new("ExtraField");
+		$ef = func_new("ExtraField");
 		$extraFields = $ef->findAll("product_id=0");
 		if (is_array($extraFields))
 		{
@@ -561,7 +561,7 @@ class Product extends Base
                 }
                 if ($found)
                 {
-            		$ef_child =& func_new("ExtraField");
+            		$ef_child = func_new("ExtraField");
             		if (!$ef_child->find("product_id='".$this->get("product_id")."' AND parent_field_id='".$extraField->get("field_id")."'"))
             		{
             			$obj_fields = array_keys($extraField->properties);
@@ -593,13 +593,13 @@ class Product extends Base
         }
     }
 
-    function &getExtraFields($enabledOnly=null) // {{{
+    function getExtraFields($enabledOnly=null) // {{{
     {
         if (is_null($enabledOnly)) {
             $enabledOnly = !$this->xlite->is("adminZone");
         }
         $extraFields = array();
-        $ef =& func_new("ExtraField");
+        $ef = func_new("ExtraField");
         if ($enabledOnly) {
             $filter = " AND enabled=1";
         } else {
@@ -638,7 +638,7 @@ class Product extends Base
         }
         // fill with stored / default values
         foreach ($extraFields as $idx => $extraField) {
-            $fv =& func_new("FieldValue");
+            $fv = func_new("FieldValue");
             if ($fv->find("field_id=".$extraField->get("field_id")." AND product_id=".$this->get("product_id"))) {
                 $extraFields[$idx]->set("value", $fv->get("value"));
             } else {
@@ -660,7 +660,7 @@ class Product extends Base
         $xml = "";
 
         // dump product categories
-        $categories =& $this->get("categories");
+        $categories = $this->get("categories");
         $xml .="<categories>\n";
         foreach ($categories as $category) {
             $xml .= "<category id=\"category_".$category->get("category_id")."\"/>\n";
@@ -669,14 +669,14 @@ class Product extends Base
  
         if ($this->hasThumbnail()) {
             // include thumbnail in XML dump
-            $thumbnail =& $this->getThumbnail();
+            $thumbnail = $this->getThumbnail();
             if ($thumbnail->get("source") == "D") {
                 $xml .= "<thumbnail><![CDATA[".base64_encode($thumbnail->get("data"))."]]></thumbnail>\n";
             }
         }
         if ($this->hasImage()) {
             // include image in XML dump
-            $image =& $this->getImage();
+            $image = $this->getImage();
             if ($image->get("source") == "D") {
                 $xml .= "<image><![CDATA[".base64_encode($image->get("data"))."]]></image>\n";
                 
@@ -745,7 +745,7 @@ class Product extends Base
     {
         $thumbnail = "";
         if ($this->hasThumbnail()) {
-            $tn =& $this->getThumbnail(); 
+            $tn = $this->getThumbnail(); 
             // include only thumbnail name from file system
             if ($tn->get("source") == "F") {
                 $thumbnail = $tn->get("data");
@@ -758,7 +758,7 @@ class Product extends Base
     {
         $image = "";
         if ($this->hasImage()) {
-            $img =& $this->getImage(); 
+            $img = $this->getImage(); 
             // include only thumbnail name from file system
             if ($img->get("source") == "F") {
                 $image = $img->get("data");
@@ -770,7 +770,7 @@ class Product extends Base
     function _exportCategory($layout=null, $delimiter=null) // {{{
     {
     	if (!isset($this->_CategoriesFromProducts)) {
-    		$this->_CategoriesFromProducts =& func_new("_CategoriesFromProducts");
+    		$this->_CategoriesFromProducts = func_new("_CategoriesFromProducts");
     	}
         return $this->_CategoriesFromProducts->createCategoryField($this->get("categories"));
     } // }}}
@@ -787,7 +787,7 @@ class Product extends Base
         parent::import($options);
     } // }}}
 
-    function &findImportedProduct($_sku, $categoryString, $_productName, $createCategories, $field="") // {{{
+    function findImportedProduct($_sku, $categoryString, $_productName, $createCategories, $field="") // {{{
     {
 		$sku = $_sku;
 		$productName = $_productName;
@@ -810,14 +810,14 @@ class Product extends Base
 				$field = "";
 		}
 
-        $product =& func_new("Product");
+        $product = func_new("Product");
         // search for product by SKU 
         if (!empty($sku) && $product->find($fsku."='".addslashes($sku)."'")) {
             return $product;
         }
         // or by category/NAME combination
         elseif (!empty($categoryString) && !empty($productName) && $product->find($fname."='".addslashes($productName)."'")) {
-            $cat =& func_new("Category");
+            $cat = func_new("Category");
             $slashedName = addslashes($productName);
             $categoryIds = array();
             foreach ($cat->parseCategoryField($categoryString, true) as $path) {
@@ -834,7 +834,7 @@ class Product extends Base
             if (count($categoryIds)) {
 				$link_table = $this->db->getTableByAlias("categories");
                 $where = "$link_table.category_id in (".implode(',',$categoryIds).")";
-                $p =& func_new("Product");
+                $p = func_new("Product");
                 foreach($p->findAll($fname."='$slashedName'") as $product) {
                     if (count($product->getCategories($where))) {
                         return $product;
@@ -853,7 +853,7 @@ class Product extends Base
     {
         $properties       = $options["properties"];
         $default_category = $options["default_category"];
-        $image =& func_new("Image");
+        $image = func_new("Image");
         $images_directory = ($options["images_directory"] != "") ? $options["images_directory"] : IMAGES_DIR;
         $save_images      = $options["save_images"];
 		$uniq_identifier  = $options["unique_identifier"];
@@ -862,7 +862,7 @@ class Product extends Base
         $existent = false;
         $product = $this->findImportedProduct($properties["sku"], $properties["category"], $properties["name"], true, $uniq_identifier);
         if (is_null($product)) {
-            $product =& func_new("Product");
+            $product = func_new("Product");
         }
         static $line_no;
         if (!isset($line_no)) $line_no = 1; else $line_no++;
@@ -882,7 +882,7 @@ class Product extends Base
         // Update product thumbnail and image
         if (!empty($images_directory)) {
             // update images base directory
-            $cfg =& func_new("Config");
+            $cfg = func_new("Config");
             if ($cfg->find("name='images_directory'")) {
                 $cfg->set("value", $images_directory);
                 $cfg->update();
@@ -893,8 +893,8 @@ class Product extends Base
                 $cfg->create();
             }
             // re-read config data
-        	$this->xlite->config =& $cfg->readConfig();
-        	$this->config =& $this->xlite->config;
+        	$this->xlite->config = $cfg->readConfig();
+        	$this->config = $this->xlite->config;
         }
         if (!empty($properties["thumbnail"])) {
             $this->_importImage($product, "thumbnail", $properties["thumbnail"], $save_images);
@@ -939,7 +939,7 @@ class Product extends Base
     function _importCategory($product, $properties, $default_category) // {{{
     {
         $category_id = null;
-        $category =& func_new("Category");
+        $category = func_new("Category");
         if (!empty($properties["category"])) {
             $newCategories = $category->parseCategoryField($properties["category"], true);
             // convert paths to categories
@@ -954,7 +954,7 @@ class Product extends Base
             die("</pre>");
         }
         // get product categories
-        $categories =& $product->get("categories");
+        $categories = $product->get("categories");
         foreach ($categories as $cat) {
             $product->deleteCategory($cat);
         }

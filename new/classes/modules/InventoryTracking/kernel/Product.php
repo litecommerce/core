@@ -53,7 +53,7 @@ class Module_InventoryTracking_Product extends Product
 		parent::constructor($id);
 	}
 
-    function &getInventory()
+    function getInventory()
     {
         if (is_null($this->inventory)) {
             $this->inventory = func_new("Inventory");
@@ -92,7 +92,7 @@ class Module_InventoryTracking_Product extends Product
 		}
 
 		if ($max_options && $this->get("tracking")) {
-			$inv =& func_new("Inventory");
+			$inv = func_new("Inventory");
 			$product_id = $this->get("product_id");
 			$out_of_stock = $inv->count("inventory_id LIKE '$product_id|%' AND amount <= 0");
 			return ($out_of_stock < $max_options);
@@ -111,7 +111,7 @@ class Module_InventoryTracking_Product extends Product
     function delete()
     {
         // delete inventory card for this product
-        $inventory =& func_new("Inventory");
+        $inventory = func_new("Inventory");
         $product_id = $this->get("product_id");
         $inventories = $inventory->findAll("inventory_id='$product_id' OR inventory_id LIKE '$product_id" . "|%'");
         if (is_array($inventories)) {
@@ -140,16 +140,16 @@ class Module_InventoryTracking_Product extends Product
 	{
 		if ($properties['opttype'] == 'Text'|| $properties['opttype'] == 'Textarea') return;	
 		
-		$option =& func_new("ProductOption",$properties['option_id']);
+		$option = func_new("ProductOption",$properties['option_id']);
 		$old_properties = $option->get('properties');
-		$inventory =& func_new("Inventory");
+		$inventory = func_new("Inventory");
 
         $inventories = $inventory->findAll("inventory_id LIKE '".$properties['product_id']."|%".addslashes($old_properties['optclass'])."%'");
 		if (empty($inventories)) return; 
 
 		if($properties['optclass']!=$old_properties['optclass'])	
 			foreach($inventories as $inventory_) {
-				$inventory =& func_new("Inventory",$inventory_->get('properties.inventory_id'));
+				$inventory = func_new("Inventory",$inventory_->get('properties.inventory_id'));
 				$inventory->delete();
 				$inventory->set('properties',$inventory_->get('properties'));
 				$inventory->set('inventory_id',preg_replace('/'.$old_properties['optclass'].':/',$properties['optclass'].":",$inventory_->get('properties.inventory_id')));
@@ -179,10 +179,10 @@ class Module_InventoryTracking_Product extends Product
 		
 	function deleteInventory(&$properties)
 	{
-		$inventory =& func_new("Inventory");
+		$inventory = func_new("Inventory");
         $deleted_inventories = $inventory->findAll("inventory_id LIKE '".$properties['product_id']."|%".addslashes($properties['optclass'])."%'");
  			foreach($deleted_inventories as $deleted_inventory) {
-				$inventory =& func_new("Inventory");
+				$inventory = func_new("Inventory");
                 $options = $inventory->parseOptions($deleted_inventory->get('inventory_id'));
 				if (!empty($options))
 				foreach($options as $key => $option) {
@@ -212,7 +212,7 @@ class Module_InventoryTracking_Product extends Product
 
 		 if (!$options)
 		{
-			$inventory =& func_new("Inventory");
+			$inventory = func_new("Inventory");
 			if(!$inventory->find("inventory_id = '".$this->get("product_id")."'")) {
 				return $product;
 			}
@@ -225,7 +225,7 @@ class Module_InventoryTracking_Product extends Product
 			return $product;
 		} else 
 		{
-			$inventories =& func_new("Inventory");
+			$inventories = func_new("Inventory");
 			$options_inventory = $inventories->findAll("inventory_id LIKE '".$this->get("product_id")."|%'", "order_by");		
 			foreach ($options_inventory as $option_inventory) {
                 $option_inventory->read();
@@ -249,7 +249,7 @@ class Module_InventoryTracking_Product extends Product
 	{	
 		$this->xlite->set("ITisCloneProduct", true);
         if ( function_exists("func_is_clone_deprecated") && func_is_clone_deprecated() ) {
-			$p =& parent::cloneObject();
+			$p = parent::cloneObject();
 		} else {
 			$p = parent::clone();
 		}
@@ -266,7 +266,7 @@ class Module_InventoryTracking_Product extends Product
 	{
 		
         if (!$this->xlite->get("ITisCloneProduct") && $this->config->get("InventoryTracking.create_inventory")) {
-            $inventory =& func_new("Inventory");
+            $inventory = func_new("Inventory");
 			$inventory->set("inventory_id",$this->get("product_id"));
 			$inventory->set("amount",$this->config->get("InventoryTracking.inventory_amount"));
 			$inventory->set("low_avail_limit",$this->config->get("InventoryTracking.low_amount"));
@@ -295,13 +295,13 @@ class Module_InventoryTracking_Product extends Product
 
 		if (is_array($result) && count($result) > 0) {
 			foreach ($result as $info) {
-				$pi =& func_new("Inventory", $info["inventory_id"]);
+				$pi = func_new("Inventory", $info["inventory_id"]);
 				$pi->delete();
 			}
 		}
 	}
 
-	function &advancedSearch($substring, $sku = null, $category_id = null, $subcategory_search = false, $fulltext = false, $onlyindexes = false) // {{{
+	function advancedSearch($substring, $sku = null, $category_id = null, $subcategory_search = false, $fulltext = false, $onlyindexes = false) // {{{
 	{
 		if ($this->xlite->get("ProductOptionsEnabled")) {
 			return $this->advancedSearchWithSku($substring, $sku, $category_id, $subcategory_search, $fulltext, $onlyindexes);
@@ -309,7 +309,7 @@ class Module_InventoryTracking_Product extends Product
 		return parent::advancedSearch($substring, $sku, $category_id, $subcategory_search, $fulltext, $onlyindexes);
 	} // }}}
 
-	function &advancedSearchWithSku($substring, $sku = null, $category_id = null, $subcategory_search = false, $fulltext = false, $onlyindexes = false) // {{{
+	function advancedSearchWithSku($substring, $sku = null, $category_id = null, $subcategory_search = false, $fulltext = false, $onlyindexes = false) // {{{
 	{
 		// compatibility check:
 		if (method_exists($this, "_beforeAdvancedSearch")) {
@@ -344,24 +344,24 @@ class Module_InventoryTracking_Product extends Product
 			$query = "($query)";
 		}
 		if (!is_null($category_id)) {
-			$category =& func_new("Category", $category_id);
-			$result =& $category->getProducts($query, null, false);
-			$result =& $this->_assocArray($result, "product_id");
-			$categories =& $category->getSubcategories();
+			$category = func_new("Category", $category_id);
+			$result = $category->getProducts($query, null, false);
+			$result = $this->_assocArray($result, "product_id");
+			$categories = $category->getSubcategories();
 			if ($subcategory_search) {
 				for ($i=0; $i<count($categories); $i++) {
-					$res1 =& $this->advancedSearchWithSku($substring, $sku, $categories[$i]->get("category_id"), true, true, $onlyindexes);
+					$res1 = $this->advancedSearchWithSku($substring, $sku, $categories[$i]->get("category_id"), true, true, $onlyindexes);
 					$result = array_merge($result, $this->_assocArray($res1, "product_id"));
 				}
 			}
 			return array_values($result);
 		} else {
-			$p =& func_new("Product");
+			$p = func_new("Product");
 			$p->fetchKeysOnly = true;
 			if ($onlyindexes) {
 				$p->fetchObjIdxOnly = true;
 			}
-			$result =& $p->findAll($query);
+			$result = $p->findAll($query);
 		}
 		return $result;
 	} // }}}

@@ -54,7 +54,7 @@ class PaymentMethod_paypalpro_express extends PaymentMethod // {{{
 		$pm = func_new("PaymentMethod","paypalpro");
 		require_once "modules/PayPalPro/encoded.php";
 		$response = PayPalPro_sendRequest($pm->get("params.pro"),$this->setExpressCheckoutRequest($order,$pm->get("params.pro")));
-		$xml =& func_new("XML");
+		$xml = func_new("XML");
         $response = $xml->parse($response);
         return $response["SOAP-ENV:ENVELOPE"]["SOAP-ENV:BODY"]["_0"]["SETEXPRESSCHECKOUTRESPONSE"];
  	} // }}}
@@ -101,7 +101,7 @@ EOT;
 		$pm = func_new("PaymentMethod","paypalpro");
 		require_once "modules/PayPalPro/encoded.php";
 		$response = PayPalPro_sendRequest($pm->get("params.pro"),$this->getExpressCheckoutRequest($pm->get("params.pro"), $token));
-		$xml =& func_new("XML");
+		$xml = func_new("XML");
 	    $response = $xml->parse($response);
 		return $response["SOAP-ENV:ENVELOPE"]["SOAP-ENV:BODY"]["_0"]["GETEXPRESSCHECKOUTDETAILSRESPONSE"];
 		
@@ -134,7 +134,7 @@ EOT;
 
 	function finishExpressCheckoutRequest(&$order, &$payment) // {{{
 	{
-		$pm =& func_new("PaymentMethod","paypalpro");
+		$pm = func_new("PaymentMethod","paypalpro");
 		$payment = $pm->get("params.pro");
         $cart = $order->get("properties");
 		$invoiceId  = $payment['prefix'].$cart['order_id'];

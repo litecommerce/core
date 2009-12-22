@@ -71,7 +71,7 @@ class Modules_UPSOnlineTools_Admin_Dialog_Order extends Admin_Dialog_Order
 		}
 	}
 
-    function &getTemplate()
+    function getTemplate()
     {
         if ($this->get("mode") == "container_details") {
             // container details
@@ -99,14 +99,14 @@ class Modules_UPSOnlineTools_Admin_Dialog_Order extends Admin_Dialog_Order
 			return false;
 		}
 
-		$containers =& $this->get("upscontainers");
+		$containers = $this->get("upscontainers");
 		return (is_array($containers) && count($containers) > 0) ? true : false;
 	}
 
 
 	function getUPSContainerName($container_type)
 	{
-		$sm =& func_new("Shipping_ups");
+		$sm = func_new("Shipping_ups");
 		$desc = $sm->getUPSContainerDims($container_type);
 		return $desc["name"];
 	}
@@ -154,7 +154,7 @@ class Modules_UPSOnlineTools_Admin_Dialog_Order extends Admin_Dialog_Order
 
 		$export_fields = array("name", "weight", "ups_width", "ups_length", "ups_height", "ups_handle_care");
 		foreach ($items_list as $k=>$item) {
-			$oi =& func_new("OrderItem");
+			$oi = func_new("OrderItem");
 
 			if (!$oi->find("item_id='".$item["item_id"]."' AND order_id='$order_id'"))
 				continue;
@@ -196,7 +196,7 @@ class Modules_UPSOnlineTools_Admin_Dialog_Order extends Admin_Dialog_Order
 			return "<b>Resource not found!</b>";
 		}
 
-		$container =& $containers[$container_id];
+		$container = $containers[$container_id];
 
 		if (!isset($container["levels"][$level_id])) {
 			return "<b>Resource not found!</b>";
@@ -215,7 +215,7 @@ class Modules_UPSOnlineTools_Admin_Dialog_Order extends Admin_Dialog_Order
 		// get products names by ids
 		$names = array();
 		foreach ($pids as $id) {
-			$po =& func_new("Product", $id);
+			$po = func_new("Product", $id);
 			$names[$id] = $po->get("name");
 		}
 
@@ -242,7 +242,7 @@ class Modules_UPSOnlineTools_Admin_Dialog_Order extends Admin_Dialog_Order
 			return "<b>Resource not found!</b>";
 		}
 
-		$container =& $containers[$container_id];
+		$container = $containers[$container_id];
 
 		return UPSOnlineTools_displayContainer_div($this, $container, $this->_img_left, $this->_img_top, $this->_img_width, $this->_img_height);
 	}

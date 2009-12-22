@@ -59,7 +59,7 @@ class Admin_Dialog_countries extends Admin_Dialog
     function action_update()
     {
         // parse POST'ed data, modify country properties
-        $country =& func_new("Country");
+        $country = func_new("Country");
         if (!empty($_POST["countries"])) {
             foreach ($country->readAll() as $country) {
                 $code = $country->get("code");

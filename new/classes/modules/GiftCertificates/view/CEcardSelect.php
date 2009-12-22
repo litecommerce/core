@@ -48,7 +48,7 @@ class CEcardSelect extends Component
     var $params = array("gcid");
     var $ecards = null;
 
-    function &getECards()
+    function getECards()
     {
         if (is_null($this->ecards)) {
             $ecard = func_get_instance("ECard");
@@ -56,7 +56,7 @@ class CEcardSelect extends Component
         }
         return $this->ecards;
     }
-    function &getGC()
+    function getGC()
     {
         if (is_null($this->gc)) {
             $this->gc = func_new("GiftCertificate",$this->get("gcid"));
@@ -66,7 +66,7 @@ class CEcardSelect extends Component
 
     function action_update()
     {
-        $gc =& $this->get("gc");
+        $gc = $this->get("gc");
         $gc->set("ecard_id", $_REQUEST["ecard_id"]);
         $gc->update();
     }

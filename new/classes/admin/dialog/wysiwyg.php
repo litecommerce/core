@@ -58,7 +58,7 @@ class Admin_Dialog_wysiwyg extends Admin_Dialog
             "var/html/common_dialog.html"=>"Dialog content area (aka Dialog window)",
             "var/html/common_sidebar_box.html"=>"Sidebars menu (aka Menu window)");
     
-    function &getShortcuts()
+    function getShortcuts()
     {
         $result = array();
         foreach ($this->shortcuts as $page => $description) {
@@ -69,10 +69,10 @@ class Admin_Dialog_wysiwyg extends Admin_Dialog
         return $result;
     }
 
-    function &getBuilder()
+    function getBuilder()
     {
         if (is_null($this->builder)) {
-            $this->builder =& func_new("WysiwygMediator");
+            $this->builder = func_new("WysiwygMediator");
         }
         return $this->builder;
     }
@@ -133,7 +133,7 @@ class Admin_Dialog_wysiwyg extends Admin_Dialog
     {
         global $options;
         // reset Layout settings to customer default
-        $layout =& func_get_instance("Layout"); //::getInstance();
+        $layout = func_get_instance("Layout"); //::getInstance();
         $layout->set("skin", $options["skin_details"]["skin"]);
         $layout->set("locale", $options["skin_details"]["locale"]);
     }

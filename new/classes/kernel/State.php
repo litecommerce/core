@@ -73,7 +73,7 @@ class State extends Base
         static $cache;
 
         if (!isset($cache)) {
-            $cache =& parent::readAll();
+            $cache = parent::readAll();
         }
         return $cache;
     }

@@ -50,13 +50,13 @@ class Admin_Dialog_categories extends Admin_Dialog
 {
     var $params = array('target', 'category_id');
     
-    function &getCategories()
+    function getCategories()
     {
-        $category =& $this->get("category");
+        $category = $this->get("category");
         return $category->get("subcategories");
     }
 
-    function &getCategory()
+    function getCategory()
     {
         $categoryID = 0;
         if (isset($_REQUEST["category_id"])) {
@@ -87,7 +87,7 @@ class Admin_Dialog_categories extends Admin_Dialog
             $order_by = $_POST["category_order"];
         }
         foreach ($order_by as $category_id => $category_order) {
-            $category =& func_new("Category", $category_id);
+            $category = func_new("Category", $category_id);
             $category->set("order_by", $category_order);
             $category->update();
         }

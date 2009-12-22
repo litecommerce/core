@@ -54,7 +54,7 @@ function GoogleCheckout_parseResponse($_this, $response)
 
 	$_this->error = "";
 	$_this->xmlError = false;
-	$xml =& GoogleCheckout_getXML_Object();
+	$xml = GoogleCheckout_getXML_Object();
 	$tree = $xml->parse($response);
 	if (!$tree) {
 		$_this->error = $xml->error;
@@ -75,7 +75,7 @@ function GoogleCheckout_sendRequest(&$_this, &$payment, &$data)
 		"Accept" => "application/xml"
 	);  
 
-	$https =& GoogleCheckout_getHTTPS_Object();
+	$https = GoogleCheckout_getHTTPS_Object();
 	$https->data        = $data;
 	$https->method      = "POST";
 	$https->conttype    = "application/xml";
@@ -106,7 +106,7 @@ function GoogleCheckout_sendRequest(&$_this, &$payment, &$data)
 
 function GoogleCheckout_getHTTPS_Object()
 {
-	$obj =& func_new("HTTPS");
+	$obj = func_new("HTTPS");
 	if (method_exists($obj, "getHeaders")) {
 		return $obj;
 	}
@@ -118,7 +118,7 @@ function GoogleCheckout_getHTTPS_Object()
 
 function GoogleCheckout_getXML_Object()
 {
-	$obj =& func_new("XML");
+	$obj = func_new("XML");
 	if (method_exists($obj, "_compileTreeNode")) {
 		return $obj;
 	}
@@ -153,10 +153,10 @@ function GoogleCheckout_getGoogleCheckoutXML_Calculation(&$_this, $address, $shi
 	$_old_admin_zone = $_this->xlite->get("adminZone");
 	$_this->xlite->set("adminZone", false);
 
-	$cart =& func_get_instance("Cart");
+	$cart = func_get_instance("Cart");
 	$cart = func_new("Cart", $_this->get("order_id")); // do not insert &
 
-	$pmGC =& func_new("PaymentMethod", "google_checkout");
+	$pmGC = func_new("PaymentMethod", "google_checkout");
 	$params = $pmGC->get("params");
 	$currency = $params["currency"];
 	$xmlDiscounts = array();
@@ -183,7 +183,7 @@ function GoogleCheckout_getGoogleCheckoutXML_Calculation(&$_this, $address, $shi
 			}
 
 			// get coupon object and validate
-			$coupon =& func_new("DiscountCoupon");
+			$coupon = func_new("DiscountCoupon");
 			if (!$coupon->find("coupon='".addslashes($coupon_code)."' AND order_id='0'"))
 				continue;
 
@@ -252,7 +252,7 @@ EOT;
 		foreach ($discounts as $id=>$discount) {
 			$cert_code = addslashes(trim($discount["CODE"]));
 
-			$cert =& func_new("GiftCertificate");
+			$cert = func_new("GiftCertificate");
 			if (!$cert->find("gcid='".addslashes($cert_code)."'"))
 				continue;
 
@@ -322,7 +322,7 @@ EOT;
 		$valid_methods = array();
 
 		// Create fake customer profile
-		$profile =& func_new("Profile");
+		$profile = func_new("Profile");
 		$profile->set("shipping_city", $addr["CITY"]);
 		$profile->set("shipping_zipcode", $addr["POSTAL-CODE"]);
 		$profile->set("shipping_country", $addr["COUNTRY-CODE"]);
@@ -332,7 +332,7 @@ EOT;
 
 		// state
 		$state_id = 0;
-		$state =& func_new("State");
+		$state = func_new("State");
 		if ($state->find("code='".addslashes($addr["REGION"])."'")) {
 			$state_id = $state->get("state_id");
 		}
@@ -358,7 +358,7 @@ EOT;
 
 			// Get Shipping method by name from GoogleCheckout
 			if ($allow_shipping && is_array($shipping_rates) && count($shipping_rates) > 0) {
-				$shippingMethod =& func_new("Shipping");
+				$shippingMethod = func_new("Shipping");
 
 				if ($shippingMethod->find("name='".addslashes($shipping_method)."' AND enabled='1' AND class IN($classes)") && array_key_exists($shippingMethod->get("shipping_id"), $shipping_rates)) {
 					// If order shipable - calculate shipping and tax cost
@@ -435,7 +435,7 @@ function GoogleCheckout_getCouponApplyDescription($coupon)
 
 function GoogleCheckout_getShippingClassesSQL_STRING()
 {
-	$so =& func_new("Shipping");
+	$so = func_new("Shipping");
 	$modules = $so->get("modules");
 
 	$keys = array();
@@ -461,7 +461,7 @@ function GoogleCheckout_new_order_notification(&$_this, $xmlData)
 	}
 
 	// Get order
-	$order =& $_this->getOrderFromCallback($xmlData, "NEW-ORDER-NOTIFICATION", false);
+	$order = $_this->getOrderFromCallback($xmlData, "NEW-ORDER-NOTIFICATION", false);
 	if (is_null($order)) {
 		$_this->xlite->logger->log("NEW-ORDER-NOTIFICATION: Order not found. ");
 		return false;
@@ -475,7 +475,7 @@ function GoogleCheckout_new_order_notification(&$_this, $xmlData)
 	// Apply Discount coupon
 	$coupon = $_this->getXMLDataByPath($xmlData, "ORDER-ADJUSTMENT/MERCHANT-CODES/COUPON-ADJUSTMENT");
 	if ($_this->xlite->get("PromotionEnabled") && $coupon && is_null($order->getDC())) {
-		$dc =& func_new("DiscountCoupon");
+		$dc = func_new("DiscountCoupon");
 		$dc->find("coupon='".addslashes($coupon["CODE"])."'");
 
 		if ($order->google_checkout_setDC($dc)) {
@@ -488,7 +488,7 @@ function GoogleCheckout_new_order_notification(&$_this, $xmlData)
 	// Apply Gift certificate
 	$gift_cert = $_this->getXMLDataByPath($xmlData, "ORDER-ADJUSTMENT/MERCHANT-CODES/GIFT-CERTIFICATE-ADJUSTMENT");
 	if ($_this->xlite->get("GiftCertificatesEnabled") && $gift_cert) {
-		$cert =& func_new("GiftCertificate");
+		$cert = func_new("GiftCertificate");
 		$cert->find("gcid='".addslashes($gift_cert["CODE"])."'");
 		$result = $order->set("GC", $cert);
 
@@ -503,7 +503,7 @@ function GoogleCheckout_new_order_notification(&$_this, $xmlData)
 
     // Set Shipping method
     $shipping_info = $_this->getXMLDataByPath($xmlData, "ORDER-ADJUSTMENT/SHIPPING/MERCHANT-CALCULATED-SHIPPING-ADJUSTMENT");
-    $sm =& func_new("Shipping");
+    $sm = func_new("Shipping");
 	$classes = GoogleCheckout_getShippingClassesSQL_STRING();
 
 $_this->xlite->logger->log("name='".addslashes($shipping_info["SHIPPING-NAME"])."' AND enabled=1 AND class IN($classes)");
@@ -516,7 +516,7 @@ $_this->xlite->logger->log("name='".addslashes($shipping_info["SHIPPING-NAME"]).
     }
 
     // Set Payment method
-    $pm =& func_new("PaymentMethod", "google_checkout");
+    $pm = func_new("PaymentMethod", "google_checkout");
     $order->setPaymentMethod($pm);
 
 
@@ -562,7 +562,7 @@ $_this->xlite->logger->log("name='".addslashes($shipping_info["SHIPPING-NAME"]).
 	$is_new_profile = false;
 	$profile = $order->get("profile");
 	if (is_null($profile)) {
-		$profile =& func_new("Profile");
+		$profile = func_new("Profile");
 		$is_new_profile = true;
 	} else {
 		$order->setProfileCopy($profile);
@@ -588,7 +588,7 @@ if ($is_new_profile) {
 	$profile->set("billing_country", $billing_addr["COUNTRY-CODE"]);
 	$profile->set("billing_zipcode", $billing_addr["POSTAL-CODE"]);
 
-	$state =& func_new("State");
+	$state = func_new("State");
 	if ($state->find("code='".trim(addslashes($billing_addr["REGION"]))."'")) {
 		$profile->set("billing_state", $state->get("state_id"));
 	} else {
@@ -607,7 +607,7 @@ if ($is_new_profile) {
 	$profile->set("shipping_country", $shipping_addr["COUNTRY-CODE"]);
 	$profile->set("shipping_zipcode", $shipping_addr["POSTAL-CODE"]);
 
-	$state =& func_new("State");
+	$state = func_new("State");
 	if ($state->find("code='".trim(addslashes($shipping_addr["REGION"]))."'")) {
 		$profile->set("shipping_state", $state->get("state_id"));
 	} else {
@@ -989,9 +989,9 @@ EOT;
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-function &GoogleCheckout_getOrderByGoogleId($googleId)
+function GoogleCheckout_getOrderByGoogleId($googleId)
 {
-	$order =& func_new("Order");
+	$order = func_new("Order");
 	if ($order->find("google_id='".addslashes($googleId)."'")) {
 		return $order;
 	}

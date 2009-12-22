@@ -103,7 +103,7 @@ class PaymentMethod_paypalpro extends PaymentMethod_credit_card // {{{
 		return ($this->get("params.solution") == 'standard') ? "modules/PayPalPro/standard_checkout.tpl" : $this->formTemplate;
 	} // }}}
 		
-	function &getPhone($cart, $type = "a") // {{{  
+	function getPhone($cart, $type = "a") // {{{  
 	{
 		if (empty($this->phone)) {
 			$phone = preg_replace('/[ ()-]/',"",$cart->get("profile.billing_phone"));

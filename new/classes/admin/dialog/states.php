@@ -73,13 +73,13 @@ class Admin_Dialog_states extends Admin_Dialog
         }
     }
     
-    function &getStates()
+    function getStates()
     {
         if (!is_null($this->states)) {
             return $this->states;
         }
-        $state =& func_new("State");
-        $this->states =& $state->findAll("country_code='".$this->get("country_code")."'");
+        $state = func_new("State");
+        $this->states = $state->findAll("country_code='".$this->get("country_code")."'");
         return $this->states;
     }
 
@@ -111,7 +111,7 @@ class Admin_Dialog_states extends Admin_Dialog
 			return;
 		}
 
-        $state =& func_new("State");
+        $state = func_new("State");
 		if ( $state->find("state='".addslashes($_POST["state"])."' AND code='".addslashes($_POST["code"])."'") ) {
 			$this->set("valid", false);
 			$this->obligatorySetStatus("exists");
@@ -131,7 +131,7 @@ class Admin_Dialog_states extends Admin_Dialog
         }
         // use POST'ed data to modify state properties
         foreach ($stateData as $state_id => $state_data) {
-            $state =& func_new("State", $state_id);
+            $state = func_new("State", $state_id);
             $state->set("properties", $state_data);
             $state->update();
         }
@@ -145,7 +145,7 @@ class Admin_Dialog_states extends Admin_Dialog
             $states = $_POST["delete_states"];
         }
         foreach ($states as $id => $state_id) {
-            $state =& func_new("State", $state_id);
+            $state = func_new("State", $state_id);
             $state->delete();
         }    
         $this->obligatorySetStatus("deleted");

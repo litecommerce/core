@@ -50,10 +50,10 @@ class Dialog_category_LayoutOrganizer extends Dialog_category
 	
     function init()
     {
-        $layout =& func_get_instance("Layout");
+        $layout = func_get_instance("Layout");
 		if (isset($_REQUEST["category_id"]) && $_REQUEST["category_id"] > 0) {
 			$category_id = $_REQUEST["category_id"];
-            $category =& func_new("Category", $category_id);
+            $category = func_new("Category", $category_id);
         }
 
         // default products list template

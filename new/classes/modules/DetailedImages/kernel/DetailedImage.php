@@ -61,7 +61,7 @@ class DetailedImage extends Base
     var $defaultOrder = "order_by";
     var $image = null;
 
-    function &getImage() // {{{
+    function getImage() // {{{
     {
         if (is_null($this->image)) {
             $this->image = func_new("Image","detailed_image", $this->get("image_id"));
@@ -74,7 +74,7 @@ class DetailedImage extends Base
 		return $this->get("image.url");
 	} // }}}
 
-    function &findImages($product_id = 0) // {{{
+    function findImages($product_id = 0) // {{{
     {
         return $this->findAll("product_id='$product_id'");
     } // }}}
@@ -199,7 +199,7 @@ class DetailedImage extends Base
         $detailed_image->set("properties", $properties);
         $detailed_image->create();
         // fill image content
-        $img =& $detailed_image->get("image");
+        $img = $detailed_image->get("image");
         if ($save_images) {
             // save image content to database
             $img->import($image_path);
@@ -214,7 +214,7 @@ class DetailedImage extends Base
 	
 	function delete() // {{{
 	{
-		$image =& $this->get("image");
+		$image = $this->get("image");
 		$image->delete();
 		parent::delete();
 	} // }}}

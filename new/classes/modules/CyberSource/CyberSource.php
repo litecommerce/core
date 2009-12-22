@@ -57,7 +57,7 @@ class Module_CyberSource extends Module
 
         parent::init();
 
-        $pm =& func_new('PaymentMethod');
+        $pm = func_new('PaymentMethod');
         $pm->registerMethod("cybersource_cc");
     }
 

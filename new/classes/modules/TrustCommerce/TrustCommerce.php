@@ -51,7 +51,7 @@ class Module_TrustCommerce extends Module
     function init()
     {
         parent::init();
-        $pm =& func_new('PaymentMethod');
+        $pm = func_new('PaymentMethod');
         $pm->registerMethod("trustcommerce_cc");
     }
 

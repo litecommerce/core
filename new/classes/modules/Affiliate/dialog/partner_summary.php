@@ -44,7 +44,7 @@
 */
 class Dialog_partner_summary extends PartnerDialog
 {
-    function &getSales()
+    function getSales()
     {
         if (!$this->auth->isAuthorized($this)) {
         	return null;
@@ -58,7 +58,7 @@ class Dialog_partner_summary extends PartnerDialog
                     "approved" => 0.00,
                     "paid" => 0.00,
                     );
-            $pp =& func_new("PartnerPayment");
+            $pp = func_new("PartnerPayment");
             foreach ((array)$pp->findAll("partner_id=".$this->get("auth.profile.profile_id")) as $payment) {
                 if ($payment->get("affiliate") == 0) {
                     $this->sales["total"]++;

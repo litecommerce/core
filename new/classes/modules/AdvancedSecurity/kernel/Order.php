@@ -55,7 +55,7 @@ class Module_AdvancedSecurity_Order extends Order
         $this->fields['secureDetails'] = ''; // GPG encrypted order details
 		$this->fields['secureDetailsText'] = ''; // GPG encrypted order details for sending to admin via email
         parent::constructor($id);
-        $this->gpg =& func_new("GPG");
+        $this->gpg = func_new("GPG");
     }
 
     function setDetails($value)
@@ -65,16 +65,16 @@ class Module_AdvancedSecurity_Order extends Order
         $this->_secureDetails = null;
     }
 
-    function &getDetails()
+    function getDetails()
     {
-        $details =& parent::getDetails();
+        $details = parent::getDetails();
         $oldDetails = $details;
         if ($this->xlite->is("adminZone") && (!$this->_detailsModified)) {
             if (!is_null($this->session->get("masterPassword"))) {
-                $details =& $this->getSecureDetails();
+                $details = $this->getSecureDetails();
             }
         } elseif (!$this->xlite->is("adminZone") && !is_null($this->_secureDetails)) {
-            $details =& $this->_secureDetails;
+            $details = $this->_secureDetails;
         }
         if (!(isset($oldDetails) && is_array($oldDetails))) {
         	$oldDetails = array();
@@ -86,7 +86,7 @@ class Module_AdvancedSecurity_Order extends Order
         return $details;
     }
 
-    function &getSecureDetails() 
+    function getSecureDetails() 
     {
         if (is_null($this->_secureDetails)) {
             $d = parent::get("secureDetails");
@@ -127,7 +127,7 @@ class Module_AdvancedSecurity_Order extends Order
 	function clone()
 	{
 		if (function_exists("func_is_clone_deprecated") && func_is_clone_deprecated()) {
-			$clone =& parent::cloneObject();
+			$clone = parent::cloneObject();
 		} else {
 			$clone = parent::clone();
 		}

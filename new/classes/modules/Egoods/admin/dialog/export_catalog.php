@@ -58,10 +58,10 @@ class Module_Egoods_Admin_dialog_export_catalog extends Admin_dialog_export_cata
         global $DATA_DELIMITERS;
 
         // save layout & export
-        $dlg =& func_new("Admin_Dialog_import_catalog");
+        $dlg = func_new("Admin_Dialog_import_catalog");
         $dlg->action_layout("pin_codes_layout");
         $this->startDownload("pin_codes.csv");
-        $wp =& func_new("PinCode");
+        $wp = func_new("PinCode");
         $wp->export($this->pin_codes_layout, $DATA_DELIMITERS[$this->delimiter], $where = null, $orderby = "product_id,pin_id");
         exit();
     }

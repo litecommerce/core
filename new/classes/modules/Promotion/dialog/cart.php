@@ -77,7 +77,7 @@ class Module_Promotion_Dialog_cart extends Dialog_cart
     {
         $this->coupon = addSlashes(trim($this->coupon));
 		$this->discountCouponResult = $this->cart->validateDiscountCoupon($this->coupon);
-		$dc =& func_new("DiscountCoupon");
+		$dc = func_new("DiscountCoupon");
 		$found = $dc->find("coupon='".$this->coupon."' AND order_id='0'");
         if ($this->discountCouponResult||!$dc->checkCondition($this->cart)) {
             $this->valid = false;

@@ -48,7 +48,7 @@ class Dialog_RecentlyViewed extends Dialog
 {
 	var $productsNumber = 0;
 
-    function &getRecentliesProducts()
+    function getRecentliesProducts()
     {
     	$products = $this->xlite->get("RecentliesProducts");
         if (isset($products)) {
@@ -57,8 +57,8 @@ class Dialog_RecentlyViewed extends Dialog
         }    
 
         $products = array();
-        $stats =& func_new("ProductRecentlyViewed");
-		$products =& $stats->findAll("sid='".$this->session->getID()."'");
+        $stats = func_new("ProductRecentlyViewed");
+		$products = $stats->findAll("sid='".$this->session->getID()."'");
 
     	$this->productsNumber = count($products);
 

@@ -48,11 +48,11 @@ class Admin_Dialog_global_product_options extends Admin_dialog
 {
 	var $_categories = null;
 
-    function &getCategories() // {{{
+    function getCategories() // {{{
     {
         if (is_null($this->_categories)) {
-            $c =& func_new("Category");
-            $this->_categories =& $c->findAll();
+            $c = func_new("Category");
+            $this->_categories = $c->findAll();
             $names = array();
             $names_hash = array();
             for ($i = 0; $i < count($this->_categories); $i++) {
@@ -70,7 +70,7 @@ class Admin_Dialog_global_product_options extends Admin_dialog
 
     function action_add()
     {
-        $option =& func_new("ProductOption");
+        $option = func_new("ProductOption");
         $option->set("properties", $this->optdata);
         if (isset($this->opttype) && $this->opttype == "Text" && isset($this->text)) {
             $option->set("properties", $this->text);
@@ -87,9 +87,9 @@ class Admin_Dialog_global_product_options extends Admin_dialog
         $this->option_id = $option->get("option_id");
 	}	
 
-    function &getAllParams()
+    function getAllParams()
     {
-        $result =& parent::getAllParams();
+        $result = parent::getAllParams();
         if (isset($this->action)) {
         	if (!isset($this->option_id) && isset($result["option_id"])) {
         		unset($result["option_id"]);
@@ -104,8 +104,8 @@ class Admin_Dialog_global_product_options extends Admin_dialog
     function action_delete()
     {
 		if (isset($this->option_id) && isset($this->global_options) && is_array($this->global_options)) {
-			$po =& func_new("ProductOption");
-			$child_po =& $po->findAll("parent_option_id='".$this->option_id."'");
+			$po = func_new("ProductOption");
+			$child_po = $po->findAll("parent_option_id='".$this->option_id."'");
 			if ($child_po) {
 				foreach($child_po as $option_) {
 					$option_->delete();
@@ -123,7 +123,7 @@ class Admin_Dialog_global_product_options extends Admin_dialog
 	function action_update_product_option()
 	{
 		if (isset($this->option_id) && isset($this->global_options) && is_array($this->global_options)) {
-			$po =& func_new("ProductOption", $this->option_id);
+			$po = func_new("ProductOption", $this->option_id);
 			$categories = "";
 			if (isset($this->global_options["categories"])) {
 				$categories = $this->global_options["categories"];
@@ -138,10 +138,10 @@ class Admin_Dialog_global_product_options extends Admin_dialog
 		}	
 	}
 	
-    function &getGlobalOptions()
+    function getGlobalOptions()
     {
         if (is_null($this->globalOptions)) {
-            $go =& func_new("ProductOption");
+            $go = func_new("ProductOption");
             $this->globalOptions = $go->findAll("product_id=0");  // global options
         }
         return $this->globalOptions;

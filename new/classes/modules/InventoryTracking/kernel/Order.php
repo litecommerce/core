@@ -69,7 +69,7 @@ class Module_InventoryTracking_Order extends Order
     function updateInventory(&$item)
     {
         require_once "modules/InventoryTracking/encoded.php";
-        $inventory =& func_new("Inventory");
+        $inventory = func_new("Inventory");
 		if ($this->xlite->get("ProductOptionsEnabled") && $item->get("product.productOptions")&& $item->get("product.tracking")) {
             /* KOI8-R comment:
             Если у продукта есть опции, и Track with product options выставлено, то попадаем сюда
@@ -133,7 +133,7 @@ class Module_InventoryTracking_Order extends Order
         require_once "modules/InventoryTracking/encoded.php";
         // update product(s) inventory        
         foreach ($this->get("items") as $item) {
-            $inventory =& func_new("Inventory");
+            $inventory = func_new("Inventory");
             $key = $item->get("key");
 			if ($this->xlite->get("ProductOptionsEnabled") && $item->get("product.productOptions") && $item->get("product.tracking")) {
                 // product has product options

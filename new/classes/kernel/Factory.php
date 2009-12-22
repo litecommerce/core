@@ -46,7 +46,7 @@
 */
 class Factory extends Object
 {
-    function &get($name)
+    function get($name)
     {
         return func_new($name);
     }

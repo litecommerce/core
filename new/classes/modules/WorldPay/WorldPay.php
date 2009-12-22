@@ -57,7 +57,7 @@ class Module_WorldPay extends Module
     function init()
     {
         parent::init();
-        $pm =& func_new('PaymentMethod');
+        $pm = func_new('PaymentMethod');
 	    // plug in  kernel/PaymentMethod/worldpay.php module
         $pm->registerMethod("worldpay");
     }

@@ -88,12 +88,12 @@ class CustomerNotification extends Base
     	}
     }
 
-    function &get($name)
+    function get($name)
     {
     	switch ($name) {
     		case "listPrice":
                 $result = parent::get("price");
-                $product =& func_new("Product", $this->get("product_id"));
+                $product = func_new("Product", $this->get("product_id"));
                 $product->set("price", $result);
                 $result = sprintf("%.02f", $product->get("listPrice"));
             break;
@@ -138,7 +138,7 @@ class CustomerNotification extends Base
     		return null;
 
     	if (is_null($this->ntfProduct)) {
-			$p =& func_new("Product", $this->get("product_id"));
+			$p = func_new("Product", $this->get("product_id"));
 			if (!$p->is("exists")) {
 				$this->errorPresent = true;
 				$this->errorDescription = "Product was deleted.";
@@ -162,7 +162,7 @@ class CustomerNotification extends Base
 			$quantity = $this->get("quantity");
 			$p->set("quantity", 0);
         	if ($this->xlite->get("PA_InventorySupport")) {
-    			$inventory =& func_new("Inventory");
+    			$inventory = func_new("Inventory");
     			if ($inventory->find("inventory_id='".addslashes($this->getProductKey())."'")) {
         			$p->set("quantity", $inventory->get("amount"));
     			}

@@ -106,14 +106,14 @@ class Module_AOM_Order extends Order
 
     function getLocationCountry() // {{{
     {
-        $country =& func_new("Country");
+        $country = func_new("Country");
         $country->find("code = '".$this->config->get("Company.location_country")."'");
         return $country;
     }   // }}} 
 
     function getLocationState() // {{{
     {
-        $state =& func_new("State",$this->config->get("Company.location_state"));
+        $state = func_new("State",$this->config->get("Company.location_state"));
         return $state;
     }   // }}} 
 	
@@ -277,7 +277,7 @@ class Module_AOM_Order extends Order
             if ($orderStatus->get('parent') !== '') {
                 $status = $orderStatus->get('parent');
             }
-            $substatus = &func_new("OrderStatus");
+            $substatus = func_new("OrderStatus");
             if ($substatus->find("status = '".$this->_oldSubstatus."'") && $substatus->get('parent') !== '') {
                 $oldStatus = $substatus->get('parent');
             } else {
@@ -287,8 +287,8 @@ class Module_AOM_Order extends Order
         $this->internalStatusChanged($oldStatus, $status);
 
 		if (!$this->_disable_all_notifications) {
-		    $mail =& func_new("Mailer");
-			$mail->order =& $this;
+		    $mail = func_new("Mailer");
+			$mail->order = $this;
 		 
 			if ($orderStatus->get("email")) {
 				$mail->set("adminMail", true);
@@ -300,7 +300,7 @@ class Module_AOM_Order extends Order
 			}
 			if ($orderStatus->get("cust_email")) {
 				// Switch layout to castomer area
-				$layout =& func_get_instance("Layout");
+				$layout = func_get_instance("Layout");
 				$active_skin = $layout->get("skin");
 				$layout->set("skin", $this->xlite->get("options.skin_details.skin"));
 				$mail->set("adminMail", false);
@@ -318,7 +318,7 @@ class Module_AOM_Order extends Order
 	
 	function getOrderHistory() // {{{ 
 	{
-		$orderHistory = &func_new("OrderHistory");
+		$orderHistory = func_new("OrderHistory");
 		return array_reverse($orderHistory->findAll("order_id = " . $this->get("order_id"),"date"));
 	} // }}}	
 	
@@ -336,7 +336,7 @@ class Module_AOM_Order extends Order
 	function clone()
 	{
 		if ( function_exists("func_is_clone_deprecated") && func_is_clone_deprecated() ) {
-			$clone =& parent::cloneObject();
+			$clone = parent::cloneObject();
 		} else {
 			$clone = parent::clone();
 		}
@@ -344,17 +344,17 @@ class Module_AOM_Order extends Order
 		return aom_order_clone($this, $clone);	
 	} //  }}}
 
-	function &getProductItems() // {{{ 
+	function getProductItems() // {{{ 
 	{
-		$orderItem = &func_new("OrderItem");
+		$orderItem = func_new("OrderItem");
 		$this->_productItems = $orderItem->findAll("order_id='" .$this->get("order_id"). "' AND product_id <> 0");
 		foreach($this->_productItems as $key => $item) {
-			$this->_productItems[$key]->order = &$this;
+			$this->_productItems[$key]->order = $this;
 		}
 		return $this->_productItems;	
 	} //   }}} 
 
-	function &getProductItemsCount() // {{{
+	function getProductItemsCount() // {{{
 	{
 		return count($this->get("productItems"));		
 	} // }}}
@@ -364,7 +364,7 @@ class Module_AOM_Order extends Order
 		return $this->get("productItemsCount") > 1;
 	} // }}}
 	
- 	function &getItems() // {{{
+ 	function getItems() // {{{
 	{
 		if($this->xlite->is("adminZone")) {
 			$checkTaxesInside = $this->xlite->get("AOMcalcAllTaxesInside");
@@ -372,7 +372,7 @@ class Module_AOM_Order extends Order
     			if (!$this->config->get("Taxes.prices_include_tax")) {
     				$this->xlite->set("AOMcalcAllTaxesInside", true);
     			} else {
-                	$taxRates =& func_new("TaxRates");
+                	$taxRates = func_new("TaxRates");
                 	$profile = $this->get("profile");
                 	if (isset($profile) && is_object($profile)) {
                     	$taxRates->setProfile($this->get("profile"));
@@ -399,16 +399,16 @@ class Module_AOM_Order extends Order
 		return $this->_items;
 	} // }}}
 
-	function &getAppliedGC() // {{{
+	function getAppliedGC() // {{{
 	{
 		$gcid = $this->get("gcid");
 		if (!empty($gcid)) {
-			$gc =& func_new("GiftCertificate",$gcid);
+			$gc = func_new("GiftCertificate",$gcid);
 		}
 		return $gc;
 	} // }}}
 	
- 	function &getOrderGC() // {{{ 
+ 	function getOrderGC() // {{{ 
 	{
 		$items = parent::getItems();
 		foreach($items as $key => $item) {
@@ -416,21 +416,21 @@ class Module_AOM_Order extends Order
 			if (empty($gcid)) 
 				unset($items[$key]);
 			else 
-				$gc[$item->get("item_id")] = &func_new("GiftCertificate",$gcid);
+				$gc[$item->get("item_id")] = func_new("GiftCertificate",$gcid);
 		}
         return is_array($gc) ? $gc : false;
 	} // }}}	
 
-	function &getGCCopy()
+	function getGCCopy()
 	{
 		$gc = parent::getGC();
 		return $gc;
 	}
 
-	function &getOrderDC() // {{{
+	function getOrderDC() // {{{
 	{
         if (is_null($this->DC) && $this->get("order_id")) {
-            $dc =& func_new("DiscountCoupon");
+            $dc = func_new("DiscountCoupon");
             $dc->_range = "";
             if ($dc->find("order_id=".$this->get("order_id"))) {
                 $this->DC = $dc;
@@ -468,7 +468,7 @@ class Module_AOM_Order extends Order
 		if ($global_discount <= 0) return 0;
 		$applied_global_discount = 0;
 
-		$gd =& $this->get("appliedGlobalDiscount");
+		$gd = $this->get("appliedGlobalDiscount");
 		if (!is_object($gd)) $gd = func_new("GlobalDiscount");
 
 		if ($gd->get("discount_type") != "a") {
@@ -517,8 +517,8 @@ class Module_AOM_Order extends Order
 		if (!$this->xlite->get("PromotionEnabled")) return 0;
 		if ($applied_discount <= 0) return 0;
 
-		$dc =& $this->get("orderDC");
-		if (!is_object($dc)) $dc =& func_new("DiscountCoupon");
+		$dc = $this->get("orderDC");
+		if (!is_object($dc)) $dc = func_new("DiscountCoupon");
 		if ($dc->get("type") != "absolute") {
 			// if percent (or undefined) discount value differs from its original value, then the discount is absolute
 			if ($this->get("config.Taxes.prices_include_tax") && $this->xlite->AOM_product_originalPrice) {
@@ -583,9 +583,9 @@ class Module_AOM_Order extends Order
         }
     }
 
-	function &setOrderStatus($value) // {{{ 
+	function setOrderStatus($value) // {{{ 
 	{
-        $substatus = &func_new("OrderStatus");
+        $substatus = func_new("OrderStatus");
 	    $substatus->find("status = '$value'");
 	    if ($substatus->get("parent") == '') {
             $_POST['status'] = $value;
@@ -603,10 +603,10 @@ class Module_AOM_Order extends Order
 
 	} // }}}
 	
-	function &getOrderStatus() // {{{ 
+	function getOrderStatus() // {{{ 
 	{
 		$status = ($this->get("substatus") == '') ? $this->get("status") : $this->get("substatus");
-		$this->orderStatus = &func_new("OrderStatus");
+		$this->orderStatus = func_new("OrderStatus");
 		$this->orderStatus->find("status = '$status'");
 	   	return $this->orderStatus;	
  	} // }}} 
@@ -637,7 +637,7 @@ class Module_AOM_Order extends Order
         } 			
 		
         if (!empty($status)) {
-			$orderStatus = &func_new("OrderStatus");
+			$orderStatus = func_new("OrderStatus");
 			$orderStatus->find("status = '$status'");
             if ($orderStatus->get("parent")) { 
 				$where[] = "substatus = '$status'";
@@ -668,7 +668,7 @@ class Module_AOM_Order extends Order
         $this->_items = null;
 		if ( !$this->config->get("Taxes.prices_include_tax") )
 			return;
-        $taxRates =& func_new("TaxRates");
+        $taxRates = func_new("TaxRates");
         $taxRates->set("order", $this);
         foreach ($this->get("items") as $item) {
 			$calcAllTaxesAOM = $this->xlite->get("AOMcalcAllTaxesInside");
@@ -701,7 +701,7 @@ class Module_AOM_Order extends Order
         $this->_items = null;
 	}
 
-    function &get($name) // {{{
+    function get($name) // {{{
     {
         switch($name) {
             case "detail_labels":

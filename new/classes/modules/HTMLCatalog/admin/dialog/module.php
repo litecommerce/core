@@ -50,16 +50,16 @@ class Admin_Dialog_module_HTMLCatalog extends Admin_Dialog_module
 		parent::init();
 
 		if ($this->page == "HTMLCatalog") {
-        	$lay =& func_get_instance("Layout");
+        	$lay = func_get_instance("Layout");
         	$lay->addLayout("general_settings.tpl", "modules/HTMLCatalog/config.tpl");
         }
 	}
 
-    function &getCategories()
+    function getCategories()
     {
        if (is_null($this->categories)) {
-            $c =& func_new("Category");
-            $this->categories =& $c->findAll();
+            $c = func_new("Category");
+            $this->categories = $c->findAll();
             $names = array();
             $names_hash = array();
             for ($i=0; $i<count($this->categories); $i++) {

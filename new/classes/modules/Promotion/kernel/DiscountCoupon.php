@@ -79,7 +79,7 @@ class DiscountCoupon extends Base
 			break;
 
 			case "product":
-				$cart =& func_get_instance("Cart");
+				$cart = func_get_instance("Cart");
 				foreach($cart->get("items") as $item) {
 					if ($item->get("product_id") == $this->get("product_id")) {
 						return true;
@@ -92,7 +92,7 @@ class DiscountCoupon extends Base
         		require_once "modules/Promotion/encoded.php";
 
 				$category = $this->get("category");
-				$cart =& func_get_instance("Cart");
+				$cart = func_get_instance("Cart");
 				foreach($cart->get("items") as $item) {
 					if (func_in_category_recursive($item->get("product"), $category)) {
 						return true;
@@ -109,9 +109,9 @@ class DiscountCoupon extends Base
     /**
     * Retrieves the origination DiscountCoupon object.
     */
-    function &getPeer()
+    function getPeer()
     {
-        $peer =& func_new("DiscountCoupon");
+        $peer = func_new("DiscountCoupon");
 		$condition = "coupon='".$this->get("coupon")."' AND parent_id='0'";
 		if ($this->get("new_link_mode")) {
 			$condition = "coupon_id='".$this->get("parent_id")."'";
@@ -123,14 +123,14 @@ class DiscountCoupon extends Base
         return $peer;
     }
 	
-	function &getCategory()
+	function getCategory()
 	{
 	    if (!is_null($this->category)) {
 	    	return $this->category;
 	    }
 
 		if ($this->get("category_id")) {
-            $this->category =& func_new("Category", $this->get("category_id"));
+            $this->category = func_new("Category", $this->get("category_id"));
             if (is_object($this->category)) {
                 if (!$this->category->find("category_id='".$this->get("category_id")."'")) {
             		$this->category = null;
@@ -149,14 +149,14 @@ class DiscountCoupon extends Base
 		return ($this->get("times") > $this->get("timesUsed")) ? false : true;
 	}
 
-	function &getOrder()
+	function getOrder()
 	{
 	    if (!is_null($this->order)) {
 	    	return $this->order;
 	    }
 
 		if ($this->get("order_id")) {
-            $this->order =& func_new("Order", $this->get("order_id"));
+            $this->order = func_new("Order", $this->get("order_id"));
             if (is_object($this->order)) {
                 if (!$this->order->find("order_id='".$this->get("order_id")."'")) {
             		$this->order = null;
@@ -170,14 +170,14 @@ class DiscountCoupon extends Base
 		return $this->order;
 	}
 
-	function &getProduct()
+	function getProduct()
 	{
 	    if (!is_null($this->product)) {
 	    	return $this->product;
 	    }
 
 		if ($this->get("product_id")) {
-            $this->product =& func_new("Product", $this->get("product_id"));
+            $this->product = func_new("Product", $this->get("product_id"));
             if (is_object($this->product)) {
                 if (!$this->product->find("product_id='".$this->get("product_id")."'")) {
             		$this->product = null;
@@ -191,7 +191,7 @@ class DiscountCoupon extends Base
 		return $this->product;
 	}
 
-	function &getChildren($coupon = null) // {{{
+	function getChildren($coupon = null) // {{{
 	{
 		if (is_null($this->_children)) {
 			if (empty($coupon)) $coupon = $this->get('coupon');
@@ -267,7 +267,7 @@ EOT;
 	 */
 	function reattachChildren($coupon) // {{{
 	{
-		$children =& $this->getChildren($coupon);
+		$children = $this->getChildren($coupon);
 		foreach ((array)$children as $child) {
 			$child->set("new_link_mode", 1); // in order to avoid recursive calls
 			$child->set("parent_id", $this->get("coupon_id"));

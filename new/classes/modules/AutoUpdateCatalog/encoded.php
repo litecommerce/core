@@ -39,11 +39,11 @@
 
 function func_categories_update(&$dialog, $category_id) // {{{
 {
-    $catalog =& $dialog->get("catalog");
+    $catalog = $dialog->get("catalog");
     // switch catalog to customer's zone
     $catalog->goCustomer();
 
-    $catalog =& $dialog->get("catalog");
+    $catalog = $dialog->get("catalog");
     // rebuild categories parent page
     $catalog->set("topCategory", $category_id);
     $catalog->set("recursive", false);
@@ -62,7 +62,7 @@ function func_categories_update(&$dialog, $category_id) // {{{
 
 function func_category_add(&$dialog, $category_id) // {{{
 {
-    $catalog =& $dialog->get("catalog");
+    $catalog = $dialog->get("catalog");
     // switch catalog to customer's zone
     $catalog->goCustomer();
 
@@ -75,7 +75,7 @@ function func_category_add(&$dialog, $category_id) // {{{
 
 function func_categories_delete(&$dialog, $category_id, $deleteParents = true) // {{{
 {
-    $catalog =& $dialog->get("catalog");
+    $catalog = $dialog->get("catalog");
     // switch catalog to customer's zone
     $catalog->goCustomer();
     $url = $dialog->getCategoryUrl($category_id);
@@ -108,7 +108,7 @@ function func_category_update(&$dialog, $category_id, $product_id=null, $callbac
 		$dialog->xlite->session->writeClose();
 	}
 
-    $catalog =& $dialog->get("catalog");
+    $catalog = $dialog->get("catalog");
     // switch catalog to customer's zone
     $catalog->goCustomer();
 
@@ -137,7 +137,7 @@ function func_category_update(&$dialog, $category_id, $product_id=null, $callbac
 
 function func_product_update(&$dialog, $product_id, $category_id, $callback=false) // {{{
 {
-    $catalog =& $dialog->get("catalog");
+    $catalog = $dialog->get("catalog");
     // switch catalog to customer's zone
     $catalog->goCustomer();
 
@@ -166,7 +166,7 @@ function func_product_update(&$dialog, $product_id, $category_id, $callback=fals
 
 function func_product_delete(&$dialog, $product_id, $category_id, $callback=false) // {{{
 {
-    $catalog =& $dialog->get("catalog");
+    $catalog = $dialog->get("catalog");
     // switch catalog to customer's zone
     $catalog->goCustomer();
 
@@ -177,10 +177,10 @@ function func_product_delete(&$dialog, $product_id, $category_id, $callback=fals
     }
 	$filename = $catalog->getFileNameByURL($url);
 	if (!empty($filename)) {
-        $category =& func_new("Category", $category_id);
+        $category = func_new("Category", $category_id);
         $catname = $category->get("stringPath");
     	$catfilename = $catalog->getFileNameByURL($catalog->getCategoryUrl($category_id));
-        $product =& func_new("Product", $product_id);
+        $product = func_new("Product", $product_id);
         $prodname = $product->get("name");
 		if (empty($prodname)) {
 			$prodname = "DELETED PRODUCT #$product_id";

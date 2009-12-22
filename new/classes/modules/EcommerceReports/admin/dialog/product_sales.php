@@ -44,11 +44,11 @@
 */
 class Admin_dialog_product_sales extends Admin_dialog_Ecommerce_reports
 {
-    function &getProductSales() // {{{
+    function getProductSales() // {{{
     {
         if (is_null($this->productSales)) {
             $this->productSales = array();
-            $items =& $this->get("rawItems");
+            $items = $this->get("rawItems");
             array_map(array(&$this, 'sumProductSales'), $items);
             usort($this->productSales, array(&$this, "cmpProducts"));
             $productSales = array_reverse($this->productSales);
@@ -69,9 +69,9 @@ class Admin_dialog_product_sales extends Admin_dialog_Ecommerce_reports
     function sumProductSales($item) // {{{
     {
         $id = $item["product_id"] . (strlen($item["options"]) ? md5($item["options"]) : "");
-        $orderItem =& func_new("OrderItem");
+        $orderItem = func_new("OrderItem");
         $found = $orderItem->find("order_id=".$item["order_id"]." AND item_id='".addslashes($item["item_id"])."'");
-		$order =& func_new("Order", $item["order_id"]);
+		$order = func_new("Order", $item["order_id"]);
 		$orderItem->set("order", $order);
 		$item['price'] = $orderItem->get("price");
 		 

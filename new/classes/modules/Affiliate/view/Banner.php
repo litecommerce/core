@@ -48,7 +48,7 @@ class CBanner extends Component
     var $width = 120;
     var $height = 240;
 
-    function &getTemplate()
+    function getTemplate()
     {
         return "modules/Affiliate/banner_" . $this->get("type") . ".tpl";
     }

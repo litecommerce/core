@@ -51,7 +51,7 @@ class Admin_Dialog_partner_orders extends Admin_Dialog
     function action_export() // {{{
     {
         $w = func_new("Widget");
-        $w->component =& $this;
+        $w->component = $this;
         $w->set("template", "modules/Affiliate/orders.tpl");
         $this->startDownload("orders.csv");
         $w->init();
@@ -61,16 +61,16 @@ class Admin_Dialog_partner_orders extends Admin_Dialog
         $this->set("silent", true);
     } // }}}
     
-    function &getDelimiter() // {{{
+    function getDelimiter() // {{{
     {
         global $DATA_DELIMITERS;
         return $DATA_DELIMITERS[$this->delimiter];
     } // }}}
 
-    function &getSales() // {{{
+    function getSales() // {{{
     {
         if (is_null($this->sales)) {
-            $pp =& func_new("PartnerPayment");
+            $pp = func_new("PartnerPayment");
             $this->sales = $pp->searchSales(
                     $this->get("startDate"),
                     $this->get("endDate") + 24 * 3600,
@@ -87,12 +87,12 @@ class Admin_Dialog_partner_orders extends Admin_Dialog
         return $this->sales;
     } // }}}
 
-    function &getSalesCount() // {{{
+    function getSalesCount() // {{{
     {
         return count($this->get("sales"));
     } // }}}
     
-    function &getOrder() // {{{
+    function getOrder() // {{{
     {
         return $this->get("sale.order");
     } // }}}

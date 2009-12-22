@@ -74,7 +74,7 @@ class ExtraField extends Base
         "order_by" => false
     );
     
-    function &getProduct() // {{{
+    function getProduct() // {{{
     {
         return func_new("Product", $this->get("product_id"));
     } // }}}
@@ -83,7 +83,7 @@ class ExtraField extends Base
     {
         if ($this->get("parent_field_id") == 0)
         {
-    		$ef_children =& $this->getChildren();
+    		$ef_children = $this->getChildren();
     		if (is_array($ef_children)) {
     			foreach($ef_children as $ef_child) {
     				$ef_child->delete();
@@ -92,7 +92,7 @@ class ExtraField extends Base
     	}
 
         // delete all values
-        $fv =& func_new("FieldValue");
+        $fv = func_new("FieldValue");
         $valuesTable = $this->db->getTableByAlias($fv->alias);
         $sql = "DELETE FROM $valuesTable WHERE field_id=" . $this->get("field_id");
         $this->db->query($sql);
@@ -103,7 +103,7 @@ class ExtraField extends Base
     function update()
     {
         if ($this->get("parent_field_id") == 0) {
-    		$ef_children =& $this->getChildren();
+    		$ef_children = $this->getChildren();
     		if (is_array($ef_children)) {
     			foreach($ef_children as $ef_child) {
     				if ($ef_child->get("name") == $this->get("name")) {
@@ -118,7 +118,7 @@ class ExtraField extends Base
             }
 
 			if ($this->get("product_id") == 0) {
-				$ef_children =& func_new("ExtraField");
+				$ef_children = func_new("ExtraField");
 				$ef_children = $ef_children->findAll("parent_field_id='".$this->get("field_id")."'");
 				if (is_array($ef_children) && count($ef_children) > 0) {
 					$categories_list = explode("|", $this->get("categories"));
@@ -137,11 +137,11 @@ class ExtraField extends Base
     			if (is_array($categories_old) && is_array($categories)) {
     				foreach($categories_old as $cat_old) {
     					if (!in_array($cat_old, $categories)) {
-    						$product =& func_new("Product");
-                            $products =& $product->advancedSearch("", null, $cat_old);
+    						$product = func_new("Product");
+                            $products = $product->advancedSearch("", null, $cat_old);
                             if (is_array($products) && count($products) > 0) {
                             	foreach($products as $product) {
-                            		$ef_children =& func_new("ExtraField");
+                            		$ef_children = func_new("ExtraField");
                                     $ef_children->set("ignoreFilter", true);
     								$ef_children = $ef_children->findAll("parent_field_id='".$this->get("field_id")."' AND product_id='".$product->get("product_id")."'");
     								if (is_array($ef_children) && count($ef_children) > 0) {
@@ -171,7 +171,7 @@ class ExtraField extends Base
         return parent::filter();
     }
 
-    function &getImportFields()
+    function getImportFields()
     {
         return parent::getImportFields("fields_layout");
     }
@@ -197,7 +197,7 @@ class ExtraField extends Base
 							$categories = explode('|',$properties['categories']);
 							foreach($categories as $category) 
 							{
-								$cat =& func_new('Category',$category);
+								$cat = func_new('Category',$category);
 								$cat_path .= '|'.$cat->getStringPath();
 							}
 							$data[] = substr($cat_path, 1);
@@ -205,7 +205,7 @@ class ExtraField extends Base
 						else $data[] = "";	
 					}
 					else { 
-	                    $product =& $this->get("product");
+	                    $product = $this->get("product");
     	                $data[] = $product->_exportCategory();
 					} 
                     break;
@@ -227,7 +227,7 @@ class ExtraField extends Base
 	
 		if ($properties['sku']==NULL && $properties['product']==NULL)	
 		{
-			$global_extra_field =& func_new ("ExtraField");
+			$global_extra_field = func_new ("ExtraField");
 			$found = $global_extra_field->find("name='".addslashes($properties['name'])."' AND product_id=0");
 			$global_extra_field->set("default_value", $properties["default_value"]);
 			$global_extra_field->set("name", $properties["name"]);
@@ -240,7 +240,7 @@ class ExtraField extends Base
 				$global_extra_field->set("categories",""); 
 			else 
 			{
-				$category =& func_new("Category");
+				$category = func_new("Category");
 				foreach($category->parseCategoryField($properties["category"],true) as $path)	
 				{
 					$cat = $category->findCategory($path);
@@ -256,7 +256,7 @@ class ExtraField extends Base
 				$global_extra_field->update();
 			}
 	
-			$extra_fields  =& func_new("ExtraField");
+			$extra_fields = func_new("ExtraField");
 			$extra_fields_ = $extra_fields->findAll("name='".addslashes($properties["name"])."' AND product_id<>0");
 			if (!empty($extra_fields_))
 				foreach($extra_fields_ as $extra_field_) 
@@ -266,15 +266,15 @@ class ExtraField extends Base
 				}
 					
 		} else {
-			$product =& func_new("Product");
-        	$product =& $product->findImportedProduct($properties["sku"], $properties["category"], $properties["product"], false /* do not create categories */);
+			$product = func_new("Product");
+        	$product = $product->findImportedProduct($properties["sku"], $properties["category"], $properties["product"], false /* do not create categories */);
 			if (is_null($product)) {
 				echo "<font color=red>Product not found for line ".$this->lineNo."</font><br>";
 			}	
 			else {
 				$productID = $product->get("product_id");
-				$field =& func_new("ExtraField");
-				$global_extra_field =& func_new("ExtraField");
+				$field = func_new("ExtraField");
+				$global_extra_field = func_new("ExtraField");
 				$global_found = $global_extra_field->find("name='".addslashes($properties["name"])."' AND product_id=0");
 				if ($global_found)
 					$field->set("parent_field_id", $global_extra_field->get("field_id"));
@@ -300,7 +300,7 @@ class ExtraField extends Base
 				$fieldID = $field->get("field_id");
 				// search and update or create field value
         		if (!empty($properties["value"]) && strlen($properties["value"])) {
-            		$fv =& func_new("FieldValue");
+            		$fv = func_new("FieldValue");
             		$found = $fv->find("field_id=$fieldID AND product_id=$productID");
             		$fv->set("field_id", $fieldID);
             		$fv->set("product_id", $productID);
@@ -364,11 +364,11 @@ class ExtraField extends Base
         return in_array($categoryID, $this->categories);
     }
 
-    function &getChildren()
+    function getChildren()
     {
         if ($this->get("parent_field_id") == 0)
         {
-    		$ef_children =& func_new("ExtraField");
+    		$ef_children = func_new("ExtraField");
             $ef_children->set("ignoreFilter", true);
     		$ef_children = $ef_children->findAll("parent_field_id='".$this->get("field_id")."'");
     		if (!(is_array($ef_children) && count($ef_children) > 0))
@@ -398,7 +398,7 @@ class ExtraField extends Base
                "WHERE p.product_id IS NULL AND e.product_id<>0";
         $result = $this->db->getAll($sql);
         foreach ($result as $info) {
-            $ef =& func_new("ExtraField", $info["field_id"]);
+            $ef = func_new("ExtraField", $info["field_id"]);
             $ef->_collectGarbage();
         }
     } // }}}

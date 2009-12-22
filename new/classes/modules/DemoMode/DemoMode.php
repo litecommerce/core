@@ -69,8 +69,8 @@ class Module_DemoMode extends Module
 		$this->addDecorator("Mailer", "Mailer_DemoMode");
 		$this->addDecorator("FlexyCompiler", "FlexyCompiler_DemoMode");
 
-        $cfg =& func_new("Config");
-        $this->xlite->config =& $cfg->readConfig();
+        $cfg = func_new("Config");
+        $this->xlite->config = $cfg->readConfig();
         if (!$this->session->get("superUser")) {
             global $options;
             $options["decorator_details"]["compileDir"] = "var/run/classes/" . $this->session->getID() . "/";

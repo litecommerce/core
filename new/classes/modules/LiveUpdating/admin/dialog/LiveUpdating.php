@@ -100,7 +100,7 @@ class Admin_Dialog_LiveUpdating extends Admin_Dialog
     		}
 
     		if (!isset($_REQUEST["action"]) && !(isset($_REQUEST["text"])||isset($_REQUEST["status"])||isset($_REQUEST["importance"])||isset($_REQUEST["period"]))) {
-                $config =& func_new("Config");
+                $config = func_new("Config");
                 if ($config->find("name='filters_preferences' AND category='LiveUpdating'")) {
         			$preferences = unserialize(stripslashes($config->get("value")));
         			if (is_array($preferences)) {
@@ -175,7 +175,7 @@ class Admin_Dialog_LiveUpdating extends Admin_Dialog
 			return $this->_lastUpdate;
 		}
 
-        $sysupdate =& func_new("SystemUpdate");
+        $sysupdate = func_new("SystemUpdate");
         $updates = $sysupdate->findAll("type='core'", "update_id");
         if (!(is_array($updates) && count($updates) > 0)) {
         	$last_update = 0;
@@ -238,7 +238,7 @@ class Admin_Dialog_LiveUpdating extends Admin_Dialog
 	{
 		$this->getLicenseInfo();
 
-        $dialog =& func_new("Admin_Dialog_modules");
+        $dialog = func_new("Admin_Dialog_modules");
         $currentModulesList = $dialog->getSortModules(MODULE_FREE);
         if (!is_array($currentModulesList)) {
         	$currentModulesList = array();
@@ -276,7 +276,7 @@ class Admin_Dialog_LiveUpdating extends Admin_Dialog
 	{
 		$this->getLicenseInfo();
 
-		$dialog =& func_new("Admin_Dialog_modules");
+		$dialog = func_new("Admin_Dialog_modules");
 		if (defined('MODULE_COMMERCICAL_OTHER')) {
 			$moduleTypes = array(MODULE_COMMERCICAL_OTHER, MODULE_COMMERCICAL_SHIPPING, MODULE_COMMERCICAL_PAYMENT);
 		} else {
@@ -362,7 +362,7 @@ class Admin_Dialog_LiveUpdating extends Admin_Dialog
 
 	function getUpdateName($update_id)
 	{
-		$sysupdate =& func_new("SystemUpdate");
+		$sysupdate = func_new("SystemUpdate");
         $sysupdate->set("update_id", $update_id);
 
         return $sysupdate->get("name");
@@ -397,7 +397,7 @@ class Admin_Dialog_LiveUpdating extends Admin_Dialog
 
                 $update_info = $data[0];
 				
-				$sysupdate =& func_new("SystemUpdate", $update_info["update_id"]);
+				$sysupdate = func_new("SystemUpdate", $update_info["update_id"]);
 				if ($sysupdate->isExists()) {
 					$this->webOutput("<FONT color=red><B>[ERR]</B> (Already exists.)</FONT>");
                     $errorsFound = true;
@@ -424,7 +424,7 @@ class Admin_Dialog_LiveUpdating extends Admin_Dialog
                 	$sysupdate->create();
 
                 	foreach($update_info["items"] as $item) {
-                		$sysupdate_item =& func_new("SystemUpdateItem");
+                		$sysupdate_item = func_new("SystemUpdateItem");
                         $sysupdate_item->set("update_id", $update_info["update_id"]);
 						$sysupdate_item->set("server_file_id", $item["file_item_id"]);
 						$sysupdate_item->set("server_item_id", $item["update_item_id"]);
@@ -463,7 +463,7 @@ EOSTR;
 		$this->set("silent", true);
 	}
 
-    function &getAllParams($exeptions=null)
+    function getAllParams($exeptions=null)
     {
     	$allParams = parent::getAllParams();
 		if ($this->page != "manage") {
@@ -571,7 +571,7 @@ EOSTR;
 		if (trim($_type))
 			$conditions[] = "type='$_type'";
 
-		$sysupdate =& func_new("SystemUpdate");
+		$sysupdate = func_new("SystemUpdate");
 		$this->_allUpdatesNumber = $sysupdate->count(implode(" AND ", $conditions));
 
 		$_last_type = $_type;
@@ -581,14 +581,14 @@ EOSTR;
 	function getModulesUpdatesList()
 	{
 		$list = array();
-		$modules =& $this->xlite->mm->get("modules");
+		$modules = $this->xlite->mm->get("modules");
 		foreach ($modules as $module) {
 			if (!$module->get("enabled"))
 				continue;
 
 			$sql = "type='module' AND module_name='".$module->get("name")."' AND version='".$module->get("version")."'";
 
-			$obj =& func_new("SystemUpdate");
+			$obj = func_new("SystemUpdate");
 			if (($total = $obj->count($sql)) <= 0) {
 				continue;
 			}
@@ -621,7 +621,7 @@ EOSTR;
 
 			$this->module_name = implode(",", $this->modules);
 
-			$dialog =& func_new("Admin_Dialog_LiveUpdating");
+			$dialog = func_new("Admin_Dialog_LiveUpdating");
 
 			// copy all params
 			foreach($this->getAllParams() as $name => $val) {
@@ -639,7 +639,7 @@ EOSTR;
 			return;
 
 		$this->set("silent", true);
-		$dialog =& func_new("Admin_Dialog_LiveUpdating");
+		$dialog = func_new("Admin_Dialog_LiveUpdating");
 
 		// copy all params
 		foreach($this->getAllParams() as $name => $val) {
@@ -661,7 +661,7 @@ EOSTR;
 		if (trim($_type))
 			$conditions[] = "type='$_type'";
 
-		$sysupdate =& func_new("SystemUpdate");
+		$sysupdate = func_new("SystemUpdate");
 		$this->_appliedUpdatesNumber = $sysupdate->count(implode(" AND ", $conditions));
 
 		$_last_type = $_type;
@@ -675,7 +675,7 @@ EOSTR;
 			return $this->_notAppliedUpdatesNumber;
 		}
 
-		$sysupdate =& func_new("SystemUpdate");
+		$sysupdate = func_new("SystemUpdate");
 		$this->_notAppliedUpdatesNumber = $sysupdate->count("status='N' AND type='".$_type."'");
 
 		$_last_type = $_type;
@@ -687,10 +687,10 @@ EOSTR;
     	return ($this->getAllUpdatesNumber() > 0 && $this->getAllUpdatesNumber() == $this->getAppliedUpdatesNumber());
     }
 
-    function &getDownloadedUpdates($_type=null)
+    function getDownloadedUpdates($_type=null)
     {
         if (is_null($this->updates)) {
-            $sysupdate =& func_new("SystemUpdate");
+            $sysupdate = func_new("SystemUpdate");
             
             $condition = array();
 			
@@ -788,7 +788,7 @@ EOSTR;
 			$preferences["period"] = $period;
         }
 
-        $config =& func_new("Config");
+        $config = func_new("Config");
         $update_config = true;
         if (!$config->find("name='filters_preferences' AND category='LiveUpdating'")) {
         	$update_config = false;
@@ -867,7 +867,7 @@ EOSTR;
     {
 		$updates = array();
 		$update_modules = array();
-		$sysupdate =& func_new("SystemUpdate");
+		$sysupdate = func_new("SystemUpdate");
 		$conditions = array("status='N'");
 
 		if ($this->upload_files) {
@@ -879,7 +879,7 @@ EOSTR;
 
 			$temp = explode(",", $this->module_name);
 			foreach ($temp as $name) {
-				$module =& func_new("Module", $name);
+				$module = func_new("Module", $name);
 				if (!$module->is("enabled"))
 					continue;
 
@@ -889,7 +889,7 @@ EOSTR;
 			}
 
 			foreach ($update_modules as $module) {
-				$obj =& func_new("SystemUpdate");
+				$obj = func_new("SystemUpdate");
 				$objs = $obj->findAll(implode(" AND ", $conditions)." AND module_name='".$module["name"]."' AND version='".$module["version"]."'", "update_id ASC");
 				foreach ($objs as $object)
 					$updates[] = $object;
@@ -933,7 +933,7 @@ EOSTR;
 			foreach ($updates as $update) {
 				$update_id = $update->get("update_id");
 
-				$updateItem =& func_new("SystemUpdateItem");
+				$updateItem = func_new("SystemUpdateItem");
 				$items = $updateItem->findAll("update_id='".$update_id."'");
 				foreach ($items as $item) {
 					$update_data = unserialize(stripslashes($item->get("update_data")));
@@ -970,7 +970,7 @@ EOSTR;
 		if ($this->mode == "process" && $errorsFound == 0) {
 			foreach ($updates as $update) {
 				$update_id = $update->get("update_id");
-                $updateItem =& func_new("SystemUpdateItem");
+                $updateItem = func_new("SystemUpdateItem");
 
                 $items = $updateItem->findAll("update_id='".$update_id."'");
                 foreach ($items as $item) {
@@ -1119,7 +1119,7 @@ EOSTR;
     		return;
     	}
 
-    	$update =& func_new("SystemUpdate");
+    	$update = func_new("SystemUpdate");
     	if (!$update->find("update_id='".$this->update_id."'")) {
     		return;
     	}
@@ -1131,7 +1131,7 @@ EOSTR;
 			return;
 		}
 
-    	$updateItem =& func_new("SystemUpdateItem");
+    	$updateItem = func_new("SystemUpdateItem");
         $updates = $updateItem->findAll("update_id='".$this->update_id."'");
 
     	if (count($updates) == 0) {
@@ -1177,7 +1177,7 @@ EOSTR;
 
 			// skip checking (diff, function) updates if file update exists.
 			if ($ui->get("server_file_id") > 0) {
-				$obj =& func_new("SystemUpdateItem");
+				$obj = func_new("SystemUpdateItem");
 				if ($obj->find("update_id='".$this->update_id."' AND server_item_id='".$ui->get("server_file_id")."' AND type='file'")) {
 //					$errorsFound ++;
 					continue;
@@ -1321,13 +1321,13 @@ EOSTR;
 						}
 
 						if ($update_item_id > 0 && $this->upload_files) {
-							$obj =& func_new("SystemUpdateItem");
+							$obj = func_new("SystemUpdateItem");
 
 							if (!$obj->find("type='file' AND server_item_id='$update_item_id' AND update_id='".$this->update_id."'")) {
 								$item = $this->getUpdateData($this->update_id, $update_item_id);
 
 								if ($item && $item["update_data"]) {
-									$file_item =& func_new("SystemUpdateItem");
+									$file_item = func_new("SystemUpdateItem");
 									$file_item->set("server_item_id", $update_item_id);
 									$file_item->set("update_id", $this->update_id);
 									$file_item->set("type", "file");
@@ -1372,7 +1372,7 @@ EOSTR;
                                 $this->updateDiffData($update_data["file"], $hunkGood, $update_data["search_data"], $update_data["replace_data"]);
                             }
 
-                            $uif =& func_new("SystemUpdateItemFile");
+                            $uif = func_new("SystemUpdateItemFile");
                             if (!$uif->find("update_id='".$this->update_id."' AND filename='".$update_data["file"]."'")) {
                             	$uif->set("update_id", $this->update_id);
                             	$uif->set("filename", $update_data["file"]);
@@ -1445,12 +1445,12 @@ EOSTR;
 	function action_undo_all()
 	{
 		$module_version = "";
-		$sysupdate =& func_new("SystemUpdate");
+		$sysupdate = func_new("SystemUpdate");
         $conditions = array("status='A'");
         if (!is_null($this->module_name)) {
             $conditions[] = "type='module'";
 
-			$module =& func_new("Module", $this->module_name);
+			$module = func_new("Module", $this->module_name);
 			if (!$module->is("enabled"))
 				return;
 
@@ -1583,7 +1583,7 @@ EOSTR;
     		return;
     	}
 
-    	$update =& func_new("SystemUpdate");
+    	$update = func_new("SystemUpdate");
     	if (!$update->find("update_id='".$this->update_id."'")) {
     		return;
     	}
@@ -1591,7 +1591,7 @@ EOSTR;
     		return;
     	}
 
-    	$updateItem =& func_new("SystemUpdateItem");
+    	$updateItem = func_new("SystemUpdateItem");
         $updates = $updateItem->findAll("update_id='".$this->update_id."'");
 
 		if (count($updates) == 0) {
@@ -1718,7 +1718,7 @@ EOSTR;
                             $update->set("applied", 0);
                             $update->update();
 
-                            $uif =& func_new("SystemUpdateItemFile");
+                            $uif = func_new("SystemUpdateItemFile");
                             if ($uif->find("update_id='".$this->update_id."' AND filename='".$update_data["file"]."'")) {
                             	$uif->delete();
                             }
@@ -2372,14 +2372,14 @@ EOSTR;
 
 	function isApplyAllValid()
 	{
-		$sysupdate =& func_new("SystemUpdate");
+		$sysupdate = func_new("SystemUpdate");
         $updates = $sysupdate->count("type='core' AND status='N'");
 		return ($updates > 0) ? true : false;
 	}
 
 	function isUndoAllValid()
 	{
-		$sysupdate =& func_new("SystemUpdate");
+		$sysupdate = func_new("SystemUpdate");
 		$updates = $sysupdate->count("type='core' AND status='A'");
 		return ($updates > 0) ? true : false;
 	}
@@ -2401,7 +2401,7 @@ EOSTR;
 
 	function checkModuleUpdate($name, $option=null)
 	{
-		$dialog =& func_new("Admin_Dialog_modules_LiveUpdating");
+		$dialog = func_new("Admin_Dialog_modules_LiveUpdating");
 		$dialog->getModulesInfo();
 		return $dialog->checkModuleUpdate($name, $option);
 	}
@@ -2412,7 +2412,7 @@ EOSTR;
 			return;
 		}
 
-		$config =& func_new("Config");
+		$config = func_new("Config");
 		$config->createOption("LiveUpdating", "last_checked", "", "serialized");
 	}
 

@@ -45,19 +45,19 @@ class Admin_Dialog_order_statuses extends Admin_Dialog
 	var $parent		= null;
 	var $deleted	= false;
 
-	function &getParentStatuses() // {{{
+	function getParentStatuses() // {{{
 	{
 		if (is_null($this->parent)) {
-			$status = &func_new("OrderStatus");
+			$status = func_new("OrderStatus");
 			$this->parent = $status->findAll("parent = ''");
 		}
 		return $this->parent;
 	} // }}} 
 	
-	function &getOrderStatuses() // {{{  
+	function getOrderStatuses() // {{{  
     {
         if (is_null($this->statuses)) {
-            $status   = &func_new("OrderStatus");
+            $status = func_new("OrderStatus");
             $statuses = $status->findAll();
             foreach($statuses as $status_) {
                 $letter = $status_->get("status");
@@ -65,7 +65,7 @@ class Admin_Dialog_order_statuses extends Admin_Dialog
                 if ($parent == "") {
                     $this->statuses[$letter]["base"] = $status_;
                 } else {    
-					$order =& func_new("Order");
+					$order = func_new("Order");
 					$counter = $order->count("substatus = '$letter'");
 					$this->statuses[$parent]["children"][$letter]["disabled"] = ($counter ? true : false);
 					if (strlen($letter) != 1) {
@@ -81,7 +81,7 @@ class Admin_Dialog_order_statuses extends Admin_Dialog
         return $this->statuses;
     } // }}}  
 
-	function &getLetters() // {{{ 
+	function getLetters() // {{{ 
 	{
 		if (is_null($this->letters)) {
 			foreach($this->get("orderStatuses") as $key => $status) {
@@ -114,9 +114,9 @@ class Admin_Dialog_order_statuses extends Admin_Dialog
 		if (strlen($this->add_status["status"]) != 1) {
 			return;
 		}
-		$status = &func_new("OrderStatus");
+		$status = func_new("OrderStatus");
 		if (!intval($this->add_status['orderby'])) {
-            $status   = &func_new("OrderStatus");
+            $status = func_new("OrderStatus");
 			$statuses = $status->findAll("parent = '".$this->add_status['parent']."' OR status = '".$this->add_status['parent']."'");
 			$status_ids = array();
 			foreach($statuses as $status_) {
@@ -132,7 +132,7 @@ class Admin_Dialog_order_statuses extends Admin_Dialog
 	{
         if ($this->get("update_status")) {
             foreach($this->get("update_status") as $status_id => $properties) {
-                $orderStatus = &func_new("OrderStatus",$status_id);
+                $orderStatus = func_new("OrderStatus",$status_id);
                 $orderStatus->set("properties",$properties);
 				$orderStatus->set("email",isset($properties['email']));
 				$orderStatus->set("cust_email",isset($properties['cust_email']));
@@ -146,7 +146,7 @@ class Admin_Dialog_order_statuses extends Admin_Dialog
 	{
 		if ($this->get("delete_status")) {
 			foreach($this->get("delete_status") as $status_id) {
-				$orderStatus = &func_new("OrderStatus",$status_id);
+				$orderStatus = func_new("OrderStatus",$status_id);
 				$orderStatus->delete();
 			}
 		}

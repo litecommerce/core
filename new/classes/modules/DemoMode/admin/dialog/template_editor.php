@@ -49,7 +49,7 @@ class Module_DemoMode_AD_template_editor_LayoutOrganizer extends Admin_Dialog_te
     function init()
     {
 		if (isset($_REQUEST["scheme_manager"])) {
-            $dialog =& func_new("Admin_Dialog_demo_mode");
+            $dialog = func_new("Admin_Dialog_demo_mode");
             $_REQUEST["target"] = "demo_mode";
             $dialog->init();
             $dialog->display();

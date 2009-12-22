@@ -59,7 +59,7 @@ class Module_SagePay extends Module
     {
         
         parent::init();
-        $pm =& func_new('PaymentMethod', "sagepaydirect_cc");
+        $pm = func_new('PaymentMethod', "sagepaydirect_cc");
 
 		switch($pm->get("params.solution")) {
 			case "form":

@@ -57,7 +57,7 @@ class PaymentMethod_authorizenet_ch extends PaymentMethod_echeck
     function constructor($id = null)
     {
         parent::constructor($id);
-        $this->processor =& func_new("AuthorizeNet_processor");
+        $this->processor = func_new("AuthorizeNet_processor");
     }
 
     function process(&$cart)

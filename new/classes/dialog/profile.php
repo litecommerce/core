@@ -72,7 +72,7 @@ class Dialog_profile extends Dialog
     {
         parent::init();
 		if ($this->profileForm->isFromCheckout()) {
-            $cart =& func_get_instance("Cart");
+            $cart = func_get_instance("Cart");
             if (!$cart->isEmpty()) {
             	$this->profileForm->profile = $cart->get("profile");
     		} else {
@@ -118,14 +118,14 @@ class Dialog_profile extends Dialog
     {
         $countriesArray = array();
 
-        $country =& func_new("Country");
-        $countries =& $country->findAll("enabled='1'");
+        $country = func_new("Country");
+        $countries = $country->findAll("enabled='1'");
         foreach($countries as $country) {
             $countriesArray[$country->get("code")]["number"] = 0;
             $countriesArray[$country->get("code")]["data"] = array();
 
-            $state =& func_new("State");
-            $states =& $state->findAll("country_code='".$country->get("code")."'");
+            $state = func_new("State");
+            $states = $state->findAll("country_code='".$country->get("code")."'");
             if (is_array($states) && count($states) > 0) {
                 $countriesArray[$country->get("code")]["number"] = count($states);
                 foreach($states as $state) {
@@ -153,7 +153,7 @@ class Dialog_profile extends Dialog
         $this->set("mode", $this->profileForm->get("mode"));
 
         if ($this->registerForm->is("valid")) {
-			$cart =& func_get_instance("Cart");
+			$cart = func_get_instance("Cart");
 			if (!$cart->isEmpty()) {
 				$cart->set("profile_id", $this->profileForm->profile->get("profile_id"));
 				$cart->setProfile($this->profileForm->profile);
@@ -166,7 +166,7 @@ class Dialog_profile extends Dialog
     function action_delete()
     {
         if ($this->auth->is("logged")) {
-			$this->profile =& $this->auth->get("profile");
+			$this->profile = $this->auth->get("profile");
             if ($this->profile->isAdmin()) {
                 $this->set("mode", "delete");
                 $this->set("submode", "cancelled");

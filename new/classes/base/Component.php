@@ -81,7 +81,7 @@ class Component extends Widget
 
     function handleRequest()
     {
-        $components =& $this->get("components");
+        $components = $this->get("components");
         for ($i = 0; $i < count($components); $i++) {
             $components[$i]->handleRequest();
         }
@@ -95,7 +95,7 @@ class Component extends Widget
     
     function fillForm()
     {
-        $components =& $this->get("components");
+        $components = $this->get("components");
         for ($i=0; $i<count($components); $i++) {
             if ($components[$i]->is("visible")) {
                 $components[$i]->fillForm();
@@ -103,7 +103,7 @@ class Component extends Widget
         }
     }
  
-    function &getAllParams()
+    function getAllParams()
     {
         $result = array();
         foreach ($this->get("params") as $name) {
@@ -112,7 +112,7 @@ class Component extends Widget
             }
         }
         // merge with subcomponents
-        $components =& $this->get("components");
+        $components = $this->get("components");
         for ($i=0; $i<count($components); $i++) {
             if ($components[$i]->is("visible")) {
                 $result = array_merge($result, $components[$i]->get("allParams"));
@@ -121,17 +121,17 @@ class Component extends Widget
         return $result;
     }
 
-    function &getComponents()
+    function getComponents()
     {
         return $this->components;
     }
     
     function addComponent(&$component)
     {
-        $this->components[] =& $component;
+        $this->components[] = $component;
     }
 
-    function &getThisVar()
+    function getThisVar()
     {
         return $this;
     }
@@ -141,7 +141,7 @@ class Component extends Widget
         if (!$this->valid) {
             return false;
         }
-        $components =& $this->get("components");
+        $components = $this->get("components");
         for ($i=0; $i<count($components); $i++) {
             if ($components[$i]->is("visible") && !$components[$i]->is("valid") && !$components[$i]->is("validationUnnecessary")) {
                 return false;

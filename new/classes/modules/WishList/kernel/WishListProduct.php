@@ -57,19 +57,19 @@ class WishListProduct extends Base // {{{
 	var $defaultOrder 	= "order_by";
 	var $primaryKey 	= array("item_id","wishlist_id");
 
-	function &getProduct() // {{{ 
+	function getProduct() // {{{ 
 	{
 		if (is_null($this->product)) {
-			$this->product = & func_new("Product",$this->get("product_id"));
+			$this->product = func_new("Product",$this->get("product_id"));
 		}	
 		return $this->product;	
 		
 	} // }}}
 	
-	function &getOrderItem() // {{{
+	function getOrderItem() // {{{
 	{
         if (is_null($this->orderItem)) {
-            $this->orderItem = & func_new("OrderItem");
+            $this->orderItem = func_new("OrderItem");
             $this->orderItem->set("product",$this->get("product"));
 		}										        
 		
@@ -92,7 +92,7 @@ class WishListProduct extends Base // {{{
         return $isChanged;
     } // }}}
 
-	function &get($name) // {{{
+	function get($name) // {{{
 	{
 		switch($name) {
 		    case "listPrice" :
@@ -111,7 +111,7 @@ class WishListProduct extends Base // {{{
 		return parent::get($name);
 	} // }}}
 
-	function &getImageURL() // {{{
+	function getImageURL() // {{{
 	{
 		return $this->get("product.imageURL");
 	} // }}}
@@ -121,18 +121,18 @@ class WishListProduct extends Base // {{{
 		return CART_SELF . "?target=product&product_id=" . $this->get("product_id");	
 	} // }}}
 
-	function &getTotal() // {{{
+	function getTotal() // {{{
 	{
 		return $this->get("price")*$this->get("amount");
 	} // }}}
 	
-	function &hasImage() // {{{
+	function hasImage() // {{{
 	{
 		$product = $this->get("product");
 		return $this->product->hasImage();
  	} // }}}
 	
-	function &hasOptions() // {{{ 
+	function hasOptions() // {{{ 
 	{
 		return $this->get("options");
 	} // }}}
@@ -143,7 +143,7 @@ class WishListProduct extends Base // {{{
 			([Color]=>Green, [Size]=>Large)
 		)
 	*/
-	function & getOptionExceptionsAsArray() {
+	function  getOptionExceptionsAsArray() {
 		$exceptions = array();
 		$product = $this->getProduct();
 		foreach ($product->get("optionExceptions") as $oneException) {
@@ -157,7 +157,7 @@ class WishListProduct extends Base // {{{
 		return $exceptions;
 	}
 	
-	function & getSelectedOptionsAsArray() {
+	function  getSelectedOptionsAsArray() {
 		$selectedOptions = $this->getProductOptions();
 		$result = array();
 		foreach ($selectedOptions as $selectedOption) {
@@ -193,8 +193,8 @@ class WishListProduct extends Base // {{{
 			// if ProductOptions disabled - all options are exists
 			return true;
 		}
-		$product = & $this->getProduct();
-		$selectedOptions = & $this->getSelectedOptionsAsArray();
+		$product = $this->getProduct();
+		$selectedOptions = $this->getSelectedOptionsAsArray();
 		
 		$result = true;
 		foreach ($product->getProductOptions() as $productOptions) {
@@ -216,7 +216,7 @@ class WishListProduct extends Base // {{{
 		return $result;
 	}
 	
-   	function &getProductOptions() // {{{
+   	function getProductOptions() // {{{
 	{
 		$options = $this->get("options");
 		if(empty($options)) 

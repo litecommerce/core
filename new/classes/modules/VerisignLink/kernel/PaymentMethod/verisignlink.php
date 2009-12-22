@@ -53,12 +53,12 @@ class PaymentMethod_verisignlink extends PaymentMethod_credit_card
         PaymentMethod_VerisignLink_handleRequest($this, $cart);
     }
 
-	function &getOrderId(&$cart)
+	function getOrderId(&$cart)
 	{
 		return $cart->get("order_id");
 	}
 
-	function &getPaymentURL(&$cart)
+	function getPaymentURL(&$cart)
 	{
 		return $this->xlite->ShopUrl("classes/modules/VerisignLink/redirect.php"); 
 	}

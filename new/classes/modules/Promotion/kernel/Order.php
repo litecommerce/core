@@ -100,7 +100,7 @@ class Module_Promotion_Order extends Order
 		return ceil($this->getMaxPayByPoints() / $this->config->get("Promotion.bonusPointsCost"));
 	}
 	
-	function &getOrderAppliedBonuses()
+	function getOrderAppliedBonuses()
 	{
 		if (!$this->xlite->is("adminZone")) 
 			$this->_appliedBonuses = null;
@@ -108,7 +108,7 @@ class Module_Promotion_Order extends Order
 		return $bonuses;
 	}
 
-	function &getRealAppliedBonuses()
+	function getRealAppliedBonuses()
 	{
         if (!$this->xlite->is("adminZone"))
             $this->_appliedBonuses = null;
@@ -120,7 +120,7 @@ class Module_Promotion_Order extends Order
 		return $realBonuses;
 	}
 
-	function &get($name)
+	function get($name)
 	{
 		if ($name == "totalWithBonusPoints") {
 			return $this->getMaxPayByPoints();
@@ -161,7 +161,7 @@ class Module_Promotion_Order extends Order
     */
 	function addBonusPoints($points)
 	{
-        $op = & $this->get("origProfile");
+        $op = $this->get("origProfile");
 		if (!is_null($op)) {
 			$op->set("bonusPoints", $op->get("bonusPoints") + $points);
 			$op->update();
@@ -198,7 +198,7 @@ class Module_Promotion_Order extends Order
 
         // decrease bonus points
         $this->addBonusPoints($sign * ceil($this->get("payedByPoints") / $this->config->get("Promotion.bonusPointsCost")));
-        $dc =& $this->get("DC.peer");
+        $dc = $this->get("DC.peer");
         if (!is_null($dc)) {
             if ($dc->get("status") != "D") {
             	// increase/decrease times the discount coupon used times
@@ -263,9 +263,9 @@ class Module_Promotion_Order extends Order
 		return "enabled=1 AND start_date<= " . time() . " AND end_date >= " . time();
 	}
 
-	function &getSpecialOffers($where="")
+	function getSpecialOffers($where="")
 	{
-		$so =& func_new("SpecialOffer");
+		$so = func_new("SpecialOffer");
 		$result = array();
 		$where = $this->buildWhereSpecialOffers($where);
         $found = $so->findAll($where);
@@ -363,16 +363,16 @@ class Module_Promotion_Order extends Order
 	* Find special offers that were applied to this order.
 	* @return array of SpecialOffer with bonus information
 	*/
-	function &getAppliedBonuses($where = null)
+	function getAppliedBonuses($where = null)
 	{
 		if (is_null($this->_appliedBonuses)) {
         	// cache results
 			if (!$this->get("order_id")) {
 				$this->_appliedBonuses = array();
 			} else {
-				$bonus =& func_new("SpecialOffer");
+				$bonus = func_new("SpecialOffer");
 				$bonus->_range = "order_id=" . $this->get("order_id");
-				$this->_appliedBonuses =& $bonus->findAll($where);
+				$this->_appliedBonuses = $bonus->findAll($where);
 			}
 		}
 		return $this->_appliedBonuses;
@@ -386,7 +386,7 @@ class Module_Promotion_Order extends Order
 			$so->delete();
 		}
 
-        $dc =& $this->get("DC");
+        $dc = $this->get("DC");
         if (!is_null($dc)) {
 			$dc->delete();
     	}
@@ -477,10 +477,10 @@ class Module_Promotion_Order extends Order
         $this->logger->log("<-Order::calcTotal");
     }
 	
-	function &getDC()
+	function getDC()
     {
         if (is_null($this->DC) && $this->get("order_id")) { 
-            $dc =& func_new("DiscountCoupon");
+            $dc = func_new("DiscountCoupon");
             $dc->_range = "";
             if ($dc->find("order_id=".$this->get("order_id"))) {
                 $this->DC = $dc;
@@ -564,7 +564,7 @@ class Module_Promotion_Order extends Order
 	function getItemsByTaxValue()
 	{
 		if (is_null($this->_items_by_tax_value)) {
-			$taxRates =& func_new("TaxRates");
+			$taxRates = func_new("TaxRates");
 			$taxRates->set("order", $this);
 
 			$items = (array) $this->get("items");
@@ -614,7 +614,7 @@ class Module_Promotion_Order extends Order
 			}
 		}
 
-		$taxRates =& func_new("TaxRates");
+		$taxRates = func_new("TaxRates");
 		$taxRates->set("order", $this);
 
 		// apply discount to items maximally taxed 

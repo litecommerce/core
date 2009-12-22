@@ -46,7 +46,7 @@ class Dialog_partner_payments extends PartnerDialog
 {
     var $totalPaid = 0.00;
 
-    function &getPayments()
+    function getPayments()
     {
         if (!$this->auth->isAuthorized($this)) {
         	return null;
@@ -54,7 +54,7 @@ class Dialog_partner_payments extends PartnerDialog
 
         if (is_null($this->payments)) {
             $this->payments = array();
-            $pp =& func_new("PartnerPayment");
+            $pp = func_new("PartnerPayment");
             $table = $pp->db->getTableByAlias($pp->alias);
             $partnerID = $this->get("auth.profile.profile_id");
             if ($this->get("period") == "period") {

@@ -55,7 +55,7 @@ class Module_InventoryTracking_Admin_Dialog_update_inventory extends Admin_Dialo
 
     function handleRequestAmount()
     {
-        $this->inventory =& func_get_instance("Inventory");
+        $this->inventory = func_get_instance("Inventory");
     }
 
     function export_amount()

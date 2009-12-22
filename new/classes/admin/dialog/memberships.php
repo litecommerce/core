@@ -58,16 +58,16 @@ class Admin_Dialog_memberships extends Admin_Dialog // {{{
                 'profiles'   => array(),
                 'membership' => array()
             );
-            $membership =& func_new("Membership");
+            $membership = func_new("Membership");
             $memberships = $membership->findAll();
             foreach($memberships as $id => $membership_) {
-                $profile =& func_new("Profile");
+                $profile = func_new("Profile");
                 $profilesData['profiles'][$id] = $this->getMembershipProfiles($membership_->get("membership"));
                 $profilesData['membership'][$id] = $membership_->get("membership");
             }
             $memberships = $this->get("update_memberships");
             foreach($memberships as $id => $membership_) {
-                $membership =& func_new("Membership",$id);
+                $membership = func_new("Membership",$id);
 				$membership_['membership'] = $membership->stripInvalidData($membership_['membership']);
 				if (strlen($membership_['membership']) <= 0) {
 					if (strlen($membership->get("membership")) <= 0) {
@@ -96,7 +96,7 @@ class Admin_Dialog_memberships extends Admin_Dialog // {{{
 			@set_time_limit(0);
             $memberships = $this->get("deleted_memberships");
 			foreach($memberships as $membership_id) {
-				$membership =& func_new("Membership", $membership_id);
+				$membership = func_new("Membership", $membership_id);
 			    $m = $membership->get('membership');
                 $this->updateProfilesMembership($this->getMembershipProfiles($m), $m, '', true);
                 $membership->delete();
@@ -108,7 +108,7 @@ class Admin_Dialog_memberships extends Admin_Dialog // {{{
 	{
 		if ($this->get("new_membership")) {
 			$new_membership = $this->get("new_membership");
-			$membership =& func_new("Membership");
+			$membership = func_new("Membership");
 
 			$new_membership['membership'] = $membership->stripInvalidData($new_membership['membership']);
 			if (strlen($new_membership['membership']) <= 0) {
@@ -134,15 +134,15 @@ class Admin_Dialog_memberships extends Admin_Dialog // {{{
 		}	
 	} // }}}
 	
-	function &getMemberships() // {{{
+	function getMemberships() // {{{
 	{
-		$membership =& func_new("Membership");
+		$membership = func_new("Membership");
 		return $membership->findAll();
 	} // }}}
 
-    function &getMembershipProfiles($membership) // {{{
+    function getMembershipProfiles($membership) // {{{
     {
-        $profile =& func_new("Profile");
+        $profile = func_new("Profile");
         return $profile->findAll("membership = '".$membership."' OR pending_membership='".$membership."'");
     } // }}}
 

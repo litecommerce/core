@@ -60,7 +60,7 @@ class Admin_Dialog_cc_cert extends Admin_Dialog
 
 	function saveParam($name, $value)
 	{
-		$cfg =& func_new('Config');
+		$cfg = func_new('Config');
 		$update = false;
 		if ($cfg->find("category='" . $this->get('cc_processor') . "' and name='" . $name . "'")) {
 			$update = true;

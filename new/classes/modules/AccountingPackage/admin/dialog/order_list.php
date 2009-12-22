@@ -74,7 +74,7 @@ class Module_AccountingPackage_Admin_Dialog_order_list extends Admin_Dialog_orde
         foreach (func_get_args() as $name) {
             if (isset($this->$name)) {
                 $value = $this->$name;
-                $config =& func_new("Config");
+                $config = func_new("Config");
                 if ($config->find("category='ImportExport' AND name='$name'")) {
                     $config->set("value", $value);
                     $config->update();

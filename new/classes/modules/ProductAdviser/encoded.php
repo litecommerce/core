@@ -10,9 +10,9 @@ function ProductAdviser_updateInventory(&$_this, &$item)
 {
 	if ($_this->xlite->get("PA_InventorySupport") && $_this->config->get("ProductAdviser.customer_notifications_enabled")) {
 		if ($item->get("outOfStock")) {
-			$rejectedItemInfo =& func_new("stdClass");
+			$rejectedItemInfo = func_new("stdClass");
         	$rejectedItem = $item;
-        	$product =& $item->get("product");
+        	$product = $item->get("product");
         	$rejectedItemInfo->product_id = $product->get("product_id");
         	$rejectedItem->set("product", $product);
         	if ($_this->xlite->get("ProductOptionsEnabled") && $product->hasOptions()) {
@@ -37,7 +37,7 @@ function ProductAdviser_checkedOut(&$products)
 
     foreach ($products as $product_id_idx => $product_id) {
     	for ($i=$product_id_idx+1; $i<count($products); $i++) {
-			$statistic =& func_new("ProductAlsoBuy");
+			$statistic = func_new("ProductAlsoBuy");
             if(!$statistic->find("product_id='".$product_id."' AND product_id_also_buy='".$products[$i]."'")) {
             	$statistic->set("product_id", $product_id);
             	$statistic->set("product_id_also_buy", $products[$i]);
@@ -48,7 +48,7 @@ function ProductAdviser_checkedOut(&$products)
                 $statistic->update();
             }
 
-			$statistic =& func_new("ProductAlsoBuy");
+			$statistic = func_new("ProductAlsoBuy");
             if(!$statistic->find("product_id='".$products[$i]."' AND product_id_also_buy='".$product_id."'")) {
             	$statistic->set("product_id", $products[$i]);
             	$statistic->set("product_id_also_buy", $product_id);
@@ -62,18 +62,18 @@ function ProductAdviser_checkedOut(&$products)
     }
 }
 
-function &ProductAdviser_getRelatedProducts(&$_this)
+function ProductAdviser_getRelatedProducts(&$_this)
 {
 	if (isset($_this->_RelatedProducts)) {
 		return $_this->_RelatedProducts; 
 	}
 
-	$relatedProduct =& func_new("RelatedProduct");
+	$relatedProduct = func_new("RelatedProduct");
 	$productId = $_this->get("product_id");
-	$_this->_RelatedProducts =& $relatedProduct->findAll("product_id='$productId'");
+	$_this->_RelatedProducts = $relatedProduct->findAll("product_id='$productId'");
 	if (is_array($_this->_RelatedProducts)) {
 		foreach($_this->_RelatedProducts as $p_key => $product) {
-            $rp =& func_new("Product", $product->get("related_product_id"));
+            $rp = func_new("Product", $product->get("related_product_id"));
 			$addSign = true;
 			$addSign &= $rp->filter();
 			$addSign &= $rp->is("available");
@@ -99,18 +99,18 @@ function &ProductAdviser_getRelatedProducts(&$_this)
     return $_this->_RelatedProducts; 
 }
 
-function &ProductAdviser_getProductsAlsoBuy(&$_this)
+function ProductAdviser_getProductsAlsoBuy(&$_this)
 {
 	if (isset($_this->_ProductsAlsoBuy)) {
 		return $_this->_ProductsAlsoBuy; 
 	}
 
 	$productId = $_this->get("product_id");
-    $statistic =& func_new("ProductAlsoBuy");
+    $statistic = func_new("ProductAlsoBuy");
     $_this->_ProductsAlsoBuy = $statistic->findAll("product_id='$productId'");
 	if (is_array($_this->_ProductsAlsoBuy)) {
 		foreach($_this->_ProductsAlsoBuy as $p_key => $product) {
-            $rp =& func_new("Product", $product->get("product_id_also_buy"));
+            $rp = func_new("Product", $product->get("product_id_also_buy"));
 			$addSign = true;
 			$addSign &= $rp->filter();
 			$addSign &= $rp->is("available");
@@ -148,7 +148,7 @@ function ProductAdviser_updateProduct(&$_this)
 		$check[] = "notify_key='" . $price["product_id"] . "'";
 		$check = implode(" AND ", $check);
 
-		$notification =& func_new("CustomerNotification");
+		$notification = func_new("CustomerNotification");
 		$notifications = $notification->findAll($check);
 		if (is_array($notifications) && count($notifications) > 0) {
 			foreach($notifications as $notification) {
@@ -163,9 +163,9 @@ function ProductAdviser_action_add(&$_this)
 {
 	if ($_this->xlite->get("PA_InventorySupport") && $_this->config->get("ProductAdviser.customer_notifications_enabled")) {
 		if (!is_null($_this->cart->get("outOfStock"))) {
-			$rejectedItemInfo =& func_new("stdClass");
-        	$rejectedItem =& func_new("OrderItem");
-        	$product =& $_this->get("product");
+			$rejectedItemInfo = func_new("stdClass");
+        	$rejectedItem = func_new("OrderItem");
+        	$product = $_this->get("product");
         	$rejectedItemInfo->product_id = $product->get("product_id");
         	$rejectedItem->set("product", $product);
         	if ($_this->xlite->get("ProductOptionsEnabled") && $product->hasOptions() && isset($_this->product_options)) {

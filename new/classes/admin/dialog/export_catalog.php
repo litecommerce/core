@@ -95,7 +95,7 @@ class Admin_Dialog_export_catalog extends Admin_Dialog
 
     function action_layout()
     {
-        $dlg =& func_new("Admin_Dialog_import_catalog");
+        $dlg = func_new("Admin_Dialog_import_catalog");
         $dlg->action_layout();
     }
 
@@ -107,13 +107,13 @@ class Admin_Dialog_export_catalog extends Admin_Dialog
 
         $this->startDownload("extra_fields.csv");
 
-     	$p =& func_new("Product");
-     	$products =& $p->findAll();
+     	$p = func_new("Product");
+     	$products = $p->findAll();
         foreach ($products as $product_idx => $product) {
 			$products[$product_idx]->populateExtraFields();
 		}
 
-		$global_extra_field = & func_new("ExtraField");
+		$global_extra_field = func_new("ExtraField");
 		foreach($global_extra_field->findAll("product_id = 0") as $gef) {
 			 print func_construct_csv($gef->_export($this->fields_layout, $DATA_DELIMITERS[$this->delimiter]), $DATA_DELIMITERS[$this->delimiter], '"');
              print "\n";
@@ -132,7 +132,7 @@ class Admin_Dialog_export_catalog extends Admin_Dialog
     {
         $layout_name = "fields_layout";
         $layout = implode(',', $_POST[$layout_name]);
-        $config =& func_new("Config");
+        $config = func_new("Config");
         if ($config->find("name='$layout_name'")) {
             $config->set("value", $layout);
             $config->update();

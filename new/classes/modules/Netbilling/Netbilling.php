@@ -58,7 +58,7 @@ class Module_Netbilling extends Module
     function init()
     {
         parent::init();
-        $pm =& func_new('PaymentMethod');
+        $pm = func_new('PaymentMethod');
         $pm->registerMethod("netbilling_cc");
 
 		$this->xlite->set("NetbillingEnabled", true);

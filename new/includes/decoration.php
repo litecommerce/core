@@ -29,10 +29,10 @@ function func_is_clone_deprecated() {
     return true;
 }
 
-function &func_new($class) { // {{{
+function func_new($class) { // {{{
 
     if (class_exists($class)) {
-        $result =& new $class;
+        $result = new $class;
     } else {
         $class = func_define_class(strtolower($class));
         if (!class_exists($class)) {
@@ -41,7 +41,7 @@ function &func_new($class) { // {{{
                 func_die("Class $class not found");
             }
         }
-        $result =& new $class;
+        $result = new $class;
     }
     if (method_exists($result, 'constructor')) {
         $args = func_get_args();
@@ -53,7 +53,7 @@ function &func_new($class) { // {{{
         $className = (!empty($value) ? substr(get_class($result),0,-1).$value : substr(get_class($result),0,-2));
         func_define_class(strtolower($className));
         $className .= DECORATION_POSTFIX;
-        $result =& new $className;
+        $result = new $className;
         if (method_exists($result, 'constructor')) {
             $args = func_get_args();
             array_shift($args);
@@ -90,7 +90,7 @@ function func_is_a($child, $parent) { // {{{
     }
 } // }}}
 
-function &func_get_instance($class, $param = null) { // {{{
+function func_get_instance($class, $param = null) { // {{{
     $class = strtolower($class);
     static $instances;
     if (!isset($instances)) {
@@ -104,7 +104,7 @@ function &func_get_instance($class, $param = null) { // {{{
                 func_die("Class $class not found");
             }
         }
-        $instances[$class.':'.$param] =& new $dclass;
+        $instances[$class.':'.$param] = new $dclass;
         if (method_exists($instances[$class.':'.$param], 'constructor')) {
             $instances[$class.':'.$param]->constructor($param);
         }
@@ -210,7 +210,7 @@ function func_compile($file, $num, $classesDir = 'classes/') { // {{{
     }
 
     // Replace old style function clone() by &cloneObject() in LC for PHP 5.x version
-    $source = str_replace('function clone()', "function &cloneObject()", $source);
+    $source = str_replace('function clone()', "function cloneObject()", $source);
     $source = str_replace('parent::clone()', "parent::_clone_deprecated()", $source);
 
     // 'Object' class extends nothing

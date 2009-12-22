@@ -75,7 +75,7 @@ class Shipping extends Base
     * Obtain reference to a module by the module class
     * if $class is not specified, then obtain the current shipping module
     */
-    function &getInstanceByClass($class)
+    function getInstanceByClass($class)
     {
         static $instances;
         if (!isset($instances)) {
@@ -87,7 +87,7 @@ class Shipping extends Base
             if (!func_class_exists($ClassName)) {
                 $ClassName = "Shipping";
             }
-            $instances[$class] =& func_new("$ClassName");
+            $instances[$class] = func_new("$ClassName");
             $instances[$class]->set("class", $class);
         }
         return $instances[$class];
@@ -101,9 +101,9 @@ class Shipping extends Base
         $this->_die("getModuleName is not implemented for abstract class Shipping"); 
     }
 
-    function &getModules()
+    function getModules()
     {
-        $sp =& func_get_instance("Shipping");
+        $sp = func_get_instance("Shipping");
         $modules = array(
             "offline" => $sp->getInstanceByClass("offline")
         );
@@ -151,12 +151,12 @@ class Shipping extends Base
     /**
     * Retrieves all shipping methods relevant to $this shipping module
     */
-    function &getShippingMethods()
+    function getShippingMethods()
     {
         return $this->findAll("class='".$this->get("class")."'");
     }
     
-    function &getRates(&$order)
+    function getRates(&$order)
     {
         $this->_die("getRates(): Not implemented in abstract class Shipping");
     }
@@ -177,7 +177,7 @@ class Shipping extends Base
     {
         parent::_updateProperties($data);
 		$properties = $this->properties;
-		$shipping = & func_get_instance('Shipping');	
+		$shipping = func_get_instance('Shipping');	
 		$this->properties = $properties;
     } // }}}
 
@@ -188,7 +188,7 @@ class Shipping extends Base
     * $class and destination $destination (L/I) if there is no such
     * method and return an existing or a newly created one.
     */
-    function &getService($class, $name, $destination) 
+    function getService($class, $name, $destination) 
     {
         $name = $this->_normalizeName($name);
         // search for the shipping method specified by ($class, $name)
@@ -236,7 +236,7 @@ class Shipping extends Base
         if ($zone) {
             return $zone;
         }
-        $defaultCountry =& func_new("Country", $this->config->get("General.default_country"));
+        $defaultCountry = func_new("Country", $this->config->get("General.default_country"));
         if (is_object($defaultCountry)) {
         	$zone = $defaultCountry->get("shipping_zone");
         	if ($zone) {

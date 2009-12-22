@@ -330,7 +330,7 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
             $data = array(
                     "value" => $path,
                     "children" => $this->childrenFromAssoc($row));
-            $this->data =& $data;
+            $this->data = $data;
             $this->mapData($data, $path);
             $this->saveRow($this->childrenToAssoc($data["children"]), $path);
         }
@@ -423,7 +423,7 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
 						}
 					} else {
 						// for LC version lower than 2.2
-						$state =& func_new("State");
+						$state = func_new("State");
 						if ($state->find("code='$val'") || $state->find("state='$val'")) {
 							$state_code = $state->get("state_id");
 						} else {
@@ -511,13 +511,13 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
     {
         $newfields = array();
         if (array_key_exists($path, $this->map)) {
-            $map =& $this->map[$path];
+            $map = $this->map[$path];
             if (isset($this->map[$path.".new_fields"])) {
                 $newfields = $this->map[$path.".new_fields"];
             }
             if (is_array($map)) {
                 // map each element of $data
-                $children =& $data["children"];
+                $children = $data["children"];
                 for ($i=0; $i<count($children); $i++) {
                     if (array_key_exists($children[$i]["value"], $map)) {
                         // there is a mapping for this value
@@ -533,7 +533,7 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
                 $this->mapScalar($data, $map);
             }
         }
-        $children =& $data["children"];
+        $children = $data["children"];
 
 		foreach ($newfields as $originalField => $newField) {
             for ($i=0; $i<count($children); $i++) {

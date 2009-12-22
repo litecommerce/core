@@ -49,25 +49,25 @@ class Dialog_WishList extends Dialog // {{{
 		Module_WishList_action_add($this);
 	} // }}} 
 
-	function &getItems() // {{{
+	function getItems() // {{{
 	{
 		$wishlist = $this->get("wishList");
 		if (!$wishlist) return false; 
-		$wishlist_product = & func_new("WishListProduct");
+		$wishlist_product = func_new("WishListProduct");
 		return $wishlist_product->findAll("wishlist_id ='" . $wishlist->get("wishlist_id") ."'");
 		
 	} // }}}  
 	
 	function action_delete() // {{{
 	{
-        $wishlist_product = & func_new("WishListProduct",$this->get("item_id"),$this->get("wishlist_id"));
+        $wishlist_product = func_new("WishListProduct",$this->get("item_id"),$this->get("wishlist_id"));
         $wishlist_product->delete();
 
 	} // }}} 
 
 	function action_update() // {{{ 
 	{
-		$wishlist_product = & func_new("WishListProduct");
+		$wishlist_product = func_new("WishListProduct");
 		$properties = $this->get("properties");
         if ($properties['wishlist_amount']<=0) $this->action_delete();
 		$wishlist_product->set("amount",$properties['wishlist_amount']);
@@ -78,7 +78,7 @@ class Dialog_WishList extends Dialog // {{{
 
 	function action_send() // {{{
 	{
-		$Mailer = & func_new("Mailer");
+		$Mailer = func_new("Mailer");
 		$Mailer->wishlist_recipient = $this->wishlist_recipient;
 		$Mailer->items = $this->get("items");
 		$Mailer->customer = $this->auth->get("profile.billing_firstname")." ".$this->auth->get("profile.billing_lastname");

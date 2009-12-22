@@ -53,17 +53,17 @@ class WishList extends Base { // {{{
 	var $autoIncrement 	= "wishlist_id";
 	var $profile		= null;
 
-	function &getProducts() // {{{
+	function getProducts() // {{{
 	{
-        $wishlist_product = & func_new("WishListProduct");
+        $wishlist_product = func_new("WishListProduct");
         return $wishlist_product->findAll("wishlist_id =" . $this->get("wishlist_id"));
 
     } // }}}  
 	
-	function &getProfile() // {{{ 
+	function getProfile() // {{{ 
 	{
 		if (is_null($this->profile)) { 
-			$this->profile = & func_new("Profile",$this->get("profile_id"));	
+			$this->profile = func_new("Profile",$this->get("profile_id"));	
 		}
 		return $this->profile;
 	} // }}} 
@@ -102,7 +102,7 @@ class WishList extends Base { // {{{
 		$wishlists = $this->findAll(implode(" AND ", $where),"date DESC");
 
 		if (!empty($sku)||!empty($name)) {
-	        $product = &func_new("Product");
+	        $product = func_new("Product");
 			$found = array();
 			$found_product = $product->findImportedProduct($sku,"","",false);
 			if ($found_product)
@@ -111,7 +111,7 @@ class WishList extends Base { // {{{
             if ($found_product)
                 $found[] = "product_id = " . $found_product->get("product_id");      
 			if (empty($found)) return array();
-			$wishlist_product = &func_new("WishListProduct");
+			$wishlist_product = func_new("WishListProduct");
 			$wishlist_products = $wishlist_product->findAll(implode(" OR ",$found));
 			$wishlist_ids = array();
 			foreach ($wishlist_products as $wishlist_product)

@@ -1,6 +1,6 @@
 <?php
 
-function &Shipping_aupost_getRates(&$_this, &$order)
+function Shipping_aupost_getRates(&$_this, &$order)
 {
 	if ((is_null($order->get("profile")) && !$_this->config->get("General.def_calc_shippings_taxes")) || $order->get("weight") == 0 || $_this->config->get("Company.location_country") != "AU") {
         return array();
@@ -42,7 +42,7 @@ function &Shipping_aupost_getRates(&$_this, &$order)
 
 }
 
-function &Shipping_aupost_queryRates(&$_this, $options, $originalZipcode, $destinationZipcode, $destinationCountry, $weight, $weight_unit=null) // {{{
+function Shipping_aupost_queryRates(&$_this, $options, $originalZipcode, $destinationZipcode, $destinationCountry, $weight, $weight_unit=null) // {{{
 {
     global $php_errormsg;
 	
@@ -130,7 +130,7 @@ function &Shipping_aupost_queryRates(&$_this, $options, $originalZipcode, $desti
 	}
 } // }}}
 
-function &Shipping_aupost_parseResponse(&$_this, $response, $destination) 
+function Shipping_aupost_parseResponse(&$_this, $response, $destination) 
 {
 	$rates = array();
 	$options = $_this->get("options");
@@ -138,10 +138,10 @@ function &Shipping_aupost_parseResponse(&$_this, $response, $destination)
 
 	if (is_array($response)) {
     	foreach($response as $_rate) {
-    		$shipping =& $_this->getService("aupost", $_rate["name"], $destination);
+    		$shipping = $_this->getService("aupost", $_rate["name"], $destination);
             $shipping->shipping_time = $_rate["shipping_time"];
             $id = $shipping->get("shipping_id");
-            $rates[$id] =& func_new("ShippingRate");
+            $rates[$id] = func_new("ShippingRate");
             $rates[$id]->shipping = $shipping;
             $rates[$id]->rate = (double) ($_rate["rate"] / $currency_rate);
     	}

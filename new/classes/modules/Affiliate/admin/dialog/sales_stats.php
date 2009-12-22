@@ -47,23 +47,23 @@ class Admin_Dialog_sales_stats extends Admin_Dialog_partner_stats
     var $saleTotal = 0;
     var $commissionsTotal = 0;
 
-    function &getPageTemplate()
+    function getPageTemplate()
     {
         return "modules/Affiliate/sales_stats.tpl";
     }
 
-    function &getProduct()
+    function getProduct()
     {
         if (is_null($this->product)) {
-            $this->product =& func_new("Product", $this->product_id);
+            $this->product = func_new("Product", $this->product_id);
         }
         return $this->product;
     }
 
-    function &getSalesStats()
+    function getSalesStats()
     {
         if (is_null($this->salesStats)) {
-            $pp =& func_new("PartnerPayment");
+            $pp = func_new("PartnerPayment");
             $this->salesStats = $pp->searchSales (
                     $this->get("startDate"),
                     $this->get("endDate") + 24 * 3600,
@@ -76,7 +76,7 @@ class Admin_Dialog_sales_stats extends Admin_Dialog_partner_stats
         return $this->salesStats;
     }
 
-    function &getTopProducts()
+    function getTopProducts()
     {
         if (is_null($this->topProducts)) {
             $this->topProducts = array();

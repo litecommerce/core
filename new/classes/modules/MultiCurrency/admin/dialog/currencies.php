@@ -47,13 +47,13 @@ class Admin_Dialog_currencies extends Admin_Dialog // {{{
 	var $allCurrencies = null;
 	var $defaultCurrency = null;
 
-	function &getDefaultCurrency() // {{{
+	function getDefaultCurrency() // {{{
 	{
 		if (is_null($this->defaultCurrency)) {
-	        $this->defaultCurrency =& func_new("CurrencyCountries");
+	        $this->defaultCurrency = func_new("CurrencyCountries");
        		$found = $this->defaultCurrency->find("base = 1");
 			if (!$found) {
-				$this->defaultCurrency =& func_new("CurrencyCountries");
+				$this->defaultCurrency = func_new("CurrencyCountries");
 				$this->defaultCurrency->set("code","USD");
 				$this->defaultCurrency->set("name","US dollar");
 				$this->defaultCurrency->set("exchange_rate",1);
@@ -67,10 +67,10 @@ class Admin_Dialog_currencies extends Admin_Dialog // {{{
 		return $this->defaultCurrency;
 	} // }}}
 
-	function &getAllCurrencies() // {{{ 
+	function getAllCurrencies() // {{{ 
 	{
         if (is_null($this->allCurrencies)) {
-            $currency = & func_new("CurrencyCountries");
+            $currency = func_new("CurrencyCountries");
             $this->allCurrencies = $currency->findAll("base = 0");
         }
         return $this->allCurrencies;
@@ -78,7 +78,7 @@ class Admin_Dialog_currencies extends Admin_Dialog // {{{
 
 	function action_update_default() // {{{ 
 	{
-		$currency =& $this->get("defaultCurrency");
+		$currency = $this->get("defaultCurrency");
 		$properties = $this->currency;
 		$currency->set("code",$properties['code']);
 	    $currency->set("name",$properties['name']);
@@ -87,10 +87,10 @@ class Admin_Dialog_currencies extends Admin_Dialog // {{{
 
 	} // }}}
 	
-	function &getCountries() // {{{ 
+	function getCountries() // {{{ 
 	{
 		if (is_null($this->countries)) {
-			$country =& func_new("Country");
+			$country = func_new("Country");
 			$this->countries = $country->findAll("enabled = 1");	
 		}		
 		return $this->countries;
@@ -98,7 +98,7 @@ class Admin_Dialog_currencies extends Admin_Dialog // {{{
 	
 	function action_add() // {{{ 
 	{
-		$currency =& func_new("CurrencyCountries");
+		$currency = func_new("CurrencyCountries");
 		$properties = $this->currency;
 		$properties['countries'] = serialize(isset($properties['countries']) ? $properties['countries'] : array());
 		$properties['enabled'] = "1";
@@ -110,7 +110,7 @@ class Admin_Dialog_currencies extends Admin_Dialog // {{{
 	function action_update() // {{{ 
 	{
 		foreach($this->currencies as $currency_) {
-			$currency =& func_new("CurrencyCountries",$currency_["currency_id"]);
+			$currency = func_new("CurrencyCountries",$currency_["currency_id"]);
 			$currency_['countries'] = serialize(isset($currency_['countries']) ? $currency_['countries'] : array());
         	$currency_['enabled'] = isset($currency_['enabled']) ? "1" : "0";
 			$currency->set("properties",$currency_);

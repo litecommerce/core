@@ -103,7 +103,7 @@ class CRegisterForm extends Component
 		$this->xlite->session->setID(SESSION_DEFAULT_ID);
 		$this->xlite->session->_initialize();
 
-        $this->profile =& func_new("Profile");
+        $this->profile = func_new("Profile");
         if ($this->xlite->is("adminZone")) {
             $this->profile->modifyAdminProperties($_REQUEST);
         } else {

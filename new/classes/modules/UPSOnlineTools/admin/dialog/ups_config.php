@@ -59,7 +59,7 @@ class Admin_Dialog_Ups_Config extends Admin_Dialog
 
 	function getPackingTypeList()
 	{
-		$ups =& func_new("Shipping_ups");	
+		$ups = func_new("Shipping_ups");	
 		return $ups->get("upscontainerslist");
 	}
 
@@ -100,7 +100,7 @@ class Admin_Dialog_Ups_Config extends Admin_Dialog
         }
 
 		// Clear UPSOnlineTools cache
-		$ups =& func_new("Shipping_ups");
+		$ups = func_new("Shipping_ups");
 		$ups->_cleanCache("ups_online_tools_cache");
     }
 
@@ -117,12 +117,12 @@ class Admin_Dialog_Ups_Config extends Admin_Dialog
     function action_test() 
     {
 		include_once "modules/UPSOnlineTools/encoded.php";
-        $this->ups =& func_new("Shipping_ups");
+        $this->ups = func_new("Shipping_ups");
 
 		$ptype = $this->xlite->get("config.UPSOnlineTools.packing_algorithm");
 		$total_weight = $this->get("pounds");
 		$ups_containers = array();
-		$container =& func_new("Container");
+		$container = func_new("Container");
 		switch ($ptype) {
 			case BINPACKING_SIMPLE_FIXED_SIZE:
 			default:
@@ -152,7 +152,7 @@ class Admin_Dialog_Ups_Config extends Admin_Dialog
         // Get company state
 		$state_id = $this->config->get("Company.location_state");
 		if ($state_id != -1) {
-		    $state = &func_new("State", $state_id);
+		    $state = func_new("State", $state_id);
 		    $originState = $state->get('code');
 		    unset($state);
 		} else {
@@ -162,7 +162,7 @@ class Admin_Dialog_Ups_Config extends Admin_Dialog
 		// Get destination state
 		$state_id = $this->get("destinationState");
 		if ($state_id != -1) {
-		    $state = &func_new("State", $state_id);
+		    $state = func_new("State", $state_id);
 		    $destinationState = $state->get('code');
 		    unset($state);
 		} else {
@@ -192,14 +192,14 @@ class Admin_Dialog_Ups_Config extends Admin_Dialog
     {
 	    $countriesArray = array();
 
-        $country =& func_new("Country");
-        $countries =& $country->findAll("enabled='1'");
+        $country = func_new("Country");
+        $countries = $country->findAll("enabled='1'");
         foreach($countries as $country) {
             $countriesArray[$country->get("code")]["number"] = 0;
             $countriesArray[$country->get("code")]["data"] = array();
 
-            $state =& func_new("State");
-            $states =& $state->findAll("country_code='".$country->get("code")."'");
+            $state = func_new("State");
+            $states = $state->findAll("country_code='".$country->get("code")."'");
             if (is_array($states) && count($states) > 0) {
                 $countriesArray[$country->get("code")]["number"] = count($states);
                 foreach($states as $state) {

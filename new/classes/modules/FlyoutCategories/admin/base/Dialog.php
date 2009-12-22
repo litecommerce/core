@@ -60,7 +60,7 @@ class Admin_Dialog_FlyoutCategories extends Admin_Dialog
 				case "delete":
 				case "icon":
 					if ($this->get("config.FlyoutCategories.scheme") > 0) {
-						$config = &func_new("Config");
+						$config = func_new("Config");
 						$config->createOption("FlyoutCategories", "category_changed", 1);
 					}
 
@@ -69,7 +69,7 @@ class Admin_Dialog_FlyoutCategories extends Admin_Dialog
 
 					// rebuild layout
 					if ($this->get("config.FlyoutCategories.category_autoupdate")) {
-						$dialog =& func_new("Admin_Dialog_categories");
+						$dialog = func_new("Admin_Dialog_categories");
 
 						$return_url = null;
 						if ($this->get("target") == "category" && $this->get("action") == "add" && $this->get("message") == "added") {
@@ -87,13 +87,13 @@ class Admin_Dialog_FlyoutCategories extends Admin_Dialog
 
 		if ($target == "memberships" && $this->get("action")) {
 			if ($this->get("config.FlyoutCategories.scheme") > 0) {
-				$config = &func_new("Config");
+				$config = func_new("Config");
 				$config->createOption("FlyoutCategories", "category_changed", 1);
 			}
 
 			// Rebuild FlyoutCategories cache
 			if ($this->get("config.FlyoutCategories.category_autoupdate")) {
-				$dialog =& func_new("Admin_Dialog_categories");
+				$dialog = func_new("Admin_Dialog_categories");
 				$dialog->action_build_categories();
 			}
 		}

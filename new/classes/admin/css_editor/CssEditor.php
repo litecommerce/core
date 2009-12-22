@@ -60,7 +60,7 @@ class CssEditor extends Object
         parent::constructor();
     }
 
-    function &getItems()
+    function getItems()
     {
         $items = array();
         $style = $this->get("style");

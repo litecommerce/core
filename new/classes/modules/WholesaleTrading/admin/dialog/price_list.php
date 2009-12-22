@@ -49,7 +49,7 @@ class Admin_Dialog_Price_List extends Admin_Dialog
 	var $params = array('target', 'mode', 'category', 'include_subcategories', 'membership');
 	var $_priceList;
 	
-	function &getTemplate()
+	function getTemplate()
 	{
 		if ($this->get('mode') == 'print') {
 			return "modules/WholesaleTrading/pl_print.tpl";
@@ -63,7 +63,7 @@ class Admin_Dialog_Price_List extends Admin_Dialog
 			$category_id = 0;
 			$include_subcategories = true;
 		}
-		$cat =& func_new('Category', $category_id); 
+		$cat = func_new('Category', $category_id); 
 		$this->_priceList []= $cat;
 		
 		if ($include_subcategories == true) {
@@ -73,22 +73,22 @@ class Admin_Dialog_Price_List extends Admin_Dialog
 		}	
 	}
 	
-	function &getPriceList()
+	function getPriceList()
 	{
 		$inc_subcategories = isset($_REQUEST['include_subcategories']);
 		$this->fillPriceList($_REQUEST['category'], $inc_subcategories);
 		return $this->_priceList;
 	}
 
-	function &getWholesalePricing($product_id)
+	function getWholesalePricing($product_id)
 	{
 		if (!isset($this->wholesale_pricing[$product_id])) {
-			$wp =& func_new ("WholesalePricing");
+			$wp = func_new ("WholesalePricing");
 			$where = "product_id=" . $product_id;
 			if ($_REQUEST["membership"] != 'all') {
 				$where .= " and (membership='all' or membership='" . $_REQUEST["membership"] . "')";
 			}
-			$this->wholesale_pricing[$product_id] =& $wp->findAll($where);
+			$this->wholesale_pricing[$product_id] = $wp->findAll($where);
 		}	
 		return $this->wholesale_pricing[$product_id];
 	}

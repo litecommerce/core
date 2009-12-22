@@ -43,7 +43,7 @@ class Module_DemoMode_Admin_Dialog_categories extends Admin_Dialog_categories
 	{   
 		$forbiddenActions = array("fc_categories_actions", "build_categories");
         if (isset($_REQUEST["action"]) && in_array($_REQUEST["action"], $forbiddenActions)) {
-            $dialog =& func_new("Admin_Dialog_demo_mode");
+            $dialog = func_new("Admin_Dialog_demo_mode");
             $_REQUEST["target"] = "demo_mode";
             $dialog->init();
             $dialog->display();

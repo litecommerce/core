@@ -114,7 +114,7 @@ class Database extends Object
         }
         @mysql_query("SET sql_mode='MYSQL40'", $this->connection);
         $this->connected = true;
-        $profiler =& func_get_instance("Profiler");
+        $profiler = func_get_instance("Profiler");
         $profiler->dbConnectTime = getmicrotime() - $time;
     } // }}}
 
@@ -187,7 +187,7 @@ class Database extends Object
 
 	function query($sql) // {{{
 	{
-        $profiler =& func_get_instance("Profiler");
+        $profiler = func_get_instance("Profiler");
         $profiler->addQuery($sql);
         $start = getmicrotime();
 
@@ -456,7 +456,7 @@ class Database extends Object
         $replace = array('\0', '\n', '\r', '\Z', "\*\/", "\/\*");
 
         $content = "";
-        $result  =& $this->getAll($sql);
+        $result = $this->getAll($sql);
         foreach ($result as $row) {
             $schema = "INSERT INTO $table VALUES (";
             $values = array();

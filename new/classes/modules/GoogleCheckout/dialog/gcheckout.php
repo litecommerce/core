@@ -48,13 +48,13 @@ class Dialog_GoogleCheckout extends Dialog_checkout
 {
     function init()
     {
-    	$this->registerForm =& func_new("Object");
+    	$this->registerForm = func_new("Object");
     	parent::init();
     }
 
     function handleRequest()
     {
-		$gacObject =& func_new("CGoogleAltCheckout");
+		$gacObject = func_new("CGoogleAltCheckout");
         $gacObject->initGoogleData();
 
         if ($this->action != "checkout" || !isset($gacObject->GCMerchantID)) {
@@ -90,7 +90,7 @@ class Dialog_GoogleCheckout extends Dialog_checkout
 			}
 		}
 
-		$pm =& func_new("PaymentMethod", "google_checkout");
+		$pm = func_new("PaymentMethod", "google_checkout");
 		$this->cart->setPaymentMethod($pm);
 		$this->updateCart();
 

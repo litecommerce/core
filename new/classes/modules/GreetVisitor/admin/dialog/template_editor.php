@@ -44,9 +44,9 @@
 */
 class Module_GreetVisitor_Admin_Dialog_template_editor extends Admin_Dialog_template_editor
 {
-    function &getBasicTemplates()
+    function getBasicTemplates()
     {
-        $templates =& parent::getBasicTemplates();
+        $templates = parent::getBasicTemplates();
         $zone = $this->get("zone");
         array_unshift($templates, func_new("FileNode", "skins/$zone/en/modules/GreetVisitor/greet_visitor.tpl", null, SHOW_FULL_PATH));
         return $templates;

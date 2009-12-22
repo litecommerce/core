@@ -49,7 +49,7 @@ class Module_Echo extends Module
     var $minVer = "2.0";
 	var $showSettingsForm = true;
 
-	function &getSettingsForm() // {{{
+	function getSettingsForm() // {{{
 	{
 		return "admin.php?target=payment_method&payment_method=echo_cc";
 	} // }}}
@@ -58,7 +58,7 @@ class Module_Echo extends Module
     {
         
         parent::init();
-        $pm =& func_new('PaymentMethod');
+        $pm = func_new('PaymentMethod');
         $pm->registerMethod("echo_cc");
     }
     

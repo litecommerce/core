@@ -51,7 +51,7 @@ class Admin_Dialog_module_LayoutOrganizer extends Admin_Dialog_module
 		parent::init();
 
 		if ($this->page == "LayoutOrganizer") {
-        	$lay =& func_get_instance("Layout");
+        	$lay = func_get_instance("Layout");
         	$lay->addLayout("general_settings.tpl", "modules/LayoutOrganizer/config.tpl");
         }
 	}
@@ -65,11 +65,11 @@ class Admin_Dialog_module_LayoutOrganizer extends Admin_Dialog_module
         parent::action_update();
 
 		if ($this->page == "LayoutOrganizer") {
-            $cfg =& func_new("Config");
-            $this->config =& $cfg->readConfig();
+            $cfg = func_new("Config");
+            $this->config = $cfg->readConfig();
 			$newTemplate = $this->config->get("LayoutOrganizer.template");
 			if (strcmp($newTemplate, $oldTemplate) != 0) {
-				$cat =& func_new("Category");
+				$cat = func_new("Category");
             	$categories  = $cat->findAll("parent = '0'");
             	$this->xlite->set("reReadConfig", true);
             	if (is_array($categories)) {

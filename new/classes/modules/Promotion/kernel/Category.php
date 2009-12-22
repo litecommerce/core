@@ -47,19 +47,19 @@ class Module_Promotion_Category extends Category
 {
     function delete()
     {
-		$so =& func_new("SpecialOffer");
-		$soDeletedCategories =& $so->findAll("category_id='" . $this->get("category_id") . "'");
+		$so = func_new("SpecialOffer");
+		$soDeletedCategories = $so->findAll("category_id='" . $this->get("category_id") . "'");
 		if (is_array($soDeletedCategories) && count($soDeletedCategories) > 0) {
 			foreach($soDeletedCategories as $sodp) {
 				$sodp->markInvalid();
 			}
 		}
 
-		$bp =& func_new("BonusPrice");
-		$bpDeletedCategories =& $bp->findAll("category_id='" . $this->get("category_id") . "'");
+		$bp = func_new("BonusPrice");
+		$bpDeletedCategories = $bp->findAll("category_id='" . $this->get("category_id") . "'");
 		if (is_array($bpDeletedCategories) && count($bpDeletedCategories) > 0) {
 			foreach($bpDeletedCategories as $bpdp) {
-				$sodp =& func_new("SpecialOffer", $bpdp->get("offer_id"));
+				$sodp = func_new("SpecialOffer", $bpdp->get("offer_id"));
 				$sodp->markInvalid();
 			}
 		}

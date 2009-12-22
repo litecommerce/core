@@ -133,7 +133,7 @@ class Module_AntiFraud_Order extends Order
 		$post["service_key"] = $this->config->get('AntiFraud.antifraud_license');
 		$post["safe_distance"] = $this->config->get('AntiFraud.antifraud_safe_distance');
 
-		$request = & func_new("HTTPS");
+		$request = func_new("HTTPS");
 		$request->url = $this->config->get('AntiFraud.antifraud_url')."/antifraud_service.php";
 		$request->data = $post;
 		$request->request();
@@ -149,7 +149,7 @@ class Module_AntiFraud_Order extends Order
     		$data 	= unserialize($data);
 
     		$risk_factor_multiplier = 1; 
-    		$found =& func_new("Order",$this->get("order_id"));
+    		$found = func_new("Order",$this->get("order_id"));
 
     		if ($this->config->get("AntiFraud.antifraud_order_total") > 0 && $this->get("total") > 0 &&  $this->get("total") > $this->config->get("AntiFraud.antifraud_order_total"))	{
     			$risk_factor_multiplier *= $this->config->get("AntiFraud.order_total_multiplier");
@@ -175,14 +175,14 @@ class Module_AntiFraud_Order extends Order
     		
     		$result["total_trust_score"] = $result["total_trust_score"] * $risk_factor_multiplier;
 
-            $country = & func_new("Country",$profile->get('billing_country'));
+            $country = func_new("Country",$profile->get('billing_country'));
             if ($country->get("riskCountry")) {
                 $result["total_trust_score"] +=  $this->config->get("AntiFraud.risk_country_multiplier");
             }
     		
             if ($result['available_request'] == $result['used_request']) {
                 $result['error'] = 'LICENSE_KEY_EXPIRED';
-    			$mailer =& func_new("Mailer");
+    			$mailer = func_new("Mailer");
     			$mailer->compose($this->get("config.Company.orders_department"),
     							 $this->get("config.Company.site_administrator"), 
     							 "modules/AntiFraud/license_expired");

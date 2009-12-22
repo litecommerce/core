@@ -51,7 +51,7 @@ class Module_Ogone extends Module
 	function init()
 	{
 		parent::init();
-		$pm =& func_new('PaymentMethod');
+		$pm = func_new('PaymentMethod');
 		$pm->registerMethod("ogone_cc");
 	}
 

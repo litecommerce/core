@@ -99,7 +99,7 @@ class Order extends Base
     */
     function calcAllTaxes() // {{{
     {
-        $taxRates =& func_new("TaxRates");
+        $taxRates = func_new("TaxRates");
         $taxRates->set("order", $this);
         $result = array();
         $items = $this->getItems();
@@ -259,7 +259,7 @@ class Order extends Base
     /**
     * Returns an array of order items to be shipped.
     */
-    function &getShippedItems() // {{{
+    function getShippedItems() // {{{
     {
         $result = array();
         foreach ($this->get("items") as $item) {
@@ -274,7 +274,7 @@ class Order extends Base
     */
     function getShippedItemsCount() // {{{
     {
-        $items =& $this->get("shippedItems");
+        $items = $this->get("shippedItems");
         $result = 0;
         foreach ($items as $item) {
             $result += $item->get("amount");
@@ -450,7 +450,7 @@ class Order extends Base
         }
     } // }}}
 
-    function &get($name) // {{{
+    function get($name) // {{{
     {
         switch ($name) {
         	case "details":
@@ -464,10 +464,10 @@ class Order extends Base
         }
     } // }}}
 
-    function &getShippingMethod() // {{{
+    function getShippingMethod() // {{{
     {
         if (is_null($this->_shippingMethod)) {
-			$sm =& func_new("Shipping");
+			$sm = func_new("Shipping");
 			if ($sm->isRegisteredModule($this->get("shipping_id"))) {
                 $this->_shippingMethod = func_new("Shipping", $this->get("shipping_id"));
     			if ($this->get("shipping_id") == 0) {
@@ -489,12 +489,12 @@ class Order extends Base
         }
     } // }}}
 
-    function &getPaymentMethod() // {{{
+    function getPaymentMethod() // {{{
     {
         if (is_null($this->_paymentMethod) && $this->get("payment_method")) {
-        	$pm =& func_new("PaymentMethod");
+        	$pm = func_new("PaymentMethod");
         	if ($pm->isRegisteredMethod($this->get("payment_method"))) {
-            	$this->_paymentMethod =& func_new("PaymentMethod", $this->get("payment_method"));
+            	$this->_paymentMethod = func_new("PaymentMethod", $this->get("payment_method"));
             }
         }
         return $this->_paymentMethod;
@@ -510,7 +510,7 @@ class Order extends Base
         }
     } // }}}
 
-    function &getShippingRates() // {{{
+    function getShippingRates() // {{{
     {
         if (is_null($this->_shippingRates)) {
             $this->calcShippingRates();
@@ -518,11 +518,11 @@ class Order extends Base
         return $this->_shippingRates;
     } // }}}
 
-    function &getProfile() // {{{
+    function getProfile() // {{{
     {
         if (is_null($this->_profile)) {
             if($pid = $this->get("profile_id")) {
-                $this->_profile =& func_new("Profile", $pid);
+                $this->_profile = func_new("Profile", $pid);
             }
         }
         return $this->_profile;
@@ -539,11 +539,11 @@ class Order extends Base
         }
     } // }}}
     
-    function &getOrigProfile() // {{{
+    function getOrigProfile() // {{{
     {
         if (is_null($this->_origProfile)) {
             if($pid = $this->get("orig_profile_id")) {
-                $this->_origProfile =& func_new("Profile", $pid);
+                $this->_origProfile = func_new("Profile", $pid);
             } else {
                 return $this->getProfile();
             }
@@ -574,7 +574,7 @@ class Order extends Base
     /**
     * Returns all tax values as an associative Array.
     */
-    function &getAllTaxes() // {{{
+    function getAllTaxes() // {{{
     {
         if (is_null($this->_taxes)) {
             if ($this->get("taxes") == "") {
@@ -616,13 +616,13 @@ class Order extends Base
     /**
     * Selects taxes to be shown in cart totals.
     */
-    function &getDisplayTaxes() // {{{
+    function getDisplayTaxes() // {{{
     {
         if (is_null($this->get("profile")) && !$this->config->get("General.def_calc_shippings_taxes")) {
         	return null;
         }
 
-        $taxRates =& func_new("TaxRates");
+        $taxRates = func_new("TaxRates");
 		$values = $names = $orderby = array();
         foreach ($this->get("allTaxes") as $name => $value) {
             if ($taxRates->getTaxLabel($name)) {
@@ -641,14 +641,14 @@ class Order extends Base
         return $taxes;
     } // }}}
 
-    function &getItems() // {{{
+    function getItems() // {{{
     {
         if (is_null($this->_items)) { // cache result in _items
 			if ($this->isPersistent) {
-				$oi =& func_new("OrderItem");
-				$this->_items =& $oi->findAll("order_id='".$this->get("order_id")."'", "orderby");
+				$oi = func_new("OrderItem");
+				$this->_items = $oi->findAll("order_id='".$this->get("order_id")."'", "orderby");
                 for ($i=0; $i<count($this->_items); $i++) {
-                    $this->_items[$i]->order =& $this;
+                    $this->_items[$i]->order = $this;
                 }
 			} else {
 				$this->_items = array();
@@ -669,7 +669,7 @@ class Order extends Base
     	}
 
         $result = array();
-        $items =& $this->get("items");
+        $items = $this->get("items");
         foreach ($items as $item_idx => $item) {
         	$result[] = array
         	(
@@ -699,7 +699,7 @@ class Order extends Base
 			return;
 		}
         $key = $item->get("key");
-        $items =& $this->get("items");
+        $items = $this->get("items");
         // if the item already exists
         for ($i=0; $i<count($items); $i++) {
             if ($items[$i]->get("key") == $key) {
@@ -763,7 +763,7 @@ class Order extends Base
         return $result;
     } // }}}
 
-    function &getDetails() // {{{
+    function getDetails() // {{{
     {
         if (is_null($this->_details)) {
             $d = parent::get("details");
@@ -788,7 +788,7 @@ class Order extends Base
         $this->_details = $value;
     } // }}}
 
-    function &getDetailLabels() // {{{
+    function getDetailLabels() // {{{
     {
         if (is_null($this->_detailLabels)) {
             $d = parent::get("detail_labels");
@@ -893,9 +893,9 @@ class Order extends Base
         // send email notification about initially placed order
         $status = $this->get("status");
         if (!($status == "P" || $status == "C" || $status == "I") && ($this->config->get("Email.enable_init_order_notif") || $this->config->get("Email.enable_init_order_notif_customer"))) {    
-            $mail =& func_new("Mailer");
+            $mail = func_new("Mailer");
             // for compatibility with dialog.order syntax in mail templates
-            $mail->order =& $this;
+            $mail->order = $this;
             // notify customer
             if ($this->config->get("Email.enable_init_order_notif_customer")) {
                 $mail->adminMail = false;
@@ -928,8 +928,8 @@ class Order extends Base
     */
     function processed() // {{{
     {
-        $mail =& func_new("Mailer");
-        $mail->order =& $this; 
+        $mail = func_new("Mailer");
+        $mail->order = $this; 
 		$mail->adminMail = true;
 		$mail->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
         $mail->compose(
@@ -960,8 +960,8 @@ class Order extends Base
     */
     function failed()
     {
-        $mail =& func_new("Mailer");
-        $mail->order =& $this; 
+        $mail = func_new("Mailer");
+        $mail->order = $this; 
 		$mail->adminMail = true;
 		$mail->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
         $mail->compose(
@@ -1022,10 +1022,10 @@ class Order extends Base
         }
         $item->set("orderby", $orderBy);
         $item->create();
-        $item->order = &$this;
+        $item->order = $this;
         if (isset($this->_items)) {
             // are items cached ?
-            $this->_items[] =& $item;
+            $this->_items[] = $item;
         }
     } // }}}
 

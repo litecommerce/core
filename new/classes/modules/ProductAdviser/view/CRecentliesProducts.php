@@ -68,7 +68,7 @@ class CRecentliesProducts extends Component
         return null;
     }
 
-    function &getRecentliesProducts()
+    function getRecentliesProducts()
     {
     	$products = $this->xlite->get("RecentliesProducts");
         if (isset($products)) {
@@ -82,15 +82,15 @@ class CRecentliesProducts extends Component
         $products = array();
         $productsStats = array();
         $statsOffset = 0;
-        $stats =& func_new("ProductRecentlyViewed");
+        $stats = func_new("ProductRecentlyViewed");
         $total = $stats->count("sid='".$this->session->getID()."'");
         $maxSteps = ceil($total / $maxViewed);
 
         for ($i=0; $i<$maxSteps; $i++) {
         	$limit = "$statsOffset, $maxViewed";
-        	$productsStats =& $stats->findAll("sid='".$this->session->getID()."'", null, null, $limit);
+        	$productsStats = $stats->findAll("sid='".$this->session->getID()."'", null, null, $limit);
         	foreach ($productsStats as $ps) {
-        		$product =& func_new("Product", $ps->get("product_id"));
+        		$product = func_new("Product", $ps->get("product_id"));
         		$addSign = (isset($product_id) && $product->get("product_id") == $product_id) ? false : true;
 				if ($addSign) {
         			$addSign &= $product->filter();

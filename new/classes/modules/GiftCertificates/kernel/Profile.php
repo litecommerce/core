@@ -52,7 +52,7 @@ class Module_GiftCertificates_Profile extends Profile
 	{
 		if (is_null($this->_active_gift_certs)) {
 			$profile_id = $this->get("profile_id");
-			$gc =& func_new("GiftCertificate");
+			$gc = func_new("GiftCertificate");
 			$this->_active_gift_certs = (array) $gc->findAll("profile_id='$profile_id' AND status='A'");
 		}
 		return $this->_active_gift_certs;

@@ -59,13 +59,13 @@ class Dialog_search extends Dialog
         }
     }
     
-    function &getProducts()
+    function getProducts()
     {
         if (is_null($this->products)) {
             $p = func_new("Product");
-			$this->products =& $p->advancedSearch($this->get("substring"), '', 0, true, false, true);
+			$this->products = $p->advancedSearch($this->get("substring"), '', 0, true, false, true);
 			if ($this->get("pageID") == null) {
-            	$searchStat =& func_new("SearchStat");
+            	$searchStat = func_new("SearchStat");
             	$searchStat->add($this->get("substring"), count($this->products));
 			}	
         }

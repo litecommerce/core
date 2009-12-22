@@ -57,7 +57,7 @@ class AffiliatePlan extends Base
     function delete()
     {
         // delete plan commissions
-        $pc =& func_new("PlanCommission");
+        $pc = func_new("PlanCommission");
         $table = $this->db->getTableByAlias($pc->alias);
         $this->db->query("DELETE FROM $table WHERE plan_id=".$this->get("plan_id"));
         parent::delete();

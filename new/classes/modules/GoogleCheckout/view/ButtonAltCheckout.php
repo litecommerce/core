@@ -51,7 +51,7 @@ class CButtonAltCheckout extends CButton
 	function init()
 	{
 		if (!isset($this->gacObject)) {
-    		$this->gacObject =& func_new("CGoogleAltCheckout");
+    		$this->gacObject = func_new("CGoogleAltCheckout");
         	$this->gacObject->initGoogleData();
 		}
 

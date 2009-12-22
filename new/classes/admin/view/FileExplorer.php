@@ -49,7 +49,7 @@ class CFileExplorer extends CColumnList
 {
     var $template = "common/file_explorer.tpl";
 
-    function &getLocale() // {{{
+    function getLocale() // {{{
     {
         if (is_null($this->locale)) {
             $this->locale = $this->get("xlite.options.skin_details.locale");
@@ -72,8 +72,8 @@ class CFileExplorer extends CColumnList
 
         // if dialog DSN is specified, use it to get the list of files to edit
         if (!is_null($this->get("dsn"))) {
-            $dialog =& $this->get("dialog");
-            $ch =& $dialog->get($this->get("dsn"));
+            $dialog = $this->get("dialog");
+            $ch = $dialog->get($this->get("dsn"));
             return $ch;
         }
 

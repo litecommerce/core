@@ -46,19 +46,19 @@ class Dialog_partner_banners extends PartnerDialog
 {
     var $params = array('target', 'mode', 'category_id');
     
-    function &getBanners()
+    function getBanners()
     {
         if (is_null($this->banners)) {
-            $this->banner =& func_new("Banner");
+            $this->banner = func_new("Banner");
             $this->banners = $this->banner->findAll();
         }
         return $this->banners;
     }
 
-    function &getCategory()
+    function getCategory()
     {
         if (is_null($this->category)) {
-            $this->category =& func_new("Category" , $this->get("category_id"));
+            $this->category = func_new("Category" , $this->get("category_id"));
         }
         return $this->category;
     }

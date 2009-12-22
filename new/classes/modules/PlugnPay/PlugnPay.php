@@ -58,7 +58,7 @@ class Module_PlugnPay extends Module
 	{
 
 		parent::init();
-		$pm =& func_new("PaymentMethod");
+		$pm = func_new("PaymentMethod");
 		$pm->registerMethod("plugnpay_cc");
 	}
 

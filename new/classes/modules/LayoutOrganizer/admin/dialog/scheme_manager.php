@@ -67,7 +67,7 @@ class Admin_Dialog_Scheme_Manager extends Admin_Dialog_template_editor
     function initLayout()
     {
     	if (strlen($this->customerLayoutPath) == 0) {
-    		$layout =& func_new("Layout");
+    		$layout = func_new("Layout");
             global $options;
             // reset Layout settings to customer default
             $layout->set("skin", $options["skin_details"]["skin"]);
@@ -90,11 +90,11 @@ class Admin_Dialog_Scheme_Manager extends Admin_Dialog_template_editor
 		return "[DEFAULT]";
 	}
 
-	function &getDefaultScheme()
+	function getDefaultScheme()
 	{
 		$this->initLayout();
 
-		$scheme =& func_new("TemplatesScheme");
+		$scheme = func_new("TemplatesScheme");
 		$scheme->set("scheme_id", 0);
 		$scheme->set("type", 0);
 		$scheme->set("enabled", 1);
@@ -125,7 +125,7 @@ class Admin_Dialog_Scheme_Manager extends Admin_Dialog_template_editor
 			return $this->schemes;
 		}
 
-		$scheme =& func_new("TemplatesScheme");
+		$scheme = func_new("TemplatesScheme");
 		$condition = array();
 		$condition[] = "scheme_id > '0'";
 		if (!$all_schemes) {
@@ -133,9 +133,9 @@ class Admin_Dialog_Scheme_Manager extends Admin_Dialog_template_editor
 		}
 		$condition[] = "type = '0'";
 		$condition = implode(" AND ", $condition);
-		$this->schemes =& $scheme->findAll($condition);
+		$this->schemes = $scheme->findAll($condition);
 
-		$scheme =& $this->getDefaultScheme();
+		$scheme = $this->getDefaultScheme();
 		$this->schemes = array_merge(array($scheme), $this->schemes);
 
 		return $this->schemes;
@@ -203,11 +203,11 @@ class Admin_Dialog_Scheme_Manager extends Admin_Dialog_template_editor
 			return;
 		}
 
-		$new_scheme =& func_new("TemplatesScheme");
+		$new_scheme = func_new("TemplatesScheme");
 		$new_scheme->set("name", $scheme->get("name") . " (clone)");
 		$new_scheme->create();
 
-    	$fNode =& func_new("FileNode");
+    	$fNode = func_new("FileNode");
     	$fNode->path = $this->customerLayoutPath . "modules/LayoutOrganizer/schemes";
     	$fNode->createDir();
     	$fNode->path = $fNode->path . "/" . $new_scheme->getFileName();

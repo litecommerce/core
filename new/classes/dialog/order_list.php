@@ -74,14 +74,14 @@ class Dialog_order_list extends Dialog
         parent::fillForm();
     }
     
-    function &getOrders()
+    function getOrders()
     {
         if (is_null($this->orders)) {
             if (!$this->auth->is("logged")) {
                 die("Access denied");
             }
             $order = func_new("Order");
-            $this->orders =& $order->search(
+            $this->orders = $order->search(
                     $this->auth->get("profile"), 
                     $this->get("order_id1"), 
                     $this->get("order_id2"), 

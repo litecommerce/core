@@ -49,7 +49,7 @@ class Dialog_sagepayform_checkout extends Dialog_checkout
 	function init()
 	{
 		if (!is_object($this->registerForm) || is_null($this->registerForm)) {
-			$this->registerForm =& func_new("Object");
+			$this->registerForm = func_new("Object");
 		}
 
 		parent::init();
@@ -64,7 +64,7 @@ class Dialog_sagepayform_checkout extends Dialog_checkout
 	{
 		require_once "modules/SagePay/encoded.php";
 
-		$paymentMethod =& func_new("PaymentMethod", "sagepayform_cc");
+		$paymentMethod = func_new("PaymentMethod", "sagepayform_cc");
 		$result = func_SagePayForm_action_return($this, $paymentMethod);
 
 		if ($result) {

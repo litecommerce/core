@@ -80,7 +80,7 @@ class Logger
     }
     
 
-    function &singleton()
+    function singleton()
     {
         static $logger;
         if (!isset($logger)) {
@@ -105,7 +105,7 @@ class Logger
     function log($message, $level = null)
     {
         require_once "Log.php";
-        $logger =& Log::singleton($this->getType(),
+        $logger = Log::singleton($this->getType(),
                                   $this->getName(),
                                   $this->getIdent()
                                   );

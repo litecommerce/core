@@ -131,13 +131,13 @@ class Admin_Dialog_DiscountCoupons extends Admin_Dialog
 		return $couponsNumber;
     }
 
-    function &getCoupons() // {{{
+    function getCoupons() // {{{
     {
     	if (isset($this->_couponsArray)) {
     		return $this->_couponsArray;
     	}
 
-		$dc =& func_new("DiscountCoupon");
+		$dc = func_new("DiscountCoupon");
 
 		$condition = array("order_id='0'");
 		$sortConditions = $this->prepareSortConditions();
@@ -151,9 +151,9 @@ class Admin_Dialog_DiscountCoupons extends Admin_Dialog
 		$dc->fetchKeysOnly = true;
 		$dc->fetchObjIdxOnly = true;
 
-		$coupons =& $dc->findAll($condition);
+		$coupons = $dc->findAll($condition);
 
-		$this->_couponsArray =& $coupons;
+		$this->_couponsArray = $coupons;
 		return $coupons;
 	} // }}}
 
@@ -181,7 +181,7 @@ class Admin_Dialog_DiscountCoupons extends Admin_Dialog
 
 	function action_add() // {{{
     {
-        $dc =& func_new("DiscountCoupon");
+        $dc = func_new("DiscountCoupon");
         if ($dc->find("coupon='" . $this->get("coupon") . "' AND order_id='0'")) {
             $this->valid = false;
             $this->couponExists = true;

@@ -47,9 +47,9 @@
 */
 class Order_PayPalPro extends Order
 {
-	function &getDetails()
+	function getDetails()
 	{
-		$details =& parent::getDetails();
+		$details = parent::getDetails();
 
 		if (!$this->xlite->is("adminZone") && ($this->get("payment_method") == "paypalpro" || $this->get("payment_method") == "paypalpro_express") && isset($details["error"]) && isset($details["errorDescription"])) {
 			$details["error"] .= " (" . $details["errorDescription"] . ")";

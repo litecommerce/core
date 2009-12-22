@@ -65,14 +65,14 @@ class Category_LayoutOrganizer extends Category
 		switch ($template_type) {
 			case "custom_template":
             	if ($this->xlite->get("reReadConfig")) {
-            		$cfg =& func_new("Config");
-            		$this->config =& $cfg->readConfig();
+            		$cfg = func_new("Config");
+            		$this->config = $cfg->readConfig();
             	}
 			return $this->config->get("LayoutOrganizer.template");
 			case "sc_custom_template":
             	if ($this->xlite->get("reReadConfig")) {
-            		$cfg =& func_new("Config");
-            		$this->config =& $cfg->readConfig();
+            		$cfg = func_new("Config");
+            		$this->config = $cfg->readConfig();
             	}
 			return $this->config->get("General.subcategories_look");
 			case "p_custom_template":
@@ -84,7 +84,7 @@ class Category_LayoutOrganizer extends Category
 	{
 		$parent = $this->get("parent");
 		if ($parent > 0) {
-			$parent =& func_new("Category", $parent);
+			$parent = func_new("Category", $parent);
 			if (is_object($parent)) {
 				if ($parent->get($template_type) < 0) {
 					return $parent->getParentTemplate($template_type);
@@ -195,7 +195,7 @@ class Category_LayoutOrganizer extends Category
     // (не совсем массив, там массив массивов)
     function getProductIDs($where) {
         if ($this->isPersistent) {
-            $p =& func_new("_ProductFromCategory", $this->get("category_id"));
+            $p = func_new("_ProductFromCategory", $this->get("category_id"));
             $p->fetchObjIdxOnly = true;
             return $p->findAll($where);
         } else {

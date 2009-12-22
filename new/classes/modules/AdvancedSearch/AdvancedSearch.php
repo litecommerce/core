@@ -45,7 +45,7 @@ class Module_AdvancedSearch extends Module // {{{
 	var $minVer = "2.1";
 	var $showSettingsForm = true;	
 
-	function &getSettingsForm() // {{{
+	function getSettingsForm() // {{{
 	{
 		return "admin.php?target=advanced_search";
 	} // }}}

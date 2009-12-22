@@ -50,7 +50,7 @@ class Module_Newsletters_CRegisterForm extends CRegisterForm
         parent::fillForm();
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
             if (!is_null($this->profile)) {
-                $ns =& func_new("NewsSubscriber");
+                $ns = func_new("NewsSubscriber");
                 $email = strtolower(addslashes($this->profile->get("login")));
                 // check all subscribed lists
                 foreach ($ns->findAll("LOWER(email)='".$email."'") as $subs) {
@@ -74,9 +74,9 @@ class Module_Newsletters_CRegisterForm extends CRegisterForm
             if (is_array($listIDs) && count($listIDs) > 0) {
                 foreach ($listIDs as $listID) {
                 	$listID = intval($listID);
-                    $nl =& func_new("NewsList");
+                    $nl = func_new("NewsList");
                     if ($nl->find("list_id='".$listID."' AND enabled=1")) {
-                        $ns =& func_new("NewsSubscriber");
+                        $ns = func_new("NewsSubscriber");
                         $email = strtolower(addslashes($this->profile->get("login")));
                         if (!$ns->find("list_id='".$listID."' AND LOWER(email)='".$email."'")) {
                             $ns->subscribe($email, $listID, false);
@@ -92,10 +92,10 @@ class Module_Newsletters_CRegisterForm extends CRegisterForm
         parent::action_modify();
         if ($this->is("valid")) {
             $listIDs = (array)$this->get("list_ids");
-            $ns =& func_new("NewsSubscriber");
+            $ns = func_new("NewsSubscriber");
             $email = strtolower(addslashes($this->profile->get("login")));
 
-            $subscribedList =& $ns->findAll("LOWER(email)='$email'");
+            $subscribedList = $ns->findAll("LOWER(email)='$email'");
             $subscribed = array();
             if (is_array($subscribedList) && count($subscribedList)>0) {
             	foreach($subscribedList as $s) {
@@ -108,7 +108,7 @@ class Module_Newsletters_CRegisterForm extends CRegisterForm
             	return;
             }
 
-            $nl =& func_new("NewsList");
+            $nl = func_new("NewsList");
             // walk through the all available News lists
             foreach ($nl->findAll() as $nlist) {
                 $id = $nlist->get("list_id");
@@ -127,10 +127,10 @@ class Module_Newsletters_CRegisterForm extends CRegisterForm
         }
     }
 
-    function &getNewsLists()
+    function getNewsLists()
     {
         if (is_null($this->newsLists)) {
-            $nl =& func_new("NewsList");
+            $nl = func_new("NewsList");
             $this->newsLists = $nl->findAll();
         }
         return $this->newsLists;

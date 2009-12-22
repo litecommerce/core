@@ -47,30 +47,30 @@ class Admin_Dialog_autoupdate_catalog extends Admin_Dialog
 {
     var $params = array("target", "returnUrl");
 
-    function &getCatalog() // {{{
+    function getCatalog() // {{{
     {
         if (is_null($this->catalog)) {
-            $this->catalog =& func_new("Catalog");
+            $this->catalog = func_new("Catalog");
         }
         return $this->catalog;
     } // }}}
     
     function getProductUrl($product_id, $category_id) // {{{
     {
-        $catalog =& $this->get("catalog");
+        $catalog = $this->get("catalog");
         return $catalog->getProductUrl($product_id, $category_id);
     } // }}}
 
     function getCategoryUrl($category_id) // {{{
     {
-        $catalog =& $this->get("catalog");
+        $catalog = $this->get("catalog");
         return $catalog->getCategoryUrl($category_id);
     } // }}}
     
     function action_update() // {{{
     {
         // initalize catalog instance
-        $catalog =& $this->get("catalog");
+        $catalog = $this->get("catalog");
         if (!$catalog->is("built")) {
             $url = $this->get("returnUrl");
 ?>
@@ -144,11 +144,11 @@ document.location="<?php echo $url; ?>";
     function rebuildFlyoutCategories()
     {
     	if ($this->xlite->get("FlyoutCategoriesEnabled") && $this->get("config.FlyoutCategories.force_js_in_layout")) {
-    		$dialog =& func_new("Admin_Dialog_module_FlyoutCategories");
+    		$dialog = func_new("Admin_Dialog_module_FlyoutCategories");
     		$dialog->action_rebuild_tree();
 
         	if ($this->get("config.FlyoutCategories.force_js_in_layout")) {
-    			$catalog =& $this->get("catalog");
+    			$catalog = $this->get("catalog");
                 $catalog->buildFCJS();
         	}
     	}
@@ -161,14 +161,14 @@ document.location="<?php echo $url; ?>";
             if ($this->category_id == $topID) {
             	if ($this->config->get("HTMLCatalog.drop_catalog")) {
                     // delete all categories & product pages
-                    $catalog =& $this->get("catalog");
+                    $catalog = $this->get("catalog");
                     $catalog->clear();
                 }
                 // rebuild the whole catalog
                 $this->set("returnUrl", "admin.php?target=catalog&action=build&xlite_form_id=".$this->get('xliteFormID'));
                 return;
             } else {    
-                $category =& func_new("Category", $category_id);
+                $category = func_new("Category", $category_id);
                 $sub = $this->updateLog["categories"];
             	if ($this->config->get("HTMLCatalog.drop_catalog")) {
                     // delete subcategories
@@ -194,14 +194,14 @@ document.location="<?php echo $url; ?>";
 
         if ($this->post["action"] == "modify" || $this->post["action"] == "update_fields") { // update
             // category_id is a modified category ID
-            $category =& func_new("Category", $this->category_id);
+            $category = func_new("Category", $this->category_id);
             $parent = $category->get("parent");
             $topID = $this->get("xlite.factory.Category.topCategory.category_id");
             // top category updated - rebuild the whole catalog
             if ($topID == $parent) {
             	if ($this->config->get("HTMLCatalog.drop_catalog")) {
                     // delete all categories & product pages
-                    $catalog =& $this->get("catalog");
+                    $catalog = $this->get("catalog");
                     $catalog->clear();
                 }
                 // rebuild the whole catalog
@@ -223,7 +223,7 @@ document.location="<?php echo $url; ?>";
         } else if ($this->post["action"] == "add") {
             // category_id is a parent category ID
             $new_category_id = $this->updateLog["category_id"];
-            $category =& func_new("Category", $new_category_id);
+            $category = func_new("Category", $new_category_id);
             if ($category->is("enabled")) {
                 func_category_add($this, $new_category_id);
                 func_category_add($this, $this->category_id);
@@ -243,20 +243,20 @@ document.location="<?php echo $url; ?>";
     function action_add_product() // {{{
     {
         $product_id = $this->updateLog["product_id"];
-        $product =& func_new("Product", $product_id);
+        $product = func_new("Product", $product_id);
         // do not add disabled product
         if (!$product->is("enabled")) {
             return;
         }
         if (isset($this->category_id)) {
-            $category =& func_new("Category", $this->category_id);
+            $category = func_new("Category", $this->category_id);
             if ($category->is("enabled")) {
 				func_product_update($this, $product_id, $this->category_id, true);
                 func_category_update($this, $this->category_id, $product_id, true);
             }
         } elseif (isset($this->product_categories)) {
             foreach ((array)$this->product_categories as $category_id) {
-                $category =& func_new ("Category", $category_id);
+                $category = func_new ("Category", $category_id);
                 if ($category->is("enabled")) {
 					func_product_update($this, $product_id, $category_id, true);
                     func_category_update($this, $category_id, $product_id, true);
@@ -283,7 +283,7 @@ document.location="<?php echo $url; ?>";
             func_category_update($this, $category_id, $this->product_id, true, true);
         }
         foreach ($addOnly as $category_id) {
-            $category =& func_new ("Category", $category_id);
+            $category = func_new ("Category", $category_id);
             if ($category->is("enabled")) {
                 func_category_update($this, $category_id, $this->product_id, true, true);
             }
@@ -313,7 +313,7 @@ document.location="<?php echo $url; ?>";
         if ($this->post["action"] == "clone") {
         	$this->product_id = $this->updateLog["product_id"];
         }
-        $product =& func_new("Product", $this->product_id);
+        $product = func_new("Product", $this->product_id);
         foreach ($product->get("categories") as $category) {
         	$category_id = $category->get("category_id");
             func_product_update($this, $this->product_id, $category_id, true);
@@ -325,8 +325,8 @@ document.location="<?php echo $url; ?>";
         $updateCategories = array();
         if ($this->post["action"] == "update") {
             foreach ($this->product_orderby as $product_id => $num) {
-                $product =& func_new("Product", $product_id);
-                $categories =& $product->get("categories");
+                $product = func_new("Product", $product_id);
+                $categories = $product->get("categories");
                 for ($i = 0; $i < count($categories); $i ++) {
                     func_product_update($this, $product_id, $categories[$i]->get("category_id"), true);
                     $updateCategories[] = $categories[$i]->get("category_id");
@@ -396,7 +396,7 @@ document.location="<?php echo $url; ?>";
         // rebuild the whole catalog
         if ($allCatalog) {
             // delete all categories & product pages
-            $catalog =& $this->get("catalog");
+            $catalog = $this->get("catalog");
             $catalog->clear();
             // rebuild the whole catalog
             $this->set("returnUrl", "admin.php?target=catalog&action=build&xlite_form_id=".$this->get('xliteFormID'));
@@ -404,13 +404,13 @@ document.location="<?php echo $url; ?>";
         }
     	if (count($category_ids) > 0) {
             foreach ($category_ids as $category_id => $foo) {
-                $category =& func_new("Category", $category_id);
+                $category = func_new("Category", $category_id);
                 $parent = $category->get("parent");
                 $topID = $this->get("xlite.factory.Category.topCategory.category_id");
                 // top category updated - rebuild the whole catalog
                 if ($topID == $parent) {
                     // delete all categories & product pages
-                    $catalog =& $this->get("catalog");
+                    $catalog = $this->get("catalog");
                     $catalog->clear();
                     // rebuild the whole catalog
                     $this->set("returnUrl", "admin.php?target=catalog&action=build&xlite_form_id=".$this->get('xliteFormID'));
@@ -430,13 +430,13 @@ document.location="<?php echo $url; ?>";
         }
 
         foreach ($this->post["categories"] as $category_id) {
-            $category =& func_new("Category", $category_id);
+            $category = func_new("Category", $category_id);
             $parent = $category->get("parent");
             $topID = $this->get("xlite.factory.Category.topCategory.category_id");
             // top category updated - rebuild the whole catalog
             if ($topID == $parent) {
                 // delete all categories & product pages
-                $catalog =& $this->get("catalog");
+                $catalog = $this->get("catalog");
                 $catalog->clear();
                 // rebuild the whole catalog
                 $this->set("returnUrl", "admin.php?target=catalog&action=build&xlite_form_id=".$this->get('xliteFormID'));
@@ -461,7 +461,7 @@ document.location="<?php echo $url; ?>";
 
         // check for building limit
         if ($this->xlite->processedSteps["counter"]++ % ($this->get("config.HTMLCatalog.catalog_pages_count")) == 0) {
-			$catalog =& $this->get("catalog");
+			$catalog = $this->get("catalog");
             $catalog->goAdmin();
 die("!!!");
             $this->set("returnUrl", "admin.php?target=autoupdate_catalog&action=update&xlite_form_id=".$this->get('xliteFormID')."&returnUrl=" . urlencode($this->get("returnUrl")));

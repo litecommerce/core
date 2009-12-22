@@ -101,19 +101,19 @@ class Admin_Dialog_ups extends Admin_Dialog_shipping_settings
     /*
     * Test data
     */
-    function &getPounds()
+    function getPounds()
     {
         return isset($this->pounds) ? $this->pounds : 1;
     }
-    function &getDestinationCountry()
+    function getDestinationCountry()
     {
         return isset($this->destinationCountry) ? $this->destinationCountry : "US";
     }
-    function &getDestinationZipCode()
+    function getDestinationZipCode()
     {
         return isset($this->destinationZipCode) ? $this->destinationZipCode : "73003";
     }
-    function &getDestinationCity()
+    function getDestinationCity()
     {
         return isset($this->destinationCity) ? $this->destinationCity : "";
     }

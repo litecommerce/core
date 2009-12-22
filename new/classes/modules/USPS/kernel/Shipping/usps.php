@@ -69,7 +69,7 @@ class Shipping_usps extends Shipping_online
         return "U.S.P.S.";
     }
 
-    function &getRates($order)
+    function getRates($order)
     {
         require_once "modules/USPS/encoded.php";
         return Shipping_usps_getRates($this, $order);
@@ -375,7 +375,7 @@ EOT;
 
 			return $http->getResponseBody();
 		} else {
-            $https =& func_new("HTTPS");
+            $https = func_new("HTTPS");
             $https->data = $queryString;
             $https->method = "POST";
             $https->conttype = "application/xml";

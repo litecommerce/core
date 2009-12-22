@@ -52,7 +52,7 @@ class Module_ShowcaseOrganizer_Admin_Dialog_module extends Admin_Dialog_module
 		parent::init();
 
 		if ($this->page == "ShowcaseOrganizer") {
-        	$layout =& func_get_instance("Layout");
+        	$layout = func_get_instance("Layout");
         	$layout->addLayout("general_settings.tpl", "modules/ShowcaseOrganizer/config.tpl");
         }
 	}

@@ -47,7 +47,7 @@
 
 class Module_PayPalPro_Admin_Dialog_payment_method extends Admin_Dialog_payment_method 
 {
-	function &getPM()
+	function getPM()
 	{
 		if ($_REQUEST["payment_method"] == "paypalpro_express")	
 			$_REQUEST["payment_method"] = "paypalpro";

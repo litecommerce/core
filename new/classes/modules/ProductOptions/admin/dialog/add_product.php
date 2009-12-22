@@ -49,18 +49,18 @@ class Module_ProductOptions_Admin_Dialog_add_product extends Admin_dialog_add_pr
 	function action_add() 
 	{
 		parent::action_add();
-		$product = &func_new("Product",$this->get("product_id"));
+		$product = func_new("Product",$this->get("product_id"));
 		foreach($product->get("categories") as $category) {
 			$product_categories[] = $category->get("category_id");
 		}
-		$po = &func_new("ProductOption");
+		$po = func_new("ProductOption");
 		$gpo = $po->get("globalOptions");
 		if ($gpo) 
 			foreach($gpo as $global_option) {
 				$gpo_categories = $global_option->getCategories();
 				$intersect = array_intersect($gpo_categories,$product_categories);
 				if (empty($gpo_categories) || (!empty($gpo_categories) && !empty($intersect))) {
-					$po = &func_new("ProductOption");
+					$po = func_new("ProductOption");
 					$po->set("properties",$global_option->get("properties"));
 					$po->set("product_id",$this->get("product_id"));
 					$po->set("parent_option_id",$global_option->get("option_id"));

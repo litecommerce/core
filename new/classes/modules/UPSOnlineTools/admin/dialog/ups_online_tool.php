@@ -198,13 +198,13 @@ EOT;
 
 	function getUPSStates()
 	{
-		$obj =& func_new("Shipping_ups");
+		$obj = func_new("Shipping_ups");
 		return $obj->get("upsstates");
 	}
 
 	function getUPSCountries()
 	{
-		$obj =& func_new("Shipping_ups");
+		$obj = func_new("Shipping_ups");
 		return $obj->get("upscountries");
 	}
 }

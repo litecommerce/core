@@ -49,7 +49,7 @@ class Dialog_protxdirect_checkout extends Dialog_checkout
 	function init()
 	{
 		if (!is_object($this->registerForm) || is_null($this->registerForm)) {
-			$this->registerForm =& func_new("Object");
+			$this->registerForm = func_new("Object");
 		}
 		parent::init();
 		
@@ -78,7 +78,7 @@ class Dialog_protxdirect_checkout extends Dialog_checkout
 			$this->session->writeClose();
 
 			$order = $this->get("order");
-            $payment =& func_new('PaymentMethod', "protxdirect_cc");
+            $payment = func_new('PaymentMethod', "protxdirect_cc");
 
 			include_once "modules/ProtxDirect/encoded.php";
 			func_ProtxDirect_action_return($this, $order, $payment);

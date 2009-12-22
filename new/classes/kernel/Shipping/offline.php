@@ -70,12 +70,12 @@ class Shipping_offline extends Shipping
             $dest = 'I';
         }
         $sql = "destination='$dest' AND enabled=1 AND class='offline'";
-        $methods =& $this->findAll($this->_buildRatesSql($sql, $order));
+        $methods = $this->findAll($this->_buildRatesSql($sql, $order));
         // join with rates table
         $result = array();
         for ($i=0; $i<count($methods); $i++)
         {
-            $method =& $methods[$i];
+            $method = $methods[$i];
             $rate = $this->getRate($order, $method);
             if (isset($rate)) {
                 $result[$method->get("shipping_id")] = $rate;
@@ -95,13 +95,13 @@ class Shipping_offline extends Shipping
         $shipping_id = $method->get("shipping_id");
         $weight = (double) $order->get("weight");
         $total = (double) $order->calcSubTotal(true); // SubTotal for "shipped only" items
-        $r =& func_new("ShippingRate");
+        $r = func_new("ShippingRate");
         $zone = $this->getZone($order);
         $items = $order->get("shippedItemsCount");
         $sql = "(shipping_id=-1 OR shipping_id='$shipping_id') AND (shipping_zone=-1 OR shipping_zone='$zone') AND min_weight<=$weight AND max_weight>=$weight AND min_total<=$total AND min_items<=$items AND max_items>=$items AND max_total>$total";
         if ($r->find($this->_buildRateSql($sql, $order, $method), "shipping_id DESC, shipping_zone DESC")) {
             $r->rate = (double)$r->get("flat") + (double)$r->get("per_item") * $items + (double)$r->get("percent")*$total/100 + (double)$r->get("per_lbs")*$weight;
-            $r->shipping =& $method;
+            $r->shipping = $method;
             return $r;
         }
         return null;

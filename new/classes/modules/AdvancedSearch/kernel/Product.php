@@ -63,7 +63,7 @@ class Module_AdvancedSearch_Product extends Product // {{{
     	$this->xlite->set("GlobalQuickCategoriesNumber", false);
     }
 	
-	function &_advancedSearch // {{{
+	function _advancedSearch // {{{
   	(	$substring			= "", 
 		$orderby 			= "name",
 		$sku 				= null, 
@@ -112,7 +112,7 @@ class Module_AdvancedSearch_Product extends Product // {{{
 		if (!empty($_category_id)) {
 			$products = in_array(true, $field_values) ? $this->getCategoryProducts($_category_id, $search_query, $subcategory_search) : array(); 
 		} else {
-			$product =& func_new("Product");
+			$product = func_new("Product");
             $product->fetchKeysOnly = true;
 			$products = in_array(true, $field_values) ? $product->findAll($search_query, $orderby) : array();
 		} 
@@ -125,14 +125,14 @@ class Module_AdvancedSearch_Product extends Product // {{{
 			);
 			$search_query = $this->getSearchQuery($field_values, $keywords, $logic); 
 			
-			$extraField =& func_new("ExtraField");	
+			$extraField = func_new("ExtraField");	
 			$field_ids = array();
 			if (true == ($globalExtraFields = $extraField->findAll("product_id = 0 AND (" . $search_query.")"))) {
 				foreach($globalExtraFields as $gef) 
 					if (!is_null($gef->get("categories"))) {
 						$categories = explode("|", $gef->get("categories"));
 						foreach($categories as $cat_id) {
-							$category =& func_new("Category", $cat_id);
+							$category = func_new("Category", $cat_id);
 							$field_ids = array_merge($field_ids, $this->getIds($category->get("products")));
 						}
 					}	
@@ -144,7 +144,7 @@ class Module_AdvancedSearch_Product extends Product // {{{
 					if ($isNewEF) {
 						$field_ids = array_merge($field_ids, array($ef->get("product_id")));
 					} else {
-            			$product =& $ef->getProduct();
+            			$product = $ef->getProduct();
     					if ($product->isExists()) {
     						$field_ids = array_merge($field_ids, array($ef->get("product_id")));
     					} else {
@@ -156,13 +156,13 @@ class Module_AdvancedSearch_Product extends Product // {{{
 			
 			$field_values = array("value" => true);
 			$search_query = $this->getSearchQuery($field_values, $keywords, $logic);
-			$fieldValue =& func_new("FieldValue");
+			$fieldValue = func_new("FieldValue");
 			if (true == ($fieldValues = $fieldValue->findAll($search_query))) {
 				foreach($fieldValues as $fv) {
 					if ($isNewEF) {
 						$field_ids = array_merge($field_ids, array($fv->get("product_id")));
 					} else {
-            			$product =& func_new("Product", $fv->get("product_id"));
+            			$product = func_new("Product", $fv->get("product_id"));
     					if ($product->isExists()) {
                         	$field_ids = array_merge($field_ids, array($fv->get("product_id")));
     					} else {
@@ -182,7 +182,7 @@ class Module_AdvancedSearch_Product extends Product // {{{
 			);
 			$search_query = $this->getSearchQuery($field_values, $keywords, $logic);
 
-			$productOption =& func_new("ProductOption");
+			$productOption = func_new("ProductOption");
 			$productOption->fetchKeysOnly = true;
 			$productOptions = $productOption->findAll("product_id <> 0 AND (" . $search_query. ")"); 
 			$option_ids = $this->getIds($productOptions);
@@ -199,7 +199,7 @@ class Module_AdvancedSearch_Product extends Product // {{{
 		
 		$product_limit = array();
 		if (!empty($search_query)) {
-			$product =& func_new("Product");
+			$product = func_new("Product");
         	$product->fetchKeysOnly = true;
 			$product_limit = $product->findAll($search_query, $orderby);
 			$ids = array_unique(array_intersect($ids, $this->getIds($product_limit)));
@@ -208,7 +208,7 @@ class Module_AdvancedSearch_Product extends Product // {{{
 		$products = array();	
 		if (!empty($ids))
 			foreach ($ids as $id) {
-                $product =& func_new("Product", $id);
+                $product = func_new("Product", $id);
                 $products[$id] = $product; 
             } 
 		return $products;
@@ -256,12 +256,12 @@ class Module_AdvancedSearch_Product extends Product // {{{
 
 	function getCategoryProducts(&$category_id, $search_query,  $subcategory_search = false) // {{{
 	{
-		$category =& func_new("Category", $category_id);
+		$category = func_new("Category", $category_id);
         $products = $category->getProducts(!empty($search_query) ? "($search_query)" : "", null, true);
 		if ($subcategory_search) {
-			$categories =& $category->getSubcategories();
+			$categories = $category->getSubcategories();
 				for ($i=0; $i<count($categories); $i++) {
-					$category_products =& $this->getCategoryProducts($categories[$i]->get("category_id"), $search_query, $subcategory_search);
+					$category_products = $this->getCategoryProducts($categories[$i]->get("category_id"), $search_query, $subcategory_search);
 					$products = array_merge($products, array_values($category_products));
 				}	
 		}

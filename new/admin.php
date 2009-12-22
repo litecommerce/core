@@ -50,7 +50,7 @@ include_once "./includes/prepend.php";
 // fires up and runs the LiteCommerce admin interface
 while (func_is_locked("cache")) sleep(1);
 
-$xlite =& func_new("XLite");
+$xlite = func_new("XLite");
 $xlite->set("adminZone", true);
 $xlite->initFromGlobals();
 $xlite->set("layout.skin", "admin");

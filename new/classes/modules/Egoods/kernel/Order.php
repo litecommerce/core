@@ -67,11 +67,11 @@ class Module_Egoods_Order extends Order
 	
 	function Egoods_checkedOut()
 	{
-		$items =& $this->get('items');
+		$items = $this->get('items');
 		for ($i = 0; $i < count($items); $i++) {
 			if ($items[$i]->is('pin') && $items[$i]->get('product.pin_type') == "D") {
 				for ($j = 0; $j < $items[$i]->get('amount'); $j++) {
-					$pin =& func_new('PinCode');
+					$pin = func_new('PinCode');
 					if ($pin->find('enabled=1 and product_id=' . $items[$i]->get('product.product_id') . " and item_id='' and order_id=0")) {
 						$pin->set('item_id', $items[$i]->get('item_id'));
 						$pin->set('order_id', $this->get('order_id'));
@@ -79,12 +79,12 @@ class Module_Egoods_Order extends Order
 					}
 				}
 				
-				$pin_settings = &func_new("PinSettings",$items[$i]->get('product.product_id'));
-				$pin = &func_new("PinCode");
+				$pin_settings = func_new("PinSettings",$items[$i]->get('product.product_id'));
+				$pin = func_new("PinCode");
 				if ($pin->getFreePinCount($items[$i]->get('product.product_id'))<= $pin_settings->get("low_available_limit") && $pin_settings->get("low_available_limit")) {
-					$mail =& func_new("Module_Egoods_Mailer");
-					$mail->item =& $items[$i];
-					$product = & func_new("Product");
+					$mail = func_new("Module_Egoods_Mailer");
+					$mail->item = $items[$i];
+					$product = func_new("Product");
 					$product->find("product_id = " . $items[$i]->get('product.product_id'));
 					$mail->product = $product;
 					$mail->free_pins = $pin->getFreePinCount($items[$i]->get('product.product_id'));
@@ -104,10 +104,10 @@ class Module_Egoods_Order extends Order
     
 	function Egoods_uncheckedOut()
     {
-		$items =& $this->get('items');
+		$items = $this->get('items');
 		for ($i = 0; $i < count($items); $i++) {
 			if ($items[$i]->is('pin') && $items[$i]->get('product.pin_type') == "D") {
-                $pins =& func_new('PinCode');
+                $pins = func_new('PinCode');
                 foreach ($pins->findAll("order_id='" . $this->get("order_id") . "' AND item_id='" . $items[$i]->get("item_id") . "'") as $pin) {
                     $pin->set('item_id', '');
                     $pin->set('order_id', 0);
@@ -144,7 +144,7 @@ class Module_Egoods_Order extends Order
 	
     function Egoods_declined()
     {
-        $items =& $this->get("items");
+        $items = $this->get("items");
         for ($i = 0; $i < count($items); $i++) {
             $items[$i]->unStoreLinks();
         }

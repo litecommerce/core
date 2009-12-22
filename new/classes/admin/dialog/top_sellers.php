@@ -53,7 +53,7 @@ class Admin_Dialog_top_sellers extends Admin_Dialog_stats
     var $sort_by = "amount";
     var $counter = array(0,1,2,3,4,5,6,7,8,9);
 
-    function &getPageTemplate()
+    function getPageTemplate()
     {
         return "top_sellers.tpl";
     }
@@ -70,7 +70,7 @@ class Admin_Dialog_top_sellers extends Admin_Dialog_stats
                 "total" => $statRec,
                 "paid" => $statRec);
 
-        $order =& func_new("Order");
+        $order = func_new("Order");
         $date = $this->get("monthDate");
         array_map(array(&$this, "collect"), $order->findAll("(status='P' OR status='C') AND date>=$date"));
         $this->sort("todayItems");

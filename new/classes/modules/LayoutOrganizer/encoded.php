@@ -50,7 +50,7 @@ function LayoutOrganizer_enableChildren(&$_this, $only_categories = false)
             foreach($productIDs as $productID) {
                 // KOI8-R comment: потому что $productID - это не чисто int значение,
                 // это "немножко" массив
-                $product = &func_new("Product", (int) $productID["data"]["product_id"]);
+                $product = func_new("Product", (int) $productID["data"]["product_id"]);
                 if ($product->get("parent.category_id") == $_this->get("category_id")) {
                     $product->set("custom_template_enabled", $enabled);
                     $product->update();
@@ -121,7 +121,7 @@ function LayoutOrganizer_action_update(&$_this)
 		return;
 	}
 
-	$fNode =& func_new("FileNode");
+	$fNode = func_new("FileNode");
 	$saved_scheme_id = $_this->scheme_id;
 
 	$names_updated = array();
@@ -141,8 +141,8 @@ function LayoutOrganizer_action_update(&$_this)
 		$scheme->set("enabled", $enabled);
 		if (!$_this->isInvariable($_this->scheme_id)) {
     		$enabled = ($enabled) ? "1" : "0";
-    		$categories_list =& func_new("Category");
-    		$categories_list =& $categories_list->findAll("(custom_template='$scheme_id' OR sc_custom_template='$scheme_id' OR p_custom_template='$scheme_id')");
+    		$categories_list = func_new("Category");
+    		$categories_list = $categories_list->findAll("(custom_template='$scheme_id' OR sc_custom_template='$scheme_id' OR p_custom_template='$scheme_id')");
     		if (is_array($categories_list)) {
     			foreach($categories_list as $cat) {
     				if ($cat->get("custom_template") == $scheme_id) {
@@ -158,8 +158,8 @@ function LayoutOrganizer_action_update(&$_this)
 					$cat->enableChildren();
     			}
     		}
-    		$products_list =& func_new("Product");
-    		$products_list =& $products_list->findAll("custom_template='$scheme_id' AND custom_template_enabled<>'$enabled'");
+    		$products_list = func_new("Product");
+    		$products_list = $products_list->findAll("custom_template='$scheme_id' AND custom_template_enabled<>'$enabled'");
     		if (is_array($products_list)) {
     			foreach($products_list as $prod) {
                 	$prod->set("custom_template_enabled", $enabled);
@@ -195,9 +195,9 @@ function LayoutOrganizer_action_update(&$_this)
 	}
 	if (count($names_updated) > 0) {
 		foreach($names_updated as $oldName => $newName) {
-    		$schemes_list =& func_new("TemplatesScheme");
+    		$schemes_list = func_new("TemplatesScheme");
     		$oldNameSql = str_replace("_", "\\_", $oldName);
-    		$schemes_list =& $schemes_list->findAll("(cat_template LIKE '%/$oldNameSql/%') OR (scat_template LIKE '%/$oldNameSql/%') OR (prod_template LIKE '%/$oldNameSql/%')");
+    		$schemes_list = $schemes_list->findAll("(cat_template LIKE '%/$oldNameSql/%') OR (scat_template LIKE '%/$oldNameSql/%') OR (prod_template LIKE '%/$oldNameSql/%')");
     		if (is_array($schemes_list)) {
     			foreach($schemes_list as $sch) {
                 	$sch->set("cat_template", str_replace("/$oldName/", "/$newName/", $sch->get("cat_template")));
@@ -206,8 +206,8 @@ function LayoutOrganizer_action_update(&$_this)
                 	$sch->update();
     			}
     		}
-    		$categories_list =& func_new("Category");
-    		$categories_list =& $categories_list->findAll("(template_name LIKE '%/$oldNameSql/%') OR (sc_template_name LIKE '%/$oldNameSql/%') OR (p_template_name LIKE '%/$oldNameSql/%')");
+    		$categories_list = func_new("Category");
+    		$categories_list = $categories_list->findAll("(template_name LIKE '%/$oldNameSql/%') OR (sc_template_name LIKE '%/$oldNameSql/%') OR (p_template_name LIKE '%/$oldNameSql/%')");
     		if (is_array($categories_list)) {
     			foreach($categories_list as $cat) {
                 	$cat->set("template_name", str_replace("/$oldName/", "/$newName/", $cat->get("template_name")));
@@ -216,8 +216,8 @@ function LayoutOrganizer_action_update(&$_this)
                 	$cat->update();
     			}
     		}
-    		$products_list =& func_new("Product");
-    		$products_list =& $products_list->findAll("template_name LIKE '%/$oldNameSql/%'");
+    		$products_list = func_new("Product");
+    		$products_list = $products_list->findAll("template_name LIKE '%/$oldNameSql/%'");
     		if (is_array($products_list)) {
     			foreach($products_list as $prod) {
                 	$prod->set("template_name", str_replace("/$oldName/", "/$newName/", $prod->get("template_name")));
@@ -265,9 +265,9 @@ function LayoutOrganizer_action_delete(&$_this)
 
 	$oldName = $scheme->getFileName();
 	$oldNameSql = str_replace("_", "\\_", $oldName);
-	$cat_dialog =& func_new("Admin_Dialog_category_LayoutOrganizer");
-	$categories_list =& func_new("Category");
-	$categories_list =& $categories_list->findAll("(template_name LIKE '%/$oldNameSql/%') OR (sc_template_name LIKE '%/$oldNameSql/%') OR (p_template_name LIKE '%/$oldNameSql/%')");
+	$cat_dialog = func_new("Admin_Dialog_category_LayoutOrganizer");
+	$categories_list = func_new("Category");
+	$categories_list = $categories_list->findAll("(template_name LIKE '%/$oldNameSql/%') OR (sc_template_name LIKE '%/$oldNameSql/%') OR (p_template_name LIKE '%/$oldNameSql/%')");
 	if (is_array($categories_list)) {
 		foreach($categories_list as $cat) {
 			if ($cat->get("custom_template") > 0 && strpos($cat->get("template_name"), "/".$oldName."/") !== false) {
@@ -283,8 +283,8 @@ function LayoutOrganizer_action_delete(&$_this)
 		}
 	}
 
-	$products_list =& func_new("Product");
-	$products_list =& $products_list->findAll("template_name LIKE '%/$oldNameSql/%'");
+	$products_list = func_new("Product");
+	$products_list = $products_list->findAll("template_name LIKE '%/$oldNameSql/%'");
 	if (is_array($products_list)) {
 		foreach($products_list as $prod) {
 			$parent = $prod->get("parent");
@@ -294,7 +294,7 @@ function LayoutOrganizer_action_delete(&$_this)
 		}
 	}
 
-	$fNode =& func_new("FileNode");
+	$fNode = func_new("FileNode");
 	$fNode->path = $_this->customerLayoutPath . "modules/LayoutOrganizer/schemes/" . $scheme->getFileName();
 	$fNode->remove();
 	$scheme->delete();

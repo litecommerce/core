@@ -48,7 +48,7 @@ class Module_ProductOptions_Dialog_product extends Dialog_product
 {
     function action_buynow()
     {
-        $product =& $this->get("product"); 
+        $product = $this->get("product"); 
         if (!$product->hasOptions()) {
             parent::action_buynow();
         }
@@ -67,7 +67,7 @@ class Module_ProductOptions_Dialog_product extends Dialog_product
     function isAvailableForSale()
     {
 		if ($this->xlite->get("InventoryTrackingEnabled")) {
-        	$product =& $this->get("product"); 
+        	$product = $this->get("product"); 
             if ($product->get("inventory.found") && !$product->get("tracking")) {
                 return $product->get("inventory.amount") > 0;
             }

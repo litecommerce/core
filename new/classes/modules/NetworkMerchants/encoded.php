@@ -138,8 +138,8 @@ $paymentMethod->initRequest($lite_cart, $post);
 
 list($a,$return)=func_https_request("POST","https://secure.networkmerchants.com:443/gw/api/transact.php",$post);
 parse_str($return,$ret);
-#response=3&responsetext=Invalid Expiration&authcode=&transactionid=0&avsresponse=&cvvresponse=&orderid=
-#response=2&responsetext=    DECLINE     &authcode=      &transactionid=33500569&avsresponse=N&cvvresponse=N&orderid=tst13-1
+#response=3&responsetext=Invalid Expiration&authcode = transactionid=0&avsresponse = cvvresponse = orderid=
+#response=2&responsetext=    DECLINE     &authcode = transactionid=33500569&avsresponse=N&cvvresponse=N&orderid=tst13-1
 
 $bill_output["billmes"] = trim($ret["responsetext"]);
 
@@ -232,7 +232,7 @@ if($ret["cvvresponse"])
 
 /*
 function networkmerchants_func_https_request($method, $url, $vars) {
-    $request =& func_new('HTTPS');
+    $request = func_new('HTTPS');
     $request->url = $url;
 	$request->data = $vars;
 	

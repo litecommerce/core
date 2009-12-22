@@ -77,7 +77,7 @@ class Admin_Dialog_users extends Admin_Dialog
     } // }}} 
 	
 
-    function &getUsers()
+    function getUsers()
     {
         if ($this->get("mode") == "") {
             return array();
@@ -115,7 +115,7 @@ class Admin_Dialog_users extends Admin_Dialog
             } elseif (is_null($access_level) && $this->user_type != "all") {
                 $where[] = "access_level=-1";
             }
-            $profile =& func_new("Profile");
+            $profile = func_new("Profile");
 			$profile->fetchKeysOnly = true;
 			$profile->fetchObjIdxOnly = true;
             $this->users = $profile->findAll($this->_buildWhere($where), "login");
@@ -135,7 +135,7 @@ class Admin_Dialog_users extends Admin_Dialog
 
     function search_orders()
     {
-        $profile =& func_new("Profile", $this->profile_id);
+        $profile = func_new("Profile", $this->profile_id);
         $profile->read();
 		$login = $profile->get("login");
         if (strlen($login) > 0) {

@@ -71,7 +71,7 @@ class Module_Egoods_Admin_Dialog_product extends Admin_dialog_product
 			||
 			($_POST["new_remote"] == "N" && !empty($_POST["new_local_file"]))
 		) {
-    		$df =& func_new('DownloadableFile');
+    		$df = func_new('DownloadableFile');
     		$df->set('product_id', $_POST['product_id']);
     		$df->set('store_type', 'F');
     		$df->set('delivery', $_POST['new_file_delivery']);
@@ -95,7 +95,7 @@ class Module_Egoods_Admin_Dialog_product extends Admin_dialog_product
 
 	function action_update_egood() // {{{
 	{
-		$df =& func_new("DownloadableFile", $_POST["file_id"]);
+		$df = func_new("DownloadableFile", $_POST["file_id"]);
 		$df->set("delivery", $_POST["delivery"]);
 
 		if 
@@ -130,11 +130,11 @@ class Module_Egoods_Admin_Dialog_product extends Admin_dialog_product
 			return;
 		}
 		
-		$df =& func_new('DownloadableFile', $_POST['file_id']);
+		$df = func_new('DownloadableFile', $_POST['file_id']);
 		@unlink($df->get('data'));
 		$df->delete();
-		$link =& func_new('DownloadableLink');
-		$links =& $link->findAll('file_id='. $_POST['file_id']);
+		$link = func_new('DownloadableLink');
+		$links = $link->findAll('file_id='. $_POST['file_id']);
 
 		for ($i = 0; $i < count($links); $i++) {
 			$links[$i]->delete();
@@ -148,7 +148,7 @@ class Module_Egoods_Admin_Dialog_product extends Admin_dialog_product
 
 	function action_add_link() // {{{
 	{
-		$dl =& func_new('DownloadableLink', $_POST['new_acc']);
+		$dl = func_new('DownloadableLink', $_POST['new_acc']);
 		$dl->set('file_id', $_POST['file_id']);
 		$dl->set('exp_time', mktime(0, 0, 0, $_POST['new_exp_dateMonth'], $_POST['new_exp_dateDay'], $_POST['new_exp_dateYear']));
 		$dl->set('available_downloads', $_POST['new_downloads']);
@@ -163,7 +163,7 @@ class Module_Egoods_Admin_Dialog_product extends Admin_dialog_product
 			return;
 		}	
 		foreach($_POST['selected_links'] as $access_key) {
-			$dl =& func_new('DownloadableLink');
+			$dl = func_new('DownloadableLink');
 			if ($dl->find('access_key=' . "'" . $access_key . "'")) {
 				$dl->delete();
 			}
@@ -172,7 +172,7 @@ class Module_Egoods_Admin_Dialog_product extends Admin_dialog_product
 
 	function action_update_free_charge() // {{{
 	{
-		$product =& $this->get('product');
+		$product = $this->get('product');
 		if (isset($_POST['free_charge']) && is_array($_POST['free_charge'])) {
 			$product->set('egood_free_for_memberships', implode(',', $_POST['free_charge']));
 		} else {
@@ -183,7 +183,7 @@ class Module_Egoods_Admin_Dialog_product extends Admin_dialog_product
 
 	function action_add_pincode() // {{{
 	{
-		$pin =& func_new('PinCode');
+		$pin = func_new('PinCode');
 		$pin->set('product_id', $this->get('product_id'));
 		$pin->set('pin', $_POST['new_pin']);
 		$pin->set('enabled', (int)$_POST['new_pin_enabled']);
@@ -196,7 +196,7 @@ class Module_Egoods_Admin_Dialog_product extends Admin_dialog_product
 			return;
 		}	
 		foreach($_POST['selected_pins'] as $pin_id) {
-			$p =& func_new('PinCode', $pin_id);
+			$p = func_new('PinCode', $pin_id);
 			$p->delete();
 		}
 	} // }}}
@@ -207,7 +207,7 @@ class Module_Egoods_Admin_Dialog_product extends Admin_dialog_product
 			return;
 		}	
 		foreach($_POST['selected_pins'] as $pin_id) {
-			$p =& func_new('PinCode', $pin_id);
+			$p = func_new('PinCode', $pin_id);
 			$p->set('enabled', false);
 			$p->update();
 		}
@@ -219,7 +219,7 @@ class Module_Egoods_Admin_Dialog_product extends Admin_dialog_product
 			return;
 		}	
 		foreach($_POST['selected_pins'] as $pin_id) {
-			$p =& func_new('PinCode', $pin_id);
+			$p = func_new('PinCode', $pin_id);
 			$p->set('enabled', true);
 			$p->update();
 		}
@@ -231,18 +231,18 @@ class Module_Egoods_Admin_Dialog_product extends Admin_dialog_product
 			return;
 		}	
 		foreach($_POST['selected_pins'] as $pin_id) {
-			$p =& func_new('PinCode', $pin_id);
+			$p = func_new('PinCode', $pin_id);
 			$p->set('order_id', 0);
 			$p->set('item_id', '');
 			$p->update();
 		}
 	} // }}}
 
-	function &getPinCodes() // {{{
+	function getPinCodes() // {{{
 	{
 		if (!isset($this->pin_codes)) {
-			$p =& func_new('PinCode');
-			$this->pin_codes =& $p->findAll('product_id=' . $this->get('product_id') . 
+			$p = func_new('PinCode');
+			$this->pin_codes = $p->findAll('product_id=' . $this->get('product_id') . 
 												($this->get("pin_enabled") != null ? 
 												' AND enabled=' . intval($this->get('pin_enabled')) : 
 												''));
@@ -252,7 +252,7 @@ class Module_Egoods_Admin_Dialog_product extends Admin_dialog_product
 
 	function action_update_pin_src() // {{{
 	{
-		$pin_settings =& func_new("PinSettings");
+		$pin_settings = func_new("PinSettings");
 		$action = "";
 		if ($pin_settings->find('product_id=' . $this->get('product.product_id'))) {
 			$action = "update";
@@ -267,7 +267,7 @@ class Module_Egoods_Admin_Dialog_product extends Admin_dialog_product
 
 	function action_update_pin_cmd_line() // {{{
 	{
-		$pin_settings =& func_new('PinSettings');
+		$pin_settings = func_new('PinSettings');
 		$action = '';
 		if (!$pin_settings->find("product_id=" . $this->get('product.product_id'))) {
 			$action = 'create';

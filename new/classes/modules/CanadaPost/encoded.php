@@ -7,9 +7,9 @@
 // Ottawa, Ontario
 // Canada  K1A 0H8
 
-function &Shipping_cps_getRates(&$_this, &$order)
+function Shipping_cps_getRates(&$_this, &$order)
 {
-    //$profiler =& func_get_instance("Profiler");
+    //$profiler = func_get_instance("Profiler");
     //$profiler->start(true);
 
 	if ((is_null($order->get("profile")) && !$_this->config->get("General.def_calc_shippings_taxes")) || $order->get("weight") == 0 || $_this->config->get("Company.location_country") != 'CA') {
@@ -73,9 +73,9 @@ function &Shipping_cps_getRates(&$_this, &$order)
 
 }
 
-function &Shipping_cps_parseResponse(&$_this,$response,$destination) 
+function Shipping_cps_parseResponse(&$_this,$response,$destination) 
 {
-	$xml = &func_new("XML");
+	$xml = func_new("XML");
 	$tree = $xml->parse($response);
 
 	if (isset($tree["EPARCEL"]["ERROR"])) {

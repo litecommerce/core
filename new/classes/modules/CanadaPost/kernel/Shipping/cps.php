@@ -68,15 +68,15 @@ class Shipping_cps extends Shipping_online // {{{
         return "Canada Post";
     } // }}} 
 
-	function &getRates($order) // {{{
+	function getRates($order) // {{{
 	{
 		include_once "modules/CanadaPost/encoded.php";
 		return Shipping_cps_getRates($this,$order);
 	} // }}}
 	
-	function &queryRates($options,$originalZipcode,$originalCountry,$itemsPrice,$weight,$description,$packed,$destinationCity,$destinationZipcode,$destinationState, $destinationCountry) // {{{
+	function queryRates($options,$originalZipcode,$originalCountry,$itemsPrice,$weight,$description,$packed,$destinationCity,$destinationZipcode,$destinationState, $destinationCountry) // {{{
 	{
-		$request = & func_new("HTTPS");
+		$request = func_new("HTTPS");
 		$request->url = "sellonline.canadapost.ca:30000";
 		$request->method = "POST";
 		$request->data = $this->createRequest($options,$originalZipcode,$originalCountry,$itemsPrice,$weight,$description,$packed,$destinationCity,$destinationZipcode,$destinationState, $destinationCountry);
@@ -125,7 +125,7 @@ class Shipping_cps extends Shipping_online // {{{
 EOT;
 	} // }}}
 
-	function &parseResponse($response,$destination) // {{{
+	function parseResponse($response,$destination) // {{{
 	{
 		include_once "modules/CanadaPost/encoded.php";
 		return Shipping_cps_parseResponse($this, $response,$destination);

@@ -60,7 +60,7 @@ class CGCValidator extends CFieldValidator
             $this->gcid = $_POST[$this->get("field")] = trim($_POST[$this->get("field")]);
 
 			// Pass validation if cert already related with current order
-			$cart =& func_get_instance("Cart");
+			$cart = func_get_instance("Cart");
 			if (is_object($cart) && !is_null($cart) && $cart->get("gcid") == $this->gcid) {
 				return true;
 			}

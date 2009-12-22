@@ -47,10 +47,10 @@ class CBulletin extends Component
 {
     var $template = "modules/Newsletters/bulletin.tpl";
 
-    function &getLastNews()
+    function getLastNews()
     {
         if (is_null($this->lastNews)) {
-            $nl =& func_new("NewsLetter");
+            $nl = func_new("NewsLetter");
             $recent_messages = $this->get("config.Newsletters.recent_messages");
             $nls = $nl->findAll();
             $count = count($nls);

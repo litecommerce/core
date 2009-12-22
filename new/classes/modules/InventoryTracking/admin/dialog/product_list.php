@@ -50,10 +50,10 @@ class Module_InventoryTracking_Admin_Dialog_product_list extends Admin_Dialog_pr
         parent::init();
     } // }}}
 
-    function &getProducts() // {{{
+    function getProducts() // {{{
     {
         if (is_null($this->productsList)) {
-            $this->productsList =& parent::getProducts();
+            $this->productsList = parent::getProducts();
             if (!is_array($this->productsList)) $this->productsList = array();
 
             if (!in_array($this->get("inventory"), array('low','out'))) return $this->productsList;
@@ -67,7 +67,7 @@ class Module_InventoryTracking_Admin_Dialog_product_list extends Admin_Dialog_pr
                 }
                 $product_id = $product->get("product_id");
 
-                $inv =& func_new("Inventory");
+                $inv = func_new("Inventory");
                 if ($this->xlite->get("ProductOptionsEnabled") && $product->get("productOptions") && $product->get("tracking")) {
                     $inventories = (array) $inv->findAll("inventory_id LIKE '$product_id" . "|%' AND enabled=1 $condition");
                     if (empty($inventories)) {

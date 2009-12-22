@@ -48,7 +48,7 @@
 
 class Module_SagePay_Admin_Dialog_payment_method extends Admin_Dialog_payment_method 
 {
-	function &getPM()
+	function getPM()
 	{
 		if ($_REQUEST["payment_method"] == "sagepayform_cc")	
 			$_REQUEST["payment_method"] = "sagepaydirect_cc";

@@ -74,26 +74,26 @@ class Shipping_aupost extends Shipping_online // {{{
         return "Australia Post";
     } // }}} 
 
-	function &getRates($order) // {{{
+	function getRates($order) // {{{
 	{
 		include_once "modules/AustraliaPost/encoded.php";
 		return Shipping_aupost_getRates($this,$order);
 	} // }}}
 	
-	function &queryRates($options, $originalZipcode, $destinationZipcode, $destinationCountry, $weight, $weight_unit=null) // {{{
+	function queryRates($options, $originalZipcode, $destinationZipcode, $destinationCountry, $weight, $weight_unit=null) // {{{
 	{
 		include_once "modules/AustraliaPost/encoded.php";
 		return Shipping_aupost_queryRates($this, $options, $originalZipcode, $destinationZipcode, $destinationCountry, $weight, $weight_unit);
 	} // }}}
 
-	function &parseResponse($rates_data, $destination) // {{{
+	function parseResponse($rates_data, $destination) // {{{
 	{
 		include_once "modules/AustraliaPost/encoded.php";
 		return Shipping_aupost_parseResponse($this, $rates_data, $destination);
 
 	} // }}} 
 
-    function &get($property)
+    function get($property)
 	{
 		if ($property == "name" && isset($this->shipping_time)) {
 			return parent::get("$property") . " (" . $this->shipping_time . " day" . (($this->shipping_time > 1) ? "s" : "") . ")";

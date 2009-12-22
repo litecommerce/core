@@ -43,7 +43,7 @@ class WishList_Dialog extends Dialog // {{{
 {
 	var $wishlist = null;
 
-	function &getWishList() // {{{
+	function getWishList() // {{{
 	{
 		if (!$this->auth->is("logged")) {
 			$this->wishlist = null;
@@ -51,7 +51,7 @@ class WishList_Dialog extends Dialog // {{{
 		}
 
 		if(is_null($this->wishlist)) {
-			$this->wishlist =& func_new("WishList");
+			$this->wishlist = func_new("WishList");
 			$found = $this->wishlist->find("profile_id = ". $this->auth->get("profile.profile_id"));
 			if(!$found) { 
 				$this->wishlist->set("profile_id", $this->auth->get("profile.profile_id"));

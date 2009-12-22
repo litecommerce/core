@@ -181,7 +181,7 @@ class PaymentMethod_sagepaydirect_cc extends PaymentMethod_credit_card
 			$field = "status_" . $name;
 			$result = $params[$field];
 			if ($this->xlite->AOMEnabled) {
-				$status =& func_new("OrderStatus");
+				$status = func_new("OrderStatus");
 				if ($status->find("status='".$params[$field]."'")) {
 					if ($status->get("parent")) {
 						$params[$field] = $status->get("parent");
@@ -192,7 +192,7 @@ class PaymentMethod_sagepaydirect_cc extends PaymentMethod_credit_card
 			$params["sub".$field] = $result;
 		}
 
-		$pm =& func_new("PaymentMethod", "sagepaydirect_cc");
+		$pm = func_new("PaymentMethod", "sagepaydirect_cc");
 		$pm->set("params", $params);
 		$pm->update();
 	} // }}}

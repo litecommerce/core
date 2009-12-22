@@ -70,13 +70,13 @@ class Shipping_intershipper extends Shipping_online
         return "Intershipper";
     }
 
-    function &getRates($order)
+    function getRates($order)
     {
         require_once "modules/Intershipper/encoded.php";
         return Shipping_intershipper_getRates($this, $order);
     }
 
-    function &_prepareRequest($weight, $ZipOrigination, $CountryOrigination, 
+    function _prepareRequest($weight, $ZipOrigination, $CountryOrigination, 
                          $ZipDestination, $CountryDestination, $options, $cod)
     {
         $ZipOrigination = $this->_normalizeZip($ZipOrigination);
@@ -125,10 +125,10 @@ class Shipping_intershipper extends Shipping_online
         return $http;
     }
 
-    function &_queryRates($weight, $ZipOrigination, $CountryOrigination, 
+    function _queryRates($weight, $ZipOrigination, $CountryOrigination, 
                          $ZipDestination, $CountryDestination,$options, $cod)
     {
-        $http =& $this->_prepareRequest($weight, $ZipOrigination, 
+        $http = $this->_prepareRequest($weight, $ZipOrigination, 
             $CountryOrigination, $ZipDestination, $CountryDestination,$options, $cod);
         $http->sendRequest();
         $response = $http->getResponseBody();
@@ -146,7 +146,7 @@ class Shipping_intershipper extends Shipping_online
         $this->_cleanCache("ints_cache");
     }
     
-    function &_parseResponse($response, $destination)
+    function _parseResponse($response, $destination)
     {
         require_once "modules/Intershipper/encoded.php";
         return Shipping_intershipper_parseResponse($this, $response, $destination);

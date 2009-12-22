@@ -48,7 +48,7 @@ class Module_SnsIntegration_Dialog_search extends Dialog_search
 {
 	var $snsActionSend = false;
 
-    function &getProducts() // {{{
+    function getProducts() // {{{
     {
 		if ($this->snsActionSend !== true) {
 			require_once("modules/SnsIntegration/include/misc.php");

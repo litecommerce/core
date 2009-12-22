@@ -71,7 +71,7 @@ class Config extends Base
         return array("General", "Company", "Email", "Security","Admin IP protection", "Captcha protection", "Environment");
     }
     
-    function &getByCategory($category)
+    function getByCategory($category)
     {
         return $this->findAll("category='$category'", "orderby");
     }
@@ -133,7 +133,7 @@ class Config extends Base
     /**
     * Read config variables
     */
-    function &readConfig() // {{{
+    function readConfig() // {{{
     {
         $config = func_new("Object");
 		$row = func_new($this->configClass);
@@ -152,12 +152,12 @@ class Config extends Base
                 $config->$category->$name = $row->get("value");
             }    
         }
-        $config->Company->locationCountry =& func_new("Country", $config->Company->location_country);
-        $config->Company->locationState =& func_new("State", $config->Company->location_state);
+        $config->Company->locationCountry = func_new("Country", $config->Company->location_country);
+        $config->Company->locationState = func_new("State", $config->Company->location_state);
 		if ($config->Company->locationState->get("state_id") == -1) {
 			$config->Company->locationState->set("state", $config->Company->get("custom_location_state"));
 		}
-        $config->General->defaultCountry =& func_new("Country", $config->General->default_country);
+        $config->General->defaultCountry = func_new("Country", $config->General->default_country);
 		$config->Memberships->memberships = array();
 		if (isset($config->Memberships->membershipsCollection)) {
 			if (is_array($config->Memberships->membershipsCollection)) {
@@ -175,7 +175,7 @@ class Config extends Base
 
     function createOption($category, $name, $value, $type = null, $comment = null, $orderby = null) // {{{
     {
-        $config =& func_new($this->configClass);
+        $config = func_new($this->configClass);
         if ($config->find("name='$name' AND category='$category'")) {
             $config->set("value", $value);
             if (!is_null($type)) {

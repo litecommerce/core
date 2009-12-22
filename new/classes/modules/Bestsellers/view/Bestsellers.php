@@ -57,9 +57,9 @@ class CBestsellers extends Component
         return $this->visible;
     }
 
-    function &getBestsellers()
+    function getBestsellers()
     {
-        $category =& $this->get("category");
+        $category = $this->get("category");
         $cat_id = $category->get("category_id");
 
         $bestsellersCategories = $this->xlite->get("BestsellersCategories");
@@ -129,7 +129,7 @@ EOT;
         // fill bestsellers array with product instances
         $best = $category->db->getAll($sql);
         foreach ($best as $p) {
-            $product =& func_new("Product",$p["product_id"]);
+            $product = func_new("Product",$p["product_id"]);
             $categories = $product->get("categories");
             if (!empty($categories) && $product->filter()) {
                 $product->category_id = $categories[0]->get("category_id");
@@ -149,13 +149,13 @@ EOT;
         return $this->bestsellers;
     }
 
-    function &getCategory()
+    function getCategory()
     {
-        $category =& func_new("Category");
+        $category = func_new("Category");
         if (isset($_REQUEST["category_id"])) {
-            $category =& func_new("Category", $_REQUEST["category_id"]); 
+            $category = func_new("Category", $_REQUEST["category_id"]); 
         } else {
-            $category =& $category->get("topCategory");
+            $category = $category->get("topCategory");
         }
         return $category;
     }
@@ -163,7 +163,7 @@ EOT;
     function getSubcategories(&$category)
     {
         $this->ids[] = $category->get("category_id");
-        $categories =& $category->getSubcategories();
+        $categories = $category->getSubcategories();
         for ($i=0; $i < count($categories); $i++) {
             $this->getSubcategories($categories[$i]);
         }

@@ -62,7 +62,7 @@ class Admin_Dialog_partner_payments extends Admin_Dialog
     function action_export_payments() // {{{
     {
         $w = func_new("Widget");
-        $w->component =& $this;
+        $w->component = $this;
         $w->set("template", "modules/Affiliate/payments.tpl");
         $this->startDownload("payments.csv");
         $w->init();
@@ -72,7 +72,7 @@ class Admin_Dialog_partner_payments extends Admin_Dialog
         $this->set("silent", true);
     } // }}}
 
-    function &getDelimiter() // {{{
+    function getDelimiter() // {{{
     {
         global $DATA_DELIMITERS;
         return $DATA_DELIMITERS[$this->delimiter];
@@ -87,7 +87,7 @@ class Admin_Dialog_partner_payments extends Admin_Dialog
             "delimiter"         => $this->delimiter,
 			"return_error"		=> true,
             );
-        $p =& func_new("PartnerPayment");
+        $p = func_new("PartnerPayment");
         $p->import($options);
 		$this->importError = $p->importError;
 
@@ -102,16 +102,16 @@ class Admin_Dialog_partner_payments extends Admin_Dialog
     function action_mark_paid() // {{{
     {
         foreach ((array)$this->get("payment_paid") as $id) {
-            $p =& func_new("PartnerPayment");
+            $p = func_new("PartnerPayment");
             $p->pay($id);
         }
     } // }}}
 
-    function &getPayments() // {{{
+    function getPayments() // {{{
     {
         if (is_null($this->payments)) {
             $this->payments = array();
-            $pp =& func_new("PartnerPayment");
+            $pp = func_new("PartnerPayment");
             $payments = $pp->findAll();
             // summarize payments
             array_map(array(&$this, 'summarize'), $payments);

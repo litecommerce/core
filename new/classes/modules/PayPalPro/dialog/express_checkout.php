@@ -53,10 +53,10 @@ class Dialog_express_checkout extends Dialog
 	
 	function action_profile()
 	{
-		$pm	=& func_new("PaymentMethod","paypalpro_express");
+		$pm = func_new("PaymentMethod","paypalpro_express");
 		$response = $pm->sendExpressCheckoutRequest($this->cart); 
 		if ($response["ACK"] == "Success" && !empty($response["TOKEN"])) {
-			$pmpro  =& func_new("PaymentMethod","paypalpro");
+			$pmpro = func_new("PaymentMethod","paypalpro");
 			$redirect = $pmpro->get("params.pro.mode") ? "https://www.paypal.com" : "https://www.sandbox.paypal.com";
 			header("Location: ". $redirect."/webscr?cmd=_express-checkout&token=".$response["TOKEN"]);
 			die();
@@ -68,12 +68,12 @@ class Dialog_express_checkout extends Dialog
 	function action_retrieve_profile()
 	{
 		if (!empty($_GET["token"])) {
-			$profile =& func_new("Profile");
-			$pm =& func_new("PaymentMethod","paypalpro_express");
+			$profile = func_new("Profile");
+			$pm = func_new("PaymentMethod","paypalpro_express");
 			$response = $pm->sendExpressCheckoutDetailsRequest($_GET["token"]);
   			$details = $response["GETEXPRESSCHECKOUTDETAILSRESPONSEDETAILS"]["PAYERINFO"];
         if ($response["ACK"] == "Success") {
-			$state =& func_new("State");
+			$state = func_new("State");
 			$countryCode = $details["ADDRESS"]["COUNTRY"];
 			$stateCode = addslashes($details["ADDRESS"]["STATEORPROVINCE"]);
 			$stateCondition = ($countryCode == "US") ? "code='$stateCode'" : "(code='$stateCode' OR state='$stateCode')";
@@ -95,7 +95,7 @@ class Dialog_express_checkout extends Dialog
 				$this->set("valid",false);
 				$this->redirect("cart.php?target=profile&mode=login");
 			} else {
-	            $profile =& func_new("Profile");
+	            $profile = func_new("Profile");
     	        $profile->set("login",$details["PAYER"]);
         	    $profile->set("billing_firstname",$details["PAYERNAME"]["FIRSTNAME"]);
             	$profile->set("billing_lastname",$details["PAYERNAME"]["LASTNAME"]);

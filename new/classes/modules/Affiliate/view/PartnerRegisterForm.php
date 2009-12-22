@@ -78,13 +78,13 @@ class Module_Affiliate_CRegisterForm extends CRegisterForm
         }
     }    
     
-    function &getProfile()
+    function getProfile()
     {
         if (!$this->xlite->is("adminZone") && $this->auth->is("logged")) {
-            $this->profile =& $this->auth->get("profile");
+            $this->profile = $this->auth->get("profile");
         }
         if (is_null($this->profile)) {
-            $this->profile =& func_new("Profile", $_REQUEST["profile_id"]);
+            $this->profile = func_new("Profile", $_REQUEST["profile_id"]);
         }
         return $this->profile;
     }
@@ -94,10 +94,10 @@ class Module_Affiliate_CRegisterForm extends CRegisterForm
         return !is_null($this->profile) && ($this->profile->is("declinedPartner") || $this->profile->is("pendingPartner") || $this->profile->is("partner"));
     }
 
-    function &getPartnerFields()
+    function getPartnerFields()
     {
         if (is_null($this->partnerFields)) {
-            $pf =& func_new("PartnerField");
+            $pf = func_new("PartnerField");
             $this->partnerFields = $pf->findAll();
         }
         return $this->partnerFields;

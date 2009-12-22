@@ -61,7 +61,7 @@ class Admin_Dialog_partners extends Admin_Dialog
         $partners = $this->get("ids");
         if (!is_null($partners) && is_array($partners)) {
             foreach ($partners as $pid) {
-                $partner =& func_new("Profile", $pid);
+                $partner = func_new("Profile", $pid);
                 if (!is_null($this->get("delete"))) {
                     $this->auth->deletePartner($partner);
                 } else if (!is_null($this->get("update"))) {
@@ -84,7 +84,7 @@ class Admin_Dialog_partners extends Admin_Dialog
         }
     }
     
-    function &getPartners()
+    function getPartners()
     {
         if (is_null($this->partners)) {
             $this->partners = array();
@@ -116,14 +116,14 @@ class Admin_Dialog_partners extends Admin_Dialog
                 $where[] = " partner_signup <= " . ($this->get("endDate") + 24 * 3600);
             }
             $and = join(' AND ',$where);
-            $profile =& func_new("Profile");
+            $profile = func_new("Profile");
             $this->partners = $profile->findAll($and, "partner_signup DESC");
             $this->partnersCount = count($this->partners);
         }
         return $this->partners;
     }
 
-    function &getPlan()
+    function getPlan()
     {
         if (is_null($this->plan)) {
             return "plan";
@@ -131,7 +131,7 @@ class Admin_Dialog_partners extends Admin_Dialog
         return $this->plan;
     }
 
-    function &getItemsPerPage()
+    function getItemsPerPage()
     {
         if (is_null($this->itemsPerPage)) {
             return 10;

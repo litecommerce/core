@@ -47,11 +47,11 @@
 */
 class CTopCategories extends Component
 {
-    function &getCategories()
+    function getCategories()
     {
         // get root categories
         if (is_null($this->categories)) {
-            $category =& func_new("Category"); 
+            $category = func_new("Category"); 
             $this->categories = $category->get("topCategory.subcategories");
         }
         return $this->categories;

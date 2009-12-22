@@ -91,15 +91,15 @@ class Admin_Dialog_intershipper extends Admin_Dialog_shipping_settings
     */
 
     /* test data */
-    function &getDestinationCountry()
+    function getDestinationCountry()
     {
         return isset($this->destinationCountry) ? $this->destinationCountry : "US";
     }
-    function &getDestinationZipCode()
+    function getDestinationZipCode()
     {
         return isset($this->destinationZipCode) ? $this->destinationZipCode : "73003";
     }
-    function &getOunces()
+    function getOunces()
     {
         return isset($this->ounces) ? $this->ounces : 1;
     }

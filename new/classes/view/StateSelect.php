@@ -48,10 +48,10 @@ class CStateSelect extends CFormField
 {
     var $template = "common/select_state.tpl";
     
-    function &getStates()
+    function getStates()
     {
         if (is_null($this->state)) {
-            $this->state =& func_new("State");
+            $this->state = func_new("State");
         }    
         return $this->state->findAll();
     }

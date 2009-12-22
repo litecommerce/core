@@ -69,7 +69,7 @@ class Module_FlyoutCategories extends Module
 			}
 		}
 
-        $scheme =& func_new("FCategoriesScheme", $this->get("config.FlyoutCategories.scheme"));
+        $scheme = func_new("FCategoriesScheme", $this->get("config.FlyoutCategories.scheme"));
         $this->xlite->set('FlyoutCategoriesCssPath', 'styles/'.$scheme->get('options.color.value').'.css');
 
 		$this->addDecorator("Profile", "Module_FlyoutCategories_Profile");
@@ -104,9 +104,9 @@ class Module_FlyoutCategories extends Module
         return $this->_kernelNonSuppVersion;
     }
 
-    function &get($name)
+    function get($name)
     {
-        $value =& parent::get($name);
+        $value = parent::get($name);
         $this->isOldKernel();
         if ($name == "type" && $this->isOldKernel()) {
             $value = $this->_moduleType;

@@ -128,7 +128,7 @@ class NewsSubscriber extends Base
 
     function sendMail($email, $template, $params = array())
     {
-        $mailer =& func_new("Mailer");
+        $mailer = func_new("Mailer");
         if (!empty($params)) {
             foreach ($params as $param => $value) {
                 $mailer->set($param, $value);
@@ -150,7 +150,7 @@ class NewsSubscriber extends Base
         
         // create and setup validator
         $tempFieldName = md5(time());        
-        $emailValidator = & func_new("CEmailValidator");
+        $emailValidator = func_new("CEmailValidator");
         $emailValidator->set("field", $tempFieldName);
 
         foreach ($subscribers as $num => $email) {
@@ -160,7 +160,7 @@ class NewsSubscriber extends Base
             $num++;
             $_POST[$tempFieldName] = $email;        
             if ((strlen($email) > 0) && $emailValidator->isValid()) {
-                $ns =& func_new("NewsSubscriber");
+                $ns = func_new("NewsSubscriber");
                 $res = $ns->subscribe($email, $list_id);
                 if ($res == SUBSCRIBER_EXISTS) {
                     echo "<font color=blue>Subscriber $email already exists!</font><br>";
@@ -171,13 +171,13 @@ class NewsSubscriber extends Base
         }
     }
 
-    function &getList($as_new=false)
+    function getList($as_new=false)
     {
     	if ($as_new) {
     		$this->list = null;
     	}
         if (is_null($this->list)) {
-            $this->list =& func_new("NewsList", $this->get("list_id"));
+            $this->list = func_new("NewsList", $this->get("list_id"));
         }
         return $this->list;
     }

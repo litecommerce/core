@@ -48,7 +48,7 @@ class WishList_Dialog_cart extends Dialog_cart // {{{
 		if (isset($this->wishlist_id)&&isset($this->item_id)) {
 			// process this wishlist
 			$this->currentItem = parent::get("currentItem");
-			$wishlist_product = & func_new("WishListProduct",$this->item_id,$this->wishlist_id);
+			$wishlist_product = func_new("WishListProduct",$this->item_id,$this->wishlist_id);
 			$product = $wishlist_product->getProduct();
 			
 			if (!$wishlist_product->isOptionsExist()) {

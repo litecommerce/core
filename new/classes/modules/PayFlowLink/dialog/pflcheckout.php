@@ -49,7 +49,7 @@ class Dialog_pflcheckout extends Dialog_checkout
     function init()
     {
     	if ($_REQUEST["target"] == "pflcheckout") {
-    		$this->registerForm =& func_new("Object");
+    		$this->registerForm = func_new("Object");
     	}
 
     	parent::init();

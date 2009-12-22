@@ -65,15 +65,15 @@ class Module_WholesaleTrading_Admin_Dialog_import_catalog extends Admin_dialog_i
 
     	switch ($this->get("page")) {
     		case "import_wholesale_pricing":
-    			$wp =& func_new("WholesalePricing");
+    			$wp = func_new("WholesalePricing");
                 $wp->collectGarbage();
     		break;
     		case "import_product_access":
-    			$pa =& func_new("ProductAccess");
+    			$pa = func_new("ProductAccess");
                 $pa->collectGarbage();
     		break;
        		case "import_purchase_limit":
-    			$pl =& func_new("PurchaseLimit");
+    			$pl = func_new("PurchaseLimit");
                 $pl->collectGarbage();
     		break;
     	}

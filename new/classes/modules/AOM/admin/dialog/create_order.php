@@ -69,12 +69,12 @@ class Admin_Dialog_create_order extends Admin_Dialog_order
 	    }
 	} // }}}
 
-	function &getCloneOrder() // {{{
+	function getCloneOrder() // {{{
 	{
 		return parent::getOrder();
 	} // }}}
 
-	function &getCloneProfile() // {{{
+	function getCloneProfile() // {{{
 	{
 		if (!$this->get("order_id")) {
 			return null;
@@ -84,12 +84,12 @@ class Admin_Dialog_create_order extends Admin_Dialog_order
 
     function action_create_order() // {{{
     {
-        $order =& func_new("Order");
+        $order = func_new("Order");
         $order->set("date",time());
 		$order->set("status","T");
 		$order->set("shipping_id","-1");
         $order->create();
-        $orderHistory = & func_new("OrderHistory");
+        $orderHistory = func_new("OrderHistory");
 	    $orderHistory->log($order, null, null,"create_order");
 						
         $this->set("returnUrl","admin.php?target=create_order&page=order_edit&mode=products&order_id=".$order->get("order_id"));
@@ -97,7 +97,7 @@ class Admin_Dialog_create_order extends Admin_Dialog_order
 
 	function action_save_changes() // {{{
 	{
-        $order =& func_new("Order",$this->get("order_id"));
+        $order = func_new("Order",$this->get("order_id"));
         $order->set("orderStatus",$_POST['substatus']);
 		if ($order->get("payment_method") == "credit_card") {
 			$this->addDetails($order);
@@ -110,14 +110,14 @@ class Admin_Dialog_create_order extends Admin_Dialog_order
 
 	function preUpdateProducts()
 	{
- 	    $order =& $this->get("cloneOrder");
+ 	    $order = $this->get("cloneOrder");
         $this->originalShippingId = $order->get("shipping_id");
 	}
 
 	function postUpdateProducts()
 	{
 		if ($this->originalShippingId == -1) {
- 	    	$order =& $this->get("cloneOrder");
+ 	    	$order = $this->get("cloneOrder");
 			$order->set("shipping_id", -1);
 			$order->set("shipping_cost", 0);
 			$order->set("tax", 0);

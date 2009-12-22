@@ -66,10 +66,10 @@ class Admin_Dialog_product extends Admin_Dialog
         'default' => 'product/info.tpl'
     );
 
-    function &getProduct()
+    function getProduct()
     {
         if (is_null($this->product)) {
-            $this->product =& func_new("Product", $this->product_id);
+            $this->product = func_new("Product", $this->product_id);
         }    
 
         if (is_null($this->extraFields)) {
@@ -79,12 +79,12 @@ class Admin_Dialog_product extends Admin_Dialog
         return $this->product;
     }
     
-    function &getExtraFields()
+    function getExtraFields()
     {
 		$this->product->populateExtraFields();
 
         if (is_null($this->extraFields)) {
-            $ef =& func_new("ExtraField");
+            $ef = func_new("ExtraField");
             $this->extraFields = $ef->findAll("product_id=".$this->get("product_id"));
         }
         return $this->extraFields;
@@ -92,7 +92,7 @@ class Admin_Dialog_product extends Admin_Dialog
 
     function action_add_field()
     {
-        $ef =& func_new("ExtraField");
+        $ef = func_new("ExtraField");
         $ef->set("properties", $_POST);
         $ef->create();
     }
@@ -102,12 +102,12 @@ class Admin_Dialog_product extends Admin_Dialog
     {
         if (!is_null($this->get("delete")) && !is_null($this->get("delete_fields"))) {
             foreach ((array)$this->get("delete_fields") as $id) {
-                $ef =& func_new("ExtraField", $id);
+                $ef = func_new("ExtraField", $id);
                 $ef->delete();
             }
         } elseif (!is_null($this->get("update"))) {
             foreach ((array)$this->get("extra_fields") as $id => $data) {
-                $ef =& func_new("ExtraField", $id);
+                $ef = func_new("ExtraField", $id);
                 $ef->set("properties", $data);
                 $ef->update();
             }
@@ -119,7 +119,7 @@ class Admin_Dialog_product extends Admin_Dialog
 		$this->stripHTMLtags($_POST, array("name"));
 
         // update product properties
-        $product =& func_new("Product", $this->product_id);
+        $product = func_new("Product", $this->product_id);
         $product->set("properties", $_POST);
         $product->update();
         
@@ -128,7 +128,7 @@ class Admin_Dialog_product extends Admin_Dialog
 
         // link product category(ies)
 		if (isset($this->category_id)) {
-			$category =& func_new("Category", $this->category_id);
+			$category = func_new("Category", $this->category_id);
 			$product->set("category", $category);
 		}
 
@@ -136,7 +136,7 @@ class Admin_Dialog_product extends Admin_Dialog
         $extraFields = (array)$this->get("extra_fields");
         if (!empty($extraFields)) {
             foreach ($extraFields as $id => $value) {
-                $fv =& func_new("FieldValue");
+                $fv = func_new("FieldValue");
                 $found = $fv->find("field_id=$id AND product_id=$this->product_id");
                 $fv->set("value", $value);
                 if ($found) {
@@ -152,13 +152,13 @@ class Admin_Dialog_product extends Admin_Dialog
 
     function action_images()
     {
-        $tn =& $this->get("product.thumbnail"); 
+        $tn = $this->get("product.thumbnail"); 
         if ($tn->handleRequest() != IMAGE_OK && $tn->_shouldProcessUpload) {
         	$this->set("valid", false);
         	$this->set("thumbnail_read_only", true);
         }
 
-        $img =& $this->get("product.image"); 
+        $img = $this->get("product.image"); 
         if ($img->handleRequest() != IMAGE_OK && $img->_shouldProcessUpload) {
         	$this->set("valid", false);
         	$this->set("image_read_only", true);
@@ -167,8 +167,8 @@ class Admin_Dialog_product extends Admin_Dialog
 
 	function action_clone()
 	{
-        $p_product =& func_new("Product", $this->product_id);
-		$product =& $p_product->cloneObject();
+        $p_product = func_new("Product", $this->product_id);
+		$product = $p_product->cloneObject();
 		foreach($p_product->get('categories') as $category) {
 			$product->addCategory($category);
 		}

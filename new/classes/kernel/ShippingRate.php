@@ -70,7 +70,7 @@ class ShippingRate extends Base
     function getShipping()
     {
         if (is_null($this->shipping) && $this->get("shipping_id")) {
-            $this->shipping =& func_new("Shipping",$this->get("shipping_id"));
+            $this->shipping = func_new("Shipping",$this->get("shipping_id"));
         }
         return $this->shipping;
     }

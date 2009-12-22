@@ -67,7 +67,7 @@ class Admin_Dialog_inventory_tracking_option extends Admin_dialog
                 $options[] = isset($optdata["option"]) ?  "$class:" . $optdata["option"] : $class;
             }
         }
-        $inventory =& func_new("Inventory");
+        $inventory = func_new("Inventory");
         $inventory->set("inventory_id", implode("|", $options));
         $inventory->set("amount", $this->amount);
         $inventory->set("low_avail_limit", $this->low_avail_limit);
@@ -76,7 +76,7 @@ class Admin_Dialog_inventory_tracking_option extends Admin_dialog
 
     function action_update()
     {
-        $inventory =& func_new("Inventory");
+        $inventory = func_new("Inventory");
         if ($inventory->find("inventory_id='".$this->inventory_id."'")) {
             $inventory->setProperties($this->optdata);
             $inventory->update();
@@ -85,7 +85,7 @@ class Admin_Dialog_inventory_tracking_option extends Admin_dialog
 
     function action_delete()
     {
-        $inventory =& func_new("Inventory");
+        $inventory = func_new("Inventory");
         if ($inventory->find("inventory_id='".$this->inventory_id."'")) {
             $inventory->delete();
         }

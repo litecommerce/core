@@ -150,7 +150,7 @@ class Module_Froogle_Product extends Product
 	{
 		$image = "";
 		if ($this->hasImage()) {
-			$img =& $this->getImage();
+			$img = $this->getImage();
 			if ($img->get("source") == "F") {
 				$image = $this->xlite->shopUrl("images/") . $img->get("data");
 			}
@@ -178,7 +178,7 @@ class Module_Froogle_Product extends Product
 			default:
 				// category
 				if (!isset($this->_CategoriesFromProducts)) {
-					$this->_CategoriesFromProducts =& func_new("_CategoriesFromProducts");
+					$this->_CategoriesFromProducts = func_new("_CategoriesFromProducts");
 				}
 				$this->_CategoriesFromProducts->prodId = $this->get("product_id");
 				if ($this->_CategoriesFromProducts->find("")) {

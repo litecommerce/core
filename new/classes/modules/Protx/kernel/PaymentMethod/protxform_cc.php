@@ -68,11 +68,11 @@ class PaymentMethod_protxform_cc extends PaymentMethod_credit_card
 	function get($name)
 	{
 		if ($name == "params") {
-			$pm =& func_new("PaymentMethod", "protxdirect_cc");
+			$pm = func_new("PaymentMethod", "protxdirect_cc");
 			return $pm->get("params");
 		}
 		if (preg_match("/order.*status/i", $name, $matches)) {
-			$pm =& func_new("PaymentMethod", "protxdirect_cc");
+			$pm = func_new("PaymentMethod", "protxdirect_cc");
 			return $pm->get($matches[0]);
 		}
 

@@ -50,7 +50,7 @@ class Admin_Dialog_module_Promotion extends Admin_Dialog_module
 		parent::init();
 
 		if ($this->page == "Promotion") {
-        	$lay =& func_get_instance("Layout");
+        	$lay = func_get_instance("Layout");
         	$lay->addLayout("general_settings.tpl", "modules/Promotion/config.tpl");
         }
 	}

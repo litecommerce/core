@@ -61,7 +61,7 @@ class Module_LiveUpdating extends Module
 
 			$this->xlite->set("FTP_support", function_exists("ftp_connect"));
 			if (!$this->xlite->get("FTP_support")) {
-				$cfg =& func_new("Config");
+				$cfg = func_new("Config");
                 $cfg->createOption("LiveUpdating", "use_ftp", "N");
 			}
 		}
@@ -97,9 +97,9 @@ class Module_LiveUpdating extends Module
         return $this->_kernelNonSuppVersion;
     }
 
-    function &get($name)
+    function get($name)
     {
-        $value =& parent::get($name);
+        $value = parent::get($name);
         $this->isOldKernel();
         if ($name == "type" && $this->isOldKernel()) {
             $value = $this->_moduleType;

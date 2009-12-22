@@ -50,11 +50,11 @@ class Admin_Dialog_module_FlyoutCategories extends Admin_Dialog_module
 		parent::init();
 
 		if ($this->page == "FlyoutCategories") {
-        	$lay =& func_get_instance("Layout");
+        	$lay = func_get_instance("Layout");
         	$lay->addLayout("general_settings.tpl", "modules/FlyoutCategories/config.tpl");
         }
 
-        $layout =& func_get_instance("Layout");
+        $layout = func_get_instance("Layout");
 	}
 
 	function getSchemes()
@@ -147,7 +147,7 @@ class Admin_Dialog_module_FlyoutCategories extends Admin_Dialog_module
 			return;
 		}
 
-		$dialog = &func_new("admin_dialog_categories");
+		$dialog = func_new("admin_dialog_categories");
 //		$dialog->set("silent", true);
 		if ($dialog->action_build_categories()) {
 			$this->set("status", "rebuilt");

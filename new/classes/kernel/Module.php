@@ -147,7 +147,7 @@ class Module extends Base
 
     function addLayout($oldTemplate, $newTemplate) // {{{
     {
-         $lay =& func_get_instance("Layout");
+         $lay = func_get_instance("Layout");
          $lay->addLayout($oldTemplate, $newTemplate);
     } // }}}
 
@@ -228,7 +228,7 @@ class Module extends Base
 		func_cleanup_cache("skins");
     } // }}}
 
-    function &getZone() // {{{
+    function getZone() // {{{
     {
         if (is_null($this->zone)) {
             $this->zone = $this->get("xlite.options.skin_details.skin");

@@ -55,7 +55,7 @@ class Admin_Dialog_partner_form extends Admin_Dialog
     
     function action_update_field()
     {
-        $pf =& func_new("PartnerField", $_POST["field_id"]);
+        $pf = func_new("PartnerField", $_POST["field_id"]);
         if (!is_null($this->get("delete"))) {
             $pf->delete();
         } else {
@@ -66,7 +66,7 @@ class Admin_Dialog_partner_form extends Admin_Dialog
 
     function action_add_field()
     {
-        $pf =& func_new("PartnerField");
+        $pf = func_new("PartnerField");
         $pf->set("properties", $_POST);
         $pf->create();
     }
@@ -75,7 +75,7 @@ class Admin_Dialog_partner_form extends Admin_Dialog
     {
         $fields = $this->get("default_fields");
         if (is_array($fields)) {
-            $config =& func_new("Config");
+            $config = func_new("Config");
             if ($config->find("category='Miscellaneous' AND name='partner_profile'")) {
                 $config->set("value", serialize($fields));
                 $config->update();

@@ -58,14 +58,14 @@ class Admin_Dialog_product_ProductAdviser extends Admin_Dialog_product
 		}
 	}
 
-	function &getProducts()
+	function getProducts()
 	{
 		if ($this->get("mode") != "search") {
 			return array();
 		}
 
-		$p =& func_new("Product");
-		$result =& $p->advancedSearch
+		$p = func_new("Product");
+		$result = $p->advancedSearch
 		(
 			$this->substring,
 			$this->search_productsku,
@@ -79,10 +79,10 @@ class Admin_Dialog_product_ProductAdviser extends Admin_Dialog_product
 					$removedItems[$p_key] = true;
 				}
 				if (!is_object($this->product)) {
-					$this->product =& func_new($this->product_id);
+					$this->product = func_new($this->product_id);
 				}
 				if (is_object($this->product)) {
-					$rp =& $this->product->getRelatedProducts();
+					$rp = $this->product->getRelatedProducts();
 					if (is_array($rp) && count($rp) > 0) {
 						foreach($rp as $rp_item) {
 							if ($rp_item->get("product.product_id") == $product->get("product_id")) {
@@ -110,7 +110,7 @@ class Admin_Dialog_product_ProductAdviser extends Admin_Dialog_product
 		return $result;
 	}
 
-	function &action_add_related_products()
+	function action_add_related_products()
 	{
 		if (!$this->is("relatedProductsEnabled")) {
 			return;
@@ -119,14 +119,14 @@ class Admin_Dialog_product_ProductAdviser extends Admin_Dialog_product
 		if (isset($this->product_ids) && is_array($this->product_ids)) {
 			$relatedProducts = array();
 			foreach ($this->product_ids as $product_id => $value) {
-				$relatedProducts[] =& func_new("Product", $product_id);
+				$relatedProducts[] = func_new("Product", $product_id);
 			}
-			$product =& func_new("Product", $this->product_id);
+			$product = func_new("Product", $this->product_id);
 			$product->addRelatedProducts($relatedProducts);
 		}	
 	}
 
-	function &action_update_related_products()
+	function action_update_related_products()
 	{
 		if (!$this->is("relatedProductsEnabled")) {
 			return;
@@ -134,7 +134,7 @@ class Admin_Dialog_product_ProductAdviser extends Admin_Dialog_product
 
 		if (isset($this->updates_product_ids) && is_array($this->updates_product_ids)) {
 			foreach ($this->updates_product_ids as $product_id => $order_by) {
-				$relatedProduct =& func_new("RelatedProduct");
+				$relatedProduct = func_new("RelatedProduct");
 				$relatedProduct->set("product_id", $this->product_id); 
 				$relatedProduct->set("related_product_id", $product_id); 
 				$relatedProduct->set("order_by", $order_by); 
@@ -143,7 +143,7 @@ class Admin_Dialog_product_ProductAdviser extends Admin_Dialog_product
 		}	
 	}
 
-	function &action_delete_related_products()
+	function action_delete_related_products()
 	{
 		if (!$this->is("relatedProductsEnabled")) {
 			return;
@@ -152,9 +152,9 @@ class Admin_Dialog_product_ProductAdviser extends Admin_Dialog_product
 		if (isset($this->delete_product_ids) && is_array($this->delete_product_ids)) {
 			$relatedProducts = array();
 			foreach ($this->delete_product_ids as $product_id => $value) {
-				$relatedProducts[] =& func_new("Product", $product_id);
+				$relatedProducts[] = func_new("Product", $product_id);
 			}
-			$product =& func_new("Product", $this->product_id);
+			$product = func_new("Product", $this->product_id);
 			$product->deleteRelatedProducts($relatedProducts);
 		}
 	}
@@ -167,7 +167,7 @@ class Admin_Dialog_product_ProductAdviser extends Admin_Dialog_product
 			return;
 		}
 
-        $stats =& func_new("ProductNewArrivals");
+        $stats = func_new("ProductNewArrivals");
         $timeStamp = time();
         if (!$stats->find("product_id='".$this->get("product_id")."'")) {
         	$stats->set("product_id", $this->get("product_id"));
@@ -222,7 +222,7 @@ class Admin_Dialog_product_ProductAdviser extends Admin_Dialog_product
     	$inventoryChangedAmount = $this->xlite->get("inventoryChangedAmount");
 		$this->session->set("inventoryNotify", null);
 		
-		$notification =& func_new("CustomerNotification");
+		$notification = func_new("CustomerNotification");
 		$notification->createInventoryChangedNotification($inventoryChangedAmount);
     }
 
@@ -235,7 +235,7 @@ class Admin_Dialog_product_ProductAdviser extends Admin_Dialog_product
     		$check[] = "status='" . CUSTOMER_REQUEST_UPDATED . "'";
     		$check = implode(" AND ", $check);
 
-    		$notification =& func_new("CustomerNotification");
+    		$notification = func_new("CustomerNotification");
     		$this->notifyPresentedHash[$inventory_id] = $notification->count($check);
     	}
 		return $this->notifyPresentedHash[$inventory_id];
@@ -250,7 +250,7 @@ class Admin_Dialog_product_ProductAdviser extends Admin_Dialog_product
     		$check[] = "status='" . CUSTOMER_REQUEST_UPDATED . "'";
     		$check = implode(" AND ", $check);
 
-    		$notification =& func_new("CustomerNotification");
+    		$notification = func_new("CustomerNotification");
     		$this->priceNotifyPresented = $notification->count($check);
     	}
 		return $this->priceNotifyPresented;

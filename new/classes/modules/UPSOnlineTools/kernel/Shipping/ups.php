@@ -80,18 +80,18 @@ class Shipping_ups extends Shipping_online
 		UPSOnlineTools_setConfig($this, $name, $value);
     }
 
-    function &getRates($order)
+    function getRates($order)
     {
         require_once "modules/UPSOnlineTools/encoded.php";
         return UPSOnlineTools_getRates($this, $order);
     }
 
-	function &_getHTTPS()
+	function _getHTTPS()
 	{
 		return func_new("HTTPS_UpsOnlineTools");
 	}
 
-    function &_queryRates($pounds, $originAddress, $originState, $originCity, $originZipCode, $originCountry, $destinationAddress, $destinationState, $destinationCity, $destinationZipCode, $destinationCountry, $options, $containers=array())
+    function _queryRates($pounds, $originAddress, $originState, $originCity, $originZipCode, $originCountry, $destinationAddress, $destinationState, $destinationCity, $destinationZipCode, $destinationCountry, $options, $containers=array())
     {
         $https = $this->_getHTTPS();
         $https->url = $options->get('server').'Rate';
@@ -364,7 +364,7 @@ EOT;
 		return $package;
 	}
 
-    function &_parseResponse($response, $destination, $originCountry)
+    function _parseResponse($response, $destination, $originCountry)
     {
         require_once "modules/UPSOnlineTools/encoded.php";
         return UPSOnlineTools_parseResponse($this, $response, $destination, $originCountry);
@@ -888,7 +888,7 @@ EOT;
 
 	function _checkCache($table, $fields)
 	{
-		$object =& func_new("Shipping_online");
+		$object = func_new("Shipping_online");
 		if (!method_exists($object, "getShippingCacheExpiration")) 
 		{
 			// LC with old core version
@@ -915,9 +915,9 @@ EOT;
 		return parent::_checkCache($table, $fields);
 	}
 
-	function &getObjectXML()
+	function getObjectXML()
 	{
-		$object =& func_new("Module_UPSOnlineTools_XML");
+		$object = func_new("Module_UPSOnlineTools_XML");
 		$object->parser_encode = "ISO-8859-1";
 
 		return $object;

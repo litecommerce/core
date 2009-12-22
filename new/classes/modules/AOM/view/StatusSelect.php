@@ -49,10 +49,10 @@ class Module_AOM_CStatusSelect extends CStatusSelect
 	var $statuses	= null;
 	var $template	= "modules/AOM/common/select_status.tpl";
 
-    function &getStatuses()
+    function getStatuses()
     {
         if (is_null($this->statuses)) {
-            $status = &func_new("OrderStatus");
+            $status = func_new("OrderStatus");
             $this->statuses = $status->findAll();
         }    
 		return $this->statuses;

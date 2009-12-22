@@ -70,28 +70,28 @@ class Admin_Dialog_news_messages extends Admin_Dialog
     	}
     }
 
-    function &getList()
+    function getList()
     {
         if (is_null($this->list)) {
-            $this->list =& func_new("NewsList", $this->get("list_id"));
+            $this->list = func_new("NewsList", $this->get("list_id"));
         }
         return $this->list;
     }
 
-    function &getMessages()
+    function getMessages()
     {
         if (is_null($this->messages)) {
-            $ns =& func_new("NewsLetter");
+            $ns = func_new("NewsLetter");
             $this->messages = $ns->findAll("list_id=".$this->get("list_id"), "send_date DESC");
 
         }
         return $this->messages;
     }
 
-	function &getMessage()
+	function getMessage()
 	{
 		if (is_null($this->message)) {
-			$this->message =& func_new("NewsLetter", $this->get("news_id"));
+			$this->message = func_new("NewsLetter", $this->get("news_id"));
 		}
 
 		return $this->message;
@@ -135,7 +135,7 @@ class Admin_Dialog_news_messages extends Admin_Dialog
     	if (!isset($this->postonly)) {
         	$this->init_multisend();
 
-            $nl =& func_new("NewsLetter");
+            $nl = func_new("NewsLetter");
             if ($this->subscribers_per_page_mail > 0) {
             	$nl->set("parentCaller", $this);
         		if ($this->mode == "continue") {
@@ -144,7 +144,7 @@ class Admin_Dialog_news_messages extends Admin_Dialog
             }
             $nl->set("properties", $this->request); // list_id, subject, body
         } else {
-            $nl =& func_new("NewsLetter");
+            $nl = func_new("NewsLetter");
             $nl->set("properties", $this->request); // list_id, subject, body
             $nl->set("subscribers", $this->get("subscribers"));
             $nl->set("testMode", true);
@@ -152,7 +152,7 @@ class Admin_Dialog_news_messages extends Admin_Dialog
             $this->set("valid", false); // leave in POST
         }
 
-		$obj =& func_new("NewsLetter");
+		$obj = func_new("NewsLetter");
 		if ($obj->find("news_id='".$this->news_id."'")) {
 			$nl->update();
 			$nl->set("postonlyMode", false);
@@ -183,7 +183,7 @@ class Admin_Dialog_news_messages extends Admin_Dialog
     	}
 
         foreach ($ids as $id) {
-            $nl =& func_new("NewsLetter", $id);
+            $nl = func_new("NewsLetter", $id);
             if ($this->get("delete")) {
                 $nl->delete();
             } elseif ($this->get("resend")) {

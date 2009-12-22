@@ -53,7 +53,7 @@ class Module_ProductAdviser extends Module
 	{
 		parent::init();
 
-		$w =& func_new ("Widget");
+		$w = func_new ("Widget");
 		$widgetMethods = array_map("strtolower", get_class_methods($w));
 		if (!in_array("isarraypointernth", $widgetMethods)) {
 			$this->addDecorator("Widget", "Widget_ProductAdviser");
@@ -98,7 +98,7 @@ class Module_ProductAdviser extends Module
 		// "Product also buy" section
 		if ($this->xlite->is("adminZone")) {
 			if ($this->config->get("ProductAdviser.admin_products_also_buy_enabled") != "Y") {
-				$cfg =& func_new("Config");
+				$cfg = func_new("Config");
                 $cfg->createOption("ProductAdviser", "products_also_buy_enabled", "N");
 			}
 		}
@@ -109,7 +109,7 @@ class Module_ProductAdviser extends Module
 		if ($this->xlite->is("adminZone")) {
 			$this->validateConfig("number_notifications", 1);
 			$customer_notifications_enabled = ($this->config->get("ProductAdviser.customer_notifications_mode") == "0") ? "N" : "Y";
-			$cfg =& func_new("Config");
+			$cfg = func_new("Config");
             $cfg->createOption("ProductAdviser", "customer_notifications_enabled", $customer_notifications_enabled);
 		}
 		/////////////////////////////////////
@@ -148,7 +148,7 @@ class Module_ProductAdviser extends Module
 			}
 		}
 		if ($number_updated) {
-			$cfg =& func_new("Config");
+			$cfg = func_new("Config");
             $cfg->createOption("ProductAdviser", $option, $number);
 		}
 	}

@@ -59,7 +59,7 @@ class Admin_Dialog_login extends Dialog
 
     function action_login()
     {
-        $profile =& $this->auth->adminLogin($_POST["login"], $_POST["password"]);
+        $profile = $this->auth->adminLogin($_POST["login"], $_POST["password"]);
         if ($profile == ACCESS_DENIED) {
             $this->set("valid", false);
             $this->set("mode", "access_denied");

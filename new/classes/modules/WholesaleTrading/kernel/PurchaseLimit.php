@@ -82,10 +82,10 @@ class PurchaseLimit extends Base
 			if ($field == "NULL") {
 				$data[] = "";
 			} elseif ($field == "product") {
-				$product = &func_new("Product",$values["product_id"]);
+				$product = func_new("Product",$values["product_id"]);
 				$data[] = $product->get("name");
 			} elseif ($field == "sku") {
-                $product = &func_new("Product",$values["product_id"]);
+                $product = func_new("Product",$values["product_id"]);
                 $data[] = $product->get("sku");
 			} elseif (isset($values[$field])) {
 				$data[] =  $this->_stripSpecials($values[$field]);
@@ -99,8 +99,8 @@ class PurchaseLimit extends Base
         if (!isset($line_no)) $line_no = 1; else $line_no++;
         
         $properties       = $options["properties"];
-        $wp =& func_new('PurchaseLimit');
-        $product = &func_new("Product");
+        $wp = func_new('PurchaseLimit');
+        $product = func_new("Product");
 
 		$product = $product->findImportedProduct($properties['sku'], '',$properties['product'], false, $options["unique_identifier"]);
 		if (!is_null($product)) {
@@ -126,7 +126,7 @@ class PurchaseLimit extends Base
     } 
     
     function collectGarbage() {
-    	$product =& func_new("Product");
+    	$product = func_new("Product");
         $product_table_name = $product->db->getTableByAlias($product->alias);
         $table_name = $this->db->getTableByAlias($this->alias);
 
@@ -141,7 +141,7 @@ EOSQL;
 
         $collection = $this->db->getAll($sql);
         foreach ($collection as $item) {
-            $pl =& func_new("PurchaseLimit");
+            $pl = func_new("PurchaseLimit");
             if ($pl->find("product_id='".$item["product_id"]."'")) {
             	$pl->delete();
             }

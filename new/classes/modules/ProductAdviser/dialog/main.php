@@ -51,7 +51,7 @@ class Dialog_main_ProductAdviser extends Dialog_main
     function init()
     {
 		if ($this->xlite->get("HTMLCatalogWorking") == true) {
-			$statistic =& func_new("ProductRecentlyViewed");
+			$statistic = func_new("ProductRecentlyViewed");
 			$statistic->collectGarbage();
 			$statistic->cleanCurrentGarbage();
 		}
@@ -82,7 +82,7 @@ class Dialog_main_ProductAdviser extends Dialog_main
             $check[] = "profile_id='$profile_id'";
             $check[] = "email='$email'";
 
-    		$notification =& func_new("CustomerNotification");
+    		$notification = func_new("CustomerNotification");
     		$notification->set("type", CUSTOMER_NOTIFICATION_PRICE);
         	$notification->set("product_id", $product_id);
             $check[] = "notify_key='" . addslashes($notification->get("productKey")) . "'";

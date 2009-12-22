@@ -46,11 +46,11 @@ class Dialog_product_banner extends Dialog
 {
     var $template = "modules/Affiliate/product_banner.tpl";
 
-    function &getProduct()
+    function getProduct()
     {
         if (is_null($this->product)) {
-            $this->product =& func_new("Product", $this->product_id);
-            $stats =& func_new("BannerStats");
+            $this->product = func_new("Product", $this->product_id);
+            $stats = func_new("BannerStats");
             $stats->logView();
         }
         return $this->product;
@@ -71,7 +71,7 @@ class Dialog_product_banner extends Dialog
         return false;
     }
 
-    function &getReferrer()
+    function getReferrer()
     {
         return isset($_SERVER["HTTP_REFERER"]) ? $_SERVER["HTTP_REFERER"] : "";
     }

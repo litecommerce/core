@@ -134,7 +134,7 @@ class Widget extends Object
             // for debugging
             return $this->templateFile;
         }
-        $layout =& func_get_instance("Layout");
+        $layout = func_get_instance("Layout");
         return $layout->getLayout($this->get("template"));
     }
 
@@ -177,9 +177,9 @@ class Widget extends Object
         if (!file_exists($includeFile) || filemtime($includeFile) != filemtime($templateFile)) {
             // compiled file name
             // compile
-            $fc =& func_new("FlexyCompiler");
+            $fc = func_new("FlexyCompiler");
             $fc->set("source", file_get_contents($templateFile));
-            $layout =& func_get_instance("Layout");
+            $layout = func_get_instance("Layout");
             $path = $layout->getPath();
             $fc->set("url_rewrite", "images:" . $path . "images");
             $fc->set("file", $templateFile);
@@ -199,9 +199,9 @@ class Widget extends Object
                 @touch($initFile, filemtime($templateFile));
             }
         }
-        $t =& $this->getThisVar();
-        $caller =& $t->widget;
-        $t->widget =& $this;
+        $t = $this->getThisVar();
+        $caller = $t->widget;
+        $t->widget = $this;
         $result = @include $includeFile;
         if (!$result) {
             $_error = "unable to read template file: $includeFile";
@@ -212,10 +212,10 @@ class Widget extends Object
             }
         }
 
-        $t->widget =& $caller;
+        $t->widget = $caller;
     }
 
-    function &getThisVar()
+    function getThisVar()
     {
         if(isset($this->component)) {
             return $this->component;
@@ -503,11 +503,11 @@ class Widget extends Object
         return true;
     }
     
-    function &getDialog()
+    function getDialog()
     {
-        $d =& $this;
+        $d = $this;
         while (!is_null($d) && !is_a($d, 'dialog__')) {
-            $d =& $d->component;
+            $d = $d->component;
         }
         return $d;
     }
@@ -515,7 +515,7 @@ class Widget extends Object
     function addWidget(&$w) 
     {
         $this->widgets[] = $w;
-        $w->parentWidget =& $this;
+        $w->parentWidget = $this;
     }
 
     function getCurrentYear()
@@ -532,7 +532,7 @@ class Widget extends Object
     {
 		if ($this->xlite->is("adminZone")) 
 		{
-    		$dialog =& func_new("Admin_Dialog_sbjs");
+    		$dialog = func_new("Admin_Dialog_sbjs");
     	}
         $dialog->sidebar_box_id = $this->strMD5($boxHead);
 
@@ -549,7 +549,7 @@ class Widget extends Object
 
 	function generateXliteFormID()
 	{
-		$form =& func_new("XliteForm");
+		$form = func_new("XliteForm");
 		$form_id = md5(uniqid(rand(0,time())));
 		$session_id = $this->xlite->session->getID();
 		$form->set("form_id", $form_id);
@@ -590,7 +590,7 @@ class Widget extends Object
 
             if(!empty($post_login) && !empty($post_password)){
                 $post_password = $this->xlite->auth->encryptPassword($post_password);
-                $profile =& func_new("Profile");
+                $profile = func_new("Profile");
                 if ($profile->find("login='".addslashes($post_login)."' AND ". "password='".addslashes($post_password)."'")) {
                     if ($profile->get("enabled") && $profile->is("admin")) {
                         return true;
@@ -631,7 +631,7 @@ class Widget extends Object
 
 		$form_id = addslashes($_REQUEST['xlite_form_id']);
 		$session_id = $this->xlite->session->getID();
-		$form =& func_new("XliteForm");
+		$form = func_new("XliteForm");
 		if (!$form->find("form_id='$form_id' AND session_id='$session_id'")) {
 			return false;
 		}

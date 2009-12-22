@@ -95,11 +95,11 @@ class Module_GiftCertificates_Order extends Order
 		$this->refresh("items");
 	}
 
-	function &getGC()
+	function getGC()
 	{
         if (is_null($this->gc)) {
             if ($this->get("gcid")) {
-                $this->gc =& func_new("GiftCertificate",$this->get("gcid"));
+                $this->gc = func_new("GiftCertificate",$this->get("gcid"));
             } else {
                 $this->gc = null;
             }
@@ -169,11 +169,11 @@ class Module_GiftCertificates_Order extends Order
 
 	function setGCStatus($status)
 	{
-		$items =& $this->get("items");
+		$items = $this->get("items");
 		for($i=0; $i<count($items); $i++) {
-            $item =& $items[$i];
+            $item = $items[$i];
 			if (!is_null($item->get("gc"))) {
-				$gc =& $item->get("gc");
+				$gc = $item->get("gc");
 				$gc->set("status", $status);
 				$gc->update();
 			}
@@ -190,7 +190,7 @@ class Module_GiftCertificates_Order extends Order
 		parent::checkout();
 	}
 
-    function &get($name)
+    function get($name)
     {
         // arounding problem in the "skins/default/en/shopping_cart/totals.tpl"
     	if ($name == "shipping_cost") {
@@ -293,7 +293,7 @@ class Module_GiftCertificates_Order extends Order
     {
         $has = false;
         if ($gcid) {
-            $items =& $this->get("items");
+            $items = $this->get("items");
             for ($i=0; $i<count($items); $i++) {
                 if ($items[$i]->get("gcid") == $gcid) {
                     $has = true;

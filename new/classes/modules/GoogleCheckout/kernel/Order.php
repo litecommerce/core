@@ -153,7 +153,7 @@ EOT;
 		foreach ($so->get("modules") as $module) {
 			$shipping_class = $module->get("class");
 
-			$shipping =& func_new("Shipping");
+			$shipping = func_new("Shipping");
 			$shippings = array_merge($shippings, $shipping->findAll("enabled=1 AND class='$shipping_class'"));
 		}
 
@@ -164,7 +164,7 @@ EOT;
 		$shippingsXML = array();
 
         foreach ($shippings as $shipping) {
-        	$shippingRate =& func_new("ShippingRate");
+        	$shippingRate = func_new("ShippingRate");
         	$shippingRate->set("shipping", $shipping);
     		$shippingsXML[] = $shippingRate->getGoogleCheckoutXML();
         }
@@ -214,7 +214,7 @@ EOT;
 	}
 
 
-	function &getProfile()
+	function getProfile()
 	{
 		if (is_null($this->GoogleCheckout_profile)) {
 			return parent::getProfile();
@@ -235,9 +235,9 @@ EOT;
 		}
 
 		if (!is_null($dc)) {
-			$coupon =& func_new("DiscountCoupon");
+			$coupon = func_new("DiscountCoupon");
 			if ( function_exists("func_is_clone_deprecated") && func_is_clone_deprecated() ) {
-				$clone =& $dc->cloneObject();
+				$clone = $dc->cloneObject();
 			} else {
 				$clone = $dc->clone();
 			}
@@ -271,7 +271,7 @@ EOT;
 		}
 
 		$result = array();
-		$items =& $this->get("items");
+		$items = $this->get("items");
 		foreach ($items as $item_idx => $item) {
 			$result[] = array
 			(
@@ -292,7 +292,7 @@ EOT;
 
 		$disableCustomerNotif = $this->xlite->get("GoogleCheckoutDCN");
 		if (!isset($disableCustomerNotif)) {
-    		$pmGC =& func_new("PaymentMethod", "google_checkout");
+    		$pmGC = func_new("PaymentMethod", "google_checkout");
     		$disableCustomerNotif = $pmGC->get("params.disable_customer_notif");
             $this->xlite->set("GoogleCheckoutDCN", $disableCustomerNotif);
 		}
@@ -335,7 +335,7 @@ EOT;
 		parent::set("google_details", serialize((array)$value));
 	}
 
-	function &getGoogleDetails()
+	function getGoogleDetails()
 	{
 		$details = parent::get("google_details");
 		if ($details) {
@@ -345,7 +345,7 @@ EOT;
 		}
 	}
 
-	function &get($name)
+	function get($name)
 	{
 		if ($name == "google_details") {
 			return $this->getGoogleDetails();
@@ -370,7 +370,7 @@ EOT;
 				return false;
 			}
 
-			$dc =& func_new("DiscountCoupon");
+			$dc = func_new("DiscountCoupon");
 			if ($dc->count("status='A' AND expire>='".time()."' AND order_id='0'") > 0) {
 				return true;
 			}
@@ -400,8 +400,8 @@ EOT;
 				return false;
 			}
 
-			$gc =& func_new("GiftCertificate");
-			$certs =& $gc->findAll();
+			$gc = func_new("GiftCertificate");
+			$certs = $gc->findAll();
 			foreach ($certs as $cert) {
 				if ($cert->validate() == GC_OK && $cert->get("debit") > 0) {
 					return true;

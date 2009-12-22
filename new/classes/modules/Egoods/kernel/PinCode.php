@@ -70,7 +70,7 @@ class PinCode extends Base
 
 	function getFreePinCount($product_id) // {{{
 	{
-		$product =& func_new('Product', $product_id);
+		$product = func_new('Product', $product_id);
 		if ($product->get('pin_type') == 'D') {
 			return count($this->findAll("item_id='' AND enabled=1 AND order_id=0 AND product_id=" . $product_id));
 		} else if ($product->get('pin_type') == 'E') {
@@ -95,11 +95,11 @@ class PinCode extends Base
 			if ($field == "NULL") {
 				$data[] = "";
 			} elseif ($field == "product") {
-				$product = & func_new("Product",$values['product_id']);
+				$product = func_new("Product",$values['product_id']);
 				$data[] = $this->_stripSpecials($product->get("name"));
 			} elseif ($field == "category") {
-                $product = & func_new("Product",$values['product_id']);
-				$category = &func_new("Category");
+                $product = func_new("Product",$values['product_id']);
+				$category = func_new("Category");
 				$data[] =  $category->createCategoryField($product->get("categories"));
 			} elseif (isset($values[$field])) {
 				$data[] =  $this->_stripSpecials($values[$field]);
@@ -117,13 +117,13 @@ class PinCode extends Base
 
         echo "<b>Importing CSV file line # $line_no: </b>";
 
-		$product =& func_new("Product");
+		$product = func_new("Product");
 		$product = $product->findImportedProduct("",$properties['category'],$properties['product'],false);
 		if (!is_object($product)) {
 			echo "product <b>\"".$properties['product']."\"</b> not found in category <b>\"".$properties['category']."\"</b>. Pin code not imported.<br>";
 			return false;
 		}
-		$pin =& func_new('PinCode');
+		$pin = func_new('PinCode');
 		$found = $pin->find("pin = '".$properties['pin']."' AND product_id =". $product->get("product_id"));
 
         $pin->set("pin", $properties['pin']);

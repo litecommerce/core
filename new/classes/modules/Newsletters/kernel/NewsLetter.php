@@ -100,7 +100,7 @@ class NewsLetter extends Base
         }
 		$parentCaller = null;
         if (is_object($this->get("parentCaller"))) {
-        	$parentCaller =& $this->get("parentCaller");
+        	$parentCaller = $this->get("parentCaller");
         	$parentCallerAction = "mail_send_callback";
         	if (!method_exists($parentCaller, $parentCallerAction)) {
         		$parentCaller = null;
@@ -116,7 +116,7 @@ class NewsLetter extends Base
 			}
 																			
             // create Mailer instance
-            $mailer =& func_new("Mailer");
+            $mailer = func_new("Mailer");
             $mailer->set("newsSubject", $this->get("subject"));
             $mailer->set("newsBody", $this->get("body"));
 			if ($this->get("list_id")) {
@@ -152,11 +152,11 @@ class NewsLetter extends Base
         }
     }
 
-    function &getSubscribers()
+    function getSubscribers()
     {
         if (is_null($this->subscribers)) {
             $this->subscribers = array();
-            $ns =& func_new("NewsSubscriber");
+            $ns = func_new("NewsSubscriber");
             foreach ($ns->findAll("list_id=".$this->get("list_id")) as $subscriber) {
                 $this->subscribers[] = $subscriber->get("email");
             }
@@ -172,10 +172,10 @@ class NewsLetter extends Base
         return parent::filter();
     }
 
-    function &getNewsList()
+    function getNewsList()
     {
         if (is_null($this->newsList)) {
-            $this->newsList =& func_new("NewsList", $this->get("list_id"));
+            $this->newsList = func_new("NewsList", $this->get("list_id"));
         }
         return $this->newsList;
     }

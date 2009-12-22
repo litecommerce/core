@@ -50,7 +50,7 @@ class Module_ShowcaseOrganizer_Dialog_category extends Dialog_category
 	
     function init()
     {
-        $layout =& func_get_instance("Layout");
+        $layout = func_get_instance("Layout");
         $layout->addLayout("category_products.tpl", $this->get("config.ShowcaseOrganizer.template"));
         parent::init();
     }

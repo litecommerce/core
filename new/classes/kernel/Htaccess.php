@@ -96,14 +96,14 @@ class Htaccess extends Base
                 $content = "";
             @fclose($fp);
             $hash = $this->makeHash($content);
-            $htaccess =& func_new("Htaccess");
+            $htaccess = func_new("Htaccess");
             $htaccess->set("filename", $file);
             $htaccess->set("content", $content);
             $htaccess->set("hash", $hash);
             $htaccess->create();
         }
 
-        $config =& func_new("Config");
+        $config = func_new("Config");
         if($config->find("name = 'last_date' AND category = 'Htaccess'")){
             $now = time();
 
@@ -154,7 +154,7 @@ class Htaccess extends Base
         if(($now - $last_date) < CHECK_INTERVAL)
             return;
 
-        $config =& func_new("Config");
+        $config = func_new("Config");
         if($config->find("name = 'last_date' AND category = 'Htaccess'")){
             $config->set("value", $now);
             $config->update();
@@ -239,7 +239,7 @@ class Htaccess extends Base
 
     function notifyAdmin($errors)
     {
-        $mail =& func_new("Mailer");
+        $mail = func_new("Mailer");
         $mail->errors = $errors;
         $mail->adminMail = true;
         $mail->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));

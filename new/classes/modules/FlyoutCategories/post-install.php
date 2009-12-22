@@ -6,7 +6,7 @@
 * @version $Id$
 */
 
-$cfg =& func_new("Config");
+$cfg = func_new("Config");
 $cfg->createOption("FlyoutCategories", "scheme", 0);
 
 ?>

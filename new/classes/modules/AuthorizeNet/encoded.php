@@ -8,7 +8,7 @@ function AuthorizeNet_processor_process(&$_this, &$cart, &$paymentMethod)
     
     $params = $paymentMethod->get("params");
 
-    $request =& func_new("HTTPS");
+    $request = func_new("HTTPS");
     $request->url = $params["url"];
     $request->data = array
     (

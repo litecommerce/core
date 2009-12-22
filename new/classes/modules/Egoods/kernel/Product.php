@@ -63,28 +63,28 @@ class Module_Egoods_Product extends Product
 		return $this->egoodsNumber;
 	}
 
-	function &getEgoods()
+	function getEgoods()
 	{
 		if (!isset($this->egoods)) {
-			$df =& func_new('DownloadableFile');
-			$this->egoods =& $df->findAll('product_id=' . $this->get('product_id'));
+			$df = func_new('DownloadableFile');
+			$this->egoods = $df->findAll('product_id=' . $this->get('product_id'));
 			$this->egoodsNumber = (is_array($this->egoods)) ? count($this->egoods) : 0;
 		}
 		return $this->egoods;
 	}
 
-	function &getLinkDeliveryFiles()
+	function getLinkDeliveryFiles()
 	{
 		$files = array();
 		if (!$this->is('egood')) {
 			return (object)$files;
 		}	
-		$egoods =& $this->get('egoods');
+		$egoods = $this->get('egoods');
 		for ($i = 0; $i < count($egoods); $i ++) {
 			if ($egoods[$i]->get('delivery') == 'L') {
 				$file = array();
 				$file['name'] = basename($egoods[$i]->get('data'));
-				$links =& $egoods[$i]->get('activeLinks');
+				$links = $egoods[$i]->get('activeLinks');
 				foreach($links as $key=>$link) {
 					$file['links'][] = $this->xlite->shopUrl('cart.php?target=download&action=download&acc=') . $link->get('access_key');
 				}
@@ -95,9 +95,9 @@ class Module_Egoods_Product extends Product
 		return (object)$files;
 	}
 
-	function &getValidLinkDeliveryFiles()
+	function getValidLinkDeliveryFiles()
 	{
-		$files =& $this->get('linkDeliveryFiles');
+		$files = $this->get('linkDeliveryFiles');
 		$valid = array();
 		foreach ($files as $key=>$file) {
 			if (count($file['links']) > 0) {
@@ -113,13 +113,13 @@ class Module_Egoods_Product extends Product
 		return (empty($valid)) ? false : true;
 	}
 
-	function &getMailDeliveryFiles()
+	function getMailDeliveryFiles()
 	{
 		$files = array();
-		$egoods =& $this->get('egoods');
+		$egoods = $this->get('egoods');
 		for ($i = 0; $i < count($egoods); $i ++) {
 			if ($egoods[$i]->get('delivery') == 'M') {
-				$files []=& $egoods[$i];
+				$files [] = $egoods[$i];
 			}	
 		}
 		return $files;
@@ -155,10 +155,10 @@ class Module_Egoods_Product extends Product
 		return in_array($membership, $free_for_memberships);
 	}
 
-	function &getPinSettings()
+	function getPinSettings()
 	{
 		if (!isset($this->pin_settings)) {
-			$this->pin_settings =& func_new('PinSettings');
+			$this->pin_settings = func_new('PinSettings');
 			if (!$this->pin_settings->find('product_id=' . $this->get('product_id'))) {
 				$this->pin_settings->set('product_id', $this->get('product_id'));
 			}
@@ -168,7 +168,7 @@ class Module_Egoods_Product extends Product
 
 	function createLink($file_id)
 	{
-		$dl =& func_new('DownloadableLink', md5(microtime()));
+		$dl = func_new('DownloadableLink', md5(microtime()));
 		$dl->set('file_id', $file_id);
 		$dl->set('exp_time', mktime(0, 0, 0, 
 				date("n", time()), 
@@ -186,7 +186,7 @@ class Module_Egoods_Product extends Product
 	function createLinks()
 	{
 		$acc = array();
-		$df =& func_new("DownloadableFile");
+		$df = func_new("DownloadableFile");
 		$files = $df->findAll("product_id=" . $this->get('product_id'));
 		for ($i = 0; $i < count($files); $i++) {
 			if ($files[$i]->get('delivery') == 'L') {
@@ -201,7 +201,7 @@ class Module_Egoods_Product extends Product
 		if ($this->xlite->is('adminZone')) {
 			return parent::filter();
 		}	
-		$pin =& func_new('PinCode');
+		$pin = func_new('PinCode');
 		$avail_amount = $pin->getFreePinCount($this->get('product_id'));
 		if ($this->is('pin') && $avail_amount < 1) {
 			return false;

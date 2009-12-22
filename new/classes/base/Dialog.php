@@ -58,7 +58,7 @@ class Dialog extends Component
     {
         parent::constructor();
         if (!$this->xlite->is("adminZone")) {
-            $this->cart =& func_get_instance("Cart");
+            $this->cart = func_get_instance("Cart");
             // cleanup processed cart for non-checkout pages
             $target = isset($_REQUEST["target"]) ? $_REQUEST["target"] : "";
             if ($target != "checkout" && ($this->cart->is("processed") || $this->cart->is("queued"))) {
@@ -67,7 +67,7 @@ class Dialog extends Component
         }
     }
 
-    function &getAllParams($exeptions=null)
+    function getAllParams($exeptions=null)
     {
     	$allParams = parent::getAllParams();
     	$params = $allParams;
@@ -85,7 +85,7 @@ class Dialog extends Component
         return $params;
     }
 
-    function &getTemplate()
+    function getTemplate()
     {
         if (!$this->xlite->is("adminZone") && $this->get("config.General.add_on_mode")) {
             return "../../../cart.html";
@@ -93,10 +93,10 @@ class Dialog extends Component
         return $this->template;
     }
     
-    function &getProduct()
+    function getProduct()
     {
         if (is_null($this->product) && isset($_REQUEST["product_id"])) {
-            $this->product =& func_new("Product",$_REQUEST["product_id"]);
+            $this->product = func_new("Product",$_REQUEST["product_id"]);
             if (!$this->xlite->is("adminZone") && !$this->product->get("enabled")) {
                 $this->product = null;
             }
@@ -104,7 +104,7 @@ class Dialog extends Component
         return $this->product;
     }
 
-    function &getCategory()
+    function getCategory()
     {
         if (is_null($this->category) && isset($_REQUEST["category_id"])) {
             $this->category = func_new("Category", $this->get("category_id"));
@@ -359,7 +359,7 @@ $this->xlite->logger->log("<<<");
         }    
     }
 
-    function &getProperties()
+    function getProperties()
     {
         $result = array();
         foreach ($_REQUEST as $name => $value)
@@ -372,7 +372,7 @@ $this->xlite->logger->log("<<<");
     function getUrl($params = null)
     {
         if (is_null($params)) {
-            $params =& $this->get("allParams");
+            $params = $this->get("allParams");
         }
         $url = $this->xlite->get("script") . "?";
         foreach ($params as $param => $value) {
@@ -404,7 +404,7 @@ $this->xlite->logger->log("<<<");
     */
     function updateCart()
     {
-        $items =& $this->cart->get("items");
+        $items = $this->cart->get("items");
 		$this->set("absence_of_product", null);
         foreach ($items as $key => $i) {
             if(!$i->isValid()) {
@@ -427,7 +427,7 @@ $this->xlite->logger->log("<<<");
             $this->cart->update();
 
     		$this->set("absence_of_product", null);
-        	$items =& $this->cart->get("items");
+        	$items = $this->cart->get("items");
             foreach ($items as $key => $i) {
                 if(!$i->isValid()) {
                 	$this->set("absence_of_product", true);
@@ -484,11 +484,11 @@ $this->xlite->logger->log("<<<");
 			return $charset;
 
 		if ($this->auth->isLogged()) {
-			$profile =& $this->auth->get("profile");
+			$profile = $this->auth->get("profile");
 			return $profile->get("billingCountry.charset");
 		} else {
 			$country = $this->config->get("General.default_country");
-			$obj =& func_new("Country", $country);
+			$obj = func_new("Country", $country);
 			return ($obj->get("charset")) ? $obj->get("charset") : "iso-8859-1";
 		}
 	}

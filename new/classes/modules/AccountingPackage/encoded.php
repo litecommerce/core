@@ -39,8 +39,8 @@
 
 function AccountingPackage_export_qb(&$dialog) // {{{
 {
-    $qb =& func_new("Widget");
-    $qb->component =& $dialog;
+    $qb = func_new("Widget");
+    $qb->component = $dialog;
     $qb->set("template", "modules/AccountingPackage/export_qb.tpl");
     $dialog->startDownload("orders.iif");
     $qb->init();
@@ -50,8 +50,8 @@ function AccountingPackage_export_qb(&$dialog) // {{{
 
 function AccountingPackage_export(&$dialog, $format) // {{{
 {
-    $qb =& func_new("Widget");
-    $qb->component =& $dialog;
+    $qb = func_new("Widget");
+    $qb->component = $dialog;
     $template = $format . "_" . $dialog->get("export_result") . ".tpl";
     $csv = $dialog->get("export_result") . ".csv";
     $qb->set("template", "modules/AccountingPackage/" . $template);

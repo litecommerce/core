@@ -86,7 +86,7 @@ class Dialog_help extends Dialog
     
     function action_contactus()
     {
-        $mailer =& func_new("Mailer");
+        $mailer = func_new("Mailer");
         $mailer->mapRequest();
         $st = func_new("State", $_REQUEST["contactus_state"]);
 		if ($st->get("state_id") == -1) {
@@ -104,7 +104,7 @@ class Dialog_help extends Dialog
     function getCountriesStates()
     {
         if (!isset($this->_profileDialog)) {
-            $this->_profileDialog =& func_new("Dialog_profile");
+            $this->_profileDialog = func_new("Dialog_profile");
         }
         return $this->_profileDialog->getCountriesStates();
     }

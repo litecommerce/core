@@ -109,7 +109,7 @@ class Module_Promotion_OrderItem extends OrderItem
         return $this->formatCurrency($price);
 	}
 
-	function &get($name)
+	function get($name)
 	{
         if ($name == "price") {
             return $this->_getPromotionPrice();
@@ -204,7 +204,7 @@ class Module_Promotion_OrderItem extends OrderItem
 				return true;
 			}
 			if ($offer->get("category_id") != 0) {
-				$cat =& func_new("Category", $offer->get("category_id"));
+				$cat = func_new("Category", $offer->get("category_id"));
 				if ($product->inCategory($cat)) {
 					return true;
 				}

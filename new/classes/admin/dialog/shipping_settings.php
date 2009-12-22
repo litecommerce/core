@@ -56,16 +56,16 @@ class Admin_Dialog_shipping_settings extends Admin_Dialog
 
     var $_shippings = null;
 
-	function &getShippings()
+	function getShippings()
 	{
 		if (!is_null($this->_shippings)) {
 			return $this->_shippings;
 		}
 
-		$shipping =& func_new("Shipping");
-    	$modules =& $shipping->getModules();
+		$shipping = func_new("Shipping");
+    	$modules = $shipping->getModules();
     	$modules = (is_array($modules)) ? array_keys($modules) : array();
-		$shippings =& $shipping->findAll();
+		$shippings = $shipping->findAll();
 		$this->_shippings = array();
 		foreach($shippings as $shipping) {
 			if (in_array($shipping->get("class"), $modules) && $shipping->get("enabled")) {

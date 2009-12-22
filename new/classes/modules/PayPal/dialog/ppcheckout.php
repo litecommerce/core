@@ -49,7 +49,7 @@ class Dialog_ppcheckout extends Dialog_checkout
     function init()
     {
     	if ($_REQUEST["target"] == "ppcheckout") {
-    		$this->registerForm =& func_new("Object");
+    		$this->registerForm = func_new("Object");
     	}
 		
     	parent::init();

@@ -53,7 +53,7 @@ class Module_UPSOnlineTools_Dialog_cart extends Dialog_cart
 	{
 		$carrier = $this->cart->getCarrier();
 		if (count($this->cart->getCarriers())>0 && $carrier && $_REQUEST['carrier'] != $carrier) {
-			$newrates = &$this->cart->getCarrierRates($_REQUEST['carrier']);
+			$newrates = $this->cart->getCarrierRates($_REQUEST['carrier']);
 
 			$this->shipping = null;
 			if (count($newrates) > 0) {

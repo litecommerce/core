@@ -58,7 +58,7 @@ class Admin_Dialog_payment_method_GoogleCheckout extends Admin_Dialog_payment_me
     	);  
 
         require_once "modules/GoogleCheckout/encoded.php";
-		$https =& GoogleCheckout_getHTTPS_Object();
+		$https = GoogleCheckout_getHTTPS_Object();
     	$https->data     = $data;
     	$https->method   = "POST";
     	$https->conttype = "application/xml";
@@ -105,7 +105,7 @@ class Admin_Dialog_payment_method_GoogleCheckout extends Admin_Dialog_payment_me
 		$this->set("silent", true);
 		$this->xlite->logger->log("Received callback from GoogleCheckout");
 
-		$this->pm =& func_new("PaymentMethod", "google_checkout");
+		$this->pm = func_new("PaymentMethod", "google_checkout");
         $params = $this->pm->get("params");
 
 		$this->phpAuthUser = $GLOBALS["_SERVER"]["PHP_AUTH_USER"];
@@ -141,7 +141,7 @@ class Admin_Dialog_payment_method_GoogleCheckout extends Admin_Dialog_payment_me
 		}
 
         require_once "modules/GoogleCheckout/encoded.php";
-		$xml =& GoogleCheckout_getXML_Object();
+		$xml = GoogleCheckout_getXML_Object();
 		$parsed = $xml->parse($this->httpRawPostData);
 
 		if (empty($parsed)) {

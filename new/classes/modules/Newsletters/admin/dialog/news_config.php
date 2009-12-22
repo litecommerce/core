@@ -45,10 +45,10 @@
 */
 class Admin_Dialog_news_config extends Admin_Dialog
 {
-    function &getNewsLists()
+    function getNewsLists()
     {
         if (is_null($this->newsLists)) {
-            $ns =& func_new("NewsList");
+            $ns = func_new("NewsList");
             $this->newsLists = $ns->findAll("WHERE 1");
 
         }

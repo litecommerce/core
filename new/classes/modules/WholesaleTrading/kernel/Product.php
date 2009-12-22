@@ -186,7 +186,7 @@ class Module_WholesaleTrading_Product extends Product
 
 		$wholesale_price = false;
 		if ($use_wholesale_price) {
-    	    $wp =& func_new("WholesalePricing");
+    	    $wp = func_new("WholesalePricing");
 	        $profile = $this->auth->get("profile");
         	$membership = (is_object($profile)) ? " OR membership='" . $profile->get("membership") . "'" : "";
 	        $wholesale_prices = $wp->getProductPrices($this->get("product_id"), $amount, $membership);
@@ -202,7 +202,7 @@ class Module_WholesaleTrading_Product extends Product
 
 			$opts = $this->get("expandedItems");
 			foreach ($opts[$optionIndex] as $option) {
-				$po =& func_new("ProductOption");
+				$po = func_new("ProductOption");
 				$po->set("product_id", $this->get("product_id"));
 
 				$modifiedPrice = ($wholesale_price === false)?($po->_modifiedPrice($option)):($po->_modifiedPrice($option, false, $wholesale_price));
@@ -227,7 +227,7 @@ class Module_WholesaleTrading_Product extends Product
 			$option_keys[] = sprintf("%s:%s", $_opt->class, $_opt->option);
 		}
 		$key = $this->get('key')."|".implode("|", $option_keys);
-		$inventory =& func_new("Inventory");
+		$inventory = func_new("Inventory");
 		$inventories = $inventory->findAll("inventory_id LIKE '".$this->get("product_id")."|%' AND enabled=1", "order_by");
 		foreach ($inventories as $i) {
 			if ($i->keyMatch($key)) {
@@ -240,7 +240,7 @@ class Module_WholesaleTrading_Product extends Product
 	function _available_action($action)
 	{
 		if (!isset($this->product_access) || is_null($this->product_access)) {
-			$this->product_access =& func_new("ProductAccess");
+			$this->product_access = func_new("ProductAccess");
 			$this->product_access->set("product_id", $this->get("product_id"));
 		}
 		return $this->product_access->groupInAccessList($this->auth->get("profile.membership"), $action . "_group");
@@ -330,7 +330,7 @@ class Module_WholesaleTrading_Product extends Product
 		return $exists;
 	}
 
-	function &get($name)
+	function get($name)
 	{
 		if ($name == "price" && !$this->is("priceAvailable") && !$this->xlite->is("adminZone")) {
 			return $this->get("config.WholesaleTrading.price_denied_message");
@@ -358,7 +358,7 @@ class Module_WholesaleTrading_Product extends Product
 	function getWholesalePricing()
 	{
 		if (is_null($this->wholesale_pricing)) {
-			$wp =& func_new("WholesalePricing");
+			$wp = func_new("WholesalePricing");
 			$sqlStr = "product_id=" . $this->get('product_id');
 			$sqlStr .= ( $this->auth->is("logged") ) ? " AND (membership='all' OR membership='" . $this->auth->get("profile.membership") . "')" : " AND membership='all'";
 			$wholesale_pricing = $wp->findAll($sqlStr);
@@ -399,7 +399,7 @@ class Module_WholesaleTrading_Product extends Product
 
 	function getPurchaseLimit()
 	{
-		$purchase_limit = &func_new("PurchaseLimit");
+		$purchase_limit = func_new("PurchaseLimit");
 		$found = $purchase_limit->find("product_id =" . $this->get("product_id"));
 		return $found ? $purchase_limit : false;
 	}
@@ -407,9 +407,9 @@ class Module_WholesaleTrading_Product extends Product
     function delete()
     {
         // delete product accesses, purchase limits and wholesale prices
-        $pa =& func_new("ProductAccess");
-        $pl =& func_new("PurchaseLimit");
-        $wp =& func_new("WholesalePricing");
+        $pa = func_new("ProductAccess");
+        $pl = func_new("PurchaseLimit");
+        $wp = func_new("WholesalePricing");
         $this->db->query("DELETE FROM ".$pa->getTable(). " WHERE product_id=".$this->get("product_id"));
         $this->db->query("DELETE FROM ".$pl->getTable(). " WHERE product_id=".$this->get("product_id"));
         $this->db->query("DELETE FROM ".$wp->getTable(). " WHERE product_id=".$this->get("product_id"));
@@ -428,7 +428,7 @@ class Module_WholesaleTrading_Product extends Product
 		$products_table = $this->db->getTableByAlias("products");
 		$classes = array("ProductAccess", "PurchaseLimit", "WholesalePricing");
 		foreach ($classes as $class) {
-			$obj =& func_new($class);
+			$obj = func_new($class);
 
 			$class_table = $obj->getTable();
 			$sql = "SELECT DISTINCT(o.product_id) AS product_id FROM ".$class_table." o LEFT OUTER JOIN $products_table p ON o.product_id=p.product_id WHERE p.product_id IS NULL";
@@ -444,7 +444,7 @@ class Module_WholesaleTrading_Product extends Product
     
     function clone() {
 		if ( function_exists("func_is_clone_deprecated") && func_is_clone_deprecated() ) {
-			$p =& parent::cloneObject();
+			$p = parent::cloneObject();
 		} else {
 			$p = parent::clone();
 		}
@@ -453,9 +453,9 @@ class Module_WholesaleTrading_Product extends Product
         $newId = $p->get("product_id");        
         
 		if ($this->config->get("WholesaleTrading.clone_wholesale_productaccess")) {            
-            $productAccess = & func_new("ProductAccess");
+            $productAccess = func_new("ProductAccess");
             foreach ($productAccess->findAll("product_id=$originalId") as $access) {
-                $foo = & func_new("ProductAccess");
+                $foo = func_new("ProductAccess");
                 $foo->set("product_id", $newId);
                 $foo->set("show_group", $access->get("show_group"));
                 $foo->set("show_price_group", $access->get("show_price_group"));
@@ -465,9 +465,9 @@ class Module_WholesaleTrading_Product extends Product
         }
         
         if ($this->config->get("WholesaleTrading.clone_wholesale_purchaselimit")) {            
-            $purchaseLimit = & func_new("PurchaseLimit");
+            $purchaseLimit = func_new("PurchaseLimit");
             foreach ($purchaseLimit->findAll("product_id=$originalId") as $limit) {
-                $foo = & func_new("PurchaseLimit");
+                $foo = func_new("PurchaseLimit");
                 $foo->set("product_id", $newId);
                 $foo->set("min", $limit->get("min"));
                 $foo->set("max", $limit->get("max"));
@@ -476,9 +476,9 @@ class Module_WholesaleTrading_Product extends Product
         }
             
         if ($this->config->get("WholesaleTrading.clone_wholesale_pricing")) {
-            $wholesalePricing = & func_new("WholesalePricing");
+            $wholesalePricing = func_new("WholesalePricing");
             foreach ($wholesalePricing->findAll("product_id=$originalId") as $pricing) {
-                $foo = & func_new("WholesalePricing");
+                $foo = func_new("WholesalePricing");
                 $foo->set("product_id", $newId);
                 $foo->set("amount", $pricing->get("amount"));
                 $foo->set("price", $pricing->get("price"));

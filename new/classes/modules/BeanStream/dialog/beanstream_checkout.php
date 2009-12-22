@@ -50,7 +50,7 @@ class Dialog_beanstream_checkout extends Dialog_checkout
 	function init()
 	{
 		if (!is_object($this->registerForm) || is_null($this->registerForm)) {
-			$this->registerForm =& func_new("Object");
+			$this->registerForm = func_new("Object");
 		}
 
 		parent::init();
@@ -75,7 +75,7 @@ class Dialog_beanstream_checkout extends Dialog_checkout
 			$this->session->writeClose();
 
 			$order = $this->get("order");
-			$payment =& func_new('PaymentMethod', "beanstream_cc");
+			$payment = func_new('PaymentMethod', "beanstream_cc");
 
 			include_once "modules/BeanStream/encoded.php";
 			func_BeanStream_action_return($this, $order, $payment);

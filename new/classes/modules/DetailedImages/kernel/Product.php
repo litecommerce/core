@@ -47,16 +47,16 @@
 */
 class Module_DetailedImages_Product extends Product
 {
-    function &getDetailedImages()
+    function getDetailedImages()
     {
-        $image =& func_new("DetailedImage");
+        $image = func_new("DetailedImage");
         $images = $image->findImages($this->get("product_id"));
         return $images;
     }
     
     function delete()
     {
-		$images =& $this->get("detailedImages");
+		$images = $this->get("detailedImages");
 		foreach ($images as $image) {
 			$image->delete();
 		}
@@ -66,14 +66,14 @@ class Module_DetailedImages_Product extends Product
 	function clone()
 	{
 		if ( function_exists("func_is_clone_deprecated") && func_is_clone_deprecated() ) {
-			$product =& parent::cloneObject();
+			$product = parent::cloneObject();
 		} else {
-			$product =& parent::clone();
+			$product = parent::clone();
 		}
 
 		$images = $this->get("detailedImages");
 		foreach ($images as $image) {
-			$newImage =& func_new("DetailedImage");
+			$newImage = func_new("DetailedImage");
 			$newImage->set("alt", $image->get("alt"));
 			$newImage->set("enabled", $image->get("enabled"));
 			$newImage->set("order_by", $image->get("order_by"));
@@ -106,7 +106,7 @@ class Module_DetailedImages_Product extends Product
 
 		if (is_array($result) && count($result) > 0) {
 			foreach ($result as $info) {
-				$di =& func_new("DetailedImage", $info["image_id"]);
+				$di = func_new("DetailedImage", $info["image_id"]);
 				$di->delete();
 			}
 		}

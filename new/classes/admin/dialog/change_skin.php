@@ -356,7 +356,7 @@ To install the selected skin, please correct the problem and start the installat
 
     	$ck_res &= $this->createDirs($this->get("directoriesToCreate"));
 
-        $teDialog =& func_new("Admin_Dialog_template_editor");
+        $teDialog = func_new("Admin_Dialog_template_editor");
         $teDialog->getExtraPages();
 
     	echo "<BR><B>Copying templates...</B><BR>\n";
@@ -378,7 +378,7 @@ To install the selected skin, please correct the problem and start the installat
 		echo "<br><br><b>Cleanup cache...</b><br>";
 		func_cleanup_cache("skins", true);
 
-		$config =& func_new("Config");
+		$config = func_new("Config");
 		$config->createOption("Skin", "skin", $this->layout);
 		
 		echo "<br><b>Task completed.</b><br>";

@@ -56,7 +56,7 @@ class Dialog_partner_product extends PartnerDialog
             }
         } else {
             // update config values
-            $config =& func_new("Config");
+            $config = func_new("Config");
             if ($config->find("name='partner_product_banner'")) {
                 $schema = $this->get("config.Miscellaneous.partner_product_banner");
                 foreach ($schema as $param => $value) {
@@ -68,10 +68,10 @@ class Dialog_partner_product extends PartnerDialog
         }
     }
 
-    function &getProduct()
+    function getProduct()
     {
         if (is_null($this->product)) {
-            $this->product =& func_new("Product", $this->product_id);
+            $this->product = func_new("Product", $this->product_id);
         }
         return $this->product;
     }

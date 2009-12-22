@@ -85,7 +85,7 @@ class SpecialOffer extends Base
 	var $condition = null;
 	var $bonus = null;
 	
-	function &getProduct()
+	function getProduct()
     {
         if (is_null($this->product)) {
             if ($this->get("product_id")) {
@@ -97,12 +97,12 @@ class SpecialOffer extends Base
         return $this->product;
     }
    	
-	function &getMembership()
+	function getMembership()
 	{	
 		return $this->auth->get("profile.membership");
 	}
  
-	function &getCategory()
+	function getCategory()
     {
         if (is_null($this->category)) {
             if ($this->get("category_id")) {
@@ -114,7 +114,7 @@ class SpecialOffer extends Base
         return $this->category;
     }
 
-    function &getBonusCategory()
+    function getBonusCategory()
     {
         if (is_null($this->bonusCategory)) {
             if ($this->get("bonusCategory_id")) {
@@ -130,10 +130,10 @@ class SpecialOffer extends Base
     {
 		$this->products = array();
 		$this->bonusProducts = array();
-		$so_product =& func_new("SpecialOfferProduct");
-		$so_products =& $so_product->findAll("offer_id = ". $this->get("offer_id"));
+		$so_product = func_new("SpecialOfferProduct");
+		$so_products = $so_product->findAll("offer_id = ". $this->get("offer_id"));
 		foreach ($so_products as $_product) {
-			$product =& func_new("Product",$_product->get("product_id"));
+			$product = func_new("Product",$_product->get("product_id"));
 			if ($_product->get("type") == "C") {
 				$this->products[] = $product;
 			} else {
@@ -144,7 +144,7 @@ class SpecialOffer extends Base
 		}
     }
     
-    function &getProducts()
+    function getProducts()
     {
         if (is_null($this->products)) {
             $this->initProducts();
@@ -152,7 +152,7 @@ class SpecialOffer extends Base
         return $this->products;
     }
 
-    function &getBonusProducts()
+    function getBonusProducts()
     {
         if (is_null($this->bonusProducts)) {
             $this->initProducts();
@@ -160,11 +160,11 @@ class SpecialOffer extends Base
         return $this->bonusProducts;
     }
 
-    function &getBonusPrices()
+    function getBonusPrices()
     {
         if (is_null($this->bonusPrices)) {
-            $pricing =& func_new("BonusPrice");
-            $this->bonusPrices =& $pricing->findAll("offer_id=" . $this->get("offer_id"));
+            $pricing = func_new("BonusPrice");
+            $this->bonusPrices = $pricing->findAll("offer_id=" . $this->get("offer_id"));
         }
         return $this->bonusPrices;
 	}
@@ -176,7 +176,7 @@ class SpecialOffer extends Base
 	{
 		$product_id = $product->get("product_id");
 		$offer_id = $this->get("offer_id");
-		$so_product =& func_new("SpecialOfferProduct");
+		$so_product = func_new("SpecialOfferProduct");
         if(!$so_product->find("offer_id = $offer_id AND product_id = $product_id AND type = '$type'"))
 		{
 			$so_product->set("offer_id",$offer_id);
@@ -189,7 +189,7 @@ class SpecialOffer extends Base
 
 	function deleteProduct($product, $type = 'C')
 	{
-		$so_product =& func_new("SpecialOfferProduct");
+		$so_product = func_new("SpecialOfferProduct");
 		if($so_product->find("offer_id = ". $this->get("offer_id") ." AND product_id =". $product->get("product_id") ." AND type = '$type'"))
 			$so_product->delete();
 	}
@@ -209,7 +209,7 @@ class SpecialOffer extends Base
 		if (is_null($price)) {
 			$price = $product->get("price");
 		}
-		$pricing =& func_new("BonusPrice");
+		$pricing = func_new("BonusPrice");
 		$pricing->set("offer_id", $this->get("offer_id"));
 		$pricing->set("product_id", $product_id);
 		$pricing->set("category_id", $category_id);
@@ -235,7 +235,7 @@ class SpecialOffer extends Base
 		} else {
 			$category_id = $category->get("category_id");
 		}
-		$pricing =& func_new("BonusPrice");
+		$pricing = func_new("BonusPrice");
 		$pricing->set("offer_id", $this->get("offer_id"));
 		$pricing->set("product_id", $product_id);
 		$pricing->set("category_id", $category_id);
@@ -257,7 +257,7 @@ class SpecialOffer extends Base
 			$category_id = $category->get("category_id");
 		}
 
-		$pricing =& func_new("BonusPrice");
+		$pricing = func_new("BonusPrice");
 		$pricing->set("offer_id", $this->get("offer_id"));
 		$pricing->set("product_id", $product_id);
 		$pricing->set("category_id", $category_id);
@@ -266,18 +266,18 @@ class SpecialOffer extends Base
 
 	function delete()
 	{
-		$so_product =& func_new("SpecialOfferProduct");
-		$so_products =& $so_product->findAll("offer_id = ". $this->get("offer_id"));
+		$so_product = func_new("SpecialOfferProduct");
+		$so_products = $so_product->findAll("offer_id = ". $this->get("offer_id"));
 		foreach($so_products as $_product)
 			$_product->delete();
 
-		$so_bonusPrice =& func_new("BonusPrice");
-		$so_bonusPrices =& $so_bonusPrice->findAll("offer_id = ". $this->get("offer_id"));
+		$so_bonusPrice = func_new("BonusPrice");
+		$so_bonusPrices = $so_bonusPrice->findAll("offer_id = ". $this->get("offer_id"));
  		foreach($so_bonusPrices as $_bonusPrice)
 	       	$_bonusPrice->delete();
 
- 		$membership =& func_new("SpecialOfferMembership");
-        $memberships =& $membership->findAll('offer_id = ' . $this->get('offer_id'));
+ 		$membership = func_new("SpecialOfferMembership");
+        $memberships = $membership->findAll('offer_id = ' . $this->get('offer_id'));
         if (is_array($memberships))
             foreach($memberships as $membership_) {
                 $membership_->delete();
@@ -315,11 +315,11 @@ class SpecialOffer extends Base
 			case "productAmount":
 		    case "eachNth":
 				if ($this->get('product_id')) {
-					$product =& func_new("Product", $this->get("product_id"));
+					$product = func_new("Product", $this->get("product_id"));
 					$this->condition["Product"] = $product->get("name");
 				}
 				if ($this->get('category_id')) {
-					$category =& func_new("Category", $this->get("category_id"));
+					$category = func_new("Category", $this->get("category_id"));
 					$this->condition["Category"] = $category->get('name');
 				}
 				$this->condition["Amount"] = $this->get("amount");
@@ -336,8 +336,8 @@ class SpecialOffer extends Base
 					}
 				break;
 			case "hasMembership":
-				$membership =& func_new('SpecialOfferMembership');
-				$memberships =& $membership->findAll('offer_id =' .  $this->get("offer_id"));
+				$membership = func_new('SpecialOfferMembership');
+				$memberships = $membership->findAll('offer_id =' .  $this->get("offer_id"));
 				foreach ($memberships as $membership_)
 					$applied .= "," . $membership_->get("membership");
 				$this->condition["Memberships"] = substr($applied,1);
@@ -363,7 +363,7 @@ class SpecialOffer extends Base
 					$this->condition["Discount on"] = "All products"; 	
 				} else {
 					if($this->get("bonusCategory_id")) {
-						$category =& func_new('Category', $this->get("bonusCategory_id"));
+						$category = func_new('Category', $this->get("bonusCategory_id"));
 						$this->condition["Discount on"] = $category->get("name");
 					} else {
 		                $this->bonusProducts = null;
@@ -376,7 +376,7 @@ class SpecialOffer extends Base
 				}
 				$value = '';
 				if ($this->get("bonusAmountType") == '$') {
-					$wg =& func_new("Widget");
+					$wg = func_new("Widget");
 					$value = $wg->price_format($this->get("bonusAmount"));
 				} else {
 					$value = $this->get("bonusAmount").$this->get("bonusAmountType");
@@ -384,16 +384,16 @@ class SpecialOffer extends Base
 				$this->condition["Discount"] = $value;
 			break;
 			case "specialPrices":
-				$pricing =& func_new("BonusPrice");
-				$prices =& $pricing->findAll("offer_id = " . $this->get("offer_id"));
+				$pricing = func_new("BonusPrice");
+				$prices = $pricing->findAll("offer_id = " . $this->get("offer_id"));
 				$condition = "";
 				foreach($prices as $key => $price) {
 					if ($price->get('product_id')) {
-						$product =& func_new('Product',$price->get('product_id'));
+						$product = func_new('Product',$price->get('product_id'));
 						$condition = "Product: " . $product->get('name') ." ";
 					}
 					if ($price->get('category_id')) {
-                        $category =& func_new('Category',$price->get('category_id'));
+                        $category = func_new('Category',$price->get('category_id'));
 						$condition .= "Category: " . $category->get('name');
 					}
 					$index = $key + 1;
@@ -461,8 +461,8 @@ class SpecialOffer extends Base
 			return true;
 		case "hasMembership":
 			if (!is_null($order->get("profile"))) {	
-				$membership =& func_new("SpecialOfferMembership");
-				$memberships =& $membership->findAll("offer_id = ". $this->get("offer_id"));
+				$membership = func_new("SpecialOfferMembership");
+				$memberships = $membership->findAll("offer_id = ". $this->get("offer_id"));
 				foreach($memberships as $membership_) {
 					if ($order->get("profile.membership") == $membership_->get("membership")) {
 						return true;
@@ -481,7 +481,7 @@ class SpecialOffer extends Base
 
 	function _discountAppliesTo($product)
 	{
-		$order =& func_new("Order");
+		$order = func_new("Order");
 		if (!is_null($this->get("bonusCategory")) && $order->_inCategoryRecursive($product, $this->get("bonusCategory"))) {
 			return true;
 		}
@@ -508,7 +508,7 @@ class SpecialOffer extends Base
 	{
 		$product = $item->get("product");	
 		if (is_null($product)) {
-			$product =& $item;
+			$product = $item;
 		}
 		if (is_null($price)) {
 			// get original product's price
@@ -523,7 +523,7 @@ class SpecialOffer extends Base
 				}   
 			}
 		} elseif($this->get("bonusType") == "specialPrices") {
-            $order =& func_new("Order");
+            $order = func_new("Order");
 			foreach ($this->get("bonusPrices") as $bonusPrice) {
 				if ($bonusPrice->get("product_id") == $product->get("product_id") || !is_null($bonusPrice->get("category")) && $order->_inCategoryRecursive($product, $bonusPrice->get("category"))) {
 					if ($bonusPrice->get("bonusType") == '$') {
@@ -581,7 +581,7 @@ class SpecialOffer extends Base
 
 		    // TODO: should be configurable !!!!
 			if ($bonusType1 == $bonusType2 && $bonusType1 == "bonusPoints") {
-				$items =& $order->getItems();
+				$items = $order->getItems();
 				foreach ($items as $item) {
 					if ($item->isOfferCondition($offer1) && $item->isOfferCondition($offer2)) {
 						if ($offer2->get("bonusAmount") < $offer1->get("bonusAmount")) {
@@ -596,7 +596,7 @@ class SpecialOffer extends Base
 
 		    // TODO: should be configurable !!!!
 			if ($bonusType1 == $bonusType2 && $bonusType1 == "discounts") {
-				$items =& $order->getItems();
+				$items = $order->getItems();
 				foreach ($items as $item) {
 					if ($item->isOfferCondition($offer1) && $item->isOfferCondition($offer2)) {
 						if ($offer2->get("bonusAmount") < $offer1->get("bonusAmount") && ($offer1->get("bonusAmountType") == $offer2->get("bonusAmountType"))) {
@@ -645,7 +645,7 @@ class SpecialOffer extends Base
 	{
 		// clone attached bonus prices & products
 		if ( function_exists("func_is_clone_deprecated") && func_is_clone_deprecated() ) {
-			$clone =& parent::cloneObject();
+			$clone = parent::cloneObject();
 		} else {
 			$clone = parent::clone();
 		}
@@ -659,11 +659,11 @@ class SpecialOffer extends Base
 		foreach ($this->get("products") as $product) {
 			$clone->addProduct($product, 'C');
 		}
-		$membership =& func_new("SpecialOfferMembership");
-		$memberships =& $membership->findAll('offer_id = ' . $this->get('offer_id'));
+		$membership = func_new("SpecialOfferMembership");
+		$memberships = $membership->findAll('offer_id = ' . $this->get('offer_id'));
 		if (is_array($memberships))	
 			foreach($memberships as $membership_) {
-				$membership =& func_new ("SpecialOfferMembership");
+				$membership = func_new ("SpecialOfferMembership");
 				$membership->set('offer_id', $clone->get('offer_id'));
 				$membership->set('membership',$membership_->get("membership"));
 				$membership->create();
@@ -673,7 +673,7 @@ class SpecialOffer extends Base
 		return $clone;
 	}
 
-	function &getAllBonusProducts()
+	function getAllBonusProducts()
 	{
 		$parentProduct = $this->get("product");
 		if ($this->get("bonusProducts")) {
@@ -693,7 +693,7 @@ class SpecialOffer extends Base
 			return $bonusProducts;
 		}
 		$products = array();
-		$cart =& func_get_instance("Cart");
+		$cart = func_get_instance("Cart");
 		foreach ($this->get("bonusPrices") as $bonusPrice) {
 			if (!is_null($bonusPrice->get("product"))) {
 				$product = $bonusPrice->get("product");
@@ -721,7 +721,7 @@ class SpecialOffer extends Base
 		return $products;
 	}
 
-	function &getAllBonusCategories()
+	function getAllBonusCategories()
 	{
 		$categories = array();
 		$this->bonusPrices = null;
@@ -740,7 +740,7 @@ class SpecialOffer extends Base
 			}
 		}
 
-		$cart =& func_get_instance("Cart");
+		$cart = func_get_instance("Cart");
 		if (!$cart->isEmpty()) {
         	$excluded_categories = array();
 			foreach ($cart->getItems() as $cart_item) {
@@ -840,7 +840,7 @@ class SpecialOffer extends Base
 			}
 		}
 		if (!is_null($this->get("category"))) {
-			$order =& func_new("Order");
+			$order = func_new("Order");
 			return $order->_inCategoryRecursive($product, $this->get("category"));
 		}
 		return false;
@@ -852,7 +852,7 @@ class SpecialOffer extends Base
 			return false;
 		}
 		if (!is_null($this->get("category"))) {
-			$order =& func_new("Order");
+			$order = func_new("Order");
 			return $order->_inCategoryRecursiveCategory($category, $this->get("category"));
 		}
 		return false;
@@ -891,7 +891,7 @@ class SpecialOffer extends Base
 			// bonuscategory should be a subcategory of category or category
 			// itself
 			if (!is_null($this->get("category")) && !is_null($this->get("bonusCategory"))) {
-				$order =& func_new("Order");
+				$order = func_new("Order");
 				if ($order->_inCategoryRecursiveCategory($this->get("category"), $this->get("bonusCategory"))) {
 					$this->bonusCategory = $this->get("category");
 
@@ -948,8 +948,8 @@ class SpecialOffer extends Base
 			case 'bonusPoints':
 				if ($this->isPersistent) {
 					$offer_id = $this->get("offer_id");
-					$so_product =& func_new("SpecialOfferProduct");
-			        $so_products =& $so_product->findAll("offer_id = $offer_id AND type='C'");
+					$so_product = func_new("SpecialOfferProduct");
+			        $so_products = $so_product->findAll("offer_id = $offer_id AND type='C'");
 			        foreach($so_products as $_product)
             			$_product->delete();
 				}
@@ -964,14 +964,14 @@ class SpecialOffer extends Base
 			$offer_id = $this->get("offer_id");
 			if ($this->isPersistent) {
 				if ($value == 'discounts' || $value == 'freeShipping' || $value == 'bonusPoints') {
-					$so_bonusPrice =& func_new("BonusPrice");
-        			$so_bonusPrices =& $so_bonusPrice->findAll("offer_id = $offer_id");
+					$so_bonusPrice = func_new("BonusPrice");
+        			$so_bonusPrices = $so_bonusPrice->findAll("offer_id = $offer_id");
         			foreach($so_bonusPrices as $_bonusPrice)
            				$_bonusPrice->delete();
 				}
 				if ($value == 'specialPrices' || $value == 'freeShipping' || $value == 'bonusPoints') {
-					$so_product =& func_new("SpecialOfferProduct");
-                    $so_products =& $so_product->findAll("offer_id = $offer_id AND type='B'");
+					$so_product = func_new("SpecialOfferProduct");
+                    $so_products = $so_product->findAll("offer_id = $offer_id AND type='B'");
                     foreach($so_products as $_product)
                         $_product->delete();
 				}
@@ -986,7 +986,7 @@ class SpecialOffer extends Base
 
 	function checkCountry($code)
 	{
-		$c =& func_new("Country",$code);
+		$c = func_new("Country",$code);
 		$name = $c->get("country");
 		$countries = explode(',', $this->get("bonusCountries"));
 		foreach ($countries as $c) {
@@ -999,8 +999,8 @@ class SpecialOffer extends Base
 	
 	function collectGarbage() // {{{ 
 	{
-		$specialOffer =& func_new("SpecialOffer");
-		$specialOffers =& $specialOffer->findAll("status = 'Trash'");
+		$specialOffer = func_new("SpecialOffer");
+		$specialOffers = $specialOffer->findAll("status = 'Trash'");
 		foreach($specialOffers as $specialOffer_) {
 			$specialOffer_->delete();
 		}

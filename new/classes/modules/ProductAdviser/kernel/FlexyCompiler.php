@@ -73,7 +73,7 @@ class FlexyCompiler_ProductAdviser extends FlexyCompiler
 			$str = substr($str, $len);
 			return $result;
 		}
-		$len = strcspn($str, '=&|,)(:');
+		$len = strcspn($str, ' = |,)(:');
 		if ($len<strlen($str) && $str{$len} == '(') { // method call
 			$result = '$t->call(\'' . substr($str, 0, $len) . '\'';
 			$str = substr($str, $len);

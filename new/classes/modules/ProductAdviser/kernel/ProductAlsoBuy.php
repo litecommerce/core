@@ -57,7 +57,7 @@ class ProductAlsoBuy extends Base
 
 	function cleanRelations($product_id)
 	{
-		$objs =& $this->findAll("product_id='$product_id' OR product_id_also_buy='$product_id'");
+		$objs = $this->findAll("product_id='$product_id' OR product_id_also_buy='$product_id'");
 		foreach ($objs as $obj) {
 			$obj->delete();
 		}

@@ -41,12 +41,12 @@
 
 class Admin_Dialog_advanced_search extends Admin_Dialog
 {
-	function &getAllPrices() // {{{ 
+	function getAllPrices() // {{{ 
 	{
 		return unserialize($this->config->get("AdvancedSearch.prices"));
 	} // }}}
 
-	function &getAllWeights() // {{{ 
+	function getAllWeights() // {{{ 
 	{
         return unserialize($this->config->get("AdvancedSearch.weights"));
 	} // }}}	
@@ -75,7 +75,7 @@ class Admin_Dialog_advanced_search extends Admin_Dialog
 			foreach($this->deleted_prices as $key => $value) {
 				unset($prices[$value]);	
 			}
-            $config = &func_new('Config');
+            $config = func_new('Config');
             $config->set('category','AdvancedSearch');
             $config->set('name','prices');
             $config->set('value',serialize($prices));
@@ -86,7 +86,7 @@ class Admin_Dialog_advanced_search extends Admin_Dialog
             foreach($this->deleted_weights as $key => $value) {
                 unset($weights[$value]);
             }
-            $config = &func_new('Config');
+            $config = func_new('Config');
             $config->set('category','AdvancedSearch');
             $config->set('name','weights');
             $config->set('value',serialize($weights));
@@ -99,7 +99,7 @@ class Admin_Dialog_advanced_search extends Admin_Dialog
 		if (isset($this->new_price) && is_array($this->new_price) && strlen($this->new_price["start"]) > 0 && strlen($this->new_price["end"]) > 0) { 
 			$prices = unserialize($this->config->get("AdvancedSearch.prices"));
 		    $prices[] = $this->new_price;
-			$config = &func_new('Config');
+			$config = func_new('Config');
 			$config->set('category','AdvancedSearch');
 			$config->set('name','prices');
 			$config->set('value',serialize($prices));
@@ -108,7 +108,7 @@ class Admin_Dialog_advanced_search extends Admin_Dialog
         if (isset($this->new_weight) && is_array($this->new_weight) && strlen($this->new_weight["start"]) > 0 && strlen($this->new_weight["end"]) > 0) { 
             $weights = unserialize($this->config->get("AdvancedSearch.weights"));
             $weights[] = $this->new_weight;
-            $config = &func_new('Config');
+            $config = func_new('Config');
             $config->set('category','AdvancedSearch');
             $config->set('name','weights');
             $config->set('value',serialize($weights));

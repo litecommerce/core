@@ -59,7 +59,7 @@ class Admin_Dialog_card_types extends Admin_Dialog
     function action_delete()
     {
         if (isset($_POST["code"])) {
-            $card =& func_new("Card");
+            $card = func_new("Card");
             if ($card->find("code='".$_POST["code"]."'")) {
                 $card->delete();
             }
@@ -89,7 +89,7 @@ class Admin_Dialog_card_types extends Admin_Dialog
         if (!isset($_POST["enabled"])) {
             $_POST["enabled"] = 0;
         }
-        $card =& func_new("Card");
+        $card = func_new("Card");
         $card->set("properties", $_POST);
         if ($card->isExists()) {
             $this->set("valid", false);
@@ -107,7 +107,7 @@ class Admin_Dialog_card_types extends Admin_Dialog
         foreach ($_POST["card_types"] as $id => $data) {
             $data["enabled"] = array_key_exists("enabled", $data) ? 1 : 0;
             $data["cvv2"]    = array_key_exists("cvv2",    $data) ? 1 : 0;
-            $card =& func_new("Card"); 
+            $card = func_new("Card"); 
             $card->set("properties", $data);
             $card->update();
         }

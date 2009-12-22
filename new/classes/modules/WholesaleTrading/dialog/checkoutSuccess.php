@@ -45,7 +45,7 @@
 */
 class Module_WholesaleTrading_Dialog_checkoutSuccess extends Dialog_checkoutSuccess
 {
-    function &getOrder()
+    function getOrder()
     {
 		$this->xlite->set("useStoredWholesale", true);
         return parent::getOrder();

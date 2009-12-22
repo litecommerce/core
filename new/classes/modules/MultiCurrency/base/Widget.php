@@ -44,10 +44,10 @@ class Module_MultiCurrency_Widget extends Widget { // {{{
 	var $currencies 		= null;
 	var $defaultCurrency 	= null;
 
-	function &getCurrencies() // {{{
+	function getCurrencies() // {{{
 	{
 		if(is_null($this->currencies)) {
-			$currency = &func_new("CurrencyCountries");
+			$currency = func_new("CurrencyCountries");
 			$this->currencies = $currency->findAll("enabled = 1 and base = 0");
 		}
 		return $this->currencies;
@@ -57,7 +57,7 @@ class Module_MultiCurrency_Widget extends Widget { // {{{
 	function getDefaultCurrency() // {{{ 
 	{
 		if (is_null($this->defaultCurrency)) { 
-			$this->defaultCurrency = &func_new("CurrencyCountries");
+			$this->defaultCurrency = func_new("CurrencyCountries");
 			$this->defaultCurrency->find("base = 1");
 		}	
 		return $this->defaultCurrency;

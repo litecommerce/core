@@ -60,7 +60,7 @@ class Module_FlyoutCategories_Auth extends Auth
 		if (is_object($profile) && $profile->get("membership")) {
 			$catalog = "/".md5($profile->get("membership"));
 
-			$this->customerLayout =& func_get_instance("Layout");
+			$this->customerLayout = func_get_instance("Layout");
 
 			$layout_path = $this->customerLayout->getPath();
 			if (substr($layout_path, strlen($layout_path)-1, 1) == "/") {

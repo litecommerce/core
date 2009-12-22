@@ -119,24 +119,24 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
 		return parent::getTemplate();
 	} //}}}
 	
-	function &getCloneOrder() // {{{ 
+	function getCloneOrder() // {{{ 
 	{
 		include_once "modules/AOM/encoded.php";
 		return aom_get_clone_order($this);
 	} // }}}	
 
-	function &getProfile() // {{{
+	function getProfile() // {{{
 	{
 		include_once "modules/AOM/encoded.php";
 		return aom_get_profile($this);
 	} // }}}
 	
-	function &getCloneProfile() // {{{ 
+	function getCloneProfile() // {{{ 
 	{
 		$order = $this->get("cloneOrder");
 		$this->clone_profile = $order->get("profile");	
 		if (is_null($this->clone_profile)) {
-				$this->clone_profile =& func_new("Profile");
+				$this->clone_profile = func_new("Profile");
 				$this->clone_profile->set("order_id",$order->get("order_id"));
 				$this->clone_profile->create();	
 				$order->set("profile_id",$this->clone_profile->get("profile_id"));
@@ -146,10 +146,10 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
 
 	} // }}}
 	
-	function &getOrdersItems() // {{{ 
+	function getOrdersItems() // {{{ 
 	{	
 		// Set cart instance for correct tax calculation
-		$this->_cart =& $this->get("order");
+		$this->_cart = $this->get("order");
 
 		$orderItems = $this->get("order.productItems");
 		$cloneItems = $this->get("cloneOrder.productItems");
@@ -165,7 +165,7 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
 		return $items;
 	} // }}} 
 
-	function &getOrdersTaxes() // {{{
+	function getOrdersTaxes() // {{{
 	{
 		$order = $this->get("order");
 		$clone = $this->get("cloneOrder");
@@ -236,8 +236,8 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
 
 	function action_send()
 	{
-    	$mail =& func_new("Mailer");
-		$order =& $this->get("order");
+    	$mail = func_new("Mailer");
+		$order = $this->get("order");
 		$mail->order = $order;
         $mail->compose(
         		$this->config->get("Company.site_administrator"),
@@ -246,7 +246,7 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
 		$mail->send();
 
 		// Switch layout to castomer area
-		$layout =& func_get_instance("Layout");
+		$layout = func_get_instance("Layout");
 		$active_skin = $layout->get("skin");
 		$layout->set("skin", $this->xlite->get("options.skin_details.skin"));
 
@@ -262,7 +262,7 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
 	
 	function action_calculate_totals() // {{{ 
 	{
-		$order =& $this->get("cloneOrder");
+		$order = $this->get("cloneOrder");
 		if ($this->xlite->get("PromotionEnabled")) {
 			$order->get("orderDC");	
 		}
@@ -275,7 +275,7 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
 		
 	function action_update_totals() // {{{
 	{
-		$order =& $this->get("cloneOrder");
+		$order = $this->get("cloneOrder");
 		$this->saveOriginalValues($order);
 		if ($this->clone["shipping_id"] == 0 && !isset($this->clone["shipping_cost"])) {
 			$this->clone["shipping_cost"] = 0;
@@ -315,13 +315,13 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
 	
 	function action_update_profile() // {{{ 
 	{
-		$profile =& $this->get("cloneProfile");
+		$profile = $this->get("cloneProfile");
 		$profile->_AOMIgnoreMembershipChanged = true;
 		$profile->set("properties",$this->cloned_profile);
 		$profile->update();
 		$profile->_AOMIgnoreMembershipChanged = false;
 
-		$order =& $this->get("cloneOrder");
+		$order = $this->get("cloneOrder");
         $order->calcTotal();
         $this->saveCurrentValues($order);
         $this->cloneUpdated(false);
@@ -336,7 +336,7 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
 	function action_fill_user() // {{{
 	{
 		if ($this->get("profile_id")) {
-			$selectedProfile =& func_new("Profile",$this->get("profile_id"));
+			$selectedProfile = func_new("Profile",$this->get("profile_id"));
 			$properties = $selectedProfile->get("properties");
 			$cloneProfile = $this->get("cloneProfile");
 			$field_values = $this->getUserProfileFields();
@@ -347,7 +347,7 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
 			$cloneProfile->update();
 			$cloneProfile->_AOMIgnoreMembershipChanged = false;
 
-    		$order =& $this->get("cloneOrder");
+    		$order = $this->get("cloneOrder");
 			$order->set("orig_profile_id", $selectedProfile->get("profile_id"));
             $order->calcTotal();
             $this->saveCurrentValues($order);
@@ -374,7 +374,7 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
 						}
 						$pitem = $item->get("product");
 						if ($this->config->get("Taxes.prices_include_tax")) {
-							$prod =& func_new("Product");
+							$prod = func_new("Product");
 							$prod->set("price", $product["price"]);
 							$item->set("price", $prod->get("listPrice"));
 						} else {
@@ -405,21 +405,21 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
 	{
 		$orig_properties = $order->get("properties");
 		$orig_details = $order->get("details");
-		$profile =& $order->get("profile");
+		$profile = $order->get("profile");
         
 		// the following lines are required for proper tax calculation:
 		// profile-dependent taxes should apply to order's owner, but not to current admin profile
 		$this->aom_cart_instance();
 		$this->_cart->setProfile($profile);
 
-		$cart =& func_new("Cart");
+		$cart = func_new("Cart");
 		$cart->set("order_id", $order->get("order_id"));
 		$cart->setProfile(null);
 		$cart->setProfile($profile);
 
 		foreach ($order->get("items") as $k=>$item) {
 			$cart->_items[$k] = $item;
-			$cart->_items[$k]->order =& $cart;
+			$cart->_items[$k]->order = $cart;
 		}
 
 		$cart->set("properties", $orig_properties); // prevent data loss during updating the cart
@@ -484,11 +484,11 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
 	function action_add_products() // {{{ 
 	{
 	    $this->cloneUpdated(false);
- 	    $order =& $this->get("cloneOrder");
+ 	    $order = $this->get("cloneOrder");
 		if (!is_null($this->get("add_products"))) {
 			foreach($this->get("add_products") as $product_id) {
-				$product =& func_new("Product",$product_id);
-				$item =& func_new("OrderItem");
+				$product = func_new("Product",$product_id);
+				$item = func_new("OrderItem");
 		   		$item->set("product",$product);
 				$item->set("amount",1);
 				if ($this->xlite->get("ProductOptionsEnabled")) {
@@ -513,8 +513,8 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
 	function action_add_gc() // {{{ 
 	{
 		$cloneOrder = $this->get("cloneOrder");
-		$giftCertificate =& func_new("GiftCertificate", $this->get("add_gcid"));
-		$item =& func_new("OrderItem");
+		$giftCertificate = func_new("GiftCertificate", $this->get("add_gcid"));
+		$item = func_new("OrderItem");
 		$item->set("GC",$giftCertificate);
 		$cloneOrder->addItem($item);
         $this->saveCurrentValues($cloneOrder);
@@ -524,7 +524,7 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
     function action_delete_gc() // {{{ 
     {
 		if (!is_null($this->get("delete_gc"))) {
-			$order =& $this->get("cloneOrder");
+			$order = $this->get("cloneOrder");
 			foreach($this->get("delete_gc") as $gcid) {
 				foreach($order->get("items") as $item)
 					if ($item->get("item_id") == $gcid)	$order->deleteItem($item);
@@ -537,7 +537,7 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
 	function action_pay_gc() // {{{
 	{
 		$cloneOrder = $this->get("cloneOrder");
-		$gc =& func_new("GiftCertificate", $this->get("add_gcid"));
+		$gc = func_new("GiftCertificate", $this->get("add_gcid"));
 		$cloneOrder->set("GC", $gc);
         $this->saveCurrentValues($cloneOrder);
         $this->cloneUpdated(false);
@@ -553,7 +553,7 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
 	
 	function action_undo_changes() // {{{ 
 	{
-        $order =& func_new("Order",$this->get("order_id"));
+        $order = func_new("Order",$this->get("order_id"));
         $orderGC = $order->get("GC");
         $cloneOrder = $this->get("cloneOrder");
         $cloneOrderGC = $cloneOrder->get("GC");
@@ -586,9 +586,9 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
 	
 	function action_save_changes() // {{{ 
 	{
-		$order =& func_new("Order",$this->get("order_id"));
+		$order = func_new("Order",$this->get("order_id"));
 		$cloneOrder = $this->get("cloneOrder");
-        $orderHistory =&  func_new("OrderHistory");
+        $orderHistory = func_new("OrderHistory");
 		$ordersItems = $this->get("ordersItems");
 		$orderHistory->log($order, $cloneOrder, $ordersItems);
 
@@ -604,11 +604,11 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
 	        if ($status == "Q" || $status == "P" || $status == "C") {
 				$order->promotionStatusChanged(1);
 	        }
-			$dc =& func_new("DiscountCoupon");	
+			$dc = func_new("DiscountCoupon");	
 			if ($dc->find("order_id = " .$order->get("order_id"))) {
 				$dc->delete();	
 			}
-            $dc =& func_new("DiscountCoupon"); 	
+            $dc = func_new("DiscountCoupon"); 	
 			if ($dc->find("order_id = ". $cloneOrder->get("order_id"))) {
 				$dc->set("order_id",$order->get("order_id"));
 				$dc->set("coupon_id",null);
@@ -638,7 +638,7 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
 		$emails = $this->config->get("AOM.order_update_notification");
 		if (is_array($emails) && count($emails) > 0) {
 			foreach ($emails as $email) {
-				$mail =& func_new("Mailer");
+				$mail = func_new("Mailer");
 				$mail->order = $order;
 
 				$to_email = trim($this->config->get("Company.$email"));
@@ -657,9 +657,9 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
 
 	function action_clone_order() // {{{ 
 	{
-		$order =& func_new("Order",$this->get("order_id"));
+		$order = func_new("Order",$this->get("order_id"));
 		if ( function_exists("func_is_clone_deprecated") && func_is_clone_deprecated() ) {
-			$clone =& $order->cloneObject();
+			$clone = $order->cloneObject();
 		} else {
 			$clone = $order->clone();
 		}
@@ -673,7 +673,7 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
 		$clone->set("orig_profile_id", $order->get("orig_profile_id"));
 		$clone->update();
 		$this->updateOrderAsCart($clone);
-        $orderHistory =&  func_new("OrderHistory");
+        $orderHistory = func_new("OrderHistory");
         $orderHistory->log($clone, $order, null,"clone_order");
 		$this->set("returnUrl","admin.php?target=order&order_id=".$clone->get("order_id"));
 	 } // }}}
@@ -691,7 +691,7 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
 		
 		$orderDate = $cart->get("date");
 		$cart->update();
-		$order =& func_new("Order", $cart->get("order_id"));
+		$order = func_new("Order", $cart->get("order_id"));
 		$order->set("date", $orderDate);
 		$order->update();
 	}
@@ -699,12 +699,12 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
  	function action_add_dc() // {{{ 
 	{
 		$this->add_dc = addSlashes(trim($this->add_dc));
-		$dc =& func_new("DiscountCoupon", $this->add_dc);
+		$dc = func_new("DiscountCoupon", $this->add_dc);
 
-		$order =& $this->get("cloneOrder");
-		$profile =& $order->get("profile");
+		$order = $this->get("cloneOrder");
+		$profile = $order->get("profile");
 
-		$cart =& func_get_instance("Cart");
+		$cart = func_get_instance("Cart");
         $cart->clear();
         $cart->set("order_id", $order->get("order_id"));
 
@@ -737,16 +737,16 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
 
 	function action_del_dc() // {{{ 
 	{
-		$order =& $this->get("cloneOrder");
+		$order = $this->get("cloneOrder");
 		if ($order->DC) {
 			$order->DC->delete(); 
 		}
         $order->DC = null;
         $status = $order->get("status");
 	    $order->set("discountCoupon", "");
-		$profile =& $order->get("profile");
+		$profile = $order->get("profile");
 
-		$cart =& func_get_instance("Cart");
+		$cart = func_get_instance("Cart");
         $cart->clear();
         $cart->set("order_id", $order->get("order_id"));
 
@@ -763,13 +763,13 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
    
     function action_update() // {{{ 
     {
-        $order =& func_new("Order",$this->get("order_id"));
-        $orderHistory =&  func_new("OrderHistory");
+        $order = func_new("Order",$this->get("order_id"));
+        $orderHistory = func_new("OrderHistory");
 		$orderHistory->log($order);
         $order->set("orderStatus",$_POST['substatus']);
         parent::action_update();
         // Diplicate changes in the cloned order
-        $_order =& $this->get('cloneOrder');
+        $_order = $this->get('cloneOrder');
         $_order->set('notes', $_POST['notes']);
         $_order->set('admin_notes', $_POST['admin_notes']);
         $_order->update();
@@ -777,7 +777,7 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
 
 	function action_clear_history_cc_info() // {{{
 	{
-		$order =& func_new("Order",$this->get("order_id"));
+		$order = func_new("Order",$this->get("order_id"));
 		$history = $order->get("orderHistory");
 		foreach ($history as $obj) {
 			$changes = $obj->get("changes");
@@ -810,44 +810,44 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
 
 // search functions // {{{ 
 
-    function &getPaymentMethods() // {{{ 
+    function getPaymentMethods() // {{{ 
     {
-        $paymentMethod =& func_new("PaymentMethod");
+        $paymentMethod = func_new("PaymentMethod");
         return $paymentMethod->get("activeMethods");
     } // }}}
 
-    function &getShippingRates() // {{{
+    function getShippingRates() // {{{
     {
         $order = $this->get("cloneOrder");
 		$order->doNotChangeGlobalDiscount = true; // don't recalculate global discount
-		$rates =& $order->getShippingRates();
+		$rates = $order->getShippingRates();
 		$order->doNotChangeGlobalDiscount = false;
         return $rates;
     } // }}}
 	
-	function &getUsers() // {{{ 
+	function getUsers() // {{{ 
 	{
 		if ($this->mode != "search_users") return array();
-		$userDialog =& func_new("Admin_Dialog_users");
+		$userDialog = func_new("Admin_Dialog_users");
 		$userDialog->mapRequest();
 		return $userDialog->getUsers();
 	} // }}}
 
-	function &getOutOfStockProduct($id) // {{{
+	function getOutOfStockProduct($id) // {{{
 	{
 		 $product = func_new("Product",$id);
 		 return $product->get("name");
 	} // }}}
 	
-    function &getProducts() // {{{ 
+    function getProducts() // {{{ 
     {
         if ($this->mode != "search") {
             return null;
         }
 
         if (is_null($this->products)) {
-            $product =& func_new("Product");
-            $this->products =& $product->advancedSearch($this->substring,
+            $product = func_new("Product");
+            $this->products = $product->advancedSearch($this->substring,
                                                     $this->search_productsku,
                                                     $this->search_category,
                                                     $this->subcategory_search,
@@ -858,21 +858,21 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
         return $this->products;
     } // }}}  
 	
-	function &getDiscountCoupons() // {{{
+	function getDiscountCoupons() // {{{
 	{
 		if ($this->mode != "search_dc") {
 			return null;
 		}
-		$dc =& func_new("DiscountCoupon");
+		$dc = func_new("DiscountCoupon");
 		return $dc->findAll("coupon LIKE '%".$this->get("coupon")."%' AND status = 'A' AND order_id = 0 AND expire > ". time());
 	} // }}}
 
-    function &getGiftCertificates() // {{{ 
+    function getGiftCertificates() // {{{ 
     {
         if ($this->mode != "search_gc") {
             return null;
         }
-        $gc =& func_new("GiftCertificate");
+        $gc = func_new("GiftCertificate");
         return $gc->findAll("gcid LIKE '%".$this->get("gcid")."%' AND status = 'A'");
 
     } // }}}
@@ -1038,7 +1038,7 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
 		return true;
 	}
 
-    function &getAllParams($exeptions=null)
+    function getAllParams($exeptions=null)
     {
     	$allParams = parent::getAllParams($exeptions);
     	if ($this->mode == "search_users") {
@@ -1055,7 +1055,7 @@ class Module_AOM_Admin_Dialog_order extends Admin_Dialog_order
 	function aom_cart_instance()
 	{
 		$this->xlite->AOM_skip_calcTotal = true;
-		$this->_cart =& func_get_instance("Cart");
+		$this->_cart = func_get_instance("Cart");
 		$this->xlite->AOM_skip_calcTotal = false;
 	}
 

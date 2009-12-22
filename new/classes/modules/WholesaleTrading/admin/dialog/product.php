@@ -59,7 +59,7 @@ class Module_WholesaleTrading_Admin_Dialog_product extends Admin_dialog_product
 	{
 		require_once "modules/WholesaleTrading/encoded.php";
 		
-		$pa =& func_new("ProductAccess");
+		$pa = func_new("ProductAccess");
 		$found = false;
 		if ($pa->find("product_id='" . intval($this->product_id) . "'")) {
 			$found = true;
@@ -76,14 +76,14 @@ class Module_WholesaleTrading_Admin_Dialog_product extends Admin_dialog_product
 		}	
 	}
 
-	function &getProductAccess()
+	function getProductAccess()
 	{
 		if (is_null($this->product_access)) {
-			$pa =& func_new("ProductAccess");
+			$pa = func_new("ProductAccess");
 			if (!$pa->find("product_id='" . intval($this->product_id) . "'")) {
 				$pa->set("porduct_id", $this->product_id);
 			}
-			$this->product_access =& $pa;
+			$this->product_access = $pa;
             $pa->collectGarbage();
 		}
 		return $this->product_access;
@@ -92,7 +92,7 @@ class Module_WholesaleTrading_Admin_Dialog_product extends Admin_dialog_product
 	function getWholesalePricing()
 	{
 		if (is_null($this->wholesale_pricing)) {
-			$wp =& func_new("WholesalePricing");
+			$wp = func_new("WholesalePricing");
 			$this->wholesale_pricing = $wp->findAll("product_id='" . intval($this->product_id) . "'");
             $wp->collectGarbage();
 		}
@@ -101,7 +101,7 @@ class Module_WholesaleTrading_Admin_Dialog_product extends Admin_dialog_product
 
 	function action_add_wholesale_pricing()
 	{
-		$wp =& func_new("WholesalePricing");
+		$wp = func_new("WholesalePricing");
 		$wp->set("product_id", $this->product_id);
 		$wp->set("price", $_REQUEST["wp_price"]);
 		$wp->set("amount", $_REQUEST["wp_amount"]);
@@ -111,13 +111,13 @@ class Module_WholesaleTrading_Admin_Dialog_product extends Admin_dialog_product
 
 	function action_delete_wholesale_price()
 	{
-		$wp =& func_new("WholesalePricing", $_REQUEST["wprice_id"]);
+		$wp = func_new("WholesalePricing", $_REQUEST["wprice_id"]);
 		$wp->delete();
 	}
 
 	function action_update_wholesale_pricing()
 	{
-		$wp =& func_new("WholesalePricing", $_REQUEST["wprice_id"]);
+		$wp = func_new("WholesalePricing", $_REQUEST["wprice_id"]);
 		$wp->set("product_id", $this->product_id);
 		$wp->set("price", $_REQUEST["w_price"]);
 		$wp->set("amount", $_REQUEST["w_amount"]);
@@ -127,7 +127,7 @@ class Module_WholesaleTrading_Admin_Dialog_product extends Admin_dialog_product
 
 	function action_add_purchase_limit()
 	{
-		$pl =& func_new("PurchaseLimit");
+		$pl = func_new("PurchaseLimit");
 		$action = "create";
 		if ($pl->find("product_id='" . intval($this->product_id) . "'")) {
 			$action = "update";
@@ -138,14 +138,14 @@ class Module_WholesaleTrading_Admin_Dialog_product extends Admin_dialog_product
 		$pl->$action();
 	}
 	
-	function &getPurchaseLimit()
+	function getPurchaseLimit()
 	{
 		if (is_null($this->purchase_limit)) {
-			$pl =& func_new("PurchaseLimit");
+			$pl = func_new("PurchaseLimit");
 			if (!$pl->find("product_id='" . intval($this->product_id) . "'")) {
 				$pl->set("product_id", $this->product_id);
 			}
-			$this->purchase_limit =& $pl;
+			$this->purchase_limit = $pl;
             $pl->collectGarbage();
 		}
 		return $this->purchase_limit;

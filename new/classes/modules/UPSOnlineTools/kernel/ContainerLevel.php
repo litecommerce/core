@@ -61,7 +61,7 @@ class ContainerLevel extends Object
 	// Initialize level
 	function init($_bottom, $_width, $_length, $_height)
 	{
-		$subspace =& func_new("Subspace");
+		$subspace = func_new("Subspace");
 		$subspace->init($_width, $_length);
 
 		$this->subspaces = array();

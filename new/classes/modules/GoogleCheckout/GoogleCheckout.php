@@ -65,10 +65,10 @@ class Module_GoogleCheckout extends Module
         }
         $this->xlite->set("options.host_details.web_dir_wo_slash", $webDir);
 
-        $pm =& func_new("PaymentMethod");
+        $pm = func_new("PaymentMethod");
         $pm->registerMethod("google_checkout");
 
-		$payment_method =& func_new("PaymentMethod", "google_checkout");
+		$payment_method = func_new("PaymentMethod", "google_checkout");
 		if ($payment_method->get("params.disable_customer_notif")) {
 			$this->xlite->set("gcheckout_disable_customer_notif", true);
 		}

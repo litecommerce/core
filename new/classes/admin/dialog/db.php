@@ -149,7 +149,7 @@ class Admin_Dialog_db extends Admin_Dialog
 		mkdirRecursive(SQL_UPLOAD_DIR);
         if (!isset($_POST['local_file']))
         { 
-            $upload  =& func_new('Upload', $_FILES['userfile']);
+            $upload = func_new('Upload', $_FILES['userfile']);
             $srcfile = SQL_UPLOAD_DIR.$upload->getName();
             if (!$upload->move($srcfile)) {
                 $this->error = $upload->getErrorMessage();

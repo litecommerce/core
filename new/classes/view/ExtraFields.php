@@ -53,13 +53,13 @@ class CExtraFields extends Component
         $this->mapRequest();
     }
  
-    function &getExtraFields()
+    function getExtraFields()
     {
 		$this->extraFields = $this->get("product.extraFields");
 
 		if (isset($this->product_id)) 
 		{
-			$product =& func_new("Product", $this->product_id);
+			$product = func_new("Product", $this->product_id);
 			if (is_object($product))
 			{
     			if ($this->config->get("General.enable_extra_fields_inherit") == "Y") {
@@ -112,7 +112,7 @@ class CExtraFields extends Component
         		{
         			if ($extraField->get("parent_field_id") == 0)
         			{
-                		$ef_child =& func_new("ExtraField");
+                		$ef_child = func_new("ExtraField");
                         $ef_child->set("ignoreFilter", true);
                 		if ($ef_child->find("parent_field_id='".$extraField->get("field_id")."' AND enabled='0'".((isset($this->product_id)&&!empty($this->product_id))?" AND product_id='".$this->product_id."'":"")))
                 		{

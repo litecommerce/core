@@ -53,7 +53,7 @@ class Module_NetworkMerchants extends Module
     {
         parent::init();
 
-        $pm =& func_new("PaymentMethod");
+        $pm = func_new("PaymentMethod");
         $pm->registerMethod("networkmerchants_cc");
 
 		$this->xlite->set("NetworkMerchantsEnabled", true);

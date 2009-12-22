@@ -55,7 +55,7 @@ class Module_InventoryTracking_Dialog_cart extends Dialog_cart
             $product_id = $this->get("cart.outOfStock");
             $category_id = intval($this->category_id);
             if ($category_id == 0) {
-        		$product =& func_new("Product", $product_id);
+        		$product = func_new("Product", $product_id);
 				$category_id = $product->get("category.category_id");
             }
             $this->addReturnUrl = "cart.php?target=product&product_id=$product_id&category_id=$category_id&mode=out_of_stock";

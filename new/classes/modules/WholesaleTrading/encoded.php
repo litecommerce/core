@@ -122,21 +122,21 @@ function func_wholesaleTrading_set_membership(&$_this, &$profile, $product)
 function func_wholesaleTrading_calc_global_discount(&$_this, $subtotal)
 {
 	$global_discount = 0;
-	$gd =& func_new('GlobalDiscount');
+	$gd = func_new('GlobalDiscount');
 	$gd->set('defaultOrder', 'subtotal');
     $profile = $_this->get("profile");
 	$membership = (is_object($profile)) ? $profile->get("membership") : "";
 	$discounts = $gd->findAll("subtotal < $subtotal AND (membership = 'all' OR membership = '$membership')");
 	if (count($discounts) != 0) {
-		$applied_gd =& $discounts[count($discounts) - 1];
+		$applied_gd = $discounts[count($discounts) - 1];
 		if ($applied_gd->get('discount_type') == 'a') {
 			$global_discount = $applied_gd->get('discount');
 		} else if ($applied_gd->get('discount_type') == 'p') {
 			$global_discount = $_this->formatCurrency(($subtotal * $applied_gd->get('discount')) / 100);
 		}
-		$_this->_applied_global_discount =& $applied_gd;
+		$_this->_applied_global_discount = $applied_gd;
 	} else {
-		$_this->_applied_global_discount =& func_new('GlobalDiscount');
+		$_this->_applied_global_discount = func_new('GlobalDiscount');
 	}
 	return $global_discount;
 }

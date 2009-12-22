@@ -60,7 +60,7 @@ class Dialog_download extends Dialog
 	function downloadByAccessKey() // {{{
 	{
 		$access_key = $_REQUEST['acc'];
-		$dl =& func_new('DownloadableLink');
+		$dl = func_new('DownloadableLink');
 		$time = time();
 		
 		// check if the link with given access key exists
@@ -73,7 +73,7 @@ class Dialog_download extends Dialog
 				return;
 			}
 			
-			$df =& func_new('DownloadableFile', $dl->get('file_id'));
+			$df = func_new('DownloadableFile', $dl->get('file_id'));
 			// check for file
 			if (!is_file($df->get('data'))) {
 				$this->set('returnUrl', 'cart.php?target=download&mode=file_not_found&filename=' . 
@@ -93,7 +93,7 @@ class Dialog_download extends Dialog
 			$dl->update();
 			
 			// save download statistics
-			$ds =& func_new('DownloadsStatistics');
+			$ds = func_new('DownloadsStatistics');
 			$ds->set('file_id', $df->get('file_id'));
 			$ds->set('date', $time);
 			$ds->set('headers', "HTTP_REFERER=" . $_SERVER["HTTP_REFERER"] . ", REMOTE_ADDR=" . $_SERVER["REMOTE_ADDR"]);
@@ -108,10 +108,10 @@ class Dialog_download extends Dialog
 	{
 		$file_id = $_REQUEST['file_id'];
 		$time = time();
-		$df =& func_new('DownloadableFile', $file_id);
+		$df = func_new('DownloadableFile', $file_id);
 		$product_id = $df->get('product_id');
 		
-		$product =& func_new('Product', $product_id);
+		$product = func_new('Product', $product_id);
 		if (!$product->isFreeForMembership($this->get('cart.profile.membership'))) {
 			$this->set('returnUrl', 'cart.php?target=download&mode=file_access_denied&reason=M');
 			return;
@@ -133,7 +133,7 @@ class Dialog_download extends Dialog
 		$this->readFile($df->get('data'));
 
 		// save download statistics
-		$ds =& func_new('DownloadsStatistics');
+		$ds = func_new('DownloadsStatistics');
 		$ds->set('file_id', $df->get('file_id'));
 		$ds->set('date', $time);
 		$ds->set('headers', "HTTP_REFERER=" . $_SERVER["HTTP_REFERER"] . ", REMOTE_ADDR=" . $_SERVER["REMOTE_ADDR"]);

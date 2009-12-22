@@ -48,7 +48,7 @@ class Module_WholesaleTrading_CRegisterForm extends CRegisterForm
 {
 	function fillForm()
 	{
-		$p =& $this->get("profile");
+		$p = $this->get("profile");
 		if ($this->xlite->is("adminZone") && is_object($p)) {
 			if ($p->get("membership_exp_date") > 0) {
 				$this->set("membership_exp_type", "custom");
@@ -60,9 +60,9 @@ class Module_WholesaleTrading_CRegisterForm extends CRegisterForm
 		parent::fillForm();
 	}
 
-	function &getAllParams()
+	function getAllParams()
 	{
-		$params =& parent::getAllParams();
+		$params = parent::getAllParams();
 		// remove duplicate form parameters: date select and hidden form parameters
 		unset($params["membership_exp_dateDay"]);
 		unset($params["membership_exp_dateMonth"]);

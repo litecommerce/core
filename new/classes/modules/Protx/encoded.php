@@ -321,7 +321,7 @@ $_this->xlite->logger->log("Protx VSP Form response:".var_export($responseArray,
 	$order_id = $out[1];
 
 	// check order exists
-	$_order =& func_new("Order");
+	$_order = func_new("Order");
 	if (!$_order->find("order_id='$order_id'")) {
 if (PROTX_FORM_DEBUG_LOG) {
 $_this->xlite->logger->log("Protx VSP Form response Error: Order #$order_id not found.");
@@ -351,7 +351,7 @@ function func_ProtxDirect_sendRequestDirect(&$payment, $post, $url=null)
 		$url = $payment->get("serviceUrl");
 	}
 
-	$https =& func_new('HTTPS');
+	$https = func_new('HTTPS');
 	$https->url        = $url;
     $https->data       = $post;
 	$https->method     = 'POST';
@@ -398,11 +398,11 @@ $payment->xlite->logger->log("RESPONSE ARRAY: ".var_export($responseArray, true)
 function func_Protx_getState(&$profile, $field, $customField)
 {
     $stateName = "";
-    $state =& func_new("State");
+    $state = func_new("State");
     if ($state->find("state_id='".$profile->get($field)."'")) {
         $stateName = $state->get('state');
     } else { // state not found
-        $stateName = &$profile->get($customField);
+        $stateName = $profile->get($customField);
     }
 
     return $stateName;

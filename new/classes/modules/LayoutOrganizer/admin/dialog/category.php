@@ -79,7 +79,7 @@ class Admin_Dialog_category_LayoutOrganizer extends Admin_Dialog_category
     function action_modify_templates()
     {
         if (isset($this->category_id) && $this->category_id > 0) {
-        	$category =& func_new("Category", $this->category_id);
+        	$category = func_new("Category", $this->category_id);
         	if ($this->view != "advanced") {
         		$this->updateCategoryTemplate($category, $this->custom_template, "custom_template");
             	$this->updateCategoryTemplate($category, $this->custom_template, "sc_custom_template");
@@ -103,7 +103,7 @@ class Admin_Dialog_category_LayoutOrganizer extends Admin_Dialog_category
         } elseif ($scheme_id == 0) {
         	$category->updateTemplate($template_type, $category->getDefaultTemplate($template_type));
         } else {
-			$scheme =& func_new("TemplatesScheme", $scheme_id);
+			$scheme = func_new("TemplatesScheme", $scheme_id);
 			if (is_object($scheme)) {
 				$category->updateTemplate($template_type, $scheme->getTemplate($template_type));
 			} else {
@@ -118,7 +118,7 @@ class Admin_Dialog_category_LayoutOrganizer extends Admin_Dialog_category
 			return $this->schemes;
 		}
 
-    	$sm =& func_new("Admin_Dialog_Scheme_Manager");
+    	$sm = func_new("Admin_Dialog_Scheme_Manager");
 		$sm->initLayout();
     	$sm->getSchemes(false);
     	$this->schemes = $sm->schemes;

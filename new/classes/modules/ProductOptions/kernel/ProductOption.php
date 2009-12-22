@@ -92,7 +92,7 @@ class ProductOption extends Base
         return (strlen(trim($options)) == 0) ? true : false;
     } // }}}
 
-    function &getProductOptions() // {{{
+    function getProductOptions() // {{{
     {
         require_once "modules/ProductOptions/encoded.php";
         if (is_null($this->productOptions)) {
@@ -117,7 +117,7 @@ class ProductOption extends Base
         print "<b>line# $line:</b> ";
 
 		if (!is_null($found)) {
-	        $product_option =& func_new("ProductOption");
+	        $product_option = func_new("ProductOption");
 			$option_found = $product_option->find("product_id = " .$found->get("product_id"). " AND optclass='".addslashes($properties["optclass"])."'");
             $product_option->set("properties",$properties);
 			$product_option->set("categories",null);
@@ -130,10 +130,10 @@ class ProductOption extends Base
 	            $product_option->create();
 			}
 		} else if (empty($properties["sku"]) && empty($properties["name"])) {
-			$global_option =& func_new("ProductOption");
+			$global_option = func_new("ProductOption");
 			$global_found = $global_option->find("optclass='".addslashes($properties['optclass'])."' AND product_id=0");		
 			if (!empty($properties["categories"])) {
-				$cat =& func_new("Category");
+				$cat = func_new("Category");
 				foreach($cat->parseCategoryField($properties["categories"],true) as $path)
 				{
 					$category = $cat->findCategory($path);
@@ -155,15 +155,15 @@ class ProductOption extends Base
             $product_id = array();
 			if (!empty($categories)) {
 				foreach($categories as $category_id) {
-					$category =& func_new("Category",$category_id);
+					$category = func_new("Category",$category_id);
 					$products = $category->get("products");
 				}
 			} else {
-				$product =& func_new("Product");
+				$product = func_new("Product");
 				$products = $product->findAll();
 			}		
             foreach($products as $product) {
-				$product_option =& func_new("ProductOption");
+				$product_option = func_new("ProductOption");
 	            $option_found = $product_option->find("product_id = " .$product->get("product_id"). " AND optclass='".addslashes($properties["optclass"])."'");
 
 	            $product_option->set("properties",$properties);
@@ -201,7 +201,7 @@ class ProductOption extends Base
 				$this->getCategories();
 				if (!empty($this->categories)) {
 					foreach($this->categories as $category_id) {
-						$category =& func_new("Category",$category_id);
+						$category = func_new("Category",$category_id);
 						$categories[] = $category->get("stringPath");
 					}	
 					$data[] = implode("|",$categories);
@@ -215,7 +215,7 @@ class ProductOption extends Base
 
     function _modifiedPrice($opt, $ignoreProductPrice=false, $newProductPrice = null) // {{{ 
     {
-        $product =& func_new("Product", $this->get("product_id"));
+        $product = func_new("Product", $this->get("product_id"));
         if (!$ignoreProductPrice) {
 			if (!is_null($newProductPrice)) {
 				if ($product->get("price") != $newProductPrice) { // get() is required for reading the product from DB
@@ -276,7 +276,7 @@ class ProductOption extends Base
         	return $opt->weight_modifier;
         }
 
-        $product =& func_new("Product", $this->get("product_id"));
+        $product = func_new("Product", $this->get("product_id"));
         $productWeight = $product->get("weight");
 
     	$weight = $opt->weight_modifier;
@@ -315,7 +315,7 @@ class ProductOption extends Base
 	function update() // {{{ 
 	{
 		if ($this->xlite->get("InventoryTrackingEnabled")) {
-            $product =& func_new("Product");
+            $product = func_new("Product");
             $product->updateInventory($this->get("properties"));
         }
 		parent::update();
@@ -325,7 +325,7 @@ class ProductOption extends Base
 	function delete() // {{{ 
 	{
     	if ($this->xlite->get("InventoryTrackingEnabled")) {
-			$product =& func_new("Product");
+			$product = func_new("Product");
 			$product->deleteInventory($this->get("properties"));
 		}
 		parent::delete();
@@ -363,7 +363,7 @@ class ProductOption extends Base
 
 		if (($categories != "" && count($addOnly) > 0) || $categories == "") {
 			foreach ($this->getProductsList($addOnly) as $product_id) {
-    			$po =& func_new("ProductOption");
+    			$po = func_new("ProductOption");
     			$child_po = $po->count("parent_option_id='".$this->get("option_id")."' AND product_id='".$product_id."'");
     			if ($child_po == 0) {
         			$po->set("properties", $this->get("properties"));
@@ -403,7 +403,7 @@ class ProductOption extends Base
 
 	function getGlobalOptions() // {{{
 	{
-		$po =& func_new("ProductOption");
+		$po = func_new("ProductOption");
 		return $po->findAll("product_id = 0");
 	} // }}}
 
@@ -415,14 +415,14 @@ class ProductOption extends Base
         }
         if (count($categories) > 0) {
             foreach ($categories as $category_id) {
-                $category =& func_new("Category", $category_id);
-                $products =& $category->get("products");
+                $category = func_new("Category", $category_id);
+                $products = $category->get("products");
                 foreach ($products as $product) {
                 	$ids[] = $product->get("product_id");
                 }
             }
         } else {
-            $product =& func_new("Product");
+            $product = func_new("Product");
             $result = $product->iterate();
             while ($product->next($result)) {
 				$ids[] = $product->get("product_id");
@@ -437,11 +437,11 @@ class ProductOption extends Base
 			$categories = explode("|", $categories);
 		}
 
-		$po =& func_new("ProductOption");
+		$po = func_new("ProductOption");
 		foreach ($products as $product_id) {
-			$child_po =& $po->findAll("parent_option_id='".$this->get("option_id")."' AND product_id='".$product_id."'");
+			$child_po = $po->findAll("parent_option_id='".$this->get("option_id")."' AND product_id='".$product_id."'");
 			if ($child_po) {
-        		$product =& func_new("Product", $product_id);
+        		$product = func_new("Product", $product_id);
                 $productCategories = array();
                 $product_categories = $product->get("categories");
                 if (is_array($product_categories)) {

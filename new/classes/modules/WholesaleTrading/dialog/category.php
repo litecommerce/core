@@ -54,7 +54,7 @@ class Module_WholesaleTrading_Dialog_category extends Dialog_category
     function init() // {{{
     {
 		if (in_array($_REQUEST["category_id"], explode(";", $this->get("config.WholesaleTrading.bulk_categories")))) {
-			$layout =& func_get_instance("Layout");
+			$layout = func_get_instance("Layout");
 			$layout->addLayout("category_products.tpl", "modules/WholesaleTrading/bulk_category_products.tpl");
 		}
 	    if ($this->config->get("WholesaleTrading.direct_addition")) {
@@ -127,7 +127,7 @@ class Module_WholesaleTrading_Dialog_category extends Dialog_category
 						$_REQUEST["OptionSetIndex"][$key] = $idx;
 						$_REQUEST["amount"] = $qty;
 						$_REQUEST["product_id"] = $key;
-						$cart =& func_new("Dialog_cart");
+						$cart = func_new("Dialog_cart");
 						$cart->init();
 						$this->xlite->set("dont_update_cart", true); 
 						$cart->action_add();
@@ -141,7 +141,7 @@ class Module_WholesaleTrading_Dialog_category extends Dialog_category
 			}
 			if ($add == true) {
 				$_REQUEST["product_id"] = $key;
-				$cart =& func_new("Dialog_cart");
+				$cart = func_new("Dialog_cart");
 				$cart->init();
 				$this->xlite->set("dont_update_cart", true); 
 				$cart->action_add();
@@ -169,7 +169,7 @@ class Module_WholesaleTrading_Dialog_category extends Dialog_category
 		if (!empty($products)) {
 			foreach($products as $key=>$value) {
 				if ($value != "" && $value > 0) {
-					$p =& func_new("Product", $key);
+					$p = func_new("Product", $key);
 					$price = $p->getFullPrice($value);
 					$this->wholesale_prices[$key] = $price;
 					$this->totals[$key] = $price * $value;
@@ -182,7 +182,7 @@ class Module_WholesaleTrading_Dialog_category extends Dialog_category
 			foreach($opt_products as $key=>$value) {
 				foreach ($value as $idx=>$qty) {
 					if ($qty != "" && $qty > 0) {
-						$p =& func_new("Product", $key);
+						$p = func_new("Product", $key);
 						if ($this->xlite->get("ProductOptionsEnabled") && $p->hasOptions()) {
 							$price = $p->getFullPrice($qty,$idx);
 							$this->wholesale_prices[$key][$idx] = $price;
@@ -250,11 +250,11 @@ class Module_WholesaleTrading_Dialog_category extends Dialog_category
 		}
 		$amount = $qty + $exists_amount;
 		// check for min/max range
-		$pl =& func_new ("PurchaseLimit");
+		$pl = func_new ("PurchaseLimit");
 		if ($pl->find("product_id=" . $product_id)) {
 			$hasError = false;
 			$error = array();
-			$p =& func_new("Product", $product_id);
+			$p = func_new("Product", $product_id);
 			if (($amount < $pl->get('min') && $qty > 0) ) {
 				$hasError = true;
 				$error["type"] = 'min';
@@ -282,12 +282,12 @@ class Module_WholesaleTrading_Dialog_category extends Dialog_category
 
 		// check for inventory
 		if ($this->xlite->get("InventoryTrackingEnabled")) {
-			$inventory =& func_new("Inventory");
-			$p =& func_new("Product", $product_id);
+			$inventory = func_new("Inventory");
+			$p = func_new("Product", $product_id);
 			
 			if ($this->xlite->get("ProductOptionsEnabled") && $p->hasOptions() && isset($option_idx)) {
 				if ($amount > $p->getAmountByOptions($option_idx) && $p->getAmountByOptions($option_idx) > -1) {
-					$p =& func_new("Product", $product_id);
+					$p = func_new("Product", $product_id);
 					$error["pr_name"] = $p->get("name");
 					$error["type"] = 'max';
 					$error["amount"] = $p->getAmountByOptions($option_idx);
@@ -352,7 +352,7 @@ class Module_WholesaleTrading_Dialog_category extends Dialog_category
 			elseif ($avail > 0) return false; // in stock
 			else return true; // out of stock
 		} else {
-			$inventory =& func_new("Inventory");
+			$inventory = func_new("Inventory");
 			$product_id = $product->get("product_id");
 			if ($inventory->find("inventory_id='$product_id' AND enabled=1")) {
 				return $inventory->get('amount') <= 0;

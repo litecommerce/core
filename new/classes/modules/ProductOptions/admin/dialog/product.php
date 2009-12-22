@@ -55,7 +55,7 @@ class Module_ProductOptions_Admin_Dialog_product extends Admin_dialog_product
 
 	function action_update_limit()
 	{
-		$product =& func_new("Product",$this->product_id);
+		$product = func_new("Product",$this->product_id);
 		$limit = isset($this->expansion_limit) ? 1 : 0;
 		$product->set('expansion_limit', $limit);
 		$product->update();	
@@ -63,10 +63,10 @@ class Module_ProductOptions_Admin_Dialog_product extends Admin_dialog_product
 
     // PRODUCT OPTION METHODS {{{
 
-    function &getProductOption() // {{{
+    function getProductOption() // {{{
     {
         if (is_null($this->option)) {
-            $this->option =& func_new("ProductOption");
+            $this->option = func_new("ProductOption");
             if (isset($this->option_id)) {
                 $this->option->set("option_id", $this->option_id);
             }
@@ -91,7 +91,7 @@ class Module_ProductOptions_Admin_Dialog_product extends Admin_dialog_product
     
     function action_update_product_option() // {{{
     {
-        $option =& $this->get("productOption");
+        $option = $this->get("productOption");
         $option->update();
 
         $this->params["option_id"] = $option->get("option_id");
@@ -100,7 +100,7 @@ class Module_ProductOptions_Admin_Dialog_product extends Admin_dialog_product
 
     function action_delete_product_option() // {{{
     {
-        $option =& $this->get("productOption");
+        $option = $this->get("productOption");
         $option->delete();
 
 		if (isset($this->option_id)) {
@@ -114,7 +114,7 @@ class Module_ProductOptions_Admin_Dialog_product extends Admin_dialog_product
     		unset($this->option_id);
     	}
 
-        $option =& $this->get("productOption");
+        $option = $this->get("productOption");
         $option->create();
 
         $this->params["option_id"] = $option->get("option_id");
@@ -125,10 +125,10 @@ class Module_ProductOptions_Admin_Dialog_product extends Admin_dialog_product
 
     // OPTION EXCEPTION METHODS {{{
 
-    function &getOptionException() // {{{
+    function getOptionException() // {{{
     {
         if (is_null($this->optionException)) {
-            $this->optionException =& func_new("OptionException");
+            $this->optionException = func_new("OptionException");
             if (isset($this->option_id)) {
                 $this->optionException->set("option_id", $this->option_id);
             }
@@ -144,13 +144,13 @@ class Module_ProductOptions_Admin_Dialog_product extends Admin_dialog_product
 
     function action_update_option_exception() // {{{
     {
-        $exception =& $this->get("optionException");
+        $exception = $this->get("optionException");
         $exception->update();
     } // }}}
 
     function action_delete_option_exception() // {{{
     {
-        $exception =& $this->get("optionException");
+        $exception = $this->get("optionException");
         $exception->delete();
     } // }}}
 
@@ -160,7 +160,7 @@ class Module_ProductOptions_Admin_Dialog_product extends Admin_dialog_product
     		unset($this->option_id);
     	}
 
-        $exception =& $this->get("optionException");
+        $exception = $this->get("optionException");
         if (!$exception->find("product_id='".$exception->get("product_id")."' AND exception='".addslashes($exception->get("exception"))."'")) {
         	$exception->create();
         }
@@ -172,7 +172,7 @@ class Module_ProductOptions_Admin_Dialog_product extends Admin_dialog_product
     
     function action_product_option_validator()
     {
-        $validator =& func_new("OptionValidator");
+        $validator = func_new("OptionValidator");
         $validator->set("product_id", $this->product_id);
         if (isset($this->javascript_code) && strlen(trim($this->javascript_code))) {
             $validator->set("javascript_code", $this->javascript_code);
@@ -204,7 +204,7 @@ class Module_ProductOptions_Admin_Dialog_product extends Admin_dialog_product
 
     function action_info()
     {
-		$product =& func_new("Product",$this->product_id);
+		$product = func_new("Product",$this->product_id);
         $oldCategories = array();
         $categories = $product->get("categories");
         if (is_array($categories)) {
@@ -218,9 +218,9 @@ class Module_ProductOptions_Admin_Dialog_product extends Admin_dialog_product
 		$product->updateGlobalProductOptions($oldCategories);
     }
 
-    function &getAllParams()
+    function getAllParams()
     {
-        $result =& parent::getAllParams();
+        $result = parent::getAllParams();
         if (isset($this->action)) {
         	if (!isset($this->option_id) && isset($result["option_id"])) {
         		unset($result["option_id"]);

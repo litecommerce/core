@@ -47,7 +47,7 @@ class Module_Egoods_Dialog_checkout extends Dialog_checkout
 {
     function action_checkout()
     {
-        $items =& $this->cart->get("items");
+        $items = $this->cart->get("items");
         foreach ($items as $key => $i) {
             if(!$i->isValid()) {
 				$this->redirect("cart.php?target=checkout");

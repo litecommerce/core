@@ -52,7 +52,7 @@ class Dialog_standard_checkout extends Dialog_checkout // {{{
 	{
 		parent::constructor();
 		if (($_REQUEST["target"] == "checkout") && ($_REQUEST["paypal_result"] == "cancel")) {
-			$this->cart =& func_get_instance("Cart");
+			$this->cart = func_get_instance("Cart");
 			if ($this->cart->get("status") == "Q") {
 				// revert back to I if the payment is cancelled at the PayPal side
 				$this->cart->set("status", "I");
@@ -64,7 +64,7 @@ class Dialog_standard_checkout extends Dialog_checkout // {{{
 	function init() // {{{
 	{
     	if ($_REQUEST["target"] == "standard_checkout") {
-			$this->registerForm =& func_new("Object");
+			$this->registerForm = func_new("Object");
 		}
 		parent::init();									  
 	} // }}}

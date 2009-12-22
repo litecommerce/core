@@ -65,7 +65,7 @@ class PaymentMethod_google_checkout extends PaymentMethod // {{{
 		"E" => "CVN error"
 	);
 
-	function &get($name)
+	function get($name)
 	{
 		if ($name == "enabled" && !$this->xlite->is("adminZone")) {
 			return false;
@@ -123,7 +123,7 @@ class PaymentMethod_google_checkout extends PaymentMethod // {{{
 		}
 	}
 
-	function &getOrderFromCallback(&$xmlData, $method, $fatal=true)
+	function getOrderFromCallback(&$xmlData, $method, $fatal=true)
 	{
 		$paymentParams = $this->get("params");
 
@@ -151,7 +151,7 @@ class PaymentMethod_google_checkout extends PaymentMethod // {{{
 			}
 		}
 
-		$order =& func_new("Order", $orderID[0]);
+		$order = func_new("Order", $orderID[0]);
 		if (!$order->isExists()) {
 			$this->_errorHandleCallback(CALLBACK_ERROR_NON_EXISTENT_ORDER_ID, $fatal);
 			return null;
@@ -197,7 +197,7 @@ class PaymentMethod_google_checkout extends PaymentMethod // {{{
 					exit;
 				}
 
-				$order =& $this->getOrderFromCallback($xmlData, "MERCHANT-CALCULATION-CALLBACK");
+				$order = $this->getOrderFromCallback($xmlData, "MERCHANT-CALCULATION-CALLBACK");
 				$xmlResponse = $order->getGoogleCheckoutXML("Calculation", $addresses, $shippings, $discounts);
 			break;
 
@@ -252,7 +252,7 @@ EOT;
 
 		if ($method == "NEW-ORDER-NOTIFICATION") {
 			$google_id = $this->getXMLDataByPath($xmlData, "NEW-ORDER-NOTIFICATION/GOOGLE-ORDER-NUMBER");
-			$order =& $this->getOrderFromCallback($xmlData, "NEW-ORDER-NOTIFICATION", false);
+			$order = $this->getOrderFromCallback($xmlData, "NEW-ORDER-NOTIFICATION", false);
 			if ($order != null) {
 				$order_num = $this->get("params.order_prefix").$order->get("order_id");
 				GoogleCheckout_OrderMerchantOrderNumber($this, $google_id, $order_num);
@@ -311,7 +311,7 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
 			$field = "status_" . $name;
 			$result = $params[$field];
 			if ($this->xlite->AOMEnabled) {
-				$status =& func_new("OrderStatus");
+				$status = func_new("OrderStatus");
 				if ($status->find("status='".$params[$field]."'")) {
 					if ($status->get("parent")) {
 						$params[$field] = $status->get("parent");
@@ -322,12 +322,12 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
 			$params["sub".$field] = $result;
 		}
 
-		$pm =& func_new("PaymentMethod", "google_checkout");
+		$pm = func_new("PaymentMethod", "google_checkout");
 		$pm->set("params", $params);
 		$pm->update();
 
 		// dublicate "default_shipping_cost" in config
-		$config = &func_new("Config");
+		$config = func_new("Config");
 		$config->createOption("GoogleCheckout", "default_shipping_cost", $params["default_shipping_cost"]);
 	}
 
@@ -390,7 +390,7 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
 				continue;
 			}
 
-			$shipping =& func_new("Shipping");
+			$shipping = func_new("Shipping");
 			if ($shipping->count("enabled=1 AND class='$class_name'") > 0) {
 				return true;
 			}

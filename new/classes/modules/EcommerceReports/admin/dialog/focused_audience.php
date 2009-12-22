@@ -46,7 +46,7 @@ class Admin_dialog_focused_audience extends Admin_dialog_Ecommerce_reports
 {
     var $crlf = "\r\n";
 
-    function &getProfiles() // {{{
+    function getProfiles() // {{{
     {
         if (is_null($this->profiles)) {
             $this->profiles = array();
@@ -67,7 +67,7 @@ class Admin_dialog_focused_audience extends Admin_dialog_Ecommerce_reports
 			}
             // create list of original profiles
 			foreach ($ids as $id) {
-				$this->profiles[] =& func_new("Profile", $id);
+				$this->profiles[] = func_new("Profile", $id);
 			}
         }
         return $this->profiles;
@@ -91,7 +91,7 @@ class Admin_dialog_focused_audience extends Admin_dialog_Ecommerce_reports
         $recipients = array_unique($recipients);
         echo "Sending newsletters .. ";
         if (!empty($recipients)) {
-            $nl =& func_new("NewsLetter");
+            $nl = func_new("NewsLetter");
             $nl->compose($this->get("config.Company.site_administrator"),
                          $recipients,
                          $this->get("subject"),
@@ -110,7 +110,7 @@ class Admin_dialog_focused_audience extends Admin_dialog_Ecommerce_reports
     function export_profiles() // {{{
     {
         $w = func_new("Widget");
-        $w->component =& $this;
+        $w->component = $this;
         $w->set("template", "modules/EcommerceReports/export_csv.tpl");
         $this->startDownload("users.csv");
         $w->init();
@@ -118,31 +118,31 @@ class Admin_dialog_focused_audience extends Admin_dialog_Ecommerce_reports
         $this->set("silent", true);
     } // }}}
 
-    function &getTargetProfiles() // {{{
+    function getTargetProfiles() // {{{
     {
         if (is_null($this->targetProfiles)) {
             $this->targetProfiles = array();
             $profileIDs = (array)$this->get("profile_ids");
             foreach ($profileIDs as $pid) {
-                $this->targetProfiles[] =& func_new("Profile", $pid);
+                $this->targetProfiles[] = func_new("Profile", $pid);
             }
         }
         return $this->targetProfiles;
     } // }}}
     
-    function &getOrders() // {{{
+    function getOrders() // {{{
     {
         if (is_null($this->orders)) {
             $this->orders = array();
             $orderIDs = (array)$this->get("order_ids");
             foreach ($orderIDs as $oid) {
-                $this->orders[] =& func_new("Order", $oid);
+                $this->orders[] = func_new("Order", $oid);
             }
         }
         return $this->orders;
     } // }}}
     
-    function &getDelimiter() // {{{
+    function getDelimiter() // {{{
     {
         global $DATA_DELIMITERS;
         return $DATA_DELIMITERS[$this->delimiter];
@@ -157,7 +157,7 @@ class Admin_dialog_focused_audience extends Admin_dialog_Ecommerce_reports
         return in_array($field, $defaultFields);
     } // }}}
     
-    function &getExportFields() // {{{
+    function getExportFields() // {{{
     {
         return array(
                 "profile_id" => "Profile #",
@@ -168,19 +168,19 @@ class Admin_dialog_focused_audience extends Admin_dialog_Ecommerce_reports
                 );
     } // }}}
 
-    function &getQueryString() // {{{
+    function getQueryString() // {{{
     {
         return $_SERVER["QUERY_STRING"];
     } // }}}
 
-    function &getFocusedSales() // {{{
+    function getFocusedSales() // {{{
     {
 		if (is_null($this->focusedSales)) {
 			$this->focusedSales = array();
 
 			// PASS 1
 			// select raw items
-			$items =& $this->get("rawItems");
+			$items = $this->get("rawItems");
 
 			// PASS 2
 			// summarize orders info
@@ -208,7 +208,7 @@ class Admin_dialog_focused_audience extends Admin_dialog_Ecommerce_reports
     function collectFocusedSales($order) // {{{
     {
         if ($order["passed"]) {
-            $this->focusedSales[] =& func_new("Order", $order["order_id"]);
+            $this->focusedSales[] = func_new("Order", $order["order_id"]);
         }
     } // }}}
 
@@ -293,7 +293,7 @@ class Admin_dialog_focused_audience extends Admin_dialog_Ecommerce_reports
             $found = false;
             foreach ($this->orders[$orderID]["products"] as $idx => $product) {
                 if ($product["product_id"] == $item["product_id"]) {
-                    $info =& $this->orders[$orderID]["products"][$idx];
+                    $info = $this->orders[$orderID]["products"][$idx];
                     $info["amount"] += $item["amount"];
                     $found = true;
                     break;
@@ -403,7 +403,7 @@ class Admin_dialog_focused_audience extends Admin_dialog_Ecommerce_reports
     {
         $where = "";
         if (($discountCoupon = $this->get("discountCoupon")) != null) {
-        	$dc =& func_new("DiscountCoupon");
+        	$dc = func_new("DiscountCoupon");
         	if (is_object($dc) && $dc->find("coupon='$discountCoupon' AND order_id='0'")) {
             	$where .= " AND $ot.discountCoupon='".$dc->get("coupon_id")."' ";
 			}
@@ -431,7 +431,7 @@ class Admin_dialog_focused_audience extends Admin_dialog_Ecommerce_reports
 
 	function hasProduct($user_id, $product_id) // {{{
 	{
-		$product =& func_new("Product");
+		$product = func_new("Product");
 		$fromDate = $this->get("period.fromDate");
 		$toDate   = $this->get("period.toDate");
 		$ot = $product->db->getTableByAlias("orders");
@@ -456,7 +456,7 @@ class Admin_dialog_focused_audience extends Admin_dialog_Ecommerce_reports
 
 	function hasCategory($user_id, $category_id) // {{{
 	{
-		$product =& func_new("Product");
+		$product = func_new("Product");
 		$fromDate = $this->get("period.fromDate");
 		$toDate   = $this->get("period.toDate");
 		$ot = $product->db->getTableByAlias("orders");

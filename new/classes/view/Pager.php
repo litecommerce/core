@@ -64,7 +64,7 @@ class CPager extends Component
         }
     }
     
-    function &getPages()
+    function getPages()
     {
         if (is_null($this->pages)) {
             if($this->get("itemsPerPage") == 0){
@@ -76,10 +76,10 @@ class CPager extends Component
         return $this->pages;
     }
 
-    function &getPageData()
+    function getPageData()
     {
     	if (!isset($this->_baseObj)) {
-    		$this->_baseObj =& func_new("Base");
+    		$this->_baseObj = func_new("Base");
     	}
         $pages = $this->get("pages");
         $pageData = $pages[$this->get("pageID")];
@@ -95,11 +95,11 @@ class CPager extends Component
         return $pageData;
     }
 
-    function &getPageUrls()
+    function getPageUrls()
     {
         $result = array();
         $params = $this->get("dialog.allParams");
-        $dialog =& $this->get("dialog");
+        $dialog = $this->get("dialog");
         for ($i = 0; $i < count($this->get("pages")); $i++) {
             $params["pageID"] = $i;
             $result[$i+1] = $dialog->getUrl($params);

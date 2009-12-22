@@ -55,11 +55,11 @@ class Admin_Dialog_product_popup extends Admin_Dialog
 	var $form_action = 'default';
     var $products = null;
 
-    function &getProducts()
+    function getProducts()
     {
         if (is_null($this->products)) {
-            $p =& func_new("Product");
-            $this->products =& $p->advancedSearch($this->substring,
+            $p = func_new("Product");
+            $this->products = $p->advancedSearch($this->substring,
                     $this->search_productsku,
                     $this->search_category,
                     $this->subcategory_search);

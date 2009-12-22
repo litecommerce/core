@@ -48,7 +48,7 @@ class Admin_Dialog_wholesale extends Admin_Dialog
     
     function action_options() // {{{
     {
-        $config =& func_new("Config");
+        $config = func_new("Config");
         $options = $config->getByCategory("WholesaleTrading");
         for ($i=0; $i<count($options); $i++) {
             $name = $options[$i]->get("name");

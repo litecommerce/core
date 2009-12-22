@@ -57,7 +57,7 @@ class Module_AuthorizeNet extends Module
     function init()
     {
         parent::init();
-        $pm =& func_new("PaymentMethod");
+        $pm = func_new("PaymentMethod");
         $pm->registerMethod("authorizenet_cc");
         $pm->registerMethod("authorizenet_ch");
 

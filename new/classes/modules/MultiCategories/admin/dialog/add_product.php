@@ -43,7 +43,7 @@ class Module_MultiCategories_Admin_Dialog_add_product extends Admin_Dialog_add_p
 	{
 		parent::action_add();
         if (isset($this->product_categories) && !empty($this->product_categories)) {
-            $product =& $this->get("product");
+            $product = $this->get("product");
             $categories = $product->get("categories");
             for ($i = 0; $i < count($categories); $i++) {
                 $product->deleteCategory($categories[$i]);

@@ -87,7 +87,7 @@ class Module_Egoods_OrderItem extends OrderItem
 
 		if ($this->is('egood') && $amount > 0) {
 		    if ($this->is('pin')) {
-			    $pin =& func_new('PinCode');
+			    $pin = func_new('PinCode');
     			if ($amount > $pin->getFreePinCount($this->get('product.product_id'))) {
 	    			$amount = $pin->getFreePinCount($this->get('product.product_id'));
 		    		if ($amount <= 0) {
@@ -112,7 +112,7 @@ class Module_Egoods_OrderItem extends OrderItem
 
 	function storeLinks()
 	{
-		$product =& $this->get('product');
+		$product = $this->get('product');
 		$links = $product->createLinks();
 		$this->set('egoods', implode(',', $links));
 		$this->update();
@@ -121,9 +121,9 @@ class Module_Egoods_OrderItem extends OrderItem
 	function unStoreLinks()
 	{
         $ids = explode(",", $this->get("egoods"));
-        $link =& func_new("DownloadableLink");
+        $link = func_new("DownloadableLink");
         foreach ($ids as $link_id) {
-            $egoods_links =& $link->findAll("access_key='$link_id'");
+            $egoods_links = $link->findAll("access_key='$link_id'");
             foreach ($egoods_links as $egoods_link) {
                 $egoods_link->delete();
             }
@@ -137,13 +137,13 @@ class Module_Egoods_OrderItem extends OrderItem
 		return ($this->get('egoods') == '') ? false : true;
 	}
 
-	function &getEgoods()
+	function getEgoods()
 	{
 		if (!isset($this->_egoods)) {
 			$egoods_links = explode(',', $this->get('egoods'));
 			foreach($egoods_links as $link_id) {
-				$link =& func_new("DownloadableLink", $link_id);
-				$file =& func_new("DownloadableFile", $link->get('file_id'));
+				$link = func_new("DownloadableLink", $link_id);
+				$file = func_new("DownloadableFile", $link->get('file_id'));
 				$record = array();
 				$record['name'] = basename($file->get('data'));
 				$record['link'] = $this->xlite->shopURL("cart.php?target=download&action=download&acc=") . $link_id;

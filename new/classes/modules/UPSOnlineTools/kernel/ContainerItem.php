@@ -85,7 +85,7 @@ class ContainerItem extends Object
 	function getOrderItem()
 	{
 		$item_id = $this->item_id;
-		$oi =& func_new("OrderItem");
+		$oi = func_new("OrderItem");
 		$oi->find("item_id='".addslashes($item_id)."'");
 
 		return $oi;

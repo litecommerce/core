@@ -54,12 +54,12 @@ class OrderStatus extends Base
 	var $primaryKey = array('status_id');
 	var $defaultOrder = "orderby, parent, status";
 
-	function &getParentStatus()
+	function getParentStatus()
 	{
 		if ($this->get("parent") == '')	{
 			return null;
 		} else {
-			$parent = &func_new("OrderStatus");
+			$parent = func_new("OrderStatus");
 			$parent->find("status = '". $this->get("parent") ."'");
 			return $parent;
 		}

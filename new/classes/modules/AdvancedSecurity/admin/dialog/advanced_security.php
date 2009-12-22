@@ -51,7 +51,7 @@ class Admin_Dialog_advanced_security extends Admin_Dialog
     
     function action_orders() // {{{
     {
-        $gpg =& $this->get("gpg");
+        $gpg = $this->get("gpg");
         $pubkey = $gpg->getPublicKey();
         $seckey = $gpg->getSecretKey();
         $this->set("valid", !empty($pubkey) && $gpg->isKeyValid($pubkey, "PUBLIC") && !empty($seckey) && $gpg->isKeyValid($seckey, "PRIVATE"));
@@ -65,7 +65,7 @@ class Admin_Dialog_advanced_security extends Admin_Dialog
             return;
         }
         $this->session->set("masterPassword", null); // to avoid update conflict
-        $order =& func_new("Order");
+        $order = func_new("Order");
         $orders = $order->findAll("payment_method='credit_card'"); 
         $this->startDump();
         for ($i = 0; $i < count($orders); $i++) {
@@ -86,13 +86,13 @@ class Admin_Dialog_advanced_security extends Admin_Dialog
     
     function testEncrypt() // {{{
     {
-        $gpg =& $this->get("gpg");
+        $gpg = $this->get("gpg");
         $this->encryptResult = $gpg->encrypt($this->sample);
     } // }}}
 
     function testDecrypt() // {{{
     {
-        $gpg =& $this->get("gpg");
+        $gpg = $this->get("gpg");
         $this->decryptResult = $gpg->decrypt($this->encryptResult, $this->get("passphrase"));
     } // }}}
     
@@ -104,7 +104,7 @@ class Admin_Dialog_advanced_security extends Admin_Dialog
 
     function action_download_secret_key() // {{{
     {
-        $gpg =& $this->get("gpg");
+        $gpg = $this->get("gpg");
         $downloadPass = $this->get("download_password");
         if (!is_null($downloadPass) && $gpg->isPasswordValid($downloadPass)) {
             $this->set("silent", true);
@@ -116,16 +116,16 @@ class Admin_Dialog_advanced_security extends Admin_Dialog
         }
     } // }}}
 
-    function &getSecurityOptions() // {{{
+    function getSecurityOptions() // {{{
     {
-        $config =& func_new("Config");
+        $config = func_new("Config");
         $options = $config->getByCategory("AdvancedSecurity");
         return $options;
     } // }}}
     
     function action_options() // {{{
     {
-        $config =& func_new("Config");
+        $config = func_new("Config");
         $options = $config->getByCategory("AdvancedSecurity");
         for ($i=0; $i<count($options); $i++) {
             $name = $options[$i]->get("name");
@@ -151,20 +151,20 @@ class Admin_Dialog_advanced_security extends Admin_Dialog
 
     function action_delete_keys()
     {
-        $gpg =& func_new("GPG");
+        $gpg = func_new("GPG");
         $gpg->deleteKeys();
     }
     
     function action_upload_keys()
     {
-        $gpg =& func_new("GPG");
+        $gpg = func_new("GPG");
         $this->set("valid", $gpg->uploadKeys());
     }
 
-    function &getGPG() // {{{
+    function getGPG() // {{{
     {
         if (is_null($this->gpg)) {
-            $this->gpg =& func_new("GPG");
+            $this->gpg = func_new("GPG");
         }
         return $this->gpg;
     } // }}}

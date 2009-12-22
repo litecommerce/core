@@ -219,14 +219,14 @@ class Dialog_checkout extends Dialog_cart
     /**
     * Returns return URL for checkout/login
     */
-    function &getBackUrl()
+    function getBackUrl()
     {
         return $this->get("url");
     }
     
-    function &getPaymentMethods()
+    function getPaymentMethods()
     {
-        $paymentMethod =& func_new("PaymentMethod");
+        $paymentMethod = func_new("PaymentMethod");
         return $paymentMethod->get("activeMethods");
     }
 
@@ -234,7 +234,7 @@ class Dialog_checkout extends Dialog_cart
     {
         $this->checkHtaccess();
 
-		$pm =& func_new("PaymentMethod", $_POST["payment_id"]);
+		$pm = func_new("PaymentMethod", $_POST["payment_id"]);
         $this->cart->set("paymentMethod", $pm);
         $this->updateCart();
 
@@ -255,7 +255,7 @@ class Dialog_checkout extends Dialog_cart
                 $this->auth->set("profile.order_id", $this->cart->get("order_id"));
                 $this->auth->call("profile.update");
             }
-    		$cart =& func_get_instance("Cart");
+    		$cart = func_get_instance("Cart");
      		if (!$cart->isEmpty()) {
      			$cart->set("profile_id", $this->auth->get("profile.profile_id"));
      			$cart->update();
@@ -275,7 +275,7 @@ class Dialog_checkout extends Dialog_cart
 			return;
 		}
 
-        $pm =& $this->cart->get("paymentMethod");
+        $pm = $this->cart->get("paymentMethod");
         if (!is_null($pm)) {
             $notes = isset($_POST["notes"]) ? $_POST["notes"] : '';
             $this->set("cart.notes", $notes);
@@ -305,10 +305,10 @@ class Dialog_checkout extends Dialog_cart
         }
     }
 
-    function &getOrder()
+    function getOrder()
     {
         if (is_null($this->order)) {
-            $this->order =& func_new("Order", $_REQUEST["order_id"]);
+            $this->order = func_new("Order", $_REQUEST["order_id"]);
         }
         return $this->order;
     }
@@ -348,7 +348,7 @@ class Dialog_checkout extends Dialog_cart
     function getCountriesStates()
     {
         if (!isset($this->_profileDialog)) {
-            $this->_profileDialog =& func_new("Dialog_profile");
+            $this->_profileDialog = func_new("Dialog_profile");
         }
         return $this->_profileDialog->getCountriesStates();
     }

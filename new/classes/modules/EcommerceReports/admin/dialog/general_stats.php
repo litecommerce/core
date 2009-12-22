@@ -127,7 +127,7 @@ class Admin_dialog_general_stats extends Admin_dialog_Ecommerce_reports
             $this->calcExtraGS();
 
             // members
-            $profile =& func_new("Profile");
+            $profile = func_new("Profile");
             $table = $profile->db->getTableByAlias($profile->alias);
             $this->gs["active_accounts"] = $profile->db->getOne("SELECT COUNT(*) FROM $table WHERE status='E' AND order_id=0");
             $this->gs["new_accounts"] = $profile->db->getOne("SELECT COUNT(*) FROM $table WHERE status='E' AND first_login BETWEEN $fd AND $td AND order_id=0");

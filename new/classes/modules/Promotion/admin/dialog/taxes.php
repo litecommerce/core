@@ -56,14 +56,14 @@ class Module_Promotion_Admin_Dialog_taxes extends Admin_Dialog_taxes
 	function action_add_tax()	
 	{
 		parent::action_add_tax();
-		$cfg =& func_new("Config");
+		$cfg = func_new("Config");
 		$cfg->createOption("Taxes", "discounts_after_taxes", $_POST['discounts_after_taxes']);
 	}
 
 	function action_update_options()
 	{
 		parent::action_update_options();
-		$cfg =& func_new("Config");
+		$cfg = func_new("Config");
 		$cfg->createOption("Taxes", "discounts_after_taxes", $_POST['discounts_after_taxes']);
 	}
 }

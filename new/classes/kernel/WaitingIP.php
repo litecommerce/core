@@ -86,8 +86,8 @@ class WaitingIP extends Base
 
     function notifyAdmin()
     {
-        $mail =& func_new("Mailer");
-        $mail->waiting_ip = &$this;
+        $mail = func_new("Mailer");
+        $mail->waiting_ip = $this;
         $mail->adminMail = true;
         $mail->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
         $mail->compose(
@@ -108,7 +108,7 @@ class WaitingIP extends Base
     function approveIP()
     {
         $ip = $this->get("ip");
-        $valid_ips_object =& func_new("Config");
+        $valid_ips_object = func_new("Config");
 
         if(!$valid_ips_object->find("category = 'SecurityIP' AND name = 'allow_admin_ip'")) {
         	$admin_ip = serialize(array());

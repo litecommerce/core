@@ -60,7 +60,7 @@ class PaymentMethod_payflowpro_cc extends PaymentMethod_credit_card
 	function initRequest($request) 
 	{
 		if ($this->xlite->get("cc_initRequestAlternate")) {
-			$_object =& func_new("PaymentMethod_payflowpro_cc_CardinalCommerce");
+			$_object = func_new("PaymentMethod_payflowpro_cc_CardinalCommerce");
 			$_object->set("CardinalMPI", $this->get("CardinalMPI"));
 			$_object->cc_info = $this->cc_info;
 			$_object->initRequest($request);

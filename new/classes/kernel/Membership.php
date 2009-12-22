@@ -58,13 +58,13 @@ class Membership extends Base // {{{
     var $countRequested = null;
     var $countGranted   = null;
 
-	function &getMemberships() // {{{
+	function getMemberships() // {{{
 	{
         if (!is_null($this->memberships)) {
 			return $this->memberships;
 		}
 
-        $config =& func_new("Config");
+        $config = func_new("Config");
 
 		$config->find("name = 'membershipsCollection' AND category = 'Memberships'");
 		$this->memberships = $memberships = unserialize($config->get("value"));
@@ -90,12 +90,12 @@ class Membership extends Base // {{{
 				}
 				$this->memberships = $new_memberships;
 
-                $config =& func_new("Config");
+                $config = func_new("Config");
         		$config->createOption("Memberships","membershipsCollection", serialize($this->memberships), "serialized");
 			} else {
 				$this->memberships = array();
 
-                $config =& func_new("Config");
+                $config = func_new("Config");
         		$config->createOption("Memberships","membershipsCollection", serialize($this->memberships), "serialized");
 			}
 		}
@@ -134,13 +134,13 @@ class Membership extends Base // {{{
         }
 		$memberships[$max] = $membershipData;
 		$memberships = (array) $this->sortMemberships($memberships);
-        $config =& func_new("Config");
+        $config = func_new("Config");
 		$config->createOption("Memberships","membershipsCollection", serialize($memberships));    
 	} // }}}
 
 	function update() // {{{
 	{
-	    $config =& func_new("Config");
+	    $config = func_new("Config");
         $memberships = $this->get("memberships");
         $membershipData = $this->get("properties");
 		$membershipData['membership'] = $this->stripInvalidData($membershipData['membership']);
@@ -154,7 +154,7 @@ class Membership extends Base // {{{
 
 	function delete() // {{{
 	{
-		$config =& func_new("Config");
+		$config = func_new("Config");
         $memberships = $this->get("memberships");
 		unset($memberships[$this->get("membership_id")]);
 		$memberships = (array) $this->sortMemberships($memberships);
@@ -166,7 +166,7 @@ class Membership extends Base // {{{
 		$result = array();
 		$memberships = (array) $this->sortMemberships();
 		foreach($memberships as $membership_id => $membership_) {
-			$membership =& func_new("Membership",$membership_id);
+			$membership = func_new("Membership",$membership_id);
 			$result[$membership_id] = $membership;	
 		}
 		return $result;
@@ -190,9 +190,9 @@ class Membership extends Base // {{{
     {
         $count = 0;
         if (is_null($this->countRequested)) {
-            $prop  =& $this->get("properties");
+            $prop = $this->get("properties");
             if (is_array($prop)) {
-                $profile =& func_new("Profile");
+                $profile = func_new("Profile");
                 $where = $profile->_buildWhere("(pending_membership<>membership AND pending_membership='".$prop['membership']."')");
                 $count = $profile->count($where);
             }
@@ -210,7 +210,7 @@ class Membership extends Base // {{{
         if (is_null($this->countGranted)) {
             $prop  = $this->get("properties");
             if (is_array($prop)) {
-                $profile =& func_new("Profile");
+                $profile = func_new("Profile");
                 $where = $profile->_buildWhere("membership='".$prop['membership']."'");
                 $count = $profile->count($where);
             }

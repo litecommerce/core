@@ -51,7 +51,7 @@ class Dialog_profile_module_AntiFraud extends Dialog_profile
     	parent::action_modify();
 
         if ($this->registerForm->is("valid")) {
-			$cart =& func_get_instance("Cart");
+			$cart = func_get_instance("Cart");
 			if (!$cart->isEmpty()) {
 				$cart->set("profile_id", $this->profileForm->profile->get("profile_id"));
 				$this->set("details.af_result", null);

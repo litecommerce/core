@@ -55,9 +55,9 @@ class Module_WholesaleTrading_Dialog_profile extends Dialog_profile
     {
 		parent::action_register();
         if ($this->registerForm->is("valid")) {
-            $product =& func_new("Product");
+            $product = func_new("Product");
 			if ($this->registerForm->get("profile.pending_membership") != "" && $product->find("selling_membership='" . $this->registerForm->get("profile.pending_membership") . "'")) {
-				$oi =& func_new('OrderItem');
+				$oi = func_new('OrderItem');
 				$oi->set('product', $product);
 				$this->cart->addItem($oi);
 				$this->updateCart();

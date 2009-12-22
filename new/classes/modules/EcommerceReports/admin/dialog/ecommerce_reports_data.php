@@ -95,7 +95,7 @@ class Admin_dialog_Ecommerce_reports_data extends Admin_dialog_sales_dynamics
         srand((float) $sec + ((float) $usec * 100000));
 
         // build cloud of product IDs
-        $p =& func_new("Product");
+        $p = func_new("Product");
         // get min price and total products cost
 		$table = $this->db->getTableByAlias("products");
         $minPrice = ceil($p->db->getOne("SELECT MIN(price) FROM $table"));
@@ -170,8 +170,8 @@ class Admin_dialog_Ecommerce_reports_data extends Admin_dialog_sales_dynamics
 
                 // create order's profile
                 // default profile
-                $profile =& func_new("Profile", 1);
-                $op =& func_new("Profile");
+                $profile = func_new("Profile", 1);
+                $op = func_new("Profile");
                 $properties = $profile->get("properties");
                 if (isset($properties["profile_id"])) {
                 	unset($properties["profile_id"]);

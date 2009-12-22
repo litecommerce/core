@@ -47,15 +47,15 @@ class Admin_Dialog_decline_partner extends Admin_Dialog
 {
     function action_decline_partner()
     {
-        $profile =& $this->get("profile");
+        $profile = $this->get("profile");
         $profile->set("properties", $_POST);
         $this->auth->declinePartner($profile);
     }
 
-    function &getProfile()
+    function getProfile()
     {
         if (is_null($this->profile)) {
-            $this->profile =& func_new("Profile", $_REQUEST["profile_id"]);
+            $this->profile = func_new("Profile", $_REQUEST["profile_id"]);
         }
         return $this->profile;
     }

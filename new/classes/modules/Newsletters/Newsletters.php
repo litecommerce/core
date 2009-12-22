@@ -55,7 +55,7 @@ class Module_Newsletters extends Module
         parent::init();
 
         // add newsletters template
-        $layout =& func_get_instance("layout");
+        $layout = func_get_instance("layout");
         $layout->addLayout("news.tpl", "modules/Newsletters/newsfeed.tpl");
 
         $this->addDecorator("Auth", "Module_Newsletters_Auth");

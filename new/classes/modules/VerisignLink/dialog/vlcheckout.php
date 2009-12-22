@@ -49,7 +49,7 @@ class Dialog_vlcheckout extends Dialog_checkout
     function init()
     {
     	if ($_REQUEST["target"] == "vlcheckout") {
-    		$this->registerForm =& func_new("Object");
+    		$this->registerForm = func_new("Object");
     	}
 
     	parent::init();

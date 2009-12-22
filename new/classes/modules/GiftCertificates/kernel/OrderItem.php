@@ -54,7 +54,7 @@ class Module_GiftCertificates_OrderItem extends OrderItem
         parent::constructor();
     }
 
-	function &getGC()
+	function getGC()
 	{
         if (is_null($this->gc)) {
             if (parent::get("gcid")) {
@@ -106,7 +106,7 @@ class Module_GiftCertificates_OrderItem extends OrderItem
 		}
 		return parent::getShortDescription($limit);
 	}
-	function &get($name)
+	function get($name)
 	{
 		if (!is_null($this->getGC())) {
 			if ($name == 'name')   return $this->getDescription();

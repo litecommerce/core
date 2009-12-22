@@ -117,7 +117,7 @@ class WysiwygMediator extends Object
 
         $exportParser = func_new("WysiwygExportParser");
         $exportParser->widgetClass = $this->widgetClass;
-        $exportParser->wysiwygMediator =& $this;
+        $exportParser->wysiwygMediator = $this;
         if (strpos($widget->get("templateFile"), '}')) {
         	if ($this->showMemoryUsage) {
 				$this->__buildFullTreeCounter--;
@@ -149,7 +149,7 @@ class WysiwygMediator extends Object
                             continue;
                         }
                     }
-                    $widget->widgets[] =& $exportParser->widgets[$i];
+                    $widget->widgets[] = $exportParser->widgets[$i];
                     $this->buildFullTree($exportParser->widgets[$i]);
                 }
             }
@@ -223,7 +223,7 @@ class WysiwygMediator extends Object
             if (isset($this->root) && $this->root->get("template") == $w->get("template")) {
                 break;
             }
-            $w =& $w->parentWidget;
+            $w = $w->parentWidget;
         } while (!is_null($w));
         return $target;
     }
@@ -238,7 +238,7 @@ class WysiwygMediator extends Object
             if (isset($this->root) && $this->root->get("template") == $w->get("template")){
                 break;
             }
-            $w =& $w->parentWidget;
+            $w = $w->parentWidget;
         } while (!is_null($w));
         return $mode;
     }
@@ -253,7 +253,7 @@ class WysiwygMediator extends Object
         $fc = func_new("WysiwygExportParser");
         $fc->source = $fc->translateTemplate(file_get_contents($w->get("templateFile")));
         for ($i=0; $i<count($w->widgets); $i++) {
-            $ww =& $w->widgets[$i];
+            $ww = $w->widgets[$i];
             $widgetHtmlCode = $this->_generateWidget($ww);
             // strip end of line if the widget is invisible on this page
             $endOffset = $ww->get("endOffset");
@@ -281,7 +281,7 @@ class WysiwygMediator extends Object
         $fc = func_new("WysiwygExportParser");
         $fc->source = $fc->translateTemplate(file_get_contents($w->get("templateFile")));
         for ($i=0; $i<count($w->widgets); $i++) {
-            $ww =& $w->widgets[$i];
+            $ww = $w->widgets[$i];
             $fc->subst($ww->get("startOffset"), $ww->get("endOffset"), $this->_generateWidgetReference($ww, true));
         }
         $text = $fc->substitute();
@@ -405,14 +405,14 @@ class WysiwygMediator extends Object
     {
         $t = $tree->get("template");
         if (!isset($this->widgetMap[$t])) {
-            $this->widgetMap[$t] =& $tree;
+            $this->widgetMap[$t] = $tree;
         }
         if ($this->hasParams($tree)) {
             $p = $parent->get("template");
-            $pp =& $parent;
+            $pp = $parent;
         } else {
             $p = $t;
-            $pp =& $tree;
+            $pp = $tree;
         }
         for ($i=0; $i<count($tree->widgets); $i++) {
             $tt = $tree->widgets[$i]->get("template");
@@ -426,7 +426,7 @@ class WysiwygMediator extends Object
                     $this->templateMap[$tt][$p] = 1;
                 }
             }
-            $tree->widgets[$i]->parentWidget =& $tree;
+            $tree->widgets[$i]->parentWidget = $tree;
             $this->_linkTree($pp, $tree->widgets[$i]);
         }
         $this->linkedTemplates[$t] = true;
@@ -447,7 +447,7 @@ EOT
             );
         }
         @fclose($fd);
-        $layout =& func_get_instance("Layout");
+        $layout = func_get_instance("Layout");
         $templatesDir = $layout->getPath();
         copyFile($templatesDir . 'style.css', HTML_BUILDER_PATH . 'style.css');
         copyRecursive($templatesDir . 'images', HTML_BUILDER_PATH . 'images');
@@ -508,7 +508,7 @@ EOT
             }
             $t = $parent;
         }
-        $this->root =& $this->widgetMap[$t];
+        $this->root = $this->widgetMap[$t];
         $this->pageTarget = $this->getWidgetTarget($tree);
         $this->pageMode = $this->getWidgetMode($tree);
         $tree->editing = true;
@@ -588,7 +588,7 @@ EOT;
         return $navigation . $path;
     }
     
-    function &getHtmlStorage()
+    function getHtmlStorage()
     {
         if (is_null($this->htmlStorage)) {
             $this->htmlStorage = func_new("WysiwygMediatorHtmlStorage");
@@ -614,7 +614,7 @@ EOT;
     function import()
     {
         $this->errors = 0;
-        $this->layout = $layout =& func_get_instance("Layout");
+        $this->layout = $layout = func_get_instance("Layout");
 		$templatesDir = $layout->getPath();
 
         $code = copyRecursive(HTML_BUILDER_PATH . 'images', $templatesDir . 'images');
@@ -753,7 +753,7 @@ class WysiwygMediatorWidget extends Widget // {{{
         }
         return $result;
     }
-    function &getTemplateType()
+    function getTemplateType()
     {
         if (is_null($this->templateType)) {
             $t = $this->get("templateFile");
@@ -800,7 +800,7 @@ class WysiwygExportParser extends FlexyCompiler // {{{
 
     function translateTemplate($src)
     {
-        $lay =& func_get_instance("Layout");
+        $lay = func_get_instance("Layout");
         return str_replace(array('{*', '*}', 'skins/' . $lay->get("skin") . '/' . $lay->get("locale") . '/style.css'), array('<!--*', '*-->', 'style.css'), $src);
     }
 
@@ -835,9 +835,9 @@ class WysiwygExportParser extends FlexyCompiler // {{{
             if ($token["type"] != "attribute" && $token["type"] != "attribute-value" && $attributes && $insideWidget) {
 ////                if (isset($attributes["name"]) && !isset($attributes["class"]) && !isset($attributes["template"])) {
                     // fetch by name
-////                    $w =& $namedWidgets[$attributes["name"]];
+////                    $w = $namedWidgets[$attributes["name"]];
 ////                } else {
-                    $w =& func_new($this->widgetClass);
+                    $w = func_new($this->widgetClass);
                     $w->set("attributes", $attributes);
                     $w->set("attributesEvaled", $attributesEvaled);
                     if (isset($attributes["name"])) {
@@ -848,7 +848,7 @@ class WysiwygExportParser extends FlexyCompiler // {{{
 							}
 						}
 
-                        $namedWidgets[$attributes["name"]] =& $w;
+                        $namedWidgets[$attributes["name"]] = $w;
                     }
 ////                }
                 $w->set("startOffset", $this->tokens[$widgetInd]["start"]);
@@ -887,7 +887,7 @@ class WysiwygExportParser extends FlexyCompiler // {{{
     
     function addWidget($w)
     {
-        $this->widgets[] =& $w;
+        $this->widgets[] = $w;
     }
 
     function error($message)
@@ -978,7 +978,7 @@ class WysiwygImportParser extends FlexyCompiler
 
     function translateTemplate($src)
     {
-        $lay =& func_get_instance("Layout");
+        $lay = func_get_instance("Layout");
         return str_replace(array('<!--*', '*-->', 'style.css'), array('{*', '*}', 'skins/' . $lay->get("skin") . '/' . $lay->get("locale") . '/style.css'), $src);
     }
 

@@ -136,7 +136,7 @@ Please correct errors above and click reload or click the button below to force 
 				$this->create();
 			}
 			// set current version in config->Version->version
-			$c =& func_new("Config");
+			$c = func_new("Config");
 			$c->set("category", "Version");
 			$c->set("name", "version");
 			$c->set("value", $this->get("to_ver"));
@@ -318,7 +318,7 @@ Please correct errors above and click reload or click the button below to force 
 
 	function patchTemplate($zone, $template, $patch, $re = '')
 	{
-		$layout =& Layout::getInstance();
+		$layout = Layout::getInstance();
 		if ($zone == CUSTOMER_SKINS) {
 			$skins = $layout->getSkins();
 		} else {

@@ -51,32 +51,32 @@ class Admin_Dialog_SpecialOffer extends Admin_Dialog
 	var $bonusAllCountries = 1;
     var $countries = null;
 
-	function &getCountries()
+	function getCountries()
 	{
         if (is_null($this->countries)) {
-            $c =& func_new("Country");
+            $c = func_new("Country");
             $this->countries = $c->findAll();
         }
         return $this->countries;
     }
 
-	function &hasMemberships()
+	function hasMemberships()
 	{
 		$memberships = $this->get("config.Memberships.memberships");
 		return !empty($memberships);
 	}
 
-    function &getSpecialOffer()
+    function getSpecialOffer()
     {
         if (is_null($this->specialOffer)) {
             if (!$this->get("offer_id")) {
                 // default special offer
-                $this->specialOffer =& func_new("SpecialOffer");
+                $this->specialOffer = func_new("SpecialOffer");
                 // default values
                 $this->specialOffer->set("conditionType", 'productAmount');
                 $this->specialOffer->set("bonusType", 'discounts');
             } else {
-                $this->specialOffer =& func_new("SpecialOffer",$this->get("offer_id"));
+                $this->specialOffer = func_new("SpecialOffer",$this->get("offer_id"));
             }
         }
         return $this->specialOffer;
@@ -94,19 +94,19 @@ class Admin_Dialog_SpecialOffer extends Admin_Dialog
     function init()
     {
         parent::init();
-		$this->product =& $this->get("specialOffer.product");
-		$this->category =& $this->get("specialOffer.category");
-		$this->products =& $this->get("specialOffer.products");
-		$this->bonusProducts =& $this->get("specialOffer.bonusProducts");
-		$this->bonusPrices =& $this->get("specialOffer.bonusPrices");
-		$this->bonusCategory =& $this->get("specialOffer.bonusCategory");
-        $this->conditionType =& $this->get("specialOffer.conditionType");
-        $this->bonusType =& $this->get("specialOffer.bonusType");
+		$this->product = $this->get("specialOffer.product");
+		$this->category = $this->get("specialOffer.category");
+		$this->products = $this->get("specialOffer.products");
+		$this->bonusProducts = $this->get("specialOffer.bonusProducts");
+		$this->bonusPrices = $this->get("specialOffer.bonusPrices");
+		$this->bonusCategory = $this->get("specialOffer.bonusCategory");
+        $this->conditionType = $this->get("specialOffer.conditionType");
+        $this->bonusType = $this->get("specialOffer.bonusType");
 	}
 
 	function isSelectedMembership($selected_membership)
 	{
-		$membership =& func_new("SpecialOfferMembership");
+		$membership = func_new("SpecialOfferMembership");
 		$memberships = $membership->findAll("offer_id = " . $this->get("offer_id"));
 		foreach($memberships as $membership_) 
 			if ($selected_membership == $membership_->get("membership")) return true;
@@ -157,10 +157,10 @@ class Admin_Dialog_SpecialOffer extends Admin_Dialog
 		else $_POST['status'] = 'Upcoming';
 		
 		$_POST['status'] == 'Expired' ? $_POST['enabled'] = 0 : $_POST['enabled'] = 1;	 
-        $specialOffer =& $this->get("specialOffer");
+        $specialOffer = $this->get("specialOffer");
 		$specialOffer->set("properties", $_POST);
 		if ($this->get("conditionType") == 'hasMembership')	{
-			$membership =& func_new("SpecialOfferMembership");
+			$membership = func_new("SpecialOfferMembership");
 			$memberships = $membership->findAll('offer_id =' . $this->get('offer_id'));
 			foreach($memberships as $membership_) {
 				$membership_->delete();
@@ -186,8 +186,8 @@ class Admin_Dialog_SpecialOffer extends Admin_Dialog
 		}
 		if ($this->get("bonusAllProducts")) {
 			$stayHere = true;
-			$so_product =& func_new("SpecialOfferProduct");
-			$so_products =& $so_product->findAll("offer_id='". $specialOffer->get("offer_id") . "' AND type='B'");
+			$so_product = func_new("SpecialOfferProduct");
+			$so_products = $so_product->findAll("offer_id='". $specialOffer->get("offer_id") . "' AND type='B'");
 			foreach($so_products as $product) {
 				$specialOffer->deleteProduct(func_new("Product", $product->get("product_id")), "B");
 			}
@@ -197,12 +197,12 @@ class Admin_Dialog_SpecialOffer extends Admin_Dialog
 			foreach($this->get("deleteBonusPrice") as $product_id => $checked) {
 				list ($product_id, $category_id) = explode('_', $product_id);
 				if ($product_id) {
-					$product =& func_new("Product",$product_id);
+					$product = func_new("Product",$product_id);
 				} else {
 					$product = null;
 				}
 				if ($category_id) {
-					$category =& func_new("Category",$category_id);
+					$category = func_new("Category",$category_id);
 				} else {
 					$category = null;
 				}
@@ -214,12 +214,12 @@ class Admin_Dialog_SpecialOffer extends Admin_Dialog
 			foreach($this->get("changeBonusPrice") as $product_id => $price) {
 				list ($product_id, $category_id) = explode('_', $product_id);
 				if ($product_id) {
-					$product =& func_new("Product",$product_id);
+					$product = func_new("Product",$product_id);
 				} else {
 					$product = null;
 				}
 				if ($category_id) {
-					$category =& func_new("Category",$category_id);
+					$category = func_new("Category",$category_id);
 				} else {
 					$category = null;
 				}
@@ -240,12 +240,12 @@ class Admin_Dialog_SpecialOffer extends Admin_Dialog
 			$stayHere = true;
 			// add bonus price
 			if ($this->get("addBonusPriceProduct_id")) {
-				$product =& func_new("Product",$this->get("addBonusPriceProduct_id"));
+				$product = func_new("Product",$this->get("addBonusPriceProduct_id"));
 			} else {
 				$product = null;
 			}
 			if ($this->get("addBonusPriceCategory_id")) {
-				$category =& func_new("Category",$this->get("addBonusPriceCategory_id"));
+				$category = func_new("Category",$this->get("addBonusPriceCategory_id"));
 			} else {
 				$category = null;
 			}

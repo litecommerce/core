@@ -48,7 +48,7 @@ class Module_Affiliate_Dialog extends Dialog
     {
         parent::init();
         if ($_SERVER["REQUEST_METHOD"] == "GET" && $this->get("target") != "banner" && $this->get("target") != "product_banner" && !$this->xlite->is("adminZone") && isset($_GET["partner"]) && (!isset($_COOKIE["PartnerID"]) || (isset($_COOKIE["PartnerID"]) && $_COOKIE["PartnerID"] != $_GET["partner"]))) {
-            $stats =& func_new("BannerStats");
+            $stats = func_new("BannerStats");
             $stats->logClick();
             // issue a partner cookie
             if ($this->get("config.Affiliate.partner_cookie_lifetime")) {
@@ -73,10 +73,10 @@ class Module_Affiliate_Dialog extends Dialog
 		parent::redirect($url);
     }
 
-    function &getShopLayout()
+    function getShopLayout()
     {
         if (is_null($this->shopLayout)) {
-            $this->shopLayout =& func_get_instance("Layout");
+            $this->shopLayout = func_get_instance("Layout");
         }
         return $this->shopLayout;
     }

@@ -45,9 +45,9 @@
 */
 class Module_Affiliate_Admin_Dialog_users extends Admin_Dialog_users
 {
-    function &getUsers()
+    function getUsers()
     {
-        $users =& parent::getUsers();
+        $users = parent::getUsers();
         if ($this->user_type == "pendingPartner" && !is_null($this->pendingPartners)) {
             return $this->pendingPartners;
         } elseif ($this->user_type == "pendingPartner" && is_null($this->pendingPartners)) {

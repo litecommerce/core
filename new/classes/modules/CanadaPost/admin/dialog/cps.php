@@ -52,7 +52,7 @@ class Admin_Dialog_cps extends Admin_Dialog_shipping_settings // {{{
 	{
 		parent::constructor();
 
-		$cps =& func_new("Shipping_cps");
+		$cps = func_new("Shipping_cps");
 		$this->settings = $cps->get("options");
 	} // }}}
 	

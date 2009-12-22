@@ -56,11 +56,11 @@ class Admin_Dialog_banner extends Admin_Dialog
 
     function action_save_banner()
     {
-        $banner =& func_new("Banner");
+        $banner = func_new("Banner");
         $banner->set("properties", $_POST);
         $banner->create();
         
-        $img =& $banner->get("image");
+        $img = $banner->get("image");
         $img->handleRequest();
 
         // switch to modify banner mode
@@ -70,17 +70,17 @@ class Admin_Dialog_banner extends Admin_Dialog
 
     function action_update_banner()
     {
-        $banner =& $this->get("banner");
+        $banner = $this->get("banner");
         $banner->set("properties", $_POST);
         $banner->update();
-        $img =& $banner->get("image");
+        $img = $banner->get("image");
         $img->handleRequest();
     }
 
-    function &getBanner()
+    function getBanner()
     {
         if (is_null($this->banner)) {
-            $this->banner =& func_new("Banner", $this->get("banner_id"));
+            $this->banner = func_new("Banner", $this->get("banner_id"));
         }
         return $this->banner;
     }

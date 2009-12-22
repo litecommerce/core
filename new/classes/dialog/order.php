@@ -51,7 +51,7 @@ class Dialog_Order extends Dialog
     var $order = null;
     var $isAccessDenied = false;
 
-    function &getTemplate()
+    function getTemplate()
     {
         if ($this->get("mode") == "invoice") {
             // print invoice
@@ -75,7 +75,7 @@ class Dialog_Order extends Dialog
         $this->redirect("cart.php?mode=accessDenied");
     }
 
-    function &getOrder()
+    function getOrder()
     {
         if (is_null($this->order)) {
             $this->order = func_new("Order", $this->get("order_id"));

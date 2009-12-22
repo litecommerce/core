@@ -94,7 +94,7 @@ class Auth extends Object
     */
     function copyBillingInfo(&$profile) // {{{
     {
-        $properties =& $profile->get("properties");
+        $properties = $profile->get("properties");
         if (empty($properties["shipping_firstname"])) {
             $properties["shipping_title"] = "";
         }
@@ -155,7 +155,7 @@ class Auth extends Object
         $profile->create();
         if (!$anonymous) {
             // send signin mail notification to regular customer
-            $mailer =& func_new("Mailer");
+            $mailer = func_new("Mailer");
             // pass this data to the mailer
             $mailer->profile = $profile; 
 			$mailer->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
@@ -185,7 +185,7 @@ class Auth extends Object
     function modify(&$profile) // {{{
     {
         // check whether another user exists with the same login
-        $another =& func_new("Profile");
+        $another = func_new("Profile");
         $login = addslashes($profile->get("login"));
         $profile_id = $profile->get("profile_id");
         if ($another->find("login='$login' AND profile_id!='$profile_id'")) {
@@ -194,7 +194,7 @@ class Auth extends Object
         if ($this->session->get("anonymous")) {
             $this->clearAnonymousPassword($profile);
         } else {
-    		$another =& func_new("Profile", $profile->get("profile_id"));
+    		$another = func_new("Profile", $profile->get("profile_id"));
             if (strlen($another->get("password")) == 0) {
             	$this->clearAnonymousPassword($profile);
             }
@@ -210,7 +210,7 @@ class Auth extends Object
         $this->copyBillingInfo($profile);
 
         // update current shopping cart/order data
-        $cart =& func_get_instance("Cart");
+        $cart = func_get_instance("Cart");
         if ($cart->get("profile.order_id")) {
             $cart->call("profile.modifyProperties", $_REQUEST);
             $this->copyBillingInfo($cart->get("profile"));
@@ -224,7 +224,7 @@ class Auth extends Object
         $this->membershipSignup($profile);
 
         // send mail notification to customer
-        $mailer =& func_new("Mailer");
+        $mailer = func_new("Mailer");
         $mailer->set("profile", $profile);
 		$mailer->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
         $mailer->compose(
@@ -289,13 +289,13 @@ class Auth extends Object
         // read profile data
         $profile->read();
         // get current profile from session
-        $current =& $this->get("session.profile_id");
+        $current = $this->get("session.profile_id");
         if ($current == $profile->get("profile_id")) {
             // log off first
             $this->logoff();
         }
         // send mail notification about deleted profile to customer
-        $mailer =& func_new("Mailer");
+        $mailer = func_new("Mailer");
         $mailer->set("profile", $profile);
 		$mailer->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
         $mailer->compose(
@@ -365,7 +365,7 @@ class Auth extends Object
     * @param string $login The user"s login
     * @param  string $password The user"s password
     */
-    function &login($login, $password) // {{{
+    function login($login, $password) // {{{
     {
         $password = $this->encryptPassword($password);
         // check for the valid parameters
@@ -373,7 +373,7 @@ class Auth extends Object
             return ACCESS_DENIED;
         }
         // read profile data
-        $profile =& func_new("Profile");
+        $profile = func_new("Profile");
         // deny login if user not found
         if (!$profile->find("login='".addslashes($login)."' AND ". "password='".addslashes($password)."'")) {
         	if ($profile->find("login='".addslashes($login)."'")) {
@@ -405,7 +405,7 @@ class Auth extends Object
     * @param string $login The admin"s login
     * @param string $password The admin"s password
     */
-    function &adminLogin($login, $password) // {{{
+    function adminLogin($login, $password) // {{{
     {
         $profile = $this->login($login, $password);
         if ($profile == ACCESS_DENIED) {
@@ -425,7 +425,7 @@ class Auth extends Object
 
     function initHtaccessFiles()
     {
-        $htaccess =& func_new("Htaccess");
+        $htaccess = func_new("Htaccess");
         if(!$htaccess->hasImage()){
             $htaccess->makeImage();
         }
@@ -439,7 +439,7 @@ class Auth extends Object
     function sendFailedAdminLogin(&$profile) // {{{
     {
         // send mail notification about failed login to administrator
-        $mailer =& func_new("Mailer");
+        $mailer = func_new("Mailer");
         $mailer->set("login", isset($_POST["login"]) ? $_POST["login"] : "unknown");
         $mailer->set("REMOTE_ADDR", isset($_SERVER["REMOTE_ADDR"]) ? $_SERVER["REMOTE_ADDR"] : "unknown");
         $mailer->set("HTTP_X_FORWARDED_FOR", isset($_SERVER["HTTP_X_FORWARDED_FOR"]) ? $_SERVER["HTTP_X_FORWARDED_FOR"] : "unknown");
@@ -476,12 +476,12 @@ class Auth extends Object
         if (is_null($this->session->get("profile_id"))) {
         	return false;
         } else {
-        	$profile =& $this->getProfile($this->session->get("profile_id"));
+        	$profile = $this->getProfile($this->session->get("profile_id"));
         	return (is_object($profile)) ? true : false;
         }
     } // }}}
 
-    function &getProfile($profile_id = null) // {{{
+    function getProfile($profile_id = null) // {{{
     {
         static $profiles;
         if (!isset($profiles) || $this->_reReadProfiles()) {
@@ -496,7 +496,7 @@ class Auth extends Object
             return null; // not logged
         }
         if (!isset($profiles[$profile_id])) {
-        	$profile =& func_new("Profile", $profile_id);
+        	$profile = func_new("Profile", $profile_id);
         	if (!$profile->isValid()) {
         		$this->session->set("profile_id", 0);
             	return null; // not logged
@@ -585,7 +585,7 @@ class Auth extends Object
 
         $valid_ips = $this->get("xlite.config.SecurityIP.allow_admin_ip");
         if((!is_array($valid_ips) || count($valid_ips) < 1) && !$checkOnly){
-            $valid_ips_object =& func_new("Config");
+            $valid_ips_object = func_new("Config");
 			$admin_ip = serialize(array(array("ip" => $admin_ip, "comment" => "Default admin IP")));
             if($valid_ips_object->find("category = 'SecurityIP' AND name = 'allow_admin_ip'")){
                 $valid_ips_object->set("value", $admin_ip);
@@ -617,7 +617,7 @@ class Auth extends Object
 
             if(!$is_valid){
                 if ($checkOnly) return IP_INVALID;
-                $waiting_list =& func_new("WaitingIP");
+                $waiting_list = func_new("WaitingIP");
                 preg_match($ip_v4_regexp,$admin_ip, $admin_ip_bytes);
                 $admin_ip = isset($admin_ip_bytes[0]) ? $admin_ip_bytes[0] : '';
                 if(!$waiting_list->find("ip = '$admin_ip'")){
@@ -647,11 +647,11 @@ class Auth extends Object
 
     function requestRecoverPassword($email) // {{{
     {
-        $profile =& func_new("Profile");
+        $profile = func_new("Profile");
         if (!$profile->find("login='$email'")) {
             return false;
         }
-        $mailer =& func_new("Mailer");
+        $mailer = func_new("Mailer");
         $mailer->url = $this->xlite->shopURL("cart.php?target=recover_password&action=confirm&email=".urlencode($profile->get("login"))."&request_id=".$profile->get("password"));
 		$mailer->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
         $mailer->compose($this->config->get('Company.users_department'),
@@ -664,13 +664,13 @@ class Auth extends Object
     
     function recoverPassword($email, $requestID) // {{{
     {
-        $profile =& func_new("Profile");
+        $profile = func_new("Profile");
         if (!$profile->find("login='$email'") || $profile->get("password") != $requestID) {
             return false;
         }
 
         $pass = generate_code();
-        $mailer =& func_new("Mailer");
+        $mailer = func_new("Mailer");
         $mailer->set("email", $email);
         $mailer->set("new_password", $pass);
         $profile->set("password", md5($pass));

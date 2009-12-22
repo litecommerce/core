@@ -79,7 +79,7 @@ class ModulesManager extends Object
     * @access public
     * @return array The active modules.
     */
-    function &getActiveModules() // {{{
+    function getActiveModules() // {{{
     {
     	if (!isset($this->activeModulesHash) || $this->activeModulesNumber != count($this->activeModules)) {
             $this->activeModulesHash = array();
@@ -96,7 +96,7 @@ class ModulesManager extends Object
     	return ((is_array($this->activeModules)) ? count($this->activeModules) : 0);
     }
 
-    function &getModules() // {{{
+    function getModules() // {{{
     {
         return $this->modules;
     } // }}}
@@ -123,7 +123,7 @@ class ModulesManager extends Object
         while ($module->next($result)) {
             $name = $module->get("name");
             $modProperties = $module->getProperties();
-            $mod =& func_new("Module");
+            $mod = func_new("Module");
             $mod->setProperties($modProperties);
             $mod->isRead = true;
             if ($mod->is("enabled")) {
@@ -147,17 +147,17 @@ class ModulesManager extends Object
 	            $mod->clearModuleType($this->getPredefinedModuleType($mod->get("name")));
 	            $moduleType = $mod->get("type");
             	if ($mod->is("enabled") && !$this->get("safeMode")) {
-	            	$mod =& func_get_instance("Module_$name"); // define and init
+	            	$mod = func_get_instance("Module_$name"); // define and init
                     $mod->setProperties($modProperties);
                     $mod->isRead = true;
                 	$mod->init();
                 }
 				$mod->set("type", $moduleType);
             	if ($mod->is("enabled")) {
-                	$this->activeModules[$name] =& $mod;
+                	$this->activeModules[$name] = $mod;
                 }
             }
-			$this->modules[] =& $mod;
+			$this->modules[] = $mod;
         }
 
         $GLOBALS["modules_initialized"] = true;
@@ -210,7 +210,7 @@ EOT;
             return false;
         }
 
-        $upload    =& func_new('Upload', $_FILES['module_file']);
+        $upload = func_new('Upload', $_FILES['module_file']);
         $dest_file = 'var/tmp/'.$upload->getName();
         if (!$upload->move($dest_file)) {
             $this->error = $upload->getErrorMessage();
@@ -270,7 +270,7 @@ EOT;
         
         foreach ($dependencies as $depend) {
             $depend = trim($depend);
-            $depend_module =& func_new("Module");
+            $depend_module = func_new("Module");
             if (!($depend_module->find("name='$depend'") && $depend_module->get('enabled'))) {
                 $this->error = "dependency failed";
                 // $this->errorDependencies = array((object)array("module"=>$moduleName, "depend"=>$dependencies));
@@ -281,7 +281,7 @@ EOT;
             }
         }
         $GLOBALS["xlite_class_files"][strtolower("Module_$moduleName")] = "modules/$moduleName/$moduleName.php";
-        $module =& func_get_instance("Module_$moduleName");
+        $module = func_get_instance("Module_$moduleName");
         $moduleInstalled = $module->find("module_id=".$options["module_id"]);
         if ($moduleInstalled) {
         	$moduleEnabled = $module->get("enabled");
@@ -338,9 +338,9 @@ EOT;
     function uninstallModule($moduleName) // {{{
     {
         $this->moduleName = $moduleName;
-        $module =& func_get_instance("Module_$moduleName", $moduleName);
+        $module = func_get_instance("Module_$moduleName", $moduleName);
         if (!is_object($module)) {
-            $module =& func_new("Module", $moduleName);
+            $module = func_new("Module", $moduleName);
         }
         foreach ($this->getModules() as $currentModule) {
             if ($currentModule->isDependsOn($moduleName) === true) {

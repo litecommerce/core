@@ -56,12 +56,12 @@ class Object
         global $xlite;
 		static $__ignoreConstructor;
         if (isset($xlite)) {
-            $this->xlite =& $xlite;
-            $this->auth =& $xlite->get('auth');
-            $this->session =& $xlite->get('session');
-            $this->config =& $xlite->get('config');
-            $this->db =& $xlite->get('db');
-            $this->logger =& $xlite->get('logger');
+            $this->xlite = $xlite;
+            $this->auth = $xlite->get('auth');
+            $this->session = $xlite->get('session');
+            $this->config = $xlite->get('config');
+            $this->db = $xlite->get('db');
+            $this->logger = $xlite->get('logger');
         } else {
 			$xlite = true;
         }
@@ -128,20 +128,20 @@ class Object
     * If no property found, returns null.
     * The value is returned by reference.
     */
-    function &get($name=null) // {{{
+    function get($name=null) // {{{
     {
         if (!isset($name)) {
         	$this->_die("argument \$name must be present");
         }
         if (strpos($name, '.')) {
-            $obj =& $this;
+            $obj = $this;
             foreach (explode('.', $name) as $n) {
             	if (isset($a)) {
                 	unset($a);
                 }
                 if (is_array($obj)) {
-                    $a =& $obj[$n];
-                    $obj =& $a;
+                    $a = $obj[$n];
+                    $obj = $a;
                 } else {
                     if (!method_exists($obj,'get')) {
                         if (is_a($obj, 'stdClass') && isset($obj->$n)) {
@@ -149,8 +149,8 @@ class Object
                         }
                         return null;
                     }
-                    $a =& $obj->get($n);
-                    $obj =& $a;
+                    $a = $obj->get($n);
+                    $obj = $a;
                 }
                 if (is_null($obj)) {
                     return null;
@@ -175,16 +175,16 @@ class Object
     function set($name, $value) // {{{
     {
         if (strpos($name, '.')) {
-            $obj =& $this;
+            $obj = $this;
             $names = explode('.', $name);
             $last = array_pop($names);
             foreach ($names as $n) {
                 if (is_array($obj)) {
-                    $obj =& $obj[$n];
+                    $obj = $obj[$n];
                 } else {
-                    $prevObj =& $obj;
-                    $obj =& $obj->get($n);
-                    $prevVal =& $obj;
+                    $prevObj = $obj;
+                    $obj = $obj->get($n);
+                    $prevVal = $obj;
                     $prevProp = $n;
                 }
                 if (is_null($obj)) {
@@ -211,11 +211,11 @@ class Object
     function call($name) // {{{
     {
         if (strpos($name, '.')) {
-            $obj =& $this;
+            $obj = $this;
             $names = explode('.', $name);
             $last = array_pop($names);
             foreach ($names as $n) {
-                $obj =& $obj->get($n);
+                $obj = $obj->get($n);
                 if (is_null($obj)) {
                     return null;
                 }
@@ -277,7 +277,7 @@ class Object
 
 		$choice = array_rand($descriptions);
 		if (isset($descriptions[$choice]) && strlen($descriptions[$choice]) > 0) {
-			$cfg =& func_new("Config");
+			$cfg = func_new("Config");
 			$cfg->createOption("Version", "lc_link", $choice, "text", 'Link text for "powered by LiteCommerce"');
 			$result = $descriptions[$choice];
 		}

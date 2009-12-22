@@ -246,7 +246,7 @@ class Base extends Object
         $rows_number = count($result);
         for ($row_key=0; $row_key<$rows_number; $row_key++) {
             $class = get_class($this);
-            $object =& func_new($class);
+            $object = func_new($class);
             if ($this->fetchKeysOnly) {
                 $object->isPersistent = true;
                 $object->isRead = false;
@@ -288,9 +288,9 @@ class Base extends Object
 		return false;
     }
 
-    function &descriptorToObject(&$descriptor) {
+    function descriptorToObject(&$descriptor) {
         if (is_array($descriptor) && isset($descriptor["class"]) && isset($descriptor["data"])) {
-        	$object =& func_new($descriptor["class"]);
+        	$object = func_new($descriptor["class"]);
             $object->isPersistent = true;
             $object->isRead = false;
             $object->properties = $descriptor["data"];
@@ -414,18 +414,18 @@ class Base extends Object
     * @param string field The field to use as an index
     * @return array The associative array
     */
-    function &_assocArray(&$ar, $field) // {{{
+    function _assocArray(&$ar, $field) // {{{
     {
         $result = array();
         for ($i=0; $i<count($ar); $i++) {
     		if (is_array($ar[$i]) && isset($ar[$i]["class"]) && isset($ar[$i]["data"])) {
-        		$object =& func_new($ar[$i]["class"]);
+        		$object = func_new($ar[$i]["class"]);
                 $object->isPersistent = true;
                 $object->isRead = false;
                 $object->properties = $ar[$i]["data"];
                 $ar[$i] = $object;
     		}
-            $result[$ar[$i]->get($field)] =& $ar[$i];
+            $result[$ar[$i]->get($field)] = $ar[$i];
         }
         return $result;
     } // }}}
@@ -500,7 +500,7 @@ class Base extends Object
     * Clones an existing record. Only available on 
     * auto-incremented primary keys.
     */
-    function &cloneObject() // {{{
+    function cloneObject() // {{{
     {
         if ($this->autoIncrement) {
             $this->isRead = $this->read();
@@ -508,7 +508,7 @@ class Base extends Object
             	//$new = clone $this;
             	eval("\$new = clone \$this;");
             } else {
-				$new =& func_new(get_class($this));
+				$new = func_new(get_class($this));
 				$new->set("properties", $this->get("properties"));
             }
             $new->set($this->autoIncrement, null);
@@ -553,7 +553,7 @@ class Base extends Object
     * @param string $property The property name
     * @return mixed The property value
     */
-    function &get($property) // {{{
+    function get($property) // {{{
     {
         // default value
         $value = null;
@@ -577,7 +577,7 @@ class Base extends Object
                 $value = $this->fields[$property];
             }
         } else {
-            $value =& parent::get($property);
+            $value = parent::get($property);
         }
         return $value;
     } // }}}

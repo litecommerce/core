@@ -49,7 +49,7 @@ class Dialog_add_gift_certificate extends Dialog
     var $params = array('target', 'gcid');
 	var $gc = null;
     
-    function &getGC()
+    function getGC()
     {
         if (is_null($this->gc)) {
             if ($this->get("gcid")) {
@@ -59,9 +59,9 @@ class Dialog_add_gift_certificate extends Dialog
                 $this->gc = func_new("GiftCertificate");
                 $this->gc->set("send_via", "E");
                 $this->gc->set("border", "no_border");
-                $auth =& func_get_instance("Auth");
+                $auth = func_get_instance("Auth");
                 if ($auth->isLogged()) {
-                    $profile =& $auth->get("profile");
+                    $profile = $auth->get("profile");
                     $this->gc->set("purchaser", $profile->get("billing_title") . " " . $profile->get("billing_firstname") . " " . $profile->get("billing_lastname"));
                 }
                 $this->gc->set("recipient_country", $this->config->get("General.default_country"));
@@ -79,7 +79,7 @@ class Dialog_add_gift_certificate extends Dialog
     {
         if (is_null($this->get("gc")))
             return false;
-        $items =& $this->cart->get("items");
+        $items = $this->cart->get("items");
         $found = false;
         for ($i=0; $i<count($items); $i++) {
             if ($items[$i]->get("gcid") == $this->get("gc.gcid")) {
@@ -95,7 +95,7 @@ class Dialog_add_gift_certificate extends Dialog
         $this->saveGC();
 
         $found = false;
-		$items =& $this->cart->get("items");
+		$items = $this->cart->get("items");
 		for ($i=0; $i<count($items); $i++) {
 			if ($items[$i]->get("gcid") == $this->get("gc.gcid")) {
 				$items[$i]->set("GC", $this->get("gc"));
@@ -111,7 +111,7 @@ class Dialog_add_gift_certificate extends Dialog
 		if ($this->cart->isPersistent) {
 			$this->cart->calcTotals();
 			$this->cart->update();
-    		$items =& $this->cart->get("items");
+    		$items = $this->cart->get("items");
     		for ($i=0; $i<count($items); $i++) {
     			if ($items[$i]->get("gcid") == $this->get("gc.gcid")) {
     				$this->cart->updateItem($items[$i]);
@@ -131,7 +131,7 @@ class Dialog_add_gift_certificate extends Dialog
     {
         $this->saveGC();
 		if (!is_null($this->get("gc"))) {
-			$gc =& $this->get("gc");
+			$gc = $this->get("gc");
             $gc->set("ecard_id", 0);
             $gc->update();
             $this->set("returnUrl", "cart.php?target=add_gift_certificate&gcid=" . $gc->get("gcid"));
@@ -150,7 +150,7 @@ class Dialog_add_gift_certificate extends Dialog
             $_REQUEST["border"] = str_replace(array(".","/"), array("",""), $_REQUEST["border"]);
         }
 		if (!is_null($this->get("gc"))) {
-			$gc =& $this->get("gc");
+			$gc = $this->get("gc");
     		$gc->setProperties($_REQUEST);
     		$gc->set("status", "D");
     		$gc->set("debit", $gc->get("amount"));
@@ -173,14 +173,14 @@ class Dialog_add_gift_certificate extends Dialog
     function getCountriesStates() {
         $countriesArray = array();
 
-        $country =& func_new("Country");
-        $countries =& $country->findAll("enabled='1'");
+        $country = func_new("Country");
+        $countries = $country->findAll("enabled='1'");
         foreach($countries as $country) {
             $countriesArray[$country->get("code")]["number"] = 0;
             $countriesArray[$country->get("code")]["data"] = array();
 
-            $state =& func_new("State");
-            $states =& $state->findAll("country_code='".$country->get("code")."'");
+            $state = func_new("State");
+            $states = $state->findAll("country_code='".$country->get("code")."'");
             if (is_array($states) && count($states) > 0) {
                 $countriesArray[$country->get("code")]["number"] = count($states);
                 foreach($states as $state) {

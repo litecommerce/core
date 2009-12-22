@@ -83,10 +83,10 @@ class AuthorizeNet_processor extends Object
     function handleConfigRequest()
     {
         $params = $_POST["params"];
-        $pm =& func_new("PaymentMethod", "authorizenet_cc");
+        $pm = func_new("PaymentMethod", "authorizenet_cc");
         $pm->set("params", $params);
         $pm->update();
-        $pm =& func_new("PaymentMethod", "authorizenet_ch");
+        $pm = func_new("PaymentMethod", "authorizenet_ch");
         $pm->set("params", $params);
         $pm->update();
     }

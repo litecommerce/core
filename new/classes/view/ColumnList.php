@@ -57,10 +57,10 @@ class CColumnList extends Component
         return $columns;
     }
 
-    function &getColumnsData($column)
+    function getColumnsData($column)
     {
         if ($this->get("columnCount") > 1) {
-            $data =& $this->get("data");
+            $data = $this->get("data");
             $columns = $this->get("columnCount");
             $cnt = ceil(count($data) / $columns);
             $pages = array_chunk($data, $cnt);
@@ -70,7 +70,7 @@ class CColumnList extends Component
                 return array();
             }
         }
-        $data =& $this->get("data");
+        $data = $this->get("data");
         return $data;
     }
 }

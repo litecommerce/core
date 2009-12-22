@@ -54,7 +54,7 @@ class CImageUpload extends Component
     {
         $field = $this->get("field");
         $method = "has$field";
-        $object =& $this->get("object");
+        $object = $this->get("object");
         if (is_object($object) && method_exists($object, $method)) {
             return $object->$method();
         }
@@ -64,7 +64,7 @@ class CImageUpload extends Component
     function isFS()
     {
         $field = $this->get("field");
-        $object =& $this->get("object");
+        $object = $this->get("object");
         return $this->get("object.$field.defaultSource") == "F";
     }
 }

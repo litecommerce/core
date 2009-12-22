@@ -61,7 +61,7 @@ class PaymentMethod_beanstream_cc extends PaymentMethod_credit_card
     function handleConfigRequest()
     {
 		$params = $_POST['params'];
-		$pm =& func_new('PaymentMethod', 'beanstream_cc');
+		$pm = func_new('PaymentMethod', 'beanstream_cc');
 		$pm->set('params', $params);
 		$pm->update();
     }

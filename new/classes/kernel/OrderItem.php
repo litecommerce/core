@@ -94,7 +94,7 @@ class OrderItem extends Base
         }
     }
 
-    function &getProduct()
+    function getProduct()
     {
         if (is_null($this->product) && $this->get("product_id")) {
             $this->product = func_new("Product", $this->get("product_id"));
@@ -162,7 +162,7 @@ class OrderItem extends Base
     function getRealProduct()
     {
 		$this->realProduct = null;
-    	$product =& func_new("Product");
+    	$product = func_new("Product");
         $product->find("product_id='".$this->get("product_id")."'");
     	if ($product->get("product_id") == $this->get("product_id")) {
     		$this->realProduct = $product;
@@ -171,7 +171,7 @@ class OrderItem extends Base
 		return false;
     }
 
-    function &get($name)
+    function get($name)
     {
 		if ($name == 'name' || $name == 'brief_description' || 
             $name == 'description' || $name == 'sku') {

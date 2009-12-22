@@ -50,7 +50,7 @@ class Module_AntiFraud_Admin_Dialog_order_list extends Admin_Dialog_order_list
 			parent::init();			
 		}
 		
-	    function &getOrders() 
+	    function getOrders() 
 		{
 			$orders = parent::getOrders();
 			

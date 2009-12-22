@@ -64,7 +64,7 @@ class Module_UPSOnlineTools_Admin_Dialog_product extends Admin_Dialog_product
 				"length" => $product->get("ups_length"),
 				"handle_care" => $product->get("ups_handle_care")
 			);
-			$item =& func_new("PackItem");
+			$item = func_new("PackItem");
 			$item->set("properties", $properties);
 			$fake_items[] = $item;
 
@@ -116,14 +116,14 @@ class Module_UPSOnlineTools_Admin_Dialog_product extends Admin_Dialog_product
 		$properties["ups_add_handling"] = (($this->get("ups_add_handling")) ? 1 : 0);
 		$properties["ups_declared_value_set"] = (($this->get("ups_declared_value_price")) ? 0 : 1);
 
-		$product =& $this->get("product");
+		$product = $this->get("product");
 		$product->set("properties", $properties);
 		$product->update();
 	}
 
 	function getUPSPackagingList()
 	{
-		$ups =& func_new("Shipping_ups");   
+		$ups = func_new("Shipping_ups");   
 
 
 		$list = array();
@@ -136,7 +136,7 @@ class Module_UPSOnlineTools_Admin_Dialog_product extends Admin_Dialog_product
 
 	function getCurrentPackaging()
 	{
-		$ups =& func_new("Shipping_ups");
+		$ups = func_new("Shipping_ups");
 		$dims = $ups->getUPSContainerDims($this->get("product.ups_packaging"));
 
 		return $dims;

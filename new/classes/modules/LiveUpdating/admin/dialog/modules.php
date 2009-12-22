@@ -67,7 +67,7 @@ class Admin_Dialog_modules_LiveUpdating extends Admin_Dialog_modules
 
 		if (!isset($this->_modulesInfo)) {
     		if (!isset($this->_LUDialog)) {
-    			$this->_LUDialog =& func_new("Admin_Dialog_LiveUpdating");
+    			$this->_LUDialog = func_new("Admin_Dialog_LiveUpdating");
     		}
 
     		$this->_modulesInfo = $this->_LUDialog->getModulesInfo();
@@ -113,7 +113,7 @@ class Admin_Dialog_modules_LiveUpdating extends Admin_Dialog_modules
 			if (empty($moduleName))
 				return;
 
-			$obj =& func_new("SystemUpdate");
+			$obj = func_new("SystemUpdate");
 			$updates = $obj->findAll("type='module' AND module_name LIKE ('".$moduleName." %')");
 			if (is_array($updates) && count($updates) > 0) {
 				foreach ($updates as $update) {
@@ -124,7 +124,7 @@ class Admin_Dialog_modules_LiveUpdating extends Admin_Dialog_modules
 			$mlast = $this->xlite->get("config.LiveUpdating.modules_last_update");
 			if (is_array($mlast) && array_key_exists($moduleName, $mlast)) {
 				$mlast[$moduleName]["last_update"] = "";
-				$config =& func_new("Config");
+				$config = func_new("Config");
 				$config->createOption("LiveUpdating", "modules_last_update", serialize($mlast), "serialized");
 			}
 		}

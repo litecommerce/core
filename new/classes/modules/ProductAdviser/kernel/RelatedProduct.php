@@ -59,7 +59,7 @@ class RelatedProduct extends Base
     function filter()
     {
     	if (is_null($this->product)) {
-        	$this->product =& func_new("Product", $this->get("product_id"));
+        	$this->product = func_new("Product", $this->get("product_id"));
         }
     	if (is_object($this->product)) {
         	return $this->product->filter();
@@ -70,7 +70,7 @@ class RelatedProduct extends Base
 
 	function cleanRelations($product_id)
 	{
-		$objs =& $this->findAll("product_id='$product_id' OR related_product_id='$product_id'");
+		$objs = $this->findAll("product_id='$product_id' OR related_product_id='$product_id'");
 		foreach ($objs as $obj) {
 			$obj->delete();
 		}

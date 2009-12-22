@@ -54,7 +54,7 @@ class Module_PayFlowLink extends Module
     {
         parent::init();
 
-        $pm =& func_new("PaymentMethod");
+        $pm = func_new("PaymentMethod");
         $pm->registerMethod("payflowlink");
     }
 
@@ -77,9 +77,9 @@ class Module_PayFlowLink extends Module
     	return $this->_kernelNonSuppVersion;
     }
     
-    function &get($name)
+    function get($name)
     {
-		$value =& parent::get($name);
+		$value = parent::get($name);
     	if ($name == "type" && $this->isOldKernel()) {
     		$value = MODULE_COMMERCIAL_PAYMENT;
     	}

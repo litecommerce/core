@@ -48,7 +48,7 @@ class Module_PayFlowPro extends Module
 	var $minVer = "2.0";
 	var $showSettingsForm = true;
 
-	function &getSettingsForm() // {{{ 
+	function getSettingsForm() // {{{ 
 	{
 		return "admin.php?target=payment_method&payment_method=payflowpro_cc";
 
@@ -58,7 +58,7 @@ class Module_PayFlowPro extends Module
     {
         
         parent::init();
-        $pm =& func_new('PaymentMethod');
+        $pm = func_new('PaymentMethod');
         $pm->registerMethod("payflowpro_cc");
 
 		$this->xlite->set("PayFlowProEnabled",true);
@@ -83,9 +83,9 @@ class Module_PayFlowPro extends Module
     	return $this->_kernelNonSuppVersion;
     }
     
-    function &get($name)
+    function get($name)
     {
-		$value =& parent::get($name);
+		$value = parent::get($name);
     	if ($name == "type" && $this->isOldKernel()) {
     		$value = MODULE_COMMERCIAL_PAYMENT;
     	}

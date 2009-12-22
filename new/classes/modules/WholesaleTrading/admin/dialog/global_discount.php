@@ -47,14 +47,14 @@ class Admin_Dialog_global_discount extends Admin_Dialog
 {
     function getGlobalDiscounts()
     {
-		$gd =& func_new('GlobalDiscount');
+		$gd = func_new('GlobalDiscount');
 		$gd->defaultOrder = "subtotal";
 		return $gd->findAll();
 	}
 											
 	function action_add()
 	{
-		$gd =& func_new('GlobalDiscount');
+		$gd = func_new('GlobalDiscount');
 		$gd->set('subtotal', $_POST['discount_subtotal']);
 		$gd->set('discount', abs($_POST['discount_value']));
 		$gd->set('discount_type', $_POST['discount_type']);
@@ -64,7 +64,7 @@ class Admin_Dialog_global_discount extends Admin_Dialog
 
 	function action_update()
 	{
-		$gd =& func_new('GlobalDiscount', $_POST["discount_id"]);
+		$gd = func_new('GlobalDiscount', $_POST["discount_id"]);
 		$gd->set('subtotal', $_POST['gd_subtotal']);
 		$gd->set('discount', abs($_POST['gd_value']));
 		$gd->set('discount_type', $_POST['gd_type']);
@@ -74,7 +74,7 @@ class Admin_Dialog_global_discount extends Admin_Dialog
 
 	function action_delete()
 	{
-		$gd =& func_new('GlobalDiscount', $_POST["discount_id"]);
+		$gd = func_new('GlobalDiscount', $_POST["discount_id"]);
 		$gd->delete();
 	}
 }

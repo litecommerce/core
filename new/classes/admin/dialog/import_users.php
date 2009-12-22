@@ -86,7 +86,7 @@ class Admin_Dialog_import_users extends Admin_Dialog
     function change_layout($layout_name = "user_layout")
     {
         $layout = implode(',', $_POST[$layout_name]);
-        $this->config =& func_new("Config");
+        $this->config = func_new("Config");
         if ($this->config->find("name='$layout_name'")) {
             $this->config->set("value", $layout);
             $this->config->update();

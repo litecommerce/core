@@ -61,10 +61,10 @@ class Dialog_checkoutSuccess extends Dialog
         }
     }
 
-    function &getOrder()
+    function getOrder()
     {
         if (!isset($this->order)) {
-            $this->order =& func_new("Order", $this->get("order_id"));
+            $this->order = func_new("Order", $this->get("order_id"));
         }
         return $this->order;
     }

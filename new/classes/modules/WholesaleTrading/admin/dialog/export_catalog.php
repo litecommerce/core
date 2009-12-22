@@ -63,15 +63,15 @@ class Module_WholesaleTrading_Admin_Dialog_export_catalog extends Admin_dialog_e
 
     	switch ($this->get("page")) {
     		case "export_wholesale_pricing":
-    			$wp =& func_new("WholesalePricing");
+    			$wp = func_new("WholesalePricing");
                 $wp->collectGarbage();
     		break;
     		case "export_product_access":
-    			$pa =& func_new("ProductAccess");
+    			$pa = func_new("ProductAccess");
                 $pa->collectGarbage();
     		break;
             case "export_purchase_limit":
-                $pl =& func_new("PurchaseLimit");
+                $pl = func_new("PurchaseLimit");
                 $pl->collectGarbage();
             break;
     	}
@@ -138,10 +138,10 @@ class Module_WholesaleTrading_Admin_Dialog_export_catalog extends Admin_dialog_e
         global $DATA_DELIMITERS;
 
         // save layout & export
-        $dlg =& func_new("Admin_Dialog_import_catalog");
+        $dlg = func_new("Admin_Dialog_import_catalog");
         $dlg->action_layout("wholesale_pricing_layout");
         $this->startDownload("wholesale_pricing.csv");
-        $wp =& func_new("WholesalePricing");
+        $wp = func_new("WholesalePricing");
         $wp->export($this->wholesale_pricing_layout, $DATA_DELIMITERS[$this->delimiter], null, "product_id");
         exit();
     }
@@ -151,11 +151,11 @@ class Module_WholesaleTrading_Admin_Dialog_export_catalog extends Admin_dialog_e
         global $DATA_DELIMITERS;
 
         // save layout & export
-        $dlg =& func_new("Admin_Dialog_import_catalog");
+        $dlg = func_new("Admin_Dialog_import_catalog");
         $dlg->action_layout("product_access_layout");
         $this->startDownload("product_access.csv");
         
-        $pa =& func_new("ProductAccess");
+        $pa = func_new("ProductAccess");
         $pa->export($this->product_access_layout, $DATA_DELIMITERS[$this->delimiter], null, 'product_id');
         exit();
     }
@@ -164,10 +164,10 @@ class Module_WholesaleTrading_Admin_Dialog_export_catalog extends Admin_dialog_e
         global $DATA_DELIMITERS;
 
         // save layout & export
-        $dlg =& func_new("Admin_Dialog_import_catalog");
+        $dlg = func_new("Admin_Dialog_import_catalog");
         $dlg->action_layout("purchase_limit_layout");
         $this->startDownload("purchase_limit.csv");
-        $pl =& func_new("PurchaseLimit");
+        $pl = func_new("PurchaseLimit");
         $pl->export($this->purchase_limit_layout, $DATA_DELIMITERS[$this->delimiter], null, "product_id");
         exit();
     }

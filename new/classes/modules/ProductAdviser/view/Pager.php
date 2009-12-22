@@ -48,9 +48,9 @@ class CPAPager extends CPager
         parent::initView();
     }
 
-    function &get($name)
+    function get($name)
     {
-    	$result =& parent::get($name); 
+    	$result = parent::get($name); 
 
     	if ($name == "pageID" && parent::get("pageIDX")) {
     		$result = isset($_REQUEST[parent::get("pageIDX")]) ? $_REQUEST[parent::get("pageIDX")] : 0; 
@@ -71,7 +71,7 @@ class CPAPager extends CPager
     	}
     }
 
-    function &getPageUrls()
+    function getPageUrls()
     {
     	if (parent::get("pageIDX")) {
             $result = array();
@@ -80,7 +80,7 @@ class CPAPager extends CPager
 			if (parent::get("extraParameter") && isset($_REQUEST[parent::get("extraParameter")])) {
 				$params[parent::get("extraParameter")] = $_REQUEST[parent::get("extraParameter")];
 			}
-            $dialog =& $this->get("dialog");
+            $dialog = $this->get("dialog");
             for ($i = 0; $i < count($this->get("pages")); $i++) {
                 if ($i == 0) {
                     $params[parent::get("pageIDX")] = null; // exclude pageID for the first page
@@ -95,7 +95,7 @@ class CPAPager extends CPager
 			if (parent::get("extraParameter") && isset($_REQUEST[parent::get("extraParameter")])) {
 				$params[parent::get("extraParameter")] = $_REQUEST[parent::get("extraParameter")];
 			}
-            $dialog =& $this->get("dialog");
+            $dialog = $this->get("dialog");
             for ($i = 0; $i < count($this->get("pages")); $i++) {
                 if ($i == 0) {
                     $params["pageID"] = null; // exclude pageID for the first page

@@ -58,7 +58,7 @@ class Admin_Dialog_categories_FlyoutCategories extends Admin_Dialog_categories
 	{
 		if ( is_null($this->_scheme) ) {
 			$scheme_id = $this->get("config.FlyoutCategories.scheme");
-			$this->_scheme =& func_new("FCategoriesScheme", $scheme_id);
+			$this->_scheme = func_new("FCategoriesScheme", $scheme_id);
 		}
 
 		return $this->_scheme;
@@ -163,14 +163,14 @@ class Admin_Dialog_categories_FlyoutCategories extends Admin_Dialog_categories
 		if ($this->get("auto_generate")) {
 			$width = $this->xlite->get("config.FlyoutCategories.smallimage_width");
 
-			$co =& func_new("Category");
+			$co = func_new("Category");
 			$categories = $co->findAll();
 
 			foreach ($categories as $category) {
 				if (!$category->get("smallimage_auto"))
 					continue;
 
-				$image =& $category->get("image");
+				$image = $category->get("image");
 				$category->resizeSmallImage($width, $image, (($category->get("smallimage_source") == "F") ? true : false));
 			}
 		}
@@ -220,7 +220,7 @@ class Admin_Dialog_categories_FlyoutCategories extends Admin_Dialog_categories
 
 	function setFlyoutCategoriesCacheCondition($conditions)
 	{
-		$profile =& $this->xlite->auth->get("profile");
+		$profile = $this->xlite->auth->get("profile");
 		if (is_object($profile)) {
 			$profile->_FlyoutCategories_membership = $conditions["membership"];
 		}
@@ -232,7 +232,7 @@ class Admin_Dialog_categories_FlyoutCategories extends Admin_Dialog_categories
 
 	function cleanFlyoutCategoriesCacheCondition()
 	{
-		$profile =& $this->xlite->auth->get("profile");
+		$profile = $this->xlite->auth->get("profile");
 		if (is_object($profile)) {
 			$profile->_FlyoutCategories_membership = null;
 		}
@@ -249,7 +249,7 @@ class Admin_Dialog_categories_FlyoutCategories extends Admin_Dialog_categories
 	{
 		$this->customerLayout = null;
 
-		$config = &func_new("Config");
+		$config = func_new("Config");
 		$config->createOption("FlyoutCategories", "last_categories_processed", 0);
 
 		if ($this->get("config.FlyoutCategories.scheme") <= 0)
@@ -279,7 +279,7 @@ class Admin_Dialog_categories_FlyoutCategories extends Admin_Dialog_categories
 		$this->customerLayout = $this->getCustomerLayout();
 
 		// Drop "Flyout Categories build" flag
-		$config = &func_new("Config");
+		$config = func_new("Config");
 		$config->createOption("FlyoutCategories", "flyout_categories_built", 0);
 
 		$success = true;
@@ -316,7 +316,7 @@ class Admin_Dialog_categories_FlyoutCategories extends Admin_Dialog_categories
 
 		// Set "Flyout Categories built" flag
 		if ( $success ) {
-			$config = &func_new("Config");
+			$config = func_new("Config");
 			$config->createOption("FlyoutCategories", "flyout_categories_built", 1);
 			$config->createOption("FlyoutCategories", "category_changed", 0);
 			$config->createOption("FlyoutCategories", "last_categories_processed", $this->_categories_processed);
@@ -398,7 +398,7 @@ function opera_click() {
 		$catalog_path = $this->get_fc_catalog_path();
 
 		// drop and create catalog
-		$fNode =& func_new("FileNode");
+		$fNode = func_new("FileNode");
 		$fNode->path = $catalog_path; //customerLayout->getPath() . "/modules/FlyoutCategories/$catalog";
 		$fNode->remove();
 		$fNode->createDir();
@@ -422,7 +422,7 @@ function opera_click() {
 						}
 
         				if ($item->is_first) {
-                            $template =& func_new("Object");
+                            $template = func_new("Object");
 
         					// Set Advanced options
         					$options = $scheme->get("options");
@@ -465,7 +465,7 @@ function opera_click() {
 							$template->set("imagesPath", "$catalog_path/images/");
 							$template->set("zIndex", $this->getZIndex());
         				}
-                        $item->category =& func_new("Category", $item->category_id);
+                        $item->category = func_new("Category", $item->category_id);
 
         				if ( !$this->get("silent") )
         	                echo "[<b>" . $item->category->get("stringPath") . "</b>] <font color=green>OK</font><br>";
@@ -510,7 +510,7 @@ function opera_click() {
 		} // $scheme->get("explorer")
 
 		// copy additional template/image files
-		$fNode =& func_new("FileNode");
+		$fNode = func_new("FileNode");
 		$files = array("categories.tpl", "style.css", "script.js", "image.tpl", "images", "styles", "script");
 		foreach($files as $file) {
 			$fNode->path = $scheme->get("templates") . "/" . $file;
@@ -544,7 +544,7 @@ function opera_click() {
 			$depth = $v->depth;
 
 			$nodes[$k] = (array)$v;
-			$category =& func_new("Category", $v->category_id);
+			$category = func_new("Category", $v->category_id);
 			$nodes[$k]["name"] = $category->get("name");
 			$category = null;
 
@@ -622,7 +622,7 @@ function opera_click() {
 				$scheme->$k = $v["value"];
 			}
 
-			$template =& func_new("Object");
+			$template = func_new("Object");
 			$template->set("scheme", $scheme);
 			$template->set("nodes", $nodes);
 
@@ -659,11 +659,11 @@ function opera_click() {
     function compile($template)
     {
         // replace layout with mailer skinned
-     	$layout =& func_get_instance("Layout");
+     	$layout = func_get_instance("Layout");
         $skin = $layout->get("skin");
         $layout->set("skin", $this->customerLayout->get("skin"));
 
-        $component =& func_new("Component");
+        $component = func_new("Component");
         
         $component->template = $template->get("template");
         $component->init();
@@ -679,13 +679,13 @@ function opera_click() {
         return $text;
     }
 
-	function &getCustomerLayout()
+	function getCustomerLayout()
 	{
 		if (!is_null($this->customerLayout)) {
 			return $this->customerLayout;
 		}
 
-        $this->customerLayout =& func_new("Layout");
+        $this->customerLayout = func_new("Layout");
 		$this->xlite->set("adminZone", false);
         $this->customerLayout->initFromGlobals();
 		$this->xlite->set("adminZone", true);
@@ -718,7 +718,7 @@ function opera_click() {
 		FlyoutCategories_processTreeItem($this, $item);
     }
 
-	function &buildTree(&$parent)
+	function buildTree(&$parent)
 	{
 		include_once "modules/FlyoutCategories/encoded.php";
 		return FlyoutCategories_buildTree($this, $parent);

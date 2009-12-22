@@ -83,9 +83,9 @@ class PartnerPayment extends Base
     // sends payment nofitication
     function notifyPartner() // {{{
     {
-        $mail =& func_new("Mailer");
-        $mail->payment =& $this;
-        $mail->partner =& func_new("Profile", $this->get("partner_id"));
+        $mail = func_new("Mailer");
+        $mail->payment = $this;
+        $mail->partner = func_new("Profile", $this->get("partner_id"));
         $mail->compose(
                 $this->config->get("Company.orders_department"),
                 $mail->get("partner.login"),
@@ -105,39 +105,39 @@ class PartnerPayment extends Base
         return parent::filter();
     } // }}}
 
-    function &getPartner() // {{{
+    function getPartner() // {{{
     {
         if (is_null($this->partner)) {
-            $this->partner =& func_new("Profile", $this->get("partner_id"));
+            $this->partner = func_new("Profile", $this->get("partner_id"));
         }
         return $this->partner;
     } // }}}
 
-    function &getAffiliates() // {{{
+    function getAffiliates() // {{{
     {
         if (is_null($this->affiliates)) {
             $this->affiliates = array();
             $level = 1;
             foreach ($this->findAll("order_id=".$this->get("order_id"), "affiliate") as $p) {
-                $this->affiliates[$level] =& $p->get("partner");
+                $this->affiliates[$level] = $p->get("partner");
                 $level++;
             }
         }
         return $this->affiliates;
     } // }}}
     
-    function &getParent() // {{{
+    function getParent() // {{{
     {
         if (is_null($this->parent)) {
-            $this->parent =& func_new("Profile", $this->get("affiliate"));
+            $this->parent = func_new("Profile", $this->get("affiliate"));
         }
         return $this->parent;
     } // }}}
 
-    function &getOrder() // {{{
+    function getOrder() // {{{
     {
         if (is_null($this->order)) {
-            $this->order =& func_new("Order", $this->get("order_id"));
+            $this->order = func_new("Order", $this->get("order_id"));
         }
         return $this->order;
     } // }}}
@@ -209,7 +209,7 @@ class PartnerPayment extends Base
     function _import($options) // {{{
     {
         $data = $options["properties"];
-        $w =& func_new("Widget");
+        $w = func_new("Widget");
 
         static $line_no;
         if (!isset($line_no)) $line_no = 1; else $line_no++;

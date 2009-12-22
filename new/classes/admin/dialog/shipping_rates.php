@@ -57,7 +57,7 @@ class Admin_Dialog_shipping_rates extends Admin_Dialog_shipping_settings
         return "shipping/charges.tpl";
     }
 
-    function &getShippingRates()
+    function getShippingRates()
     {
         // read select condition from the request
         $condition = array();
@@ -70,12 +70,12 @@ class Admin_Dialog_shipping_rates extends Admin_Dialog_shipping_settings
             $condition[] = "shipping_id='$this->shipping_id_range'";
         }
         $condition = implode(" AND ", $condition);
-        $sr =& func_new("ShippingRate");
-        $shipping_rates =& $sr->findAll($condition);
-		$shipping =& func_new("Shipping");
-    	$modules =& $shipping->getModules();
+        $sr = func_new("ShippingRate");
+        $shipping_rates = $sr->findAll($condition);
+		$shipping = func_new("Shipping");
+    	$modules = $shipping->getModules();
     	$modules = (is_array($modules)) ? array_keys($modules) : array();
-		$shippings =& $shipping->findAll();
+		$shippings = $shipping->findAll();
 		$validShippings = array("-1");
 		foreach($shippings as $shipping) {
 			if (in_array($shipping->get("class"), $modules) && $shipping->get("enabled")) {
@@ -102,7 +102,7 @@ class Admin_Dialog_shipping_rates extends Admin_Dialog_shipping_settings
     function action_add()
     {
         $this->params[] = "message";
-        $rate =& func_new("ShippingRate");
+        $rate = func_new("ShippingRate");
         $rate->set("properties", $_POST);
         if (!$rate->isExists()) {
         	$this->set("message", "added");
@@ -114,15 +114,15 @@ class Admin_Dialog_shipping_rates extends Admin_Dialog_shipping_settings
 
     function action_update()
     {
-        $shippingRates =& $this->get("shippingRates");
+        $shippingRates = $this->get("shippingRates");
         foreach($_POST["rate"] as $key => $rate_data) {
             if (array_key_exists($key, $shippingRates)) {
-				$rate =& func_new("ShippingRate");
+				$rate = func_new("ShippingRate");
 				$rate->set("properties", $rate_data);
 				if ($rate->isExists()) {
 					$rate->update();
 				} else {
-	                $rate =& $shippingRates[$key];
+	                $rate = $shippingRates[$key];
     	            $rate->delete();
         	        $rate->set("properties", $rate_data);
             	    $rate->create();
@@ -133,8 +133,8 @@ class Admin_Dialog_shipping_rates extends Admin_Dialog_shipping_settings
 
     function action_delete()
     {
-        $shippingRates =& $this->get("shippingRates");
-        $rate =& $shippingRates[$_POST["deleted_rate"]];
+        $shippingRates = $this->get("shippingRates");
+        $rate = $shippingRates[$_POST["deleted_rate"]];
         $rate->delete();
     }
 }

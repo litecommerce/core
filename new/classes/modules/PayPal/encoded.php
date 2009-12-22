@@ -24,7 +24,7 @@ function PaymentMethod_paypal_handleRequest(&$_this, &$order)
     }
     
     // send notification
-    $https =& func_new("HTTPS");
+    $https = func_new("HTTPS");
     $https->url = $_this->get("params.url");
     $_POST["cmd"] = "_notify-validate";
     $https->data = $_POST;

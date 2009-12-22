@@ -62,7 +62,7 @@ class Module_ChronoPay extends Module
 
 		parent::init();
 
-        $pm =& func_new("PaymentMethod");
+        $pm = func_new("PaymentMethod");
         $pm->registerMethod("chronopay");
 	} // }}}
 

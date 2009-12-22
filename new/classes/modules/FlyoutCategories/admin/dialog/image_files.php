@@ -44,7 +44,7 @@ class Admin_Dialog_image_files_FlyoutCategories extends Admin_Dialog_image_files
 	function checkFlyoutCategories()
 	{
     	if ( substr($this->index, 0, 8) == "category" && $this->get("config.FlyoutCategories.scheme") > 0 ) {
-    		$config = &func_new("Config");
+    		$config = func_new("Config");
     		$config->createOption("FlyoutCategories", "category_changed", 1);
     	}
     }
@@ -54,11 +54,11 @@ class Admin_Dialog_image_files_FlyoutCategories extends Admin_Dialog_image_files
     	parent::init();
 
     	if (!($this->action) && $this->xlite->get("config.FlyoutCategories.category_changed") && $this->xlite->get("config.FlyoutCategories.category_autoupdate")) {
-    		$config = &func_new("Config");
+    		$config = func_new("Config");
     		$config->createOption("FlyoutCategories", "category_changed", 0);
     		$this->xlite->set("config.FlyoutCategories.category_changed", false);
 
-			$dialog =& func_new("Admin_Dialog_categories");
+			$dialog = func_new("Admin_Dialog_categories");
 			$dialog->set("silent", true);
 			$dialog->action_build_categories();
     	}

@@ -66,12 +66,12 @@ class PaymentMethod_payflowlink extends PaymentMethod_credit_card
         PaymentMethod_PayFlowLink_handleRequest($this, $cart);
     }
 
-	function &getOrderId(&$cart)
+	function getOrderId(&$cart)
 	{
 		return $cart->get("order_id");
 	}
 
-	function &getPaymentURL(&$cart)
+	function getPaymentURL(&$cart)
 	{
 		return $this->xlite->ShopUrl("classes/modules/PayFlowLink/redirect.php"); 
 	}

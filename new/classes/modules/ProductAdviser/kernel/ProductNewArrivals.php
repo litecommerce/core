@@ -58,7 +58,7 @@ class ProductNewArrivals extends Base
 
 	function cleanRelations($product_id)
 	{
-		$objs =& $this->findAll("product_id='$product_id'");
+		$objs = $this->findAll("product_id='$product_id'");
 		foreach ($objs as $obj) {
 			$obj->delete();
 		}

@@ -609,7 +609,7 @@ function func_die($message) { // {{{
 	if (!$ignore) {
 		$ignore ++;
 		// func_new can also cause func_die being called
-    	$dialog =& func_new("Dialog");
+    	$dialog = func_new("Dialog");
     }
 
 	global $options;
@@ -631,7 +631,7 @@ function func_die($message) { // {{{
         		}
 			}
             require_once "Log.php";
-            $logger =& Log::singleton("file", $log_name, "XLite kernel panic");
+            $logger = Log::singleton("file", $log_name, "XLite kernel panic");
             $log_message = str_replace("<pre>", "\n" . str_repeat("-", 50), $trace_message);
             $log_message = str_replace("</pre>", "\n" . str_repeat("-", 50) . "\n", $log_message);
             $logger->log($log_message, "LOG_ERR");
@@ -931,7 +931,7 @@ function func_https_request ($method, $url, $vars) {
 }
 //}}}
 
-function &func_parse_csv($line, $delimiter, $q, &$error) { // {{{
+function func_parse_csv($line, $delimiter, $q, &$error) { // {{{
     $line = trim($line);
     if (empty($q)) {
         return explode($delimiter, $line);

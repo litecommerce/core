@@ -57,7 +57,7 @@ class Module_SecureTrading extends Module
 	function init() {
 
 		parent::init();
-		$pm = &func_new("PaymentMethod");
+		$pm = func_new("PaymentMethod");
 		$pm->registerMethod("securetrading");
 
         $webDir = $this->xlite->get("options.host_details.web_dir");

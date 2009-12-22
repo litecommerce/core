@@ -49,7 +49,7 @@ class Product_ProductAdviser extends Product
 	var $_ProductsAlsoBuy = null;
 	var $_ProductMainCategory = null;
 
-    function &getRelatedProducts()
+    function getRelatedProducts()
     {
         require_once "modules/ProductAdviser/encoded.php";
 		ProductAdviser_getRelatedProducts($this);
@@ -57,7 +57,7 @@ class Product_ProductAdviser extends Product
         return $this->_RelatedProducts; 
     }
 
-    function &getProductsAlsoBuy()
+    function getProductsAlsoBuy()
     {
         require_once "modules/ProductAdviser/encoded.php";
 		ProductAdviser_getProductsAlsoBuy($this);
@@ -65,11 +65,11 @@ class Product_ProductAdviser extends Product
         return $this->_ProductsAlsoBuy; 
     }
 
-	function &addRelatedProducts($products)
+	function addRelatedProducts($products)
 	{
 		if (is_array($products)) {
     		foreach($products as $p_key => $product) {
-				$relatedProduct =& func_new("RelatedProduct");
+				$relatedProduct = func_new("RelatedProduct");
                 $relatedProduct->set("product_id", $this->get("product_id"));
                 $relatedProduct->set("related_product_id", $product->get("product_id"));
     			if (!$relatedProduct->isExists()) {
@@ -79,11 +79,11 @@ class Product_ProductAdviser extends Product
     	}
 	}
 
-	function &deleteRelatedProducts($products)
+	function deleteRelatedProducts($products)
 	{
 		if (is_array($products)) {
     		foreach($products as $p_key => $product) {
-				$relatedProduct =& func_new("RelatedProduct");
+				$relatedProduct = func_new("RelatedProduct");
                 $relatedProduct->set("product_id", $this->get("product_id"));
                 $relatedProduct->set("related_product_id", $product->get("product_id"));
     			if ($relatedProduct->isExists()) {
@@ -101,7 +101,7 @@ class Product_ProductAdviser extends Product
             //$added = mktime(date("H", $added), 0, 0, date("m", $added), date("d", $added), date("Y", $added));
             $product_id = $this->get("product_id");
 
-        	$statistic =& func_new("ProductNewArrivals");
+        	$statistic = func_new("ProductNewArrivals");
             $statistic->set("product_id", $product_id);
         	if ($statistic->find("product_id='$product_id'")) {
         		$statistic->set("updated", $added);
@@ -128,14 +128,14 @@ class Product_ProductAdviser extends Product
     	parent::delete();
 
 		foreach ($linked as $objName) {
-    		$object =& func_new($objName);
-    		$objs =& $object->cleanRelations($product_id);
+    		$object = func_new($objName);
+    		$objs = $object->cleanRelations($product_id);
 		}
     }
 
 	function getNewArrival()
 	{
-        $stats =& func_new("ProductNewArrivals");
+        $stats = func_new("ProductNewArrivals");
         $timeCondition = $this->config->get("ProductAdviser.period_new_arrivals") * 3600;
 		$timeLimit = time();
         if (!$stats->find("product_id='".$this->get("product_id")."'")) {
@@ -217,7 +217,7 @@ class Product_ProductAdviser extends Product
     		if ($this->_checkSafetyMode()) {
     			$this->xlite->set("adminZone", $adminZone);
     		}
-    		$this->_ProductMainCategory =& $categories[0];
+    		$this->_ProductMainCategory = $categories[0];
     	}
     	return $this->_ProductMainCategory;
     }
@@ -231,7 +231,7 @@ class Product_ProductAdviser extends Product
 		$check[] = "status='" . CUSTOMER_REQUEST_UPDATED . "'";
 		$check = implode(" AND ", $check);
 
-		$notification =& func_new("CustomerNotification");
+		$notification = func_new("CustomerNotification");
 		$pricingCAI = $notification->count($check);
 
 		if ($pricingCAI > 0) {

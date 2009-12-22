@@ -125,7 +125,7 @@ class Session extends Object
     * @return               The concrete Session reference
     *                       on error.
     */
-    function &start()
+    function start()
     {
         static $session;
         if (!isset($session)) {

@@ -128,21 +128,21 @@ class PaymentMethod extends Base
         if (!isset($instances[$class])) {
             $ClassName = "PaymentMethod_" . $class;
             if (func_class_exists($ClassName)) {
-                $instances[$class] =& func_new($ClassName);
+                $instances[$class] = func_new($ClassName);
             } else {
-                $instances[$class] =& func_new("PaymentMethod");
+                $instances[$class] = func_new("PaymentMethod");
             }
         }
         return $instances[$class];
     } // }}}
 
-    function &getActiveMethods() // {{{
+    function getActiveMethods() // {{{
     {
         static $instances;
 
         if (!isset($instances)) {
             $instances = array();
-            $p =& func_new("PaymentMethod");
+            $p = func_new("PaymentMethod");
             foreach ($p->findAll() as $method) {
 				if ($method->is("enabled")) {
                 	$instances[$method->get("payment_method")] = $method;
@@ -168,7 +168,7 @@ class PaymentMethod extends Base
         return $payment;
     } // }}}
 
-    function &get($name) // {{{
+    function get($name) // {{{
     {
         $result = parent::get($name);
         if ($name == "params") {

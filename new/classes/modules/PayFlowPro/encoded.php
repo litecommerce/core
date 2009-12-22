@@ -157,7 +157,7 @@ $post = implode("&", $post);
 
 
 // Get HTTPS object
-$https =& PayFlowPro_getHTTPS_Object();
+$https = PayFlowPro_getHTTPS_Object();
 
 $https->addHeader("Content-Type", "text/namevalue");
 $https->addHeader("X-VPS-REQUEST-ID", md5(uniqid(time())));
@@ -388,7 +388,7 @@ if(!empty($bill_output[billmes]))
 
 function PayFlowPro_getHTTPS_Object()
 {
-	$obj =& func_new("HTTPS");
+	$obj = func_new("HTTPS");
 	if (method_exists($obj, "getHeaders")) {
 		return $obj;
 	}

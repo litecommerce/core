@@ -53,7 +53,7 @@ class CMailExplorer extends CColumnList
     var $template = "template_editor/mail_list.tpl";
     var $templates = array();
 
-    function &getLocale() // {{{
+    function getLocale() // {{{
     {
         if (is_null($this->locale)) {
             $this->locale = $this->get("xlite.options.skin_details.locale");

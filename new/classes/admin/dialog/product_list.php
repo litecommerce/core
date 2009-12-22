@@ -56,11 +56,11 @@ class Admin_Dialog_product_list extends Admin_Dialog
     	return array('search_productsku', 'substring', 'search_category', 'subcategory_search', 'status');
     }
 
-    function &getExtraParams()
+    function getExtraParams()
     {
     	$form_params = $this->_getExtraParams();
 
-        $result =& parent::getAllParams();
+        $result = parent::getAllParams();
         if (is_array($result)) {
         	foreach ($result as $param => $name) {
         		if (in_array($param, $form_params)) {
@@ -74,16 +74,16 @@ class Admin_Dialog_product_list extends Admin_Dialog
         return $result;
     }
 
-    function &getProducts()
+    function getProducts()
     {
     	if ($this->mode != "search") {
     		return null;
     	}
 
     	if (is_null($this->productsList)) {
-            $p =& func_new("Product");
+            $p = func_new("Product");
             $p->collectGarbage();
-            $this->productsList =& $p->advancedSearch($this->substring,
+            $this->productsList = $p->advancedSearch($this->substring,
                                           $this->search_productsku,
                                           $this->search_category,
                                           $this->subcategory_search,
@@ -96,7 +96,7 @@ class Admin_Dialog_product_list extends Admin_Dialog
     function action_update()
     {
 		foreach ($this->product_orderby as $product_id => $order_by) {
-			$p =& func_new("Product", $product_id);
+			$p = func_new("Product", $product_id);
 			$p->set("order_by", $order_by);
 			$p->set("price", $this->product_price[$product_id]);
 			$p->update();
@@ -117,7 +117,7 @@ class Admin_Dialog_product_list extends Admin_Dialog
 			}
 
             foreach ($this->product_ids as $product_id) {
-    			$p =& func_new("Product", $product_id);
+    			$p = func_new("Product", $product_id);
                 $p->delete();
             }
             if (!empty($this->product_ids)) {
@@ -130,7 +130,7 @@ class Admin_Dialog_product_list extends Admin_Dialog
     		$this->set("mode", "confirmation");
         	if (isset($this->product_ids) && is_array($this->product_ids)) {
                 foreach ($this->product_ids as $idx => $product_id) {
-                	$this->product_ids[$idx] =& func_new("Product", $product_id);
+                	$this->product_ids[$idx] = func_new("Product", $product_id);
                 }
             }
         }
@@ -140,8 +140,8 @@ class Admin_Dialog_product_list extends Admin_Dialog
 	{
     	if (isset($this->product_ids) && is_array($this->product_ids)) {
             foreach ($this->product_ids as $product_id) {
-    			$p =& func_new("Product", $product_id);
-                $product =& $p->cloneObject();
+    			$p = func_new("Product", $product_id);
+                $product = $p->cloneObject();
     			foreach ($p->get("categories") as $category) {
     				$product->addCategory($category);
     			}

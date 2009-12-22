@@ -82,7 +82,7 @@ class Module_WholesaleTrading_Dialog_product extends Dialog_product
 		}	
 
 		// min/max purchase amount check
-		$pl =& func_new("PurchaseLimit");
+		$pl = func_new("PurchaseLimit");
 		if ($pl->find("product_id=" . $product->get("product_id"))) {
 			$category_id = $this->get("category_id");
 			if (!isset($category_id)) {
@@ -113,7 +113,7 @@ class Module_WholesaleTrading_Dialog_product extends Dialog_product
 	function getWholesalePricing()
 	{
 		if (is_null($this->wholesale_pricing)) {
-			$product =& func_new("Product", $this->get("product.product_id"));
+			$product = func_new("Product", $this->get("product.product_id"));
 			$this->wholesale_pricing = $product->getWholesalePricing();
 		}	
 		return $this->wholesale_pricing;

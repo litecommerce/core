@@ -58,11 +58,11 @@ class Admin_Dialog_product_list_ProductAdviser extends Admin_Dialog_product_list
     	return array('search_productsku', 'substring', 'search_category', 'subcategory_search', 'new_arrivals_search');
     }
 
-    function &getExtraParams()
+    function getExtraParams()
     {
     	$form_params = $this->_getExtraParams();
 
-        $result =& parent::getAllParams();
+        $result = parent::getAllParams();
         if (is_array($result)) {
         	foreach ($result as $param => $name) {
         		if (in_array($param, $form_params)) {
@@ -85,24 +85,24 @@ class Admin_Dialog_product_list_ProductAdviser extends Admin_Dialog_product_list
     		$check[] = "status='" . CUSTOMER_REQUEST_UPDATED . "'";
     		$check = implode(" AND ", $check);
 
-    		$notification =& func_new("CustomerNotification");
+    		$notification = func_new("CustomerNotification");
     		$this->notifyPresentedHash[$product_id] = $notification->count($check);
     	}
 		return $this->notifyPresentedHash[$product_id];
     }
 
-    function &getProducts()
+    function getProducts()
     {
     	if ($this->mode != "search") {
     		return null;
     	}
 
-    	$this->productsList =& parent::getProducts();
+    	$this->productsList = parent::getProducts();
     	if (is_array($this->productsList) && $this->new_arrivals_search) {
     		$removedItems = array();
     		for($i=0; $i<count($this->productsList); $i++) {
         		if (is_array($this->productsList[$i]) && isset($this->productsList[$i]["class"]) && isset($this->productsList[$i]["data"])) {
-            		$object =& func_new($this->productsList[$i]["class"]);
+            		$object = func_new($this->productsList[$i]["class"]);
                     $object->isPersistent = true;
                     $object->isRead = false;
                     $object->properties = $this->productsList[$i]["data"];

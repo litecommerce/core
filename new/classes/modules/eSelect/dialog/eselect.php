@@ -49,7 +49,7 @@ class Dialog_eselect_checkout extends Dialog_checkout
 	function init()
 	{
 		if (!is_object($this->registerForm) || is_null($this->registerForm)) {
-			$this->registerForm =& func_new("Object");
+			$this->registerForm = func_new("Object");
 		}
 
 		parent::init();
@@ -74,7 +74,7 @@ class Dialog_eselect_checkout extends Dialog_checkout
 			$this->session->writeClose();
 
 			$order = $this->get("order");
-			$payment =& func_new('PaymentMethod', "eselect_cc");
+			$payment = func_new('PaymentMethod', "eselect_cc");
 
 			include_once "modules/eSelect/encoded.php";
 			func_eSelect_action_return($this, $order, $payment);

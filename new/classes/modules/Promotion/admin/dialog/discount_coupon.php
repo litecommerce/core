@@ -48,7 +48,7 @@ class Admin_Dialog_discount_coupon extends Admin_Dialog
 {
 	var $params = array("target", "coupon_id");
 
-	function &getDC() // {{{
+	function getDC() // {{{
 	{
 		if (is_null($this->_dc)) {
 			$this->_dc = func_new("DiscountCoupon", $this->get("coupon_id"));
@@ -58,7 +58,7 @@ class Admin_Dialog_discount_coupon extends Admin_Dialog
 
 	function action_update() // {{{
 	{
-		$dc =& func_new("DiscountCoupon");
+		$dc = func_new("DiscountCoupon");
 		if ($dc->find("coupon='" . addslashes($_POST['coupon']) . "' AND order_id='0' AND coupon_id<>'".addslashes($this->get("coupon_id"))."'")) {
 			$this->set("valid", false);
 			$this->couponCodeDuplicate = true;

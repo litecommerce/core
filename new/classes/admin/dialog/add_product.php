@@ -63,7 +63,7 @@ class Admin_Dialog_add_product extends Admin_Dialog
     {
 		$this->stripHTMLtags($_POST, array("name"));
 
-        $product =& $this->get("product");
+        $product = $this->get("product");
         $product->set("properties", $_POST);
         $product->create();
 
@@ -74,7 +74,7 @@ class Admin_Dialog_add_product extends Admin_Dialog
         }
 
         if (isset($this->category_id)) {
-            $category =& func_new("Category", $this->category_id);
+            $category = func_new("Category", $this->category_id);
             $product->set("category", $category);
         }
 
@@ -83,7 +83,7 @@ class Admin_Dialog_add_product extends Admin_Dialog
         if (!empty($extraFields)) {
             foreach ($extraFields as $id => $value) {
                 if (strlen($value)) {
-                    $fv =& func_new("FieldValue");
+                    $fv = func_new("FieldValue");
                     $found = $fv->find("field_id=$id AND product_id=".$product->get("product_id"));
                     $fv->set("value", $value);
                     if ($found) {
@@ -103,20 +103,20 @@ class Admin_Dialog_add_product extends Admin_Dialog
 
     function action_images()
     {
-        $tn =& $this->get("product.thumbnail");
+        $tn = $this->get("product.thumbnail");
         if ($tn->handleRequest() != IMAGE_OK && $tn->_shouldProcessUpload) {
         	$this->set("valid", false);
         	$this->set("thumbnail_read_only", true);
         }
 
-        $img =& $this->get("product.image"); 
+        $img = $this->get("product.image"); 
         if ($img->handleRequest() != IMAGE_OK && $img->_shouldProcessUpload) {
         	$this->set("valid", false);
         	$this->set("image_read_only", true);
         }
     }
 
-    function &getProduct()
+    function getProduct()
     {
         if (is_null($this->product)) {
             $this->product = func_new("Product", $this->get("product_id"));

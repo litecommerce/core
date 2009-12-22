@@ -39,9 +39,9 @@ class CRPAddToCart extends CButton
 {
 	var $p_id = null;
 	
-    function &gethref()
+    function gethref()
     {
-		$product =& func_new("Product", $this->get("p_id"));
+		$product = func_new("Product", $this->get("p_id"));
         if (func_class_exists("ProductOption") && $product->hasOptions()) {
 			$product->checkSafetyMode();
 			$c_id = $product->get("category.category_id");

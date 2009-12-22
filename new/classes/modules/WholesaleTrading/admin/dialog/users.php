@@ -62,7 +62,7 @@ class Module_WholesaleTrading_Admin_Dialog_users extends Admin_Dialog_users
     	parent::init();
     }
 
-    function &getUsers()
+    function getUsers()
     {
 		if ($this->membership == "all") {
 			$this->membership = "%"; // default is ALL

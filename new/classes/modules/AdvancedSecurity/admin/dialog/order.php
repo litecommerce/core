@@ -45,7 +45,7 @@ class Module_AdvancedSecurity_Admin_Dialog_order extends Admin_Dialog_order
 {
     function action_submit_password()
     {
-        $gpg =& func_new("GPG");
+        $gpg = func_new("GPG");
         if ($gpg->isPasswordValid($this->get("master_password"))) {
             $this->session->set("masterPassword", $this->get("master_password"));
         } else {
@@ -59,10 +59,10 @@ class Module_AdvancedSecurity_Admin_Dialog_order extends Admin_Dialog_order
         $this->session->set("masterPassword", null);
     }
 
-    function &getGPG()
+    function getGPG()
     {
         if (is_null($this->gpg)) {
-            $this->gpg =& func_new("GPG");
+            $this->gpg = func_new("GPG");
         }
         return $this->gpg;
     }

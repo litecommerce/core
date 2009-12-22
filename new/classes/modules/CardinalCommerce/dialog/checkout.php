@@ -68,7 +68,7 @@ class Dialog_checkout_CardinalCommerce extends Dialog_checkout
 			return;
 		}
 
-        $pm =& $this->cart->get("paymentMethod");
+        $pm = $this->cart->get("paymentMethod");
         if (!is_null($pm)) {
         	if (!$this->isSupportedByCardinalCommerce($pm)) {
         		parent::action_checkout();
@@ -149,7 +149,7 @@ document.frm_redirect.submit();
 
 	function Cardinal_lookup_method()
 	{
-		$currency =& func_new("Currency");
+		$currency = func_new("Currency");
         $currency->find("code='".$this->config->get("CardinalCommerce.current_currency")."'");
 
     	$hash = array
@@ -181,7 +181,7 @@ document.frm_redirect.submit();
     	);
     	$xml = func_hash2xml($hash);
 
-		$https =& func_new("HTTPS");
+		$https = func_new("HTTPS");
         if ($this->config->Security->httpsClient == "autodetect") {
             $software = $https->AutoDetect();
         } else {

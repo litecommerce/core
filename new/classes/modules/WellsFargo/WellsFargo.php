@@ -51,7 +51,7 @@ class Module_WellsFargo extends Module
     function init()
     {
         parent::init();
-        $pm =& func_new('PaymentMethod');
+        $pm = func_new('PaymentMethod');
 	    // plug in  kernel/PaymentMethod/wells_fargo_cc.php module
         $pm->registerMethod("wells_fargo_cc");
     }

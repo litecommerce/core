@@ -62,15 +62,15 @@ class DownloadableFile extends Base
 			"data"					=> '',
 			);
 			
-	function &getLinks()
+	function getLinks()
 	{
-		$links =& func_new('DownloadableLink');
+		$links = func_new('DownloadableLink');
 		return $links->findAll('file_id=' . $this->get('file_id'));
 	}
 
-	function &getManualLinks()
+	function getManualLinks()
 	{
-		$links =& func_new('DownloadableLink');
+		$links = func_new('DownloadableLink');
 		if (!isset($this->_manual_links)) {
 			$this->_manual_links = $links->findAll('file_id=' . $this->get('file_id') . " and link_type='M'");
 		}	
@@ -86,14 +86,14 @@ class DownloadableFile extends Base
 		return false;
 	}
 	
-	function &getActiveLinks()
+	function getActiveLinks()
 	{
-		$l =& func_new('DownloadableLink');
-		$links =& $l->findAll('file_id=' . $this->get('file_id'));
+		$l = func_new('DownloadableLink');
+		$links = $l->findAll('file_id=' . $this->get('file_id'));
 		$active_links = array();
 		for ($i = 0; $i < count($links); $i ++) {
 			if ($links[$i]->is('Active')) {
-				$active_links []=& $links[$i];
+				$active_links [] = $links[$i];
 			}	
 		}
 		return $active_links;

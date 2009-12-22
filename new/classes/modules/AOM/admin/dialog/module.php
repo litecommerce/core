@@ -50,7 +50,7 @@ class Module_AOM_Admin_Dialog_module extends Admin_Dialog_module
 		parent::init();
 
 		if ($this->page == "AOM") {
-        	$lay =& func_get_instance("Layout");
+        	$lay = func_get_instance("Layout");
         	$lay->addLayout("general_settings.tpl", "modules/AOM/config.tpl");
         }
 	}
@@ -60,7 +60,7 @@ class Module_AOM_Admin_Dialog_module extends Admin_Dialog_module
 		if ($this->page == "AOM") {
 			$value = (is_array($_REQUEST["order_update_notification"])) ? $_REQUEST["order_update_notification"] : array();
 
-			$config = &func_new("Config");
+			$config = func_new("Config");
 			$config->createOption("AOM", "order_update_notification", serialize($value));
 		}
 

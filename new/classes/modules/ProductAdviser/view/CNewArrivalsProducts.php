@@ -61,10 +61,10 @@ class CNewArrivalsProducts extends Component
         return ($this->productsNumber > 0) ? true : false;
     }
 
-    function &getDialogCategory()
+    function getDialogCategory()
     {
         if (isset($_REQUEST["target"]) && ($_REQUEST["target"] == "category" || $_REQUEST["target"] == "product") && isset($_REQUEST["category_id"]) && intval($_REQUEST["category_id"]) > 0) {
-        	$category =& func_new("Category", intval($_REQUEST["category_id"]));
+        	$category = func_new("Category", intval($_REQUEST["category_id"]));
         	return $category;
         }
         return null;
@@ -131,7 +131,7 @@ class CNewArrivalsProducts extends Component
 		$timeCondition = $this->config->get("ProductAdviser.period_new_arrivals") * 3600;
 		$category_id = $_category->get("category_id");
 
-		$obj =& func_new("ProductNewArrivals");
+		$obj = func_new("ProductNewArrivals");
 		$arrival_table = $this->db->getTableByAlias($obj->alias);
 		$links_table = $this->db->getTableByAlias("product_links");
 
@@ -150,7 +150,7 @@ class CNewArrivalsProducts extends Component
 		foreach ((array)$rows as $row) {
 			$product_id = $row["product_id"];
 
-			$obj =& func_new("ProductNewArrivals", $product_id);
+			$obj = func_new("ProductNewArrivals", $product_id);
 			if ($this->checkArrivalCondition($_category, $obj)) {
 				if (!$this->isDisplayedDialog() && count($this->_new_arrival_products) >= $this->config->get("ProductAdviser.number_new_arrivals")) {
 					$this->additionalPresent = true;
@@ -158,14 +158,14 @@ class CNewArrivalsProducts extends Component
 				}
 
 				if (!isset($this->_new_arrival_products[$product_id])) {
-					$this->_new_arrival_products[$product_id] =& func_new("Product", $product_id);
+					$this->_new_arrival_products[$product_id] = func_new("Product", $product_id);
 					$this->_new_arrival_products_updated[$product_id] = $row["updated"];
 				}
 			}
 		}
 
 		// get subcategories list
-		$category =& func_new("Category");
+		$category = func_new("Category");
 		$categories = $category->findAll("parent='$category_id'");
 		foreach ($categories as $category) {
 			if ($this->recursiveArrivalsSearch($category))
@@ -178,7 +178,7 @@ class CNewArrivalsProducts extends Component
 	function checkArrivalCondition($category, $ps)
 	{
 		$product_id = $this->getDialogProductId();
-		$product =& func_new("Product", $ps->get("product_id"));
+		$product = func_new("Product", $ps->get("product_id"));
 
 		$addSign = (isset($product_id) && $product->get("product_id") == $product_id) ? false : true;
 		if ($addSign) {
@@ -197,7 +197,7 @@ class CNewArrivalsProducts extends Component
 		return $addSign;
 	}
 
-    function &getNewArrivalsProducts()
+    function getNewArrivalsProducts()
     {
         if (!$this->isDisplayed()) {
         	$this->productsNumber = 0;
@@ -210,7 +210,7 @@ class CNewArrivalsProducts extends Component
             return $products;
         }    
 
-		$category =& $this->getDialogCategory();
+		$category = $this->getDialogCategory();
 		$product_id = $this->getDialogProductId();
 
 
@@ -222,7 +222,7 @@ class CNewArrivalsProducts extends Component
 			$categories = array();
 			if (is_null($category)) {
 				// deal with root category
-				$obj =& func_new("Category");
+				$obj = func_new("Category");
 				$categories = $obj->findAll("parent='0'");
 			} else {
 				$categories[] = $category;
@@ -251,16 +251,16 @@ class CNewArrivalsProducts extends Component
         $products = array();
         $productsStats = array();
         $statsOffset = 0;
-        $stats =& func_new("ProductNewArrivals");
+        $stats = func_new("ProductNewArrivals");
         $timeCondition = $this->config->get("ProductAdviser.period_new_arrivals") * 3600;
 		$timeLimit = time();
         $maxSteps = ($this->isDisplayedDialog()) ? 1 : ceil($stats->count("new='Y' OR ((updated + '$timeCondition') > '$timeLimit')") / $maxViewed);
 
         for ($i=0; $i<$maxSteps; $i++) {
         	$limit = ($this->isDisplayedDialog()) ? null : "$statsOffset, $maxViewed";
-        	$productsStats =& $stats->findAll("new='Y' OR ((updated + '$timeCondition') > '$timeLimit')", null, null, $limit);
+        	$productsStats = $stats->findAll("new='Y' OR ((updated + '$timeCondition') > '$timeLimit')", null, null, $limit);
         	foreach ($productsStats as $ps) {
-				$product =& func_new("Product", $ps->get("product_id"));
+				$product = func_new("Product", $ps->get("product_id"));
 				$addSign = $this->checkArrivalCondition($category, $ps);
                 if ($addSign) {
                     $product->checkSafetyMode();

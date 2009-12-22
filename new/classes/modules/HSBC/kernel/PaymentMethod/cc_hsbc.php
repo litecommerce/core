@@ -466,7 +466,7 @@ class PaymentMethod_cc_hsbc extends PaymentMethod_credit_card
 		foreach ($statuses as $name) {
 			$field = 'status_'.$name;
 			if ($this->xlite->AOMEnabled) {
-				$status =& func_new("OrderStatus");
+				$status = func_new("OrderStatus");
 				$status->find("status='".$params[$field]."'");
 
 				$params[$field] = (($status->get("parent")) ? $status->get("parent") : $status->get("status"));
@@ -487,7 +487,7 @@ class PaymentMethod_cc_hsbc extends PaymentMethod_credit_card
 		$params = $this->get("params");
 		$result = $params[$name];
 		if ($params["sub".$name] && $this->xlite->AOMEnabled) {
-			$status =& func_new("OrderStatus");
+			$status = func_new("OrderStatus");
 			if ($status->find("status='".$params["sub".$name]."' AND parent='".$params[$name]."'")) {
 				$result = $params["sub".$name];
 			}

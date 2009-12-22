@@ -81,7 +81,7 @@ class Admin_Dialog_image_files extends Admin_Dialog
     * with an additional field $image->imageClass - a string which displays
     * the image class.
     */
-	function &getImageClasses()
+	function getImageClasses()
 	{
         $image = func_get_instance("Image");
         return $image->get("imageClasses");
@@ -98,7 +98,7 @@ class Admin_Dialog_image_files extends Admin_Dialog
 		$images = $this->get("imageClasses");
         $images_directory = ($images_directory != "") ? $images_directory : IMAGES_DIR;
 
-        $cfg =& func_new("Config");
+        $cfg = func_new("Config");
         if ($cfg->find("name='images_directory'")) {
             $cfg->set("value", $images_directory);
             $cfg->update();
@@ -110,8 +110,8 @@ class Admin_Dialog_image_files extends Admin_Dialog
         }
         
         // re-read config data
-        $this->xlite->config =& $cfg->readConfig();
-        $this->config =& $this->xlite->config;
+        $this->xlite->config = $cfg->readConfig();
+        $this->config = $this->xlite->config;
     }
 }
 // WARNING :

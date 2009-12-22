@@ -49,7 +49,7 @@ class Admin_Dialog_wishlist extends Admin_Dialog { // {{{
 	
 	var $wishlist = null;
 	
-	function &getTemplate() // {{{ 
+	function getTemplate() // {{{ 
 	{
 		if ($this->get("mode") == "print") {
             // print invoice
@@ -58,17 +58,17 @@ class Admin_Dialog_wishlist extends Admin_Dialog { // {{{
         return $this->template;
 	} // }}}
 	
-	function &getWishlist() // {{{
+	function getWishlist() // {{{
 	{
 		if (is_null($this->wishlist)) {
-			$this->wishlist = &func_new("WishList",$this->wishlist_id);
+			$this->wishlist = func_new("WishList",$this->wishlist_id);
 		}
 		return $this->wishlist;
 	} // }}}
 	
 	function action_delete() // {{{ 
 	{
-		$wishlist = &func_new("WishList",$this->wishlist_id);
+		$wishlist = func_new("WishList",$this->wishlist_id);
 		$wishlist_products = $wishlist->get("products");
 		foreach($wishlist_products as $product)
 			$product->delete();

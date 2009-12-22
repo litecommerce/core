@@ -72,16 +72,16 @@ class Dialog_main extends Dialog
         }
     }
 
-    function &getCategory()
+    function getCategory()
     {
         if (is_null($this->category)) {
-            $cat =& func_new("Category");
+            $cat = func_new("Category");
             $this->category = $cat->get("topCategory");
         }    
         return $this->category;
     }
 
-    function &getExtraPage() // {{{
+    function getExtraPage() // {{{
     {
         if (is_null($this->extraPage)) {
             $this->extraPage = func_new("ExtraPage");

@@ -81,13 +81,13 @@ There <?php echo ($inventoryCAI == 1) ? "is" : "are"; ?> <b><font color=blue><?p
     function update()
     {
     	if ($this->xlite->get("checkInventoryChangedAfterImport")) {
-			$inventory =& func_new("Inventory", $this->get("inventory_id"));
+			$inventory = func_new("Inventory", $this->get("inventory_id"));
 			$oldAmount = $inventory->get("amount");
 
     		$inventoryChangedAmount = $this->properties;
             $inventoryChangedAmount["oldAmount"] = $oldAmount;
 
-    		$notification =& func_new("CustomerNotification");
+    		$notification = func_new("CustomerNotification");
     		if ($notification->createInventoryChangedNotification($inventoryChangedAmount)) {
         		$this->xlite->set("inventoryChangedAfterImport", $this->xlite->get("inventoryChangedAfterImport") + 1);
     		}

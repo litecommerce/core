@@ -39,10 +39,10 @@ function FlyoutCategories_processTreeItem(&$_this, &$item)
 	}
 }
 
-function &FlyoutCategories_buildTree(&$_this, &$parent)
+function FlyoutCategories_buildTree(&$_this, &$parent)
 {
 	if (!isset($_this->categoryClass)) {
-		$_this->categoryClass =& func_new("Category");
+		$_this->categoryClass = func_new("Category");
 	}
 	$table = $_this->categoryClass->getTable();
 	$category_id = (!isset($parent)) ? 0 : $parent->category_id;
@@ -55,7 +55,7 @@ function &FlyoutCategories_buildTree(&$_this, &$parent)
 		$_this->xlite->set("adminZone", false);
 
 		foreach ($_this->db->getAll($sql) as $record) {
-			$co =& func_new("Category", $record["category_id"]);
+			$co = func_new("Category", $record["category_id"]);
 			if ($co->filter()) {
 				$subcategories[] = $record;
 			}
@@ -65,7 +65,7 @@ function &FlyoutCategories_buildTree(&$_this, &$parent)
 	}
 
 	if (!isset($parent)) {
-		$parent =& func_new("StdClass");
+		$parent = func_new("StdClass");
 		$parent->depth = 0;
 	}
 
@@ -74,9 +74,9 @@ function &FlyoutCategories_buildTree(&$_this, &$parent)
 	$parent->number = count($subcategories);
 
 	for($i=0; $i < count($subcategories); $i++) {
-		$category =& func_new("Category", $subcategories[$i]["category_id"]);
+		$category = func_new("Category", $subcategories[$i]["category_id"]);
 
-		$sc =& func_new("StdClass");
+		$sc = func_new("StdClass");
 		$sc->parent = $category_id;
 		$sc->category_id = $subcategories[$i]["category_id"];
 		$sc->is_first = ($i == 0) ? true : false;
@@ -143,7 +143,7 @@ function FlyoutCategories_action_update(&$_this)
 		return;
 	}
 
-	$fNode =& func_new("FileNode");
+	$fNode = func_new("FileNode");
 	$saved_scheme_id = $_this->scheme_id;
 
 	$names_updated = array();
@@ -215,14 +215,14 @@ function FlyoutCategories_action_delete(&$_this)
 	// Check for active scheme
 	$id = $_this->get("config.FlyoutCategories.scheme");
 	if ( $scheme->get("scheme_id") == $id ) {
-		$cfg =& func_new("Config");
+		$cfg = func_new("Config");
 		$cfg->createOption("FlyoutCategories", "scheme", 0);
 		$_this->params[] = "warning";
 		$_this->set("warning", "drop_scheme");
 	}
 
 	// Delete scheme files
-	$fNode =& func_new("FileNode");
+	$fNode = func_new("FileNode");
 	$fNode->path = $_this->customerLayoutPath . "modules/FlyoutCategories/schemes/" . $scheme->getFileName();
 	$fNode->remove();
 	$scheme->delete();
@@ -279,7 +279,7 @@ function FlyoutCategories_action_fc_clone(&$_this)
 
 
 	$clone_fields = array("max_depth", "options", "explorer");
-	$new_scheme =& func_new("FCategoriesScheme");
+	$new_scheme = func_new("FCategoriesScheme");
 	$new_scheme->set("name", $scheme->get("name") . " (clone)");
 	foreach ($clone_fields as $v){
 		$data = $scheme->get($v);
@@ -287,7 +287,7 @@ function FlyoutCategories_action_fc_clone(&$_this)
 	}
 	$new_scheme->create();
 
-	$fNode =& func_new("FileNode");
+	$fNode = func_new("FileNode");
 	$fNode->path = $_this->customerLayoutPath . "modules/FlyoutCategories/schemes";
 	$fNode->createDir();
 	$fNode->path = $fNode->path . "/" . $new_scheme->getFileName();
@@ -309,7 +309,7 @@ function FlyoutCategories_action_fc_clone(&$_this)
 
 function FlyoutCategories_action_rebuild_tree(&$_this)
 {
-	$dialog = &func_new("admin_dialog_categories");
+	$dialog = func_new("admin_dialog_categories");
 	$dialog->set("silent", true);
 	$dialog->action_build_categories();
 	$_this->params[] = "status";
@@ -448,9 +448,9 @@ function FlyoutCategories_getSchemeManagerDialog(&$_this)
 	$dialog = null;
 
 	if ($_this->xlite->LayoutOrganizerEnabled) {
-		$dialog =& func_new("Admin_Dialog_scheme_manager");
+		$dialog = func_new("Admin_Dialog_scheme_manager");
 	} else {
-		$dialog =& func_new("Admin_Dialog_scheme_manager_fc");
+		$dialog = func_new("Admin_Dialog_scheme_manager_fc");
 	}
 
 	return $dialog;
@@ -460,7 +460,7 @@ function FlyoutCategories_getDefaultScheme(&$_this)
 {
 	$_this->initLayout();
 
-	$scheme =& func_new("FCategoriesScheme");
+	$scheme = func_new("FCategoriesScheme");
 	$scheme->set("scheme_id", 0);
 	$scheme->set("name", $_this->getDefaultSchemeName());
 	$scheme->set("order_by", 0);
@@ -473,15 +473,15 @@ function FlyoutCategories_getSchemes(&$_this, $all_schemes=true)
 {
 	$_this->schemes = null;
 
-	$scheme =& func_new("FCategoriesScheme");
+	$scheme = func_new("FCategoriesScheme");
 	$condition = array();
 	$condition[] = "scheme_id > '0'";
 	$condition = implode(" AND ", $condition);
-	$_this->schemes =& $scheme->findAll($condition);
+	$_this->schemes = $scheme->findAll($condition);
 
 	if ( is_array($_this->schemes) && count($_this->schemes) == 0 )
 	{
-		$scheme =& $_this->getDefaultScheme();
+		$scheme = $_this->getDefaultScheme();
 		$_this->schemes = array_merge(array($scheme), $_this->schemes);
 	}
 }
@@ -523,13 +523,13 @@ function FlyoutCategories_getCurrentScheme(&$_this)
 function FlyoutCategories_checkUpdateCategories(&$_this)
 {
 	if ( $_this->get("config.FlyoutCategories.scheme") > 0 ) {
-		$config = &func_new("Config");
+		$config = func_new("Config");
 		$config->createOption("FlyoutCategories", "category_changed", 1);
 	}
 
 	// rebuild layout
 	if ($_this->get("config.FlyoutCategories.category_autoupdate")) {
-		$dialog =& func_new("Admin_Dialog_categories");
+		$dialog = func_new("Admin_Dialog_categories");
 		$dialog->set("silent", true);
 		$dialog->action_build_categories();
 	}

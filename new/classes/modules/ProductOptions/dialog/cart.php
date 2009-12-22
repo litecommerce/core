@@ -44,7 +44,7 @@
 */
 class Module_ProductOptions_Dialog_cart extends Dialog_cart
 {
-    function &getCurrentItem()
+    function getCurrentItem()
     {
         if (is_null($this->currentItem)) {
             parent::getCurrentItem(); // $this->currentItem
@@ -71,7 +71,7 @@ class Module_ProductOptions_Dialog_cart extends Dialog_cart
             }
             // delete item from cart and switch back to product details
 			$key = $this->get("currentItem.key");
-			$cart_items =& $this->get("cart.items");
+			$cart_items = $this->get("cart.items");
 			for ($i = 0; $i < count($cart_items); $i++) {
 				if ($cart_items[$i]->get("key") == $key) {
 					$this->cart->deleteItem($cart_items[$i]);

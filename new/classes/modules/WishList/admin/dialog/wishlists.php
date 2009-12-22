@@ -53,7 +53,7 @@ class Admin_Dialog_wishlists extends Admin_Dialog { // {{{
 	function getWishlists() // {{{
 	{
 		if (is_null($this->wishlists)) {
-			$wishlist = &func_new("WishList");
+			$wishlist = func_new("WishList");
 			$wishlist->collectGarbage();
 
 			$profile = false;
@@ -77,7 +77,7 @@ class Admin_Dialog_wishlists extends Admin_Dialog { // {{{
 	function action_delete() {
 		if (isset($this->wishlist_id)) {
 			foreach ($this->wishlist_id as $id) {
-				$wishlist = &func_new("WishList",$id);
+				$wishlist = func_new("WishList",$id);
 				$wishlist_products = $wishlist->get("products");
 				foreach($wishlist_products as $product)
 					$product->delete();

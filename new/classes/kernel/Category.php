@@ -89,11 +89,11 @@ class Category extends Base
     var $image = null;
 	var $_string_path = null;
     
-    function &cloneObject()
+    function cloneObject()
     {       
-        $c =& parent::cloneObject();
+        $c = parent::cloneObject();
         $id = $c->get("category_id");
-        $image =& $this->get("image");
+        $image = $this->get("image");
         $image->copyTo($id);
         return $c;
     }       
@@ -108,7 +108,7 @@ class Category extends Base
     {
         if ($this->get("category_id")==0)
             return false;
-        $image =& $this->get("image");
+        $image = $this->get("image");
         $data = $image->get("data");
         return !empty($data);
     } // }}}
@@ -119,7 +119,7 @@ class Category extends Base
     * @access public
     * @return Image the Image instance.
     */
-    function &getImage() // {{{
+    function getImage() // {{{
     {   
         if (is_null($this->image)) {
             $this->image = func_new("Image", "category", $this->get("category_id"));
@@ -141,10 +141,10 @@ class Category extends Base
     function getPath() // {{{
     {
         $path = array();
-        $parent =& $this;
+        $parent = $this;
         do {
-            $path[] =& $parent;
-            $parent =& $parent->get("parentCategory");
+            $path[] = $parent;
+            $parent = $parent->get("parentCategory");
         } while (!is_null($parent));
         return array_reverse($path);
     } // }}}
@@ -159,7 +159,7 @@ class Category extends Base
     function getStringPath() // {{{
     {
         if (is_null($this->_string_path)) {
-            $path =& $this->getPath();
+            $path = $this->getPath();
             $location = "";
             for ($i=0; $i<count($path); $i++) {
                 if ($i) {
@@ -178,7 +178,7 @@ class Category extends Base
     * @access public
     * @return Category The parent category instance.
     */
-    function &getParentCategory() // {{{
+    function getParentCategory() // {{{
     {
         if (is_null($this->parent) && $this->get("category_id") && $this->get("parent")) {
             $this->parent = func_new("Category", $this->get("parent"));
@@ -217,7 +217,7 @@ class Category extends Base
         }
         if (!isset($products[$id][$where][$orderby])) {
             if ($this->isPersistent) {
-                $p =& func_new("_ProductFromCategory", $id);
+                $p = func_new("_ProductFromCategory", $id);
                 $products[$id][$where][$orderby] = $p->findAll($where, $orderby);
             } else {
                 $products[$id][$where][$orderby] = array();
@@ -230,7 +230,7 @@ class Category extends Base
     {
         $id = $this->get("category_id");
         if ($this->isPersistent) {
-            $p =& func_new("_ProductFromCategory", $id);
+            $p = func_new("_ProductFromCategory", $id);
             return $p->getProductsNumber(false);
         }    
         return 0;
@@ -266,23 +266,23 @@ class Category extends Base
     function delete() // {{{
     {
         // remove all products from the category
-        $products =& $this->get("products");
+        $products = $this->get("products");
         for ($i=0; $i<count($products); $i++) {
             $products[$i]->deleteCategory($this);
         }
-        $subcategories =& $this->get("subcategories");
+        $subcategories = $this->get("subcategories");
         for ($i = 0; $i < count($subcategories); $i++) {
-            $category =& $subcategories[$i];
+            $category = $subcategories[$i];
             $category->delete();
         }
-        $product =& func_new("Product");
+        $product = func_new("Product");
         $product->collectGarbage();
-		$image =& $this->get("image");
+		$image = $this->get("image");
 		$image->delete();
         parent::delete();
     } // }}}
 
-    function &getTopCategory() // {{{
+    function getTopCategory() // {{{
     {
         return func_new("Category",0);
     } // }}}
@@ -303,7 +303,7 @@ class Category extends Base
             DATA ::= CATEGORY_PATH
 
     */
-    function &parseCategoryField($data, $allowMiltyCategories) // {{{
+    function parseCategoryField($data, $allowMiltyCategories) // {{{
     {
         $i = 0;
         $state = "S";
@@ -373,7 +373,7 @@ class Category extends Base
         return implode("/", $path);
     } // }}}
     
-    function &createRecursive($name) // {{{
+    function createRecursive($name) // {{{
     {
         if (!is_array($name)) {
             $path = $this->parseCategoryField($name, false);
@@ -396,7 +396,7 @@ class Category extends Base
         return func_new("Category",$category_id);
     } // }}}
 
-    function &findCategory($path) // {{{
+    function findCategory($path) // {{{
     {
         if (!is_array($path)) {
             $path = $this->parseCategoryField($path, false);
@@ -481,7 +481,7 @@ class Category extends Base
         $xml = "";
         if ($this->hasImage()) {
             // include image in XML dump
-            $image =& $this->getImage();
+            $image = $this->getImage();
             if ($image->get("source") == "D") {
                 $xml .= "<image><![CDATA[".base64_encode($image->get("data"))."]]></image>";
                 

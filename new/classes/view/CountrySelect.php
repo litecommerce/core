@@ -49,10 +49,10 @@ class CCountrySelect extends CFormField
     var $template = "common/select_country.tpl";
     var $all = false;
     
-    function &getCountries()
+    function getCountries()
     {
         if (is_null($this->country)) {
-            $this->country =& func_new("Country");
+            $this->country = func_new("Country");
         }    
         return $this->country->findAll($this->all?'':'enabled=1');
     }

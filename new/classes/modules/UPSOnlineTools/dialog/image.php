@@ -55,7 +55,7 @@ class Module_UPSOnlineTools_Dialog_image extends Dialog_image
 				exit();
 			}
 
-			$order =& func_new("Order", $this->get("order_id"));
+			$order = func_new("Order", $this->get("order_id"));
 			$containers = $order->get("ups_containers");
 
 			$container_id = $this->get("container");
@@ -66,7 +66,7 @@ class Module_UPSOnlineTools_Dialog_image extends Dialog_image
 				exit();
 			}
 
-			$container =& $containers[$container_id];
+			$container = $containers[$container_id];
 
 			if (!isset($container["levels"][$level_id])) {
 				// level not set 

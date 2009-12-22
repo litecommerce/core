@@ -72,7 +72,7 @@ class Image extends Base
             ));
     }
 
-    function &getImageClasses()
+    function getImageClasses()
     {
         global $_registered_image_classes;
         if (!isset($_registered_image_classes)) {
@@ -81,7 +81,7 @@ class Image extends Base
         return $_registered_image_classes;
     }
 
-    function &getDefaultImageClasses()
+    function getDefaultImageClasses()
     {
         $result = array();
         foreach (array(
@@ -238,7 +238,7 @@ class Image extends Base
         $this->_shouldProcessUpload = false;
 	    if (isset($_FILES[$image_field]) && is_uploaded_file($_FILES[$image_field]["tmp_name"])) {
 	    	$this->_shouldProcessUpload = true;
-            $upload    =& func_new('Upload', $_FILES[$image_field]);
+            $upload = func_new('Upload', $_FILES[$image_field]);
             $dest_file = "var/tmp/".$upload->getName();
             if (!$upload->move($dest_file)) {
                 return IMAGE_NOT_OK;
@@ -456,7 +456,7 @@ class Image extends Base
 		if ($from) {
     		$imagesHash = array();
     		foreach ($imagesArray as $row) {
-				$image =& func_new("Image", $this->imageClass, $row[$this->autoIncrement]);
+				$image = func_new("Image", $this->imageClass, $row[$this->autoIncrement]);
 				$fn = $image->getFilePath($image->get("data"));
 				if (!isset($imagesHash[$fn])) {
 					$imagesHash[$fn] = 1;
@@ -550,7 +550,7 @@ class ImageClass extends Object
     *   $img = $iClass->get("image");
     *   $img->set("
     */
-    function &getImage()
+    function getImage()
     {
         return func_new("Image", $this->class, 0);
     }

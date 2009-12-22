@@ -57,7 +57,7 @@ class ECard extends Base
     var $thumbnail = null;
     var $image = null;
 
-    function &getThumbnail()
+    function getThumbnail()
     {
         if (is_null($this->thumbnail)) {
             $this->thumbnail = func_new("Image","ecard_thumbnail", $this->get("ecard_id"));
@@ -65,7 +65,7 @@ class ECard extends Base
         return $this->thumbnail;
     }
 
-    function &getImage()
+    function getImage()
     {
         if (is_null($this->image)) {
             $this->image = func_new("Image", 'ecard_image', $this->get("ecard_id"));
@@ -73,7 +73,7 @@ class ECard extends Base
         return $this->image;
     }
 
-    function &getAllTemplates()
+    function getAllTemplates()
     {
         $templates = array();
         $layout = func_get_instance("Layout");
@@ -94,7 +94,7 @@ class ECard extends Base
         return $templates;
     }
 
-    function &getAllBorders()
+    function getAllBorders()
     {
         $borders = array();
         $layout = func_get_instance("Layout");
@@ -116,9 +116,9 @@ class ECard extends Base
 
     function delete()
     {
-        $thumbnail =& $this->getThumbnail();
+        $thumbnail = $this->getThumbnail();
         $thumbnail->delete();
-        $image =& $this->getImage();
+        $image = $this->getImage();
         $image->delete();
         parent::delete();
     }

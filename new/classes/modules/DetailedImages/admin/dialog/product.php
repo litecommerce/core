@@ -55,23 +55,23 @@ class DetailedImages_Admin_Dialog_product extends Admin_Dialog_product
     
     function action_add_detailed_image()
     {
-        $d_img =& func_new("DetailedImage");
+        $d_img = func_new("DetailedImage");
         $d_img->set("properties", $_POST); 
         $d_img->create();
-        $img =& $d_img->get("image");
+        $img = $d_img->get("image");
         $img->handleRequest();
     }
 
     function action_delete_detailed_image()
     {
-        $d_img =& func_new("DetailedImage", $this->image_id);
+        $d_img = func_new("DetailedImage", $this->image_id);
         $d_img->delete();
     }
 
     function action_update_detailed_images()
     {
         foreach ($this->alt as $image_id => $alt) {
-            $img =& func_new("DetailedImage", $image_id);
+            $img = func_new("DetailedImage", $image_id);
             $img->set("alt", $alt);
             $img->set("order_by", $this->order_by[$image_id]);
             $img->update();

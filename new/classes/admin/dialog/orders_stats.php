@@ -47,7 +47,7 @@
 */
 class Admin_Dialog_orders_stats extends Admin_Dialog_stats
 {
-    function &getPageTemplate()
+    function getPageTemplate()
     {
         return "orders_stats.tpl";
     }
@@ -64,7 +64,7 @@ class Admin_Dialog_orders_stats extends Admin_Dialog_stats
                 "total" => $statRec,
                 "paid" => $statRec);
 
-        $order =& func_new("Order");
+        $order = func_new("Order");
         $date = $this->get("monthDate");
         // fetch orders for this month
         array_map(array(&$this, "summarize"), $order->findAll("date>=$date"));

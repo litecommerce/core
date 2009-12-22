@@ -43,7 +43,7 @@
 */
 class Admin_Dialog_top_performers extends Admin_Dialog_partner_stats
 {
-    function &getPageTemplate()
+    function getPageTemplate()
     {
         return "modules/Affiliate/top_performers.tpl";
     }
@@ -59,10 +59,10 @@ class Admin_Dialog_top_performers extends Admin_Dialog_partner_stats
         }
     }
     
-    function &getStats()
+    function getStats()
     {
         if (is_null($this->stats)) {
-            $ss =& func_new("BannerStats");
+            $ss = func_new("BannerStats");
             $this->stats = array();
             $this->stats = $ss->searchTopPerformers(
                 $this->get("startDate"),
@@ -72,7 +72,7 @@ class Admin_Dialog_top_performers extends Admin_Dialog_partner_stats
             $this->stats = array_reverse($this->stats);
             foreach ($this->stats as $sid => $stat) {
                 if (isset($stat["partner_id"])) {
-                    $partner =& func_new("Profile");
+                    $partner = func_new("Profile");
                     if (!$partner->find("profile_id=".$stat["partner_id"])) {
                         $partner->set("login", "Unknown");
                     }

@@ -60,7 +60,7 @@ class Module_WholesaleTrading_Admin_Dialog_Order extends Admin_Dialog_Order
             return false;
     }
 
-    function &getOrder()
+    function getOrder()
     {
         // AOM
         if ($this->page == "order_edit" || $this->page == "order_preview") {

@@ -67,18 +67,18 @@ class Admin_Dialog_order_list extends Admin_Dialog
     	return true;
     }
 
-    function &getOrders()
+    function getOrders()
     {
 		$this->origProfile = true;
 		$this->enhacedSearch = false;
 
         if (is_null($this->orders)) {
-            $order =& func_new("Order");
+            $order = func_new("Order");
             $order->collectGarbage();
 			$order->fetchKeysOnly = true;
 			$order->fetchObjIdxOnly = $this->is("quickSearch");
             if ($this->get("login")) {
-                $profile =& func_new("Profile");
+                $profile = func_new("Profile");
 				$profile->_range = null;
                 if (!$profile->find("login='" . addslashes($this->get("login")) . "' AND order_id<>'0'")) {
                     $this->noSuchUser = true;
@@ -100,7 +100,7 @@ class Admin_Dialog_order_list extends Admin_Dialog
 
             if (!$this->enhacedSearch) {
             	if (($this->get("login") && $profile->get("profile_id")) || !$this->get("login")) {
-                    $this->orders =& $order->search(
+                    $this->orders = $order->search(
                             $profile,
                             $this->get("order_id1"),
                             $this->get("order_id2"),
@@ -116,7 +116,7 @@ class Admin_Dialog_order_list extends Admin_Dialog
             	}
             } 
             if ($this->enhacedSearch || (!$this->enhacedSearch && count($this->orders) == 0)) {
-            	$orders =& $order->search(
+            	$orders = $order->search(
                         null,
                         $this->get("order_id1"),
                         $this->get("order_id2"),
@@ -188,13 +188,13 @@ class Admin_Dialog_order_list extends Admin_Dialog
 	function action_export_xls()
 	{
         $w = func_new("Widget");
-        $w->component =& $this;
+        $w->component = $this;
         $w->set("template", "order/export_xls.tpl");
         $this->startDownload("orders.xls");
         $this->ColumnCount = 9;
         $this->RowCount = $this->get("count") + 2;
         $this->endRow = $this->get("count") + 1;
-        $profile =& $this->auth->get("profile");
+        $profile = $this->auth->get("profile");
         $time = time();
         $this->create_date = strftime("%Y-%m-%d", $time);
         $this->create_time = strftime("%H:%M:%S", $time);

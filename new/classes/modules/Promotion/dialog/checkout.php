@@ -50,7 +50,7 @@ class Module_Promotion_Dialog_checkout extends Dialog_checkout
     {
         if ($this->session->isRegistered("couponFailed")) {
         	if (isset($_REQUEST["mode"]) && $_REQUEST["mode"] == "couponFailed") {
-				$dc =& func_new("DiscountCoupon");
+				$dc = func_new("DiscountCoupon");
 				$found = $dc->find("coupon='".$this->session->get("couponFailed")."'");
 				if ($found) {
 					$this->set("discountCoupon", $dc);
@@ -86,7 +86,7 @@ class Module_Promotion_Dialog_checkout extends Dialog_checkout
             if (!$this->session->isRegistered("bonusListDisplayed") && $this->config->get("Promotion.showBonusList")) {
                 if ($this->cart->getBonusList()) {
                 	$needRedirect = false;
-                    $bonusList =& $this->cart->get("bonusList");
+                    $bonusList = $this->cart->get("bonusList");
                 	foreach ($bonusList as $bonus) {
                 		$products = $bonus->get("allBonusProducts");
                 		if (is_array($products) && count($products) > 0) {
@@ -116,7 +116,7 @@ class Module_Promotion_Dialog_checkout extends Dialog_checkout
         parent::handleRequest();
     }
 	
-	function &getBonusList()
+	function getBonusList()
 	{
 		// collect products & prices
 		$this->bonusList = $this->cart->getBonusList();

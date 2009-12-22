@@ -89,13 +89,13 @@ class Shipping_ups extends Shipping_online
         return "UPS";
     }
 
-    function &getRates($order)
+    function getRates($order)
     {
         require_once "modules/UPS/encoded.php";
         return Shipping_ups_getRates($this, $order);
 	}
 
-    function &_queryRates($pounds, $originZipCode, $originCountry, $destinationZipCode, $destinationCountry, $options, $codvalue)
+    function _queryRates($pounds, $originZipCode, $originCountry, $destinationZipCode, $destinationCountry, $options, $codvalue)
     {
         $https = func_new("HTTPS");
         $https->url = $options->server;
@@ -236,7 +236,7 @@ EOT;
         $this->_cleanCache("ups_cache");
     }
     
-    function &_parseResponse($response, $destination, $originCountry)
+    function _parseResponse($response, $destination, $originCountry)
     {
         require_once "modules/UPS/encoded.php";
         return Shipping_ups_parseResponse($this, $response, $destination, $originCountry);

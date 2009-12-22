@@ -59,36 +59,36 @@ class XLite extends Object
             $this->options->$key->setProperties($val);
         }
 
-        $this->profiler =& func_get_instance("Profiler");
+        $this->profiler = func_get_instance("Profiler");
         $this->profiler->start($this->options->profiler_details->enabled);
 
-		$this->db =& func_new("Database");
+		$this->db = func_new("Database");
         $this->db->connect();
         $this->profiler->log("db_time");
 
         // read configuration data from database
-        $cfg =& func_new("Config");
-        $this->config =& $cfg->readConfig();
+        $cfg = func_new("Config");
+        $this->config = $cfg->readConfig();
         $this->profiler->log("cfg_time");
 		
 		// initialize logging
         require_once "kernel/Logger.php";
-        $this->logger =& Logger::singleton();
+        $this->logger = Logger::singleton();
 
         // start session
-        $session =& func_get_instance("Session");
-        $this->session =& $session->start();
+        $session = func_get_instance("Session");
+        $this->session = $session->start();
         $this->profiler->log("ss_time");
 
         // attempt to initialize modules subsystem
-        $this->mm =& func_new("ModulesManager");
+        $this->mm = func_new("ModulesManager");
         $this->mm->init();
         $this->profiler->log("mm_time");
 
-        $this->layout =& func_get_instance("Layout");
+        $this->layout = func_get_instance("Layout");
         $this->layout->initFromGlobals();
         
-        $this->auth =& func_get_instance("Auth");
+        $this->auth = func_get_instance("Auth");
 
         $this->profiler->log("init_time");
 
@@ -122,7 +122,7 @@ class XLite extends Object
         if ($this->get('adminZone')) {
             $dialogClass = 'admin_' . $dialogClass;
         }
-        $dialog =& func_new($dialogClass);
+        $dialog = func_new($dialogClass);
         $dialog->init();
         $this->profiler->log("dialog_init_time");
         $dialog->handleRequest();
@@ -137,7 +137,7 @@ class XLite extends Object
         return $this->get("adminZone") ? ADMIN_SELF : CART_SELF;
     }
 
-    function &getFactory()
+    function getFactory()
     {
         return func_new("Factory");
     }

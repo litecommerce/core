@@ -58,7 +58,7 @@ class Module_AntiFraud_Admin_Dialog_order extends Admin_Dialog_order
 		$post["shop_host"] = func_parse_host($this->xlite->options->host_details->http_host);
 		$post["reason"] = strip_tags($this->get("fraud_comment"));
 		$post["service_key"] = $this->config->get("AntiFraud.antifraud_license");
-		$request = & func_new("HTTPS");
+		$request = func_new("HTTPS");
         $request->data = $post; 
         $request->url = $this->config->get('AntiFraud.antifraud_url')."/add_fraudulent_ip.php";
 		$request->request();
@@ -66,10 +66,10 @@ class Module_AntiFraud_Admin_Dialog_order extends Admin_Dialog_order
 		$request->response ? $this->set("mode","sent") : $this->set("mode","failed");
 	}
 
-	function &getOrder()
+	function getOrder()
 	{
 		if (is_null($this->order)) {
-			$this->order = & func_new("Order",$this->get("order_id"));
+			$this->order = func_new("Order",$this->get("order_id"));
 		} 
 		return $this->order;
 	}	
@@ -86,7 +86,7 @@ class Module_AntiFraud_Admin_Dialog_order extends Admin_Dialog_order
         }   
 
         $order = $this->get("order");
-        $this->country =& func_new("Country", $order->get("profile.billing_country"));
+        $this->country = func_new("Country", $order->get("profile.billing_country"));
         $this->country->set("order", $order);
         return $this->country;
     }

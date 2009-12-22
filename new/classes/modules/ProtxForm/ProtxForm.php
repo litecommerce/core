@@ -56,7 +56,7 @@ class Module_ProtxForm extends Module
     {
         parent::init();
 
-        $pm =& func_new("PaymentMethod");
+        $pm = func_new("PaymentMethod");
         $pm->registerMethod("protxform_cc");
     }
 

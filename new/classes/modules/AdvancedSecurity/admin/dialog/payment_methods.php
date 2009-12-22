@@ -51,9 +51,9 @@ class Module_AdvancedSecurity_Admin_Dialog_payment_methods extends Admin_Dialog_
 
 	function isAdvancedSecurityDisplayNote()
 	{
-		$pm =& func_new("PaymentMethod", "credit_card");
+		$pm = func_new("PaymentMethod", "credit_card");
 
-		$gpg =& func_new("GPG");
+		$gpg = func_new("GPG");
 		return ($pm->get("enabled") && (!$gpg->get("publicKey") || !$gpg->get("secretKey"))) ? true : false;
 	}
 

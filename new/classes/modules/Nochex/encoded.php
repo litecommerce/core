@@ -1,6 +1,6 @@
 <?php
 
-	function &PaymentMethod_nochex_handleRequest(&$order,&$_this)
+	function PaymentMethod_nochex_handleRequest(&$order,&$_this)
 	{
         $order->set("details.error", null);
         $order->set("detailLabels.error", null);
@@ -16,7 +16,7 @@
 			$order->set("detailLabels.error", "Error");
 			$order->set("details.error", "Duplicate transaction : " . $_POST['transaction_id']);
 		} else {
-	        $request = & func_new("HTTPS");
+	        $request = func_new("HTTPS");
     	    $request->url = "https://www.nochex.com:443/nochex.dll/apc/apc";
         	$request->data = $_POST;
 	        $request->request();

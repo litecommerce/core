@@ -49,7 +49,7 @@ class Module_PayPalPro_Dialog_profile extends Dialog_profile // {{{
 	function handleRequest() // {{{  
 	{
 		if ($this->get("mode") == "modify" && $this->cart->get("PaymentMethod.payment_method") == "paypalpro_express") {
-			$express_checkout =& func_new("Dialog_express_checkout");
+			$express_checkout = func_new("Dialog_express_checkout");
 			$express_checkout->action_profile();
 		} 
 		parent::handleRequest();

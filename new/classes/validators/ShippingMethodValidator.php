@@ -56,7 +56,7 @@ class CShippingMethodValidator extends CRequiredValidator
 
         $result = !empty($_POST[$this->get("field")]) || !isset($_POST[$this->get("field")]);
         if ($result && isset($_POST[$this->get("field")]) && !$this->xlite->get("action_add_valid")) {
-            $shipping =& func_new("Shipping");
+            $shipping = func_new("Shipping");
             if ($shipping->find("class='offline' AND destination='".$_POST["destination"]."' AND name='".addslashes($_POST[$this->get("field")])."'")) {
             	$this->set("shipping_already_exists", true);
             	$result = false;

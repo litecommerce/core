@@ -52,7 +52,7 @@ class CFormField extends Component
     * Used in form field components to display a form field according to
     * the 'field' property.  
     */      
-    function &getValue()
+    function getValue()
     {
         if (!is_null($this->field) && !is_null($this->get("component." . $this->field))) {
             return $this->get("component." . $this->field);

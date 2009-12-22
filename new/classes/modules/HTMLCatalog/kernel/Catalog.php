@@ -121,7 +121,7 @@ class Catalog extends FlexyCompiler
 			return $fcSrc;
 
 		if (!isset($this->customerLayout)) {
-			$this->customerLayout =& func_new("Layout");
+			$this->customerLayout = func_new("Layout");
 			$adminZone = $this->xlite->get("adminZone");
 			$this->xlite->set("adminZone", false);
 			$this->customerLayout->initFromGlobals();
@@ -199,7 +199,7 @@ class Catalog extends FlexyCompiler
     function delete($url) // {{{
     {
         if (is_object($this->get("parentCaller"))) {
-        	$parentCaller =& $this->get("parentCaller");
+        	$parentCaller = $this->get("parentCaller");
         	$parentCallerAction = "catalog_callback";
         	if (method_exists($parentCaller, $parentCallerAction)) {
             	if ($parentCaller->$parentCallerAction($url)) {
@@ -422,7 +422,7 @@ class Catalog extends FlexyCompiler
     /**
     * Start building catalog from this Category
     */
-    function &getTopCategory() // {{{
+    function getTopCategory() // {{{
     {
         if (!is_null($this->topCategory)) {
             $id = $this->topCategory;
@@ -430,7 +430,7 @@ class Catalog extends FlexyCompiler
             $id = $this->get("config.HTMLCatalog.catalog_category");
         }    
         if (!empty($id)) {
-            $category =& func_new("Category", $id);
+            $category = func_new("Category", $id);
         } else {
             $category = $this->get("xlite.factory.Category.topCategory");
         }    
@@ -516,7 +516,7 @@ class Catalog extends FlexyCompiler
                         if (is_array($products[$i]) && isset($products[$i]["class"]) && isset($products[$i]["data"])) {
                         	if ($old_class != $products[$i]["class"] || !is_object($object)) {
                         		$old_class = $products[$i]["class"];
-                        		$object =& func_new($products[$i]["class"]);
+                        		$object = func_new($products[$i]["class"]);
                         	}
                             $object->isPersistent = true;
                             $object->isRead = false;
@@ -533,7 +533,7 @@ class Catalog extends FlexyCompiler
                                 $this->xlite->session->set("productsAlreadyGenerated", $alreadyGenerated);
                                 $this->xlite->session->writeClose();
                                 $this->goCustomer();
-                                $products[$i] =& $object;
+                                $products[$i] = $object;
                                 $is_new_product = true;
                                 $this->set("product_id", $products[$i]["data"]["product_id"]);
                             } else {
@@ -657,7 +657,7 @@ class Catalog extends FlexyCompiler
         @touch($this->getCatalogIndex());
         @chmod($this->getCatalogIndex(), 0666);
         if (version_compare($this->config->get("Version.version"), "2.2.39", "ge")) {
-            $htaccess =& func_new("Htaccess");
+            $htaccess = func_new("Htaccess");
             if ($htaccess->find("filename='catalog/.htaccess'"))
                 $htaccess->restoreFile();
         }
@@ -682,7 +682,7 @@ class Catalog extends FlexyCompiler
             closedir($dh);
         }
         if (version_compare($this->config->get("Version.version"), "2.2.39", "ge")) {
-            $htaccess =& func_new("Htaccess");
+            $htaccess = func_new("Htaccess");
             if ($htaccess->find("filename='catalog/.htaccess'")) 
                 $htaccess->restoreFile();
         }
@@ -701,7 +701,7 @@ class Catalog extends FlexyCompiler
 		}
 
         if (is_object($this->get("parentCaller"))) {
-        	$parentCaller =& $this->get("parentCaller");
+        	$parentCaller = $this->get("parentCaller");
         	$parentCallerAction = "catalog_callback";
         	if (method_exists($parentCaller, $parentCallerAction)) {
             	if ($parentCaller->$parentCallerAction($url)) {
@@ -794,11 +794,11 @@ class Catalog extends FlexyCompiler
         $this->session->_data = array();
 
         // switch layout to customer's zone
-        $layout =& func_get_instance("Layout");
+        $layout = func_get_instance("Layout");
         $layout->set("skin", "default");
 
         // empty cart
-        $cart =& func_get_instance("Cart");
+        $cart = func_get_instance("Cart");
         $cart = null;
 
         // switch XLite to customer's zone
@@ -1045,7 +1045,7 @@ class Catalog extends FlexyCompiler
         	$adminZone = $this->xlite->get("adminZone");
             $this->xlite->set("adminZone", true);
 
-            $category =& func_new("Category", $request["category_id"]);
+            $category = func_new("Category", $request["category_id"]);
             $category->read();
 
             $this->xlite->set("adminZone", $adminZone);
@@ -1055,13 +1055,13 @@ class Catalog extends FlexyCompiler
         	$adminZone = $this->xlite->get("adminZone");
             $this->xlite->set("adminZone", true);
 
-            $product =& func_new("Product", $request["product_id"]);
+            $product = func_new("Product", $request["product_id"]);
             $product->read();
 
             if (!isset($request["category_id"])) {
             	$pc = $product->getCategories();
 
-                $category =& func_new("Category", $pc[0]->get("category_id"));
+                $category = func_new("Category", $pc[0]->get("category_id"));
             	$category->read();
             }
 
@@ -1123,11 +1123,11 @@ class Catalog extends FlexyCompiler
 				// $maxMemoryUsage = $this->config->get("HTMLCatalog.memory_usage");
 				// if ($maxMemoryUsage < $GLOBALS['memory_usage']) {
 				// 	if (!is_object($this->cfg)) {
-            	// 		$this->cfg =& func_new("Config");
+            	// 		$this->cfg = func_new("Config");
 				// 	}
                 // 	$this->cfg->createOption("HTMLCatalog", "memory_usage", $GLOBALS['memory_usage'], "text");
                 //     // re-read config data
-                // 	$this->config =& $this->cfg->readConfig();
+                // 	$this->config = $this->cfg->readConfig();
                 // }
             }
             echo "<br>\n";

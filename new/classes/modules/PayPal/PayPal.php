@@ -58,7 +58,7 @@ class Module_PayPal extends Module
     {
         parent::init();
         // plug in the kernel/PaymentMethod/paypal.php module
-        $pm =& func_new("PaymentMethod");
+        $pm = func_new("PaymentMethod");
         $pm->registerMethod("paypal");
     }
 

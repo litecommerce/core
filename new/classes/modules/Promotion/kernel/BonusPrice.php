@@ -55,17 +55,17 @@ class BonusPrice extends Base
 	var $alias = "special_offer_bonusprices";	
 	var $primaryKey = array("offer_id","product_id");
 
-	function &getProduct()
+	function getProduct()
 	{
 		if ($this->get("product_id")) {
-			$product = &func_new("Product",$this->get("product_id"));
+			$product = func_new("Product",$this->get("product_id"));
 		} else {
             $product = null;
         }    
         return $product;
     }
 
-    function &getCategory()
+    function getCategory()
     {
 		if ($this->get("category_id")) {
 			$category = func_new("Category",$this->get("category_id"));

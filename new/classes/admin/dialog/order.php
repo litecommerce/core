@@ -49,7 +49,7 @@ class Admin_Dialog_Order extends Admin_Dialog
 {
     var $params = array("target", "order_id");
 
-    function &getTemplate()
+    function getTemplate()
     {
         if ($this->get("mode") == "invoice") {
             // print invoice
@@ -58,7 +58,7 @@ class Admin_Dialog_Order extends Admin_Dialog
         return $this->template;
     }
 
-    function &getOrder()
+    function getOrder()
     {
         if (is_null($this->order)) {
             $this->order = func_new("Order", $this->get("order_id"));

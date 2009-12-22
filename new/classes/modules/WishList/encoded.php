@@ -15,7 +15,7 @@
 	  		 return;
 		}
         
-        $product = & func_new("Product",$_this->product_id);
+        $product = func_new("Product",$_this->product_id);
         
 		// alternative way to set product options
 		if ($_this->xlite->get("ProductOptionsEnabled") && isset($_REQUEST["OptionSetIndex"][$product->get("product_id")])) {
@@ -31,7 +31,7 @@
         }
 
         $wishlist = $_this->get("wishList");
-        $wishlist_product = & func_new("WishListProduct");
+        $wishlist_product = func_new("WishListProduct");
         
         $wishlist_product->set("product_id",$_this->get("product_id"));
 

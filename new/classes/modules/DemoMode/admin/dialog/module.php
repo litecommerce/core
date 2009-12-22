@@ -43,7 +43,7 @@ class Module_DemoMode_Admin_Dialog_module extends Admin_Dialog_module
 	{   
 		$forbiddenActions = array("update", "save_rebuild");
         if (isset($_REQUEST["action"]) && $_REQUEST["page"] == "FlyoutCategories" && in_array($_REQUEST["action"], $forbiddenActions)) {
-            $dialog =& func_new("Admin_Dialog_demo_mode");
+            $dialog = func_new("Admin_Dialog_demo_mode");
             $_REQUEST["target"] = "demo_mode";
             $dialog->init();
             $dialog->display();

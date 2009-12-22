@@ -91,7 +91,7 @@ function func_sns_request($config, $clientId, $actions, $timestamp = null)
 
 	$url .= "/event." . $config->get("SnsIntegration.collectorLanguage");
 
-    $logger =& func_new("Logger");
+    $logger = func_new("Logger");
     $logger->log("SnS request at $url:");
 	if (!$clientId) {
 		// no client id is given
@@ -123,7 +123,7 @@ function func_sns_request($config, $clientId, $actions, $timestamp = null)
         }
         $config->xlite->set("SNSResponse", $http->getResponseBody());
     } else {
-        $https =& func_new("HTTPS");
+        $https = func_new("HTTPS");
 
         $postData = array();
     	$postData["clientId"] = $clientId;

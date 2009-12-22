@@ -49,7 +49,7 @@ class DetailedImages_Dialog_image extends Dialog_image
     function action_detailed_images()
     {
         $detailed_image = func_new("DetailedImage", $this->image_id);
-        $image =& $detailed_image->getImage();
+        $image = $detailed_image->getImage();
         $image->show();
     }
 }

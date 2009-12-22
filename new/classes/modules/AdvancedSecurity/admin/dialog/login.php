@@ -46,7 +46,7 @@ class Module_AdvancedSecurity_Admin_Dialog_login extends Admin_Dialog_login
 	function action_clear_password()
 	{
 		if ($this->xlite->get("config.AdvancedSecurity.clr_mp_logoff")) {
-    		$orderDialog =& func_new("Admin_Dialog_order");
+    		$orderDialog = func_new("Admin_Dialog_order");
     		$orderDialog->action_clear_password();
     	}
 	}

@@ -63,7 +63,7 @@ class Admin_Dialog_CustomerNotifications extends Admin_Dialog
 	function init()
 	{
 		if (!isset($_REQUEST["action"]) && !(isset($_REQUEST["email"])||isset($_REQUEST["pinfo"])||isset($_REQUEST["status"])||isset($_REQUEST["type"])||isset($_REQUEST["prodname"])||isset($_REQUEST["period"]))) {
-            $config =& func_new("Config");
+            $config = func_new("Config");
             if ($config->find("name='filters_preferences' AND category='ProductAdviser'")) {
     			$preferences = unserialize(stripslashes($config->get("value")));
     			if (is_array($preferences)) {
@@ -93,7 +93,7 @@ class Admin_Dialog_CustomerNotifications extends Admin_Dialog
 		}
 	}
 
-    function &getAllParams($exeptions=null)
+    function getAllParams($exeptions=null)
     {
     	$allParams = parent::getAllParams();
     	$params = $allParams;
@@ -176,10 +176,10 @@ class Admin_Dialog_CustomerNotifications extends Admin_Dialog
     	return array($startDateRaw, $endDateRaw);
     }
 
-    function &getNotifications()
+    function getNotifications()
     {
         if (is_null($this->notifications)) {
-            $cntfs =& func_new("CustomerNotification");
+            $cntfs = func_new("CustomerNotification");
             
             $condition = array();
 			
@@ -255,8 +255,8 @@ class Admin_Dialog_CustomerNotifications extends Admin_Dialog
 
             	if (isset($this->action) && $this->action == "prepare_notifications") {
             		for($i=0; $i<$this->notificationsNumber; $i++) {
-            			$mail =& func_new("Mailer");
-            			$mail->ntf =& $this->notifications[$i];
+            			$mail = func_new("Mailer");
+            			$mail->ntf = $this->notifications[$i];
                         $dir = "modules/ProductAdviser/notifications/".$this->notifications[$i]->get("type")."/";
                         $mail->set("subject", $mail->compile($dir.$mail->get("subjectTemplate")));
                         $mail->set("signature", $mail->compile($mail->get("signatureTemplate")));
@@ -283,7 +283,7 @@ class Admin_Dialog_CustomerNotifications extends Admin_Dialog
             $statuses = implode(", ", $statuses);
 
     		foreach($this->selected as $notify_id) {
-				$notification =& func_new("CustomerNotification");
+				$notification = func_new("CustomerNotification");
 
         		$condition = array();
                 $condition[] = "status IN ($statuses)";
@@ -308,7 +308,7 @@ class Admin_Dialog_CustomerNotifications extends Admin_Dialog
             $statuses = implode(", ", $statuses);
 
     		foreach($this->selected as $notify_id) {
-				$notification =& func_new("CustomerNotification");
+				$notification = func_new("CustomerNotification");
 
         		$condition = array();
                 $condition[] = "status IN ($statuses)";
@@ -347,7 +347,7 @@ class Admin_Dialog_CustomerNotifications extends Admin_Dialog
 </SCRIPT>
 <?php
     		foreach($this->ids as $ntf_id) {
-				$notification =& func_new("CustomerNotification");
+				$notification = func_new("CustomerNotification");
 
         		$condition = array();
                 $condition[] = "status='".CUSTOMER_REQUEST_UPDATED."'";
@@ -357,7 +357,7 @@ class Admin_Dialog_CustomerNotifications extends Admin_Dialog
 					$notification->set("status", CUSTOMER_REQUEST_SENT);
 					$notification->update();
 
-        			$mail =& func_new("Mailer");
+        			$mail = func_new("Mailer");
                     $mail->set("subject", $this->subjects[$ntf_id]);
                     $mail->set("body", $this->bodies[$ntf_id]);
                     $mail->set("ignoreDefaultSubjectBody", true);
@@ -414,7 +414,7 @@ class Admin_Dialog_CustomerNotifications extends Admin_Dialog
 			$preferences["period"] = $period;
         }
 
-        $config =& func_new("Config");
+        $config = func_new("Config");
         $update_config = true;
         if (!$config->find("name='filters_preferences' AND category='ProductAdviser'")) {
         	$update_config = false;

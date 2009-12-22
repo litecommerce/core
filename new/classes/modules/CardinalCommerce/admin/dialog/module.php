@@ -51,7 +51,7 @@ class Admin_Dialog_module_CardinalCommerce extends Admin_Dialog_module
 		parent::init();
 
 		if ($this->page == "CardinalCommerce") {
-        	$lay =& func_get_instance("Layout");
+        	$lay = func_get_instance("Layout");
         	$lay->addLayout("general_settings.tpl", "modules/CardinalCommerce/config.tpl");
         }
 	}

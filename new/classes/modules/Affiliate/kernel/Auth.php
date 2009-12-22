@@ -68,7 +68,7 @@ class Module_Affiliate_Auth extends Auth
             $this->pendPartner($profile);
         }
         $profile->update();
-        $mailer =& func_new("Mailer");
+        $mailer = func_new("Mailer");
         $mailer->profile = $profile;
         // mailto customer with a new signup notification
         $mailer->compose($this->get("config.Company.site_administrator"),
@@ -96,7 +96,7 @@ class Module_Affiliate_Auth extends Auth
         $profile->set("access_level", $this->get("declinedPartnerAccessLevel"));
         $profile->update();
         // sent notification to customer
-        $mailer =& func_new("Mailer");
+        $mailer = func_new("Mailer");
         $mailer->profile = $profile;
         $mailer->compose(
                 $this->get("config.Company.site_administrator"),
@@ -112,7 +112,7 @@ class Module_Affiliate_Auth extends Auth
             $profile->set("access_level", $this->get("pendingPartnerAccessLevel"));
         }    
         // mailto customer with a new signup notification
-        $mailer =& func_new("Mailer");
+        $mailer = func_new("Mailer");
         $mailer->profile = $profile;
         $mailer->compose($this->get("config.Company.site_administrator"),
                 $profile->get("login"),
@@ -129,7 +129,7 @@ class Module_Affiliate_Auth extends Auth
         }    
         $profile->set("plan", $profile->get("pending_plan"));
         // mailto customer with a new signup notification
-        $mailer =& func_new("Mailer");
+        $mailer = func_new("Mailer");
         $mailer->profile = $profile;
         $mailer->compose($this->get("config.Company.site_administrator"),
                 $profile->get("login"),

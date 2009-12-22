@@ -61,12 +61,12 @@ class Admin_Dialog_settings extends Admin_Dialog
         parent::handleRequest();
     }
 
-    function &getSettings()
+    function getSettings()
     {
         return func_new("Config");
     }
 
-    function &getPages()
+    function getPages()
     {
         $categories = $this->get("settings.categories");
         $names = $this->get("settings.categoryNames");
@@ -79,7 +79,7 @@ class Admin_Dialog_settings extends Admin_Dialog
         return $pages;
     }
 
-    function &getOptions()
+    function getOptions()
     {
         $settings = $this->get("settings");
         return $settings->getByCategory($this->page);
@@ -87,7 +87,7 @@ class Admin_Dialog_settings extends Admin_Dialog
 	
 	function check_https($https_client)	
 	{
-		$https =& func_new("HTTPS");
+		$https = func_new("HTTPS");
 		switch ($https_client) {
 			case 'libcurl' : return $https->LibCurl_detect(); break;
 			case 'curl'	  : return $https->Curl_detect(); break;
@@ -102,7 +102,7 @@ class Admin_Dialog_settings extends Admin_Dialog
         return ($res != "");
     }
 	
-	function &get($name) 
+	function get($name) 
 	{
 		switch($name) {
             case 'phpversion' 	: return phpversion(); break;
@@ -333,7 +333,7 @@ class Admin_Dialog_settings extends Admin_Dialog
 
     function getCheckFiles()
     {
-        $htaccess =& func_new("Htaccess");
+        $htaccess = func_new("Htaccess");
         return $htaccess->checkEnvironment();
     }
 
@@ -341,7 +341,7 @@ class Admin_Dialog_settings extends Admin_Dialog
     {
         $ids = (array) $this->get("ind");
         foreach($ids as $id => $v){
-            $htaccess =& func_new("Htaccess", $id);
+            $htaccess = func_new("Htaccess", $id);
             $htaccess->reImage();
         }
     }
@@ -350,7 +350,7 @@ class Admin_Dialog_settings extends Admin_Dialog
     {
         $ids = (array) $this->get("ind");
         foreach($ids as $id => $v){
-            $htaccess =& func_new("Htaccess", $id);
+            $htaccess = func_new("Htaccess", $id);
             $htaccess->restoreFile();
         }
     }
@@ -442,7 +442,7 @@ class Admin_Dialog_settings extends Admin_Dialog
 	
 	function action_update()
     {
-        $options =& $this->get("options");
+        $options = $this->get("options");
         for ($i=0; $i<count($options); $i++) {
             $name = $options[$i]->get("name");
             $type = $options[$i]->get("type");
@@ -478,15 +478,15 @@ class Admin_Dialog_settings extends Admin_Dialog
     function getCountriesStates()
     {
     	if (!isset($this->_profileDialog)) {
-    		$this->_profileDialog =& func_new("Admin_Dialog_profile");
+    		$this->_profileDialog = func_new("Admin_Dialog_profile");
     	}
         return $this->_profileDialog->getCountriesStates();
     }
 
-    function &getWaitingList()
+    function getWaitingList()
     {
         if(is_null($this->_waiting_list)){
-            $waiting_ip =& func_new("WaitingIP");
+            $waiting_ip = func_new("WaitingIP");
             $this->_waiting_list = (array) $waiting_ip->findAll("", "first_date");
         }
 
@@ -507,7 +507,7 @@ class Admin_Dialog_settings extends Admin_Dialog
     {
         $ids = (array) $this->get("waiting_ips");
         foreach($ids as $id){
-            $waiting_ip =& func_new("WaitingIP", $id);
+            $waiting_ip = func_new("WaitingIP", $id);
             $waiting_ip->approveIP();
             $waiting_ip->delete();
         }
@@ -518,12 +518,12 @@ class Admin_Dialog_settings extends Admin_Dialog
     {
         $ids = (array) $this->get("waiting_ips");
         foreach($ids as $id){
-            $waiting_ip =& func_new("WaitingIP", $id);
+            $waiting_ip = func_new("WaitingIP", $id);
             $waiting_ip->delete();
         }
     }
 
-    function &getAllowedList()
+    function getAllowedList()
     {
         return $this->get("xlite.config.SecurityIP.allow_admin_ip");
     }
@@ -532,7 +532,7 @@ class Admin_Dialog_settings extends Admin_Dialog
     {
         $ip = $this->get("byte_1") . "." . $this->get("byte_2") . "." . $this->get("byte_3") . "." . $this->get("byte_4");
         $comment = $this->get("comment");
-        $valid_ips_object =& func_new("Config");
+        $valid_ips_object = func_new("Config");
         if(!$valid_ips_object->find("category = 'SecurityIP' AND name = 'allow_admin_ip'"))
             return;
         $list = unserialize($valid_ips_object->get("value"));
@@ -570,7 +570,7 @@ class Admin_Dialog_settings extends Admin_Dialog
             $new_list[] = array("ip" => $admin_ip, "comment" => "Default admin IP");
         }
 
-        $valid_ips_object =& func_new("Config");
+        $valid_ips_object = func_new("Config");
 
         if(!$valid_ips_object->find("category = 'SecurityIP' AND name = 'allow_admin_ip'"))
             return;
@@ -582,7 +582,7 @@ class Admin_Dialog_settings extends Admin_Dialog
     function action_update_allowed_ip()
     {
         $comments = (array) $this->get("comment");
-        $valid_ips_object =& func_new("Config");
+        $valid_ips_object = func_new("Config");
         if(!$valid_ips_object->find("category = 'SecurityIP' AND name = 'allow_admin_ip'"))
             return;
         $list = unserialize($valid_ips_object->get("value"));

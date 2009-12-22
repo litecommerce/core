@@ -59,11 +59,11 @@ class PaymentMethod_securetrading extends PaymentMethod_credit_card {
 		return $cart->get("total")*100;
 	}
 	function getBillingState(&$cart) { 
-		$state = & func_new("State",$cart->get("profile.billing_state"));
+		$state = func_new("State",$cart->get("profile.billing_state"));
 		return $state->get("state");
 	}
 	function getCountry(&$cart)	{
-		$country = & func_new("Country",$cart->get("profile.billing_country"));
+		$country = func_new("Country",$cart->get("profile.billing_country"));
 		return $country->get("country");
 	}
 	function getMerchantEmail() {

@@ -44,7 +44,7 @@ class WishList_Dialog_checkout extends Dialog_checkout
 	function success() // {{{
 	{
 		if ($this->auth->get('profile')) {
-			$wishlist = & func_new("WishList");
+			$wishlist = func_new("WishList");
 			$wishlist->find("profile_id = ". $this->auth->get('profile.profile_id'));
 			$wishlist_products = $wishlist->get("products");
 		

@@ -44,19 +44,19 @@
 */
 class Admin_dialog_download_statistics extends Admin_dialog_stats
 {
-	function &getStat()
+	function getStat()
 	{
 		if (!isset($this->stats)) {
-			$ds =& func_new ("DownloadsStatistics");
-			$this->stats =& $ds->findAll();
+			$ds = func_new ("DownloadsStatistics");
+			$this->stats = $ds->findAll();
 		}
 		return $this->stats;
 	}
 
 	function getProductName($file_id, $trim=25)
 	{
-		$df =& func_new("DownloadableFile", $file_id);
-		$product =& func_new("Product", $df->get('product_id'));
+		$df = func_new("DownloadableFile", $file_id);
+		$product = func_new("Product", $df->get('product_id'));
 		$name = $product->get('name');
 		if (strlen($name) <= $trim) {
 			return $name;
@@ -67,12 +67,12 @@ class Admin_dialog_download_statistics extends Admin_dialog_stats
 
 	function getProductHref($file_id)
 	{
-		$df =& func_new("DownloadableFile", $file_id);
-		$product =& func_new("Product", $df->get('product_id'));
+		$df = func_new("DownloadableFile", $file_id);
+		$product = func_new("Product", $df->get('product_id'));
 		return "admin.php?target=product&product_id=" . $product->get('product_id') . "&page=downloadable_files";
 	}
 
-	function &getPageTemplate()
+	function getPageTemplate()
 	{
 		return "modules/Egoods/download_statisics.tpl";
 	}

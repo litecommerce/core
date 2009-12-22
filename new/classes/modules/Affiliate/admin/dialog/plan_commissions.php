@@ -56,7 +56,7 @@ class Admin_Dialog_plan_commissions extends Admin_Dialog
                 return; // wrong data
             }
             foreach ($this->get("commission") as $itemID => $commission) {
-                $pc =& func_new("PlanCommission", $this->get("plan_id"), $itemID, $this->get("item_type"));
+                $pc = func_new("PlanCommission", $this->get("plan_id"), $itemID, $this->get("item_type"));
                 $pc->set("commission", $commissions[$itemID]);
                 $pc->set("commission_type", $types[$itemID]);
                 $pc->update();
@@ -65,7 +65,7 @@ class Admin_Dialog_plan_commissions extends Admin_Dialog
             $deleteItems = $this->get("delete_items");
             if (is_array($deleteItems)) {
                 foreach ($deleteItems as $itemID => $status) {
-                    $pc =& func_new("PlanCommission", $this->get("plan_id"), $itemID, $this->get("item_type"));
+                    $pc = func_new("PlanCommission", $this->get("plan_id"), $itemID, $this->get("item_type"));
                     $pc->delete();
                 }
             }
@@ -74,14 +74,14 @@ class Admin_Dialog_plan_commissions extends Admin_Dialog
 
     function action_add_commission()
     {
-        $pc =& $this->get("planCommission");
+        $pc = $this->get("planCommission");
         $pc->set("properties", $_POST);
         $pc->create();
     }
     
     function action_basic_commission()
     {
-        $pc =& $this->get("basicCommission");
+        $pc = $this->get("basicCommission");
         $pc->set("properties", $_POST);        
         if ($this->foundBasicCommission) {
             $pc->update();
@@ -90,36 +90,36 @@ class Admin_Dialog_plan_commissions extends Admin_Dialog
         }
     }
 
-    function &getAffiliatePlan()
+    function getAffiliatePlan()
     {
-        $ap =& func_new("AffiliatePlan", isset($_REQUEST["plan_id"]) ? $_REQUEST["plan_id"] : null);
+        $ap = func_new("AffiliatePlan", isset($_REQUEST["plan_id"]) ? $_REQUEST["plan_id"] : null);
         $ap->set("properties", $_REQUEST);
         return $ap;
     }
 
-    function &getCategoryCommissions()
+    function getCategoryCommissions()
     {
-        $pc =& $this->get("planCommission");
+        $pc = $this->get("planCommission");
         return $pc->findAll("plan_id=".$_REQUEST["plan_id"]." AND item_type='C'");
     }
 
-    function &getProductCommissions()
+    function getProductCommissions()
     {
-        $pc =& $this->get("planCommission");
+        $pc = $this->get("planCommission");
         return $pc->findAll("plan_id=".$_REQUEST["plan_id"]." AND item_type='P'");
     }
 
-    function &getBasicCommission()
+    function getBasicCommission()
     {
-        $pc =& $this->get("planCommission");
+        $pc = $this->get("planCommission");
         $this->foundBasicCommission = $pc->find("plan_id=".$_REQUEST["plan_id"]." AND item_type='B'");
         return $pc;
     }
 
-    function &getPlanCommission()
+    function getPlanCommission()
     {
         if (is_null($this->pc)) {
-            $this->pc =& func_new("PlanCommission");
+            $this->pc = func_new("PlanCommission");
         }
         return $this->pc;
     }

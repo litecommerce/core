@@ -69,7 +69,7 @@ class Module_DetailedImages_Admin_Dialog_import_catalog extends Admin_Dialog_imp
 				"return_error" => true,
                 );
 
-        $detailed_image =& func_new("DetailedImage");
+        $detailed_image = func_new("DetailedImage");
         $detailed_image->import($options);
 		$this->importError = $detailed_image->importError;
 

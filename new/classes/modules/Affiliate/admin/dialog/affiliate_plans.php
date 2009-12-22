@@ -47,9 +47,9 @@ class Admin_Dialog_affiliate_plans extends Admin_Dialog
 {
     function action_delete()
     {
-        $ap =& $this->get("affiliatePlan");
+        $ap = $this->get("affiliatePlan");
         if ($ap->get("plan_id") == $this->config->get("Affiliate.default_plan")) {
-			$cfg =& func_new("Config");
+			$cfg = func_new("Config");
             $cfg->createOption("Affiliate", "default_plan", "");
         }
         $ap->delete();
@@ -57,34 +57,34 @@ class Admin_Dialog_affiliate_plans extends Admin_Dialog
     
     function action_update()
     {
-        $ap =& $this->get("affiliatePlan");
+        $ap = $this->get("affiliatePlan");
         $ap->update();
         if ($ap->get("plan_id") == $this->config->get("Affiliate.default_plan") && !$ap->get("enabled")) {
-			$cfg =& func_new("Config");
+			$cfg = func_new("Config");
             $cfg->createOption("Affiliate", "default_plan", "");
         }
     }
     
     function action_add()
     {
-        $ap =& $this->get("affiliatePlan");
+        $ap = $this->get("affiliatePlan");
         $ap->create();
         if (!is_null($this->get("returnUrl"))) {
             $this->set("returnUrl", $this->get("returnUrl") . $ap->get("plan_id"));
         }
     }
 
-    function &getAffiliatePlan()
+    function getAffiliatePlan()
     {
-        $ap =& func_new("AffiliatePlan", isset($_REQUEST["plan_id"]) ? $_REQUEST["plan_id"] : null);
+        $ap = func_new("AffiliatePlan", isset($_REQUEST["plan_id"]) ? $_REQUEST["plan_id"] : null);
         $ap->set("properties", $_REQUEST);
         return $ap;
     }
 
-    function &getAffiliatePlans()
+    function getAffiliatePlans()
     {
         if (is_null($this->affiliatePlans)) {
-            $ap =& func_new("AffiliatePlan");
+            $ap = func_new("AffiliatePlan");
             $this->affiliatePlans = $ap->findAll();
         }
         return $this->affiliatePlans;

@@ -43,10 +43,10 @@
 */
 class Dialog_partner_affiliates extends PartnerDialog
 {
-    function &getRoot()
+    function getRoot()
     {
         if (is_null($this->root)) {
-            $this->root =& $this->get("auth.profile");
+            $this->root = $this->get("auth.profile");
         }
         return $this->root;
     }

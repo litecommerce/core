@@ -63,7 +63,7 @@ class Module_SnsIntegration_Dialog_product extends Dialog_product
     {
 		require_once("modules/SnsIntegration/include/misc.php");
 		$snsClientId  = func_get_sns_client_id();
-		$category =& func_new("Category", $this->get("category_id"));
+		$category = func_new("Category", $this->get("category_id"));
 		$actions = array();
 		$action = "name=$action";
 		$action .= "&productId=" . $this->get("product_id");

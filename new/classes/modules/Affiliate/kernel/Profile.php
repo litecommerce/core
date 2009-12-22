@@ -65,9 +65,9 @@ class Module_Affiliate_Profile extends Profile
         parent::set($name, $value);
     } // }}}
 
-    function &get($name) // {{{
+    function get($name) // {{{
     {
-        $value =& parent::get($name);
+        $value = parent::get($name);
         if ($name == "partner_fields") {
             $result = unserialize($value);
             if (is_array($result)) {
@@ -77,10 +77,10 @@ class Module_Affiliate_Profile extends Profile
         return $value;
     } // }}}
 
-    function &getParentProfile() // {{{
+    function getParentProfile() // {{{
     {
         if (is_null($this->parentProfile)) {
-            $pp =& func_new("Profile");
+            $pp = func_new("Profile");
             if ($pp->find("profile_id=".$this->get("parent"))) {
                 $this->parentProfile = $pp;
             }
@@ -103,15 +103,15 @@ class Module_Affiliate_Profile extends Profile
     }
     // }}}
 
-    function &getPartnerPlan() // {{{
+    function getPartnerPlan() // {{{
     {
         if (is_null($this->partnerPlan)) {
-            $this->partnerPlan =& func_new("AffiliatePlan", $this->get("plan"));
+            $this->partnerPlan = func_new("AffiliatePlan", $this->get("plan"));
         }
         return $this->partnerPlan;
     } // }}}
 
-    function &getParents() // {{{
+    function getParents() // {{{
     {
         $parents = array();
         $tiers = intval($this->get("config.Affiliate.tiers_number"));
@@ -120,7 +120,7 @@ class Module_Affiliate_Profile extends Profile
             $level = 2; // start from level 2 affiliate
             // search for parents chain
             do {
-                $p =& func_new("Profile");
+                $p = func_new("Profile");
                 $found = $p->find("profile_id=".$parent);
                 if ($found) {
                     $parents[$level] = $p;
@@ -131,7 +131,7 @@ class Module_Affiliate_Profile extends Profile
         return $parents;
     } // }}}
 
-    function &getAffiliates() // {{{
+    function getAffiliates() // {{{
     {
         if (is_null($this->affiliates)) {
             $this->affiliates = array();
@@ -153,11 +153,11 @@ class Module_Affiliate_Profile extends Profile
         }
     } // }}}
 
-    function &getPartnerCommissions() // {{{
+    function getPartnerCommissions() // {{{
     {
         if (is_null($this->partnerCommissions)) {
             $this->partnerCommissions = 0.00;
-            $pp =& func_new("PartnerPayment");
+            $pp = func_new("PartnerPayment");
             // own commissions
             foreach ((array)$pp->findAll("partner_id=".$this->get("profile_id")." AND affiliate=0") as $payment) {
                 $this->partnerCommissions += $payment->get("commissions");
@@ -166,11 +166,11 @@ class Module_Affiliate_Profile extends Profile
         return $this->partnerCommissions;
     } // }}}
 
-    function &getAffiliateCommissions() // {{{
+    function getAffiliateCommissions() // {{{
     {
         if (is_null($this->affiliateCommissions)) {
             $this->affiliateCommissions = 0.00;
-            $pp =& func_new("PartnerPayment");
+            $pp = func_new("PartnerPayment");
             // own commissions
             foreach ((array)$pp->findAll("partner_id=".$this->get("profile_id")." AND affiliate<>0") as $payment) {
                 $this->affiliateCommissions += $payment->get("commissions");
@@ -179,12 +179,12 @@ class Module_Affiliate_Profile extends Profile
         return $this->affiliateCommissions;
     } // }}}
 
-    function &getBranchCommissions() // {{{
+    function getBranchCommissions() // {{{
     {
         if (is_null($this->branchCommissions)) {
             $this->branchCommissions = 0.00;
             foreach ((array)$this->get("affiliates") as $partner) {
-                $pp =& func_new("PartnerPayment");
+                $pp = func_new("PartnerPayment");
                 foreach ((array)$pp->findAll("partner_id=".$partner->get("profile_id")) as $payment) {
                     $this->branchCommissions += $payment->get("commissions");
                 }

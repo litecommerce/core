@@ -52,7 +52,7 @@ class Module_BankOfAmerica extends Module
 	{
 
 		parent::init();
-		$pm =& func_new('PaymentMethod');
+		$pm = func_new('PaymentMethod');
 		$pm->registerMethod("bank_of_america_cc");
 	}
 
@@ -69,7 +69,7 @@ class Module_BankOfAmerica extends Module
 if (!function_exists("ref_func_https_request")) {
 
     function ref_func_https_request ($method, $url, $vars, $ref = "") {
-        $request =& func_new ('HTTPS');
+        $request = func_new ('HTTPS');
         if ($ref != "") {
        		$request->referer = $ref;
         }

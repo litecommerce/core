@@ -57,7 +57,7 @@ class FeaturedProduct extends Base
 
     function filter()
     {
-        $this->product =& func_new("Product", $this->get("product_id"));
+        $this->product = func_new("Product", $this->get("product_id"));
         if (!$this->product->isExists()) {
         	return false;
         }

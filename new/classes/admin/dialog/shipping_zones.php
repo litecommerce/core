@@ -56,11 +56,11 @@ class Admin_Dialog_shipping_zones extends Admin_Dialog_shipping_settings
     {
         if ($_POST["target_state_zone"] == 'new') {
             // create new zone
-            $zone =& func_new("ShippingZone");
+            $zone = func_new("ShippingZone");
             $zone->create();
         } else {
             // move to specified zone
-            $zone =& func_new("ShippingZone",$_POST["target_state_zone"]);
+            $zone = func_new("ShippingZone",$_POST["target_state_zone"]);
         }
         // move selected states
         if (isset($_POST["states"])) {
@@ -72,11 +72,11 @@ class Admin_Dialog_shipping_zones extends Admin_Dialog_shipping_settings
     {
         if ($_POST["target_country_zone"] == 'new') {
             // create new zone
-            $zone =& func_new("ShippingZone");
+            $zone = func_new("ShippingZone");
             $zone->create();
         } else {
             // move to specified zone
-            $zone =& func_new("ShippingZone",$_POST["target_country_zone"]);
+            $zone = func_new("ShippingZone",$_POST["target_country_zone"]);
         }
         // move selected countries
         if (isset($_POST["countries"])) {

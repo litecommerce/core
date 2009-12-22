@@ -49,7 +49,7 @@ class Dialog_sagepaydirect_checkout extends Dialog_checkout
 	function init()
 	{
 		if (!is_object($this->registerForm) || is_null($this->registerForm)) {
-			$this->registerForm =& func_new("Object");
+			$this->registerForm = func_new("Object");
 		}
 		parent::init();
 		
@@ -78,7 +78,7 @@ class Dialog_sagepaydirect_checkout extends Dialog_checkout
 			$this->session->writeClose();
 
 			$order = $this->get("order");
-            $payment =& func_new('PaymentMethod', "sagepaydirect_cc");
+            $payment = func_new('PaymentMethod', "sagepaydirect_cc");
 
 			include_once "modules/SagePay/encoded.php";
 			func_SagePayDirect_action_return($this, $order, $payment);

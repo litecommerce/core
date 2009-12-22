@@ -46,7 +46,7 @@
 */
 class Module_AOM_Admin_Dialog_orders_stats extends Admin_Dialog_orders_stats
 {
-    function &getPageTemplate()
+    function getPageTemplate()
     {
         return "modules/AOM/orders_stats.tpl";
 	}
@@ -55,7 +55,7 @@ class Module_AOM_Admin_Dialog_orders_stats extends Admin_Dialog_orders_stats
     {
         // typedef
         $statRec = array("today" => 0, "week" => 0, "month" => 0);
-		$orderStatus =& func_new("OrderStatus");
+		$orderStatus = func_new("OrderStatus");
 		$orderStatuses = $orderStatus->findAll();
 		$orderStatusesHash = array();
 		foreach($orderStatuses as $orderStatus_) {
@@ -66,7 +66,7 @@ class Module_AOM_Admin_Dialog_orders_stats extends Admin_Dialog_orders_stats
 		$this->stats["total"] = $statRec;
 		$this->stats["paid"] = $statRec;
         
-		$order =& func_new("Order");
+		$order = func_new("Order");
         $date = $this->get("monthDate");
         // fetch orders for this month
         array_map(array(&$this, "summarize"), $order->findAll("date>=$date"));

@@ -51,7 +51,7 @@ class Module_LinkPoint extends Module
     function init()
     {
         parent::init();
-        $pm =& func_new('PaymentMethod');
+        $pm = func_new('PaymentMethod');
         $pm->registerMethod("linkpoint_cc");
     }
 
@@ -66,7 +66,7 @@ class Module_LinkPoint extends Module
 }
 
     function lp_func_https_request ($method, $url, $vars, $cert) {
-        $request =& func_new('HTTPS');
+        $request = func_new('HTTPS');
         $request->url = $url;
 		$request->data = $vars;
 		

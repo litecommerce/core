@@ -53,7 +53,7 @@ class Module_Promotion_Profile extends Profile
         parent::constructor($param);
     }
 
-	function &get($name)
+	function get($name)
 	{
 		if ($name == "bonusPointsDollar") {
 			

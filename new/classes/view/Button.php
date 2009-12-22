@@ -57,7 +57,7 @@ class CButton extends Component
         $hasProfileString = (strpos($this->href, "target=profile") !== false);
         $hasDeleteString = (strpos($this->href, "mode=delete") !== false);
         if (!$isAdminZone && $isLoggedIn && $hasProfileString && $hasDeleteString) {
-            $profile =& $this->auth->get("profile");  
+            $profile = $this->auth->get("profile");  
             if ($profile->isAdmin()) {
                 $this->set("visible", false);
             }

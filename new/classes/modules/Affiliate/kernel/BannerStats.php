@@ -91,7 +91,7 @@ class BannerStats extends Base
         $endDate = intval($endDate);
 
         // select partners orders
-        $o =& func_new("Order");
+        $o = func_new("Order");
         $ordersTable = $o->db->getTableByAlias($o->alias);
         $sql = "SELECT partnerClick AS stat_id, subtotal FROM $ordersTable WHERE partnerClick<>0 AND (status='P' OR status='C')";
         $orders = $this->db->getAll($sql);
@@ -244,15 +244,15 @@ class BannerStats extends Base
                 $result[$i]["rate"] =  sprintf("%.02f", doubleval($result[$i]["clicks"] / $result[$i]["views"]));
             }    
             if (isset($result[$i]["banner_id"])) {
-                $banner =& func_new("Banner");
+                $banner = func_new("Banner");
                 $banner->set("deleted", !$banner->find("banner_id=".$result[$i]["banner_id"]));
-                $result[$i]["banner"] =& $banner;
+                $result[$i]["banner"] = $banner;
             }
             // create product instance
             else if (isset($result[$i]["product_id"])) {
-                $product =& func_new("Product");
+                $product = func_new("Product");
                 $product->set("deleted", !$product->find("product_id=".$result[$i]["product_id"]));
-                $result[$i]["product"] =& $product;
+                $result[$i]["product"] = $product;
             }
             // direct link
             else {
@@ -274,12 +274,12 @@ class BannerStats extends Base
         return array_reverse($result);
     } // }}}
 
-    function &getPartner() // {{{
+    function getPartner() // {{{
     {
         if (is_null($this->partner)) {
-            $profile =& func_new("Profile", $this->get("partner_id"));
+            $profile = func_new("Profile", $this->get("partner_id"));
             if ($profile->is("partner") && $profile->is("enabled")) {
-                $this->partner =& $profile;
+                $this->partner = $profile;
             }
         }
         return $this->partner;

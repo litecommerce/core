@@ -49,7 +49,7 @@
 
 class Admin_Dialog_Image_Edit extends Admin_Dialog
 {
-    function &getLocale() // {{{
+    function getLocale() // {{{
     {
         if (is_null($this->locale)) {
             $this->locale = $this->get("xlite.options.skin_details.locale");
@@ -57,7 +57,7 @@ class Admin_Dialog_Image_Edit extends Admin_Dialog
         return $this->locale;
     } // }}}
 
-    function &getZone()
+    function getZone()
     {
         if (is_null($this->zone)) {
             $this->zone = $this->get("xlite.options.skin_details.skin");
@@ -65,12 +65,12 @@ class Admin_Dialog_Image_Edit extends Admin_Dialog
         return $this->zone;
     }
 
-    function &getEditor()
+    function getEditor()
     {
         $zone   = $this->get("zone");
         $locale = $this->get("locale");
         if (!isset($this->editor)) {
-            $this->editor =& func_new("ImageEditor", "skins/$zone/$locale/images.ini");
+            $this->editor = func_new("ImageEditor", "skins/$zone/$locale/images.ini");
         }
         return $this->editor;
     }
@@ -78,7 +78,7 @@ class Admin_Dialog_Image_Edit extends Admin_Dialog
     function action_change()
     {
         $image_field_name = "new_image_" . $this->current_image;
-        $editor =& $this->get("editor");
+        $editor = $this->get("editor");
         $code = $editor->uploadImage($image_field_name, $this->current_image);
         if($code !== LC_UPLOAD_OK) {
             $this->set('valid', false);

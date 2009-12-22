@@ -94,7 +94,7 @@ class Module_WholesaleTrading_OrderItem extends OrderItem
         }
         $product = $this->get("product");
 		if (!isset($this->wholesale_prices)) {
-			$wp =& func_new("WholesalePricing");
+			$wp = func_new("WholesalePricing");
 			$this->wholesale_prices = $wp->getProductPrices($product->get("product_id"), $this->get("amount"), "OR membership='" . $this->get("order.profile.membership") . "'");
 		}	
 		if (count($this->wholesale_prices) == 0) {
@@ -119,7 +119,7 @@ class Module_WholesaleTrading_OrderItem extends OrderItem
 		return $price;
 	}
 
-	function &get($name)
+	function get($name)
 	{
         if ($name == "price") {
             return $this->_getWholesalePrice();
@@ -130,7 +130,7 @@ class Module_WholesaleTrading_OrderItem extends OrderItem
         }
 	}
 
-    function &getProduct()
+    function getProduct()
     {
         if (is_null($this->product) && $this->get("product_id")) {
             $this->product = func_new("Product", $this->get("product_id"));

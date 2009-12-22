@@ -48,7 +48,7 @@ class Dialog_product_LayoutOrganizer extends Dialog_product
 {
     function init()
     {
-        $layout =& func_get_instance("Layout");
+        $layout = func_get_instance("Layout");
 
 		if (isset($_REQUEST["product_id"]) && $_REQUEST["product_id"] > 0) {
 			$this->getProduct();

@@ -50,10 +50,10 @@ class Dialog_preview_ecard extends Dialog
     var $gc = null;
     var $template = "modules/GiftCertificates/preview.tpl";
     
-    function &getGC()
+    function getGC()
     {
         if (is_null($this->gc)) {
-            $this->gc =& func_new("GiftCertificate",$this->get("gcid"));
+            $this->gc = func_new("GiftCertificate",$this->get("gcid"));
         }
         return $this->gc;
     }

@@ -45,7 +45,7 @@
 */
 class Module_WholesaleTrading_Category extends Category
 {
-	function &get($name)
+	function get($name)
 	{
 		$value = parent::get($name);
 		if ($name == "membership" && !$this->xlite->is("adminZone")) {

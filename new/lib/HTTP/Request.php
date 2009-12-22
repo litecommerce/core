@@ -38,7 +38,7 @@
 //
 // Simple example, (Fetches yahoo.com and displays it):
 //
-// $a = &new HTTP_Request('http://www.yahoo.com/');
+// $a = new HTTP_Request('http://www.yahoo.com/');
 // $a->sendRequest();
 // echo $a->getResponseBody();
 //

@@ -61,7 +61,7 @@ class Module_Promotion_Cart extends Cart
 
     function constructor($id = null)
     {
-        $obj =& func_new("Object");
+        $obj = func_new("Object");
         $obj->logger->log("->Cart::constructor()");
         $this->doNotCallCartChanged = true;
         parent::constructor($id);
@@ -95,7 +95,7 @@ class Module_Promotion_Cart extends Cart
             $this->doNotCallCartChanged = false;
         }
 		// check bonus points
-        $op =& $this->get("origProfile");
+        $op = $this->get("origProfile");
         $status = $this->get("status");
 		if ($status == "P" || $status == "Q" || $status == "C") {
 			if ($this->get("payedByPoints") > $op->get("bonusPoints")*$this->config->get("Promotion.bonusPointsCost")) {
@@ -113,9 +113,9 @@ class Module_Promotion_Cart extends Cart
 		// each time cart is changed by customer, 
 		// compare applicable special order list with
 		// already applied bonuses
-		$offers =& $this->getSpecialOffers();
+		$offers = $this->getSpecialOffers();
 		$this->_appliedBonuses = null; // reset applied bonuses before proceeding
-		$bonuses =& $this->getAppliedBonuses();
+		$bonuses = $this->getAppliedBonuses();
         $this->logger->log("========== calculated offers ==========");
         $this->dumpBonuses($offers);
         $this->logger->log("========== stored offers ==============");
@@ -127,10 +127,10 @@ class Module_Promotion_Cart extends Cart
 				$bonuses[$i]->delete();
 			}
             for ($i=0; $i<count($offers); $i++) {
-                $offer =& func_new("SpecialOffer", $offers[$i]->get("offer_id"));
+                $offer = func_new("SpecialOffer", $offers[$i]->get("offer_id"));
 				$offer->bonusPrices = null;
 				if ( function_exists("func_is_clone_deprecated") && func_is_clone_deprecated() ) {
-					$newOffer =& $offer->cloneObject();
+					$newOffer = $offer->cloneObject();
 				} else {
 					$newOffer = $offer->clone();
 				}
@@ -171,7 +171,7 @@ class Module_Promotion_Cart extends Cart
 		$items = array_reverse($this->_items);
 
         $this->_appliedBonuses = null;
-        $applied =& $this->getAppliedBonuses();
+        $applied = $this->getAppliedBonuses();
         if (isset($bonuses)) {
         	unset($bonuses);
         }
@@ -181,7 +181,7 @@ class Module_Promotion_Cart extends Cart
         $this->dumpBonuses($applied);
 
         for ($i = 0; $i < count($applied); $i++) {
-            $bonus =& $applied[$i];
+            $bonus = $applied[$i];
 			if ($bonus->get("bonusType") != "discounts") {
 				$bonuses[] = $bonus;
 			}
@@ -189,7 +189,7 @@ class Module_Promotion_Cart extends Cart
 
 		$add = array();
         for ($j = 0; $j < count($bonuses); $j++) {
-            $bonus =& $bonuses[$j];
+            $bonus = $bonuses[$j];
 			$total = $this->_getProductAmount($bonus->get("product"), $bonus->get("category"));
 			if ($bonus->get("conditionType") == "eachNth") {
 		        // check eachNth -  conditions, redistribute amount if neccessary
@@ -307,7 +307,7 @@ class Module_Promotion_Cart extends Cart
             if (isset($items)) {
             	unset($items);
             }
-    		$items = &parent::getItems(); // re-read items if changed
+    		$items = parent::getItems(); // re-read items if changed
     		reset($items);
             $this->_items = $items;
             foreach($items as $item_idx => $item) {
@@ -373,7 +373,7 @@ class Module_Promotion_Cart extends Cart
 	* Return a list of available products for bonus price. It is displayed at
 	* the first checkout step.
 	*/
-	function &getBonusList()
+	function getBonusList()
 	{
 		$bonusList = array(); // array of BonusPrice, which is product-price pair
         // take bonuses into account
@@ -460,7 +460,7 @@ class Module_Promotion_Cart extends Cart
 
         if (!is_null($dc)) {
 			if ( function_exists("func_is_clone_deprecated") && func_is_clone_deprecated() ) {
-	            $clone =& $dc->cloneObject();
+	            $clone = $dc->cloneObject();
 			} else {
 				$clone = $dc->clone();
 			}

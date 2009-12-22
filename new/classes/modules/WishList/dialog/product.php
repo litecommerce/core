@@ -53,11 +53,11 @@ class WishList_Dialog_product extends Dialog_product
 
 	function action_send_friend() // {{{
     {
-        $Mailer = & func_new("Mailer");
+        $Mailer = func_new("Mailer");
 	    $Mailer->sender_name  = $this->sender_name;
 	    $Mailer->sender_email = $this->sender_email;
 	    $Mailer->recipient_email = $this->recipient_email;
-        $product = & func_new("Product",$this->product_id);
+        $product = func_new("Product",$this->product_id);
  		$Mailer->product = $product;
         $Mailer->url = $this->shopUrl("cart.php?target=product&product_id=".$this->product_id);
         $Mailer->compose($this->get("sender_email"),$this->get("recipient_email"),"modules/WishList/send_friend");

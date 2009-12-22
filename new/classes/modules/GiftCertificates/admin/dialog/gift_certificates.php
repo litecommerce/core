@@ -48,7 +48,7 @@ class Admin_Dialog_gift_certificates extends Admin_Dialog
 {
     var $giftCertificates = null;
 
-    function &getGiftCertificates()
+    function getGiftCertificates()
     {
         if (is_null($this->giftCertificates)) {
             $gc = func_new("GiftCertificate");

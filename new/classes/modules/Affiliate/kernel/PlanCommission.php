@@ -54,42 +54,42 @@ class PlanCommission extends Base
     var $alias = "partner_plan_commissions";
     var $primaryKey = array("plan_id", "item_id", "item_type");
 
-    function &getProduct()
+    function getProduct()
     {
         return func_new("Product", $this->get("item_id"));
     }
 
-    function &getCategory()
+    function getCategory()
     {
         return func_new("Category", $this->get("item_id"));
     }
 
-    function &getBasicCommission()
+    function getBasicCommission()
     {
-        $bc =& func_new("PlanCommission");
+        $bc = func_new("PlanCommission");
         if ($bc->find("plan_id=".$this->get("order.partner.plan")." AND item_id=0 AND item_type='B'")) {
             return $bc;
         }
         return null;
     }
-    function &getProductCommission($product_id)
+    function getProductCommission($product_id)
     {
-        $pc =& func_new("PlanCommission");
+        $pc = func_new("PlanCommission");
         if ($pc->find("plan_id=".$this->get("order.partner.plan")." AND item_id=$product_id AND item_type='P'")) {
             return $pc;
         }
         return null;
     }
-    function &getCategoryCommission($category_id)
+    function getCategoryCommission($category_id)
     {
-        $cc =& func_new("PlanCommission");
+        $cc = func_new("PlanCommission");
         if ($cc->find("plan_id=".$this->get("order.partner.plan")." AND item_id=$category_id AND item_type='C'")) {
             return $cc;
         }
         return null;
     }
 
-    function &getOrderCommissions()
+    function getOrderCommissions()
     {
         require_once "modules/Affiliate/encoded.php";
         return func_Affiliate_calc_order_commissions($this);
@@ -97,9 +97,9 @@ class PlanCommission extends Base
 
     function calculate(&$order)
     {
-        $this->order =& $order;
+        $this->order = $order;
         $commissions = 0;
-        $ap =& func_new("AffiliatePlan", $order->get("partner.plan"));
+        $ap = func_new("AffiliatePlan", $order->get("partner.plan"));
         if ($ap->is("enabled")) {
             $commissions = $this->get("orderCommissions");
         }            

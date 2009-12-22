@@ -60,7 +60,7 @@ class Module_UPSOnlineTools_OrderItem extends OrderItem
 		$p = $this->get("product"); 
 
 		// dimension
-		$item =& func_new("PackItem");
+		$item = func_new("PackItem");
 		foreach (array("width", "height", "length") as $field) {
 			$item->set($field, $p->get("ups_".$field));
 		}

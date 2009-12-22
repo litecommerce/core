@@ -56,15 +56,15 @@ class Admin_Dialog_banner_stats extends Admin_Dialog_partner_stats
         }
     }
     
-    function &getPageTemplate()
+    function getPageTemplate()
     {
         return "modules/Affiliate/banner_stats.tpl";
     }
 
-    function &getStats()
+    function getStats()
     {
         if (is_null($this->stats)) {
-            $stats =& func_new("BannerStats");
+            $stats = func_new("BannerStats");
             $this->stats = $stats->search(
                     $this->get("partner_id"),
                     $this->get("startDate"),

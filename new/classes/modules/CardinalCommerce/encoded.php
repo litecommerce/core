@@ -6,7 +6,7 @@
 function CardinalCommerce_isSupported(&$_this, $pm)
 {
 	if (!isset($pm)) {
-    	$pm =& $_this->cart->get("paymentMethod");
+    	$pm = $_this->cart->get("paymentMethod");
     	if (is_null($pm)) {
 			return false;
     	}
@@ -31,7 +31,7 @@ function CardinalCommerce_checkout_cmpi(&$_this)
 		return;
 	}
 
-    $pm =& $_this->cart->get("paymentMethod");
+    $pm = $_this->cart->get("paymentMethod");
     if (is_null($pm)) {
 		$_this->redirect("cart.php?target=cart");
 		return;

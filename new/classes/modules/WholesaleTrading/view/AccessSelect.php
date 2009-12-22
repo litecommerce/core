@@ -51,7 +51,7 @@ class CAccessSelect extends Component
     var $noneOption = false;
     var $template = "modules/WholesaleTrading/product_access/access_select.tpl";
 
-    function &getSelectedGroups()
+    function getSelectedGroups()
     {
         if (is_null($this->selectedGroups)) {
             $this->selectedGroups = $this->get("component." . $this->field);

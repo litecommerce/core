@@ -60,7 +60,7 @@ class Dialog_notify_me extends Dialog
 		}
 
 		if (isset($this->product_id) && intval($this->product_id) > 0) {
-			$this->product =& func_new("Product", $this->product_id);
+			$this->product = func_new("Product", $this->product_id);
 		}
 
 		if (!(is_object($this->product) && ($this->product->is("exists")))) {
@@ -100,7 +100,7 @@ class Dialog_notify_me extends Dialog
 		}
 		$this->email = trim($_REQUEST["email"]);
 
-		$notification =& func_new("CustomerNotification");
+		$notification = func_new("CustomerNotification");
     	$check = array();
 		$notification->set("type", CUSTOMER_NOTIFICATION_PRODUCT);
         $check[] = "type='" . CUSTOMER_NOTIFICATION_PRODUCT . "'";
@@ -152,7 +152,7 @@ class Dialog_notify_me extends Dialog
 		}
 		$this->email = trim($_REQUEST["email"]);
 
-		$notification =& func_new("CustomerNotification");
+		$notification = func_new("CustomerNotification");
     	$check = array();
 		$notification->set("type", CUSTOMER_NOTIFICATION_PRICE);
         $check[] = "type='" . CUSTOMER_NOTIFICATION_PRICE . "'";

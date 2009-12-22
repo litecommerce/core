@@ -64,7 +64,7 @@ class Module_Affiliate_Order extends Order
             $this->chargePartnerCommissions();
         }
         if ($this->get("partnerClick") != 0) {
-            $pp =& func_new("PartnerPayment");
+            $pp = func_new("PartnerPayment");
             if ($pp->find("order_id=".$this->get("order_id")." AND affiliate=0")) {
                 // found commission payment for this order, notify partner
                 $pp->notifyPartner();
@@ -88,8 +88,8 @@ class Module_Affiliate_Order extends Order
             }
             // update order with partner click ID
             if ($partnerClick) {
-                $stat =& func_new("BannerStats", $partnerClick);
-                $partner =& $stat->get("partner");
+                $stat = func_new("BannerStats", $partnerClick);
+                $partner = $stat->get("partner");
                 if (!is_null($stat->get("partner"))) {
                     $this->set("partnerClick", $partnerClick);
                 }
@@ -112,11 +112,11 @@ class Module_Affiliate_Order extends Order
 
         if ($this->get("partnerClick") != 0) { // click found for this order
             // charge and save partner's commissions
-            $stat =& func_new("BannerStats", $this->get("partnerClick"));
-            $partner =& $stat->get("partner");
+            $stat = func_new("BannerStats", $this->get("partnerClick"));
+            $partner = $stat->get("partner");
             if (!is_null($partner)) {
                 $this->set("partner", $partner);
-                $pp =& func_new("PartnerPayment");
+                $pp = func_new("PartnerPayment");
                 $pp->charge($this);
             }
         }
@@ -125,7 +125,7 @@ class Module_Affiliate_Order extends Order
     function delete() // {{{
     {
         parent::delete();
-        $pp =& func_new("PartnerPayment");
+        $pp = func_new("PartnerPayment");
         $payments = $pp->findAll("order_id=".$this->get("order_id"));
         foreach ($payments as $p) {
             $p->delete();

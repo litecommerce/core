@@ -44,7 +44,7 @@ define('TAX_TOLOWERCASE', 1);
 * Calculate tax rates based on order parameters (location, 
 * products)
 * To calculate taxes on a item, do teh following:
-* $tax =& func_new("TaxRates");
+* $tax = func_new("TaxRates");
 * $tax->setOrder($order); // set customer location info
 * $tax->setOrderItem($orderItem); // order item info
 * $tax->calculateTaxes();
@@ -465,7 +465,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
     function setSchema($schema)
     {
     	if (is_array($schema)) {
-            $conf =& func_new("Config");
+            $conf = func_new("Config");
             $conf->set("category", "Taxes");
             foreach ($schema as $name => $value) {
                 $conf->set("name", $name);
@@ -487,7 +487,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
 			$this->set("profile", $profile);
         } else {
         	if ($this->config->get("General.def_calc_shippings_taxes")) {
-                $default_country =& func_new("Country", $this->config->get("General.default_country"));
+                $default_country = func_new("Country", $this->config->get("General.default_country"));
     			$this->_conditionValues["country"] = $default_country->get("country");
         		if ($default_country->isEUMember()) {
         			$this->_conditionValues["country"] .= ",EU country";
@@ -514,7 +514,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
 			$this->_conditionValues["city"] = $profile->get("shipping_city");
 			$this->_conditionValues["zip"] = $profile->get("shipping_zipcode");
 		}
-		$c =& func_new("Country",$countryCode);
+		$c = func_new("Country",$countryCode);
 		if ($c->isEUMember()) {
 			$this->_conditionValues["country"] .= ",EU country";
 		}
@@ -751,7 +751,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
         return '';
     }
 
-    function &getProductClasses()
+    function getProductClasses()
     {
         $classes = array();
         $this->_collectClasses($this->_rates, $classes);
@@ -775,7 +775,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
         }
     }
 
-    function &getActions()
+    function getActions()
     {
         $actions = array();
         $this->_collectActions($this->_rates, $actions);
@@ -898,7 +898,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
                     );    
         }        
 
-        $c =& func_new("Config");
+        $c = func_new("Config");
         $c->set("category", "Taxes");
         $c->set("name", "schemas");
 
@@ -924,7 +924,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
     function formatCurrency($price)
     {
     	if (!isset($this->_BaseObj)) {
-    		$this->_BaseObj =& func_new("Base");
+    		$this->_BaseObj = func_new("Base");
     	}
 
         return $this->_BaseObj->formatCurrency($price);

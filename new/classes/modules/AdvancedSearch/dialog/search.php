@@ -41,16 +41,16 @@
 
 class Module_AdvancedSearch_Dialog_search extends Dialog_search // {{{
 {
-	function &getCount() // {{{
+	function getCount() // {{{
 	{
 		return count($this->get("products"));
 	} // }}}
 
-	function &getProducts() // {{{ 
+	function getProducts() // {{{ 
 	{
         if (is_null($this->products)) {
 	        $p = func_new("Product");
-	        $this->products =& $p->_advancedSearch($this->get("substring"),"name",null,null,false, true, 1, true, true, true, true, true, false, null, null, null, null );
+	        $this->products = $p->_advancedSearch($this->get("substring"),"name",null,null,false, true, 1, true, true, true, true, true, false, null, null, null, null );
 		    $searchStat = func_new("SearchStat");
 		    $searchStat->add($this->get("substring"), count($this->products));
 		}

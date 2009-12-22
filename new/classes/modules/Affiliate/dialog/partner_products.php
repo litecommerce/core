@@ -47,11 +47,11 @@ class Dialog_partner_products extends PartnerDialog
     var $params = array('target', 'mode', 'search_productsku', 'substring', 'search_category', 'subcategory_search', 'pageID', 'status');
     var $productsFound = 0;
 
-    function &getProducts()
+    function getProducts()
     {
         if (is_null($this->products)) {
-            $p =& func_new("Product");
-            $this->products =& $p->advancedSearch($this->substring,
+            $p = func_new("Product");
+            $this->products = $p->advancedSearch($this->substring,
                     $this->search_productsku,
                     $this->search_category,
                     $this->subcategory_search);

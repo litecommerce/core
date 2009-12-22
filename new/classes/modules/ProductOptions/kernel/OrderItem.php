@@ -56,7 +56,7 @@ class Module_ProductOptions_OrderItem extends OrderItem
 
     function hasOptions()
     {
-        $product =& $this->get("product");
+        $product = $this->get("product");
         if (is_object($product)) {
         	return $product->hasOptions();
         } else {
@@ -135,7 +135,7 @@ class Module_ProductOptions_OrderItem extends OrderItem
         return $result;
     }
 
-    function &getProductOptions()
+    function getProductOptions()
     {
         $options = $this->get("options");
         if (empty($options)) {
@@ -144,7 +144,7 @@ class Module_ProductOptions_OrderItem extends OrderItem
         return unserialize($options);
     }
     
-    function &get($name)
+    function get($name)
     {
 		$options_names = array('price', 'weight');
 		if (in_array($name, $options_names)) {
@@ -192,9 +192,9 @@ class Module_ProductOptions_OrderItem extends OrderItem
         }
 
         if (!$calcAllTaxesInside) {
-            $product =& $this->getProduct();
+            $product = $this->getProduct();
             if (is_object($product)) {
-                $po =& func_new("ProductOption");
+                $po = func_new("ProductOption");
                 $po->set("product_id", $product->get("product_id"));
 
                 $originalPrice = $product->get("listPrice");

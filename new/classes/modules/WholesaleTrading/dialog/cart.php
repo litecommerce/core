@@ -51,7 +51,7 @@ class Module_WholesaleTrading_Dialog_cart extends Module_WholesaleTrading_Dialog
     function action_add()
     {
 		$amount = 1;
-		$items =& $this->cart->get('items');
+		$items = $this->cart->get('items');
 
         // alternative way to set product options
         if ($this->xlite->get("ProductOptionsEnabled") && is_object($this->getProduct()) && isset($_REQUEST["OptionSetIndex"][$this->product->get("product_id")])) {
@@ -69,7 +69,7 @@ class Module_WholesaleTrading_Dialog_cart extends Module_WholesaleTrading_Dialog
 		}
 		if (!isset($_REQUEST["opt_product_qty"])) {
     		// min/max purchase amount check
-    		$pl =& func_new("PurchaseLimit");
+    		$pl = func_new("PurchaseLimit");
     		if ($pl->find("product_id=" . $this->get('currentItem.product.product_id'))) {
     			$exists_amount = 0;
     			for ($i=0; $i < count($items); $i++) {
@@ -91,7 +91,7 @@ class Module_WholesaleTrading_Dialog_cart extends Module_WholesaleTrading_Dialog
 			return;
 		}
 
-		$this->currentItem =& parent::get("currentItem");
+		$this->currentItem = parent::get("currentItem");
 		$this->currentItem->set("amount", $amount);
  
         parent::action_add();
@@ -103,7 +103,7 @@ class Module_WholesaleTrading_Dialog_cart extends Module_WholesaleTrading_Dialog
 
     function action_update()
     {
-		$items =& $this->cart->get('items');
+		$items = $this->cart->get('items');
 		$raw_items = array();
 		$amounts = $this->get("amount");
 		for ($i = 0; $i < count($items); $i++) {
@@ -113,7 +113,7 @@ class Module_WholesaleTrading_Dialog_cart extends Module_WholesaleTrading_Dialog
 		}
 
 		foreach($raw_items as $key => $amount) {
-			$purchase_limit = & func_new("PurchaseLimit");
+			$purchase_limit = func_new("PurchaseLimit");
 			$limit = array();
 			if ($purchase_limit->find("product_id = ". $key)) {
 				$limit = $purchase_limit->get("properties");
@@ -132,7 +132,7 @@ class Module_WholesaleTrading_Dialog_cart extends Module_WholesaleTrading_Dialog
 			parent::action_update();
 		} else {
 			foreach($this->updateErrors as $key => $error) {
-				$product = & func_new("Product",$key);
+				$product = func_new("Product",$key);
 				$this->updateErrors[$key]['name'] = $product->get("name");
 			}
 			

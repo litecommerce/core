@@ -48,9 +48,9 @@
 class Module_UPSOnlineTools_Dialog_checkout extends Dialog_checkout
 {
 
-	function &getPaymentMethods()
+	function getPaymentMethods()
 	{
-		$methods =& parent::getPaymentMethods();
+		$methods = parent::getPaymentMethods();
 
 		$originCountry = $this->config->get("Company.location_country");
 		if (is_null($this->cart) || is_null($this->cart->get("profile"))) {

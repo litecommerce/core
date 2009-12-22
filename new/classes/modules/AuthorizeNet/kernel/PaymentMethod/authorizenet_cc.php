@@ -55,7 +55,7 @@ class PaymentMethod_authorizenet_cc extends PaymentMethod_credit_card
     function constructor($id = null)
     {
         parent::constructor($id);
-        $this->processor =& func_new("AuthorizeNet_processor");
+        $this->processor = func_new("AuthorizeNet_processor");
     }
     
     function process(&$cart)
@@ -71,7 +71,7 @@ class PaymentMethod_authorizenet_cc extends PaymentMethod_credit_card
     function initRequest(&$cart, &$request)
     {
 		if ($this->xlite->get("cc_initRequestAlternate")) {
-			$_object =& func_new("PaymentMethod_authorizenet_cc_CardinalCommerce");
+			$_object = func_new("PaymentMethod_authorizenet_cc_CardinalCommerce");
 			$_object->set("CardinalMPI", $this->get("CardinalMPI"));
 			$_object->initRequest($cart, $request);
 		}

@@ -58,7 +58,7 @@ class Module_ePDQ extends Module
     {
         
         parent::init();
-        $pm =& func_new('PaymentMethod');
+        $pm = func_new('PaymentMethod');
 	    // plug in  kernel/PaymentMethod/epdq_cc.php module
         $pm->registerMethod("epdq_cc");
         $webDir = $this->xlite->get("options.host_details.web_dir");

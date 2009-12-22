@@ -48,8 +48,8 @@ class Module_Newsletters_Auth extends Auth
         parent::unregister($profile);
         // delete profile subscriptions
         $email = strtolower($profile->get("login"));
-        $ns =& func_new("NewsSubscriber");
-        $nl =& func_new("NewsList");
+        $ns = func_new("NewsSubscriber");
+        $nl = func_new("NewsList");
         foreach ($nl->findAll() as $list) {
             $ns->unsubscribe($email, $list->get("list_id"));
         }

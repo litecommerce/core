@@ -69,7 +69,7 @@ class Module_Promotion extends Module
 		$this->addDecorator("Dialog_cart", "Module_Promotion_Dialog_cart");
 		$this->addDecorator("Cart", "Module_Promotion_Cart");
 		$this->addDecorator("Widget", "Module_Promotion_Widget");
-		$pm =& func_new("PaymentMethod");
+		$pm = func_new("PaymentMethod");
 		$pm->registerMethod("bonus_points");
 
 		$this->addDecorator("Admin_Dialog_module", "Admin_Dialog_module_Promotion");

@@ -58,18 +58,18 @@ class CCategorySelect extends Component
     	return array(null, null, null, null);
     }
 
-    function &getCategories()
+    function getCategories()
     {
        if (is_null($this->categories)) {
-            $c =& func_new("Category");
+            $c = func_new("Category");
             $names = array();
             $names_hash = array();
 
             list($where, $orderby, $groupby, $limit) = $this->getCategoriesCondition();
         	if ($this->rootOption && $this->currentCategory > 0) {
-            	$categories =& $c->findAll($where, $orderby, $groupby, $limit);
+            	$categories = $c->findAll($where, $orderby, $groupby, $limit);
             	$this->categories = array();
-            	$currentCategory =& func_new("Category", $this->currentCategory);
+            	$currentCategory = func_new("Category", $this->currentCategory);
             	$currentCategoryPath = $currentCategory->getStringPath() . "/";
             	for ($i=0; $i<count($categories); $i++) {
             		$name = $categories[$i]->getStringPath();
@@ -79,7 +79,7 @@ class CCategorySelect extends Component
             		$this->categories[] = $categories[$i];
             	}
         	} else {
-            	$this->categories =& $c->findAll($where, $orderby, $groupby, $limit);
+            	$this->categories = $c->findAll($where, $orderby, $groupby, $limit);
         	}
 
             for ($i=0; $i<count($this->categories); $i++) {
@@ -95,7 +95,7 @@ class CCategorySelect extends Component
         return $this->categories;
     }
 
-    function &getSelectedCategory()
+    function getSelectedCategory()
     {
         if (is_null($this->selectedCategory) && !is_null($this->field)) {
             $this->selectedCategory = $this->get("component." . $this->field);

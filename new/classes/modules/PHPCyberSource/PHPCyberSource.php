@@ -44,7 +44,7 @@ class Module_PHPCyberSource extends Module // {{{
 	var $minVer = "2.0";
 	var $showSettingsForm = true;
 
-	function &getSettingsForm() // {{{
+	function getSettingsForm() // {{{
 	{
 		return "admin.php?target=payment_method&payment_method=phpcybersource_cc";	
 	} // }}} 
@@ -54,7 +54,7 @@ class Module_PHPCyberSource extends Module // {{{
 
         parent::init();
 
-        $pm =& func_new("PaymentMethod");
+        $pm = func_new("PaymentMethod");
         $pm->registerMethod("phpcybersource_cc");
 
     } // }}}

@@ -84,9 +84,9 @@ class Module_InventoryTracking_OrderItem extends OrderItem
 		return false;
 	} // }}}
 
-	function &get($name) // {{{
+	function get($name) // {{{
 	{
-		$value =& parent::get($name);
+		$value = parent::get($name);
 		if ($name == 'sku') {
 			$sku = parent::get('product_sku');
 			if (!empty($sku)) $value = $sku;

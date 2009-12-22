@@ -105,7 +105,7 @@ class Module_WholesaleTrading_Order extends Order
 	function getItemsByTaxValue()
 	{
 		if (is_null($this->_items_by_tax_value)) {
-			$taxRates =& func_new("TaxRates");
+			$taxRates = func_new("TaxRates");
 			$taxRates->set("order", $this);
 
 			$items = (array) $this->get("items");
@@ -139,7 +139,7 @@ class Module_WholesaleTrading_Order extends Order
 		$result = array();
 		if ($discount <= 0) return $result;
 
-		$taxRates =& func_new("TaxRates");
+		$taxRates = func_new("TaxRates");
 		$taxRates->set("order", $this);
 
 		// apply discount to items maximally taxed 
@@ -177,7 +177,7 @@ class Module_WholesaleTrading_Order extends Order
 		return $result;
 	}
 
-	function &getAppliedGlobalDiscount()
+	function getAppliedGlobalDiscount()
 	{
 		if (is_null($this->_applied_global_discount)) {
 			$subtotal = parent::calcSubTotal();
@@ -218,10 +218,10 @@ class Module_WholesaleTrading_Order extends Order
 	
 	function WholesaleTrading_processed()
 	{
-		$items =& $this->get('items');
+		$items = $this->get('items');
 		foreach ($items as $item) {
 			if ($item->is('product.sellingMembership')) {
-				$profile =& $this->get('origProfile');
+				$profile = $this->get('origProfile');
 				require_once "modules/WholesaleTrading/encoded.php";
 				func_wholesaleTrading_set_membership($this, $profile, $item->get('product'));
 				$profile->update();

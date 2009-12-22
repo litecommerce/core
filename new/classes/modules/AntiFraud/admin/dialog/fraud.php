@@ -45,7 +45,7 @@ class Admin_Dialog_fraud extends Admin_dialog
 	var $order = null;
 	var $response = null;
 
-	function &getTemplate() 
+	function getTemplate() 
 	{
 		if($this->get("mode") == "track") 
 			return "modules/AntiFraud/track.tpl"; 
@@ -53,14 +53,14 @@ class Admin_Dialog_fraud extends Admin_dialog
 			return "main.tpl";
 	}
 	
-	function &getOrder()
+	function getOrder()
 	{
 		if (is_null($order)) 
-			$order =& func_new("Order",$this->get("order_id"));
+			$order = func_new("Order",$this->get("order_id"));
 		return $order;
 	}
 		
-	function &getIp()
+	function getIp()
 	{
 		if (isset($this->ip)) 
 			return $this->ip;
@@ -78,7 +78,7 @@ class Admin_Dialog_fraud extends Admin_dialog
         return isset($this->city) ? $this->city : $this->auth->get("profile.billing_city");
     }
 
-	function &getResponse()
+	function getResponse()
 	{
 	  	if (is_null($this->response) && isset($this->distance)) {
 			$this->response = $this->check_ip($this->distance);
@@ -108,7 +108,7 @@ class Admin_Dialog_fraud extends Admin_dialog
             	$post["zipcode"] = $properties["zipcode"];
 		}
 		
-		$request =& func_new("HTTPS");
+		$request = func_new("HTTPS");
 		$request->data = $post;
 		$request->url = $this->config->get('AntiFraud.antifraud_url')."/check_ip.php";
 		$request->request();

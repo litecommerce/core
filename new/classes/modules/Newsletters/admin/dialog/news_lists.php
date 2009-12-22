@@ -45,10 +45,10 @@
 */
 class Admin_Dialog_news_lists extends Admin_Dialog
 {
-    function &getNewsLists()
+    function getNewsLists()
     {
         if (is_null($this->newsLists)) {
-            $ns =& func_new("NewsList");
+            $ns = func_new("NewsList");
             $this->newsLists = $ns->findAll();
 
         }
@@ -57,7 +57,7 @@ class Admin_Dialog_news_lists extends Admin_Dialog
 
     function action_add_list()
     {
-        $nl =& func_new("NewsList");
+        $nl = func_new("NewsList");
         $nl->set("properties", $_POST);
         $nl->create();
 
@@ -66,7 +66,7 @@ class Admin_Dialog_news_lists extends Admin_Dialog
 
     function action_update_list()
     {
-		$nl =& func_new("NewsList");
+		$nl = func_new("NewsList");
 		if ($nl->find("name='".addslashes($this->get("name"))."' AND list_id<>'".intval($this->get("list_id"))."'")) {
 			$this->params[] = "errorDesc";
 			$this->set("errorDesc", "newsExists");
@@ -74,14 +74,14 @@ class Admin_Dialog_news_lists extends Admin_Dialog
 			return;
 		}
 
-        $nl =& func_new("NewsList", $this->get("list_id"));
+        $nl = func_new("NewsList", $this->get("list_id"));
         $nl->set("properties", $_POST);
         $nl->update();
     }
 
     function action_delete_list()
     {
-        $nl =& func_new("NewsList", $this->get("list_id"));
+        $nl = func_new("NewsList", $this->get("list_id"));
         $nl->delete();
 
         $this->set("actionPerformed", true);

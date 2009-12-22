@@ -122,7 +122,7 @@ class Mailer extends Component
     function selectCustomerLayout()
     {
 		// Switch layout to castomer area
-		$layout =& func_get_instance("Layout");
+		$layout = func_get_instance("Layout");
 		$this->templatesSkin = $layout->get("skin");
 		$layout->set("skin", $this->xlite->get("options.skin_details.skin"));
     }
@@ -224,7 +224,7 @@ class Mailer extends Component
     */
     function createAltBody($html) // {{{
     {
-        // html_entity_decode('&nbsp;') = &nbsp; !!!
+        // html_entity_decode('&nbsp;') = nbsp; !!!
         $trans_tbl = get_html_translation_table(HTML_ENTITIES);
         $trans_tbl = array_flip ($trans_tbl);
         $trans_tbl['&nbsp;'] = ' '; // Default: ['&nbsp;'] = 0xa0 (in ISO-8859-1)
@@ -256,7 +256,7 @@ class Mailer extends Component
 
         if (isset($this->templatesSkin)) {
 			// Restore layout
-			$layout =& func_get_instance("Layout");
+			$layout = func_get_instance("Layout");
 			$layout->set("skin", $this->templatesSkin);
 			$this->templatesSkin = null;
         }
@@ -269,7 +269,7 @@ class Mailer extends Component
     {
         // replace layout with mailer skinned
         if ($switchLayout) {
-            $layout =& func_get_instance("Layout");
+            $layout = func_get_instance("Layout");
             $skin = $layout->get("skin");
             $layout->set("skin", MAIL_SKIN);
         } else {

@@ -44,22 +44,22 @@
 */
 class Dialog_banner extends Dialog
 {
-    function &getTemplate()
+    function getTemplate()
     {
         return "modules/Affiliate/" . $this->get("banner.type") . "_banner.tpl";
     }
 
-    function &getBanner()
+    function getBanner()
     {
         if (is_null($this->banner)) {
-            $this->banner =& func_new("Banner", $this->get("banner_id"));
-            $stats =& func_new("BannerStats");
+            $this->banner = func_new("Banner", $this->get("banner_id"));
+            $stats = func_new("BannerStats");
             $stats->logView();
         }
         return $this->banner;
     }
 
-    function &getReferrer()
+    function getReferrer()
     {
         return isset($_SERVER["HTTP_REFERER"]) ? $_SERVER["HTTP_REFERER"] : "";
     }

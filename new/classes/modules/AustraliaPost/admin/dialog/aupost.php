@@ -52,13 +52,13 @@ class Admin_Dialog_aupost extends Admin_Dialog_shipping_settings // {{{
 	{
 		parent::constructor();
 
-		$aupost =& func_new("Shipping_aupost");
+		$aupost = func_new("Shipping_aupost");
 		$this->settings = $aupost->get("options");
 	} // }}}
 	
 	function action_update() // {{{ 
 	{
-		$aupost =& func_new("Shipping_aupost");
+		$aupost = func_new("Shipping_aupost");
 		$currency_rate = $_POST["currency_rate"];
 		if (((double) $currency_rate) <= 0) {
 			$_POST["currency_rate"] = 1;
@@ -79,7 +79,7 @@ class Admin_Dialog_aupost extends Admin_Dialog_shipping_settings // {{{
         if (empty($this->destinationCountry)) 
 			$this->destinationCountry = $this->config->get("General.default_country");
  
-		$this->aupost =& func_new("Shipping_aupost");
+		$this->aupost = func_new("Shipping_aupost");
 		$options = $this->aupost->get("options");
 
 		$this->rates = $this->aupost->queryRates

@@ -42,7 +42,7 @@ class Module_SnsIntegration_Dialog_advanced_search extends Dialog_advanced_searc
 {
 	var $snsActionSend = false;
 
-    function &getProducts() // {{{
+    function getProducts() // {{{
     {
 		if (isset($this->mode) && isset($this->action) && $this->snsActionSend !== true && is_array($this->search)) {
 			require_once("modules/SnsIntegration/include/misc.php");
@@ -51,7 +51,7 @@ class Module_SnsIntegration_Dialog_advanced_search extends Dialog_advanced_searc
 			$action = "name=AdvancedSearch";
 			$action .= "&searchPhrase=" . urlencode($this->search["substring"]);
 			if ($this->search["category"] != 0) {
-				$cat =& func_new("Category", $this->search["category"]);
+				$cat = func_new("Category", $this->search["category"]);
 				$categoryName = $cat->get("stringPath");
 			} else {
 				$categoryName = "";

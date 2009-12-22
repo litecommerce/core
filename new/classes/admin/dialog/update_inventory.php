@@ -71,7 +71,7 @@ class Admin_Dialog_update_inventory extends Admin_dialog
 
     function handleRequestPricing()
     {
-        $this->inventory =& func_get_instance("ProductInventory"); 
+        $this->inventory = func_get_instance("ProductInventory"); 
     }
 
     function action_export()
@@ -85,7 +85,7 @@ class Admin_Dialog_update_inventory extends Admin_dialog
     function action_layout($layout)
     {
         // save/update layout
-        $dlg =& func_new("Admin_Dialog_import_catalog");
+        $dlg = func_new("Admin_Dialog_import_catalog");
         $dlg->action_layout($layout);
     }
 

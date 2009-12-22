@@ -48,10 +48,10 @@ define('CATALOG_CLEANUP_CACHE', 0);
 
 class Admin_Dialog_catalog extends Admin_Dialog
 {
-    function &getCatalog()
+    function getCatalog()
     {
         if (is_null($this->catalog)) {
-            $this->catalog =& func_new("Catalog");
+            $this->catalog = func_new("Catalog");
         }
         return $this->catalog;
     }
@@ -71,7 +71,7 @@ class Admin_Dialog_catalog extends Admin_Dialog
 		}
 
         $this->set("silent", true);
-        $catalog =& $this->get("catalog");
+        $catalog = $this->get("catalog");
         func_refresh_start();
         if (is_null($this->get("category_id"))) {
             echo "Building static HTML catalog, please wait ..<br><br>\n";
@@ -98,7 +98,7 @@ class Admin_Dialog_catalog extends Admin_Dialog
 
     function nextPage()
     {
-        $catalog =& $this->get("catalog");
+        $catalog = $this->get("catalog");
         $url = "admin.php?target=catalog&action=build"."&category_id=".$catalog->get("category_id")."&page_id=".$catalog->get("page_id")."&product_id=".$catalog->get("product_id")."&xlite_form_id=".$this->get("xliteFormID");
 ?>
 If you're not redirected automatically, <a href="<?php echo $url; ?>">click on this link to build the next page</a> ...
@@ -147,7 +147,7 @@ document.location="admin.php?target=catalog&mode=success";
     {
         $this->set("silent", true);
         print "Cleaning up static HTML catalog ... ";
-        $catalog =& $this->get("catalog");
+        $catalog = $this->get("catalog");
         $catalog->clear();
         if (is_null($catalog->get("error"))) {
             echo "[<font color=green>OK</font>]";

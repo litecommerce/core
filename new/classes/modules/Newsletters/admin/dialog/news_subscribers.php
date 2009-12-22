@@ -53,18 +53,18 @@ class Admin_Dialog_news_subscribers extends Admin_Dialog
         require_once "modules/Newsletters/encoded.php";
     }
     
-    function &getList()
+    function getList()
     {
         if (is_null($this->list)) {
-            $this->list =& func_new("NewsList", $this->get("list_id"));
+            $this->list = func_new("NewsList", $this->get("list_id"));
         }
         return $this->list;
     }
 
-    function &getSubscribers()
+    function getSubscribers()
     {
         if (is_null($this->subscribers)) {
-            $ns =& func_new("NewsSubscriber");
+            $ns = func_new("NewsSubscriber");
             $condition = array();
             $condition[] = "list_id=".$this->get("list_id");
 			$email = $this->get("subscriber");
@@ -86,7 +86,7 @@ class Admin_Dialog_news_subscribers extends Admin_Dialog
 
     function action_add_subscriber()
     {
-        $nl =& func_new("NewsSubscriber");
+        $nl = func_new("NewsSubscriber");
         if ($nl->find("list_id=".$this->get("list_id")." AND LOWER(email)='".strtolower(addslashes($this->get("email")))."'")) {
             $this->set("valid", false);
             $this->set("userExists", true);
@@ -98,7 +98,7 @@ class Admin_Dialog_news_subscribers extends Admin_Dialog
     function action_unsubscribe()
     {
         foreach ((array)$this->get("emails") as $email => $one) {
-            $nl =& func_new("NewsSubscriber");
+            $nl = func_new("NewsSubscriber");
             $nl->unsubscribe(strtolower(addslashes($email)), $this->get("list_id"));
         }
     }
@@ -109,7 +109,7 @@ class Admin_Dialog_news_subscribers extends Admin_Dialog
         $file = $this->getUploadedFile();
         if (!is_null($file)) {
             $list_id = $this->get("list_id");
-            $ns =& func_new("NewsSubscriber");
+            $ns = func_new("NewsSubscriber");
             $ns->import($list_id, $file);
             echo "<br>Subscribers imported successfully. <a href=\"admin.php?target=news_subscribers&list_id=".$this->get("list_id")."\"><u>Click here to return to admin interface</u></a>";
         } else {

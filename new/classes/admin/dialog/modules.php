@@ -52,13 +52,13 @@ class Admin_Dialog_modules extends Admin_Dialog
     var $modules = null;
     var $_sort_modules = null;
 
-    function &getModules()
+    function getModules()
     {
     	if (isset($this->modules)) {
     		return $this->modules;
     	}
 		
-		$modules =& $this->xlite->mm->get("modules");
+		$modules = $this->xlite->mm->get("modules");
 		$this->modules = array();
 		if (is_array($modules)) {
 			for($i=0; $i<count($modules); $i++) {
@@ -88,7 +88,7 @@ class Admin_Dialog_modules extends Admin_Dialog
 			$this->_sort_modules[$type] = array();
 		}
 
-		$temp =& $this->get("modules");
+		$temp = $this->get("modules");
 		foreach((array)$temp as $v) {
 			if ($v->get("type") == MODULE_UNKNOWN) {
 				$v->set("type", $this->xlite->mm->getPredefinedModuleType($v->get("name")));
@@ -104,7 +104,7 @@ class Admin_Dialog_modules extends Admin_Dialog
 
     function getModulesForUpdate()
     {
-        $modules = &$this->getModules();
+        $modules = $this->getModules();
         $res = array();
         foreach ($modules as $module) {
             if ($module->is('needUpdate'))

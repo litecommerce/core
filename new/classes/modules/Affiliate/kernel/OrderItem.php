@@ -51,7 +51,7 @@ class Module_Affiliate_OrderItem extends OrderItem
 	function getAffiliateProduct()
 	{
 		$this->xlite->adminZone = true;
-		$product = &func_new("Product", $this->get("product_id"));
+		$product = func_new("Product", $this->get("product_id"));
 		$product->read();
 		$this->xlite->adminZone = false;
 		return $product;

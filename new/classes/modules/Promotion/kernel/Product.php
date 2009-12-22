@@ -47,28 +47,28 @@ class Module_Promotion_Product extends Product
 {
     function delete()
     {
-		$so =& func_new("SpecialOffer");
-		$soDeletedProducts =& $so->findAll("product_id='" . $this->get("product_id") . "'");
+		$so = func_new("SpecialOffer");
+		$soDeletedProducts = $so->findAll("product_id='" . $this->get("product_id") . "'");
 		if (is_array($soDeletedProducts) && count($soDeletedProducts) > 0) {
 			foreach($soDeletedProducts as $sodp) {
 				$sodp->markInvalid();
 			}
 		}
 
-		$bp =& func_new("BonusPrice");
-		$bpDeletedProducts =& $bp->findAll("product_id='" . $this->get("product_id") . "'");
+		$bp = func_new("BonusPrice");
+		$bpDeletedProducts = $bp->findAll("product_id='" . $this->get("product_id") . "'");
 		if (is_array($bpDeletedProducts) && count($bpDeletedProducts) > 0) {
 			foreach($bpDeletedProducts as $bpdp) {
-				$sodp =& func_new("SpecialOffer", $bpdp->get("offer_id"));
+				$sodp = func_new("SpecialOffer", $bpdp->get("offer_id"));
 				$sodp->markInvalid();
 			}
 		}
 
-		$bp =& func_new("SpecialOfferProduct");
-		$bpDeletedProducts =& $bp->findAll("product_id='" . $this->get("product_id") . "'");
+		$bp = func_new("SpecialOfferProduct");
+		$bpDeletedProducts = $bp->findAll("product_id='" . $this->get("product_id") . "'");
 		if (is_array($bpDeletedProducts) && count($bpDeletedProducts) > 0) {
 			foreach($bpDeletedProducts as $bpdp) {
-				$sodp =& func_new("SpecialOffer", $bpdp->get("offer_id"));
+				$sodp = func_new("SpecialOffer", $bpdp->get("offer_id"));
 				$sodp->markInvalid();
 			}
 		}

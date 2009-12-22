@@ -49,10 +49,10 @@ class Dialog_cart extends Dialog
 {
     var $currentItem = null;
 
-    function &getCurrentItem()
+    function getCurrentItem()
     {
         if (is_null($this->currentItem)) {
-            $this->currentItem =& func_new("OrderItem");
+            $this->currentItem = func_new("OrderItem");
             $this->currentItem->set("product", $this->get("product"));
         }
         return $this->currentItem;
@@ -94,7 +94,7 @@ class Dialog_cart extends Dialog
     function action_update()
     {
         // update the specified product quantity in cart
-        $items =& $this->cart->get("items");
+        $items = $this->cart->get("items");
         foreach ($items as $key => $i) {
             if (isset($_REQUEST["amount"][$key])) {
                 $items[$key]->updateAmount($_REQUEST["amount"][$key]);

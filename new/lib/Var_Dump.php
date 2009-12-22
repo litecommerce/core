@@ -261,7 +261,7 @@ class Var_Dump extends PEAR
     function display($variable = '', $except = '')
     {
         if (!isset($this) or get_class($this) != 'var_dump') {
-            $this = & new Var_Dump;
+            $this = new Var_Dump;
         }
         echo $this->r_display($variable, $except);
     }
@@ -283,7 +283,7 @@ class Var_Dump extends PEAR
     function r_display($variable = '', $except = '')
     {
         if (!isset($this) or get_class($this) != 'var_dump') {
-            $this = & new Var_Dump;
+            $this = new Var_Dump;
         }
 
         $this->_populate($variable, $except);

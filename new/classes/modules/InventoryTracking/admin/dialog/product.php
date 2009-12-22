@@ -56,7 +56,7 @@ class Module_InventoryTracking_Admin_Dialog_product extends Admin_dialog_product
     function init()
     {
         if (isset($_REQUEST["product_id"]) && intval($_REQUEST["product_id"]) > 0) {
-			$product =& func_new("Product", $_REQUEST["product_id"]);
+			$product = func_new("Product", $_REQUEST["product_id"]);
 	    	if(!$this->xlite->get("ProductOptionsEnabled") || ($this->xlite->get("ProductOptionsEnabled") && !$product->hasOptions())) {
 		    	if ($product->get("tracking") != 0 ) {
 			    	$product->set("tracking", 0);
@@ -67,19 +67,19 @@ class Module_InventoryTracking_Admin_Dialog_product extends Admin_dialog_product
 		parent::init();
 	}
 
-    function &getOrderItem()
+    function getOrderItem()
     {
         if (is_null($this->orderItem)) {
-            $this->orderItem =& func_new("OrderItem");
+            $this->orderItem = func_new("OrderItem");
             $this->orderItem->set("product", $this->get("product"));
         }
         return $this->orderItem;
     }
     
-    function &getInventory()
+    function getInventory()
     {
         if (is_null($this->inventory)) {
-            $this->inventory =& func_new("Inventory");
+            $this->inventory = func_new("Inventory");
             $found = $this->inventory->find("inventory_id='" . addslashes($this->get("orderItem.key")) . "'");
             $this->set("cardFound", $found);
             // set card status to DISABLED in ADD mode
@@ -96,7 +96,7 @@ class Module_InventoryTracking_Admin_Dialog_product extends Admin_dialog_product
 	function action_tracking_selection()
 	{	
 		if (!isset($this->tracking)) return;
-        $product =& func_new("Product", $this->product_id);
+        $product = func_new("Product", $this->product_id);
 		$product->find("product_id = '".$this->product_id."'");
 		$product->set("tracking",$this->tracking);
 		$product->update();
@@ -104,7 +104,7 @@ class Module_InventoryTracking_Admin_Dialog_product extends Admin_dialog_product
 
 	function action_update_product_inventory()
     {
-        $inventory =& $this->get("inventory");
+        $inventory = $this->get("inventory");
         if ($this->is("cardFound")) {
             $inventory->update();
         } else {
@@ -112,13 +112,13 @@ class Module_InventoryTracking_Admin_Dialog_product extends Admin_dialog_product
         }
     }
 
-    function &getInventories()
+    function getInventories()
     {
         $inventories = array();
 		if (!$this->xlite->get("ProductOptionsEnabled")) {
             return $inventories;
         }    
-        $inventory =& func_new("Inventory");
+        $inventory = func_new("Inventory");
         $inventories = $inventory->findAll("inventory_id LIKE '".$this->product_id."|%'");
         for ($k = 0; $k < count($inventories); $k++) {
             $inventory_id = $inventories[$k]->get("inventory_id");
@@ -135,13 +135,13 @@ class Module_InventoryTracking_Admin_Dialog_product extends Admin_dialog_product
         return $inventories;    
     }
 
-    function &getProductOptions()
+    function getProductOptions()
     {
         $productOptions = array();
 		if (!$this->xlite->get("ProductOptionsEnabled")) {
             return $productOptions;
         }
-        $po =& func_new("ProductOption");
+        $po = func_new("ProductOption");
         $productOptions = $po->findAll("product_id=$this->product_id");
         return $productOptions;
     }
@@ -157,14 +157,14 @@ class Module_InventoryTracking_Admin_Dialog_product extends Admin_dialog_product
 
     function action_delete_tracking_option()
     {
-        $i =& func_new("Inventory", $this->inventory_id);
+        $i = func_new("Inventory", $this->inventory_id);
         $i->delete();
 		$this->updateProductInventorySku();
     }
 
     function action_update_tracking_option()
     {
-        $i =& func_new("Inventory", $this->inventory_id);
+        $i = func_new("Inventory", $this->inventory_id);
 		$this->optdata['inventory_sku'] = preg_replace("/\|/", "-", $this->optdata['inventory_sku']);
         $i->set("properties", $this->optdata);
         $i->update();
@@ -176,7 +176,7 @@ class Module_InventoryTracking_Admin_Dialog_product extends Admin_dialog_product
         if (empty($this->optdata)) {
             return;
         }    
-		$inventory =& func_new("Inventory");
+		$inventory = func_new("Inventory");
         $options[] = $this->product_id;
         foreach ($this->optdata as $class => $optdata) {
             if (isset($optdata["used"])) {

@@ -69,7 +69,7 @@ class Module_GiftCertificates extends Module
 		$this->addDecorator("OrderItem", "Module_GiftCertificates_OrderItem");
 		$this->addDecorator("TaxRates", "Module_GiftCertificates_TaxRates");
 		$this->addDecorator("Profile", "Module_GiftCertificates_Profile");
-		$pm =& func_new("PaymentMethod");
+		$pm = func_new("PaymentMethod");
 		$pm->registerMethod("gift_certificate");
         $img = func_get_instance("Image");
         $img->registerImageClass("ecard_thumbnail", "e-Card thumbnails", "ecards", "thumbnail", "ecard_id");

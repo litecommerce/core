@@ -55,7 +55,7 @@ $parserTime += getmicrotime() - $time;
 if (func_is_locked("cache")) func_shop_closed("Warning: cache is locked for cleanup.");
 
 // creates cart instance
-$xlite =& func_new("XLite");
+$xlite = func_new("XLite");
 $xlite->initFromGlobals();
 
 $time = getmicrotime();

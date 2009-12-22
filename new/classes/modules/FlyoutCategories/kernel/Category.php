@@ -56,12 +56,12 @@ class FlyoutCategories_Category extends Category
     {
         if ($this->get("category_id")==0)
             return false;
-        $image =& $this->get("smallImage");
+        $image = $this->get("smallImage");
         $data = $image->get("data");
         return !empty($data);
     } // }}}
     
-    function &getSmallImage() // {{{
+    function getSmallImage() // {{{
     {   
         if (is_null($this->smallimage)) {
             $this->smallimage = func_new("Image", "category_small", $this->get("category_id"));
@@ -83,7 +83,7 @@ class FlyoutCategories_Category extends Category
 		}
 
 		if ($src_image == null) {
-			$src_image =& $this->get("smallImage");
+			$src_image = $this->get("smallImage");
 		}
 
 		if ($src_image->get("source") == "D") {
@@ -128,7 +128,7 @@ class FlyoutCategories_Category extends Category
 		ob_end_clean();
 
 		// Save
-		$dst_image =& $this->get("smallImage");
+		$dst_image = $this->get("smallImage");
 		$dst_image->set("type", $src_image->get("type"));
 
 		if (isset($filesystem)) {
@@ -164,7 +164,7 @@ class FlyoutCategories_Category extends Category
 
     function delete()
     {
-		$image =& $this->get("smallImage");
+		$image = $this->get("smallImage");
 		$image->delete();
 
         parent::delete();

@@ -84,8 +84,8 @@ class Module_WholesaleTrading_Profile extends Profile
 		$this->properties["membership_history"] = $this->_initMembershipHistory($this->properties["membership_history"]);
 
 		if ($readStatus && ($this->get('membership_exp_date') > 0) && (time() > $this->get('membership_exp_date')) ) {
-			$mail =& func_new("Mailer");
-			$mail->profile =& $this;
+			$mail = func_new("Mailer");
+			$mail->profile = $this;
 
 			// Notify customer
 			$mail->adminMail = false;
@@ -131,7 +131,7 @@ class Module_WholesaleTrading_Profile extends Profile
 		return $readStatus;
 	}
 
-    function &get($name)
+    function get($name)
     {
         $value = parent::get($name);
         if ( $name == "membership_history" ) {
@@ -177,7 +177,7 @@ class Module_WholesaleTrading_Profile extends Profile
 
 	function membershipChanged($oldMembership, $newMembership)
 	{
-		$mail =& func_new("Mailer");
+		$mail = func_new("Mailer");
 		$mail->profile = $this;
 		$mail->oldMembership = $oldMembership;
 		$mail->newMembership = $newMembership;

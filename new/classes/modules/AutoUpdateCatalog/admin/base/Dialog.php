@@ -47,7 +47,7 @@ class Module_AutoUpdateCatalog_Admin_Dialog extends Admin_Dialog
 {
 	var $isAlreadyRedirected = false;
 
-    function &get($name)
+    function get($name)
     {
         switch(strtolower($name)) {
             case 'returnurl':

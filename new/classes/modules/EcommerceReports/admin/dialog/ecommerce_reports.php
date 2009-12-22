@@ -77,11 +77,11 @@ class Admin_dialog_Ecommerce_reports extends Admin_dialog_stats
         parent::fillForm();
     } // }}}
 
-    function &getCategories() // {{{
+    function getCategories() // {{{
     {
         if (is_null($this->categories)) {
             $category = func_new('Category');
-            $this->categories =& $category->findAll();
+            $this->categories = $category->findAll();
             $names = array();
             $names_hash = array();
             for ($i=0; $i<count($this->categories); $i++) {
@@ -108,7 +108,7 @@ class Admin_dialog_Ecommerce_reports extends Admin_dialog_stats
         return false;
     } // }}}
     
-    function &getPeriod() // {{{
+    function getPeriod() // {{{
     {
         if (is_null($this->period)) {
             if ($this->search_period == 6) {
@@ -169,13 +169,13 @@ class Admin_dialog_Ecommerce_reports extends Admin_dialog_stats
         return array($startDateRaw, $endDateRaw);
     } // }}}
 
-    function &getRawProducts() // {{{
+    function getRawProducts() // {{{
     {
         require_once "modules/EcommerceReports/encoded.php";
         return func_EcommerceReports_getRawProducts($this);
     } // }}}
 
-    function &getRawItems($unique=false) // {{{
+    function getRawItems($unique=false) // {{{
     {
     	if (is_null($this->rawItems)) {
         	require_once "modules/EcommerceReports/encoded.php";
@@ -228,7 +228,7 @@ class Admin_dialog_Ecommerce_reports extends Admin_dialog_stats
         return "";
     } // }}}
 
-    function &getNextDate() // {{{
+    function getNextDate() // {{{
     {
         static $currentDate;
 

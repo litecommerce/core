@@ -43,7 +43,7 @@ class Module_PayPalPro extends Module // {{{
 	var $minVer = "2.0";
 	var $showSettingsForm = true;
 
-	function &getSettingsForm() // {{{ 
+	function getSettingsForm() // {{{ 
 	{
 		return "admin.php?target=payment_method&payment_method=paypalpro";
 
@@ -53,7 +53,7 @@ class Module_PayPalPro extends Module // {{{
     {
         parent::init();
 
-        $pm =& func_new("PaymentMethod","paypalpro");
+        $pm = func_new("PaymentMethod","paypalpro");
 		
 		switch($pm->get("params.solution")) {
 			case "standard":
@@ -95,7 +95,7 @@ class Module_PayPalPro extends Module // {{{
 		$this->xlite->set("PayPalProSolution",$pm->get("params.solution"));
 
         if ($pm->get("params.solution") != "standard") {
-			$pm_express =& func_new("PaymentMethod", "paypalpro_express");
+			$pm_express = func_new("PaymentMethod", "paypalpro_express");
             $this->xlite->set("PayPalProExpressEnabled", $pm_express->get("enabled"));
         }
     } // }}} 

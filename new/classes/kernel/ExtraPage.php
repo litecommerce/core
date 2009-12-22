@@ -78,7 +78,7 @@ class ExtraPage extends Object
         $this->linksTemplate = $this->get("templatePrefix") . "pages_links.tpl";
     }
 
-    function &getLocale() // {{{
+    function getLocale() // {{{
     {
         if (is_null($this->locale)) {
             $this->locale = $this->get("xlite.options.skin_details.locale");
@@ -86,7 +86,7 @@ class ExtraPage extends Object
         return $this->locale;
     } // }}}
 
-    function &getZone()
+    function getZone()
     {
         if (is_null($this->zone)) {
             $this->zone = $this->get("xlite.options.skin_details.skin");
@@ -94,7 +94,7 @@ class ExtraPage extends Object
         return $this->zone;
     }
 
-    function &getTemplatePrefix()
+    function getTemplatePrefix()
     {
         if (is_null($this->templatePrefix)) {
             $zone   = $this->get("zone");
@@ -121,13 +121,13 @@ class ExtraPage extends Object
                 if (preg_match("/<widget (\S+) body=\"(\w+)\.tpl\" head=\"([^\"]+)\" (\S+)/", $line, $matches)) {
                     
                     list($line, $template, $page, $title) = $matches;
-                    $p =& func_new("ExtraPage");
+                    $p = func_new("ExtraPage");
                     $p->page = $page;
                     $p->title = func_htmldecode($title);
                     $fd = @fopen($this->get("templatePrefix") . $page . ".tpl", "rb");
                     if ($fd) {
                     	fclose($fd);
-                    	$p->template =& func_new("Template", $page . ".tpl");
+                    	$p->template = func_new("Template", $page . ".tpl");
                     }
                     $pages[] = $p;
                 }
@@ -139,7 +139,7 @@ class ExtraPage extends Object
     /**
     * Find a page by ID
     */
-    function &findPage($id)
+    function findPage($id)
     {
         foreach ($this->getPages() as $page) {
             if ($page->page == $id) {
@@ -167,7 +167,7 @@ class ExtraPage extends Object
                 break;
             case "menu":
                 $this->getCustomerLayout();
-                $template =& func_new("Object");
+                $template = func_new("Object");
                 $template->set("template", $this->getRelativeTemplatePath($this->menuTemplateDef));
                 $template->set("skinPath", $this->customerLayout->getPath());
                 $template->set("page_link", "cart.php?page=" . $this->page);
@@ -318,13 +318,13 @@ class ExtraPage extends Object
         return $name.$suff;
     }
 
-	function &getCustomerLayout()
+	function getCustomerLayout()
 	{
 		if (!is_null($this->customerLayout)) {
 			return $this->customerLayout;
 		}
 
-        $this->customerLayout =& func_new("Layout");
+        $this->customerLayout = func_new("Layout");
 		$this->xlite->set("adminZone", false);
         $this->customerLayout->initFromGlobals();
 		$this->xlite->set("adminZone", true);
@@ -335,11 +335,11 @@ class ExtraPage extends Object
     function compile($template)
     {
         // replace layout with customer layout
-     	$layout =& func_get_instance("Layout");
+     	$layout = func_get_instance("Layout");
         $skin = $layout->get("skin");
         $layout->set("skin", $this->customerLayout->get("skin"));
 
-        $component =& func_new("Component");
+        $component = func_new("Component");
         
         $component->template = $template->get("template");
         $component->init();

@@ -43,15 +43,15 @@
 */
 class Admin_Dialog_partners_tree extends Admin_Dialog_partner_stats
 {
-    function &getPageTemplate()
+    function getPageTemplate()
     {
         return "modules/Affiliate/partners_tree.tpl";
     }
 
-    function &getRoot()
+    function getRoot()
     {
         if (is_null($this->root)) {
-            $this->root =& func_new("Profile", $this->get("partner_id"));
+            $this->root = func_new("Profile", $this->get("partner_id"));
         }
         return $this->root;
     }

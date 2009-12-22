@@ -50,7 +50,7 @@ class Dialog_captcha extends Dialog
     
     function handleRequest()
     {
-        $captcha =& func_new("CaptchaGenerator");
+        $captcha = func_new("CaptchaGenerator");
         $length = ((int) $this->get("config.Captcha.captcha_length") > 0) ? (int) $this->get("config.Captcha.captcha_length") : 5;
         $code = $captcha->generateCode($length);
 

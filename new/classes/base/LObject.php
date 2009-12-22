@@ -55,17 +55,17 @@ class LObject extends Object
     {
     }
 
-	function &get($name)
+	function get($name)
     {
         if (strpos($name, '.')) {
-            $obj =& $this;
+            $obj = $this;
             foreach (explode('.', $name) as $n) {
             	if (isset($a)) {
                 	unset($a);
                 }
                 if (is_array($obj)) {
-                    $a =& $obj[$n];
-                    $obj =& $a;
+                    $a = $obj[$n];
+                    $obj = $a;
                 } else {
                     if (!method_exists($obj,'get')) {
                         if (is_a($obj, 'stdClass') && isset($obj->$n)) {
@@ -73,8 +73,8 @@ class LObject extends Object
                         }
                         return null;
                     }
-                    $a =& $obj->get($n);
-                    $obj =& $a;
+                    $a = $obj->get($n);
+                    $obj = $a;
                 }
                 if (is_null($obj)) {
                     return null;

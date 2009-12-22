@@ -66,13 +66,13 @@ class Module_FeaturedProducts_Admin_Dialog_categories extends Admin_Dialog_categ
 		}
 	}
 
-    function &getProducts()
+    function getProducts()
     {
         if ($this->get("mode") != "search") {
             return array();
         }
-        $p =& func_new("Product");
-        $result =& $p->advancedSearch($this->substring,
+        $p = func_new("Product");
+        $result = $p->advancedSearch($this->substring,
                                       $this->search_productsku,
                                       $this->search_category,
                                       $this->subcategory_search);

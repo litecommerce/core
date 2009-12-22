@@ -48,11 +48,11 @@
 class Module_AdvancedSecurity_Dialog_checkout extends Dialog_checkout
 {
     
-    function &getPaymentMethods()
+    function getPaymentMethods()
     {
-		$methods =& parent::getPaymentMethods();
+		$methods = parent::getPaymentMethods();
 
-		$gpg =& func_new("GPG");
+		$gpg = func_new("GPG");
 		if ($gpg->get("publicKey") && $gpg->get("secretKey"))
 			return $methods;
 

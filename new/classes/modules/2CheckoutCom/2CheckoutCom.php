@@ -57,7 +57,7 @@ class Module_2CheckoutCom extends Module
     function init()
     {
         parent::init();
-        $pm =& func_new("PaymentMethod");
+        $pm = func_new("PaymentMethod");
         $pm->registerMethod("2checkout");
 
         $webDir = $this->xlite->get("options.host_details.web_dir");
@@ -66,7 +66,7 @@ class Module_2CheckoutCom extends Module
         }
         $this->xlite->set("options.host_details.web_dir_wo_slash", $webDir);
 
-        $pm =& func_new("PaymentMethod", "2checkout");
+        $pm = func_new("PaymentMethod", "2checkout");
 		$params = $pm->get("params");
 		if (!isset($params["version"])) {
 			$params["version"] = "2";

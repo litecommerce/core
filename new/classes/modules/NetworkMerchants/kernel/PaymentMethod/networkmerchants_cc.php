@@ -54,7 +54,7 @@ class PaymentMethod_networkmerchants_cc extends PaymentMethod_credit_card
 	function initRequest(&$cart, &$request) 
 	{
 		if ($this->xlite->get("cc_initRequestAlternate")) {
-			$_object =& func_new("PaymentMethod_networkmerchants_cc_CardinalCommerce");
+			$_object = func_new("PaymentMethod_networkmerchants_cc_CardinalCommerce");
 			$_object->set("CardinalMPI", $this->get("CardinalMPI"));
 			$_object->cc_info = $this->cc_info;
 			$_object->initRequest($cart, $request);

@@ -87,9 +87,9 @@ class PaymentMethod_credit_card extends PaymentMethod
         }
     }
 
-    function &getCardTypes()
+    function getCardTypes()
     {
-        $c =& func_new("Card");
+        $c = func_new("Card");
         return $c->findAll();
     }
 }

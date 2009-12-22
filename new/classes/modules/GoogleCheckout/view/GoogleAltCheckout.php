@@ -52,7 +52,7 @@ class CGoogleAltCheckout extends Component
     function initGoogleData()
     {
     	if (!isset($this->GCMerchantID)) {
-    		$pm =& func_new("PaymentMethod", "google_checkout");
+    		$pm = func_new("PaymentMethod", "google_checkout");
     		$isAdminZone = $this->xlite->is("adminZone");
     		$this->xlite->set("adminZone", true);
     		$enabled = (bool) $pm->get("enabled");

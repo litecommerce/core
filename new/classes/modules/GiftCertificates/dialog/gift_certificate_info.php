@@ -49,7 +49,7 @@ class Dialog_gift_certificate_info extends Dialog
     var $params = array("target", "gcid");
     var $gc = null;
 
-    function &getGC()
+    function getGC()
     {
         if (is_null($this->gc)) {
             $this->gc = func_new("GiftCertificate", $this->get("gcid"));

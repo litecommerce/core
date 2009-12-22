@@ -73,7 +73,7 @@ class Dialog_cart_ProductAdviser extends Dialog_cart
 		if (is_null($this->rejectedItemInfo)) {
 			$rejectedItemInfo = $this->session->get("rejectedItem");
 			$this->session->set("rejectedItem", null);
-			$this->rejectedItemInfo =& func_new("Object");
+			$this->rejectedItemInfo = func_new("Object");
 			$this->rejectedItemInfo->set("product_id", $rejectedItemInfo->product_id);
 			$this->rejectedItemInfo->set("product", func_new("Product", $this->rejectedItemInfo->product_id));
 			$this->rejectedItemInfo->set("amount", $rejectedItemInfo->availableAmount);
@@ -113,7 +113,7 @@ class Dialog_cart_ProductAdviser extends Dialog_cart
         $check[] = "profile_id='$profile_id'";
         $check[] = "email='$email'";
 
-		$notification =& func_new("CustomerNotification");
+		$notification = func_new("CustomerNotification");
 		$notification->set("type", CUSTOMER_NOTIFICATION_PRODUCT);
     	$notification->set("product_id", $rejectedItemInfo->product_id);
 		if (isset($rejectedItemInfo->productOptions)) {

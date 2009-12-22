@@ -57,7 +57,7 @@ class Admin_Dialog_payment_methods extends Admin_Dialog
 		}
 
 		$this->configurableMethods = false;
-	    $pm =& func_new("PaymentMethod");
+	    $pm = func_new("PaymentMethod");
 	    $methods = $pm->readAll();
 	    foreach($methods as $pm) {
 	    	if (!is_null($pm->get("configurationTemplate"))) {
@@ -81,7 +81,7 @@ class Admin_Dialog_payment_methods extends Admin_Dialog
             }
 
             if ($data["payment_method"] == $default_offline_payment && !$data["enabled"]) {
-        		$cfg =& func_new("Config");
+        		$cfg = func_new("Config");
                 $cfg->createOption("Payments", "default_offline_payment", "");
             }
 
@@ -94,7 +94,7 @@ class Admin_Dialog_payment_methods extends Admin_Dialog
 
     function action_default_payment()
     {
-		$cfg =& func_new("Config");
+		$cfg = func_new("Config");
         $cfg->createOption("Payments", "default_offline_payment", $this->default_payment);
 		$cfg->createOption("Payments", "default_select_payment", $this->default_select_payment);
     }

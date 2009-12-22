@@ -223,7 +223,7 @@ function func_ProtxDirect_sendRequestDirect(&$payment, $post, $url=null)
 		$url = $payment->get("serviceUrl");
 	}
 
-	$https =& func_new('HTTPS');
+	$https = func_new('HTTPS');
 	$https->url        = $url;
     $https->data       = $post;
 	$https->method     = 'POST';
@@ -270,11 +270,11 @@ $payment->xlite->logger->log("RESPONSE ARRAY: ".var_export($responseArray, true)
 function func_ProtxDirect_getState(&$profile, $field, $customField)
 {
     $stateName = "";
-    $state =& func_new("State");
+    $state = func_new("State");
     if ($state->find("state_id='".$profile->get($field)."'")) {
         $stateName = $state->get('state');
     } else { // state not found
-        $stateName = &$profile->get($customField);
+        $stateName = $profile->get($customField);
     }
 
     return $stateName;

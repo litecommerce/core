@@ -51,7 +51,7 @@ class Admin_Dialog_Css_Edit extends Admin_Dialog
 {
     var $params = array('target', 'mode', 'style_id', 'status');
 
-    function &getLocale() // {{{
+    function getLocale() // {{{
     {
         if (is_null($this->locale)) {
             $this->locale = $this->get("xlite.options.skin_details.locale");
@@ -59,7 +59,7 @@ class Admin_Dialog_Css_Edit extends Admin_Dialog
         return $this->locale;
     } // }}}
 
-    function &getZone() // {{{
+    function getZone() // {{{
     {
         if (is_null($this->zone)) {
             $this->zone = $this->get("xlite.options.skin_details.skin");
@@ -67,12 +67,12 @@ class Admin_Dialog_Css_Edit extends Admin_Dialog
         return $this->zone;
     } // }}}
 
-    function &getEditor()
+    function getEditor()
     {
         if (isset($this->editor)) {
             return $this->editor;
         }
-        $this->editor =& func_new("CssEditor", $this->get("cssFile"));
+        $this->editor = func_new("CssEditor", $this->get("cssFile"));
         return $this->editor;
     }
 
@@ -85,7 +85,7 @@ class Admin_Dialog_Css_Edit extends Admin_Dialog
 
     function action_save()
     {
-        $editor =& $this->get("editor");
+        $editor = $this->get("editor");
         $editor->set("style.style.$this->style_id", $this->style);
 
         $editor->save();
@@ -94,7 +94,7 @@ class Admin_Dialog_Css_Edit extends Admin_Dialog
     
     function action_restore_default()
     {
-        $editor =& $this->get("editor");
+        $editor = $this->get("editor");
         $editor->restoreDefault();
     }
 

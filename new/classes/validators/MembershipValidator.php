@@ -62,7 +62,7 @@ class CMembershipValidator extends CFieldValidator
 			return true;
 		}
 
-		$dialog =& $this->get("dialog");
+		$dialog = $this->get("dialog");
 		if (is_object($dialog) && $dialog->get("actionProcessed")) {
 			return true;
 		}
@@ -74,7 +74,7 @@ class CMembershipValidator extends CFieldValidator
     		if (strlen($membershipData) == 0) {
     			return false;
     		}
-			$membership =& func_new("Membership");
+			$membership = func_new("Membership");
 			if ($membershipData != $membership->stripInvalidData($membershipData)) {
 				$this->set("dataInvalid", true);
 				return false;

@@ -50,7 +50,7 @@ class Admin_Dialog_gift_certificate_ecard extends Admin_Dialog
     var $ecard = null;
     var $returnUrl = "admin.php?target=gift_certificate_ecards";
     
-    function &getECard()
+    function getECard()
     {
         if (is_null($this->ecard)) {
             if (!$this->get("ecard_id")) {
@@ -82,10 +82,10 @@ class Admin_Dialog_gift_certificate_ecard extends Admin_Dialog
 
     function action_images()
     {
-        $tn =& $this->get("ecard.thumbnail");
+        $tn = $this->get("ecard.thumbnail");
         $tn->handleRequest();
             
-        $img =& $this->get("ecard.image");
+        $img = $this->get("ecard.image");
         $img->handleRequest();
     }
 

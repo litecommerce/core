@@ -54,12 +54,12 @@ class Module_DemoMode_Base extends Base
 	function _setSessionVar($path, $value)
 	{
 		global $safeData;
-		$ptr =& $safeData;
+		$ptr = $safeData;
 		foreach ($path as $key) {
 			if (!isset($ptr[$key])) {
 				$ptr[$key] = array();
 			}
-			$ptr =& $ptr[$key];
+			$ptr = $ptr[$key];
 		}
 		$ptr = $value;
 		$this->session->set('safeData', $safeData);
@@ -68,7 +68,7 @@ class Module_DemoMode_Base extends Base
 	function _getSessionVar($path)
 	{
 		global $safeData;
-		$ptr =& $safeData;
+		$ptr = $safeData;
 		foreach ($path as $key) {
 			if (!isset($ptr[$key])) {
 				return null;
@@ -76,7 +76,7 @@ class Module_DemoMode_Base extends Base
 			if (is_scalar($ptr)) {
 				return $ptr;
 			}
-			$ptr =& $ptr[$key];
+			$ptr = $ptr[$key];
 		}	
 		return $ptr;
 	}

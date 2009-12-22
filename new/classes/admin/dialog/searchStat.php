@@ -54,15 +54,15 @@ class Admin_Dialog_SearchStat extends Admin_Dialog_stats
             "count" => "count desc",
             "product count" => "product_count desc");
 
-    function &getPageTemplate()
+    function getPageTemplate()
     {
         return "searchStat.tpl";
     }
 
-    function &getSearchStat()
+    function getSearchStat()
     {
         if (is_null($this->searchStat)) {
-            $searchStat =& func_new("SearchStat");
+            $searchStat = func_new("SearchStat");
             $this->searchStat = $searchStat->findAll("", $this->orders[$this->get("listOrder")]);
         }
         return $this->searchStat;
@@ -70,7 +70,7 @@ class Admin_Dialog_SearchStat extends Admin_Dialog_stats
 
     function action_cleanup()
     {
-        $searchStat =& func_new("SearchStat");
+        $searchStat = func_new("SearchStat");
         $searchStat->cleanup($_POST["maxCount"]);
     }
 

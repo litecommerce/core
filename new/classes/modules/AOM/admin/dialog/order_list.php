@@ -49,10 +49,10 @@ class Module_AOM_Admin_Dialog_order_list extends Admin_Dialog_order_list
 	var $params = array('target', 'mode', 'start_order_id', 'end_order_id', 'login', 'status', 'person_info', 'product_name', 'period', 'start_total', 'end_total', 'payment_method', 'shipping_id');
 	var $_shippingRates = null;
 	
-	function &getOrders() // {{{
+	function getOrders() // {{{
 	{
 		if(is_null($this->orders)) {
-			$order = &func_new("Order");
+			$order = func_new("Order");
 			$order->collectGarbage();
 
 // search dates // {{{ 
@@ -63,7 +63,7 @@ class Module_AOM_Admin_Dialog_order_list extends Admin_Dialog_order_list
 		}
  // }}}
 
-			$orders = & $order->search(
+			$orders = $order->search(
 					null,
 					$this->get("start_order_id"),
 					$this->get("end_order_id"),
@@ -79,7 +79,7 @@ class Module_AOM_Admin_Dialog_order_list extends Admin_Dialog_order_list
 // search by profiles // {{{
 
 		if ($this->get("login")||$this->get("person_info"))	{
-			$profile = &func_new("Profile");
+			$profile = func_new("Profile");
 			$profile->_range = null;
 			$person_search = "";
 			if ($this->get("person_info")) {
@@ -115,10 +115,10 @@ class Module_AOM_Admin_Dialog_order_list extends Admin_Dialog_order_list
 
 			$products = array();
 			if ($this->get("product_name")) {
-				$product = &func_new("Product");
+				$product = func_new("Product");
 				$product_name = addslashes($this->get("product_name"));
 				$products = $product->findAll("name LIKE '%$product_name%' OR sku LIKE '%$product_name%'");
-				$item	 = &func_new("OrderItem");
+				$item = func_new("OrderItem");
 				$items 	 = $item->findAll("product_name LIKE '%$product_name%' OR product_sku LIKE '%$product_name%'");
 				$product_ids = array();
                 foreach($products as $product)
@@ -156,24 +156,24 @@ class Module_AOM_Admin_Dialog_order_list extends Admin_Dialog_order_list
 
 	} // }}}
 
-    function &getPaymentMethods() // {{{ 
+    function getPaymentMethods() // {{{ 
     {
-        $paymentMethod =& func_new("PaymentMethod");
+        $paymentMethod = func_new("PaymentMethod");
         return $paymentMethod->get("activeMethods");
     } // }}}
 
-    function &getShippingRates() // {{{
+    function getShippingRates() // {{{
     {
     	if (isset($this->_shippingRates)) {
     		return $this->_shippingRates;
     	}
 
-		$sr =& func_new("ShippingRate");
-        $shipping_rates =& $sr->findAll();
-		$shipping =& func_new("Shipping");
-    	$modules =& $shipping->getModules();
+		$sr = func_new("ShippingRate");
+        $shipping_rates = $sr->findAll();
+		$shipping = func_new("Shipping");
+    	$modules = $shipping->getModules();
     	$modules = (is_array($modules)) ? array_keys($modules) : array();
-		$shippings =& $shipping->findAll();
+		$shippings = $shipping->findAll();
 		$validShippings = array("-1");
 		foreach($shippings as $shipping) {
 			if (in_array($shipping->get("class"), $modules) && $shipping->get("enabled")) {
@@ -212,7 +212,7 @@ class Module_AOM_Admin_Dialog_order_list extends Admin_Dialog_order_list
         return $shipping_rates;
     } // }}}
 
-	function &getPeriodDates($period) // {{{ 
+	function getPeriodDates($period) // {{{ 
 	{
 		$ct = getdate(time());
 		switch($period) {

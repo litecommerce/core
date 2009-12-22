@@ -55,11 +55,11 @@ class Admin_Dialog_settings_LayoutOrganizer extends Admin_Dialog_settings
         parent::action_update();
 
 		if ($this->page == "General") {
-            $cfg =& func_new("Config");
-            $this->config =& $cfg->readConfig();
+            $cfg = func_new("Config");
+            $this->config = $cfg->readConfig();
 			$newTemplate = $this->config->get("General.subcategories_look");
 			if (strcmp($newTemplate, $oldTemplate) != 0) {
-				$cat =& func_new("Category");
+				$cat = func_new("Category");
             	$categories  = $cat->findAll("parent = '0'");
             	$this->xlite->set("reReadConfig", true);
             	if (is_array($categories)) {

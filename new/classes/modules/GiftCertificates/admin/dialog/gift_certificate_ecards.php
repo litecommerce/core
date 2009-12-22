@@ -46,7 +46,7 @@
 */
 class Admin_Dialog_gift_certificate_ecards extends Admin_Dialog
 {
-    function &getECards()
+    function getECards()
     {
         $ecard = func_new("ECard");
         return $ecard->findAll();

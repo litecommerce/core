@@ -65,7 +65,7 @@ class Banner extends Base
     var $defaultOrder = "banner_id";
     var $image = null;    
 
-    function &getImage()
+    function getImage()
     {
         if (is_null($this->image)) {
             $this->image = func_new("Image", "banner_image", $this->get("banner_id"));

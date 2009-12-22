@@ -67,7 +67,7 @@ class PartnerField extends Base
         return parent::filter();
     }
 
-    function &getFieldOptions()
+    function getFieldOptions()
     {
         $array = explode("\n", $this->get("value"));
         for ($i = 0; $i < count($array); $i++) {

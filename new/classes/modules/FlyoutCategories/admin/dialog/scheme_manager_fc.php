@@ -76,7 +76,7 @@ class Admin_Dialog_scheme_manager_fc extends Admin_Dialog_template_editor
     function initLayout()
     {
     	if (strlen($this->customerLayoutPath) == 0) {
-    		$layout =& func_new("Layout");
+    		$layout = func_new("Layout");
             global $options;
             // reset Layout settings to customer default
             $layout->set("skin", $options["skin_details"]["skin"]);
@@ -94,7 +94,7 @@ class Admin_Dialog_scheme_manager_fc extends Admin_Dialog_template_editor
 		$this->session->set("FromFCSchemeManager", null);
     }
 
-	function &getDefaultScheme()
+	function getDefaultScheme()
 	{
 		require_once "modules/FlyoutCategories/encoded.php";
 		return FlyoutCategories_getDefaultScheme($this);

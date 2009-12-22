@@ -48,7 +48,7 @@ class Admin_Dialog_SpecialOffers extends Admin_Dialog
 {
     var $specialOffers = null;
 
-	function &getSpecialOffers()
+	function getSpecialOffers()
     {
         switch ($this->get("sort")) {
             case "date_asc":
@@ -130,7 +130,7 @@ class Admin_Dialog_SpecialOffers extends Admin_Dialog
             foreach($this->offer_ids as $key => $value) {
                	$so = func_new("SpecialOffer",$key);
 				if ( function_exists("func_is_clone_deprecated") && func_is_clone_deprecated() ) {
-	               	$clone =& $so->cloneObject();
+	               	$clone = $so->cloneObject();
 				} else {
 					$clone = $so->clone();
 				}

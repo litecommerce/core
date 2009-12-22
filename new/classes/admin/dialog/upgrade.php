@@ -66,7 +66,7 @@ class Admin_Dialog_upgrade extends Admin_Dialog
 
     function action_upgrade()
     {
-        $up =& func_new("Upgrade");
+        $up = func_new("Upgrade");
         $up->setProperties($_GET);
         $up->doUpgrade();
         $this->set("silent", true);
@@ -74,7 +74,7 @@ class Admin_Dialog_upgrade extends Admin_Dialog
 
     function action_upgrade_force()
     {
-        $up =& func_new("Upgrade");
+        $up = func_new("Upgrade");
         $up->setProperties($_GET);
         $up->success();
         $this->set("silent", true);

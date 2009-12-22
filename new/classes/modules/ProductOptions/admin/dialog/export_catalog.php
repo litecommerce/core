@@ -58,10 +58,10 @@ class Module_ProductOptions_Admin_Dialog_export_catalog extends Admin_dialog_exp
         global $DATA_DELIMITERS;
 
         // save layout & export
-        $dlg =& func_new("Admin_Dialog_import_catalog");
+        $dlg = func_new("Admin_Dialog_import_catalog");
         $dlg->action_layout("product_options_layout");
         $this->startDownload("product_options.csv");
-        $po =& func_new("ProductOption");
+        $po = func_new("ProductOption");
         $po->export($this->product_options_layout, $DATA_DELIMITERS[$this->delimiter], $where = null, $orderby = "product_id");
         exit();
     }

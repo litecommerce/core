@@ -54,7 +54,7 @@
 		}
 
 		if (is_null($order->get("details.reason"))) {
-    	    $request =& func_new("HTTPS");
+    	    $request = func_new("HTTPS");
     	   	$request->url = $_this->get("params.standard.mode") ? $_this->get("params.standard.live_url") : $_this->get("params.standard.test_url");
     	    $_POST["cmd"] = "_notify-validate";
     	    $request->data = $_POST;
@@ -179,7 +179,7 @@
 			$order->set("detailLabels.error", "HTTPS Error");
 			$order->set("status","F");
 		} else {
-			$xml =& func_new("XML");
+			$xml = func_new("XML");
 			$response = $xml->parse($response);
 			if (isset($response["SOAP-ENV:ENVELOPE"]["SOAP-ENV:BODY"]["_0"]["SOAP-ENV:FAULT"])) {
 				$responseFault = $response["SOAP-ENV:ENVELOPE"]["SOAP-ENV:BODY"]["_0"]["SOAP-ENV:FAULT"];
@@ -216,14 +216,14 @@
 
   function paypalExpressHandleRequest(&$_this,&$order) // {{{ 
   {
-	$request =& func_new("HTTPS");
+	$request = func_new("HTTPS");
 	if(is_null($order->get("details.token"))) {
-		$express_checkout =& func_new("Dialog_express_checkout");	
+		$express_checkout = func_new("Dialog_express_checkout");	
 		$express_checkout->action_profile();
 	}
 	$pm = func_new("PaymentMethod","paypalpro");
 	$response = PayPalPro_sendRequest($pm->get("params.pro"),$_this->finishExpressCheckoutRequest($order,$pm->get("params.pro")));
-    $xml =& func_new("XML");
+    $xml = func_new("XML");
     $response = $xml->parse($response);
 
 	if (isset($response["SOAP-ENV:ENVELOPE"]["SOAP-ENV:BODY"]["_0"]["SOAP-ENV:FAULT"])) {
@@ -278,7 +278,7 @@ global $xlite;
 $xlite->logger->log("\nREQUEST:\n".var_export($data, true));
 //*/
 
-		$request =& func_new("HTTPS");
+		$request = func_new("HTTPS");
 		$request->data			= $data;
         $request->cert			= $payment["certificate"];
         $request->method		= 'POST';
@@ -289,7 +289,7 @@ $xlite->logger->log("\nREQUEST:\n".var_export($data, true));
 
 /*
 if (!$request->error) {
-	$xml =& func_new("XML");
+	$xml = func_new("XML");
 	$xml_response = $xml->parse($request->response);
 	$xlite->logger->log("\nRESPONSE:\n".var_export($xml_response, true)."\n");
 } else {

@@ -90,11 +90,11 @@ class Admin_Dialog extends Dialog
         return $this->get("config.Security.admin_security");
     }
 
-    function &getRecentAdmins()
+    function getRecentAdmins()
     {
         if ($this->auth->isLogged() && is_null($this->recentAdmins)) {
-            $profile =& func_new("Profile");
-            $this->recentAdmins =& $profile->findAll("access_level>='".$this->get("auth.adminAccessLevel")."' AND last_login>'0'", "last_login ASC", null, "0, 7");
+            $profile = func_new("Profile");
+            $this->recentAdmins = $profile->findAll("access_level>='".$this->get("auth.adminAccessLevel")."' AND last_login>'0'", "last_login ASC", null, "0, 7");
         }    
         return $this->recentAdmins;
     }

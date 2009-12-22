@@ -47,7 +47,7 @@
 */
 class Module_UPSOnlineTools_Admin_Dialog_shipping_settings extends Admin_Dialog_shipping_settings
 {
-	function &getShippings()
+	function getShippings()
 	{
 		if (!is_null($this->_shippings)) {
 			return $this->_shippings;

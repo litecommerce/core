@@ -1,13 +1,13 @@
 <?php
 function func_moduleEgoods_send_files(&$order)
 {
-	$items =& $order->get('items');
+	$items = $order->get('items');
 
 	for ($i = 0; $i < count($items); $i++) {
 		if ($items[$i]->isEgood()) {
-			$mail =& func_new("Module_Egoods_Mailer");
+			$mail = func_new("Module_Egoods_Mailer");
 			$items[$i]->storeLinks();
-			$mail->item =& $items[$i];
+			$mail->item = $items[$i];
 			$mail->set('clean_after_send', false);
 			$mail->compose(
 					$order->config->get("Company.site_administrator"),
@@ -15,9 +15,9 @@ function func_moduleEgoods_send_files(&$order)
 					"modules/Egoods/instructions");
 			
 			$linksAvailable = false;
-			$product =& $items[$i]->get("product");
+			$product = $items[$i]->get("product");
 			if (isset($product) && is_object($product)) {
-				$egoods =& $product->getEgoods();
+				$egoods = $product->getEgoods();
     			for($j=0; $j<count($egoods); $j++) {
     				if ($egoods[$j]->get("delivery") == "L") {
     					$linksAvailable = true;
@@ -52,7 +52,7 @@ function func_moduleEgoods_getPinCodes($item)
 		return $result;
 	}
 	if ($item->get('product.pin_type') == 'D') {
-		$pin =& func_new('PinCode');
+		$pin = func_new('PinCode');
 		$pin_objects = $pin->findAll("item_id = '" . $item->get('item_id') . "' and order_id=" . $item->get('order_id'));
 		foreach($pin_objects as $pin_obj) {
 			$result []= $pin_obj->get('pin');
@@ -80,14 +80,14 @@ function func_moduleEgoods_parseCmdLine($item, $cmd_line)
 
 function func_moduleEgoods_send_pins(&$order)
 {
-	$items =& $order->get('items');
+	$items = $order->get('items');
 
 	for ($i = 0; $i < count($items); $i++) {
 		if ($items[$i]->isPin()) {
 			$items[$i]->createPins();
 			if ($items[$i]->get('pincodes') != '') {
-				$mail =& func_new("Module_Egoods_Mailer");
-				$mail->item =& $items[$i]; 
+				$mail = func_new("Module_Egoods_Mailer");
+				$mail->item = $items[$i]; 
 				$mail->compose(
 						$order->config->get("Company.site_administrator"),
 						$order->get("profile.login"),

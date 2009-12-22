@@ -95,7 +95,7 @@ class GiftCertificate extends Base
          return nl2br(htmlspecialchars($this->get("message")));
     }
 
-    function &getRecipientState()
+    function getRecipientState()
     {
         if (is_null($this->recipientState)) {
             $this->recipientState = func_new("State", $this->get("recipient_state"));
@@ -103,7 +103,7 @@ class GiftCertificate extends Base
         return $this->recipientState;
     }
 
-    function &getRecipientCountry()
+    function getRecipientCountry()
     {
         if (is_null($this->recipientCountry)) {
             $this->recipientCountry = func_new("Country", $this->get("recipient_country"));
@@ -116,7 +116,7 @@ class GiftCertificate extends Base
         if ($name == "status" && $value == "A" && $this->get("status") != "A" && $this->get("send_via") == "E") {
             // send GC by e-mail
             $mail = func_new("Mailer");
-            $mail->gc =& $this;
+            $mail->gc = $this;
             $mail->compose(
                 $this->config->get("Company.site_administrator"), 
                 $this->get("recipient_email"),
@@ -158,7 +158,7 @@ class GiftCertificate extends Base
         $ec = func_new("ECard");
         return count($ec->findAll("enabled=1")) > 0;
     }
-    function &getECard()
+    function getECard()
     {
         if (is_null($this->ecard)) {
             if ($this->get("ecard_id")) {
@@ -172,8 +172,8 @@ class GiftCertificate extends Base
 
     function showECardBody()
     {
-        $c =& func_new("CECard");
-        $c->gc =& $this;
+        $c = func_new("CECard");
+        $c->gc = $this;
         $c->init();
         $c->display();
     }
@@ -184,7 +184,7 @@ class GiftCertificate extends Base
     */
     function getBorderHeight($bottom = false)
     {
-        $layout =& func_get_instance("Layout");
+        $layout = func_get_instance("Layout");
         $borderFile = "skins/mail/" . $layout->get("locale") . "/modules/GiftCertificates/ecards/borders/" . $this->get("border") . ($bottom?"_bottom":"") . ".gif";
         if (is_readable($borderFile)) {
             list($w, $h) = getimagesize($borderFile);
@@ -200,7 +200,7 @@ class GiftCertificate extends Base
 
     function getBordersDir()
     {
-        $layout =& func_get_instance("Layout");
+        $layout = func_get_instance("Layout");
         return $this->xlite->shopURL("skins/mail/" . $layout->get("locale") . "/modules/GiftCertificates/ecards/borders/");
     }
 
@@ -218,7 +218,7 @@ class GiftCertificate extends Base
 	function getProfile()
 	{
 		if (is_null($this->_profile)) {
-			$this->_profile =& func_new("Profile", $this->get("profile_id"));
+			$this->_profile = func_new("Profile", $this->get("profile_id"));
 		}
 		return $this->_profile;
 	}
@@ -243,8 +243,8 @@ class GiftCertificate extends Base
 			if ($this->xlite->get("config.GiftCertificates.expiration_email") && (!$this->get("exp_email_sent"))) {
 				if (($this->get("debit") > 0) && ($this->get("status") == "A")) {
 					// send warning notification
-					$mailer =& func_new("Mailer");
-					$mailer->cert =& $this;
+					$mailer = func_new("Mailer");
+					$mailer->cert = $this;
 					$mailer->compose(
 						$this->xlite->get("config.Company.site_administrator"),
 						$this->get("recipient_email"),
@@ -286,7 +286,7 @@ class CECard extends Component
 
     function getTemplateFile()
     {
-        $layout =& func_get_instance("Layout");
+        $layout = func_get_instance("Layout");
         return "skins/mail/" . $layout->get("locale") . "/" . $this->get("template");
     }
 

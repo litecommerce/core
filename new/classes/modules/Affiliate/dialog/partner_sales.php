@@ -50,7 +50,7 @@ class Dialog_partner_sales extends PartnerDialog
     var $affiliatePending = 0;
     var $affiliatePaid    = 0;
 
-    function &getSalesStats()
+    function getSalesStats()
     {
         if (!$this->auth->isAuthorized($this)) {
         	return null;
@@ -58,7 +58,7 @@ class Dialog_partner_sales extends PartnerDialog
 
         if (is_null($this->salesStats)) {
             $this->salesStats = array();
-            $pp =& func_new("PartnerPayment");
+            $pp = func_new("PartnerPayment");
             $salesStats = $pp->searchSales(
                     $this->get("startDate"),
                     $this->get("endDate") + 24 * 3600,
@@ -76,7 +76,7 @@ class Dialog_partner_sales extends PartnerDialog
         return $this->salesStats;
     }
 
-    function &getTopProducts()
+    function getTopProducts()
     {
         if (is_null($this->topProducts)) {
             $this->topProducts = array();

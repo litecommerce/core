@@ -47,7 +47,7 @@ class CPartnerField extends Component
     var $formField = null;
     var $partner = null;
 
-    function &getValue()
+    function getValue()
     {
         // form submitted
         if ($_SERVER["REQUEST_METHOD"] == "POST") {

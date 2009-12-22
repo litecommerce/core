@@ -66,10 +66,10 @@ class Module_UPSOnlineTools_Order extends Order
     function getCarrier()
 	{
         if (!isset($this->_carrier)) {
-            $carriers = &$this->getCarriers();
+            $carriers = $this->getCarriers();
 
 			if ($this->get("shipping_id")) {
-				$sm =& func_new("Shipping");
+				$sm = func_new("Shipping");
 
 				// return NULL if shipping method not available
 				if (!$sm->find("shipping_id='".$this->get("shipping_id")."' AND enabled='1'")) {
@@ -92,11 +92,11 @@ class Module_UPSOnlineTools_Order extends Order
         return $this->_carrier;
     }
 
-    function &getCarriers()
+    function getCarriers()
     {
         if (!isset($this->_carriers)) {
             $return = array();
-            $rates = &$this->getShippingRates();
+            $rates = $this->getShippingRates();
             foreach($rates as $rate) {
                 $class = $rate->get('shipping.class');
                 if(!isset($return[$class]))
@@ -110,9 +110,9 @@ class Module_UPSOnlineTools_Order extends Order
         return $this->_carriers;
     }
 
-    function &getCarrierRates($carrier = null)
+    function getCarrierRates($carrier = null)
     {
-        $rates = &$this->getShippingRates();
+        $rates = $this->getShippingRates();
         if (is_null($carrier)) $carrier = $this->getCarrier();
         if (!$carrier || !is_array($rates)) return $rates;
         foreach($rates as $k=>$rate)
@@ -137,9 +137,9 @@ class Module_UPSOnlineTools_Order extends Order
 		parent::set($name, $value);
 	}
 
-	function &get($name)
+	function get($name)
 	{
-		$value =& parent::get($name);
+		$value = parent::get($name);
 
 		if ($name == "ups_containers") {
 			$value = unserialize(base64_decode($value));
@@ -164,7 +164,7 @@ class Module_UPSOnlineTools_Order extends Order
         }
 
         $result = array();
-        $items =& $this->get("items");
+        $items = $this->get("items");
         foreach ($items as $item_idx => $item) {
             $result[] = array
             (
@@ -363,7 +363,7 @@ class Module_UPSOnlineTools_Order extends Order
 
 				$weight_limit = 150; // lbs
 
-				$container =& func_new("Container");
+				$container = func_new("Container");
 				$container->setDimensions($_width, $_length, $_height);
 				$container->setWeightLimit($weight_limit);
 				$container->setContainerType(PACKAGING_TYPE_PACKAGE); // Package type
@@ -405,7 +405,7 @@ class Module_UPSOnlineTools_Order extends Order
 						continue;
 
 					// add new container
-					$c =& func_new("Container");
+					$c = func_new("Container");
 					$c->setDimensions($_width, $_length, $_height);
 					$c->setWeightLimit($weight_limit);
 					$c->setContainerType(PACKAGING_TYPE_PACKAGE); // Package type
@@ -416,7 +416,7 @@ class Module_UPSOnlineTools_Order extends Order
 			break;
 			////////////////////////////////////////////////////////
 			case BINPACKING_NORMAL_ALGORITHM:	// pack all items in one package
-				$sm =& func_new("Shipping_ups");
+				$sm = func_new("Shipping_ups");
 				$pack = $sm->getUPSContainerDims($packaging_type);
 
 				$const_items = $items;
@@ -460,7 +460,7 @@ class Module_UPSOnlineTools_Order extends Order
 			break;
 			////////////////////////////////////////////////////////
 			case BINPACKING_OVERSIZE_ALGORITHM:	// pack items in similar containers
-				$sm =& func_new("Shipping_ups");
+				$sm = func_new("Shipping_ups");
 				$pack = $sm->getUPSContainerDims($packaging_type);
 
 				$ups_containers = UPSOnlineTools_solve_binpack($pack["width"], $pack["length"], $pack["height"], $pack["weight_limit"], $items);
@@ -491,7 +491,7 @@ class Module_UPSOnlineTools_Order extends Order
 					foreach ((array)$level->getItems() as $item) {
 						$item_id = $item->get("item_id");
 
-						$oi =& func_new("OrderItem");
+						$oi = func_new("OrderItem");
 						if ($oi->find("item_id='".addslashes($item_id)."'")) {
 							if ($oi->get("product.ups_add_handling")) {
 								$ups_containers[$container_id]->setAdditionalHandling(true);

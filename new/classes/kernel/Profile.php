@@ -170,7 +170,7 @@ class Profile extends Base
 
     function getBillingState() // {{{
     {
-        $state =& func_new("State", $this->get("billing_state"));
+        $state = func_new("State", $this->get("billing_state"));
 		if ($state->get("state_id") == -1)
 			$state->set("state", $this->get("billing_custom_state"));
 
@@ -178,7 +178,7 @@ class Profile extends Base
     } // }}}
     function getShippingState() // {{{
     {
-        $state =& func_new("State", $this->get("shipping_state"));
+        $state = func_new("State", $this->get("shipping_state"));
 		if ($state->get("state_id") == -1)
 			$state->set("state", $this->get("shipping_custom_state"));
 
@@ -205,7 +205,7 @@ class Profile extends Base
 
     function isExists($login) // {{{
     {
-        $p =& func_new("Profile");
+        $p = func_new("Profile");
         return $p->find("login='".addslashes($login)."'");
     } // }}}
 
@@ -216,7 +216,7 @@ class Profile extends Base
 
     function isAdmin() // {{{
     {
-        $auth =& func_get_instance("Auth"); 
+        $auth = func_get_instance("Auth"); 
         return $auth->isAdmin($this);
     } // }}}
 
@@ -313,7 +313,7 @@ class Profile extends Base
 
     function _convertState($value)
     {
-    	$state =& func_new("State");
+    	$state = func_new("State");
     	$value = addslashes($value);
     	if ($state->find("code='$value'") || $state->find("state='$value'") || $state->find("state_id='$value'")) {
     		return $state->get("state_id");
@@ -323,7 +323,7 @@ class Profile extends Base
 
     function _convertCountry($value)
     {
-    	$country =& func_new("Country");
+    	$country = func_new("Country");
     	$value = addslashes($value);
     	if ($country->find("code='$value'") || $country->find("country='$value'")) {
     		return $country->get("code");

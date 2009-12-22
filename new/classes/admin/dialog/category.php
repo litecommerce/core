@@ -81,10 +81,10 @@ class Admin_Dialog_category extends Admin_Dialog
         $this->set("properties", $this->get("category.properties"));
     }
 
-    function &getCategories()
+    function getCategories()
     {
-        $c =& func_new("Category");
-        $this->categories =& $c->findAll();
+        $c = func_new("Category");
+        $this->categories = $c->findAll();
         $names = array();
         $names_hash = array();
         for ($i = 0; $i < count($this->categories); $i++) 
@@ -102,11 +102,11 @@ class Admin_Dialog_category extends Admin_Dialog
         return $this->categories;
     }
 
-    function &getExtraFields()
+    function getExtraFields()
     {
         if (is_null($this->extraFields)) 
         {
-            $ef =& func_new("ExtraField");
+            $ef = func_new("ExtraField");
             $extraFields = $ef->findAll("product_id=0");  // global fields
             foreach($extraFields as $extraField_key => $extraField)
             {
@@ -121,25 +121,25 @@ class Admin_Dialog_category extends Admin_Dialog
         return $this->extraFields;
     }
 
-    function &getParentCategory()
+    function getParentCategory()
     {
         if (is_null($this->parentCategory)) {
-            $this->parentCategory =& func_new("Category", $this->category_id);
+            $this->parentCategory = func_new("Category", $this->category_id);
         }
         return $this->parentCategory;
     }
     
-    function &getCategory()
+    function getCategory()
     {
         if (is_null($this->category)) {
             if ($this->get("mode") == "add") {
-                $this->category =& func_new("Category"); // empty category
+                $this->category = func_new("Category"); // empty category
             } else {
                 $categoryID = 0;
                 if (isset($_REQUEST["category_id"])) {
                     $categoryID = $_REQUEST["category_id"];
                 }
-                $this->category =& func_new("Category", $categoryID);
+                $this->category = func_new("Category", $categoryID);
             }
         }
         return $this->category;
@@ -178,13 +178,13 @@ class Admin_Dialog_category extends Admin_Dialog
             return;
         }
         // update category
-        $category =& func_new("Category");
+        $category = func_new("Category");
 		if (empty($_POST['parent'])) $_POST['parent'] = 0;
         $category->set("properties", $_POST);
         $category->update();
 
         // update category image
-        $image =& $category->get("image");
+        $image = $category->get("image");
         $image->handleRequest();
         
         $this->set("message", "updated");
@@ -200,7 +200,7 @@ class Admin_Dialog_category extends Admin_Dialog
             return;
         }
         // add category
-        $category =& func_new("Category");
+        $category = func_new("Category");
         $category->set("properties", $_POST);
         $category->set("category_id", null);
         if (empty($_POST['parent'])) $_POST['parent'] = 0;
@@ -208,7 +208,7 @@ class Admin_Dialog_category extends Admin_Dialog
         $category->create();
 
         // upload category image
-        $image =& $category->get("image");
+        $image = $category->get("image");
         $image->handleRequest();
 
         // switch to modify page
@@ -219,7 +219,7 @@ class Admin_Dialog_category extends Admin_Dialog
 
     function action_delete()
     {
-        $category =& $this->get("category");
+        $category = $this->get("category");
         // return to categories listing
         $this->set("target", "categories");
         $this->set("category_id", $category->get("parent"));
@@ -228,9 +228,9 @@ class Admin_Dialog_category extends Admin_Dialog
 
     function action_icon()
     {
-        $category =& $this->get("category");
+        $category = $this->get("category");
         // delete category image
-        $image =& $category->get("image");
+        $image = $category->get("image");
         $image->handleRequest();
     }
 
@@ -250,7 +250,7 @@ class Admin_Dialog_category extends Admin_Dialog
             $categories = (array)$this->get("add_categories");
             if (!empty($categories)) 
             {
-                $ef =& func_new("ExtraField");
+                $ef = func_new("ExtraField");
                 $ef->set("properties", $_POST);
                 $ef->setCategoriesList($categories);
                 $ef->create();
@@ -261,16 +261,16 @@ class Admin_Dialog_category extends Admin_Dialog
                 $categories = (array)$this->get("add_categories");
                 if (!empty($categories)) {
                     foreach ($categories as $categoryID) {
-                        $category =& func_new("Category", $categoryID);
+                        $category = func_new("Category", $categoryID);
                         foreach ((array)$category->get("products") as $product) {
-                            $ef =& func_new("ExtraField");
+                            $ef = func_new("ExtraField");
                             $ef->set("properties", $_POST);
                             $ef->set("product_id", $product->get("product_id"));
                             $ef->create();
                         }
                     }
                 } else {    
-                    $ef =& func_new("ExtraField");
+                    $ef = func_new("ExtraField");
                     $ef->set("properties", $_POST);
                     $ef->create();
                 }    
@@ -279,9 +279,9 @@ class Admin_Dialog_category extends Admin_Dialog
         // DELETE field
         elseif (!is_null($this->get("delete_field"))) {
             foreach ((array)$this->get("add_categories") as $categoryID) {
-                $category =& func_new("Category", $categoryID);
+                $category = func_new("Category", $categoryID);
                 foreach ((array)$category->get("products") as $product) {
-                    $ef =& func_new("ExtraField");
+                    $ef = func_new("ExtraField");
                     if ($ef->find("name='".addslashes($this->get("name"))."' AND product_id=".$product->get("product_id"))) {
                         $ef->delete();
                     }    
@@ -297,7 +297,7 @@ class Admin_Dialog_category extends Admin_Dialog
 			$category_id = $this->get("category_id");
             foreach ((array)$this->get("delete_fields") as $id) {
 				$data = array();
-                $ef =& func_new("ExtraField", $id);
+                $ef = func_new("ExtraField", $id);
 				$categories = $ef->getCategories();
 				if ( !is_array($categories) || count($categories) == 0 ) {
 					$cat = func_new("Category");
@@ -321,7 +321,7 @@ class Admin_Dialog_category extends Admin_Dialog
         {
             foreach ((array)$this->get("extra_fields") as $id => $data) 
             {
-                $ef =& func_new("ExtraField", $id);
+                $ef = func_new("ExtraField", $id);
                 $ef->set("categories_old", $ef->get("categories"));
                 $ef->set("properties", $data);
                 $ef->update();

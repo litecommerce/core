@@ -285,7 +285,7 @@ class GPG extends Object
         $this->cleanup();
     } // }}}
 
-    function &getPublicKey() // {{{
+    function getPublicKey() // {{{
     {
         if (is_null($this->_publicKey)) {
             $this->_publicKey = $this->_getKeyData("public");
@@ -293,7 +293,7 @@ class GPG extends Object
         return $this->_publicKey;
     } // }}}
 
-    function &getSecretKey() // {{{
+    function getSecretKey() // {{{
     {
         if (is_null($this->_secretKey)) {
             $this->_secretKey = $this->_getKeyData("secret");
@@ -315,7 +315,7 @@ class GPG extends Object
         return $data;
     } // }}}
 
-    function &getPublicKeyInfo() // {{{
+    function getPublicKeyInfo() // {{{
     {
         if (is_null($this->_publicKeyInfo)) {
             $this->_publicKeyInfo = $this->_getKeyInfo("public");
@@ -323,7 +323,7 @@ class GPG extends Object
         return $this->_publicKeyInfo;
     } // }}}
 
-    function &getSecretKeyInfo() // {{{
+    function getSecretKeyInfo() // {{{
     {
         if (is_null($this->_secretKeyInfo)) {
             $this->_secretKeyInfo = $this->_getKeyInfo("secret");

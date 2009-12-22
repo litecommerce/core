@@ -49,7 +49,7 @@ class Dialog_partner_profile extends PartnerDialog
     var $submode = "warning"; // delete profile status: warning | confirmed | cancelled
 
 
-    function &getTemplate() // {{{
+    function getTemplate() // {{{
     {
         if ($this->get("mode") == "sent") {
             return "modules/Affiliate/login.tpl";
@@ -93,7 +93,7 @@ class Dialog_partner_profile extends PartnerDialog
     function action_delete()
     {
         if ($this->auth->is("logged")) {
-            $this->profile =& $this->auth->get("profile");
+            $this->profile = $this->auth->get("profile");
             $this->auth->deletePartner($this->profile);
             $this->set("mode", "delete");
             $this->set("submode", "confirmed");

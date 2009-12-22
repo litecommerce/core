@@ -3,7 +3,7 @@
 * Hidden methods
 */
 
-function &Shipping_usps_getRates(&$_this, $order)
+function Shipping_usps_getRates(&$_this, $order)
 {
     // original code
     
@@ -28,7 +28,7 @@ function &Shipping_usps_getRates(&$_this, $order)
     }
 }
 
-function &Shipping_usps_parseResponse(&$_this, $response, $destination)
+function Shipping_usps_parseResponse(&$_this, $response, $destination)
 {
     // original code
     $_this->error = "";

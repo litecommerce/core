@@ -172,11 +172,11 @@ $_this->xlite->logger->log("Response:\n".var_export($response, true)."\n");
 function func_Netbilling_getState(&$profile, $field, $customField)
 {
 	$stateName = "";
-	$state =& func_new("State");
+	$state = func_new("State");
 	if ($state->find("state_id='".$profile->get($field)."'")) {
 		$stateName = $state->get('state');
 	} else { // state not found
-		$stateName = &$profile->get($customField);
+		$stateName = $profile->get($customField);
 	}
 
 	return $stateName;

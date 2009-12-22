@@ -86,7 +86,7 @@ $_this->xlite->logger->log("Protx VSP Form response:".var_export($responseArray,
 	$order_id = $out[1];
 
 	// check order exists
-	$_order =& func_new("Order");
+	$_order = func_new("Order");
 	if (!$_order->find("order_id='$order_id'")) {
 if (PROTX_FORM_DEBUG_LOG) {
 $_this->xlite->logger->log("Protx VSP Form response Error: Order #$order_id not found.");
@@ -154,11 +154,11 @@ $_this->xlite->logger->log("Protx VSP Form response Error: Order #$order_id not 
 function func_ProtxForm_getState(&$profile, $field, $customField)
 {
 	$stateName = "";
-	$state =& func_new("State");
+	$state = func_new("State");
 	if ($state->find("state_id='".$profile->get($field)."'")) {
 		$stateName = $state->get('state');
 	} else { // state not found
-		$stateName = &$profile->get($customField);
+		$stateName = $profile->get($customField);
 	}
 
 	return $stateName;

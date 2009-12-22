@@ -348,11 +348,11 @@ function func_eSelect_xmlToArray($xmlData)
 function func_eSelect_getState(&$profile, $field, $customField)
 {
 	$stateName = "";
-	$state =& func_new("State");
+	$state = func_new("State");
 	if ($state->find("state_id='".$profile->get($field)."'")) {
 		$stateName = $state->get("code");
 	} else { // state not found
-		$stateName = &$profile->get($customField);
+		$stateName = $profile->get($customField);
 	}
 
 	return $stateName;
@@ -563,7 +563,7 @@ function func_eSelect_mpgSendRequest(&$payment, &$data)
 
 	$xmlString .= "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?><request><store_id>".$params["store_id"]."</store_id><api_token>".$params["api_token"]."</api_token>$data</request>";
 
-	$request =& func_new("HTTPS");
+	$request = func_new("HTTPS");
 	$request->data          = $xmlString;
 	$request->method        = 'POST';
 	$request->conttype      = "text/xml";
@@ -642,7 +642,7 @@ function func_eSelect_mpiSendRequest(&$payment, &$data)
 
 	$xmlString = "<?xml version=\"1.0\"?><MpiRequest><store_id>".$params["store_id"]."</store_id><api_token>".$params["api_token"]."</api_token>$data</MpiRequest>";
 
-	$request =& func_new("HTTPS");
+	$request = func_new("HTTPS");
 	$request->data          = $xmlString;
 	$request->method        = 'POST';
 	$request->conttype      = "text/xml";

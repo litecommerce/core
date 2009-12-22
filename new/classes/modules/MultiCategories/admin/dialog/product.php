@@ -42,7 +42,7 @@ class Module_MultiCategories_Admin_Dialog_product extends Admin_Dialog_product
     function action_info()
     {
         parent::action_info();
-        $product =& func_new("Product", $this->product_id);
+        $product = func_new("Product", $this->product_id);
         $categories = $product->get("categories");
         for ($i = 0; $i < count($categories); $i++) {
             $product->deleteCategory($categories[$i]);

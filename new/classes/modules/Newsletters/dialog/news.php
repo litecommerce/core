@@ -59,10 +59,10 @@ class Dialog_news extends Dialog
     	}
     }
 
-    function &getNews()
+    function getNews()
     {
         if (is_null($this->news)) {
-            $this->news =& func_new("Newsletter");
+            $this->news = func_new("Newsletter");
             $news_id = intval($this->get("news_id"));
             $this->newsError = false;
             $found = $this->news->find("news_id='$news_id'");
@@ -73,10 +73,10 @@ class Dialog_news extends Dialog
         return $this->news;
     }
     
-    function &getAllNews()
+    function getAllNews()
     {
         if (is_null($this->allNews)) {
-            $nl =& func_new("Newsletter");
+            $nl = func_new("Newsletter");
             $this->allNews = $nl->findAll();
         }
         return $this->allNews;
@@ -85,7 +85,7 @@ class Dialog_news extends Dialog
     function action_confirm()
     {
 		$method = $this->get("type");
-		$nl =& func_new("NewsList");
+		$nl = func_new("NewsList");
 		if ($method != "unsubscribe" && $nl->get("showedListsNumber") == 0) {
 			if (isset($this->params)) {
 				$this->params = array();
@@ -100,8 +100,8 @@ class Dialog_news extends Dialog
 		$mode = substr($method, 0 , (strlen($method)-2)) . "ption";
         if ($confirmed) {
             // subscribe/unsubscribe 
-            $ns =& func_new("NewsSubscriber");
-            $nl =& func_new("NewsList");
+            $ns = func_new("NewsSubscriber");
+            $nl = func_new("NewsList");
             switch($method) {
             	case "subscribe":
             		$nlList = $nl->findAll("show_as_news=1");
@@ -134,7 +134,7 @@ class Dialog_news extends Dialog
 
     function action_subscribe()
     {
-		$nl =& func_new("NewsList");
+		$nl = func_new("NewsList");
 		if ($nl->get("showedListsNumber") == 0) {
 			if (isset($this->params)) {
 				$this->params = array();
@@ -144,7 +144,7 @@ class Dialog_news extends Dialog
 		}
 
         // validate email
-        $val =& func_new("CEmailValidator");
+        $val = func_new("CEmailValidator");
         $val->set("field", "email");
         $this->set("valid", $val->is("valid"));
         if (!$this->is("valid")) {
@@ -153,7 +153,7 @@ class Dialog_news extends Dialog
         // send subscribe confirmation
         require_once "modules/Newsletters/encoded.php";
 
-        $ns =& func_new("NewsSubscriber");
+        $ns = func_new("NewsSubscriber");
         $ns->request($this->get("email"));
         // show confirmation notification
         $this->set("mode", "confirm_message");

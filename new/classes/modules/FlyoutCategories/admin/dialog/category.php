@@ -71,8 +71,8 @@ class FlyoutCategories_Admin_Dialog_category extends Admin_Dialog_category
 
 		parent::action_modify();
 
-		$category =& $this->get("category");
-        $image =& $category->get("smallImage");
+		$category = $this->get("category");
+        $image = $category->get("smallImage");
         $result = $image->handleRequest();
 
 		// resize
@@ -81,7 +81,7 @@ class FlyoutCategories_Admin_Dialog_category extends Admin_Dialog_category
 
 			$resize = false;
 			if ($category->get("smallimage_auto") || $_POST["smallimage_generate"]) {
-				$obj =& $category->get("image");
+				$obj = $category->get("image");
 				$resize = true;
 			}
 
@@ -91,7 +91,7 @@ class FlyoutCategories_Admin_Dialog_category extends Admin_Dialog_category
 
 		// rebuild cache if new category added
 		if ($this->get("config.FlyoutCategories.category_autoupdate")) {
-			$dialog =& func_new("Admin_Dialog_categories");
+			$dialog = func_new("Admin_Dialog_categories");
 			$dialog->action_build_categories($this->category_update_return_url());
 		}
     }
@@ -106,10 +106,10 @@ class FlyoutCategories_Admin_Dialog_category extends Admin_Dialog_category
 		parent::action_add();
 
 		if ($this->get("message") == "added") {
-			$category =& func_new("Category", $this->get("category_id"));
+			$category = func_new("Category", $this->get("category_id"));
 
 			// upload small image
-    	    $image =& $category->get("smallImage");
+    	    $image = $category->get("smallImage");
         	$result = $image->handleRequest();
 
 			// resize
@@ -118,7 +118,7 @@ class FlyoutCategories_Admin_Dialog_category extends Admin_Dialog_category
 
 				$resize = false;
 				if ($category->get("smallimage_auto") || $_POST["smallimage_generate"]) {
-					$obj =& $category->get("image");
+					$obj = $category->get("image");
 					$resize = true;
 				}
 
@@ -130,7 +130,7 @@ class FlyoutCategories_Admin_Dialog_category extends Admin_Dialog_category
 		// rebuild cache if new category added
 		if ($this->get("config.FlyoutCategories.category_autoupdate")) {
 			if ($this->get("target") == "category" && $this->get("action") == "add" && $this->get("message") == "added") {
-				$dialog =& func_new("Admin_Dialog_categories");
+				$dialog = func_new("Admin_Dialog_categories");
 				$dialog->action_build_categories($this->category_add_return_url());
 			}
 		}
@@ -141,9 +141,9 @@ class FlyoutCategories_Admin_Dialog_category extends Admin_Dialog_category
     {
 		$_REQUEST["smallimage_filesystem"] = $_REQUEST["image_filesystem"];
 
-        $category =& $this->get("category");
+        $category = $this->get("category");
         // delete category image
-        $image =& $category->get("smallImage");
+        $image = $category->get("smallImage");
         $result = $image->handleRequest();
 
 		if ($this->get("smallimage_delete") && $result == IMAGE_OK) {
@@ -156,7 +156,7 @@ class FlyoutCategories_Admin_Dialog_category extends Admin_Dialog_category
 		// resize
 		if ($this->xlite->gdlib_enabled) {
 			if ($result == IMAGE_OK && ($category->get("smallimage_auto") || $_POST["smallimage_generate"])) {
-				$obj =& $category->get("image");
+				$obj = $category->get("image");
 				$category->resizeSmallImage($this->get("smallImageWidth"), $obj, (bool) $_REQUEST["smallimage_filesystem"]);
 			}
 		}
@@ -186,7 +186,7 @@ class FlyoutCategories_Admin_Dialog_category extends Admin_Dialog_category
 
 		// rebuild cache if new category added
 		if ($this->get("config.FlyoutCategories.category_autoupdate")) {
-			$dialog =& func_new("Admin_Dialog_categories");
+			$dialog = func_new("Admin_Dialog_categories");
 			$dialog->action_build_categories($delete_return_url);
 		}
 	}

@@ -62,7 +62,7 @@ ini_set('track_errors', true);
  * destructor, use error_log(), syslog() or something similar.
  *
  * IMPORTANT! To use the emulated destructors you need to create the
- * objects by reference, ej: $obj =& new PEAR_child;
+ * objects by reference, ej: $obj = new PEAR_child;
  *
  * @since PHP 4.0.2
  * @author Stig Bakken <ssb@fast.no>
@@ -150,7 +150,7 @@ class PEAR
             $destructor = "_$classname";
             if (method_exists($this, $destructor)) {
                 global $_PEAR_destructor_object_list;
-                $_PEAR_destructor_object_list[] = &$this;
+                $_PEAR_destructor_object_list[] = $this;
                 break;
             } else {
                 $classname = get_parent_class($classname);
@@ -184,7 +184,7 @@ class PEAR
     /**
     * If you have a class that's mostly/entirely static, and you need static
     * properties, you can use this method to simulate them. Eg. in your method(s)
-    * do this: $myVar = &PEAR::getStaticProperty('myVar');
+    * do this: $myVar = PEAR::getStaticProperty('myVar');
     * You MUST use a reference, or they will not persist!
     *
     * @access public
@@ -193,7 +193,7 @@ class PEAR
     * @return mixed   A reference to the variable. If not set it will be
     *                 auto initialised to NULL.
     */
-    function &getStaticProperty($class, $var)
+    function getStaticProperty($class, $var)
     {
         static $properties;
         return $properties[$class][$var];
@@ -276,11 +276,11 @@ class PEAR
     function setErrorHandling($mode = null, $options = null)
     {
         if (isset($this)) {
-            $setmode     = &$this->_default_error_mode;
-            $setoptions  = &$this->_default_error_options;
+            $setmode = $this->_default_error_mode;
+            $setoptions = $this->_default_error_options;
         } else {
-            $setmode     = &$GLOBALS['_PEAR_default_error_mode'];
-            $setoptions  = &$GLOBALS['_PEAR_default_error_options'];
+            $setmode = $GLOBALS['_PEAR_default_error_mode'];
+            $setoptions = $GLOBALS['_PEAR_default_error_options'];
         }
 
         switch ($mode) {
@@ -462,7 +462,7 @@ class PEAR
      * @see PEAR::setErrorHandling
      * @since PHP 4.0.5
      */
-    function &raiseError($message = null,
+    function raiseError($message = null,
                          $code = null,
                          $mode = null,
                          $options = null,
@@ -522,7 +522,7 @@ class PEAR
      * @param string $message
      *
      */
-    function &throwError($message = null,
+    function throwError($message = null,
                          $code = null,
                          $userinfo = null)
     {
@@ -550,13 +550,13 @@ class PEAR
      */
     function pushErrorHandling($mode, $options = null)
     {
-        $stack = &$GLOBALS['_PEAR_error_handler_stack'];
+        $stack = $GLOBALS['_PEAR_error_handler_stack'];
         if (isset($this)) {
-            $def_mode    = &$this->_default_error_mode;
-            $def_options = &$this->_default_error_options;
+            $def_mode = $this->_default_error_mode;
+            $def_options = $this->_default_error_options;
         } else {
-            $def_mode    = &$GLOBALS['_PEAR_default_error_mode'];
-            $def_options = &$GLOBALS['_PEAR_default_error_options'];
+            $def_mode = $GLOBALS['_PEAR_default_error_mode'];
+            $def_options = $GLOBALS['_PEAR_default_error_options'];
         }
         $stack[] = array($def_mode, $def_options);
 
@@ -581,7 +581,7 @@ class PEAR
     */
     function popErrorHandling()
     {
-        $stack = &$GLOBALS['_PEAR_error_handler_stack'];
+        $stack = $GLOBALS['_PEAR_error_handler_stack'];
         array_pop($stack);
         list($mode, $options) = $stack[sizeof($stack) - 1];
         array_pop($stack);

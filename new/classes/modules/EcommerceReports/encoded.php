@@ -1,5 +1,5 @@
 <?php
-function &func_EcommerceReports_getRawProducts(&$dlg)
+function func_EcommerceReports_getRawProducts(&$dlg)
 {
     if (is_null($dlg->rawProducts)) {
         $dlg->rawProducts = array();
@@ -8,7 +8,7 @@ function &func_EcommerceReports_getRawProducts(&$dlg)
 		$products_from_categories = array(); // products from selected categories
         if (!empty($categories)) {
             $ids = implode(",", $categories);
-            $pc =& func_new("_ProductFromCategory");
+            $pc = func_new("_ProductFromCategory");
             $productTable = $pc->db->getTableByAlias("products");
             $linkTable = $dlg->db->getTableByAlias("product_links");
             $sql = "SELECT links.product_id " .
@@ -26,7 +26,7 @@ function &func_EcommerceReports_getRawProducts(&$dlg)
     return $dlg->rawProducts;
 }
 
-function &func_EcommerceReports_getRawItems(&$dlg, $unique=true)
+function func_EcommerceReports_getRawItems(&$dlg, $unique=true)
 {
     if (is_null($dlg->rawItems)) {
         $dlg->rawItems = array();
@@ -35,7 +35,7 @@ function &func_EcommerceReports_getRawItems(&$dlg, $unique=true)
             $ids = implode(",", $rawProducts);
             $fromDate = $dlg->get("period.fromDate");
             $toDate   = $dlg->get("period.toDate");
-            $product  =& func_new("Product");
+            $product = func_new("Product");
             $ot = $product->db->getTableByAlias("orders");
             $it = $product->db->getTableByAlias("order_items");
             $pt = $product->db->getTableByAlias("profiles");

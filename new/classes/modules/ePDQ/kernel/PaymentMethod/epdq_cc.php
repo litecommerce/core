@@ -75,7 +75,7 @@ class PaymentMethod_epdq_cc extends PaymentMethod_credit_card
 
 #perform the HTTP Post
 
-		$request = & func_new('HTTPS');
+		$request = func_new('HTTPS');
 		$request->urlencoded = true;
 		$request->url = $this->get("params.param08");
 		$request->data = $_params;

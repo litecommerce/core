@@ -55,7 +55,7 @@ class Admin_Dialog_main_LiveUpdating extends Admin_Dialog_main
 		}
 
 		if (!isset($this->_updatesNumber)) {
-			$dialog =& func_new("Admin_Dialog_LiveUpdating");
+			$dialog = func_new("Admin_Dialog_LiveUpdating");
 			$this->_updatesNumber = $dialog->getUpdatesNumber();
 		}
 

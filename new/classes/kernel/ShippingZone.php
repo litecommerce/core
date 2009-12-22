@@ -84,18 +84,18 @@ class ShippingZone extends Base
         return $this->_zonesArray($array);
     }
 
-    function &_zonesArray($array)
+    function _zonesArray($array)
     {
         $zones = array();
         foreach ($array as $zone) {
-            $zone_object =& func_new("ShippingZone");
+            $zone_object = func_new("ShippingZone");
             $zone_object->_updateProperties($zone);
-            $zones[$zone["shipping_zone"]] =& $zone_object;
+            $zones[$zone["shipping_zone"]] = $zone_object;
         }
         if (!isset($zones[0])) {
-            $z =& func_new("ShippingZone");
+            $z = func_new("ShippingZone");
             $z->set("shipping_zone", 0);
-            $zones[0] =& $z;
+            $zones[0] = $z;
         }
         return $zones;
     }
@@ -124,39 +124,39 @@ class ShippingZone extends Base
         $this->set("shipping_zone", max($max1, $max2)+1);
     }
 
-    function &getCountries()
+    function getCountries()
     {
         if (!isset($this->countries)) {
-            $c =& func_new("Country");
-            $this->countries =& $c->findAll("shipping_zone='".$this->get("shipping_zone")."'");
+            $c = func_new("Country");
+            $this->countries = $c->findAll("shipping_zone='".$this->get("shipping_zone")."'");
         }
         return $this->countries;
     }
 
-    function &getStates()
+    function getStates()
     {
         if (!isset($this->states)) {
-            $c =& func_new("State");
-            $this->states =& $c->findAll("shipping_zone='".$this->get("shipping_zone")."'", "country_code, state");
+            $c = func_new("State");
+            $this->states = $c->findAll("shipping_zone='".$this->get("shipping_zone")."'", "country_code, state");
         }
         return $this->states;
     }
 
     function hasCountries()
     {
-        $countries =& $this->get("countries");
+        $countries = $this->get("countries");
         return count($countries)>0;
     }
 
     function hasStates()
     {
-        $states =& $this->getStates();
+        $states = $this->getStates();
         return count($states)>0;
     }
 
     function setCountries($countries)
     {
-        $c =& func_new("Country");
+        $c = func_new("Country");
         foreach ($countries as $country)
         {
             $c->set("code", $country);
@@ -170,7 +170,7 @@ class ShippingZone extends Base
 
     function setStates($states)
     {
-        $c =& func_new("State");
+        $c = func_new("State");
         foreach ($states as $state)
         {
             $c->set("state_id", $state);

@@ -46,7 +46,7 @@ class Dialog_advanced_search extends Dialog
 	var $search = null;
 	var $profile = null;
 
-	function &getProfile()
+	function getProfile()
 	{
 		if (is_null($this->profile)) 
 			$this->profile = func_new("Profile",$this->auth->get("profile.profile_id"));
@@ -92,7 +92,7 @@ class Dialog_advanced_search extends Dialog
 		$profile->update();
 	}	
 
-    function &getProducts()
+    function getProducts()
     {
         if (!isset($this->mode)) return array();
 
@@ -126,7 +126,7 @@ class Dialog_advanced_search extends Dialog
                 $properties["end_weight"] = !empty($weight[1]) ? $weight[1] : null;
                 $orderby = "weight";
             }
-            $this->products =& $p->_advancedSearch
+            $this->products = $p->_advancedSearch
             (
             	$properties["substring"],
             	$orderby,
@@ -165,14 +165,14 @@ class Dialog_advanced_search extends Dialog
 		if ($val1["start"] < $val2["start"]) return -1; else return 1;
 	}
 	
-	function &getPrices()
+	function getPrices()
 	{
 		$prices = unserialize($this->config->get("AdvancedSearch.prices"));
 		usort($prices, array(&$this,"cmp"));
 		return $prices;
 	}
 	
-	function &getWeights()
+	function getWeights()
 	{
      	$weights =  unserialize($this->config->get("AdvancedSearch.weights"));
         usort($weights, array(&$this,"cmp"));

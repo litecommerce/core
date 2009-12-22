@@ -62,13 +62,13 @@ class CProductSelect extends Component
         return $this->formName . $this->formField;
     }
     
-	function &getProduct()
+	function getProduct()
 	{
         if (is_null($this->product)) {
             $field = $this->formField . "_id";
             $productId = $this->get("dialog.$field");
             if ($productId) {
-                $this->product =& func_new("Product", $this->get("dialog.$field"));
+                $this->product = func_new("Product", $this->get("dialog.$field"));
             } else {
                 $this->product = null;
             }

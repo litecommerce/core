@@ -53,15 +53,15 @@ class CTabber extends Widget
     var $template = "common/tabber.tpl";
     var $tabPagesInfo = array();
 
-    function &getPages()
+    function getPages()
     {
         $pages = array();
-        $dialog =& $this->get("dialog");
+        $dialog = $this->get("dialog");
         $url = $dialog->get("url");
         $dialogPages = $dialog->get($this->get("tabPages"));
         if (is_array($dialogPages)) {
             foreach ($dialogPages as $page => $header) {
-                $p =& func_new("Object");
+                $p = func_new("Object");
                 $pageURL = preg_replace("/$this->switch=(\w+)/", $this->switch."=".$page, $url);
                 $p->set("url", $pageURL);
                 $p->set("header", $header);
@@ -77,9 +77,9 @@ class CTabber extends Widget
         return $pages;
     }
 
-    function &getSplittedPages($splitParameter=null)
+    function getSplittedPages($splitParameter=null)
     {
-		$pages =& $this->getPages();
+		$pages = $this->getPages();
 		$pagesHeadersTotalLength = 0;
     	foreach($pages as $page) {
 			$pagesHeadersTotalLength += strlen($page->header);

@@ -88,7 +88,7 @@ class ImageEditor extends Object
         $images = $this->get("images");
         // upload/update image
         $image_file_name = $this->images[$image_name]["filename"];
-        $upload =& func_new('Upload', $_FILES[$image_field]);
+        $upload = func_new('Upload', $_FILES[$image_field]);
         $move   = $upload->move($image_file_name);
         if ($move && !LC_OS_IS_WIN) {
             $real_img_name = realpath(".") . '/' . $image_file_name;

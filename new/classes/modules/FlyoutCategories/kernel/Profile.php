@@ -49,7 +49,7 @@ class Module_FlyoutCategories_Profile extends Profile
 {
 	var $_FlyoutCategories_membership = null;
 
-	function &get($name)
+	function get($name)
 	{
 		$value = parent::get($name);
 		if ($name == "membership" && !is_null($this->_FlyoutCategories_membership)) {

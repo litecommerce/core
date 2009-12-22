@@ -77,7 +77,7 @@ class Admin_Dialog_profile extends Admin_Dialog
         parent::handleRequest();
     }
 
-    function &getProfile()
+    function getProfile()
     {
         if (is_null($this->profile)) {
             $this->profile = func_new("Profile", $this->get("profile_id"));
@@ -89,14 +89,14 @@ class Admin_Dialog_profile extends Admin_Dialog
     {
         $countriesArray = array();
 
-        $country =& func_new("Country");
-        $countries =& $country->findAll("enabled='1'");
+        $country = func_new("Country");
+        $countries = $country->findAll("enabled='1'");
         foreach($countries as $country) {
             $countriesArray[$country->get("code")]["number"] = 0;
             $countriesArray[$country->get("code")]["data"] = array();
 
-            $state =& func_new("State");
-            $states =& $state->findAll("country_code='".$country->get("code")."'");
+            $state = func_new("State");
+            $states = $state->findAll("country_code='".$country->get("code")."'");
             if (is_array($states) && count($states) > 0) {
                 $countriesArray[$country->get("code")]["number"] = count($states);
                 foreach($states as $state) {

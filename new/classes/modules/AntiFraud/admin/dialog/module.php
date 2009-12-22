@@ -50,7 +50,7 @@ class Admin_Dialog_module_AntiFraud extends Admin_Dialog_module
 		parent::init();
 
 		if ($this->page == "AntiFraud") {
-        	$lay =& func_get_instance("Layout");
+        	$lay = func_get_instance("Layout");
         	$lay->addLayout("general_settings.tpl", "modules/AntiFraud/config.tpl");
         }
 	}

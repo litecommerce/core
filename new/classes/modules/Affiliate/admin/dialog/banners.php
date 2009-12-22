@@ -47,14 +47,14 @@ class Admin_Dialog_banners extends Admin_Dialog
 {
     function action_delete()
     {
-        $banner =& func_new("Banner", $this->banner_id);
+        $banner = func_new("Banner", $this->banner_id);
         $banner->delete();
     }
     
-    function &getBanners()
+    function getBanners()
     {
         if (is_null($this->banners)) {
-            $this->banner =& func_new("Banner");
+            $this->banner = func_new("Banner");
             $this->banners = $this->banner->findAll();
         }
         return $this->banners;

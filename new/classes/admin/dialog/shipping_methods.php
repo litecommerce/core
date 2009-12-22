@@ -54,7 +54,7 @@ class Admin_Dialog_shipping_methods extends Admin_Dialog_shipping_settings
 
     function action_add()
     {
-        $shipping =& func_new("Shipping");
+        $shipping = func_new("Shipping");
         $shipping->set("properties", $_POST);
         $shipping->create();
 		$this->xlite->set("action_add_valid", true);
@@ -63,7 +63,7 @@ class Admin_Dialog_shipping_methods extends Admin_Dialog_shipping_settings
     function action_update()
     {
         foreach($_POST["order_by"] as $shipping_id=>$order_by) {
-            $shipping =& func_new("Shipping", $shipping_id);
+            $shipping = func_new("Shipping", $shipping_id);
             $shipping->set("order_by", $order_by);
             if (isset($_POST["enabled"][$shipping_id])) {
                 $enabled = 1;
@@ -77,7 +77,7 @@ class Admin_Dialog_shipping_methods extends Admin_Dialog_shipping_settings
 
     function action_delete()
     {
-        $shipping =& func_new("Shipping",$_REQUEST["shipping_id"]);
+        $shipping = func_new("Shipping",$_REQUEST["shipping_id"]);
         $shipping->delete();
     }
 }

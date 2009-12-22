@@ -49,19 +49,19 @@ class Admin_Dialog_add_gift_certificate extends Admin_Dialog
     var $params = array('target', 'gcid');
     var $gc = null;
 
-    function &getGC()
+    function getGC()
     {
         if (is_null($this->gc)) {
             if ($this->get("gcid")) {
-                $this->gc =& func_new("GiftCertificate", $this->get("gcid"));
+                $this->gc = func_new("GiftCertificate", $this->get("gcid"));
             } else {
                 // set default form values
-                $this->gc =& func_new("GiftCertificate");
+                $this->gc = func_new("GiftCertificate");
                 $this->gc->set("send_via", "E");
                 $this->gc->set("border", "no_border");
-                $auth =& func_get_instance("Auth");
+                $auth = func_get_instance("Auth");
                 if ($auth->isLogged()) {
-                    $profile =& $auth->get("profile");
+                    $profile = $auth->get("profile");
                     $this->gc->set("purchaser", $profile->get("billing_title") . " " . $profile->get("billing_firstname") . " " . $profile->get("billing_lastname"));
                 }
                 $this->gc->set("recipient_country", $this->config->get("General.default_country"));
@@ -96,7 +96,7 @@ class Admin_Dialog_add_gift_certificate extends Admin_Dialog
     {
         $this->saveGC();
 		if (!is_null($this->get("gc"))) {
-			$gc =& $this->get("gc");
+			$gc = $this->get("gc");
         	$gc->set("ecard_id", 0);
         	$gc->update();
         	$this->set("returnUrl", "admin.php?target=add_gift_certificate&gcid=" . $gc->get("gcid"));
@@ -112,7 +112,7 @@ class Admin_Dialog_add_gift_certificate extends Admin_Dialog
     function saveGC()
     {
 		if (!is_null($this->get("gc"))) {
-			$gc =& $this->get("gc");
+			$gc = $this->get("gc");
             $gc->setProperties($_REQUEST);
             $gc->set("add_date", time());
 			$gc->set("expiration_date", $this->get("expiration_date"));
@@ -140,14 +140,14 @@ class Admin_Dialog_add_gift_certificate extends Admin_Dialog
     function getCountriesStates() {
         $countriesArray = array();
 
-        $country =& func_new("Country");
-        $countries =& $country->findAll("enabled='1'");
+        $country = func_new("Country");
+        $countries = $country->findAll("enabled='1'");
         foreach($countries as $country) {
             $countriesArray[$country->get("code")]["number"] = 0;
             $countriesArray[$country->get("code")]["data"] = array();
 
-            $state =& func_new("State");
-            $states =& $state->findAll("country_code='".$country->get("code")."'");
+            $state = func_new("State");
+            $states = $state->findAll("country_code='".$country->get("code")."'");
             if (is_array($states) && count($states) > 0) {
                 $countriesArray[$country->get("code")]["number"] = count($states);
                 foreach($states as $state) {

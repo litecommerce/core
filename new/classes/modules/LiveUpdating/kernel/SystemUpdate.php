@@ -72,7 +72,7 @@ class SystemUpdate extends Base
 		return sprintf("%011s", $update_id);
 	}
 
-	function &get($name)
+	function get($name)
 	{
 		$result = parent::get($name);
 
@@ -80,12 +80,12 @@ class SystemUpdate extends Base
 			$result = parent::get("status");
     		if ($result == "A") {
     			$update_id = parent::get("update_id");
-            	$updateItem =& func_new("SystemUpdateItem");
+            	$updateItem = func_new("SystemUpdateItem");
                 $updates = $updateItem->findAll("update_id='$update_id'");
                 foreach($updates as $ui) {
-                    $uif =& func_new("SystemUpdateItemFile");
+                    $uif = func_new("SystemUpdateItemFile");
                     if ($uif->find("update_id='$update_id'")) {
-                    	$files =& $uif->findAll("filename='".$uif->get("filename")."'", "update_item_id");
+                    	$files = $uif->findAll("filename='".$uif->get("filename")."'", "update_item_id");
                     	if ($files[count($files)-1]->get("update_id") != $update_id) {
                     		$this->set("overridden", $this->getName($files[count($files)-1]->get("update_id")));
     						$result = "O";

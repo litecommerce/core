@@ -52,13 +52,13 @@ class Dialog_login extends Dialog
 
     function action_login()
     {
-        $this->profile =& $this->auth->login($_POST["login"], $_POST["password"]);
+        $this->profile = $this->auth->login($_POST["login"], $_POST["password"]);
         if ($this->profile == ACCESS_DENIED) {
             $this->set("valid", false);
             return;
         }   
         if (is_null($this->get("returnUrl"))) {
-            $cart =& func_get_instance("Cart");
+            $cart = func_get_instance("Cart");
             $url = $this->get("xlite.script");
             if (!$cart->get("empty")) {
                 $url .= "?target=cart";
@@ -66,7 +66,7 @@ class Dialog_login extends Dialog
             $this->set("returnUrl", $url);
         }
 
-		$cart =& func_get_instance("Cart");
+		$cart = func_get_instance("Cart");
 		$cart->set("profile_id", $this->profile->get("profile_id"));
 
 		$this->recalcCart();

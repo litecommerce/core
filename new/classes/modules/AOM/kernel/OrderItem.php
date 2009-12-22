@@ -49,7 +49,7 @@ class Module_AOM_OrderItem extends OrderItem
 		parent::constructor($id);
 	} // }}} 
 
-	function &get($name) // {{{ 
+	function get($name) // {{{ 
 	{
 		if($this->xlite->is("adminZone")) {
 			$value = parent::get($name);
@@ -124,7 +124,7 @@ class Module_AOM_OrderItem extends OrderItem
         $this->set("aom_extra", $val);
     }
 
-	function &getKey() // {{{
+	function getKey() // {{{
 	{
 		$keyValue = parent::getKey();
 		if ($this->xlite->get("ProductOptionsEnabled") && strlen($keyValue) > 250) {
@@ -156,7 +156,7 @@ class Module_AOM_OrderItem extends OrderItem
 	function hasWholesalePricing() // {{{
 	{
 		if ($this->xlite->get("mm.activeModules.WholesaleTrading")) {
-			$wholesale =& func_new("WholesalePricing") 	;
+			$wholesale = func_new("WholesalePricing") 	;
 			return count($wholesale->findAll("product_id='" . $this->get("product.product_id") . "' AND amount<= '" . $this->get("amount") . "' AND (membership='all' OR membership='" . $this->get("order.profile.membership") . "')"));
 		} else {
 			return false;

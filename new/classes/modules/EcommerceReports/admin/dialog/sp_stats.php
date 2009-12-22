@@ -44,7 +44,7 @@
 */
 class Admin_dialog_sp_stats extends Admin_dialog_Ecommerce_reports
 {
-    function &getShippingMethods() // {{{
+    function getShippingMethods() // {{{
     {
         if (is_null($this->shippingMethods)) {
             $this->shippingMethods = array();
@@ -52,15 +52,15 @@ class Admin_dialog_sp_stats extends Admin_dialog_Ecommerce_reports
             $ids = $this->order->db->getAll("SELECT shipping_id, COUNT(*) as num_used FROM $table WHERE status!='T' GROUP BY shipping_id ORDER BY num_used DESC");
             foreach ($ids as $id) {
                 $sid = $id["shipping_id"];
-                $this->shippingMethods[] =& $this->getShippingMethod($sid);
+                $this->shippingMethods[] = $this->getShippingMethod($sid);
             }
         }
         return $this->shippingMethods;
     } // }}}
 
-    function &getShippingMethod($sid) // {{{
+    function getShippingMethod($sid) // {{{
     {
-        $sm =& func_new("Shipping");
+        $sm = func_new("Shipping");
         if (!$sm->find("shipping_id=$sid")) {
             $sm->set("shipping_id", $sid);
 			$name = ($sid == 0)?"Free shipping":"Unknown (id:$sid)";
@@ -69,7 +69,7 @@ class Admin_dialog_sp_stats extends Admin_dialog_Ecommerce_reports
         return $sm;
     } // }}}
     
-    function &getPaymentMethods() // {{{
+    function getPaymentMethods() // {{{
     {
         if (is_null($this->paymentMethods)) {
             $this->paymentMethods = array();
@@ -77,15 +77,15 @@ class Admin_dialog_sp_stats extends Admin_dialog_Ecommerce_reports
             $pms = $this->order->db->getAll("SELECT payment_method, COUNT(*) as num_used FROM $table WHERE status!='T' GROUP BY payment_method ORDER BY num_used DESC");
             foreach ($pms as $id) {
                 $pn = $id["payment_method"];
-                $this->paymentMethods[] =& $this->getPaymentMethod($pn);
+                $this->paymentMethods[] = $this->getPaymentMethod($pn);
             }
         }
         return $this->paymentMethods;
     } // }}}
 
-    function &getPaymentMethod($pn) // {{{
+    function getPaymentMethod($pn) // {{{
     {
-        $pm =& func_new("PaymentMethod");
+        $pm = func_new("PaymentMethod");
         if (!$pm->find("payment_method='$pn'")) {
             $pm->set("payment_method", $pn);
             $pm->set("name", $pn);
@@ -93,7 +93,7 @@ class Admin_dialog_sp_stats extends Admin_dialog_Ecommerce_reports
         return $pm;
     } // }}}
 
-    function &getOrders() // {{{
+    function getOrders() // {{{
     {
         if (is_null($this->orders)) {
             $this->orders = array();
@@ -121,11 +121,11 @@ class Admin_dialog_sp_stats extends Admin_dialog_Ecommerce_reports
                 $od["orders"] = 1;
                 $od["total"] = $row["total"];
                 $od["percent"] = round(100 / $this->totalOrders, 2);
-                $od["payment_method"] =& $this->getPaymentMethod($row["payment_method"]);
-                $od["shipping_method"] =& $this->getShippingMethod($row["shipping_id"]);
+                $od["payment_method"] = $this->getPaymentMethod($row["payment_method"]);
+                $od["shipping_method"] = $this->getShippingMethod($row["shipping_id"]);
                 $this->orders[$hash] = $od; 
             } else {
-                $od =& $this->orders[$hash];
+                $od = $this->orders[$hash];
                 $od["orders"]++;
                 $od["total"] += $row["total"];
                 $od["percent"] = round($od["orders"] * 100 / $this->totalOrders, 2);
@@ -133,10 +133,10 @@ class Admin_dialog_sp_stats extends Admin_dialog_Ecommerce_reports
         }
     } // }}}
 
-    function &getOrder() // {{{
+    function getOrder() // {{{
     {
         if (is_null($this->order)) {
-            $this->order =& func_new("Order");
+            $this->order = func_new("Order");
         }
         return $this->order;
     } // }}}

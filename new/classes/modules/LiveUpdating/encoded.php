@@ -71,7 +71,7 @@ function LiveUpdating_getModulesUpdateInfo(&$_this)
 		}
 	}
 
-	$config =& func_new("Config");
+	$config = func_new("Config");
 	$config->createOption("LiveUpdating", "modules_last_update", serialize($mlist), "serialized");
 
 	return $mlist;
@@ -145,7 +145,7 @@ function LiveUpdating_getUpdatesNumber(&$_this)
 	$currTime = time();
 	$lastChecked["next_check"] = mktime(0, 0, 0, date("m", $currTime), date("d", $currTime) + 1, date("Y", $currTime));
 	$lastChecked["updates_number"] = $_this->_updatesNumber;
-	$config =& func_new("Config");
+	$config = func_new("Config");
 	$config->createOption("LiveUpdating", "last_checked", serialize($lastChecked), "serialized");
 
 	return $_this->_updatesNumber;
@@ -230,7 +230,7 @@ function LiveUpdating_getUpdates(&$_this)
 	$lastChecked["next_check"] = mktime(0, 0, 0, date("m", $currTime), date("d", $currTime) + 1, date("Y", $currTime));
 	$lastChecked["updates_number"] = $_this->_updatesNumber;
 	$lastChecked["updates_announcement"] = $_this->_updates;
-	$config =& func_new("Config");
+	$config = func_new("Config");
 	$config->createOption("LiveUpdating", "last_checked", serialize($lastChecked), "serialized");
 
 	return $_this->_updates;
@@ -308,7 +308,7 @@ function LiveUpdating_getUpdateData(&$_this, $update_id, $update_item_id=0)
 			$mlist = $_this->get("config.LiveUpdating.modules_last_update");
 			$mlist[$out[1]]["last_update"] = $info["update_id"];
 
-			$config =& func_new("Config");
+			$config = func_new("Config");
 			$config->createOption("LiveUpdating", "modules_last_update", serialize($mlist), "serialized");
 		}
 	}
@@ -321,7 +321,7 @@ function LiveUpdating_getUpdateData(&$_this, $update_id, $update_item_id=0)
 	if (isset($lastChecked["updates_announcement"])) {
 		unset($lastChecked["updates_announcement"]);
 	}
-	$config =& func_new("Config");
+	$config = func_new("Config");
 	$config->createOption("LiveUpdating", "last_checked", serialize($lastChecked), "serialized");
 
 	return $return_data;

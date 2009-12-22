@@ -52,7 +52,7 @@ class Module_PaySystems extends Module
     {
         
         parent::init();
-        $pm =& func_new ('PaymentMethod');
+        $pm = func_new ('PaymentMethod');
 	    // plug in  kernel/PaymentMethod/pay_systems_web_cc.php module
         $pm->registerMethod("pay_systems_web_cc");
     }

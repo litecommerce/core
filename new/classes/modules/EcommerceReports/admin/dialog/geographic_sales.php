@@ -44,11 +44,11 @@
 */
 class Admin_dialog_geographic_sales extends Admin_dialog_product_sales
 {
-    function &getGeoSales() // {{{
+    function getGeoSales() // {{{
     {
         if (is_null($this->geoSales)) {
             $this->geoSales = array();
-            $items =& $this->get("rawItems");
+            $items = $this->get("rawItems");
             // summarize
             array_map(array(&$this, 'sumProductSales'), $items);
             // sort
@@ -96,11 +96,11 @@ class Admin_dialog_geographic_sales extends Admin_dialog_product_sales
         if (!isset($this->geoSales[$gid])) {
             $this->geoSales[$gid] = array();
         }    
-        $productSales =& $this->geoSales[$gid];
+        $productSales = $this->geoSales[$gid];
         $id = $item["product_id"] . (strlen($item["options"]) ? md5($item["options"]) : "");
-		$orderItem =& func_new("OrderItem");
+		$orderItem = func_new("OrderItem");
 		$orderItem->find("order_id=".$item["order_id"]." AND item_id='".addslashes($item["item_id"])."'");
-		$order =& func_new("Order", $item["order_id"]);
+		$order = func_new("Order", $item["order_id"]);
 		$orderItem->set("order", $order);
 		$item["price"] = $orderItem->get("price");
         if (!isset($productSales[$id])) {
@@ -118,13 +118,13 @@ class Admin_dialog_geographic_sales extends Admin_dialog_product_sales
     {
         $prefix = $this->get("group_by");
         if (!is_null($this->get("state_ids"))) { // has selected states
-            $st =& func_new("State", $item[$prefix . "_state"]);
+            $st = func_new("State", $item[$prefix . "_state"]);
             $state = $st->get("state");
         } else {
             $state = "All";
         }
         if (!is_null($this->get("country_codes"))) { // has selected country
-            $cnt =& func_new("Country", $item[$prefix . "_country"]);
+            $cnt = func_new("Country", $item[$prefix . "_country"]);
             $country = $cnt->get("country");
         } else {
             $country = "All";
@@ -132,7 +132,7 @@ class Admin_dialog_geographic_sales extends Admin_dialog_product_sales
         return $country . " / " . $state;
     } // }}}
     
-    function &getProductsFound() // {{{
+    function getProductsFound() // {{{
     {
         $found = 0;
         foreach ((array)$this->get("geoSales") as $gl => $gs) {
@@ -141,19 +141,19 @@ class Admin_dialog_geographic_sales extends Admin_dialog_product_sales
         return $found;
     } // }}}
     
-    function &getCountries() // {{{
+    function getCountries() // {{{
     {
         if (is_null($this->countries)) {
-            $country =& func_new("Country");
+            $country = func_new("Country");
             $this->countries = $country->findAll();
         }
         return $this->countries;
     } // }}}
 
-    function &getStates() // {{{
+    function getStates() // {{{
     {
         if (is_null($this->states)) {
-            $state =& func_new("State");
+            $state = func_new("State");
             $this->states = $state->findAll();
         }
         return $this->states;

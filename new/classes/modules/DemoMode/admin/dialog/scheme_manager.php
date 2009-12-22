@@ -49,7 +49,7 @@ class Module_DemoMode_Admin_Dialog_Scheme_Manager extends Admin_Dialog_Scheme_Ma
     function init()
     {
     	if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "clone") {
-            $dialog =& func_new("Admin_Dialog_demo_mode");
+            $dialog = func_new("Admin_Dialog_demo_mode");
             $_REQUEST["target"] = "demo_mode";
             $dialog->init();
             $dialog->display();

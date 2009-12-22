@@ -65,9 +65,9 @@ umask(0);
 
 // Link auto-globals {{{
 if (empty($HTTP_SERVER_VARS)) {
-	$HTTP_GET_VARS = &$_GET;
-	$HTTP_POST_VARS = &$_POST;
-	$HTTP_SERVER_VARS = &$_SERVER;
+	$HTTP_GET_VARS = $_GET;
+	$HTTP_POST_VARS = $_POST;
+	$HTTP_SERVER_VARS = $_SERVER;
 }
 // }}}
 

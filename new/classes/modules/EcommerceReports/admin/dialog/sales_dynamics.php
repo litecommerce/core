@@ -105,7 +105,7 @@ class Admin_dialog_sales_dynamics extends Admin_dialog_Ecommerce_reports
         return count($number);
     } // }}}
 
-    function &getSales() // {{{
+    function getSales() // {{{
     {
         if (is_null($this->sales)) {
             $this->sales = array(
@@ -115,7 +115,7 @@ class Admin_dialog_sales_dynamics extends Admin_dialog_Ecommerce_reports
                     );
             $func = "sumSale" . $this->get("show");
             $startDate = $this->get("period.fromDate");
-            $items =& $this->get("rawItems");
+            $items = $this->get("rawItems");
             $x = array();
             $y = array();
             $labels = array();
@@ -141,13 +141,13 @@ class Admin_dialog_sales_dynamics extends Admin_dialog_Ecommerce_reports
             $this->salesData[$x] = $sales["y"][$xid];
         }
         $w = func_new("Widget");
-        $w->component =& $this;
+        $w->component = $this;
         $w->set("template", "modules/EcommerceReports/export_xls.tpl");
         $this->startDownload("sales.xls");
         $this->ColumnCount = 2;
         $this->RowCount = count($this->salesData) + 2;
         $this->endRow = count($this->salesData) + 1;
-        $profile =& $this->auth->get("profile");
+        $profile = $this->auth->get("profile");
         $time = time();
         $this->create_date = strftime("%Y-%m-%d", $time);
         $this->create_time = strftime("%H:%M:%S", $time);

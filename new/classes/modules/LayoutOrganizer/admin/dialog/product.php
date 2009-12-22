@@ -61,13 +61,13 @@ class Admin_Dialog_product_LayoutOrganizer extends Admin_Dialog_product
     function action_modify_templates()
     {
         if (isset($this->product_id) && $this->product_id > 0) {
-        	$product =& func_new("Product", $this->product_id);
+        	$product = func_new("Product", $this->product_id);
         	$product->set("custom_template", $this->custom_template);
 			$parent = $product->get("parent");
     		if ($this->custom_template < 0) {
 				$product->set("template_name", $parent->getTemplate("p_custom_template"));
     		} else {
-    			$scheme =& func_new("TemplatesScheme", $this->custom_template);
+    			$scheme = func_new("TemplatesScheme", $this->custom_template);
     			if (is_object($scheme)) {
     				$product->set("template_name", $scheme->getTemplate("p_custom_template"));
     			} else {
@@ -84,7 +84,7 @@ class Admin_Dialog_product_LayoutOrganizer extends Admin_Dialog_product
 			return $this->schemes;
 		}
 
-    	$sm =& func_new("Admin_Dialog_Scheme_Manager");
+    	$sm = func_new("Admin_Dialog_Scheme_Manager");
 		$sm->initLayout();
     	$sm->getSchemes(false);
     	$this->schemes = $sm->schemes;

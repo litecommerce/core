@@ -41,7 +41,7 @@ function func_Affiliate_charge(&$payment, &$order) // {{{
 {
     $commissions = 0;
     // process current partner
-    $planCommission =& func_new("PlanCommission");
+    $planCommission = func_new("PlanCommission");
     $commissions = $planCommission->calculate($order);
     if ($commissions >= 0.01) {
         // check for existing partner payment
@@ -61,7 +61,7 @@ function func_Affiliate_charge(&$payment, &$order) // {{{
         foreach ((array)$order->get("partner.parents") as $level => $parent) {
             $rate = $payment->get("config.Affiliate.tier_commission_rates.$level");
             if ($rate > 0) {
-                $pp =& func_new("PartnerPayment");
+                $pp = func_new("PartnerPayment");
                 $update = $pp->find("partner_id=".$parent->get("profile_id")." AND order_id=".$order->get("order_id")." AND affiliate=".$affiliate);
                 $pc =  round((double)($commissions / 100 * $rate + 0.00000000001), 2);
                 if ($pc >= 0.01) {
@@ -87,21 +87,21 @@ function func_Affiliate_calc_order_commissions(&$planCommission) // {{{
     $orderCommissions = 0;
     foreach ($planCommission->get("order.items") as $item) {
         // search for iitem product commission
-        $pc =& $planCommission->getProductCommission($item->get("product_id"));
+        $pc = $planCommission->getProductCommission($item->get("product_id"));
         if (!is_null($pc)) {
             $orderCommissions += func_Affiliate_calc_commission_rate($pc, $item);
             continue;
         }
         // search for item category commission 
         foreach ((array)$item->get("product.categories") as $category) {
-            $cc =& $planCommission->getCategoryCommission($category->get("category_id"));
+            $cc = $planCommission->getCategoryCommission($category->get("category_id"));
             if (!is_null($cc)) {
                 $orderCommissions += func_Affiliate_calc_commission_rate($cc, $item);
                 continue 2;  // next order item
             }
         }
         // search for item basic commission
-        $bc =& $planCommission->getBasicCommission();
+        $bc = $planCommission->getBasicCommission();
         if (!is_null($bc)) {
             $orderCommissions += func_Affiliate_calc_commission_rate($bc, $item);
         }

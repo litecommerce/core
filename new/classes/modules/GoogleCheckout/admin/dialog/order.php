@@ -94,7 +94,7 @@ class Module_GoogleCheckout_Admin_Dialog_Order extends Admin_Dialog_Order
 		}
 
 		if ($this->get("action")) {
-			$this->payment_method =& func_new("PaymentMethod", "google_checkout");
+			$this->payment_method = func_new("PaymentMethod", "google_checkout");
 			include_once "modules/GoogleCheckout/encoded.php";
 		}
 

@@ -50,7 +50,7 @@ class Module_AdvancedSecurity_Mailer extends Mailer
         parent::compose($from, $to, $dir, $customHeaders);
         // encrypt message with a public key if necessary
         if ($this->get("adminMail") && $this->get("order") && $this->get("order.details")) {
-            $gpg =& func_new("GPG");
+            $gpg = func_new("GPG");
 			if ($this->get("config.AdvancedSecurity.gpg_crypt_mail")) {
 	            $this->logger->log("Module_AdvancedSecurity_Mailer::getBody() encrypt message");
     	        // send as a plain mail

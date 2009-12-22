@@ -48,7 +48,7 @@
 
 class Module_Protx_Admin_Dialog_payment_method extends Admin_Dialog_payment_method 
 {
-	function &getPM()
+	function getPM()
 	{
 		if ($_REQUEST["payment_method"] == "protxform_cc")	
 			$_REQUEST["payment_method"] = "protxdirect_cc";

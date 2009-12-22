@@ -56,20 +56,20 @@ class OrderHistory extends Base
 
 	var $secure_prefix = array("cc_");
 
-	function &get($name) {
+	function get($name) {
 		if ($name == 'changes') 
 			return $this->getChanges();
 		return parent::get($name);
 	}
 	
-	function &getChanges() // {{{
+	function getChanges() // {{{
 	{
         if (is_null($this->_changes)) {
 			$this->_changes = unserialize(parent::get("changes"));
 
 			$val = parent::get("secureChanges");
 			if ( trim($val) != "" ) {
-				$gpg =& func_new("GPG");
+				$gpg = func_new("GPG");
 				$secureChanges = unserialize($gpg->decrypt($val));
 	
 				if ( is_array($secureChanges) ) {
@@ -121,7 +121,7 @@ class OrderHistory extends Base
 				}
 			}
 
-			$gpg =& func_new("GPG");
+			$gpg = func_new("GPG");
 			$secureChanges = $gpg->encrypt(serialize($secureChanges));
 		}
 
@@ -201,9 +201,9 @@ class OrderHistory extends Base
 					}
 				}
 
-				$profile =& $order->get("profile");
+				$profile = $order->get("profile");
 				if ($profile) {
-					$cloneProfile =& $cloneOrder->get("profile");
+					$cloneProfile = $cloneOrder->get("profile");
 					foreach ($profile->get("properties") as $key => $value)
 						if (($cloneProfile->get("$key") != $value) && !($key == 'order_id' || $key == 'profile_id'))
 						{
@@ -223,7 +223,7 @@ class OrderHistory extends Base
 			}
 			if ($_POST['details']) {
 				if ( !is_null($this->session->get("masterPassword")) ) {
-					$temp_details =& $order->getSecureDetails();
+					$temp_details = $order->getSecureDetails();
 				} else {
 					$temp_details = $order->get("details");
 				}
@@ -241,7 +241,7 @@ class OrderHistory extends Base
 				$history['details'] = $details;
 				$history['changedDetails'] = $changedDetails;
 			}
-            $changedStatus = &func_new("OrderStatus");
+            $changedStatus = func_new("OrderStatus");
             $changedStatus->find("status = '".$_POST["substatus"]."'");
 			if ($order->get("orderStatus.name") != $changedStatus->get("name"))	{
 		    	$history['status'] = $order->get("orderStatus.name");
@@ -254,7 +254,7 @@ class OrderHistory extends Base
 		}               
 
 		if (!empty($history)) {
-            $orderHistory = &func_new("OrderHistory");
+            $orderHistory = func_new("OrderHistory");
 			$orderHistory->set("order_id",$order->get("order_id"));
 			$orderHistory->set("login",$this->auth->get("profile.login"));
 			$orderHistory->set("changes", $history);

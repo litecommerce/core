@@ -190,7 +190,7 @@ EOT;
 	    $request[CYBS_SK_XML_DOCUMENT] = $this->createAuthRequest($cart);
 	    $status = cybs_run_transaction($config, $request, $response);
 
-	    $xml =& func_new("XML");
+	    $xml = func_new("XML");
 
 	    $response = $xml->parse($response[CYBS_SK_XML_DOCUMENT]);
 	    if ($status == CYBS_S_OK && $response['C:REPLYMESSAGE']['C:DECISION'] == 'ACCEPT') {
@@ -219,7 +219,7 @@ EOT;
         $request[CYBS_SK_XML_DOCUMENT] = $this->createCaptureRequest($cart,$authResponse);
         $status = cybs_run_transaction($config, $request, $response);
 
-   	    $xml =& func_new("XML");
+   	    $xml = func_new("XML");
 	    $response = $xml->parse($response[CYBS_SK_XML_DOCUMENT]);
 
         if ($status == CYBS_S_OK && $response['C:REPLYMESSAGE']['C:DECISION'] == 'ACCEPT') {

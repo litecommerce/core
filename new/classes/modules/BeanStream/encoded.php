@@ -51,7 +51,7 @@ function BeanStream_processor_process(&$_this, &$cart)
         $trnType = "PA";
     }
 
-    $request =& func_new("HTTPS");
+    $request = func_new("HTTPS");
     $request->url = $_this->get("purchaseUrl");
 
     $request->data = array(
@@ -114,7 +114,7 @@ function BeanStream_processor_process(&$_this, &$cart)
 
 function func_BeanStream_action_return(&$_this, &$cart, $pm)
 {
-	$request =& func_new('HTTPS');
+	$request = func_new('HTTPS');
 	$request->url = $pm->get("authorizationUrl");
 	$request->data = array(
 		"PaRes"	=> $_this->get("PaRes"),
@@ -222,11 +222,11 @@ function BeanStream_parse_response(&$cart, $response=array(), $pm)
 function func_Protx_getState(&$profile, $field, $customField)
 {
     $stateName = "";
-    $state =& func_new("State");
+    $state = func_new("State");
     if ($state->find("state_id='".$profile->get($field)."'")) {
         $stateName = $state->get("code");
     } else { // state not found
-        $stateName = &$profile->get($customField);
+        $stateName = $profile->get($customField);
     }
 
     return $stateName;

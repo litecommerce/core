@@ -80,7 +80,7 @@ class Admin_Dialog_Scheme_Manager_FlyoutCategories extends Admin_Dialog_Scheme_M
         return null;
     }
 
-	function &getDefaultScheme()
+	function getDefaultScheme()
 	{
 		if ($this->get("page") != "fc_manager")
 		    return parent::getDefaultScheme();

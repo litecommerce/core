@@ -45,14 +45,14 @@
 */
 class Module_Egoods_PurchaseLimit extends PurchaseLimit
 {
-    function &get($property) {
-        $value =& parent::get($property);
+    function get($property) {
+        $value = parent::get($property);
 
         if ($property == "max") {
-            $product =& func_new("Product", $this->get("product_id"));
+            $product = func_new("Product", $this->get("product_id"));
             if ($product->is("egood")) {
                 if ($product->is("pin")) {
-                    $pin =& func_new('PinCode');
+                    $pin = func_new('PinCode');
                     $freePinCounts = $pin->getFreePinCount($this->get('product_id'));
     			    if ($value > $freePinCounts) {
                         $value = $freePinCounts;

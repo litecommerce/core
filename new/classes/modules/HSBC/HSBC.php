@@ -49,7 +49,7 @@ class Module_HSBC extends Module
 	var $minVer = "2.0"; 
 	var $showSettingsForm = true;
 
-    function &getSettingsForm() // {{{ 
+    function getSettingsForm() // {{{ 
     {
         return "admin.php?target=payment_method&payment_method=cc_hsbc";
     } // }}}
@@ -58,7 +58,7 @@ class Module_HSBC extends Module
     {
         
         parent::init();
-        $pm =& func_new('PaymentMethod');
+        $pm = func_new('PaymentMethod');
 	    // plug in  kernel/PaymentMethod/cc_hsbc.php module
         $pm->registerMethod("cc_hsbc");
     }

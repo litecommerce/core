@@ -80,7 +80,7 @@ class Admin_Dialog_template_editor extends Admin_Dialog
 			"checkout/success_message.tpl"
 			);
 
-    function &getLocale() // {{{
+    function getLocale() // {{{
     {
         if (is_null($this->locale)) {
             $this->locale = $this->get("xlite.options.skin_details.locale");
@@ -88,7 +88,7 @@ class Admin_Dialog_template_editor extends Admin_Dialog
         return $this->locale;
     } // }}}
 
-    function &getZone() // {{{
+    function getZone() // {{{
     {
         if (is_null($this->zone)) {
             $this->zone = $this->get("xlite.options.skin_details.skin");
@@ -96,7 +96,7 @@ class Admin_Dialog_template_editor extends Admin_Dialog
         return $this->zone;
     } // }}}
     
-    function &getTreePages() // {{{
+    function getTreePages() // {{{
     {
         $zone = $this->get("xlite.options.skin_details.skin");
         if (is_null($this->treePages)) {
@@ -117,7 +117,7 @@ class Admin_Dialog_template_editor extends Admin_Dialog
         return null;
     } // }}}
     
-    function &getUrl() // {{{
+    function getUrl() // {{{
     {
         if ($this->get("editor") != "advanced") {
             $this->set("zone", null);
@@ -130,7 +130,7 @@ class Admin_Dialog_template_editor extends Admin_Dialog
 
     /**
     */
-    function &getBasicTemplates() // {{{
+    function getBasicTemplates() // {{{
     {
         $zone   = $this->get("zone");
         $locale = $this->get("locale");
@@ -194,7 +194,7 @@ class Admin_Dialog_template_editor extends Admin_Dialog
     function action_update_templates() // {{{
     {
         foreach ($_POST["template"] as $path => $content) {
-            $t =& func_new("FileNode", $path);
+            $t = func_new("FileNode", $path);
             $t->set("content", $content);
             $t->update();
         	if ($t->writePermitted) {
@@ -208,13 +208,13 @@ class Admin_Dialog_template_editor extends Admin_Dialog
 
     // MAIL templates editor methods {{{
 
-    function &getMailTemplates()
+    function getMailTemplates()
     {
         $node = $_REQUEST["node"];
         $path = $_REQUEST["path"];
-        $data["subject"] =& func_new("FileNode", "$node/subject.tpl");
-        $data["body"] =& func_new("FileNode", "$node/body.tpl");
-        $data["signature"] =& func_new("FileNode", "$path/signature.tpl");
+        $data["subject"] = func_new("FileNode", "$node/subject.tpl");
+        $data["body"] = func_new("FileNode", "$node/body.tpl");
+        $data["signature"] = func_new("FileNode", "$path/signature.tpl");
         return $data;
     }
 
@@ -223,21 +223,21 @@ class Admin_Dialog_template_editor extends Admin_Dialog
     	$writePermitted = false;
         $node = $_POST["node"];
         $path = $_POST["path"];
-        $s =& func_new("FileNode", "$node/subject.tpl");
+        $s = func_new("FileNode", "$node/subject.tpl");
         $s->set("content", $_POST["subject"]);
         $s->update();
         if ($s->writePermitted) {
 			$writePermitted = true;
         	$this->set("subjectWriteError", true);
         }
-        $b =& func_new("FileNode", "$node/body.tpl");
+        $b = func_new("FileNode", "$node/body.tpl");
         $b->set("content", $_POST["body"]);
         $b->update();
         if ($b->writePermitted) {
 			$writePermitted = true;
         	$this->set("bodyWriteError", true);
         }
-        $sig =& func_new("FileNode", "$path/signature.tpl");
+        $sig = func_new("FileNode", "$path/signature.tpl");
         $sig->set("content", $_POST["signature"]);
         $sig->update();
         if ($sig->writePermitted) {
@@ -254,10 +254,10 @@ class Admin_Dialog_template_editor extends Admin_Dialog
     
     // USER-DEFINED pages editor methods {{{
 
-    function &getExtraPage() // {{{
+    function getExtraPage() // {{{
     {
         if (is_null($this->extraPage)) {
-            $this->extraPage =& func_new("ExtraPage");
+            $this->extraPage = func_new("ExtraPage");
             if (isset($_REQUEST["page"]) && !empty($_REQUEST["page"])) {
                 $this->extraPage = $this->extraPage->findPage($_REQUEST["page"]);
             }    
@@ -265,7 +265,7 @@ class Admin_Dialog_template_editor extends Admin_Dialog
         return $this->extraPage;
     } // }}}
     
-    function &getExtraPages() // {{{
+    function getExtraPages() // {{{
     {
         if (is_null($this->extraPages)) {
             $this->extraPages = $this->get("extraPage.pages");
@@ -301,7 +301,7 @@ class Admin_Dialog_template_editor extends Admin_Dialog
     function action_update_page() // {{{
         {
         $page = trim($_POST["page"]);
-        $this->extraPage =& func_new("ExtraPage");
+        $this->extraPage = func_new("ExtraPage");
         $this->set("extraPage.page", $page);
         $this->set("extraPage.title", trim($_POST["title"]));
         $this->set("extraPage.content", trim($_POST["content"]));
@@ -326,7 +326,7 @@ class Admin_Dialog_template_editor extends Admin_Dialog
 
     function action_page_remove() // {{{
     {
-        $extraPage =& $this->get("extraPage");
+        $extraPage = $this->get("extraPage");
         if (!is_null($extraPage) && is_object($extraPage)) {
             $extraPage->remove();
         }
@@ -336,10 +336,10 @@ class Admin_Dialog_template_editor extends Admin_Dialog
 
     // ADVANCED templates editor methods // {{{
 
-    function &getFile() // {{{
+    function getFile() // {{{
     {
         $path = isset($_REQUEST["file"]) ? $_REQUEST["file"] : null;
-        $file =& func_new("FileNode", $path);
+        $file = func_new("FileNode", $path);
         if (isset($_REQUEST["content"])) {
             $file->set("content", $_REQUEST["content"]);
         }
@@ -348,7 +348,7 @@ class Admin_Dialog_template_editor extends Admin_Dialog
 
     function action_advanced_update() // {{{
     {
-        $file =& $this->get("file");
+        $file = $this->get("file");
 		$file->update();
         $this->afterAdvanced();
 		$this->set("returnUrl", $this->get("url") . "&mode=edit&file=" . $file->get("path"));
@@ -361,14 +361,14 @@ class Admin_Dialog_template_editor extends Admin_Dialog
     
     function action_remove() // {{{
     {
-        $file =& func_new("FileNode", $_REQUEST["selected_file"]);
+        $file = func_new("FileNode", $_REQUEST["selected_file"]);
         $file->remove();
         $this->afterAdvanced();
     } // }}}
 
     function action_copy() // {{{
     {   
-        $file =& func_new("FileNode", $_REQUEST["selected_file"]);
+        $file = func_new("FileNode", $_REQUEST["selected_file"]);
         $basename = dirname($file->path);
         $file->set("newPath", $basename . "/" . $_REQUEST["new_name"]);
         $file->copy();
@@ -377,7 +377,7 @@ class Admin_Dialog_template_editor extends Admin_Dialog
 
     function action_rename() // {{{
     {   
-        $file =& func_new("FileNode", $_REQUEST["selected_file"]);
+        $file = func_new("FileNode", $_REQUEST["selected_file"]);
         $basename = dirname($file->path);
         $file->set("newPath", $basename . "/" . $_REQUEST["new_name"]);
         $file->rename();
@@ -386,7 +386,7 @@ class Admin_Dialog_template_editor extends Admin_Dialog
 
     function action_new_file() // {{{
     {
-        $file   =& $this->get("file");
+        $file = $this->get("file");
         $path   = $file->get("path");
         $zone   = $this->get("zone");
         $locale = $this->get("locale");
@@ -402,7 +402,7 @@ class Admin_Dialog_template_editor extends Admin_Dialog
 
     function action_new_dir() // {{{
     {   
-        $file   =& $this->get("file");
+        $file = $this->get("file");
         $path   = $file->get("path");
         $zone   = $this->get("zone");
         $locale = $this->get("locale");
@@ -418,7 +418,7 @@ class Admin_Dialog_template_editor extends Admin_Dialog
 
     function action_restore_all() // {{{
     {
-        $file =& $this->get("file");
+        $file = $this->get("file");
         $file->set("path", "skins_original");
         $file->set("newPath", "skins");
         $file->copy();
@@ -430,7 +430,7 @@ class Admin_Dialog_template_editor extends Admin_Dialog
 
     function action_restore() // {{{
     {
-        $file =& $this->get("file");
+        $file = $this->get("file");
         $to = $_REQUEST["selected_file"];
 		$schema_file = preg_replace("/^(skins)/", sprintf("schemas/templates/%s",$this->config->get("Skin.skin")), $to);
 		$from = (file_exists($schema_file) ? $schema_file : preg_replace("/^(skins)/", "skins_original", $to));

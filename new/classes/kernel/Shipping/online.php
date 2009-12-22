@@ -50,7 +50,7 @@ class Shipping_online extends Shipping
 {
     var $optionsTable;
 
-    function &getOptions()
+    function getOptions()
     {
         
         $name = $this->configCategory;
@@ -92,8 +92,8 @@ class Shipping_online extends Shipping
     function unserializeCacheRates($rates)
     {
         $result = array();
-        $cart  = & func_get_instance("Cart");
-        $order = & func_new("Order",$cart->get("order_id"));
+        $cart = func_get_instance("Cart");
+        $order = func_new("Order",$cart->get("order_id"));
         $weight = (double) $order->get("weight");
         $total = (double) $order->calcSubTotal(true); // SubTotal for "shipped only" items
         $items = $order->get("shippedItemsCount");

@@ -53,7 +53,7 @@ class Admin_Dialog_module_LiveUpdating extends Admin_Dialog_module
 		parent::init();
 
 		if ($this->page == "LiveUpdating") {
-        	$lay =& func_get_instance("Layout");
+        	$lay = func_get_instance("Layout");
         	$lay->addLayout("general_settings.tpl", "modules/LiveUpdating/config.tpl");
         }
 	}

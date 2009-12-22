@@ -59,7 +59,7 @@ class Module_Protx extends Module
     {
         
         parent::init();
-        $pm =& func_new('PaymentMethod', "protxdirect_cc");
+        $pm = func_new('PaymentMethod', "protxdirect_cc");
 
 		switch($pm->get("params.solution")) {
 			case "form":

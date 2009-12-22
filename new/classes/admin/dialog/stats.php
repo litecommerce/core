@@ -54,7 +54,7 @@ class Admin_Dialog_stats extends Admin_Dialog
                        'searchStat' => 'Search statistics',
                        );
 
-    function &getTodayDate()
+    function getTodayDate()
     {
         if (is_null($this->todayDate)) {
             $this->todayDate = mktime(0, 0 ,0 , date("m"), date("d"), date("Y"));
@@ -62,7 +62,7 @@ class Admin_Dialog_stats extends Admin_Dialog
         return $this->todayDate;
     }        
 
-    function &getWeekDate()
+    function getWeekDate()
     {
         if (is_null($this->weekDate)) {
             $this->weekDate  = mktime(0, 0 ,0 , date("m"), date("d") + (((date("w") == 0) ? -7 : ( -1 * date("w"))) + 1), date("Y"));
@@ -70,7 +70,7 @@ class Admin_Dialog_stats extends Admin_Dialog
         return $this->weekDate;
     }
 
-    function &getMonthDate()
+    function getMonthDate()
     {
         if (is_null($this->monthDate)) {
             $this->monthDate = mktime(0, 0 ,0 , date("m"), 1, date("Y"));

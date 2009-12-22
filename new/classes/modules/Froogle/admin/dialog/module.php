@@ -52,7 +52,7 @@ class Module_Froogle_Admin_Dialog_module extends Admin_Dialog_module
 		parent::init();
 
 		if ($this->page == "Froogle") {
-        	$layout =& func_get_instance("Layout");
+        	$layout = func_get_instance("Layout");
         	$layout->addLayout("general_settings.tpl", "modules/Froogle/config.tpl");
         }
 	}
@@ -68,7 +68,7 @@ class Module_Froogle_Admin_Dialog_module extends Admin_Dialog_module
 		return ($this->get("config.Version.version") >= "2.2") ? true : false;
 	}
 
-	function &getFroogleOptions()
+	function getFroogleOptions()
 	{
 		$options = array();
 		foreach ($this->getOptions() as $opt) {

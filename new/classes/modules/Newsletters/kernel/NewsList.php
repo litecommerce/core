@@ -70,13 +70,13 @@ class NewsList extends Base
     function delete()
     {
         // delete newsletters..
-        $nl =& func_new("NewsLetter");
+        $nl = func_new("NewsLetter");
         foreach ((array)$nl->findAll("list_id=".$this->get("list_id")) as $nsl) {
             $nsl->delete();
         }
 
         // delete subscribers..
-        $ns =& func_new("NewsSubscriber");
+        $ns = func_new("NewsSubscriber");
         foreach ((array)$ns->findAll("list_id=".$this->get("list_id")) as $subscriber) {
             $subscriber->unsubscribe();
         }
@@ -85,25 +85,25 @@ class NewsList extends Base
         parent::delete();
     }
 
-    function &getSubscribers()
+    function getSubscribers()
     {
         if (is_null($this->subscribers)) {
-            $ns =& func_new("NewsSubscriber");
+            $ns = func_new("NewsSubscriber");
             $this->subscribers = $ns->findAll("list_id=".$this->get("list_id"));
         }
         return $this->subscribers;
     }
 
-    function &getMessages()
+    function getMessages()
     {
         if (is_null($this->messages)) {
-            $nm =& func_new("NewsLetter");
+            $nm = func_new("NewsLetter");
             $this->messages = $nm->findAll("list_id=".$this->get("list_id"));
         }
         return $this->messages;
     }
 
-    function &getShowedListsNumber()
+    function getShowedListsNumber()
     {
         if (is_null($this->xlite->showed_lists_number)) {
             $this->xlite->showed_lists_number = $this->count("show_as_news=1 AND enabled=1");

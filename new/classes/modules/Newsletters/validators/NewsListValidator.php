@@ -63,7 +63,7 @@ class CNewsListValidator extends CRequiredValidator
 
         $result = !empty($_POST[$this->get("field")]) || !isset($_POST[$this->get("field")]);
         if ($result && isset($_POST[$this->get("field")])) {
-        	$nl =& func_new("NewsList");
+        	$nl = func_new("NewsList");
             if ($nl->find("name='".addslashes($_POST[$this->get("field")])."'")) {
             	$this->set("newslist_already_exists", true);
             	$this->newslist_already_exists = true;

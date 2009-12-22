@@ -61,7 +61,7 @@ class Module_Froogle_Admin_Dialog_export_catalog extends Admin_dialog_export_cat
         // switch to customer's zone context
         $this->_sessionData = $this->session->_data;
         $this->session->_data = array();
-        $cart =& func_get_instance("Cart");
+        $cart = func_get_instance("Cart");
         $cart = null;
 
 		$this->goCustomer();
@@ -84,7 +84,7 @@ class Module_Froogle_Admin_Dialog_export_catalog extends Admin_dialog_export_cat
             $this->fp = fopen($ufile, "wb") or $this->_die("FAILED: write failed for $ufile");
             ob_start(array($this, 'outputHandler'));
         }
-        $p =& func_new("Product");
+        $p = func_new("Product");
         $p->export("froogle", $delimiter = "\t", $where = 'price > 0', $orderby = "product_id", null);
 		$this->goAdmin();
 
@@ -177,11 +177,11 @@ class Module_Froogle_Admin_Dialog_export_catalog extends Admin_dialog_export_cat
 		$this->session->_data = array();
 
 		// switch layout to customer's zone
-		$layout =& func_get_instance("Layout");
+		$layout = func_get_instance("Layout");
 		$layout->set("skin", "default");
 
 		// empty cart
-		$cart =& func_get_instance("Cart");
+		$cart = func_get_instance("Cart");
 		$cart = null;
 	} // }}}
 

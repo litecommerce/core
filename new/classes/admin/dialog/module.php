@@ -50,15 +50,15 @@ class Admin_Dialog_module extends Admin_Dialog
 {
     var $params = array("target", "page");
     
-    function &getOptions()
+    function getOptions()
     {
-        $config =& func_new("Config"); 
+        $config = func_new("Config"); 
         return $config->getByCategory($this->page);
     }
 
     function action_update()
     {
-        $options =& $this->get("options");
+        $options = $this->get("options");
         for ($i=0; $i<count($options); $i++) {
             $name = $options[$i]->get("name");
             $type = $options[$i]->get("type");

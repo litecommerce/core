@@ -91,7 +91,7 @@ class Inventory extends Base
     {
         $properties = $options["properties"];
         // search for the product first
-        $product =& func_new("Product");
+        $product = func_new("Product");
         $found = false;
 
         // search product by SKU
@@ -110,7 +110,7 @@ class Inventory extends Base
         if ($found) {
             // product found
             $inventory_id = $product->get("product_id") . (!empty($properties["product_options"]) ? "|".$properties["product_options"] : "");
-            $inventory =& func_new("Inventory");
+            $inventory = func_new("Inventory");
 		    $inventory->set("properties", $properties);
 
             if ($inventory->find("inventory_id='$inventory_id'")) {
@@ -138,7 +138,7 @@ class Inventory extends Base
 		if ($pos&&(!$this->xlite->get("ProductOptionsEnabled")||($this->xlite->get("ProductOptionsEnabled")&&!in_array("product_options",$layout))))
 			return array();
         $product_id = $pos === false ? $inventory_id : substr($inventory_id, 0, $pos);
-        $product =& func_new("Product", $product_id);
+        $product = func_new("Product", $product_id);
         if ($product->find("product_id='$product_id'")) {
             $values = $this->properties;
             foreach ($layout as $field) {
@@ -203,7 +203,7 @@ class Inventory extends Base
         }
     } // }}}
 
-    function &get($property)
+    function get($property)
     {
     	switch($property) {
     		case "amount":

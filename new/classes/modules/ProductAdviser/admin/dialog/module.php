@@ -50,7 +50,7 @@ class Admin_Dialog_module_ProductAdviser extends Admin_Dialog_module
 		parent::init();
 
 		if ($this->page == "ProductAdviser") {
-        	$lay =& func_get_instance("Layout");
+        	$lay = func_get_instance("Layout");
         	$lay->addLayout("general_settings.tpl", "modules/ProductAdviser/config.tpl");
         }
 	}

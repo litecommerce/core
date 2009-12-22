@@ -66,7 +66,7 @@ class CPrice extends Component
                 break;
             case "YD":
                 if ($full) {
-                    $wg =& func_new("Widget");
+                    $wg = func_new("Widget");
                     $value = $wg->price_format($this->product->get("sale_price") - $this->product->get("listPrice"));
                 } else {
                     $value = $this->product->get("sale_price") - $this->product->get("listPrice");

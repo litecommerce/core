@@ -57,14 +57,14 @@ class Dialog_partner_banner_stats extends PartnerDialog
         }
     }
 
-    function &getStats()
+    function getStats()
     {
         if (!$this->auth->isAuthorized($this)) {
         	return null;
         }
 
         if (is_null($this->stats)) {
-            $stats =& func_new("BannerStats");
+            $stats = func_new("BannerStats");
             $this->stats = $stats->search(
                     $this->get("auth.profile.profile_id"),
                     $this->get("startDate"),

@@ -53,7 +53,7 @@ class Admin_Dialog_extra_fields extends Admin_Dialog
     function fillForm()
     {
         if (!isset($this->name)) {
-            $ef =& func_new("ExtraField");
+            $ef = func_new("ExtraField");
             $this->set("properties", $ef->fields);
         }
         parent::fillForm();
@@ -64,11 +64,11 @@ class Admin_Dialog_extra_fields extends Admin_Dialog
         return in_array($categoryID, (array)$_POST[$name]);
     }
     
-    function &getCategories() // {{{
+    function getCategories() // {{{
     {
         if (is_null($this->_categories)) {
-            $c =& func_new("Category");
-            $this->_categories =& $c->findAll();
+            $c = func_new("Category");
+            $this->_categories = $c->findAll();
             $names = array();
             $names_hash = array();
             for ($i = 0; $i < count($this->_categories); $i++) {
@@ -84,10 +84,10 @@ class Admin_Dialog_extra_fields extends Admin_Dialog
         return $this->_categories;
     } // }}}
 
-    function &getExtraFields()
+    function getExtraFields()
     {
         if (is_null($this->extraFields)) {
-            $ef =& func_new("ExtraField");
+            $ef = func_new("ExtraField");
             $this->extraFields = $ef->findAll("product_id=0");  // global fields
         }
         return $this->extraFields;
@@ -97,14 +97,14 @@ class Admin_Dialog_extra_fields extends Admin_Dialog
     {
         if (!is_null($this->get("delete")) && !is_null($this->get("delete_fields")) && $this->get("delete") == "delete") {
             foreach ((array)$this->get("delete_fields") as $id) {
-                $ef =& func_new("ExtraField", $id);
+                $ef = func_new("ExtraField", $id);
                 $ef->delete();
             }
         } elseif (!is_null($this->get("update"))) {
             foreach ((array)$this->get("extra_fields") as $id => $data) 
             {
                 $rewrite = !(isset($data['rewrite']) && $data['rewrite'] == "yes");
-                $ef =& func_new("ExtraField", $id);
+                $ef = func_new("ExtraField", $id);
                 $ef->set("categories_old", $ef->get("categories"));
 
                 if($data['global'] == 0){
@@ -118,7 +118,7 @@ class Admin_Dialog_extra_fields extends Admin_Dialog
                     } else {
                         if($rewrite){
                             $old = array();
-                            $category =& func_new("Category");
+                            $category = func_new("Category");
                             $categories = $category->findAll();
                             foreach ($categories as $category) {
                                 $old[] = $category->get("category_id");
@@ -140,7 +140,7 @@ class Admin_Dialog_extra_fields extends Admin_Dialog
                             
                         } else {
                             $old = array();
-                            $category =& func_new("Category");
+                            $category = func_new("Category");
                             $categories = $category->findAll();
                             foreach ($categories as $category) {
                                 $old[] = $category->get("category_id");
@@ -162,7 +162,7 @@ class Admin_Dialog_extra_fields extends Admin_Dialog
         if (!is_null($this->get("add_field"))) {
             $categories = (array)$this->get("add_categories");
 
-            $ef =& func_new("ExtraField");
+            $ef = func_new("ExtraField");
             $ef->set("properties", $_POST);
             if (!empty($categories)) {
                 $ef->setCategoriesList($categories);

@@ -11,7 +11,7 @@ class CPromotionMembershipValidator extends CRequiredValidator
         }
 
 		if($_POST['action']=="update2") {
-				$specialOffer =& func_new("SpecialOffer",$_POST['offer_id']);
+				$specialOffer = func_new("SpecialOffer",$_POST['offer_id']);
 				if ($specialOffer->get("conditionType") == "hasMembership")
 				{
 					 $result =  !empty($_POST[$this->get("field")]);

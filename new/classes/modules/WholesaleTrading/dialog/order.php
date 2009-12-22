@@ -45,7 +45,7 @@
 */
 class Module_WholesaleTrading_Dialog_Order extends Dialog_Order
 {
-    function &getOrder()
+    function getOrder()
     {
 		$this->xlite->set("useStoredWholesale", true);
         return parent::getOrder();

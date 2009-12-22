@@ -59,7 +59,7 @@ class Module_ProtxDirect extends Module
     {
         
         parent::init();
-        $pm =& func_new('PaymentMethod');
+        $pm = func_new('PaymentMethod');
         $pm->registerMethod("protxdirect_cc");
     }
 

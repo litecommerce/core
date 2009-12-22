@@ -262,7 +262,7 @@ class System
     * @return   boolean true on success
     * @access   public
     */
-    function &cat($args)
+    function cat($args)
     {
         $ret = null;
         $files = array();

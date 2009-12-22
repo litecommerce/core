@@ -63,7 +63,7 @@ class Dialog_product_ProductAdviser extends Dialog_product
             	$referers[$product_id] = $referer;
             	$this->session->set("HTTP_REFERER", $referers);
 
-            	$statistic =& func_new("ProductRecentlyViewed");
+            	$statistic = func_new("ProductRecentlyViewed");
             	$sid = $this->session->getID();
                 $statistic->set("sid", $sid);
                 $statistic->set("product_id", $product_id);
@@ -78,7 +78,7 @@ class Dialog_product_ProductAdviser extends Dialog_product
     		}
     	}
 		if ($product_id > 0 && $this->xlite->get("HTMLCatalogWorking") == true) {
-			$statistic =& func_new("ProductRecentlyViewed");
+			$statistic = func_new("ProductRecentlyViewed");
 			$statistic->collectGarbage();
 			$statistic->cleanCurrentGarbage();
 		}
@@ -87,7 +87,7 @@ class Dialog_product_ProductAdviser extends Dialog_product
 
 		if ($this->xlite->get("PA_InventorySupport") && $this->config->get("ProductAdviser.customer_notifications_enabled") && is_object($this->getProduct())) {
 			if ($this->product->get("inventory.amount") == 0 && $this->product->get("tracking") == 0) {
-    			$this->rejectedItemInfo =& func_new("Object");
+    			$this->rejectedItemInfo = func_new("Object");
     			$this->rejectedItemInfo->set("product_id", $this->product->get("product_id"));
     			$this->rejectedItemInfo->set("product", func_new("Product", $this->product->get("product_id")));
 
@@ -101,7 +101,7 @@ class Dialog_product_ProductAdviser extends Dialog_product
                 		$this->rejectedItemInfo = null;
                 		$this->session->set("rejectedItem", null);
                 	} else {
-            			$this->rejectedItemInfo =& func_new("Object");
+            			$this->rejectedItemInfo = func_new("Object");
             			$this->rejectedItemInfo->set("product_id", $rejectedItemInfo->product_id);
             			$this->rejectedItemInfo->set("product", func_new("Product", $rejectedItemInfo->product_id));
             			if (isset($rejectedItemInfo->productOptions)) {
@@ -153,7 +153,7 @@ class Dialog_product_ProductAdviser extends Dialog_product
         $check[] = "profile_id='$profile_id'";
         $check[] = "email='$email'";
 
-		$notification =& func_new("CustomerNotification");
+		$notification = func_new("CustomerNotification");
 		$notification->set("type", CUSTOMER_NOTIFICATION_PRODUCT);
     	$notification->set("product_id", $rejectedItemInfo->product_id);
 		if (isset($rejectedItemInfo->productOptions)) {
@@ -200,7 +200,7 @@ class Dialog_product_ProductAdviser extends Dialog_product
             $check[] = "profile_id='$profile_id'";
             $check[] = "email='$email'";
 
-    		$notification =& func_new("CustomerNotification");
+    		$notification = func_new("CustomerNotification");
     		$notification->set("type", CUSTOMER_NOTIFICATION_PRICE);
         	$notification->set("product_id", $this->get("product_id"));
             $check[] = "notify_key='" . addslashes($notification->get("productKey")) . "'";
@@ -232,7 +232,7 @@ class Dialog_product_ProductAdviser extends Dialog_product
 		foreach($this->rp_bulk as $product_id => $pended) {
 			if ($pended) {
 				$_REQUEST["product_id"] = $product_id;
-				$cart =& func_new("Dialog_cart");
+				$cart = func_new("Dialog_cart");
 				$cart->init();
 				$cart->action_add();
 			}

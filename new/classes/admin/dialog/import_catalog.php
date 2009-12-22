@@ -119,7 +119,7 @@ class Admin_Dialog_import_catalog extends Admin_Dialog
 			"return_error"		=> true,
             );
 
-        $product =& func_new("Product");
+        $product = func_new("Product");
         $product->import($options);
 		$this->importError = $product->importError;
     }
@@ -127,7 +127,7 @@ class Admin_Dialog_import_catalog extends Admin_Dialog
     function action_layout($layout_name = "product_layout")
     {
         $layout = implode(',', $_POST[$layout_name]);
-        $config =& func_new("Config");
+        $config = func_new("Config");
         if ($config->find("name='$layout_name'")) {
             $config->set("value", $layout);
             $config->update();
@@ -150,7 +150,7 @@ class Admin_Dialog_import_catalog extends Admin_Dialog
 			"return_error"		=> true,
             );
          
-        $field =& func_new("ExtraField");
+        $field = func_new("ExtraField");
         $field->import($options);
 		$this->importError = $field->importError;
     }
@@ -159,7 +159,7 @@ class Admin_Dialog_import_catalog extends Admin_Dialog
     {
         $layout_name = "fields_layout";
         $layout = implode(',', $_POST[$layout_name]);
-        $config =& func_new("Config");
+        $config = func_new("Config");
         if ($config->find("name='$layout_name'")) {
             $config->set("value", $layout);
             $config->update();
@@ -210,7 +210,7 @@ class Admin_Dialog_import_catalog extends Admin_Dialog
 
     function getImagesDir()
     {
-        $image =& func_new("Image");
+        $image = func_new("Image");
         return ($this->get("xlite.config.Images.images_directory") != "") ? $this->get("xlite.config.Images.images_directory") : IMAGES_DIR;
     }
 }

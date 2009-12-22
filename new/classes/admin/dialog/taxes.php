@@ -71,7 +71,7 @@ class Admin_Dialog_taxes extends Admin_Dialog
 			$this->pageTemplates = array("add_rate" => "tax/add.tpl");
 		}
 
-        $this->taxes =& func_new("TaxRates");
+        $this->taxes = func_new("TaxRates");
         $this->getRates();
 
         if ($this->get("mode") == "add") {
@@ -146,7 +146,7 @@ class Admin_Dialog_taxes extends Admin_Dialog
 			foreach($deleted as $key => $value) {
 				unset($taxes[$key]);
 			}
-    	    $c =& func_new("Config");
+    	    $c = func_new("Config");
 	        $c->set("category", "Taxes");
 	        $c->set("name", "taxes");
     	    $c->set("value", serialize($taxes)); 
@@ -165,7 +165,7 @@ class Admin_Dialog_taxes extends Admin_Dialog
     function action_delete_schema()
     {
         $name = $_POST["schema"];
-        $tax =& func_new("TaxRates");
+        $tax = func_new("TaxRates");
         $tax->saveSchema($name, null);
     }
     
@@ -174,11 +174,11 @@ class Admin_Dialog_taxes extends Admin_Dialog
     	static $tax;
 
     	if (!isset($tax)) {
-        	$tax =& func_new('TaxRates');
+        	$tax = func_new('TaxRates');
     	}
 
 		// find the corresponding cell in the rates tree
-		$ptr =& $this->locateNode($this->taxes->_rates, $this->_levels[$ind_rate]);
+		$ptr = $this->locateNode($this->taxes->_rates, $this->_levels[$ind_rate]);
 		$tax_name = $this->getNoteTaxName($ptr);
 
         // check expression {{{
@@ -229,7 +229,7 @@ class Admin_Dialog_taxes extends Admin_Dialog
                 $levels = $this->_levels[$ind];
                 array_pop($levels);
                 // locate the corresponding pos array in the pos tree
-                $ptr =& $this->locateNode($posTree, $levels);
+                $ptr = $this->locateNode($posTree, $levels);
                 if (!isset($ptr["orderbys"])) {
                     $ptr["orderbys"] = array();
                 }
@@ -245,7 +245,7 @@ class Admin_Dialog_taxes extends Admin_Dialog
     function action_open()
     {
         $ind = $_REQUEST["ind"];
-        $node =& $this->locateNode($this->taxes->_rates, $this->_levels[$ind]);
+        $node = $this->locateNode($this->taxes->_rates, $this->_levels[$ind]);
         $node["open"] = true;
         // store
         $this->taxes->setSchema(array("tax_rates" => $this->taxes->_rates));
@@ -279,7 +279,7 @@ class Admin_Dialog_taxes extends Admin_Dialog
     function action_close()
     {
         $ind = $_REQUEST["ind"];
-        $node =& $this->locateNode($this->taxes->_rates, $this->_levels[$ind]);
+        $node = $this->locateNode($this->taxes->_rates, $this->_levels[$ind]);
         if (isset($node["open"])) {
             unset($node["open"]);
         }    
@@ -290,7 +290,7 @@ class Admin_Dialog_taxes extends Admin_Dialog
 
     function action_edit()
     {
-        $this->taxes =& func_new("TaxRates");
+        $this->taxes = func_new("TaxRates");
         if (isset($_REQUEST["ind"]) && $_REQUEST["ind"] !== '') {
             $this->ind = $ind = $_REQUEST["ind"];
             $this->tax = $this->locateNode($this->taxes->_rates, explode(',',$ind));
@@ -313,7 +313,7 @@ class Admin_Dialog_taxes extends Admin_Dialog
         if (isset($_REQUEST["ind"])) {
             $ind = $_REQUEST["ind"];
             $this->ind = $ind;
-            $this->taxes =& func_new("TaxRates");
+            $this->taxes = func_new("TaxRates");
             if ($ind === '') {
                 $ind = array();
             } else {    
@@ -345,7 +345,7 @@ class Admin_Dialog_taxes extends Admin_Dialog
                     $currentName = substr($this->tax, 0, strpos($this->tax, ":="));
                 }
                 
-                $tax =& func_new('TaxRates');
+                $tax = func_new('TaxRates');
                 if($currentName != '' && $currentName <> $taxName && $tax->isUsedInExpressions($currentName, $taxName)){
                     $this->set('error', 'Tax name "' . $currentName . '" is used in another formula.');
                     return null;
@@ -354,7 +354,7 @@ class Admin_Dialog_taxes extends Admin_Dialog
             } elseif ($taxValue{0} == '=') {
                 // check expression {{{
                 $invalids = array();
-                $tax =& func_new('TaxRates');
+                $tax = func_new('TaxRates');
                 if ($tax->checkExpressionSyntax($taxValue, $invalids, $taxName)) {
                     $action = "$taxName:=$taxValue";
                 } else {
@@ -401,7 +401,7 @@ class Admin_Dialog_taxes extends Admin_Dialog
             $this->valid = false;
             $this->action_add(); // show errors and the form again
         } else {
-            $subTree =& $this->locateNode($this->taxes->_rates, $this->indexes);
+            $subTree = $this->locateNode($this->taxes->_rates, $this->indexes);
             if (isset($subTree["action"])) {
                 $subTree["action"][] = $node;
             } else {
@@ -425,7 +425,7 @@ class Admin_Dialog_taxes extends Admin_Dialog
             $this->valid = false;
             $this->action_edit(); // show errors and the form again
         } else {
-	        $subTree =& $this->locateNode($this->taxes->_rates, $this->indexes);
+	        $subTree = $this->locateNode($this->taxes->_rates, $this->indexes);
 			if (empty($node['action']))	
 				$action = $subTree['action'];
             $subTree = $node;
@@ -442,7 +442,7 @@ class Admin_Dialog_taxes extends Admin_Dialog
         $ind = $this->_levels[$_REQUEST["ind"]];
         $subTreeIndex = $ind;
         $lastIndex = array_pop($subTreeIndex); // remove last
-        $subTree =& $this->locateNode($this->taxes->_rates, $subTreeIndex);
+        $subTree = $this->locateNode($this->taxes->_rates, $subTreeIndex);
         if (isset($subTree[$lastIndex])) {
             unset($subTree[$lastIndex]);
         }
@@ -469,22 +469,22 @@ class Admin_Dialog_taxes extends Admin_Dialog
     
     function initRuleParams()
     {
-        $countries =& func_new("Object");
+        $countries = func_new("Object");
         $countries->name = 'Countries';
         $countries->var  = 'country';
         $countries->cond  = 'country';
         $countries->values = array("EU country");
-        $c =& func_new("Country");
+        $c = func_new("Country");
         foreach ($c->findAll() as $country) {
             $countries->values[] = $country->get("country");
         }
-        $states =& func_new("Object");
+        $states = func_new("Object");
         $states->name = 'States';
         $states->var  = 'state';
         $states->cond  = 'state';
         $states->values = array();
 		$states->diplay_ex = 1;
-        $c =& func_new("State");
+        $c = func_new("State");
 
 		$lit = true;
 		$last_ccode = "";
@@ -494,19 +494,19 @@ class Admin_Dialog_taxes extends Admin_Dialog
 			if ( $country_code != $last_ccode ) {
 				$lit = !$lit;
 				$last_ccode = $country_code;
-				$c =& func_new("Country", $country_code);
+				$c = func_new("Country", $country_code);
 				$country = $c->get("country");
 			}
 
             $states->values[] = array("val"=>$state->get("state"), "code"=>$state->get("code"), "country"=>$country, "lit"=>( $lit ) ? 1 : 0);
         }
 
-        $cities =& func_new("Object");
+        $cities = func_new("Object");
         $cities->name = "Cities";
         $cities->var = "city";
         $cities->cond = "city";
         $cities->values = array();
-        $pr =& func_new("Profile");
+        $pr = func_new("Profile");
         foreach ($pr->findAll() as $p) {
             $cities->values[] = $p->get("shipping_city");
         }
@@ -515,25 +515,25 @@ class Admin_Dialog_taxes extends Admin_Dialog
             unset($cities->values['']);
         }
 
-        $pm =& func_new("Object");
+        $pm = func_new("Object");
         $pm->name = "Payment method";
         $pm->var = "pm";
         $pm->cond = "payment method";
         $pm->values = array();
-        $pmethod =& func_new("PaymentMethod");
+        $pmethod = func_new("PaymentMethod");
         $methods = $pmethod->getActiveMethods();
         foreach ($methods as $method) {
             $pm->values[] = $method->get("name");
         }
         
-        $classes =& func_new("Object");
+        $classes = func_new("Object");
         $classes->name = "Product class, either new or existing";
         $classes->var = "pclass";
         $classes->cond = "product class";
         $classes->values = array_unique(array_merge(array("shipping service"), $this->taxes->getProductClasses()));
         array_multisort($classes->values);
 
-        $memberships =& func_new("Object");
+        $memberships = func_new("Object");
         $memberships->name = "User membership level";
         $memberships->var = "membership";
         $memberships->cond = "membership";
@@ -541,7 +541,7 @@ class Admin_Dialog_taxes extends Admin_Dialog
         
         $memberships->values = array_merge($memberships->values, $this->config->Memberships->memberships);
 
-        $zips =& func_new("Object");
+        $zips = func_new("Object");
         $zips->name = "Zip codes/ranges (e.g. 43200-43300,55555)";
         $zips->var = "zip";
         $zips->cond = "zip";
@@ -571,18 +571,18 @@ class Admin_Dialog_taxes extends Admin_Dialog
         $rateTree = $ratesToSort;
     }
     
-    function &locateNode(&$tree, $path)
+    function locateNode(&$tree, $path)
     {
-        $ptr =& $tree;
+        $ptr = $tree;
         foreach ($path as $index) {
             if (isset($ptr["action"])) {
-                $ptr =& $ptr["action"];
+                $ptr = $ptr["action"];
             }
             if (!isset($ptr[$index])) {
                 // create a node 
                 $ptr[$index] = array();
             }
-            $ptr =& $ptr[$index];
+            $ptr = $ptr[$index];
         }
         return $ptr;
     }
@@ -817,7 +817,7 @@ class Admin_Dialog_taxes extends Admin_Dialog
             unset($_POST["billing_state"]);
             $this->set("properties", $_POST);
 
-            $tax =& func_new("TaxRates");
+            $tax = func_new("TaxRates");
 		    // setup tax rate calculator
 		    if (!is_array($tax->_conditionValues)) {
 		    	$tax->_conditionValues = array();
@@ -827,14 +827,14 @@ class Admin_Dialog_taxes extends Admin_Dialog
 			    $tax->_conditionValues[$name1] = $this->$name;
 		    }
 		    if (isset($this->country)) {
-			    $country =& func_new("Country", $this->country);
+			    $country = func_new("Country", $this->country);
 			    $tax->_conditionValues["country"] = $country->get("country");
         	    if ($country->isEUMember()) {
         		    $tax->_conditionValues["country"] .= ",EU country";
               	}
 		    }
 		    if (isset($this->state)) {
-			    $state =& func_new("State",$this->state);
+			    $state = func_new("State",$this->state);
 			    $tax->_conditionValues["state"] = $state->get("state");
     		}
 
@@ -854,8 +854,8 @@ class Admin_Dialog_taxes extends Admin_Dialog
         }
         
         // show tax calculator
-        $w =& func_new("Widget");
-        $w->component =& $this;
+        $w = func_new("Widget");
+        $w->component = $this;
         $w->set("template", "tax/calculator.tpl");
         $w->init();
         $w->display();
@@ -879,14 +879,14 @@ class Admin_Dialog_taxes extends Admin_Dialog
             $name = $this->get("new_name");
         }
 
-        $tax =& func_new("TaxRates");
+        $tax = func_new("TaxRates");
         $tax->saveSchema($name);
     }
 
     function action_export()
     {
         $name = $this->get("export_schema");
-        $tax =& func_new("TaxRates");
+        $tax = func_new("TaxRates");
         $schema = $tax->get("predefinedSchemas.$name");
         if (!is_null($schema)) {
             $this->set("silent", true);
@@ -909,16 +909,16 @@ class Admin_Dialog_taxes extends Admin_Dialog
         }    
         $name = basename($_FILES['userfile']['name'], ".tax");
         $schema = unserialize(file_get_contents($file));
-        $tax =& func_new("TaxRates");
+        $tax = func_new("TaxRates");
         $tax->saveSchema($name, $schema);
     }
 
-    function &getEdit()
+    function getEdit()
     {
         return $this->get("mode") == "edit";
     }
 
-	function &getSchemas()
+	function getSchemas()
 	{
 		$schemas = unserialize($this->xlite->config->Taxes->schemas);
 		return ($schemas ? $schemas : array());
@@ -927,7 +927,7 @@ class Admin_Dialog_taxes extends Admin_Dialog
     function getCountriesStates()
     {
     	if (!isset($this->_profileDialog)) {
-    		$this->_profileDialog =& func_new("Admin_Dialog_profile");
+    		$this->_profileDialog = func_new("Admin_Dialog_profile");
     	}
         return $this->_profileDialog->getCountriesStates();
     }

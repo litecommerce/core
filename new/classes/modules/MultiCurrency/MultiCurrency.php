@@ -53,10 +53,10 @@ class Module_MultiCurrency extends Module { // {{{
 
 		$this->xlite->set("MultiCurrencyEnabled",true);
 
-        $this->defaultCurrency =& func_new("CurrencyCountries");
+        $this->defaultCurrency = func_new("CurrencyCountries");
    		$found = $this->defaultCurrency->find("base = 1");
 		if (!$found) {
-			$this->defaultCurrency =& func_new("CurrencyCountries");
+			$this->defaultCurrency = func_new("CurrencyCountries");
 			$this->defaultCurrency->set("code","USD");
 			$this->defaultCurrency->set("name","US dollar");
 			$this->defaultCurrency->set("exchange_rate",1);
