@@ -37,6 +37,10 @@
 * vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 */
 
+// It's the feature of PHP 5. We need to explicitly define current time zone.
+// See also http://bugs.php.net/bug.php?id=48914
+date_default_timezone_set(@date_default_timezone_get());
+
 // sanity check: whether cart installed or not?
 clearstatcache();
 is_dir("skins/default") or die("LiteCommerce shopping cart is not installed. Please, run <a href='install.php'>install.php</a> first.");
@@ -57,17 +61,10 @@ define('LC_OS_IS_WIN', LC_OS_CODE === "win");
 // registers error handling function
 $xlite_php53 = version_compare(phpversion(),"5.3.0", ">=");
 
-if ($xlite_php53) { // PHP 5.3.X compatibility: hide E_DEPRECATED exceptions
-    error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED);
-} else {
-    error_reporting(E_ALL ^ E_NOTICE);
-}
-
 // Display all errors and warnings
 // error_reporting(E_ALL | E_STRICT);
-// ini_set('display_errors', true);
-
-//set_error_handler("errorHandler");
+error_reporting(E_ALL ^ E_NOTICE);
+ini_set('display_errors', true);
 
 // ignores client disconnect
 ignore_user_abort(1);
