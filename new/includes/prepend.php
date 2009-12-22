@@ -86,8 +86,8 @@ func_read_classes("", "classes.sp1", false);
 // sets the include path for classes
 $includes  = "." . DIRECTORY_SEPARATOR . "classes" . PATH_SEPARATOR;
 $includes .= "." . DIRECTORY_SEPARATOR . "lib" . PATH_SEPARATOR;
-$includes .= "." . DIRECTORY_SEPARATOR . PATH_SEPARATOR;
-ini_set("include_path", $includes);
+$includes .= "." . DIRECTORY_SEPARATOR;
+set_include_path(get_include_path() . PATH_SEPARATOR . $includes);
 
 // reads configuration file(s)
 
