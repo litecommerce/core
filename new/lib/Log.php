@@ -51,7 +51,7 @@ class Log {
      * @return          The newly created concrete Log instance, or an
      *                  false on an error.
      */
-    function factory ($log_type, $log_name = '', $ident = '', $conf = array()) {
+    static function factory($log_type, $log_name = '', $ident = '', $conf = array()) {
         $log_type = strtolower($log_type);
         $classfile = 'Log/' . $log_type . '.php';
 	if (@include_once $classfile) {
@@ -95,7 +95,7 @@ class Log {
      * 
      * @return          The concrete Log reference, or false on an error.
      */
-    function singleton ($log_type, $log_name = '', $ident = '', $conf = array()) {
+    static function singleton($log_type, $log_name = '', $ident = '', $conf = array()) {
         static $instances;
         if (!isset($instances)) $instances = array();
         
@@ -126,7 +126,7 @@ class Log {
             LOG_INFO    => 'info',
             LOG_DEBUG   => 'debug'
         );
-        return $priorities[$priority];
+        return isset($priorities[$priority]) ? $priorities[$priority] : null;
     }
     // }}}
 

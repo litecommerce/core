@@ -66,7 +66,7 @@ class ProductInventory extends Product
         return $data;
     } // }}}
 
-    function _import(&$options) // {{{
+    function _import(array $options) // {{{
     {
         static $line;
         if (!isset($line)) $line = 1; else $line++;

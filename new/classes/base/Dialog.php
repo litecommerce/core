@@ -129,7 +129,7 @@ class Dialog extends Component
         $cart_self = $GLOBALS["XLITE_SELF"];
 
         $trusted_referer = false;
-        if (strlen($_SERVER["HTTP_REFERER"]) > 0) {
+        if (!empty($_SERVER['HTTP_REFERER']) && strlen($_SERVER["HTTP_REFERER"]) > 0) {
             $referer = $this->_pure_url_path($_SERVER["HTTP_REFERER"]);
 
             $url = $this->_pure_url_path($this->xlite->shopURL(""));
@@ -333,7 +333,7 @@ $this->xlite->logger->log("<<<");
         $this->xlite->profiler->enabled = false;
         $this->xlite->done();
 
-		if ($this->get(returnUrlAbsolute))
+		if ($this->get('returnUrlAbsolute'))
 		{
 			header("Location: " . $location);
 		} 

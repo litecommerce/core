@@ -108,9 +108,9 @@ class Config extends Base
         return $this->get("type") == "select";
     }
     
-    function isSelected($val)
+    function isSelected($property, $value, $prop = null)
     {
-        return parent::isSelected("value", $val);
+        return parent::isSelected("value", $property);
     }
 
     function isName($name)

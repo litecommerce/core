@@ -52,7 +52,7 @@ class Component extends Widget
     
     function init()
     {
-		$originalRequest = $request;
+		$originalRequest = $_REQUEST;
 		$this->_requestUpdated = false;
 
         // get request params

@@ -408,17 +408,18 @@ class Auth extends Object
     function adminLogin($login, $password) // {{{
     {
         $profile = $this->login($login, $password);
-        if ($profile == ACCESS_DENIED) {
-            $this->sendFailedAdminLogin($profile);
-            return ACCESS_DENIED;
-        }
-        // check whether the user account is enabled and it is admin account
-        if (!$profile->is("admin")) {
-            $this->sendFailedAdminLogin($profile);
-            return ACCESS_DENIED;
-        }
 
-        $this->initHtaccessFiles();
+		if (
+			(is_int($profile) && ACCESS_DENIED === $profile)
+			|| ($profile instanceof Profile && !$profile->is("admin"))
+		) {
+
+			$this->sendFailedAdminLogin($profile);
+
+		} else {
+
+			$this->initHtaccessFiles();
+		}
 
         return $profile; 
     } // }}}

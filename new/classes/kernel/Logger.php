@@ -80,7 +80,7 @@ class Logger
     }
     
 
-    function singleton()
+    static function singleton()
     {
         static $logger;
         if (!isset($logger)) {

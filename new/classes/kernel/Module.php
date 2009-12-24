@@ -311,17 +311,18 @@ class Module extends Base
 		return $up->patchTemplate($zone, $template, $patch, $re);
 	} // }}}
 
-    function _updateProperties(&$data) // {{{
+    function _updateProperties(array $properties = array()) // {{{
     {
-        parent::_updateProperties($data);
-        if ($data["enabled"] && !$this->session->isRegistered("safe_mode")) {
-            $moduleName = $data["name"];
+        parent::_updateProperties($properties);
+
+        if (!empty($properties["enabled"]) && !$this->session->isRegistered("safe_mode")) {
+            $moduleName = $properties["name"];
             $classFile  = "modules/$moduleName/$moduleName.php";
             $className  = "Module_$moduleName";
             global $xlite_class_files;
             $xlite_class_files[strtolower($className)] = $classFile;
             // $this = func_new($className);	// for PHP5 compatibility
-            parent::_updateProperties($data);
+            parent::_updateProperties($properties);
         }
     } // }}}
 

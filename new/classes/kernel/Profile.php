@@ -203,10 +203,11 @@ class Profile extends Base
         $this->set("status", "D");
     } // }}}
 
-    function isExists($login) // {{{
+    function isExists($login = '') // {{{
     {
         $p = func_new("Profile");
-        return $p->find("login='".addslashes($login)."'");
+
+        return $p->find('login = \'' . addslashes($login) . '\'');
     } // }}}
 
     function isValid()
@@ -244,7 +245,7 @@ class Profile extends Base
     * It will modify the $this->config->Memberships->memberships variable
     * SO you need to save it after all.
     */
-    function _import($options) // {{{
+    function _import(array $options) // {{{
     {
         static $line;
         if (!isset($line)) $line = 1; else $line++;
@@ -331,7 +332,7 @@ class Profile extends Base
     	return "";
     }
 
-    function getImportFields() // {{{
+    function getImportFields($layout = null) // {{{
     {
         $layout = array();
         if (!is_null($this->config->get("ImportExport.user_layout"))) {

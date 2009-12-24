@@ -80,7 +80,9 @@ class Module_Promotion_Order extends Order
 	function getMaxPayByPoints()
 	{
 		$allTaxes = $this->get("allTaxes");
-		$tax = $allTaxes['Tax'];
+
+		$tax = isset($allTaxes['Tax']) ? $allTaxes['Tax'] : 0;
+
 		if ($this->config->get("Taxes.prices_include_tax")) {
 			$shippingTaxes = $this->get("shippingTaxes");
 			$tax = $shippingTaxes['Tax'];
@@ -498,9 +500,7 @@ class Module_Promotion_Order extends Order
     	$result = parent::calcAllTaxes();
 		$calcAllTaxesInside = $orig_calcAllTaxesInside;
 
-		if ( function_exists(func_is_php5) && func_is_php5() ) {
-			$this->_items = null;
-		}
+		$this->_items = null;
 
 		if (floatval($this->get("discount")) > 0) {
 			if (!($this->get("config.Taxes.prices_include_tax") && $this->get("config.Taxes.discounts_after_taxes"))) {

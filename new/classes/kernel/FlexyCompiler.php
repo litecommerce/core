@@ -422,10 +422,10 @@ class FlexyCompiler extends Object
     {
     	$result = "";
 
-		$wName = str_replace('->', '.', $attrs['name']);
+		$wName = str_replace('->', '.', empty($attrs['name']) ? 'N/A' : $attrs['name']);
 
     	$targetPreFound = array_key_exists("target", $attrs);
-    	$targetFound = (!$this->_internalDisplayCode && ($targetPreFound || array_key_exists("module", $attrs))) ? true : false;
+    	$targetFound = (empty($this->_internalDisplayCode) && ($targetPreFound || array_key_exists("module", $attrs))) ? true : false;
     	if ($targetFound) {
     		$attrTarget = array();
     		if (array_key_exists("target", $attrs)) {
@@ -454,7 +454,7 @@ class FlexyCompiler extends Object
         }
         $result .= "))){";
 
-        if (!$this->_internalDisplayCode) {
+        if (empty($this->_internalDisplayCode)) {
             foreach ($attrs as $name=>$value) {
                 // setup only dynamic properties
                 if (strpos($value, '{') === false) {
@@ -476,7 +476,7 @@ class FlexyCompiler extends Object
     {
     	$result = "";
 
-    	$targetFound = (!$this->_internalInitCode && (array_key_exists("target", $attrs) || array_key_exists("module", $attrs))) ? true : false;
+    	$targetFound = (empty($this->_internalInitCode) && (array_key_exists("target", $attrs) || array_key_exists("module", $attrs))) ? true : false;
     	if ($targetFound) {
     		$attrTarget = array();
     		if (array_key_exists("target", $attrs)) {
@@ -501,7 +501,7 @@ class FlexyCompiler extends Object
         }
         $result .= "))){\n";
             
-        if (!$this->_internalInitCode) {
+        if (empty($this->_internalInitCode)) {
             $wName = $attrs['name'];
             $class = $attrs['class'];
             $result .= '$t->' . $wName . ' = func_new(\'' . $class . "');\n";
@@ -612,7 +612,8 @@ class FlexyCompiler extends Object
 		$str = $this->removeBraces($str);
 		$this->condition = '';
 		if ($str{0} == '!') {
-			$res = $this->flexyExpression(substr($str,1));
+			$str = substr($str,1);
+			$res = $this->flexyExpression($str);
 			$not = "!";
 		} else {
 			$res = $this->flexyExpression($str);
@@ -755,7 +756,8 @@ class FlexyCompiler extends Object
                     $this->error("} not found");
                     return "";
                 }
-                $s = $this->flexyExpression(substr($str, 0, $pos+1));
+				$tmp = substr($str, 0, $pos+1);
+                $s = $this->flexyExpression($tmp);
                 $str = substr($str, $pos+1);
             } else {
                 $pos = strpos($str, "{");
@@ -805,7 +807,7 @@ class FlexyCompiler extends Object
 
 	function getXliteFormIDText()
 	{
-		if (is_null($this->xlite->_xlite_form_id_text)) {
+		if (!isset($this->xlite->_xlite_form_id_text) || is_null($this->xlite->_xlite_form_id_text)) {
 			$this->xlite->_xlite_form_id_text = $this->flexyEcho("{xliteFormID}");
 		}
 		return $this->xlite->_xlite_form_id_text;
@@ -816,7 +818,7 @@ class FlexyCompiler extends Object
 		if (!$this->xlite->is("adminZone")) return;
 
 		$token = $this->tokens[$token_index];
-		$token['name'] = strtolower($token['name']);
+		$token['name'] = empty($token['name']) ? '' : strtolower($token['name']);
 
 		// sign each form with generated form_id
 		if (($token["type"] == "tag") && ($token['name'] == 'form')) {

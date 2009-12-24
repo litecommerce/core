@@ -50,7 +50,7 @@ class _CategoriesFromProducts extends Category
 {
     var $prodId;
 
-    function _buildSelect($where = null, $orderby = null)
+    function _buildSelect($where = null, $orderby = null, $groupby = null, $limit = null)
     {
         $table = $this->getTable();
         $fields = array();

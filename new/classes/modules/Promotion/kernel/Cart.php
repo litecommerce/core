@@ -340,7 +340,6 @@ class Module_Promotion_Cart extends Cart
         $this->_items = array_values($sorted);
 
         $this->logger->log("<-cartChanged()");
-		return !$eq;
 	}
 
 	function _updateItemAmount($item, $peer, $amount, $bonusItem)

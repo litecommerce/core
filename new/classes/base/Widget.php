@@ -200,7 +200,7 @@ class Widget extends Object
             }
         }
         $t = $this->getThisVar();
-        $caller = $t->widget;
+        $caller = $t->get('widget');
         $t->widget = $this;
         $result = @include $includeFile;
         if (!$result) {

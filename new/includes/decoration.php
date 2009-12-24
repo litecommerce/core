@@ -80,7 +80,7 @@ function func_is_a($child, $parent) { // {{{
     $child .= DECORATION_POSTFIX;
     if (func_is_php5()) {
         $obj = (class_exists($child) ? new $child : new StdClass); 
-        return is_a($obj, $parent);
+        return $obj instanceof $parent;
     } else {   
         while ($child != $parent) {
             $child = get_parent_class($child);

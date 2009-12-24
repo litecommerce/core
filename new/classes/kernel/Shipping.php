@@ -173,12 +173,13 @@ class Shipping extends Base
         return false; // N/A
     }
 
-    function _updateProperties(&$data) // {{{
+    function _updateProperties(array $properties = array()) // {{{
     {
-        parent::_updateProperties($data);
-		$properties = $this->properties;
+        parent::_updateProperties($properties);
+
+		$savedProperties = $this->properties;
 		$shipping = func_get_instance('Shipping');	
-		$this->properties = $properties;
+		$this->properties = $savedProperties;
     } // }}}
 
 

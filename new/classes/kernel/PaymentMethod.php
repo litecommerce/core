@@ -159,12 +159,14 @@ class PaymentMethod extends Base
         return '';
     } // }}}
     
-    function _updateProperties(&$data) // {{{
+    function _updateProperties(array $properties = array()) // {{{
     {
-		parent::_updateProperties($data);
-		$payment = $this->getInstanceByClass($data["payment_method"]);
+		parent::_updateProperties($properties);
+
+		$payment = $this->getInstanceByClass($properties["payment_method"]);
 		$payment->isPersistent = true;
 		$payment->isRead = true;
+
         return $payment;
     } // }}}
 

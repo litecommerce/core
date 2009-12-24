@@ -71,15 +71,6 @@ class Object
     } // }}}
 
     /**
-    * "internal" logger
-    *
-    * @access public
-    */
-    function log($message, $priority = LOG_DEBUG) // {{{
-    {
-    } // }}}
-
-    /**
     * Maps the specified associative array to this object properties.
     *
     * @access public
@@ -128,7 +119,7 @@ class Object
     * If no property found, returns null.
     * The value is returned by reference.
     */
-    function get($name=null) // {{{
+    function get($name) // {{{
     {
         if (!isset($name)) {
         	$this->_die("argument \$name must be present");

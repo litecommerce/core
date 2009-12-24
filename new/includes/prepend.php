@@ -62,8 +62,7 @@ define('LC_OS_IS_WIN', LC_OS_CODE === "win");
 $xlite_php53 = version_compare(phpversion(),"5.3.0", ">=");
 
 // Display all errors and warnings
-// error_reporting(E_ALL | E_STRICT);
-error_reporting(E_ALL ^ E_NOTICE);
+error_reporting(E_ALL | E_STRICT);
 ini_set('display_errors', true);
 
 // ignores client disconnect

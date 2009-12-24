@@ -174,9 +174,12 @@ class ModulesManager extends Object
     */
     function init() // {{{
     {
-		if ($_REQUEST["target"] == "upgrade" && ($_REQUEST["action"] == "upgrade") || $_REQUEST["action"] == "upgrade_force") {
-			return;
+		if (!empty($_REQUEST['target']) && !empty($_REQUEST['action'])) {
+			if ('upgrade' === $_REQUEST['target'] && ('upgrade' === $_REQUEST['action'] || 'upgrade_force' === $_REQUEST['action'])) {
+				return;
+			}
 		}
+
         if ($this->xlite->get("adminZone") && isset($_GET["safe_mode"])) {
         	$auth_code = $this->xlite->get("options.installer_details.auth_code");
             if (empty($auth_code) || (!empty($auth_code) && $_GET["auth_code"] == $auth_code)) {

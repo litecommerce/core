@@ -778,7 +778,7 @@ class Base extends Object
     * @access private
     * @param array $properties The properties values array
     */
-    function _updateProperties($properties = array()) // {{{
+    function _updateProperties(array $properties = array()) // {{{
     {
         if (!empty($properties) && sizeof($properties)) {
             foreach ($properties as $key => $value) {
@@ -964,12 +964,12 @@ class Base extends Object
         return $result;
     } // }}}
 
-    function _import(&$options) // {{{
+    function _import(array $options) // {{{
     {
         $this->_die("Base::_import() method should be overridden");
     } // }}}
     
-    function _export() // {{{
+    function _export($layout, $delimiter) // {{{
     {
         $this->_die("Base::_export() method should be overridden");
     } // }}}

@@ -269,13 +269,13 @@ class Product extends Base
             }
         }
         if (!isset($categories[$id][$where][$orderby])) {
-            if (!is_array($categories[$id])) {
+            if (!empty($categories[$id]) && !is_array($categories[$id])) {
                 $categories[$id] = array();
             }
-            if (!is_array($categories[$id][$where])) {
+            if (!empty($categories[$id][$where]) && !is_array($categories[$id][$where])) {
                 $categories[$id][$where] = array();
             }
-            if (!is_array($categories[$id][$where][$orderby])) {
+            if (!empty($categories[$id][$where][$orderby]) && !is_array($categories[$id][$where][$orderby])) {
                 $categories[$id][$where][$orderby] = (!$useCache) ? null : array();
             } 
             if ($this->isPersistent) {
@@ -849,7 +849,7 @@ class Product extends Base
         return null;
     } // }}}
 
-    function _import(&$options) // {{{
+    function _import(array $options) // {{{
     {
         $properties       = $options["properties"];
         $default_category = $options["default_category"];

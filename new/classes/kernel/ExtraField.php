@@ -171,7 +171,7 @@ class ExtraField extends Base
         return parent::filter();
     }
 
-    function getImportFields()
+    function getImportFields($layout = null)
     {
         return parent::getImportFields("fields_layout");
     }
@@ -220,7 +220,7 @@ class ExtraField extends Base
         return $data;
     } // }}}
 
-    function _import(&$options) // {{{
+    function _import(array $options) // {{{
     {
         $properties = $options["properties"];
 		//import global extra fields 
