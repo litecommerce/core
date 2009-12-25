@@ -163,11 +163,6 @@ class ModulesManager extends Object
         $GLOBALS["modules_initialized"] = true;
     } // }}}
 
-    function getPredefinedModuleType($moduleName)
-    {
-		return MODULE_FREE;
-    }
-
     /**
     * Attempts to initialize the ModulesManager and all active modules.
     * @access public
@@ -374,6 +369,102 @@ EOT;
         func_cleanup_cache("classes", (bool)$this->get("verboseCleanup"));
 		func_cleanup_cache("skins", (bool)$this->get("verboseCleanup"));
     } // }}}
+
+	public function getPredefinedModuleType($moduleName)
+	{
+		switch($moduleName) {
+			case "2CheckoutCom":
+			case "AuthorizeNet":
+			case "BankOfAmerica":
+			case "CyberSource":
+			case "Echo":
+			case "ePDQ":
+			case "eProc":
+			case "eSelect":
+			case "eWAYxml":
+			case "HSBC":
+			case "LinkPoint":
+			case "NetRegistry":
+			case "Netbilling":
+			case "NetworkMerchants":
+			case "Nochex":
+			case "Ogone":
+			case "PHPCyberSource":
+			case "ParentPay":
+			case "PayPal":
+			case "PayPalPro":
+			case "PaySystems":
+			case "PlugnPay":
+			case "ProtxDirect":
+			case "Protx":
+			case "SagePay":
+			case "SecureTrading":
+			case "SkipJack":
+			case "TrustCommerce":
+			case "VeriSign":
+			case "VerisignLink":
+			case "PayFlowPro":
+			case "PayFlowLink":
+			case "WellsFargo":
+			case "WorldPay":
+		    case "ChronoPay":
+		    case "BeanStream":
+			case "ProtxForm":
+				return Module__::MODULE_PAYMENT;
+
+			case "AustraliaPost":
+			case "CanadaPost":
+			case "Intershipper":
+			case "UPS":
+			case "USPS":
+		    case "UPSOnlineTools":
+				return Module__::MODULE_SHIPPING;
+
+			case "AOM":
+			case "Affiliate":
+			case "AutoUpdateCatalog":
+			case "CardinalCommerce":
+			case "EcommerceReports":
+			case "Egoods":
+			case "InventoryTracking":
+			case "LayoutOrganizer":
+			case "Newsletters":
+			case "ProductAdviser":
+			case "ProductOptions":
+			case "WholesaleTrading":
+			case "WishList":
+		    case "FlyoutCategories":
+			case "GiftCertificates":
+			case "GoogleCheckout":
+			case "AdvancedSearch":
+			case "AdvancedSecurity":
+			case "AntiFraud":
+			case "Bestsellers":
+			case "DemoMode":
+			case "DetailedImages":
+			case "FeaturedProducts":
+			case "Froogle":
+			case "GreetVisitor":
+			case "HTMLCatalog":
+			case "MultiCategories":
+			case "MultiCurrency":
+			case "Promotion":
+			case "ShowcaseOrganizer":
+			case "SnsIntegration":
+			case "AccountingPackage":
+			case "XCartImport":
+				return Module__::MODULE_GENERAL;
+
+		    case "FashionBoutique":
+		    case "GiftsShop":
+		    case "SummerSports":
+		    case "WinterSports":
+			    return Module__::MODULE_SKIN;
+
+			default:
+				return Module__::MODULE_3RD_PARTY;
+		}
+	}
 }
 
 // WARNING :

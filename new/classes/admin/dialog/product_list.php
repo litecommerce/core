@@ -90,6 +90,7 @@ class Admin_Dialog_product_list extends Admin_Dialog
                                           false, true);
             $this->productsFound = count($this->productsList);
 		}
+
         return $this->productsList;
     }
 

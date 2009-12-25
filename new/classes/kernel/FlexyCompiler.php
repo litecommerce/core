@@ -98,7 +98,7 @@ class FlexyCompiler extends Object
 		// count \n
 		$line = $col = 1;
 		for ($i=0; $i < $this->offset; $i++) {
-			if ($this->source{$i} == "\n") {
+			if (substr($this->source, $i, 1) == "\n") {
 				$line ++;
 				$col=0;
 			}
@@ -196,7 +196,7 @@ class FlexyCompiler extends Object
 	// comment ::= '<!--' text '-->'
 	function comment()
 	{
-        if ($this->offset<strlen($this->source) && $this->source{$this->offset} == '<') {
+        if ($this->offset<strlen($this->source) && substr($this->source, $this->offset, 1) == '<') {
             if (substr($this->source, $this->offset, 4) == '<!--') {
                 $pos = strpos($this->source, '-->', $this->offset+4);
                 if ($pos===FALSE) {
@@ -212,7 +212,7 @@ class FlexyCompiler extends Object
 	// php tag ::= '< ?' php code '? >'
 	function phptag()
 	{
-        if ($this->offset<strlen($this->source) && $this->source{$this->offset} == '<') {
+        if ($this->offset<strlen($this->source) && substr($this->source, $this->offset, 1) == '<') {
             if (substr($this->source, $this->offset, 2) == '<?') {
                 $this->_die("&lt;?php&gt; tags are not allowed in templates");
             }
@@ -243,7 +243,7 @@ class FlexyCompiler extends Object
 
 	function flexyComment()
 	{
-		if ($this->offset<strlen($this->source) && $this->source{$this->offset} == '{') {
+		if ($this->offset<strlen($this->source) && substr($this->source, $this->offset, 1) == '{') {
 			if (substr($this->source, $this->offset, 2) == '{*') {
 				$this->tokens[] = array("type"=>"flexy", "start" => $this->offset);
 				$pos = strpos($this->source, '*}', $this->offset + 2);
@@ -270,7 +270,7 @@ class FlexyCompiler extends Object
 	}
 	function char($c)
 	{
-		if (strlen($this->source) > $this->offset && $this->source{$this->offset} == $c) {
+		if (strlen($this->source) > $this->offset && substr($this->source, $this->offset, 1) == $c) {
 			$this->offset ++;
 			return true;
 		}
@@ -278,7 +278,7 @@ class FlexyCompiler extends Object
 	}
 	function notChars($str)
 	{
-		if (strpos($str, $this->source{$this->offset}) === false) {
+		if (strpos($str, substr($this->source, $this->offset, 1)) === false) {
 			$this->offset ++;
 			return true;
 		}
@@ -295,7 +295,7 @@ class FlexyCompiler extends Object
 		$tagname = $c = '';
 		do {
 			$tagname .= $c;
-			$c = $this->source{$this->offset++};
+			$c = substr($this->source, $this->offset++, 1);
 		} while ($c >= 'a' && $c <= 'z' || $c >= 'A' && $c <= 'Z' || $c >= '0' && $c <= '9' || $c == '_' || $c == ':' || $c=='-');
 		$this->offset--;
 		if (strlen($tagname)) {
@@ -422,7 +422,7 @@ class FlexyCompiler extends Object
     {
     	$result = "";
 
-		$wName = str_replace('->', '.', empty($attrs['name']) ? 'N/A' : $attrs['name']);
+		$wName = isset($attrs['name']) ? str_replace('->', '.', $attrs['name']) : '';
 
     	$targetPreFound = array_key_exists("target", $attrs);
     	$targetFound = (empty($this->_internalDisplayCode) && ($targetPreFound || array_key_exists("module", $attrs))) ? true : false;
@@ -611,7 +611,7 @@ class FlexyCompiler extends Object
 	{
 		$str = $this->removeBraces($str);
 		$this->condition = '';
-		if ($str{0} == '!') {
+		if (substr($str, 0, 1) == '!') {
 			$str = substr($str,1);
 			$res = $this->flexyExpression($str);
 			$not = "!";
@@ -678,20 +678,23 @@ class FlexyCompiler extends Object
 	function flexyExpression(&$str)
 	{
 		$str = $this->removeBraces($str);
-        if ($str{0} == '!') { // NOT
+        if (substr($str, 0, 1) == '!') { // NOT
             $str = substr($str, 1);
             return '!(' . $this->flexyExpression($str) . ')';
         }
         $result = $this->flexySimpleExpression($str);
-        if ($str{0} == '=') { // comparision
+
+		// var_dump($result);
+
+        if (substr($str, 0, 1) == '=') { // comparision
             $str = substr($str, 1);
             $result .= '==' . $this->flexyExpression($str);
         }
-        if ($str{0} == '&') { // AND
+        if (substr($str, 0, 1) == '&') { // AND
             $str = substr($str, 1);
             $result .= '&&' . $this->flexyExpression($str);
         }
-        if ($str{0} == '|') { // OR
+        if (substr($str, 0, 1) == '|') { // OR
             $str = substr($str, 1);
             $result .= '||' . $this->flexyExpression($str);
         }
@@ -700,7 +703,7 @@ class FlexyCompiler extends Object
 
     function flexySimpleExpression(&$str)
     {
-		if ($str{0} == "#") {
+		if (substr($str, 0, 1) == "#") {
 			// find next #
 			$pos = strpos($str, "#", 1);
 			if ($pos===false) $this->error("No closing #");
@@ -708,18 +711,18 @@ class FlexyCompiler extends Object
 			$str = substr($str, $pos+1);
 			return $result;
 		}
-		if ($str{0}>='0' && $str{0} <='9' || $str{0} == '-' || $str{0} == '.') { // numeric constant
+		if (substr($str, 0, 1)>='0' && substr($str, 0, 1) <='9' || substr($str, 0, 1) == '-' || substr($str, 0, 1) == '.') { // numeric constant
 			$len = strspn($str, '0123456789-.');
 			$result = substr($str, 0, $len);
 			$str = substr($str, $len);
 			return $result;
 		}
-		$len = strcspn($str, ' = |,)(:');
-		if ($len<strlen($str) && $str{$len} == '(') { // method call
+		$len = strcspn($str, '=&|,)(:');
+		if ($len<strlen($str) && substr($str, $len, 1) == '(') { // method call
 			$result = '$t->call(\'' . substr($str, 0, $len) . '\'';
 			$str = substr($str, $len);
-            if ($str{1} != ')') {
-    			while ($str{0} != ')') {
+            if (substr($str, 1, 1) != ')') {
+    			while (substr($str, 0, 1) != ')') {
 	    			$str = substr($str,1); // eat , or (
 		    		if (strlen($str) == 0) $this->error("No closing )");
 			    	$result .= ',' . $this->flexyExpression($str);
@@ -750,7 +753,7 @@ class FlexyCompiler extends Object
         $find = array("'", '&quot;');
         $replace = array("\'", '"');
         while(strlen($str)) {
-            if ($str{0} == "{") {
+            if (substr($str, 0, 1) == "{") {
                 $pos = strpos($str, "}");
                 if ($pos === false) {
                     $this->error("} not found");
@@ -779,7 +782,7 @@ class FlexyCompiler extends Object
 	function flexyForeach($str)
 	{
 		$expr = $this->flexyExpression($str);
-		if ($str{0} != ',') {
+		if (substr($str, 0, 1) != ',') {
 			$this->error("No comma in foreach expression");
 		}
 		$str = substr($str, 1);
@@ -796,7 +799,7 @@ class FlexyCompiler extends Object
 	}
 	function removeBraces($str)
 	{
-		if ($str{0} == '{') {
+		if (substr($str, 0, 1) == '{') {
 			$str = substr($str, 1);
 		}
 		if ($str{strlen($str)-1} == '}') {

@@ -99,21 +99,6 @@ class Module_Protx extends Module
 
         parent::uninstall();
     }
-
-	function set($name, $value)
-	{
-		if ($name == "type") {
-			// avoiding typo in 2.2.17
-			if (defined('MODULE_COMMERCICAL_PAYMENT')) {
-				$value = MODULE_COMMERCICAL_PAYMENT;
-			} else {
-				$value = MODULE_COMMERCIAL_PAYMENT;
-			}
-		}
-	
-		parent::set($name, $value);
-	}
-
 }
 
 // WARNING :

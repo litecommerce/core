@@ -81,7 +81,7 @@ class Module_DemoMode_Base extends Base
 		return $ptr;
 	}
 
-	function _updateProperties(&$properties)
+	function _updateProperties(array $properties = array())
 	{
 		if (!$this->session->get("superUser")) {
 			$path = array($this->alias, '');

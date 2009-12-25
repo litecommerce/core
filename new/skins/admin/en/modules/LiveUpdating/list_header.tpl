@@ -1,1 +1,0 @@
-&nbsp;&nbsp;&nbsp;<a href="javascript: SortBy('{widget.anchor}')" onClick="this.blur()"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle" IF="sortby={widget.anchor}"/> <span IF="!sortby={widget.anchor}"><u>{widget.label}</u></span><b IF="sortby={widget.anchor}">{widget.label}</b></a>&nbsp;&nbsp;&nbsp;

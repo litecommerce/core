@@ -7,28 +7,6 @@
 
 define('DECORATION_POSTFIX', '__');
 
-function func_is_php5() {
-    global $xlite_php5;
-
-    if (!isset($xlite_php5)) {
-    	$xlite_php5 = version_compare(phpversion(),"5.0.0") >= 0;
-    }
-    return $xlite_php5;
-}
-
-function func_is_php53() {
-    global $xlite_php53;
-
-    if (!isset($xlite_php53)) {
-        $xlite_php53 = version_compare(phpversion(),"5.3.0", ">=");
-    }
-    return $xlite_php53;
-}
-
-function func_is_clone_deprecated() {
-    return true;
-}
-
 function func_new($class) { // {{{
 
     if (class_exists($class)) {
@@ -78,16 +56,9 @@ function func_is_a($child, $parent) { // {{{
     $parent = strtolower($parent) . DECORATION_POSTFIX;
     func_define_class($child);
     $child .= DECORATION_POSTFIX;
-    if (func_is_php5()) {
-        $obj = (class_exists($child) ? new $child : new StdClass); 
-        return $obj instanceof $parent;
-    } else {   
-        while ($child != $parent) {
-            $child = get_parent_class($child);
-            if(!$child) return false;
-        }
-        return true;
-    }
+    $obj = (class_exists($child) ? new $child : new StdClass); 
+
+    return $obj instanceof $parent;
 } // }}}
 
 function func_get_instance($class, $param = null) { // {{{
@@ -204,10 +175,7 @@ function func_define_class($originalClass, $classesDir = 'classes/' /* debug */)
 function func_compile($file, $num, $classesDir = 'classes/') { // {{{
     $dashes = DECORATION_POSTFIX . str_repeat('_', $num);
     // compile the class
-    $source = file_get_contents($classesDir.$file);
-    if (func_is_php5()) {
-    	$source = str_replace("var $","public $", $source);
-    }
+    $source = str_replace("var $","public $", file_get_contents($classesDir.$file));
 
     // Replace old style function clone() by &cloneObject() in LC for PHP 5.x version
     $source = str_replace('function clone()', "function cloneObject()", $source);
@@ -230,13 +198,13 @@ function func_compile($file, $num, $classesDir = 'classes/') { // {{{
             $replacements[] = 'class ' . $cl . $dashes;
         }
     }
-    if (func_is_php5()) {
-        // Replace array_merge with func_array_merge to avoid the
-        // warning message about the incorrect parameners of this function
-        // in PHP 5.X
-        $patterns[] = '/([^a-z0-9_]+)array_merge(\s*)\(/i';
-        $replacements[] = '${1}func_array_merge${2}(';
-    }
+
+    // Replace array_merge with func_array_merge to avoid the
+    // warning message about the incorrect parameners of this function
+    // in PHP 5.X
+    $patterns[] = '/([^a-z0-9_]+)array_merge(\s*)\(/i';
+    $replacements[] = '${1}func_array_merge${2}(';
+
     return preg_replace($patterns, $replacements, $source);
 } // }}}
 
@@ -257,13 +225,16 @@ function func_add_decorator($decorated, $decorator) { // {{{
     }
     $definedClasses = array_keys($xlite_defined_classes);
     foreach ($definedClasses as $defined) {
-        foreach (explode(',', $xlite_class_deps[$defined]) as $dep) {
-           if (isset($rebuildClasses[$dep])) {
-				if (isset($xlite_defined_classes[$defined])) {
-               		unset($xlite_defined_classes[$defined]);
-               	}
-               $rebuildClasses[$defined] = true;
-           }
+
+        if (!empty($xlite_class_deps[$defined])) {
+            foreach (explode(',', $xlite_class_deps[$defined]) as $dep) {
+               if (isset($rebuildClasses[$dep])) {
+		    		if (isset($xlite_defined_classes[$defined])) {
+                   		unset($xlite_defined_classes[$defined]);
+               	    }
+                    $rebuildClasses[$defined] = true;
+                }
+            }
         }
     }
 } // }}}

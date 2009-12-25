@@ -140,7 +140,7 @@ class Base extends Object
         $args = func_get_args();
         if (count($args)) {
             for ($i=0; $i<count($this->primaryKey); $i++) {
-                if (!is_null($args[$i])) {
+                if (isset($args[$i]) && !is_null($args[$i])) {
 					if ($this->primaryKey[$i] == $this->autoIncrement) {
 						if (!is_numeric($args[$i])) $args[$i] = 0;
 					}
@@ -504,13 +504,7 @@ class Base extends Object
     {
         if ($this->autoIncrement) {
             $this->isRead = $this->read();
-    		if (func_is_php5()) {
-            	//$new = clone $this;
-            	eval("\$new = clone \$this;");
-            } else {
-				$new = func_new(get_class($this));
-				$new->set("properties", $this->get("properties"));
-            }
+            $new = clone $this;
             $new->set($this->autoIncrement, null);
             $new->create();
             return $new;

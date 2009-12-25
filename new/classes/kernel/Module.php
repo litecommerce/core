@@ -38,13 +38,20 @@
 
 /* vim: set expandtab tabstop=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
 
-define('MODULE_UNKNOWN', 0);
+/*define('MODULE_UNKNOWN',   0);
+define('MODULE_PAYMENT',   1);
+define('MODULE_SHIPPING',  2);
+define('MODULE_SKIN',      3);
+define('MODULE_GENERAL',   4);
+define('MODULE_3RD_PARTY', 5);
+
+/*define('MODULE_UNKNOWN', 0);
 define('MODULE_FREE', 1);
 define('MODULE_COMMERCIAL_OTHER', 2);
 define('MODULE_COMMERCIAL_SHIPPING', 4);
 define('MODULE_COMMERCIAL_PAYMENT', 8);
 define('MODULE_COMMERCIAL_SKIN', 16);
-define('MODULE_3RD_PARTY', 4096);
+define('MODULE_3RD_PARTY', 4096);*/
 
 /**
 * Base Module class. Describes the standart Module extension interface.
@@ -55,6 +62,13 @@ define('MODULE_3RD_PARTY', 4096);
 */
 class Module extends Base
 {
+	const MODULE_UNKNOWN   = 0;
+	const MODULE_PAYMENT   = 1;
+	const MODULE_SHIPPING  = 2;
+	const MODULE_SKIN      = 3;
+	const MODULE_GENERAL   = 4;
+	const MODULE_3RD_PARTY = 5;
+
     /**
     * Module properties.
     */
@@ -65,7 +79,7 @@ class Module extends Base
             "enabled"       => 0,
             "version"       => "",
             "dependencies"  => "", 
-            "type"			=> MODULE_UNKNOWN,
+            "type"			=> self::MODULE_UNKNOWN,
             "access_date"   => 0
             );
     

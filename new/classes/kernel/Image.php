@@ -192,16 +192,20 @@ class Image extends Base
 	/**
 	* Define fields 'data', 'source' and 'type'
 	**/
-	function get($name = null)
+	function get($name)
 	{
-    if (is_null($name)) $this->_die("no argument");
 		switch ($name) {
-		case 'data':   return parent::get($this->dataField);
-		case 'source': return parent::get($this->sourceField);
-		case 'type':   return parent::get($this->typeField);
-        case 'id': return parent::get($this->autoIncrement);
-		default: return parent::get($name);
+			case 'data':
+				return parent::get($this->dataField);
+			case 'source':
+				return parent::get($this->sourceField);
+			case 'type':
+				return parent::get($this->typeField);
+	        case 'id':
+				return parent::get($this->autoIncrement);
 		}
+
+		return parent::get($name);
 	}
 
 	/**
@@ -248,10 +252,10 @@ class Image extends Base
 				$this->set("DefaultSource", "F");
 				$this->set("type", $this->getImageType($dest_file));
 				$fn = $this->createFileName();
-				$result = $this->import($dest_file, 'F', $fn, $force);
+				$result = $this->importImage($dest_file, 'F', $fn, $force);
 			} else {
 				$this->set("DefaultSource", "D");
-				$result = $this->import($dest_file);
+				$result = $this->importImage($dest_file);
 			}
         	@unlink($dest_file);
 
@@ -286,7 +290,7 @@ class Image extends Base
         return $images_directory . DIRECTORY_SEPARATOR . $filename;
 	}
 	
-	function import($image_file, $source = 'D', $filename = '', $force = false)
+	public function importImage($image_file, $source = 'D', $filename = '', $force = false)
 	{
 		$this->set("type", $this->getImageType($image_file));
 		$filepath = $this->getFilePath($filename);
@@ -324,6 +328,7 @@ class Image extends Base
 			$this->set("data", $filename);
 		}
 		$this->update();
+
 		return IMAGE_OK;
 	}
 
@@ -474,7 +479,7 @@ class Image extends Base
 			if ($from) {
 				// from filesystem to database
 				$fn = $image->getFilePath($image->get("data"));
-				$image->import($fn, 'D');
+				$image->importImage($fn, 'D');
 				$m ++;
                 // remove file from filesystem
                 $imagesHash[$fn] --;

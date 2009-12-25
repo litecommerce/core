@@ -68,7 +68,7 @@ class Admin_Dialog_SpecialOffer extends Admin_Dialog
 
     function getSpecialOffer()
     {
-        if (is_null($this->specialOffer)) {
+        if (!isset($this->specialOffer) || is_null($this->specialOffer)) {
             if (!$this->get("offer_id")) {
                 // default special offer
                 $this->specialOffer = func_new("SpecialOffer");

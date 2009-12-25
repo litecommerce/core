@@ -57,8 +57,8 @@ class Module_SagePay extends Module
 
     function init()
     {
-        
         parent::init();
+
         $pm = func_new('PaymentMethod', "sagepaydirect_cc");
 
 		switch($pm->get("params.solution")) {
@@ -75,7 +75,6 @@ class Module_SagePay extends Module
 			$this->addDecorator("Admin_Dialog_payment_method", "Module_SagePay_Admin_Dialog_payment_method");
 		}
 
-//		$this->xlite->set("ProtxEnabled", true);
 		$this->xlite->set("SagePayEnabled", true);
     }
 
@@ -86,21 +85,6 @@ class Module_SagePay extends Module
 
         parent::uninstall();
     }
-
-	function set($name, $value)
-	{
-		if ($name == "type") {
-			// avoiding typo in 2.2.17
-			if (defined('MODULE_COMMERCICAL_PAYMENT')) {
-				$value = MODULE_COMMERCICAL_PAYMENT;
-			} else {
-				$value = MODULE_COMMERCIAL_PAYMENT;
-			}
-		}
-	
-		parent::set($name, $value);
-	}
-
 }
 
 // WARNING :

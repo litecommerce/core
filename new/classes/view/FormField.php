@@ -57,7 +57,7 @@ class CFormField extends Component
         if (!is_null($this->field) && !is_null($this->get("component." . $this->field))) {
             return $this->get("component." . $this->field);
         }
-        return $this->value;
+        return isset($this->value) ? $this->value : null;
     }
 
 }

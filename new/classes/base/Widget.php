@@ -506,7 +506,7 @@ class Widget extends Object
     function getDialog()
     {
         $d = $this;
-        while (!is_null($d) && !is_a($d, 'dialog__')) {
+        while (!is_null($d) && !($d instanceof dialog__)) {
             $d = $d->component;
         }
         return $d;

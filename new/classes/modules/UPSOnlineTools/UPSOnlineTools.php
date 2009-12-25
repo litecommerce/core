@@ -92,7 +92,7 @@ class Module_UPSOnlineTools extends Module
     function disable_ups()
 	{
         $mods = $this->xlite->mm->getActiveModules();
-        if ($mods["UPS"]) {
+        if (isset($mods["UPS"])) {
             $mod = func_new("Module", "UPS");
             $this->xlite->mm->changeModuleStatus($mod, false);
             $mod->update();
@@ -115,15 +115,6 @@ class Module_UPSOnlineTools extends Module
         func_cleanup_cache("skins");
         parent::uninstall();
     }
-
-	function set($name, $value)
-	{
-		if ($name == "type") {
-			$value = MODULE_COMMERCIAL_SHIPPING;
-		}
-
-		parent::set($name, $value);
-	}
 }
 // WARNING :
 // Please ensure that you have no whitespaces / empty lines below this message.

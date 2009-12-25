@@ -1,6 +1,0 @@
-module_id=42165
-name=LiveUpdating
-description="This modules allows to track and apply updates to a live LiteCommerce store."
-enabled=1
-version=2.1.RC2
-dependencies=

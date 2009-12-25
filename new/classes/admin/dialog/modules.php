@@ -48,6 +48,15 @@
 */
 class Admin_Dialog_modules extends Admin_Dialog
 {
+	protected $sections = array(
+		Module__::MODULE_PAYMENT   => 'Payment modules', 
+		Module__::MODULE_SHIPPING  => 'Shipping modules',
+		Module__::MODULE_SKIN      => 'Skin modules',
+		Module__::MODULE_GENERAL   => 'Add-ons',
+		Module__::MODULE_3RD_PARTY => '3rd party modules',
+		Module__::MODULE_UNKNOWN   => 'Unknown',
+	);
+
     var $success = true; // last operation status: true or false
     var $modules = null;
     var $_sort_modules = null;
@@ -90,14 +99,16 @@ class Admin_Dialog_modules extends Admin_Dialog
 
 		$temp = $this->get("modules");
 		foreach((array)$temp as $v) {
-			if ($v->get("type") == MODULE_UNKNOWN) {
+			if ($v->get("type") == Module__::MODULE_UNKNOWN) {
 				$v->set("type", $this->xlite->mm->getPredefinedModuleType($v->get("name")));
 				$v->update();
 			}
-			if ((($v->get("type") & $type) != 0)){
-				$this->_sort_modules[$type][] = $v;
+			if ($v->get("type") == $type){
+				$this->_sort_modules[$type][$v->get("name")] = $v;
 			}
 		}
+
+		ksort($this->_sort_modules[$type]);
 
 		return $this->_sort_modules[$type];
 	}

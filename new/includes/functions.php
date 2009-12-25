@@ -464,10 +464,10 @@ function query_upload($filename, $connection = null, $ignoreErrors = false, $is_
         do {
 		    $c .= fgets($fp, 1024);
 		    $endPos = strlen($c) - 1;
-        } while ($c{$endPos} != "\n" && !feof($fp));
+        } while (substr($c, $endPos) != "\n" && !feof($fp));
         $c = chop($c);
         // skip comments
-        if ($c{0} == '#') continue;
+        if (substr($c, 0, 1) == '#') continue;
         if (substr($c, 0, 2) == '--') continue;
 
         // parse SQL statement
@@ -728,7 +728,7 @@ function func_cleanup_cache($cache, $verbose = false) { // {{{
 				unlinkRecursive("$cacheDir/cart.html.php");
 				unlinkRecursive("$cacheDir/cart.html.init.php");
 			}
-            if ($_lock_cache) {
+            if (!empty($_lock_cache)) {
             	func_unlock("cache");
             }
         }

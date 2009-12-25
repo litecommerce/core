@@ -86,43 +86,6 @@ class Module_FlyoutCategories extends Module
 
         parent::uninstall();
     }
-
-    function isOldKernel()
-    {
-        if (!isset($this->_kernelNonSuppVersion)) {
-            $configVersion = $this->config->get("Version.version");
-            $configVersion = str_replace(" build ", ".", $configVersion);
-            $this->_kernelNonSuppVersion = version_compare("2.2.21", $configVersion, ">=");
-            // avoiding typo in 2.2.17
-            if (defined('MODULE_COMMERCICAL_OTHER')) {
-            	$this->_moduleType = MODULE_COMMERCICAL_OTHER;
-            } else {
-            	$this->_moduleType = MODULE_COMMERCIAL_OTHER;
-            }
-        }
-
-        return $this->_kernelNonSuppVersion;
-    }
-
-    function get($name)
-    {
-        $value = parent::get($name);
-        $this->isOldKernel();
-        if ($name == "type" && $this->isOldKernel()) {
-            $value = $this->_moduleType;
-        }
-
-        return $value;
-    }
-
-    function set($name, $value)
-    {
-        if ($name == "type" && $this->isOldKernel()) {
-            $value = $this->_moduleType;
-        }
-
-        parent::set($name, $value);
-    }
 }
 
 // WARNING :

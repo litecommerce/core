@@ -116,20 +116,6 @@ class Module_GoogleCheckout extends Module
 
         parent::uninstall();
     }
-
-	function set($name, $value)
-	{
-		if ($name == "type") {
-			// avoiding typo in 2.2.17
-			if (defined('MODULE_COMMERCICAL_OTHER')) {
-				$value = MODULE_COMMERCICAL_OTHER;
-			} else {
-				$value = MODULE_COMMERCIAL_OTHER;
-			}
-		}
-
-		parent::set($name, $value);
-	}
 }
 
 // WARNING :

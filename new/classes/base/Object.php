@@ -121,9 +121,6 @@ class Object
     */
     function get($name) // {{{
     {
-        if (!isset($name)) {
-        	$this->_die("argument \$name must be present");
-        }
         if (strpos($name, '.')) {
             $obj = $this;
             foreach (explode('.', $name) as $n) {
@@ -131,11 +128,11 @@ class Object
                 	unset($a);
                 }
                 if (is_array($obj)) {
-                    $a = $obj[$n];
+                    $a = isset($obj[$n]) ? $obj[$n] : null;
                     $obj = $a;
                 } else {
                     if (!method_exists($obj,'get')) {
-                        if (is_a($obj, 'stdClass') && isset($obj->$n)) {
+                        if (($obj instanceof stdClass) && isset($obj->$n)) {
                             return $obj->$n;
                         }
                         return null;
@@ -214,13 +211,13 @@ class Object
             if (method_exists($obj, $last)) {
                 $params = func_get_args();
                 array_shift($params);
-                return call_user_func_array(array(&$obj, $last), $params);
+                return call_user_func_array(array($obj, $last), $params);
             }
             return null;
         } else if (method_exists($this, $name)){
             $params = func_get_args();
             array_shift($params);
-            return call_user_func_array(array(&$this, $name), $params);
+            return call_user_func_array(array($this, $name), $params);
         }
         return null;
     } // }}}

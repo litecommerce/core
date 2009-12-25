@@ -55,7 +55,7 @@ class CRequiredValidator extends CFieldValidator
         }
 
         $result = !empty($_POST[$this->get("field")]) || !isset($_POST[$this->get("field")]);
-        if ($result && isset($_POST[$this->get("field")]) && func_is_php5()) {
+        if ($result && isset($_POST[$this->get("field")])) {
         	$field = trim($_POST[$this->get("field")]);
         	$result &= !empty($field);
         }

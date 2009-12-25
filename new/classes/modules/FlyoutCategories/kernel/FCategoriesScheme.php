@@ -133,21 +133,24 @@ class FCategoriesScheme extends Base
 		foreach ($all_modules as $name=>$active) {
 			if ($active) $modules[] = $name;
 		}
-		$skins = (array)($this->commercialSkins[$scheme]);
-		foreach ($skins as $skin) {
-			// if commercial skin is installed or its module is active:
-			if (($selected_skin == $skin) || in_array($skin, $modules)) {
-				// add new color model to current scheme:
-				if (!in_array($skin, $options['color']['points'])) {
-					$options['color']['points'][] = $skin;
-				}
-			} else {
-				// remove unused color model from current scheme:
-				if ($key = array_search($skin, $options['color']['points'])) {
-					unset($options['color']['points'][$key]);
+
+		if (!empty($this->commercialSkins[$scheme]) && is_array($this->commercialSkins[$scheme])) {
+			foreach ($this->commercialSkins[$scheme] as $skin) {
+				// if commercial skin is installed or its module is active:
+				if (($selected_skin == $skin) || in_array($skin, $modules)) {
+					// add new color model to current scheme:
+					if (!in_array($skin, $options['color']['points'])) {
+						$options['color']['points'][] = $skin;
+					}
+				} else {
+					// remove unused color model from current scheme:
+					if ($key = array_search($skin, $options['color']['points'])) {
+						unset($options['color']['points'][$key]);
+					}
 				}
 			}
 		}
+
 		return $options;
 	}
 }

@@ -160,10 +160,6 @@ class Admin_Dialog_settings extends Admin_Dialog
                                         $mode = $this->getFilePermission($file);
                                         $modeStr = $this->getFilePermissionStr($file);
                                         $res = array("file" => $file, "error" => "");
-                                        if ($this->xlite->mm->trialMode) {
-                                            $result[] = $res;
-                                            continue;
-                                        }
 										if (!is_file($file)) {
 											$res["error"] = "does_not_exist";
 											$result[] = $res;
@@ -195,10 +191,6 @@ class Admin_Dialog_settings extends Admin_Dialog
                                         $mode = $this->getDirPermission($dir);
                                         $modeStr = $this->getDirPermissionStr($dir);
 										$res = array("dir" => $dir, "error" => "", "subdirs" => array());
-										if ($this->xlite->mm->trialMode) {
-                                            $result[] = $res;
-                                            continue;
-										}
 
 										if (!is_dir($dir)) {
 											$full_path = "";
@@ -598,7 +590,7 @@ class Admin_Dialog_settings extends Admin_Dialog
 
     function isWin()
     {
-        return (LC_OS_CODE === 'win' || $this->xlite->mm->trialMode);
+        return (LC_OS_CODE === 'win');
     }
 
     function getTimeZonesList()
