@@ -1,0 +1,3 @@
+paymentmethod_payflowlink:modules/PayFlowLink/kernel/PaymentMethod/payflowlink.php:paymentmethod_credit_card
+dialog_pflcheckout:modules/PayFlowLink/dialog/pflcheckout.php:dialog_checkout
+module_payflowlink:modules/PayFlowLink/PayFlowLink.php:module

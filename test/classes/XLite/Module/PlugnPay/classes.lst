@@ -1,0 +1,2 @@
+paymentmethod_plugnpay_cc:modules/PlugnPay/kernel/PaymentMethod/plugnpay_cc.php:paymentmethod_credit_card
+module_plugnpay:modules/PlugnPay/PlugnPay.php:module

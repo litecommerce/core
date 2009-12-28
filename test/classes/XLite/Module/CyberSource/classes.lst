@@ -1,0 +1,2 @@
+paymentmethod_cybersource_cc:modules/CyberSource/kernel/PaymentMethod/cybersource_cc.php:paymentmethod_credit_card
+module_cybersource:modules/CyberSource/CyberSource.php:module

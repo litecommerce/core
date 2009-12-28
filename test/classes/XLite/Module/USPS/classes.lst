@@ -1,0 +1,4 @@
+shipping_usps:modules/USPS/kernel/Shipping/usps.php:shipping_online
+module_usps_admin_dialog_shipping_settings:modules/USPS/admin/dialog/shipping_settings.php:admin_dialog_shipping_settings
+admin_dialog_usps:modules/USPS/admin/dialog/usps.php:admin_dialog_shipping_settings
+module_usps:modules/USPS/USPS.php:module

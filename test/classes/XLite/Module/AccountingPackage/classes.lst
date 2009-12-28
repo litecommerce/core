@@ -1,0 +1,3 @@
+module_accountingpackage_order:modules/AccountingPackage/kernel/Order.php:order
+module_accountingpackage_admin_dialog_order_list:modules/AccountingPackage/admin/dialog/order_list.php:admin_dialog_order_list
+module_accountingpackage:modules/AccountingPackage/AccountingPackage.php:module

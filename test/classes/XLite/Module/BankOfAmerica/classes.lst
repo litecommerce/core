@@ -1,0 +1,2 @@
+paymentmethod_bank_of_america_cc:modules/BankOfAmerica/kernel/PaymentMethod/bank_of_america_cc.php:paymentmethod_credit_card
+module_bankofamerica:modules/BankOfAmerica/BankOfAmerica.php:module

@@ -1,0 +1,6 @@
+detailedimage:modules/DetailedImages/kernel/DetailedImage.php:base
+module_detailedimages_product:modules/DetailedImages/kernel/Product.php:product
+detailedimages_dialog_image:modules/DetailedImages/dialog/image.php:dialog_image
+module_detailedimages_admin_dialog_import_catalog:modules/DetailedImages/admin/dialog/import_catalog.php:admin_dialog_import_catalog
+detailedimages_admin_dialog_product:modules/DetailedImages/admin/dialog/product.php:admin_dialog_product
+module_detailedimages:modules/DetailedImages/DetailedImages.php:module

@@ -1,0 +1,12 @@
+wishlist:modules/WishList/kernel/WishList.php:base
+wishlistproduct:modules/WishList/kernel/WishListProduct.php:base
+wishlist_dialog_cart:modules/WishList/dialog/cart.php:dialog_cart
+wishlist_dialog_checkout:modules/WishList/dialog/checkout.php:dialog_checkout
+wishlist_dialog_login:modules/WishList/dialog/login.php:dialog_login
+wishlist_dialog_product:modules/WishList/dialog/product.php:dialog_product
+wishlist_dialog_profile:modules/WishList/dialog/profile.php:dialog_profile
+dialog_wishlist:modules/WishList/dialog/wishlist.php:dialog
+wishlist_dialog:modules/WishList/base/Dialog.php:dialog
+admin_dialog_wishlist:modules/WishList/admin/dialog/wishlist.php:admin_dialog
+admin_dialog_wishlists:modules/WishList/admin/dialog/wishlists.php:admin_dialog
+module_wishlist:modules/WishList/WishList.php:module

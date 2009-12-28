@@ -1,0 +1,2 @@
+paymentmethod_eway_xml:modules/eWAYxml/kernel/PaymentMethod/eway_xml.php:paymentmethod_credit_card
+module_ewayxml:modules/eWAYxml/eWAYxml.php:module

@@ -1,0 +1,2 @@
+admin_dialog_xcart_import:modules/XCartImport/admin/dialog/xcart_import.php:admin_dialog
+module_xcartimport:modules/XCartImport/XCartImport.php:module

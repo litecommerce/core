@@ -1,0 +1,7 @@
+module_id=1320
+name=ePDQ
+description=ePDQ Payment Gateway
+enabled=1
+version=2.5
+dependencies=
+

@@ -1,0 +1,4 @@
+paymentmethod_authorizenet_cc:modules/AuthorizeNet/kernel/PaymentMethod/authorizenet_cc.php:paymentmethod_credit_card
+paymentmethod_authorizenet_ch:modules/AuthorizeNet/kernel/PaymentMethod/authorizenet_ch.php:paymentmethod_echeck
+module_authorizenet:modules/AuthorizeNet/AuthorizeNet.php:module
+authorizenet_processor:modules/AuthorizeNet/processor.php:object

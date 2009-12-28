@@ -1,0 +1,2 @@
+paymentmethod_pay_systems_web_cc:modules/PaySystems/kernel/PaymentMethod/pay_systems_web_cc.php:paymentmethod_credit_card
+module_paysystems:modules/PaySystems/PaySystems.php:module

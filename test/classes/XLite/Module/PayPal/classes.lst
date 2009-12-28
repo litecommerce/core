@@ -1,0 +1,3 @@
+paymentmethod_paypal:modules/PayPal/kernel/PaymentMethod/paypal.php:paymentmethod
+dialog_ppcheckout:modules/PayPal/dialog/ppcheckout.php:dialog_checkout
+module_paypal:modules/PayPal/PayPal.php:module

@@ -1,0 +1,10 @@
+module_antifraud_country:modules/AntiFraud/kernel/Country.php:country
+module_antifraud_order:modules/AntiFraud/kernel/Order.php:order
+dialog_callback_module_antifraud:modules/AntiFraud/dialog/callback.php:dialog_callback
+dialog_profile_module_antifraud:modules/AntiFraud/dialog/profile.php:dialog_profile
+module_antifraud_admin_dialog_countries:modules/AntiFraud/admin/dialog/countries.php:admin_dialog_countries
+admin_dialog_fraud:modules/AntiFraud/admin/dialog/fraud.php:admin_dialog
+admin_dialog_module_antifraud:modules/AntiFraud/admin/dialog/module.php:admin_dialog_module
+module_antifraud_admin_dialog_order:modules/AntiFraud/admin/dialog/order.php:admin_dialog_order
+module_antifraud_admin_dialog_order_list:modules/AntiFraud/admin/dialog/order_list.php:admin_dialog_order_list
+module_antifraud:modules/AntiFraud/AntiFraud.php:module

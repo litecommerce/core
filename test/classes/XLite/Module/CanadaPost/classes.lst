@@ -1,0 +1,4 @@
+shipping_cps:modules/CanadaPost/kernel/Shipping/cps.php:shipping_online
+admin_dialog_cps:modules/CanadaPost/admin/dialog/cps.php:admin_dialog_shipping_settings
+module_canadapost_admin_dialog_shipping_settings:modules/CanadaPost/admin/dialog/shipping_settings.php:admin_dialog_shipping_settings
+module_canadapost:modules/CanadaPost/CanadaPost.php:module

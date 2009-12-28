@@ -1,0 +1,7 @@
+paymentmethod_protxdirect_cc:modules/Protx/kernel/PaymentMethod/protxdirect_cc.php:paymentmethod_credit_card
+paymentmethod_protxform_cc:modules/Protx/kernel/PaymentMethod/protxform_cc.php:paymentmethod_credit_card
+dialog_protxdirect_checkout:modules/Protx/dialog/protxdirect.php:dialog_checkout
+dialog_protxform_checkout:modules/Protx/dialog/protxform.php:dialog_checkout
+module_protx_admin_dialog_modules:modules/Protx/admin/dialog/modules.php:admin_dialog_modules
+module_protx_admin_dialog_payment_method:modules/Protx/admin/dialog/payment_method.php:admin_dialog_payment_method
+module_protx:modules/Protx/Protx.php:module

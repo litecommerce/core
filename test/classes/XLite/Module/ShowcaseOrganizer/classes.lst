@@ -1,0 +1,3 @@
+module_showcaseorganizer_dialog_category:modules/ShowcaseOrganizer/dialog/category.php:dialog_category
+module_showcaseorganizer_admin_dialog_module:modules/ShowcaseOrganizer/admin/dialog/module.php:admin_dialog_module
+module_showcaseorganizer:modules/ShowcaseOrganizer/ShowcaseOrganizer.php:module

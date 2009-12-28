@@ -1,0 +1,4 @@
+shipping_intershipper:modules/Intershipper/kernel/Shipping/intershipper.php:shipping_online
+admin_dialog_intershipper:modules/Intershipper/admin/dialog/intershipper.php:admin_dialog_shipping_settings
+module_intershipper_admin_dialog_shipping_settings:modules/Intershipper/admin/dialog/shipping_settings.php:admin_dialog_shipping_settings
+module_intershipper:modules/Intershipper/Intershipper.php:module

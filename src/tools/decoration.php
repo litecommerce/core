@@ -642,14 +642,14 @@ function license_check($get_license_data = false, $retcode = false) // {{{
             }
         }
 
-    } else if ($data["type"] == "development") {
+    } /*else if ($data["type"] == "development") {
         if (($_SERVER['REQUEST_METHOD'] != 'POST' || $_GET) && isset($_GET["target"]) && $_GET["target"] != "image") {
             // show a message periodically
             if (rand() % 25 == 0) {
                 die("This license is granted for development purpose only and should not be used on commercial base. Please send an e-mail to <a href='mailto: piracy@x-cart.com?Subject=PIRACY WARNING!'><u>piracy@x-cart.com</u></a><br><b>Refresh this page to get rid of this message");
             }
         }
-    }
+    }*/
 
     $licenseTime += getmicrotime() - $startTime; // Profiling
     return $data;

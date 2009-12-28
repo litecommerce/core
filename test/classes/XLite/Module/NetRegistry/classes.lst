@@ -1,0 +1,2 @@
+paymentmethod_netregistry_cc:modules/NetRegistry/kernel/PaymentMethod/netregistry_cc.php:paymentmethod_credit_card
+module_netregistry:modules/NetRegistry/NetRegistry.php:module

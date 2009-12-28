@@ -1,0 +1,16 @@
+corderstatus:modules/AOM/view/OrderStatus.php:module_aom_cstatusselect
+module_aom_cstatusselect:modules/AOM/view/StatusSelect.php:cstatusselect
+module_aom_order:modules/AOM/kernel/Order.php:order
+orderhistory:modules/AOM/kernel/OrderHistory.php:base
+module_aom_orderitem:modules/AOM/kernel/OrderItem.php:orderitem
+orderstatus:modules/AOM/kernel/OrderStatus.php:base
+module_aom_profile:modules/AOM/kernel/Profile.php:profile
+module_aom_widget:modules/AOM/base/Widget.php:widget
+admin_dialog_create_order:modules/AOM/admin/dialog/create_order.php:admin_dialog_order
+module_aom_admin_dialog_module:modules/AOM/admin/dialog/module.php:admin_dialog_module
+module_aom_admin_dialog_order:modules/AOM/admin/dialog/order.php:admin_dialog_order
+module_aom_admin_dialog_order_list:modules/AOM/admin/dialog/order_list.php:admin_dialog_order_list
+admin_dialog_order_statuses:modules/AOM/admin/dialog/order_statuses.php:admin_dialog
+module_aom_admin_dialog_orders_stats:modules/AOM/admin/dialog/orders_stats.php:admin_dialog_orders_stats
+module_aom_wysiwygmediator:modules/AOM/admin/WysiwygMediator.php:wysiwygmediator
+module_aom:modules/AOM/AOM.php:module

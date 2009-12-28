@@ -17,10 +17,10 @@
 ; ----------------------
 ;
 [database_details]
-hostspec = "localhost"
-database = "xlite"
-username = "xlite"
-password = "xlite"
+hostspec = "localhost:/tmp/mysql-3.2.3.sock"
+database = "vvs_xlite"
+username = "vvs"
+password = ",tkmubz"
 persistent = Off
 
 ;
@@ -62,9 +62,9 @@ persistent = Off
 ;   https://www.yourhost.com/
 ;
 [host_details]
-http_host = "www.litecommerce.com"
-https_host = "www.litecommerce.com"
-web_dir = "/shop"
+http_host = "xcart2-4311i.crtdev.local"
+https_host = "xcart2-4311i.crtdev.local"
+web_dir = "/~vvs/xlite/src"
 
 
 ;
@@ -168,7 +168,7 @@ memory_limit = "16M"
 ; Installation authcode is created authomatically and stored in this section.
 ;
 [installer_details]
-auth_code = ""
+auth_code = "X2JG2Z55"
 
 ; WARNING: Do not change the line below
 ; */ ?>

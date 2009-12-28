@@ -1,0 +1,2 @@
+paymentmethod_netbilling_cc:modules/Netbilling/kernel/PaymentMethod/netbilling_cc.php:paymentmethod_credit_card
+module_netbilling:modules/Netbilling/Netbilling.php:module

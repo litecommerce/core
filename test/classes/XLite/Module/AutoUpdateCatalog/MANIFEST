@@ -1,0 +1,6 @@
+module_id=900
+name=AutoUpdateCatalog
+description=HTML static catalog auto update module
+enabled=1
+version=2.10.RC5
+dependencies=HTMLCatalog

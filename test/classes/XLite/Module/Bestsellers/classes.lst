@@ -1,0 +1,3 @@
+cbestsellers:modules/Bestsellers/view/Bestsellers.php:component
+cmenubestsellers:modules/Bestsellers/view/MenuBestsellers.php:cbestsellers
+module_bestsellers:modules/Bestsellers/Bestsellers.php:module

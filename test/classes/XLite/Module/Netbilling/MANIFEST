@@ -1,0 +1,6 @@
+module_id=1315
+name=Netbilling
+description=Netbilling.com credit card payment processor
+enabled=1
+version=2.4
+dependencies=

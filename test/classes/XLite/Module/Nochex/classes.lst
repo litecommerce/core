@@ -1,0 +1,2 @@
+paymentmethod_nochex:modules/Nochex/kernel/PaymentMethod/nochex.php:paymentmethod_credit_card
+module_nochex:modules/Nochex/Nochex.php:module

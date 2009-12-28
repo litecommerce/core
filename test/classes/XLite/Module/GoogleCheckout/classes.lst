@@ -1,0 +1,16 @@
+cbuttonaltcheckout:modules/GoogleCheckout/view/ButtonAltCheckout.php:cbutton
+cgooglealtcheckout:modules/GoogleCheckout/view/GoogleAltCheckout.php:component
+module_googlecheckout_cstatusselect:modules/GoogleCheckout/view/StatusSelect.php:cstatusselect
+paymentmethod_google_checkout:modules/GoogleCheckout/kernel/PaymentMethod/google_checkout.php:paymentmethod
+https_googlecheckout:modules/GoogleCheckout/kernel/HTTPS.php:https
+module_googlecheckout_mailer:modules/GoogleCheckout/kernel/Mailer.php:mailer
+module_googlecheckout_order:modules/GoogleCheckout/kernel/Order.php:order
+module_googlecheckout_orderitem:modules/GoogleCheckout/kernel/OrderItem.php:orderitem
+module_googlecheckout_product:modules/GoogleCheckout/kernel/Product.php:product
+module_googlecheckout_shippingrate:modules/GoogleCheckout/kernel/ShippingRate.php:shippingrate
+xml_googlecheckout:modules/GoogleCheckout/kernel/XML.php:xml
+module_googlecheckout_dialog_checkout:modules/GoogleCheckout/dialog/checkout.php:dialog_checkout
+dialog_googlecheckout:modules/GoogleCheckout/dialog/gcheckout.php:dialog_checkout
+module_googlecheckout_admin_dialog_order:modules/GoogleCheckout/admin/dialog/order.php:admin_dialog_order
+admin_dialog_payment_method_googlecheckout:modules/GoogleCheckout/admin/dialog/payment_method.php:admin_dialog_payment_method
+module_googlecheckout:modules/GoogleCheckout/GoogleCheckout.php:module

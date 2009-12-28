@@ -65,6 +65,11 @@ if ($xlite_php53) { // PHP 5.3.X compatibility: hide E_DEPRECATED exceptions
 } else {
     error_reporting(E_ALL ^ E_NOTICE);
 }
+
+// Display all errors and warnings
+// error_reporting(E_ALL | E_STRICT);
+// ini_set('display_errors', true);
+
 //set_error_handler("errorHandler");
 
 // ignores client disconnect

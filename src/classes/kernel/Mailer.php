@@ -240,6 +240,9 @@ class Mailer extends Component
     */
     function send() // {{{
     {
+		// !!!!!!!!!!!!!!!!!!!!!!!!!!
+		return;
+
         if (!($this->get("to") == '')) {
             if (!isset($this->mail)) {
                 $this->logger->log("Mail FAILED: unknown error");

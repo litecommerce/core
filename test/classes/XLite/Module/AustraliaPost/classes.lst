@@ -1,0 +1,4 @@
+shipping_aupost:modules/AustraliaPost/kernel/Shipping/aupost.php:shipping_online
+admin_dialog_aupost:modules/AustraliaPost/admin/dialog/aupost.php:admin_dialog_shipping_settings
+module_australiapost_admin_dialog_shipping_settings:modules/AustraliaPost/admin/dialog/shipping_settings.php:admin_dialog_shipping_settings
+module_australiapost:modules/AustraliaPost/AustraliaPost.php:module

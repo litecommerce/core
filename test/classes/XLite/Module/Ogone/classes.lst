@@ -1,0 +1,3 @@
+paymentmethod_ogone_cc:modules/Ogone/kernel/PaymentMethod/ogone_cc.php:paymentmethod_credit_card
+sha1lib:modules/Ogone/kernel/sha1.php:
+module_ogone:modules/Ogone/Ogone.php:module

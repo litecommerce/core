@@ -1,0 +1,4 @@
+shipping_ups:modules/UPS/kernel/Shipping/ups.php:shipping_online
+module_ups_admin_dialog_shipping_settings:modules/UPS/admin/dialog/shipping_settings.php:admin_dialog_shipping_settings
+admin_dialog_ups:modules/UPS/admin/dialog/ups.php:admin_dialog_shipping_settings
+module_ups:modules/UPS/UPS.php:module

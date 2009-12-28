@@ -1,0 +1,3 @@
+paymentmethod_protxdirect_cc:modules/ProtxDirect/kernel/PaymentMethod/protxdirect_cc.php:paymentmethod_credit_card
+dialog_protxdirect_checkout:modules/ProtxDirect/dialog/protxdirect.php:dialog_checkout
+module_protxdirect:modules/ProtxDirect/ProtxDirect.php:module

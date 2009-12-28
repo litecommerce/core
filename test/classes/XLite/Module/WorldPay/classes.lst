@@ -1,0 +1,2 @@
+paymentmethod_worldpay:modules/WorldPay/kernel/PaymentMethod/worldpay.php:paymentmethod_credit_card
+module_worldpay:modules/WorldPay/WorldPay.php:module

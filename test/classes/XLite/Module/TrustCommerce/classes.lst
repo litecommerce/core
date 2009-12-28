@@ -1,0 +1,2 @@
+paymentmethod_trustcommerce_cc:modules/TrustCommerce/kernel/PaymentMethod/trustcommerce_cc.php:paymentmethod_credit_card
+module_trustcommerce:modules/TrustCommerce/TrustCommerce.php:module

@@ -1,5 +1,5 @@
 #!/usr/local/bin/php -q
-<?
+<?php
 set_time_limit(0);
 error_reporting(E_ALL ^ E_NOTICE);
 $config = parse_ini_file("etc/config.local.php");

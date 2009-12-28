@@ -938,7 +938,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
     */
     function checkExpressionSyntax($exp, &$errors, $tax_name = 'Tax')
     {
-        if ($exp{0} == '=') {
+        if (substr($exp, 0, 1) == '=') {
             $exp = substr($exp, 1);
         } else {
             return false;
