@@ -60,7 +60,7 @@ class XLite_Module_ProductOptions_Controller_Admin_AddProduct extends XLite_Cont
 				$gpo_categories = $global_option->getCategories();
 				$intersect = array_intersect($gpo_categories,$product_categories);
 				if (empty($gpo_categories) || (!empty($gpo_categories) && !empty($intersect))) {
-					$po = func_new("ProductOption");
+					$po = new XLite_Module_ProductOptions_Model_ProductOption();
 					$po->set("properties",$global_option->get("properties"));
 					$po->set("product_id",$this->get("product_id"));
 					$po->set("parent_option_id",$global_option->get("option_id"));

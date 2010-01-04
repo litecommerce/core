@@ -78,7 +78,7 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product
 
     function hasOptions()
     {
-        $po = func_new("ProductOption");
+        $po = new XLite_Module_ProductOptions_Model_ProductOption();
         return $po->hasOptions($this->get("product_id"));
     }
 
@@ -90,7 +90,7 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product
 
     function hasExceptions()
     {
-        $pe = func_new("OptionException");
+        $pe = new XLite_Module_ProductOptions_Model_OptionException();
         return $pe->hasExceptions($this->get("product_id"));
     }
 
@@ -103,7 +103,7 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product
 
     function getOptionValidator()
     {
-        $pv = func_new("OptionValidator");
+        $pv = new XLite_Module_ProductOptions_Model_OptionValidator();
         $pv->set("product_id", $this->get("product_id"));
         return $pv->get("javascript_code");
     }
@@ -132,9 +132,9 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product
             }
         }
         // delete product options, exceptions and javascript validator
-        $option = func_new("ProductOption");
-        $exception = func_new("OptionException");
-        $validator = func_new("OptionValidator");
+        $option = new XLite_Module_ProductOptions_Model_ProductOption();
+        $exception = new XLite_Module_ProductOptions_Model_OptionException();
+        $validator = new XLite_Module_ProductOptions_Model_OptionValidator();
         $this->db->query("DELETE FROM ".$option->getTable(). " WHERE product_id='".$this->get("product_id")."'");
         $this->db->query("DELETE FROM ".$exception->getTable(). " WHERE product_id='".$this->get("product_id")."'");
         $this->db->query("DELETE FROM ".$validator->getTable(). " WHERE product_id='".$this->get("product_id")."'");
@@ -154,12 +154,12 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product
 
 			$id = $p->get("product_id");
 
-			$clone_option = func_new("ProductOption");
+			$clone_option = new XLite_Module_ProductOptions_Model_ProductOption();
 			$options = $clone_option->findAll("product_id='".$this->get("product_id")."'");
 		
 			if(empty($options))	return $p;
 			foreach($options as $option) {
-				$clone_option = func_new("ProductOption");
+				$clone_option = new XLite_Module_ProductOptions_Model_ProductOption();
 				$clone_option->set("properties",$option->get("properties"));
 				$clone_option->set("option_id","");
 				$clone_option->set("product_id",$id);
@@ -167,7 +167,7 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product
 			}
  
 			// Clone validator JS code
-			$validator = func_new("OptionValidator", $this->get("product_id"));
+			$validator = new XLite_Module_ProductOptions_Model_OptionValidator($this->get("product_id"));
 			$js_code = $validator->get("javascript_code");
 			if ( strlen(trim($js_code)) > 0 ) {
 				$validator->set("product_id", $id);
@@ -176,10 +176,10 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product
 			}
 			
 			// Clone options exceptions
-			$foo = func_new("OptionException");
+			$foo = new XLite_Module_ProductOptions_Model_OptionException();
 			$exceptions = $foo->findAll("product_id = '" . $this->get("product_id") . "'");
 			foreach ($exceptions as $exception) {			
-				$optionException = func_new("OptionException");
+				$optionException = new XLite_Module_ProductOptions_Model_OptionException();
 				$optionException->set("product_id", $id);
 				$optionException->set("exception", $exception->get("exception"));
 				$optionException->create();
@@ -224,7 +224,7 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product
     	        	if ($class_name == "ProductOption" && $info["object_product_id"] == 0) {
     	        		continue;	// global product option
     	        	}
-					$obj = func_new($class_name, $info["object_key"]);
+					$obj = new $class_name($info["object_key"]);
             	    $obj->delete();
 	            }
     	    }			
@@ -256,7 +256,7 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product
 		}
 
 		if ($max_options && $this->get("tracking")) {
-			$inv = func_new("Inventory");
+			$inv = new XLite_Module_InventoryTracking_Model_Inventory();
 			$product_id = $this->get("product_id");
 			$out_of_stock = $inv->count("inventory_id LIKE '$product_id|%' AND amount <= 0");
 			return ($out_of_stock < $max_options);
@@ -313,7 +313,7 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product
 			$globalProductOptions = array();
 			foreach($productOptions as $po) {
 				if ($po->get("parent_option_id") > 0) {
-					$gpo = func_new("ProductOption", $po->get("parent_option_id"));
+					$gpo = new XLite_Module_ProductOptions_Model_ProductOption($po->get("parent_option_id"));
 					$categories = $gpo->getCategories();
 					$result = array_intersect($categories, $deleteOnly);
 					if (count($result) > 0 && count(array_intersect($categories, $newCategories)) == 0) {
@@ -324,7 +324,7 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product
 		}
 
 		if (count($addOnly) > 0) {
-			$gpo = func_new("ProductOption");
+			$gpo = new XLite_Module_ProductOptions_Model_ProductOption();
 			$gpos = $gpo->findAll("product_id='0' AND parent_option_id='0'");
 			if (is_array($gpos)) {
 				foreach($gpos as $gp) {
@@ -340,7 +340,7 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product
 							}
 						}
 						if ($need_update) {
-							$po = func_new("ProductOption");
+							$po = new XLite_Module_ProductOptions_Model_ProductOption();
 							$po->set("properties", $gp->get("properties"));
 							$po->set("option_id", null);
 							$po->set("product_id", $this->get("product_id"));

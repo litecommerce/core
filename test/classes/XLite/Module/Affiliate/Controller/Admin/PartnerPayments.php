@@ -102,7 +102,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Cont
     function action_mark_paid() // {{{
     {
         foreach ((array)$this->get("payment_paid") as $id) {
-            $p = func_new("PartnerPayment");
+            $p = new XLite_Module_Affiliate_Model_PartnerPayment();
             $p->pay($id);
         }
     } // }}}
@@ -111,7 +111,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Cont
     {
         if (is_null($this->payments)) {
             $this->payments = array();
-            $pp = func_new("PartnerPayment");
+            $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
             $payments = $pp->findAll();
             // summarize payments
             array_map(array(&$this, 'summarize'), $payments);

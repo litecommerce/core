@@ -100,7 +100,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
         }
 
 		// Clear UPSOnlineTools cache
-		$ups = func_new("Shipping_ups");
+		$ups = new XLite_Module_UPS_Model_Shipping_Ups();
 		$ups->_cleanCache("ups_online_tools_cache");
     }
 
@@ -117,7 +117,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
     function action_test() 
     {
 		include_once "modules/UPSOnlineTools/encoded.php";
-        $this->ups = func_new("Shipping_ups");
+        $this->ups = new XLite_Module_UPS_Model_Shipping_Ups();
 
 		$ptype = $this->xlite->get("config.UPSOnlineTools.packing_algorithm");
 		$total_weight = $this->get("pounds");
@@ -198,7 +198,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
             $countriesArray[$country->get("code")]["number"] = 0;
             $countriesArray[$country->get("code")]["data"] = array();
 
-            $state = func_new("State");
+            $state = new XLite_Model_State();
             $states = $state->findAll("country_code='".$country->get("code")."'");
             if (is_array($states) && count($states) > 0) {
                 $countriesArray[$country->get("code")]["number"] = count($states);

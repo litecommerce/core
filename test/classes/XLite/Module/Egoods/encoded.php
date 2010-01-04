@@ -86,7 +86,7 @@ function func_moduleEgoods_send_pins(&$order)
 		if ($items[$i]->isPin()) {
 			$items[$i]->createPins();
 			if ($items[$i]->get('pincodes') != '') {
-				$mail = func_new("Module_Egoods_Mailer");
+				$mail = new XLite_Module_Egoods_Model_Mailer();
 				$mail->item = $items[$i]; 
 				$mail->compose(
 						$order->config->get("Company.site_administrator"),

@@ -133,7 +133,7 @@ class XLite_Module_InventoryTracking_Model_Order extends XLite_Model_Order
         require_once "modules/InventoryTracking/encoded.php";
         // update product(s) inventory        
         foreach ($this->get("items") as $item) {
-            $inventory = func_new("Inventory");
+            $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
             $key = $item->get("key");
 			if ($this->xlite->get("ProductOptionsEnabled") && $item->get("product.productOptions") && $item->get("product.tracking")) {
                 // product has product options

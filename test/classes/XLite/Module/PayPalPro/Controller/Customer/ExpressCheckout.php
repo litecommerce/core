@@ -69,7 +69,7 @@ class XLite_Module_PayPalPro_Controller_Customer_ExpressCheckout extends XLite_C
 	{
 		if (!empty($_GET["token"])) {
 			$profile = new XLite_Model_Profile();
-			$pm = func_new("PaymentMethod","paypalpro_express");
+			$pm = new XLite_Model_PaymentMethod("paypalpro_express");
 			$response = $pm->sendExpressCheckoutDetailsRequest($_GET["token"]);
   			$details = $response["GETEXPRESSCHECKOUTDETAILSRESPONSEDETAILS"]["PAYERINFO"];
         if ($response["ACK"] == "Success") {

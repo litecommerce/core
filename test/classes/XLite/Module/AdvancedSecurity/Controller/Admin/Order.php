@@ -62,7 +62,7 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_Order extends XLite_Control
     function getGPG()
     {
         if (is_null($this->gpg)) {
-            $this->gpg = func_new("GPG");
+            $this->gpg = new XLite_Module_AdvancedSecurity_Model_GPG();
         }
         return $this->gpg;
     }

@@ -223,7 +223,7 @@ document.location="<?php echo $url; ?>";
         } else if ($this->post["action"] == "add") {
             // category_id is a parent category ID
             $new_category_id = $this->updateLog["category_id"];
-            $category = func_new("Category", $new_category_id);
+            $category = new XLite_Model_Category($new_category_id);
             if ($category->is("enabled")) {
                 func_category_add($this, $new_category_id);
                 func_category_add($this, $this->category_id);
@@ -249,14 +249,14 @@ document.location="<?php echo $url; ?>";
             return;
         }
         if (isset($this->category_id)) {
-            $category = func_new("Category", $this->category_id);
+            $category = new XLite_Model_Category($this->category_id);
             if ($category->is("enabled")) {
 				func_product_update($this, $product_id, $this->category_id, true);
                 func_category_update($this, $this->category_id, $product_id, true);
             }
         } elseif (isset($this->product_categories)) {
             foreach ((array)$this->product_categories as $category_id) {
-                $category = func_new ("Category", $category_id);
+                $category = new XLite_Model_Category($category_id);
                 if ($category->is("enabled")) {
 					func_product_update($this, $product_id, $category_id, true);
                     func_category_update($this, $category_id, $product_id, true);
@@ -283,7 +283,7 @@ document.location="<?php echo $url; ?>";
             func_category_update($this, $category_id, $this->product_id, true, true);
         }
         foreach ($addOnly as $category_id) {
-            $category = func_new ("Category", $category_id);
+            $category = new XLite_Model_Category($category_id);
             if ($category->is("enabled")) {
                 func_category_update($this, $category_id, $this->product_id, true, true);
             }
@@ -325,7 +325,7 @@ document.location="<?php echo $url; ?>";
         $updateCategories = array();
         if ($this->post["action"] == "update") {
             foreach ($this->product_orderby as $product_id => $num) {
-                $product = func_new("Product", $product_id);
+                $product = new XLite_Model_Product($product_id);
                 $categories = $product->get("categories");
                 for ($i = 0; $i < count($categories); $i ++) {
                     func_product_update($this, $product_id, $categories[$i]->get("category_id"), true);
@@ -404,7 +404,7 @@ document.location="<?php echo $url; ?>";
         }
     	if (count($category_ids) > 0) {
             foreach ($category_ids as $category_id => $foo) {
-                $category = func_new("Category", $category_id);
+                $category = new XLite_Model_Category($category_id);
                 $parent = $category->get("parent");
                 $topID = $this->get("xlite.factory.Category.topCategory.category_id");
                 // top category updated - rebuild the whole catalog
@@ -430,7 +430,7 @@ document.location="<?php echo $url; ?>";
         }
 
         foreach ($this->post["categories"] as $category_id) {
-            $category = func_new("Category", $category_id);
+            $category = new XLite_Model_Category($category_id);
             $parent = $category->get("parent");
             $topID = $this->get("xlite.factory.Category.topCategory.category_id");
             // top category updated - rebuild the whole catalog

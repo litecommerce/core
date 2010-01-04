@@ -186,7 +186,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_Category extends XLite_Cont
 
 		// rebuild cache if new category added
 		if ($this->get("config.FlyoutCategories.category_autoupdate")) {
-			$dialog = func_new("Admin_Dialog_categories");
+			$dialog = new XLite_Controller_Admin_Categories();
 			$dialog->action_build_categories($delete_return_url);
 		}
 	}

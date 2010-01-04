@@ -72,11 +72,11 @@ class XLite_Controller_Admin_ShippingZones extends XLite_Controller_Admin_Shippi
     {
         if ($_POST["target_country_zone"] == 'new') {
             // create new zone
-            $zone = func_new("ShippingZone");
+            $zone = new XLite_Model_ShippingZone();
             $zone->create();
         } else {
             // move to specified zone
-            $zone = func_new("ShippingZone",$_POST["target_country_zone"]);
+            $zone = new XLite_Model_ShippingZone($_POST["target_country_zone"]);
         }
         // move selected countries
         if (isset($_POST["countries"])) {

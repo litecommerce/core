@@ -95,7 +95,7 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 
 	function action_update_egood() // {{{
 	{
-		$df = func_new("DownloadableFile", $_POST["file_id"]);
+		$df = new XLite_Module_Egoods_Model_DownloadableFile($_POST["file_id"]);
 		$df->set("delivery", $_POST["delivery"]);
 
 		if 
@@ -130,7 +130,7 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 			return;
 		}
 		
-		$df = func_new('DownloadableFile', $_POST['file_id']);
+		$df = new XLite_Module_Egoods_Model_DownloadableFile($_POST['file_id']);
 		@unlink($df->get('data'));
 		$df->delete();
 		$link = new XLite_Module_Egoods_Model_DownloadableLink();
@@ -148,7 +148,7 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 
 	function action_add_link() // {{{
 	{
-		$dl = func_new('DownloadableLink', $_POST['new_acc']);
+		$dl = new XLite_Module_Egoods_Model_DownloadableLink($_POST['new_acc']);
 		$dl->set('file_id', $_POST['file_id']);
 		$dl->set('exp_time', mktime(0, 0, 0, $_POST['new_exp_dateMonth'], $_POST['new_exp_dateDay'], $_POST['new_exp_dateYear']));
 		$dl->set('available_downloads', $_POST['new_downloads']);
@@ -163,7 +163,7 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 			return;
 		}	
 		foreach($_POST['selected_links'] as $access_key) {
-			$dl = func_new('DownloadableLink');
+			$dl = new XLite_Module_Egoods_Model_DownloadableLink();
 			if ($dl->find('access_key=' . "'" . $access_key . "'")) {
 				$dl->delete();
 			}
@@ -196,7 +196,7 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 			return;
 		}	
 		foreach($_POST['selected_pins'] as $pin_id) {
-			$p = func_new('PinCode', $pin_id);
+			$p = new XLite_Module_Egoods_Model_PinCode($pin_id);
 			$p->delete();
 		}
 	} // }}}
@@ -207,7 +207,7 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 			return;
 		}	
 		foreach($_POST['selected_pins'] as $pin_id) {
-			$p = func_new('PinCode', $pin_id);
+			$p = new XLite_Module_Egoods_Model_PinCode($pin_id);
 			$p->set('enabled', false);
 			$p->update();
 		}
@@ -219,7 +219,7 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 			return;
 		}	
 		foreach($_POST['selected_pins'] as $pin_id) {
-			$p = func_new('PinCode', $pin_id);
+			$p = new XLite_Module_Egoods_Model_PinCode($pin_id);
 			$p->set('enabled', true);
 			$p->update();
 		}
@@ -231,7 +231,7 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 			return;
 		}	
 		foreach($_POST['selected_pins'] as $pin_id) {
-			$p = func_new('PinCode', $pin_id);
+			$p = new XLite_Module_Egoods_Model_PinCode($pin_id);
 			$p->set('order_id', 0);
 			$p->set('item_id', '');
 			$p->update();
@@ -241,7 +241,7 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 	function getPinCodes() // {{{
 	{
 		if (!isset($this->pin_codes)) {
-			$p = func_new('PinCode');
+			$p = new XLite_Module_Egoods_Model_PinCode();
 			$this->pin_codes = $p->findAll('product_id=' . $this->get('product_id') . 
 												($this->get("pin_enabled") != null ? 
 												' AND enabled=' . intval($this->get('pin_enabled')) : 
@@ -267,7 +267,7 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 
 	function action_update_pin_cmd_line() // {{{
 	{
-		$pin_settings = func_new('PinSettings');
+		$pin_settings = new XLite_Module_Egoods_Model_PinSettings();
 		$action = '';
 		if (!$pin_settings->find("product_id=" . $this->get('product.product_id'))) {
 			$action = 'create';

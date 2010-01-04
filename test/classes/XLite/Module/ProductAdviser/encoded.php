@@ -10,7 +10,7 @@ function ProductAdviser_updateInventory(&$_this, &$item)
 {
 	if ($_this->xlite->get("PA_InventorySupport") && $_this->config->get("ProductAdviser.customer_notifications_enabled")) {
 		if ($item->get("outOfStock")) {
-			$rejectedItemInfo = func_new("stdClass");
+			$rejectedItemInfo = new StdClass();
         	$rejectedItem = $item;
         	$product = $item->get("product");
         	$rejectedItemInfo->product_id = $product->get("product_id");
@@ -48,7 +48,7 @@ function ProductAdviser_checkedOut(&$products)
                 $statistic->update();
             }
 
-			$statistic = func_new("ProductAlsoBuy");
+			$statistic = new XLite_Module_ProductAdviser_Model_ProductAlsoBuy();
             if(!$statistic->find("product_id='".$products[$i]."' AND product_id_also_buy='".$product_id."'")) {
             	$statistic->set("product_id", $products[$i]);
             	$statistic->set("product_id_also_buy", $product_id);
@@ -106,7 +106,7 @@ function ProductAdviser_getProductsAlsoBuy(&$_this)
 	}
 
 	$productId = $_this->get("product_id");
-    $statistic = func_new("ProductAlsoBuy");
+    $statistic = new XLite_Module_ProductAdviser_Model_ProductAlsoBuy();
     $_this->_ProductsAlsoBuy = $statistic->findAll("product_id='$productId'");
 	if (is_array($_this->_ProductsAlsoBuy)) {
 		foreach($_this->_ProductsAlsoBuy as $p_key => $product) {
@@ -163,7 +163,7 @@ function ProductAdviser_action_add(&$_this)
 {
 	if ($_this->xlite->get("PA_InventorySupport") && $_this->config->get("ProductAdviser.customer_notifications_enabled")) {
 		if (!is_null($_this->cart->get("outOfStock"))) {
-			$rejectedItemInfo = func_new("stdClass");
+			$rejectedItemInfo = new StdClass();
         	$rejectedItem = new XLite_Model_OrderItem();
         	$product = $_this->get("product");
         	$rejectedItemInfo->product_id = $product->get("product_id");

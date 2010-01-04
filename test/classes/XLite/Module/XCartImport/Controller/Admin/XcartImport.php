@@ -359,7 +359,7 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
     function saveRow($row, $path)
     {
         if ($path != 'products_categories') {
-            $obj = func_new("$path");
+            $obj = new $path();
     		if (is_object($obj)) {
     			// connecting to LC database
     			$obj->db->connect();

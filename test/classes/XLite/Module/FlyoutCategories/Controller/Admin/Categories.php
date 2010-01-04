@@ -316,7 +316,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_Categories extends XLite_Co
 
 		// Set "Flyout Categories built" flag
 		if ( $success ) {
-			$config = func_new("Config");
+			$config = new XLite_Model_Config();
 			$config->createOption("FlyoutCategories", "flyout_categories_built", 1);
 			$config->createOption("FlyoutCategories", "category_changed", 0);
 			$config->createOption("FlyoutCategories", "last_categories_processed", $this->_categories_processed);
@@ -422,7 +422,7 @@ function opera_click() {
 						}
 
         				if ($item->is_first) {
-                            $template = func_new("Object");
+                            $template = new XLite_Base_Object();
 
         					// Set Advanced options
         					$options = $scheme->get("options");
@@ -544,7 +544,7 @@ function opera_click() {
 			$depth = $v->depth;
 
 			$nodes[$k] = (array)$v;
-			$category = func_new("Category", $v->category_id);
+			$category = new XLite_Model_Category($v->category_id);
 			$nodes[$k]["name"] = $category->get("name");
 			$category = null;
 
@@ -622,7 +622,7 @@ function opera_click() {
 				$scheme->$k = $v["value"];
 			}
 
-			$template = func_new("Object");
+			$template = new XLite_Base_Object();
 			$template->set("scheme", $scheme);
 			$template->set("nodes", $nodes);
 

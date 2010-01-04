@@ -134,7 +134,7 @@ EOT;
 
 	function finishExpressCheckoutRequest(&$order, &$payment) // {{{
 	{
-		$pm = func_new("PaymentMethod","paypalpro");
+		$pm = new XLite_Model_PaymentMethod("paypalpro");
 		$payment = $pm->get("params.pro");
         $cart = $order->get("properties");
 		$invoiceId  = $payment['prefix'].$cart['order_id'];

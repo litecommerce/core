@@ -131,7 +131,7 @@ class XLite_Controller_Admin_States extends XLite_Controller_Admin_Abstract
         }
         // use POST'ed data to modify state properties
         foreach ($stateData as $state_id => $state_data) {
-            $state = func_new("State", $state_id);
+            $state = new XLite_Model_State($state_id);
             $state->set("properties", $state_data);
             $state->update();
         }
@@ -145,7 +145,7 @@ class XLite_Controller_Admin_States extends XLite_Controller_Admin_Abstract
             $states = $_POST["delete_states"];
         }
         foreach ($states as $id => $state_id) {
-            $state = func_new("State", $state_id);
+            $state = new XLite_Model_State($state_id);
             $state->delete();
         }    
         $this->obligatorySetStatus("deleted");

@@ -220,7 +220,7 @@ class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_Abstract
 	{
 		if (isset($_POST["order_ids"])) {
 			foreach ($_POST["order_ids"] as $oid => $value) {
-				$order = func_new("Order",$oid);
+				$order = new XLite_Model_Order($oid);
 				$order->remove();
 			}
 		}

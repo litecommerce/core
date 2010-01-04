@@ -98,7 +98,7 @@ class XLite_Module_Egoods_Model_PinCode extends XLite_Model_Abstract
 				$product = new XLite_Model_Product($values['product_id']);
 				$data[] = $this->_stripSpecials($product->get("name"));
 			} elseif ($field == "category") {
-                $product = func_new("Product",$values['product_id']);
+                $product = new XLite_Model_Product($values['product_id']);
 				$category = new XLite_Model_Category();
 				$data[] =  $category->createCategoryField($product->get("categories"));
 			} elseif (isset($values[$field])) {
@@ -117,7 +117,7 @@ class XLite_Module_Egoods_Model_PinCode extends XLite_Model_Abstract
 
         echo "<b>Importing CSV file line # $line_no: </b>";
 
-		$product = func_new("Product");
+		$product = new XLite_Model_Product();
 		$product = $product->findImportedProduct("",$properties['category'],$properties['product'],false);
 		if (!is_object($product)) {
 			echo "product <b>\"".$properties['product']."\"</b> not found in category <b>\"".$properties['category']."\"</b>. Pin code not imported.<br>";

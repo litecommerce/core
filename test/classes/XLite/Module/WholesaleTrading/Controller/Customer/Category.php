@@ -182,7 +182,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
 			foreach($opt_products as $key=>$value) {
 				foreach ($value as $idx=>$qty) {
 					if ($qty != "" && $qty > 0) {
-						$p = func_new("Product", $key);
+						$p = new XLite_Model_Product($key);
 						if ($this->xlite->get("ProductOptionsEnabled") && $p->hasOptions()) {
 							$price = $p->getFullPrice($qty,$idx);
 							$this->wholesale_prices[$key][$idx] = $price;
@@ -254,7 +254,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
 		if ($pl->find("product_id=" . $product_id)) {
 			$hasError = false;
 			$error = array();
-			$p = func_new("Product", $product_id);
+			$p = new XLite_Model_Product($product_id);
 			if (($amount < $pl->get('min') && $qty > 0) ) {
 				$hasError = true;
 				$error["type"] = 'min';
@@ -283,11 +283,11 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
 		// check for inventory
 		if ($this->xlite->get("InventoryTrackingEnabled")) {
 			$inventory = new XLite_Module_InventoryTracking_Model_Inventory();
-			$p = func_new("Product", $product_id);
+			$p = new XLite_Model_Product($product_id);
 			
 			if ($this->xlite->get("ProductOptionsEnabled") && $p->hasOptions() && isset($option_idx)) {
 				if ($amount > $p->getAmountByOptions($option_idx) && $p->getAmountByOptions($option_idx) > -1) {
-					$p = func_new("Product", $product_id);
+					$p = new XLite_Model_Product($product_id);
 					$error["pr_name"] = $p->get("name");
 					$error["type"] = 'max';
 					$error["amount"] = $p->getAmountByOptions($option_idx);
@@ -345,14 +345,14 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
 	function isProductOutOfStock($product_id, $option_idx = null)
 	{
 		if (!$this->xlite->get("InventoryTrackingEnabled")) return false;
-		$product = func_new("Product", $product_id);
+		$product = new XLite_Model_Product($product_id);
 		if ($this->xlite->get("ProductOptionsEnabled") && $product->hasOptions() && $product->get("tracking") && (!is_null($option_idx))) {
 			$avail = $product->getAmountByOptions($option_idx);
 			if ($avail == -1) return false; // unlimited
 			elseif ($avail > 0) return false; // in stock
 			else return true; // out of stock
 		} else {
-			$inventory = func_new("Inventory");
+			$inventory = new XLite_Module_InventoryTracking_Model_Inventory();
 			$product_id = $product->get("product_id");
 			if ($inventory->find("inventory_id='$product_id' AND enabled=1")) {
 				return $inventory->get('amount') <= 0;

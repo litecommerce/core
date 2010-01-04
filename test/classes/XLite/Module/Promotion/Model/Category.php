@@ -59,7 +59,7 @@ class XLite_Module_Promotion_Model_Category extends XLite_Model_Category
 		$bpDeletedCategories = $bp->findAll("category_id='" . $this->get("category_id") . "'");
 		if (is_array($bpDeletedCategories) && count($bpDeletedCategories) > 0) {
 			foreach($bpDeletedCategories as $bpdp) {
-				$sodp = func_new("SpecialOffer", $bpdp->get("offer_id"));
+				$sodp = new XLite_Module_Promotion_Model_SpecialOffer($bpdp->get("offer_id"));
 				$sodp->markInvalid();
 			}
 		}

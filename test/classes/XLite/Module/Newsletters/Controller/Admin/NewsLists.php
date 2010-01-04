@@ -57,7 +57,7 @@ class XLite_Module_Newsletters_Controller_Admin_NewsLists extends XLite_Controll
 
     function action_add_list()
     {
-        $nl = func_new("NewsList");
+        $nl = new XLite_Module_Newsletters_Model_NewsList();
         $nl->set("properties", $_POST);
         $nl->create();
 
@@ -66,7 +66,7 @@ class XLite_Module_Newsletters_Controller_Admin_NewsLists extends XLite_Controll
 
     function action_update_list()
     {
-		$nl = func_new("NewsList");
+		$nl = new XLite_Module_Newsletters_Model_NewsList();
 		if ($nl->find("name='".addslashes($this->get("name"))."' AND list_id<>'".intval($this->get("list_id"))."'")) {
 			$this->params[] = "errorDesc";
 			$this->set("errorDesc", "newsExists");
@@ -74,14 +74,14 @@ class XLite_Module_Newsletters_Controller_Admin_NewsLists extends XLite_Controll
 			return;
 		}
 
-        $nl = func_new("NewsList", $this->get("list_id"));
+        $nl = new XLite_Module_Newsletters_Model_NewsList($this->get("list_id"));
         $nl->set("properties", $_POST);
         $nl->update();
     }
 
     function action_delete_list()
     {
-        $nl = func_new("NewsList", $this->get("list_id"));
+        $nl = new XLite_Module_Newsletters_Model_NewsList($this->get("list_id"));
         $nl->delete();
 
         $this->set("actionPerformed", true);

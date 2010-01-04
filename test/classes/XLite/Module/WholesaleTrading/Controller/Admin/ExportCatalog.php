@@ -164,7 +164,7 @@ class XLite_Module_WholesaleTrading_Controller_Admin_ExportCatalog extends XLite
         global $DATA_DELIMITERS;
 
         // save layout & export
-        $dlg = func_new("Admin_Dialog_import_catalog");
+        $dlg = new XLite_Controller_Admin_ImportCatalog();
         $dlg->action_layout("purchase_limit_layout");
         $this->startDownload("purchase_limit.csv");
         $pl = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();

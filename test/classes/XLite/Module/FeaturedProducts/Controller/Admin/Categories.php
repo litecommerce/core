@@ -85,7 +85,7 @@ class XLite_Module_FeaturedProducts_Controller_Admin_Categories extends XLite_Co
 		if (isset($_POST["delete"])) {
 			$products = array();
 			foreach ($_POST["delete"] as $product_id => $value) {
-				$products[] = func_new("Product",$product_id);
+				$products[] = new XLite_Model_Product($product_id);
 			}
 			$category = new XLite_Model_Category($this->category_id);
 			$category->deleteFeaturedProducts($products);

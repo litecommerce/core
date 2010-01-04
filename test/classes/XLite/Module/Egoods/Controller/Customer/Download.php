@@ -108,7 +108,7 @@ class XLite_Module_Egoods_Controller_Customer_Download extends XLite_Controller_
 	{
 		$file_id = $_REQUEST['file_id'];
 		$time = time();
-		$df = func_new('DownloadableFile', $file_id);
+		$df = new XLite_Module_Egoods_Model_DownloadableFile($file_id);
 		$product_id = $df->get('product_id');
 		
 		$product = new XLite_Model_Product($product_id);
@@ -133,7 +133,7 @@ class XLite_Module_Egoods_Controller_Customer_Download extends XLite_Controller_
 		$this->readFile($df->get('data'));
 
 		// save download statistics
-		$ds = func_new('DownloadsStatistics');
+		$ds = new XLite_Module_Egoods_Model_DownloadsStatistics();
 		$ds->set('file_id', $df->get('file_id'));
 		$ds->set('date', $time);
 		$ds->set('headers', "HTTP_REFERER=" . $_SERVER["HTTP_REFERER"] . ", REMOTE_ADDR=" . $_SERVER["REMOTE_ADDR"]);

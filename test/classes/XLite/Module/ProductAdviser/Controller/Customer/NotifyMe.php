@@ -152,7 +152,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
 		}
 		$this->email = trim($_REQUEST["email"]);
 
-		$notification = func_new("CustomerNotification");
+		$notification = new XLite_Module_ProductAdviser_Model_Notification();
     	$check = array();
 		$notification->set("type", CUSTOMER_NOTIFICATION_PRICE);
         $check[] = "type='" . CUSTOMER_NOTIFICATION_PRICE . "'";

@@ -73,7 +73,7 @@ class XLite_Module_DetailedImages_Model_Product extends XLite_Model_Product
 
 		$images = $this->get("detailedImages");
 		foreach ($images as $image) {
-			$newImage = func_new("DetailedImage");
+			$newImage = new XLite_Module_DetailedImages_Model_DetailedImage();
 			$newImage->set("alt", $image->get("alt"));
 			$newImage->set("enabled", $image->get("enabled"));
 			$newImage->set("order_by", $image->get("order_by"));
@@ -106,7 +106,7 @@ class XLite_Module_DetailedImages_Model_Product extends XLite_Model_Product
 
 		if (is_array($result) && count($result) > 0) {
 			foreach ($result as $info) {
-				$di = func_new("DetailedImage", $info["image_id"]);
+				$di = new XLite_Module_DetailedImages_Model_DetailedImage($info["image_id"]);
 				$di->delete();
 			}
 		}

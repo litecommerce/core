@@ -148,7 +148,7 @@ class XLite_Module_ProductAdviser_Main extends XLite_Model_Module
 			}
 		}
 		if ($number_updated) {
-			$cfg = func_new("Config");
+			$cfg = new XLite_Model_Config();
             $cfg->createOption("ProductAdviser", $option, $number);
 		}
 	}

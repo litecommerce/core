@@ -96,7 +96,7 @@ class XLite_Controller_Admin_Memberships extends Admin_Dialog // {{{
 			@set_time_limit(0);
             $memberships = $this->get("deleted_memberships");
 			foreach($memberships as $membership_id) {
-				$membership = func_new("Membership", $membership_id);
+				$membership = new XLite_Model_Membership($membership_id);
 			    $m = $membership->get('membership');
                 $this->updateProfilesMembership($this->getMembershipProfiles($m), $m, '', true);
                 $membership->delete();
@@ -108,7 +108,7 @@ class XLite_Controller_Admin_Memberships extends Admin_Dialog // {{{
 	{
 		if ($this->get("new_membership")) {
 			$new_membership = $this->get("new_membership");
-			$membership = func_new("Membership");
+			$membership = new XLite_Model_Membership();
 
 			$new_membership['membership'] = $membership->stripInvalidData($new_membership['membership']);
 			if (strlen($new_membership['membership']) <= 0) {
@@ -136,7 +136,7 @@ class XLite_Controller_Admin_Memberships extends Admin_Dialog // {{{
 	
 	function getMemberships() // {{{
 	{
-		$membership = func_new("Membership");
+		$membership = new XLite_Model_Membership();
 		return $membership->findAll();
 	} // }}}
 

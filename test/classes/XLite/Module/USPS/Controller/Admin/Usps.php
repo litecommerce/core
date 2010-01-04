@@ -111,7 +111,7 @@ class XLite_Module_USPS_Controller_Admin_Usps extends XLite_Controller_Admin_Shi
     */
     function action_int_test()
     {
-        $this->usps = func_new("Shipping_usps");
+        $this->usps = new XLite_Module_USPS_Model_Shipping_Usps();
         $this->set("properties", $_GET);
         $this->rates = $this->usps->_queryInternationalRates($this->get("ounces"), $this->get("destinationCountry"), $this->usps->get("options"));
         $this->testResult = true;
@@ -123,7 +123,7 @@ class XLite_Module_USPS_Controller_Admin_Usps extends XLite_Controller_Admin_Shi
     */
     function action_nat_test()
     {
-        $this->usps = func_new("Shipping_usps");
+        $this->usps = new XLite_Module_USPS_Model_Shipping_Usps();
         $this->set("properties", $_GET);
         $this->ZipOrigination = $this->config->get("Company.location_zipcode");
         $this->rates = $this->usps->_queryNationalRates($this->get("ounces"), $this->get("ZipOrigination"), $this->get("ZipDestination"), $this->usps->get("options"));

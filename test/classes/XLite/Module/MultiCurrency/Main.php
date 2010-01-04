@@ -57,7 +57,7 @@ class XLite_Module_MultiCurrency_Main extends XLite_Model_Module
         $this->defaultCurrency = new XLite_Module_MultiCurrency_Model_Currency();
    		$found = $this->defaultCurrency->find("base = 1");
 		if (!$found) {
-			$this->defaultCurrency = func_new("CurrencyCountries");
+			$this->defaultCurrency = new XLite_Module_MultiCurrency_Model_Currency();
 			$this->defaultCurrency->set("code","USD");
 			$this->defaultCurrency->set("name","US dollar");
 			$this->defaultCurrency->set("exchange_rate",1);

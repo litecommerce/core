@@ -161,7 +161,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_Module extends XLite_Contro
 	{
 		if ( is_null($this->_fc_scheme) ) {
 			$scheme = $this->get("config.FlyoutCategories.scheme");
-			$this->_fc_scheme = func_new("FCategoriesScheme", $scheme);
+			$this->_fc_scheme = new XLite_Module_FlyoutCategories_Model_FCategoriesScheme($scheme);
 			$this->_fc_scheme->get("options");
 		}
 

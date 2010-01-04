@@ -57,7 +57,7 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificateEcard extend
                 $this->ecard = new XLite_Module_GiftCertificates_Model_ECard();
                 $this->ecard->set("enabled", 1);
             } else {
-                $this->ecard = func_new("ECard",$this->get("ecard_id"));
+                $this->ecard = new XLite_Module_GiftCertificates_Model_ECard($this->get("ecard_id"));
             }
         }
         return $this->ecard;

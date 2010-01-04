@@ -64,7 +64,7 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificates extends XL
     {
         if (isset($_POST["status"])) {
             foreach ($_POST["status"] as $gcid => $status) {
-                $gc = func_new("GiftCertificate",$gcid);
+                $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate($gcid);
                 $gc->set("status", $status);
                 $gc->update();
             }
@@ -73,13 +73,13 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificates extends XL
 
     function action_delete()
     {
-        $gc = func_new("GiftCertificate",$_POST["gcid"]);
+        $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate($_POST["gcid"]);
         $gc->delete();
     }
 
     function action_delete_all()
     {
-        $gc = func_new("GiftCertificate");
+        $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate();
         $status = $_POST["deleteStatus"];
         $toDelete = $gc->iterate("status='$status'");
         while ($gc->next($toDelete)) {

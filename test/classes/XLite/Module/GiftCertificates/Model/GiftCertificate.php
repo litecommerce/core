@@ -162,7 +162,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_Ab
     {
         if (is_null($this->ecard)) {
             if ($this->get("ecard_id")) {
-                $this->ecard = func_new("ECard",$this->get("ecard_id"));
+                $this->ecard = new XLite_Module_GiftCertificates_Model_ECard($this->get("ecard_id"));
             } else {
                 $this->ecard = null;
             }
@@ -172,7 +172,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_Ab
 
     function showECardBody()
     {
-        $c = func_new("CECard");
+        $c = new XLite_Module_GiftCertificates_View_CECard();
         $c->gc = $this;
         $c->init();
         $c->display();
@@ -275,24 +275,3 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_Ab
     }
 }
 
-class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_View
-{
-    var $gc = null;
-
-    function getTemplate()
-    {
-        return "modules/GiftCertificates/ecards/" . $this->get("gc.ecard.template") . ".tpl";
-    }
-
-    function getTemplateFile()
-    {
-        $layout = XLite_Model_Layout::getInstance();
-        return "skins/mail/" . $layout->get("locale") . "/" . $this->get("template");
-    }
-
-}
-
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

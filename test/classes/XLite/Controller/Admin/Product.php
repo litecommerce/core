@@ -102,12 +102,12 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_Abstract
     {
         if (!is_null($this->get("delete")) && !is_null($this->get("delete_fields"))) {
             foreach ((array)$this->get("delete_fields") as $id) {
-                $ef = func_new("ExtraField", $id);
+                $ef = new XLite_Model_ExtraField($id);
                 $ef->delete();
             }
         } elseif (!is_null($this->get("update"))) {
             foreach ((array)$this->get("extra_fields") as $id => $data) {
-                $ef = func_new("ExtraField", $id);
+                $ef = new XLite_Model_ExtraField($id);
                 $ef->set("properties", $data);
                 $ef->update();
             }
@@ -167,7 +167,7 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_Abstract
 
 	function action_clone()
 	{
-        $p_product = func_new("Product", $this->product_id);
+        $p_product = new XLite_Model_Product($this->product_id);
 		$product = $p_product->cloneObject();
 		foreach($p_product->get('categories') as $category) {
 			$product->addCategory($category);

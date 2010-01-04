@@ -49,7 +49,7 @@ class XLite_Module_PayFlowLink_Controller_Customer_Pflcheckout extends XLite_Con
     function init()
     {
     	if ($_REQUEST["target"] == "pflcheckout") {
-    		$this->registerForm = func_new("Object");
+    		$this->registerForm = new XLite_Base_Object();
     	}
 
     	parent::init();

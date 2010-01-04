@@ -199,7 +199,7 @@ class XLite_Module_AdvancedSearch_Model_Product extends Product // {{{
 		
 		$product_limit = array();
 		if (!empty($search_query)) {
-			$product = func_new("Product");
+			$product = new XLite_Model_Product();
         	$product->fetchKeysOnly = true;
 			$product_limit = $product->findAll($search_query, $orderby);
 			$ids = array_unique(array_intersect($ids, $this->getIds($product_limit)));
@@ -208,7 +208,7 @@ class XLite_Module_AdvancedSearch_Model_Product extends Product // {{{
 		$products = array();	
 		if (!empty($ids))
 			foreach ($ids as $id) {
-                $product = func_new("Product", $id);
+                $product = new XLite_Model_Product($id);
                 $products[$id] = $product; 
             } 
 		return $products;

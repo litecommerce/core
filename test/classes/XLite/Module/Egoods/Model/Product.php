@@ -186,7 +186,7 @@ class XLite_Module_Egoods_Model_Product extends XLite_Model_Product
 	function createLinks()
 	{
 		$acc = array();
-		$df = func_new("DownloadableFile");
+		$df = new XLite_Module_Egoods_Model_DownloadableFile();
 		$files = $df->findAll("product_id=" . $this->get('product_id'));
 		for ($i = 0; $i < count($files); $i++) {
 			if ($files[$i]->get('delivery') == 'L') {

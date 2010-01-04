@@ -77,7 +77,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsOnlineTool extends XLite_C
     }
 
     function processStep_3() {
-        $obj = func_new("Shipping_ups");
+        $obj = new XLite_Module_UPS_Model_Shipping_Ups();
         $ret = $this->getReg();
         if ($tmp= $obj->setAccount($ret, $error)) {
             $this->session->set('ups_message', $error);
@@ -198,13 +198,13 @@ EOT;
 
 	function getUPSStates()
 	{
-		$obj = func_new("Shipping_ups");
+		$obj = new XLite_Module_UPS_Model_Shipping_Ups();
 		return $obj->get("upsstates");
 	}
 
 	function getUPSCountries()
 	{
-		$obj = func_new("Shipping_ups");
+		$obj = new XLite_Module_UPS_Model_Shipping_Ups();
 		return $obj->get("upscountries");
 	}
 }

@@ -129,7 +129,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
     function getParent() // {{{
     {
         if (is_null($this->parent)) {
-            $this->parent = func_new("Profile", $this->get("affiliate"));
+            $this->parent = new XLite_Model_Profile($this->get("affiliate"));
         }
         return $this->parent;
     } // }}}

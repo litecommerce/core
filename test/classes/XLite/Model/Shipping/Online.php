@@ -57,7 +57,7 @@ class XLite_Model_Shipping_Online extends XLite_Model_Shipping
         if (isset($this->config->$name)) {
             $options = $this->config->$name;
         } else {
-            $options = func_new("Object");
+            $options = new XLite_Base_Object();
         }
         foreach ($this->optionsFields as $field) {
             if (!isset($options->$field)) {
@@ -73,7 +73,7 @@ class XLite_Model_Shipping_Online extends XLite_Model_Shipping
         $c = new XLite_Model_Config();
         $category = $this->configCategory;
         $c->set("category", $category);
-        $this->config->$category = func_new("Object");
+        $this->config->$category = new XLite_Base_Object();
         foreach ($this->optionsFields as $field) {
             if (!isset($options->$field)) {
                 continue;

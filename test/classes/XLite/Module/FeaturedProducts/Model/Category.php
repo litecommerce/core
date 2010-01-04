@@ -64,7 +64,7 @@ class XLite_Module_FeaturedProducts_Model_Category extends XLite_Model_Category
 	function addFeaturedProducts($products)
 	{
 		for ($i=0; $i<count($products); $i++) {
-			$fp = func_new("FeaturedProduct");
+			$fp = new XLite_Module_FeaturedProducts_Model_FeaturedProduct();
 			$fp->set("category_id", $this->get("category_id"));
 			$fp->set("product_id", $products[$i]->get("product_id"));
 			if (!$fp->isExists()) {
@@ -76,7 +76,7 @@ class XLite_Module_FeaturedProducts_Model_Category extends XLite_Model_Category
 	function deleteFeaturedProducts($products)
 	{
 		for ($i=0; $i<count($products); $i++) {
-			$fp = func_new("FeaturedProduct");
+			$fp = new XLite_Module_FeaturedProducts_Model_FeaturedProduct();
 			$fp->set("category_id", $this->get("category_id"));
 			$fp->set("product_id", $products[$i]->get("product_id"));
 			$fp->delete();

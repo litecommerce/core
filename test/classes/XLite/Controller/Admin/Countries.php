@@ -117,7 +117,7 @@ class XLite_Controller_Admin_Countries extends XLite_Controller_Admin_Abstract
 
 		if ( is_array($countries) && count($countries) > 0 ) {
 			foreach ($countries as $code) {
-				$country = func_new("Country", $code);
+				$country = new XLite_Model_Country($code);
 				$country->delete();
 			}
 		}

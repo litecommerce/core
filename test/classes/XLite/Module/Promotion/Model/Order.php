@@ -372,7 +372,7 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order
 			if (!$this->get("order_id")) {
 				$this->_appliedBonuses = array();
 			} else {
-				$bonus = func_new("SpecialOffer");
+				$bonus = new XLite_Module_Promotion_Model_SpecialOffer();
 				$bonus->_range = "order_id=" . $this->get("order_id");
 				$this->_appliedBonuses = $bonus->findAll($where);
 			}

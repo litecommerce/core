@@ -80,7 +80,7 @@ class XLite_Module_Affiliate_Controller_Admin_Banner extends XLite_Controller_Ad
     function getBanner()
     {
         if (is_null($this->banner)) {
-            $this->banner = func_new("Banner", $this->get("banner_id"));
+            $this->banner = new XLite_Module_Affiliate_Model_Banner($this->get("banner_id"));
         }
         return $this->banner;
     }

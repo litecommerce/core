@@ -58,7 +58,7 @@ class XLite_Module_MultiCurrency_base_Widget extends XLite_View_Abstract
 	function getDefaultCurrency() // {{{ 
 	{
 		if (is_null($this->defaultCurrency)) { 
-			$this->defaultCurrency = func_new("CurrencyCountries");
+			$this->defaultCurrency = new XLite_Module_MultiCurrency_Model_Currency();
 			$this->defaultCurrency->find("base = 1");
 		}	
 		return $this->defaultCurrency;

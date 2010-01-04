@@ -59,7 +59,7 @@ class XLite_Module_Promotion_Model_Product extends XLite_Model_Product
 		$bpDeletedProducts = $bp->findAll("product_id='" . $this->get("product_id") . "'");
 		if (is_array($bpDeletedProducts) && count($bpDeletedProducts) > 0) {
 			foreach($bpDeletedProducts as $bpdp) {
-				$sodp = func_new("SpecialOffer", $bpdp->get("offer_id"));
+				$sodp = new XLite_Module_Promotion_Model_SpecialOffer($bpdp->get("offer_id"));
 				$sodp->markInvalid();
 			}
 		}
@@ -68,7 +68,7 @@ class XLite_Module_Promotion_Model_Product extends XLite_Model_Product
 		$bpDeletedProducts = $bp->findAll("product_id='" . $this->get("product_id") . "'");
 		if (is_array($bpDeletedProducts) && count($bpDeletedProducts) > 0) {
 			foreach($bpDeletedProducts as $bpdp) {
-				$sodp = func_new("SpecialOffer", $bpdp->get("offer_id"));
+				$sodp = new XLite_Module_Promotion_Model_SpecialOffer($bpdp->get("offer_id"));
 				$sodp->markInvalid();
 			}
 		}

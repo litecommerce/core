@@ -86,7 +86,7 @@ class XLite_Module_Newsletters_Controller_Admin_NewsSubscribers extends XLite_Co
 
     function action_add_subscriber()
     {
-        $nl = func_new("NewsSubscriber");
+        $nl = new XLite_Module_Newsletters_Model_NewsSubscriber();
         if ($nl->find("list_id=".$this->get("list_id")." AND LOWER(email)='".strtolower(addslashes($this->get("email")))."'")) {
             $this->set("valid", false);
             $this->set("userExists", true);
@@ -98,7 +98,7 @@ class XLite_Module_Newsletters_Controller_Admin_NewsSubscribers extends XLite_Co
     function action_unsubscribe()
     {
         foreach ((array)$this->get("emails") as $email => $one) {
-            $nl = func_new("NewsSubscriber");
+            $nl = new XLite_Module_Newsletters_Model_NewsSubscriber();
             $nl->unsubscribe(strtolower(addslashes($email)), $this->get("list_id"));
         }
     }
@@ -109,7 +109,7 @@ class XLite_Module_Newsletters_Controller_Admin_NewsSubscribers extends XLite_Co
         $file = $this->getUploadedFile();
         if (!is_null($file)) {
             $list_id = $this->get("list_id");
-            $ns = func_new("NewsSubscriber");
+            $ns = new XLite_Module_Newsletters_Model_NewsSubscriber();
             $ns->import($list_id, $file);
             echo "<br>Subscribers imported successfully. <a href=\"admin.php?target=news_subscribers&list_id=".$this->get("list_id")."\"><u>Click here to return to admin interface</u></a>";
         } else {

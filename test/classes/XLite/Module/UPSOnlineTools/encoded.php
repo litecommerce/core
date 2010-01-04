@@ -257,7 +257,7 @@ function UPSOnlineTools_setAccount(&$_this, $userinfo, &$error)
 		$version = $_this->xlite->get("config.Version.version");
 
 	if (is_numeric($userinfo['state'])) {
-		$obj = func_new('State', $userinfo['state']);
+		$obj = new XLite_Model_State($userinfo['state']);
 		$userinfo['state'] = $obj->get('code');
 	}
 
@@ -392,7 +392,7 @@ function UPSOnlineTools_checkAddress(&$_this, $shipping_country, $shipping_state
 	$options = $_this->getOptions();
 	if ($options->get("av_status") == "Y" && $shipping_country == "US") {
 		if ($shipping_state > 0) {
-			$state = func_new("State", $shipping_state);
+			$state = new XLite_Model_State($shipping_state);
 			$state_code = $state->get('code');
 		} else {
 			$state_code = $shipping_custom_state;
@@ -828,14 +828,14 @@ function UPSOnlineTools_divide_subspaces_h(&$subspaces)
 					}
 
 					if (min($b_v1, $a_v1) - max($b_v0, $a_v0) > 0) {
-						$sub_a1 = func_new("Subspace");
+						$sub_a1 = new XLite_Module_UPSOnlineTools_Model_Subspace();
 						$sub_a1->init($a->width, (min($b_v1, $a_v1) - max($b_v0, $a_v0)), $a->left, max($b_v0, $a_v0));
 						$buffer[] = $sub_a1;
 						$div_a = true;
 					}
 
 					if ($a_v1 - $b_v1 > 0) {
-						$sub_a2 = func_new("Subspace");
+						$sub_a2 = new XLite_Module_UPSOnlineTools_Model_Subspace();
 						$sub_a2->init($a->width, ($a_v1 - $b_v1), $a->left, min($b_v1, $a_v1));
 						$buffer[] = $sub_a2;
 						$div_a = true;
@@ -847,21 +847,21 @@ function UPSOnlineTools_divide_subspaces_h(&$subspaces)
 
 					// object "b"
 					if ($a_v0 - $b_v0 > 0) {
-						$sub_b0 = func_new("Subspace");
+						$sub_b0 = new XLite_Module_UPSOnlineTools_Model_Subspace();
 						$sub_b0->init($b->width, ($a_v0 - $b_v0), $b->left, $b_v0);
 						$buffer[] = $sub_b0;
 						$div_b = true;
 					}
 
 					if (min($a_v1, $b_v1) - max($a_v0, $b_v0) > 0) {
-						$sub_b1 = func_new("Subspace");
+						$sub_b1 = new XLite_Module_UPSOnlineTools_Model_Subspace();
 						$sub_b1->init($b->width, (min($a_v1, $b_v1) - max($a_v0, $b_v0)), $b->left, max($b_v0, $a_v0));
 						$buffer[] = $sub_b1;
 						$div_b = true;
 					}
 
 					if ($b_v1 - $a_v1 > 0) {
-						$sub_b2 = func_new("Subspace");
+						$sub_b2 = new XLite_Module_UPSOnlineTools_Model_Subspace();
 						$sub_b2->init($b->width, ($b_v1 - $a_v1), $b->left, min($b_v1, $a_v1));
 						$buffer[] = $sub_b2;
 						$div_b = true;
@@ -938,21 +938,21 @@ function UPSOnlineTools_divide_subspaces_v(&$subspaces)
 
                     // object "a"
                     if ($b_v0 - $a_v0 > 0) {
-                        $sub_a0 = func_new("Subspace");
+                        $sub_a0 = new XLite_Module_UPSOnlineTools_Model_Subspace();
                         $sub_a0->init(($b_v0 - $a_v0), $a->length, min($a_v0, $b_v0), $a->top);
                         $buffer[] = $sub_a0;
                         $div_a = true;
                     }
 
                     if (min($b_v1, $a_v1) - max($b_v0, $a_v0) > 0) {
-                        $sub_a1 = func_new("Subspace");
+                        $sub_a1 = new XLite_Module_UPSOnlineTools_Model_Subspace();
                         $sub_a1->init((min($b_v1, $a_v1) - max($b_v0, $a_v0)), $a->length, max($b_v0, $a_v0), $a->top);
                         $buffer[] = $sub_a1;
                         $div_a = true;
                     }
 
                     if ($a_v1 - $b_v1 > 0) {
-                        $sub_a2 = func_new("Subspace");
+                        $sub_a2 = new XLite_Module_UPSOnlineTools_Model_Subspace();
                         $sub_a2->init(($a_v1 - $b_v1), $a->length, min($b_v1, $a_v1), $a->top);
                         $buffer[] = $sub_a2;
                         $div_a = true;
@@ -963,21 +963,21 @@ function UPSOnlineTools_divide_subspaces_v(&$subspaces)
 
                     // object "b"
                     if ($a_v0 - $b_v0 > 0) {
-                        $sub_b0 = func_new("Subspace");
+                        $sub_b0 = new XLite_Module_UPSOnlineTools_Model_Subspace();
                         $sub_b0->init(($a_v0 - $b_v0), $b->length, $b_v0, $b->top);
                         $buffer[] = $sub_b0;
                         $div_b = true;
                     }
 
                     if (min($a_v1, $b_v1) - max($a_v0, $b_v0) > 0) {
-                        $sub_b1 = func_new("Subspace");
+                        $sub_b1 = new XLite_Module_UPSOnlineTools_Model_Subspace();
                         $sub_b1->init((min($a_v1, $b_v1) - max($a_v0, $b_v0)), $b->length, max($b_v0, $a_v0), $b->top);
                         $buffer[] = $sub_b1;
                         $div_b = true;
                     }
 
                     if ($b_v1 - $a_v1 > 0) {
-                        $sub_b2 = func_new("Subspace");
+                        $sub_b2 = new XLite_Module_UPSOnlineTools_Model_Subspace();
                         $sub_b2->init(($b_v1 - $a_v1), $b->length, min($b_v1, $a_v1), $b->top);
                         $buffer[] = $sub_b2;
                         $div_b = true;
@@ -1076,7 +1076,7 @@ function UPSOnlineTools_combine_horizontal(&$subspaces)
 					$ignore[] = $i;
 					$ignore[] = $j;
 
-					$subspace = func_new("Subspace");
+					$subspace = new XLite_Module_UPSOnlineTools_Model_Subspace();
 					$subspace->init($comb->width, $comb->length, $comb->left, $comb->top);
 					$combined_spaces[] = $subspace;
 
@@ -1142,7 +1142,7 @@ function UPSOnlineTools_combine_vertical(&$subspaces)
 					$ignore[] = $i;
 					$ignore[] = $j;
 
-                    $subspace = func_new("Subspace");
+                    $subspace = new XLite_Module_UPSOnlineTools_Model_Subspace();
                     $subspace->init($comb->width, $comb->length, $comb->left, $comb->top);
 					$combined_spaces[] = $subspace;
 
@@ -1302,14 +1302,14 @@ function UPSOnlineTools_placeBox(&$_this, $_width, $_length)
 		return false;
 
 	$sub = array(
-		0 => func_new("Subspace"),
-		1 => func_new("Subspace")
+		0 => new XLite_Module_UPSOnlineTools_Model_Subspace(),
+		1 => new XLite_Module_UPSOnlineTools_Model_Subspace(),
 	);
 
-	$a = func_new("Subspace");
+	$a = new XLite_Module_UPSOnlineTools_Model_Subspace();
 	$a->init($_this->width, ($_this->length - $_length), $_this->left, ($_this->top + $_length));
 
-	$b = func_new("Subspace");
+	$b = new XLite_Module_UPSOnlineTools_Model_Subspace();
 	$b->init(($_this->width - $_width), ($_this->length), ($_this->left + $_width), ($_this->top));
 
 	$eps_a = $a->getEpsilon();
@@ -1486,7 +1486,7 @@ function UPSOnlineTools_progressive_placeItem(&$_this, &$level, &$items, $item_w
 			$sub = $space->placeBox($item->get("width"), $item->get("length"));
 
 			// add subspace as used
-			$used_space = func_new("Subspace");
+			$used_space = new XLite_Module_UPSOnlineTools_Model_Subspace();
 			$used_space->init($item->get("width"), $item->get("length"), $space->left, $space->top);
 			$used_space->setUpperLimit($level->getBottomHeight() + $item->get("height"));
 			$level->addUsedSpace($used_space);
@@ -1530,7 +1530,7 @@ function UPSOnlineTools_getNextLevel(&$_this, $overlaped=true)
 	$med_height = (($overlaped) ? $last_level->getMediumHeight() : $last_level->getHeight());
 	$start_height = $last_level->getBottomHeight() + $med_height;
 
-	$level = func_new("ContainerLevel");
+	$level = new XLite_Module_UPSOnlineTools_Model_ContainerLevel();
 	$level->init($start_height, $_this->width, $_this->length, ($_this->height - $start_height));
 
 	// move valid used subspaces to subspaces array

@@ -76,7 +76,7 @@ class XLite_Module_Newsletters_Controller_Customer_News extends XLite_Controller
     function getAllNews()
     {
         if (is_null($this->allNews)) {
-            $nl = func_new("Newsletter");
+            $nl = new XLite_Module_Newsletters_Model_NewsLetter();
             $this->allNews = $nl->findAll();
         }
         return $this->allNews;
@@ -101,7 +101,7 @@ class XLite_Module_Newsletters_Controller_Customer_News extends XLite_Controller
         if ($confirmed) {
             // subscribe/unsubscribe 
             $ns = new XLite_Module_Newsletters_Model_NewsSubscriber();
-            $nl = func_new("NewsList");
+            $nl = new XLite_Module_Newsletters_Model_NewsList();
             switch($method) {
             	case "subscribe":
             		$nlList = $nl->findAll("show_as_news=1");
@@ -134,7 +134,7 @@ class XLite_Module_Newsletters_Controller_Customer_News extends XLite_Controller
 
     function action_subscribe()
     {
-		$nl = func_new("NewsList");
+		$nl = new XLite_Module_Newsletters_Model_NewsList();
 		if ($nl->get("showedListsNumber") == 0) {
 			if (isset($this->params)) {
 				$this->params = array();
@@ -153,7 +153,7 @@ class XLite_Module_Newsletters_Controller_Customer_News extends XLite_Controller
         // send subscribe confirmation
         require_once "modules/Newsletters/encoded.php";
 
-        $ns = func_new("NewsSubscriber");
+        $ns = new XLite_Module_Newsletters_Model_NewsSubscriber();
         $ns->request($this->get("email"));
         // show confirmation notification
         $this->set("mode", "confirm_message");

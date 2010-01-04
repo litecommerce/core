@@ -342,7 +342,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
     {
         $ids = (array) $this->get("ind");
         foreach($ids as $id => $v){
-            $htaccess = func_new("Htaccess", $id);
+            $htaccess = new XLite_Model_Htaccess($id);
             $htaccess->restoreFile();
         }
     }
@@ -510,7 +510,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
     {
         $ids = (array) $this->get("waiting_ips");
         foreach($ids as $id){
-            $waiting_ip = func_new("WaitingIP", $id);
+            $waiting_ip = new XLite_Model_WaitingIP($id);
             $waiting_ip->delete();
         }
     }
@@ -562,7 +562,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
             $new_list[] = array("ip" => $admin_ip, "comment" => "Default admin IP");
         }
 
-        $valid_ips_object = func_new("Config");
+        $valid_ips_object = new XLite_Model_Config();
 
         if(!$valid_ips_object->find("category = 'SecurityIP' AND name = 'allow_admin_ip'"))
             return;
@@ -574,7 +574,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
     function action_update_allowed_ip()
     {
         $comments = (array) $this->get("comment");
-        $valid_ips_object = func_new("Config");
+        $valid_ips_object = new XLite_Model_Config();
         if(!$valid_ips_object->find("category = 'SecurityIP' AND name = 'allow_admin_ip'"))
             return;
         $list = unserialize($valid_ips_object->get("value"));

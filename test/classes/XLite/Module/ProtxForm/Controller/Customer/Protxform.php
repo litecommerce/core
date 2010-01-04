@@ -49,7 +49,7 @@ class XLite_Module_ProtxForm_Controller_Customer_Protxform extends XLite_Control
 	function init()
 	{
 		if (!is_object($this->registerForm) || is_null($this->registerForm)) {
-			$this->registerForm = func_new("Object");
+			$this->registerForm = new XLite_Base_Object();
 		}
 
 		parent::init();

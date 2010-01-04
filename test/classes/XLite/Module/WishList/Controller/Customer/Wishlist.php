@@ -67,7 +67,7 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends Dialog // {{{
 
 	function action_update() // {{{ 
 	{
-		$wishlist_product = func_new("WishListProduct");
+		$wishlist_product = new XLite_Module_WishList_Model_WishListProduct();
 		$properties = $this->get("properties");
         if ($properties['wishlist_amount']<=0) $this->action_delete();
 		$wishlist_product->set("amount",$properties['wishlist_amount']);

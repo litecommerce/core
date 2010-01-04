@@ -383,7 +383,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
         $topID = $this->get("topCategory.category_id");
         $category_id = $topID;
         foreach ($path as $n) {
-            $category = func_new("Category");
+            $category = new XLite_Model_Category();
             if ($category->find("name='".addslashes($n)."' AND parent=$category_id")) {
                 $category_id = $category->get("category_id");
                 continue;
@@ -393,7 +393,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
             $category->create();
             $category_id = $category->get("category_id");
         }
-        return func_new("Category",$category_id);
+        return new XLite_Model_Category($category_id);
     } // }}}
 
     function findCategory($path) // {{{
@@ -404,14 +404,14 @@ class XLite_Model_Category extends XLite_Model_Abstract
         $topID = $this->get("topCategory.category_id");
         $category_id = $topID;
         foreach ($path as $n) {
-            $category = func_new("Category");
+            $category = new XLite_Model_Category();
             if ($category->find("name='".addslashes($n)."' AND parent=$category_id")) {
                 $category_id = $category->get("category_id");
                 continue;
             } 
             return null;
         }
-        return func_new("Category",$category_id);
+        return new XLite_Model_Category($category_id);
     } // }}}
 
     function filterRule()

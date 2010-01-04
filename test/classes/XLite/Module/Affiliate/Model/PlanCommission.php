@@ -74,7 +74,7 @@ class XLite_Module_Affiliate_Model_PlanCommission extends XLite_Model_Abstract
     }
     function getProductCommission($product_id)
     {
-        $pc = func_new("PlanCommission");
+        $pc = new XLite_Module_Affiliate_Model_PlanCommission();
         if ($pc->find("plan_id=".$this->get("order.partner.plan")." AND item_id=$product_id AND item_type='P'")) {
             return $pc;
         }
@@ -82,7 +82,7 @@ class XLite_Module_Affiliate_Model_PlanCommission extends XLite_Model_Abstract
     }
     function getCategoryCommission($category_id)
     {
-        $cc = func_new("PlanCommission");
+        $cc = new XLite_Module_Affiliate_Model_PlanCommission();
         if ($cc->find("plan_id=".$this->get("order.partner.plan")." AND item_id=$category_id AND item_type='C'")) {
             return $cc;
         }

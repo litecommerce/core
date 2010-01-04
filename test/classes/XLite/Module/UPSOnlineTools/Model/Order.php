@@ -405,7 +405,7 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order
 						continue;
 
 					// add new container
-					$c = func_new("Container");
+					$c = new XLite_Module_UPSOnlineTools_Model_Container();
 					$c->setDimensions($_width, $_length, $_height);
 					$c->setWeightLimit($weight_limit);
 					$c->setContainerType(PACKAGING_TYPE_PACKAGE); // Package type
@@ -460,7 +460,7 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order
 			break;
 			////////////////////////////////////////////////////////
 			case BINPACKING_OVERSIZE_ALGORITHM:	// pack items in similar containers
-				$sm = func_new("Shipping_ups");
+				$sm = new XLite_Module_UPS_Model_Shipping_Ups();
 				$pack = $sm->getUPSContainerDims($packaging_type);
 
 				$ups_containers = UPSOnlineTools_solve_binpack($pack["width"], $pack["length"], $pack["height"], $pack["weight_limit"], $items);

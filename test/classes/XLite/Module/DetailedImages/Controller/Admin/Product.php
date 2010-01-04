@@ -64,14 +64,14 @@ class XLite_Module_DetailedImages_Controller_Admin_Product extends XLite_Control
 
     function action_delete_detailed_image()
     {
-        $d_img = func_new("DetailedImage", $this->image_id);
+        $d_img = new XLite_Module_DetailedImages_Model_DetailedImage($this->image_id);
         $d_img->delete();
     }
 
     function action_update_detailed_images()
     {
         foreach ($this->alt as $image_id => $alt) {
-            $img = func_new("DetailedImage", $image_id);
+            $img = new XLite_Module_DetailedImages_Model_DetailedImage($image_id);
             $img->set("alt", $alt);
             $img->set("order_by", $this->order_by[$image_id]);
             $img->update();

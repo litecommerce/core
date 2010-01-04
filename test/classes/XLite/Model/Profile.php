@@ -314,7 +314,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
 
     function _convertState($value)
     {
-    	$state = func_new("State");
+    	$state = new XLite_Model_State();
     	$value = addslashes($value);
     	if ($state->find("code='$value'") || $state->find("state='$value'") || $state->find("state_id='$value'")) {
     		return $state->get("state_id");
@@ -324,7 +324,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
 
     function _convertCountry($value)
     {
-    	$country = func_new("Country");
+    	$country = new XLite_Model_Country();
     	$value = addslashes($value);
     	if ($country->find("code='$value'") || $country->find("country='$value'")) {
     		return $country->get("code");

@@ -117,7 +117,7 @@ class XLite_Controller_Admin_ShippingRates extends XLite_Controller_Admin_Shippi
         $shippingRates = $this->get("shippingRates");
         foreach($_POST["rate"] as $key => $rate_data) {
             if (array_key_exists($key, $shippingRates)) {
-				$rate = func_new("ShippingRate");
+				$rate = new XLite_Model_ShippingRate();
 				$rate->set("properties", $rate_data);
 				if ($rate->isExists()) {
 					$rate->update();

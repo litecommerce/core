@@ -95,7 +95,7 @@ class XLite_Model_Membership extends Base // {{{
 			} else {
 				$this->memberships = array();
 
-                $config = func_new("Config");
+                $config = new XLite_Model_Config();
         		$config->createOption("Memberships","membershipsCollection", serialize($this->memberships), "serialized");
 			}
 		}
@@ -134,13 +134,13 @@ class XLite_Model_Membership extends Base // {{{
         }
 		$memberships[$max] = $membershipData;
 		$memberships = (array) $this->sortMemberships($memberships);
-        $config = func_new("Config");
+        $config = new XLite_Model_Config();
 		$config->createOption("Memberships","membershipsCollection", serialize($memberships));    
 	} // }}}
 
 	function update() // {{{
 	{
-	    $config = func_new("Config");
+	    $config = new XLite_Model_Config();
         $memberships = $this->get("memberships");
         $membershipData = $this->get("properties");
 		$membershipData['membership'] = $this->stripInvalidData($membershipData['membership']);
@@ -154,7 +154,7 @@ class XLite_Model_Membership extends Base // {{{
 
 	function delete() // {{{
 	{
-		$config = func_new("Config");
+		$config = new XLite_Model_Config();
         $memberships = $this->get("memberships");
 		unset($memberships[$this->get("membership_id")]);
 		$memberships = (array) $this->sortMemberships($memberships);

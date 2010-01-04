@@ -467,9 +467,9 @@ class XLite_Model_Order extends XLite_Model_Abstract
     function getShippingMethod() // {{{
     {
         if (is_null($this->_shippingMethod)) {
-			$sm = func_new("Shipping");
+			$sm = new XLite_Model_Shipping();
 			if ($sm->isRegisteredModule($this->get("shipping_id"))) {
-                $this->_shippingMethod = func_new("Shipping", $this->get("shipping_id"));
+                $this->_shippingMethod = new XLite_Model_Shipping($this->get("shipping_id"));
     			if ($this->get("shipping_id") == 0) {
     				$this->_shippingMethod->set("name", "Free shipping");
     			}
@@ -603,7 +603,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
 
 	function getRegistration($name) // {{{
 	{
-		$tax = func_new("TaxRates");
+		$tax = new XLite_Model_TaxRates();
 		return $tax->getRegistration($name);
 	}	
 
@@ -622,7 +622,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
         	return null;
         }
 
-        $taxRates = func_new("TaxRates");
+        $taxRates = new XLite_Model_TaxRates();
 		$values = $names = $orderby = array();
         foreach ($this->get("allTaxes") as $name => $value) {
             if ($taxRates->getTaxLabel($name)) {
@@ -960,7 +960,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
     */
     function failed()
     {
-        $mail = func_new("Mailer");
+        $mail = new XLite_Model_Mailer();
         $mail->order = $this; 
 		$mail->adminMail = true;
 		$mail->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));

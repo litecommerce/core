@@ -36,37 +36,77 @@
 +------------------------------------------------------------------------------+
 */
 
-/* vim: set expandtab tabstop=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
+/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
-/**
-*
-* @package $Package$
-* @version $Id$
-*/
-
-class XLite_Module_GiftCertificates_Model_WysiwygMediator extends XLite_Model_WysiwygMediator
+class XLite_Model_MailImageParser extends XLite_Model_FlexyCompiler
 {
-    function export($templates)
+    var $webdir;
+    var $images;
+    var $counter;
+
+	function flexy() { }
+
+    function postprocess() // {{{
     {
-		$this->xlite->GiftCertificates_wysiwyg_work = true;
-		$result = parent::export($templates);
-		$this->xlite->GiftCertificates_wysiwyg_work = false;
+        $this->images = array();
+        $this->counter = 1;
+        // find images, e.g. background=..., src=..., style="...url('...')"
+        for ($i=0; $i<count($this->tokens); $i++) {
+            $token = $this->tokens[$i];
+            if ($token["type"] == "attribute") {
+                $name = strtolower($token["name"]);
+            } else if ($token["type"] == "attribute-value") {
+                $val = $this->getTokenText($i);
+                if ($name == 'style') {
+                    $pos = strpos($val, 'url(');
+                    if ($pos!==false) {
+                        $this->substImage($pos+5+$token["start"], strpos($val, ')')+$token["start"] -1 /* closing quote */);
+                    }
+                } else if ($name == 'background' || $name == 'src') {
+                    $this->substImage($token["start"], $token["end"]);
+                }
+                $name = '';
+            } else {
+                $name = '';
+            }
+        }
+        $this->result = $this->substitute();
+    } // }}}
+    
+    function substImage($start, $end) // {{{
+    {
+        $img = substr($this->source, $start, $end-$start);
+        if (strcasecmp(substr($img, 0, 5), 'http:')) {
+            $img = $this->webdir . $img; // relative URL
+        }
+        $img = str_replace('&amp;', '&', $img);
+        $img = str_replace(' ', '%20', $img);
+        $this->subst($start, $end,  $this->getImgSubstitution($img));
+    } // }}}
 
-		return $result;
-    }
-
-
-	function import()
-	{
-		$this->xlite->GiftCertificates_wysiwyg_work = true;
-		$result = parent::import();
-		$this->xlite->GiftCertificates_wysiwyg_work = false;
-
-		return $result;
-	}
+    function getImgSubstitution($img) // {{{
+    {
+        if (!isset($this->images[$img])) {
+            // fetch image
+            if (($fd = @fopen($img, "rb"))) {
+                $image = '';
+                while(!feof($fd)) {
+                    $image .= fgets($fd, 10000);
+                }
+                fclose($fd);
+                $info = getimagesize($img);
+                $this->images[$img] = array(
+                    'name' => basename($img),
+                    'data' => $image,
+                    'mime' => $info['mime']
+                    );
+                $this->counter++;
+            } else {
+                // can't fetch
+                return $img;
+            }
+        }
+        return 'cid:'.$this->images[$img]['name'].'@mail.lc';
+    } // }}}
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

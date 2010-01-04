@@ -56,7 +56,7 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificateEcards exten
     {
         if (isset($_POST["pos"])) {
             foreach ($_POST["pos"] as $ecard_id => $order_by) {
-                $ec = func_new("ECard",$ecard_id);
+                $ec = new XLite_Module_GiftCertificates_Model_ECard($ecard_id);
                 $ec->set("order_by", $order_by);
                 if (isset($_POST["enabled"][$ecard_id])) {
                     $ec->set("enabled", 1);
@@ -70,7 +70,7 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificateEcards exten
 
     function action_delete()
     {
-        $ec = func_new("ECard",$_REQUEST["ecard_id"]);
+        $ec = new XLite_Module_GiftCertificates_Model_ECard($_REQUEST["ecard_id"]);
         $ec->delete();
     }
 

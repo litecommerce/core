@@ -86,7 +86,7 @@ class XLite_Module_AdvancedSearch_Controller_Admin_AdvancedSearch extends XLite_
             foreach($this->deleted_weights as $key => $value) {
                 unset($weights[$value]);
             }
-            $config = func_new('Config');
+            $config = new XLite_Model_Config();
             $config->set('category','AdvancedSearch');
             $config->set('name','weights');
             $config->set('value',serialize($weights));
@@ -99,7 +99,7 @@ class XLite_Module_AdvancedSearch_Controller_Admin_AdvancedSearch extends XLite_
 		if (isset($this->new_price) && is_array($this->new_price) && strlen($this->new_price["start"]) > 0 && strlen($this->new_price["end"]) > 0) { 
 			$prices = unserialize($this->config->get("AdvancedSearch.prices"));
 		    $prices[] = $this->new_price;
-			$config = func_new('Config');
+			$config = new XLite_Model_Config();
 			$config->set('category','AdvancedSearch');
 			$config->set('name','prices');
 			$config->set('value',serialize($prices));
@@ -108,7 +108,7 @@ class XLite_Module_AdvancedSearch_Controller_Admin_AdvancedSearch extends XLite_
         if (isset($this->new_weight) && is_array($this->new_weight) && strlen($this->new_weight["start"]) > 0 && strlen($this->new_weight["end"]) > 0) { 
             $weights = unserialize($this->config->get("AdvancedSearch.weights"));
             $weights[] = $this->new_weight;
-            $config = func_new('Config');
+            $config = new XLite_Model_Config();
             $config->set('category','AdvancedSearch');
             $config->set('name','weights');
             $config->set('value',serialize($weights));

@@ -58,7 +58,7 @@ class XLite_Module_AustraliaPost_Controller_Admin_Aupost extends Admin_Dialog_sh
 	
 	function action_update() // {{{ 
 	{
-		$aupost = func_new("Shipping_aupost");
+		$aupost = new XLite_Module_AustraliaPost_Model_Shipping_Aupost();
 		$currency_rate = $_POST["currency_rate"];
 		if (((double) $currency_rate) <= 0) {
 			$_POST["currency_rate"] = 1;
@@ -79,7 +79,7 @@ class XLite_Module_AustraliaPost_Controller_Admin_Aupost extends Admin_Dialog_sh
         if (empty($this->destinationCountry)) 
 			$this->destinationCountry = $this->config->get("General.default_country");
  
-		$this->aupost = func_new("Shipping_aupost");
+		$this->aupost = new XLite_Module_AustraliaPost_Model_Shipping_Aupost();
 		$options = $this->aupost->get("options");
 
 		$this->rates = $this->aupost->queryRates

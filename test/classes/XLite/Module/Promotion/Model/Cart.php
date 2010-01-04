@@ -61,7 +61,7 @@ class XLite_Module_Promotion_Model_Cart extends XLite_Model_Cart
 
     function constructor($id = null)
     {
-        $obj = func_new("Object");
+        $obj = new XLite_Base_Object();
         $obj->logger->log("->Cart::constructor()");
         $this->doNotCallCartChanged = true;
         parent::constructor($id);
@@ -288,9 +288,9 @@ class XLite_Module_Promotion_Model_Cart extends XLite_Model_Cart
 				}
 				if (is_object($bonusItem)) {
 					$reg_props = $bonusItem->get("properties");
-					$bonusItem1 = func_new("OrderItem");
+					$bonusItem1 = new XLite_Model_OrderItem();
 					$bonusItem1->set("properties", $reg_props);
-					$bonusItem2 = func_new("OrderItem");
+					$bonusItem2 = new XLite_Model_OrderItem();
 					$bonusItem2->set("properties", $reg_props);
 				} else {
 					$bonusItem1 = $bonusItem2 = null;

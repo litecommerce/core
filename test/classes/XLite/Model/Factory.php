@@ -48,7 +48,7 @@ class XLite_Model_Factory extends XLite_Base_Object
 {
     function get($name)
     {
-        return func_new($name);
+        return new $name();
     }
 }
 

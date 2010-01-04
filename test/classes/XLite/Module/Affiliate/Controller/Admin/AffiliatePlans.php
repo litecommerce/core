@@ -84,7 +84,7 @@ class XLite_Module_Affiliate_Controller_Admin_AffiliatePlans extends XLite_Contr
     function getAffiliatePlans()
     {
         if (is_null($this->affiliatePlans)) {
-            $ap = func_new("AffiliatePlan");
+            $ap = new XLite_Module_Affiliate_Model_AffiliatePlan();
             $this->affiliatePlans = $ap->findAll();
         }
         return $this->affiliatePlans;

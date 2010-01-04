@@ -321,7 +321,7 @@ class XLite_Model_Module extends XLite_Model_Abstract
 
 	function patchTemplate($zone, $template, $patch, $re = '') // {{{
 	{
-		$up = func_new("Upgrade");
+		$up = new XLite_Model_Upgrade();
 		return $up->patchTemplate($zone, $template, $patch, $re);
 	} // }}}
 
@@ -335,7 +335,8 @@ class XLite_Model_Module extends XLite_Model_Abstract
             $className  = "Module_$moduleName";
             global $xlite_class_files;
             $xlite_class_files[strtolower($className)] = $classFile;
-            // $this = func_new($className);	// for PHP5 compatibility
+			// FIXME - for PHP5 compatibility
+            // $this = new $className();
             parent::_updateProperties($properties);
         }
     } // }}}

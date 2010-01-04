@@ -128,9 +128,9 @@ class XLite_Model_PaymentMethod extends XLite_Model_Abstract
         if (!isset($instances[$class])) {
             $ClassName = "PaymentMethod_" . $class;
             if (func_class_exists($ClassName)) {
-                $instances[$class] = func_new($ClassName);
+                $instances[$class] = new $ClassName();
             } else {
-                $instances[$class] = func_new("PaymentMethod");
+                $instances[$class] = new XLite_Model_PaymentMethod();
             }
         }
         return $instances[$class];
@@ -142,7 +142,7 @@ class XLite_Model_PaymentMethod extends XLite_Model_Abstract
 
         if (!isset($instances)) {
             $instances = array();
-            $p = func_new("PaymentMethod");
+            $p = new XLite_Model_PaymentMethod();
             foreach ($p->findAll() as $method) {
 				if ($method->is("enabled")) {
                 	$instances[$method->get("payment_method")] = $method;

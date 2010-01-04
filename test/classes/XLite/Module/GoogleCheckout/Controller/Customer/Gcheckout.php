@@ -48,7 +48,7 @@ class XLite_Module_GoogleCheckout_Controller_Customer_Gcheckout extends XLite_Co
 {
     function init()
     {
-    	$this->registerForm = func_new("Object");
+    	$this->registerForm = new XLite_Base_Object();
     	parent::init();
     }
 

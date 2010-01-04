@@ -192,7 +192,7 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
 
             // send low limit notification
             $mailer = new XLite_Model_Mailer();
-            $mailer->set("product", func_new("Product",$product_id));
+            $mailer->set("product", new XLite_Model_Product($product_id));
             $mailer->set("item", $item);
             $mailer->set("amount", $this->get("amount"));
             $mailer->compose(

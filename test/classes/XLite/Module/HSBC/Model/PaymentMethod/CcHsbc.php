@@ -487,7 +487,7 @@ class XLite_Module_HSBC_Model_PaymentMethod_CcHsbc extends XLite_Model_PaymentMe
 		$params = $this->get("params");
 		$result = $params[$name];
 		if ($params["sub".$name] && $this->xlite->AOMEnabled) {
-			$status = func_new("OrderStatus");
+			$status = new XLite_Module_AOM_Model_OrderStatus();
 			if ($status->find("status='".$params["sub".$name]."' AND parent='".$params[$name]."'")) {
 				$result = $params["sub".$name];
 			}

@@ -87,7 +87,7 @@ class XLite_Module_UPS_Controller_Admin_Ups extends XLite_Controller_Admin_Shipp
 
     function action_update()
     {
-        $ups = func_new("Shipping_ups");
+        $ups = new XLite_Module_UPS_Model_Shipping_Ups();
         if (!isset($_POST["sat_delivery"])) {
             $_POST["sat_delivery"] = 0;
         }
@@ -123,7 +123,7 @@ class XLite_Module_UPS_Controller_Admin_Ups extends XLite_Controller_Admin_Shipp
     */
     function action_test()
     {
-        $this->ups = func_new("Shipping_ups");
+        $this->ups = new XLite_Module_UPS_Model_Shipping_Ups();
         $this->rates = $this->ups->_queryRates($this->get("pounds"), $this->config->get("Company.location_zipcode"), $this->config->get("Company.location_country"), $this->get("destinationZipCode"), $this->get("destinationCountry"), $this->ups->get("options"), 0);
         $this->testResult = true;
         $this->valid = false;

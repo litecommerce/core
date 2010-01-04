@@ -370,7 +370,7 @@ EOT;
 				return false;
 			}
 
-			$dc = func_new("DiscountCoupon");
+			$dc = new XLite_Module_Promotion_Model_DiscountCoupon();
 			if ($dc->count("status='A' AND expire>='".time()."' AND order_id='0'") > 0) {
 				return true;
 			}

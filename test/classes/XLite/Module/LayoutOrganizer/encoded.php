@@ -216,7 +216,7 @@ function LayoutOrganizer_action_update(&$_this)
                 	$cat->update();
     			}
     		}
-    		$products_list = func_new("Product");
+    		$products_list = new XLite_Model_Product();
     		$products_list = $products_list->findAll("template_name LIKE '%/$oldNameSql/%'");
     		if (is_array($products_list)) {
     			foreach($products_list as $prod) {
@@ -266,7 +266,7 @@ function LayoutOrganizer_action_delete(&$_this)
 	$oldName = $scheme->getFileName();
 	$oldNameSql = str_replace("_", "\\_", $oldName);
 	$cat_dialog = new XLite_Module_LayoutOrganizer_Controller_Admin_Category();
-	$categories_list = func_new("Category");
+	$categories_list = new XLite_Model_Category();
 	$categories_list = $categories_list->findAll("(template_name LIKE '%/$oldNameSql/%') OR (sc_template_name LIKE '%/$oldNameSql/%') OR (p_template_name LIKE '%/$oldNameSql/%')");
 	if (is_array($categories_list)) {
 		foreach($categories_list as $cat) {
@@ -283,7 +283,7 @@ function LayoutOrganizer_action_delete(&$_this)
 		}
 	}
 
-	$products_list = func_new("Product");
+	$products_list = new XLite_Model_Product();
 	$products_list = $products_list->findAll("template_name LIKE '%/$oldNameSql/%'");
 	if (is_array($products_list)) {
 		foreach($products_list as $prod) {

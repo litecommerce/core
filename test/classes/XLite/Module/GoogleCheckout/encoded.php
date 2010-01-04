@@ -475,7 +475,7 @@ function GoogleCheckout_new_order_notification(&$_this, $xmlData)
 	// Apply Discount coupon
 	$coupon = $_this->getXMLDataByPath($xmlData, "ORDER-ADJUSTMENT/MERCHANT-CODES/COUPON-ADJUSTMENT");
 	if ($_this->xlite->get("PromotionEnabled") && $coupon && is_null($order->getDC())) {
-		$dc = func_new("DiscountCoupon");
+		$dc = new XLite_Module_Promotion_Model_DiscountCoupon();
 		$dc->find("coupon='".addslashes($coupon["CODE"])."'");
 
 		if ($order->google_checkout_setDC($dc)) {
@@ -488,7 +488,7 @@ function GoogleCheckout_new_order_notification(&$_this, $xmlData)
 	// Apply Gift certificate
 	$gift_cert = $_this->getXMLDataByPath($xmlData, "ORDER-ADJUSTMENT/MERCHANT-CODES/GIFT-CERTIFICATE-ADJUSTMENT");
 	if ($_this->xlite->get("GiftCertificatesEnabled") && $gift_cert) {
-		$cert = func_new("GiftCertificate");
+		$cert = new XLite_Module_GiftCertificates_Model_GiftCertificate();
 		$cert->find("gcid='".addslashes($gift_cert["CODE"])."'");
 		$result = $order->set("GC", $cert);
 
@@ -503,7 +503,7 @@ function GoogleCheckout_new_order_notification(&$_this, $xmlData)
 
     // Set Shipping method
     $shipping_info = $_this->getXMLDataByPath($xmlData, "ORDER-ADJUSTMENT/SHIPPING/MERCHANT-CALCULATED-SHIPPING-ADJUSTMENT");
-    $sm = func_new("Shipping");
+    $sm = new XLite_Model_Shipping();
 	$classes = GoogleCheckout_getShippingClassesSQL_STRING();
 
 $_this->xlite->logger->log("name='".addslashes($shipping_info["SHIPPING-NAME"])."' AND enabled=1 AND class IN($classes)");
@@ -607,7 +607,7 @@ if ($is_new_profile) {
 	$profile->set("shipping_country", $shipping_addr["COUNTRY-CODE"]);
 	$profile->set("shipping_zipcode", $shipping_addr["POSTAL-CODE"]);
 
-	$state = func_new("State");
+	$state = new XLite_Model_State();
 	if ($state->find("code='".trim(addslashes($shipping_addr["REGION"]))."'")) {
 		$profile->set("shipping_state", $state->get("state_id"));
 	} else {

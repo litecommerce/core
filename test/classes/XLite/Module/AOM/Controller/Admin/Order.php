@@ -537,7 +537,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 	function action_pay_gc() // {{{
 	{
 		$cloneOrder = $this->get("cloneOrder");
-		$gc = func_new("GiftCertificate", $this->get("add_gcid"));
+		$gc = new XLite_Module_GiftCertificates_Model_GiftCertificate($this->get("add_gcid"));
 		$cloneOrder->set("GC", $gc);
         $this->saveCurrentValues($cloneOrder);
         $this->cloneUpdated(false);
@@ -604,11 +604,11 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 	        if ($status == "Q" || $status == "P" || $status == "C") {
 				$order->promotionStatusChanged(1);
 	        }
-			$dc = func_new("DiscountCoupon");	
+			$dc = new XLite_Module_Promotion_Model_DiscountCoupon();	
 			if ($dc->find("order_id = " .$order->get("order_id"))) {
 				$dc->delete();	
 			}
-            $dc = func_new("DiscountCoupon"); 	
+            $dc = new XLite_Module_Promotion_Model_DiscountCoupon(); 	
 			if ($dc->find("order_id = ". $cloneOrder->get("order_id"))) {
 				$dc->set("order_id",$order->get("order_id"));
 				$dc->set("coupon_id",null);
@@ -657,7 +657,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 
 	function action_clone_order() // {{{ 
 	{
-		$order = func_new("Order",$this->get("order_id"));
+		$order = new XLite_Model_Order($this->get("order_id"));
 		if ( function_exists("func_is_clone_deprecated") && func_is_clone_deprecated() ) {
 			$clone = $order->cloneObject();
 		} else {
@@ -673,7 +673,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 		$clone->set("orig_profile_id", $order->get("orig_profile_id"));
 		$clone->update();
 		$this->updateOrderAsCart($clone);
-        $orderHistory = func_new("OrderHistory");
+        $orderHistory = new XLite_Module_AOM_Model_OrderHistory();
         $orderHistory->log($clone, $order, null,"clone_order");
 		$this->set("returnUrl","admin.php?target=order&order_id=".$clone->get("order_id"));
 	 } // }}}
@@ -691,7 +691,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 		
 		$orderDate = $cart->get("date");
 		$cart->update();
-		$order = func_new("Order", $cart->get("order_id"));
+		$order = new XLite_Model_Order($cart->get("order_id"));
 		$order->set("date", $orderDate);
 		$order->update();
 	}
@@ -699,7 +699,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
  	function action_add_dc() // {{{ 
 	{
 		$this->add_dc = addSlashes(trim($this->add_dc));
-		$dc = func_new("DiscountCoupon", $this->add_dc);
+		$dc = new XLite_Module_Promotion_Model_DiscountCoupon($this->add_dc);
 
 		$order = $this->get("cloneOrder");
 		$profile = $order->get("profile");
@@ -763,8 +763,8 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
    
     function action_update() // {{{ 
     {
-        $order = func_new("Order",$this->get("order_id"));
-        $orderHistory = func_new("OrderHistory");
+        $order = new XLite_Model_Order($this->get("order_id"));
+        $orderHistory = new XLite_Module_AOM_Model_OrderHistory();
 		$orderHistory->log($order);
         $order->set("orderStatus",$_POST['substatus']);
         parent::action_update();
@@ -777,7 +777,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 
 	function action_clear_history_cc_info() // {{{
 	{
-		$order = func_new("Order",$this->get("order_id"));
+		$order = new XLite_Model_Order($this->get("order_id"));
 		$history = $order->get("orderHistory");
 		foreach ($history as $obj) {
 			$changes = $obj->get("changes");
@@ -835,7 +835,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 
 	function getOutOfStockProduct($id) // {{{
 	{
-		 $product = func_new("Product",$id);
+		 $product = new XLite_Model_Product($id);
 		 return $product->get("name");
 	} // }}}
 	
@@ -846,7 +846,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
         }
 
         if (is_null($this->products)) {
-            $product = func_new("Product");
+            $product = new XLite_Model_Product();
             $this->products = $product->advancedSearch($this->substring,
                                                     $this->search_productsku,
                                                     $this->search_category,
@@ -863,7 +863,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 		if ($this->mode != "search_dc") {
 			return null;
 		}
-		$dc = func_new("DiscountCoupon");
+		$dc = new XLite_Module_Promotion_Model_DiscountCoupon();
 		return $dc->findAll("coupon LIKE '%".$this->get("coupon")."%' AND status = 'A' AND order_id = 0 AND expire > ". time());
 	} // }}}
 
@@ -872,7 +872,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
         if ($this->mode != "search_gc") {
             return null;
         }
-        $gc = func_new("GiftCertificate");
+        $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate();
         return $gc->findAll("gcid LIKE '%".$this->get("gcid")."%' AND status = 'A'");
 
     } // }}}

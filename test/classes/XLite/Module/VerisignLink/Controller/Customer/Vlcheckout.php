@@ -49,7 +49,7 @@ class XLite_Module_VerisignLink_Controller_Customer_Vlcheckout extends XLite_Con
     function init()
     {
     	if ($_REQUEST["target"] == "vlcheckout") {
-    		$this->registerForm = func_new("Object");
+    		$this->registerForm = new XLite_Base_Object();
     	}
 
     	parent::init();

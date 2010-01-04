@@ -8,7 +8,7 @@
 * @version $Id$
 */
 
-function aom_order_clone(&$_this, &$clone) 
+function aom_order_clone($_this, $clone) 
 {
 	if ($_this->xlite->get("mm.activeModules.Promotion")) {
 		foreach ($_this->getAppliedBonuses() as $specialOffer) {
@@ -59,7 +59,7 @@ function aom_order_clone(&$_this, &$clone)
 	return $clone;	
 }
 
-function aom_get_clone_order(&$_this)
+function aom_get_clone_order($_this)
 {
 	if (is_null($_this->clone_order)) {
 		$aom_orders = $_this->session->get("aom_orders");
@@ -74,7 +74,7 @@ function aom_get_clone_order(&$_this)
 		if ($found) {
 			$_this->clone_order = new XLite_Model_Order($aom_orders[$_this->get("order_id")]);
 		} else {
-			$order = func_new("Order", $_this->get("order_id"));
+			$order = new XLite_Model_Order($_this->get("order_id"));
 			if ( function_exists("func_is_clone_deprecated") && func_is_clone_deprecated() ) {
 				$_this->clone_order = $order->cloneObject();
 			} else {
@@ -91,10 +91,10 @@ function aom_get_clone_order(&$_this)
 	return $_this->clone_order;
 }
 
-function aom_get_profile(&$_this)
+function aom_get_profile($_this)
 {
     if (is_null($_this->profile)) {  
-        $order = func_new("Order", $_this->get("order_id"));
+        $order = new XLite_Model_Order($_this->get("order_id"));
         $_this->profile = $order->get("profile");
         if (is_null($_this->profile)) {
             $_this->profile = new XLite_Model_Profile();
@@ -107,11 +107,11 @@ function aom_get_profile(&$_this)
     return $_this->profile;
 }
 
-function aom_split_order(&$_this)
+function aom_split_order($_this)
 {
 	if ($_this->get("split_items")) {
 		$order = $_this->get("order");
-        $splitOrder = func_new("Order");
+        $splitOrder = new XLite_Model_Order();
         $splitOrder->set("date",time());
         $splitOrder->create();
 		foreach($order->get("items") as $item) {

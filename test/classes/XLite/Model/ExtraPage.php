@@ -167,7 +167,7 @@ class XLite_Model_ExtraPage extends XLite_Base_Object
                 break;
             case "menu":
                 $this->getCustomerLayout();
-                $template = func_new("Object");
+                $template = new XLite_Base_Object();
                 $template->set("template", $this->getRelativeTemplatePath($this->menuTemplateDef));
                 $template->set("skinPath", $this->customerLayout->getPath());
                 $template->set("page_link", "cart.php?page=" . $this->page);

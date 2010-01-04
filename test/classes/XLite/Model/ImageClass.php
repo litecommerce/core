@@ -48,7 +48,7 @@ class XLite_Model_ImageClass extends XLite_Base_Object
     */
     function getImage()
     {
-        return func_new("Image", $this->class, 0);
+        return new XLite_Model_Image($this->class, 0);
     }
 }
 

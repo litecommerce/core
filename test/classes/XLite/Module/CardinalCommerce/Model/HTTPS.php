@@ -38,6 +38,8 @@
 
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
+require_once LC_ROOT_DIR . 'lib' . LC_DS . 'Net' . LC_DS . 'URL.php';
+
 /**
 * HTTPS_CardinalCommerce description.
 *
@@ -130,7 +132,7 @@ class XLite_Module_CardinalCommerce_Model_HTTPS extends XLite_Model_HTTPS
         if ($this->curlErrorCode) {
             if (isset($this->curlErrors[$this->curlErrorCode])) {
                 $this->error = "Curl error $this->curlErrorCode: ".$this->curlErrors[$this->curlErrorCode];
-                $url = func_new("Net_URL",$this->url);
+                $url = new Net_URL($this->url);
                 $this->error = str_replace("PROTO", $url->protocol,  $this->error);
                 $this->error = str_replace("FULLURL", $this->url,  $this->error);
                 $this->error = str_replace("HOST",  $url->host,  $this->error);

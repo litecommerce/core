@@ -83,7 +83,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product
 	{
 		if (is_array($products)) {
     		foreach($products as $p_key => $product) {
-				$relatedProduct = func_new("RelatedProduct");
+				$relatedProduct = new XLite_Module_ProductAdviser_Model_RelatedProduct();
                 $relatedProduct->set("product_id", $this->get("product_id"));
                 $relatedProduct->set("related_product_id", $product->get("product_id"));
     			if ($relatedProduct->isExists()) {
@@ -128,14 +128,14 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product
     	parent::delete();
 
 		foreach ($linked as $objName) {
-    		$object = func_new($objName);
+    		$object = new $objName();
     		$objs = $object->cleanRelations($product_id);
 		}
     }
 
 	function getNewArrival()
 	{
-        $stats = func_new("ProductNewArrivals");
+        $stats = new XLite_Module_ProductAdviser_Model_ProductNewArrivals();
         $timeCondition = $this->config->get("ProductAdviser.period_new_arrivals") * 3600;
 		$timeLimit = time();
         if (!$stats->find("product_id='".$this->get("product_id")."'")) {

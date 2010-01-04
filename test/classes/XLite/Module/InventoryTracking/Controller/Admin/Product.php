@@ -118,7 +118,7 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
 		if (!$this->xlite->get("ProductOptionsEnabled")) {
             return $inventories;
         }    
-        $inventory = func_new("Inventory");
+        $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
         $inventories = $inventory->findAll("inventory_id LIKE '".$this->product_id."|%'");
         for ($k = 0; $k < count($inventories); $k++) {
             $inventory_id = $inventories[$k]->get("inventory_id");
@@ -149,7 +149,7 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
 	function updateProductInventorySku() // {{{
 	{
 		$product_id = addslashes($this->get("product_id"));
-		$p = func_new("Product");
+		$p = new XLite_Model_Product();
 		if ($p->find("product_id='$product_id'")) {
 			$p->updateInventorySku();
 		}
@@ -157,14 +157,14 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
 
     function action_delete_tracking_option()
     {
-        $i = func_new("Inventory", $this->inventory_id);
+        $i = new XLite_Module_InventoryTracking_Model_Inventory($this->inventory_id);
         $i->delete();
 		$this->updateProductInventorySku();
     }
 
     function action_update_tracking_option()
     {
-        $i = func_new("Inventory", $this->inventory_id);
+        $i = new XLite_Module_InventoryTracking_Model_Inventory($this->inventory_id);
 		$this->optdata['inventory_sku'] = preg_replace("/\|/", "-", $this->optdata['inventory_sku']);
         $i->set("properties", $this->optdata);
         $i->update();
@@ -176,7 +176,7 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
         if (empty($this->optdata)) {
             return;
         }    
-		$inventory = func_new("Inventory");
+		$inventory = new XLite_Module_InventoryTracking_Model_Inventory();
         $options[] = $this->product_id;
         foreach ($this->optdata as $class => $optdata) {
             if (isset($optdata["used"])) {

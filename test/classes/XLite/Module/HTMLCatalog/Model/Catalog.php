@@ -516,7 +516,7 @@ class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Model_FlexyCompiler
                         if (is_array($products[$i]) && isset($products[$i]["class"]) && isset($products[$i]["data"])) {
                         	if ($old_class != $products[$i]["class"] || !is_object($object)) {
                         		$old_class = $products[$i]["class"];
-                        		$object = func_new($products[$i]["class"]);
+                        		$object = new $products[$i]["class"];
                         	}
                             $object->isPersistent = true;
                             $object->isRead = false;
@@ -1061,7 +1061,7 @@ class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Model_FlexyCompiler
             if (!isset($request["category_id"])) {
             	$pc = $product->getCategories();
 
-                $category = func_new("Category", $pc[0]->get("category_id"));
+                $category = new XLite_Model_Category($pc[0]->get("category_id"));
             	$category->read();
             }
 

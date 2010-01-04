@@ -44,30 +44,25 @@
 * @version $Id$
 */
 
-class XLite_Module_AOM_Model_WysiwygMediator extends XLite_Model_WysiwygMediator
+class XLite_Module_GiftCertificates_Model_Wysiwyg_Mediator extends XLite_Model_Wysiwyg_Mediator
 {
-    
     function export($templates)
     {
-		$this->AOM_remove_admin_layouts();
-		return parent::export($templates);
+		$this->xlite->GiftCertificates_wysiwyg_work = true;
+		$result = parent::export($templates);
+		$this->xlite->GiftCertificates_wysiwyg_work = false;
+
+		return $result;
     }
 
 
 	function import()
 	{
-		$this->AOM_remove_admin_layouts();
-		return parent::import();
-	}
+		$this->xlite->GiftCertificates_wysiwyg_work = true;
+		$result = parent::import();
+		$this->xlite->GiftCertificates_wysiwyg_work = false;
 
-	function AOM_remove_admin_layouts()
-	{
-		$layout = XLite_Model_Layout::getInstance();
-
-		$list = $layout->list;
-		unset($list["order/order.tpl"]);
-		unset($list["order/search_form.tpl"]);
-		$layout->list = $list;
+		return $result;
 	}
 }
 

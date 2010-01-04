@@ -81,7 +81,7 @@ class XLite_Module_Intershipper_Controller_Admin_Intershipper extends XLite_Cont
 
     function action_update()
     {
-        $intershipper = func_new("Shipping_intershipper");
+        $intershipper = new XLite_Module_Intershipper_Model_Shipping_Intershipper();
         $intershipper->set("options", (object)$_POST);
         $this->set("updated","1");
     }
@@ -106,7 +106,7 @@ class XLite_Module_Intershipper_Controller_Admin_Intershipper extends XLite_Cont
 
     function action_test()
     {
-        $this->intershipper = func_new("Shipping_intershipper");
+        $this->intershipper = new XLite_Module_Intershipper_Model_Shipping_Intershipper();
         $this->set("properties", $_GET);
         
         $this->rates = $this->intershipper->_queryRates($this->get("ounces"), $this->config->get("Company.location_zipcode"), $this->config->get("Company.location_country"), $this->get("destinationZipCode"), $this->get("destinationCountry"), $this->intershipper->get("options"), 0);

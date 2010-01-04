@@ -107,7 +107,7 @@ class XLite_Controller_Admin_CardTypes extends XLite_Controller_Admin_Abstract
         foreach ($_POST["card_types"] as $id => $data) {
             $data["enabled"] = array_key_exists("enabled", $data) ? 1 : 0;
             $data["cvv2"]    = array_key_exists("cvv2",    $data) ? 1 : 0;
-            $card = func_new("Card"); 
+            $card = new XLite_Model_Card(); 
             $card->set("properties", $data);
             $card->update();
         }

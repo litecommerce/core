@@ -133,13 +133,13 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
     {
         if (is_null($this->category)) {
             if ($this->get("mode") == "add") {
-                $this->category = func_new("Category"); // empty category
+                $this->category = new XLite_Model_Category(); // empty category
             } else {
                 $categoryID = 0;
                 if (isset($_REQUEST["category_id"])) {
                     $categoryID = $_REQUEST["category_id"];
                 }
-                $this->category = func_new("Category", $categoryID);
+                $this->category = new XLite_Model_Category($categoryID);
             }
         }
         return $this->category;
@@ -178,7 +178,7 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
             return;
         }
         // update category
-        $category = func_new("Category");
+        $category = new XLite_Model_Category();
 		if (empty($_POST['parent'])) $_POST['parent'] = 0;
         $category->set("properties", $_POST);
         $category->update();
@@ -200,7 +200,7 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
             return;
         }
         // add category
-        $category = func_new("Category");
+        $category = new XLite_Model_Category();
         $category->set("properties", $_POST);
         $category->set("category_id", null);
         if (empty($_POST['parent'])) $_POST['parent'] = 0;
@@ -261,16 +261,16 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
                 $categories = (array)$this->get("add_categories");
                 if (!empty($categories)) {
                     foreach ($categories as $categoryID) {
-                        $category = func_new("Category", $categoryID);
+                        $category = new XLite_Model_Category($categoryID);
                         foreach ((array)$category->get("products") as $product) {
-                            $ef = func_new("ExtraField");
+                            $ef = new XLite_Model_ExtraField();
                             $ef->set("properties", $_POST);
                             $ef->set("product_id", $product->get("product_id"));
                             $ef->create();
                         }
                     }
                 } else {    
-                    $ef = func_new("ExtraField");
+                    $ef = new XLite_Model_ExtraField();
                     $ef->set("properties", $_POST);
                     $ef->create();
                 }    
@@ -279,9 +279,9 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
         // DELETE field
         elseif (!is_null($this->get("delete_field"))) {
             foreach ((array)$this->get("add_categories") as $categoryID) {
-                $category = func_new("Category", $categoryID);
+                $category = new XLite_Model_Category($categoryID);
                 foreach ((array)$category->get("products") as $product) {
-                    $ef = func_new("ExtraField");
+                    $ef = new XLite_Model_ExtraField();
                     if ($ef->find("name='".addslashes($this->get("name"))."' AND product_id=".$product->get("product_id"))) {
                         $ef->delete();
                     }    
@@ -297,10 +297,10 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
 			$category_id = $this->get("category_id");
             foreach ((array)$this->get("delete_fields") as $id) {
 				$data = array();
-                $ef = func_new("ExtraField", $id);
+                $ef = new XLite_Model_ExtraField($id);
 				$categories = $ef->getCategories();
 				if ( !is_array($categories) || count($categories) == 0 ) {
-					$cat = func_new("Category");
+					$cat = new XLite_Model_Category();
 					$cats = $cat->findAll();
 					$categories = array();
 					foreach ($cats as $v)
@@ -321,7 +321,7 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
         {
             foreach ((array)$this->get("extra_fields") as $id => $data) 
             {
-                $ef = func_new("ExtraField", $id);
+                $ef = new XLite_Model_ExtraField($id);
                 $ef->set("categories_old", $ef->get("categories"));
                 $ef->set("properties", $data);
                 $ef->update();

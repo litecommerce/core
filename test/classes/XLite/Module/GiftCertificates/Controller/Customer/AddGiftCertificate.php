@@ -56,7 +56,7 @@ class XLite_Module_GiftCertificates_Controller_Customer_AddGiftCertificate exten
                 $this->gc = new XLite_Module_GiftCertificates_Model_GiftCertificate($this->get("gcid"));
             } else {
                 // set default form values
-                $this->gc = func_new("GiftCertificate");
+                $this->gc = new XLite_Module_GiftCertificates_Model_GiftCertificate();
                 $this->gc->set("send_via", "E");
                 $this->gc->set("border", "no_border");
                 $auth = XLite_Model_Auth::getInstance();

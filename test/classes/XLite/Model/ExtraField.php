@@ -227,7 +227,7 @@ class XLite_Model_ExtraField extends XLite_Model_Abstract
 	
 		if ($properties['sku']==NULL && $properties['product']==NULL)	
 		{
-			$global_extra_field = func_new ("ExtraField");
+			$global_extra_field = new XLite_Model_ExtraField();
 			$found = $global_extra_field->find("name='".addslashes($properties['name'])."' AND product_id=0");
 			$global_extra_field->set("default_value", $properties["default_value"]);
 			$global_extra_field->set("name", $properties["name"]);
@@ -256,7 +256,7 @@ class XLite_Model_ExtraField extends XLite_Model_Abstract
 				$global_extra_field->update();
 			}
 	
-			$extra_fields = func_new("ExtraField");
+			$extra_fields = new XLite_Model_ExtraField();
 			$extra_fields_ = $extra_fields->findAll("name='".addslashes($properties["name"])."' AND product_id<>0");
 			if (!empty($extra_fields_))
 				foreach($extra_fields_ as $extra_field_) 
@@ -266,15 +266,15 @@ class XLite_Model_ExtraField extends XLite_Model_Abstract
 				}
 					
 		} else {
-			$product = func_new("Product");
+			$product = new XLite_Model_Product();
         	$product = $product->findImportedProduct($properties["sku"], $properties["category"], $properties["product"], false /* do not create categories */);
 			if (is_null($product)) {
 				echo "<font color=red>Product not found for line ".$this->lineNo."</font><br>";
 			}	
 			else {
 				$productID = $product->get("product_id");
-				$field = func_new("ExtraField");
-				$global_extra_field = func_new("ExtraField");
+				$field = new XLite_Model_ExtraField();
+				$global_extra_field = new XLite_Model_ExtraField();
 				$global_found = $global_extra_field->find("name='".addslashes($properties["name"])."' AND product_id=0");
 				if ($global_found)
 					$field->set("parent_field_id", $global_extra_field->get("field_id"));
@@ -368,7 +368,7 @@ class XLite_Model_ExtraField extends XLite_Model_Abstract
     {
         if ($this->get("parent_field_id") == 0)
         {
-    		$ef_children = func_new("ExtraField");
+    		$ef_children = new XLite_Model_ExtraField();
             $ef_children->set("ignoreFilter", true);
     		$ef_children = $ef_children->findAll("parent_field_id='".$this->get("field_id")."'");
     		if (!(is_array($ef_children) && count($ef_children) > 0))
@@ -398,7 +398,7 @@ class XLite_Model_ExtraField extends XLite_Model_Abstract
                "WHERE p.product_id IS NULL AND e.product_id<>0";
         $result = $this->db->getAll($sql);
         foreach ($result as $info) {
-            $ef = func_new("ExtraField", $info["field_id"]);
+            $ef = new XLite_Model_ExtraField($info["field_id"]);
             $ef->_collectGarbage();
         }
     } // }}}

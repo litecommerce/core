@@ -103,7 +103,7 @@ class XLite_Module_Promotion_Controller_Admin_SpecialOffers extends XLite_Contro
 	function action_update()
 	{
 		// set 'active' fields
-		$so = func_new("SpecialOffer");
+		$so = new XLite_Module_Promotion_Model_SpecialOffer();
 		foreach ($so->findAll() as $specialOffer) {
 			if (isset($_POST["active"]) && $_POST["active"][$specialOffer->get("offer_id")]) {
 				$specialOffer->set("enabled", 1);
@@ -118,7 +118,7 @@ class XLite_Module_Promotion_Controller_Admin_SpecialOffers extends XLite_Contro
 	{
 		if (!empty($this->offer_ids)) {
 			foreach($this->offer_ids as $key => $value) {
-		       $so = func_new("SpecialOffer",$key);
+		       $so = new XLite_Module_Promotion_Model_SpecialOffer($key);
 		       $so->delete();
 			}
 		}
@@ -128,7 +128,7 @@ class XLite_Module_Promotion_Controller_Admin_SpecialOffers extends XLite_Contro
 	{
         if (!empty($this->offer_ids)) {
             foreach($this->offer_ids as $key => $value) {
-               	$so = func_new("SpecialOffer",$key);
+               	$so = new XLite_Module_Promotion_Model_SpecialOffer($key);
 				if ( function_exists("func_is_clone_deprecated") && func_is_clone_deprecated() ) {
 	               	$clone = $so->cloneObject();
 				} else {

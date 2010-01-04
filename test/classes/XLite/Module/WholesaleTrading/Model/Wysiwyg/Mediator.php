@@ -45,7 +45,7 @@
 * @version $Id$
 */
 
-class XLite_Module_WholesaleTrading_Model_WysiwygMediator extends XLite_Model_WysiwygMediator
+class XLite_Module_WholesaleTrading_Model_Wysiwyg_Mediator extends XLite_Model_Wysiwyg_Mediator
 {
     
     function export($templates)

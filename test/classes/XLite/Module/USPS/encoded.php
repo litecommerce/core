@@ -91,7 +91,7 @@ function Shipping_usps_parseResponse(&$_this, $response, $destination)
          		$serviceName = $_this->translations[$service["SERVICE"]]; 
          		$shipping = $_this->getService("usps", "U.S.P.S. $serviceName", "L"); 
          		$id = $shipping->get("shipping_id"); 
-         		$rates[$id] = func_new("ShippingRate"); 
+         		$rates[$id] = new XLite_Model_ShippingRate(); 
          		$rates[$id]->shipping = $shipping; 
          		$rates[$id]->rate = (double)trim($service["POSTAGE"]); 
             } 

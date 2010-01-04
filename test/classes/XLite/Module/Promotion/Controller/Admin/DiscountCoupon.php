@@ -58,7 +58,7 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupon extends XLite_Contr
 
 	function action_update() // {{{
 	{
-		$dc = func_new("DiscountCoupon");
+		$dc = new XLite_Module_Promotion_Model_DiscountCoupon();
 		if ($dc->find("coupon='" . addslashes($_POST['coupon']) . "' AND order_id='0' AND coupon_id<>'".addslashes($this->get("coupon_id"))."'")) {
 			$this->set("valid", false);
 			$this->couponCodeDuplicate = true;

@@ -268,7 +268,7 @@ EOT;
         
         foreach ($dependencies as $depend) {
             $depend = trim($depend);
-            $depend_module = func_new("Module");
+            $depend_module = new XLite_Model_Module();
             if (!($depend_module->find("name='$depend'") && $depend_module->get('enabled'))) {
                 $this->error = "dependency failed";
                 // $this->errorDependencies = array((object)array("module"=>$moduleName, "depend"=>$dependencies));
@@ -338,7 +338,7 @@ EOT;
         $this->moduleName = $moduleName;
         $module = func_get_instance("Module_$moduleName", $moduleName);
         if (!is_object($module)) {
-            $module = func_new("Module", $moduleName);
+            $module = new XLite_Model_Module($moduleName);
         }
         foreach ($this->getModules() as $currentModule) {
             if ($currentModule->isDependsOn($moduleName) === true) {

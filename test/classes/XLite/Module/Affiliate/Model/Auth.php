@@ -112,7 +112,7 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth
             $profile->set("access_level", $this->get("pendingPartnerAccessLevel"));
         }    
         // mailto customer with a new signup notification
-        $mailer = func_new("Mailer");
+        $mailer = new XLite_Model_Mailer();
         $mailer->profile = $profile;
         $mailer->compose($this->get("config.Company.site_administrator"),
                 $profile->get("login"),
@@ -129,7 +129,7 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth
         }    
         $profile->set("plan", $profile->get("pending_plan"));
         // mailto customer with a new signup notification
-        $mailer = func_new("Mailer");
+        $mailer = new XLite_Model_Mailer();
         $mailer->profile = $profile;
         $mailer->compose($this->get("config.Company.site_administrator"),
                 $profile->get("login"),

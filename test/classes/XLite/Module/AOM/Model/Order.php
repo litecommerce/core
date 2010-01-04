@@ -416,7 +416,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order
 			if (empty($gcid)) 
 				unset($items[$key]);
 			else 
-				$gc[$item->get("item_id")] = func_new("GiftCertificate",$gcid);
+				$gc[$item->get("item_id")] = new XLite_Module_GiftCertificates_Model_GiftCertificate($gcid);
 		}
         return is_array($gc) ? $gc : false;
 	} // }}}	
@@ -518,7 +518,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order
 		if ($applied_discount <= 0) return 0;
 
 		$dc = $this->get("orderDC");
-		if (!is_object($dc)) $dc = func_new("DiscountCoupon");
+		if (!is_object($dc)) $dc = new XLite_Module_Promotion_Model_DiscountCoupon();
 		if ($dc->get("type") != "absolute") {
 			// if percent (or undefined) discount value differs from its original value, then the discount is absolute
 			if ($this->get("config.Taxes.prices_include_tax") && $this->xlite->AOM_product_originalPrice) {
@@ -585,7 +585,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order
 
 	function setOrderStatus($value) // {{{ 
 	{
-        $substatus = func_new("OrderStatus");
+        $substatus = new XLite_Module_AOM_Model_OrderStatus();
 	    $substatus->find("status = '$value'");
 	    if ($substatus->get("parent") == '') {
             $_POST['status'] = $value;
@@ -606,7 +606,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order
 	function getOrderStatus() // {{{ 
 	{
 		$status = ($this->get("substatus") == '') ? $this->get("status") : $this->get("substatus");
-		$this->orderStatus = func_new("OrderStatus");
+		$this->orderStatus = new XLite_Module_AOM_Model_OrderStatus();
 		$this->orderStatus->find("status = '$status'");
 	   	return $this->orderStatus;	
  	} // }}} 
@@ -637,7 +637,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order
         } 			
 		
         if (!empty($status)) {
-			$orderStatus = func_new("OrderStatus");
+			$orderStatus = new XLite_Module_AOM_Model_OrderStatus();
 			$orderStatus->find("status = '$status'");
             if ($orderStatus->get("parent")) { 
 				$where[] = "substatus = '$status'";

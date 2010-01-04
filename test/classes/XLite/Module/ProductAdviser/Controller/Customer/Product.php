@@ -78,7 +78,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
     		}
     	}
 		if ($product_id > 0 && $this->xlite->get("HTMLCatalogWorking") == true) {
-			$statistic = func_new("ProductRecentlyViewed");
+			$statistic = new XLite_Module_ProductAdviser_Model_ProductRecentlyViewed();
 			$statistic->collectGarbage();
 			$statistic->cleanCurrentGarbage();
 		}
@@ -87,7 +87,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
 
 		if ($this->xlite->get("PA_InventorySupport") && $this->config->get("ProductAdviser.customer_notifications_enabled") && is_object($this->getProduct())) {
 			if ($this->product->get("inventory.amount") == 0 && $this->product->get("tracking") == 0) {
-    			$this->rejectedItemInfo = func_new("Object");
+    			$this->rejectedItemInfo = new XLite_Base_Object();
     			$this->rejectedItemInfo->set("product_id", $this->product->get("product_id"));
     			$this->rejectedItemInfo->set("product", new XLite_Model_Product($this->product->get("product_id")));
 
@@ -101,7 +101,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
                 		$this->rejectedItemInfo = null;
                 		$this->session->set("rejectedItem", null);
                 	} else {
-            			$this->rejectedItemInfo = func_new("Object");
+            			$this->rejectedItemInfo = new XLite_Base_Object();
             			$this->rejectedItemInfo->set("product_id", $rejectedItemInfo->product_id);
             			$this->rejectedItemInfo->set("product", new XLite_Model_Product($rejectedItemInfo->product_id));
             			if (isset($rejectedItemInfo->productOptions)) {
@@ -200,7 +200,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
             $check[] = "profile_id='$profile_id'";
             $check[] = "email='$email'";
 
-    		$notification = func_new("CustomerNotification");
+    		$notification = new XLite_Module_ProductAdviser_Model_Notification();
     		$notification->set("type", CUSTOMER_NOTIFICATION_PRICE);
         	$notification->set("product_id", $this->get("product_id"));
             $check[] = "notify_key='" . addslashes($notification->get("productKey")) . "'";

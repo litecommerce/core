@@ -174,7 +174,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
     	static $tax;
 
     	if (!isset($tax)) {
-        	$tax = func_new('TaxRates');
+        	$tax = new XLite_Model_TaxRates();
     	}
 
 		// find the corresponding cell in the rates tree
@@ -290,7 +290,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
 
     function action_edit()
     {
-        $this->taxes = func_new("TaxRates");
+        $this->taxes = new XLite_Model_TaxRates();
         if (isset($_REQUEST["ind"]) && $_REQUEST["ind"] !== '') {
             $this->ind = $ind = $_REQUEST["ind"];
             $this->tax = $this->locateNode($this->taxes->_rates, explode(',',$ind));
@@ -313,7 +313,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
         if (isset($_REQUEST["ind"])) {
             $ind = $_REQUEST["ind"];
             $this->ind = $ind;
-            $this->taxes = func_new("TaxRates");
+            $this->taxes = new XLite_Model_TaxRates();
             if ($ind === '') {
                 $ind = array();
             } else {    
@@ -345,7 +345,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
                     $currentName = substr($this->tax, 0, strpos($this->tax, ":="));
                 }
                 
-                $tax = func_new('TaxRates');
+                $tax = new XLite_Model_TaxRates();
                 if($currentName != '' && $currentName <> $taxName && $tax->isUsedInExpressions($currentName, $taxName)){
                     $this->set('error', 'Tax name "' . $currentName . '" is used in another formula.');
                     return null;
@@ -354,7 +354,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
             } elseif ($taxValue{0} == '=') {
                 // check expression {{{
                 $invalids = array();
-                $tax = func_new('TaxRates');
+                $tax = new XLite_Model_TaxRates();
                 if ($tax->checkExpressionSyntax($taxValue, $invalids, $taxName)) {
                     $action = "$taxName:=$taxValue";
                 } else {
@@ -469,7 +469,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
     
     function initRuleParams()
     {
-        $countries = func_new("Object");
+        $countries = new XLite_Base_Object();
         $countries->name = 'Countries';
         $countries->var  = 'country';
         $countries->cond  = 'country';
@@ -478,7 +478,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
         foreach ($c->findAll() as $country) {
             $countries->values[] = $country->get("country");
         }
-        $states = func_new("Object");
+        $states = new XLite_Base_Object();
         $states->name = 'States';
         $states->var  = 'state';
         $states->cond  = 'state';
@@ -501,7 +501,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
             $states->values[] = array("val"=>$state->get("state"), "code"=>$state->get("code"), "country"=>$country, "lit"=>( $lit ) ? 1 : 0);
         }
 
-        $cities = func_new("Object");
+        $cities = new XLite_Base_Object();
         $cities->name = "Cities";
         $cities->var = "city";
         $cities->cond = "city";
@@ -515,7 +515,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
             unset($cities->values['']);
         }
 
-        $pm = func_new("Object");
+        $pm = new XLite_Base_Object();
         $pm->name = "Payment method";
         $pm->var = "pm";
         $pm->cond = "payment method";
@@ -526,14 +526,14 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
             $pm->values[] = $method->get("name");
         }
         
-        $classes = func_new("Object");
+        $classes = new XLite_Base_Object();
         $classes->name = "Product class, either new or existing";
         $classes->var = "pclass";
         $classes->cond = "product class";
         $classes->values = array_unique(array_merge(array("shipping service"), $this->taxes->getProductClasses()));
         array_multisort($classes->values);
 
-        $memberships = func_new("Object");
+        $memberships = new XLite_Base_Object();
         $memberships->name = "User membership level";
         $memberships->var = "membership";
         $memberships->cond = "membership";
@@ -541,7 +541,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
         
         $memberships->values = array_merge($memberships->values, $this->config->Memberships->memberships);
 
-        $zips = func_new("Object");
+        $zips = new XLite_Base_Object();
         $zips->name = "Zip codes/ranges (e.g. 43200-43300,55555)";
         $zips->var = "zip";
         $zips->cond = "zip";
@@ -817,7 +817,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
             unset($_POST["billing_state"]);
             $this->set("properties", $_POST);
 
-            $tax = func_new("TaxRates");
+            $tax = new XLite_Model_TaxRates();
 		    // setup tax rate calculator
 		    if (!is_array($tax->_conditionValues)) {
 		    	$tax->_conditionValues = array();
@@ -827,7 +827,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
 			    $tax->_conditionValues[$name1] = $this->$name;
 		    }
 		    if (isset($this->country)) {
-			    $country = func_new("Country", $this->country);
+			    $country = new XLite_Model_Country($this->country);
 			    $tax->_conditionValues["country"] = $country->get("country");
         	    if ($country->isEUMember()) {
         		    $tax->_conditionValues["country"] .= ",EU country";
@@ -879,14 +879,14 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
             $name = $this->get("new_name");
         }
 
-        $tax = func_new("TaxRates");
+        $tax = new XLite_Model_TaxRates();
         $tax->saveSchema($name);
     }
 
     function action_export()
     {
         $name = $this->get("export_schema");
-        $tax = func_new("TaxRates");
+        $tax = new XLite_Model_TaxRates();
         $schema = $tax->get("predefinedSchemas.$name");
         if (!is_null($schema)) {
             $this->set("silent", true);
@@ -909,7 +909,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
         }    
         $name = basename($_FILES['userfile']['name'], ".tax");
         $schema = unserialize(file_get_contents($file));
-        $tax = func_new("TaxRates");
+        $tax = new XLite_Model_TaxRates();
         $tax->saveSchema($name, $schema);
     }
 

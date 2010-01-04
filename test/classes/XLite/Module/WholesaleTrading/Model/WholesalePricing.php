@@ -111,7 +111,7 @@ class XLite_Module_WholesaleTrading_Model_WholesalePricing extends XLite_Model_A
         
         $properties       = $options["properties"];
         $wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
-        $product = func_new("Product");
+        $product = new XLite_Model_Product();
 
 		$product = $product->findImportedProduct($properties['sku'], '',$properties['product'], false, $options["unique_identifier"]);
 		if (!is_null($product)) {
@@ -140,7 +140,7 @@ class XLite_Module_WholesaleTrading_Model_WholesalePricing extends XLite_Model_A
 
     function collectGarbage()
     {
-    	$product = func_new("Product");
+    	$product = new XLite_Model_Product();
         $product_table_name = $product->db->getTableByAlias($product->alias);
         $table_name = $this->db->getTableByAlias($this->alias);
 

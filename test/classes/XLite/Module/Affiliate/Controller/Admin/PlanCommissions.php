@@ -65,7 +65,7 @@ class XLite_Module_Affiliate_Controller_Admin_PlanCommissions extends XLite_Cont
             $deleteItems = $this->get("delete_items");
             if (is_array($deleteItems)) {
                 foreach ($deleteItems as $itemID => $status) {
-                    $pc = func_new("PlanCommission", $this->get("plan_id"), $itemID, $this->get("item_type"));
+                    $pc = new XLite_Module_Affiliate_Model_PlanCommission($this->get("plan_id"), $itemID, $this->get("item_type"));
                     $pc->delete();
                 }
             }
@@ -119,7 +119,7 @@ class XLite_Module_Affiliate_Controller_Admin_PlanCommissions extends XLite_Cont
     function getPlanCommission()
     {
         if (is_null($this->pc)) {
-            $this->pc = func_new("PlanCommission");
+            $this->pc = new XLite_Module_Affiliate_Model_PlanCommission();
         }
         return $this->pc;
     }

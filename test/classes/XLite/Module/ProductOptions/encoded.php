@@ -92,7 +92,7 @@ function func_get_product_options(&$_this)
    			}
 		}
 // END		
-        $opt = func_new("stdClass");
+        $opt = new StdClass();
         $opt->class     = $_this->get("optclass");
         $opt->option_id = $option_id++;
         $opt->option    = trim($option);

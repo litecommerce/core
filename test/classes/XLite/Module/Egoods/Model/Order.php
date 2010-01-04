@@ -80,7 +80,7 @@ class XLite_Module_Egoods_Model_Order extends XLite_Model_Order
 				}
 				
 				$pin_settings = new XLite_Module_Egoods_Model_PinSettings($items[$i]->get('product.product_id'));
-				$pin = func_new("PinCode");
+				$pin = new XLite_Module_Egoods_Model_PinCode();
 				if ($pin->getFreePinCount($items[$i]->get('product.product_id'))<= $pin_settings->get("low_available_limit") && $pin_settings->get("low_available_limit")) {
 					$mail = new XLite_Module_Egoods_Model_Mailer();
 					$mail->item = $items[$i];
@@ -107,7 +107,7 @@ class XLite_Module_Egoods_Model_Order extends XLite_Model_Order
 		$items = $this->get('items');
 		for ($i = 0; $i < count($items); $i++) {
 			if ($items[$i]->is('pin') && $items[$i]->get('product.pin_type') == "D") {
-                $pins = func_new('PinCode');
+                $pins = new XLite_Module_Egoods_Model_PinCode();
                 foreach ($pins->findAll("order_id='" . $this->get("order_id") . "' AND item_id='" . $items[$i]->get("item_id") . "'") as $pin) {
                     $pin->set('item_id', '');
                     $pin->set('order_id', 0);

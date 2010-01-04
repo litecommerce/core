@@ -283,7 +283,7 @@ class XLite_Module_ProductAdviser_Controller_Admin_CustomerNotifications extends
             $statuses = implode(", ", $statuses);
 
     		foreach($this->selected as $notify_id) {
-				$notification = func_new("CustomerNotification");
+				$notification = new XLite_Module_ProductAdviser_Model_Notification();
 
         		$condition = array();
                 $condition[] = "status IN ($statuses)";
@@ -308,7 +308,7 @@ class XLite_Module_ProductAdviser_Controller_Admin_CustomerNotifications extends
             $statuses = implode(", ", $statuses);
 
     		foreach($this->selected as $notify_id) {
-				$notification = func_new("CustomerNotification");
+				$notification = new XLite_Module_ProductAdviser_Model_Notification();
 
         		$condition = array();
                 $condition[] = "status IN ($statuses)";
@@ -347,7 +347,7 @@ class XLite_Module_ProductAdviser_Controller_Admin_CustomerNotifications extends
 </SCRIPT>
 <?php
     		foreach($this->ids as $ntf_id) {
-				$notification = func_new("CustomerNotification");
+				$notification = new XLite_Module_ProductAdviser_Model_Notification();
 
         		$condition = array();
                 $condition[] = "status='".CUSTOMER_REQUEST_UPDATED."'";

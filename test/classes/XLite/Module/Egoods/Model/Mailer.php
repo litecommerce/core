@@ -67,7 +67,7 @@ class XLite_Module_Egoods_Model_Mailer extends XLite_Model_Mailer
         $this->set("body", $this->compile($dir.$this->get("bodyTemplate"), false));
 
         // find all images and fetch them; replace with cid:...
-        $imageParser = func_new("MailImageParser");
+        $imageParser = new XLite_Model_MailImageParser();
         $imageParser->source = $this->get("body");
         $imageParser->webdir = $this->xlite->shopUrl("");
         $imageParser->parse();

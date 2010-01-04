@@ -175,7 +175,7 @@ class XLite_Model_Config extends XLite_Model_Abstract
 
     function createOption($category, $name, $value, $type = null, $comment = null, $orderby = null) // {{{
     {
-        $config = func_new($this->configClass);
+        $config = new $this->configClass;
         if ($config->find("name='$name' AND category='$category'")) {
             $config->set("value", $value);
             if (!is_null($type)) {

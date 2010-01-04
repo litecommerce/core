@@ -72,7 +72,7 @@ class XLite_Controller_Admin_Wysiwyg extends XLite_Controller_Admin_Abstract
     function getBuilder()
     {
         if (is_null($this->builder)) {
-            $this->builder = new XLite_Model_WysiwygMediator();
+            $this->builder = new XLite_Model_Wysiwyg_Mediator();
         }
         return $this->builder;
     }

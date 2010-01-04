@@ -181,7 +181,7 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
 
 	function action_add() // {{{
     {
-        $dc = func_new("DiscountCoupon");
+        $dc = new XLite_Module_Promotion_Model_DiscountCoupon();
         if ($dc->find("coupon='" . $this->get("coupon") . "' AND order_id='0'")) {
             $this->valid = false;
             $this->couponExists = true;
@@ -199,7 +199,7 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
 	{
 		if (isset($_POST["status"])) {
 			foreach ($_POST["status"] as $coupon_id => $status) {
-				$dc = func_new("DiscountCoupon",$coupon_id);
+				$dc = new XLite_Module_Promotion_Model_DiscountCoupon($coupon_id);
 				$dc->set("status", $status);
 				$dc->update();
 			}
@@ -210,7 +210,7 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
 
 	function action_delete() // {{{
 	{
-		$dc = func_new("DiscountCoupon",$this->get("coupon_id"));
+		$dc = new XLite_Module_Promotion_Model_DiscountCoupon($this->get("coupon_id"));
 		$dc->delete();
 
 		$this->_action_postprocess();

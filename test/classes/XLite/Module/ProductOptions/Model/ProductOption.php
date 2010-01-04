@@ -130,7 +130,7 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
 	            $product_option->create();
 			}
 		} else if (empty($properties["sku"]) && empty($properties["name"])) {
-			$global_option = func_new("ProductOption");
+			$global_option = new XLite_Module_ProductOptions_Model_ProductOption();
 			$global_found = $global_option->find("optclass='".addslashes($properties['optclass'])."' AND product_id=0");		
 			if (!empty($properties["categories"])) {
 				$cat = new XLite_Model_Category();
@@ -163,7 +163,7 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
 				$products = $product->findAll();
 			}		
             foreach($products as $product) {
-				$product_option = func_new("ProductOption");
+				$product_option = new XLite_Module_ProductOptions_Model_ProductOption();
 	            $option_found = $product_option->find("product_id = " .$product->get("product_id"). " AND optclass='".addslashes($properties["optclass"])."'");
 
 	            $product_option->set("properties",$properties);
@@ -182,7 +182,7 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
     {
         $data = array();
         
-        $product = func_new("Product", $this->get("product_id"));
+        $product = new XLite_Model_Product($this->get("product_id"));
         $values = $this->get("properties");
 
         foreach ($layout as $field) {
@@ -201,7 +201,7 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
 				$this->getCategories();
 				if (!empty($this->categories)) {
 					foreach($this->categories as $category_id) {
-						$category = func_new("Category",$category_id);
+						$category = new XLite_Model_Category($category_id);
 						$categories[] = $category->get("stringPath");
 					}	
 					$data[] = implode("|",$categories);
@@ -215,7 +215,7 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
 
     function _modifiedPrice($opt, $ignoreProductPrice=false, $newProductPrice = null) // {{{ 
     {
-        $product = func_new("Product", $this->get("product_id"));
+        $product = new XLite_Model_Product($this->get("product_id"));
         if (!$ignoreProductPrice) {
 			if (!is_null($newProductPrice)) {
 				if ($product->get("price") != $newProductPrice) { // get() is required for reading the product from DB
@@ -259,7 +259,7 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
 
 		$full_price = null;
 		if ($this->xlite->get("WholesaleTradingEnabled")) {
-			$p = func_new("Product", $this->get("product_id"));
+			$p = new XLite_Model_Product($this->get("product_id"));
 			$full_price = $p->getFullPrice($amount=1);
 			if (doubleval($full_price) != $full_price) $full_price = null;
 			if ($this->config->get("Taxes.prices_include_tax") && !is_null($full_price)) {
@@ -276,7 +276,7 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
         	return $opt->weight_modifier;
         }
 
-        $product = func_new("Product", $this->get("product_id"));
+        $product = new XLite_Model_Product($this->get("product_id"));
         $productWeight = $product->get("weight");
 
     	$weight = $opt->weight_modifier;
@@ -315,7 +315,7 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
 	function update() // {{{ 
 	{
 		if ($this->xlite->get("InventoryTrackingEnabled")) {
-            $product = func_new("Product");
+            $product = new XLite_Model_Product();
             $product->updateInventory($this->get("properties"));
         }
 		parent::update();
@@ -325,7 +325,7 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
 	function delete() // {{{ 
 	{
     	if ($this->xlite->get("InventoryTrackingEnabled")) {
-			$product = func_new("Product");
+			$product = new XLite_Model_Product();
 			$product->deleteInventory($this->get("properties"));
 		}
 		parent::delete();
@@ -363,7 +363,7 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
 
 		if (($categories != "" && count($addOnly) > 0) || $categories == "") {
 			foreach ($this->getProductsList($addOnly) as $product_id) {
-    			$po = func_new("ProductOption");
+    			$po = new XLite_Module_ProductOptions_Model_ProductOption();
     			$child_po = $po->count("parent_option_id='".$this->get("option_id")."' AND product_id='".$product_id."'");
     			if ($child_po == 0) {
         			$po->set("properties", $this->get("properties"));
@@ -403,7 +403,7 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
 
 	function getGlobalOptions() // {{{
 	{
-		$po = func_new("ProductOption");
+		$po = new XLite_Module_ProductOptions_Model_ProductOption();
 		return $po->findAll("product_id = 0");
 	} // }}}
 
@@ -415,14 +415,14 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
         }
         if (count($categories) > 0) {
             foreach ($categories as $category_id) {
-                $category = func_new("Category", $category_id);
+                $category = new XLite_Model_Category($category_id);
                 $products = $category->get("products");
                 foreach ($products as $product) {
                 	$ids[] = $product->get("product_id");
                 }
             }
         } else {
-            $product = func_new("Product");
+            $product = new XLite_Model_Product();
             $result = $product->iterate();
             while ($product->next($result)) {
 				$ids[] = $product->get("product_id");
@@ -437,11 +437,11 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
 			$categories = explode("|", $categories);
 		}
 
-		$po = func_new("ProductOption");
+		$po = new XLite_Module_ProductOptions_Model_ProductOption();
 		foreach ($products as $product_id) {
 			$child_po = $po->findAll("parent_option_id='".$this->get("option_id")."' AND product_id='".$product_id."'");
 			if ($child_po) {
-        		$product = func_new("Product", $product_id);
+        		$product = new XLite_Model_Product($product_id);
                 $productCategories = array();
                 $product_categories = $product->get("categories");
                 if (is_array($product_categories)) {

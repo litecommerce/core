@@ -111,13 +111,13 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Product extends XLite_Contr
 
 	function action_delete_wholesale_price()
 	{
-		$wp = func_new("WholesalePricing", $_REQUEST["wprice_id"]);
+		$wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing($_REQUEST["wprice_id"]);
 		$wp->delete();
 	}
 
 	function action_update_wholesale_pricing()
 	{
-		$wp = func_new("WholesalePricing", $_REQUEST["wprice_id"]);
+		$wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing($_REQUEST["wprice_id"]);
 		$wp->set("product_id", $this->product_id);
 		$wp->set("price", $_REQUEST["w_price"]);
 		$wp->set("amount", $_REQUEST["w_amount"]);

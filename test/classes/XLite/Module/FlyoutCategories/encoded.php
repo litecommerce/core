@@ -65,7 +65,7 @@ function FlyoutCategories_buildTree(&$_this, &$parent)
 	}
 
 	if (!isset($parent)) {
-		$parent = func_new("StdClass");
+		$parent = new StdClass();
 		$parent->depth = 0;
 	}
 
@@ -74,9 +74,9 @@ function FlyoutCategories_buildTree(&$_this, &$parent)
 	$parent->number = count($subcategories);
 
 	for($i=0; $i < count($subcategories); $i++) {
-		$category = func_new("Category", $subcategories[$i]["category_id"]);
+		$category = new XLite_Model_Category($subcategories[$i]["category_id"]);
 
-		$sc = func_new("StdClass");
+		$sc = new StdClass();
 		$sc->parent = $category_id;
 		$sc->category_id = $subcategories[$i]["category_id"];
 		$sc->is_first = ($i == 0) ? true : false;
@@ -287,7 +287,7 @@ function FlyoutCategories_action_fc_clone(&$_this)
 	}
 	$new_scheme->create();
 
-	$fNode = func_new("FileNode");
+	$fNode = new XLite_Model_FileNode();
 	$fNode->path = $_this->customerLayoutPath . "modules/FlyoutCategories/schemes";
 	$fNode->createDir();
 	$fNode->path = $fNode->path . "/" . $new_scheme->getFileName();
@@ -460,7 +460,7 @@ function FlyoutCategories_getDefaultScheme(&$_this)
 {
 	$_this->initLayout();
 
-	$scheme = func_new("FCategoriesScheme");
+	$scheme = new XLite_Module_FlyoutCategories_Model_FCategoriesScheme();
 	$scheme->set("scheme_id", 0);
 	$scheme->set("name", $_this->getDefaultSchemeName());
 	$scheme->set("order_by", 0);
@@ -473,7 +473,7 @@ function FlyoutCategories_getSchemes(&$_this, $all_schemes=true)
 {
 	$_this->schemes = null;
 
-	$scheme = func_new("FCategoriesScheme");
+	$scheme = new XLite_Module_FlyoutCategories_Model_FCategoriesScheme();
 	$condition = array();
 	$condition[] = "scheme_id > '0'";
 	$condition = implode(" AND ", $condition);

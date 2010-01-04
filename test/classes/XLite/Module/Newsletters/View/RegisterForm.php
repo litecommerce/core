@@ -76,7 +76,7 @@ class XLite_Module_Newsletters_View_RegisterForm extends XLite_View_RegisterForm
                 	$listID = intval($listID);
                     $nl = new XLite_Module_Newsletters_Model_NewsList();
                     if ($nl->find("list_id='".$listID."' AND enabled=1")) {
-                        $ns = func_new("NewsSubscriber");
+                        $ns = new XLite_Module_Newsletters_Model_NewsSubscriber();
                         $email = strtolower(addslashes($this->profile->get("login")));
                         if (!$ns->find("list_id='".$listID."' AND LOWER(email)='".$email."'")) {
                             $ns->subscribe($email, $listID, false);
@@ -92,7 +92,7 @@ class XLite_Module_Newsletters_View_RegisterForm extends XLite_View_RegisterForm
         parent::action_modify();
         if ($this->is("valid")) {
             $listIDs = (array)$this->get("list_ids");
-            $ns = func_new("NewsSubscriber");
+            $ns = new XLite_Module_Newsletters_Model_NewsSubscriber();
             $email = strtolower(addslashes($this->profile->get("login")));
 
             $subscribedList = $ns->findAll("LOWER(email)='$email'");
@@ -108,7 +108,7 @@ class XLite_Module_Newsletters_View_RegisterForm extends XLite_View_RegisterForm
             	return;
             }
 
-            $nl = func_new("NewsList");
+            $nl = new XLite_Module_Newsletters_Model_NewsList();
             // walk through the all available News lists
             foreach ($nl->findAll() as $nlist) {
                 $id = $nlist->get("list_id");
@@ -130,7 +130,7 @@ class XLite_Module_Newsletters_View_RegisterForm extends XLite_View_RegisterForm
     function getNewsLists()
     {
         if (is_null($this->newsLists)) {
-            $nl = func_new("NewsList");
+            $nl = new XLite_Module_Newsletters_Model_NewsList();
             $this->newsLists = $nl->findAll();
         }
         return $this->newsLists;

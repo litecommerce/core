@@ -278,7 +278,7 @@ global $xlite;
 $xlite->logger->log("\nREQUEST:\n".var_export($data, true));
 //*/
 
-		$request = func_new("HTTPS");
+		$request = new XLite_Model_HTTPS();
 		$request->data			= $data;
         $request->cert			= $payment["certificate"];
         $request->method		= 'POST';
@@ -289,7 +289,7 @@ $xlite->logger->log("\nREQUEST:\n".var_export($data, true));
 
 /*
 if (!$request->error) {
-	$xml = func_new("XML");
+	$xml = new XLite_Model_XML();
 	$xml_response = $xml->parse($request->response);
 	$xlite->logger->log("\nRESPONSE:\n".var_export($xml_response, true)."\n");
 } else {

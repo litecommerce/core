@@ -79,7 +79,7 @@ class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Control
 					$removedItems[$p_key] = true;
 				}
 				if (!is_object($this->product)) {
-					$this->product = func_new($this->product_id);
+					$this->product = new $this->product_id;
 				}
 				if (is_object($this->product)) {
 					$rp = $this->product->getRelatedProducts();
@@ -121,7 +121,7 @@ class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Control
 			foreach ($this->product_ids as $product_id => $value) {
 				$relatedProducts[] = new XLite_Model_Product($product_id);
 			}
-			$product = func_new("Product", $this->product_id);
+			$product = new XLite_Model_Product($this->product_id);
 			$product->addRelatedProducts($relatedProducts);
 		}	
 	}
@@ -152,9 +152,9 @@ class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Control
 		if (isset($this->delete_product_ids) && is_array($this->delete_product_ids)) {
 			$relatedProducts = array();
 			foreach ($this->delete_product_ids as $product_id => $value) {
-				$relatedProducts[] = func_new("Product", $product_id);
+				$relatedProducts[] = new XLite_Model_Product($product_id);
 			}
-			$product = func_new("Product", $this->product_id);
+			$product = new XLite_Model_Product($this->product_id);
 			$product->deleteRelatedProducts($relatedProducts);
 		}
 	}
@@ -235,7 +235,7 @@ class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Control
     		$check[] = "status='" . CUSTOMER_REQUEST_UPDATED . "'";
     		$check = implode(" AND ", $check);
 
-    		$notification = func_new("CustomerNotification");
+    		$notification = new XLite_Module_ProductAdviser_Model_Notification();
     		$this->notifyPresentedHash[$inventory_id] = $notification->count($check);
     	}
 		return $this->notifyPresentedHash[$inventory_id];
@@ -250,7 +250,7 @@ class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Control
     		$check[] = "status='" . CUSTOMER_REQUEST_UPDATED . "'";
     		$check = implode(" AND ", $check);
 
-    		$notification = func_new("CustomerNotification");
+    		$notification = new XLite_Module_ProductAdviser_Model_Notification();
     		$this->priceNotifyPresented = $notification->count($check);
     	}
 		return $this->priceNotifyPresented;

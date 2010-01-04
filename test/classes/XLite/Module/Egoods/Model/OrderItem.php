@@ -142,7 +142,7 @@ class XLite_Module_Egoods_Model_OrderItem extends XLite_Model_OrderItem
 		if (!isset($this->_egoods)) {
 			$egoods_links = explode(',', $this->get('egoods'));
 			foreach($egoods_links as $link_id) {
-				$link = func_new("DownloadableLink", $link_id);
+				$link = new XLite_Module_Egoods_Model_DownloadableLink($link_id);
 				$file = new XLite_Module_Egoods_Model_DownloadableFile($link->get('file_id'));
 				$record = array();
 				$record['name'] = basename($file->get('data'));

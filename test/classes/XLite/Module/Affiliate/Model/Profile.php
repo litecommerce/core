@@ -157,7 +157,7 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile
     {
         if (is_null($this->partnerCommissions)) {
             $this->partnerCommissions = 0.00;
-            $pp = func_new("PartnerPayment");
+            $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
             // own commissions
             foreach ((array)$pp->findAll("partner_id=".$this->get("profile_id")." AND affiliate=0") as $payment) {
                 $this->partnerCommissions += $payment->get("commissions");
@@ -170,7 +170,7 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile
     {
         if (is_null($this->affiliateCommissions)) {
             $this->affiliateCommissions = 0.00;
-            $pp = func_new("PartnerPayment");
+            $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
             // own commissions
             foreach ((array)$pp->findAll("partner_id=".$this->get("profile_id")." AND affiliate<>0") as $payment) {
                 $this->affiliateCommissions += $payment->get("commissions");
@@ -184,7 +184,7 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile
         if (is_null($this->branchCommissions)) {
             $this->branchCommissions = 0.00;
             foreach ((array)$this->get("affiliates") as $partner) {
-                $pp = func_new("PartnerPayment");
+                $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
                 foreach ((array)$pp->findAll("partner_id=".$partner->get("profile_id")) as $payment) {
                     $this->branchCommissions += $payment->get("commissions");
                 }

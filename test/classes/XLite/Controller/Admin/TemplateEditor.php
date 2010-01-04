@@ -172,17 +172,17 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
                     );
         } elseif ($zone == "admin") {
         } else {
-            $shortcuts = array(
-                    func_new("FileNode","skins/$zone/$locale/main.tpl", null, SHOW_FULL_PATH), 
-                    func_new("FileNode","skins/$zone/$locale/category_products.tpl", null, SHOW_FULL_PATH), 
-                    func_new("FileNode","skins/$zone/$locale/category_subcategories.tpl", null, SHOW_FULL_PATH), 
-                    func_new("FileNode","skins/$zone/$locale/product_details.tpl", null, SHOW_FULL_PATH), 
-                    func_new("FileNode","skins/$zone/$locale/checkout", "Checkout pages", SHOW_FULL_PATH), 
-                    func_new("FileNode","skins/$zone/$locale/common/invoice.tpl", "Invoice form template", SHOW_FULL_PATH), 
-                    func_new("FileNode","skins/$zone/$locale/common/print_invoice.tpl", "Printable Invoice form template", SHOW_FULL_PATH), 
-                    func_new("FileNode","cart.html", null, SHOW_FULL_PATH), 
-                    func_new("FileNode","shop_closed.html", "Shop is closed warning template", SHOW_FULL_PATH), 
-                    );
+			$shortcuts = array(
+				new FileNode("skins/$zone/$locale/main.tpl", null, SHOW_FULL_PATH),
+				new FileNode("skins/$zone/$locale/category_products.tpl", null, SHOW_FULL_PATH),
+				new FileNode("skins/$zone/$locale/category_subcategories.tpl", null, SHOW_FULL_PATH),
+				new FileNode("skins/$zone/$locale/product_details.tpl", null, SHOW_FULL_PATH),
+				new FileNode("skins/$zone/$locale/checkout", "Checkout pages", SHOW_FULL_PATH),
+				new FileNode("skins/$zone/$locale/common/invoice.tpl", "Invoice form template", SHOW_FULL_PATH),
+				new FileNode("skins/$zone/$locale/common/print_invoice.tpl", "Printable Invoice form template", SHOW_FULL_PATH),
+				new FileNode("cart.html", null, SHOW_FULL_PATH),
+				new FileNode("shop_closed.html", "Shop is closed warning template", SHOW_FULL_PATH),
+			);
         }    
         return $shortcuts;
     } // }}}
@@ -193,7 +193,7 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
     function action_update_templates() // {{{
     {
         foreach ($_POST["template"] as $path => $content) {
-            $t = func_new("FileNode", $path);
+            $t = new XLite_Model_FileNode($path);
             $t->set("content", $content);
             $t->update();
         	if ($t->writePermitted) {
@@ -211,9 +211,9 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
     {
         $node = $_REQUEST["node"];
         $path = $_REQUEST["path"];
-        $data["subject"] = func_new("FileNode", "$node/subject.tpl");
-        $data["body"] = func_new("FileNode", "$node/body.tpl");
-        $data["signature"] = func_new("FileNode", "$path/signature.tpl");
+        $data["subject"] = new XLite_Model_FileNode("$node/subject.tpl");
+        $data["body"] = new XLite_Model_FileNode("$node/body.tpl");
+        $data["signature"] = new XLite_Model_FileNode("$path/signature.tpl");
         return $data;
     }
 
@@ -222,21 +222,21 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
     	$writePermitted = false;
         $node = $_POST["node"];
         $path = $_POST["path"];
-        $s = func_new("FileNode", "$node/subject.tpl");
+        $s = new XLite_Model_FileNode("$node/subject.tpl");
         $s->set("content", $_POST["subject"]);
         $s->update();
         if ($s->writePermitted) {
 			$writePermitted = true;
         	$this->set("subjectWriteError", true);
         }
-        $b = func_new("FileNode", "$node/body.tpl");
+        $b = new XLite_Model_FileNode("$node/body.tpl");
         $b->set("content", $_POST["body"]);
         $b->update();
         if ($b->writePermitted) {
 			$writePermitted = true;
         	$this->set("bodyWriteError", true);
         }
-        $sig = func_new("FileNode", "$path/signature.tpl");
+        $sig = new XLite_Model_FileNode("$path/signature.tpl");
         $sig->set("content", $_POST["signature"]);
         $sig->update();
         if ($sig->writePermitted) {
@@ -338,7 +338,7 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
     function getFile() // {{{
     {
         $path = isset($_REQUEST["file"]) ? $_REQUEST["file"] : null;
-        $file = func_new("FileNode", $path);
+        $file = new XLite_Model_FileNode($path);
         if (isset($_REQUEST["content"])) {
             $file->set("content", $_REQUEST["content"]);
         }
@@ -360,14 +360,14 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
     
     function action_remove() // {{{
     {
-        $file = func_new("FileNode", $_REQUEST["selected_file"]);
+        $file = new XLite_Model_FileNode($_REQUEST["selected_file"]);
         $file->remove();
         $this->afterAdvanced();
     } // }}}
 
     function action_copy() // {{{
     {   
-        $file = func_new("FileNode", $_REQUEST["selected_file"]);
+        $file = new XLite_Model_FileNode($_REQUEST["selected_file"]);
         $basename = dirname($file->path);
         $file->set("newPath", $basename . "/" . $_REQUEST["new_name"]);
         $file->copy();
@@ -376,7 +376,7 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
 
     function action_rename() // {{{
     {   
-        $file = func_new("FileNode", $_REQUEST["selected_file"]);
+        $file = new XLite_Model_FileNode($_REQUEST["selected_file"]);
         $basename = dirname($file->path);
         $file->set("newPath", $basename . "/" . $_REQUEST["new_name"]);
         $file->rename();

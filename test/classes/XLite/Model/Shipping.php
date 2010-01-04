@@ -87,7 +87,7 @@ class XLite_Model_Shipping extends XLite_Model_Abstract
             if (!func_class_exists($ClassName)) {
                 $ClassName = "Shipping";
             }
-            $instances[$class] = func_new("$ClassName");
+            $instances[$class] = new $ClassName();
             $instances[$class]->set("class", $class);
         }
         return $instances[$class];

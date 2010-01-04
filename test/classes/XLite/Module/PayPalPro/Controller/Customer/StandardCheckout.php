@@ -64,7 +64,7 @@ class XLite_Module_PayPalPro_Controller_Customer_StandardCheckout extends Dialog
 	function init() // {{{
 	{
     	if ($_REQUEST["target"] == "standard_checkout") {
-			$this->registerForm = func_new("Object");
+			$this->registerForm = new XLite_Base_Object();
 		}
 		parent::init();									  
 	} // }}}

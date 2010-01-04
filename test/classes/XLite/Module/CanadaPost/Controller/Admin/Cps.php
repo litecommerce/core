@@ -58,7 +58,7 @@ class XLite_Module_CanadaPost_Controller_Admin_Cps extends Admin_Dialog_shipping
 	
 	function action_update() // {{{ 
 	{
-		$cps = func_new("Shipping_cps");
+		$cps = new XLite_Module_CanadaPost_Model_Shipping_Cps();
 		if (!isset($_POST['test_server'])) {
 			$_POST['test_server'] = 0;
 		}	
@@ -79,7 +79,7 @@ class XLite_Module_CanadaPost_Controller_Admin_Cps extends Admin_Dialog_shipping
 		$state = $state->get("code");
 		if (empty($state)) $state = "Other";
  
-		$this->cps = func_new("Shipping_cps");
+		$this->cps = new XLite_Module_CanadaPost_Model_Shipping_Cps();
 		$options = $this->cps->get("options");
 		$options->packed == 'Y' ? $packed = "<readyToShip/>" : $packed = "";
 

@@ -121,7 +121,7 @@ class XLite_Module_AOM_Model_OrderHistory extends XLite_Model_Abstract
 				}
 			}
 
-			$gpg = func_new("GPG");
+			$gpg = new XLite_Module_AdvancedSecurity_Model_GPG();
 			$secureChanges = $gpg->encrypt(serialize($secureChanges));
 		}
 

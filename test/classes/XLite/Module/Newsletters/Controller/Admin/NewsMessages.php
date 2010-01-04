@@ -91,7 +91,7 @@ class XLite_Module_Newsletters_Controller_Admin_NewsMessages extends XLite_Contr
 	function getMessage()
 	{
 		if (is_null($this->message)) {
-			$this->message = func_new("NewsLetter", $this->get("news_id"));
+			$this->message = new XLite_Module_Newsletters_Model_NewsLetter($this->get("news_id"));
 		}
 
 		return $this->message;
@@ -135,7 +135,7 @@ class XLite_Module_Newsletters_Controller_Admin_NewsMessages extends XLite_Contr
     	if (!isset($this->postonly)) {
         	$this->init_multisend();
 
-            $nl = func_new("NewsLetter");
+            $nl = new XLite_Module_Newsletters_Model_NewsLetter();
             if ($this->subscribers_per_page_mail > 0) {
             	$nl->set("parentCaller", $this);
         		if ($this->mode == "continue") {
@@ -144,7 +144,7 @@ class XLite_Module_Newsletters_Controller_Admin_NewsMessages extends XLite_Contr
             }
             $nl->set("properties", $this->request); // list_id, subject, body
         } else {
-            $nl = func_new("NewsLetter");
+            $nl = new XLite_Module_Newsletters_Model_NewsLetter();
             $nl->set("properties", $this->request); // list_id, subject, body
             $nl->set("subscribers", $this->get("subscribers"));
             $nl->set("testMode", true);
@@ -152,7 +152,7 @@ class XLite_Module_Newsletters_Controller_Admin_NewsMessages extends XLite_Contr
             $this->set("valid", false); // leave in POST
         }
 
-		$obj = func_new("NewsLetter");
+		$obj = new XLite_Module_Newsletters_Model_NewsLetter();
 		if ($obj->find("news_id='".$this->news_id."'")) {
 			$nl->update();
 			$nl->set("postonlyMode", false);
@@ -183,7 +183,7 @@ class XLite_Module_Newsletters_Controller_Admin_NewsMessages extends XLite_Contr
     	}
 
         foreach ($ids as $id) {
-            $nl = func_new("NewsLetter", $id);
+            $nl = new XLite_Module_Newsletters_Model_NewsLetter($id);
             if ($this->get("delete")) {
                 $nl->delete();
             } elseif ($this->get("resend")) {

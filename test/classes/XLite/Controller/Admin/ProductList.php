@@ -118,7 +118,7 @@ class XLite_Controller_Admin_ProductList extends XLite_Controller_Admin_Abstract
 			}
 
             foreach ($this->product_ids as $product_id) {
-    			$p = func_new("Product", $product_id);
+    			$p = new XLite_Model_Product($product_id);
                 $p->delete();
             }
             if (!empty($this->product_ids)) {
@@ -131,7 +131,7 @@ class XLite_Controller_Admin_ProductList extends XLite_Controller_Admin_Abstract
     		$this->set("mode", "confirmation");
         	if (isset($this->product_ids) && is_array($this->product_ids)) {
                 foreach ($this->product_ids as $idx => $product_id) {
-                	$this->product_ids[$idx] = func_new("Product", $product_id);
+                	$this->product_ids[$idx] = new XLite_Model_Product($product_id);
                 }
             }
         }
@@ -141,7 +141,7 @@ class XLite_Controller_Admin_ProductList extends XLite_Controller_Admin_Abstract
 	{
     	if (isset($this->product_ids) && is_array($this->product_ids)) {
             foreach ($this->product_ids as $product_id) {
-    			$p = func_new("Product", $product_id);
+    			$p = new XLite_Model_Product($product_id);
                 $product = $p->cloneObject();
     			foreach ($p->get("categories") as $category) {
     				$product->addCategory($category);

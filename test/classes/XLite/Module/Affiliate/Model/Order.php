@@ -112,11 +112,11 @@ class XLite_Module_Affiliate_Model_Order extends XLite_Model_Order
 
         if ($this->get("partnerClick") != 0) { // click found for this order
             // charge and save partner's commissions
-            $stat = func_new("BannerStats", $this->get("partnerClick"));
+            $stat = new XLite_Module_Affiliate_Model_BannerStats($this->get("partnerClick"));
             $partner = $stat->get("partner");
             if (!is_null($partner)) {
                 $this->set("partner", $partner);
-                $pp = func_new("PartnerPayment");
+                $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
                 $pp->charge($this);
             }
         }
@@ -125,7 +125,7 @@ class XLite_Module_Affiliate_Model_Order extends XLite_Model_Order
     function delete() // {{{
     {
         parent::delete();
-        $pp = func_new("PartnerPayment");
+        $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
         $payments = $pp->findAll("order_id=".$this->get("order_id"));
         foreach ($payments as $p) {
             $p->delete();

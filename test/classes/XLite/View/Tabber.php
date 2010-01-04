@@ -61,7 +61,7 @@ class XLite_View_Tabber extends XLite_View_Abstract
         $dialogPages = $dialog->get($this->get("tabPages"));
         if (is_array($dialogPages)) {
             foreach ($dialogPages as $page => $header) {
-                $p = func_new("Object");
+                $p = new XLite_Base_Object();
                 $pageURL = preg_replace("/$this->switch=(\w+)/", $this->switch."=".$page, $url);
                 $p->set("url", $pageURL);
                 $p->set("header", $header);

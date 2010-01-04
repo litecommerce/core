@@ -310,7 +310,7 @@ class XLite_Model_Auth extends XLite_Base_Singleton
             $this->logoff();
         }
         // send mail notification about deleted profile to customer
-        $mailer = func_new("Mailer");
+        $mailer = new XLite_Model_Mailer();
         $mailer->set("profile", $profile);
 		$mailer->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
         $mailer->compose(
@@ -388,7 +388,7 @@ class XLite_Model_Auth extends XLite_Base_Singleton
             return ACCESS_DENIED;
         }
         // read profile data
-        $profile = func_new("Profile");
+        $profile = new XLite_Model_Profile();
         // deny login if user not found
         if (!$profile->find("login='".addslashes($login)."' AND ". "password='".addslashes($password)."'")) {
         	if ($profile->find("login='".addslashes($login)."'")) {
@@ -455,7 +455,7 @@ class XLite_Model_Auth extends XLite_Base_Singleton
     function sendFailedAdminLogin(&$profile) // {{{
     {
         // send mail notification about failed login to administrator
-        $mailer = func_new("Mailer");
+        $mailer = new XLite_Model_Mailer();
         $mailer->set("login", isset($_POST["login"]) ? $_POST["login"] : "unknown");
         $mailer->set("REMOTE_ADDR", isset($_SERVER["REMOTE_ADDR"]) ? $_SERVER["REMOTE_ADDR"] : "unknown");
         $mailer->set("HTTP_X_FORWARDED_FOR", isset($_SERVER["HTTP_X_FORWARDED_FOR"]) ? $_SERVER["HTTP_X_FORWARDED_FOR"] : "unknown");
@@ -512,7 +512,7 @@ class XLite_Model_Auth extends XLite_Base_Singleton
             return null; // not logged
         }
         if (!isset($profiles[$profile_id])) {
-        	$profile = func_new("Profile", $profile_id);
+        	$profile = new XLite_Model_Profile($profile_id);
         	if (!$profile->isValid()) {
         		$this->session->set("profile_id", 0);
             	return null; // not logged
@@ -663,11 +663,11 @@ class XLite_Model_Auth extends XLite_Base_Singleton
 
     function requestRecoverPassword($email) // {{{
     {
-        $profile = func_new("Profile");
+        $profile = new XLite_Model_Profile();
         if (!$profile->find("login='$email'")) {
             return false;
         }
-        $mailer = func_new("Mailer");
+        $mailer = new XLite_Model_Mailer();
         $mailer->url = $this->xlite->shopURL("cart.php?target=recover_password&action=confirm&email=".urlencode($profile->get("login"))."&request_id=".$profile->get("password"));
 		$mailer->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
         $mailer->compose($this->config->get('Company.users_department'),
@@ -680,13 +680,13 @@ class XLite_Model_Auth extends XLite_Base_Singleton
     
     function recoverPassword($email, $requestID) // {{{
     {
-        $profile = func_new("Profile");
+        $profile = new XLite_Model_Profile();
         if (!$profile->find("login='$email'") || $profile->get("password") != $requestID) {
             return false;
         }
 
         $pass = generate_code();
-        $mailer = func_new("Mailer");
+        $mailer = new XLite_Model_Mailer();
         $mailer->set("email", $email);
         $mailer->set("new_password", $pass);
         $profile->set("password", md5($pass));

@@ -150,7 +150,7 @@ class XLite_Module_ProductAdviser_View_CNewArrivalsProducts extends XLite_View
 		foreach ((array)$rows as $row) {
 			$product_id = $row["product_id"];
 
-			$obj = func_new("ProductNewArrivals", $product_id);
+			$obj = new XLite_Module_ProductAdviser_Model_ProductNewArrivals($product_id);
 			if ($this->checkArrivalCondition($_category, $obj)) {
 				if (!$this->isDisplayedDialog() && count($this->_new_arrival_products) >= $this->config->get("ProductAdviser.number_new_arrivals")) {
 					$this->additionalPresent = true;
@@ -222,7 +222,7 @@ class XLite_Module_ProductAdviser_View_CNewArrivalsProducts extends XLite_View
 			$categories = array();
 			if (is_null($category)) {
 				// deal with root category
-				$obj = func_new("Category");
+				$obj = new XLite_Model_Category();
 				$categories = $obj->findAll("parent='0'");
 			} else {
 				$categories[] = $category;
@@ -251,7 +251,7 @@ class XLite_Module_ProductAdviser_View_CNewArrivalsProducts extends XLite_View
         $products = array();
         $productsStats = array();
         $statsOffset = 0;
-        $stats = func_new("ProductNewArrivals");
+        $stats = new XLite_Module_ProductAdviser_Model_ProductNewArrivals();
         $timeCondition = $this->config->get("ProductAdviser.period_new_arrivals") * 3600;
 		$timeLimit = time();
         $maxSteps = ($this->isDisplayedDialog()) ? 1 : ceil($stats->count("new='Y' OR ((updated + '$timeCondition') > '$timeLimit')") / $maxViewed);
@@ -260,7 +260,7 @@ class XLite_Module_ProductAdviser_View_CNewArrivalsProducts extends XLite_View
         	$limit = ($this->isDisplayedDialog()) ? null : "$statsOffset, $maxViewed";
         	$productsStats = $stats->findAll("new='Y' OR ((updated + '$timeCondition') > '$timeLimit')", null, null, $limit);
         	foreach ($productsStats as $ps) {
-				$product = func_new("Product", $ps->get("product_id"));
+				$product = new XLite_Model_Product($ps->get("product_id"));
 				$addSign = $this->checkArrivalCondition($category, $ps);
                 if ($addSign) {
                     $product->checkSafetyMode();

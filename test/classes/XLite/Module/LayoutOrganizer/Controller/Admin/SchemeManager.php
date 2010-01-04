@@ -125,7 +125,7 @@ class XLite_Module_LayoutOrganizer_Controller_Admin_SchemeManager extends XLite_
 			return $this->schemes;
 		}
 
-		$scheme = func_new("TemplatesScheme");
+		$scheme = new XLite_Module_LayoutOrganizer_Model_TemplatesScheme();
 		$condition = array();
 		$condition[] = "scheme_id > '0'";
 		if (!$all_schemes) {
@@ -203,7 +203,7 @@ class XLite_Module_LayoutOrganizer_Controller_Admin_SchemeManager extends XLite_
 			return;
 		}
 
-		$new_scheme = func_new("TemplatesScheme");
+		$new_scheme = new XLite_Module_LayoutOrganizer_Model_TemplatesScheme();
 		$new_scheme->set("name", $scheme->get("name") . " (clone)");
 		$new_scheme->create();
 

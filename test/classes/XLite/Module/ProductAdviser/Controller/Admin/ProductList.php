@@ -102,7 +102,7 @@ class XLite_Module_ProductAdviser_Controller_Admin_ProductList extends XLite_Con
     		$removedItems = array();
     		for($i=0; $i<count($this->productsList); $i++) {
         		if (is_array($this->productsList[$i]) && isset($this->productsList[$i]["class"]) && isset($this->productsList[$i]["data"])) {
-            		$object = func_new($this->productsList[$i]["class"]);
+            		$object = new $this->productsList[$i]["class"];
                     $object->isPersistent = true;
                     $object->isRead = false;
                     $object->properties = $this->productsList[$i]["data"];

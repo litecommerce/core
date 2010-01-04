@@ -70,7 +70,7 @@ class XLite_Module_Egoods_Model_DownloadableFile extends XLite_Model_Abstract
 
 	function getManualLinks()
 	{
-		$links = func_new('DownloadableLink');
+		$links = new XLite_Module_Egoods_Model_DownloadableLink();
 		if (!isset($this->_manual_links)) {
 			$this->_manual_links = $links->findAll('file_id=' . $this->get('file_id') . " and link_type='M'");
 		}	
@@ -88,7 +88,7 @@ class XLite_Module_Egoods_Model_DownloadableFile extends XLite_Model_Abstract
 	
 	function getActiveLinks()
 	{
-		$l = func_new('DownloadableLink');
+		$l = new XLite_Module_Egoods_Model_DownloadableLink();
 		$links = $l->findAll('file_id=' . $this->get('file_id'));
 		$active_links = array();
 		for ($i = 0; $i < count($links); $i ++) {

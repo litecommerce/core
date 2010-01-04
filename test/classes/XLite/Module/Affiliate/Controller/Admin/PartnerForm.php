@@ -66,7 +66,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerForm extends XLite_Controll
 
     function action_add_field()
     {
-        $pf = func_new("PartnerField");
+        $pf = new XLite_Module_Affiliate_Model_PartnerField();
         $pf->set("properties", $_POST);
         $pf->create();
     }

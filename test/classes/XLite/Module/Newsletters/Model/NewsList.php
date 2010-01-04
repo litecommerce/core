@@ -88,7 +88,7 @@ class XLite_Module_Newsletters_Model_NewsList extends XLite_Model_Abstract
     function getSubscribers()
     {
         if (is_null($this->subscribers)) {
-            $ns = func_new("NewsSubscriber");
+            $ns = new XLite_Module_Newsletters_Model_NewsSubscriber();
             $this->subscribers = $ns->findAll("list_id=".$this->get("list_id"));
         }
         return $this->subscribers;
@@ -97,7 +97,7 @@ class XLite_Module_Newsletters_Model_NewsList extends XLite_Model_Abstract
     function getMessages()
     {
         if (is_null($this->messages)) {
-            $nm = func_new("NewsLetter");
+            $nm = new XLite_Module_Newsletters_Model_NewsLetter();
             $this->messages = $nm->findAll("list_id=".$this->get("list_id"));
         }
         return $this->messages;

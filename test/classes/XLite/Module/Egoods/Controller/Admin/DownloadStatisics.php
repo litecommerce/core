@@ -67,7 +67,7 @@ class XLite_Module_Egoods_Controller_Admin_DownloadStatisics extends XLite_Contr
 
 	function getProductHref($file_id)
 	{
-		$df = func_new("DownloadableFile", $file_id);
+		$df = new XLite_Module_Egoods_Model_DownloadableFile($file_id);
 		$product = new XLite_Model_Product($df->get('product_id'));
 		return "admin.php?target=product&product_id=" . $product->get('product_id') . "&page=downloadable_files";
 	}

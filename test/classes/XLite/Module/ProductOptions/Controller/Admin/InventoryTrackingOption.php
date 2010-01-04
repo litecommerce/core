@@ -76,7 +76,7 @@ class XLite_Module_ProductOptions_Controller_Admin_InventoryTrackingOption exten
 
     function action_update()
     {
-        $inventory = func_new("Inventory");
+        $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
         if ($inventory->find("inventory_id='".$this->inventory_id."'")) {
             $inventory->setProperties($this->optdata);
             $inventory->update();
@@ -85,7 +85,7 @@ class XLite_Module_ProductOptions_Controller_Admin_InventoryTrackingOption exten
 
     function action_delete()
     {
-        $inventory = func_new("Inventory");
+        $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
         if ($inventory->find("inventory_id='".$this->inventory_id."'")) {
             $inventory->delete();
         }

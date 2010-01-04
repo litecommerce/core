@@ -476,7 +476,7 @@ class XLite_Model_Image extends XLite_Model_Abstract
     	}
 		foreach ($imagesArray as $row) {
 			$n++;
-			$image = func_new("Image", $this->imageClass, $row[$this->autoIncrement]);
+			$image = new XLite_Model_Image($this->imageClass, $row[$this->autoIncrement]);
 			print ". ";
 			func_flush();
 

@@ -77,7 +77,7 @@ class XLite_Controller_Admin_ShippingMethods extends XLite_Controller_Admin_Ship
 
     function action_delete()
     {
-        $shipping = func_new("Shipping",$_REQUEST["shipping_id"]);
+        $shipping = new XLite_Model_Shipping($_REQUEST["shipping_id"]);
         $shipping->delete();
     }
 }

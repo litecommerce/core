@@ -104,7 +104,7 @@ class XLite_Module_ProductOptions_Controller_Admin_GlobalProductOptions extends 
     function action_delete()
     {
 		if (isset($this->option_id) && isset($this->global_options) && is_array($this->global_options)) {
-			$po = func_new("ProductOption");
+			$po = new XLite_Module_ProductOptions_Model_ProductOption();
 			$child_po = $po->findAll("parent_option_id='".$this->option_id."'");
 			if ($child_po) {
 				foreach($child_po as $option_) {
@@ -123,7 +123,7 @@ class XLite_Module_ProductOptions_Controller_Admin_GlobalProductOptions extends 
 	function action_update_product_option()
 	{
 		if (isset($this->option_id) && isset($this->global_options) && is_array($this->global_options)) {
-			$po = func_new("ProductOption", $this->option_id);
+			$po = new XLite_Module_ProductOptions_Model_ProductOption($this->option_id);
 			$categories = "";
 			if (isset($this->global_options["categories"])) {
 				$categories = $this->global_options["categories"];
@@ -141,7 +141,7 @@ class XLite_Module_ProductOptions_Controller_Admin_GlobalProductOptions extends 
     function getGlobalOptions()
     {
         if (is_null($this->globalOptions)) {
-            $go = func_new("ProductOption");
+            $go = new XLite_Module_ProductOptions_Model_ProductOption();
             $this->globalOptions = $go->findAll("product_id=0");  // global options
         }
         return $this->globalOptions;
