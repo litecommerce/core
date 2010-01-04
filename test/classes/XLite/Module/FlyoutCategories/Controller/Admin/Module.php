@@ -50,11 +50,11 @@ class XLite_Module_FlyoutCategories_Controller_Admin_Module extends XLite_Contro
 		parent::init();
 
 		if ($this->page == "FlyoutCategories") {
-        	$lay = func_get_instance("Layout");
+        	$lay = XLite_Model_Layout::getInstance();
         	$lay->addLayout("general_settings.tpl", "modules/FlyoutCategories/config.tpl");
         }
 
-        $layout = func_get_instance("Layout");
+        $layout = XLite_Model_Layout::getInstance();
 	}
 
 	function getSchemes()

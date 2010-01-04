@@ -45,7 +45,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Model_Layout extends Object
+class XLite_Model_Layout extends XLite_Base_Singleton
 {
     /**
     * Skin templates list.
@@ -56,6 +56,21 @@ class XLite_Model_Layout extends Object
     var $list = array();
     var $skin = null;
     var $locale = null;
+
+	/**
+     * Return pointer to the single instance of current class
+     *
+     * @param string $className name of derived class
+     *
+     * @return XLite_Base_Singleton
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0
+     */
+    public static function getInstance($className = __CLASS__)
+    {
+        return parent::getInstance(__CLASS__);
+    }
 
     function initFromGlobals()
     {

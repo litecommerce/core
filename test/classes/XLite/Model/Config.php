@@ -58,7 +58,7 @@ class XLite_Model_Config extends XLite_Model_Abstract
     var $primaryKey = array('category', 'name');
     var $alias = 'config';
     var $defaultOrder = "orderby";
-    var $configClass = "Config";
+    var $configClass = "XLite_Model_Config";
     
     // GET methods {{{
     function getCategories()
@@ -135,13 +135,13 @@ class XLite_Model_Config extends XLite_Model_Abstract
     */
     function readConfig() // {{{
     {
-        $config = func_new("Object");
-		$row = func_new($this->configClass);
+        $config = new XLite_Base_Object();
+		$row = new $this->configClass;
         $r = $row->iterate();
         while ($row->next($r)) {
             $category = $row->get("category");
             if (!isset($config->$category)) {
-                $config->$category = func_new("Object");
+                $config->$category = new XLite_Base_Object();
             }
             $name = $row->get("name");
             if ($row->get("type") == "checkbox") {

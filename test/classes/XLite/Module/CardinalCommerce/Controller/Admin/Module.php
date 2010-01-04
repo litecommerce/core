@@ -51,7 +51,7 @@ class XLite_Module_CardinalCommerce_Controller_Admin_Module extends XLite_Contro
 		parent::init();
 
 		if ($this->page == "CardinalCommerce") {
-        	$lay = func_get_instance("Layout");
+        	$lay = XLite_Model_Layout::getInstance();
         	$lay->addLayout("general_settings.tpl", "modules/CardinalCommerce/config.tpl");
         }
 	}

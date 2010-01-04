@@ -52,7 +52,7 @@ class XLite_Module_Froogle_Controller_Admin_Module extends XLite_Controller_Admi
 		parent::init();
 
 		if ($this->page == "Froogle") {
-        	$layout = func_get_instance("Layout");
+        	$layout = XLite_Model_Layout::getInstance();
         	$layout->addLayout("general_settings.tpl", "modules/Froogle/config.tpl");
         }
 	}

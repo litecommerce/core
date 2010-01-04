@@ -48,7 +48,7 @@
 */
 define('SHOW_FULL_PATH', 1);
 
-class XLite_Model_FileNode extends Object
+class XLite_Model_FileNode extends XLite_Base_Object
 {
     function constructor($path = null, $comment = null, $options = 0)
     {

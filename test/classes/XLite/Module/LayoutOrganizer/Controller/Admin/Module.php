@@ -51,7 +51,7 @@ class XLite_Module_LayoutOrganizer_Controller_Admin_Module extends XLite_Control
 		parent::init();
 
 		if ($this->page == "LayoutOrganizer") {
-        	$lay = func_get_instance("Layout");
+        	$lay = XLite_Model_Layout::getInstance();
         	$lay->addLayout("general_settings.tpl", "modules/LayoutOrganizer/config.tpl");
         }
 	}

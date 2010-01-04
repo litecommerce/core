@@ -1587,7 +1587,7 @@ function UPSOnlineTools_getColorByIndex($index)
 function UPSOnlineTools_getLayoutSkinPath()
 {
 	// get layout path
-	$layout = func_get_instance("Layout");
+	$layout = XLite_Model_Layout::getInstance();
 	return $layout->get("path");
 }
 

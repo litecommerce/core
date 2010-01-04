@@ -50,7 +50,7 @@ class XLite_Module_ShowcaseOrganizer_Controller_Customer_Category extends XLite_
 	
     function init()
     {
-        $layout = func_get_instance("Layout");
+        $layout = XLite_Model_Layout::getInstance();
         $layout->addLayout("category_products.tpl", $this->get("config.ShowcaseOrganizer.template"));
         parent::init();
     }

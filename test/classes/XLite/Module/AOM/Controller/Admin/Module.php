@@ -50,7 +50,7 @@ class XLite_Module_AOM_Controller_Admin_Module extends XLite_Controller_Admin_Mo
 		parent::init();
 
 		if ($this->page == "AOM") {
-        	$lay = func_get_instance("Layout");
+        	$lay = XLite_Model_Layout::getInstance();
         	$lay->addLayout("general_settings.tpl", "modules/AOM/config.tpl");
         }
 	}

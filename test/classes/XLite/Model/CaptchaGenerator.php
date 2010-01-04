@@ -44,7 +44,7 @@
 * @package $Package$
 * @version $Id$
 */
-class XLite_Model_CaptchaGenerator extends Object
+class XLite_Model_CaptchaGenerator extends XLite_Base_Object
 {
     function constructor()
     {

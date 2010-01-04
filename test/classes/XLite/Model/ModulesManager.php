@@ -55,7 +55,7 @@ define("MM_OK", 0);
 * @access public
 * @version $Id$
 */
-class XLite_Model_ModulesManager extends Object
+class XLite_Model_ModulesManager extends XLite_Base_Object
 {
     /**
     * Contains the available Modules list.
@@ -175,7 +175,7 @@ class XLite_Model_ModulesManager extends Object
 			}
 		}
 
-        if ($this->xlite->get("adminZone") && isset($_GET["safe_mode"])) {
+        if (XLite::getInstance()->get("adminZone") && isset($_GET["safe_mode"])) {
         	$auth_code = $this->xlite->get("options.installer_details.auth_code");
             if (empty($auth_code) || (!empty($auth_code) && $_GET["auth_code"] == $auth_code)) {
                 if ($_GET["safe_mode"] == "on") {

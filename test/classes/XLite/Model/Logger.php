@@ -51,7 +51,8 @@ define('LOGGER_DEFAULT_IDENT', 'X-Lite');
 * @access public
 * @version $Id$
 */
-class XLite_Model_Logger {
+class XLite_Model_Logger extends XLite_Base_Singleton
+{
     /**
     * Logger options.
     *
@@ -78,14 +79,19 @@ class XLite_Model_Logger {
         $this->_options = array_merge($this->_options, $options["log_details"]);
     }
     
-
-    static function singleton()
+	/**
+     * Return pointer to the single instance of current class
+     *
+     * @param string $className name of derived class
+     *
+     * @return XLite_Base_Singleton
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0
+     */
+    public static function getInstance($className = __CLASS__)
     {
-        static $logger;
-        if (!isset($logger)) {
-            $logger = new Logger();
-        }
-        return $logger;
+        return parent::getInstance(__CLASS__);
     }
     
     /**

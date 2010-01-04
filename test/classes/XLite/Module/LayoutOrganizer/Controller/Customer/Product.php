@@ -48,7 +48,7 @@ class XLite_Module_LayoutOrganizer_Controller_Customer_Product extends XLite_Con
 {
     function init()
     {
-        $layout = func_get_instance("Layout");
+        $layout = XLite_Model_Layout::getInstance();
 
 		if (isset($_REQUEST["product_id"]) && $_REQUEST["product_id"] > 0) {
 			$this->getProduct();

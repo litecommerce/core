@@ -58,7 +58,7 @@ define('LC_UPLOAD_UNK',       7); // unknown error
 * @access public
 * @version $Id$
 */
-class XLite_Model_Upload extends Object
+class XLite_Model_Upload extends XLite_Base_Object
 {
     /**
     * Upload code.

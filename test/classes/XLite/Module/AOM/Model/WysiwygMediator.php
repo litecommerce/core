@@ -62,7 +62,7 @@ class XLite_Module_AOM_Model_WysiwygMediator extends XLite_Model_WysiwygMediator
 
 	function AOM_remove_admin_layouts()
 	{
-		$layout = func_get_instance("Layout");
+		$layout = XLite_Model_Layout::getInstance();
 
 		$list = $layout->list;
 		unset($list["order/order.tpl"]);

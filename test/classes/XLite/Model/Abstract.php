@@ -51,7 +51,7 @@ $GLOBALS['TEXT_QUALIFIERS'] = array("double_quote"=>'"',"single_quote"=>"'");
 * @access public
 * @version $Id$
 */
-class XLite_Model_Abstract extends Object
+class XLite_Model_Abstract extends XLite_Base_Object
 {
     // properties {{{
 
@@ -159,7 +159,7 @@ class XLite_Model_Abstract extends Object
     */
     function getTable() // {{{
     {
-        return $this->db->getTableByAlias($this->alias);
+        return XLite_Model_Database::getInstance()->getTableByAlias($this->alias);
     } // }}}
 
     /**
@@ -310,7 +310,7 @@ class XLite_Model_Abstract extends Object
         $where = $this->_buildWhere($where);
         // build select query
         $this->sql = $this->_buildSelect($where, $orderby, $groupby, $limit); 
-		$result = $this->db->getAll($this->sql);
+		$result = XLite_Model_Database::getInstance()->getAll($this->sql);
         if (!is_array($result)) {
             $this->_die ($this->sql.": ".$result->getMessage());
         }
@@ -553,7 +553,7 @@ class XLite_Model_Abstract extends Object
     * @param string $property The property name
     * @return mixed The property value
     */
-    function &get($property) // {{{
+    function get($property) // {{{
     {
         // default value
         $value = null;
@@ -778,7 +778,7 @@ class XLite_Model_Abstract extends Object
     * @access private
     * @param array $properties The properties values array
     */
-    function _updateProperties($properties = array()) // {{{
+    function _updateProperties(array $properties = array()) // {{{
     {
         if (!empty($properties) && sizeof($properties)) {
             foreach ($properties as $key => $value) {

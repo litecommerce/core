@@ -76,7 +76,7 @@ class XLite_Module_Affiliate_base_Dialog extends XLite_Controller_Abstract
     function getShopLayout()
     {
         if (is_null($this->shopLayout)) {
-            $this->shopLayout = func_get_instance("Layout");
+            $this->shopLayout = XLite_Model_Layout::getInstance();
         }
         return $this->shopLayout;
     }

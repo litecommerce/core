@@ -45,7 +45,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_View_Abstract extends Object
+class XLite_View_Abstract extends XLite_Base_Object
 {
     /**
     * Widget template filename.
@@ -134,7 +134,7 @@ class XLite_View_Abstract extends Object
             // for debugging
             return $this->templateFile;
         }
-        $layout = func_get_instance("Layout");
+        $layout = XLite_Model_Layout::getInstance();
         return $layout->getLayout($this->get("template"));
     }
 
@@ -179,7 +179,7 @@ class XLite_View_Abstract extends Object
             // compile
             $fc = new XLite_Model_FlexyCompiler();
             $fc->set("source", file_get_contents($templateFile));
-            $layout = func_get_instance("Layout");
+            $layout = XLite_Model_Layout::getInstance();
             $path = $layout->getPath();
             $fc->set("url_rewrite", "images:" . $path . "images");
             $fc->set("file", $templateFile);

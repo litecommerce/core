@@ -56,7 +56,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Model_ExtraPage extends Object
+class XLite_Model_ExtraPage extends XLite_Base_Object
 {
     var $templatePrefix; // = "skins/$zone/en/";
     var $page; // a page identifier
@@ -335,7 +335,7 @@ class XLite_Model_ExtraPage extends Object
     function compile($template)
     {
         // replace layout with customer layout
-     	$layout = func_get_instance("Layout");
+     	$layout = XLite_Model_Layout::getInstance();
         $skin = $layout->get("skin");
         $layout->set("skin", $this->customerLayout->get("skin"));
 

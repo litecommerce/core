@@ -54,7 +54,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
     function init() // {{{
     {
 		if (in_array($_REQUEST["category_id"], explode(";", $this->get("config.WholesaleTrading.bulk_categories")))) {
-			$layout = func_get_instance("Layout");
+			$layout = XLite_Model_Layout::getInstance();
 			$layout->addLayout("category_products.tpl", "modules/WholesaleTrading/bulk_category_products.tpl");
 		}
 	    if ($this->config->get("WholesaleTrading.direct_addition")) {

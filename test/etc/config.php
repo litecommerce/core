@@ -95,7 +95,7 @@ suppress_logging_errors = Off
 ;   debug
 ;
 [session_details]
-type = sql
+type = Sql
 
 ;
 ; Skin details

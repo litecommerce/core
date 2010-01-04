@@ -55,7 +55,7 @@ $_reReadProfiles = false;
 * @access public
 * @version $Id$
 */
-class XLite_Model_Auth extends Object
+class XLite_Model_Auth extends XLite_Base_Object
 {
     function _reReadProfiles($newValue = null)  // {{{
     {

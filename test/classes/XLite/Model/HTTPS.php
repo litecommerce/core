@@ -59,7 +59,7 @@ require_once "Net/URL.php";
 * @access public
 * @version $Id$
 */
-class XLite_Model_HTTPS extends Object
+class XLite_Model_HTTPS extends XLite_Base_Object
 {
     var $method = 'POST';
     var $url = '';

@@ -190,7 +190,7 @@ class XLite_Model_Database extends XLite_Base_Singleton
 
 	function query($sql) // {{{
 	{
-        $profiler = func_get_instance("Profiler");
+        $profiler = new XLite_Model_Profiler();
         $profiler->addQuery($sql);
         $start = microtime(true);
 

@@ -50,7 +50,7 @@ class XLite_Module_HTMLCatalog_Controller_Admin_Module extends XLite_Controller_
 		parent::init();
 
 		if ($this->page == "HTMLCatalog") {
-        	$lay = func_get_instance("Layout");
+        	$lay = XLite_Model_Layout::getInstance();
         	$lay->addLayout("general_settings.tpl", "modules/HTMLCatalog/config.tpl");
         }
 	}

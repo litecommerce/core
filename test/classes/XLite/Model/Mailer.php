@@ -122,7 +122,7 @@ class XLite_Model_Mailer extends XLite_View
     function selectCustomerLayout()
     {
 		// Switch layout to castomer area
-		$layout = func_get_instance("Layout");
+		$layout = XLite_Model_Layout::getInstance();
 		$this->templatesSkin = $layout->get("skin");
 		$layout->set("skin", $this->xlite->get("options.skin_details.skin"));
     }
@@ -256,7 +256,7 @@ class XLite_Model_Mailer extends XLite_View
 
         if (isset($this->templatesSkin)) {
 			// Restore layout
-			$layout = func_get_instance("Layout");
+			$layout = XLite_Model_Layout::getInstance();
 			$layout->set("skin", $this->templatesSkin);
 			$this->templatesSkin = null;
         }
@@ -269,7 +269,7 @@ class XLite_Model_Mailer extends XLite_View
     {
         // replace layout with mailer skinned
         if ($switchLayout) {
-            $layout = func_get_instance("Layout");
+            $layout = XLite_Model_Layout::getInstance();
             $skin = $layout->get("skin");
             $layout->set("skin", MAIL_SKIN);
         } else {

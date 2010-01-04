@@ -547,7 +547,7 @@ class XLite_Model_Image extends XLite_Model_Abstract
 	
 }
 
-class XLite_Model_Image extends Object
+class XLite_Model_Image extends XLite_Base_Object
 {
     /**
     * Create an image object based on the image class.

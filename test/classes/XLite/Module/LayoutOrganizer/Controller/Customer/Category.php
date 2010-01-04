@@ -50,7 +50,7 @@ class XLite_Module_LayoutOrganizer_Controller_Customer_Category extends XLite_Co
 	
     function init()
     {
-        $layout = func_get_instance("Layout");
+        $layout = XLite_Model_Layout::getInstance();
 		if (isset($_REQUEST["category_id"]) && $_REQUEST["category_id"] > 0) {
 			$category_id = $_REQUEST["category_id"];
             $category = new XLite_Model_Category($category_id);

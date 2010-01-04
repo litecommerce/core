@@ -133,7 +133,7 @@ class XLite_Controller_Admin_Wysiwyg extends XLite_Controller_Admin_Abstract
     {
         global $options;
         // reset Layout settings to customer default
-        $layout = func_get_instance("Layout"); //::getInstance();
+        $layout = XLite_Model_Layout::getInstance(); //::getInstance();
         $layout->set("skin", $options["skin_details"]["skin"]);
         $layout->set("locale", $options["skin_details"]["locale"]);
     }

@@ -300,7 +300,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order
 			}
 			if ($orderStatus->get("cust_email")) {
 				// Switch layout to castomer area
-				$layout = func_get_instance("Layout");
+				$layout = XLite_Model_Layout::getInstance();
 				$active_skin = $layout->get("skin");
 				$layout->set("skin", $this->xlite->get("options.skin_details.skin"));
 				$mail->set("adminMail", false);

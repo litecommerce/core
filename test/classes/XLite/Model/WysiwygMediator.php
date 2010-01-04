@@ -68,7 +68,7 @@ $GLOBALS['TEMPLATE_REFERENCE_PARAMS'] = array(
 * @package $Package$
 * @version $Id$
 */
-class XLite_Model_WysiwygMediator extends Object
+class XLite_Model_WysiwygMediator extends XLite_Base_Object
 {
     var $widgetClass = "WysiwygMediatorWidget";
     var $templateClass = "Template";
@@ -447,7 +447,7 @@ EOT
             );
         }
         @fclose($fd);
-        $layout = func_get_instance("Layout");
+        $layout = XLite_Model_Layout::getInstance();
         $templatesDir = $layout->getPath();
         copyFile($templatesDir . 'style.css', HTML_BUILDER_PATH . 'style.css');
         copyRecursive($templatesDir . 'images', HTML_BUILDER_PATH . 'images');
@@ -614,7 +614,7 @@ EOT;
     function import()
     {
         $this->errors = 0;
-        $this->layout = $layout = func_get_instance("Layout");
+        $this->layout = $layout = XLite_Model_Layout::getInstance();
 		$templatesDir = $layout->getPath();
 
         $code = copyRecursive(HTML_BUILDER_PATH . 'images', $templatesDir . 'images');
@@ -800,7 +800,7 @@ class XLite_Model_WysiwygMediator extends FlexyCompiler // {{{
 
     function translateTemplate($src)
     {
-        $lay = func_get_instance("Layout");
+        $lay = XLite_Model_Layout::getInstance();
         return str_replace(array('{*', '*}', 'skins/' . $lay->get("skin") . '/' . $lay->get("locale") . '/style.css'), array('<!--*', '*-->', 'style.css'), $src);
     }
 
@@ -978,7 +978,7 @@ class XLite_Model_WysiwygMediator extends XLite_Model_FlexyCompiler
 
     function translateTemplate($src)
     {
-        $lay = func_get_instance("Layout");
+        $lay = XLite_Model_Layout::getInstance();
         return str_replace(array('<!--*', '*-->', 'style.css'), array('{*', '*}', 'skins/' . $lay->get("skin") . '/' . $lay->get("locale") . '/style.css'), $src);
     }
 

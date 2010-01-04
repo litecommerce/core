@@ -60,7 +60,7 @@ class XLite_Module_FlyoutCategories_Model_Auth extends XLite_Model_Auth
 		if (is_object($profile) && $profile->get("membership")) {
 			$catalog = "/".md5($profile->get("membership"));
 
-			$this->customerLayout = func_get_instance("Layout");
+			$this->customerLayout = XLite_Model_Layout::getInstance();
 
 			$layout_path = $this->customerLayout->getPath();
 			if (substr($layout_path, strlen($layout_path)-1, 1) == "/") {

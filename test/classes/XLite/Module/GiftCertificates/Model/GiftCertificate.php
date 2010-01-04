@@ -184,7 +184,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_Ab
     */
     function getBorderHeight($bottom = false)
     {
-        $layout = func_get_instance("Layout");
+        $layout = XLite_Model_Layout::getInstance();
         $borderFile = "skins/mail/" . $layout->get("locale") . "/modules/GiftCertificates/ecards/borders/" . $this->get("border") . ($bottom?"_bottom":"") . ".gif";
         if (is_readable($borderFile)) {
             list($w, $h) = getimagesize($borderFile);
@@ -200,7 +200,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_Ab
 
     function getBordersDir()
     {
-        $layout = func_get_instance("Layout");
+        $layout = XLite_Model_Layout::getInstance();
         return $this->xlite->shopURL("skins/mail/" . $layout->get("locale") . "/modules/GiftCertificates/ecards/borders/");
     }
 
@@ -286,7 +286,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_View
 
     function getTemplateFile()
     {
-        $layout = func_get_instance("Layout");
+        $layout = XLite_Model_Layout::getInstance();
         return "skins/mail/" . $layout->get("locale") . "/" . $this->get("template");
     }
 

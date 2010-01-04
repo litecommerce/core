@@ -177,7 +177,7 @@ class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controll
 		$this->session->_data = array();
 
 		// switch layout to customer's zone
-		$layout = func_get_instance("Layout");
+		$layout = XLite_Model_Layout::getInstance();
 		$layout->set("skin", "default");
 
 		// empty cart

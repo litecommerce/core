@@ -125,16 +125,6 @@ class XLite extends XLite_Base_Singleton
 		return $this->getArrayValues($this->options, $names);
 	}
 
-	public function getConfigSetting($category = null, $names = null)
-	{
-		if (is_null($this->config)) {
-			$configModel = new XLite_Model_Config();
-            $this->config = $configModel->readConfig();
-        }
-
-		return $this->getArrayValues($this->config, $names);		
-	}
-
     public function initFromGlobals()
     {
         $this->profiler = XLite_Model_Profiler::getInstance();
@@ -145,18 +135,14 @@ class XLite extends XLite_Base_Singleton
         $this->profiler->log('db_time');
 
         // read configuration data from database
-        /*$cfg = new XLite_Model_Config();
+        $cfg = new XLite_Model_Config();
         $this->config = $cfg->readConfig();
-        $this->profiler->log('cfg_time');*/
+        $this->profiler->log('cfg_time');
 
-		print_r($this->getConfigSetting());die;
-		
-		// initialize logging
-        require_once "kernel/Logger.php";
-        $this->logger = Logger::singleton();
+        $this->logger = XLite_Model_Logger::getInstance();
 
         // start session
-        $session = func_get_instance("Session");
+        $session = XLite_Model_Session::getInstance();
         $this->session = $session->start();
         $this->profiler->log("ss_time");
 
@@ -165,7 +151,7 @@ class XLite extends XLite_Base_Singleton
         $this->mm->init();
         $this->profiler->log("mm_time");
 
-        $this->layout = func_get_instance("Layout");
+        $this->layout = XLite_Model_Layout::getInstance();
         $this->layout->initFromGlobals();
         
         $this->auth = func_get_instance("Auth");

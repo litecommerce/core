@@ -50,7 +50,7 @@ class XLite_Module_SnsIntegration_Controller_Admin_Module extends XLite_Controll
 		parent::init();
 
 		if ($this->page == "SnsIntegration") {
-        	$lay = func_get_instance("Layout");
+        	$lay = XLite_Model_Layout::getInstance();
         	$lay->addLayout("general_settings.tpl", "modules/SnsIntegration/config.tpl");
         }
 	}

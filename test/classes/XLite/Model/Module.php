@@ -161,7 +161,7 @@ class XLite_Model_Module extends XLite_Model_Abstract
 
     function addLayout($oldTemplate, $newTemplate) // {{{
     {
-         $lay = func_get_instance("Layout");
+         $lay = XLite_Model_Layout::getInstance();
          $lay->addLayout($oldTemplate, $newTemplate);
     } // }}}
 

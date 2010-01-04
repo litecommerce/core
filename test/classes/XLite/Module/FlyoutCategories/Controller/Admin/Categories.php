@@ -659,7 +659,7 @@ function opera_click() {
     function compile($template)
     {
         // replace layout with mailer skinned
-     	$layout = func_get_instance("Layout");
+     	$layout = XLite_Model_Layout::getInstance();
         $skin = $layout->get("skin");
         $layout->set("skin", $this->customerLayout->get("skin"));
 

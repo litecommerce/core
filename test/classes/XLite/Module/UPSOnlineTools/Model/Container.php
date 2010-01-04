@@ -46,7 +46,7 @@
 * @version $Id$
 */
 
-class XLite_Module_UPSOnlineTools_Model_Container extends Object
+class XLite_Module_UPSOnlineTools_Model_Container extends XLite_Base_Object
 {
 	var $container_id;
 	var $width, $length, $height;

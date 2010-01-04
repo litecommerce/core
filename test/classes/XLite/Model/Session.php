@@ -39,21 +39,6 @@
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
 /**
-* Session default options. Should be overridden through the [log_details]
-* configuration file sections.
-*/
-define('SESSION_DEFAULT_TYPE', 'sql');
-define('SESSION_DEFAULT_NAME', 'XSID');
-define('SESSION_DEFAULT_PATH', '/');
-define('SESSION_DEFAULT_TTL',  7200); // 2 hours (default), set 86400 for 1 day session TTL
-list($usec, $sec) = explode(' ', microtime());
-$seed = (float) $sec + ((float) $usec * 1000000);
-if (isset($_SERVER["REMOTE_ADDR"])) $seed += (float) ip2long($_SERVER["REMOTE_ADDR"]);
-if (isset($_SERVER["REMOTE_PORT"])) $seed += (float) $_SERVER["REMOTE_PORT"];
-srand($seed);
-define('SESSION_DEFAULT_ID', md5(uniqid(rand(), true)));
-
-/**
 * Class implements both an abstraction for the concrete Session classes and
 * base session functionality .
 *
@@ -61,8 +46,13 @@ define('SESSION_DEFAULT_ID', md5(uniqid(rand(), true)));
 * @access public
 * @version $Id$
 */
-class XLite_Model_Session extends Object
+class XLite_Model_Session extends XLite_Base_Singleton
 {
+	const SESSION_DEFAULT_TYPE = 'Sql';
+	const SESSION_DEFAULT_NAME = 'xid';
+	const SESSION_DEFAULT_PATH = '/';
+	const SESSION_DEFAULT_TTL  = 7200;
+
     /**
     * Session data containter.
     * @var array $_data
@@ -76,45 +66,39 @@ class XLite_Model_Session extends Object
     * @var array $options
     * @access private
     */
-    var $options = array(
-            'type' => SESSION_DEFAULT_TYPE,
-            'name' => SESSION_DEFAULT_NAME,
-            'id'   => SESSION_DEFAULT_ID,
-            'path' => SESSION_DEFAULT_PATH,
-            'ttl'  => SESSION_DEFAULT_TTL
-        );
+    protected $options = array(
+		'type' => self::SESSION_DEFAULT_TYPE,
+		'name' => self::SESSION_DEFAULT_NAME,
+		'id'   => '',
+		'path' => self::SESSION_DEFAULT_PATH,
+		'ttl'  => self::SESSION_DEFAULT_TTL
+	);
+
+	/**
+     * Return pointer to the single instance of current class
+     *
+     * @param string $className name of derived class
+     *
+     * @return XLite_Base_Singleton
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0
+     */
+    public static function getInstance($className = __CLASS__)
+    {
+        return parent::getInstance(__CLASS__);
+    }
     
     /**
     * Constructor.
     *
     */
-    function constructor()
+    protected function __construct()
     {
-        parent::constructor();
-        global $options;
-        $this->options = array_merge($this->options,
-                $options["session_details"]);
-        $this->options = array_merge($this->options,
-                $options["host_details"]);
-    }
+        parent::__construct();
 
-    /**
-    * Factory method. Attempts to create the concrete Session object instance.
-    *
-    * @access public
-    * @return mixed The newly created concrete Session object instance
-    */
-    function factory()
-    {
-        $session = new XLite_Model_Session();
-        $session_type = strtolower($session->getType());		
-        if (isset($session)) {
-        	unset($session);
-        }		
-
-        $class = "Session_$session_type";
-
-        return func_new("$class");
+		$xlite = XLite::getInstance();
+		$this->options = array_merge($this->options, $xlite->getOptions('session_details'), $xlite->getOptions('host_details'));
     }
 
     /**
@@ -125,18 +109,16 @@ class XLite_Model_Session extends Object
     * @return               The concrete Session reference
     *                       on error.
     */
-    function start()
+    public function start()
     {
-        static $session;
-        if (!isset($session)) {
-            $session = $this->factory();
-        }    
-        return $session;
+		$class = 'XLite_Model_Session_' . $this->getType();
+
+		return new $class();
     }
 
     /**
     * Destroys the concrete session object. Abstract method, should be 
-    * overridden.
+    * overridden. FIXME
     */
     function destroy()
     {
@@ -144,7 +126,7 @@ class XLite_Model_Session extends Object
     
     /**
     * Sets the variable with specified name and value (add it to
-    * the data container)
+    * the data container). FIXME
     *
     * @param string $name    The variable name.
     * @param mixed  $value   The variable value.
@@ -157,7 +139,7 @@ class XLite_Model_Session extends Object
     }
     
     /**
-    * Returns the value for the specified session variable.
+    * Returns the value for the specified session variable. FIXME
     * 
     * @param string $name     The variable name
     *
@@ -169,14 +151,14 @@ class XLite_Model_Session extends Object
     }
 
     /**
-    * Checks whether the variable has been registered to session
+    * Checks whether the variable has been registered to session. FIXME
     */
     function isRegistered($name)
     {
     }
 
     /**
-    * Abstract method for concrete Session object initialization.
+    * Abstract method for concrete Session object initialization. FIXME
     */
     function _initialize()
     {
@@ -184,7 +166,7 @@ class XLite_Model_Session extends Object
 
     /**
     * Abstract method for fetching the concrete Session object data
-    * from the database.
+    * from the database. FIXME
     */
     function _fetchData()
     {
@@ -193,10 +175,10 @@ class XLite_Model_Session extends Object
     /**
     * Sets the session type.
     *
-    * @param string $type The session type. Default is SESSION_DEFAULT_TYPE
+    * @param string $type The session type. Default is self::SESSION_DEFAULT_TYPE
     * @access public
     */
-    function setType($type = SESSION_DEFAULT_TYPE)
+    function setType($type = self::SESSION_DEFAULT_TYPE)
     {
         $this->options["type"] = $type;
     }
@@ -216,9 +198,9 @@ class XLite_Model_Session extends Object
     * Sets the session name.
     *
     * @access public
-    * @param string $name The session name, Default is SESSION_DEFAULT_NAME
+    * @param string $name The session name, Default is self::SESSION_DEFAULT_NAME
     */
-    function setName($name = SESSION_DEFAULT_NAME)
+    function setName($name = self::SESSION_DEFAULT_NAME)
     {
         $this->options["name"] = $name;
     }
@@ -228,12 +210,10 @@ class XLite_Model_Session extends Object
         return $this->options["name"];
     }
 
-    function setID($id = SESSION_DEFAULT_ID)
+    function setID($id)
     {
 		if (!preg_match('/^[0-9a-fA-F]{31,32}$/', $id)) {
-			// if not md5
-			$this->xlite->logger->log("Session::setID(): Incorrect XSID has been detected: " . $id);
-			$id = SESSION_DEFAULT_ID;
+			$this->_die('Session::setID(): Incorrect session ID has been detected: ' . $id);
 		}      
         $this->options["id"] = $id;
     }
@@ -243,7 +223,7 @@ class XLite_Model_Session extends Object
         return $this->options["id"];
     }
 
-    function setPath($path = SESSION_DEFAULT_PATH)
+    function setPath($path = self::SESSION_DEFAULT_PATH)
     {
         $this->options["path"] = $path;
     }
@@ -253,7 +233,7 @@ class XLite_Model_Session extends Object
         return $this->options["path"];
     }
 
-    function setTtl($ttl = SESSION_DEFAULT_TTL)
+    function setTtl($ttl = self::SESSION_DEFAULT_TTL)
     {
         $this->options["ttl"] = $ttl;
     }
@@ -296,7 +276,7 @@ class XLite_Model_Session extends Object
     }
 
     /**
-    * Saves the session data.
+    * Saves the session data. FIXME
     *
     * @access public
     * @return void

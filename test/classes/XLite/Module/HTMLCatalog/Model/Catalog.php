@@ -794,7 +794,7 @@ class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Model_FlexyCompiler
         $this->session->_data = array();
 
         // switch layout to customer's zone
-        $layout = func_get_instance("Layout");
+        $layout = XLite_Model_Layout::getInstance();
         $layout->set("skin", "default");
 
         // empty cart

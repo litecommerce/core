@@ -76,7 +76,7 @@ class XLite_Module_GiftCertificates_Model_ECard extends XLite_Model_Abstract
     function getAllTemplates()
     {
         $templates = array();
-        $layout = func_get_instance("Layout");
+        $layout = XLite_Model_Layout::getInstance();
         // "skins/mail/" . $layout->get("locale") .
         // $layout->set("skin", "mail");
         // $path = $layout->getPath() . DIRECTORY_SEPARATOR . "modules" . DIRECTORY_SEPARATOR . "GiftCertificates" . DIRECTORY_SEPARATOR . "ecards";
@@ -97,7 +97,7 @@ class XLite_Module_GiftCertificates_Model_ECard extends XLite_Model_Abstract
     function getAllBorders()
     {
         $borders = array();
-        $layout = func_get_instance("Layout");
+        $layout = XLite_Model_Layout::getInstance();
         // $layout->set("skin","mail");
         // $path = $layout->getPath() . DIRECTORY_SEPARATOR . "modules" . DIRECTORY_SEPARATOR . "GiftCertificates" . DIRECTORY_SEPARATOR . "ecards" . DIRECTORY_SEPARATOR . "borders";
         $path = "skins/mail/" . $layout->get("locale") . "/modules/GiftCertificates/ecards/borders";
@@ -128,7 +128,7 @@ class XLite_Module_GiftCertificates_Model_ECard extends XLite_Model_Abstract
     */
     function isNeedBorder()
     {
-        $layout = func_get_instance("Layout");
+        $layout = XLite_Model_Layout::getInstance();
         $template = "skins/mail/" . $layout->get("locale") . "/modules/GiftCertificates/ecards/" . $this->get("template") . ".tpl";
         $templateCode = file_get_contents($template);
         // does the e-Card template use the border?

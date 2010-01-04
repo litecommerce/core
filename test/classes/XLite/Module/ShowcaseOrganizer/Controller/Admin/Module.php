@@ -52,7 +52,7 @@ class XLite_Module_ShowcaseOrganizer_Controller_Admin_Module extends XLite_Contr
 		parent::init();
 
 		if ($this->page == "ShowcaseOrganizer") {
-        	$layout = func_get_instance("Layout");
+        	$layout = XLite_Model_Layout::getInstance();
         	$layout->addLayout("general_settings.tpl", "modules/ShowcaseOrganizer/config.tpl");
         }
 	}

@@ -46,7 +46,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_UPSOnlineTools_Model_ContainerLevel extends Object
+class XLite_Module_UPSOnlineTools_Model_ContainerLevel extends XLite_Base_Object
 {
 	var $level_id;
 	var $bottom;

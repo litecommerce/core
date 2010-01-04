@@ -50,7 +50,7 @@ class XLite_Module_Newsletters_Controller_Admin_Module extends XLite_Controller_
 		parent::init();
 
 		if ($this->page == "Newsletters") {
-        	$lay = func_get_instance("Layout");
+        	$lay = XLite_Model_Layout::getInstance();
         	$lay->addLayout("general_settings.tpl", "modules/Newsletters/config.tpl");
         }
 	}
