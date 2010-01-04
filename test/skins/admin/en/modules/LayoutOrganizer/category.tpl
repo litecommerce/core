@@ -38,10 +38,10 @@ function visibleBox(id, status)
                         	<tr class="Center" height=20>
                             	<td nowrap>&nbsp;&nbsp;All (subcategory/product list, product page)&nbsp;&nbsp;</td>
                             	<td nowrap IF="parent=#0#">
-                        		<widget class="CFormField" template="modules/LayoutOrganizer/select_scheme.tpl" field="custom_template" scheme_id="{getCategoryScheme(#custom_template#)}" schemes="{schemes}">
+                        		<widget class="XLite_View_FormField"template="modules/LayoutOrganizer/select_scheme.tpl" field="custom_template" scheme_id="{getCategoryScheme(#custom_template#)}" schemes="{schemes}">
                             	</td>
                             	<td nowrap IF="!parent=#0#">
-                        		<widget class="CFormField" template="modules/LayoutOrganizer/select_scheme.tpl" field="custom_template" inherit scheme_id="{getCategoryScheme(#custom_template#)}" schemes="{schemes}">
+                        		<widget class="XLite_View_FormField"template="modules/LayoutOrganizer/select_scheme.tpl" field="custom_template" inherit scheme_id="{getCategoryScheme(#custom_template#)}" schemes="{schemes}">
                             	</td>
                         	</tr>
                         </table>
@@ -88,28 +88,28 @@ function visibleBox(id, status)
                         	<tr class="Center" height=20>
                             	<td nowrap>&nbsp;&nbsp;Subcategory list&nbsp;&nbsp;</td>
                             	<td nowrap IF="parent=#0#">
-                        		<widget class="CFormField" template="modules/LayoutOrganizer/select_scheme.tpl" field="sc_custom_template" scheme_id="{getCategoryScheme(#sc_custom_template#)}" schemes="{schemes}">
+                        		<widget class="XLite_View_FormField"template="modules/LayoutOrganizer/select_scheme.tpl" field="sc_custom_template" scheme_id="{getCategoryScheme(#sc_custom_template#)}" schemes="{schemes}">
                             	</td>
                             	<td nowrap IF="!parent=#0#">
-                        		<widget class="CFormField" template="modules/LayoutOrganizer/select_scheme.tpl" field="sc_custom_template" inherit scheme_id="{getCategoryScheme(#sc_custom_template#)}" schemes="{schemes}">
+                        		<widget class="XLite_View_FormField"template="modules/LayoutOrganizer/select_scheme.tpl" field="sc_custom_template" inherit scheme_id="{getCategoryScheme(#sc_custom_template#)}" schemes="{schemes}">
                             	</td>
                         	</tr>
                         	<tr class="Center" height=20>
                             	<td nowrap>&nbsp;&nbsp;Product list&nbsp;&nbsp;</td>
                             	<td nowrap IF="parent=#0#">
-                        		<widget class="CFormField" template="modules/LayoutOrganizer/select_scheme.tpl" field="custom_template" scheme_id="{getCategoryScheme(#custom_template#)}" schemes="{schemes}">
+                        		<widget class="XLite_View_FormField"template="modules/LayoutOrganizer/select_scheme.tpl" field="custom_template" scheme_id="{getCategoryScheme(#custom_template#)}" schemes="{schemes}">
                             	</td>
                             	<td nowrap IF="!parent=#0#">
-                        		<widget class="CFormField" template="modules/LayoutOrganizer/select_scheme.tpl" field="custom_template" inherit scheme_id="{getCategoryScheme(#custom_template#)}" schemes="{schemes}">
+                        		<widget class="XLite_View_FormField"template="modules/LayoutOrganizer/select_scheme.tpl" field="custom_template" inherit scheme_id="{getCategoryScheme(#custom_template#)}" schemes="{schemes}">
                             	</td>
                         	</tr>
                         	<tr class="Center" height=20>
                             	<td nowrap>&nbsp;&nbsp;Product page&nbsp;&nbsp;</td>
                             	<td nowrap IF="parent=#0#">
-                        		<widget class="CFormField" template="modules/LayoutOrganizer/select_scheme.tpl" field="p_custom_template" scheme_id="{getCategoryScheme(#p_custom_template#)}" schemes="{schemes}">
+                        		<widget class="XLite_View_FormField"template="modules/LayoutOrganizer/select_scheme.tpl" field="p_custom_template" scheme_id="{getCategoryScheme(#p_custom_template#)}" schemes="{schemes}">
                             	</td>
                             	<td nowrap IF="!parent=#0#">
-                        		<widget class="CFormField" template="modules/LayoutOrganizer/select_scheme.tpl" field="p_custom_template" inherit scheme_id="{getCategoryScheme(#p_custom_template#)}" schemes="{schemes}">
+                        		<widget class="XLite_View_FormField"template="modules/LayoutOrganizer/select_scheme.tpl" field="p_custom_template" inherit scheme_id="{getCategoryScheme(#p_custom_template#)}" schemes="{schemes}">
                             	</td>
                         	</tr>
                         </table>

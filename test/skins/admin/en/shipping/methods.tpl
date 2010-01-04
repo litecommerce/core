@@ -110,7 +110,7 @@ Use this section to define your store's shipping methods.
 				<tr class="DialogBox">
 				    <td>
 				    	<input type=text name="name" size=32 value="{name}">
-				    	<widget class="CShippingMethodValidator" field="name">
+				    	<widget class="XLite_Validator_ShippingMethodValidator"field="name">
 				    </td>
 				    <td>
 				        <select name="destination">

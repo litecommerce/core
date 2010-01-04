@@ -1,1 +1,1 @@
-<widget target="scheme_manager" class="CTabber" body="{pageTemplate}" switch="page">
+<widget target="scheme_manager" class="XLite_View_Tabber"body="{pageTemplate}" switch="page">

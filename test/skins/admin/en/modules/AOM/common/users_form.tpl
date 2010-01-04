@@ -9,7 +9,7 @@
     <td height="10" class="FormButton" nowrap>Membership</td>
     <td width="10" height="10">&nbsp;</td>
     <td>
-        <widget class="CMembershipSelect" template="common/select_membership.tpl" field="membership" allOption pendingOption>
+        <widget class="XLite_View_MembershipSelect"template="common/select_membership.tpl" field="membership" allOption pendingOption>
     </td>
 </tr>
 <tr>

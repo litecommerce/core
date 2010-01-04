@@ -32,7 +32,7 @@ See also: <br>
 </tr>
 <tr>
 	<td colspan=4>
-	<widget class="CPager" data="{subscribers}" name="pager" itemsPerPage="{config.Newsletters.subscribers_per_page_admin}">
+	<widget class="XLite_View_Pager"data="{subscribers}" name="pager" itemsPerPage="{config.Newsletters.subscribers_per_page_admin}">
 	</td>
 </tr>
 </form>
@@ -115,7 +115,7 @@ function SortBy(field)
     <td class=Star>*</td>
     <td width=90%>
         <input type=text name=email value="{email:r}" size=35>
-        &nbsp;<widget class="CEmailValidator" field="email">
+        &nbsp;<widget class="XLite_Validator_EmailValidator"field="email">
     </td>
 </tr>
 <tr>

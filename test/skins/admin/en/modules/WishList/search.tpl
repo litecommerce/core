@@ -22,11 +22,11 @@
     </tr>
 	<tr>
 		<td class=FormButton noWrap height=10>Creation date from:</td>
-		<td height=10><widget class="CDate" field="startDate"></td>
+		<td height=10><widget class="XLite_View_Date"field="startDate"></td>
 	</tr>
     <tr>
         <td class=FormButton noWrap height=10>Creation date through:</td>
-        <td height=10><widget class="CDate" field="endDate"></td>
+        <td height=10><widget class="XLite_View_Date"field="endDate"></td>
     </tr>
 	<tr>
 		<td></td>

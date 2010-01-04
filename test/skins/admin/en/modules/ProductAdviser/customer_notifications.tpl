@@ -351,12 +351,12 @@ function SaveFilters()
             	<tr>
                 	<td nowrap>Date from:</td>
                 	<td>&nbsp;</td>
-                	<td nowrap><widget class="CDate" template="modules/ProductAdviser/form_date.tpl" field="startDate" id_prefix="search_"></td>
+                	<td nowrap><widget class="XLite_View_Date"template="modules/ProductAdviser/form_date.tpl" field="startDate" id_prefix="search_"></td>
             	</tr>
             	<tr>
                 	<td nowrap>Date through:</td>
                 	<td>&nbsp;</td>
-                	<td nowrap><widget class="CDate" template="modules/ProductAdviser/form_date.tpl" field="endDate" id_prefix="search_"></td>
+                	<td nowrap><widget class="XLite_View_Date"template="modules/ProductAdviser/form_date.tpl" field="endDate" id_prefix="search_"></td>
             	</tr>
             	</tbody>
             	</table>
@@ -394,7 +394,7 @@ function SaveFilters()
 
 <br>
 
-<widget class="CPager" data="{notifications}" name="pager" itemsPerPage="{xlite.config.ProductAdviser.number_notifications}">
+<widget class="XLite_View_Pager"data="{notifications}" name="pager" itemsPerPage="{xlite.config.ProductAdviser.number_notifications}">
 
 <table IF="pager.pageData" border=0 cellpadding=1 cellspacing=3>
 

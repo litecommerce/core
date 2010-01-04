@@ -67,7 +67,7 @@
 <tr>	
 	<td valign=top>Image file:</td>
 	<td valign="middle">
-        <widget class="CImageUpload" field="image" actionName="add_detailed_image" formName="imageForm">
+        <widget class="XLite_View_ImageUpload"field="image" actionName="add_detailed_image" formName="imageForm">
 	</td>
 </tr>
 <tr>

@@ -46,7 +46,7 @@
 <tr>
 	<td valign="top">Categories for bulk shopping<br><i>To (un)select more than one category, Ctrl-click it</i></td>
 	<td>
-	<widget class="CWholesaleCategorySelect" fieldName="bulk_categories[]" template="modules/WholesaleTrading/multiselect_category.tpl">
+	<widget class="XLite_Module_WholesaleTrading_View_CategorySelect"fieldName="bulk_categories[]" template="modules/WholesaleTrading/multiselect_category.tpl">
 	</td>
 </tr>
 <tr>

@@ -1,5 +1,5 @@
 {if:order.substatus} 
-<widget class="COrderStatus" status="{order.substatus}">
+<widget class="XLite_Module_AOM_View_OrderStatus"status="{order.substatus}">
 {else:}
-<widget class="COrderStatus" status="{order.status}">
+<widget class="XLite_Module_AOM_View_OrderStatus"status="{order.status}">
 {end:}

@@ -222,7 +222,7 @@ No memberships defined.
 					<td>&nbsp;</td>
                 </tr>
                 <tr class="DialogBox">
-					<td><widget class="CMembershipValidator" field="new_membership[membership]" action="add"></td>
+					<td><widget class="XLite_Validator_MembershipValidator"field="new_membership[membership]" action="add"></td>
                 </tr>
             </table>
 		</td>

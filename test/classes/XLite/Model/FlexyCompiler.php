@@ -335,7 +335,7 @@ class XLite_Model_FlexyCompiler extends XLite_Base_Object
 						list($expr,$k,$forvar) = $this->flexyForeach($this->getTokenText($pos+1));
                         $exprNumber = "$forvar"."ArraySize";
                         $exprCounter = "$forvar"."ArrayPointer";
-						$this->subst($token["start"], 0, "<?php \$$forvar = \$t->$forvar; \$_foreach_var = $expr; if (!is_null(\$_foreach_var)) { \$t->$exprNumber=count(\$_foreach_var); \$t->$exprCounter=0; } if (!is_null(\$_foreach_var)) foreach(\$_foreach_var as $k){ \$t->$exprCounter++; ?>");
+						$this->subst($token["start"], 0, "<?php \$$forvar = isset(\$t->$forvar) ? \$t->$forvar : null; \$_foreach_var = $expr; if (!is_null(\$_foreach_var)) { \$t->$exprNumber=count(\$_foreach_var); \$t->$exprCounter=0; } if (!is_null(\$_foreach_var)) foreach(\$_foreach_var as $k){ \$t->$exprCounter++; ?>");
 						$this->subst($this->tokens[$pos]["start"], $this->tokens[$pos]["end"], '');
 						$this->subst($this->tokens[$pos1]["end"]-1, $this->tokens[$pos1]["end"], "><?php } \$t->$forvar = \$$forvar; ?>");
 					} else {
@@ -414,7 +414,7 @@ class XLite_Model_FlexyCompiler extends XLite_Base_Object
             $attrs["name"] = 'widget->_' . $this->widgetCounter++;
         } 
         if (!isset($attrs["class"])) {
-            $attrs["class"] = 'Widget';
+            $attrs["class"] = 'XLite_View_Abstract';
         }
     }
 
@@ -504,10 +504,10 @@ class XLite_Model_FlexyCompiler extends XLite_Base_Object
         if (empty($this->_internalInitCode)) {
             $wName = $attrs['name'];
             $class = $attrs['class'];
-            $result .= '$t->' . $wName . ' = func_new(\'' . $class . "');\n";
+            $result .= '$t->' . $wName . ' = new ' . $class . "();\n";
             $result .= '$t->' . $wName . '->component = $t;' . "\n";
             $result .= '$t->widget->addWidget($t->' . $wName . ");\n";
-            if (func_is_a($class, "Component")) {
+            if ($class instanceof XLite_View) {
                 $result .= '$t->addComponent($t->' . $wName . ");\n";
             }
 

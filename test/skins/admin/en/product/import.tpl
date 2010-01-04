@@ -38,7 +38,7 @@
 <tr>
     <td colspan=2>
     <br>
-    Default&nbsp;category:<br><widget class="CCategorySelect" fieldName="category_id" noneOption>
+    Default&nbsp;category:<br><widget class="XLite_View_CategorySelect"fieldName="category_id" noneOption>
     </td>
 </tr>
 <tr>

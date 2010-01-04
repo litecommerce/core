@@ -60,9 +60,10 @@ class XLite_Model_Session_Sql extends XLite_Model_Session
     * @access public
     * @return void
     */
-    function constructor($options = array())
+    function __construct(array $options = array())
     {
-        parent::constructor($options);
+        parent::__construct($options);
+
         $this->sql_table = $this->db->getTableByAlias("sessions");
         $this->gc();
 

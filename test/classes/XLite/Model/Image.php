@@ -53,6 +53,10 @@ define('IMAGE_NOT_OK', 2);
 **/
 class XLite_Model_Image extends XLite_Model_Abstract
 {
+	protected $dataField   = '';
+	protected $sourceField = '';
+	protected $typeField   = '';
+
     /**
     * Register a new image class from module.
     */
@@ -62,7 +66,7 @@ class XLite_Model_Image extends XLite_Model_Abstract
         if (!isset($_registered_image_classes)) {
             $_registered_image_classes = $this->getDefaultImageClasses();
         }
-        $_registered_image_classes[$class] = func_new("ImageClass");
+        $_registered_image_classes[$class] = new XLite_Model_ImageClass();
         $_registered_image_classes[$class]->set("properties", array(
             'class' => $class,
             'comment' => $comment, 
@@ -101,7 +105,7 @@ class XLite_Model_Image extends XLite_Model_Abstract
                 'fieldPrefix' => 'image',
                 'idField' => 'category_id'),
              ) as $key => $value) {
-             $result[$key] = func_new("ImageClass");
+             $result[$key] = new XLite_Model_ImageClass();
              $result[$key]->set("properties", $value);
              $result[$key]->set("class", $key);
          }
@@ -547,18 +551,3 @@ class XLite_Model_Image extends XLite_Model_Abstract
 	
 }
 
-class XLite_Model_Image extends XLite_Base_Object
-{
-    /**
-    * Create an image object based on the image class.
-    * Syntax: 
-    *   $img = $iClass->get("image");
-    *   $img->set("
-    */
-    function getImage()
-    {
-        return func_new("Image", $this->class, 0);
-    }
-}
-
-?>

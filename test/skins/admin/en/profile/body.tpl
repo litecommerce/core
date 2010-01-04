@@ -47,7 +47,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
         </table>
     </td>
     <td>
-        <widget class="CEmailValidator" field="login">
+        <widget class="XLite_Validator_EmailValidator"field="login">
     </td>
 </tr>
 <tr valign="middle">
@@ -58,7 +58,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
     </td>
     <td>
 		&nbsp;
-        <widget class="CRequiredValidator" field="password" visible="{mode=#register#}">
+        <widget class="XLite_Validator_RequiredValidator"field="password" visible="{mode=#register#}">
     </td>
 </tr>
 <tr valign="middle">
@@ -69,8 +69,8 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
     </td>
     <td>
         &nbsp;
-        <widget class="CRequiredValidator" field="confirm_password" visible="{mode=#register#}">
-        <widget class="CPasswordValidator" field="confirm_password" passwordField="password" visible="{mode=#register#}">
+        <widget class="XLite_Validator_RequiredValidator"field="confirm_password" visible="{mode=#register#}">
+        <widget class="XLite_Validator_PasswordValidator"field="confirm_password" passwordField="password" visible="{mode=#register#}">
     </td>
 </tr>
 <tr>
@@ -108,14 +108,14 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 <tr>
 	<td align="right">Requested membership</td>
     <td><font class="Star">*</font></td>
-    <td><widget class="CMembershipSelect" field="pending_membership">&nbsp;&nbsp;{if:xlite.WholesaleTradingEnabled}<widget module="WholesaleTrading" template="modules/WholesaleTrading/profile_grant_membership.tpl">{else:}<a IF="mode=#modify#" href="javascript: grantMembership()"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> <font class="FormButton">Grant membership</font></a>{end:}</td>
+    <td><widget class="XLite_View_MembershipSelect"field="pending_membership">&nbsp;&nbsp;{if:xlite.WholesaleTradingEnabled}<widget module="WholesaleTrading" template="modules/WholesaleTrading/profile_grant_membership.tpl">{else:}<a IF="mode=#modify#" href="javascript: grantMembership()"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> <font class="FormButton">Grant membership</font></a>{end:}</td>
     <td></td>
 </tr>
 
 <tr>
 	<td align="right" valign=top>Granted membership</td>
     <td valign=top><font class="Star">*</font></td>
-    <td><widget class="CMembershipSelect" field="membership" history="{membership_history}"><widget module="WholesaleTrading" template="modules/WholesaleTrading/membership_history/caption.tpl" membership_history="{membership_history}"></td>
+    <td><widget class="XLite_View_MembershipSelect"field="membership" history="{membership_history}"><widget module="WholesaleTrading" template="modules/WholesaleTrading/membership_history/caption.tpl" membership_history="{membership_history}"></td>
     <td></td>
 </tr>
 
@@ -157,7 +157,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
         <input type="text" name="billing_firstname" value="{billing_firstname:r}" size="32" maxlength="128">
     </td>
     <td>
-        <widget class="CRequiredValidator" field="billing_firstname">
+        <widget class="XLite_Validator_RequiredValidator"field="billing_firstname">
     </td>
 </tr>
 <tr valign="middle">
@@ -167,7 +167,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
         <input type="text" name="billing_lastname" value="{billing_lastname:r}" size="32" maxlength="128">
     </td>
     <td align="left">
-        <widget class="CRequiredValidator" field="billing_lastname">
+        <widget class="XLite_Validator_RequiredValidator"field="billing_lastname">
     </td>
 </tr>
 <tr valign="middle">
@@ -186,7 +186,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
         <input type="text" name="billing_phone" value="{billing_phone:r}" size="32" maxlength="32">
     </td>    
     <td>
-        <widget class="CRequiredValidator" field="billing_phone">
+        <widget class="XLite_Validator_RequiredValidator"field="billing_phone">
     </td>
 </tr>
 <tr valign="middle">
@@ -205,7 +205,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
         <input type="text" name="billing_address" value="{billing_address:r}" size="32" maxlength="64">
     </td>
     <td>
-        <widget class="CRequiredValidator" field="billing_address">
+        <widget class="XLite_Validator_RequiredValidator"field="billing_address">
     </td>
 </tr>
 <tr valign="middle">
@@ -215,18 +215,18 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
         <input type="text" name="billing_city" value="{billing_city:r}" size="32" maxlength="64">
     </td>
     <td>
-        <widget class="CRequiredValidator" field="billing_city">
+        <widget class="XLite_Validator_RequiredValidator"field="billing_city">
     </td>
 </tr>
 <tr valign="middle">
     <td align="right">State</td>
     <td><font class="Star">*</font></td>
     <td>
-		<widget class="CStateSelect" field="billing_state" onChange="javascript: changeState(this, 'billing');" fieldId="billing_state_select">
+		<widget class="XLite_View_StateSelect"field="billing_state" onChange="javascript: changeState(this, 'billing');" fieldId="billing_state_select">
     </td>
     <td>
-        <widget class="CRequiredValidator" field="billing_state">
-        <widget class="CStateValidator" field="billing_state" countryField="billing_country">
+        <widget class="XLite_Validator_RequiredValidator"field="billing_state">
+        <widget class="XLite_Validator_StateValidator"field="billing_state" countryField="billing_country">
     </td>
 </tr>
 <tr valign="middle" id="billing_custom_state_body">
@@ -242,10 +242,10 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
     <td align="right">Country</td>
     <td><font class="Star">*</font></td>
     <td>
-		<widget class="CCountrySelect" field="billing_country" onChange="javascript: populateStates(this,'billing_state');" fieldId="billing_country_select">
+		<widget class="XLite_View_CountrySelect"field="billing_country" onChange="javascript: populateStates(this,'billing_state');" fieldId="billing_country_select">
     </td>
     <td>
-        <widget class="CRequiredValidator" field="billing_country">
+        <widget class="XLite_Validator_RequiredValidator"field="billing_country">
     </td>
 </tr>
 <tr valign="middle">
@@ -255,7 +255,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
         <input type="text" name="billing_zipcode" value="{billing_zipcode:r}" size="32" maxlength="32">
     </td>
     <td>
-        <widget class="CRequiredValidator" field="billing_zipcode">
+        <widget class="XLite_Validator_RequiredValidator"field="billing_zipcode">
     </td>
 </tr>
 
@@ -267,8 +267,8 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
 <tr valign="middle">
     <td colspan="4"><b>Shipping Address (leave empty if same as billing address)</b><br><hr size="1" align=left noshade width="80%">
-		<span id="btn_copy_billing"><widget class="CButton" label="Copy Billing Info" href="javascript: copyBillingInfo(document.profile_form);"></span>
-		<span id="btn_modify_shipping" style="display: none;"><widget class="CButton" label="Modify Shipping address" href="javascript: OnModifyShippingAddress(document.profile_form);"></span>
+		<span id="btn_copy_billing"><widget class="XLite_View_Button"label="Copy Billing Info" href="javascript: copyBillingInfo(document.profile_form);"></span>
+		<span id="btn_modify_shipping" style="display: none;"><widget class="XLite_View_Button"label="Modify Shipping address" href="javascript: OnModifyShippingAddress(document.profile_form);"></span>
 	</td>
 </tr>
 <tbody id="shipping_body">
@@ -347,10 +347,10 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
     <td align="right">State</td>
     <td><font class="Star">*</font></td>
     <td>
-		<widget class="CStateSelect" field="shipping_state" value="{shipping_state}" onChange="javascript: changeState(this, 'shipping');" fieldId="shipping_state_select">
+		<widget class="XLite_View_StateSelect"field="shipping_state" value="{shipping_state}" onChange="javascript: changeState(this, 'shipping');" fieldId="shipping_state_select">
     </td>
     <td>
-        <widget class="CStateValidator" field="shipping_state" countryField="shipping_country">
+        <widget class="XLite_Validator_StateValidator"field="shipping_state" countryField="shipping_country">
     </td>
 </tr>
 <tr valign="middle" id="shipping_custom_state_body">
@@ -366,7 +366,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
     <td align="right">Country</td>
     <td><font class="Star">*</font></td>
     <td>
-		<widget class="CCountrySelect" field="shipping_country" onChange="javascript: populateStates(this,'shipping_state');" fieldId="shipping_country_select">
+		<widget class="XLite_View_CountrySelect"field="shipping_country" onChange="javascript: populateStates(this,'shipping_state');" fieldId="shipping_country_select">
     </td>
     <td>&nbsp;</td>
 </tr>

@@ -25,7 +25,7 @@ function setHeaderChecked()
 <p class="SuccessMessage" IF="status=#deleted#">&gt;&gt;&nbsp;Products have been deleted successfully.&nbsp;&lt;&lt;</p>
 <p class="SuccessMessage" IF="status=#cloned#">&gt;&gt;&nbsp;Products have been cloned successfully.&nbsp;&lt;&lt;</p>
 
-<widget class="CPager" data="{products}" name="pager" itemsPerPage="{config.General.products_per_page_admin}">
+<widget class="XLite_View_Pager"data="{products}" name="pager" itemsPerPage="{config.General.products_per_page_admin}">
 
 <br>
 <form name="products_form" action="admin.php" method="POST">

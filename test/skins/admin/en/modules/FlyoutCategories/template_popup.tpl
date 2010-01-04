@@ -22,7 +22,7 @@
 Templates directory: <B>{node}</B>
 <hr>
 
-<widget class="CFileExplorer" formSelectionName="selected_file" columnCount=2 modifier="zone">
+<widget class="XLite_View_FileExplorer"formSelectionName="selected_file" columnCount=2 modifier="zone">
 
 <script>
 var parent_dir = "{node}"

@@ -19,7 +19,7 @@ function updateMembershipExpireDateState(type_el) {
 			<option value="custom" selected="{membership_exp_type=#custom#}">Specific date</option>
 		</select>
 		<span id="membership_exp_date_id" {if:!membership_exp_type=#custom#}style="display:none;"{end:}>
-			<widget class="CDate" field="membership_exp_date">
+			<widget class="XLite_View_Date"field="membership_exp_date">
 		</span>
 	</td>
     <td>&nbsp;</td>

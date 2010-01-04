@@ -134,8 +134,8 @@ class XLite_View_Abstract extends XLite_Base_Object
             // for debugging
             return $this->templateFile;
         }
-        $layout = XLite_Model_Layout::getInstance();
-        return $layout->getLayout($this->get("template"));
+
+        return XLite_Model_Layout::getInstance()->getLayout($this->get("template"));
     }
 
     function getDisplayFile()
@@ -150,7 +150,8 @@ class XLite_View_Abstract extends XLite_Base_Object
  
     function getCompileDir()
     {
-        return is_null($this->xlite->get("options.HTML_Template_Flexy.compileDir")) ? "var/run" : $this->xlite->get("options.HTML_Template_Flexy.compileDir");
+        return is_null($this->xlite->getOptions(array('HTML_Template_Flexy', 'compileDir')))
+			? 'var' . LC_DS . 'run' : $this->xlite->getOptions(array('HTML_Template_Flexy', 'compileDir'));
     }
     
     function includeCompiledFile($includeFileProp)
@@ -171,6 +172,7 @@ class XLite_View_Abstract extends XLite_Base_Object
         $templateFile = $this->get("templateFile");
         $initFile = $this->get("initFile");
         $displayFile = $this->get("displayFile");
+
         if (!@filemtime($templateFile) && $this->is("ignoreErrors")) {
             return;
         }
@@ -200,9 +202,9 @@ class XLite_View_Abstract extends XLite_Base_Object
             }
         }
         $t = $this->getThisVar();
-        $caller = $t->widget;
+        $caller = $t->get('widget');
         $t->widget = $this;
-        $result = @include $includeFile;
+        $result = include $includeFile;
         if (!$result) {
             $_error = "unable to read template file: $includeFile";
             if ($GLOBALS['XLITE_SELF'] == "cart.php") {
@@ -215,7 +217,7 @@ class XLite_View_Abstract extends XLite_Base_Object
         $t->widget = $caller;
     }
 
-    function &getThisVar()
+    function getThisVar()
     {
         if(isset($this->component)) {
             return $this->component;
@@ -503,10 +505,10 @@ class XLite_View_Abstract extends XLite_Base_Object
         return true;
     }
     
-    function &getDialog()
+    function getDialog()
     {
         $d = $this;
-        while (!is_null($d) && !is_a($d, 'dialog__')) {
+        while (!is_null($d) && !($d instanceof XLite_Controller_Abstract)) {
             $d = $d->component;
         }
         return $d;

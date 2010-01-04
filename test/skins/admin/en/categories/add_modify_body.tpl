@@ -27,14 +27,14 @@
     <tr>
         <td class="FormButton" nowrap>Parent category</td>
         <td class=Star>*</td>
-        <td>{if:mode=#add#}<widget class="CCategorySelect" formField="parent" selectedCategory="{category_id}" rootOption>{else:}<widget class="CCategorySelect" selectedCategory="{parent}" formField="parent" rootOption currentCategory="{category_id}">{end:}
+        <td>{if:mode=#add#}<widget class="XLite_View_CategorySelect"formField="parent" selectedCategory="{category_id}" rootOption>{else:}<widget class="XLite_View_CategorySelect"selectedCategory="{parent}" formField="parent" rootOption currentCategory="{category_id}">{end:}
         </td>
     </tr>
 	<tr>
 		<td class="FormButton">Membership</td>
         <td class=Star>*</td>
 		<td>
-            <widget class="CMembershipSelect" template="common/select_membership.tpl" field="membership" allOption>
+            <widget class="XLite_View_MembershipSelect"template="common/select_membership.tpl" field="membership" allOption>
 		</td>	
 	</tr>
 	<tr>
@@ -51,7 +51,7 @@
 		<td>{if:category.hasImage()}<img src="cart.php?target=image&action=category&category_id={category.category_id}&_{rand()}" border="0">{else:}<img src="images/no_image.gif" border="0">{end:}</td>
         <td>&nbsp;</td>
 		<td width="100%" valign="bottom" rowspan=2>
-            <widget class="CImageUpload" field="image" actionName="icon" formName="add_modify_form" object="{category}">
+            <widget class="XLite_View_ImageUpload"field="image" actionName="icon" formName="add_modify_form" object="{category}">
 		</td>
 	</tr>
 	<tr>

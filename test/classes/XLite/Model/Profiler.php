@@ -105,7 +105,7 @@ class XLite_Model_Profiler extends XLite_Base_Singleton
 		$this->includedFilesTotal /= 1000;
         array_multisort($this->includedFileSizes,SORT_DESC, $this->includedFiles);
         for ($i=0; $i<count($this->includedFiles); $i++) {
-            $a = func_new("StdClass");
+            $a = new StdClass();
             $a->name = $this->includedFiles[$i];
             $a->size = $this->includedFileSizes[$i];
             $this->includedFiles[$i] = $a;

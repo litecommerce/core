@@ -66,17 +66,17 @@
 	<td rowspan="3">&nbsp;</td>
 	<td rowspan="3">&nbsp;&nbsp;&nbsp;</td>
 	<td>'Queued' order status:</td>
-	<td><widget class="CStatusSelect" field="params[status_queued]" value="{pm.getStatusCode(#status_queued#)}"></td>
+	<td><widget class="XLite_View_StatusSelect"field="params[status_queued]" value="{pm.getStatusCode(#status_queued#)}"></td>
 </tr>
 
 <tr>
 	<td>'Processed' order status:</td>
-	<td><widget class="CStatusSelect" field="params[status_processed]" value="{pm.getStatusCode(#status_processed#)}"></td>
+	<td><widget class="XLite_View_StatusSelect"field="params[status_processed]" value="{pm.getStatusCode(#status_processed#)}"></td>
 </tr>
 
 <tr>
 	<td>'Failed' order status:</td>
-	<td><widget class="CStatusSelect" field="params[status_failed]" value="{pm.getStatusCode(#status_failed#)}"></td>
+	<td><widget class="XLite_View_StatusSelect"field="params[status_failed]" value="{pm.getStatusCode(#status_failed#)}"></td>
 </tr>
 
 <tr>

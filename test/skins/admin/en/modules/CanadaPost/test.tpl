@@ -15,11 +15,11 @@
         </tr>
         <tr>
             <td>Province/State:</td>
-            <td><widget class="CStateSelect" field="destinationState"></td>
+            <td><widget class="XLite_View_StateSelect"field="destinationState"></td>
         </tr>
         <tr>
             <td>Country:</td> 
-            <td><widget class="CCountrySelect" field="destinationCountry"></td>
+            <td><widget class="XLite_View_CountrySelect"field="destinationCountry"></td>
         </tr>
         <tr>
             <td>Postal/ZIP Code:</td>

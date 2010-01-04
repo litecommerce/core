@@ -58,7 +58,7 @@ class XLite_Controller_Abstract extends XLite_View
     {
         parent::constructor();
         if (!$this->xlite->is("adminZone")) {
-            $this->cart =& func_get_instance("Cart");
+            $this->cart = func_get_instance("Cart");
             // cleanup processed cart for non-checkout pages
             $target = isset($_REQUEST["target"]) ? $_REQUEST["target"] : "";
             if ($target != "checkout" && ($this->cart->is("processed") || $this->cart->is("queued"))) {
@@ -67,7 +67,7 @@ class XLite_Controller_Abstract extends XLite_View
         }
     }
 
-    function &getAllParams($exeptions=null)
+    function getAllParams($exeptions=null)
     {
     	$allParams = parent::getAllParams();
     	$params = $allParams;
@@ -85,7 +85,7 @@ class XLite_Controller_Abstract extends XLite_View
         return $params;
     }
 
-    function &getTemplate()
+    function getTemplate()
     {
         if (!$this->xlite->is("adminZone") && $this->get("config.General.add_on_mode")) {
             return "../../../cart.html";
@@ -93,7 +93,7 @@ class XLite_Controller_Abstract extends XLite_View
         return $this->template;
     }
     
-    function &getProduct()
+    function getProduct()
     {
         if (is_null($this->product) && isset($_REQUEST["product_id"])) {
             $this->product = new XLite_Model_Product($_REQUEST["product_id"]);
@@ -104,7 +104,7 @@ class XLite_Controller_Abstract extends XLite_View
         return $this->product;
     }
 
-    function &getCategory()
+    function getCategory()
     {
         if (is_null($this->category) && isset($_REQUEST["category_id"])) {
             $this->category = new XLite_Model_Category($this->get("category_id"));
@@ -129,7 +129,7 @@ class XLite_Controller_Abstract extends XLite_View
         $cart_self = $GLOBALS["XLITE_SELF"];
 
         $trusted_referer = false;
-        if (strlen($_SERVER["HTTP_REFERER"]) > 0) {
+        if (!empty($_SERVER["HTTP_REFERER"])) {
             $referer = $this->_pure_url_path($_SERVER["HTTP_REFERER"]);
 
             $url = $this->_pure_url_path($this->xlite->shopURL(""));
@@ -139,15 +139,50 @@ class XLite_Controller_Abstract extends XLite_View
             }
         }
 
-		if (isset($_REQUEST[SESSION_DEFAULT_NAME]) && (isset($_GET[SESSION_DEFAULT_NAME]) || isset($_POST[SESSION_DEFAULT_NAME])) && ((isset($_COOKIE[SESSION_DEFAULT_NAME]) && isset($_SERVER["HTTP_REFERER"]) && ((isset($_GET[SESSION_DEFAULT_NAME]) && $_GET[SESSION_DEFAULT_NAME] != $_COOKIE[SESSION_DEFAULT_NAME]) || (isset($_POST[SESSION_DEFAULT_NAME]) && $_POST[SESSION_DEFAULT_NAME] != $_COOKIE[SESSION_DEFAULT_NAME])) && !$trusted_referer) || (isset($_COOKIE[SESSION_DEFAULT_NAME]) && !isset($_SERVER["HTTP_REFERER"]) && $this->xlite->get("script") == $cart_self && ((isset($_GET[SESSION_DEFAULT_NAME]) && $_GET[SESSION_DEFAULT_NAME] != $_COOKIE[SESSION_DEFAULT_NAME]) || (isset($_POST[SESSION_DEFAULT_NAME]) && $_POST[SESSION_DEFAULT_NAME] != $_COOKIE[SESSION_DEFAULT_NAME]))) || (!isset($_COOKIE[SESSION_DEFAULT_NAME]) && (!isset($_SERVER["HTTP_REFERER"]) || (isset($_SERVER["HTTP_REFERER"]) && !$trusted_referer))))) {
+		if (
+			isset($_REQUEST[XLite_Model_Session::SESSION_DEFAULT_NAME])
+			&& (isset($_GET[XLite_Model_Session::SESSION_DEFAULT_NAME]) || isset($_POST[XLite_Model_Session::SESSION_DEFAULT_NAME]))
+			&& (
+				(
+				isset($_COOKIE[XLite_Model_Session::SESSION_DEFAULT_NAME])
+				&& isset($_SERVER["HTTP_REFERER"])
+				&& (
+					(isset($_GET[XLite_Model_Session::SESSION_DEFAULT_NAME]) && $_GET[XLite_Model_Session::SESSION_DEFAULT_NAME] != $_COOKIE[XLite_Model_Session::SESSION_DEFAULT_NAME])
+					|| (isset($_POST[XLite_Model_Session::SESSION_DEFAULT_NAME]) && $_POST[XLite_Model_Session::SESSION_DEFAULT_NAME] != $_COOKIE[XLite_Model_Session::SESSION_DEFAULT_NAME]))
+					&& !$trusted_referer
+				)
+				||
+				(
+				isset($_COOKIE[XLite_Model_Session::SESSION_DEFAULT_NAME])
+				&& !isset($_SERVER["HTTP_REFERER"])
+				&& $this->xlite->get("script") == $cart_self
+				&& (
+					(
+					isset($_GET[XLite_Model_Session::SESSION_DEFAULT_NAME])
+					&& $_GET[XLite_Model_Session::SESSION_DEFAULT_NAME] != $_COOKIE[XLite_Model_Session::SESSION_DEFAULT_NAME]
+					)
+					||
+					(
+					isset($_POST[XLite_Model_Session::SESSION_DEFAULT_NAME])
+					&& $_POST[XLite_Model_Session::SESSION_DEFAULT_NAME] != $_COOKIE[XLite_Model_Session::SESSION_DEFAULT_NAME]
+					)
+				   )
+				)
+				||
+				(
+				!isset($_COOKIE[XLite_Model_Session::SESSION_DEFAULT_NAME])
+				&& (!isset($_SERVER["HTTP_REFERER"]) || (isset($_SERVER["HTTP_REFERER"]) && !$trusted_referer))
+				)
+			)
+		) {
 
-$this->xlite->logger->log("Dialog::handleRequest() >>>");
-$this->xlite->logger->log("_COOKIE_SESSION_DEFAULT_NAME: ".$_COOKIE[SESSION_DEFAULT_NAME]);
-$this->xlite->logger->log("_GET_SESSION_DEFAULT_NAME: ".$_GET[SESSION_DEFAULT_NAME]);
-$this->xlite->logger->log("_POST_SESSION_DEFAULT_NAME: ".$_POST[SESSION_DEFAULT_NAME]);
-$this->xlite->logger->log("_REQUEST_SESSION_DEFAULT_NAME: ".$_REQUEST[SESSION_DEFAULT_NAME]);
-$this->xlite->logger->log("_SERVER_HTTP_REFERER: ".$_SERVER["HTTP_REFERER"]);
-$this->xlite->logger->log("<<<");
+			$this->xlite->logger->log("Dialog::handleRequest() >>>");
+			$this->xlite->logger->log("_COOKIE_XLite_Model_Session::SESSION_DEFAULT_NAME: ".$_COOKIE[XLite_Model_Session::SESSION_DEFAULT_NAME]);
+			$this->xlite->logger->log("_GET_XLite_Model_Session::SESSION_DEFAULT_NAME: ".$_GET[XLite_Model_Session::SESSION_DEFAULT_NAME]);
+			$this->xlite->logger->log("_POST_XLite_Model_Session::SESSION_DEFAULT_NAME: ".$_POST[XLite_Model_Session::SESSION_DEFAULT_NAME]);
+			$this->xlite->logger->log("_REQUEST_XLite_Model_Session::SESSION_DEFAULT_NAME: ".$_REQUEST[XLite_Model_Session::SESSION_DEFAULT_NAME]);
+			$this->xlite->logger->log("_SERVER_HTTP_REFERER: ".$_SERVER["HTTP_REFERER"]);
+			$this->xlite->logger->log("<<<");
 
 			if ( $GLOBALS["XLITE_SELF"] == ADMIN_SELF ) {
 				// Admin area - redirect to login page
@@ -215,7 +250,7 @@ $this->xlite->logger->log("<<<");
 
 	function _clear_xsid_data()
 	{
-		unset($_REQUEST[SESSION_DEFAULT_NAME]);
+		unset($_REQUEST[XLite_Model_Session::SESSION_DEFAULT_NAME]);
 		$this->xlite->session->destroy();
 		$this->xlite->session->setID(SESSION_DEFAULT_ID);
 		$this->xlite->session->_initialize();
@@ -241,7 +276,7 @@ $this->xlite->logger->log("<<<");
     {
         if ((isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS'] == 'on') || $_SERVER['HTTPS'] == '1')) ||
             (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443') ||
-            (isset($_SERVER['REMOTE_ADDR']) && isset($this->xlite->options->host_details->remote_addr) && $_SERVER['REMOTE_ADDR'] == $this->xlite->options->host_details->remote_addr))
+            (isset($_SERVER['REMOTE_ADDR']) && $this->xlite->getOptions(array('host_details', 'remote_addr')) == $_SERVER['REMOTE_ADDR']))
         {
             return true;
         }
@@ -359,7 +394,7 @@ $this->xlite->logger->log("<<<");
         }    
     }
 
-    function &getProperties()
+    function getProperties()
     {
         $result = array();
         foreach ($_REQUEST as $name => $value)
@@ -372,7 +407,7 @@ $this->xlite->logger->log("<<<");
     function getUrl($params = null)
     {
         if (is_null($params)) {
-            $params =& $this->get("allParams");
+            $params = $this->get("allParams");
         }
         $url = $this->xlite->get("script") . "?";
         foreach ($params as $param => $value) {
@@ -404,7 +439,7 @@ $this->xlite->logger->log("<<<");
     */
     function updateCart()
     {
-        $items =& $this->cart->get("items");
+        $items = $this->cart->get("items");
 		$this->set("absence_of_product", null);
         foreach ($items as $key => $i) {
             if(!$i->isValid()) {
@@ -427,7 +462,7 @@ $this->xlite->logger->log("<<<");
             $this->cart->update();
 
     		$this->set("absence_of_product", null);
-        	$items =& $this->cart->get("items");
+        	$items = $this->cart->get("items");
             foreach ($items as $key => $i) {
                 if(!$i->isValid()) {
                 	$this->set("absence_of_product", true);

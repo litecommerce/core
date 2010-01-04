@@ -32,13 +32,13 @@
     {end:}
     {end:}
     {if:option.isCountry()}
-    <widget class="CCountrySelect" field="{option.name}" value="{option.value}" onChange="javascript: populateStates(this,'location_state');" fieldId="{option.name}_select">
+    <widget class="XLite_View_CountrySelect"field="{option.name}" value="{option.value}" onChange="javascript: populateStates(this,'location_state');" fieldId="{option.name}_select">
     {end:}
     {if:option.isState()}
 		{if:option.name=#location_state#}
-		<widget class="CStateSelect" field="{option.name}" value="{option.value}" onChange="changeCompanyState(this, 'custom_location_state_body');" fieldId="{option.name}_select">
+		<widget class="XLite_View_StateSelect"field="{option.name}" value="{option.value}" onChange="changeCompanyState(this, 'custom_location_state_body');" fieldId="{option.name}_select">
 		{else:}
-		<widget class="CStateSelect" field="{option.name}" value="{option.value}" fieldId="{option.name}_select">
+		<widget class="XLite_View_StateSelect"field="{option.name}" value="{option.value}" fieldId="{option.name}_select">
 		{end:}
     {end:}
     {if:option.isName(#mail_backend#)}

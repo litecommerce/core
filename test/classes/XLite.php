@@ -154,7 +154,7 @@ class XLite extends XLite_Base_Singleton
         $this->layout = XLite_Model_Layout::getInstance();
         $this->layout->initFromGlobals();
         
-        $this->auth = func_get_instance("Auth");
+        $this->auth = XLite_Model_Auth::getInstance();
 
         $this->profiler->log("init_time");
 
@@ -167,7 +167,7 @@ class XLite extends XLite_Base_Singleton
             $this->memoryLimitChangeable = false;
         }
 
-        $this->suMode = get_php_execution_mode();
+        $this->suMode = (1 == $this->getOptions(array('filesystem_permissions', 'permission_mode')));
 
         $this->instanceUniqID = md5(uniqid(rand(), true));
     }
@@ -184,11 +184,12 @@ class XLite extends XLite_Base_Singleton
         } else {
             $target = $_REQUEST['target'] = 'main';
         }
-        $dialogClass = 'dialog_' . $target;
-        if ($this->get('adminZone')) {
-            $dialogClass = 'admin_' . $dialogClass;
-        }
-        $dialog = func_new($dialogClass);
+
+        $dialogClass = 'XLite_Controller_' 
+			. ($this->get('adminZone') ? 'Admin' : 'Customer') . '_' 
+			. preg_replace('/((?:\A|_)([a-zA-Z]))/ie', 'strtoupper(\'\\2\')', $target);
+
+        $dialog = new $dialogClass();
         $dialog->init();
         $this->profiler->log("dialog_init_time");
         $dialog->handleRequest();
@@ -212,9 +213,8 @@ class XLite extends XLite_Base_Singleton
     {
         // construct requested cart URL 
         $proto   = $secure ? "https://" : "http://";
-        $host    = $secure ? $this->options->host_details->https_host :
-                             $this->options->host_details->http_host;
-        $web_dir = $this->options->host_details->web_dir;
+        $host    = $secure ? $this->getOptions(array('host_details', 'https_host')) : $this->getOptions(array('host_details', 'http_host'));
+        $web_dir = $this->getOptions(array('host_details', 'web_dir'));
         $last    = strlen($web_dir) - 1;
         $web_dir .= ($web_dir{$last} == "/") ? "" : "/";
         $sid     = "";

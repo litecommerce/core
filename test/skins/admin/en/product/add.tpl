@@ -21,7 +21,7 @@
   </td>
   <td class=ProductDetails>
     <input type="text" name="name" size="45" value="{name:r}">
-    <widget class="CRequiredValidator" field="name">
+    <widget class="XLite_Validator_RequiredValidator"field="name">
   </td>
 </tr>
 
@@ -35,12 +35,12 @@
 	</table>
 	</td>
     <td>
-        <widget class="CCategorySelect" fieldName="category_id" selectedCategory="{product.categories.0.category_id}">
-		<widget class="CRequiredValidator" field="category_id">
+        <widget class="XLite_View_CategorySelect"fieldName="category_id" selectedCategory="{product.categories.0.category_id}">
+		<widget class="XLite_Validator_RequiredValidator"field="category_id">
     </td>
 </tr>
 
-<widget module="MultiCategories" class="CCategorySelect" template="modules/MultiCategories/additionalCategories.tpl" product="{product}" fieldName="category_id" >
+<widget module="MultiCategories" class="XLite_View_CategorySelect"template="modules/MultiCategories/additionalCategories.tpl" product="{product}" fieldName="category_id" >
 
 <tr>
   <td valign=middle class="FormButton">
@@ -148,7 +148,7 @@
   <td class=ProductDetails valign=top height="15"><font class="FormButton">Thumbnail</font><br>(in products list)</td>
   <td class=ProductDetails valign="middle">
   <span IF="thumbnail_read_only" class="ErrorMessage">WARNING! File cannot be uploaded!<br>Please check and correct file permissions.<br></span>
-  <widget class="CImageUpload" field="thumbnail" actionName="images" formName="modify_form" object="{product}">
+  <widget class="XLite_View_ImageUpload"field="thumbnail" actionName="images" formName="modify_form" object="{product}">
   </td>
 </tr>
 
@@ -156,7 +156,7 @@
   <td class=ProductDetails valign=top height="15"><font class="FormButton">Image</font><br>(on product details page)</td>
   <td class=ProductDetails valign="middle">
   <span IF="image_read_only" class="ErrorMessage">WARNING! File cannot be uploaded!<br>Please check and correct file permissions.<br></span>
-  <widget class="CImageUpload" field="image" actionName="images" formName="modify_form" object="{product}">
+  <widget class="XLite_View_ImageUpload"field="image" actionName="images" formName="modify_form" object="{product}">
   </td>
 </tr>
 
@@ -205,7 +205,7 @@
 
 {*extraFields*}
 <widget module="GoogleCheckout" template="modules/GoogleCheckout/product/add.tpl">
-<widget class="CExtraFields" template="product/extra_fields.tpl" product="{product}">
+<widget class="XLite_View_ExtraFields"template="product/extra_fields.tpl" product="{product}">
 
 <widget module="WholesaleTrading" template="modules/WholesaleTrading/memberships/membership_product.tpl">
 

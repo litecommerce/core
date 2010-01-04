@@ -59,7 +59,7 @@ class XLite_Module_GiftCertificates_Controller_Admin_AddGiftCertificate extends 
                 $this->gc = func_new("GiftCertificate");
                 $this->gc->set("send_via", "E");
                 $this->gc->set("border", "no_border");
-                $auth = func_get_instance("Auth");
+                $auth = XLite_Model_Auth::getInstance();
                 if ($auth->isLogged()) {
                     $profile = $auth->get("profile");
                     $this->gc->set("purchaser", $profile->get("billing_title") . " " . $profile->get("billing_firstname") . " " . $profile->get("billing_lastname"));

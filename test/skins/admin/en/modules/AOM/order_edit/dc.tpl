@@ -54,7 +54,7 @@
     No Discount Coupons found on your query.
 </span>
 <span IF="discountCoupons">
-    <widget class="CPager" data="{discountCoupons}" name="pager">
+    <widget class="XLite_View_Pager"data="{discountCoupons}" name="pager">
     <form action="admin.php" method="POST" name="add_dc_form">
     <input FOREACH="dialog.allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
     <input type="hidden" name="mode" value="dc">

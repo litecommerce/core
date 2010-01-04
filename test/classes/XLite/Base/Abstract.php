@@ -17,6 +17,10 @@ abstract class XLite_Base_Abstract
         } else {
             $xlite = true;
         }
+
+		if (function_exists('memory_get_usage')) {
+            $GLOBALS['memory_usage'] = max(isset($GLOBALS['memory_usage']) ? $GLOBALS['memory_usage'] : 0, memory_get_usage()) / 1024 / 1024; // MB used
+        }
 	}
 
 	public function _die($message)
@@ -42,6 +46,7 @@ abstract class XLite_Base_Abstract
     */
     function get($name) // {{{
     {
+		if (!empty($name)) {
         if (strpos($name, '.')) {
             $obj = $this;
             foreach (explode('.', $name) as $n) {
@@ -78,6 +83,8 @@ abstract class XLite_Base_Abstract
         if (isset($this->$name)) {
             return $this->$name;
         }
+		}
+
         return null;
     } // }}}
 

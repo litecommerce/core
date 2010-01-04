@@ -7,7 +7,7 @@
 		<TD class="FormButton" noWrap height=10>In category</TD>
 		<TD width=10 height=10><FONT class="ErrorMessage">*</FONT></TD>
 		<TD height=10>
-            <widget class="CCategorySelect" fieldName="category" allOption>
+            <widget class="XLite_View_CategorySelect"fieldName="category" allOption>
         </TD>
 	</TR>
 	<TR>

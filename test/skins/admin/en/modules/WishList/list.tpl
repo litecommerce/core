@@ -1,4 +1,4 @@
-<widget class="CPager" data="{wishlists}" name="pager">
+<widget class="XLite_View_Pager"data="{wishlists}" name="pager">
 <br>
 <table border="0">
 <tr class="TableHead">

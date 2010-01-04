@@ -38,120 +38,17 @@
 
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
-/**
-* Class Layout provides access to skins templates.
-*
-* @package Kernel
-* @access public
-* @version $Id$
-*/
-class XLite_Model_Layout extends XLite_Base_Singleton
+class XLite_Model_ImageClass extends XLite_Base_Object
 {
     /**
-    * Skin templates list.
-    *
-    * @var Elements $elements Skin templates list.
-    * @access private
+    * Create an image object based on the image class.
+    * Syntax: 
+    *   $img = $iClass->get("image");
+    *   $img->set("
     */
-    var $list = array();
-    var $skin = null;
-    var $locale = null;
-
-	/**
-     * Return pointer to the single instance of current class
-     *
-     * @param string $className name of derived class
-     *
-     * @return XLite_Base_Singleton
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0
-     */
-    public static function getInstance($className = __CLASS__)
+    function getImage()
     {
-        return parent::getInstance(__CLASS__);
+        return func_new("Image", $this->class, 0);
     }
-
-    function initFromGlobals()
-    {
-		$this->skin   = $this->xlite->getOptions(array('skin_details', 'skin'));
-		$this->locale = $this->xlite->getOptions(array('skin_details', 'locale'));
-    }
-
-    /**
-    * Adds layout template file for the specified widget
-    *
-    * @param string $widgetName The widget name
-    * @param string $templateName The template file name
-    * @access public
-    */
-    function addLayout($widgetName, $templateName)
-    {
-        $this->list[$widgetName] = $templateName;
-    }
-
-    /**
-    * Returns the widget template file name for this layout.
-    *
-    * @param string $widgetName The name of widget
-    * @access public
-    * @return string The widget tamplate name
-    */
-    function getLayout($templateName)
-    {
-        if (!isset($this->list[$templateName])) {
-			return $this->get("path") . $templateName;
-        }
-        return $this->get("path") . $this->list[$templateName];
-    }
-
-    function hasLayout($widgetName)
-    {
-        return isset($this->list[$widgetName]);
-    }
-    
-    /**
-    * Returns the layout path.
-    *
-    * @access public
-    */
-    function getPath()
-    {
-        return sprintf("skins/%s/%s/", $this->get("skin"), $this->get("locale"));
-    }
-	
-	function getSkins($includeAdmin = false)
-	{
-		$list = array();
-		$dir = "skins";
-		if ($dh = opendir($dir)) {
-			while (($file = readdir($dh)) !== false) {
-				if (is_dir($dir . '/'. $file) && $file{0} != '.' && ($file != 'admin' || $includeAdmin) && $file != 'mail' && $file != 'CVS') {
-					$list[] = $file;
-				}
-			}
-		}
-        closedir($dh);
-		return $list;
-	}
-
-	function getLocales($skin)
-	{
-		$list = array();
-		$dir = "skins/$skin/";
-		if ($dh = opendir($dir)) {
-			while (($file = readdir($dh)) !== false) {
-				if (is_dir($dir . $file) && $file{0} != '.' && $file != 'CVS') {
-					$list[] = $file;
-				}
-			}
-		}
-		return $list;
-	}
-
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

@@ -217,7 +217,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
 
     function isAdmin() // {{{
     {
-        $auth = func_get_instance("Auth"); 
+        $auth = XLite_Model_Auth::getInstance(); 
         return $auth->isAdmin($this);
     } // }}}
 
