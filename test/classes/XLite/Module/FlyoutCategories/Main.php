@@ -47,8 +47,7 @@ class XLite_Module_FlyoutCategories_Main extends XLite_Model_Module
     {
         parent::init();
 
-		$image = func_get_instance("Image");
-		$image->registerImageClass("category_small", "Small category icons", "categories", "smallimage", "category_id");
+		XLite_Model_Image::getInstance()->registerImageClass("category_small", "Small category icons", "categories", "smallimage", "category_id");
 
 		$this->addDecorator("Category", "FlyoutCategories_Category");
 

@@ -50,7 +50,9 @@ class XLite_Controller_Admin_UpdateInventory extends XLite_Controller_Admin_Abst
     var $params = array('target', 'page');
     var $pages = array('pricing' => 'Update pricing');
     var $pageTemplates = array('pricing' => 'product/update_inventory.tpl');
-    var $page = "pricing";                   
+    var $page = "pricing";   
+
+	protected $inventory = null;                
 
     function handleRequest()
     {
@@ -71,7 +73,7 @@ class XLite_Controller_Admin_UpdateInventory extends XLite_Controller_Admin_Abst
 
     function handleRequestPricing()
     {
-        $this->inventory = func_get_instance("ProductInventory"); 
+        $this->inventory = XLite_Model_ProductInventory::getInstance(); 
     }
 
     function action_export()

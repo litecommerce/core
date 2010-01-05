@@ -45,7 +45,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Model_Shipping extends XLite_Model_Abstract
+class XLite_Model_Shipping extends XLite_Model_Abstract implements XLite_Base_ISingleton
 {
     var $fields = array(
         "shipping_id" => "",
@@ -59,10 +59,17 @@ class XLite_Model_Shipping extends XLite_Model_Abstract
     var $autoIncrement = "shipping_id";
     var $defaultOrder = "order_by, name";
 
-	function constructor($id = null)
+	public static function getInstance()
+    {
+        return self::_getInstance(__CLASS__);
+    }
+
+	function __construct($id = null)
 	{
 		global $registeredShippingModules;
-		parent::constructor($id);
+
+		parent::__construct($id);
+
 		if ($id && ($class = $this->get("class"))) {
 			if (!is_array($registeredShippingModules) || array_search($class, $registeredShippingModules)===false) {
 				// unset the class, if it is not registerred within active shipping modules
@@ -103,7 +110,7 @@ class XLite_Model_Shipping extends XLite_Model_Abstract
 
     function getModules()
     {
-        $sp = func_get_instance("Shipping");
+        $sp = self::getInstance();
         $modules = array(
             "offline" => $sp->getInstanceByClass("offline")
         );
@@ -178,7 +185,7 @@ class XLite_Model_Shipping extends XLite_Model_Abstract
         parent::_updateProperties($properties);
 
 		$savedProperties = $this->properties;
-		$shipping = func_get_instance('Shipping');	
+		$shipping = self::getInstance();	
 		$this->properties = $savedProperties;
     } // }}}
 

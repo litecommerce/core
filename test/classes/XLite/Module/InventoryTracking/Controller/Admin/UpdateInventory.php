@@ -46,6 +46,8 @@
 */
 class XLite_Module_InventoryTracking_Controller_Admin_UpdateInventory extends XLite_Controller_Admin_UpdateInventory
 {
+	protected $inventory = null;
+
     function constructor()
     {
         parent::constructor();
@@ -55,7 +57,7 @@ class XLite_Module_InventoryTracking_Controller_Admin_UpdateInventory extends XL
 
     function handleRequestAmount()
     {
-        $this->inventory = func_get_instance("Inventory");
+        $this->inventory = XLite_Module_InventoryTracking_Model_Inventory::getInstance();
     }
 
     function export_amount()

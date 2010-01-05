@@ -71,7 +71,7 @@ class XLite_Module_GiftCertificates_Main extends XLite_Model_Module
 		$this->addDecorator("Profile", "Module_GiftCertificates_Profile");
 		$pm = new XLite_Model_PaymentMethod();
 		$pm->registerMethod("gift_certificate");
-        $img = func_get_instance("Image");
+        $img = XLite_Model_Image::getInstance();
         $img->registerImageClass("ecard_thumbnail", "e-Card thumbnails", "ecards", "thumbnail", "ecard_id");
         $img->registerImageClass("ecard_image", "e-Card images", "ecards", "image", "ecard_id");
 

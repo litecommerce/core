@@ -53,12 +53,7 @@ class XLite_Module_Affiliate_Main extends XLite_Model_Module
     {
         parent::init();
 
-        $image = func_get_instance("Image");
-        $image->registerImageClass("banner_image",  // class
-                                   "Banner images", // comment
-                                   "banners",       // table alias
-                                   "banner",        // field prefix 
-                                   "banner_id");    // ID field
+        XLite_Model_Image::getInstance()->registerImageClass("banner_image", "Banner images", "banners", "banner", "banner_id");
 
         // common class decorations
         $this->addDecorator("Auth", "Module_Affiliate_Auth");

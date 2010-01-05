@@ -51,11 +51,16 @@ define('IMAGE_NOT_OK', 2);
 * @access public
 * @version $Id$
 **/
-class XLite_Model_Image extends XLite_Model_Abstract
+class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISingleton
 {
 	protected $dataField   = '';
 	protected $sourceField = '';
 	protected $typeField   = '';
+
+	public static function getInstance()
+    {
+        return self::_getInstance(__CLASS__);
+    }
 
     /**
     * Register a new image class from module.

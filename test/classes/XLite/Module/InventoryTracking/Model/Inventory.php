@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstract
+class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstract implements XLite_Base_ISingleton
 {
     /**
     * @var string $alias The credit cards database table alias.
@@ -77,6 +77,11 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
             "enabled" => false,
             "order_by" => false,
             );
+
+	public static function getInstance()
+    {
+        return self::_getInstance(__CLASS__);
+    }
 
     function constructor($id = null) // {{{
     {

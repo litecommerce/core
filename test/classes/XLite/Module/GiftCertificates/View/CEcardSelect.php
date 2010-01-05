@@ -51,8 +51,8 @@ class XLite_Module_GiftCertificates_View_CEcardSelect extends XLite_View
     function getECards()
     {
         if (is_null($this->ecards)) {
-            $ecard = func_get_instance("ECard");
-            $this->ecards = $ecard->findAll("enabled=1");
+			$eCard = new XLite_Module_GiftCertificates_Model_ECard();
+            $this->ecards = $eCard->findAll("enabled=1");
         }
         return $this->ecards;
     }

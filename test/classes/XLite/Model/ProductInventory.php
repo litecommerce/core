@@ -45,7 +45,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Model_ProductInventory extends XLite_Model_Product
+class XLite_Model_ProductInventory extends XLite_Model_Product implements XLite_Base_ISingleton
 {
     var $importFields = array(
             "NULL"  => false,
@@ -53,6 +53,11 @@ class XLite_Model_ProductInventory extends XLite_Model_Product
             "name"  => false,
             "price" => false
             );
+
+	public static function getInstance()
+    {
+        return self::_getInstance(__CLASS__);
+    }
 
     function _export($layout, $delimiter) // {{{
     {

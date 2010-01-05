@@ -57,6 +57,11 @@ define("MM_OK", 0);
 */
 class XLite_Model_ModulesManager extends XLite_Base
 {
+	const CLASS_PREFIX = 'XLite_Module_';
+
+	const CLASS_SUFFIF = 'Main';
+
+
     /**
     * Contains the available Modules list.
     */
@@ -147,7 +152,8 @@ class XLite_Model_ModulesManager extends XLite_Base
 	            $mod->clearModuleType($this->getPredefinedModuleType($mod->get("name")));
 	            $moduleType = $mod->get("type");
             	if ($mod->is("enabled") && !$this->get("safeMode")) {
-	            	$mod = func_get_instance("Module_$name"); // define and init
+					// FIXME
+					$mod = call_user_func(array(self::CLASS_PREFIX . $name . self::CLASS_SUFFIX, 'getInstance'));
                     $mod->setProperties($modProperties);
                     $mod->isRead = true;
                 	$mod->init();
@@ -278,8 +284,9 @@ EOT;
                 return false;
             }
         }
-        $GLOBALS["xlite_class_files"][strtolower("Module_$moduleName")] = "modules/$moduleName/$moduleName.php";
-        $module = func_get_instance("Module_$moduleName");
+        $GLOBALS["xlite_class_files"][strtolower(self::CLASS_PREFIX . $moduleName . self::CLASS_SUFFIX)] = "modules/$moduleName/$moduleName.php";
+		// FIXME
+        $module = call_user_func(array(self::CLASS_PREFIX . $moduleName . self::CLASS_SUFFIX, 'getInstance'));
         $moduleInstalled = $module->find("module_id=".$options["module_id"]);
         if ($moduleInstalled) {
         	$moduleEnabled = $module->get("enabled");
@@ -336,7 +343,8 @@ EOT;
     function uninstallModule($moduleName) // {{{
     {
         $this->moduleName = $moduleName;
-        $module = func_get_instance("Module_$moduleName", $moduleName);
+		// FIXME
+        $module = call_user_func(array(self::CLASS_PREFIX . $moduleName . self::CLASS_SUFFIX, 'getInstance'));
         if (!is_object($module)) {
             $module = new XLite_Model_Module($moduleName);
         }

@@ -53,9 +53,7 @@ class XLite_Module_DetailedImages_Main extends XLite_Model_Module
     {
         parent::init();
 
-        $image = func_get_instance("Image");
-        $image->registerImageClass("detailed_image", "Detailed images", 
-            "images", "image", "image_id");
+        XLite_Model_Image::getInstance()->registerImageClass("detailed_image", "Detailed images", "images", "image", "image_id");
 
 		$this->addDecorator("Product", "Module_DetailedImages_Product");
 
