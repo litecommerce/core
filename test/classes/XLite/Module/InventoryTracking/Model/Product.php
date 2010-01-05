@@ -46,11 +46,11 @@
 */
 class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product
 {
-	function constructor($id = null)
+	public function __construct($id = null)
 	{
 		$this->fields["tracking"] = 0;
 		$this->fields["sku_variants"] = '';
-		parent::constructor($id);
+		parent::__construct($id);
 	}
 
     function getInventory()

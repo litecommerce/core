@@ -51,9 +51,9 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
     var $exe       = null;
     var $recipient = null;
 
-    function constructor() // {{{
+    public function __construct() // {{{
     {
-        parent::constructor();
+        parent::__construct();
         
         //
         // GnuPG binary

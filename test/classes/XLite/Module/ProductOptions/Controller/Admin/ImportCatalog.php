@@ -46,9 +46,9 @@
 */
 class XLite_Module_ProductOptions_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_ImportCatalog
 {
-    function constructor()
+    public function __construct()
     {
-        parent::constructor();
+        parent::__construct();
         $this->pages["import_product_options"] = "Import product options";
         $this->pageTemplates["import_product_options"] = "modules/ProductOptions/import_product_options.tpl";
     }

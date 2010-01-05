@@ -41,9 +41,9 @@
 
 class XLite_Module_CanadaPost_Controller_Admin_ShippingSettings extends Admin_Dialog_shipping_settings // {{{
 {
-	function constructor() 
+	public function __construct() 
 	{
-		parent::constructor();
+		parent::__construct();
 		$this->pages["cps"]	= "Canada Post settings";
 		$this->pageTemplates["cps"] = "modules/CanadaPost/config.tpl";
 	}

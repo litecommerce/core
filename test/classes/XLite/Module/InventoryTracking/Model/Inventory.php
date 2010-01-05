@@ -83,9 +83,9 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
         return self::_getInstance(__CLASS__);
     }
 
-    function constructor($id = null) // {{{
+    public function __construct($id = null) // {{{
     {
-        parent::constructor($id);
+        parent::__construct($id);
 		if ($this->xlite->get("ProductOptionsEnabled")) {
             $this->importFields["product_options"] = false;
             $this->importFields["inventory_sku"] = false;

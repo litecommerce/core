@@ -47,9 +47,9 @@ class XLite_Module_PayFlowLink_Model_PaymentMethod_Payflowlink extends XLite_Mod
     var $configurationTemplate = "modules/PayFlowLink/config.tpl";
     var $formTemplate ="modules/PayFlowLink/checkout.tpl";
 
-    function constructor($id = null) 
+    public function __construct($id = null) 
     {
-        parent::constructor($id);
+        parent::__construct($id);
         if ($id) {
             if (!$this->get("params")) {
                 $this->set("params", array());

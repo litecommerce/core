@@ -48,9 +48,9 @@ class XLite_Module_InventoryTracking_Controller_Admin_UpdateInventory extends XL
 {
 	protected $inventory = null;
 
-    function constructor()
+    public function __construct()
     {
-        parent::constructor();
+        parent::__construct();
         $this->pages["amount"] = "Update amount";
         $this->pageTemplates["amount"] = "modules/InventoryTracking/update_amount.tpl";
     }

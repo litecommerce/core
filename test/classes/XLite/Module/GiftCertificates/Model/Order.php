@@ -59,12 +59,12 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order
 
     var $shippingCost = null;
 
-    function constructor($param = null)
+    public function __construct($param = null)
     {
         // new fields
 		$this->fields["gcid"] = ""; // gift certificate unique ID or 0
 		$this->fields["payedByGC"] = ""; // how much of the order is payed by GC
-        parent::constructor($param);
+        parent::__construct($param);
     }
 
     /**

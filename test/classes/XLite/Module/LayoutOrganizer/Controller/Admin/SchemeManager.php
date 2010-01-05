@@ -50,7 +50,7 @@ class XLite_Module_LayoutOrganizer_Controller_Admin_SchemeManager extends XLite_
 	var $scheme = null;
 	var $customerLayoutPath = "";
 
-    function constructor()
+    public function __construct()
     {
     	$this->params[] = "scheme_id";
     	foreach($this->params as $k => $v) {
@@ -61,7 +61,7 @@ class XLite_Module_LayoutOrganizer_Controller_Admin_SchemeManager extends XLite_
         		unset($this->params[$k]);
         	}
     	}
-    	parent::constructor();
+    	parent::__construct();
     }
 
     function initLayout()

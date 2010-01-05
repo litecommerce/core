@@ -62,9 +62,9 @@ class XLite_Module_UPS_Model_Shipping_Ups extends XLite_Model_Shipping_Online
     var $configCategory = "UPS";
     var $optionsFields;
 
-    function constructor($param = null)
+    public function __construct($param = null)
     {
-        parent::constructor($param);
+        parent::__construct($param);
         $this->optionsFields = array("userid","password","accessKey","server","packaging","pickup","length","width","height","insured","sat_delivery","sat_pickup","residential","weight_unit");
         $this->services = array( // UPS service codes
         "01" => array(US => "Next Day Air", CA => "Express", PR => "Next Day Air"),

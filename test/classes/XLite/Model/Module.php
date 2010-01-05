@@ -96,9 +96,9 @@ class XLite_Model_Module extends XLite_Model_Abstract
 
     var $showSettingsForm = false;
 
-    function constructor($name = null) // {{{
+    public function __construct($name = null) // {{{
     {
-        parent::constructor($name);
+        parent::__construct($name);
         if (!is_null($name)) {
             $this->read();
         }

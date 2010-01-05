@@ -68,9 +68,9 @@ class XLite_Module_Newsletters_Model_NewsLetter extends XLite_Model_Abstract
 
     var $testMode = false;
 
-    function constructor($id = null)
+    public function __construct($id = null)
     {
-        parent::constructor($id);
+        parent::__construct($id);
         $this->defaultOrder = $this->config->get("Newsletters.news_order") == "D" ? "send_date DESC" : "send_date ASC";
     }
 

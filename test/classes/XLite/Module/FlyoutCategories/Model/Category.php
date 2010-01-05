@@ -46,10 +46,10 @@
 */
 class XLite_Module_FlyoutCategories_Model_Category extends XLite_Model_Category
 {
-	function constructor($id=null)
+	public function __construct($id=null)
 	{
 		$this->fields["smallimage_auto"] = 1;
-		parent::constructor($id);
+		parent::__construct($id);
 	}
 
     function hasSmallImage() // {{{

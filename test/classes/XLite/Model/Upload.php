@@ -81,9 +81,9 @@ class XLite_Model_Upload extends XLite_Base
     var $tmp_name;
     var $error;
 
-    function constructor($uploadArray = array())
+    public function __construct($uploadArray = array())
     {
-        parent::constructor();
+        parent::__construct();
       
         $this->name     = (isset($uploadArray['name']) ? $uploadArray['name'] : null);
         $this->type     = (isset($uploadArray['type']) ? $uploadArray['type'] : null);

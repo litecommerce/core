@@ -46,7 +46,7 @@
 */
 class XLite_Module_LayoutOrganizer_Model_Category extends XLite_Model_Category
 {
-	function constructor($c_id = null)
+	public function __construct($c_id = null)
 	{
 		$this->fields["custom_template"] = -1;
 		$this->fields["custom_template_enabled"] = 1;
@@ -57,7 +57,7 @@ class XLite_Module_LayoutOrganizer_Model_Category extends XLite_Model_Category
 		$this->fields["p_custom_template"] = -1;
 		$this->fields["p_custom_template_enabled"] = 1;
 		$this->fields["p_template_name"] = "";
-		parent::constructor($c_id);
+		parent::__construct($c_id);
 	}
 
 	function getDefaultTemplate($template_type)

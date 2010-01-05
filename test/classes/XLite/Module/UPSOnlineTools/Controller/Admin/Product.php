@@ -88,9 +88,9 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Product extends XLite_Control
 		parent::handleRequest();
 	}
 
-	function constructor()
+	public function __construct()
 	{
-		parent::constructor();
+		parent::__construct();
 		$this->pages["ups_settings"] = "UPS Settings";
 		$this->pageTemplates["ups_settings"] = "modules/UPSOnlineTools/product.tpl";
 	}

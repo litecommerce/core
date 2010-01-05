@@ -48,10 +48,10 @@ class XLite_Module_SnsIntegration_Model_Order extends XLite_Model_Order
 {
     var $sendSnsCartChanged = false;
 
-    function constructor($param = null) // {{{
+    public function __construct($param = null) // {{{
     {
         $this->fields["snsClientId"] = "";
-        parent::constructor($param);
+        parent::__construct($param);
     } // }}}
 
         // item can be OrderItem of product or OrderItem of GiftCert.

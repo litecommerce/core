@@ -73,9 +73,9 @@ class XLite_Model_PaymentMethod extends XLite_Model_Abstract
     var $hasConfigurationForm = false;
     // }}}
 
-    function constructor($id = null) // {{{
+    public function __construct($id = null) // {{{
     {
-        parent::constructor($id);
+        parent::__construct($id);
         if (isset($this->_range)) {
             $this->_range .= " AND ";
         } else {

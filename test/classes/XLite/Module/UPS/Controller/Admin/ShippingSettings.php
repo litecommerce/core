@@ -45,9 +45,9 @@
 */
 class XLite_Module_UPS_Controller_Admin_ShippingSettings extends XLite_Controller_Admin_ShippingSettings
 {
-    function constructor()
+    public function __construct()
     {
-        parent::constructor();
+        parent::__construct();
         $this->pages["ups"] = "UPS settings";
         $this->pageTemplates["ups"] = "modules/UPS/config.tpl"; 
     }

@@ -72,9 +72,9 @@ class XLite_Module_Intershipper_Controller_Admin_Intershipper extends XLite_Cont
         "IHM" => "Inaccessible HazMat"
         );
 
-    function constructor()
+    public function __construct()
     {
-        parent::constructor();
+        parent::__construct();
         $intershipper = new XLite_Module_Intershipper_Model_Shipping_Intershipper();
         $this->settings = $intershipper->get("options");
     }

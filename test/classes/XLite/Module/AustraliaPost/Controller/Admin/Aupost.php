@@ -48,9 +48,9 @@ class XLite_Module_AustraliaPost_Controller_Admin_Aupost extends Admin_Dialog_sh
 	var $settings;	
 	var $rates 		= array();
 
-	function constructor() // {{{ 
+	public function __construct() // {{{ 
 	{
-		parent::constructor();
+		parent::__construct();
 
 		$aupost = new XLite_Module_AustraliaPost_Model_Shipping_Aupost();
 		$this->settings = $aupost->get("options");

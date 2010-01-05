@@ -49,11 +49,11 @@ class XLite_Module_Promotion_Model_OrderItem extends XLite_Model_OrderItem
 	var $_isBonusItem = false;
 	var $_createPeerItem = false;
 
-    function constructor($param = null)
+    public function __construct($param = null)
     {
 		$this->fields["bonusItem"] = 0; // amount of bonus items
 		$this->primaryKey[] = "bonusItem"; // it's a primary key also
-        parent::constructor();
+        parent::__construct();
     }
 
 	function _getPromotionPrice($parentPrice = false)

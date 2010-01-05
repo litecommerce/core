@@ -53,9 +53,9 @@ class XLite_Model_ImageEditor_ImageEditor extends XLite_Base
     var $error       = false;
     var $uploadError = '';
 
-    function constructor($iniFile = null)
+    public function __construct($iniFile = null)
     {
-        parent::constructor();
+        parent::__construct();
         if (!is_readable($iniFile)) {
             $this->error = true;
         } else {

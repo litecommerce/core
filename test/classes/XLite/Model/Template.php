@@ -51,9 +51,9 @@ class XLite_Model_Template extends XLite_Model_FileNode
     var $comment; // template comment (null if not available)
     var $content; // template file content (null if not read)
 
-    function constructor($path = null, $comment = null)
+    public function __construct($path = null, $comment = null)
     {
-        parent::constructor($path);
+        parent::__construct($path);
         if (isset($path)) {
             $this->setPath($path);
         }

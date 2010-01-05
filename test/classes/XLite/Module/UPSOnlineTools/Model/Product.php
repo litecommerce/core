@@ -47,9 +47,9 @@
 */
 class XLite_Module_UPSOnlineTools_Model_Product extends XLite_Model_Product
 {
-	function constructor($id=null)
+	public function __construct($id=null)
 	{
-		parent::constructor($id);
+		parent::__construct($id);
 		$this->fields["ups_width"] = 1;
 		$this->fields["ups_height"] = 1;
 		$this->fields["ups_length"] = 1;

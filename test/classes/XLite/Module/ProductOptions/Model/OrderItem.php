@@ -48,9 +48,9 @@ class XLite_Module_ProductOptions_Model_OrderItem extends XLite_Model_OrderItem
 {
     var $options = array();
 
-    function constructor()
+    public function __construct()
     {
-        parent::constructor();
+        parent::__construct();
         $this->fields["options"] = "";
     }
 

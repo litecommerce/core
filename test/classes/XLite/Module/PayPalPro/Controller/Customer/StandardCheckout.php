@@ -48,9 +48,9 @@ class XLite_Module_PayPalPro_Controller_Customer_StandardCheckout extends Dialog
 {
 	var $registerForm = null;
 
-	function constructor()
+	public function __construct()
 	{
-		parent::constructor();
+		parent::__construct();
 		if (($_REQUEST["target"] == "checkout") && ($_REQUEST["paypal_result"] == "cancel")) {
 			$this->cart = XLite_Model_Cart::getInstance();
 			if ($this->cart->get("status") == "Q") {

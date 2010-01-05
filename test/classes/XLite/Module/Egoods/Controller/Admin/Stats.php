@@ -44,10 +44,10 @@
 */
 class XLite_Module_Egoods_Controller_Admin_Stats extends XLite_Controller_Admin_Stats
 {
-    function constructor() // {{{
+    public function __construct() // {{{
     {
         $this->pages["download_statistics"] = "Egoods statistics";
-        parent::constructor();
+        parent::__construct();
     } // }}}
 }
 

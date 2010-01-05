@@ -57,9 +57,9 @@ class XLite_Module_ProductAdviser_Model_ProductRecentlyViewed extends XLite_Mode
 	var $defaultOrder = "views_number DESC, last_viewed DESC";
 	var $product = null;
 
-	function constructor()
+	public function __construct()
 	{
-		parent::constructor();
+		parent::__construct();
 
 		$this->collectGarbage();
 	}

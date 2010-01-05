@@ -46,9 +46,9 @@
 */
 class XLite_Module_DetailedImages_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_ImportCatalog
 {
-    function constructor()
+    public function __construct()
     {
-        parent::constructor();
+        parent::__construct();
         $this->pages["detailed_images"] = "Import images";
         $this->pageTemplates["detailed_images"] = "modules/DetailedImages/import.tpl";
     }

@@ -46,9 +46,9 @@
 */
 class XLite_Module_FeaturedProducts_Controller_Admin_Categories extends XLite_Controller_Admin_Categories
 {
-    function constructor()
+    public function __construct()
     {
-        parent::constructor();
+        parent::__construct();
         if (!isset($_REQUEST["search_category"])) {
             $_REQUEST["search_category"] = $_REQUEST["category_id"];
         }    

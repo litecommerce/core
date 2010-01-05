@@ -129,9 +129,9 @@ class XLite_Model_Abstract extends XLite_Base
     *
     * @access public
     */
-    function constructor() // {{{
+    public function __construct() // {{{
     {
-        parent::constructor(); 
+        parent::__construct(); 
         if (!empty($this->autoIncrement)) {
             // if auto-increment is specified, make it a primary key
             // of this table

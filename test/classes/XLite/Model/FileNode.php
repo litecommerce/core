@@ -50,9 +50,9 @@ define('SHOW_FULL_PATH', 1);
 
 class XLite_Model_FileNode extends XLite_Base
 {
-    function constructor($path = null, $comment = null, $options = 0)
+    public function __construct($path = null, $comment = null, $options = 0)
     {
-        parent::constructor();
+        parent::__construct();
 
         $this->path = $path;
         $this->comment = $comment;

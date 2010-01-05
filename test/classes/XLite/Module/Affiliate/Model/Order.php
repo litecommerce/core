@@ -43,10 +43,10 @@
 */
 class XLite_Module_Affiliate_Model_Order extends XLite_Model_Order
 {
-    function constructor($id = null) // {{{
+    public function __construct($id = null) // {{{
     {
         $this->fields["partnerClick"] = 0;
-        parent::constructor($id);
+        parent::__construct($id);
     } // }}}
     
     /**

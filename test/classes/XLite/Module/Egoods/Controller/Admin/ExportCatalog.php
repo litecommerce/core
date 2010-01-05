@@ -46,9 +46,9 @@
 */
 class XLite_Module_Egoods_Controller_Admin_ExportCatalog extends XLite_Controller_Admin_ExportCatalog
 {
-    function constructor()
+    public function __construct()
     {
-        parent::constructor();
+        parent::__construct();
         $this->pages["export_pin_codes"] = "Export PIN codes";
         $this->pageTemplates["export_pin_codes"] = "modules/Egoods/export_pin_codes.tpl";
     }

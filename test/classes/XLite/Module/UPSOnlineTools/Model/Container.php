@@ -66,7 +66,7 @@ class XLite_Module_UPSOnlineTools_Model_Container extends XLite_Base
 
 	var $extra_item_ids = null;
 
-	function constructor()
+	public function __construct()
 	{
 		$this->setThreshold(5);
 		$this->getWeightLimit(0);

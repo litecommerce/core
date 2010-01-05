@@ -44,9 +44,9 @@
 */
 class XLite_Module_WholesaleTrading_Controller_Admin_Product extends XLite_Controller_Admin_Product
 {
-    function constructor()
+    public function __construct()
     {
-        parent::constructor();
+        parent::__construct();
         $this->pages["access_list"] = "Product access";
         $this->pageTemplates["access_list"] = "modules/WholesaleTrading/product_access/access_list.tpl";
         $this->pages["wholesale_pricing"] = "Wholesale pricing";

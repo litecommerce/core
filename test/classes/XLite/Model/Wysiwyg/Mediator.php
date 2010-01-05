@@ -85,10 +85,10 @@ class XLite_Model_WysiwygMediator extends XLite_Base
 	var $__buildFullTreeCounter = 0;
 	var $__buildFullTreeCounterMax = 0;
 
-    function constructor()
+    public function __construct()
     {
 		$this->__memoryUsageMin = 1024.0 * 1024.0 * 1024.0 * 1024.0;
-        parent::constructor();
+        parent::__construct();
         $this->templateEditableParams = $GLOBALS['TEMPLATE_EDITABLE_PARAMS'];
         $this->templateReferenceParams = $GLOBALS['TEMPLATE_REFERENCE_PARAMS'];
     }

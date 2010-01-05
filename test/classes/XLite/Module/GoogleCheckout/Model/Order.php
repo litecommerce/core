@@ -41,9 +41,9 @@ class XLite_Module_GoogleCheckout_Model_Order extends XLite_Model_Order
 {
 	var $GoogleCheckout_profile = null;
 
-	function constructor($id=null)
+	public function __construct($id=null)
 	{
-		parent::constructor($id);
+		parent::__construct($id);
 		$this->fields["google_id"] = '';
 		$this->fields["google_total"] = 0;
 		$this->fields["google_details"] = "";

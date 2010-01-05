@@ -71,10 +71,10 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
     var $alias = 'order_items';
     var $defaultOrder = "orderby";
 
-	function constructor()
+	public function __construct()
 	{
 		$this->_uniqueKey = uniqid("order_item_");
-		parent::constructor();
+		parent::__construct();
 	}
 
     function setProduct($product)

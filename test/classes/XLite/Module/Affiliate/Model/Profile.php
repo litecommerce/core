@@ -43,7 +43,7 @@
 */
 class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile
 {
-    function constructor($id = null) // {{{
+    public function __construct($id = null) // {{{
     {
         $this->fields["parent"] = 0;
         $this->fields["partner_fields"] = "";
@@ -54,7 +54,7 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile
         // fields available only for core
         $this->_securefields["plan"] = "";
         $this->_securefields["reason"] = "";
-        parent::constructor($id);
+        parent::__construct($id);
     } // }}}
 
     function set($name, $value) // {{{

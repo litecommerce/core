@@ -43,10 +43,10 @@
 */
 class XLite_Module_Affiliate_Model_OrderItem extends XLite_Model_OrderItem
 {
-    function constructor()
+    public function __construct()
     {
         $this->fields["commissions"] = 0;
-        parent::constructor();
+        parent::__construct();
     }
 	function getAffiliateProduct()
 	{

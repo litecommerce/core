@@ -52,12 +52,12 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order
 	var $doNotChangeShippingCost = false;
 	var $doNotChangeGlobalDiscount = false;
 
-	function constructor($id = null) // {{{
+	public function __construct($id = null) // {{{
     {
 		$this->fields["substatus"] = '';
 		$this->fields['admin_notes'] = '';
 		$this->fields['manual_edit'] = 0;
-		parent::constructor($id);
+		parent::__construct($id);
     } // }}}
 	
 	function statusChanged($oldStatus, $newStatus) // {{{

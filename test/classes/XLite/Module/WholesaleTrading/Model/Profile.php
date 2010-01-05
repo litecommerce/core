@@ -47,7 +47,7 @@ class XLite_Module_WholesaleTrading_Model_Profile extends XLite_Model_Profile
 	var $_membershipChanged = false;
 	var $_oldMembership = "";
 
-	function constructor($p_id = null)
+	public function __construct($p_id = null)
 	{
 		$this->fields["membership_exp_date"] = 0;
 		$this->fields["tax_id"] = '';
@@ -57,7 +57,7 @@ class XLite_Module_WholesaleTrading_Model_Profile extends XLite_Model_Profile
 		$this->fields["membership_history"] = '';
         $this->_securefields["membership_exp_date"] = "";
 		$this->_securefields["membership_history"] = "";
-		parent::constructor($p_id);
+		parent::__construct($p_id);
 	}
 
 	function _initMembershipHistory($history)

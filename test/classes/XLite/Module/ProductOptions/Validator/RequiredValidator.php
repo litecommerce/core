@@ -47,9 +47,9 @@ class XLite_Module_ProductOptions_Validator_RequiredValidator extends XLite_Vali
 {
     var $template = "common/required_validator.tpl";
 
-    function constructor()
+    public function __construct()
     {
-    	parent::constructor();
+    	parent::__construct();
     	$this->params[] = "option_id";
     }
     

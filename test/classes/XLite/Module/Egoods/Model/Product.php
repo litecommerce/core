@@ -48,10 +48,10 @@ class XLite_Module_Egoods_Model_Product extends XLite_Model_Product
 {
 	var $egoodsNumber = null;
 
-	function constructor($p_id = null)
+	public function __construct($p_id = null)
 	{
 		$this->fields['egood_free_for_memberships'] = '';
-		parent::constructor($p_id);
+		parent::__construct($p_id);
 	}
 	
 	function getEgoodsNumber()

@@ -46,9 +46,9 @@
 */
 class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Controller_Admin_Product
 {
-    function constructor()
+    public function __construct()
     {
-        parent::constructor();
+        parent::__construct();
         $this->pages["product_options"] = "Product options";
         $this->pageTemplates["product_options"] = "modules/ProductOptions/product_options.tpl";
     }

@@ -52,9 +52,9 @@ class XLite_Model_ShippingZone extends XLite_Model_Abstract
         );
     var $isRead = true;    
 
-    function constructor($zone = null)
+    public function __construct($zone = null)
     {
-        parent::constructor();
+        parent::__construct();
         if (isset($zone)) {
             $this->set("shipping_zone", $zone);
         }

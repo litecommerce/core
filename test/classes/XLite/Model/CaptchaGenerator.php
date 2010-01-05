@@ -46,9 +46,9 @@
 */
 class XLite_Model_CaptchaGenerator extends XLite_Base
 {
-    function constructor()
+    public function __construct()
     {
-        parent::constructor();
+        parent::__construct();
 
         $this->symbol_width = 20;
         $this->height = 20;

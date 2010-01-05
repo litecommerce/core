@@ -45,9 +45,9 @@
 class XLite_Module_WholesaleTrading_Controller_Admin_Users extends XLite_Controller_Admin_Users
 {
 
-	function constructor()
+	public function __construct()
 	{
-		parent::constructor();
+		parent::__construct();
 
 		$this->params[] = "search";
 	}

@@ -39,9 +39,9 @@
 
 class XLite_Module_DemoMode_base_Base extends XLite_Model_Abstract
 {
-	function constructor($id = null)
+	public function __construct($id = null)
 	{
-		parent::constructor($id);
+		parent::__construct($id);
 		global $safeData;
 		if (!isset($safeData)) {
 			$safeData = $this->session->get('safeData');

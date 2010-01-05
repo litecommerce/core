@@ -46,9 +46,9 @@
 */
 class XLite_Module_ProductOptions_Controller_Admin_ExportCatalog extends XLite_Controller_Admin_ExportCatalog
 {
-    function constructor()
+    public function __construct()
     {
-        parent::constructor();
+        parent::__construct();
         $this->pages["export_product_options"] = "Export product options";
         $this->pageTemplates["export_product_options"] = "modules/ProductOptions/export_product_options.tpl";
     }

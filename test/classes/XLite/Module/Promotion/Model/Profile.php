@@ -46,11 +46,11 @@
 */
 class XLite_Module_Promotion_Model_Profile extends XLite_Model_Profile
 {
-    function constructor($param = null)
+    public function __construct($param = null)
     {
 		$this->fields["bonusPoints"] = 0;
 		$this->_securefields["bonusPoints"] = 0;
-        parent::constructor($param);
+        parent::__construct($param);
     }
 
 	function get($name)

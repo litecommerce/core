@@ -44,9 +44,9 @@
 */
 class XLite_Module_InventoryTracking_Model_OrderItem extends XLite_Model_OrderItem
 {
-	function constructor() // {{{
+	public function __construct() // {{{
 	{
-		parent::constructor();
+		parent::__construct();
 		$this->fields["product_sku"] = "";
 	} // }}}
 

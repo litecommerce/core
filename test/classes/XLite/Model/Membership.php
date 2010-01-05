@@ -103,9 +103,9 @@ class XLite_Model_Membership extends Base // {{{
 		return $this->memberships;
 	} // }}} 
 	
-	function constructor() // {{{
+	public function __construct() // {{{
 	{
-		parent::constructor();
+		parent::__construct();
 		$memberships = $this->get("memberships");
 		$args = func_get_args();
 		if (count($args)) {

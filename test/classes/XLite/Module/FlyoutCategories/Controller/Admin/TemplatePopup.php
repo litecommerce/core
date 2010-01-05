@@ -48,12 +48,12 @@ class XLite_Module_FlyoutCategories_Controller_Admin_TemplatePopup extends XLite
 {
     var $template = "modules/FlyoutCategories/template_popup.tpl";
 
-    function constructor()
+    public function __construct()
     {
     	$this->params[] = "formName";
     	$this->params[] = "formField";
 
-    	parent::constructor();
+    	parent::__construct();
     }
 
     function init()

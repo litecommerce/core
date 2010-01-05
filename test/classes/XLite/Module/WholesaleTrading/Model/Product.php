@@ -47,9 +47,9 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product
 {
 	var $_checkExistanceRequired = false; // perform direct sale check if the product does not exist
 
-	function constructor($id = null)
+	public function __construct($id = null)
 	{
-		parent::constructor($id);
+		parent::__construct($id);
 		$this->fields["selling_membership"] = "";
 		$this->fields["validaty_period"] = "";
 	}

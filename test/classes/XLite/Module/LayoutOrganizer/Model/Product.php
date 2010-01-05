@@ -46,12 +46,12 @@
 */
 class XLite_Module_LayoutOrganizer_Model_Product extends XLite_Model_Product
 {
-	function constructor($p_id = null)
+	public function __construct($p_id = null)
 	{
 		$this->fields["custom_template"] = -1;
 		$this->fields["custom_template_enabled"] = 1;
 		$this->fields["template_name"] = "";
-		parent::constructor($p_id);
+		parent::__construct($p_id);
 	}
 
     function getParent()

@@ -41,12 +41,12 @@
 class XLite_Module_AOM_Model_OrderItem extends XLite_Model_OrderItem
 {
 
-	function constructor($id = null) // {{{
+	public function __construct($id = null) // {{{
 	{
 		$this->fields["product_name"] = '';
 		$this->fields["product_sku"] = '';
 		$this->fields["aom_extra"] = '';
-		parent::constructor($id);
+		parent::__construct($id);
 	} // }}} 
 
 	function get($name) // {{{ 

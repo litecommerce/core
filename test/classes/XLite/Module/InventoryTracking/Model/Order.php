@@ -46,10 +46,10 @@
 */
 class XLite_Module_InventoryTracking_Model_Order extends XLite_Model_Order
 {
-	function constructor($id = null)
+	public function __construct($id = null)
 	{
 		$this->fields['inventory_changed'] = 0;
-		parent::constructor($id);
+		parent::__construct($id);
 	}
 
     function calcTotals()

@@ -77,9 +77,9 @@ class XLite_Module_USPS_Controller_Admin_Usps extends XLite_Controller_Admin_Shi
         "PARCEL"	=> "Parcel",
     );
 
-    function constructor()
+    public function __construct()
     {
-        parent::constructor();
+        parent::__construct();
         $usps = new XLite_Module_USPS_Model_Shipping_Usps();
         $this->settings = $usps->get("options");
     }

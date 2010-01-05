@@ -46,7 +46,7 @@
 */
 class XLite_Module_LayoutOrganizer_Controller_Admin_Wysiwyg extends XLite_Controller_Admin_Wysiwyg
 {
-    function constructor()
+    public function __construct()
     {
     	$sm = new XLite_Module_LayoutOrganizer_Controller_Admin_SchemeManager();
 		$sm->initLayout();
@@ -56,7 +56,7 @@ class XLite_Module_LayoutOrganizer_Controller_Admin_Wysiwyg extends XLite_Contro
     		$this->exportTemplates[] = str_replace($sm->customerLayoutPath, "", $scheme->get("scat_template"));
     		$this->exportTemplates[] = str_replace($sm->customerLayoutPath, "", $scheme->get("prod_template"));
     	}
-    	parent::constructor();
+    	parent::__construct();
     }
 }
 

@@ -49,9 +49,9 @@ class XLite_Model_ProductFromCategory extends XLite_Model_Product
 {
     var $fetchKeysOnly = true;
 
-    function constructor($catId = null)
+    public function __construct($catId = null)
     {
-        parent::constructor();
+        parent::__construct();
         $this->catId = $catId; 
     }
 

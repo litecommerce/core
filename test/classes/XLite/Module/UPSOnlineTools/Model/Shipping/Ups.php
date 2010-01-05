@@ -56,9 +56,9 @@ class XLite_Module_UPSOnlineTools_Model_Shipping_Ups extends XLite_Model_Shippin
 {
     var $error = 0;
 
-    function constructor($param = null)
+    public function __construct($param = null)
     {
-        parent::constructor($param);
+        parent::__construct($param);
         $this->services = $this->getServices();
     }
     

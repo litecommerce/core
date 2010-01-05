@@ -55,9 +55,9 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
             'endDateYear'
             );
 
-    function constructor() // {{{
+    public function __construct() // {{{
     {
-        parent::constructor();
+        parent::__construct();
         $this->params = array_merge($this->params, $this->dateParams);
     } // }}}
 

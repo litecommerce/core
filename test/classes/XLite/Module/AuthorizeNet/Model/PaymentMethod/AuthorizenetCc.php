@@ -52,9 +52,9 @@ class XLite_Module_AuthorizeNet_Model_PaymentMethod_AuthorizenetCc extends XLite
     var $configurationTemplate = "modules/AuthorizeNet/config.tpl";
     var $processorName = "Authorize.Net";
 
-    function constructor($id = null)
+    public function __construct($id = null)
     {
-        parent::constructor($id);
+        parent::__construct($id);
         $this->processor = new XLite_Module_AuthorizeNet_Processor();
     }
     

@@ -76,9 +76,9 @@ class XLite_Model_Mailer extends XLite_View
     var $charset			= "iso-8859-1";
     var $templatesSkin		= null;
 
-    function constructor() // {{{
+    public function __construct() // {{{
     {
-        parent::constructor();
+        parent::__construct();
         $this->set("name", "MailMessage");
     } // }}}
 

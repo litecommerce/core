@@ -50,9 +50,9 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order
 {
 	var $_ups_containers = null;
 
-	function constructor($id=null)
+	public function __construct($id=null)
 	{
-		parent::constructor($id);
+		parent::__construct($id);
 		$this->fields["ups_containers"] = base64_encode(serialize(array()));
 	}
 

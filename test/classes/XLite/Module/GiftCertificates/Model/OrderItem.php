@@ -48,10 +48,10 @@ class XLite_Module_GiftCertificates_Model_OrderItem extends XLite_Model_OrderIte
 {
     var $gc = null;
 
-    function constructor()
+    public function __construct()
     {
 		$this->fields["gcid"] = ""; // Gift Certificate unique ID
-        parent::constructor();
+        parent::__construct();
     }
 
 	function getGC()

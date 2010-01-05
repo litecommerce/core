@@ -59,9 +59,9 @@ class XLite_Model_Country extends XLite_Model_Abstract
     var $alias = "countries";
     var $defaultOrder = "country";
 
-    function constructor($code = null)
+    public function __construct($code = null)
     {
-        parent::constructor();
+        parent::__construct();
         if (!empty($code)) {
             $this->set("code", $code);
         }    

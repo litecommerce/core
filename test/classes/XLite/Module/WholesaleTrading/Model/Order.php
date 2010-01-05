@@ -44,10 +44,10 @@
 */
 class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order
 {
-	function constructor($oid = null)
+	public function __construct($oid = null)
 	{
 		$this->fields['global_discount'] = '';
-		parent::constructor($oid);
+		parent::__construct($oid);
 	}
 	
     function calcSubTotal($shippedOnly=false) // {{{

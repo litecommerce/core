@@ -46,9 +46,9 @@ class XLite_Module_Egoods_Model_Mailer extends XLite_Model_Mailer
 {
 	var $clean_after_send = true;
 
-    function constructor() // {{{
+    public function __construct() // {{{
     {
-        parent::constructor();
+        parent::__construct();
         // Initialize PHPMailer
         require_once "PHPMailer/class.phpmailer.php";
         $this->mail = new PHPMailer();

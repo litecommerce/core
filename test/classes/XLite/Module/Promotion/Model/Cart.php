@@ -59,12 +59,12 @@ class XLite_Module_Promotion_Model_Cart extends XLite_Model_Cart
 		return ($this->doNotCallConstructorCalcTotal)?false:true;
     }
 
-    function constructor($id = null)
+    public function __construct($id = null)
     {
         $obj = new XLite_Base();
         $obj->logger->log("->Cart::constructor()");
         $this->doNotCallCartChanged = true;
-        parent::constructor($id);
+        parent::__construct($id);
         $this->doNotCallCartChanged = false;
         if ($this->_constructorNeedCalcTotal()) {
         	$this->logger->log("->Cart::calcTotals()");

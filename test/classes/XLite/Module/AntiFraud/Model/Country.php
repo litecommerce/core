@@ -43,10 +43,10 @@ class XLite_Module_AntiFraud_Model_Country extends Country // {{{
 {
 	var $riskCountry = null;
 
-	function constructor($id = null) // {{{ 
+	public function __construct($id = null) // {{{ 
 	{
 		$this->fields["risk_country"] = 0; 
-		parent::constructor($id);
+		parent::__construct($id);
 	} // }}}
 
 	function isRiskCountry($check=null) // {{{

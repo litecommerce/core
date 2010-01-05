@@ -44,11 +44,11 @@
 */
 class XLite_Module_Egoods_Model_OrderItem extends XLite_Model_OrderItem
 {
-	function constructor()
+	public function __construct()
 	{
         $this->fields["pincodes"] = "";
 		$this->fields["egoods"] = "";
-        parent::constructor();
+        parent::__construct();
 	}
 	
 	function isEgood()

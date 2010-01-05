@@ -41,10 +41,10 @@
 
 class XLite_Module_AdvancedSearch_Model_Profile extends Profile // {{{
 {
-	function constructor($id = null)
+	public function __construct($id = null)
 	{
 		$this->fields["search_settings"] = "";
-		parent::constructor($id);
+		parent::__construct($id);
 	}
 
 } // }}}

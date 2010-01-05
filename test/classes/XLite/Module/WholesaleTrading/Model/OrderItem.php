@@ -46,10 +46,10 @@ class XLite_Module_WholesaleTrading_Model_OrderItem extends XLite_Model_OrderIte
 {
 	var $_itemChanged = false;
 
-	function constructor()
+	public function __construct()
 	{
 		$this->fields["wholesale_price"] = 0;
-		parent::constructor();
+		parent::__construct();
 	}
 
 	function _getStoredWholesalePrice()

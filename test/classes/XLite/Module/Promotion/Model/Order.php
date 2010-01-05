@@ -52,12 +52,12 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order
     var $_appliedBonuses = null;
 	var $_count_all_products = false;
 
-	function constructor($id = null)
+	public function __construct($id = null)
 	{
 		$this->fields["payedByPoints"] = 0;
 		$this->fields["discountCoupon"] = "";
 		$this->fields["discount"] = 0;
-		parent::constructor($id);
+		parent::__construct($id);
 	}
 
 	/**
