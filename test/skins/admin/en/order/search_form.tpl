@@ -14,18 +14,18 @@
 <TR>
 <TD class=FormButton noWrap height=10>Order status:</TD>
 <TD height=10>
-<widget class="XLite_View_StatusSelect"field="status" allOption>
+<widget class="XLite_View_StatusSelect" field="status" allOption>
 </TD></TR>
 <widget module="AntiFraud" template="modules/AntiFraud/orders/search_form.tpl">
 <TR>
 <TD class=FormButton noWrap height=10>Order date from:</TD>
 <TD height=10>
-<widget class="XLite_View_Date"field="startDate">
+<widget class="XLite_View_Date" field="startDate">
 </TD></TR>
 <TR>
 <TD class=FormButton noWrap height=10>Order date through:</TD>
 <TD height=10>
-<widget class="XLite_View_Date"field="endDate">
+<widget class="XLite_View_Date" field="endDate">
 </TD></TR>
 <TR>
 <TD class=FormButton width=78>&nbsp;</TD>

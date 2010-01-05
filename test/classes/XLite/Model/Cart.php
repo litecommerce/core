@@ -44,11 +44,17 @@
 * @package Kernel
 * @version $Id$
 */
-class XLite_Model_Cart extends XLite_Model_Order
+class XLite_Model_Cart extends XLite_Model_Order implements XLite_Base_ISingleton
 {
-    function constructor($id = null)
+	public static function getInstance()
     {
-        parent::constructor($id);
+        return self::_getInstance(__CLASS__);
+    }
+
+    function __construct($id = null)
+    {
+        parent::__construct($id);
+
         $this->fields["status"] = "T";
         if ($this->session->isRegistered("order_id")) {
             $this->set("order_id", $this->session->get("order_id"));

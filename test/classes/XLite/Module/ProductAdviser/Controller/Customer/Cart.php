@@ -73,7 +73,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Cart extends XLite_Control
 		if (is_null($this->rejectedItemInfo)) {
 			$rejectedItemInfo = $this->session->get("rejectedItem");
 			$this->session->set("rejectedItem", null);
-			$this->rejectedItemInfo = new XLite_Base_Object();
+			$this->rejectedItemInfo = new XLite_Base();
 			$this->rejectedItemInfo->set("product_id", $rejectedItemInfo->product_id);
 			$this->rejectedItemInfo->set("product", new XLite_Model_Product($this->rejectedItemInfo->product_id));
 			$this->rejectedItemInfo->set("amount", $rejectedItemInfo->availableAmount);

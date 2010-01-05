@@ -45,7 +45,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_View_TabberPage extends XLite_Base_Object
+class XLite_View_TabberPage extends XLite_Base
 {
     var $name;
     var $header;

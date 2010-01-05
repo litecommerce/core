@@ -53,7 +53,7 @@ define('SQL_UPLOAD_DIR', 'var/tmp/');
 * @package Kernel
 * @version $Id$
 */
-class XLite_Model_Database extends XLite_Base_Singleton
+class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
 {
     // properties {{{
 
@@ -86,19 +86,9 @@ class XLite_Model_Database extends XLite_Base_Singleton
     // }}}
 
 
-	/**
-     * Return pointer to the single instance of current class
-     *
-     * @param string $className name of derived class
-     *
-     * @return XLite_Base_Singleton
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0
-     */
-    public static function getInstance($className = __CLASS__)
+	public static function getInstance()
     {
-        return parent::getInstance(__CLASS__);
+        return self::_getInstance(__CLASS__);
     }
 
     function connect() // {{{

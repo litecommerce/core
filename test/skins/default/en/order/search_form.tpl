@@ -13,14 +13,14 @@ status:</TD>
 <TD width=10 height=10><FONT 
 class=ErrorMessage>*</FONT></TD>
 <TD height=10>
-<widget class="XLite_View_StatusSelect"field="status" allOption>
+<widget class="XLite_View_StatusSelect" field="status" allOption>
 </TD></TR>
 <TR>
 <TD class=FormButton noWrap height=10>Order date 
 from:</TD>
 <TD width=10 height=10><FONT class=ErrorMessage>*</FONT></TD>
 <TD height=10>
-<widget class="XLite_View_Date"field="startDate">
+<widget class="XLite_View_Date" field="startDate">
 </TD></TR>
 <TR>
 <TD class=FormButton noWrap height=10>Order date 
@@ -28,12 +28,12 @@ through:</TD>
 <TD width=10 height=10><FONT 
 class=ErrorMessage>*</FONT></TD>
 <TD height=10>
-<widget class="XLite_View_Date"field="endDate">
+<widget class="XLite_View_Date" field="endDate">
 </TD></TR>
 <TR>
 <TD class=FormButton width=78>&nbsp;</TD>
 <TD width=10>&nbsp;</TD>
-<TD height=30><widget class="XLite_View_Button"label="Search" href="javascript: document.order_search_form.submit();"> 
+<TD height=30><widget class="XLite_View_Button" label="Search" href="javascript: document.order_search_form.submit();"> 
 &nbsp; </TD></TR>
 </tbody>
 </table>

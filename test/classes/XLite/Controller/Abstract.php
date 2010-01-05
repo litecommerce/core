@@ -54,11 +54,14 @@ class XLite_Controller_Abstract extends XLite_View
     var $category = null; // current category or null
     var $locationPath = array(); // path for dialog location
 
-    function constructor()
+	protected $cart = null;
+
+    function __construct()
     {
-        parent::constructor();
+        parent::__construct();
+
         if (!$this->xlite->is("adminZone")) {
-            $this->cart = func_get_instance("Cart");
+            $this->cart = XLite_Model_Cart::getInstance();
             // cleanup processed cart for non-checkout pages
             $target = isset($_REQUEST["target"]) ? $_REQUEST["target"] : "";
             if ($target != "checkout" && ($this->cart->is("processed") || $this->cart->is("queued"))) {
@@ -439,19 +442,21 @@ class XLite_Controller_Abstract extends XLite_View
     */
     function updateCart()
     {
-        $items = $this->cart->get("items");
-		$this->set("absence_of_product", null);
-        foreach ($items as $key => $i) {
-            if(!$i->isValid()) {
-            	$this->set("absence_of_product", true);
-            	$this->redirect("cart.php?target=cart");
-        		return;
-            }
-        }
-        if ($this->cart->isPersistent) {
-            $this->cart->calcTotals();
-            $this->cart->update();
-        }
+		if (!is_null($this->cart)) {
+	        $items = $this->cart->get("items");
+			$this->set("absence_of_product", null);
+    	    foreach ($items as $key => $i) {
+        	    if(!$i->isValid()) {
+            		$this->set("absence_of_product", true);
+            		$this->redirect("cart.php?target=cart");
+	        		return;
+    	        }
+	        }
+        	if ($this->cart->isPersistent) {
+    	        $this->cart->calcTotals();
+        	    $this->cart->update();
+	        }
+		}
     }
 
     function recalcCart()

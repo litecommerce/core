@@ -1,4 +1,4 @@
-<widget class="XLite_View_Pager"data="{orders}" name="pager">
+<widget class="XLite_View_Pager" data="{orders}" name="pager">
 
 <br>
 <table border="0">

@@ -104,7 +104,7 @@
             <th colspan="3" align="left"> Newsletter title <font class="Star">*</font>
 			    <input type=text name="name" size=28 maxlength=128 value="{name:h}">
 				&nbsp;&nbsp;
-			    <widget class="XLite_Module_Newsletters_Validator_NewsListValidator"field="name">
+			    <widget class="XLite_Module_Newsletters_Validator_NewsListValidator" field="name">
             </th>
         </tr>
         <tr class="TableRow">

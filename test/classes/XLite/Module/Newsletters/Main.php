@@ -55,7 +55,7 @@ class XLite_Module_Newsletters_Main extends XLite_Model_Module
         parent::init();
 
         // add newsletters template
-        $layout = func_get_instance("layout");
+        $layout = XLite_Model_Layout::getInstance();
         $layout->addLayout("news.tpl", "modules/Newsletters/newsfeed.tpl");
 
         $this->addDecorator("Auth", "Module_Newsletters_Auth");

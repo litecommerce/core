@@ -5,7 +5,7 @@
             <td nowrap>Option class name:&nbsp;</td>
             <td>
             	<input type=text name="optdata[optclass]" size=12>
-                <widget class="XLite_Module_ProductOptions_Validator_RequiredValidator"field="optdata[optclass]" action="{widget.action}">
+                <widget class="XLite_Module_ProductOptions_Validator_RequiredValidator" field="optdata[optclass]" action="{widget.action}">
                 &nbsp;<span style="color: #606060">should be unique for easier stock management</span>
             </td>
 		</tr>

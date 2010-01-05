@@ -56,7 +56,7 @@
             <td><a name="section_{option.option_id}"></a>Option class name:&nbsp;</td>
             <td>
             <input type=text name="global_options[optclass]" value="{option.optclass:r}" size=12>
-            <widget class="XLite_Module_ProductOptions_Validator_RequiredValidator"field="global_options[optclass]" action="update_product_option" option_id="{option.option_id}">
+            <widget class="XLite_Module_ProductOptions_Validator_RequiredValidator" field="global_options[optclass]" action="update_product_option" option_id="{option.option_id}">
 			&nbsp;<span style="color: #606060">should be unique for easier stock management</span>
             </td>
 		</tr>

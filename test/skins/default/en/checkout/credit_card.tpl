@@ -258,7 +258,7 @@ function showStar(name)
     <td align="right">Start date (MMYY)</td>
     <td class="Star"><span id="start_date_star">*</span></td>
     <td>
-        <widget class="XLite_View_Date"field="cc_info_cc_start_date_" hide_days="1" higherYear="{currentYear}" showMonthsNumbers="1">
+        <widget class="XLite_View_Date" field="cc_info_cc_start_date_" hide_days="1" higherYear="{currentYear}" showMonthsNumbers="1">
         <br><input type="checkbox" name="no_start_date" id="start_date_box" onclick="javascript: showStar('start_date');">&nbsp;<label for="start_date_box">My card has no "Start date" information</label>
         <input type="hidden" name="cc_info[cc_start_date]" value="MMYY">
     </td>
@@ -267,7 +267,7 @@ function showStar(name)
 <tr valign="middle">
     <td align="right">Expiration date (MMYY)</td>
     <td class="Star">*</td>
-    <td><widget class="XLite_View_Date"field="cc_info_cc_date_" hide_days="1" lowerYear="{currentYear}" yearsRange="5" showMonthsNumbers="1"><input type="hidden" name="cc_info[cc_date]" value="MMYY"></td>
+    <td><widget class="XLite_View_Date" field="cc_info_cc_date_" hide_days="1" lowerYear="{currentYear}" yearsRange="5" showMonthsNumbers="1"><input type="hidden" name="cc_info[cc_date]" value="MMYY"></td>
     <td colspan="2">&nbsp;</td>
 </tr>
 <tr id='issue_number' valign="top">
@@ -310,7 +310,7 @@ function showStar(name)
 <p>By clicking "SUBMIT" you agree with our "<a href='cart.php?target=help&amp;mode=terms_conditions'><u>Terms &amp; Conditions</u></a>" and "<a href='cart.php?target=help&amp;mode=privacy_statement'><u>Privacy statement</u></a>".<br>
 <br>
 <span id="submit_order_button">
-<widget class="XLite_View_Button"label="Submit order" href="javascript: CheckoutSubmit();">
+<widget class="XLite_View_Button" label="Submit order" href="javascript: CheckoutSubmit();">
 </span>
 <span id="submiting_process" style="display:none"></span>
 </form>

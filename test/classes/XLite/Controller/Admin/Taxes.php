@@ -469,7 +469,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
     
     function initRuleParams()
     {
-        $countries = new XLite_Base_Object();
+        $countries = new XLite_Base();
         $countries->name = 'Countries';
         $countries->var  = 'country';
         $countries->cond  = 'country';
@@ -478,7 +478,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
         foreach ($c->findAll() as $country) {
             $countries->values[] = $country->get("country");
         }
-        $states = new XLite_Base_Object();
+        $states = new XLite_Base();
         $states->name = 'States';
         $states->var  = 'state';
         $states->cond  = 'state';
@@ -501,7 +501,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
             $states->values[] = array("val"=>$state->get("state"), "code"=>$state->get("code"), "country"=>$country, "lit"=>( $lit ) ? 1 : 0);
         }
 
-        $cities = new XLite_Base_Object();
+        $cities = new XLite_Base();
         $cities->name = "Cities";
         $cities->var = "city";
         $cities->cond = "city";
@@ -515,7 +515,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
             unset($cities->values['']);
         }
 
-        $pm = new XLite_Base_Object();
+        $pm = new XLite_Base();
         $pm->name = "Payment method";
         $pm->var = "pm";
         $pm->cond = "payment method";
@@ -526,14 +526,14 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
             $pm->values[] = $method->get("name");
         }
         
-        $classes = new XLite_Base_Object();
+        $classes = new XLite_Base();
         $classes->name = "Product class, either new or existing";
         $classes->var = "pclass";
         $classes->cond = "product class";
         $classes->values = array_unique(array_merge(array("shipping service"), $this->taxes->getProductClasses()));
         array_multisort($classes->values);
 
-        $memberships = new XLite_Base_Object();
+        $memberships = new XLite_Base();
         $memberships->name = "User membership level";
         $memberships->var = "membership";
         $memberships->cond = "membership";
@@ -541,7 +541,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
         
         $memberships->values = array_merge($memberships->values, $this->config->Memberships->memberships);
 
-        $zips = new XLite_Base_Object();
+        $zips = new XLite_Base();
         $zips->name = "Zip codes/ranges (e.g. 43200-43300,55555)";
         $zips->var = "zip";
         $zips->cond = "zip";

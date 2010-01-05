@@ -135,13 +135,13 @@ class XLite_Model_Config extends XLite_Model_Abstract
     */
     function readConfig() // {{{
     {
-        $config = new XLite_Base_Object();
+        $config = new XLite_Base();
 		$row = new $this->configClass;
         $r = $row->iterate();
         while ($row->next($r)) {
             $category = $row->get("category");
             if (!isset($config->$category)) {
-                $config->$category = new XLite_Base_Object();
+                $config->$category = new XLite_Base();
             }
             $name = $row->get("name");
             if ($row->get("type") == "checkbox") {

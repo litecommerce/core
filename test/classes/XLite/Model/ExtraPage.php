@@ -56,7 +56,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Model_ExtraPage extends XLite_Base_Object
+class XLite_Model_ExtraPage extends XLite_Base
 {
     var $templatePrefix; // = "skins/$zone/en/";
     var $page; // a page identifier
@@ -167,7 +167,7 @@ class XLite_Model_ExtraPage extends XLite_Base_Object
                 break;
             case "menu":
                 $this->getCustomerLayout();
-                $template = new XLite_Base_Object();
+                $template = new XLite_Base();
                 $template->set("template", $this->getRelativeTemplatePath($this->menuTemplateDef));
                 $template->set("skinPath", $this->customerLayout->getPath());
                 $template->set("page_link", "cart.php?page=" . $this->page);

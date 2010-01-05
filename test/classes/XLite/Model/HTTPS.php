@@ -59,7 +59,7 @@ require_once LC_ROOT_DIR . 'Net' . LC_DS . 'URL.php';
 * @access public
 * @version $Id$
 */
-class XLite_Model_HTTPS extends XLite_Base_Object
+class XLite_Model_HTTPS extends XLite_Base
 {
     var $method = 'POST';
     var $url = '';

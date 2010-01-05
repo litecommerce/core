@@ -422,7 +422,7 @@ function opera_click() {
 						}
 
         				if ($item->is_first) {
-                            $template = new XLite_Base_Object();
+                            $template = new XLite_Base();
 
         					// Set Advanced options
         					$options = $scheme->get("options");
@@ -622,7 +622,7 @@ function opera_click() {
 				$scheme->$k = $v["value"];
 			}
 
-			$template = new XLite_Base_Object();
+			$template = new XLite_Base();
 			$template->set("scheme", $scheme);
 			$template->set("nodes", $nodes);
 

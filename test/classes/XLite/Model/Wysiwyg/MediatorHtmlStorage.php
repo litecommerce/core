@@ -38,7 +38,7 @@
 
 /* vim: set expandtab tabstop=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
 
-class XLite_Model_Wysiwyg_MediatorHtmlStorage extends XLite_Base_Object
+class XLite_Model_Wysiwyg_MediatorHtmlStorage extends XLite_Base
 {
     function save($file, $content)
     {

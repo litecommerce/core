@@ -55,7 +55,7 @@ define("MM_OK", 0);
 * @access public
 * @version $Id$
 */
-class XLite_Model_ModulesManager extends XLite_Base_Object
+class XLite_Model_ModulesManager extends XLite_Base
 {
     /**
     * Contains the available Modules list.

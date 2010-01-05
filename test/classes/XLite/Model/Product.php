@@ -445,7 +445,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
             $this->_taxRates = new XLite_Model_TaxRates();
         }
         if ($this->auth->is("logged")) {
-            $cart = func_get_instance("Cart");
+            $cart = XLite_Model_Cart::getInstance();
             if (!$cart->isEmpty()) {
             	$profile = $cart->get("profile");
     		} else {

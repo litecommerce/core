@@ -51,7 +51,7 @@ $GLOBALS['TEXT_QUALIFIERS'] = array("double_quote"=>'"',"single_quote"=>"'");
 * @access public
 * @version $Id$
 */
-class XLite_Model_Abstract extends XLite_Base_Object
+class XLite_Model_Abstract extends XLite_Base
 {
     // properties {{{
 

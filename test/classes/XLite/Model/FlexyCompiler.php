@@ -45,7 +45,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Model_FlexyCompiler extends XLite_Base_Object
+class XLite_Model_FlexyCompiler extends XLite_Base
 {
 	var $source; // Flexy template source code
 	var $phpcode;

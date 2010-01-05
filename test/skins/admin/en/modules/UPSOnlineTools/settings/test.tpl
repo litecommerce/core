@@ -23,8 +23,8 @@
         <tr>
             <td>State</td>
             <td>
-			    <widget class="XLite_View_StateSelect"field="destinationState" onChange="{if:useDynamicStates}javascript: changeState(this, 'destination');{end:}" fieldId="destination_state_select" value="{destinationState}">
-  			    <widget class="XLite_Validator_StateValidator"field="destinationState" countryField="destinationCountry">
+			    <widget class="XLite_View_StateSelect" field="destinationState" onChange="{if:useDynamicStates}javascript: changeState(this, 'destination');{end:}" fieldId="destination_state_select" value="{destinationState}">
+  			    <widget class="XLite_Validator_StateValidator" field="destinationState" countryField="destinationCountry">
             </td>
         </tr>
         <tr valign="middle" id="destination_custom_state_body">
@@ -33,7 +33,7 @@
         </tr>
         <tr>
             <td>Country</td>
-            <td><widget class="XLite_View_CountrySelect"field="destinationCountry" onChange="{if:useDynamicStates}javascript: populateStates(this,'destination_state');{end:}" fieldId="destination_country_select" value="{destinationCountry}"></td>
+            <td><widget class="XLite_View_CountrySelect" field="destinationCountry" onChange="{if:useDynamicStates}javascript: populateStates(this,'destination_state');{end:}" fieldId="destination_country_select" value="{destinationCountry}"></td>
         </tr>
         <tr><td>Zip/Postal code</td><td><input type="text" name="destinationZipCode" value="{destinationZipCode}"></td></tr>
         <tr><td>Weight ({weightUnit:h})</td><td><input type="text" name="pounds" size="10" value="{pounds:r}"></td></tr>

@@ -47,6 +47,8 @@
 */
 class XLite_View_TopCategories extends XLite_View
 {
+	protected $categories = null;
+
     function getCategories()
     {
         // get root categories

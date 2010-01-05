@@ -38,8 +38,8 @@
 		</tr>
         <tr>
             <td>Country:</td> 
-            <td IF="!destinationCountry=##"><widget class="XLite_View_CountrySelect"field="destinationCountry" value="{destinationCountry}"></td>
-            <td IF="destinationCountry=##"><widget class="XLite_View_CountrySelect"field="destinationCountry" value="{config.General.default_country}"></td>
+            <td IF="!destinationCountry=##"><widget class="XLite_View_CountrySelect" field="destinationCountry" value="{destinationCountry}"></td>
+            <td IF="destinationCountry=##"><widget class="XLite_View_CountrySelect" field="destinationCountry" value="{config.General.default_country}"></td>
         </tr>
         <tr>
             <td>Postal/ZIP Code:</td>

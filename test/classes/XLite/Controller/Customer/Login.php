@@ -58,7 +58,7 @@ class XLite_Controller_Customer_Login extends XLite_Controller_Abstract
             return;
         }   
         if (is_null($this->get("returnUrl"))) {
-            $cart = func_get_instance("Cart");
+            $cart = XLite_Model_Cart::getInstance();
             $url = $this->get("xlite.script");
             if (!$cart->get("empty")) {
                 $url .= "?target=cart";
@@ -66,7 +66,7 @@ class XLite_Controller_Customer_Login extends XLite_Controller_Abstract
             $this->set("returnUrl", $url);
         }
 
-		$cart = func_get_instance("Cart");
+		$cart = XLite_Model_Cart::getInstance();
 		$cart->set("profile_id", $this->profile->get("profile_id"));
 
 		$this->recalcCart();

@@ -136,7 +136,7 @@ class XLite_Module_GoogleCheckout_View_GoogleAltCheckout extends XLite_View
 	{
 		$cart = $this->get("dialog.cart");
 		if (is_null($cart) || !is_object($cart)) {
-			$cart = func_get_instance("Cart");
+			$cart = XLite_Model_Cart::getInstance();
 		}
 
 		return $cart->isGoogleAllowPay();

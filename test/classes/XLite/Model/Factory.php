@@ -44,7 +44,7 @@
 * @package Kernel
 * @version $Id$
 */
-class XLite_Model_Factory extends XLite_Base_Object
+class XLite_Model_Factory extends XLite_Base
 {
     function get($name)
     {

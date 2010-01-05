@@ -7,12 +7,12 @@
 		{if:xlite.gdlib_enabled}
 		<div id="browse_smallimage_section" {*style='display: none;'*}>
 		<br>
-		<widget class="XLite_View_ImageUpload"field="smallimage" actionName="small_icon" formName="add_modify_form" object="{category}">
+		<widget class="XLite_View_ImageUpload" field="smallimage" actionName="small_icon" formName="add_modify_form" object="{category}">
 		</div>
 		{else:}
 		<font class="ErrorMessage" IF="!xlite.gdlib_enabled">&nbsp;GDlib is disabled or its version is lower than 2.0.</font>
 		<p>
-		<widget class="XLite_View_ImageUpload"field="smallimage" actionName="small_icon" formName="add_modify_form" object="{category}">
+		<widget class="XLite_View_ImageUpload" field="smallimage" actionName="small_icon" formName="add_modify_form" object="{category}">
 		{end:}
 		</div>
 	</td>

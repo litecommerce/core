@@ -1,4 +1,4 @@
-<widget class="XLite_Module_GiftCertificates_View_AddStatesInfo"/>
+<widget class="XLite_Module_GiftCertificates_View_AddStatesInfo" />
 
 {* Add gift certificate page *}
 <script language="JavaScript1.2">
@@ -72,14 +72,14 @@ The gift certificate will include the sender's name, the recipient's name and a 
 <td align="right">From</td>
 <td><font class="Star">*</font></td>
 <td><input type="text" name="purchaser" size="32" value="{purchaser}"></td>
-<td>&nbsp;<widget class="XLite_Validator_RequiredValidator"field="purchaser"></td>
+<td>&nbsp;<widget class="XLite_Validator_RequiredValidator" field="purchaser"></td>
 </tr>
 
 <tr>
 <td align="right">To</td>
 <td><font class="Star">*</font></td>
 <td><input type="text" name="recipient" size="32" value="{recipient:r}"> </td>
-<td>&nbsp;<widget class="XLite_Validator_RequiredValidator"field="recipient"></td>
+<td>&nbsp;<widget class="XLite_Validator_RequiredValidator" field="recipient"></td>
 </tr>
 
 <tr>
@@ -105,7 +105,7 @@ Specify the amount in currency.<br><br>
 <td><input type="text" name="amount" size="6" value="{amount}">
 {price_format(config.GiftCertificates.minAmount):h} - {price_format(config.GiftCertificates.maxAmount):h}
 </td>
-<td>&nbsp;<widget class="XLite_Validator_RangeValidator"field="amount" min="{config.GiftCertificates.minAmount}" max="{config.GiftCertificates.maxAmount}"></td>
+<td>&nbsp;<widget class="XLite_Validator_RangeValidator" field="amount" min="{config.GiftCertificates.minAmount}" max="{config.GiftCertificates.maxAmount}"></td>
 </tr>
 
 <tr>
@@ -239,14 +239,14 @@ Specify the amount in currency.<br><br>
 <td><font class="Star">*</font></td>
 {if:versionUpper2_1}
     <td>
-        <widget class="XLite_View_StateSelect"field="recipient_state" onChange="javascript: changeState(this, 'recipient');" fieldId="recipient_state_select">
+        <widget class="XLite_View_StateSelect" field="recipient_state" onChange="javascript: changeState(this, 'recipient');" fieldId="recipient_state_select">
     </td>
     <td>
-        <widget class="XLite_Validator_StateValidator"field="recipient_state" countryField="recipient_country">
+        <widget class="XLite_Validator_StateValidator" field="recipient_state" countryField="recipient_country">
     </td>
 {else:}
     <td>
-        <widget class="XLite_View_StateSelect"field="recipient_state" fieldId="recipient_state_select">
+        <widget class="XLite_View_StateSelect" field="recipient_state" fieldId="recipient_state_select">
     </td>
 {end:}
 </tr>
@@ -268,14 +268,14 @@ Specify the amount in currency.<br><br>
 <td><font class="Star">*</font></td>
 {if:versionUpper2_1}
 <td>
-    <widget class="XLite_View_CountrySelect"field="recipient_country" onChange="javascript: populateStates(this,'recipient_state');" fieldId="recipient_country_select">
+    <widget class="XLite_View_CountrySelect" field="recipient_country" onChange="javascript: populateStates(this,'recipient_state');" fieldId="recipient_country_select">
 </td>
 <td>
-    <widget class="XLite_Validator_RequiredValidator"field="recipient_country">
+    <widget class="XLite_Validator_RequiredValidator" field="recipient_country">
 </td>
 {else:}
 <td>
-    <widget class="XLite_View_CountrySelect"field="recipient_country"  fieldId="recipient_country_select">
+    <widget class="XLite_View_CountrySelect" field="recipient_country"  fieldId="recipient_country_select">
 </td>
 {end:}
 </tr>
@@ -298,7 +298,7 @@ Specify the amount in currency.<br><br>
 <tr>
 	<td align="right">Expiration date</td>
 	<td><font class="Star">*</font></td>
-	<td><widget class="XLite_View_Date"field="expiration_date" value="{expiration_date}"></td>
+	<td><widget class="XLite_View_Date" field="expiration_date" value="{expiration_date}"></td>
 	<td>&nbsp;</td>
 </tr>
 

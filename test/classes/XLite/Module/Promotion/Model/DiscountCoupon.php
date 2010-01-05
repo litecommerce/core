@@ -79,7 +79,7 @@ class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_Abstract
 			break;
 
 			case "product":
-				$cart = func_get_instance("Cart");
+				$cart = XLite_Model_Cart::getInstance();
 				foreach($cart->get("items") as $item) {
 					if ($item->get("product_id") == $this->get("product_id")) {
 						return true;
@@ -92,7 +92,7 @@ class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_Abstract
         		require_once "modules/Promotion/encoded.php";
 
 				$category = $this->get("category");
-				$cart = func_get_instance("Cart");
+				$cart = XLite_Model_Cart::getInstance();
 				foreach($cart->get("items") as $item) {
 					if (func_in_category_recursive($item->get("product"), $category)) {
 						return true;

@@ -49,7 +49,7 @@ class XLite_Module_PayPal_Controller_Customer_Ppcheckout extends XLite_Controlle
     function init()
     {
     	if ($_REQUEST["target"] == "ppcheckout") {
-    		$this->registerForm = new XLite_Base_Object();
+    		$this->registerForm = new XLite_Base();
     	}
 		
     	parent::init();

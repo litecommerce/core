@@ -38,7 +38,7 @@
 
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
-class XLite_Model_ImageClass extends XLite_Base_Object
+class XLite_Model_ImageClass extends XLite_Base
 {
     /**
     * Create an image object based on the image class.

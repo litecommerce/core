@@ -32,7 +32,7 @@ If you already have an account, you can authenticate yourself by filling in the 
         <input type="hidden" name="target" value="login">
         <input type="hidden" name="action" value="login">
         <input IF="returnUrl" type="hidden" name="returnUrl" value="{returnUrl}"/>
-        <widget class="XLite_View_Submit"href="javascript: document.auth_form.submit()">
+        <widget class="XLite_View_Submit" href="javascript: document.auth_form.submit()">
     </td>
 </tr>
 </table>

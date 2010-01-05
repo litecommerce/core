@@ -61,7 +61,7 @@ class XLite_Module_Promotion_Model_Cart extends XLite_Model_Cart
 
     function constructor($id = null)
     {
-        $obj = new XLite_Base_Object();
+        $obj = new XLite_Base();
         $obj->logger->log("->Cart::constructor()");
         $this->doNotCallCartChanged = true;
         parent::constructor($id);

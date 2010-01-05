@@ -49,7 +49,7 @@ class XLite_Module_eSelect_Controller_Customer_Eselect extends XLite_Controller_
 	function init()
 	{
 		if (!is_object($this->registerForm) || is_null($this->registerForm)) {
-			$this->registerForm = new XLite_Base_Object();
+			$this->registerForm = new XLite_Base();
 		}
 
 		parent::init();

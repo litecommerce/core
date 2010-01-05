@@ -1,8 +1,18 @@
 <?php
 
-abstract class XLite_Base_Abstract
+class XLite_Base
 {
-	protected function __construct()
+	/**
+     * Array of instances for all derived classes
+     *
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0
+     */
+    protected static $instances = array();
+
+	public function __construct()
 	{
 		// Application
         global $xlite;
@@ -18,17 +28,36 @@ abstract class XLite_Base_Abstract
             $xlite = true;
         }
 
-		if (function_exists('memory_get_usage')) {
-            $GLOBALS['memory_usage'] = max(isset($GLOBALS['memory_usage']) ? $GLOBALS['memory_usage'] : 0, memory_get_usage()) / 1024 / 1024; // MB used
-        }
+		// MB used
+		$GLOBALS['memory_usage'] = max(isset($GLOBALS['memory_usage']) ? $GLOBALS['memory_usage'] : 0, memory_get_usage()) / 1024 / 1024;
 	}
 
-	public function _die($message)
+	protected function _die($message)
 	{
 		// TODO - add logging
 
 		die ($message);
 	}
+
+	/**
+     * Return pointer to the single instance of current class
+     *
+	 * @param string $className name of derived class
+	 *
+     * @return XLite_Base_Singleton
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0
+     */
+    protected static function _getInstance($className)
+    {
+        // Create new instance of the object (if it is not already created)
+        if (!isset(self::$instances[$className])) {
+            self::$instances[$className] = new $className();
+        }
+
+        return self::$instances[$className];
+    }
 
 	/**
     * Returns boolean property value named $name.

@@ -38,12 +38,12 @@
 	</table>
 	</td>
 	<td> 
-        <widget class="XLite_View_CategorySelect"formField="category_id" selectedCategory="{product.categories.0.category_id}">
-		<widget class="XLite_Validator_RequiredValidator"field="category_id">
+        <widget class="XLite_View_CategorySelect" formField="category_id" selectedCategory="{product.categories.0.category_id}">
+		<widget class="XLite_Validator_RequiredValidator" field="category_id">
     </td>
 </tr>
 
-<widget module="MultiCategories" class="XLite_View_CategorySelect"template="modules/MultiCategories/additionalCategories.tpl" product="{product}" allOption formField="category_id">
+<widget module="MultiCategories" class="XLite_View_CategorySelect" template="modules/MultiCategories/additionalCategories.tpl" product="{product}" allOption formField="category_id">
 
 <tr>
   <td>
@@ -131,7 +131,7 @@
 <img IF="product.hasThumbnail()" src="{product.thumbnailURL:h}" border=0></img>
 <br>
 <span IF="thumbnail_read_only" class="ErrorMessage">WARNING! File cannot be uploaded!<br>Please check and correct file permissions.<br></span>
-<widget class="XLite_View_ImageUpload"field="thumbnail" actionName="images" formName="modify_form" object="{product}">
+<widget class="XLite_View_ImageUpload" field="thumbnail" actionName="images" formName="modify_form" object="{product}">
 </td>
 </tr>
 
@@ -141,7 +141,7 @@
 <img IF="product.hasImage()" src="{product.imageURL:h}" border=0></img>
 <br>
 <span IF="image_read_only" class="ErrorMessage">WARNING! File cannot be uploaded!<br>Please check and correct file permissions.<br></span>
-<widget class="XLite_View_ImageUpload"field="image" actionName="images" formName="modify_form" object="{product}">
+<widget class="XLite_View_ImageUpload" field="image" actionName="images" formName="modify_form" object="{product}">
 </td>
 </tr>
 
@@ -179,7 +179,7 @@
 
 {*extraFields*}
 <widget module="GoogleCheckout" template="modules/GoogleCheckout/product/info.tpl">
-<widget class="XLite_View_ExtraFields"template="product/extra_fields.tpl" product="{product}">
+<widget class="XLite_View_ExtraFields" template="product/extra_fields.tpl" product="{product}">
 
 <widget module="WholesaleTrading" template="modules/WholesaleTrading/memberships/membership_product.tpl">
 <widget module="ProductAdviser" template="modules/ProductAdviser/product.tpl">

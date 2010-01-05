@@ -62,7 +62,7 @@ define('TAX_TOLOWERCASE', 1);
 * @access public
 * @version $Id$
 */
-class XLite_Model_TaxRates extends XLite_Base_Object
+class XLite_Model_TaxRates extends XLite_Base
 {
     var $_rates;
     /**

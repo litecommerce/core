@@ -693,7 +693,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_Abstract
 			return $bonusProducts;
 		}
 		$products = array();
-		$cart = func_get_instance("Cart");
+		$cart = XLite_Model_Cart::getInstance();
 		foreach ($this->get("bonusPrices") as $bonusPrice) {
 			if (!is_null($bonusPrice->get("product"))) {
 				$product = $bonusPrice->get("product");
@@ -740,7 +740,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_Abstract
 			}
 		}
 
-		$cart = func_get_instance("Cart");
+		$cart = XLite_Model_Cart::getInstance();
 		if (!$cart->isEmpty()) {
         	$excluded_categories = array();
 			foreach ($cart->getItems() as $cart_item) {

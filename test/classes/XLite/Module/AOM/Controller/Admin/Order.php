@@ -704,7 +704,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 		$order = $this->get("cloneOrder");
 		$profile = $order->get("profile");
 
-		$cart = func_get_instance("Cart");
+		$cart = XLite_Model_Cart::getInstance();
         $cart->clear();
         $cart->set("order_id", $order->get("order_id"));
 
@@ -746,7 +746,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 	    $order->set("discountCoupon", "");
 		$profile = $order->get("profile");
 
-		$cart = func_get_instance("Cart");
+		$cart = XLite_Model_Cart::getInstance();
         $cart->clear();
         $cart->set("order_id", $order->get("order_id"));
 
@@ -1055,7 +1055,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 	function aom_cart_instance()
 	{
 		$this->xlite->AOM_skip_calcTotal = true;
-		$this->_cart = func_get_instance("Cart");
+		$this->_cart = XLite_Model_Cart::getInstance();
 		$this->xlite->AOM_skip_calcTotal = false;
 	}
 

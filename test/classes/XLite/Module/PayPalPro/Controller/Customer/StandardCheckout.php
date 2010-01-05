@@ -52,7 +52,7 @@ class XLite_Module_PayPalPro_Controller_Customer_StandardCheckout extends Dialog
 	{
 		parent::constructor();
 		if (($_REQUEST["target"] == "checkout") && ($_REQUEST["paypal_result"] == "cancel")) {
-			$this->cart = func_get_instance("Cart");
+			$this->cart = XLite_Model_Cart::getInstance();
 			if ($this->cart->get("status") == "Q") {
 				// revert back to I if the payment is cancelled at the PayPal side
 				$this->cart->set("status", "I");
@@ -64,7 +64,7 @@ class XLite_Module_PayPalPro_Controller_Customer_StandardCheckout extends Dialog
 	function init() // {{{
 	{
     	if ($_REQUEST["target"] == "standard_checkout") {
-			$this->registerForm = new XLite_Base_Object();
+			$this->registerForm = new XLite_Base();
 		}
 		parent::init();									  
 	} // }}}

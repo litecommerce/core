@@ -49,7 +49,7 @@ define("STYLE", 2);
 * @access public
 * @version $Id$
 */
-class XLite_Model_CssEditor extends XLite_Base_Object
+class XLite_Model_CssEditor extends XLite_Base
 {
     var $cssFile;
     var $style = array();

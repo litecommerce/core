@@ -45,7 +45,7 @@
 * @version $Id$
 * @access public
 */
-class XLite extends XLite_Base_Singleton
+class XLite extends XLite_Base implements XLite_Base_ISingleton
 {
     protected $adminZone = false;
 
@@ -101,19 +101,9 @@ class XLite extends XLite_Base_Singleton
 		return $options;
 	}
 
-	/**
-     * Return pointer to the single instance of current class
-     *
-     * @param string $className name of derived class
-     *
-     * @return XLite
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0
-     */
-    public static function getInstance($className = __CLASS__)
+	public static function getInstance()
     {
-        return parent::getInstance(__CLASS__);
+        return self::_getInstance(__CLASS__);
     }
 
 	public function getOptions($names = null)

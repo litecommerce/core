@@ -21,7 +21,7 @@ function setHeaderChecked()
 // -->
 </script>
 
-<widget class="XLite_View_Pager"data="{orders}" name="pager" itemsPerPage="{config.General.orders_per_page}">
+<widget class="XLite_View_Pager" data="{orders}" name="pager" itemsPerPage="{config.General.orders_per_page}">
 
 <br>
 <form name="order_form" action="admin.php" method="POST">

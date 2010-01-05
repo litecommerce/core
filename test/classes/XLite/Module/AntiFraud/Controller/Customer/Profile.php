@@ -51,7 +51,7 @@ class XLite_Module_AntiFraud_Controller_Customer_Profile extends XLite_Controlle
     	parent::action_modify();
 
         if ($this->registerForm->is("valid")) {
-			$cart = func_get_instance("Cart");
+			$cart = XLite_Model_Cart::getInstance();
 			if (!$cart->isEmpty()) {
 				$cart->set("profile_id", $this->profileForm->profile->get("profile_id"));
 				$this->set("details.af_result", null);

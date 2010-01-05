@@ -29,7 +29,7 @@ See also: <br>
 <font IF="messages" class="AdminHead">Existing messages</font>
 <br><br>
 
-<widget class="XLite_View_Pager"data="{messages}" name="pager">
+<widget class="XLite_View_Pager" data="{messages}" name="pager">
 
 <table IF="pager.pageData" border=0 cellpadding=5 cellspacing=1 width=90%>
 <tr class=TableHead>
@@ -79,7 +79,7 @@ See also: <br>
     <td width=8 class=Star>*</td>
     <td width="100%">
         <input type=text name=subject {if:message.subject}value="{message.subject:r}"{else:}value="{subject:r}"{end:} size=80>
-        &nbsp;<widget class="XLite_Validator_RequiredValidator"field="subject" visible="{!test}">
+        &nbsp;<widget class="XLite_Validator_RequiredValidator" field="subject" visible="{!test}">
     </td>
 </tr>
 <tr valign=top>

@@ -110,7 +110,7 @@
     No Gift Certificates found on your query.
 </span>
 <span IF="giftCertificates">
-	<widget class="XLite_View_Pager"data="{giftCertificates}" name="pager">
+	<widget class="XLite_View_Pager" data="{giftCertificates}" name="pager">
 	<form action="admin.php" method="POST" name="add_form">
 	<input FOREACH="dialog.allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
     <input type="hidden" name="mode" value="gc">

@@ -55,21 +55,11 @@ $_reReadProfiles = false;
 * @access public
 * @version $Id$
 */
-class XLite_Model_Auth extends XLite_Base_Singleton
+class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
 {
-	/**
-     * Return pointer to the single instance of current class
-     *
-     * @param string $className name of derived class
-     *
-     * @return XLite_Base_Singleton
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0
-     */
-    public static function getInstance($className = __CLASS__)
+	public static function getInstance()
     {
-        return parent::getInstance(__CLASS__);
+        return self::_getInstance(__CLASS__);
     }
 
     function _reReadProfiles($newValue = null)  // {{{
@@ -225,7 +215,7 @@ class XLite_Model_Auth extends XLite_Base_Singleton
         $this->copyBillingInfo($profile);
 
         // update current shopping cart/order data
-        $cart = func_get_instance("Cart");
+        $cart = XLite_Model_Cart::getInstance();
         if ($cart->get("profile.order_id")) {
             $cart->call("profile.modifyProperties", $_REQUEST);
             $this->copyBillingInfo($cart->get("profile"));

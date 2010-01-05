@@ -34,7 +34,7 @@ If you are a registered customer, please <a href="cart.php?target=profile&amp;mo
         <input type="text" name="login" value="{login:r}" size="32" maxlength="128">
     </td>
     <td>
-        <widget class="XLite_Validator_EmailValidator"field="login">
+        <widget class="XLite_Validator_EmailValidator" field="login">
     </td>
 </tr>
 <tr valign="middle" IF="allowAnonymous">
@@ -51,7 +51,7 @@ If you are a registered customer, please <a href="cart.php?target=profile&amp;mo
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator"field="password" visible="{!allowAnonymous}">
+        <widget class="XLite_Validator_RequiredValidator" field="password" visible="{!allowAnonymous}">
     </td>
 </tr>
 <tr valign="middle">
@@ -62,8 +62,8 @@ If you are a registered customer, please <a href="cart.php?target=profile&amp;mo
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator"field="confirm_password" visible="{!allowAnonymous}">
-        <widget class="XLite_Validator_PasswordValidator"field="confirm_password" passwordField="password" visible="{!allowAnonymous}">
+        <widget class="XLite_Validator_RequiredValidator" field="confirm_password" visible="{!allowAnonymous}">
+        <widget class="XLite_Validator_PasswordValidator" field="confirm_password" passwordField="password" visible="{!allowAnonymous}">
     </td>
 </tr>
 <tr>
@@ -95,7 +95,7 @@ If you are a registered customer, please <a href="cart.php?target=profile&amp;mo
         <input type="text" name="billing_firstname" value="{billing_firstname:r}" size="32" maxlength="128">
     </td>
     <td>
-        <widget class="XLite_Validator_RequiredValidator"field="billing_firstname">
+        <widget class="XLite_Validator_RequiredValidator" field="billing_firstname">
     </td>
 </tr>
 <tr valign="middle">
@@ -105,7 +105,7 @@ If you are a registered customer, please <a href="cart.php?target=profile&amp;mo
         <input type="text" name="billing_lastname" value="{billing_lastname:r}" size="32" maxlength="128">
     </td>
     <td align="left">
-        <widget class="XLite_Validator_RequiredValidator"field="billing_lastname">
+        <widget class="XLite_Validator_RequiredValidator" field="billing_lastname">
     </td>
 </tr>
 <tr valign="middle">
@@ -124,7 +124,7 @@ If you are a registered customer, please <a href="cart.php?target=profile&amp;mo
         <input type="text" name="billing_phone" value="{billing_phone:r}" size="32" maxlength="32">
     </td>
     <td>
-        <widget class="XLite_Validator_RequiredValidator"field="billing_phone">
+        <widget class="XLite_Validator_RequiredValidator" field="billing_phone">
     </td>
 </tr>
 <tr valign="middle">
@@ -143,7 +143,7 @@ If you are a registered customer, please <a href="cart.php?target=profile&amp;mo
         <input type="text" name="billing_address" value="{billing_address:r}" size="32" maxlength="64">
     </td>
     <td>
-        <widget class="XLite_Validator_RequiredValidator"field="billing_address">
+        <widget class="XLite_Validator_RequiredValidator" field="billing_address">
     </td>
 </tr>
 <tr valign="middle">
@@ -153,18 +153,18 @@ If you are a registered customer, please <a href="cart.php?target=profile&amp;mo
         <input type="text" name="billing_city" value="{billing_city:r}" size="32" maxlength="64">
     </td>
     <td>
-        <widget class="XLite_Validator_RequiredValidator"field="billing_city">
+        <widget class="XLite_Validator_RequiredValidator" field="billing_city">
     </td>
 </tr>
 <tr valign="middle">
     <td align="right">State</td>
     <td><font class="Star">*</font></td>
     <td>
-		<widget class="XLite_View_StateSelect"field="billing_state" onChange="javascript: changeState(this, 'billing');" fieldId="billing_state_select">
+		<widget class="XLite_View_StateSelect" field="billing_state" onChange="javascript: changeState(this, 'billing');" fieldId="billing_state_select">
     </td>
     <td>
-        <widget class="XLite_Validator_RequiredValidator"field="billing_state">
-        <widget class="XLite_Validator_StateValidator"field="billing_state" countryField="billing_country">
+        <widget class="XLite_Validator_RequiredValidator" field="billing_state">
+        <widget class="XLite_Validator_StateValidator" field="billing_state" countryField="billing_country">
     </td>
 </tr>
 <tr valign="middle" id="billing_custom_state_body">
@@ -180,10 +180,10 @@ If you are a registered customer, please <a href="cart.php?target=profile&amp;mo
     <td align="right">Country</td>
     <td><font class="Star">*</font></td>
     <td>
-		<widget class="XLite_View_CountrySelect"field="billing_country" onChange="javascript: populateStates(this,'billing');" fieldId="billing_country_select">
+		<widget class="XLite_View_CountrySelect" field="billing_country" onChange="javascript: populateStates(this,'billing');" fieldId="billing_country_select">
     </td>
     <td>
-        <widget class="XLite_Validator_RequiredValidator"field="billing_country">
+        <widget class="XLite_Validator_RequiredValidator" field="billing_country">
     </td>
 </tr>
 <tr valign="middle">
@@ -193,7 +193,7 @@ If you are a registered customer, please <a href="cart.php?target=profile&amp;mo
         <input type="text" name="billing_zipcode" value="{billing_zipcode:r}" size="32" maxlength="32">
     </td>
     <td>
-        <widget class="XLite_Validator_RequiredValidator"field="billing_zipcode">
+        <widget class="XLite_Validator_RequiredValidator" field="billing_zipcode">
     </td>
 </tr>
 
@@ -204,7 +204,7 @@ If you are a registered customer, please <a href="cart.php?target=profile&amp;mo
 <!-- ********************************* SHIPPING ADDRESS ********************************* -->
 
 <tr valign="middle">
-    <td colspan="4"><b>Shipping Address (leave empty if same as billing address)</b><br><hr size="1" noshade><widget class="XLite_View_Button"label="Copy Billing Info" href="javascript: copyBillingInfo(document.registration_form);"></td>
+    <td colspan="4"><b>Shipping Address (leave empty if same as billing address)</b><br><hr size="1" noshade><widget class="XLite_View_Button" label="Copy Billing Info" href="javascript: copyBillingInfo(document.registration_form);"></td>
 </tr>
 <tr valign="middle">
     <td align="right">Title</td>
@@ -286,10 +286,10 @@ If you are a registered customer, please <a href="cart.php?target=profile&amp;mo
     <td align="right">State</td>
     <td><font class="Star">*</font></td>
     <td>
-		<widget class="XLite_View_StateSelect"field="shipping_state" value="{shipping_state}" onChange="javascript: changeState(this, 'shipping');" fieldId="shipping_state_select">
+		<widget class="XLite_View_StateSelect" field="shipping_state" value="{shipping_state}" onChange="javascript: changeState(this, 'shipping');" fieldId="shipping_state_select">
     </td>
     <td>
-        <widget class="XLite_Validator_StateValidator"field="shipping_state" countryField="shipping_country">
+        <widget class="XLite_Validator_StateValidator" field="shipping_state" countryField="shipping_country">
     </td>
 </tr>
 <tr valign="middle" id="shipping_custom_state_body">
@@ -305,7 +305,7 @@ If you are a registered customer, please <a href="cart.php?target=profile&amp;mo
     <td align="right">Country</td>
     <td><font class="Star">*</font></td>
     <td>
-		<widget class="XLite_View_CountrySelect"field="shipping_country" onChange="javascript: populateStates(this,'shipping');" fieldId="shipping_country_select">
+		<widget class="XLite_View_CountrySelect" field="shipping_country" onChange="javascript: populateStates(this,'shipping');" fieldId="shipping_country_select">
     </td>
     <td>
     </td>
@@ -332,7 +332,7 @@ If you are a registered customer, please <a href="cart.php?target=profile&amp;mo
 <tr valign="middle">
     <td align="right">Membership</td>
     <td>&nbsp;</td>
-    <td><widget class="XLite_View_MembershipSelect"field="pending_membership">
+    <td><widget class="XLite_View_MembershipSelect" field="pending_membership">
 	</td>
 </tr>
 </tbody>
@@ -355,7 +355,7 @@ If you are a registered customer, please <a href="cart.php?target=profile&amp;mo
         <br>
         <input type="hidden" foreach="dialog.allparams,param,v" name="{param}" value="{v}"/>
         <input type="hidden" name="action" value="{mode}">
-        <widget class="XLite_View_Submit"href="javascript: document.registration_form.submit()">
+        <widget class="XLite_View_Submit" href="javascript: document.registration_form.submit()">
         <br>
     </td>
 </tr>

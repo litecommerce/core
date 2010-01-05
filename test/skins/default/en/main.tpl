@@ -148,9 +148,9 @@
 <widget module="FlyoutCategories" template="modules/FlyoutCategories/main_side.tpl">
 </div>
 <div IF="!xlite.FlyoutCategoriesEnabled">
-<widget class="XLite_View_TopCategories"template="common/sidebar_box.tpl" head="Categories" dir="categories">
+<widget class="XLite_View_TopCategories" template="common/sidebar_box.tpl" head="Categories" dir="categories">
 </div>
-<widget module="Bestsellers" class="XLite_Module_Bestsellers_View_Bestsellers"template="common/sidebar_box.tpl" head="Bestsellers" dir="modules/Bestsellers/menu" visible="{config.Bestsellers.bestsellers_menu}">
+<widget module="Bestsellers" class="XLite_Module_Bestsellers_View_Bestsellers" template="common/sidebar_box.tpl" head="Bestsellers" dir="modules/Bestsellers/menu" visible="{config.Bestsellers.bestsellers_menu}">
 <widget module="GiftCertificates" template="common/sidebar_box.tpl" head="Gift certificates" dir="modules/GiftCertificates/menu">
 <widget module="Affiliate" template="common/sidebar_box.tpl" head="Affiliate" dir="modules/Affiliate/menu">
 <widget template="common/sidebar_box.tpl" head="Help" dir="help">
@@ -162,7 +162,7 @@
     <TD valign="top" width="100%"><BR>
 
 <!-- [center] -->
-<widget module="GoogleCheckout" class="XLite_Module_GoogleCheckout_View_GoogleAltCheckout">
+<widget module="GoogleCheckout" class="XLite_Module_GoogleCheckout_View_GoogleAltCheckout" >
 
 <!-- [main] {{{ -->
 <widget module="InventoryTracking" target="cart" mode="exceeding" template="common/dialog.tpl" body="modules/InventoryTracking/exceeding.tpl" head="InventoryTracking Notification">
@@ -203,9 +203,9 @@
 <widget target="profile" mode="login" template="common/dialog.tpl" head="Authentication" body="authentication.tpl">
 <widget target="profile" mode="account" template="common/dialog.tpl" head="Your account" body="account.tpl">
 <widget target="login" template="common/dialog.tpl" body="authentication.tpl" head="Authentication">
-<widget target="profile" mode="register" class="XLite_View_RegisterForm"template="common/dialog.tpl" head="New customer" body="register_form.tpl" name="registerForm" IF="!showAV"/>
+<widget target="profile" mode="register" class="XLite_View_RegisterForm" template="common/dialog.tpl" head="New customer" body="register_form.tpl" name="registerForm" IF="!showAV"/>
 <widget target="profile" mode="success" template="common/dialog.tpl" head="Registration complete" body="register_success.tpl">
-<widget target="profile" mode="modify" class="XLite_View_RegisterForm"template="common/dialog.tpl" head="Modify profile" body="profile.tpl" name="profileForm" IF="!showAV"/>
+<widget target="profile" mode="modify" class="XLite_View_RegisterForm" template="common/dialog.tpl" head="Modify profile" body="profile.tpl" name="profileForm" IF="!showAV"/>
 <widget target="profile" mode="delete" template="common/dialog.tpl" head="Delete profile - Confirmation" body="delete_profile.tpl">
 <widget module="UPSOnlineTools" template="modules/UPSOnlineTools/main.tpl">
 <!-- [/profile] }}} -->
@@ -213,7 +213,7 @@
 <!-- [checkout] {{{ -->
 <widget target="checkout" mode="register,paymentMethod,details" template="common/dialog.tpl" body="checkout/checkout.tpl" head="Shopping cart" IF="!showAV"/>
 <widget module="PayPalPro" target="checkout" mode="register" template="common/dialog.tpl" body="modules/PayPalPro/retrieve_profile.tpl" head="Make checkout easier with PayPal Website Pro" visible="{xlite.PayPalProExpressEnabled}">
-<widget target="checkout" mode="register" class="XLite_View_RegisterForm"template="common/dialog.tpl" body="register_form.tpl" head="Customer Information" name="registerForm" allowAnonymous="{config.General.enable_anon_checkout}" IF="!showAV"/>
+<widget target="checkout" mode="register" class="XLite_View_RegisterForm" template="common/dialog.tpl" body="register_form.tpl" head="Customer Information" name="registerForm" allowAnonymous="{config.General.enable_anon_checkout}" IF="!showAV"/>
 <widget target="checkout" mode="paymentMethod" template="common/dialog.tpl" body="payment_method.tpl" head="Payment method">
 <widget target="checkout" mode="details" template="common/dialog.tpl" body="checkout/details_dialog.tpl" head="{cart.paymentMethod.name}">
 <widget target="checkoutSuccess" template="checkout/success.tpl">
@@ -231,7 +231,7 @@
 
 <!-- [modules] {{{ -->
 <widget module="DetailedImages" target="product" template="common/dialog.tpl" body="modules/DetailedImages/body.tpl" head="Detailed Images" visible="{product.detailedImages}">
-<widget module="Bestsellers" target="main,category" mode="" class="XLite_Module_Bestsellers_View_Bestsellers"template="common/dialog.tpl" body="modules/Bestsellers/bestsellers.tpl" head="Bestsellers" visible="{!config.Bestsellers.bestsellers_menu}" name="bestsellerswidget">
+<widget module="Bestsellers" target="main,category" mode="" class="XLite_Module_Bestsellers_View_Bestsellers" template="common/dialog.tpl" body="modules/Bestsellers/bestsellers.tpl" head="Bestsellers" visible="{!config.Bestsellers.bestsellers_menu}" name="bestsellerswidget">
 <widget module="FeaturedProducts" target="main,category" mode="" template="common/dialog.tpl" body="{config.FeaturedProducts.featured_products_look}" head="Featured products" visible="{category.featuredProducts&!page}">
 <widget module="GiftCertificates" target="add_gift_certificate" template="common/dialog.tpl" body="modules/GiftCertificates/add_gift_certificate.tpl" head="Add gift certificate">
 <widget module="GiftCertificates" target="gift_certificate_ecards" template="common/dialog.tpl" body="modules/GiftCertificates/select_ecard.tpl" head="Select e-Card">
@@ -263,8 +263,8 @@
 <widget template="common/sidebar_box.tpl" dir="profile" name="profileWidget" head="Your profile" visible="{auth.logged}">
 <widget template="common/sidebar_box.tpl" dir="authentication" name="authenticationWidget" head="Authentication" visible="{auth.logged}">
 <widget module="Newsletters" template="common/sidebar_box.tpl" dir="modules/Newsletters/menu_news" head="News">
-<widget module="ProductAdviser" target="main,category,product,cart,RecentlyViewed" class="XLite_Module_ProductAdviser_View_CNewArrivalsProducts"template="common/sidebar_box.tpl" head="New Arrivals" dir="modules/ProductAdviser/NewArrivals">
-<widget module="ProductAdviser" target="main,category,product,cart" class="XLite_Module_ProductAdviser_View_CRecentliesProducts"template="common/sidebar_box.tpl" head="Recently viewed" dir="modules/ProductAdviser/RecentlyViewed">
+<widget module="ProductAdviser" target="main,category,product,cart,RecentlyViewed" class="XLite_Module_ProductAdviser_View_CNewArrivalsProducts" template="common/sidebar_box.tpl" head="New Arrivals" dir="modules/ProductAdviser/NewArrivals">
+<widget module="ProductAdviser" target="main,category,product,cart" class="XLite_Module_ProductAdviser_View_CRecentliesProducts" template="common/sidebar_box.tpl" head="Recently viewed" dir="modules/ProductAdviser/RecentlyViewed">
 <!-- [/right] -->
     </TD>
     <TD width="4"><IMG src="images/spacer.gif" width="4" height="1" alt=""></TD>

@@ -46,7 +46,7 @@
 * @version $Id$
 */
 
-class XLite_Model_ImageEditor_ImageEditor extends XLite_Base_Object
+class XLite_Model_ImageEditor_ImageEditor extends XLite_Base
 {
     var $images      = array();
     var $images_path;

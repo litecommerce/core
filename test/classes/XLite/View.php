@@ -49,6 +49,8 @@ class XLite_View extends XLite_View_Abstract
     var $params = array();
     var $components = array();
     var $valid = true;
+
+	protected $returnUrl = null;
     
     function init()
     {

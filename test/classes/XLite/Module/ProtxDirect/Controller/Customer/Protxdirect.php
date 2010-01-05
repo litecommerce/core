@@ -49,7 +49,7 @@ class XLite_Module_ProtxDirect_Controller_Customer_Protxdirect extends XLite_Con
 	function init()
 	{
 		if (!is_object($this->registerForm) || is_null($this->registerForm)) {
-			$this->registerForm = new XLite_Base_Object();
+			$this->registerForm = new XLite_Base();
 		}
 		parent::init();
 		

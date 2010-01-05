@@ -60,7 +60,7 @@ class XLite_Module_GiftCertificates_Validator_GCValidator extends XLite_Validato
             $this->gcid = $_POST[$this->get("field")] = trim($_POST[$this->get("field")]);
 
 			// Pass validation if cert already related with current order
-			$cart = func_get_instance("Cart");
+			$cart = XLite_Model_Cart::getInstance();
 			if (is_object($cart) && !is_null($cart) && $cart->get("gcid") == $this->gcid) {
 				return true;
 			}

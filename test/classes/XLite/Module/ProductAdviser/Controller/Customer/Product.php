@@ -87,7 +87,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
 
 		if ($this->xlite->get("PA_InventorySupport") && $this->config->get("ProductAdviser.customer_notifications_enabled") && is_object($this->getProduct())) {
 			if ($this->product->get("inventory.amount") == 0 && $this->product->get("tracking") == 0) {
-    			$this->rejectedItemInfo = new XLite_Base_Object();
+    			$this->rejectedItemInfo = new XLite_Base();
     			$this->rejectedItemInfo->set("product_id", $this->product->get("product_id"));
     			$this->rejectedItemInfo->set("product", new XLite_Model_Product($this->product->get("product_id")));
 
@@ -101,7 +101,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
                 		$this->rejectedItemInfo = null;
                 		$this->session->set("rejectedItem", null);
                 	} else {
-            			$this->rejectedItemInfo = new XLite_Base_Object();
+            			$this->rejectedItemInfo = new XLite_Base();
             			$this->rejectedItemInfo->set("product_id", $rejectedItemInfo->product_id);
             			$this->rejectedItemInfo->set("product", new XLite_Model_Product($rejectedItemInfo->product_id));
             			if (isset($rejectedItemInfo->productOptions)) {

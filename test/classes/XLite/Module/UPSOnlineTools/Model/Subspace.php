@@ -45,7 +45,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_UPSOnlineTools_Model_Subspace extends XLite_Base_Object
+class XLite_Module_UPSOnlineTools_Model_Subspace extends XLite_Base
 {
 	var $width, $length;
 	var $left, $top;

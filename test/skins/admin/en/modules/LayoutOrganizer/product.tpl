@@ -18,7 +18,7 @@
                         	<tr class="Center" height=20>
                             	<td nowrap>&nbsp;&nbsp;Product page&nbsp;&nbsp;</td>
                             	<td nowrap>
-                        		<widget class="XLite_View_FormField"template="modules/LayoutOrganizer/select_scheme.tpl" field="custom_template" inherit scheme_id="{productCustomTemplate}" schemes="{schemes}">
+                        		<widget class="XLite_View_FormField" template="modules/LayoutOrganizer/select_scheme.tpl" field="custom_template" inherit scheme_id="{productCustomTemplate}" schemes="{schemes}">
                             	</td>
                         	</tr>
                         </table>

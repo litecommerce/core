@@ -255,7 +255,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
                 $this->auth->set("profile.order_id", $this->cart->get("order_id"));
                 $this->auth->call("profile.update");
             }
-    		$cart = func_get_instance("Cart");
+    		$cart = XLite_Model_Cart::getInstance();
      		if (!$cart->isEmpty()) {
      			$cart->set("profile_id", $this->auth->get("profile.profile_id"));
      			$cart->update();

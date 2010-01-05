@@ -45,7 +45,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_View_Abstract extends XLite_Base_Object
+class XLite_View_Abstract extends XLite_Base
 {
     /**
     * Widget template filename.

@@ -79,17 +79,17 @@
 <widget name="categoriesWidget" target="categories" template="common/dialog.tpl" head="Manage categories" body="categories/body.tpl" visible="{!mode=#delete_all#}">
 <widget module="FeaturedProducts" template="common/dialog.tpl" head="Featured products" body="modules/FeaturedProducts/featuredProducts.tpl" visible="{categoriesWidget.visible}">
 <span IF="!xlite.LayoutOrganizerEnabled">
-<widget target="category" class="XLite_View_Tabber"body="{pageTemplate}" switch="page" visible="{!mode=#delete#}">
+<widget target="category" class="XLite_View_Tabber" body="{pageTemplate}" switch="page" visible="{!mode=#delete#}">
 </span>
 <span IF="xlite.LayoutOrganizerEnabled">
-<widget module="LayoutOrganizer" target="category" class="XLite_View_Tabber"body="{pageTemplate}" switch="page" visible="{!mode=#delete#}">
+<widget module="LayoutOrganizer" target="category" class="XLite_View_Tabber" body="{pageTemplate}" switch="page" visible="{!mode=#delete#}">
 </span>
 <widget target="categories" template="common/dialog.tpl" body="categories/delete_all.tpl" head="Confirmation" mode="delete_all">
 <widget target="category" template="common/dialog.tpl" body="categories/delete.tpl" head="Confirmation" mode="delete">
 
 <widget target="card_types" template="common/dialog.tpl" body="card_types.tpl" head="Edit credit card types">
 
-<widget target="settings" class="XLite_View_Tabber"body="general_settings.tpl" switch="page">
+<widget target="settings" class="XLite_View_Tabber" body="general_settings.tpl" switch="page">
 
 <widget template="users/search.tpl" target="users">
 <widget target="recent_login" template="common/dialog.tpl" body="recent_login.tpl" head="Login history">
@@ -97,7 +97,7 @@
 <widget target="payment_methods" template="common/dialog.tpl" body="payment_methods/body.tpl" head="Payment methods">
 
 <widget target="product_list" template="product/product_list_form.tpl">
-<widget target="product" class="XLite_View_Tabber"body="{pageTemplate}" switch="page">
+<widget target="product" class="XLite_View_Tabber" body="{pageTemplate}" switch="page">
 
 <widget target="extra_fields" template="common/dialog.tpl" body="product/extra_fields_form.tpl" head="Global extra fields">
 
@@ -106,8 +106,8 @@
 
 <widget target="profile" mode="delete" template="common/dialog.tpl" head="Delete profile - Confirmation" body="profile/confirm_delete.tpl">
 <widget target="wysiwyg" template="common/dialog.tpl" head="HTML design import/export" body="wysiwyg.tpl">
-<widget target="profile" mode="modify" class="XLite_View_RegisterForm"template="common/dialog.tpl" head="Modify profile" body="profile/body.tpl" name="profileForm">
-<widget target="profile" mode="register" class="XLite_View_RegisterForm"template="common/dialog.tpl" head="Add new user" body="profile/body.tpl" name="registerForm">
+<widget target="profile" mode="modify" class="XLite_View_RegisterForm" template="common/dialog.tpl" head="Modify profile" body="profile/body.tpl" name="profileForm">
+<widget target="profile" mode="register" class="XLite_View_RegisterForm" template="common/dialog.tpl" head="Add new user" body="profile/body.tpl" name="registerForm">
 
 <widget target="order_list,order,advanced_security" module="AdvancedSecurity" template="modules/AdvancedSecurity/advanced_security.tpl">
 <widget module="AntiFraud" target='order'  visible="{mode}" mode="{mode}" template="common/dialog.tpl" body="modules/AntiFraud/tracking/message.tpl" head="AntiFraud Service Notification">
@@ -126,9 +126,9 @@
 <span IF="xlite.AOMEnabled">
 <widget module="AOM" template="modules/AOM/main.tpl">
 </span>
-<widget target="shipping_methods" class="XLite_View_Tabber"body="{pageTemplate}" switch="target">
-<widget target="shipping_rates" class="XLite_View_Tabber"body="{pageTemplate}" switch="target">
-<widget target="shipping_zones" class="XLite_View_Tabber"body="{pageTemplate}" switch="target">
+<widget target="shipping_methods" class="XLite_View_Tabber" body="{pageTemplate}" switch="target">
+<widget target="shipping_rates" class="XLite_View_Tabber" body="{pageTemplate}" switch="target">
+<widget target="shipping_zones" class="XLite_View_Tabber" body="{pageTemplate}" switch="target">
 <widget module="GoogleCheckout" template="modules/GoogleCheckout/main.tpl">
 
 <widget template="stats.tpl">
@@ -143,16 +143,16 @@
 <widget target="change_skin" template="common/dialog.tpl" body="change_skin.tpl" head="Change Current Skin">
 <widget target="countries" template="common/dialog.tpl" body="countries.tpl" head="Countries">
 <widget target="states" template="common/dialog.tpl" body="states.tpl" head="States">
-<widget class="XLite_View_Tabber"target="taxes" body="{pageTemplate}" switch="page">
-<widget class="XLite_View_Tabber"target="db" body="{pageTemplate}" switch="page">
+<widget class="XLite_View_Tabber" target="taxes" body="{pageTemplate}" switch="page">
+<widget class="XLite_View_Tabber" target="db" body="{pageTemplate}" switch="page">
 
 <widget target="import_users" template="common/dialog.tpl" body="import_users.tpl" head="Import users">
-<widget target="import_catalog" class="XLite_View_Tabber"body="{pageTemplate}" switch="page">
-<widget target="export_catalog" class="XLite_View_Tabber"body="{pageTemplate}" switch="page">
-<widget target="update_inventory" class="XLite_View_Tabber"body="{pageTemplate}" switch="page">
+<widget target="import_catalog" class="XLite_View_Tabber" body="{pageTemplate}" switch="page">
+<widget target="export_catalog" class="XLite_View_Tabber" body="{pageTemplate}" switch="page">
+<widget target="update_inventory" class="XLite_View_Tabber" body="{pageTemplate}" switch="page">
 
 <widget target="memberships" template="common/dialog.tpl" body="memberships.tpl" head="Membership levels">
-<widget target="template_editor" class="XLite_View_Tabber"body="{pageTemplate}" switch="editor">
+<widget target="template_editor" class="XLite_View_Tabber" body="{pageTemplate}" switch="editor">
 <widget target="image_files" template="common/dialog.tpl" body="image_files.tpl" head="Image files">
 <widget module="GiftCertificates" target="gift_certificates" template="common/dialog.tpl" body="modules/GiftCertificates/list.tpl" head="Gift certificates">
 <widget module="GiftCertificates" target="add_gift_certificate" template="common/dialog.tpl" body="modules/GiftCertificates/add_gift_certificate.tpl" head="Add gift certificate">
@@ -166,14 +166,14 @@
 <widget module="Promotion" target="DiscountCoupons" template="common/dialog.tpl" body="modules/Promotion/coupons.tpl" head="Discount coupons">
 <widget module="Promotion" template="modules/Promotion/main.tpl">
 
-<widget module="UPS" target="ups" class="XLite_View_Tabber"body="{pageTemplate}" switch="target">
+<widget module="UPS" target="ups" class="XLite_View_Tabber" body="{pageTemplate}" switch="target">
 <widget module="UPS" target="ups"  template="common/dialog.tpl" body="modules/UPS/test.tpl" head="UPS Live Test">
-<widget module="USPS" target="usps" class="XLite_View_Tabber"body="{pageTemplate}" switch="target">
+<widget module="USPS" target="usps" class="XLite_View_Tabber" body="{pageTemplate}" switch="target">
 <widget module="USPS" target="usps"  template="common/dialog.tpl" body="modules/USPS/test.tpl" head="USPS Live Test">
-<widget module="Intershipper" target="intershipper" class="XLite_View_Tabber"body="{pageTemplate}" switch="target">
+<widget module="Intershipper" target="intershipper" class="XLite_View_Tabber" body="{pageTemplate}" switch="target">
 <widget module="Intershipper" target="intershipper"  template="common/dialog.tpl" body="modules/Intershipper/test.tpl" head="Intershipper Live Test">
 <widget module="AustraliaPost" template="modules/AustraliaPost/main.tpl">
-<widget module="CanadaPost" target="cps" class="XLite_View_Tabber"body="{pageTemplate}" switch="target">
+<widget module="CanadaPost" target="cps" class="XLite_View_Tabber" body="{pageTemplate}" switch="target">
 <widget module="CanadaPost" target="cps" template="common/dialog.tpl" body="modules/CanadaPost/test.tpl" head="Canada Post Live Test">
 <widget module="DemoMode" target="demo_mode"  template="common/dialog.tpl" body="modules/DemoMode/denied.tpl" head="Demo Mode Access Error">
 <widget module="XCartImport" target="xcart_import" template="common/dialog.tpl" body="modules/XCartImport/dialog.tpl" head="Import X-Cart data">

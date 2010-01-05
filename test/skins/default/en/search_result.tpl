@@ -3,7 +3,7 @@ No products found on your query. Please try to {if:xlite.AdvancedSearchEnabled}<
 </div>
 <div IF="products">
 {if:xlite.AdvancedSearchEnabled&count}{dialog.count} {if:count=#1#}product{else:} products {end:} found. <a class="FormButton" href="cart.php?target=advanced_search"><u>Refine your search</u></a>{end:}
-<widget class="XLite_View_Pager"data="{products}" name="pager">
+<widget class="XLite_View_Pager" data="{products}" name="pager">
 <div FOREACH="pager.pageData,product">
 <br>
 <table cellpadding="5" cellspacing="0" border="0">
@@ -21,7 +21,7 @@ No products found on your query. Please try to {if:xlite.AdvancedSearchEnabled}<
         {truncate(product,#brief_description#,#300#):h}
         <br>
         <hr>
-        <widget class="XLite_View_Price"product="{product}" template="common/price_plain.tpl">
+        <widget class="XLite_View_Price" product="{product}" template="common/price_plain.tpl">
 		<!--AFTER PRICE-->
         <br><br>
         <table cellpadding="0" cellspacing="0" border="0">

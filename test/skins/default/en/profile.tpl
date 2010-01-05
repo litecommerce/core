@@ -34,7 +34,7 @@ Note that fields marked with an asterisk <font class="Star">*</font> are mandato
         <input type="text" name="login" value="{login:r}" size="32" maxlength="128">
     </td>
     <td>
-        <widget class="XLite_Validator_EmailValidator"field="login">
+        <widget class="XLite_Validator_EmailValidator" field="login">
     </td>
 </tr>
 <tr><td>&nbsp;</td><td>&nbsp;</td><td>
@@ -57,7 +57,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
         <input type="password" name="confirm_password" value="{confirm_password:r}" size="32" maxlength="128">
     </td>
     <td>
-        <widget class="XLite_Validator_PasswordValidator"field="confirm_password" passwordField="password">
+        <widget class="XLite_Validator_PasswordValidator" field="confirm_password" passwordField="password">
     </td>
 </tr>
 <tr>
@@ -89,7 +89,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
         <input type="text" name="billing_firstname" value="{billing_firstname:r}" size="32" maxlength="128">
     </td>
     <td>
-        <widget class="XLite_Validator_RequiredValidator"field="billing_firstname">
+        <widget class="XLite_Validator_RequiredValidator" field="billing_firstname">
     </td>
 </tr>
 <tr valign="middle">
@@ -99,7 +99,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
         <input type="text" name="billing_lastname" value="{billing_lastname:r}" size="32" maxlength="128">
     </td>
     <td align="left">
-        <widget class="XLite_Validator_RequiredValidator"field="billing_lastname">
+        <widget class="XLite_Validator_RequiredValidator" field="billing_lastname">
     </td>
 </tr>
 <tr valign="middle">
@@ -118,7 +118,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
         <input type="text" name="billing_phone" value="{billing_phone:r}" size="32" maxlength="32">
     </td>    
     <td>
-        <widget class="XLite_Validator_RequiredValidator"field="billing_phone">
+        <widget class="XLite_Validator_RequiredValidator" field="billing_phone">
     </td>
 </tr>
 <tr valign="middle">
@@ -137,7 +137,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
         <input type="text" name="billing_address" value="{billing_address:r}" size="32" maxlength="64">
     </td>
     <td>
-        <widget class="XLite_Validator_RequiredValidator"field="billing_address">
+        <widget class="XLite_Validator_RequiredValidator" field="billing_address">
     </td>
 </tr>
 <tr valign="middle">
@@ -147,18 +147,18 @@ Please leave the password fields empty<br> if you don't want to change the passw
         <input type="text" name="billing_city" value="{billing_city:r}" size="32" maxlength="64">
     </td>
     <td>
-        <widget class="XLite_Validator_RequiredValidator"field="billing_city">
+        <widget class="XLite_Validator_RequiredValidator" field="billing_city">
     </td>
 </tr>
 <tr valign="middle">
     <td align="right">State</td>
     <td><font class="Star">*</font></td>
     <td>
-		<widget class="XLite_View_StateSelect"field="billing_state" onChange="javascript: changeState(this, 'billing');" fieldId="billing_state_select">
+		<widget class="XLite_View_StateSelect" field="billing_state" onChange="javascript: changeState(this, 'billing');" fieldId="billing_state_select">
     </td>
     <td>
-        <widget class="XLite_Validator_RequiredValidator"field="billing_state">
-        <widget class="XLite_Validator_StateValidator"field="billing_state" countryField="billing_country">
+        <widget class="XLite_Validator_RequiredValidator" field="billing_state">
+        <widget class="XLite_Validator_StateValidator" field="billing_state" countryField="billing_country">
     </td>
 </tr>
 <tr valign="middle" id="billing_custom_state_body">
@@ -174,10 +174,10 @@ Please leave the password fields empty<br> if you don't want to change the passw
     <td align="right">Country</td>
     <td><font class="Star">*</font></td>
     <td>
-		<widget class="XLite_View_CountrySelect"field="billing_country" onChange="javascript: populateStates(this,'billing');" fieldId="billing_country_select">
+		<widget class="XLite_View_CountrySelect" field="billing_country" onChange="javascript: populateStates(this,'billing');" fieldId="billing_country_select">
     </td>
     <td>
-        <widget class="XLite_Validator_RequiredValidator"field="billing_country">
+        <widget class="XLite_Validator_RequiredValidator" field="billing_country">
     </td>
 </tr>
 <tr valign="middle">
@@ -187,7 +187,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
         <input type="text" name="billing_zipcode" value="{billing_zipcode:r}" size="32" maxlength="32">
     </td>
     <td>
-        <widget class="XLite_Validator_RequiredValidator"field="billing_zipcode">
+        <widget class="XLite_Validator_RequiredValidator" field="billing_zipcode">
     </td>
 </tr>
 
@@ -199,8 +199,8 @@ Please leave the password fields empty<br> if you don't want to change the passw
 
 <tr valign="middle">
     <td colspan="4"><b>Shipping Address (leave empty if same as billing address)</b><br><hr size="1" noshade>
-		<div id="btn_copy_billing"><widget class="XLite_View_Button"label="Copy Billing Info" href="javascript: copyBillingInfo(document.profile_form);"></div>
-		<div id="btn_modify_shipping" style="display: none;"><widget class="XLite_View_Button"label="Modify Shipping address" href="javascript: OnModifyShippingAddress(document.profile_form);"></div>
+		<div id="btn_copy_billing"><widget class="XLite_View_Button" label="Copy Billing Info" href="javascript: copyBillingInfo(document.profile_form);"></div>
+		<div id="btn_modify_shipping" style="display: none;"><widget class="XLite_View_Button" label="Modify Shipping address" href="javascript: OnModifyShippingAddress(document.profile_form);"></div>
 	</td>
 </tr>
 <tbody id="shipping_body">
@@ -279,10 +279,10 @@ Please leave the password fields empty<br> if you don't want to change the passw
     <td align="right">State</td>
     <td><font class="Star">*</font></td>
     <td>
-		<widget class="XLite_View_StateSelect"field="shipping_state" value="{shipping_state}" onChange="javascript: changeState(this, 'shipping');" fieldId="shipping_state_select">
+		<widget class="XLite_View_StateSelect" field="shipping_state" value="{shipping_state}" onChange="javascript: changeState(this, 'shipping');" fieldId="shipping_state_select">
     </td>
     <td>
-        <widget class="XLite_Validator_StateValidator"field="shipping_state" countryField="shipping_country">
+        <widget class="XLite_Validator_StateValidator" field="shipping_state" countryField="shipping_country">
     </td>
 </tr>
 <tr valign="middle" id="shipping_custom_state_body">
@@ -298,7 +298,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
     <td align="right">Country</td>
     <td><font class="Star">*</font></td>
     <td>
-		<widget class="XLite_View_CountrySelect"field="shipping_country" onChange="javascript: populateStates(this,'shipping');" fieldId="shipping_country_select">
+		<widget class="XLite_View_CountrySelect" field="shipping_country" onChange="javascript: populateStates(this,'shipping');" fieldId="shipping_country_select">
     </td>
     <td>&nbsp;</td>
 </tr>
@@ -331,7 +331,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
 <tr valign="middle">
     <td align="right">Request membership</td>
     <td>&nbsp;</td>
-    <td><widget class="XLite_View_MembershipSelect"field="pending_membership">
+    <td><widget class="XLite_View_MembershipSelect" field="pending_membership">
 	</td>
 </tr>
 </tbody>
@@ -353,7 +353,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
         <br>
         <input type="hidden" foreach="dialog.allparams,param,v" name="{param}" value="{v}"/>
         <input type="hidden" name="action" value="{mode}">
-        <widget class="XLite_View_Submit"href="javascript: document.profile_form.submit()" font="FormButton">
+        <widget class="XLite_View_Submit" href="javascript: document.profile_form.submit()" font="FormButton">
     </td>
 </tr>
 </table>

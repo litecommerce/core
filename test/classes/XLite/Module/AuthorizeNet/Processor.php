@@ -46,7 +46,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_AuthorizeNet_Processor extends XLite_Base_Object
+class XLite_Module_AuthorizeNet_Processor extends XLite_Base
 {
     var $cvverr = array(
             "M" => "Card Code matches",

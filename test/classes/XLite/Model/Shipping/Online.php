@@ -57,7 +57,7 @@ class XLite_Model_Shipping_Online extends XLite_Model_Shipping
         if (isset($this->config->$name)) {
             $options = $this->config->$name;
         } else {
-            $options = new XLite_Base_Object();
+            $options = new XLite_Base();
         }
         foreach ($this->optionsFields as $field) {
             if (!isset($options->$field)) {
@@ -73,7 +73,7 @@ class XLite_Model_Shipping_Online extends XLite_Model_Shipping
         $c = new XLite_Model_Config();
         $category = $this->configCategory;
         $c->set("category", $category);
-        $this->config->$category = new XLite_Base_Object();
+        $this->config->$category = new XLite_Base();
         foreach ($this->optionsFields as $field) {
             if (!isset($options->$field)) {
                 continue;
@@ -92,7 +92,7 @@ class XLite_Model_Shipping_Online extends XLite_Model_Shipping
     function unserializeCacheRates($rates)
     {
         $result = array();
-        $cart = func_get_instance("Cart");
+        $cart = XLite_Model_Cart::getInstance();
         $order = new XLite_Model_Order($cart->get("order_id"));
         $weight = (double) $order->get("weight");
         $total = (double) $order->calcSubTotal(true); // SubTotal for "shipped only" items

@@ -61,7 +61,7 @@ class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controll
         // switch to customer's zone context
         $this->_sessionData = $this->session->_data;
         $this->session->_data = array();
-        $cart = func_get_instance("Cart");
+        $cart = XLite_Model_Cart::getInstance();
         $cart = null;
 
 		$this->goCustomer();
@@ -181,7 +181,7 @@ class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controll
 		$layout->set("skin", "default");
 
 		// empty cart
-		$cart = func_get_instance("Cart");
+		$cart = XLite_Model_Cart::getInstance();
 		$cart = null;
 	} // }}}
 

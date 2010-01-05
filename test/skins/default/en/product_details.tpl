@@ -42,9 +42,9 @@ function isValid()
         <widget module="InventoryTracking" template="modules/InventoryTracking/product_quantity.tpl" IF="!product.productOptions" visible="{product.inventory.found}"/>
         <widget module="ProductOptions" template="modules/ProductOptions/product_quantity.tpl">
 
-        <widget class="XLite_View_ExtraFields"product="{product}">
+        <widget class="XLite_View_ExtraFields" product="{product}">
         <tbody><tr IF="{!product.weight=0}"><td width="30%" class="ProductDetails">Weight:</td><td class="ProductDetails" nowrap>{product.weight} {config.General.weight_symbol}</td></tr>
-        <widget class="XLite_View_Price"product="{product}" template="common/price_table.tpl">
+        <widget class="XLite_View_Price" product="{product}" template="common/price_table.tpl">
         <widget module="ProductAdviser" template="modules/ProductAdviser/PriceNotification/product_button.tpl" visible="{!priceNotificationSaved}">
         <widget module="ProductOptions" template="modules/ProductOptions/product_options.tpl" IF="product.hasOptions()&!product.showExpandedOptions"/>
         <widget module="WholesaleTrading" template="modules/WholesaleTrading/expanded_options.tpl" IF="product.hasOptions()&product.showExpandedOptions"/>
@@ -52,7 +52,7 @@ function isValid()
         <tr><td colspan=2>&nbsp;</td></tr>
         <tr IF="availableForSale" id="addToCartButton">
             <td>
-                <widget class="XLite_View_Button"label="Add to Cart" href="javascript: if (isValid()) document.add_to_cart.submit()" img="cart4button.gif" font="FormButton">
+                <widget class="XLite_View_Button" label="Add to Cart" href="javascript: if (isValid()) document.add_to_cart.submit()" img="cart4button.gif" font="FormButton">
 			</td>
 			<td IF="!config.General.add_on_mode">
 				<widget module="WishList" template="modules/WishList/add.tpl" href="javascript: WishList_Add2Cart();">

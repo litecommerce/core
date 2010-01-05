@@ -64,7 +64,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Model_XML extends XLite_Base_Object
+class XLite_Model_XML extends XLite_Base
 {
     var $xml_parser;
 

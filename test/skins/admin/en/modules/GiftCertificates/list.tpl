@@ -1,4 +1,4 @@
-<widget class="XLite_View_Pager"name="pager" data="{giftCertificates}">
+<widget class="XLite_View_Pager" name="pager" data="{giftCertificates}">
 <br>
 <form action="admin.php" method="POST" name="certForm">
 <input type="hidden" name="target" value="gift_certificates">

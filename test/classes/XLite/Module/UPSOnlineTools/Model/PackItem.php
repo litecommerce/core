@@ -48,7 +48,7 @@
 
 include_once "modules/UPSOnlineTools/encoded.php";
 
-class XLite_Module_UPSOnlineTools_Model_PackItem extends XLite_Base_Object
+class XLite_Module_UPSOnlineTools_Model_PackItem extends XLite_Base
 {
 	var $width = MIN_DIM_SIZE;
 	var $length = MIN_DIM_SIZE;

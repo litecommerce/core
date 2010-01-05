@@ -153,7 +153,7 @@ function GoogleCheckout_getGoogleCheckoutXML_Calculation(&$_this, $address, $shi
 	$_old_admin_zone = $_this->xlite->get("adminZone");
 	$_this->xlite->set("adminZone", false);
 
-	$cart = func_get_instance("Cart");
+	$cart = XLite_Model_Cart::getInstance();
 	$cart = new XLite_Model_Cart($_this->get("order_id")); // do not insert &
 
 	$pmGC = new XLite_Model_PaymentMethod("google_checkout");

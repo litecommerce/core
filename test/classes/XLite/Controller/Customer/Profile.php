@@ -72,7 +72,7 @@ class XLite_Controller_Customer_Profile extends XLite_Controller_Abstract
     {
         parent::init();
 		if ($this->profileForm->isFromCheckout()) {
-            $cart = func_get_instance("Cart");
+            $cart = XLite_Model_Cart::getInstance();
             if (!$cart->isEmpty()) {
             	$this->profileForm->profile = $cart->get("profile");
     		} else {
@@ -153,7 +153,7 @@ class XLite_Controller_Customer_Profile extends XLite_Controller_Abstract
         $this->set("mode", $this->profileForm->get("mode"));
 
         if ($this->registerForm->is("valid")) {
-			$cart = func_get_instance("Cart");
+			$cart = XLite_Model_Cart::getInstance();
 			if (!$cart->isEmpty()) {
 				$cart->set("profile_id", $this->profileForm->profile->get("profile_id"));
 				$cart->setProfile($this->profileForm->profile);

@@ -44,7 +44,7 @@
 * @package Module_AdvancedSecurity
 * @version $Id$
 */
-class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base_Object
+class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
 {
     var $tmpdir    = null;
     var $homedir   = null;

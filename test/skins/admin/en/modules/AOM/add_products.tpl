@@ -23,7 +23,7 @@
 {if:products}
 <span class="Text" IF="mode=#search#">{productsFound} product(s) found</span>
 <br>
-<widget class="XLite_View_Pager"data="{products}" name="pager" itemsPerPage="{xlite.config.General.products_per_page_admin}">
+<widget class="XLite_View_Pager" data="{products}" name="pager" itemsPerPage="{xlite.config.General.products_per_page_admin}">
 <br>
 <form name="aom_products_form" action="admin.php" method="POST">
 <input FOREACH="dialog.allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>

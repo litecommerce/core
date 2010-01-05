@@ -42,7 +42,7 @@ function continueCheckout()
         <br>
         <input type="hidden" name="target" value="checkout">
         <input type="hidden" name="action" value="payment">
-        <widget class="XLite_View_Submit"label="Continue.." href="javascript: continueCheckout(); void(0);" font="FormButton">
+        <widget class="XLite_View_Submit" label="Continue.." href="javascript: continueCheckout(); void(0);" font="FormButton">
     </td>
 </tr>
 </table>

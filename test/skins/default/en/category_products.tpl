@@ -1,6 +1,6 @@
 {* Product list inside a category *}
 
-<widget class="XLite_View_Pager"data="{category.products}" name="pager">
+<widget class="XLite_View_Pager" data="{category.products}" name="pager">
 
 <div FOREACH="pager.pageData,product">
 <table cellpadding="5" cellspacing="0" border="0">
@@ -21,7 +21,7 @@
         </tr>    
         <tr>
             <td>
-                <widget class="XLite_View_Price"product="{product}" template="common/price_plain.tpl">
+                <widget class="XLite_View_Price" product="{product}" template="common/price_plain.tpl">
                 <widget module="ProductAdviser" template="modules/ProductAdviser/PriceNotification/category_button.tpl" product="{product}" visible="{!getPriceNotificationSaved(product.product_id)}">
 				<!--AFTER PRICE-->
                 <br><br>
