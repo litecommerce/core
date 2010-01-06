@@ -601,6 +601,9 @@ function func_die($message) { // {{{
 	$trace_message .= "<pre>\n";
     if (function_exists("debug_backtrace")) {
         foreach (debug_backtrace() as $trace) {
+
+			if (!is_array($trace)) continue;
+
             if (!isset($trace["file"])) {
                 $trace["file"] = "?";
             }
@@ -610,7 +613,9 @@ function func_die($message) { // {{{
             if (!isset($trace["class"])) {
                 $trace["class"] = "?";
             }
-            $trace_args = (isset($trace["args"]) && is_array($trace["args"]) && count($trace["args"]) > 0) ? implode(',', $trace["args"]) : "n/a";
+
+			// FIXME
+            $trace_args = (!empty($trace["args"]) && is_array($trace["args"])) ? @implode(',', $trace["args"]) : "n/a";
     		$trace_message .= $trace["class"]."::".$trace["function"] . "(". basename($trace["file"]).":".$trace["line"].") <b>args:</b> $trace_args\n";
         }
     }
@@ -619,7 +624,7 @@ function func_die($message) { // {{{
 	if (!$ignore) {
 		$ignore ++;
 		// func_new can also cause func_die being called
-    	$dialog = func_new("Dialog");
+    	$dialog = new XLite_Controller_Abstract();
     }
 
 	$options = XLite::getInstance()->getOptions();

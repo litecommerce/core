@@ -108,7 +108,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 <tr>
 	<td align="right">Requested membership</td>
     <td><font class="Star">*</font></td>
-    <td><widget class="XLite_View_MembershipSelect"field="pending_membership">&nbsp;&nbsp;{if:xlite.WholesaleTradingEnabled}<widget module="WholesaleTrading" template="modules/WholesaleTrading/profile_grant_membership.tpl">{else:}<a IF="mode=#modify#" href="javascript: grantMembership()"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> <font class="FormButton" >Grant membership</font></a>{end:}</td>
+    <td><widget class="XLite_View_MembershipSelect" field="pending_membership">&nbsp;&nbsp;{if:xlite.WholesaleTradingEnabled}<widget module="WholesaleTrading" template="modules/WholesaleTrading/profile_grant_membership.tpl">{else:}<a IF="mode=#modify#" href="javascript: grantMembership()"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> <font class="FormButton">Grant membership</font></a>{end:}</td>
     <td></td>
 </tr>
 

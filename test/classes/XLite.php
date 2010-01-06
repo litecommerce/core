@@ -51,7 +51,9 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
 
 	protected $options = null;
 
-	protected $config = null;
+	public $config = null;
+
+	public $_xlite_form_id = null;
 
 	protected function getArrayValue(array $array, $key)
 	{

@@ -1,6 +1,6 @@
 <table border=0 width="100%" cellpadding=0 cellspacing=0 valign=top>
 <tr><td height=15>
-<table  border=0 cellspacing=0 cellpadding=0 class="XLite_Module_UPSOnlineTools_Model_Container">
+<table  border=0 cellspacing=0 cellpadding=0 class="Container">
 <tr height=17>
 {foreach:widget.pages,tabPage}
 {if:tabPage.selected}

@@ -7,10 +7,10 @@
 	<span IF="productsFound">{productsFound} product<span IF="!productsFound=#1#">s</span> found.</span>
 </span>
 
-<widget template="common/dialog.tpl" head="Search results" body="product/product_list.tpl" visible="{mode=#search#&products}" />
+<widget template="common/dialog.tpl" head="Search results" body="product/product_list.tpl" visible="{products&mode=#search#}">
 
 {else:}
 
-<widget template="common/dialog.tpl" head="Confirmation" body="product/products_delete.tpl" />
+<widget template="common/dialog.tpl" head="Confirmation" body="product/products_delete.tpl">
 
 {end:}

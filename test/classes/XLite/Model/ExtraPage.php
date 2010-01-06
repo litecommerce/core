@@ -67,6 +67,10 @@ class XLite_Model_ExtraPage extends XLite_Base
 
     var $isRead = false;
 
+	protected $zone = null;
+
+	protected $locale = null;
+
     public function __construct()
     {
         parent::__construct();

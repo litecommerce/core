@@ -26,7 +26,7 @@
 
 <BODY>
 <!-- [/begin] -->
-<TABLE border="0" width="100%" cellpadding="0" cellspacing="0" class="XLite_Module_UPSOnlineTools_Model_Container">
+<TABLE border="0" width="100%" cellpadding="0" cellspacing="0" class="Container">
 <TR>
 <TD valign="top">
 
