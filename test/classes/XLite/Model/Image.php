@@ -114,6 +114,7 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
              $result[$key]->set("properties", $value);
              $result[$key]->set("class", $key);
          }
+
          return $result;
     }
 	/**
@@ -131,31 +132,22 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
             $imageClasses = $this->get("imageClasses");
             $this->imageClass = $class;
             if (isset($imageClasses[$class])) {
-
-                $imageClass = $imageClasses[$class];
-
-                $this->alias = $imageClass->get('tableName');
-
-				$idField = $imageClass->get('idField');
-				$fieldPrefix = $imageClass->get('fieldPrefix');
-
-                $this->autoIncrement = $idField;
-                $this->primaryKey = array($idField);
-                $this->fieldPrefix = $fieldPrefix;
-                $this->dataField = $fieldPrefix;
-                $this->sourceField = $fieldPrefix . '_source';
-                $this->typeField = $fieldPrefix . '_type';
+				$imageClass = $imageClasses[$class];
+                $this->alias = $imageClass->tableName;
+                $this->autoIncrement = $imageClass->idField;
+                $this->primaryKey = array($imageClass->idField);
+                $this->fieldPrefix = $imageClass->fieldPrefix;
+                $this->dataField = $imageClass->fieldPrefix;
+                $this->sourceField = $imageClass->fieldPrefix."_source";
+                $this->typeField = $imageClass->fieldPrefix."_type";
                 $this->isPersistent = true;
-
-				if (!is_null($idField)) {
-	                $this->fields = array(
-    	                    $idField  => '',
-        	                $this->dataField	  => '',
-            	            $this->sourceField	  => '',
-                	        $this->typeField	  => ''
-                    	    );
-	                $this->set($idField, $id);
-				}
+                $this->fields = array(
+                        $imageClass->idField  => "",
+                        $this->dataField      => "",
+                        $this->sourceField    => "",
+                        $this->typeField      => ""
+                        );
+                $this->set($imageClass->idField, $id);
             } else {
                 $this->_die("Image class $class is not registered");
             }
@@ -464,6 +456,7 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
 		$sql = "SELECT count(*) FROM " . $this->db->getTableByAlias($this->alias) . " WHERE " . $this->sourceField . "='$type' AND " . $this->dataField . "<>''";
 		return $this->db->getOne($sql);
 	}
+
 	function getDatabaseCount()
 	{
 		return $this->getFilesystemCount('D');

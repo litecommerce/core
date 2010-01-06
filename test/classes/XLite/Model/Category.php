@@ -104,12 +104,13 @@ class XLite_Model_Category extends XLite_Model_Abstract
     * @access public
     * @return boolean
     */
-    function hasImage() // {{{
+    public function hasImage() // {{{
     {
-        if ($this->get("category_id")==0)
-            return false;
-        $image = $this->get("image");
-        $data = $image->get("data");
+        if ($this->get('category_id') == 0) return false;
+
+        $image = $this->get('image');
+        $data  = $image->get('data');
+
         return !empty($data);
     } // }}}
     

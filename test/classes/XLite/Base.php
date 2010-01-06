@@ -178,5 +178,21 @@ class XLite_Base
         }
         return null;
     } // }}}
+
+	/**
+    * Maps the specified associative array to this object properties.
+    *
+    * @access public
+    * @param array $assoc The associative array
+    */
+    function setProperties($assoc) // {{{
+    {
+        if (!is_array($assoc)) {
+            $this->_die("argument must be an array");
+        }
+        foreach ($assoc as $key => $value) {
+            $this->set($key, $value);
+        }
+    }
 }
 
