@@ -45,6 +45,8 @@
 */
 class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
 {
+	protected $recentAdmins = null;
+
     function getLicenseWarningParam()
     {
         return !empty($GLOBALS["license_warning_param"]) ? $GLOBALS["license_warning_param"] : null;
@@ -104,7 +106,7 @@ class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
     {
         if ($this->auth->isLogged() && is_null($this->recentAdmins)) {
             $profile = new XLite_Model_Profile();
-            $this->recentAdmins =& $profile->findAll("access_level>='".$this->get("auth.adminAccessLevel")."' AND last_login>'0'", "last_login ASC", null, "0, 7");
+            $this->recentAdmins = $profile->findAll("access_level>='".$this->get("auth.adminAccessLevel")."' AND last_login>'0'", "last_login ASC", null, "0, 7");
         }    
         return $this->recentAdmins;
     }

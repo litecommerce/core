@@ -47,6 +47,9 @@
 class XLite_View_RegisterForm extends XLite_View
 {
     var $params = array("success");
+
+	protected $success = false;
+
     // profile data
     var $profile = null;
     // whether to login user after successful registration or not

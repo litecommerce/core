@@ -46,12 +46,17 @@
 * @access public
 * @version $Id$
 */
-class XLite_Model_Session_Sql extends XLite_Model_Session
+class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_ISingleton
 {
     /**
     * @var string $sql_table The database sql table to store session to
     */
     var $sql_table;
+
+	public static function getInstance()
+    {
+        return self::_getInstance(__CLASS__);
+    }
 
     /**
     * Constructor.

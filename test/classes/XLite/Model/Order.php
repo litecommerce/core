@@ -492,11 +492,9 @@ class XLite_Model_Order extends XLite_Model_Abstract
     function getPaymentMethod() // {{{
     {
         if (is_null($this->_paymentMethod) && $this->get("payment_method")) {
-        	$pm = new XLite_Model_PaymentMethod();
-        	if ($pm->isRegisteredMethod($this->get("payment_method"))) {
-            	$this->_paymentMethod = new XLite_Model_PaymentMethod($this->get("payment_method"));
-            }
+			$this->_paymentMethod = XLite_Model_PaymentMethod::factory($this->get("payment_method"));
         }
+
         return $this->_paymentMethod;
     } // }}}
     
@@ -1067,12 +1065,12 @@ class XLite_Model_Order extends XLite_Model_Abstract
 
     function isShowCCInfo()
     {
-        return $this->get("payment_method") == "credit_card" && $this->config->get("Email.show_cc_info");
+        return $this->get("payment_method") == "CreditCard" && $this->config->get("Email.show_cc_info");
     }
 
     function isShowECheckInfo()
     {
-        return $this->get("payment_method") == "echeck" && $this->config->get("Email.show_cc_info");
+        return $this->get("payment_method") == "Echeck" && $this->config->get("Email.show_cc_info");
     }
 
     function isProcessed()

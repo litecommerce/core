@@ -48,6 +48,8 @@ class XLite_View_CountrySelect extends XLite_View_FormField
 {
     var $template = "common/select_country.tpl";
     var $all = false;
+
+	protected $country = null;
     
     function getCountries()
     {

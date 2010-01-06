@@ -64,7 +64,7 @@ instructions on using corresponding payment methods.<br>
 				    <th class="TableHead">Active<br><input id="activate_payments" type="checkbox" onClick="this.blur();setChecked(this.checked);"></th>
 					<th class="TableHead" IF="hasConfigurableMethods()">Configure</th>
 				</tr>
-				<tr FOREACH="xlite.factory.PaymentMethod.readAll(),pm_idx,payment_method" class="{getRowClass(pm_idx,#DialogBox#,#TableRow#)}">
+				<tr FOREACH="xlite.factory.XLite_Model_PaymentMethod.readAll(),pm_idx,payment_method" class="{getRowClass(pm_idx,#DialogBox#,#TableRow#)}">
 					<input type="hidden" name="data[{payment_method.payment_method}][payment_method]" value = "{payment_method.payment_method:r}">
 					<td>
 						{payment_method.payment_method}
@@ -112,7 +112,7 @@ instructions on using corresponding payment methods.<br>
     <td>
     <select name="default_select_payment">
     <option value="" selected="config.Payments.default_select_payment=##">-None-</option>
-    {foreach:xlite.factory.PaymentMethod.readAll(),payment_method}
+    {foreach:xlite.factory.XLite_Model_PaymentMethod.readAll(),payment_method}
     {if:payment_method.enabled&!payment_method.payment_method=#google_checkout#}
     <option value="{payment_method.payment_method}" selected="config.Payments.default_select_payment=payment_method.payment_method">{payment_method.name}</option>
     {end:}
@@ -125,7 +125,7 @@ instructions on using corresponding payment methods.<br>
     <td>
     <select name="default_payment">
     <option value="" selected="config.Payments.default_offline_payment=##">-None-</option>
-	{foreach:xlite.factory.PaymentMethod.readAll(),payment_method}
+	{foreach:xlite.factory.XLite_Model_PaymentMethod.readAll(),payment_method}
 	{if:payment_method.class=#offline#}
     <option value="{payment_method.payment_method}" selected="config.Payments.default_offline_payment=payment_method.payment_method">{payment_method.name}</option>
 	{end:}

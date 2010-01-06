@@ -39,7 +39,7 @@
 * @version $Id$
 */
 
-class XLite_Module_PayPalPro_Model_PaymentMethod_Paypalpro extends PaymentMethod_credit_card // {{{ 
+class XLite_Module_PayPalPro_Model_PaymentMethod_Paypalpro extends XLite_Model_PaymentMethod_CreditCard
 {
 	// Pending reasons array // {{{ 
 	 var $pendingReasons = array(

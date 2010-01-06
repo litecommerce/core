@@ -96,6 +96,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
         // profile db connect
         $time = microtime(true);
         $options = XLite::getInstance()->getOptions('database_details');
+
 		if (!empty($options['persistent'])&&function_exists('mysql_pconnect')) {
 			if (!($this->connection = @mysql_pconnect($options["hostspec"], $options["username"], $options["password"]))) 
             $this->_die(mysql_error());

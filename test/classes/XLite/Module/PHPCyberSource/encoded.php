@@ -1,9 +1,9 @@
 <?php
 
-function PaymentMethod_cybersource_process(&$_this, &$cart, $debug = false)
+function PaymentMethod_cybersource_process($_this, $cart, $debug = false)
 {
 	if (PHP_OS == "FreeBSD")
-		return FreeBSD_cybersource_process($_this, &$cart);
+		return FreeBSD_cybersource_process($_this, $cart);
 
 	$request 	= array();
     $response 	= array();
@@ -29,7 +29,7 @@ function PaymentMethod_cybersource_process(&$_this, &$cart, $debug = false)
 	 }
 }
 
-function FreeBSD_cybersource_process(&$_this, &$cart) 
+function FreeBSD_cybersource_process($_this, $cart) 
 {
 	$order 	= $cart->get("properties");
 	$profile = $cart->get("profile");

@@ -60,7 +60,7 @@ class XLite_Model_ProductFromCategory extends XLite_Model_Product
     *
     * @access private
     */
-    function _buildSelect($where = null, $orderby = null)
+    function _buildSelect($where = null, $orderby = null, $groupby = null, $limit = null)
     {
         $table = $this->db->getTableByAlias("products");
         $link_table = $this->db->getTableByAlias("product_links");

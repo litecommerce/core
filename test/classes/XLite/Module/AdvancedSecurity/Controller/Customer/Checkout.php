@@ -58,7 +58,7 @@ class XLite_Module_AdvancedSecurity_Controller_Customer_Checkout extends XLite_C
 
 		$values = array();
 		foreach ($methods as $method) {
-			if ($method->get("payment_method") == "credit_card")
+			if ($method->get("payment_method") == "CreditCard")
 				continue;
 
 			$values[] = $method;

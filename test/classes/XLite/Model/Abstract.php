@@ -504,13 +504,15 @@ class XLite_Model_Abstract extends XLite_Base
     {
         if ($this->autoIncrement) {
             $this->isRead = $this->read();
-    		if (func_is_php5()) {
+			// FIXME - check this code
+			$new = clone $this;
+    		/*if (func_is_php5()) {
             	//$new = clone $this;
             	eval("\$new = clone \$this;");
             } else {
 				$new = new self;
 				$new->set("properties", $this->get("properties"));
-            }
+            }*/
             $new->set($this->autoIncrement, null);
             $new->create();
             return $new;
@@ -964,12 +966,12 @@ class XLite_Model_Abstract extends XLite_Base
         return $result;
     } // }}}
 
-    function _import(&$options) // {{{
+    function _import(array $options) // {{{
     {
         $this->_die("Base::_import() method should be overridden");
     } // }}}
     
-    function _export() // {{{
+    function _export($layout, $delimiter) // {{{
     {
         $this->_die("Base::_export() method should be overridden");
     } // }}}

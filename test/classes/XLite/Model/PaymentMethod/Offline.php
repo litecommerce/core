@@ -47,15 +47,15 @@
 */
 class XLite_Model_PaymentMethod_Offline extends XLite_Model_PaymentMethod
 {
-    var $formTemplate = "checkout/offline.tpl";
+    protected $formTemplate = "checkout/offline.tpl";
 
-    function process(&$cart)
+    function process($cart)
     {
         $cart->set("status", "Q");
         $cart->update();
     }
 
-    function handleRequest(&$cart)
+    function handleRequest($cart)
     {
         $this->process($cart);
         return PAYMENT_SUCCESS;

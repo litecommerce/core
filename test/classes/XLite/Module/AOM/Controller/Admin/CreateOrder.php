@@ -99,7 +99,7 @@ class XLite_Module_AOM_Controller_Admin_CreateOrder extends XLite_Controller_Adm
 	{
         $order = new XLite_Model_Order($this->get("order_id"));
         $order->set("orderStatus",$_POST['substatus']);
-		if ($order->get("payment_method") == "credit_card") {
+		if ($order->get("payment_method") == "CreditCard") {
 			$this->addDetails($order);
 		}
 		$order->update();

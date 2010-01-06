@@ -90,9 +90,9 @@ class XLite_Model_Shipping extends XLite_Model_Abstract implements XLite_Base_IS
         }
 
         if (!isset($instances[$class])) {
-            $ClassName = "Shipping_" . $class;
-            if (!func_class_exists($ClassName)) {
-                $ClassName = "Shipping";
+            $ClassName = 'XLite_Model_Shipping_' . $class;
+            if (!@class_exists($ClassName)) {
+                $ClassName = 'XLite_Model_Shipping';
             }
             $instances[$class] = new $ClassName();
             $instances[$class]->set("class", $class);
@@ -112,7 +112,7 @@ class XLite_Model_Shipping extends XLite_Model_Abstract implements XLite_Base_IS
     {
         $sp = self::getInstance();
         $modules = array(
-            "offline" => $sp->getInstanceByClass("offline")
+            "Offline" => $sp->getInstanceByClass("Offline")
         );
         global $registeredShippingModules;
         if (isset($registeredShippingModules)) {
@@ -127,7 +127,7 @@ class XLite_Model_Shipping extends XLite_Model_Abstract implements XLite_Base_IS
     {
 		$query = $this->_buildSelect("shipping_id='$shipping_id'");
         if ($shipping = $this->db->getRow($query)) {
-        	if ($shipping["class"] == "offline") {
+        	if ($shipping["class"] == "Offline") {
             	return true;
             }
      

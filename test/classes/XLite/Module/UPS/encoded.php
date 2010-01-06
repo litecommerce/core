@@ -26,7 +26,7 @@ function Shipping_ups_getRates(&$_this, $order)
         $destinationZipCode = $order->get("profile.shipping_zipcode");
         $destinationCountry = $order->get("profile.shipping_country");
 	}
-    if ($order->get("payment_method") == "cod") {
+    if ($order->get("payment_method") == "COD") {
         $codvalue = $order->get("subtotal");
     } else {
         $codvalue = 0;

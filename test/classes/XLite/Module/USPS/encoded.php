@@ -7,7 +7,7 @@ function Shipping_usps_getRates(&$_this, $order)
 {
     // original code
     
-    if ((is_null($order->get("profile")) && !$_this->config->get("General.def_calc_shippings_taxes")) || $order->get("weight") == 0 || $order->get("payment_method") == "cod") {
+    if ((is_null($order->get("profile")) && !$_this->config->get("General.def_calc_shippings_taxes")) || $order->get("weight") == 0 || $order->get("payment_method") == "COD") {
         return array();
     }
 

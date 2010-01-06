@@ -81,7 +81,7 @@ function Shipping_intershipper_getRates(&$_this, $order)
         $CountryDestination = $order->get("profile.shipping_country");
 	}
 
-    if ($order->get("payment_method") == "cod") {
+    if ($order->get("payment_method") == "COD") {
         $cod = $order->get("subtotal");
     } else {
         $cod = 0;

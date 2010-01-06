@@ -77,6 +77,6 @@ require_once LC_ROOT_DIR . 'includes' . LC_DS . 'functions.php';
  */
 function __autoload($className)
 {
-	require_once LC_CLASSES_DIR . str_replace('_', LC_DS, $className) . '.php';
+	include_once LC_CLASSES_DIR . str_replace('_', LC_DS, $className) . '.php';
 }
 

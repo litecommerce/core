@@ -38,6 +38,8 @@
 
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
+define('SESSION_DEFAULT_ID', md5(uniqid(rand(), true)));
+
 /**
 * Class implements both an abstraction for the concrete Session classes and
 * base session functionality .
@@ -69,7 +71,7 @@ class XLite_Model_Session extends XLite_Base implements XLite_Base_ISingleton
     protected $options = array(
 		'type' => self::SESSION_DEFAULT_TYPE,
 		'name' => self::SESSION_DEFAULT_NAME,
-		'id'   => '',
+		'id'   => SESSION_DEFAULT_ID,
 		'path' => self::SESSION_DEFAULT_PATH,
 		'ttl'  => self::SESSION_DEFAULT_TTL
 	);
@@ -101,9 +103,7 @@ class XLite_Model_Session extends XLite_Base implements XLite_Base_ISingleton
     */
     public function start()
     {
-		$class = 'XLite_Model_Session_' . $this->getType();
-
-		return new $class();
+		return call_user_func(array('XLite_Model_Session_' . $this->getType(), 'getInstance'));
     }
 
     /**

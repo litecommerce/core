@@ -66,7 +66,7 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XL
         }
         $this->session->set("masterPassword", null); // to avoid update conflict
         $order = new XLite_Model_Order();
-        $orders = $order->findAll("payment_method='credit_card'"); 
+        $orders = $order->findAll("payment_method='CreditCard'"); 
         $this->startDump();
         for ($i = 0; $i < count($orders); $i++) {
             if ($this->get("decrypt_orders")) {

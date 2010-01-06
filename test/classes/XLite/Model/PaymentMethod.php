@@ -76,16 +76,16 @@ class XLite_Model_PaymentMethod extends XLite_Model_Abstract
     public function __construct($id = null) // {{{
     {
         parent::__construct($id);
+
         if (isset($this->_range)) {
             $this->_range .= " AND ";
         } else {
             $this->_range = "";
-        }    
+        } 
+
         global $_registered_methods;
-        $this->_range .= "payment_method IN ('".join("','", $_registered_methods)."')";
-        if ($id) {
-            $this->read();
-        }
+
+        $this->_range .= "payment_method IN ('".join("','", array_keys($_registered_methods))."')";
     } // }}}
 
     /**
@@ -100,57 +100,32 @@ class XLite_Model_PaymentMethod extends XLite_Model_Abstract
     function registerMethod($name) // {{{
     {
         global $_registered_methods;
-        $_registered_methods[] = $name;
+
+        $_registered_methods[$name] = $name;
+
 		$this->xlite->_paymentMethodRegistered = 1;
     } // }}}
 
     function isRegisteredMethod($name)
     {
         global $_registered_methods;
-        foreach($_registered_methods as $method) {
-        	if ($method == $name) {
-        		return true;
-        	}
-        }
-        return false;
-    } // }}}
 
-    /**
-    * Returns a copy of the class 'PaymentMethod_$class' instance
-    */
-    function getInstanceByClass($class) // {{{
-    {
-        static $instances;
-        if (!isset($instances)) {
-            $instances = array();
-        }
-
-        if (!isset($instances[$class])) {
-            $ClassName = "PaymentMethod_" . $class;
-            if (func_class_exists($ClassName)) {
-                $instances[$class] = new $ClassName();
-            } else {
-                $instances[$class] = new XLite_Model_PaymentMethod();
-            }
-        }
-        return $instances[$class];
+        return isset($_registered_methods[$name]);
     } // }}}
 
     function getActiveMethods() // {{{
     {
-        static $instances;
+        $methodsList = array();
 
-        if (!isset($instances)) {
-            $instances = array();
-            $p = new XLite_Model_PaymentMethod();
-            foreach ($p->findAll() as $method) {
-				if ($method->is("enabled")) {
-                	$instances[$method->get("payment_method")] = $method;
-				}
-            }
-        }
-        return $instances;
-    } // }}}
+		$p = new XLite_Model_PaymentMethod();
+		foreach ($p->findAll() as $method) {
+			if ($method->is("enabled")) {
+				$methodsList[$method->get('payment_method')] = $method;
+			}
+		}
+
+		return $methodsList;
+	}
 
     function handleConfigRequest() // {{{
     {
@@ -159,17 +134,6 @@ class XLite_Model_PaymentMethod extends XLite_Model_Abstract
         return '';
     } // }}}
     
-    function _updateProperties(array $properties = array()) // {{{
-    {
-		parent::_updateProperties($properties);
-
-		$payment = $this->getInstanceByClass($properties["payment_method"]);
-		$payment->isPersistent = true;
-		$payment->isRead = true;
-
-        return $payment;
-    } // }}}
-
     function get($name) // {{{
     {
         $result = parent::get($name);
@@ -181,7 +145,8 @@ class XLite_Model_PaymentMethod extends XLite_Model_Abstract
                 }
             }
             $result = $this->params;
-        }
+		}
+
         return $result;
     } // }}}
 
@@ -193,6 +158,16 @@ class XLite_Model_PaymentMethod extends XLite_Model_Abstract
         }
         parent::set($name, $val);
     } // }}}
+
+	public static function factory($name)
+	{
+		global $_registered_methods;
+
+		$class = isset($_registered_methods[$name]) ? $_registered_methods[$name] : '';
+		$className = 'XLite_Model_PaymentMethod' . (empty($class) ? '' : '_' . $class);
+
+		return new $className($name);
+	}
 
 }
 

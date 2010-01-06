@@ -39,7 +39,7 @@
 * @version $Id$
 */
 
-class XLite_Module_PHPCyberSource_Model_PaymentMethod_PhpcybersourceCc extends PaymentMethod_credit_card // {{{ 
+class XLite_Module_PHPCyberSource_Model_PaymentMethod_PhpcybersourceCc extends XLite_Model_PaymentMethod_CreditCard 
 {
 	var $configurationTemplate 	= "modules/PHPCyberSource/config.tpl";
 	var $hasConfigurationForm	= true;

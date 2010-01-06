@@ -55,40 +55,16 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
 
 	public $_xlite_form_id = null;
 
-	protected function getArrayValue(array $array, $key)
-	{
-		return isset($array[$key]) ? $array[$key] : null;
-	}
-
-	protected function getArrayValues(array $array, $keys)
-	{
-		$result = $array;
-
-		if (!is_null($keys)) {
-            if (is_array($keys)) {
-
-                $keys = array_reverse($keys);
-
-                while (!empty($keys) && !is_null($result)) {
-
-					if (is_null($key = array_pop($keys))) break;
-                    $result = $this->getArrayValue($result, $key);
-                }
-            } else {
-
-                $result = $this->getArrayValue($result, $keys);
-            }
-        }
-
-		return $result;
-	}
+	public static function getInstance()
+    {
+        return self::_getInstance(__CLASS__);
+    }
 
 	protected function parseConfigFile()
 	{
 		$options = parse_ini_file(LC_ROOT_DIR . 'etc' . LC_DS . 'config.php', true);
 
 		if (is_array($options)) {
-
 			if (file_exists(LC_ROOT_DIR . 'etc' . LC_DS . 'config.local.php')) {
 				$optionsLocal = parse_ini_file(LC_ROOT_DIR . 'etc' . LC_DS . 'config.local.php', true);
 				if (is_array($optionsLocal)) {
@@ -96,17 +72,11 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
 				}
 			}
 		} else {
-
 			$this->_die('Unable to read/parse configuration file(s)');
 		}
 
 		return $options;
 	}
-
-	public static function getInstance()
-    {
-        return self::_getInstance(__CLASS__);
-    }
 
 	public function getOptions($names = null)
 	{
@@ -114,7 +84,21 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
 			$this->options = $this->parseConfigFile();
 		}
 
-		return $this->getArrayValues($this->options, $names);
+		$result = $this->options;
+
+		if (!is_null($names)) {
+			if (is_array($names)) {
+				$names = array_reverse($names);
+				while (!empty($names) && !is_null($result)) {
+					if (is_null($key = array_pop($names))) break;
+					$result = isset($result[$key]) ? $result[$key] : null;
+				}
+	        } else {
+				$result = isset($result[$names]) ? $result[$names] : null;
+			}
+		}
+
+		return $result;
 	}
 
     public function initFromGlobals()

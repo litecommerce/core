@@ -48,11 +48,13 @@
 class XLite_Controller_Customer_Login extends XLite_Controller_Abstract
 {
     var $params = array("target", "mode");
-    var $profile;
+
+    protected $profile = null;
 
     function action_login()
     {
         $this->profile = $this->auth->login($_POST["login"], $_POST["password"]);
+
         if ($this->profile == ACCESS_DENIED) {
             $this->set("valid", false);
             return;

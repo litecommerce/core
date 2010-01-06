@@ -97,7 +97,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 			$order = $this->get("cloneOrder");
 			if (!$order->isEmpty()) {
             	$this->pages["order_preview"] = "Review and Save Order";
-        		if ($this->xlite->get("mm.activeModules.AdvancedSecurity") && is_null($this->session->get("masterPassword")) && $order->get("paymentMethod.payment_method") == "credit_card") {
+        		if ($this->xlite->get("mm.activeModules.AdvancedSecurity") && is_null($this->session->get("masterPassword")) && $order->get("paymentMethod.payment_method") == "CreditCard") {
         		    $this->set("unsecureCC", true);
         		}
             } else {
@@ -916,7 +916,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 		$order1->_substatusChanged = false;
 		$order1->_statusChanged = false;
 
-		if ($order2->get("payment_method") == "credit_card") {
+		if ($order2->get("payment_method") == "CreditCard") {
 			$this->addDetails($order1);
 		}
         $order1->set("order_id",$properties['order_id']);

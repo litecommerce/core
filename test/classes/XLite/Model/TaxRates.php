@@ -735,7 +735,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
 	{
         foreach ($this->_taxes as $tax) {
             if ($tax["name"] == $name) {
-                return $tax["registration"];
+                return isset($tax["registration"]) ? $tax["registration"] : '';
             }
         }
         return '';

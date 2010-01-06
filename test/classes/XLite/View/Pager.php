@@ -54,6 +54,8 @@ class XLite_View_Pager extends XLite_View
     var $params = array("pageID");
     var $itemsPerPage = 10;
 
+	protected $pages = null;
+
     function initView()
     {
         parent::initView();

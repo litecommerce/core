@@ -120,7 +120,15 @@ class XLite_Model_ModulesManager extends XLite_Base
     	// see PaymentMethod.php
 		// registering initial payment methods
         global $_registered_methods;
-        $_registered_methods = array("phone_ordering", "fax_ordering", "purchase_order", "credit_card", "echeck", "cod", "money_ordering");
+        $_registered_methods = array(
+			'PhoneOrdering' => 'Offline',
+			'FaxOrdering'   => 'Offline',
+			'PurchaseOrder' => 'Offline',
+			'CreditCard'    => 'CreditCard',
+			'Echeck'        => 'Echeck',
+			'COD'           => 'Offline',
+			'MoneyOrdering' => 'Offline',
+		);
 
         $module = new XLite_Model_Module();
         $result = $module->iterate();
