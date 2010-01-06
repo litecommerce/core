@@ -1,3 +1,0 @@
-paymentmethod_chronopay:modules/ChronoPay/kernel/PaymentMethod/chronopay.php:paymentmethod_credit_card
-module_chronopay_dialog_callback:modules/ChronoPay/dialog/callback.php:dialog_callback
-module_chronopay:modules/ChronoPay/ChronoPay.php:module

@@ -1,5 +1,0 @@
-module_autoupdatecatalog_category:modules/AutoUpdateCatalog/kernel/Category.php:category
-module_autoupdatecatalog_product:modules/AutoUpdateCatalog/kernel/Product.php:product
-admin_dialog_autoupdate_catalog:modules/AutoUpdateCatalog/admin/dialog/autoupdate_catalog.php:admin_dialog
-module_autoupdatecatalog_admin_dialog:modules/AutoUpdateCatalog/admin/base/Dialog.php:admin_dialog
-module_autoupdatecatalog:modules/AutoUpdateCatalog/AutoUpdateCatalog.php:module

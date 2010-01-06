@@ -1,2 +1,0 @@
-paymentmethod_skipjack_cc:modules/SkipJack/kernel/PaymentMethod/skipjack_cc.php:paymentmethod_credit_card
-module_skipjack:modules/SkipJack/SkipJack.php:module

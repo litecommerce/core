@@ -1,4 +1,0 @@
-currencycountries:modules/MultiCurrency/kernel/Currency.php:base
-module_multicurrency_widget:modules/MultiCurrency/base/Widget.php:widget
-admin_dialog_currencies:modules/MultiCurrency/admin/dialog/currencies.php:admin_dialog
-module_multicurrency:modules/MultiCurrency/MultiCurrency.php:module

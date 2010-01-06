@@ -1,3 +1,0 @@
-module_greetvisitor_dialog_main:modules/GreetVisitor/dialog/main.php:dialog_main
-module_greetvisitor_admin_dialog_template_editor:modules/GreetVisitor/admin/dialog/template_editor.php:admin_dialog_template_editor
-module_greetvisitor:modules/GreetVisitor/GreetVisitor.php:module

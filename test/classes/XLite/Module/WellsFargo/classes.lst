@@ -1,2 +1,0 @@
-paymentmethod_wells_fargo_cc:modules/WellsFargo/kernel/PaymentMethod/wells_fargo_cc.php:paymentmethod_credit_card
-module_wellsfargo:modules/WellsFargo/WellsFargo.php:module

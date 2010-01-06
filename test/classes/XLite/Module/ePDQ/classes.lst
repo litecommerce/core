@@ -1,2 +1,0 @@
-paymentmethod_epdq_cc:modules/ePDQ/kernel/PaymentMethod/epdq_cc.php:paymentmethod_credit_card
-module_epdq:modules/ePDQ/ePDQ.php:module

@@ -1,4 +1,0 @@
-cmulticategoriesvalidator:modules/MultiCategories/validators/MultiCategoriesValidator.php:crequiredvalidator
-module_multicategories_admin_dialog_add_product:modules/MultiCategories/admin/dialog/add_product.php:admin_dialog_add_product
-module_multicategories_admin_dialog_product:modules/MultiCategories/admin/dialog/product.php:admin_dialog_product
-module_multicategories:modules/MultiCategories/MultiCategories.php:module

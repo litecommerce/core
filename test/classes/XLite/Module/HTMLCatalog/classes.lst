@@ -1,5 +1,0 @@
-catalog:modules/HTMLCatalog/kernel/Catalog.php:flexycompiler
-dialog_htmlcatalog:modules/HTMLCatalog/base/dialog.php:dialog
-admin_dialog_catalog:modules/HTMLCatalog/admin/dialog/catalog.php:admin_dialog
-admin_dialog_module_htmlcatalog:modules/HTMLCatalog/admin/dialog/module.php:admin_dialog_module
-module_htmlcatalog:modules/HTMLCatalog/HTMLCatalog.php:module

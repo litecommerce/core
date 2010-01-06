@@ -1,2 +1,0 @@
-paymentmethod_verisign_cc:modules/VeriSign/kernel/PaymentMethod/verisign_cc.php:paymentmethod_credit_card
-module_verisign:modules/VeriSign/VeriSign.php:module

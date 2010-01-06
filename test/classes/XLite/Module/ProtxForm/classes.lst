@@ -1,3 +1,0 @@
-paymentmethod_protxform_cc:modules/ProtxForm/kernel/PaymentMethod/protxform.php:paymentmethod_credit_card
-dialog_protxform_checkout:modules/ProtxForm/dialog/protxform.php:dialog_checkout
-module_protxform:modules/ProtxForm/ProtxForm.php:module

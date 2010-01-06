@@ -1,9 +1,0 @@
-paymentmethod_paypalpro:modules/PayPalPro/kernel/PaymentMethod/paypalpro.php:paymentmethod_credit_card
-paymentmethod_paypalpro_express:modules/PayPalPro/kernel/PaymentMethod/paypalpro_express.php:paymentmethod
-order_paypalpro:modules/PayPalPro/kernel/Order.php:order
-dialog_express_checkout:modules/PayPalPro/dialog/express_checkout.php:dialog
-module_paypalpro_dialog_profile:modules/PayPalPro/dialog/profile.php:dialog_profile
-dialog_standard_checkout:modules/PayPalPro/dialog/standard_checkout.php:dialog_checkout
-module_paypalpro_admin_dialog_modules:modules/PayPalPro/admin/dialog/modules.php:admin_dialog_modules
-module_paypalpro_admin_dialog_payment_method:modules/PayPalPro/admin/dialog/payment_method.php:admin_dialog_payment_method
-module_paypalpro:modules/PayPalPro/PayPalPro.php:module

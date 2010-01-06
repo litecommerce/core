@@ -1,3 +1,0 @@
-paymentmethod_payflowpro_cc:modules/PayFlowPro/kernel/PaymentMethod/pfpro_cc.php:paymentmethod_credit_card
-https_payflowpro:modules/PayFlowPro/kernel/HTTPS.php:https
-module_payflowpro:modules/PayFlowPro/PayFlowPro.php:module

@@ -1,2 +1,0 @@
-paymentmethod_securetrading:modules/SecureTrading/kernel/PaymentMethod/securetrading.php:paymentmethod_credit_card
-module_securetrading:modules/SecureTrading/SecureTrading.php:module

@@ -1,2 +1,0 @@
-paymentmethod_networkmerchants_cc:modules/NetworkMerchants/kernel/PaymentMethod/networkmerchants_cc.php:paymentmethod_credit_card
-module_networkmerchants:modules/NetworkMerchants/NetworkMerchants.php:module

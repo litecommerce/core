@@ -1,3 +1,0 @@
-paymentmethod_verisignlink:modules/VerisignLink/kernel/PaymentMethod/verisignlink.php:paymentmethod_credit_card
-dialog_vlcheckout:modules/VerisignLink/dialog/vlcheckout.php:dialog_checkout
-module_verisignlink:modules/VerisignLink/VerisignLink.php:module

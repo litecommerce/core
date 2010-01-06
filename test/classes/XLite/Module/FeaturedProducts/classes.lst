@@ -1,5 +1,0 @@
-module_featuredproducts_category:modules/FeaturedProducts/kernel/Category.php:category
-featuredproduct:modules/FeaturedProducts/kernel/FeaturedProduct.php:base
-module_featuredproducts_product:modules/FeaturedProducts/kernel/Product.php:product
-module_featuredproducts_admin_dialog_categories:modules/FeaturedProducts/admin/dialog/categories.php:admin_dialog_categories
-module_featuredproducts:modules/FeaturedProducts/FeaturedProducts.php:module

@@ -1,7 +1,0 @@
-module_advancedsearch_auth:modules/AdvancedSearch/kernel/Auth.php:auth
-module_advancedsearch_product:modules/AdvancedSearch/kernel/Product.php:product
-module_advancedsearch_profile:modules/AdvancedSearch/kernel/Profile.php:profile
-dialog_advanced_search:modules/AdvancedSearch/dialog/advanced_search.php:dialog
-module_advancedsearch_dialog_search:modules/AdvancedSearch/dialog/search.php:dialog_search
-admin_dialog_advanced_search:modules/AdvancedSearch/admin/dialog/advanced_search.php:admin_dialog
-module_advancedsearch:modules/AdvancedSearch/AdvancedSearch.php:module

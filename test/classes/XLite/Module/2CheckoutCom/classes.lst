@@ -1,2 +1,0 @@
-paymentmethod_2checkout:modules/2CheckoutCom/kernel/PaymentMethod/2checkout.php:paymentmethod_credit_card
-module_2checkoutcom:modules/2CheckoutCom/2CheckoutCom.php:module

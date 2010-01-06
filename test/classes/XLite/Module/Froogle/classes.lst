@@ -1,4 +1,0 @@
-module_froogle_product:modules/Froogle/kernel/Product.php:product
-module_froogle_admin_dialog_export_catalog:modules/Froogle/admin/dialog/export_catalog.php:admin_dialog_export_catalog
-module_froogle_admin_dialog_module:modules/Froogle/admin/dialog/module.php:admin_dialog_module
-module_froogle:modules/Froogle/Froogle.php:module

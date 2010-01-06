@@ -1,2 +1,0 @@
-paymentmethod_cc_hsbc:modules/HSBC/kernel/PaymentMethod/cc_hsbc.php:paymentmethod_credit_card
-module_hsbc:modules/HSBC/HSBC.php:module

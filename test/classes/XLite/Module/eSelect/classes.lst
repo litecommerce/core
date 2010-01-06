@@ -1,3 +1,0 @@
-paymentmethod_eselect_cc:modules/eSelect/kernel/PaymentMethod/eselect_cc.php:paymentmethod_credit_card
-dialog_eselect_checkout:modules/eSelect/dialog/eselect.php:dialog_checkout
-module_eselect:modules/eSelect/eSelect.php:module

@@ -1,3 +1,0 @@
-paymentmethod_beanstream_cc:modules/BeanStream/kernel/PaymentMethod/beanstream_cc.php:paymentmethod_credit_card
-dialog_beanstream_checkout:modules/BeanStream/dialog/beanstream_checkout.php:dialog_checkout
-module_beanstream:modules/BeanStream/BeanStream.php:module
