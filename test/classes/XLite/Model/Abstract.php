@@ -59,25 +59,25 @@ class XLite_Model_Abstract extends XLite_Base
     * The SQL database table alias for object
     * @var string $alias
     */
-    var $alias;
+    protected $alias;
 
     /**
     * Object properties: field => default value
     * @var array $fields
     */
-    var $fields = array();
+    protected $fields = array();
 
     /**
     * Object properties values
     * @var array $properties
     */
-    var $properties = array();
+    protected $properties = array();
 
     /**
     * Primary key field names
     * @var array $primaryKey
     */
-    var $primaryKey = array(); 
+    protected $primaryKey = array(); 
 
     /**
     * Auto-increment field name. Used as a primary key too.
@@ -102,7 +102,7 @@ class XLite_Model_Abstract extends XLite_Base
     * is specified.
     * @var string $defaultOrder
     */
-    var $defaultOrder;
+    protected $defaultOrder;
 
     /**
     * Contains SQL WHERE clause used by default by findAll()

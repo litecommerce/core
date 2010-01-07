@@ -57,20 +57,15 @@ define("MM_OK", 0);
 */
 class XLite_Model_ModulesManager extends XLite_Base
 {
-	const CLASS_PREFIX = 'XLite_Module_';
-
-	const CLASS_SUFFIF = 'Main';
-
-
     /**
     * Contains the available Modules list.
     */
-    var $modules = array();
+/*    var $modules = array();
 
     /**
     * Contains the active (enabled) Modules list.
     */
-    var $activeModules = array();
+/*    var $activeModules = array();
     var $activeModulesNumber = 0;
     var $activeModulesHash = null;
 
@@ -84,7 +79,7 @@ class XLite_Model_ModulesManager extends XLite_Base
     * @access public
     * @return array The active modules.
     */
-    function getActiveModules() // {{{
+/*    function getActiveModules() // {{{
     {
     	if (!isset($this->activeModulesHash) || $this->activeModulesNumber != count($this->activeModules)) {
             $this->activeModulesHash = array();
@@ -115,7 +110,7 @@ class XLite_Model_ModulesManager extends XLite_Base
     * Attempts to initialize the active (enabled) modules.
     * @access public
     */
-    function initModules() // {{{
+/*    function initModules() // {{{
     {
     	// see PaymentMethod.php
 		// registering initial payment methods
@@ -181,7 +176,7 @@ class XLite_Model_ModulesManager extends XLite_Base
     * Attempts to initialize the ModulesManager and all active modules.
     * @access public
     */
-    function init() // {{{
+/*    function init() // {{{
     {
 		if (!empty($_REQUEST['target']) && !empty($_REQUEST['action'])) {
 			if ('upgrade' === $_REQUEST['target'] && ('upgrade' === $_REQUEST['action'] || 'upgrade_force' === $_REQUEST['action'])) {
@@ -481,9 +476,156 @@ EOT;
 				return Module__::MODULE_3RD_PARTY;
 		}
 	}
+
+
+*/
+
+
+	/**
+	 * GET params to enable safe mode
+	 */
+
+	const PARAM_SAFE_MODE = 'safe_mode';
+	const PARAM_AUTH_CODE = 'auth_code';
+
+	/**
+	 * Session variable to determine current mode
+	 */
+	const SESSION_VAR_SAFE_MODE = 'safe_mode';
+
+
+	/**
+	 * Determines if we need to initialize modules or not 
+	 * 
+	 * @var    bool
+	 * @access protected
+	 * @since  1.0
+	 */
+	protected $safeMode = false;
+
+	/**
+	 * Module object
+	 * 
+	 * @var    XLite_Model_Module
+	 * @access protected
+	 * @since  1.0
+	 */
+	protected $module = null;
+
+
+	/**
+	 * Instantiate moduel object
+	 * 
+	 * @return XLite_Model_Module
+	 * @access protected
+	 * @since  1.0
+	 */
+	protected function getModule()
+	{
+		if (is_null($this->module)) {
+			$this->module = new XLite_Model_Module();
+		}
+
+		return $this->module;
+	}
+
+	/**
+	 * Determines current mode 
+	 * 
+	 * @return bool
+	 * @access protected
+	 * @since  1.0
+	 */
+	protected function isInSafeMode()
+	{
+		$result = false;
+
+		if (XLite::getInstance()->is('adminZone') && isset($_GET[self::PARAM_SAFE_MODE])) {
+			$authCode = XLite::getInstance()->getOptions(array('installer_details', 'auth_code'));
+			$result = empty($authCode) xor (isset($_GET[self::PARAM_AUTH_CODE]) && ($authCode == $_GET[self::PARAM_AUTH_CODE]));
+		}
+
+		return $result;
+	}
+	
+    /**
+     * Cleanup cache
+     * 
+     * @return void
+     * @access protected
+     * @since  1.0
+     */
+    protected function cleanupCompileCache()
+    {
+        func_cleanup_cache('classes');
+        func_cleanup_cache('skins');
+    }
+
+	/**
+	 * Iterate on the "Modules" directory
+	 * 
+	 * @param array $callback callback function to apply for each module
+	 *  
+	 * @return array
+	 * @access protected
+	 * @since  1.0
+	 */
+	protected function iterateOverModules(array $callback)
+	{
+		$result = array();
+
+		foreach (new DirectoryIterator(LC_MODULES_DIR) as $fileInfo) {
+			if ($fileInfo->isDir() && !$fileInfo->isDot()) {
+				$name = $fileInfo->getFilename();
+				$result[$name] = call_user_func_array($callback, array($name));
+			}
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Run the "init" function for all active modules
+	 * 
+	 * @return void
+	 * @access protected
+	 * @since  1.0
+	 */
+	protected function initModules()
+	{
+		foreach ($this->getModule()->findAll('enabled = \'1\'') as $module) {
+			$className = 'XLite_Module_' . $module->get('name') . '_Main';
+			$moduleObject = new $className();
+			$moduleObject->init();
+		}
+	}
+
+
+    /**
+     * Attempts to initialize the ModulesManager and all active modules
+     * 
+     * @return void
+     * @access public
+     * @since  1.0
+     */
+    public function init()
+    {
+		if ($this->isInSafeMode()) {
+
+			if ('on' == $_GET[self::PARAM_SAFE_MODE]) {
+                XLite_Model_Session::getInstance()->set(self::SESSION_VAR_SAFE_MODE, true);
+				$this->set('safeMode', true);
+			} elseif ('off' == $_GET[self::PARAM_SAFE_MODE]) {
+				XLite_Model_Session::getInstance()->set(self::SESSION_VAR_SAFE_MODE, null);
+			}
+		}
+
+		if ($this->config->get('General.safe_mode') || XLite_Model_Session::getInstance()->isRegistered('safe_mode')) {
+			$this->cleanupCompileCache();
+			$this->set('safeMode', true);
+		} 
+
+        $this->initModules();
+    } 
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

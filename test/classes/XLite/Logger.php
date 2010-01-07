@@ -104,10 +104,10 @@ class XLite_Logger {
     function log($message, $level = null)
     {
         require_once "Log.php";
-        $logger =& Log::singleton($this->getType(),
-                                  $this->getName(),
-                                  $this->getIdent()
-                                  );
+        $logger = Log::singleton($this->getType(),
+                                 $this->getName(),
+                                 $this->getIdent()
+                                 );
         if (is_null($level)) {
             $level = $this->getLevel();
         }

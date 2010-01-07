@@ -23,7 +23,7 @@ abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstr
     {
 		$product = parent::getProduct();
 
-		if (!$this->product->get('enabled')) {
+		if (!is_null($product) && !$product->get('enabled')) {
 			$product = $this->product = null;
 		}
 

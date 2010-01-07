@@ -86,6 +86,7 @@ abstract class XLite_Controller_Abstract extends XLite_View
         if (is_null($this->product) && isset($_REQUEST["product_id"])) {
             $this->product = new XLite_Model_Product($_REQUEST["product_id"]);
         }
+
         return $this->product;
     }
 

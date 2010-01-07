@@ -278,6 +278,8 @@ Please correct errors above and click reload or click the button below to force 
 			return CANT_PATCH;
 		}
     }
+
+	// FIXME - not needed?
     function createConfig($name, $comment, $value, $category, $orderby, $type) // {{{
     {
         echo "Creating config option $name ($category) ... ";
@@ -300,6 +302,7 @@ Please correct errors above and click reload or click the button below to force 
         return true;
     } // }}}
 
+	// FIXME - not needed?
     function dropConfig($name, $category) // {{{
     {
         echo "Deleting config option $name ($category) ...";
@@ -316,6 +319,7 @@ Please correct errors above and click reload or click the button below to force 
         return true;
     } // }}}
 
+	// FIXME - not needed?
 	function patchTemplate($zone, $template, $patch, $re = '')
 	{
 		$layout = Layout::getInstance();

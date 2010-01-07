@@ -50,7 +50,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
     * @var array $fields The category properties
     * @access private
     */
-    var $fields = array(
+    protected $fields = array(
                     "category_id"           => 0,
                     "image_width"           => 0,
                     "image_height"          => 0,
