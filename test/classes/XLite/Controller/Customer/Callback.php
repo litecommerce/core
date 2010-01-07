@@ -44,7 +44,7 @@
 * @package $Package$
 * @version $Id$
 */
-class XLite_Controller_Customer_Callback extends XLite_Controller_Abstract
+class XLite_Controller_Customer_Callback extends XLite_Controller_Customer_Abstract
 {
     function action_callback()
     {

@@ -45,30 +45,18 @@
 * @access public
 * @version $Id$
 */
-class XLite_Controller_Abstract extends XLite_View
+abstract class XLite_Controller_Abstract extends XLite_View
 {
     var $params = array('target');
     var $template = "main.tpl";
     var $dumpStarted = false; // startDump was called
-    var $product = null; // current product or null
-    var $category = null; // current category or null
     var $locationPath = array(); // path for dialog location
 
 	protected $cart = null;
 
-    function __construct()
-    {
-        parent::__construct();
+	protected $product = null;
 
-        if (!$this->xlite->is("adminZone")) {
-            $this->cart = XLite_Model_Cart::getInstance();
-            // cleanup processed cart for non-checkout pages
-            $target = isset($_REQUEST["target"]) ? $_REQUEST["target"] : "";
-            if ($target != "checkout" && ($this->cart->is("processed") || $this->cart->is("queued"))) {
-                $this->cart->clear();
-            }
-        }
-    }
+	protected $category = null;
 
     function getAllParams($exeptions=null)
     {
@@ -88,21 +76,15 @@ class XLite_Controller_Abstract extends XLite_View
         return $params;
     }
 
-    function getTemplate()
+	function getTemplate()
     {
-        if (!$this->xlite->is("adminZone") && $this->get("config.General.add_on_mode")) {
-            return "../../../cart.html";
-        }
-        return $this->template;
-    }
-    
+		return $this->template;
+	}
+
     function getProduct()
     {
         if (is_null($this->product) && isset($_REQUEST["product_id"])) {
             $this->product = new XLite_Model_Product($_REQUEST["product_id"]);
-            if (!$this->xlite->is("adminZone") && !$this->product->get("enabled")) {
-                $this->product = null;
-            }
         }
         return $this->product;
     }
@@ -118,6 +100,7 @@ class XLite_Controller_Abstract extends XLite_View
     function init()
     {
         $this->mapRequest();
+
         parent::init();
     }
 
@@ -191,13 +174,6 @@ class XLite_Controller_Abstract extends XLite_View
 				// Admin area - redirect to login page
 				$this->_clear_xsid_data();
 				header("Location: " . $this->shopURL(ADMIN_SELF."?target=login"));
-				return;
-			}
-
-			if ($this->xlite->is("aspZone")) {
-				// ASPE Control Center - redirect ot login page
-				$this->_clear_xsid_data();
-				header("Location: " . $this->shopURL("cpanel.php?target=login"));
 				return;
 			}
 
@@ -387,14 +363,7 @@ class XLite_Controller_Abstract extends XLite_View
     */
     function shopURL($url, $secure = false)
     {
-        if ($fc = $this->config->get("Security.full_customer_security")) {
-            if (!$this->xlite->is("adminZone") && $fc) 
-                return $this->xlite->shopURL($url, $fc);
-            else
-                return $this->xlite->shopURL($url, $secure);
-        } else {
-            return $this->xlite->shopURL($url, $secure);
-        }    
+		return $this->xlite->shopURL($url, $secure);
     }
 
     function getProperties()
@@ -421,13 +390,10 @@ class XLite_Controller_Abstract extends XLite_View
         return rtrim($url, '&');
     }
 
-    function getLoginURL()
-    {
-        $script = $this->get("xlite.script");
-        $secure = $this->get("xlite.adminZone") ? $this->get("config.Security.admin_security") : $this->get("config.Security.customer_security");
-        $url = $this->shopUrl($script, $secure);
-        return $url;
-    }
+    public function getLoginURL()
+	{
+		return $this->shopUrl($this->get('xlite.script'));
+	}
 
     function getPageTemplate()
     {
@@ -553,17 +519,6 @@ class XLite_Controller_Abstract extends XLite_View
 
     function isSecure()
     {
-        if (!$this->xlite->is("adminZone")) {
-            if ($this->get("config.Security.full_customer_security")) {
-                if ($this->xlite->get("HTMLCatalogWorking"))
-                    return false;
-                else
-                    return true;
-            } else {
-                if (!is_null($this->get("feed")) && $this->get("feed") == "login")
-                    return $this->get("config.Security.customer_security");
-            }        
-        }
         return false;
     }
     

@@ -45,7 +45,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Controller_Customer_Profile extends XLite_Controller_Abstract
+class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_Abstract
 {
     var $params = array("target", "mode", "submode", "returnUrl"); // mode ::= register | modify | success | delete 
     var $mode = "register"; // default mode

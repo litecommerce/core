@@ -44,7 +44,7 @@
 * @package $Package$
 * @version $Id$
 */
-class XLite_Controller_Customer_Captcha extends XLite_Controller_Abstract
+class XLite_Controller_Customer_Captcha extends XLite_Controller_Customer_Abstract
 {
     var $params = array('target', 'id');
     

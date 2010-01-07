@@ -44,7 +44,7 @@
 * @package $Package$
 * @version $Id$
 */
-class XLite_Controller_Customer_CheckoutSuccess extends XLite_Controller_Abstract
+class XLite_Controller_Customer_CheckoutSuccess extends XLite_Controller_Customer_Abstract
 {
     var $params = array("target", "order_id");
     var $order = null;

@@ -45,7 +45,7 @@
 * @access public
 * @version $Id: upgrade.php
 */
-class XLite_Controller_Customer_Upgrade extends XLite_Controller_Abstract
+class XLite_Controller_Customer_Upgrade extends XLite_Controller_Customer_Abstract
 {
 	function init()
 	{

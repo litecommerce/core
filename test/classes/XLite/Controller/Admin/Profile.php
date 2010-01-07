@@ -51,6 +51,8 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
     var $mode = "modify"; // default mode
     var $backUrl = "admin.php?target=users";
 
+	protected $profile = null;
+
     function getDeleteUrl()
     {
         $params = $this->get("allParams");

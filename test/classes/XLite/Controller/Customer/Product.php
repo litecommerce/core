@@ -45,7 +45,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Controller_Customer_Product extends XLite_Controller_Abstract
+class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Abstract
 {
     var $params = array("target", "product_id", "category_id");
 

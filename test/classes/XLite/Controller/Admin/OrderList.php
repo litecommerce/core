@@ -49,6 +49,10 @@ class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_Abstract
     var $params = array('target', 'mode', 'order_id1', 'order_id2', 'login', 'status');
     var $noSuchUser = false;
 
+	protected $action = '';
+
+	protected $orders = null;
+
     function fillForm()
     {
         if (!isset($this->startDate)) {
@@ -60,11 +64,7 @@ class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_Abstract
  
     function isQuickSearch()
     {
-    	if ($this->action == "export_xls") {
-    		return false;
-    	}
-
-    	return true;
+    	return !('export_xls' == $this->action);
     }
 
     function getOrders()

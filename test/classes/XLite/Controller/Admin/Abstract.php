@@ -43,7 +43,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
+abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
 {
 	protected $recentAdmins = null;
 
@@ -215,6 +215,10 @@ EOT;
         return array();
     }
 
+	public function getLoginURL()
+	{
+		return $this->shopUrl($this->get('xlite.script'), $this->get('config.Security.admin_security'));
+	}
 }
 
 // WARNING :

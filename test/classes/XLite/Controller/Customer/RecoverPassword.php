@@ -44,7 +44,7 @@
 * @package $Package$
 * @version $Id$
 */
-class XLite_Controller_Customer_RecoverPassword extends XLite_Controller_Abstract
+class XLite_Controller_Customer_RecoverPassword extends XLite_Controller_Customer_Abstract
 {
     var $params = array("target", "mode", "email", "link_mailed");
 

@@ -45,7 +45,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Controller_Customer_Search extends XLite_Controller_Abstract
+class XLite_Controller_Customer_Search extends XLite_Controller_Customer_Abstract
 {
     var $params = array("target", "substring");
     var $products = null;

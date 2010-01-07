@@ -45,7 +45,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Controller_Customer_Order extends XLite_Controller_Abstract
+class XLite_Controller_Customer_Order extends XLite_Controller_Customer_Abstract
 {
     var $params = array("target", "order_id");
     var $order = null;
