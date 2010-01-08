@@ -43,7 +43,7 @@
 * @package WholesaleTrading
 * @version $Id$
 */
-class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product
+class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product implements XLite_Base_IDecorator
 {
 	var $_checkExistanceRequired = false; // perform direct sale check if the product does not exist
 

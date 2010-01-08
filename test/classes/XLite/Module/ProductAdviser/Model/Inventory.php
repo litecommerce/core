@@ -43,7 +43,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_ProductAdviser_Model_Inventory extends XLite_Module_InventoryTracking_Model_Inventory
+class XLite_Module_ProductAdviser_Model_Inventory extends XLite_Module_InventoryTracking_Model_Inventory implements XLite_Base_IDecorator
 {
     function set($property, $value)
     {

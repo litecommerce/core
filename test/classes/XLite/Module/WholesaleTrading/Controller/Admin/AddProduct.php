@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_WholesaleTrading_Controller_Admin_AddProduct extends XLite_Controller_Admin_AddProduct
+class XLite_Module_WholesaleTrading_Controller_Admin_AddProduct extends XLite_Controller_Admin_AddProduct implements XLite_Base_IDecorator
 {
 	function getValidatyModifier()
 	{

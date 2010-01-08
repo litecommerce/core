@@ -59,7 +59,7 @@ class XLite_Module_SnsIntegration_Main extends XLite_Model_Module
         $this->addDecorator("Cart", "Module_SnsIntegration_Cart");
         $this->addDecorator("Order", "Module_SnsIntegration_Order");
         $this->addDecorator("OrderItem", "Module_SnsIntegration_OrderItem");
-        $this->addDecorator("Dialog", "Module_SnsIntegration_Dialog");
+        $this->addDecorator("Dialog", "Module_SnsIntegration_dialog");
         $this->addDecorator("Auth", "Module_SnsIntegration_Auth");
         $this->addDecorator("Dialog_help", "Module_SnsIntegration_Dialog_help");
         $this->addDecorator("Dialog_search", "Module_SnsIntegration_Dialog_search");

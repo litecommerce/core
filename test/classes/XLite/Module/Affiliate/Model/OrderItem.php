@@ -41,7 +41,7 @@
 * @package Module_Affiliate
 * @version $Id$
 */
-class XLite_Module_Affiliate_Model_OrderItem extends XLite_Model_OrderItem
+class XLite_Module_Affiliate_Model_OrderItem extends XLite_Model_OrderItem implements XLite_Base_IDecorator
 {
     public function __construct()
     {

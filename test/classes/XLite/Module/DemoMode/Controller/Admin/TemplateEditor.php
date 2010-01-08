@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_DemoMode_Controller_Admin_TemplateEditor extends XLite_Module_LayoutOrganizer_Controller_Admin_TemplateEditor
+class XLite_Module_DemoMode_Controller_Admin_TemplateEditor extends XLite_Module_LayoutOrganizer_Controller_Admin_TemplateEditor implements XLite_Base_IDecorator
 {
     function init()
     {

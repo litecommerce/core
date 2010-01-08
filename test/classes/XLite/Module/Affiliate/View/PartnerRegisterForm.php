@@ -41,7 +41,7 @@
 * @package Module_Affiliate
 * @version $Id$
 */
-class XLite_Module_Affiliate_View_PartnerRegisterForm extends XLite_View_RegisterForm
+class XLite_Module_Affiliate_View_PartnerRegisterForm extends XLite_View_RegisterForm implements XLite_Base_IDecorator
 {
     function fillForm()
     {

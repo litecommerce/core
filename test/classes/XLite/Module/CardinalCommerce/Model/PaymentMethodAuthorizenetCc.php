@@ -41,7 +41,7 @@
 * @version $Id$
 */
 
-class XLite_Module_CardinalCommerce_Model_PaymentMethodAuthorizenetCc extends XLite_Module_AuthorizeNet_Model_PaymentMethod_AuthorizenetCc
+class XLite_Module_CardinalCommerce_Model_PaymentMethodAuthorizenetCc extends XLite_Module_AuthorizeNet_Model_PaymentMethod_AuthorizenetCc implements XLite_Base_IDecorator
 {
     function initRequest(&$cart, &$request)
     {

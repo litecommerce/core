@@ -42,7 +42,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_WholesaleTrading_Controller_Customer_CartUpdate extends XLite_Controller_Customer_Cart
+class XLite_Module_WholesaleTrading_Controller_Customer_CartUpdate extends XLite_Controller_Customer_Cart implements XLite_Base_IDecorator
 {
 	function updateCart()
 	{

@@ -43,7 +43,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Controller_Admin_Product
+class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Controller_Admin_Product implements XLite_Base_IDecorator
 {
 	var $productsFound = 0;
 	var $notifyPresentedHash = array();

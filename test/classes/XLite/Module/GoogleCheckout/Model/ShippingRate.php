@@ -37,7 +37,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_GoogleCheckout_Model_ShippingRate extends XLite_Model_ShippingRate
+class XLite_Module_GoogleCheckout_Model_ShippingRate extends XLite_Model_ShippingRate implements XLite_Base_IDecorator
 {
 	function getGoogleCheckoutCurrency()
 	{

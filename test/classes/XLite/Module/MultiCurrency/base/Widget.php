@@ -39,7 +39,7 @@
 * @version $Id$
 */
 
-class XLite_Module_MultiCurrency_base_Widget extends XLite_View_Abstract
+class XLite_Module_MultiCurrency_base_Widget extends XLite_View_Abstract implements XLite_Base_IDecorator
 { // {{{
 
 	var $currencies 		= null;

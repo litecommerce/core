@@ -43,7 +43,7 @@
 * @package Module_Newsletters
 * @version $Id$
 */
-class XLite_Module_Newsletters_View_RegisterForm extends XLite_View_RegisterForm
+class XLite_Module_Newsletters_View_RegisterForm extends XLite_View_RegisterForm implements XLite_Base_IDecorator
 {
     function fillForm()
     {

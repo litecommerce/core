@@ -44,7 +44,7 @@
 * @version $Id$
 */
 
-class XLite_Module_AOM_Model_Wysiwyg_Mediator extends XLite_Model_Wysiwyg_Mediator
+class XLite_Module_AOM_Model_Wysiwyg_Mediator extends XLite_Model_Wysiwyg_Mediator implements XLite_Base_IDecorator
 {
     
     function export($templates)

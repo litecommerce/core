@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_ProductOptions_Controller_Customer_Product extends XLite_Controller_Customer_Product
+class XLite_Module_ProductOptions_Controller_Customer_Product extends XLite_Controller_Customer_Product implements XLite_Base_IDecorator
 {
     function action_buynow()
     {

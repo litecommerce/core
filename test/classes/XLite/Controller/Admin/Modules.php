@@ -49,21 +49,29 @@
 class XLite_Controller_Admin_Modules extends XLite_Controller_Admin_Abstract
 {
 	protected $sections = array(
-		Module__::MODULE_PAYMENT   => 'Payment modules', 
-		Module__::MODULE_SHIPPING  => 'Shipping modules',
-		Module__::MODULE_SKIN      => 'Skin modules',
-		Module__::MODULE_GENERAL   => 'Add-ons',
-		Module__::MODULE_3RD_PARTY => '3rd party modules',
-		Module__::MODULE_UNKNOWN   => 'Unknown',
+		XLite_Model_Module::MODULE_PAYMENT   => 'Payment modules', 
+		XLite_Model_Module::MODULE_SHIPPING  => 'Shipping modules',
+		XLite_Model_Module::MODULE_SKIN      => 'Skin modules',
+		XLite_Model_Module::MODULE_GENERAL   => 'Add-ons',
+		XLite_Model_Module::MODULE_3RD_PARTY => '3rd party modules',
+		XLite_Model_Module::MODULE_UNKNOWN   => 'Unknown',
 	);
 
     var $success = true; // last operation status: true or false
-    var $modules = null;
     var $_sort_modules = null;
 
-    function getModules()
+	protected $modules = null;
+
+	protected $currentModuleType = null;
+
+    function getModules($type = null)
     {
-    	if (isset($this->modules)) {
+		if (is_null($this->modules) || $type !== $this->currentModuleType) {
+			$this->currentModuleType = $type;
+			$this->modules = XLite_Model_ModulesManager::getInstance()->getModules($type);
+		}
+
+    	/*if (isset($this->modules)) {
     		return $this->modules;
     	}
 		
@@ -80,7 +88,7 @@ class XLite_Controller_Admin_Modules extends XLite_Controller_Admin_Abstract
 					$this->modules[] = $modules[$i];
 				}
 			}
-		}
+		}*/
 
 		return $this->modules;
     }
@@ -99,8 +107,9 @@ class XLite_Controller_Admin_Modules extends XLite_Controller_Admin_Abstract
 
 		$temp = $this->get("modules");
 		foreach((array)$temp as $v) {
-			if ($v->get("type") == Module__::MODULE_UNKNOWN) {
-				$v->set("type", $this->xlite->mm->getPredefinedModuleType($v->get("name")));
+			if ($v->get("type") == XLite_Model_Module::MODULE_UNKNOWN) {
+				// FIXME
+				// $v->set("type", $this->xlite->mm->getPredefinedModuleType($v->get("name")));
 				$v->update();
 			}
 			if ($v->get("type") == $type){

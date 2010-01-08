@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_SnsIntegration_Controller_Customer_Search extends XLite_Controller_Customer_Search
+class XLite_Module_SnsIntegration_Controller_Customer_Search extends XLite_Controller_Customer_Search implements XLite_Base_IDecorator
 {
 	var $snsActionSend = false;
 

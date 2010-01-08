@@ -47,7 +47,7 @@ func_define('CALLBACK_PASSED_MESSAGE', 'CALLBACK TEST PASSED');
 * @access public
 * @version $Id$
 */
-class XLite_Module_GoogleCheckout_Controller_Admin_PaymentMethod extends XLite_Controller_Admin_PaymentMethod
+class XLite_Module_GoogleCheckout_Controller_Admin_PaymentMethod extends XLite_Controller_Admin_PaymentMethod implements XLite_Base_IDecorator
 {
     function sendRequest(&$payment, $url, $data)
     {

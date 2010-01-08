@@ -39,7 +39,7 @@
 * @version $Id$
 */
 
-class XLite_Module_AntiFraud_Controller_Admin_OrderList extends XLite_Controller_Admin_OrderList
+class XLite_Module_AntiFraud_Controller_Admin_OrderList extends XLite_Controller_Admin_OrderList implements XLite_Base_IDecorator
 {
 		function init()
 		{

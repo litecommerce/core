@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_LayoutOrganizer_Model_Category extends XLite_Model_Category
+class XLite_Module_LayoutOrganizer_Model_Category extends XLite_Model_Category implements XLite_Base_IDecorator
 {
 	public function __construct($c_id = null)
 	{

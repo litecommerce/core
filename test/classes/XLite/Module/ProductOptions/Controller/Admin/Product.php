@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Controller_Admin_Product
+class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Controller_Admin_Product implements XLite_Base_IDecorator
 {
     public function __construct()
     {

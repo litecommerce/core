@@ -45,7 +45,7 @@
 * @version $Id$
 */
 
-class XLite_Module_UPSOnlineTools_View_RegisterForm extends XLite_View_RegisterForm
+class XLite_Module_UPSOnlineTools_View_RegisterForm extends XLite_View_RegisterForm implements XLite_Base_IDecorator
 {
     var $upsError = false;
 

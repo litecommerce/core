@@ -43,7 +43,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_AOM_View_StatusSelect extends XLite_View_StatusSelect
+class XLite_Module_AOM_View_StatusSelect extends XLite_View_StatusSelect implements XLite_Base_IDecorator
 {
     var $allOption 	= false; 
 	var $statuses	= null;

@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_HTMLCatalog_base_Dialog extends XLite_Controller_Abstract
+class XLite_Module_HTMLCatalog_base_Dialog extends XLite_Controller_Abstract implements XLite_Base_IDecorator
 {
     function getLoginURL()
     {

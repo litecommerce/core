@@ -38,7 +38,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Order
+class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Order implements XLite_Base_IDecorator
 {
 	// settings // {{{  
 	var $page = "order_info";

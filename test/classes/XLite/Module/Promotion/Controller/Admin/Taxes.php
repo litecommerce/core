@@ -43,7 +43,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_Promotion_Controller_Admin_Taxes extends XLite_Controller_Admin_Taxes
+class XLite_Module_Promotion_Controller_Admin_Taxes extends XLite_Controller_Admin_Taxes implements XLite_Base_IDecorator
 {
 	/*
 	 * This function required for configuring discounts taxing policy

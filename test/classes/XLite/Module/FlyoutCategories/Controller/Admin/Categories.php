@@ -39,7 +39,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_FlyoutCategories_Controller_Admin_Categories extends XLite_Controller_Admin_Categories
+class XLite_Module_FlyoutCategories_Controller_Admin_Categories extends XLite_Controller_Admin_Categories implements XLite_Base_IDecorator
 {
 	var $categoriesMenu = array();
 	var $categoriesMenuMode = 0;

@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_Promotion_Model_Profile extends XLite_Model_Profile
+class XLite_Module_Promotion_Model_Profile extends XLite_Model_Profile implements XLite_Base_IDecorator
 {
     public function __construct($param = null)
     {

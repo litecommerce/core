@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_GoogleCheckout_View_StatusSelect extends XLite_View_StatusSelect
+class XLite_Module_GoogleCheckout_View_StatusSelect extends XLite_View_StatusSelect implements XLite_Base_IDecorator
 {
 	function isGoogleCheckoutOrder()
 	{

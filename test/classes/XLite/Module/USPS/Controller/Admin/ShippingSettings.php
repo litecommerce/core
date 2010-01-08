@@ -38,7 +38,7 @@
 
 /* vim: set expandtab tabstop=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
 
-class XLite_Module_USPS_Controller_Admin_ShippingSettings extends XLite_Controller_Admin_ShippingSettings
+class XLite_Module_USPS_Controller_Admin_ShippingSettings extends XLite_Controller_Admin_ShippingSettings implements XLite_Base_IDecorator
 {
     public function __construct()
     {

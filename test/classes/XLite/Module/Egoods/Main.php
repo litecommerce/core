@@ -64,10 +64,10 @@ class XLite_Module_Egoods_Main extends XLite_Model_Module
 		
         // admin backoffice - specific class decorations
         if ($this->xlite->is("adminZone")) {
-			$this->addDecorator("Admin_dialog_product", "Module_Egoods_Admin_dialog_product");
-			$this->addDecorator("Admin_dialog_export_catalog", "Module_Egoods_Admin_dialog_export_catalog");
-			$this->addDecorator("Admin_dialog_import_catalog", "Module_Egoods_Admin_dialog_import_catalog");
-			$this->addDecorator("Admin_dialog_stats", "Module_Egoods_Admin_dialog_stats");
+			$this->addDecorator("Admin_Dialog_product", "Module_Egoods_Admin_Dialog_product");
+			$this->addDecorator("Admin_Dialog_export_catalog", "Module_Egoods_Admin_dialog_export_catalog");
+			$this->addDecorator("Admin_Dialog_import_catalog", "Module_Egoods_Admin_dialog_import_catalog");
+			$this->addDecorator("Admin_Dialog_stats", "Module_Egoods_Admin_dialog_stats");
         }
 
 		$this->addDecorator("Dialog_checkout", "Module_Egoods_Dialog_checkout");

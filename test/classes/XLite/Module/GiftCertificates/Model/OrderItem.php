@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_GiftCertificates_Model_OrderItem extends XLite_Model_OrderItem
+class XLite_Module_GiftCertificates_Model_OrderItem extends XLite_Model_OrderItem implements XLite_Base_IDecorator
 {
     var $gc = null;
 

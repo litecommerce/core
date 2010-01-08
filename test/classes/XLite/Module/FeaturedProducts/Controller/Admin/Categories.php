@@ -44,7 +44,7 @@
 * @package Module_FeaturedProducts
 *
 */
-class XLite_Module_FeaturedProducts_Controller_Admin_Categories extends XLite_Controller_Admin_Categories
+class XLite_Module_FeaturedProducts_Controller_Admin_Categories extends XLite_Controller_Admin_Categories implements XLite_Base_IDecorator
 {
     public function __construct()
     {

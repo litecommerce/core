@@ -55,7 +55,7 @@ define("MM_OK", 0);
 * @access public
 * @version $Id$
 */
-class XLite_Model_ModulesManager extends XLite_Base
+class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingleton
 {
     /**
     * Contains the available Modules list.
@@ -548,19 +548,6 @@ EOT;
 		return $result;
 	}
 	
-    /**
-     * Cleanup cache
-     * 
-     * @return void
-     * @access protected
-     * @since  1.0
-     */
-    protected function cleanupCompileCache()
-    {
-        func_cleanup_cache('classes');
-        func_cleanup_cache('skins');
-    }
-
 	/**
 	 * Iterate on the "Modules" directory
 	 * 
@@ -601,6 +588,18 @@ EOT;
 	}
 
 
+	/**
+	 * Return singleton reference 
+	 * 
+	 * @return XLite_Model_Modules_Manager
+	 * @access public
+	 * @since  1.0
+	 */
+	public static function getInstance()
+    {
+        return self::_getInstance(__CLASS__);
+    }
+
     /**
      * Attempts to initialize the ModulesManager and all active modules
      * 
@@ -627,5 +626,23 @@ EOT;
 
         $this->initModules();
     } 
+
+	/**
+     * Cleanup cache
+     *
+     * @return void
+     * @access public
+     * @since  1.0
+     */
+    public function cleanupCompileCache()
+    {
+        func_cleanup_cache('classes');
+        func_cleanup_cache('skins');
+    }
+
+	public function getModules($type = null)
+	{
+		return $this->getModule()->findAll();
+	}
 }
 

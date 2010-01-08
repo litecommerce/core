@@ -45,7 +45,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_FlyoutCategories_View_ImageUpload extends XLite_View_ImageUpload
+class XLite_Module_FlyoutCategories_View_ImageUpload extends XLite_View_ImageUpload implements XLite_Base_IDecorator
 {
 
 	function isFS()

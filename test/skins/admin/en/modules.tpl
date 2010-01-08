@@ -103,7 +103,7 @@ Use this section to manage add-on components of your online store.
 
 {* Display payment modules *}
 
-<tbody IF="getSortModules(#8#)">
+<tbody {*IF="getSortModules(#8#)"*}>
 <widget template="modules_body.tpl" caption="Commercial payment modules" key="8">
 </tbody>
 

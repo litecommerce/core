@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_PayPalPro_Controller_Admin_Modules extends XLite_Controller_Admin_Modules
+class XLite_Module_PayPalPro_Controller_Admin_Modules extends XLite_Controller_Admin_Modules implements XLite_Base_IDecorator
 {
     function init()
     {

@@ -46,22 +46,6 @@
 */
 class XLite_Module_EcommerceReports_Main extends XLite_Model_Module
 {
-    function init()
-    {
-        parent::init();
-
-        // common class decorations
-        //$this->addDecorator("", "Module_ModuleName_");
-
-        // admin backoffice - specific class decorations
-        if ($this->xlite->is("adminZone")) {
-            //$this->addDecorator("Admin_dialog_stats", "Module_EcommerceReports_Admin_dialog_stats");
-        } else {
-        // customer frontend - specific class decorations
-            //$this->addDecorator("", "Module_ModuleName_");
-        }
-    }
-
     function uninstall()
     {
         func_cleanup_cache("classes");

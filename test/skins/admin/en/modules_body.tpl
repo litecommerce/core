@@ -22,7 +22,7 @@
 			    <th class="TableHead">Version</th>
 			    <th class="TableHead">&nbsp;</th>
 			</tr>
-			<tbody FOREACH="getSortModules(widget.key),module_idx,module">
+			<tbody FOREACH="getModules(widget.key),module_idx,module">
 			<tr valign=middle nowrap class="{getRowClass(module_idx,#DialogBox#,#TableRow#)}">
 				<td>
 					<table border=0 cellspacing="0" cellpadding="0">

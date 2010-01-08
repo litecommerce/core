@@ -43,7 +43,7 @@
 * @package $Package$
 * @version $Id$
 */
-class XLite_Module_Affiliate_Controller_Admin_Module extends XLite_Controller_Admin_Module
+class XLite_Module_Affiliate_Controller_Admin_Module extends XLite_Controller_Admin_Module implements XLite_Base_IDecorator
 {
     function action_update()
     {

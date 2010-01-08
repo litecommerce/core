@@ -41,7 +41,7 @@
 * @package Module_AdvancedSecurity
 * @version $Id$
 */
-class XLite_Module_AdvancedSecurity_Controller_Admin_Login extends XLite_Controller_Admin_Login
+class XLite_Module_AdvancedSecurity_Controller_Admin_Login extends XLite_Controller_Admin_Login implements XLite_Base_IDecorator
 {
 	function action_clear_password()
 	{

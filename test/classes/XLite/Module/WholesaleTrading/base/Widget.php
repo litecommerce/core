@@ -42,7 +42,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_WholesaleTrading_base_Widget extends XLite_View_Abstract
+class XLite_Module_WholesaleTrading_base_Widget extends XLite_View_Abstract implements XLite_Base_IDecorator
 {
     function price_format($base, $field = "", $thousand_delim = null, $decimal_delim = null)
 	{

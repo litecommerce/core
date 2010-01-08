@@ -61,8 +61,8 @@ class XLite_Module_AdvancedSecurity_Main extends XLite_Model_Module
         $this->addDecorator("Mailer", "Module_AdvancedSecurity_Mailer");
 		$this->addDecorator("Dialog_checkout", "Module_AdvancedSecurity_Dialog_checkout");
         if ($this->xlite->is("adminZone")) {
-            $this->addDecorator("Admin_Dialog_Order", "Module_AdvancedSecurity_Admin_Dialog_Order");
-			$this->addDecorator("Admin_Dialog_Login", "Module_AdvancedSecurity_Admin_Dialog_Login");
+            $this->addDecorator("Admin_Dialog_Order", "Module_AdvancedSecurity_Admin_Dialog_order");
+			$this->addDecorator("Admin_Dialog_login", "Module_AdvancedSecurity_Admin_Dialog_login");
 			$this->addDecorator("Admin_Dialog_payment_methods", "Module_AdvancedSecurity_Admin_Dialog_payment_methods");
         }
     }

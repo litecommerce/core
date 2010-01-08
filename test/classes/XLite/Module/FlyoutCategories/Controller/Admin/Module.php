@@ -43,7 +43,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_FlyoutCategories_Controller_Admin_Module extends XLite_Controller_Admin_Module
+class XLite_Module_FlyoutCategories_Controller_Admin_Module extends XLite_Controller_Admin_Module implements XLite_Base_IDecorator
 {
 	function init()
 	{

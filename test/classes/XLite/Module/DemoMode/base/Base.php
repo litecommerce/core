@@ -37,7 +37,7 @@
 
 /* vim: set expandtab tabstop=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
 
-class XLite_Module_DemoMode_base_Base extends XLite_Model_Abstract
+class XLite_Module_DemoMode_base_Base extends XLite_Model_Abstract implements XLite_Base_IDecorator
 {
 	public function __construct($id = null)
 	{

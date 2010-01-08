@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_WholesaleTrading_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_ImportCatalog
+class XLite_Module_WholesaleTrading_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_ImportCatalog implements XLite_Base_IDecorator
 {
     var $unique_identifier = null;
 

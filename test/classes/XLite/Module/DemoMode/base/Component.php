@@ -44,7 +44,7 @@
 * @package Base
 * @version $Id$
 */
-class XLite_Module_DemoMode_base_Component extends XLite_View
+class XLite_Module_DemoMode_base_Component extends XLite_View implements XLite_Base_IDecorator
 {
 
 	function init()

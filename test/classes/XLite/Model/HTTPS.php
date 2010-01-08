@@ -41,7 +41,7 @@
 define('HTTPS_ERROR', 1);
 define('HTTPS_SUCCESS', 2);
 
-require_once LC_ROOT_DIR . 'Net' . LC_DS . 'URL.php';
+require_once LC_ROOT_DIR . 'lib' . LC_DS . 'Net' . LC_DS . 'URL.php';
 
 /**
 * HTTPS allows to make HTTP requests thru ssl secure

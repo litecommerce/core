@@ -160,7 +160,7 @@ class XLite_Model_Mailer extends XLite_View
         $this->set("images", $imageParser->images);
 
         // Initialize PHPMailer
-        require_once "PHPMailer/class.phpmailer.php";
+		require_once LC_ROOT_DIR . 'lib' . LC_DS . 'PHPMailer' . LC_DS . 'class.phpmailer.php';
         $this->mail = new PHPMailer();
 
         $this->mail->SetLanguage($this->get("langLocale"),

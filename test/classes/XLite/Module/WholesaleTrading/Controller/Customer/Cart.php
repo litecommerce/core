@@ -42,7 +42,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_WholesaleTrading_Controller_Customer_Cart extends XLite_Module_WholesaleTrading_Controller_Customer_CartUpdate
+class XLite_Module_WholesaleTrading_Controller_Customer_Cart extends XLite_Module_WholesaleTrading_Controller_Customer_CartUpdate implements XLite_Base_IDecorator
 {
 	var $updateErrors = null;
 	var $params = array("target","mode");

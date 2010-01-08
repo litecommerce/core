@@ -43,7 +43,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_AOM_Controller_Admin_OrderList extends XLite_Controller_Admin_OrderList
+class XLite_Module_AOM_Controller_Admin_OrderList extends XLite_Controller_Admin_OrderList implements XLite_Base_IDecorator
 {
 	var $orders = null;
 	var $params = array('target', 'mode', 'start_order_id', 'end_order_id', 'login', 'status', 'person_info', 'product_name', 'period', 'start_total', 'end_total', 'payment_method', 'shipping_id');

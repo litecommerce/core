@@ -42,7 +42,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_GreetVisitor_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_TemplateEditor
+class XLite_Module_GreetVisitor_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_TemplateEditor implements XLite_Base_IDecorator
 {
     function getBasicTemplates()
     {

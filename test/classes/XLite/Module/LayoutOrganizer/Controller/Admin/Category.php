@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_LayoutOrganizer_Controller_Admin_Category extends XLite_Controller_Admin_Category
+class XLite_Module_LayoutOrganizer_Controller_Admin_Category extends XLite_Controller_Admin_Category implements XLite_Base_IDecorator
 {
     var $page = "category_modify";
 	var $schemes = null;

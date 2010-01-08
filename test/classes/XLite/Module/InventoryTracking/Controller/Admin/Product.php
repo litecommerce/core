@@ -42,7 +42,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Controller_Admin_Product
+class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Controller_Admin_Product implements XLite_Base_IDecorator
 {
     var $maxOrderBy = 1;
 

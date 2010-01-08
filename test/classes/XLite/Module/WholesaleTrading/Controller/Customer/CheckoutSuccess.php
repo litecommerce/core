@@ -43,7 +43,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_WholesaleTrading_Controller_Customer_CheckoutSuccess extends XLite_Controller_Customer_CheckoutSuccess
+class XLite_Module_WholesaleTrading_Controller_Customer_CheckoutSuccess extends XLite_Controller_Customer_CheckoutSuccess implements XLite_Base_IDecorator
 {
     function getOrder()
     {

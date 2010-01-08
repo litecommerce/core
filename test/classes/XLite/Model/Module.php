@@ -92,7 +92,7 @@ class XLite_Model_Module extends XLite_Model_Abstract
      * @access protected
      * @since  1.0
      */
-    protected $primaryKey = array('name' => null);
+    protected $primaryKey = array('name');
 
     /**
      * Default SQL ORDER clause 
@@ -260,7 +260,7 @@ class XLite_Model_Module extends XLite_Model_Abstract
     }
 
     /**
-     * Check if current module is depends on a passed one
+     * Check if current module depends on a passed one
      *
      * @param string $moduleName module to check
      *
@@ -347,13 +347,13 @@ class XLite_Model_Module extends XLite_Model_Abstract
         if (is_readable($sql) && !query_upload($sql, $this->db->connection, true)) {
             $this->failure();
         } else {
-            $zone = $this->get('zone');
+            $zone = $this->getZone();
             $skinFolders = array(
                 array('admin', 'en', 'modules'),
                 array('admin', 'en', 'images', 'modules'),
-                array($zone, 'en', 'modules'),
-                array($zone, 'en', 'images', 'modules'),
-                array('mail', 'en', 'modules'),
+                array($zone,   'en', 'modules'),
+                array($zone,   'en', 'images', 'modules'),
+                array('mail',  'en', 'modules'),
             );
 
             foreach ($skinFolders as $folder) {

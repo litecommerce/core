@@ -43,7 +43,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_Controller_Customer_Category
+class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_Controller_Customer_Category implements XLite_Base_IDecorator
 {
 	var $totals = array();
 	var $wholesale_prices = array();

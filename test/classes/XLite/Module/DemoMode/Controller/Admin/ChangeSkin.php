@@ -47,7 +47,7 @@
 *
 */
 
-class XLite_Module_DemoMode_Controller_Admin_ChangeSkin extends XLite_Controller_Admin_ChangeSkin
+class XLite_Module_DemoMode_Controller_Admin_ChangeSkin extends XLite_Controller_Admin_ChangeSkin implements XLite_Base_IDecorator
 {
 	function getCurrentSkin()
 	{

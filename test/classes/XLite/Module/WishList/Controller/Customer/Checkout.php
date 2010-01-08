@@ -39,7 +39,7 @@
 * @version $Id$
 */
 
-class XLite_Module_WishList_Controller_Customer_Checkout extends XLite_Controller_Customer_Checkout
+class XLite_Module_WishList_Controller_Customer_Checkout extends XLite_Controller_Customer_Checkout implements XLite_Base_IDecorator
 {
 	function success() // {{{
 	{

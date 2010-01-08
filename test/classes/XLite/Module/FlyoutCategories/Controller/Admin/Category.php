@@ -46,7 +46,7 @@
 * @version $Id$
 *
 */
-class XLite_Module_FlyoutCategories_Controller_Admin_Category extends XLite_Controller_Admin_Category
+class XLite_Module_FlyoutCategories_Controller_Admin_Category extends XLite_Controller_Admin_Category implements XLite_Base_IDecorator
 {
 
 	function init()

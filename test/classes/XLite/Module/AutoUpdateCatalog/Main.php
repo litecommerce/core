@@ -53,7 +53,7 @@ class XLite_Module_AutoUpdateCatalog_Main extends XLite_Model_Module
         $this->addDecorator("Product", "Module_AutoUpdateCatalog_Product");
         $this->addDecorator("Category", "Module_AutoUpdateCatalog_Category");
         if ($this->xlite->is("adminZone")) {
-            $this->addDecorator("Admin_dialog", "Module_AutoUpdateCatalog_Admin_dialog");
+            $this->addDecorator("Admin_Dialog", "Module_AutoUpdateCatalog_Admin_Dialog");
         }
 
 		$this->xlite->set("AutoUpdateCatalogEnabled", true);

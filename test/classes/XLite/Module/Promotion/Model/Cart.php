@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_Promotion_Model_Cart extends XLite_Model_Cart
+class XLite_Module_Promotion_Model_Cart extends XLite_Model_Cart implements XLite_Base_IDecorator
 {
 	var $_originalItems = false;
     var $doNotCallCartChanged = false;

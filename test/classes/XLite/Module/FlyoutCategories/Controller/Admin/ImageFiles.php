@@ -39,7 +39,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_FlyoutCategories_Controller_Admin_ImageFiles extends XLite_Controller_Admin_ImageFiles
+class XLite_Module_FlyoutCategories_Controller_Admin_ImageFiles extends XLite_Controller_Admin_ImageFiles implements XLite_Base_IDecorator
 {
 	function checkFlyoutCategories()
 	{

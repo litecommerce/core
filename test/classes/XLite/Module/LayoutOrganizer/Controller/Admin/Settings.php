@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_LayoutOrganizer_Controller_Admin_Settings extends XLite_Controller_Admin_Settings
+class XLite_Module_LayoutOrganizer_Controller_Admin_Settings extends XLite_Controller_Admin_Settings implements XLite_Base_IDecorator
 {
     function action_update()
     {

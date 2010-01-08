@@ -40,7 +40,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_CardinalCommerce_Model_PaymentMethodNetworkmerchantsCc extends XLite_Module_NetworkMerchants_Model_PaymentMethod_NetworkmerchantsCc
+class XLite_Module_CardinalCommerce_Model_PaymentMethodNetworkmerchantsCc extends XLite_Module_NetworkMerchants_Model_PaymentMethod_NetworkmerchantsCc implements XLite_Base_IDecorator
 {
 	function initRequest(&$cart, &$request)
 	{

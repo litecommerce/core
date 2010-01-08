@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_AntiFraud_Controller_Customer_Callback extends XLite_Controller_Customer_Callback
+class XLite_Module_AntiFraud_Controller_Customer_Callback extends XLite_Controller_Customer_Callback implements XLite_Base_IDecorator
 {
     function action_callback()
     {

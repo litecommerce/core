@@ -45,7 +45,7 @@
 * @version $Id$
 */
 
-class XLite_Module_SnsIntegration_Model_Cart extends XLite_Model_Cart
+class XLite_Module_SnsIntegration_Model_Cart extends XLite_Model_Cart implements XLite_Base_IDecorator
 {
     function checkout() 
     {

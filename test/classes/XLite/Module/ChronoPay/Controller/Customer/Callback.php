@@ -44,7 +44,7 @@
 * @package Module_ChronoPay
 * @version $Id$
 */
-class XLite_Module_ChronoPay_Controller_Customer_Callback extends XLite_Controller_Customer_Callback
+class XLite_Module_ChronoPay_Controller_Customer_Callback extends XLite_Controller_Customer_Callback implements XLite_Base_IDecorator
 {
 	function handleRequest()
 	{

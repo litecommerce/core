@@ -45,7 +45,7 @@
 * @version $Id$
 */
 
-class XLite_Module_PayPalPro_Controller_Admin_PaymentMethod extends XLite_Controller_Admin_PaymentMethod
+class XLite_Module_PayPalPro_Controller_Admin_PaymentMethod extends XLite_Controller_Admin_PaymentMethod implements XLite_Base_IDecorator
 {
 	function getPM()
 	{

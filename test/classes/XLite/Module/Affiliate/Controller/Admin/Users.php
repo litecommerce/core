@@ -43,7 +43,7 @@
 * @package $Package$
 * @version $Id$
 */
-class XLite_Module_Affiliate_Controller_Admin_Users extends XLite_Controller_Admin_Users
+class XLite_Module_Affiliate_Controller_Admin_Users extends XLite_Controller_Admin_Users implements XLite_Base_IDecorator
 {
     function getUsers()
     {

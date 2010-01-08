@@ -46,7 +46,7 @@
 * @version $Id$
 */
 
-class XLite_Module_UPSOnlineTools_Model_Shipping_Online extends XLite_Model_Shipping_Online
+class XLite_Module_UPSOnlineTools_Model_Shipping_Online extends XLite_Model_Shipping_Online implements XLite_Base_IDecorator
 {
     function getCarrier() {
         return $this->getModuleName();

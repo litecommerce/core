@@ -43,7 +43,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_ProductAdviser_Model_Mailer extends XLite_Model_Mailer
+class XLite_Module_ProductAdviser_Model_Mailer extends XLite_Model_Mailer implements XLite_Base_IDecorator
 {
     function set($property, $value)
 	{

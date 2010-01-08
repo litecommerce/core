@@ -42,7 +42,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_LayoutOrganizer_Model_FileNode extends XLite_Model_FileNode
+class XLite_Module_LayoutOrganizer_Model_FileNode extends XLite_Model_FileNode implements XLite_Base_IDecorator
 {
     function rename()
     {

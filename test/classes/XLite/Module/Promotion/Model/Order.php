@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_Promotion_Model_Order extends XLite_Model_Order
+class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
 {
 	var $_bonusPrices = true; // getPrice & getSubTotal return bonus prices
 	var $DC = null;

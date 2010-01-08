@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_LayoutOrganizer_Controller_Admin_Wysiwyg extends XLite_Controller_Admin_Wysiwyg
+class XLite_Module_LayoutOrganizer_Controller_Admin_Wysiwyg extends XLite_Controller_Admin_Wysiwyg implements XLite_Base_IDecorator
 {
     public function __construct()
     {

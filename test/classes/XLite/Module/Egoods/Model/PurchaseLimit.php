@@ -43,7 +43,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_Egoods_Model_PurchaseLimit extends XLite_Module_WholesaleTrading_Model_PurchaseLimit
+class XLite_Module_Egoods_Model_PurchaseLimit extends XLite_Module_WholesaleTrading_Model_PurchaseLimit implements XLite_Base_IDecorator
 {
     function get($property) {
         $value = parent::get($property);

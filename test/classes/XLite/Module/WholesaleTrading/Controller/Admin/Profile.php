@@ -42,7 +42,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_WholesaleTrading_Controller_Admin_Profile extends XLite_Controller_Admin_Profile
+class XLite_Module_WholesaleTrading_Controller_Admin_Profile extends XLite_Controller_Admin_Profile implements XLite_Base_IDecorator
 {
 	function isShowWholesalerFields()
 	{

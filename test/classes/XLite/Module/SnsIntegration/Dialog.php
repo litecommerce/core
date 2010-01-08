@@ -45,7 +45,7 @@
 * @version $Id$
 */
 
-class XLite_Module_SnsIntegration_Dialog extends XLite_Controller_Abstract
+class XLite_Module_SnsIntegration_Dialog extends XLite_Controller_Abstract implements XLite_Base_IDecorator
 {
     // distinguish current site - either http or https
     function getSnsTrackerURL()

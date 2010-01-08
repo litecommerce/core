@@ -45,7 +45,7 @@
 * @version $Id$
 */
 
-class XLite_Module_SnsIntegration_Controller_Customer_Help extends XLite_Controller_Customer_Help
+class XLite_Module_SnsIntegration_Controller_Customer_Help extends XLite_Controller_Customer_Help implements XLite_Base_IDecorator
 {
 	
     function action_contactus() // {{{

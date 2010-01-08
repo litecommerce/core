@@ -45,7 +45,7 @@
 * @version $Id$
 */
 
-class XLite_Module_FlyoutCategories_Controller_Admin_SchemeManager extends XLite_Module_LayoutOrganizer_Controller_Admin_SchemeManager
+class XLite_Module_FlyoutCategories_Controller_Admin_SchemeManager extends XLite_Module_LayoutOrganizer_Controller_Admin_SchemeManager implements XLite_Base_IDecorator
 {
 	var $schemes = null;
 	var $scheme = null;

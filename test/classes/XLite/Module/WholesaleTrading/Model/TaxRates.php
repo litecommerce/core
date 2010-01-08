@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_WholesaleTrading_Model_TaxRates extends XLite_Model_TaxRates
+class XLite_Module_WholesaleTrading_Model_TaxRates extends XLite_Model_TaxRates implements XLite_Base_IDecorator
 {
     function setOrderItem($item)
     {

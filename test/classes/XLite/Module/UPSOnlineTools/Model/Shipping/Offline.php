@@ -46,7 +46,7 @@
 * @version $Id$
 */
 
-class XLite_Module_UPSOnlineTools_Model_Shipping_Offline extends XLite_Model_Shipping_Offline
+class XLite_Module_UPSOnlineTools_Model_Shipping_Offline extends XLite_Model_Shipping_Offline implements XLite_Base_IDecorator
 {
     function getCarrier() {
         return "Other";

@@ -43,7 +43,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_GoogleCheckout_View_ButtonAltCheckout extends XLite_View_Button
+class XLite_Module_GoogleCheckout_View_ButtonAltCheckout extends XLite_View_Button implements XLite_Base_IDecorator
 {
 	var $buttonUrl = null;
 	var $gacObject = null;

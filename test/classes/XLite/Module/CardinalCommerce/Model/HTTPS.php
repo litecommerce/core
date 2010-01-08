@@ -48,7 +48,7 @@ require_once LC_ROOT_DIR . 'lib' . LC_DS . 'Net' . LC_DS . 'URL.php';
 * @version $Id$
 */
 
-class XLite_Module_CardinalCommerce_Model_HTTPS extends XLite_Model_HTTPS
+class XLite_Module_CardinalCommerce_Model_HTTPS extends XLite_Model_HTTPS implements XLite_Base_IDecorator
 {
     function requestLibCurl()
     {

@@ -45,7 +45,7 @@
 * @version $Id$
 */
 
-class XLite_Module_SnsIntegration_Model_Auth extends XLite_Model_Auth
+class XLite_Module_SnsIntegration_Model_Auth extends XLite_Model_Auth implements XLite_Base_IDecorator
 {
     function register(&$profile) // {{{
     {

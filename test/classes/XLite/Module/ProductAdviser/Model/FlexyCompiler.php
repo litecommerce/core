@@ -43,7 +43,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_ProductAdviser_Model_FlexyCompiler extends XLite_Model_FlexyCompiler
+class XLite_Module_ProductAdviser_Model_FlexyCompiler extends XLite_Model_FlexyCompiler implements XLite_Base_IDecorator
 {
 	function flexyExpression(&$str)
 	{

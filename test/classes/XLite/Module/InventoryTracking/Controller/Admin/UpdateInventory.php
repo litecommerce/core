@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_InventoryTracking_Controller_Admin_UpdateInventory extends XLite_Controller_Admin_UpdateInventory
+class XLite_Module_InventoryTracking_Controller_Admin_UpdateInventory extends XLite_Controller_Admin_UpdateInventory implements XLite_Base_IDecorator
 {
 	protected $inventory = null;
 

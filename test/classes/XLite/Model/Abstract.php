@@ -752,11 +752,9 @@ class XLite_Model_Abstract extends XLite_Base
         $properties = $this->properties;
         $condition = array();
         foreach ($this->primaryKey as $field) {
-            $condition[] = "$field='".addslashes($properties[$field])."'";
-            // remove primary keys
-            if (isset($properties[$field])) {
-            	unset($properties[$field]);
-            }
+			$condition[] = $field . ' = \'' . (isset($properties[$field]) ? addslashes($properties[$field]) : '') . '\'';
+			// remove primary keys
+			unset($properties[$field]);
         }
         $condition = implode(" AND ", $condition);
         $values = array(); // compile 'set' clause
@@ -770,7 +768,7 @@ class XLite_Model_Abstract extends XLite_Base
         }
         $values = implode(',', $values);
         $table = $this->getTable();
-        return "UPDATE $table SET $values WHERE $condition";
+        return 'UPDATE ' . $table . ' SET ' . $values . ' WHERE ' . $condition;
     } // }}}
     
     /**

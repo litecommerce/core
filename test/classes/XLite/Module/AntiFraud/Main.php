@@ -55,7 +55,7 @@ class XLite_Module_AntiFraud_Main extends Module // {{{
         $this->addDecorator("Country", "Module_AntiFraud_Country");
 
 		if ($this->xlite->is("adminZone")) {
-			 $this->addDecorator("Admin_Dialog_order", "Module_AntiFraud_Admin_Dialog_order");
+			 $this->addDecorator("Admin_Dialog_Order", "Module_AntiFraud_Admin_Dialog_order");
 			 $this->addDecorator("Admin_Dialog_order_list", "Module_AntiFraud_Admin_Dialog_order_list");
 			 $this->addDecorator("Admin_Dialog_module", "Admin_Dialog_module_AntiFraud");
 			 $this->addDecorator("Admin_Dialog_countries", "Module_AntiFraud_Admin_Dialog_countries");

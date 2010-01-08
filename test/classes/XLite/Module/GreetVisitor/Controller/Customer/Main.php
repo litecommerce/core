@@ -42,7 +42,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_GreetVisitor_Controller_Customer_Main extends XLite_Controller_Customer_Main
+class XLite_Module_GreetVisitor_Controller_Customer_Main extends XLite_Controller_Customer_Main implements XLite_Base_IDecorator
 {
     function isGreetVisitor()
     {

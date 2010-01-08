@@ -59,7 +59,7 @@ class XLite_Module_AOM_Main extends Module // {{{
 		$this->addLayout("common/print_invoice.tpl","modules/AOM/order_info.tpl");
  	 
 		if($this->xlite->is("adminZone")) {
-			$this->addDecorator("Admin_Dialog_order","Module_AOM_Admin_Dialog_order");
+			$this->addDecorator("Admin_Dialog_Order","Module_AOM_Admin_Dialog_order");
 			$this->addDecorator("Admin_Dialog_order_list","Module_AOM_Admin_Dialog_order_list");
             $this->addDecorator("Admin_Dialog_module", "Module_AOM_Admin_Dialog_module");
 			$this->addDecorator("WysiwygMediator", "Module_AOM_WysiwygMediator");

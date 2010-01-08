@@ -41,7 +41,7 @@
 * @version $Id$
 */
 
-class XLite_Module_CardinalCommerce_Model_PaymentMethodNetbillingCc extends XLite_Module_Netbilling_Model_PaymentMethod_NetbillingCc
+class XLite_Module_CardinalCommerce_Model_PaymentMethodNetbillingCc extends XLite_Module_Netbilling_Model_PaymentMethod_NetbillingCc implements XLite_Base_IDecorator
 {
     function initRequest(&$cart, &$request)
     {

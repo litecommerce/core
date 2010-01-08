@@ -43,7 +43,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controller_Admin_Order
+class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controller_Admin_Order implements XLite_Base_IDecorator
 {
 	var $page = "order_info";
 	var $payment_method = null;

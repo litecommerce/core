@@ -42,7 +42,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_Egoods_Controller_Admin_Stats extends XLite_Controller_Admin_Stats
+class XLite_Module_Egoods_Controller_Admin_Stats extends XLite_Controller_Admin_Stats implements XLite_Base_IDecorator
 {
     public function __construct() // {{{
     {

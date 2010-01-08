@@ -42,7 +42,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Controller_Admin_OrderList
+class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Controller_Admin_OrderList implements XLite_Base_IDecorator
 {
     var $delimiter  = "\t";
     var $crlf       = "\r\n";

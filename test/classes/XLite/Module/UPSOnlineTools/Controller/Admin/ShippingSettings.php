@@ -45,7 +45,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_UPSOnlineTools_Controller_Admin_ShippingSettings extends XLite_Controller_Admin_ShippingSettings
+class XLite_Module_UPSOnlineTools_Controller_Admin_ShippingSettings extends XLite_Controller_Admin_ShippingSettings implements XLite_Base_IDecorator
 {
 	function getShippings()
 	{

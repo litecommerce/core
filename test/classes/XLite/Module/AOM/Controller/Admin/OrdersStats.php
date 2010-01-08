@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_AOM_Controller_Admin_OrdersStats extends XLite_Controller_Admin_OrdersStats
+class XLite_Module_AOM_Controller_Admin_OrdersStats extends XLite_Controller_Admin_OrdersStats implements XLite_Base_IDecorator
 {
     function getPageTemplate()
     {

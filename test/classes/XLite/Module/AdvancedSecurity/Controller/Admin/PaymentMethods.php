@@ -46,7 +46,7 @@
 * @version $Id$
 *
 */
-class XLite_Module_AdvancedSecurity_Controller_Admin_PaymentMethods extends XLite_Controller_Admin_PaymentMethods
+class XLite_Module_AdvancedSecurity_Controller_Admin_PaymentMethods extends XLite_Controller_Admin_PaymentMethods implements XLite_Base_IDecorator
 {
 
 	function isAdvancedSecurityDisplayNote()

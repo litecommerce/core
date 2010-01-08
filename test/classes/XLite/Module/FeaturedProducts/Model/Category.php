@@ -42,7 +42,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_FeaturedProducts_Model_Category extends XLite_Model_Category
+class XLite_Module_FeaturedProducts_Model_Category extends XLite_Model_Category implements XLite_Base_IDecorator
 {
     function getFeaturedProducts()
     {

@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_ProductAdviser_Controller_Customer_Login extends XLite_Controller_Customer_Login
+class XLite_Module_ProductAdviser_Controller_Customer_Login extends XLite_Controller_Customer_Login implements XLite_Base_IDecorator
 {
     function init()
     {

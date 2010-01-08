@@ -47,7 +47,7 @@
 *
 */
 
-class XLite_Module_UPSOnlineTools_Controller_Customer_Cart extends XLite_Controller_Customer_Cart
+class XLite_Module_UPSOnlineTools_Controller_Customer_Cart extends XLite_Controller_Customer_Cart implements XLite_Base_IDecorator
 {
 	function action_update()
 	{

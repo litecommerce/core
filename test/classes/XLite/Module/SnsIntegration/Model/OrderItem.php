@@ -37,7 +37,7 @@
 
 /* vim: set expandtab tabstop=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
 
-class XLite_Module_SnsIntegration_Model_OrderItem extends XLite_Model_OrderItem
+class XLite_Module_SnsIntegration_Model_OrderItem extends XLite_Model_OrderItem implements XLite_Base_IDecorator
 {
     function updateAmount($amount)
     {

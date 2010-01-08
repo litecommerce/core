@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_DemoMode_Model_NewsLetter extends XLite_Module_Newsletters_Model_NewsLetter
+class XLite_Module_DemoMode_Model_NewsLetter extends XLite_Module_Newsletters_Model_NewsLetter implements XLite_Base_IDecorator
 {
     function send()
     {   

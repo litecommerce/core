@@ -44,7 +44,7 @@
 */
 
 
-class XLite_Module_Affiliate_Controller_Customer_Image extends XLite_Controller_Customer_Image
+class XLite_Module_Affiliate_Controller_Customer_Image extends XLite_Controller_Customer_Image implements XLite_Base_IDecorator
 {
     function isSecure()
     {

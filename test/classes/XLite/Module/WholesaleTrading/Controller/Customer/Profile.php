@@ -42,7 +42,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_WholesaleTrading_Controller_Customer_Profile extends XLite_Controller_Customer_Profile
+class XLite_Module_WholesaleTrading_Controller_Customer_Profile extends XLite_Controller_Customer_Profile implements XLite_Base_IDecorator
 {
 	function init()
 	{
