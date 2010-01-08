@@ -37,38 +37,18 @@
 
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
-class XLite_Module_DemoMode_Main extends XLite_Model_Module
+class XLite_Module_DemoMode_Main extends XLite_Module_Abstract
 {
     var $isFree = true;
 
     function init()
     {
         parent::init();
-        
-        $this->addDecorator("Base", "Module_DemoMode_Base");
-
         $mm = new XLite_Model_Module();
-        $this->addDecorator("Dialog", "Module_DemoMode_Dialog");
-		$this->addDecorator("Component", "Module_DemoMode_Component");
         if ($this->xlite->is("adminZone")) {
             $this->addLayout("welcome.tpl", "modules/DemoMode/welcome.tpl");
-			$this->addDecorator("Admin_Dialog_login", "Module_DemoMode_Admin_Dialog_login");
-			$this->addDecorator("Admin_Dialog_module", "Module_DemoMode_Admin_Dialog_module");
-			$this->addDecorator("Admin_Dialog_categories", "Module_DemoMode_Admin_Dialog_categories");
-            $this->addDecorator("Admin_Dialog_Scheme_Manager", "Module_DemoMode_Admin_Dialog_Scheme_Manager");
-            $this->addDecorator("Admin_Dialog_template_editor_LayoutOrganizer", "Module_DemoMode_AD_template_editor_LayoutOrganizer");
-			$this->addDecorator("Admin_Dialog_Change_Skin", "Module_DemoMode_Admin_Dialog_Change_Skin");
         } else {
-            $this->addDecorator("Dialog_login", "Module_DemoMode_Dialog_login");
-            $this->addDecorator("Dialog_profile", "Module_DemoMode_Dialog_profile");
-            $this->addDecorator("PartnerDialog", "Module_DemoMode_PartnerDialog");
-
         }
-
-		$this->addDecorator("NewsLetter", "NewsLetter_DemoMode");
-		$this->addDecorator("Mailer", "Mailer_DemoMode");
-		$this->addDecorator("FlexyCompiler", "FlexyCompiler_DemoMode");
-
         $cfg = new XLite_Model_Config();
         $this->xlite->config = $cfg->readConfig();
         if (!$this->session->get("superUser")) {

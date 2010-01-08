@@ -39,7 +39,7 @@
 * @version $Id$
 */
 
-class XLite_Module_MultiCurrency_Main extends XLite_Model_Module
+class XLite_Module_MultiCurrency_Main extends XLite_Module_Abstract
 { // {{{
 
 	var $isFree = true;
@@ -49,9 +49,6 @@ class XLite_Module_MultiCurrency_Main extends XLite_Model_Module
 	function init() // {{{ 
 	{
 		parent::init();
-
-		$this->addDecorator("Widget","Module_MultiCurrency_Widget");
-
 		$this->xlite->set("MultiCurrencyEnabled",true);
 
         $this->defaultCurrency = new XLite_Module_MultiCurrency_Model_Currency();

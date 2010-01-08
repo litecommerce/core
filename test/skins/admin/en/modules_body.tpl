@@ -28,17 +28,16 @@
 					<table border=0 cellspacing="0" cellpadding="0">
 					<script language="Javascript" IF="module.enabled">setHeaderChecked('{widget.key}');</script>
                     <tr valign=top nowrap>
-					{if:module.enabled&module.showSettingsForm&module.licenseValid}
+					{if:module.enabled&module.showSettingsForm}
 						<td width=13><a href="{module.settingsForm}" title="Click to configure module {module.name}" onClick="this.blur()"><img src="images/go.gif" border=0 width=13 align=absmiddle alt="Click to configure module {module.name}"></a></td>
 					{else:}
 						<td width=13><img src="images/spacer.gif" border=0 width=13 alt=""></td>
 					{end:}
-						<td>&nbsp;</td>
 						<td>
-					{if:module.enabled&module.showSettingsForm&module.licenseValid}
+					{if:module.enabled&module.showSettingsForm}
 							<a href="{module.settingsForm}" title="Click to configure module {module.name}" onClick="this.blur()"><b>{module.name}</b></a>
 					{else:}
-						{if:module.enabled&module.licenseValid}
+						{if:module.enabled}
 							<b>{module.name}</b>
 						{else:}
 								{module.name}
@@ -49,16 +48,11 @@
 					</table>
 				</td>
 
-				<td align=center><input id="active_module_{widget.key}" type="checkbox" name="active_modules[]" value="{module.module_id}" checked="{module.enabled&module.licenseValid}" onClick="javascript:this.blur();checkUpdated('{widget.key}')"><input type="hidden" name="installed_modules[]" value="{module.module_id}"></td>
+				<td align=center><input id="active_module_{widget.key}" type="checkbox" name="active_modules[]" value="{module.module_id}" checked="{module.enabled}" onClick="javascript:this.blur();checkUpdated('{widget.key}')"><input type="hidden" name="installed_modules[]" value="{module.module_id}"></td>
 				<td>{module.description}</td>
-				<td align=center>{module.version}<widget module="LiveUpdating" template="modules/LiveUpdating/module_version.tpl" moduleValue="{module}"></td>
+				<td align=center>{module.version}</td>
 				<td><input type="button" value=" Uninstall " onClick="uninstallModule(modules_form_{widget.key}, '{module.module_id}', '{addSlashes(module.name)}')"></td>
 			</tr>    
-
-			<tr IF="module.enabled&!module.licenseValid">
-				<td colspan=4 class=ErrorMessage>&gt;&gt;Cannot initialize module {module.name:h}: the module license is invalid</td>
-			</tr>
-
 			<tr IF="module.brokenDependencies">
 				<td colspan=4 class=ErrorMessage valign=top>&gt;&gt;Cannot initialize module {module.name:h}: dependency modules are not available<br>{foreach:module.brokenDependencies,idx,dep}<li> {dep:h}<br>{end:}</td>
 			</tr>

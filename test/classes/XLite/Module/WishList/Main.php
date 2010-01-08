@@ -44,21 +44,13 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_WishList_Main extends XLite_Model_Module
+class XLite_Module_WishList_Main extends XLite_Module_Abstract
 {
     var $minVer = "2.1";
 	
     function init()
     {
         parent::init();
-
-		$this->addDecorator("Dialog", "WishList_Dialog");
-		$this->addDecorator("Dialog_cart", "WishList_Dialog_cart");
-		$this->addDecorator("Dialog_profile", "WishList_Dialog_profile");
-		$this->addDecorator("Dialog_login", "WishList_Dialog_login");
-		$this->addDecorator("Dialog_product", "WishList_Dialog_product");
-		$this->addDecorator("Dialog_checkout", "WishList_Dialog_checkout");
-
         $this->xlite->set("WishListEnabled", true);
 	}
 

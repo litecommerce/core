@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_MultiCategories_Main extends XLite_Model_Module
+class XLite_Module_MultiCategories_Main extends XLite_Module_Abstract
 {
     var $isFree = true;
     var $minVer = "2.1.2";
@@ -54,8 +54,6 @@ class XLite_Module_MultiCategories_Main extends XLite_Model_Module
         parent::init();
 
 		if ($this->xlite->is("adminZone")) {
-        	$this->addDecorator("Admin_Dialog_add_product", "Module_MultiCategories_Admin_Dialog_add_product");
-        	$this->addDecorator("Admin_Dialog_product", "Module_MultiCategories_Admin_Dialog_product");
 		}
         
     }

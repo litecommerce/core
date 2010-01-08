@@ -39,31 +39,8 @@
 * @version $Id$
 */
 
-class XLite_Module_CanadaPost_Main extends Module // {{{ 
+class XLite_Module_CanadaPost_Main extends XLite_Module_Abstract
 {
-	var $showSettingsForm = true;
-	var $minVer = "2.0";
-
-	function getSettingsForm() // {{{
-	{ 
-        return "admin.php?target=cps";
-
-    } // }}}
-
-	function init() // {{{ 
-	{
-		parent::init();
-		$shipping = new XLite_Model_Shipping();
-		$shipping->registerShippingModule("cps");
-			
-		$this->addDecorator("Admin_Dialog_shipping_settings","Module_CanadaPost_Admin_Dialog_shipping_settings");
-
-		$this->xlite->set("CanadaPostEnabled",true);
-
-	} // }}}
-	
-    function uninstall() // {{{ 
-    {
         func_cleanup_cache("classes");
         func_cleanup_cache("skins");
         parent::uninstall();

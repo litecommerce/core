@@ -46,7 +46,7 @@ define('FEATURED_PRODUCTS_TABLE', DBTABLE_PREFIX.'featured_products');
 * @version $Id$
 * @package Module_FeaturedProducts
 */
-class XLite_Module_FeaturedProducts_Main extends XLite_Model_Module
+class XLite_Module_FeaturedProducts_Main extends XLite_Module_Abstract
 {
     var $isFree = true;
     var $minVer = "2.0";
@@ -55,11 +55,7 @@ class XLite_Module_FeaturedProducts_Main extends XLite_Model_Module
     function init()
 	{
 		parent::init();
-
-		$this->addDecorator("Category",  "Module_FeaturedProducts_Category");
-		$this->addDecorator("Product",  "Module_FeaturedProducts_Product");
         if ($this->xlite->is("adminZone")) {
-		    $this->addDecorator("Admin_Dialog_categories", "Module_FeaturedProducts_Admin_Dialog_categories");
         }
 	}
 

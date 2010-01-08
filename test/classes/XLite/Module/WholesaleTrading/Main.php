@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_WholesaleTrading_Main extends XLite_Model_Module
+class XLite_Module_WholesaleTrading_Main extends XLite_Module_Abstract
 {
 	var $showSettingsForm = true;
 	var $minVer = "2.1.2";
@@ -59,37 +59,7 @@ class XLite_Module_WholesaleTrading_Main extends XLite_Model_Module
         parent::init();
 
         // common class decorations
-        $this->addDecorator("Product", "Module_WholesaleTrading_Product");
-        $this->addDecorator("Category", "Module_WholesaleTrading_Category");
-        $this->addDecorator("Order", "Module_WholesaleTrading_Order");
-		$this->addDecorator("OrderItem", "Module_WholesaleTrading_OrderItem");
-        $this->addDecorator("TaxRates", "Module_WholesaleTrading_TaxRates");
-		$this->addDecorator("Profile", "Module_WholesaleTrading_Profile");
-	    $this->addDecorator("Auth", "Module_WholesaleTrading_Auth");
-
-		$this->addDecorator("Widget", "Module_WholesaleTrading_Widget");
-		$this->addDecorator("CRegisterForm", "Module_WholesaleTrading_CRegisterForm");
-
-        $this->addDecorator("Dialog_product", "Module_WholesaleTrading_Dialog_product");
-        $this->addDecorator("Dialog_category", "Module_WholesaleTrading_Dialog_category");
-        $this->addDecorator("Dialog_search", "Module_WholesaleTrading_Dialog_search");
-		$this->addDecorator("Dialog_cart", "Module_WholesaleTrading_Dialog_cart_update");
-		$this->addDecorator("Module_WholesaleTrading_Dialog_cart_update", "Module_WholesaleTrading_Dialog_cart");
-		$this->addDecorator("Dialog_profile", "Module_WholesaleTrading_Dialog_profile");
-		$this->addDecorator("Dialog_checkout", "Module_WholesaleTrading_Dialog_checkout");
-		$this->addDecorator("Dialog_checkoutSuccess", "Module_WholesaleTrading_Dialog_checkoutSuccess");
-		$this->addDecorator("Dialog_Order", "Module_WholesaleTrading_Dialog_Order");
-
 		if ($this->xlite->is("adminZone")) {
-		    $this->addDecorator("Admin_Dialog_product", "Module_WholesaleTrading_Admin_Dialog_product");
-			$this->addDecorator("Admin_Dialog_export_catalog", "Module_WholesaleTrading_Admin_Dialog_export_catalog");
-			$this->addDecorator("Admin_Dialog_import_catalog", "Module_WholesaleTrading_Admin_Dialog_import_catalog");
-			$this->addDecorator("Admin_Dialog_add_product", "Module_WholesaleTrading_Admin_Dialog_add_product");
-			$this->addDecorator("Admin_Dialog_profile", "Module_WholesaleTrading_Admin_Dialog_profile");
-			$this->addDecorator("Admin_Dialog_users", "Module_WholesaleTrading_Admin_Dialog_users");
-			$this->addDecorator("Admin_Dialog_Order", "Module_WholesaleTrading_Admin_Dialog_Order");
-			$this->addDecorator("Admin_Dialog_taxes", "Module_WholesaleTrading_Admin_Dialog_taxes");
-			$this->addDecorator("WysiwygMediator", "Module_WholesaleTrading_WysiwygMediator");
 			$this->addLayout("common/select_membership.tpl", "modules/WholesaleTrading/common/select_membership.tpl");
 		}
 

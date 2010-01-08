@@ -40,35 +40,8 @@
 * @version $Id$
 */
 
-class XLite_Module_AntiFraud_Main extends Module // {{{
+class XLite_Module_AntiFraud_Main extends XLite_Module_Abstract
 {
-
-	var $minVer = "2.0";
-	var $isFree = true;
-	var $showSettingsForm = true;
-
-	function init() // {{{ 
-	{
-		parent::init();	
-
-		$this->addDecorator("Order", "Module_AntiFraud_Order");
-        $this->addDecorator("Country", "Module_AntiFraud_Country");
-
-		if ($this->xlite->is("adminZone")) {
-			 $this->addDecorator("Admin_Dialog_Order", "Module_AntiFraud_Admin_Dialog_order");
-			 $this->addDecorator("Admin_Dialog_order_list", "Module_AntiFraud_Admin_Dialog_order_list");
-			 $this->addDecorator("Admin_Dialog_module", "Admin_Dialog_module_AntiFraud");
-			 $this->addDecorator("Admin_Dialog_countries", "Module_AntiFraud_Admin_Dialog_countries");
-		} else {
-			 $this->addDecorator("Dialog_profile", "Dialog_profile_module_AntiFraud");
-			 $this->addDecorator("Dialog_callback", "Dialog_callback_module_AntiFraud");
-		}
-		$this->xlite->set("AntiFraudEnabled",true);
-
-	} // }}} 
-	
-	function uninstall() // {{{ 
-	{
 		func_cleanup_cache("classes");
 		func_cleanup_cache("skins");
 		parent::uninstall();

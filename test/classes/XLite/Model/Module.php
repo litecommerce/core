@@ -193,11 +193,6 @@ class XLite_Model_Module extends XLite_Model_Abstract
         $this->addLink();
     }
 
-    // FIXME - this function must be deleted
-    function addDecorator($decorated, $decorator)
-    {
-    }
-
     /**
      * Overlay a template
      *
@@ -227,17 +222,6 @@ class XLite_Model_Module extends XLite_Model_Abstract
         parent::__construct($name);
 
         is_null($name) || $this->read();
-    }
-
-    /**
-     * Method to initialize concrete module instance
-     * 
-     * @return void
-     * @access public
-     * @since  1.0
-     */
-    public function init()
-    {
     }
 
     /**
@@ -366,5 +350,11 @@ class XLite_Model_Module extends XLite_Model_Abstract
             $this->addLink();
         }
     }
+
+	public function __call($name, array $arguments)
+	{
+		// TODO - call the certain module function
+		echo $name;die;
+	}
 }
 

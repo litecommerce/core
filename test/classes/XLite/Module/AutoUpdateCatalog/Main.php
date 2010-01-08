@@ -41,7 +41,7 @@
 * Class description.
 *
 */
-class XLite_Module_AutoUpdateCatalog_Main extends XLite_Model_Module
+class XLite_Module_AutoUpdateCatalog_Main extends XLite_Module_Abstract
 {
     var $minVer = "2.0";
     var $showSettingsForm = true;
@@ -49,11 +49,7 @@ class XLite_Module_AutoUpdateCatalog_Main extends XLite_Model_Module
     function init()
     {
         parent::init();
-
-        $this->addDecorator("Product", "Module_AutoUpdateCatalog_Product");
-        $this->addDecorator("Category", "Module_AutoUpdateCatalog_Category");
         if ($this->xlite->is("adminZone")) {
-            $this->addDecorator("Admin_Dialog", "Module_AutoUpdateCatalog_Admin_Dialog");
         }
 
 		$this->xlite->set("AutoUpdateCatalogEnabled", true);

@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_GiftCertificates_Main extends XLite_Model_Module
+class XLite_Module_GiftCertificates_Main extends XLite_Module_Abstract
 {
     var $minVer = "2.0";
     var $showSettingsForm = true;
@@ -56,19 +56,10 @@ class XLite_Module_GiftCertificates_Main extends XLite_Model_Module
 
         // customer frontend - specific class decorations
         if (!$this->xlite->is("adminZone")) {
-            $this->addDecorator("Dialog_cart", "Module_GiftCertificates_Dialog_cart");
-            $this->addDecorator("Dialog_checkout", "Module_GiftCertificates_Dialog_checkout");
         }
 		
 		if ($this->xlite->is("adminZone")) {
-			$this->addDecorator("WysiwygMediator", "Module_GiftCertificates_WysiwygMediator");
 		}
-
-		$this->addDecorator("Mailer", "Module_GiftCertificates_Mailer");
-		$this->addDecorator("Order", "Module_GiftCertificates_Order");
-		$this->addDecorator("OrderItem", "Module_GiftCertificates_OrderItem");
-		$this->addDecorator("TaxRates", "Module_GiftCertificates_TaxRates");
-		$this->addDecorator("Profile", "Module_GiftCertificates_Profile");
 		$pm = new XLite_Model_PaymentMethod();
 		$pm->registerMethod("gift_certificate");
         $img = XLite_Model_Image::getInstance();

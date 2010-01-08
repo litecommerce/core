@@ -39,7 +39,7 @@
 * @version $Id$
 */
 
-class XLite_Module_AdvancedSearch_Main extends Module // {{{
+class XLite_Module_AdvancedSearch_Main extends XLite_Module_Abstract // {{{
 {
     var $isFree = true;
 	var $minVer = "2.1";
@@ -53,12 +53,6 @@ class XLite_Module_AdvancedSearch_Main extends Module // {{{
 	function init() // {{{
 	{
 		parent::init();
-		
-		$this->addDecorator("Product","Module_AdvancedSearch_Product");
-	    $this->addDecorator("Profile","Module_AdvancedSearch_Profile");
-	    $this->addDecorator("Auth","Module_AdvancedSearch_Auth");
-        $this->addDecorator("Dialog_search","Module_AdvancedSearch_Dialog_search");
-
         $this->xlite->set("AdvancedSearchEnabled", true);
 	} // }}} 
 

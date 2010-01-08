@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_UPS_Main extends XLite_Model_Module
+class XLite_Module_UPS_Main extends XLite_Module_Abstract
 {
     var $minVer = "2.0";
     var $showSettingsForm = true;
@@ -58,7 +58,6 @@ class XLite_Module_UPS_Main extends XLite_Model_Module
         parent::init();
         $shipping = new XLite_Model_Shipping();
         $shipping->registerShippingModule("ups");
-        $this->addDecorator("Admin_Dialog_shipping_settings", "Module_UPS_Admin_Dialog_shipping_settings");
     }
 
     function uninstall()

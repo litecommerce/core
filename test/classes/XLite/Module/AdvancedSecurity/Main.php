@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_AdvancedSecurity_Main extends XLite_Model_Module
+class XLite_Module_AdvancedSecurity_Main extends XLite_Module_Abstract
 {
     var $minVer = "2.0";
     var $isFree = true;
@@ -57,13 +57,7 @@ class XLite_Module_AdvancedSecurity_Main extends XLite_Model_Module
     function init()
     {
         parent::init();
-        $this->addDecorator("Order", "Module_AdvancedSecurity_Order");
-        $this->addDecorator("Mailer", "Module_AdvancedSecurity_Mailer");
-		$this->addDecorator("Dialog_checkout", "Module_AdvancedSecurity_Dialog_checkout");
         if ($this->xlite->is("adminZone")) {
-            $this->addDecorator("Admin_Dialog_Order", "Module_AdvancedSecurity_Admin_Dialog_order");
-			$this->addDecorator("Admin_Dialog_login", "Module_AdvancedSecurity_Admin_Dialog_login");
-			$this->addDecorator("Admin_Dialog_payment_methods", "Module_AdvancedSecurity_Admin_Dialog_payment_methods");
         }
     }
 

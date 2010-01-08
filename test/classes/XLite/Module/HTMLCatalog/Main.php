@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_HTMLCatalog_Main extends XLite_Model_Module
+class XLite_Module_HTMLCatalog_Main extends XLite_Module_Abstract
 {
     var $isFree = true;
     var $minVer = "2.0";
@@ -53,10 +53,7 @@ class XLite_Module_HTMLCatalog_Main extends XLite_Model_Module
     function init()
     {
         parent::init();
-
-		$this->addDecorator("Dialog", "Dialog_HTMLCatalog");
         if ($this->xlite->is("adminZone")) {
-			$this->addDecorator("Admin_Dialog_module", "Admin_Dialog_module_HTMLCatalog");
 		}
     }
 

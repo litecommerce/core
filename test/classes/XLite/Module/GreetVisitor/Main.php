@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_GreetVisitor_Main extends XLite_Model_Module
+class XLite_Module_GreetVisitor_Main extends XLite_Module_Abstract
 {
     var $isFree = true;
     var $minVer = "2.0";
@@ -55,10 +55,8 @@ class XLite_Module_GreetVisitor_Main extends XLite_Model_Module
 
         if ($this->xlite->is("adminZone")) {
             // admin backoffice - specific class decorations
-            $this->addDecorator("Admin_Dialog_template_editor", "Module_GreetVisitor_Admin_Dialog_template_editor");
         } else {
             // customer frontend - specific class decorations
-            $this->addDecorator("Dialog_main", "Module_GreetVisitor_Dialog_main");
         }
     }
 

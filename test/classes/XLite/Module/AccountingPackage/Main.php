@@ -42,7 +42,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_AccountingPackage_Main extends XLite_Model_Module
+class XLite_Module_AccountingPackage_Main extends XLite_Module_Abstract
 {
     var $minVer = "2.0";
     var $showSettingsForm = true;
@@ -51,12 +51,8 @@ class XLite_Module_AccountingPackage_Main extends XLite_Model_Module
     function init()
     {
         parent::init();
-
-		$this->addDecorator("Order","Module_AccountingPackage_Order");
-
         // admin backoffice - specific class decorations
         if ($this->xlite->is("adminZone")) {
-            $this->addDecorator("Admin_Dialog_order_list", "Module_AccountingPackage_Admin_Dialog_order_list");
         }
     }
 

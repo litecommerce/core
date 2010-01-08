@@ -42,7 +42,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_SkipJack_Main extends XLite_Model_Module
+class XLite_Module_SkipJack_Main extends XLite_Module_Abstract
 {
 	var $minVer = "2.0";
 

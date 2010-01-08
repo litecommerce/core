@@ -39,28 +39,8 @@
 * @version $Id$
 */
 
-class XLite_Module_PHPCyberSource_Main extends Module // {{{
+class XLite_Module_PHPCyberSource_Main extends XLite_Module_Abstract
 {
-	var $minVer = "2.0";
-	var $showSettingsForm = true;
-
-	function getSettingsForm() // {{{
-	{
-		return "admin.php?target=payment_method&payment_method=phpcybersource_cc";	
-	} // }}} 
-	
-	function init() // {{{ 
-    {
-
-        parent::init();
-
-        $pm = new XLite_Model_PaymentMethod();
-        $pm->registerMethod("phpcybersource_cc");
-
-    } // }}}
-
-    function uninstall() // {{{ 
-    {
         func_cleanup_cache("classes");
         func_cleanup_cache("skins");
 

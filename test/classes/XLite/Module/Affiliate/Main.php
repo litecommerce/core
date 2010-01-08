@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_Affiliate_Main extends XLite_Model_Module
+class XLite_Module_Affiliate_Main extends XLite_Module_Abstract
 {
     var $minVer = "2.0";
     var $showSettingsForm = true;
@@ -56,18 +56,8 @@ class XLite_Module_Affiliate_Main extends XLite_Model_Module
         XLite_Model_Image::getInstance()->registerImageClass("banner_image", "Banner images", "banners", "banner", "banner_id");
 
         // common class decorations
-        $this->addDecorator("Auth", "Module_Affiliate_Auth");
-        $this->addDecorator("Profile", "Module_Affiliate_Profile");
-        $this->addDecorator("Dialog", "Module_Affiliate_Dialog");
-        $this->addDecorator("Dialog_image", "Dialog_affiliate_image");
-        $this->addDecorator("CRegisterForm", "Module_Affiliate_CRegisterForm");
-        $this->addDecorator("Order", "Module_Affiliate_Order");
-        $this->addDecorator("OrderItem", "Module_Affiliate_OrderItem");
-
         // admin backoffice - specific class decorations
         if ($this->xlite->is("adminZone")) {
-            $this->addDecorator("Admin_Dialog_module", "Module_Affiliate_Admin_Dialog_module");
-            $this->addDecorator("Admin_Dialog_users", "Module_Affiliate_Admin_Dialog_users");
         }
         // customer frontend - specific class decorations
         else {

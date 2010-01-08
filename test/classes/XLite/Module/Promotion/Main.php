@@ -43,7 +43,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_Promotion_Main extends XLite_Model_Module
+class XLite_Module_Promotion_Main extends XLite_Module_Abstract
 {
 	var $minVer = '2.1.1';
     var $showSettingsForm = true;
@@ -52,29 +52,12 @@ class XLite_Module_Promotion_Main extends XLite_Model_Module
     {
         
         parent::init();
-
-		$this->addDecorator("Category", "Module_Promotion_Category");
-		$this->addDecorator("Product", "Module_Promotion_Product");
-		$this->addDecorator("Profile", "Module_Promotion_Profile");
-		$this->addDecorator("Order", "Module_Promotion_Order");
-		$this->addDecorator("OrderItem", "Module_Promotion_OrderItem");
-        $this->addDecorator("TaxRates", "Module_Promotion_TaxRates");
-
         // replace cart item and totals templates
         $this->addLayout("shopping_cart/item.tpl", "modules/Promotion/item.tpl");
         $this->addLayout("shopping_cart/totals.tpl", "modules/Promotion/totals.tpl");
 		$this->addLayout("shopping_cart/delivery.tpl", "modules/Promotion/delivery.tpl");
-
-		$this->addDecorator("Dialog_checkout", "Module_Promotion_Dialog_checkout");
-		$this->addDecorator("Dialog_cart", "Module_Promotion_Dialog_cart");
-		$this->addDecorator("Cart", "Module_Promotion_Cart");
-		$this->addDecorator("Widget", "Module_Promotion_Widget");
 		$pm = new XLite_Model_PaymentMethod();
 		$pm->registerMethod("bonus_points");
-
-		$this->addDecorator("Admin_Dialog_module", "Admin_Dialog_module_Promotion");
-		$this->addDecorator("Admin_Dialog_taxes", "Module_Promotion_Admin_Dialog_taxes");
-
 		$this->xlite->set("PromotionEnabled",true);
     }
 

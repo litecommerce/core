@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_ProductOptions_Main extends XLite_Model_Module
+class XLite_Module_ProductOptions_Main extends XLite_Module_Abstract
 {
     var $minVer = "2.0";
     var $showSettingsForm = true;
@@ -52,22 +52,6 @@ class XLite_Module_ProductOptions_Main extends XLite_Model_Module
     function init()
     {
         parent::init();
-
-        // add common class decorators
-        $this->addDecorator("Product",   "Module_ProductOptions_Product");
-        $this->addDecorator("Category",   "Module_ProductOptions_Category");
-        $this->addDecorator("OrderItem", "Module_ProductOptions_OrderItem");
-        $this->addDecorator("Order", "Module_ProductOptions_Order");
-        $this->addDecorator("Dialog_cart", "Module_ProductOptions_Dialog_cart");
-        $this->addDecorator("Dialog_product", "Module_ProductOptions_Dialog_product");
-
-        if ($this->xlite->is("adminZone")) {
-            $this->addDecorator("Admin_Dialog_product", "Module_ProductOptions_Admin_Dialog_product");
-            $this->addDecorator("Admin_Dialog_add_product", "Module_ProductOptions_Admin_Dialog_add_product");
-            $this->addDecorator("Admin_Dialog_export_catalog", "Module_ProductOptions_Admin_Dialog_export_catalog");
-            $this->addDecorator("Admin_Dialog_import_catalog", "Module_ProductOptions_Admin_Dialog_import_catalog");
-            $this->addDecorator("Admin_Dialog_order_list", "Module_ProductOptions_Admin_Dialog_order_list");
-        }
 
 		$this->xlite->set("ProductOptionsEnabled", true);
 	}

@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_Egoods_Main extends XLite_Model_Module
+class XLite_Module_Egoods_Main extends XLite_Module_Abstract
 {
 	var $showSettingsForm = true;
 	var $minVer = "2.0";
@@ -55,23 +55,12 @@ class XLite_Module_Egoods_Main extends XLite_Model_Module
         parent::init();
 
         // common class decorations
-		$this->addDecorator("Order", "Module_Egoods_Order");
-		$this->addDecorator("OrderItem", "Module_Egoods_OrderItem");
-		$this->addDecorator("Product", "Module_Egoods_Product");
         if (func_class_exists("PurchaseLimit")) {
-            $this->addDecorator("PurchaseLimit", "Module_Egoods_PurchaseLimit");
         }
 		
         // admin backoffice - specific class decorations
         if ($this->xlite->is("adminZone")) {
-			$this->addDecorator("Admin_Dialog_product", "Module_Egoods_Admin_Dialog_product");
-			$this->addDecorator("Admin_Dialog_export_catalog", "Module_Egoods_Admin_dialog_export_catalog");
-			$this->addDecorator("Admin_Dialog_import_catalog", "Module_Egoods_Admin_dialog_import_catalog");
-			$this->addDecorator("Admin_Dialog_stats", "Module_Egoods_Admin_dialog_stats");
         }
-
-		$this->addDecorator("Dialog_checkout", "Module_Egoods_Dialog_checkout");
-
 		$this->xlite->set("EgoodsEnabled",true);
     }
 

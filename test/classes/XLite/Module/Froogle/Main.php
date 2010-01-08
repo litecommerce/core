@@ -43,7 +43,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_Froogle_Main extends XLite_Model_Module
+class XLite_Module_Froogle_Main extends XLite_Module_Abstract
 {
     var $minVer = "2.0";
     var $isFree = true;
@@ -52,11 +52,7 @@ class XLite_Module_Froogle_Main extends XLite_Model_Module
     function init()
     {
         parent::init();
-        $this->addDecorator("Product", "Module_Froogle_Product");
-
         if ($this->xlite->is("adminZone")) {
-            $this->addDecorator("Admin_Dialog_export_catalog", "Module_Froogle_Admin_Dialog_export_catalog");
-			$this->addDecorator("Admin_Dialog_module", "Module_Froogle_Admin_Dialog_module");
         	$this->xlite->set("BaseHasImprovedExport", $this->isImprovedExport());
         }
     }

@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_DetailedImages_Main extends XLite_Model_Module
+class XLite_Module_DetailedImages_Main extends XLite_Module_Abstract
 {
     var $isFree = true;
     var $minVer = "2.0";
@@ -54,12 +54,7 @@ class XLite_Module_DetailedImages_Main extends XLite_Model_Module
         parent::init();
 
         XLite_Model_Image::getInstance()->registerImageClass("detailed_image", "Detailed images", "images", "image", "image_id");
-
-		$this->addDecorator("Product", "Module_DetailedImages_Product");
-
         if ($this->xlite->is("adminZone")) {
-            $this->addDecorator("Admin_Dialog_import_catalog", "Module_DetailedImages_Admin_Dialog_import_catalog");
-            $this->addDecorator("Admin_Dialog_product", "DetailedImages_Admin_Dialog_product");
         }
     }
 

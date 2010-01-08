@@ -45,7 +45,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_GoogleCheckout_Main extends XLite_Model_Module
+class XLite_Module_GoogleCheckout_Main extends XLite_Module_Abstract
 {
     var $minVer = "2.1.2";
     var $showSettingsForm = true;
@@ -90,20 +90,8 @@ class XLite_Module_GoogleCheckout_Main extends XLite_Model_Module
 			$this->xlite->set("gcheckout_currency", $currency);
 			$this->xlite->set("gcheckout_remove_discounts", $payment_method->get("params.remove_discounts"));
 		}
-
-		$this->addDecorator("CButton", "CButtonAltCheckout");
-		$this->addDecorator("OrderItem", "Module_GoogleCheckout_OrderItem");
-		$this->addDecorator("Order", "Module_GoogleCheckout_Order");
-		$this->addDecorator("Mailer", "Module_GoogleCheckout_Mailer");
-		$this->addDecorator("ShippingRate", "Module_GoogleCheckout_ShippingRate");
-		$this->addDecorator("Product", "Module_GoogleCheckout_Product");
-		$this->addDecorator("CStatusSelect", "Module_GoogleCheckout_CStatusSelect");
-
 		if ($this->xlite->is("adminZone")) {
-			$this->addDecorator("Admin_Dialog_payment_method", "Admin_Dialog_payment_method_GoogleCheckout");
-			$this->addDecorator("Admin_Dialog_Order", "Module_GoogleCheckout_Admin_Dialog_Order");
 		} else {
-			$this->addDecorator("Dialog_checkout", "Module_GoogleCheckout_Dialog_checkout");
 		}
 
 		$this->xlite->set("GoogleCheckoutEnabled",true);

@@ -39,31 +39,8 @@
 * @version $Id$
 */
 
-class XLite_Module_AustraliaPost_Main extends Module // {{{ 
+class XLite_Module_AustraliaPost_Main extends XLite_Module_Abstract
 {
-	var $showSettingsForm = true;
-	var $minVer = "2.0";
-
-	function getSettingsForm() // {{{
-	{ 
-        return "admin.php?target=aupost";
-
-    } // }}}
-
-	function init() // {{{ 
-	{
-		parent::init();
-		$shipping = new XLite_Model_Shipping();
-		$shipping->registerShippingModule("aupost");
-			
-		$this->addDecorator("Admin_Dialog_shipping_settings","Module_AustraliaPost_Admin_Dialog_shipping_settings");
-
-		$this->xlite->set("AustraliaPostEnabled", true);
-
-	} // }}}
-	
-    function uninstall() // {{{ 
-    {
         func_cleanup_cache("classes");
         func_cleanup_cache("skins");
         parent::uninstall();

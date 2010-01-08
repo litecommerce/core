@@ -36,7 +36,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_LayoutOrganizer_Main extends XLite_Model_Module
+class XLite_Module_LayoutOrganizer_Main extends XLite_Module_Abstract
 {
 	var $minVer = '2.1.1';
     var $showSettingsForm = true;
@@ -45,22 +45,8 @@ class XLite_Module_LayoutOrganizer_Main extends XLite_Model_Module
     {
 
         parent::init();
-
-        $this->addDecorator("Category", "Category_LayoutOrganizer");
-        $this->addDecorator("Dialog_category", "Dialog_category_LayoutOrganizer");
-        $this->addDecorator("Product", "Product_LayoutOrganizer");
-        $this->addDecorator("FileNode", "FileNode_LayoutOrganizer");
-        $this->addDecorator("Dialog_product", "Dialog_product_LayoutOrganizer");
-
         // admin frontend - specific class decorations
         if ($this->xlite->is("adminZone")) {
-			$this->addDecorator("Admin_Dialog_modules", "Admin_Dialog_modules_LayoutOrganizer");
-			$this->addDecorator("Admin_Dialog_module", "Admin_Dialog_module_LayoutOrganizer");
-			$this->addDecorator("Admin_Dialog_settings", "Admin_Dialog_settings_LayoutOrganizer");
-			$this->addDecorator("Admin_Dialog_category", "Admin_Dialog_category_LayoutOrganizer");
-			$this->addDecorator("Admin_Dialog_product", "Admin_Dialog_product_LayoutOrganizer");
-			$this->addDecorator("Admin_Dialog_wysiwyg", "Admin_Dialog_wysiwyg_LayoutOrganizer");
-			$this->addDecorator("Admin_Dialog_template_editor", "Admin_Dialog_template_editor_LayoutOrganizer");
 		}
 
 		if ($this->xlite->mm->get("activeModules.ShowcaseOrganizer")) {

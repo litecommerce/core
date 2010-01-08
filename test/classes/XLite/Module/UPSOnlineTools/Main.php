@@ -38,7 +38,7 @@
 * @version $Id$
 */
 
-class XLite_Module_UPSOnlineTools_Main extends XLite_Model_Module
+class XLite_Module_UPSOnlineTools_Main extends XLite_Module_Abstract
 {
     var $minVer = "2.1.2";
     var $showSettingsForm = true;
@@ -60,23 +60,7 @@ class XLite_Module_UPSOnlineTools_Main extends XLite_Model_Module
 
         $shipping = new XLite_Model_Shipping();
         $shipping->registerShippingModule("ups");
-
-        $this->addDecorator("Order", "Module_UPSOnlineTools_Order");
-		$this->addDecorator("OrderItem", "Module_UPSOnlineTools_OrderItem");
-		$this->addDecorator("Product", "Module_UPSOnlineTools_Product");
-        $this->addDecorator("Shipping_online", "Module_UPSOnlineTools_Shipping_online");
-        $this->addDecorator("Shipping_offline", "Module_UPSOnlineTools_Shipping_offline");
-        $this->addDecorator("Dialog", "Module_UPSOnlineTools_Dialog");
-
-        $this->addDecorator("Dialog_cart", "Module_UPSOnlineTools_Dialog_cart");
-        $this->addDecorator("CRegisterForm", "Module_UPSOnlineTools_CRegisterForm");
-		$this->addDecorator("Dialog_image", "Module_UPSOnlineTools_Dialog_image");
-
 		if ($this->xlite->is("adminZone")) {
-			$this->addDecorator("Admin_Dialog_product", "Module_UPSOnlineTools_Admin_Dialog_product");
-			$this->addDecorator("Admin_Dialog_Order", "Modules_UPSOnlineTools_Admin_Dialog_Order");
-			$this->addDecorator("Admin_Dialog_shipping_settings", "Module_UPSOnlineTools_Admin_Dialog_shipping_settings");
-
 		}
 
 		$this->xlite->set("UPSOnlineToolsEnabled", true);

@@ -43,7 +43,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_Newsletters_Main extends XLite_Model_Module
+class XLite_Module_Newsletters_Main extends XLite_Module_Abstract
 {
     var $minVer = "2.1.0";
     var $showSettingsForm = true;
@@ -57,11 +57,7 @@ class XLite_Module_Newsletters_Main extends XLite_Model_Module
         // add newsletters template
         $layout = XLite_Model_Layout::getInstance();
         $layout->addLayout("news.tpl", "modules/Newsletters/newsfeed.tpl");
-
-        $this->addDecorator("Auth", "Module_Newsletters_Auth");
-        $this->addDecorator("CRegisterForm", "Module_Newsletters_CRegisterForm");
         if ($this->xlite->is("adminZone")) {
-            $this->addDecorator("Admin_Dialog_module", "Admin_Dialog_module_Newsletters");
         }
     }
 

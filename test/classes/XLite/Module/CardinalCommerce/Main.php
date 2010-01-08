@@ -39,7 +39,7 @@
 * @version $Id$
 */
 
-class XLite_Module_CardinalCommerce_Main extends XLite_Model_Module
+class XLite_Module_CardinalCommerce_Main extends XLite_Module_Abstract
 {
 	var $minVer = '2.1.2';
     var $showSettingsForm = true;
@@ -49,7 +49,6 @@ class XLite_Module_CardinalCommerce_Main extends XLite_Model_Module
         parent::init();
 
         if ($this->xlite->mm->get("activeModules.VeriSign")) {
-			$this->addDecorator("PaymentMethod_verisign_cc", "PaymentMethod_verisign_cc_CardinalCommerce");
 		}
 
 		$build_ver = $this->xlite->config->get("Version.version");
@@ -57,28 +56,17 @@ class XLite_Module_CardinalCommerce_Main extends XLite_Model_Module
 			$this->xlite->set("cc_initRequestAlternate", true);
 		} else {
 			if ($this->xlite->get("AuthorizeNetEnabled")) {
-				$this->addDecorator("PaymentMethod_authorizenet_cc", "PaymentMethod_authorizenet_cc_CardinalCommerce");
 			}
 			if ($this->xlite->get("PayFlowProEnabled")) {
-				$this->addDecorator("PaymentMethod_payflowpro_cc", "PaymentMethod_payflowpro_cc_CardinalCommerce");
 			}
 			if ($this->xlite->get("NetworkMerchantsEnabled")) {
-				$this->addDecorator("PaymentMethod_networkmerchants_cc", "PaymentMethod_networkmerchants_cc_CardinalCommerce");
 			}
 			if ($this->xlite->get("NetbillingEnabled")) {
-				$this->addDecorator("PaymentMethod_netbilling_cc", "PaymentMethod_netbilling_cc_CardinalCommerce");
 			}
 		}
-
-		$this->addDecorator("HTTPS", "HTTPS_CardinalCommerce");
-
 		// admin frontend - specific class decorations
         if ($this->xlite->is("adminZone")) {
-			$this->addDecorator("Admin_Dialog_module", "Admin_Dialog_module_CardinalCommerce");
 		}
-
-		$this->addDecorator("Dialog_checkout", "Dialog_checkout_CardinalCommerce");
-
 		$this->xlite->set("CardinalCommerceEnabled",true);
     }
 

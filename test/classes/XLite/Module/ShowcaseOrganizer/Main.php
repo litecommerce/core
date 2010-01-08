@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_ShowcaseOrganizer_Main extends XLite_Model_Module
+class XLite_Module_ShowcaseOrganizer_Main extends XLite_Module_Abstract
 {
     var $minVer = "2.0";
 	var $showSettingsForm = true;
@@ -53,9 +53,7 @@ class XLite_Module_ShowcaseOrganizer_Main extends XLite_Model_Module
     function init()
     {
         parent::init();
-        $this->addDecorator("Dialog_category", "Module_ShowcaseOrganizer_Dialog_category");
         if ($this->xlite->is("adminZone")) {
-            $this->addDecorator("Admin_Dialog_module", "Module_ShowcaseOrganizer_Admin_Dialog_module");
         }
 
     }

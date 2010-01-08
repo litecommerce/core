@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_EcommerceReports_Main extends XLite_Model_Module
+class XLite_Module_EcommerceReports_Main extends XLite_Module_Abstract
 {
     function uninstall()
     {

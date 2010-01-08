@@ -42,7 +42,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_InventoryTracking_Main extends XLite_Model_Module
+class XLite_Module_InventoryTracking_Main extends XLite_Module_Abstract
 {
     var $minVer = "2.0";
     var $showSettingsForm = true;
@@ -50,17 +50,7 @@ class XLite_Module_InventoryTracking_Main extends XLite_Model_Module
     function init()
     {
         parent::init();
-        
-        $this->addDecorator("Product",   "Module_InventoryTracking_Product");
-        $this->addDecorator("Order",     "Module_InventoryTracking_Order");
-        $this->addDecorator("OrderItem", "Module_InventoryTracking_OrderItem");
-        $this->addDecorator("Dialog_product", "Module_InventoryTracking_Dialog_product");
-        $this->addDecorator("Dialog_cart", "Module_InventoryTracking_Dialog_cart");
-
         if ($this->xlite->is("adminZone")) {
-            $this->addDecorator("Admin_Dialog_product", "Module_InventoryTracking_Admin_Dialog_product");
-            $this->addDecorator("Admin_Dialog_product_list", "Module_InventoryTracking_Admin_Dialog_product_list");
-            $this->addDecorator("Admin_Dialog_update_inventory", "Module_InventoryTracking_Admin_Dialog_update_inventory");
         }
 
 		$this->xlite->set("InventoryTrackingEnabled",true);

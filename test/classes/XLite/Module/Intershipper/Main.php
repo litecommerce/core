@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_Intershipper_Main extends XLite_Model_Module
+class XLite_Module_Intershipper_Main extends XLite_Module_Abstract
 {
     
     var $showSettingsForm = true;
@@ -60,8 +60,6 @@ class XLite_Module_Intershipper_Main extends XLite_Model_Module
         parent::init();
         $shipping = new XLite_Model_Shipping();
         $shipping->registerShippingModule("intershipper");
-
-        $this->addDecorator("Admin_Dialog_shipping_settings", "Module_Intershipper_Admin_Dialog_shipping_settings");
     }
 
     function uninstall()

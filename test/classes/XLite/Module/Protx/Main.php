@@ -45,7 +45,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_Protx_Main extends XLite_Model_Module
+class XLite_Module_Protx_Main extends XLite_Module_Abstract
 {
 	var $minVer = "2.0";
 	var $showSettingsForm = true;
@@ -72,8 +72,6 @@ class XLite_Module_Protx_Main extends XLite_Model_Module
 		}
 
 		if ($this->xlite->is("adminZone")) {
-			$this->addDecorator("Admin_Dialog_payment_method", "Module_Protx_Admin_Dialog_payment_method");
-			$this->addDecorator("Admin_Dialog_modules", "Module_Protx_Admin_Dialog_modules");
 		}
 
 		if ($this->xlite->mm->get("activeModules.ProtxDirect")) {

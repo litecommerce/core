@@ -40,7 +40,7 @@
 * @version $Id$
 */
 
-class XLite_Module_VerisignLink_Main extends XLite_Model_Module
+class XLite_Module_VerisignLink_Main extends XLite_Module_Abstract
 {
     var $minVer = "2.0";
     var $showSettingsForm = true;

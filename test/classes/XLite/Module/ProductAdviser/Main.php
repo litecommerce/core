@@ -44,7 +44,7 @@ define('CUSTOMER_REQUEST_UPDATED', 'U');
 define('CUSTOMER_REQUEST_SENT', 'S');
 define('CUSTOMER_REQUEST_DECLINED', 'D');
 
-class XLite_Module_ProductAdviser_Main extends XLite_Model_Module
+class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
 {
 	var $minVer = '2.1.2';
     var $showSettingsForm = true;
@@ -56,24 +56,15 @@ class XLite_Module_ProductAdviser_Main extends XLite_Model_Module
 		$w = new XLite_View_Abstract();
 		$widgetMethods = array_map("strtolower", get_class_methods($w));
 		if (!in_array("isarraypointernth", $widgetMethods)) {
-			$this->addDecorator("Widget", "Widget_ProductAdviser");
-			$this->addDecorator("FlexyCompiler", "FlexyCompiler_ProductAdviser");
 		} else {
 			$this->xlite->set("PAPartialWidget", true);
-			$this->addDecorator("Widget", "Widget_ProductAdviser");
 		}
-
-		$this->addDecorator("Product",  "Product_ProductAdviser");
-		$this->addDecorator("Order",  "Order_ProductAdviser");
-
         if ($this->xlite->is("adminZone")) {
-			$this->addDecorator("Admin_Dialog_module", "Admin_Dialog_module_ProductAdviser");
 		}
 
 		/////////////////////////////////////
 		// "RelatedProducts" section
 		if ($this->xlite->is("adminZone")) {
-			$this->addDecorator("Admin_Dialog_product", "Admin_Dialog_product_ProductAdviser");
 		}
 		/////////////////////////////////////
 
@@ -82,8 +73,6 @@ class XLite_Module_ProductAdviser_Main extends XLite_Model_Module
 		if ($this->xlite->is("adminZone")) {
 			$this->validateConfig("number_recently_viewed");
 		}
-		$this->addDecorator("Dialog_product", "Dialog_product_ProductAdviser");
-
 		/////////////////////////////////////
 
 		/////////////////////////////////////
@@ -117,20 +106,11 @@ class XLite_Module_ProductAdviser_Main extends XLite_Model_Module
         $inventorySupport = func_class_exists("Inventory");
         $this->xlite->set("PA_InventorySupport", $inventorySupport);
 		if ($inventorySupport) {
-			$this->addDecorator("Inventory", "Inventory_ProductAdviser");
 			if (!$this->xlite->is("adminZone")) {
-				$this->addDecorator("Dialog_cart", "Dialog_cart_ProductAdviser");
 			}
 		}
 		if ($this->xlite->is("adminZone")) {
-			$this->addDecorator("Admin_Dialog_product_list", "Admin_Dialog_product_list_ProductAdviser");
 		}
-		$this->addDecorator("Dialog_login", "Dialog_login_ProductAdviser");
-		$this->addDecorator("Dialog_profile", "Dialog_profile_ProductAdviser");
-		$this->addDecorator("Dialog_category", "Dialog_category_ProductAdviser");
-		$this->addDecorator("Dialog_main", "Dialog_main_ProductAdviser");
-		$this->addDecorator("Mailer",  "Mailer_ProductAdviser");
-
 		$this->xlite->set("ProductAdviserEnabled", true);
 	}
 

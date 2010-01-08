@@ -38,7 +38,7 @@
 * @version $Id$
 */
 
-class XLite_Module_FlyoutCategories_Main extends XLite_Model_Module
+class XLite_Module_FlyoutCategories_Main extends XLite_Module_Abstract
 {
 	var $minVer = "2.1.2";
     var $showSettingsForm = true;
@@ -48,32 +48,17 @@ class XLite_Module_FlyoutCategories_Main extends XLite_Model_Module
         parent::init();
 
 		XLite_Model_Image::getInstance()->registerImageClass("category_small", "Small category icons", "categories", "smallimage", "category_id");
-
-		$this->addDecorator("Category", "FlyoutCategories_Category");
-
         // admin frontend - specific class decorations
         if ($this->xlite->is("adminZone")) 
         {
-			$this->addDecorator("Admin_Dialog", "Admin_Dialog_FlyoutCategories");
-			$this->addDecorator("Admin_Dialog_categories", "Admin_Dialog_categories_FlyoutCategories");
-			$this->addDecorator("Admin_Dialog_module", "Admin_Dialog_module_FlyoutCategories");
-			$this->addDecorator("Admin_Dialog_category", "FlyoutCategories_Admin_Dialog_category");
-			$this->addDecorator("Admin_Dialog_image_files", "Admin_Dialog_image_files_FlyoutCategories");
-			$this->addDecorator("CImageUpload", "FlyoutCategories_CImageUpload");
-
 			$this->addLayout("modules/LayoutOrganizer/main.tpl", "modules/FlyoutCategories/schemes_manager.tpl");
 
 			if ($this->xlite->LayoutOrganizerEnabled) {
-				$this->addDecorator("Admin_Dialog_Scheme_Manager", "Admin_Dialog_Scheme_Manager_FlyoutCategories");
 			}
 		}
 
         $scheme = new XLite_Module_FlyoutCategories_Model_FCategoriesScheme($this->get("config.FlyoutCategories.scheme"));
         $this->xlite->set('FlyoutCategoriesCssPath', 'styles/'.$scheme->get('options.color.value').'.css');
-
-		$this->addDecorator("Profile", "Module_FlyoutCategories_Profile");
-		$this->addDecorator("Auth", "Module_FlyoutCategories_Auth");
-
 		$this->xlite->set("FlyoutCategoriesEnabled", true);
     }
 

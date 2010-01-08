@@ -45,7 +45,7 @@
 * @version $Id$
 */
 
-class XLite_Module_SnsIntegration_Main extends XLite_Model_Module
+class XLite_Module_SnsIntegration_Main extends XLite_Module_Abstract
 {
     var $isFree = true;
     var $minVer = "2.0";
@@ -56,21 +56,10 @@ class XLite_Module_SnsIntegration_Main extends XLite_Model_Module
         parent::init();
 
         // common class decorations
-        $this->addDecorator("Cart", "Module_SnsIntegration_Cart");
-        $this->addDecorator("Order", "Module_SnsIntegration_Order");
-        $this->addDecorator("OrderItem", "Module_SnsIntegration_OrderItem");
-        $this->addDecorator("Dialog", "Module_SnsIntegration_dialog");
-        $this->addDecorator("Auth", "Module_SnsIntegration_Auth");
-        $this->addDecorator("Dialog_help", "Module_SnsIntegration_Dialog_help");
-        $this->addDecorator("Dialog_search", "Module_SnsIntegration_Dialog_search");
-        $this->addDecorator("Dialog_product", "Module_SnsIntegration_Dialog_product");
-
         if ($this->xlite->get("AdvancedSearchEnabled")) {
-        	$this->addDecorator("Dialog_advanced_search","Module_SnsIntegration_Dialog_advanced_search");
         }
 
         if ($this->xlite->is("adminZone")) {
-			$this->addDecorator("Admin_Dialog_module", "Admin_Dialog_module_SnsIntegration");
 		}
 
 		$this->xlite->set("SnsIntegrationEnabled", true);

@@ -39,53 +39,8 @@
 * @version $Id$
 */
 
-class XLite_Module_AOM_Main extends Module // {{{
+class XLite_Module_AOM_Main extends XLite_Module_Abstract
 {
-	var $minVer 			= "2.1.2";
-	var	$showSettingsForm 	= true;
-
-	function init() // {{{
-	{
-		parent::init();
-
-		$this->addDecorator("Order","Module_AOM_Order");
-		$this->addDecorator("OrderItem","Module_AOM_OrderItem");
-		$this->addDecorator("Profile","Module_AOM_Profile");
-		$this->addDecorator("CStatusSelect","Module_AOM_CStatusSelect");
-        $this->addDecorator("Admin_Dialog_orders_stats","Module_AOM_Admin_Dialog_orders_stats");
-		$this->addDecorator("Widget","Module_AOM_Widget");
-        $this->addLayout("common/order_status.tpl","modules/AOM/common/order_status.tpl");
-	    $this->addLayout("common/invoice.tpl","modules/AOM/order_info.tpl");
-		$this->addLayout("common/print_invoice.tpl","modules/AOM/order_info.tpl");
- 	 
-		if($this->xlite->is("adminZone")) {
-			$this->addDecorator("Admin_Dialog_Order","Module_AOM_Admin_Dialog_order");
-			$this->addDecorator("Admin_Dialog_order_list","Module_AOM_Admin_Dialog_order_list");
-            $this->addDecorator("Admin_Dialog_module", "Module_AOM_Admin_Dialog_module");
-			$this->addDecorator("WysiwygMediator", "Module_AOM_WysiwygMediator");
-			$this->addLayout("common/select_status.tpl","modules/AOM/common/select_status.tpl");
-            $this->addLayout("order/search_form.tpl","modules/AOM/search_form.tpl");
-            $this->addLayout("order/order.tpl","modules/AOM/order.tpl");
-				  
-		}	
-        if ($this->xlite->get("mm.activeModules.GiftCertificates")) {
-			$this->xlite->set("GiftCertificatesEnabled",true);
-		}	
-       	if ($this->xlite->get("mm.activeModules.Promotion")) {
-            $this->xlite->set("PromotionEnabled",true);
-		}	
-        if ($this->xlite->get("mm.activeModules.Egoods")) {
-            $this->xlite->set("EgoodsEnabled",true);
-        }
-        if ($this->xlite->get("mm.activeModules.Affiliate")) {
-            $this->xlite->set("AffiliateEnabled",true);
-        }
-										
-		$this->xlite->set("AOMEnabled",true);
-	} // }}}
-
-    function uninstall() // {{{ 
-    {
         func_cleanup_cache("classes");
         func_cleanup_cache("skins");
         parent::uninstall();

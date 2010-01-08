@@ -38,70 +38,8 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_PayPalPro_Main extends Module // {{{ 
+class XLite_Module_PayPalPro_Main extends XLite_Module_Abstract
 {
-	var $minVer = "2.0";
-	var $showSettingsForm = true;
-
-	function getSettingsForm() // {{{ 
-	{
-		return "admin.php?target=payment_method&payment_method=paypalpro";
-
-	} // }}} 
-	
-	function init() // {{{
-    {
-        parent::init();
-
-        $pm = new XLite_Model_PaymentMethod("paypalpro");
-		
-		switch($pm->get("params.solution")) {
-			case "standard":
-				$pm->checkServiceURL();
-			    $pm->registerMethod("paypalpro"); 
-			break;
-			case "pro": 	
-		        $pm->registerMethod("paypalpro");
-		        $pm->registerMethod("paypalpro_express"); 
-		    break;
-			case "express":				
-		        $pm->registerMethod("paypalpro_express"); 
-		    break;
-		}
-
-		$this->addDecorator("Order", "Order_PayPalPro");
-
-		$this->addDecorator("Dialog_profile","Module_PayPalPro_Dialog_profile");
-        $this->addDecorator("Dialog_checkout","Dialog_standard_checkout");
-
-		if($this->xlite->is("adminZone")) {
-			$this->addDecorator("Admin_Dialog_payment_method","Module_PayPalPro_Admin_Dialog_payment_method");
-			$this->addDecorator("Admin_Dialog_modules", "Module_PayPalPro_Admin_Dialog_modules");
-		}	
-
-		if ($this->xlite->mm->get("activeModules.PayPal")) {
-			$modules = $this->xlite->mm->get("modules");
-			$ids = array();
-        	foreach ($modules as $module) {
-        		if ($module->get("name") != "PayPal" && $module->get("enabled") ) {
-        			$ids[] = $module->get("module_id");
-        		}
-			}
-			$this->xlite->mm->updateModules($ids);
-			$this->session->set("PayPalOff", true);
-		}
-
-    	$this->xlite->set("PayPalProEnabled", true);
-		$this->xlite->set("PayPalProSolution",$pm->get("params.solution"));
-
-        if ($pm->get("params.solution") != "standard") {
-			$pm_express = new XLite_Model_PaymentMethod("paypalpro_express");
-            $this->xlite->set("PayPalProExpressEnabled", $pm_express->get("enabled"));
-        }
-    } // }}} 
-
-    function uninstall() // {{{ 
-    {
         func_cleanup_cache("classes");
         func_cleanup_cache("skins");
 

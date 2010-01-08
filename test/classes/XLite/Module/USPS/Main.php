@@ -45,7 +45,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_USPS_Main extends XLite_Model_Module
+class XLite_Module_USPS_Main extends XLite_Module_Abstract
 {
     var $showSettingsForm = true;
     var $minVer = "2.0";
@@ -60,8 +60,6 @@ class XLite_Module_USPS_Main extends XLite_Model_Module
         parent::init();
         $shipping = new XLite_Model_Shipping();
         $shipping->registerShippingModule("usps");
-
-        $this->addDecorator("Admin_Dialog_shipping_settings", "Module_USPS_Admin_Dialog_shipping_settings");
     }
 
     function uninstall()
