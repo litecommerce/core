@@ -146,10 +146,8 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         // get referer
         if (isset($_SERVER["HTTP_REFERER"])) {
             if (!isset($_COOKIE["LCReferrerCookie"])) {
-                global $options;
-
             	$referer = $_SERVER["HTTP_REFERER"];
-                setcookie("LCReferrerCookie", $referer, time() + 3600 * 24 * 180, "/", $options["host_details"]["http_host"]);
+                setcookie("LCReferrerCookie", $referer, time() + 3600 * 24 * 180, "/", XLite::getInstance()->getOptions(array('host_details', 'http_host')));
             } else {
             	$referer = $_COOKIE["LCReferrerCookie"];
             }
@@ -348,10 +346,10 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     */
     function rememberLogin($login) // {{{
     {
-        $hosts = array($this->get("xlite.options.host_details.http_host"), $this->get("xlite.options.host_details.https_host"));
-        foreach ($hosts as $host) {
-            $domain = func_parse_host($host);
-            @setcookie("last_login", $login, time()+3600*24*$this->get("config.General.login_lifetime"), "/", $domain);
+		$options = XLite::getInstance()->getOptions('host_details');
+
+        foreach (array($options['http_host'], $options['https_host']) as $host) {
+            @setcookie('last_login', $login, time() + 3600 * 24 * $this->get('config.General.login_lifetime', '/', func_parse_host($host)));
         }
     } // }}}
 

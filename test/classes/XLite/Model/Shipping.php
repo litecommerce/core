@@ -1,260 +1,279 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
 
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
-
-/**
-* Shipping module.
-*
-* @package Kernel
-* @access public
-* @version $Id$
-*/
-class XLite_Model_Shipping extends XLite_Model_Abstract implements XLite_Base_ISingleton
+class XLite_Model_Shipping extends XLite_Model_Abstract
 {
-    var $fields = array(
-        "shipping_id" => "",
-        "class" => "", // see kernel/Shipping/*.php
-        "destination" => "L", // Local/International
-        "name" => "",
-        "order_by" => 0,
-        "enabled" => 1);
+	/**
+     * Db table fields
+     *
+     * @var    array
+     * @access protected
+     * @since  3.0
+     */
+    protected $fields = array(
+        'shipping_id' => '',
+        'class'       => '',
+        'destination' => 'L',
+        'name'        => '',
+        'order_by'    => 0,
+        'enabled'     => 1,
+	);
 
-    var $alias = "shipping";
-    var $autoIncrement = "shipping_id";
-    var $defaultOrder = "order_by, name";
+	/**
+     * Db table name
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $alias = 'shipping';
 
-	public static function getInstance()
+	/**
+     * Db table primary key
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $autoIncrement = 'shipping_id';
+
+	/**
+     * Filed to use in ORDERBY clause
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $defaultOrder = "order_by, name";
+
+	/**
+	 * List of registered shipping modules
+	 * 
+	 * @var    array
+	 * @access protected
+	 * @since  3.0
+	 */
+	protected static $registeredShippingModules = array(
+		'Offline' => 'Model_Shipping_Offline',
+	);
+
+	/**
+	 * Normalize service name 
+	 * 
+	 * @param string $name string to normalize_
+	 *  
+	 * @return string
+	 * @access protected
+	 * @since  3.0
+	 */
+	protected function _normalizeName($name)
     {
-        return self::_getInstance(__CLASS__);
+        return trim(preg_replace('/\s+/', ' ', $name));
     }
-
-	function __construct($id = null)
-	{
-		global $registeredShippingModules;
-
-		parent::__construct($id);
-
-		if ($id && ($class = $this->get("class"))) {
-			if (!is_array($registeredShippingModules) || array_search($class, $registeredShippingModules)===false) {
-				// unset the class, if it is not registerred within active shipping modules
-				$this->set("class", null);
-			}
-		}
-	}
 
     /**
-    * Obtain reference to a module by the module class
-    * if $class is not specified, then obtain the current shipping module
-    */
-    function getInstanceByClass($class)
+     * Return only enabled services from the $methods list 
+     * 
+     * @param array $methods methods list
+     *  
+     * @return array
+     * @access protected
+     * @since  3.0
+     */
+    protected function filterEnabled(array $methods)
     {
-        static $instances;
-        if (!isset($instances)) {
-            $instances = array();
+        $filtered = array();
+
+        foreach ($methods as $id => $rate) {
+            if ($rate->shipping->is('enabled')) {
+                $filtered[$id] = $rate;
+            }
         }
 
-        if (!isset($instances[$class])) {
-            $ClassName = 'XLite_Model_Shipping_' . $class;
-            if (!@class_exists($ClassName)) {
-                $ClassName = 'XLite_Model_Shipping';
-            }
-            $instances[$class] = new $ClassName();
-            $instances[$class]->set("class", $class);
-        }
-        return $instances[$class];
+        return $filtered;
     }
 
-    /**
-    * Display name for "offline", "intershipper", etc.
-    */
-    function getModuleName()
+	/**
+	 * Return shipping zone 
+	 * 
+	 * @param XLite_Model_Order $order order object
+	 *  
+	 * @return int
+	 * @access protected
+	 * @since  3.0
+	 */
+	protected function getZone(XLite_Model_Order $order)
     {
-        $this->_die("getModuleName is not implemented for abstract class Shipping"); 
-    }
-
-    function getModules()
-    {
-        $sp = self::getInstance();
-        $modules = array(
-            "Offline" => $sp->getInstanceByClass("Offline")
-        );
-        global $registeredShippingModules;
-        if (isset($registeredShippingModules)) {
-            foreach ($registeredShippingModules as $class) {
-                $modules[$class] = $sp->getInstanceByClass($class);
-            }
-        }    
-        return $modules;
-    }
-
-    function isRegisteredModule($shipping_id) 
-    {
-		$query = $this->_buildSelect("shipping_id='$shipping_id'");
-        if ($shipping = $this->db->getRow($query)) {
-        	if ($shipping["class"] == "Offline") {
-            	return true;
-            }
-     
-			global $registeredShippingModules;
-
-			if (isset($registeredShippingModules)) {
-            	foreach ($registeredShippingModules as $class) {
-                	if ($class == $shipping["class"]) {
-                    	return true;
-                    }
+        if (!($zone = $order->get('profile.shippingState.shipping_zone'))) {
+			if (!($zone = $order->get('profile.shippingCountry.shipping_zone'))) {
+				$defaultCountry = new XLite_Model_Country($this->config->get('General.default_country'));
+				if (!($zone = $defaultCountry->get('shipping_zone'))) {
+					$zone = 0;
 				}
 			}
 		}
 
-		return false;
-     }
- 
-    function registerShippingModule($className)
+		return $zone;
+    }
+
+
+	/**
+	 * Check module class 
+	 * 
+	 * @param string $id module identifier
+	 *  
+	 * @return void
+	 * @access public
+	 * @since  3.0
+	 */
+	public function __construct($id = null)
+	{
+		parent::__construct($id);
+
+		// unset the class, if it is not registerred within active shipping modules
+		if ($id && ($class = $this->get("class")) && !isset(self::$registeredShippingModules[$class])) {
+			$this->set("class", null);
+		}
+	}
+
+    /**
+     * Return module name (stub)
+     * 
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function getModuleName()
     {
-        global $registeredShippingModules;
-        if (!isset($registeredShippingModules)) {
-            $registeredShippingModules = array();
-        }
-        $registeredShippingModules[] = $className;
-		$this->xlite->_shippingMethodRegistered = 1;
+		$this->_die("getModuleName is not implemented for abstract class Shipping");
+    }
+
+	/**
+     * Register new shipping module.
+     *
+     * @param string $name  module name
+     * @param string $class module class
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public static function registerShippingModule($name, $class)
+    {
+		if (!isset(self::$registeredShippingModules[$name]) || !(self::$registeredShippingModules[$name] instanceof self)) {
+			$class = 'XLite_' . $class;
+			self::$registeredShippingModules[$name] = new $class();
+			self::$registeredShippingModules[$name]->set('class', $name);
+		}
     }
 
     /**
-    * Retrieves all shipping methods relevant to $this shipping module
-    */
-    function getShippingMethods()
+     * Retrieves all shipping methods relevant to $this shipping module 
+     * 
+     * @return XLite_Model_Shipping
+     * @access public
+     * @since  3.0
+     */
+    public function getShippingMethods()
     {
-        return $this->findAll("class='".$this->get("class")."'");
+        return $this->findAll('class = \'' . $this->get('class') . '\'');
     }
     
-    function getRates(&$order)
+    /**
+     * Return shipping rates (stub)
+     * 
+     * @param XLite_Model_Order $order order object
+     *  
+     * @return void
+     * @since  3.0
+     */
+    public function getRates(XLite_Model_Order $order)
     {
-        $this->_die("getRates(): Not implemented in abstract class Shipping");
+		$this->_die("getRates(): Not implemented in abstract class Shipping");
     }
     
-    function calculate(&$order)
-    {
-        $s = $order->get("shippingRates");
-        if (!is_array($s)){
-            $this->_die(gettype($s));
-        }
-        if (!is_null($s) && array_key_exists($order->get("shipping_id"), $s)) {
-            return $s[$order->get("shipping_id")]->rate;
-        }
-        return false; // N/A
-    }
-
-    function _updateProperties(array $properties = array()) // {{{
-    {
-        parent::_updateProperties($properties);
-
-		$savedProperties = $this->properties;
-		$shipping = self::getInstance();	
-		$this->properties = $savedProperties;
-    } // }}}
-
-
     /**
-    * Used by real-time shipping methods to collect shipping services in
-    * the xlite_shipping tables. It will create a shipping $name of class
-    * $class and destination $destination (L/I) if there is no such
-    * method and return an existing or a newly created one.
-    */
-    function getService($class, $name, $destination) 
+     * calculate 
+     * 
+     * @param XLite_Model_Order $order order object
+     *  
+     * @return mixed
+     * @access public
+     * @since  3.0
+     */
+    public function calculate(XLite_Model_Order $order)
     {
-        $name = $this->_normalizeName($name);
-        // search for the shipping method specified by ($class, $name)
-        $shipping = new XLite_Model_Shipping();
-        if ($shipping->find("class='$class' AND name='". addslashes($name)."' AND destination='$destination'")) {
-            return $shipping;
-        } else {
-            // create a new service, disabled
-            $shipping->set("class", $class);
-            $shipping->set("name", $name);
-            $shipping->set("destination", $destination);
-            $shipping->set("enabled", 0);
-            $shipping->create();
-            return $shipping;
-        }
-    }
+		$rates = $order->get('shippingRates');
+		$result = false;
 
-    function _normalizeName($name)
-    {
-        $name = preg_replace('/\s+/', ' ', $name);
-        return trim($name);
-    }
-
-    /**
-    * Return only enabled services from the $methods list
-    */
-    function filterEnabled($methods)
-    {
-        $filtered = array();
-        foreach ($methods as $id => $rate) {
-            if ($rate->shipping->is("enabled")) {
-                $filtered[$id] = $rate;
-            }
-        }
-        return $filtered;
-    }
-
-    function getZone(&$order)
-    {
-        $zone = $order->get("profile.shippingState.shipping_zone");
-        if ($zone) {
-            return $zone;
-        }
-        $zone = $order->get("profile.shippingCountry.shipping_zone");
-        if ($zone) {
-            return $zone;
-        }
-        $defaultCountry = new XLite_Model_Country($this->config->get("General.default_country"));
-        if (is_object($defaultCountry)) {
-        	$zone = $defaultCountry->get("shipping_zone");
-        	if ($zone) {
-            	return $zone;
+		if (is_array($rates)) { 
+			$shippingId = $order->get("shipping_id");
+			if (isset($rates[$shippingId])) {
+				$result = $rates[$shippingId]->rate;
 			}
 		}
-        return 0;
+
+		return $result;
     }
+
+    /**
+     * Used by real-time shipping methods to collect shipping services in
+     * the xlite_shipping tables. It will create a shipping $name of class
+     * $class and destination $destination (L/I) if there is no such
+     * method and return an existing or a newly created one 
+     * 
+     * @param string $class       module class
+     * @param string $name        module name
+     * @param string $destination shipping destination
+     *  
+     * @return XLite_Model_Shipping
+     * @access public
+     * @since  3.0
+     */
+    public function getService($class, $name, $destination) 
+    {
+        $name = $this->_normalizeName($name);
+
+        // search for the shipping method specified by ($class, $name)
+        $shipping = new self();
+        if (!$shipping->find('class = \'' . $class . '\' AND name = \'' . addslashes($name) . '\' AND destination = \'' . $destination . '\'')) {
+            // create a new service, disabled
+            $shipping->set('class', $class);
+            $shipping->set('name', $name);
+            $shipping->set('destination', $destination);
+            $shipping->set('enabled', 0);
+            $shipping->create();
+        }
+
+		return $shipping;
+    }
+
+	/**
+     * Return list of all available shipping modules
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public static function getModules()
+    {
+        return self::$registeredShippingModules;
+    }
+
+	/**
+	 * Register predefined modules 
+	 * 
+	 * @return void
+	 * @access public
+	 * @since  3.0
+	 */
+	public static function registerDefaultModules()
+	{
+		foreach (self::$registeredShippingModules as $name => $class) {
+			self::registerShippingModule($name, $class);
+		}
+	}
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+
+// Instantiate classes
+XLite_Model_Shipping::registerDefaultModules();
+

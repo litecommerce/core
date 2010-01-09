@@ -76,7 +76,7 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
 
         // auto-login request
         if (!$this->auth->is("logged") && isset($_POST["login"]) && isset($_POST["password"])) {
-            if($this->auth->adminLogin($_POST["login"], $_POST["password"]) == ACCESS_DENIED) {
+            if($this->auth->adminLogin($_POST["login"], $_POST["password"]) === ACCESS_DENIED) {
                 die("ACCESS DENIED");
             }
         }

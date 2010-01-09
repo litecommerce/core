@@ -69,6 +69,23 @@ abstract class XLite_Module_Abstract extends XLite_Model_Module
 		return $method->registerMethod($name, $class);
 	}
 
+	/**
+	 * Easy way to register shipping module 
+	 * 
+	 * @param string $name shipping module name
+	 *  
+	 * @return void
+	 * @access protected
+	 * @since  3.0
+	 */
+	protected function registerShippingModule($name)
+	{
+		$shipping = new XLite_Model_Shipping();
+		$class  = 'Module_' . $this->getName() . '_Model_Shipping_' . XLite_Core_Converter::convertToCamelCase($name);
+
+		return $shipping->registerShippingModule($name, $class);
+	}
+
 
 	/**
      * Method to initialize concrete module instance
@@ -128,5 +145,20 @@ abstract class XLite_Module_Abstract extends XLite_Model_Module
 	{
 		return (true === $this->enabled); 
 	}
+
+	/**
+	 * Clean up cache
+	 * 
+	 * @return void
+	 * @access public
+	 * @since  3.0
+	 */
+	public function uninstall()
+    {
+        func_cleanup_cache('classes');
+        func_cleanup_cache('skins');
+
+        parent::uninstall();
+    }
 }
 

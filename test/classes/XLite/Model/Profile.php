@@ -282,7 +282,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         }
     } // }}}
 
-    function _convertProperties(&$p, $md5_import = '') // {{{
+    function _convertProperties(array &$p, $md5_import = '') // {{{
     {
         // X-CART Gold/Pro compatibility check for profile import
         if (!empty($p["status"])) {

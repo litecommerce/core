@@ -38,7 +38,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_CanadaPost_Model_Shipping_Cps extends Shipping_online // {{{ 
+class XLite_Module_CanadaPost_Model_Shipping_Cps extends XLite_Model_Shipping_Online 
 {
 
 	var $configCategory = "CanadaPost";
@@ -68,9 +68,9 @@ class XLite_Module_CanadaPost_Model_Shipping_Cps extends Shipping_online // {{{
         return "Canada Post";
     } // }}} 
 
-	function getRates($order) // {{{
+	function getRates(XLite_Model_Order $order) // {{{
 	{
-		include_once "modules/CanadaPost/encoded.php";
+		include_once LC_MODULES_DIR . 'CanadaPost' . LC_DS . 'encoded.php';
 		return Shipping_cps_getRates($this,$order);
 	} // }}}
 	
@@ -127,7 +127,7 @@ EOT;
 
 	function parseResponse($response,$destination) // {{{
 	{
-		include_once "modules/CanadaPost/encoded.php";
+		include_once LC_MODULES_DIR . 'CanadaPost' . LC_DS . 'encoded.php';
 		return Shipping_cps_parseResponse($this, $response,$destination);
 	} // }}} 
 

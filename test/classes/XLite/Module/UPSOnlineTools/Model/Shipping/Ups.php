@@ -70,19 +70,19 @@ class XLite_Module_UPSOnlineTools_Model_Shipping_Ups extends XLite_Model_Shippin
 
     function setAccount($userinfo, &$error)
 	{
-		include_once "modules/UPSOnlineTools/encoded.php";
+		require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
 		return UPSOnlineTools_setAccount($this, $userinfo, $error);
     }
 
     function setConfig($name, $value)
 	{
-		include_once "modules/UPSOnlineTools/encoded.php";
+		require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
 		UPSOnlineTools_setConfig($this, $name, $value);
     }
 
-    function getRates($order)
+    function getRates(XLite_Model_Order $order)
     {
-        require_once "modules/UPSOnlineTools/encoded.php";
+        require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
         return UPSOnlineTools_getRates($this, $order);
     }
 
@@ -150,7 +150,7 @@ class XLite_Module_UPSOnlineTools_Model_Shipping_Ups extends XLite_Model_Shippin
 
     function _createRequest($pounds, $originAddress, $originState, $originCity, $originZipCode, $originCountry, $destinationAddress, $destinationState, $destinationCity, $destinationZipCode, $destinationCountry, $options, $containers=array())
     {
-		include_once "modules/UPSOnlineTools/encoded.php";
+		require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
 
         $customer_classification_code = $options->get('customer_classification_code');
         if ($originCountry == "US" && !empty($customer_classification_code)) {
@@ -366,14 +366,14 @@ EOT;
 
     function _parseResponse($response, $destination, $originCountry)
     {
-        require_once "modules/UPSOnlineTools/encoded.php";
+        require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
         return UPSOnlineTools_parseResponse($this, $response, $destination, $originCountry);
     }
 
 
     function getOptions()
 	{
-		include_once "modules/UPSOnlineTools/encoded.php";
+		require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
 		$options = UPSOnlineTools_getOptions($this);
 
         switch ($options->get('account_type')) {
@@ -481,7 +481,7 @@ EOT;
 
     function checkAddress($shipping_country, $shipping_state, $shipping_custom_state, $shipping_city, $shipping_zipcode, &$av_result, &$request_result)
 	{
-		require_once "modules/UPSOnlineTools/encoded.php";
+		require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
 		return UPSOnlineTools_checkAddress($this, $shipping_country, $shipping_state, $shipping_custom_state, $shipping_city, $shipping_zipcode, $av_result, $request_result);
     }
 
@@ -688,7 +688,7 @@ EOT;
 		$value = parent::get($name);
 
 		if ($name == "name") {
-			include_once "modules/UPSOnlineTools/encoded.php";
+			require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
 			$value = UPSOnlineTools_getNameUPS($value);
 		}
 

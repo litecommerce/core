@@ -80,8 +80,7 @@ class XLite_Module_AustraliaPost_Main extends XLite_Module_Abstract
     {
         parent::init();
 
-        $shipping = new XLite_Model_Shipping();
-        $shipping->registerShippingModule("aupost");
+        $this->registerShippingModule('aupost');
 
         $this->xlite->set("AustraliaPostEnabled", true);
 

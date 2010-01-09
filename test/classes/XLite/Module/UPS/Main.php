@@ -83,8 +83,8 @@ class XLite_Module_UPS_Main extends XLite_Module_Abstract
     function init()
     {
         parent::init();
-        $shipping = new XLite_Model_Shipping();
-        $shipping->registerShippingModule("ups");
+
+        $this->registerShippingModule('ups');
     }
 
     function uninstall()

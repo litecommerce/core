@@ -56,7 +56,7 @@ class XLite_Model_Shipping_Offline extends XLite_Model_Shipping
     	return $sql;
     }
 
-    function getRates(&$order)
+    function getRates(XLite_Model_Order $order)
     {
         $shop_country = $this->config->get("Company.location_country");
         if (is_null($order->get("profile")) && !$this->config->get("General.def_calc_shippings_taxes")) {

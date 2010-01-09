@@ -79,10 +79,7 @@ class XLite_Module_UPSOnlineTools_Main extends XLite_Module_Abstract
 	{
         parent::init();
 
-        $shipping = new XLite_Model_Shipping();
-        $shipping->registerShippingModule("ups");
-		if ($this->xlite->is("adminZone")) {
-		}
+        $this->registerShippingModule('ups');
 
 		$this->xlite->set("UPSOnlineToolsEnabled", true);
 
@@ -92,12 +89,6 @@ class XLite_Module_UPSOnlineTools_Main extends XLite_Module_Abstract
 			$this->config->set("UPSOnlineTools.av_status", "N");
 
 		}
-    }
-
-    function install()
-	{
-        $this->disable_ups();
-        parent::install();
     }
 }
 

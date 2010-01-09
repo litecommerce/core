@@ -69,9 +69,9 @@ class XLite_Module_USPS_Model_Shipping_Usps extends XLite_Model_Shipping_Online
         return "U.S.P.S.";
     }
 
-    function getRates($order)
+    function getRates(XLite_Model_Order $order)
     {
-        require_once "modules/USPS/encoded.php";
+        require_once LC_MODULES_DIR . 'USPS' . LC_DS . 'encoded.php';
         return Shipping_usps_getRates($this, $order);
     }
 
@@ -342,7 +342,7 @@ EOT;
     
     function _parseResponse($response, $destination)
     {
-        require_once "modules/USPS/encoded.php";
+        require_once LC_MODULES_DIR . 'USPS' . LC_DS . 'encoded.php';
         return Shipping_usps_parseResponse($this, $response, $destination);
     }
 

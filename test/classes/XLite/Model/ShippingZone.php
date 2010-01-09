@@ -60,7 +60,7 @@ class XLite_Model_ShippingZone extends XLite_Model_Abstract
         }
     }
     
-    function findAll()
+    function findAll($where = null, $orderby = null, $groupby = null, $limit = null)
     {
         $states = $this->db->getTableByAlias("states");
         $countries = $this->db->getTableByAlias("countries");
@@ -100,7 +100,7 @@ class XLite_Model_ShippingZone extends XLite_Model_Abstract
         return $zones;
     }
 
-    function find($arg1, $arg2)
+    function find($where, $order = null)
     {
         $this->_die("find() not applicable on ShippingZone");
     }

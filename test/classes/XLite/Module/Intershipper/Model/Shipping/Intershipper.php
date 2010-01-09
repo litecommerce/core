@@ -70,9 +70,9 @@ class XLite_Module_Intershipper_Model_Shipping_Intershipper extends XLite_Model_
         return "Intershipper";
     }
 
-    function getRates($order)
+    function getRates(XLite_Model_Order $order)
     {
-        require_once "modules/Intershipper/encoded.php";
+        include_once LC_MODULES_DIR . 'Intershipper' . LC_DS . 'encoded.php';
         return Shipping_intershipper_getRates($this, $order);
     }
 
@@ -148,7 +148,7 @@ class XLite_Module_Intershipper_Model_Shipping_Intershipper extends XLite_Model_
     
     function _parseResponse($response, $destination)
     {
-        require_once "modules/Intershipper/encoded.php";
+        include_once LC_MODULES_DIR . 'Intershipper' . LC_DS . 'encoded.php';
         return Shipping_intershipper_parseResponse($this, $response, $destination);
     }
 }

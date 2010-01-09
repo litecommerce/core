@@ -38,7 +38,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_AustraliaPost_Model_Shipping_Aupost extends Shipping_online // {{{ 
+class XLite_Module_AustraliaPost_Model_Shipping_Aupost extends XLite_Model_Shipping_Online 
 {
 
 	var $configCategory = "AustraliaPost";
@@ -74,21 +74,21 @@ class XLite_Module_AustraliaPost_Model_Shipping_Aupost extends Shipping_online /
         return "Australia Post";
     } // }}} 
 
-	function getRates($order) // {{{
+	function getRates(XLite_Model_Order $order) // {{{
 	{
-		include_once "modules/AustraliaPost/encoded.php";
+		include_once LC_MODULES_DIR . 'AustraliaPost' . LC_DS . 'encoded.php';
 		return Shipping_aupost_getRates($this,$order);
 	} // }}}
 	
 	function queryRates($options, $originalZipcode, $destinationZipcode, $destinationCountry, $weight, $weight_unit=null) // {{{
 	{
-		include_once "modules/AustraliaPost/encoded.php";
+		include_once LC_MODULES_DIR . 'AustraliaPost' . LC_DS . 'encoded.php';
 		return Shipping_aupost_queryRates($this, $options, $originalZipcode, $destinationZipcode, $destinationCountry, $weight, $weight_unit);
 	} // }}}
 
 	function parseResponse($rates_data, $destination) // {{{
 	{
-		include_once "modules/AustraliaPost/encoded.php";
+		include_once LC_MODULES_DIR . 'AustraliaPost' . LC_DS . 'encoded.php';
 		return Shipping_aupost_parseResponse($this, $rates_data, $destination);
 
 	} // }}} 

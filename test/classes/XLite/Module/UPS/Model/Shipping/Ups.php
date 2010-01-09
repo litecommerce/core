@@ -91,7 +91,7 @@ class XLite_Module_UPS_Model_Shipping_Ups extends XLite_Model_Shipping_Online
 
     function getRates($order)
     {
-        require_once "modules/UPS/encoded.php";
+        require_once LC_MODULES_DIR . 'UPS' . LC_DS . 'encoded.php';
         return Shipping_ups_getRates($this, $order);
 	}
 
@@ -238,7 +238,7 @@ EOT;
     
     function _parseResponse($response, $destination, $originCountry)
     {
-        require_once "modules/UPS/encoded.php";
+        require_once LC_MODULES_DIR . 'UPS' . LC_DS . 'encoded.php';
         return Shipping_ups_parseResponse($this, $response, $destination, $originCountry);
     }
 

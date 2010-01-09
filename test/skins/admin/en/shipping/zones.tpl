@@ -21,7 +21,7 @@ Select a country or a state from a list, specify the zone where the country or s
 <hr>
 
 <table border=0 cellpadding=5>
-<tbody FOREACH="xlite.factory.ShippingZone.findAll(),zone">
+<tbody FOREACH="xlite.factory.XLite_Model_ShippingZone.findAll(),zone">
 <form action="admin.php" method="POST" name="shipping_zone_{zone.shipping_zone}">
 <input type="hidden" name="target" value="shipping_zones">
 <input type="hidden" name="action" value="">
@@ -50,7 +50,7 @@ Select a country or a state from a list, specify the zone where the country or s
 Move selected countries to:<br>
 <select name="target_country_zone">
 <option value="new">New zone</option>
-<option FOREACH="xlite.factory.ShippingZone.findCountryZones(),z" value="{z.shipping_zone}">{z.name}</option>
+<option FOREACH="xlite.factory.XLite_Model_ShippingZone.findCountryZones(),z" value="{z.shipping_zone}">{z.name}</option>
 </select><br>
 <input type=button value=" Apply " onClick="shipping_zone_{zone.shipping_zone}.action.value='update_countries';shipping_zone_{zone.shipping_zone}.submit()">
 </td>
@@ -58,7 +58,7 @@ Move selected countries to:<br>
 Move selected states to:<br>
 <select name="target_state_zone">
 <option value="new">New zone</option>
-<option FOREACH="xlite.factory.ShippingZone.findStateZones(),z" value="{z.shipping_zone}">{z.name}</option>
+<option FOREACH="xlite.factory.XLite_Model_ShippingZone.findStateZones(),z" value="{z.shipping_zone}">{z.name}</option>
 </select><br>
 <input type=button value=" Apply " onClick="shipping_zone_{zone.shipping_zone}.action.value='update_states';shipping_zone_{zone.shipping_zone}.submit()">
 </td>

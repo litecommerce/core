@@ -269,7 +269,7 @@
 	$order->update();
 	$status = $order->get("status");
 
-	return ($status == "Q" || $status == "P") ? self:PAYMENT_SUCCESS : self::PAYMENT_FAILURE; 
+	return ($status == "Q" || $status == "P") ? self::PAYMENT_SUCCESS : self::PAYMENT_FAILURE; 
   } // }}} 
  
 	function PayPalPro_sendRequest(&$payment, &$data) // {{{

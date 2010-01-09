@@ -103,11 +103,11 @@ class XLite_Model_PaymentMethod extends XLite_Model_Abstract
     {
         parent::__construct($id);
 
-		$this->_range .= (empty($this->_range) ? '' : ' AND ') . 'payment_method IN (\'' . join('\',\'', array_keys(self::$registeredPaymentMethods)) . '\')';
+		$this->_range .= (empty($this->_range) ? '' : ' AND ') 
+			. 'payment_method IN (\'' . join('\',\'', array_keys(self::$registeredPaymentMethods)) . '\')';
     }
 
     /**
-     * 
 	 * A method which registers a new payment method $name.
      * A payment method won't be visible untill you register it.
      * Re-create this object after you call this method, like this:

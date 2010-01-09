@@ -91,7 +91,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
     var $_range = "status!='T'";
 
     // }}}
-   
+
     ////////////// Order calculation functions ////////////////
 
     /**
@@ -337,18 +337,20 @@ class XLite_Model_Order extends XLite_Model_Abstract
     */
     function calcShippingRates() // {{{
     {
-        // cache rates
-        $shipping = new XLite_Model_Shipping();
-        $rates = array();
-        foreach ($shipping->get("modules") as $module) {
-            $r = $module->getRates($this);
-            foreach ($r as $k=>$v) {
-                $rates[$k] = $v; 
-            }
-        }
-        $this->_sortRates($rates);
-        $this->_shippingRates = $rates;
-        return $this->_shippingRates;
+		if (is_null($this->_shippingRates)) {
+
+			$this->_shippingRates = array();
+			
+			foreach (XLite_Model_Shipping::getModules() as $module) {
+				foreach ($module->getRates($this) as $key => $value) {
+					$this->_shippingRates[$key] = $value;
+				}
+			}
+
+			$this->_sortRates($this->_shippingRates);
+		}
+
+		return $this->_shippingRates;
     } // }}}
 
     /**
@@ -466,15 +468,10 @@ class XLite_Model_Order extends XLite_Model_Abstract
 
     function getShippingMethod() // {{{
     {
-        if (is_null($this->_shippingMethod)) {
-			$sm = new XLite_Model_Shipping();
-			if ($sm->isRegisteredModule($this->get("shipping_id"))) {
-                $this->_shippingMethod = new XLite_Model_Shipping($this->get("shipping_id"));
-    			if ($this->get("shipping_id") == 0) {
-    				$this->_shippingMethod->set("name", "Free shipping");
-    			}
-			}
+        if (is_null($this->_shippingMethod) && $this->get("shipping_id")) {
+			$this->_shippingMethod = new XLite_Model_Shipping($this->get("shipping_id"));
         }
+
         return $this->_shippingMethod;
     } // }}}
 

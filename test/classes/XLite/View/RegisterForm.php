@@ -98,10 +98,13 @@ class XLite_View_RegisterForm extends XLite_View
     
     function action_register()
     {
-    	if (isset($_REQUEST[SESSION_DEFAULT_NAME]) && !(isset($_GET[SESSION_DEFAULT_NAME]) || isset($_POST[SESSION_DEFAULT_NAME]))) {
-    		unset($_REQUEST[SESSION_DEFAULT_NAME]);
+    	if (
+			isset($_REQUEST[XLite_Model_Session::SESSION_DEFAULT_NAME]) 
+			&& !(isset($_GET[XLite_Model_Session::SESSION_DEFAULT_NAME]) || isset($_POST[XLite_Model_Session::SESSION_DEFAULT_NAME]))
+		) {
+    		unset($_REQUEST[XLite_Model_Session::SESSION_DEFAULT_NAME]);
     	}
-		$this->xlite->session->set("_".SESSION_DEFAULT_NAME, SESSION_DEFAULT_NAME."=".$this->xlite->session->getID());
+		$this->xlite->session->set("_".XLite_Model_Session::SESSION_DEFAULT_NAME, XLite_Model_Session::SESSION_DEFAULT_NAME."=".$this->xlite->session->getID());
 		$this->xlite->session->destroy();
 		$this->xlite->session->setID(SESSION_DEFAULT_ID);
 		$this->xlite->session->_initialize();

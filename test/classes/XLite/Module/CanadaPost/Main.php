@@ -80,8 +80,7 @@ class XLite_Module_CanadaPost_Main extends XLite_Module_Abstract
     {
         parent::init();
 
-        $shipping = new XLite_Model_Shipping();
-        $shipping->registerShippingModule("cps");
+        $this->registerShippingModule('cps');
 
         $this->xlite->set("CanadaPostEnabled",true);
     }

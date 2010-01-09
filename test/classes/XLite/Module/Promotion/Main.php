@@ -77,8 +77,8 @@ class XLite_Module_Promotion_Main extends XLite_Module_Abstract
 
     function init()
     {
-        
         parent::init();
+
         // replace cart item and totals templates
         $this->addLayout("shopping_cart/item.tpl", "modules/Promotion/item.tpl");
         $this->addLayout("shopping_cart/totals.tpl", "modules/Promotion/totals.tpl");

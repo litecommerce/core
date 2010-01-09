@@ -83,7 +83,7 @@ class XLite_Model_Abstract extends XLite_Base
     * Auto-increment field name. Used as a primary key too.
     * @var string $autoIncrement
     */
-    var $autoIncrement = null;
+    protected $autoIncrement = null;
     
     /**
     * Shows whether the object data have been read from DB or not
