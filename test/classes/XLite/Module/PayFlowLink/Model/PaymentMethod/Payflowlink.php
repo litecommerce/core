@@ -73,7 +73,7 @@ class XLite_Module_PayFlowLink_Model_PaymentMethod_Payflowlink extends XLite_Mod
 
 	function getPaymentURL(&$cart)
 	{
-		return $this->xlite->ShopUrl("classes/modules/PayFlowLink/redirect.php"); 
+		return $this->xlite->ShopUrl('classes/XLite/Module/PayFlowLink/redirect.php'); 
 	}
 }
 // WARNING :

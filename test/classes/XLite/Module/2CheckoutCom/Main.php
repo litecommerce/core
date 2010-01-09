@@ -46,6 +46,33 @@
 */
 class XLite_Module_2CheckoutCom_Main extends XLite_Module_Abstract
 {
+    /**
+     * Module version
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $version = '2.11';
+
+    /**
+     * Module description
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $description = '2Checkout.com credit card payment processor gateway';
+
+    /**
+     * Determines if module is switched on/off
+     *
+     * @var    bool
+     * @access protected
+     * @since  3.0
+     */
+    protected $enabled = true;
+
     var $minVer = "2.0";
     var $showSettingsForm = true;
 
@@ -57,8 +84,8 @@ class XLite_Module_2CheckoutCom_Main extends XLite_Module_Abstract
     function init()
     {
         parent::init();
-        $pm = new XLite_Model_PaymentMethod();
-        $pm->registerMethod("2checkout");
+        
+        $this->registerPaymentMethod('2Checkout');
 
         $webDir = $this->xlite->get("options.host_details.web_dir");
         if (substr($webDir, -1) == "/") {
@@ -66,7 +93,7 @@ class XLite_Module_2CheckoutCom_Main extends XLite_Module_Abstract
         }
         $this->xlite->set("options.host_details.web_dir_wo_slash", $webDir);
 
-        $pm = new XLite_Model_PaymentMethod("2checkout");
+        $pm = XLite_Model_PaymentMethod::factory('2Checkout');
 		$params = $pm->get("params");
 		if (!isset($params["version"])) {
 			$params["version"] = "2";

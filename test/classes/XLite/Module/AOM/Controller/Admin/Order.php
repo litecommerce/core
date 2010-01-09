@@ -812,7 +812,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 
     function getPaymentMethods() // {{{ 
     {
-        $paymentMethod = new XLite_Model_PaymentMethod();
+        
         return $paymentMethod->get("activeMethods");
     } // }}}
 

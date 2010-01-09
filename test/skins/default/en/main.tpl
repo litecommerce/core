@@ -162,7 +162,7 @@
     <TD valign="top" width="100%"><BR>
 
 <!-- [center] -->
-<widget module="GoogleCheckout" class="XLite_Module_GoogleCheckout_View_GoogleAltCheckout" >
+<widget module="GoogleCheckout" class="XLite_Module_GoogleCheckout_View_GoogleAltCheckout">
 
 <!-- [main] {{{ -->
 <widget module="InventoryTracking" target="cart" mode="exceeding" template="common/dialog.tpl" body="modules/InventoryTracking/exceeding.tpl" head="InventoryTracking Notification">

@@ -512,6 +512,8 @@ EOT;
 	 */
 	protected $module = null;
 
+	protected $activeModules = null;
+
 
 	/**
 	 * Instantiate moduel object
@@ -644,5 +646,31 @@ EOT;
 	{
 		return $this->getModule()->findAll();
 	}
+
+	public function getActiveModules()
+	{
+		// FIXME
+		if (is_null($this->activeModules)) {
+			$this->activeModules = array();
+			foreach ($this->getModule()->findAll('enabled = \'1\'') as $module) {
+				$this->activeModules[$module->get('name')] = true;
+			}
+		}
+
+		return $this->activeModules;
+	}
+
+	public function changeModuleStatus(XLite_Model_Module $module, $status)
+    {
+        return $status ? $module->enable() : $module->disable();
+    }
+
+	public function updateModules(array $moduleIDs)
+    {
+        foreach ($this->getModules() as $module) {
+			$this->changeModuleStatus($module, in_array($module->get("module_id"), $moduleIDs));
+            $module->update();
+        }
+    }
 }
 

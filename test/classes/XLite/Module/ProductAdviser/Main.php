@@ -46,6 +46,33 @@ define('CUSTOMER_REQUEST_DECLINED', 'D');
 
 class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
 {
+    /**
+     * Module version
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $version = '2.12.RC4';
+
+    /**
+     * Module description
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $description = 'ProductAdviser add-on introduces multiple cross-selling features and a customer notification mechanism';
+
+    /**
+     * Determines if module is switched on/off
+     *
+     * @var    bool
+     * @access protected
+     * @since  3.0
+     */
+    protected $enabled = true;
+
 	var $minVer = '2.1.2';
     var $showSettingsForm = true;
 
@@ -103,7 +130,7 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
 		}
 		/////////////////////////////////////
 
-        $inventorySupport = func_class_exists("Inventory");
+        $inventorySupport = class_exists('XLite_Module_InventoryTracking_Model_Inventory');
         $this->xlite->set("PA_InventorySupport", $inventorySupport);
 		if ($inventorySupport) {
 			if (!$this->xlite->is("adminZone")) {

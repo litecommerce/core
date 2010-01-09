@@ -46,6 +46,33 @@
 */
 class XLite_Module_ePDQ_Main extends XLite_Module_Abstract
 {
+    /**
+     * Module version
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $version = '2.5';
+
+    /**
+     * Module description
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $description = 'ePDQ Payment Gateway';
+
+    /**
+     * Determines if module is switched on/off
+     *
+     * @var    bool
+     * @access protected
+     * @since  3.0
+     */
+    protected $enabled = true;
+
 	var $minVer = "2.0";
     var $showSettingsForm = true;
 
@@ -58,9 +85,9 @@ class XLite_Module_ePDQ_Main extends XLite_Module_Abstract
     {
         
         parent::init();
-        $pm = new XLite_Model_PaymentMethod();
+        
 	    // plug in  kernel/PaymentMethod/epdq_cc.php module
-        $pm->registerMethod("epdq_cc");
+        $this->registerPaymentMethod('epdq_cc');
         $webDir = $this->xlite->get("options.host_details.web_dir");
         if (substr($webDir, -1) == "/") {
             $webDir = substr($webDir, 0, -1);

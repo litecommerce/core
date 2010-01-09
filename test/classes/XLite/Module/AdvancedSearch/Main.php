@@ -39,8 +39,35 @@
 * @version $Id$
 */
 
-class XLite_Module_AdvancedSearch_Main extends XLite_Module_Abstract // {{{
+class XLite_Module_AdvancedSearch_Main extends XLite_Module_Abstract
 {
+    /**
+     * Module version
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $version = '2.6.RC3';
+
+    /**
+     * Module description
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $description = 'This module introduces advanced product search to the customer front end';
+
+    /**
+     * Determines if module is switched on/off
+     *
+     * @var    bool
+     * @access protected
+     * @since  3.0
+     */
+    protected $enabled = true;
+
     var $isFree = true;
 	var $minVer = "2.1";
 	var $showSettingsForm = true;	

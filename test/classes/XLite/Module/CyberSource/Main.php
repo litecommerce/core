@@ -44,6 +44,33 @@
 */
 class XLite_Module_CyberSource_Main extends XLite_Module_Abstract
 {
+    /**
+     * Module version
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $version = '2.6.RC2';
+
+    /**
+     * Module description
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $description = 'CyberSource credit card payment processor';
+
+    /**
+     * Determines if module is switched on/off
+     *
+     * @var    bool
+     * @access protected
+     * @since  3.0
+     */
+    protected $enabled = true;
+
 	var $minVer = "2.0";
 	var $showSettingsForm = true;
 
@@ -57,8 +84,8 @@ class XLite_Module_CyberSource_Main extends XLite_Module_Abstract
 
         parent::init();
 
-        $pm = new XLite_Model_PaymentMethod();
-        $pm->registerMethod("cybersource_cc");
+        
+        $this->registerPaymentMethod('cybersource_cc');
     }
 
     function uninstall()

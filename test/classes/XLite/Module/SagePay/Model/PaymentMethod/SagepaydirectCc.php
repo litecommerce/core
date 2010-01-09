@@ -192,7 +192,7 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepaydirectCc extends XLite_Mod
 			$params["sub".$field] = $result;
 		}
 
-		$pm = new XLite_Model_PaymentMethod("sagepaydirect_cc");
+		$pm = XLite_Model_PaymentMethod::factory('sagepaydirect_cc');
 		$pm->set("params", $params);
 		$pm->update();
 	} // }}}

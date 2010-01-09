@@ -64,7 +64,7 @@ class XLite_Module_Protx_Controller_Customer_Protxform extends XLite_Controller_
 	{
 		require_once "modules/Protx/encoded.php";
 
-		$paymentMethod = new XLite_Model_PaymentMethod("protxform_cc");
+		$paymentMethod = XLite_Model_PaymentMethod::factory('protxform_cc');
 		$result = func_ProtxForm_action_return($this, $paymentMethod);
 
 		if ($result) {

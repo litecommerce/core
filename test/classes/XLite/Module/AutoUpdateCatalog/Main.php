@@ -43,6 +43,42 @@
 */
 class XLite_Module_AutoUpdateCatalog_Main extends XLite_Module_Abstract
 {
+    /**
+     * Module dependencies
+     *
+     * @var    array
+     * @access protected
+     * @since  3.0
+     */
+    protected $dependencies = array('Array');
+
+    /**
+     * Module version
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $version = '2.10.RC5';
+
+    /**
+     * Module description
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $description = 'HTML static catalog auto update module';
+
+    /**
+     * Determines if module is switched on/off
+     *
+     * @var    bool
+     * @access protected
+     * @since  3.0
+     */
+    protected $enabled = true;
+
     var $minVer = "2.0";
     var $showSettingsForm = true;
 

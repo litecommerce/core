@@ -46,6 +46,33 @@
 */
 class XLite_Module_HTMLCatalog_Main extends XLite_Module_Abstract
 {
+    /**
+     * Module version
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $version = '2.16.RC9';
+
+    /**
+     * Module description
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $description = 'HTML catalog add-on module is a complete tool for generating an HTML mirror of the product catalog';
+
+    /**
+     * Determines if module is switched on/off
+     *
+     * @var    bool
+     * @access protected
+     * @since  3.0
+     */
+    protected $enabled = true;
+
     var $isFree = true;
     var $minVer = "2.0";
     var $showSettingsForm = true;

@@ -1,142 +1,185 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
 
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
-
-/**
-* Values returned by habdleRequest(&$order)
-*/
-define('PAYMENT_SILENT', 1); // disable output
-define('PAYMENT_SUCCESS', 2); // show success page
-define('PAYMENT_FAILURE', 3); // show error page
-
-/**
-* Class PaymentMethod provides access to payment method details.
-*
-* @package Kernel
-* @access public
-* @version $Id$
-*/
 class XLite_Model_PaymentMethod extends XLite_Model_Abstract
 {
-    // {{{ properties
-    var $alias = "payment_methods";
-    var $primaryKey = array(
-        "payment_method"
-        );
-    var $defaultOrder = "orderby";
-    var $fields = array(
-            'payment_method'  => '',  
-            'name'            => '',
-            'details'         => '',
-            'class'           => '',
-            'params'          => '',
-            'orderby'         => '',
-            'enabled'         => 1
-        );
-    var $params = null; 
-    var $hasConfigurationForm = false;
-    // }}}
+	/**
+	 * Values returned by habdleRequest($order)
+	 */
+	
+	const PAYMENT_SILENT  = 1; // disable output
+    const PAYMENT_SUCCESS = 2; // show success page
+    const PAYMENT_FAILURE = 3; // show error page
 
-    public function __construct($id = null) // {{{
+
+    /**
+     * Db table name
+     * 
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $alias = 'payment_methods';
+
+    /**
+     * Db table primary key(s)
+     * 
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $primaryKey = array('payment_method');
+
+    /**
+     * Filed to use in ORDERBY clause 
+     * 
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $defaultOrder = 'orderby';
+
+    /**
+     * Db table fields 
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0
+     */
+    protected $fields = array(
+		'payment_method' => '',  
+		'name'		     => '',
+		'details'        => '',
+		'class'          => '',
+		'params'         => '',
+		'orderby'        => '',
+		'enabled'        => 1,
+	);
+
+    /**
+     * Payment method params 
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0
+     */
+    protected $params = null;
+
+    /**
+     * Determines if there is a configuration form for this payment method 
+     * 
+     * @var    bool
+     * @access protected
+     * @since  3.0
+     */
+    protected $hasConfigurationForm = false;
+
+	/**
+	 * Payment methods availabled by default
+	 * 
+	 * @var    array
+	 * @access protected
+	 * @since  3.0
+	 */
+	protected static $registeredPaymentMethods = array(
+		'PhoneOrdering' => 'Model_PaymentMethod_Offline',
+		'FaxOrdeing'    => 'Model_PaymentMethod_Offline',
+		'PurchaseOrder' => 'Model_PaymentMethod_Offline',
+		'CreditCard'    => 'Model_PaymentMethod_CreditCard',
+		'Echeck'        => 'Model_PaymentMethod_Echeck',
+		'COD'           => 'Model_PaymentMethod_Offline',
+		'MoneyOrdering' => 'Model_PaymentMethod_Offline',
+	);
+
+    /**
+     * Define available methods range 
+     * 
+     * @param string $id method identifier
+     *  
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function __construct($id = null)
     {
         parent::__construct($id);
 
-        if (isset($this->_range)) {
-            $this->_range .= " AND ";
-        } else {
-            $this->_range = "";
-        } 
-
-        global $_registered_methods;
-
-        $this->_range .= "payment_method IN ('".join("','", array_keys($_registered_methods))."')";
-    } // }}}
+		$this->_range .= (empty($this->_range) ? '' : ' AND ') . 'payment_method IN (\'' . join('\',\'', array_keys(self::$registeredPaymentMethods)) . '\')';
+    }
 
     /**
-    * A method which registers a new payment method $name.
-    * A payment method won't be visible untill you register it.
-    * Re-create this object after you call this method, like this:
-    * $pm = new XLite_Model_PaymentMethod();
-    * $pm->registerMethod('my_method');
-    * $pm = new XLite_Model_PaymentMethod();
-    * $pm->getActiveMethods();
-    */
-    function registerMethod($name) // {{{
+     * 
+	 * A method which registers a new payment method $name.
+     * A payment method won't be visible untill you register it.
+     * Re-create this object after you call this method, like this:
+     * $pm = new XLite_Model_PaymentMethod();
+     * $pm->registerMethod('my_method');
+     * $pm = new XLite_Model_PaymentMethod();
+     * $pm->getActiveMethods();
+	 *
+     * @param string $name  method name
+     * @param string $class method class
+     *  
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function registerMethod($name, $class)
     {
-        global $_registered_methods;
+		isset(self::$registeredPaymentMethods[$name]) || self::$registeredPaymentMethods[$name] = $class;
+    }
 
-        $_registered_methods[$name] = $name;
-
-		$this->xlite->_paymentMethodRegistered = 1;
-    } // }}}
-
-    function isRegisteredMethod($name)
+    /**
+     * Check if method is already registered 
+     * 
+     * @param string $name method name
+     *  
+     * @return bool
+     * @access public
+     * @since  3.0
+     */
+    public static function isRegisteredMethod($name)
     {
-        global $_registered_methods;
+        return isset(self::$registeredPaymentMethods[$name]);
+    }
 
-        return isset($_registered_methods[$name]);
-    } // }}}
-
-    function getActiveMethods() // {{{
+    /**
+     * Return list of active payment methods 
+     * 
+     * @return XLite_Model_PaymentMethod
+	 * @access public
+     * @since  3.0
+     */
+    public function getActiveMethods()
     {
-        $methodsList = array();
-
-		$p = new XLite_Model_PaymentMethod();
-		foreach ($p->findAll() as $method) {
-			if ($method->is("enabled")) {
-				$methodsList[$method->get('payment_method')] = $method;
-			}
-		}
-
-		return $methodsList;
+		return $this->findAll('enabled = \'1\'');
 	}
 
-    function handleConfigRequest() // {{{
+    /**
+     * handleConfigRequest 
+     * 
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function handleConfigRequest()
     {
-        $this->set("params", $_POST["params"]);
+        $this->set('params', $_POST['params']);
         $this->update();
-        return '';
-    } // }}}
+    }
     
-    function get($name) // {{{
+    /**
+     * get 
+     * 
+     * @param mixed $name property name
+     *  
+     * @return mixed
+     * @access public
+     * @since  3.0
+     */
+    public function get($name)
     {
         $result = parent::get($name);
+
         if ($name == "params") {
             if (is_null($this->params) && !empty($result)) {
                 $this->params = unserialize($result);
@@ -148,30 +191,42 @@ class XLite_Model_PaymentMethod extends XLite_Model_Abstract
 		}
 
         return $result;
-    } // }}}
+    }
 
-    function set($name, $val) // {{{
+    /**
+     * set 
+     * 
+     * @param string $name property name
+     * @param mixed  $val  property value
+     *  
+     * @return void
+	 * @access public
+     * @since  3.0
+     */
+    public function set($name, $val)
     {
         if ($name == "params") {
             $this->params = $val;
             $val = serialize($val);
         }
-        parent::set($name, $val);
-    } // }}}
 
+        parent::set($name, $val);
+    }
+
+	/**
+	 * Return payment method object by it's name
+	 * 
+	 * @param string $name payment method name
+	 *  
+	 * @return XLite_Model_PaymentMethod
+	 * @access public
+	 * @since  3.0
+	 */
 	public static function factory($name)
 	{
-		global $_registered_methods;
-
-		$class = isset($_registered_methods[$name]) ? $_registered_methods[$name] : '';
-		$className = 'XLite_Model_PaymentMethod' . (empty($class) ? '' : '_' . $class);
+		$className = 'XLite_' . self::$registeredPaymentMethods[$name];
 
 		return new $className($name);
 	}
-
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

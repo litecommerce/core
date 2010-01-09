@@ -47,6 +47,33 @@
 */
 class XLite_Module_GoogleCheckout_Main extends XLite_Module_Abstract
 {
+    /**
+     * Module version
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $version = '2.1.RC2';
+
+    /**
+     * Module description
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $description = 'GoogleCheckout module';
+
+    /**
+     * Determines if module is switched on/off
+     *
+     * @var    bool
+     * @access protected
+     * @since  3.0
+     */
+    protected $enabled = true;
+
     var $minVer = "2.1.2";
     var $showSettingsForm = true;
 
@@ -65,10 +92,10 @@ class XLite_Module_GoogleCheckout_Main extends XLite_Module_Abstract
         }
         $this->xlite->set("options.host_details.web_dir_wo_slash", $webDir);
 
-        $pm = new XLite_Model_PaymentMethod();
-        $pm->registerMethod("google_checkout");
+        
+        $this->registerPaymentMethod('google_checkout');
 
-		$payment_method = new XLite_Model_PaymentMethod("google_checkout");
+		$payment_method = XLite_Model_PaymentMethod::factory('google_checkout');
 		if ($payment_method->get("params.disable_customer_notif")) {
 			$this->xlite->set("gcheckout_disable_customer_notif", true);
 		}

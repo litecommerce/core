@@ -46,6 +46,33 @@
 */
 class XLite_Module_WorldPay_Main extends XLite_Module_Abstract
 {
+    /**
+     * Module version
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $version = '2.4';
+
+    /**
+     * Module description
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $description = 'RBS WorldPay payment gateway';
+
+    /**
+     * Determines if module is switched on/off
+     *
+     * @var    bool
+     * @access protected
+     * @since  3.0
+     */
+    protected $enabled = true;
+
 	var $minVer = "2.0";
 	var $showSettingsForm = true;
 
@@ -57,9 +84,9 @@ class XLite_Module_WorldPay_Main extends XLite_Module_Abstract
     function init()
     {
         parent::init();
-        $pm = new XLite_Model_PaymentMethod();
+        
 	    // plug in  kernel/PaymentMethod/worldpay.php module
-        $pm->registerMethod("worldpay");
+        $this->registerPaymentMethod('worldpay');
     }
 
     function uninstall()

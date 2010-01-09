@@ -47,6 +47,33 @@
 */
 class XLite_Module_SagePay_Main extends XLite_Module_Abstract
 {
+    /**
+     * Module version
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $version = '2.0';
+
+    /**
+     * Module description
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $description = 'VSP Direct and VSP Form credit card payment processor (former Protx)';
+
+    /**
+     * Determines if module is switched on/off
+     *
+     * @var    bool
+     * @access protected
+     * @since  3.0
+     */
+    protected $enabled = true;
+
 	var $minVer = "2.0";
 	var $showSettingsForm = true;
 
@@ -59,19 +86,17 @@ class XLite_Module_SagePay_Main extends XLite_Module_Abstract
     {
         parent::init();
 
-        $pm = new XLite_Model_PaymentMethod("sagepaydirect_cc");
+		$pm = new XLite_Model_PaymentMethod();
+        $pm->find('payment_method = \'sagepaydirect_cc\'');
 
 		switch($pm->get("params.solution")) {
 			case "form":
-				$pm->registerMethod("sagepayform_cc");
+				$this->registerPaymentMethod('sagepayform_cc');
 			break;
 			default:
 			case "direct":
-				$pm->registerMethod("sagepaydirect_cc");
+				$this->registerPaymentMethod('sagepaydirect_cc');
 			break;
-		}
-
-		if ($this->xlite->is("adminZone")) {
 		}
 
 		$this->xlite->set("SagePayEnabled", true);

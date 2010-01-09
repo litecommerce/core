@@ -80,21 +80,15 @@ class XLite_Model_PaymentMethod_CreditCard extends XLite_Model_PaymentMethod
         $this->cc_info = $this->getPaymentInfo();
         $this->process($cart);
         $status = $cart->get("status");
-        if ($status == 'Q' || $status == 'P') {
-            return PAYMENT_SUCCESS;
-        } else {
-            return PAYMENT_FAILURE;
-        }
+
+		return ($status == 'Q' || $status == 'P') ? self::PAYMENT_SUCCESS : self::PAYMENT_FAILURE;
     }
 
     function getCardTypes()
     {
-        $c = new XLite_Model_Card();
-        return $c->findAll();
+        $card = new XLite_Model_Card();
+
+        return $card->findAll();
     }
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

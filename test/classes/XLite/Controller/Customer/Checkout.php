@@ -279,17 +279,22 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
         if (!is_null($pm)) {
             $notes = isset($_POST["notes"]) ? $_POST["notes"] : '';
             $this->set("cart.notes", $notes);
+
             switch($pm->handleRequest($this->cart)) {
-            case PAYMENT_SILENT:
-                $this->set("silent", true); // don't call output()
-                break;
-            case PAYMENT_SUCCESS:
-                $this->success();
-                $this->set("returnUrl", "cart.php?target=checkoutSuccess&order_id=".$this->cart->get("order_id"));
-                break;
-            case PAYMENT_FAILURE:
-                $this->set("returnUrl", "cart.php?target=checkout&mode=error&order_id=".$this->cart->get("order_id"));
-                break;
+
+	            case XLite_Model_PaymentMethod::PAYMENT_SILENT:
+					// don't call output()
+    	            $this->set("silent", true);
+        	        break;
+
+            	case XLite_Model_PaymentMethod::PAYMENT_SUCCESS:
+                	$this->success();
+	                $this->set("returnUrl", "cart.php?target=checkoutSuccess&order_id=".$this->cart->get("order_id"));
+    	            break;
+
+        	    case XLite_Model_PaymentMethod::PAYMENT_FAILURE:
+            	    $this->set("returnUrl", "cart.php?target=checkout&mode=error&order_id=".$this->cart->get("order_id"));
+                	break;
             }
         }
     }

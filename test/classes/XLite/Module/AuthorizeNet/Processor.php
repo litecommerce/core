@@ -83,10 +83,10 @@ class XLite_Module_AuthorizeNet_Processor extends XLite_Base
     function handleConfigRequest()
     {
         $params = $_POST["params"];
-        $pm = new XLite_Model_PaymentMethod("authorizenet_cc");
+        $pm = XLite_Model_PaymentMethod::factory('authorizenet_cc');
         $pm->set("params", $params);
         $pm->update();
-        $pm = new XLite_Model_PaymentMethod("authorizenet_ch");
+        $pm = XLite_Model_PaymentMethod::factory('authorizenet_ch');
         $pm->set("params", $params);
         $pm->update();
     }

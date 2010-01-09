@@ -41,14 +41,63 @@
 
 class XLite_Module_AOM_Main extends XLite_Module_Abstract
 {
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
-        parent::uninstall();
-    } // }}}
-	
-} // }}}
+    /**
+     * Module version
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $version = '2.10.RC19';
 
-// WARNING:
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+    /**
+     * Module description
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $description = 'This module provides your online store with an advanced order management tool';
+
+    /**
+     * Determines if module is switched on/off
+     *
+     * @var    bool
+     * @access protected
+     * @since  3.0
+     */
+    protected $enabled = true;
+
+	var $showSettingsForm = true;
+
+	function init() // {{{
+    {
+        parent::init();
+
+        $this->addLayout("common/order_status.tpl","modules/AOM/common/order_status.tpl");
+        $this->addLayout("common/invoice.tpl","modules/AOM/order_info.tpl");
+        $this->addLayout("common/print_invoice.tpl","modules/AOM/order_info.tpl");
+
+        if($this->xlite->is("adminZone")) {
+            $this->addLayout("common/select_status.tpl","modules/AOM/common/select_status.tpl");
+            $this->addLayout("order/search_form.tpl","modules/AOM/search_form.tpl");
+            $this->addLayout("order/order.tpl","modules/AOM/order.tpl");
+
+        }
+        if ($this->xlite->get("mm.activeModules.GiftCertificates")) {
+            $this->xlite->set("GiftCertificatesEnabled",true);
+        }
+        if ($this->xlite->get("mm.activeModules.Promotion")) {
+            $this->xlite->set("PromotionEnabled",true);
+        }
+        if ($this->xlite->get("mm.activeModules.Egoods")) {
+            $this->xlite->set("EgoodsEnabled",true);
+        }
+        if ($this->xlite->get("mm.activeModules.Affiliate")) {
+            $this->xlite->set("AffiliateEnabled",true);
+        }
+
+        $this->xlite->set("AOMEnabled",true);
+    }
+}
+

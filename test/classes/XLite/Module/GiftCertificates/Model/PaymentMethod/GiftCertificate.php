@@ -57,11 +57,11 @@ class XLite_Module_GiftCertificates_Model_PaymentMethod_GiftCertificate extends 
 			$cart->set("payment_method", ""); // choose payment method once again
         	$cart->update();
 			header("Location: cart.php?target=checkout");
-            return PAYMENT_SILENT;
+            return self::PAYMENT_SILENT;
 		} else {
         	$cart->set("status", "P");
         	$cart->update();
-            return PAYMENT_SUCCESS;
+            return self::PAYMENT_SUCCESS;
 		}
     }
 

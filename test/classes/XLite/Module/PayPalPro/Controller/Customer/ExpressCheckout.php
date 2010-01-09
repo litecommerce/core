@@ -53,10 +53,10 @@ class XLite_Module_PayPalPro_Controller_Customer_ExpressCheckout extends XLite_C
 	
 	function action_profile()
 	{
-		$pm = new XLite_Model_PaymentMethod("paypalpro_express");
+		$pm = XLite_Model_PaymentMethod::factory('paypalpro_express');
 		$response = $pm->sendExpressCheckoutRequest($this->cart); 
 		if ($response["ACK"] == "Success" && !empty($response["TOKEN"])) {
-			$pmpro = new XLite_Model_PaymentMethod("paypalpro");
+			$pmpro = XLite_Model_PaymentMethod::factory('paypalpro');
 			$redirect = $pmpro->get("params.pro.mode") ? "https://www.paypal.com" : "https://www.sandbox.paypal.com";
 			header("Location: ". $redirect."/webscr?cmd=_express-checkout&token=".$response["TOKEN"]);
 			die();
@@ -69,7 +69,7 @@ class XLite_Module_PayPalPro_Controller_Customer_ExpressCheckout extends XLite_C
 	{
 		if (!empty($_GET["token"])) {
 			$profile = new XLite_Model_Profile();
-			$pm = new XLite_Model_PaymentMethod("paypalpro_express");
+			$pm = XLite_Model_PaymentMethod::factory('paypalpro_express');
 			$response = $pm->sendExpressCheckoutDetailsRequest($_GET["token"]);
   			$details = $response["GETEXPRESSCHECKOUTDETAILSRESPONSEDETAILS"]["PAYERINFO"];
         if ($response["ACK"] == "Success") {

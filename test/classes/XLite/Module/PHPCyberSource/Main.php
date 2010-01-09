@@ -41,15 +41,45 @@
 
 class XLite_Module_PHPCyberSource_Main extends XLite_Module_Abstract
 {
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
+    /**
+     * Module version
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $version = '2.2';
 
-        parent::uninstall();
-    } // }}}
-	
-} // }}}
+    /**
+     * Module description
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $description = 'CyberSource credit card payment processor [PHP API]';
 
-// WARNING:
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+    /**
+     * Determines if module is switched on/off
+     *
+     * @var    bool
+     * @access protected
+     * @since  3.0
+     */
+    protected $enabled = true;
+
+	var $showSettingsForm = true;
+
+	function getSettingsForm()
+    {
+        return "admin.php?target=payment_method&payment_method=cybersource_cc";
+    }
+
+    function init()
+    {
+		parent::init();
+
+        $this->registerPaymentMethod('cybersource_cc');
+    }
+}
+

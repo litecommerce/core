@@ -1,4 +1,4 @@
-<div IF="xlite.factory.NewsList.showedListsNumber">
+<div IF="xlite.factory.XLite_Module_Newsletters_Model_NewsList.showedListsNumber">
 
 <widget class="XLite_Module_Newsletters_View_Bulletin" >
 
@@ -20,6 +20,6 @@
 
 </div>
 
-<span IF="!xlite.factory.NewsList.showedListsNumber">
+<span IF="!xlite.factory.XLite_Module_Newsletters_Model_NewsList.showedListsNumber">
 There are currently no news available.
 </span>

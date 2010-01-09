@@ -65,7 +65,7 @@
     	        $order->set("detailLabels.error", "HTTPS Error");
     			$order->set("status","F");
 				$order->update();
-				return PAYMENT_FAILURE; 
+				return self::PAYMENT_FAILURE; 
      		} elseif (preg_match("/VERIFIED/i",$request->response)) {
     			$txn_id = ($order->get("details.reason") ? "" : $order->get("details.txn_id")); 
     		}	
@@ -83,7 +83,7 @@
 						$order->set("detailLabels.error", "Error");
 						$order->set("status","F");
 						$order->update();
-						return PAYMENT_FAILURE;
+						return self::PAYMENT_FAILURE;
 					} else {
 						// ignore duplicate transaction
 					}
@@ -168,7 +168,7 @@
     		}
 		}
 		
-		return PAYMENT_SUCCESS; 
+		return self::PAYMENT_SUCCESS; 
 	} // }}}
 
     function proRequest(&$_this,&$order) // {{{
@@ -221,7 +221,7 @@
 		$express_checkout = new XLite_Module_PayPalPro_Controller_Customer_ExpressCheckout();	
 		$express_checkout->action_profile();
 	}
-	$pm = new XLite_Model_PaymentMethod("paypalpro");
+	$pm = XLite_Model_PaymentMethod::factory('paypalpro');
 	$response = PayPalPro_sendRequest($pm->get("params.pro"),$_this->finishExpressCheckoutRequest($order,$pm->get("params.pro")));
     $xml = new XLite_Model_XML();
     $response = $xml->parse($response);
@@ -268,7 +268,8 @@
 
 	$order->update();
 	$status = $order->get("status");
-	return ($status == "Q" || $status == "P") ? PAYMENT_SUCCESS : PAYMENT_FAILURE; 
+
+	return ($status == "Q" || $status == "P") ? self:PAYMENT_SUCCESS : self::PAYMENT_FAILURE; 
   } // }}} 
  
 	function PayPalPro_sendRequest(&$payment, &$data) // {{{

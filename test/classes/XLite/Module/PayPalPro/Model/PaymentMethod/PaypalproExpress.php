@@ -51,7 +51,7 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_PaypalproExpress extends Paymen
 	
 	function sendExpressCheckoutRequest(&$order) // {{{
 	{
-		$pm = new XLite_Model_PaymentMethod("paypalpro");
+		$pm = XLite_Model_PaymentMethod::factory('paypalpro');
 		require_once "modules/PayPalPro/encoded.php";
 		$response = PayPalPro_sendRequest($pm->get("params.pro"),$this->setExpressCheckoutRequest($order,$pm->get("params.pro")));
 		$xml = new XLite_Model_XML();
@@ -98,7 +98,7 @@ EOT;
 	
 	function sendExpressCheckoutDetailsRequest(&$token) // {{{ 
 	{
-		$pm = new XLite_Model_PaymentMethod("paypalpro");
+		$pm = XLite_Model_PaymentMethod::factory('paypalpro');
 		require_once "modules/PayPalPro/encoded.php";
 		$response = PayPalPro_sendRequest($pm->get("params.pro"),$this->getExpressCheckoutRequest($pm->get("params.pro"), $token));
 		$xml = new XLite_Model_XML();
@@ -134,7 +134,7 @@ EOT;
 
 	function finishExpressCheckoutRequest(&$order, &$payment) // {{{
 	{
-		$pm = new XLite_Model_PaymentMethod("paypalpro");
+		$pm = XLite_Model_PaymentMethod::factory('paypalpro');
 		$payment = $pm->get("params.pro");
         $cart = $order->get("properties");
 		$invoiceId  = $payment['prefix'].$cart['order_id'];

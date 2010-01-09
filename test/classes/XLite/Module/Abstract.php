@@ -1,13 +1,6 @@
 <?php
 
-/**
- * XLite_Module_Abstract 
- * 
- * @package    Lite Commerce
- * @subpackage ____sub_package____
- * @since      3.0
- */
-abstract class XLite_Module_Abstract extends XLite_Module_Abstract
+abstract class XLite_Module_Abstract extends XLite_Model_Module
 {
 	/**
 	 * Module dependencies
@@ -34,16 +27,47 @@ abstract class XLite_Module_Abstract extends XLite_Module_Abstract
 	 * @access protected
 	 * @since  3.0
 	 */
-	protected $description = 'wdwdw';
+	protected $description = '';
 
 	/**
-	 * Determines if module switched on/off
+	 * Determines if module is switched on/off
 	 * 
-	 * @var    mixed
+	 * @var    bool
 	 * @access protected
 	 * @since  3.0
 	 */
 	protected $enabled = true;
+
+
+	/**
+	 * Return module name by class name
+	 * 
+	 * @return string
+	 * @access protected
+	 * @since  3.0
+	 */
+	protected function getName()
+	{
+		return preg_match('/XLite_Module_(\w+)_Main/', get_class($this), $matches) ?
+			$matches[1] : $this->_die('Module class name is invalid - "' . get_class($this) . '"');
+	}
+
+	/**
+	 * Easy way to register payment method
+	 * 
+	 * @param string $name payment method name
+	 *  
+	 * @return void
+	 * @access protected
+	 * @since  3.0
+	 */
+	protected function registerPaymentMethod($name)
+	{
+		$method = new XLite_Model_PaymentMethod();
+		$class  = 'Module_' . $this->getName() . '_Model_PaymentMethod_' . XLite_Core_Converter::convertToCamelCase($name);
+
+		return $method->registerMethod($name, $class);
+	}
 
 
 	/**

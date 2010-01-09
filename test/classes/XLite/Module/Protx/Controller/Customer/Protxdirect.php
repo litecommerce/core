@@ -78,7 +78,7 @@ class XLite_Module_Protx_Controller_Customer_Protxdirect extends XLite_Controlle
 			$this->session->writeClose();
 
 			$order = $this->get("order");
-            $payment = new XLite_Model_PaymentMethod("protxdirect_cc");
+            $payment = XLite_Model_PaymentMethod::factory('protxdirect_cc');
 
 			include_once "modules/Protx/encoded.php";
 			func_ProtxDirect_action_return($this, $order, $payment);

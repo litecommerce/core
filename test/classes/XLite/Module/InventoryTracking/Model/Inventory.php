@@ -92,7 +92,7 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
         }
     } // }}}
     
-    function _import(&$options) // {{{
+    function _import(array $options) // {{{
     {
         $properties = $options["properties"];
         // search for the product first

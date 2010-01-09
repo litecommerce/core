@@ -68,11 +68,11 @@ class XLite_Module_Protx_Model_PaymentMethod_ProtxformCc extends XLite_Model_Pay
 	function get($name)
 	{
 		if ($name == "params") {
-			$pm = new XLite_Model_PaymentMethod("protxdirect_cc");
+			$pm = XLite_Model_PaymentMethod::factory('protxdirect_cc');
 			return $pm->get("params");
 		}
 		if (preg_match("/order.*status/i", $name, $matches)) {
-			$pm = new XLite_Model_PaymentMethod("protxdirect_cc");
+			$pm = XLite_Model_PaymentMethod::factory('protxdirect_cc');
 			return $pm->get($matches[0]);
 		}
 

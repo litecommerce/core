@@ -67,11 +67,8 @@ class XLite_Model_PaymentMethod_Echeck extends XLite_Model_PaymentMethod
     {
         $this->process($cart);
         $status = $cart->get("status");
-        if ($status == 'Q' || $status == 'P') {
-            return PAYMENT_SUCCESS;
-        } else {
-            return PAYMENT_FAILURE;
-        }
+
+		return ($status == 'Q' || $status == 'P') ? self::PAYMENT_SUCCESS : self::PAYMENT_FAILURE;
     }
 }
 

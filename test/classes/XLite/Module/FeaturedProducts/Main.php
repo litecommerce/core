@@ -48,6 +48,33 @@ define('FEATURED_PRODUCTS_TABLE', DBTABLE_PREFIX.'featured_products');
 */
 class XLite_Module_FeaturedProducts_Main extends XLite_Module_Abstract
 {
+    /**
+     * Module version
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $version = '2.8';
+
+    /**
+     * Module description
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $description = 'This module enables featured products list';
+
+    /**
+     * Determines if module is switched on/off
+     *
+     * @var    bool
+     * @access protected
+     * @since  3.0
+     */
+    protected $enabled = true;
+
     var $isFree = true;
     var $minVer = "2.0";
     var $showSettingsForm = true;

@@ -58,7 +58,8 @@ class XLite_Model_PaymentMethod_Offline extends XLite_Model_PaymentMethod
     function handleRequest($cart)
     {
         $this->process($cart);
-        return PAYMENT_SUCCESS;
+
+        return self::PAYMENT_SUCCESS;
     }
 }
 

@@ -292,7 +292,7 @@ EOT;
 
 		$disableCustomerNotif = $this->xlite->get("GoogleCheckoutDCN");
 		if (!isset($disableCustomerNotif)) {
-    		$pmGC = new XLite_Model_PaymentMethod("google_checkout");
+    		$pmGC = XLite_Model_PaymentMethod::factory('google_checkout');
     		$disableCustomerNotif = $pmGC->get("params.disable_customer_notif");
             $this->xlite->set("GoogleCheckoutDCN", $disableCustomerNotif);
 		}

@@ -40,7 +40,34 @@
 */
 
 class XLite_Module_MultiCurrency_Main extends XLite_Module_Abstract
-{ // {{{
+{
+    /**
+     * Module version
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $version = '2.2RC2';
+
+    /**
+     * Module description
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $description = 'This module introduces support for multiple currencies';
+
+    /**
+     * Determines if module is switched on/off
+     *
+     * @var    bool
+     * @access protected
+     * @since  3.0
+     */
+    protected $enabled = true;
+ // {{{
 
 	var $isFree = true;
 	var $showSettingsForm = true;

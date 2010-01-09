@@ -40,6 +40,33 @@
 
 class XLite_Module_UPSOnlineTools_Main extends XLite_Module_Abstract
 {
+    /**
+     * Module version
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $version = '2.1.RC13';
+
+    /**
+     * Module description
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $description = 'This module enables the access to UPS OnLine Tools';
+
+    /**
+     * Determines if module is switched on/off
+     *
+     * @var    bool
+     * @access protected
+     * @since  3.0
+     */
+    protected $enabled = true;
+
     var $minVer = "2.1.2";
     var $showSettingsForm = true;
 
@@ -51,12 +78,6 @@ class XLite_Module_UPSOnlineTools_Main extends XLite_Module_Abstract
     function init()
 	{
         parent::init();
-
-        if ($this->disable_ups()) {
-            $obj = new XLite_Controller_Abstract();
-            $obj->redirect("admin.php?target=modules");
-            exit();
-        }
 
         $shipping = new XLite_Model_Shipping();
         $shipping->registerShippingModule("ups");
@@ -73,34 +94,10 @@ class XLite_Module_UPSOnlineTools_Main extends XLite_Module_Abstract
 		}
     }
 
-    function disable_ups()
-	{
-        $mods = $this->xlite->mm->getActiveModules();
-        if (isset($mods["UPS"])) {
-            $mod = new XLite_Model_Module("UPS");
-            $this->xlite->mm->changeModuleStatus($mod, false);
-            $mod->update();
-            func_cleanup_cache("classes");
-            func_cleanup_cache("skins");
-            return true;
-        }
-        return false;
-    }
-
     function install()
 	{
         $this->disable_ups();
         parent::install();
     }
-
-    function uninstall()
-	{
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
-        parent::uninstall();
-    }
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+

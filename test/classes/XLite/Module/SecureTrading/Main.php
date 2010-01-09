@@ -47,6 +47,33 @@
 
 class XLite_Module_SecureTrading_Main extends XLite_Module_Abstract
 {
+    /**
+     * Module version
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $version = '2.3';
+
+    /**
+     * Module description
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $description = 'securetrading.com credit card processor';
+
+    /**
+     * Determines if module is switched on/off
+     *
+     * @var    bool
+     * @access protected
+     * @since  3.0
+     */
+    protected $enabled = true;
+
 	var $minVer = "2.0";
 	var $showSettingsForm = true;
 
@@ -57,8 +84,8 @@ class XLite_Module_SecureTrading_Main extends XLite_Module_Abstract
 	function init() {
 
 		parent::init();
-		$pm = new XLite_Model_PaymentMethod();
-		$pm->registerMethod("securetrading");
+		
+		$this->registerPaymentMethod('securetrading');
 
         $webDir = $this->xlite->get("options.host_details.web_dir");
         if (substr($webDir, -1) == "/") {

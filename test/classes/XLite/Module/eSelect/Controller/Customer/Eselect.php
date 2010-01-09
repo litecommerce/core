@@ -74,7 +74,7 @@ class XLite_Module_eSelect_Controller_Customer_Eselect extends XLite_Controller_
 			$this->session->writeClose();
 
 			$order = $this->get("order");
-			$payment = new XLite_Model_PaymentMethod("eselect_cc");
+			$payment = XLite_Model_PaymentMethod::factory('eselect_cc');
 
 			include_once "modules/eSelect/encoded.php";
 			func_eSelect_action_return($this, $order, $payment);

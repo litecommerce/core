@@ -192,7 +192,7 @@ class XLite_Module_Protx_Model_PaymentMethod_ProtxdirectCc extends XLite_Model_P
 			$params["sub".$field] = $result;
 		}
 
-		$pm = new XLite_Model_PaymentMethod("protxdirect_cc");
+		$pm = XLite_Model_PaymentMethod::factory('protxdirect_cc');
 		$pm->set("params", $params);
 		$pm->update();
 	} // }}}

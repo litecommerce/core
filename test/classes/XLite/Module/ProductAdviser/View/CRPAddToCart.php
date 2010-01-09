@@ -42,7 +42,7 @@ class XLite_Module_ProductAdviser_View_CRPAddToCart extends XLite_View_Button
     function gethref()
     {
 		$product = new XLite_Model_Product($this->get("p_id"));
-        if (func_class_exists("ProductOption") && $product->hasOptions()) {
+        if (class_exists('XLite_Module_ProductOptions_Model_ProductOption') && $product->hasOptions()) {
 			$product->checkSafetyMode();
 			$c_id = $product->get("category.category_id");
 			return "cart.php?target=product&product_id=".$this->get("p_id")."&category_id=".$c_id;

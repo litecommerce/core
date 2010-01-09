@@ -68,11 +68,11 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepayformCc extends XLite_Model
 	function get($name)
 	{
 		if ($name == "params") {
-			$pm = new XLite_Model_PaymentMethod("sagepaydirect_cc");
+			$pm = XLite_Model_PaymentMethod::factory('sagepaydirect_cc');
 			return $pm->get("params");
 		}
 		if (preg_match("/order.*status/i", $name, $matches)) {
-			$pm = new XLite_Model_PaymentMethod("sagepaydirect_cc");
+			$pm = XLite_Model_PaymentMethod::factory('sagepaydirect_cc');
 			return $pm->get($matches[0]);
 		}
 

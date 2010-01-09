@@ -45,7 +45,7 @@ define('CALLBACK_ERROR_ILLEGAL_ORDER_ID', 4);
 * @version $Id$
 */
 
-class XLite_Module_GoogleCheckout_Model_PaymentMethod_GoogleCheckout extends PaymentMethod // {{{ 
+class XLite_Module_GoogleCheckout_Model_PaymentMethod_GoogleCheckout extends XLite_Model_PaymentMethod 
 {
 	var $configurationTemplate = "modules/GoogleCheckout/config.tpl";
 	var $processorName = "GoogleCheckout";
@@ -283,14 +283,14 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
 </HTML>
 <?php
 
-			return PAYMENT_SILENT;
+			return self::PAYMENT_SILENT;
 		} else {
 			$error = $response["ERROR"]["ERROR-MESSAGE"];
 			$order->set("details.error", (($error) ? $error : "Unknown"));
 			$order->set("detailLabels.error", "Error");
 			$order->update();
 
-			return PAYMENT_FAILURE;
+			return self::PAYMENT_FAILURE;
 		}
 
 	}
@@ -322,7 +322,7 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
 			$params["sub".$field] = $result;
 		}
 
-		$pm = new XLite_Model_PaymentMethod("google_checkout");
+		$pm = XLite_Model_PaymentMethod::factory('google_checkout');
 		$pm->set("params", $params);
 		$pm->update();
 

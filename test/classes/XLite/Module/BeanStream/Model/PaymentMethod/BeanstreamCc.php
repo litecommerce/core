@@ -61,7 +61,7 @@ class XLite_Module_BeanStream_Model_PaymentMethod_BeanstreamCc extends XLite_Mod
     function handleConfigRequest()
     {
 		$params = $_POST['params'];
-		$pm = new XLite_Model_PaymentMethod('beanstream_cc');
+		$pm = XLite_Model_PaymentMethod::factory('beanstream_cc');
 		$pm->set('params', $params);
 		$pm->update();
     }

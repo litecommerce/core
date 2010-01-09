@@ -46,6 +46,33 @@
 */
 class XLite_Module_GiftCertificates_Main extends XLite_Module_Abstract
 {
+    /**
+     * Module version
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $version = '2.12.RC10';
+
+    /**
+     * Module description
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $description = 'Gift certificates';
+
+    /**
+     * Determines if module is switched on/off
+     *
+     * @var    bool
+     * @access protected
+     * @since  3.0
+     */
+    protected $enabled = true;
+
     var $minVer = "2.0";
     var $showSettingsForm = true;
 
@@ -60,8 +87,8 @@ class XLite_Module_GiftCertificates_Main extends XLite_Module_Abstract
 		
 		if ($this->xlite->is("adminZone")) {
 		}
-		$pm = new XLite_Model_PaymentMethod();
-		$pm->registerMethod("gift_certificate");
+		
+		$this->registerPaymentMethod('gift_certificate');
         $img = XLite_Model_Image::getInstance();
         $img->registerImageClass("ecard_thumbnail", "e-Card thumbnails", "ecards", "thumbnail", "ecard_id");
         $img->registerImageClass("ecard_image", "e-Card images", "ecards", "image", "ecard_id");

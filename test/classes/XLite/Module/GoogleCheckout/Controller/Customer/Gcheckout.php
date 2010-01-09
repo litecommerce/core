@@ -90,7 +90,7 @@ class XLite_Module_GoogleCheckout_Controller_Customer_Gcheckout extends XLite_Co
 			}
 		}
 
-		$pm = new XLite_Model_PaymentMethod("google_checkout");
+		$pm = XLite_Model_PaymentMethod::factory('google_checkout');
 		$this->cart->setPaymentMethod($pm);
 		$this->updateCart();
 

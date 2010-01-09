@@ -78,7 +78,7 @@ class XLite_Module_SagePay_Controller_Customer_Sagepaydirect extends XLite_Contr
 			$this->session->writeClose();
 
 			$order = $this->get("order");
-            $payment = new XLite_Model_PaymentMethod("sagepaydirect_cc");
+            $payment = XLite_Model_PaymentMethod::factory('sagepaydirect_cc');
 
 			include_once "modules/SagePay/encoded.php";
 			func_SagePayDirect_action_return($this, $order, $payment);

@@ -85,7 +85,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Modul
 
     function getPaymentMethod($pn) // {{{
     {
-        $pm = new XLite_Model_PaymentMethod();
+        
         if (!$pm->find("payment_method='$pn'")) {
             $pm->set("payment_method", $pn);
             $pm->set("name", $pn);

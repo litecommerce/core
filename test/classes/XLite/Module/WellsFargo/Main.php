@@ -46,14 +46,41 @@
 */
 class XLite_Module_WellsFargo_Main extends XLite_Module_Abstract
 {
+    /**
+     * Module version
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $version = '2.1';
+
+    /**
+     * Module description
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $description = 'WellsFargo Payment Gateway';
+
+    /**
+     * Determines if module is switched on/off
+     *
+     * @var    bool
+     * @access protected
+     * @since  3.0
+     */
+    protected $enabled = true;
+
 	var $minVer = "2.0";
 
     function init()
     {
         parent::init();
-        $pm = new XLite_Model_PaymentMethod();
+        
 	    // plug in  kernel/PaymentMethod/wells_fargo_cc.php module
-        $pm->registerMethod("wells_fargo_cc");
+        $this->registerPaymentMethod('wells_fargo_cc');
     }
     
     function uninstall()

@@ -40,6 +40,33 @@
 
 class XLite_Module_FlyoutCategories_Main extends XLite_Module_Abstract
 {
+    /**
+     * Module version
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $version = '2.3.RC4';
+
+    /**
+     * Module description
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $description = 'Allows to change the layout of your categories pages instantly';
+
+    /**
+     * Determines if module is switched on/off
+     *
+     * @var    bool
+     * @access protected
+     * @since  3.0
+     */
+    protected $enabled = true;
+
 	var $minVer = "2.1.2";
     var $showSettingsForm = true;
 
@@ -49,12 +76,8 @@ class XLite_Module_FlyoutCategories_Main extends XLite_Module_Abstract
 
 		XLite_Model_Image::getInstance()->registerImageClass("category_small", "Small category icons", "categories", "smallimage", "category_id");
         // admin frontend - specific class decorations
-        if ($this->xlite->is("adminZone")) 
-        {
+        if ($this->xlite->is("adminZone")) {
 			$this->addLayout("modules/LayoutOrganizer/main.tpl", "modules/FlyoutCategories/schemes_manager.tpl");
-
-			if ($this->xlite->LayoutOrganizerEnabled) {
-			}
 		}
 
         $scheme = new XLite_Module_FlyoutCategories_Model_FCategoriesScheme($this->get("config.FlyoutCategories.scheme"));

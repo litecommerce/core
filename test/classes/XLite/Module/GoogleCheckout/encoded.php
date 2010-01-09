@@ -156,7 +156,7 @@ function GoogleCheckout_getGoogleCheckoutXML_Calculation(&$_this, $address, $shi
 	$cart = XLite_Model_Cart::getInstance();
 	$cart = new XLite_Model_Cart($_this->get("order_id")); // do not insert &
 
-	$pmGC = new XLite_Model_PaymentMethod("google_checkout");
+	$pmGC = XLite_Model_PaymentMethod::factory('google_checkout');
 	$params = $pmGC->get("params");
 	$currency = $params["currency"];
 	$xmlDiscounts = array();
@@ -516,7 +516,7 @@ $_this->xlite->logger->log("name='".addslashes($shipping_info["SHIPPING-NAME"]).
     }
 
     // Set Payment method
-    $pm = new XLite_Model_PaymentMethod("google_checkout");
+    $pm = XLite_Model_PaymentMethod::factory('google_checkout');
     $order->setPaymentMethod($pm);
 
 

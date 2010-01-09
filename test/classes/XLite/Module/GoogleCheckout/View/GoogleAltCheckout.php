@@ -52,7 +52,7 @@ class XLite_Module_GoogleCheckout_View_GoogleAltCheckout extends XLite_View
     function initGoogleData()
     {
     	if (!isset($this->GCMerchantID)) {
-    		$pm = new XLite_Model_PaymentMethod("google_checkout");
+    		$pm = XLite_Model_PaymentMethod::factory('google_checkout');
     		$isAdminZone = $this->xlite->is("adminZone");
     		$this->xlite->set("adminZone", true);
     		$enabled = (bool) $pm->get("enabled");

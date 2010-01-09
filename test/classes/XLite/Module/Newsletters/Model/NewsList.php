@@ -58,6 +58,8 @@ class XLite_Module_Newsletters_Model_NewsList extends XLite_Model_Abstract
     var $autoIncrement = "list_id";
     var $alias = "newslists";
 
+	protected $showedListsNumber = null;
+
     function filter()
     {
         if ($this->xlite->is("adminZone")) {
@@ -105,10 +107,10 @@ class XLite_Module_Newsletters_Model_NewsList extends XLite_Model_Abstract
 
     function getShowedListsNumber()
     {
-        if (is_null($this->xlite->showed_lists_number)) {
-            $this->xlite->showed_lists_number = $this->count("show_as_news=1 AND enabled=1");
+        if (is_null($this->showedListsNumber)) {
+            $this->showedListsNumber = $this->count("show_as_news=1 AND enabled=1");
         }
-        return $this->xlite->showed_lists_number;
+        return $this->showedListsNumber;
     }
 } 
 

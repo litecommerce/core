@@ -75,7 +75,7 @@ class XLite_Module_BeanStream_Controller_Customer_BeanstreamCheckout extends XLi
 			$this->session->writeClose();
 
 			$order = $this->get("order");
-			$payment = new XLite_Model_PaymentMethod("beanstream_cc");
+			$payment = XLite_Model_PaymentMethod::factory('beanstream_cc');
 
 			include_once "modules/BeanStream/encoded.php";
 			func_BeanStream_action_return($this, $order, $payment);

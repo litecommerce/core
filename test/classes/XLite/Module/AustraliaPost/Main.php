@@ -41,15 +41,50 @@
 
 class XLite_Module_AustraliaPost_Main extends XLite_Module_Abstract
 {
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
-        parent::uninstall();
+    /**
+     * Module version
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $version = '2.2.RC2';
+
+    /**
+     * Module description
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $description = 'This module introduces Australia Post real-time shipping cost calculations';
+
+    /**
+     * Determines if module is switched on/off
+     *
+     * @var    bool
+     * @access protected
+     * @since  3.0
+     */
+    protected $enabled = true;
+
+	var $showSettingsForm = true;
+
+    function getSettingsForm() // {{{
+    {
+        return "admin.php?target=aupost";
 
     } // }}}
 
-} // }}}
+    function init() // {{{
+    {
+        parent::init();
 
-// WARNING:
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+        $shipping = new XLite_Model_Shipping();
+        $shipping->registerShippingModule("aupost");
+
+        $this->xlite->set("AustraliaPostEnabled", true);
+
+    }
+}
+
