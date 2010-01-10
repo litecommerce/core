@@ -218,7 +218,7 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
 		$product->updateGlobalProductOptions($oldCategories);
     }
 
-    function getAllParams()
+    function getAllParams($exeptions = null)
     {
         $result = parent::getAllParams();
         if (isset($this->action)) {

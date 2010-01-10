@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_PayPalPro_Controller_Customer_StandardCheckout extends Dialog_checkout // {{{ 
+class XLite_Module_PayPalPro_Controller_Customer_StandardCheckout extends XLite_Controller_Customer_Checkout implements XLite_Base_IDecorator
 {
 	var $registerForm = null;
 

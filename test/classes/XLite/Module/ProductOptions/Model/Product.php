@@ -143,13 +143,10 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product impl
         parent::delete();
     }
 	
-	function clone()
+	function __clone()
 	{
-		if ( function_exists("func_is_clone_deprecated") && func_is_clone_deprecated() ) {
-			$p = parent::cloneObject();
-		} else {
-			$p = parent::clone();
-		}
+		$p = parent::__clone();
+
 		if ($this->config->get("ProductOptions.clone_product_options")) {
 
 			$id = $p->get("product_id");

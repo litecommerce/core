@@ -58,7 +58,7 @@ abstract class XLite_Controller_Abstract extends XLite_View
 
 	protected $category = null;
 
-    function getAllParams($exeptions=null)
+    function getAllParams($exeptions = null)
     {
     	$allParams = parent::getAllParams();
     	$params = $allParams;

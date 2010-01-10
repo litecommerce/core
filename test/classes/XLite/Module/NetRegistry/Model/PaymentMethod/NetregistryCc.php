@@ -51,7 +51,7 @@ class XLite_Module_NetRegistry_Model_PaymentMethod_NetregistryCc extends XLite_M
     var $hasConfigurationForm = true;
     var $processorName = "NetRegistry";
 
-    function process(&$cart)
+    function process($cart)
     {
 		require_once("modules/NetRegistry/encoded.php");
         return func_NetRegistry_process($cart, $this, false);

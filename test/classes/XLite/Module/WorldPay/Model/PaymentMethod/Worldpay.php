@@ -53,7 +53,7 @@ class XLite_Module_WorldPay_Model_PaymentMethod_Worldpay extends XLite_Model_Pay
 	var $processorName = "RBS WorldPay";
 	var $hasConfugurationForm = true;
 
-    function handleRequest(&$cart)
+    function handleRequest($cart)
     {
 		require_once "classes/modules/WorldPay/encoded.php";
         func_PaymentMethod_worldpay_handleRequest($this, $cart);
@@ -74,7 +74,7 @@ class XLite_Module_WorldPay_Model_PaymentMethod_Worldpay extends XLite_Model_Pay
         return $this->get("params.prefix").$oid;
     }
 
-    function getNameField(&$cart)
+    function getNameField($cart)
     {
         switch ($this->get("params.test")) {
             case 'A':
@@ -100,7 +100,7 @@ class XLite_Module_WorldPay_Model_PaymentMethod_Worldpay extends XLite_Model_Pay
     /* calculate MD5 signature for transaction.
      * the same md5hashValue should be set on your WorldPay CMS. 
      */
-    function getMD5Signature(&$cart)
+    function getMD5Signature($cart)
     {
         if (!is_null($this->get("params.md5HashValue"))) {
    

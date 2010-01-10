@@ -50,7 +50,7 @@ class XLite_Model_PaymentMethod_CreditCard extends XLite_Model_PaymentMethod
     var $formTemplate = "checkout/credit_card.tpl";
     var $secure = true;
 
-    function process(&$cart)
+    function process($cart)
     {
         // save CC details to order
         $cart->set("details", $this->cc_info);
@@ -75,7 +75,7 @@ class XLite_Model_PaymentMethod_CreditCard extends XLite_Model_PaymentMethod
         return (isset($_POST["cc_info"]) ? $_POST["cc_info"] : '');
     }
 
-    function handleRequest(&$cart)
+    function handleRequest($cart)
     {
         $this->cc_info = $this->getPaymentInfo();
         $this->process($cart);

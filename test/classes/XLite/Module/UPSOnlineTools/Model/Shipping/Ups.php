@@ -44,13 +44,14 @@
 * @version $Id$
 */
 
-define('US', "US");
+// FIXME - this must be uncommented !!!!
+/*define('US', "US");
 define('EU', "EU");
 define('CA', "CA");
 define('PR', "PR");
 define('MX', "MX");
 define('PL', "PL");
-define('OTHER_ORIGINS', "OTHER_ORIGINS");
+define('OTHER_ORIGINS', "OTHER_ORIGINS");*/
 
 class XLite_Module_UPSOnlineTools_Model_Shipping_Ups extends XLite_Model_Shipping_Online
 {

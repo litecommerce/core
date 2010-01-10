@@ -52,7 +52,7 @@ class XLite_Module_eSelect_Model_PaymentMethod_EselectCc extends XLite_Model_Pay
     var $hasConfigurationForm = true;
     var $processorName = "eSelect";
 	
-    function process(&$cart)
+    function process($cart)
 	{
 		require_once('modules/eSelect/encoded.php');
 		func_eSelect_process($cart, $this);

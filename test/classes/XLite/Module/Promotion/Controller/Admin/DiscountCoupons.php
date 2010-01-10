@@ -37,11 +37,11 @@
 
 /* vim: set expandtab tabstop=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
 
-define(DEFAULT_DC_EXPIRATION, 3600*24*7); // a week
-define(DIALOG_SORT_MODE_ALL, 0);
-define(DIALOG_SORT_MODE_ACTIVE, 1);
-define(DIALOG_SORT_MODE_DISABLED, 2);
-define(DIALOG_SORT_MODE_USED, 3);
+define('DEFAULT_DC_EXPIRATION', 3600*24*7); // a week
+define('DIALOG_SORT_MODE_ALL', 0);
+define('DIALOG_SORT_MODE_ACTIVE', 1);
+define('DIALOG_SORT_MODE_DISABLED', 2);
+define('DIALOG_SORT_MODE_USED', 3);
 
 /**
 * Admin_Dialog_DiscountCoupons description.

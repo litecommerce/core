@@ -206,7 +206,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
     	}
     }
 
-    function getCategory()
+    function getCategory($where = null, $orderby = null, $useCache = true)
     {
     	if (is_null($this->_ProductMainCategory) || $this->_checkSafetyMode()) {
     		if ($this->_checkSafetyMode()) {

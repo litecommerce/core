@@ -641,14 +641,10 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_Abstract
 		}
 	}
 
-	function clone()
+	function __clone()
 	{
-		// clone attached bonus prices & products
-		if ( function_exists("func_is_clone_deprecated") && func_is_clone_deprecated() ) {
-			$clone = parent::cloneObject();
-		} else {
-			$clone = parent::clone();
-		}
+		$clone = parent::__clone();
+
 		$this->bonusPrices = null;
 		foreach ($this->get("bonusPrices") as $bonusPrice) {
 			$clone->addBonusPrice($bonusPrice->get("product"), $bonusPrice->get("category"), $bonusPrice->get("price"), $bonusPrice->get("bonusType"));

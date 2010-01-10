@@ -89,7 +89,7 @@ class XLite_Module_UPS_Model_Shipping_Ups extends XLite_Model_Shipping_Online
         return "UPS";
     }
 
-    function getRates($order)
+    function getRates(XLite_Model_Order $order)
     {
         require_once LC_MODULES_DIR . 'UPS' . LC_DS . 'encoded.php';
         return Shipping_ups_getRates($this, $order);

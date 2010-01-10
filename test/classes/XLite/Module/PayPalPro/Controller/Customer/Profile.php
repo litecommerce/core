@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_PayPalPro_Controller_Customer_Profile extends Dialog_profile // {{{
+class XLite_Module_PayPalPro_Controller_Customer_Profile extends XLite_Controller_Customer_Profile implements XLite_Base_IDecorator
 {
 	function handleRequest() // {{{  
 	{

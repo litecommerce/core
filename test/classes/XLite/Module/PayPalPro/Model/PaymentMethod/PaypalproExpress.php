@@ -39,7 +39,7 @@
 * @version $Id$
 */
 
-class XLite_Module_PayPalPro_Model_PaymentMethod_PaypalproExpress extends PaymentMethod // {{{ 
+class XLite_Module_PayPalPro_Model_PaymentMethod_PaypalproExpress extends XLite_Model_PaymentMethod 
 {
 	var $configurationTemplate = "modules/PayPalPro/config.tpl";
 	

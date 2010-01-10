@@ -75,7 +75,7 @@ class XLite_Module_2CheckoutCom_Model_PaymentMethod_2Checkout extends XLite_Mode
     var $configurationTemplate = "modules/2CheckoutCom/config.tpl";
     var $formTemplate ="modules/2CheckoutCom/checkout.tpl";
 
-    function handleRequest(&$cart)
+    function handleRequest($cart)
     {
 		$params = $this->get("params");
 		if ($params["version"] != 2) {
@@ -117,7 +117,7 @@ class XLite_Module_2CheckoutCom_Model_PaymentMethod_2Checkout extends XLite_Mode
 		}		
     }
 
-    function createSecureNumber(&$order)
+    function createSecureNumber($order)
     {
         if (!$order->get("details.secureNumber")) {
             $num = generate_code();

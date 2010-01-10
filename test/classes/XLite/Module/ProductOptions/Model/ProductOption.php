@@ -101,7 +101,7 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
         return $this->productOptions;
     } // }}}
 
-    function _import(&$options) // {{{
+    function _import(array $options) // {{{
     {
         static $line;
         if (!isset($line)) $line = 1; else $line++;

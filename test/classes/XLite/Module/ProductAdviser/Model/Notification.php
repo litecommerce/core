@@ -79,7 +79,7 @@ class XLite_Module_ProductAdviser_Model_Notification extends XLite_Model_Abstrac
     	}
     }
 
-    function _updateProperties($properties = array())
+    function _updateProperties(array $properties = array())
     {
     	parent::_updateProperties($properties);
     	$po = $this->get("product_options");

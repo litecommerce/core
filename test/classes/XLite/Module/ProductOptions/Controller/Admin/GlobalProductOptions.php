@@ -87,7 +87,7 @@ class XLite_Module_ProductOptions_Controller_Admin_GlobalProductOptions extends 
         $this->option_id = $option->get("option_id");
 	}	
 
-    function getAllParams()
+    function getAllParams($exeptions = null)
     {
         $result = parent::getAllParams();
         if (isset($this->action)) {
