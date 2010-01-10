@@ -95,7 +95,7 @@ class XLite_Module_Affiliate_Model_PlanCommission extends XLite_Model_Abstract
         return func_Affiliate_calc_order_commissions($this);
     }
 
-    function calculate(&$order)
+    function calculate($order)
     {
         $this->order = $order;
         $commissions = 0;

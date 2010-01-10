@@ -42,7 +42,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_Affiliate_Controller_Customer_PartnerSales extends XLite_Module_Affiliate_base_PartnerDialog
+class XLite_Module_Affiliate_Controller_Customer_PartnerSales extends XLite_Module_Affiliate_Controller_Partner
 {
     var $qty              = 0;
     var $saleTotal        = 0;
@@ -71,7 +71,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerSales extends XLite_Modu
                     true
                     );
             // summarize search result into $this->salesStats
-            array_map(array(&$this, 'sumSale'), $salesStats);
+            array_map(array($this, 'sumSale'), $salesStats);
         }
         return $this->salesStats;
     }
@@ -96,7 +96,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerSales extends XLite_Modu
                     $this->topProducts[$id]["amount"]["commissions"] = sprintf("%.02f", doubleval($this->topProducts[$id]["amount"]["commissions"] + $item->get("commissions")));
                 }    
             }
-            usort($this->topProducts, array(&$this, "cmpProducts"));
+            usort($this->topProducts, array($this, "cmpProducts"));
             $topProducts = array_chunk(array_reverse($this->topProducts), 10);
             $this->topProducts = $topProducts[0];
         }

@@ -42,7 +42,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_Affiliate_Controller_Customer_PartnerBannerStats extends XLite_Module_Affiliate_base_PartnerDialog
+class XLite_Module_Affiliate_Controller_Customer_PartnerBannerStats extends XLite_Module_Affiliate_Controller_Partner
 {
     var $statsTotal = array("views" => 0, "click" => 0, "rate" => 0);
 
@@ -74,7 +74,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerBannerStats extends XLit
                     $this->get("product_banner"),
                     $this->get("direct_link"));
             // calculate stats total using callback
-            array_map(array(&$this, 'sum'), $st = $this->stats);
+            array_map(array($this, 'sum'), $st = $this->stats);
         }
         return $this->stats;
     }

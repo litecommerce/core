@@ -74,7 +74,7 @@ class XLite_Module_Affiliate_Controller_Admin_BannerStats extends XLite_Module_A
                     $this->get("product_banner"),
                     $this->get("direct_link"));
             // calculate stats total using callback
-            array_map(array(&$this, 'sum'), $st = $this->stats);
+            array_map(array($this, 'sum'), $st = $this->stats);
         }
         return $this->stats;
     }

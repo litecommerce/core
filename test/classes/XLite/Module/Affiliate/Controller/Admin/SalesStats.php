@@ -71,7 +71,7 @@ class XLite_Module_Affiliate_Controller_Admin_SalesStats extends XLite_Module_Af
                     $this->get("partner_id"),
                     $this->get("payment_status")
                     );
-            array_map(array(&$this, 'sumSale'), $st = $this->salesStats);
+            array_map(array($this, 'sumSale'), $st = $this->salesStats);
         }
         return $this->salesStats;
     }
@@ -97,7 +97,7 @@ class XLite_Module_Affiliate_Controller_Admin_SalesStats extends XLite_Module_Af
                 }    
             }
             if (is_array($this->topProducts) && count($this->topProducts) > 0) {
-                usort($this->topProducts, array(&$this, "cmpProducts"));
+                usort($this->topProducts, array($this, "cmpProducts"));
                 $topProducts = array_chunk(array_reverse($this->topProducts), 10);
                 $this->topProducts = $topProducts[0];
             } else {

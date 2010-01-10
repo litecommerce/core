@@ -37,7 +37,7 @@
 
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
-function func_Affiliate_charge(&$payment, &$order) // {{{
+function func_Affiliate_charge(&$payment, $order) // {{{
 {
     $commissions = 0;
     // process current partner

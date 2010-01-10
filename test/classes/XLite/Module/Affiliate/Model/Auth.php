@@ -43,12 +43,12 @@
 */
 class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLite_Base_IDecorator
 {
-    function isAuthenticated(&$profile)
+    function isAuthenticated($profile)
     {
         return $profile->find("login='".addslashes($profile->get("login"))."' AND status='E' AND password='".$this->encryptPassword($profile->get("password"))."' AND order_id=0");
     }
 
-    function registerPartner(&$profile)
+    function registerPartner($profile)
     {
         // if profile already exists, check password
         // register it otherwise
@@ -86,12 +86,12 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLit
         return REGISTER_SUCCESS;
     }
 
-    function deletePartner(&$profile)
+    function deletePartner($profile)
     {
         $this->unregister($profile);
     }
 
-    function declinePartner(&$profile)
+    function declinePartner($profile)
     {
         $profile->set("access_level", $this->get("declinedPartnerAccessLevel"));
         $profile->update();
@@ -106,7 +106,7 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLit
         $mailer->send();
     }
     
-    function pendPartner(&$profile)
+    function pendPartner($profile)
     {
         if ($profile->get("access_level") < $this->get("pendingPartnerAccessLevel")) {
             $profile->set("access_level", $this->get("pendingPartnerAccessLevel"));
@@ -122,7 +122,7 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLit
 
     }
     
-    function approvePartner(&$profile)
+    function approvePartner($profile)
     {
         if ($profile->get("access_level") < $this->getPartnerAccessLevel()) {
             $profile->set("access_level", $this->getPartnerAccessLevel());
@@ -139,15 +139,15 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLit
 
     }
     
-    function isPartner(&$profile)
+    function isPartner($profile)
     {
         return $profile->get("access_level") == $this->getPartnerAccessLevel();
     }
-    function isPendingPartner(&$profile)
+    function isPendingPartner($profile)
     {
         return $profile->get("access_level") == $this->getPendingPartnerAccessLevel();
     }
-    function isDeclinedPartner(&$profile)
+    function isDeclinedPartner($profile)
     {
         return $profile->get("access_level") == $this->getDeclinedPartnerAccessLevel();
     }

@@ -68,7 +68,7 @@ class XLite_Module_Affiliate_Controller_Admin_TopPerformers extends XLite_Module
                 $this->get("startDate"),
                 $this->get("endDate")+24*3600,
                 $this->get("report_by"));
-            usort($this->stats, array(&$this, "cmpStats"));
+            usort($this->stats, array($this, "cmpStats"));
             $this->stats = array_reverse($this->stats);
             foreach ($this->stats as $sid => $stat) {
                 if (isset($stat["partner_id"])) {

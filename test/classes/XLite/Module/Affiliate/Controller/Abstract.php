@@ -42,7 +42,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_Affiliate_base_Dialog extends XLite_Controller_Abstract implements XLite_Base_IDecorator
+class XLite_Module_Affiliate_Controller_Abstract extends XLite_Controller_Abstract implements XLite_Base_IDecorator
 {
     function init()
     {
@@ -81,7 +81,7 @@ class XLite_Module_Affiliate_base_Dialog extends XLite_Controller_Abstract imple
         return $this->shopLayout;
     }
     
-    function getRowClass($idx, $class1, $class2)
+    function getRowClass($idx, $class1, $class2 = null)
     {   
 		$classMethods = array_map("strtolower", get_class_methods($this));
 		$isNewRC = in_array("isoddrow", $classMethods);

@@ -63,7 +63,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
     var $order;
     var $affiliates;
 
-    function charge(&$order) // {{{
+    function charge($order) // {{{
     {
         require_once LC_MODULES_DIR . 'Affiliate' . LC_DS . 'encoded.php';
         return func_Affiliate_charge($this, $order);
@@ -206,7 +206,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
         }
     } // }}}
 
-    function _import($options) // {{{
+    function _import(array $options) // {{{
     {
         $data = $options["properties"];
         $w = new XLite_View_Abstract();

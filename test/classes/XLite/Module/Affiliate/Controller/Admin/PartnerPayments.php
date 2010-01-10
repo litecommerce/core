@@ -114,7 +114,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Cont
             $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
             $payments = $pp->findAll();
             // summarize payments
-            array_map(array(&$this, 'summarize'), $payments);
+            array_map(array($this, 'summarize'), $payments);
             if ($this->get("account_filter") == "ready") {
                 $payments2 = array();
                 foreach ($this->payments as $payment) {

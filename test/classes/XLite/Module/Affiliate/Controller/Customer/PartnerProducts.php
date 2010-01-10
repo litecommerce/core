@@ -42,7 +42,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_Affiliate_Controller_Customer_PartnerProducts extends XLite_Module_Affiliate_base_PartnerDialog
+class XLite_Module_Affiliate_Controller_Customer_PartnerProducts extends XLite_Module_Affiliate_Controller_Partner
 {
     var $params = array('target', 'mode', 'search_productsku', 'substring', 'search_category', 'subcategory_search', 'pageID', 'status');
     var $productsFound = 0;

@@ -41,7 +41,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_Affiliate_Controller_Customer_PartnerAffiliates extends XLite_Module_Affiliate_base_PartnerDialog
+class XLite_Module_Affiliate_Controller_Customer_PartnerAffiliates extends XLite_Module_Affiliate_Controller_Partner
 {
     function getRoot()
     {
