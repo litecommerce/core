@@ -6,7 +6,7 @@
 * @version $Id$
 */
 
-    function Module_WishList_action_add(&$_this) // {{{
+    function Module_WishList_action_add($_this) // {{{
     {
 
 		if (!$_this->auth->is("logged"))	{

@@ -260,7 +260,7 @@ EOT;
 		}
 	}
 
-	function handleRequest(&$order)
+	function handleRequest($order)
 	{
 		$response = $this->sendGoogleCheckoutRequest($order);
 
@@ -295,7 +295,7 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
 
 	}
 
-	function sendGoogleCheckoutRequest(&$order)
+	function sendGoogleCheckoutRequest($order)
 	{
 		require_once LC_MODULES_DIR . 'GoogleCheckout' . LC_DS . 'encoded.php';
 		return GoogleCheckout_sendGoogleCheckoutRequest($this, $order);
@@ -423,7 +423,7 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
 		return "http" . $secureTestmode . "://" . $this->xlite->options->get("host_details.https_host") . $this->xlite->options->get("host_details.web_dir_wo_slash") . $subpath;
 	}
 
-	function getOrderMerchantNote(&$order, $paymentParams)
+	function getOrderMerchantNote($order, $paymentParams)
 	{
 		// switch to customer area for correct order items fingerprint calc.
 		$is_admin = $this->xlite->is("adminZone");
@@ -451,7 +451,7 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
         return $idText;
 	}
 
-	function getOrderCheckoutRequest(&$order, $paymentParams)
+	function getOrderCheckoutRequest($order, $paymentParams)
 	{
 		$shop_url = htmlentities($this->xlite->shopUrl("cart.php"));
 		$merchantNote = $this->getOrderMerchantNote($order, $paymentParams);

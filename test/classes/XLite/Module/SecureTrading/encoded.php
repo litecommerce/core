@@ -1,6 +1,6 @@
 <?php
 
-function PaymentMethod_securetrading_handleRequest(&$pm, &$order, $debug = false)
+function PaymentMethod_securetrading_handleRequest(&$pm, $order, $debug = false)
 {
 	$order->xlite->logger->log("SecureTrading: STResult=" . $_REQUEST["stresult"] . ", RemoteAddr=" . $_SERVER['REMOTE_ADDR']);
 

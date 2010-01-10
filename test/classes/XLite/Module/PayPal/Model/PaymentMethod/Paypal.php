@@ -68,7 +68,7 @@ class XLite_Module_PayPal_Model_PaymentMethod_Paypal extends XLite_Model_Payment
     var $formTemplate = "modules/PayPal/checkout.tpl";
     var $processorName = "PayPal";
 
-    function handleRequest(&$order)
+    function handleRequest($order)
     {
         require_once LC_MODULES_DIR . 'PayPal' . LC_DS . 'encoded.php';
         PaymentMethod_paypal_handleRequest($this, $order);

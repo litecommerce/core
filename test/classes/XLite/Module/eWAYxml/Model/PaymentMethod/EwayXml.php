@@ -50,7 +50,7 @@ class XLite_Module_eWAYxml_Model_PaymentMethod_EwayXml extends XLite_Model_Payme
     var $hasConfigurationForm = true;
     var $processorName = "eWAYxml";
 
-    function process(&$cart)
+    function process($cart)
     {
 		require_once("modules/eWAYxml/encoded.php");
         return func_eWAYxml_process($cart, $this);

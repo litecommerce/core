@@ -58,7 +58,7 @@ class XLite_Module_AuthorizeNet_Model_PaymentMethod_AuthorizenetCc extends XLite
         $this->processor = new XLite_Module_AuthorizeNet_Processor();
     }
     
-    function process(&$cart)
+    function process($cart)
     {
         return $this->processor->process($cart, $this);
     }
@@ -68,7 +68,7 @@ class XLite_Module_AuthorizeNet_Model_PaymentMethod_AuthorizenetCc extends XLite
         return $this->processor->handleConfigRequest();
     }
 
-    function initRequest(&$cart, &$request)
+    function initRequest($cart, &$request)
     {
 		if ($this->xlite->get("cc_initRequestAlternate")) {
 			$_object = new XLite_Module_CardinalCommerce_Model_PaymentMethodAuthorizenetCc();

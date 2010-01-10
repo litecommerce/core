@@ -28,27 +28,74 @@
 | PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
 | THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
 | SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
+| GRANTED  BY  THIS AGREEMENT.                                                 |
 |                                                                              |
 | The Initial Developer of the Original Code is Creative Development LLC       |
 | Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
 | Development LLC. All Rights Reserved.                                        |
 +------------------------------------------------------------------------------+
 */
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
+
+/* vim: set expandtab tabstop=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
 
 /**
-* Module_Promotion description.
+* Class description.
 *
-* @package Module_Promotion
+* @package Module_UPSOnlineTools
 * @access public
 * @version $Id$
+*
 */
-class XLite_Module_Promotion_base_Widget extends XLite_View_Abstract implements XLite_Base_IDecorator
+
+class XLite_Module_UPSOnlineTools_Controller_Abstract extends XLite_Controller_Abstract implements XLite_Base_IDecorator
 {
-	function invertSign($value)
+    function isShowAV()
+    {
+        $target = $this->get('target');
+        $mode = $this->get('mode');
+        if ($target == 'profile'|| ($target == 'checkout' && $mode == 'register')) {
+            $av_result = $this->session->get('ups_av_result');
+            if (count($av_result) > 0 || $this->session->get('ups_av_error')) return true;
+        }
+        else {
+			$this->session->set('ups_av_result', null);
+			$this->session->set('ups_av_error', null);
+		}
+
+        return false;
+    }
+
+    function getUpsUsed() 
+    {
+        if (!isset($this->_ups_profile)) {
+            $this->_ups_profile = new XLite_Model_Profile();
+            $this->_ups_profile->set('properties', $this->session->get('ups_used'));
+        }
+
+        return $this->_ups_profile;
+    }
+
+	function isSuggestionExists()
 	{
-		return -$value;
+		$av_result = $this->session->get('ups_av_result');
+		return (count($av_result) > 0) ? true : false;
 	}
+
+	function isAVError()
+	{
+		return $this->session->get('ups_av_error');
+	}
+
+	function getAVErrorMessage()
+	{
+		$errcode = $this->session->get('ups_av_errorcode');
+		if (empty($errcode)) {
+			return "Unable to connect. UPS OnLine&reg; Tools Address Validation service is not available.";
+		} else {
+			return "UPS OnLine&reg; Tools Address Validation returned an error: (".$errcode.") ".$this->session->get('ups_av_errordescr');
+		}
+	}
+
 }
 
 // WARNING :

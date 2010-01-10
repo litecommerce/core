@@ -6,7 +6,7 @@
 * @version $Id$
 */
 
-function PaymentMethod_PayFlowLink_handleRequest(&$_this, &$cart)
+function PaymentMethod_PayFlowLink_handleRequest($_this, $cart)
 {
     $params = $_this->params;
     $error = null;

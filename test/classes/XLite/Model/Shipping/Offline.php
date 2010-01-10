@@ -51,7 +51,7 @@ class XLite_Model_Shipping_Offline extends XLite_Model_Shipping
         return "Manually defined shipping methods";
     }
 
-    function _buildRatesSql($sql, &$order)
+    function _buildRatesSql($sql, $order)
     {
     	return $sql;
     }
@@ -85,12 +85,12 @@ class XLite_Model_Shipping_Offline extends XLite_Model_Shipping
         return $result;
     }
 
-    function _buildRateSql($sql, &$order, &$method)
+    function _buildRateSql($sql, $order, &$method)
     {
     	return $sql;
     }
 
-    function getRate(&$order, &$method)
+    function getRate($order, &$method)
     {
         $shipping_id = $method->get("shipping_id");
         $weight = (double) $order->get("weight");

@@ -63,13 +63,9 @@ class XLite_Module_DetailedImages_Model_Product extends XLite_Model_Product impl
         parent::delete();
     }
 
-	function clone()
+	function __clone()
 	{
-		if ( function_exists("func_is_clone_deprecated") && func_is_clone_deprecated() ) {
-			$product = parent::cloneObject();
-		} else {
-			$product = parent::clone();
-		}
+		$product = parent::__clone();
 
 		$images = $this->get("detailedImages");
 		foreach ($images as $image) {

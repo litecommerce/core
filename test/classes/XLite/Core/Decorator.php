@@ -34,8 +34,12 @@ class XLite_Core_Decorator extends XLite_Base implements XLite_Base_ISingleton
 
 				if ($this->checkFile($filePath) && preg_match('/class\s+([\w\d]+)[\s\n\r]+/', file_get_contents($filePath), $matches)) {
 					$className = str_replace(LC_DS, '_', preg_replace($pattern, '$1', $filePath));
-					if (class_exists($className) && $className instanceof XLite_Base_IDecorator) {
-						echo $className . "<br />";
+					if (in_array('XLite_Base_IDecorator', class_implements($className))) {
+						$parentClass = get_parent_class($className);
+						if (!isset($this->classDecorators[$parentClass])) {
+							$this->classDecorators[$parentClass] = array();
+						}
+						$this->classDecorators[$parentClass][$className] = 0;
 					}
 				}
 			}
@@ -56,7 +60,9 @@ class XLite_Core_Decorator extends XLite_Base implements XLite_Base_ISingleton
 				$this->_die('Unable to create classes cache directory');
 			}*/
 
-			$this->walkThroughPHPFiles();
+			// $this->walkThroughPHPFiles();
+
+			// print_r($this->classDecorators);die;
 		}
     }
 }

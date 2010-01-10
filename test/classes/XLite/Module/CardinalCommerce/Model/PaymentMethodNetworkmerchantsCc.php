@@ -42,7 +42,7 @@
 */
 class XLite_Module_CardinalCommerce_Model_PaymentMethodNetworkmerchantsCc extends XLite_Module_NetworkMerchants_Model_PaymentMethod_NetworkmerchantsCc implements XLite_Base_IDecorator
 {
-	function initRequest(&$cart, &$request)
+	function initRequest($cart, &$request)
 	{
 		$cmpi_result = $this->get("CardinalMPI");
 		if(isset($cmpi_result)) {

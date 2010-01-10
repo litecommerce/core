@@ -151,7 +151,7 @@ $_this->xlite->logger->log("Protx VSP Form response Error: Order #$order_id not 
 
 
 /////////////////////////////////////////// Helper //////////////////////////////////
-function func_ProtxForm_getState(&$profile, $field, $customField)
+function func_ProtxForm_getState($profile, $field, $customField)
 {
 	$stateName = "";
 	$state = new XLite_Model_State();

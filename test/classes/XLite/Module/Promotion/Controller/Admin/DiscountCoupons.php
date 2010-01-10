@@ -221,7 +221,7 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
 		return (($row % 2) == 0) ? true : false;
 	}
 
-	function getRowClass($row,$odd_css_class, $even_css_class)
+	function getRowClass($row,$odd_css_class, $even_css_class = null)
 	{
 		return ($this->isOddRow($row)) ? $odd_css_class : $even_css_class;
 	}

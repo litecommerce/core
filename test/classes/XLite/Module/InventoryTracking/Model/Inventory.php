@@ -188,7 +188,7 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
         return $options;
     } // }}}
 
-    function checkLowLimit(&$item) // {{{
+    function checkLowLimit($item) // {{{
     {
         if ($this->get("amount") < $this->get("low_avail_limit")) {
             $inventory_id = $this->get("inventory_id");

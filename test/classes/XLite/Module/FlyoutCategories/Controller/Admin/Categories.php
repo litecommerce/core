@@ -712,7 +712,7 @@ function opera_click() {
     	}
     }
 
-    function processTreeItem(&$item)
+    function processTreeItem($item)
     {
 		require_once LC_MODULES_DIR . 'FlyoutCategories' . LC_DS . 'encoded.php';
 		FlyoutCategories_processTreeItem($this, $item);

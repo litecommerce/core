@@ -186,20 +186,20 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
 			// summarize orders info
 			$this->totals = array();
 			$this->orders = array();
-			array_map(array(&$this, 'sumOrders'), $items);
+			array_map(array($this, 'sumOrders'), $items);
 
 			// PASS 3
 			// apply/purchased products filter
 			// orders not passed through filter are marked
 			// order["passed"] == false
-			array_map(array(&$this, 'filterOrders'), $this->orders);
+			array_map(array($this, 'filterOrders'), $this->orders);
 
 			//echo "ORDERS<pre>"; print_r($this->orders); echo "</pre>";
 			//echo "TOTALS<pre>"; print_r($this->totals); echo "</pre>";
 
 			// PASS 4
 			// collect passed orders to focusedSales
-			array_map(array(&$this, 'collectFocusedSales'), $this->orders);
+			array_map(array($this, 'collectFocusedSales'), $this->orders);
 
 		}
         return $this->focusedSales;
@@ -212,7 +212,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
         }
     } // }}}
 
-    function filterOrders(&$order) // {{{
+    function filterOrders($order) // {{{
     {
         // apply products filter
         foreach ($order["products"] as $pidx => $product) {

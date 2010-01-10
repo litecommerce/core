@@ -50,7 +50,7 @@ class XLite_Module_BankOfAmerica_Model_PaymentMethod_BankOfAmericaCc extends XLi
 	var $hasConfigurationForm = true;
 	var $processorName = "BankOfAmerica";
 
-    function process(&$cart)
+    function process($cart)
     {
 		require_once "classes/modules/BankOfAmerica/encoded.php";
         func_BankOfAmerica_process($cart, $this);

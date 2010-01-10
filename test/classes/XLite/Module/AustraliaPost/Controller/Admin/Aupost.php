@@ -39,7 +39,7 @@
 * @version $Id$
 */
 
-class XLite_Module_AustraliaPost_Controller_Admin_Aupost extends Admin_Dialog_shipping_settings // {{{
+class XLite_Module_AustraliaPost_Controller_Admin_Aupost extends XLite_Controller_Admin_ShippingSettings
 {
 	var $params = array("target", "updated");
 	var $page		="aupost";	

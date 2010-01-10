@@ -779,7 +779,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
 
     // PRODUCT IMPORT functions {{{
 
-    function import(&$options) // {{{
+    function import(array $options) // {{{
     {
         if (isset($options["delete_products"]) && $options["delete_products"] === true) {
             $this->deleteAll();

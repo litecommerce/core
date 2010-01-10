@@ -1,6 +1,6 @@
 <?php
 
-	function PaymentMethod_nochex_handleRequest(&$order,&$_this)
+	function PaymentMethod_nochex_handleRequest($order,$_this)
 	{
         $order->set("details.error", null);
         $order->set("detailLabels.error", null);

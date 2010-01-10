@@ -50,7 +50,7 @@ class XLite_Module_ChronoPay_Model_PaymentMethod_Chronopay extends XLite_Model_P
     var $processorName = "ChronoPay";
     var $formTemplate ="modules/ChronoPay/checkout.tpl";
 
-    function handleRequest(&$cart)
+    function handleRequest($cart)
     {
 		require_once LC_MODULES_DIR . 'ChronoPay' . LC_DS . 'encoded.php';
 		PaymentMethod_chronopay_handleRequest($this, $cart);

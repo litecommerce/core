@@ -55,7 +55,7 @@
 	<td align=right>Total</td>
 	<td align=center>%</td>
 </tr>	
-<tr FOREACH="orders,oidx,od" valign=top class="{getRowClass(#TableRow#,##)}">
+<tr FOREACH="orders,oidx,od" valign=top class="{getRowClass(oidx,#TableRow#,##)}">
 	<td>{od.shipping_method.name:h}</td>
 	<td>{od.payment_method.name:h}</td>
 	<td align="center">{od.orders}</td>

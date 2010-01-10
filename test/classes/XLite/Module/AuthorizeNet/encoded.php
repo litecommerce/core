@@ -2,7 +2,7 @@
 /*
 * Hidden methods
 */
-function AuthorizeNet_processor_process(&$_this, &$cart, &$paymentMethod)
+function AuthorizeNet_processor_process($_this, $cart, &$paymentMethod)
 {
     // AuthorizeNet_processor::process() method code
     

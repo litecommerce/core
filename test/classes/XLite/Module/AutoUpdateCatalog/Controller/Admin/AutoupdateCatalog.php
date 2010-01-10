@@ -130,7 +130,7 @@ echo '<a href="admin.php?target=catalog&action=build&xlite_form_id='.$this->get(
         func_refresh_end();
     } // }}}
 
-    function redirect() // {{{
+    function redirect($url = null) // {{{
     {
         $url = $this->get("returnUrl");
 ?>

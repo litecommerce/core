@@ -37,7 +37,7 @@
 
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
-function func_update_inventory(&$order, &$inventory, &$items)
+function func_update_inventory($order, &$inventory, &$items)
 {
     $amount = $inventory->get("amount");
     // check inventory
@@ -71,7 +71,7 @@ function func_update_inventory(&$order, &$inventory, &$items)
     }
 }
 
-function func_change_inventory(&$order, $status, &$inventory, &$item)
+function func_change_inventory($order, $status, &$inventory, $item)
 {
     $amount = $status ? $inventory->get("amount") - $item->get("amount") : $inventory->get("amount") + $item->get("amount");
     $inventory->set("amount", $amount);

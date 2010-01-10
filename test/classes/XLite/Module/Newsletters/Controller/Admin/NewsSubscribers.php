@@ -110,7 +110,7 @@ class XLite_Module_Newsletters_Controller_Admin_NewsSubscribers extends XLite_Co
         if (!is_null($file)) {
             $list_id = $this->get("list_id");
             $ns = new XLite_Module_Newsletters_Model_NewsSubscriber();
-            $ns->import($list_id, $file);
+            $ns->importSubscribers($list_id, $file);
             echo "<br>Subscribers imported successfully. <a href=\"admin.php?target=news_subscribers&list_id=".$this->get("list_id")."\"><u>Click here to return to admin interface</u></a>";
         } else {
             echo "<font color=red>No uploaded file</font>";

@@ -66,7 +66,7 @@ class XLite_Module_InventoryTracking_Model_Order extends XLite_Model_Order imple
         parent::calcTotals();
     }
 
-    function updateInventory(&$item)
+    function updateInventory($item)
     {
         require_once LC_MODULES_DIR . 'InventoryTracking' . LC_DS . 'encoded.php';
         $inventory = new XLite_Module_InventoryTracking_Model_Inventory();

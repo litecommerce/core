@@ -3,7 +3,7 @@
 * Hidden methods
 */
 
-function Shipping_intershipper_parseResponse(&$_this, $response, $destination)
+function Shipping_intershipper_parseResponse($_this, $response, $destination)
 {
     // original code of Shipping_intershipper::_parseResponse()
     $_this->error = "";
@@ -57,7 +57,7 @@ function Shipping_intershipper_parseResponse(&$_this, $response, $destination)
     return $rates;
 }
 
-function Shipping_intershipper_getRates(&$_this, $order)
+function Shipping_intershipper_getRates($_this, $order)
 {
     // original code of Shipping_intershipper::getRates()
     

@@ -6,7 +6,7 @@
 # Netbilling.com CC processing module using Direct Mode 3.1
 #
 
-function func_Netbilling_processor_process(&$cart, &$_this, $debug = false)
+function func_Netbilling_processor_process($cart, $_this, $debug = false)
 {
 	$module_params = $_this->get('params');
 
@@ -169,7 +169,7 @@ $_this->xlite->logger->log("Response:\n".var_export($response, true)."\n");
 
 }
 
-function func_Netbilling_getState(&$profile, $field, $customField)
+function func_Netbilling_getState($profile, $field, $customField)
 {
 	$stateName = "";
 	$state = new XLite_Model_State();

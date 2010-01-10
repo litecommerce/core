@@ -51,13 +51,13 @@ class XLite_Module_HSBC_Model_PaymentMethod_CcHsbc extends XLite_Model_PaymentMe
 	var $timestamp = null;
 	var $merchant_data = null;
 
-    function handleRequest(&$cart)
+    function handleRequest($cart)
     {
 		require_once("modules/HSBC/encoded.php");
         func_PaymentMethod_cc_hsbc_handleRequest($this, $cart);
     }
 
-	function getUserId(&$cart)
+	function getUserId($cart)
 	{	
 		require_once("modules/HSBC/encoded.php");
         return func_PaymentMethod_cc_hsbc_getUserId($this, $cart);
@@ -68,7 +68,7 @@ class XLite_Module_HSBC_Model_PaymentMethod_CcHsbc extends XLite_Model_PaymentMe
 		return ($this->get("params.param05") == "capture") ? "Capture" : "Auth";
 	}
 
-	function getHash(&$cart)
+	function getHash($cart)
 	{
 		require_once("modules/HSBC/encoded.php");
 
@@ -405,7 +405,7 @@ class XLite_Module_HSBC_Model_PaymentMethod_CcHsbc extends XLite_Model_PaymentMe
 		return $this->timestamp;
 	}
 
-	function getMerchantData(&$cart)
+	function getMerchantData($cart)
 	{
 		if (null === $this->merchant_data) {
 			$this->merchant_data = $this->session->getId();

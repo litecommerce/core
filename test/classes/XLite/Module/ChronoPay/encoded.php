@@ -9,7 +9,7 @@
 /*
 * Hidden methods
 */
-function PaymentMethod_chronopay_handleRequest(&$_this, &$cart)
+function PaymentMethod_chronopay_handleRequest($_this, $cart)
 {
 	$answer = array(
 		'onetime' => 'One time payment has been made, no repayment required',

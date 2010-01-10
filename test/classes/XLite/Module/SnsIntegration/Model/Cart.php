@@ -103,7 +103,7 @@ class XLite_Module_SnsIntegration_Model_Cart extends XLite_Model_Cart implements
 		$result = func_sns_request($this->config, $snsClientId, $actions);
 	}
 
-	function deleteItem(&$item)
+	function deleteItem($item)
 	{
         $itemInfo = $this->getOrderItemInfo($item);
 		

@@ -79,7 +79,7 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstra
         return $this->findAll("product_id='$product_id'");
     } // }}}
 
-    function getImportFields() // {{{
+    function getImportFields($layout = null) // {{{
     {
         $layout = array();
         if (isset($this->config->ImportExport->detailed_images_layout)) {
@@ -144,7 +144,7 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstra
         return $newImg;
     }
 
-    function _import(&$options) // {{{
+    public function import(array $options) // {{{
     {
         static $line;
         if (!isset($line)) $line = 1; else $line++;

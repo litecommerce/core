@@ -49,7 +49,7 @@ class XLite_Module_WellsFargo_Model_PaymentMethod_WellsFargoCc extends XLite_Mod
 	var $hasConfigurationForm = true;
 	var $formTemplate = "modules/WellsFargo/checkout.tpl";
 
-    function handleRequest(&$cart)
+    function handleRequest($cart)
     {
 		require_once "classes/modules/WellsFargo/encoded.php";
         func_PaymentMethod_wells_fargo_cc_handleRequest($this, $cart);

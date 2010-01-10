@@ -54,7 +54,7 @@
 		<th height="25" class="AomTableHead" width="100">Total</th>
 	</tr>
 	<tbody IF="cloneOrder.items">
-	<tr FOREACH="cloneOrder.items,item" valign="top" class="{getRowClass(#TableRow#)}">
+	<tr FOREACH="cloneOrder.items,item" valign="top" class="{getRowClass(#0#,#TableRow#)}">
 		<td class="ProductDetailsTitle">{item.product_name}<br>
 			<table cellspacing="5">
             <widget module="ProductOptions" template="modules/AOM/invoice_options.tpl" item="{item}" visible="{item.hasOptions()}">
@@ -86,7 +86,7 @@
 	<td>{if:target=#order#}<b style="font-size: 12px">Current</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="1" name="clone[manual_edit]" checked="{isSelected(cloneOrder.manual_edit,#1#)}" title="Manual editing order totals">Manual editing{else:}<b style="font-size: 12px">Properties</b>{end:}</td>
 </tr>
 </tr>
-<tr class="{getRowClass(#TableRow#)}" height="25">
+<tr class="{getRowClass(#0#,#TableRow#)}" height="25">
     <td><b>Payment method</b></td>
     <td IF="target=#order#">{if:order.paymentMethod}{order.paymentMethod.name}{else:}N/A{end:}</td>
     <td><select name="clone[payment_method]">
@@ -98,7 +98,7 @@
 		<font class="Star" IF="!order.paymentMethod">&nbsp;(*)</font>
 	</td>
 </tr>
-<tr class="{getRowClass(#TableRow#)}" height="25">
+<tr class="{getRowClass(#0#,#TableRow#)}" height="25">
     <td><b>Shipping method</b></td>
     <td IF="target=#order#" nowrap>
         {if:order.shippingMethod}
@@ -135,43 +135,43 @@
 </tr>
 <tbody IF="!cloneOrder.shipping_id=#-1#">
 <widget module="WholesaleTrading" template="modules/AOM/order_edit/wholesale_totals.tpl">
-<tr class="{getRowClass(#TableRow#)}" height="25">  
+<tr class="{getRowClass(#0#,#TableRow#)}" height="25">  
     <td><b>Subtotal</b></td>
     <td IF="target=#order#">{price_format(order.subtotal):h}</td>
     <td>{price_format(cloneOrder.subtotal):h}</td>
 </tr>
 <widget module="Promotion" template="modules/AOM/order_edit/promotion_totals.tpl">
 <widget module="GiftCertificates" template="modules/AOM/order_edit/gc_totals.tpl">
-<tr class="{getRowClass(#TableRow#)}" height="25">
+<tr class="{getRowClass(#0#,#TableRow#)}" height="25">
     <td><b>Shipping cost</b></td>
     <td IF="target=#order#">{price_format(order.shipping_cost):h}</td>
     <td><input id="shipping_cost" type="text" name="clone[shipping_cost]" {if:cloneOrder.shipping_cost}value="{cloneOrder.shipping_cost:h}"{else:}value="0.00" disabled{end:} size="5"><span id="restore_shipping">&nbsp;&nbsp;<a href="javascript: void(0);" OnClick="changeShippingCost({cloneOrder.shipping_id});"><u>Restore shipping cost</u></A></span></td>
 </tr>
-<tr FOREACH="ordersTaxes,name,tax" class="{getRowClass(#TableRow#)}" height="25">
+<tr FOREACH="ordersTaxes,name,tax" class="{getRowClass(#0#,#TableRow#)}" height="25">
 	<td nowrap><b>{name}</b></td>
 	<td IF="target=#order#">{price_format(tax.order):h}</td>
 	<td>{if:cloneOrder.manual_edit}<input type="textbox" name="taxes[{name}]" value="{tax.clone}" size="10">{else:}{price_format(tax.clone):h}{end:}</td>
 </tr>
 <widget module="Promotion" template="modules/AOM/order_edit/promotion_bonus_points.tpl">
-<tr class="{getRowClass(#TableRow#)}" height="25">
+<tr class="{getRowClass(#0#,#TableRow#)}" height="25">
     <td><b>Total</b></td>
     <td IF="target=#order#">{price_format(order.total):h}</td>
 	<td>{if:cloneOrder.manual_edit}<input id="total" type="text" name="clone[total]" value="{cloneOrder.total}" size="10">{else:}{price_format(cloneOrder.total):h}{end:}</td>
 </tr>
 </tbody>
 <tbody IF="cloneOrder.shipping_id=#-1#">
-<tr class="{getRowClass(#TableRow#)}" height="25">
+<tr class="{getRowClass(#0#,#TableRow#)}" height="25">
     <td><b>Shipping cost</b></td>
     <td IF="target=#order#">{price_format(order.shipping_cost):h}</td>
     <td><input id="shipping_cost" type="text" name="clone[shipping_cost]" {if:cloneOrder.shipping_cost}value="{cloneOrder.shipping_cost:h}"{else:}value="0.00" disabled{end:} size="5"></td>
 </tr>
-<tr class="{getRowClass(#TableRow#)}" height="25">
+<tr class="{getRowClass(#0#,#TableRow#)}" height="25">
     <td></td>
     <td IF="target=#order#"></td>
     <td><font class="Star">To view subtotal, tax and total amounts please choose a valid delivery method and click "Calculate/Update"!</font></td>
 </tr>
 </tbody>
-<tr class="{getRowClass(#TableRow#)}" height="25">
+<tr class="{getRowClass(#0#,#TableRow#)}" height="25">
 	<td>&nbsp;</td>
 	<td IF="target=#order#">&nbsp;</td>
 	<td>{if:!cloneOrder.manual_edit}<input class="UpdateButton" type="button" onClick="javascript: document.totals_form.action.value = 'calculate_totals'; document.totals_form.submit(); " value=" Calculate ">&nbsp;&nbsp;{end:}<input type="submit" value=" Update "></td>

@@ -154,7 +154,7 @@ function func_sns_request($config, $clientId, $actions, $timestamp = null)
 	return true;
 }
 
-function func_sns_profile_params(&$profile)
+function func_sns_profile_params($profile)
 {
     $action = "&billing_country=" . urlencode($profile->get("billingCountry.country"));
     $action .= "&billing_city=" . urlencode($profile->get("billing_city"));

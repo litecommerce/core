@@ -60,7 +60,7 @@ class XLite_Module_ProductAdviser_Model_Inventory extends XLite_Module_Inventory
     	}
     }
 
-    function import(&$options)
+    public function import(array $options)
     {
         $this->xlite->set("inventoryChangedAfterImport", 0);
         $this->xlite->set("checkInventoryChangedAfterImport", true);

@@ -48,7 +48,7 @@ class XLite_Module_CyberSource_Model_PaymentMethod_CybersourceCc extends XLite_M
     var $hasConfigurationForm = true;
     var $processorName = "CyberSource";
 
-    function process(&$cart)
+    function process($cart)
     {
 		require_once('modules/CyberSource/encoded.php');
         return func_CyberSource_process($cart, $this);

@@ -60,18 +60,18 @@ class XLite_Module_PayFlowLink_Model_PaymentMethod_Payflowlink extends XLite_Mod
         }
     }
 
-    function handleRequest(&$cart)
+    function handleRequest($cart)
     {
         require_once LC_MODULES_DIR . 'PayFlowLink' . LC_DS . 'encoded.php';
         PaymentMethod_PayFlowLink_handleRequest($this, $cart);
     }
 
-	function getOrderId(&$cart)
+	function getOrderId($cart)
 	{
 		return $cart->get("order_id");
 	}
 
-	function getPaymentURL(&$cart)
+	function getPaymentURL($cart)
 	{
 		return $this->xlite->ShopUrl('classes/XLite/Module/PayFlowLink/redirect.php'); 
 	}

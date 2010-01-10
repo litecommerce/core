@@ -43,7 +43,7 @@
 
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
-function func_get_product_options(&$_this)
+function func_get_product_options($_this)
 {
     $result = array();
 

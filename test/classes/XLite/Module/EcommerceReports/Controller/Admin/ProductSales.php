@@ -49,8 +49,8 @@ class XLite_Module_EcommerceReports_Controller_Admin_ProductSales extends XLite_
         if (is_null($this->productSales)) {
             $this->productSales = array();
             $items = $this->get("rawItems");
-            array_map(array(&$this, 'sumProductSales'), $items);
-            usort($this->productSales, array(&$this, "cmpProducts"));
+            array_map(array($this, 'sumProductSales'), $items);
+            usort($this->productSales, array($this, "cmpProducts"));
             $productSales = array_reverse($this->productSales);
             $this->productSales = $productSales;
         }

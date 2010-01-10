@@ -1,5 +1,5 @@
 <?php
-    function func_PaymentMethod_epdq_cc_handleRequest(&$_this, &$cart)
+    function func_PaymentMethod_epdq_cc_handleRequest($_this, $cart)
     {    
 			if ($_POST["transactionstatus"] == "Success") {
 				$status = "P";

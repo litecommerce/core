@@ -108,7 +108,7 @@ class XLite_Module_Egoods_Model_PinCode extends XLite_Model_Abstract
 		return $data;
 	} // }}}
 
-    function _import(&$options) // {{{
+    public function import(array $options) // {{{
     {
         $properties = $options["properties"];
 		

@@ -1,5 +1,5 @@
 <?php
-    function func_PaymentMethod_worldpay_handleRequest(&$_this, &$cart)
+    function func_PaymentMethod_worldpay_handleRequest($_this, $cart)
     {    
         $status = "P";
 

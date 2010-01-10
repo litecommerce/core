@@ -168,14 +168,14 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
 	function getPrices()
 	{
 		$prices = unserialize($this->config->get("AdvancedSearch.prices"));
-		usort($prices, array(&$this,"cmp"));
+		usort($prices, array($this,"cmp"));
 		return $prices;
 	}
 	
 	function getWeights()
 	{
      	$weights =  unserialize($this->config->get("AdvancedSearch.weights"));
-        usort($weights, array(&$this,"cmp"));
+        usort($weights, array($this,"cmp"));
         return $weights;
 	}
 

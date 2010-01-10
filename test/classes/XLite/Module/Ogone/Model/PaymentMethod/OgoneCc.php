@@ -50,7 +50,7 @@ class XLite_Module_Ogone_Model_PaymentMethod_OgoneCc extends XLite_Model_Payment
     var $hasConfigurationForm = true;
     var $processorName = "Ogone";
 
-    function process(&$cart)
+    function process($cart)
     {
 		require_once('modules/Ogone/encoded.php');
 		func_Ogone_process($cart, $this);

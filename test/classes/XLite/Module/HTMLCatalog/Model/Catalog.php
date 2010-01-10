@@ -999,7 +999,7 @@ class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Model_FlexyCompiler
         return $name;
     }
 
-    function getCategoryFileName(&$request, &$category)
+    function getCategoryFileName(&$request, $category)
     {
     	$catname = $this->config->get("HTMLCatalog.category_name_format");
     	$catname = str_replace("%cid", $category->get("category_id"), $catname);
@@ -1014,7 +1014,7 @@ class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Model_FlexyCompiler
 		return $catname;
     }
 
-    function getProductFileName(&$request, &$category, &$product)
+    function getProductFileName(&$request, $category, &$product)
     {
     	$prodname = $this->config->get("HTMLCatalog.product_name_format");
     	$prodname = str_replace("%cid", $category->get("category_id"), $prodname);

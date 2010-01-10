@@ -47,7 +47,7 @@
 
 class XLite_Module_SnsIntegration_Model_Auth extends XLite_Model_Auth implements XLite_Base_IDecorator
 {
-    function register(&$profile) // {{{
+    function register($profile) // {{{
     {
         $result = parent::register($profile);
         if ($result == REGISTER_SUCCESS) {
@@ -59,7 +59,7 @@ class XLite_Module_SnsIntegration_Model_Auth extends XLite_Model_Auth implements
         return $result;
     } // }}}
 
-    function modify(&$profile) // {{{
+    function modify($profile) // {{{
     {
         $result = parent::modify($profile);
         if ($result == REGISTER_SUCCESS) {
@@ -71,7 +71,7 @@ class XLite_Module_SnsIntegration_Model_Auth extends XLite_Model_Auth implements
         return $result;
     } // }}}
             
-    function loginProfile(&$profile) // {{{
+    function loginProfile($profile) // {{{
     {
         if (strlen($profile->get("password")) && !($this->xlite->is("adminZone") || $this->xlite->is("aspZone"))) {
             // not anonymous
@@ -80,7 +80,7 @@ class XLite_Module_SnsIntegration_Model_Auth extends XLite_Model_Auth implements
         parent::loginProfile($profile);
     } // }}}
 
-    function sendProfileAction(&$profile, $action) // {{{
+    function sendProfileAction($profile, $action) // {{{
     {    
         require_once("modules/SnsIntegration/include/misc.php");
         $snsClientId  = func_get_sns_client_id(); 

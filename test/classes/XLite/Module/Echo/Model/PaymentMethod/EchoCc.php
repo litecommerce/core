@@ -52,7 +52,7 @@ class XLite_Module_Echo_Model_PaymentMethod_EchoCc extends XLite_Model_PaymentMe
 	var $configurationTemplate = "modules/Echo/config.tpl";
 	var $hasCongifurationForm = true;
     
-    function process(&$cart)
+    function process($cart)
     {
 		require_once LC_MODULES_DIR . 'Echo' . LC_DS . 'encoded.php';
         return func_Echo_processor_process($cart, $this);

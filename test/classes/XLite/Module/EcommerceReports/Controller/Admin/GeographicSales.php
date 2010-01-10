@@ -50,11 +50,11 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeographicSales extends XLi
             $this->geoSales = array();
             $items = $this->get("rawItems");
             // summarize
-            array_map(array(&$this, 'sumProductSales'), $items);
+            array_map(array($this, 'sumProductSales'), $items);
             // sort
             foreach ($this->geoSales as $gl => $gs) {
                 $productSales = $this->geoSales[$gl];
-                usort($productSales, array(&$this, "cmpProducts"));
+                usort($productSales, array($this, "cmpProducts"));
                 $ps = array_reverse($productSales);
                 $this->geoSales[$gl] = $ps;
             }    

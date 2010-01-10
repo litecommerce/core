@@ -35,97 +35,60 @@
 +------------------------------------------------------------------------------+
 */
 
-/* vim: set expandtab tabstop=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
+/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
-class XLite_Module_DemoMode_base_Base extends XLite_Model_Abstract implements XLite_Base_IDecorator
+/**
+* @package Module_WholesaleTrading
+* @access public
+* @version $Id$
+*/
+class XLite_Module_WholesaleTrading_View_Abstract extends XLite_View_Abstract implements XLite_Base_IDecorator
 {
-	public function __construct($id = null)
+    function price_format($base, $field = "", $thousand_delim = null, $decimal_delim = null)
 	{
-		parent::__construct($id);
-		global $safeData;
-		if (!isset($safeData)) {
-			$safeData = $this->session->get('safeData');
-			if (is_null($safeData)) {
-				$safeData = array();
-			}
+		if (is_Object($base) && $base->get($field) === $this->get("config.WholesaleTrading.price_denied_message")) {
+			return $this->get("config.WholesaleTrading.price_denied_message");
+		} else if ($base === $this->get("config.WholesaleTrading.price_denied_message")) {
+			return $this->get("config.WholesaleTrading.price_denied_message");
 		}
-	}
-	
-	function _setSessionVar($path, $value)
-	{
-		global $safeData;
-		$ptr = $safeData;
-		foreach ($path as $key) {
-			if (!isset($ptr[$key])) {
-				$ptr[$key] = array();
-			}
-			$ptr = $ptr[$key];
-		}
-		$ptr = $value;
-		$this->session->set('safeData', $safeData);
+
+		return parent::price_format($base, $field, $thousand_delim, $decimal_delim);
 	}
 
-	function _getSessionVar($path)
+	function disabled($disabled)
 	{
-		global $safeData;
-		$ptr = $safeData;
-		foreach ($path as $key) {
-			if (!isset($ptr[$key])) {
-				return null;
-			}
-			if (is_scalar($ptr)) {
-				return $ptr;
-			}
-			$ptr = $ptr[$key];
-		}	
-		return $ptr;
-	}
-
-	function _updateProperties(array $properties = array())
-	{
-		if (!$this->session->get("superUser")) {
-			$path = array($this->alias, '');
-			foreach ($this->primaryKey as $pkey) {
-				$path[] = $properties[$pkey];
-			}
-			foreach ($properties as $name => $value) {
-				$path[1] = $name;
-				$val = $this->_getSessionVar($path);
-				if (isset($val)) {
-					$properties[$name] = $val;
-				}
-			}
+		if ($disabled) {
+			print("disabled");
 		}
-		parent::_updateProperties($properties);
+	}	
+
+	function checked($checked)
+	{
+		if ($checked) {
+			return "checked";
+		}
 	}
 
-	function update()
+	function isEven($val)
 	{
-		if (!$this->session->get("superUser")) {
-			$path = array($this->alias, '');
-			foreach ($this->primaryKey as $pkey) {
-				$path[] = $this->properties[$pkey];
-			}
-			if ($this->alias == "config" ||
-				$this->alias == "modules" ||
-				$this->alias == "payment_methods" ||
-				$this->alias == "profiles" && $this->get("profile_id") == 1) {
-				$this->_beforeSave();
-				foreach ($this->properties as $key => $value) {
-					if ($this->alias == "payment_methods" && ($key != "orderby" ) || $this->alias != "payment_methods") {
-						$path[1] = $key;
-						$this->_setSessionVar($path, $value);
-					}
-				}
-			} else {
-				parent::update();
-			}
+		return ($val % 2 == 0);
+	}
+
+	function selectString($first, $second, $print_first)
+	{
+		if ($print_first) {
+			print $first;
 		} else {
-			parent::update();
-		}
+			print $second;
+		}	
 	}
 
+	function invertSign($value)
+	{
+		return -$value;
+	}
 }
+
 // WARNING :
 // Please ensure that you have no whitespaces / empty lines below this message.
 // Adding a whitespace or an empty line below this line will cause a PHP error.

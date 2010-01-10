@@ -52,7 +52,7 @@ class XLite_Module_Netbilling_Model_PaymentMethod_NetbillingCc extends XLite_Mod
 	var $configurationTemplate = "modules/Netbilling/config.tpl";
 	var $hsaCongifurationForm = true;
     
-    function process(&$cart)
+    function process($cart)
     {
 		require_once LC_MODULES_DIR . 'Netbilling' . LC_DS . 'encoded.php';
         return func_Netbilling_processor_process($cart, $this);
@@ -131,7 +131,7 @@ class XLite_Module_Netbilling_Model_PaymentMethod_NetbillingCc extends XLite_Mod
 	}
 
 
-	function initRequest(&$cart, &$request) 
+	function initRequest($cart, &$request) 
 	{
 		if ($this->xlite->get("cc_initRequestAlternate")) {
 			$_object = new XLite_Module_CardinalCommerce_Model_PaymentMethodNetbillingCc();

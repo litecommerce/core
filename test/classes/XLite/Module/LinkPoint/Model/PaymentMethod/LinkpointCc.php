@@ -50,7 +50,7 @@ class XLite_Module_LinkPoint_Model_PaymentMethod_LinkpointCc extends XLite_Model
     var $hasConfigurationForm = true;
     var $processorName = "LinkPoint";
 
-    function process(&$cart)
+    function process($cart)
     {
 		require_once("modules/LinkPoint/encoded.php");
         return func_LinkPoint_process($cart, $this);

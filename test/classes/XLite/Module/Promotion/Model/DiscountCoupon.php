@@ -71,7 +71,7 @@ class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_Abstract
 	var $category = null;
 	var $_oldCouponCode = null;
 
-	function checkCondition(&$order)
+	function checkCondition($order)
 	{
 		switch ($this->get("applyTo")) {
 			case "total":

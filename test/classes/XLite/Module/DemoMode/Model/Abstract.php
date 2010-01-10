@@ -37,71 +37,94 @@
 
 /* vim: set expandtab tabstop=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
 
-/**
-*
-* @package Module_DemoMode
-* @access public
-* @version $Id$
-*/
-class XLite_Module_DemoMode_base_Dialog extends XLite_Controller_Abstract implements XLite_Base_IDecorator
+class XLite_Module_DemoMode_Model_Abstract extends XLite_Model_Abstract implements XLite_Base_IDecorator
 {
-    function init()
-    {
-        $target = isset($_REQUEST["target"]) ? strtolower($_REQUEST["target"]) : "main";
-        $action = isset($_REQUEST["action"]) ? strtolower($_REQUEST["action"]) : "default";
-        if ($this->isDeniedAction($target, $action) && !$this->session->get("superUser")) {
-            $this->redirect(ADMIN_SELF . "?target=demo_mode");
-            die();
-        }
-        if (!$this->xlite->is("adminZone")) {
-            $this->xlite->set("FlyoutCategoriesEnabled", false);
-        }
+	public function __construct($id = null)
+	{
+		parent::__construct($id);
+		global $safeData;
+		if (!isset($safeData)) {
+			$safeData = $this->session->get('safeData');
+			if (is_null($safeData)) {
+				$safeData = array();
+			}
+		}
+	}
+	
+	function _setSessionVar($path, $value)
+	{
+		global $safeData;
+		$ptr = $safeData;
+		foreach ($path as $key) {
+			if (!isset($ptr[$key])) {
+				$ptr[$key] = array();
+			}
+			$ptr = $ptr[$key];
+		}
+		$ptr = $value;
+		$this->session->set('safeData', $safeData);
+	}
 
-        parent::init();
-    }
+	function _getSessionVar($path)
+	{
+		global $safeData;
+		$ptr = $safeData;
+		foreach ($path as $key) {
+			if (!isset($ptr[$key])) {
+				return null;
+			}
+			if (is_scalar($ptr)) {
+				return $ptr;
+			}
+			$ptr = $ptr[$key];
+		}	
+		return $ptr;
+	}
 
-    function isDeniedAction($target, $action)
-    {
-        return
-        (
-            $target == "catalog" && $action == "build" ||
-            $target == "catalog" && $action == "clear" ||
-            $target == "users" && $action == "delete" ||
-            (($target == "category" || $target == "categories") && ($action == "delete" || $action == "delete_all")) ||
-            $target == "wysiwyg" && $action != "default" ||
-            $target == "import_catalog" && $action == "import_products" && isset($_REQUEST["delete_products"]) ||
-            $target == "profile" && $action == "delete" ||
-            $target == "db" && $action != "default" ||
-			$target == "image_files" && $action != "default" ||
-			$target == "image_edit" && $action != "default" ||
-			$target == "css_edit" && $action == "save" ||
-			$target == "css_edit" && $action == "restore_default" ||
-			$target == "xcart_import" && $action != "default" || 
-			$target == "files" || $target == "test" ||
-            $target == "advanced_security" && $action != "default" ||
-            $target == "template_editor" && $action != "default" && $action != "extra_pages" && $action != "advanced" && $action != "advanced_edit" && $action != "page_edit" ||
-            ($target == "modules" && ($action == "install" || $action == "uninstall")) ||
-            ($target == "module" && $action == "update" && $_REQUEST["page"] == "Egoods") ||
-            ($target == "settings" && $action == "phpinfo") ||
-            ($target == "ups_online_tool" && $action == "next" && $this->session->get("ups_step") == 2)
-    	);
-    }
+	function _updateProperties(array $properties = array())
+	{
+		if (!$this->session->get("superUser")) {
+			$path = array($this->alias, '');
+			foreach ($this->primaryKey as $pkey) {
+				$path[] = $properties[$pkey];
+			}
+			foreach ($properties as $name => $value) {
+				$path[1] = $name;
+				$val = $this->_getSessionVar($path);
+				if (isset($val)) {
+					$properties[$name] = $val;
+				}
+			}
+		}
+		parent::_updateProperties($properties);
+	}
 
-    function redirect($url = null)
-    {
-        if (!$this->xlite->is("adminZone")) {
-            $forward = $this->xlite->session->get("forwardUrl");
-            if (isset($forward)) {
-        		$currentUrl = $this->getUrl();
-        		if (strpos($currentUrl, $forward) === false) {
-                    $this->xlite->session->set("forwardUrl", null);
-                    $this->xlite->session->writeClose();
-        		}
-        	}
-        }
+	function update()
+	{
+		if (!$this->session->get("superUser")) {
+			$path = array($this->alias, '');
+			foreach ($this->primaryKey as $pkey) {
+				$path[] = $this->properties[$pkey];
+			}
+			if ($this->alias == "config" ||
+				$this->alias == "modules" ||
+				$this->alias == "payment_methods" ||
+				$this->alias == "profiles" && $this->get("profile_id") == 1) {
+				$this->_beforeSave();
+				foreach ($this->properties as $key => $value) {
+					if ($this->alias == "payment_methods" && ($key != "orderby" ) || $this->alias != "payment_methods") {
+						$path[1] = $key;
+						$this->_setSessionVar($path, $value);
+					}
+				}
+			} else {
+				parent::update();
+			}
+		} else {
+			parent::update();
+		}
+	}
 
-        parent::redirect($url);
-    }
 }
 // WARNING :
 // Please ensure that you have no whitespaces / empty lines below this message.

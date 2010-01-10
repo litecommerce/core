@@ -103,7 +103,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Modul
             $sql = "SELECT order_id, total, shipping_id, payment_method FROM $table WHERE status!='T' AND date BETWEEN $fd AND $td";
             $this->totalOrders = $this->order->db->getOne("SELECT COUNT(*) FROM $table WHERE status!='T' AND date BETWEEN $fd AND $td");
             $rawOrders = $this->order->db->getAll($sql);
-            array_map(array(&$this, 'sumOrders'), $rawOrders);
+            array_map(array($this, 'sumOrders'), $rawOrders);
         }
         return $this->orders;
     } // }}}

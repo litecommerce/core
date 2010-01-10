@@ -24,7 +24,7 @@ function BeanStream_parse_str($str)
     return $params;
 }
 
-function BeanStream_get_order_number(&$cart)
+function BeanStream_get_order_number($cart)
 {
     $params = $cart->get("paymentMethod.params");
 	$order_id = ((!empty($params["order_prefix"]))?($params["order_prefix"] . "_"):"") . $cart->get("order_id");
@@ -40,7 +40,7 @@ function BeanStream_get_order_id($order_number)
     return ((empty($matches[1])) ? false : $matches[1]);
 }
 
-function BeanStream_processor_process(&$_this, &$cart)
+function BeanStream_processor_process($_this, $cart)
 {
     $params  = $_this->get("params");
 	$profile = $cart->get("profile");
@@ -112,7 +112,7 @@ function BeanStream_processor_process(&$_this, &$cart)
     }
 }
 
-function func_BeanStream_action_return(&$_this, &$cart, $pm)
+function func_BeanStream_action_return($_this, $cart, $pm)
 {
 	$request = new XLite_Model_HTTPS();
 	$request->url = $pm->get("authorizationUrl");
@@ -145,7 +145,7 @@ function func_BeanStream_action_return(&$_this, &$cart, $pm)
 }
 
 
-function BeanStream_parse_response(&$cart, $response=array(), $pm)
+function BeanStream_parse_response($cart, $response=array(), $pm)
 {
 	$result = false;
     $status = $pm->get("orderFailStatus");
@@ -219,7 +219,7 @@ function BeanStream_parse_response(&$cart, $response=array(), $pm)
 	return $result;
 }
 
-function func_Protx_getState(&$profile, $field, $customField)
+function func_Protx_getState($profile, $field, $customField)
 {
     $stateName = "";
     $state = new XLite_Model_State();

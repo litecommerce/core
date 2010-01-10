@@ -52,7 +52,7 @@ class XLite_Module_BeanStream_Model_PaymentMethod_BeanstreamCc extends XLite_Mod
     var $configurationTemplate = 'modules/BeanStream/config.tpl';
     var $processorName = 'BeanStream';
 
-    function process(&$cart)
+    function process($cart)
     {
 		require_once('modules/BeanStream/encoded.php');
         return BeanStream_processor_process($this, $cart);
@@ -76,7 +76,7 @@ class XLite_Module_BeanStream_Model_PaymentMethod_BeanstreamCc extends XLite_Mod
 		return "https://www.beanstream.com:443/scripts/process_transaction_auth.asp";
 	}
 
-    function initRequest(&$cart, &$request)
+    function initRequest($cart, &$request)
     {
         $request->data["trnCardNumber"] = $this->cc_info["cc_number"];
         $request->data["trnExpMonth"]   = substr($this->cc_info["cc_date"],0,2);

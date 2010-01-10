@@ -874,7 +874,7 @@ class XLite_Model_Abstract extends XLite_Base
 
     // IMPORT/EXPORT methods {{{
 
-    function import(&$options) // {{{
+    function import(array $options) // {{{
     {
         global $DATA_DELIMITERS, $TEXT_QUALIFIERS;
 

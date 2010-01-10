@@ -51,7 +51,7 @@ class XLite_Module_Protx_Model_PaymentMethod_ProtxdirectCc extends XLite_Model_P
     var $hasConfigurationForm = true;
     var $processorName = "Protx VSP Direct";
 
-    function process(&$cart)
+    function process($cart)
     {
 		require_once("modules/Protx/encoded.php");
 		return func_ProtxDirect_process($this, $cart);

@@ -1,5 +1,5 @@
 <?php
-function func_moduleEgoods_send_files(&$order)
+function func_moduleEgoods_send_files($order)
 {
 	$items = $order->get('items');
 
@@ -78,7 +78,7 @@ function func_moduleEgoods_parseCmdLine($item, $cmd_line)
 	return $cmd_line;
 }
 
-function func_moduleEgoods_send_pins(&$order)
+function func_moduleEgoods_send_pins($order)
 {
 	$items = $order->get('items');
 

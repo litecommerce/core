@@ -10,7 +10,7 @@ if (!defined('PROTX_DIRECT_DEBUG_LOG')) {
 	define('PROTX_DIRECT_DEBUG_LOG', 0);
 }
 
-function func_ProtxDirect_process(&$_this, &$order)
+function func_ProtxDirect_process($_this, $order)
 {
 	$vendor = $_this->get("params.vendor_name");
 //	$vendorTxCode = $_this->get("params.order_prefix").$order->get("order_id")."_".uniqid(time())."";
@@ -139,7 +139,7 @@ function func_ProtxDirect_process(&$_this, &$order)
 	$order->update();
 }
 
-function func_ProtxDirect_action_return(&$_this, &$order, $payment)
+function func_ProtxDirect_action_return($_this, $order, $payment)
 {
 	$trxData = array(
 		"MD"	=> $_this->get("MD"),
@@ -267,7 +267,7 @@ $payment->xlite->logger->log("RESPONSE ARRAY: ".var_export($responseArray, true)
 }
 
 /////////////////////////////////////////// Helper //////////////////////////////////
-function func_ProtxDirect_getState(&$profile, $field, $customField)
+function func_ProtxDirect_getState($profile, $field, $customField)
 {
     $stateName = "";
     $state = new XLite_Model_State();

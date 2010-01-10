@@ -44,7 +44,7 @@
 */
 class XLite_Module_WholesaleTrading_Model_Auth extends XLite_Model_Auth implements XLite_Base_IDecorator
 {
-    function loginProfile(&$profile)
+    function loginProfile($profile)
     {
 		parent::loginProfile($profile);
     }

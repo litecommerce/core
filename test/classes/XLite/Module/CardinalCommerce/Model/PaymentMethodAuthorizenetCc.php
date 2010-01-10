@@ -43,7 +43,7 @@
 
 class XLite_Module_CardinalCommerce_Model_PaymentMethodAuthorizenetCc extends XLite_Module_AuthorizeNet_Model_PaymentMethod_AuthorizenetCc implements XLite_Base_IDecorator
 {
-    function initRequest(&$cart, &$request)
+    function initRequest($cart, &$request)
     {
 		$cmpi_result = $this->get("CardinalMPI");
         if(isset($cmpi_result)) {

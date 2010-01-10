@@ -60,13 +60,13 @@ class XLite_Module_PHPCyberSource_Model_PaymentMethod_PhpcybersourceCc extends X
 		241	=> "The request ID is invalid for the follow-on request.",
 		250	=> "The request was received, but there was a timeout at the payment processor."); 		
 
-	function process(&$cart) // {{{ 
+	function process($cart) // {{{ 
 	{
 		require_once LC_MODULES_DIR . 'PHPCyberSource' . LC_DS . 'encoded.php';
 		return PaymentMethod_cybersource_process($this, $cart);
 	} // }}}
 
-	function createAuthRequest(&$cart) // {{{ 
+	function createAuthRequest($cart) // {{{ 
 	{
 		$profile  = $cart->get("profile.properties");
 		$shippingState 	= $cart->get("profile.shippingState.code");
@@ -128,7 +128,7 @@ EOT;
 		return $request;
 	} // }}}
 
-	function createCaptureRequest(&$cart,$authResponse) // {{{
+	function createCaptureRequest($cart,$authResponse) // {{{
 	{
 		$params = $this->get("params");
 		$discount = !is_null($cart->get("discount")) ? $cart->get("discount") : 0;
@@ -182,7 +182,7 @@ EOT;
         return $_SERVER["REMOTE_ADDR"];
     } // }}}
 
-	function runAuth(&$cart,&$config) // {{{ 
+	function runAuth($cart,&$config) // {{{ 
 	{
     	$request    = array();
 	    $response   = array();
@@ -211,7 +211,7 @@ EOT;
 	    return $response;
 	} // }}}
 
-	 function runCapture(&$cart,&$config,$authResponse) // {{{
+	 function runCapture($cart,&$config,$authResponse) // {{{
 	{
 		$request    = array();
         $response   = array();

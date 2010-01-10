@@ -228,7 +228,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         return "<profile id=\"$id\">\n$xml</profile>\n";
     } // }}}
 
-    function import(&$options) // {{{
+    function import(array $options) // {{{
     {
         parent::import($options);
         // save memberships

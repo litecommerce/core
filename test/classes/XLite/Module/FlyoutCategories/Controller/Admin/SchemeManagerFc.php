@@ -134,7 +134,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_SchemeManagerFc extends XLi
 		return (($row % 2) == 0) ? true : false;
 	}
 
-	function getRowClass($row,$css_class)
+	function getRowClass($row,$css_class, $reserved = null)
 	{
 		return ($this->isOddRow($row)) ? "" : $css_class;
 	}

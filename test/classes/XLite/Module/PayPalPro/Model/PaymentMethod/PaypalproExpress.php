@@ -43,13 +43,13 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_PaypalproExpress extends XLite_
 {
 	var $configurationTemplate = "modules/PayPalPro/config.tpl";
 	
-	function handleRequest(&$order) // {{{
+	function handleRequest($order) // {{{
 	{
 		require_once LC_MODULES_DIR . 'PayPalPro' . LC_DS . 'encoded.php';
 		return paypalExpressHandleRequest($this,$order);	
 	} // }}}
 	
-	function sendExpressCheckoutRequest(&$order) // {{{
+	function sendExpressCheckoutRequest($order) // {{{
 	{
 		$pm = XLite_Model_PaymentMethod::factory('paypalpro');
 		require_once LC_MODULES_DIR . 'PayPalPro' . LC_DS . 'encoded.php';
@@ -59,7 +59,7 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_PaypalproExpress extends XLite_
         return $response["SOAP-ENV:ENVELOPE"]["SOAP-ENV:BODY"]["_0"]["SETEXPRESSCHECKOUTRESPONSE"];
  	} // }}}
 	
-	function setExpressCheckoutRequest(&$order,&$payment) // {{{ 
+	function setExpressCheckoutRequest($order,&$payment) // {{{ 
 	{
 		$cart = $order->get("properties");
 		$returnUrl = $this->get("returnUrl");
@@ -132,7 +132,7 @@ EOT;
 EOT;
 	}	// }}} 
 
-	function finishExpressCheckoutRequest(&$order, &$payment) // {{{
+	function finishExpressCheckoutRequest($order, &$payment) // {{{
 	{
 		$pm = XLite_Model_PaymentMethod::factory('paypalpro');
 		$payment = $pm->get("params.pro");

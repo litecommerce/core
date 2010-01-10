@@ -1,5 +1,5 @@
 <?php
-    function func_PaymentMethod_wells_fargo_cc_handleRequest(&$_this, &$cart)
+    function func_PaymentMethod_wells_fargo_cc_handleRequest($_this, $cart)
     {
         $status = $cart->get("status");
 		

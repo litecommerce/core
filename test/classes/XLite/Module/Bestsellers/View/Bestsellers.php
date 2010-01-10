@@ -160,7 +160,7 @@ EOT;
         return $category;
     }
 
-    function getSubcategories(&$category)
+    function getSubcategories($category)
     {
         $this->ids[] = $category->get("category_id");
         $categories = $category->getSubcategories();

@@ -4,7 +4,7 @@
 * @version $Id$
 */
 
-function FlyoutCategories_processTreeChunk(&$_this, &$chunk)
+function FlyoutCategories_processTreeChunk($_this, &$chunk)
 {
 	static $count = 0;
 	$count++;
@@ -21,7 +21,7 @@ function FlyoutCategories_processTreeChunk(&$_this, &$chunk)
 	$count--;
 }
 
-function FlyoutCategories_processTreeItem(&$_this, &$item)
+function FlyoutCategories_processTreeItem($_this, $item)
 {
 	$_this->_categories_processed++;
 
@@ -39,7 +39,7 @@ function FlyoutCategories_processTreeItem(&$_this, &$item)
 	}
 }
 
-function FlyoutCategories_buildTree(&$_this, &$parent)
+function FlyoutCategories_buildTree($_this, &$parent)
 {
 	if (!isset($_this->categoryClass)) {
 		$_this->categoryClass = new XLite_Model_Category();
@@ -134,7 +134,7 @@ function FlyoutCategories_isInvariable($scheme_id)
 	}
 }
 
-function FlyoutCategories_action_update(&$_this)
+function FlyoutCategories_action_update($_this)
 {
 	if (!(isset($_this->schemes_list) && is_array($_this->schemes_list))) {
     	$_this->params[] = "status";
@@ -187,7 +187,7 @@ function FlyoutCategories_action_update(&$_this)
 	$_this->scheme_id = $saved_scheme_id;
 }
 
-function FlyoutCategories_action_delete(&$_this)
+function FlyoutCategories_action_delete($_this)
 {
 	if (!isset($_this->modified_scheme_id) || strlen($_this->modified_scheme_id) == 0) {
     	$_this->params[] = "status";
@@ -231,7 +231,7 @@ function FlyoutCategories_action_delete(&$_this)
     $_this->set("status" , "deleted");
 }
 
-function FlyoutCategories_action_fc_update_templates(&$_this)
+function FlyoutCategories_action_fc_update_templates($_this)
 {
 	if (!$_this->isSchemeAvailable() || $_this->scheme_id == 0) {
 		$_this->params[] = "status";
@@ -257,7 +257,7 @@ function FlyoutCategories_action_fc_update_templates(&$_this)
 	$_this->set("status" , "updated");
 }
 
-function FlyoutCategories_action_fc_clone(&$_this)
+function FlyoutCategories_action_fc_clone($_this)
 {
 	if (!isset($_this->modified_scheme_id) || strlen($_this->modified_scheme_id) == 0) {
 		$_this->params[] = "status";
@@ -307,7 +307,7 @@ function FlyoutCategories_action_fc_clone(&$_this)
 	$_this->set("scheme_id", $new_scheme->get("scheme_id"));
 }
 
-function FlyoutCategories_action_rebuild_tree(&$_this)
+function FlyoutCategories_action_rebuild_tree($_this)
 {
 	$dialog = new XLite_Controller_Admin_Categories();
 	$dialog->set("silent", true);
@@ -316,7 +316,7 @@ function FlyoutCategories_action_rebuild_tree(&$_this)
 	$_this->set("status", "rebuilt");
 }
 
-function FlyoutCategories_action_delete_option(&$_this)
+function FlyoutCategories_action_delete_option($_this)
 {
 	$keyname = $_REQUEST["keyname"];
 	if ( empty($keyname) )
@@ -330,7 +330,7 @@ function FlyoutCategories_action_delete_option(&$_this)
 	$scheme->update();
 }
 
-function FlyoutCategories_action_add_option(&$_this)
+function FlyoutCategories_action_add_option($_this)
 {
 	$scheme = $_this->get("currentScheme");
 	$options = $scheme->get("options");
@@ -389,7 +389,7 @@ function FlyoutCategories_action_add_option(&$_this)
 	$_this->set("status", "added");
 }
 
-function FlyoutCategories_action_update_option(&$_this)
+function FlyoutCategories_action_update_option($_this)
 {
     $keyname = preg_replace("/[^A-Za-z0-9_]+/", "_", $_this->option_keyname);
 
@@ -443,7 +443,7 @@ function FlyoutCategories_action_update_option(&$_this)
 	$_this->set("status", "option_updated");
 }
 
-function FlyoutCategories_getSchemeManagerDialog(&$_this)
+function FlyoutCategories_getSchemeManagerDialog($_this)
 {
 	$dialog = null;
 
@@ -456,7 +456,7 @@ function FlyoutCategories_getSchemeManagerDialog(&$_this)
 	return $dialog;
 }
 
-function FlyoutCategories_getDefaultScheme(&$_this)
+function FlyoutCategories_getDefaultScheme($_this)
 {
 	$_this->initLayout();
 
@@ -469,7 +469,7 @@ function FlyoutCategories_getDefaultScheme(&$_this)
 	return $scheme;
 }
 
-function FlyoutCategories_getSchemes(&$_this, $all_schemes=true)
+function FlyoutCategories_getSchemes($_this, $all_schemes=true)
 {
 	$_this->schemes = null;
 
@@ -486,7 +486,7 @@ function FlyoutCategories_getSchemes(&$_this, $all_schemes=true)
 	}
 }
 
-function FlyoutCategories_isSchemeAvailable(&$_this)
+function FlyoutCategories_isSchemeAvailable($_this)
 {
 	if (!isset($_this->scheme_id)) {
 		return false;
@@ -498,7 +498,7 @@ function FlyoutCategories_isSchemeAvailable(&$_this)
 	return ($_this->scheme_id >= 0) ? true : false;
 }
 
-function FlyoutCategories_getCurrentScheme(&$_this)
+function FlyoutCategories_getCurrentScheme($_this)
 {
 	if (!$_this->isSchemeAvailable()) {
 		return null;
@@ -520,7 +520,7 @@ function FlyoutCategories_getCurrentScheme(&$_this)
 }
 
 
-function FlyoutCategories_checkUpdateCategories(&$_this)
+function FlyoutCategories_checkUpdateCategories($_this)
 {
 	if ( $_this->get("config.FlyoutCategories.scheme") > 0 ) {
 		$config = new XLite_Model_Config();
@@ -535,7 +535,7 @@ function FlyoutCategories_checkUpdateCategories(&$_this)
 	}
 }
 
-function FlyoutCategories_copy_scheme_nodes(&$_this, &$fNode, &$scheme, &$new_scheme)
+function FlyoutCategories_copy_scheme_nodes($_this, &$fNode, &$scheme, &$new_scheme)
 {
 	$files = $_this->getSchemeNodesList();
 	foreach($files as $file) {

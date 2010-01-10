@@ -1,5 +1,5 @@
 <?php
-    function func_PaymentMethod_pay_systems_web_cc_handleRequest(&$_this, &$cart)
+    function func_PaymentMethod_pay_systems_web_cc_handleRequest($_this, $cart)
     {
 		if (isset($_POST["cc_status"])) {
 			if ($_POST["cc_status"] != "pass") {

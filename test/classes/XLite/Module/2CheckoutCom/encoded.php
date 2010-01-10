@@ -2,7 +2,7 @@
 /*
 * Hidden methods
 */
-function PaymentMethod_2checkout_handleRequest(&$_this, &$cart)
+function PaymentMethod_2checkout_handleRequest($_this, $cart)
 {
     // PaymentMethod::2checkout_handleRequest() code
     
@@ -99,7 +99,7 @@ function PaymentMethod_2checkout_handleRequest(&$_this, &$cart)
     PaymentMethod_2checkout_html_location($location);
 }
 
-function PaymentMethod_2checkout_v2_handleRequest(&$_this, &$cart, $security_check=true)
+function PaymentMethod_2checkout_v2_handleRequest($_this, $cart, $security_check=true)
 {
     // PaymentMethod::2checkout_handleRequest() code
     

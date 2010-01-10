@@ -3,7 +3,7 @@
 * Hidden methods
 */
 
-function PaymentMethod_paypal_handleRequest(&$_this, &$order)
+function PaymentMethod_paypal_handleRequest($_this, $order)
 {
     // original code of PaymentMethod_paypal::handleRequest()
 

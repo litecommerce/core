@@ -37,8 +37,12 @@
 
 /* vim: set expandtab tabstop=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
 
-define('GC_OK', 2);
-define('GC_DISABLED', 3);
+if (!defined('GC_OK')) {
+    define('GC_OK', 2);
+}
+if (!defined('GC_DISABLED')) {
+    define('GC_DISABLED', 3);
+}
 
 /**
 * Module_GiftCertificates_Order description.

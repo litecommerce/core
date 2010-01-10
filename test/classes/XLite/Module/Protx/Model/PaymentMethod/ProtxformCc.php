@@ -44,7 +44,7 @@ class XLite_Module_Protx_Model_PaymentMethod_ProtxformCc extends XLite_Model_Pay
 	var $hasConfigurationForm = true;
     var $configurationTemplate = "modules/Protx/config.tpl";
 
-    function handleRequest(&$cart)
+    function handleRequest($cart)
     {
         require_once LC_MODULES_DIR . 'Protx' . LC_DS . 'encoded.php';
         PaymentMethod_ProtxForm_handleRequest($this, $cart);

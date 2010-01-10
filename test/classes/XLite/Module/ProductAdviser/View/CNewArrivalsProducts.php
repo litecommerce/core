@@ -104,7 +104,7 @@ class XLite_Module_ProductAdviser_View_CNewArrivalsProducts extends XLite_View
         }
     }
 
-    function inCategory(&$product, &$category)
+    function inCategory(&$product, $category)
     {
 		$signCategory = $product->inCategory($category);
 		if ($signCategory) {

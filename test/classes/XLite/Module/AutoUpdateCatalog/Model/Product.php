@@ -58,7 +58,7 @@ class XLite_Module_AutoUpdateCatalog_Model_Product extends XLite_Model_Product i
         $GLOBALS["updateLog"] = $ac;
     }
     
-    function addCategory(&$category)
+    function addCategory($category)
     {
         parent::addCategory($category);
         $ac = $GLOBALS["updateLog"];
@@ -69,7 +69,7 @@ class XLite_Module_AutoUpdateCatalog_Model_Product extends XLite_Model_Product i
         $GLOBALS["updateLog"] = $ac;
     }
 
-    function deleteCategory(&$category)
+    function deleteCategory($category)
     {
         parent::deleteCategory($category);
         $ac = $GLOBALS["updateLog"];

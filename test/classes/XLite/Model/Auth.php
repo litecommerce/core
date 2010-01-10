@@ -97,7 +97,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     *
     * @param Profile $profile The Profile instance
     */
-    function copyBillingInfo(&$profile) // {{{
+    function copyBillingInfo($profile) // {{{
     {
         $properties = $profile->get("properties");
         if (empty($properties["shipping_firstname"])) {
@@ -121,7 +121,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     * @access public
     * @return mixed Result constant
     */
-    function register(&$profile) // {{{
+    function register($profile) // {{{
     {
         // check whether the user is registered
         if ($profile->isExists($profile->get("login"))) {
@@ -185,7 +185,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     * @param Profile $profile The profile instance
     * @return mixed Result constant
     */
-    function modify(&$profile) // {{{
+    function modify($profile) // {{{
     {
         // check whether another user exists with the same login
         $another = new XLite_Model_Profile();
@@ -247,7 +247,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         return REGISTER_SUCCESS;
     } // }}}
 
-    function clearAnonymousPassword(&$profile)
+    function clearAnonymousPassword($profile)
     {
 		$profile->set("password", null);
 		if (isset($_REQUEST["password"])) {
@@ -258,7 +258,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     /**
     * Handles membership signup.
     */
-    function membershipSignup(&$profile) // {{{
+    function membershipSignup($profile) // {{{
     {
         // membership signup requested 
     } // }}}
@@ -269,7 +269,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     * @access public
     * @return boolean
     */
-    function isLastAdmin(&$profile) // {{{
+    function isLastAdmin($profile) // {{{
     {
         // check whether this admin profile is not the latest available
         $where = "access_level >= %d AND status = 'E'";
@@ -287,7 +287,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     * @access public
     * @param Profile $profile The profile instance to unregister
     */
-    function unregister(&$profile) // {{{
+    function unregister($profile) // {{{
     {
         // read profile data
         $profile->read();
@@ -323,7 +323,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     *
     * @param Profile $profile The profile instance
     */
-    function loginProfile(&$profile) // {{{
+    function loginProfile($profile) // {{{
     {
         // check for the fisrt time login
         if (!$profile->get("first_login")) {
@@ -444,7 +444,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     *
     * @param Profile $profile The profile instance
     */
-    function sendFailedAdminLogin(&$profile) // {{{
+    function sendFailedAdminLogin($profile) // {{{
     {
         // send mail notification about failed login to administrator
         $mailer = new XLite_Model_Mailer();
@@ -520,7 +520,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     * @access public
     * @param Profile $profile The user profile
     */
-    function isAdmin(&$profile) // {{{
+    function isAdmin($profile) // {{{
     {
         return $profile->get("access_level") >= $this->getAdminAccessLevel();
     } // }}}

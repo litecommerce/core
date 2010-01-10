@@ -39,7 +39,7 @@
 * @version $Id$
 */
 
-class XLite_Module_MultiCurrency_Controller_Admin_Currencies extends Admin_Dialog // {{{ 
+class XLite_Module_MultiCurrency_Controller_Admin_Currencies extends XLite_Controller_Admin_Abstract
 { 
 	
 	var $params = array("target");

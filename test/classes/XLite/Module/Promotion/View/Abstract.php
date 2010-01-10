@@ -34,55 +34,17 @@
 | Development LLC. All Rights Reserved.                                        |
 +------------------------------------------------------------------------------+
 */
-
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
 /**
-* @package Module_WholesaleTrading
+* Module_Promotion description.
+*
+* @package Module_Promotion
 * @access public
 * @version $Id$
 */
-class XLite_Module_WholesaleTrading_base_Widget extends XLite_View_Abstract implements XLite_Base_IDecorator
+class XLite_Module_Promotion_View_Abstract extends XLite_View_Abstract implements XLite_Base_IDecorator
 {
-    function price_format($base, $field = "", $thousand_delim = null, $decimal_delim = null)
-	{
-		if (is_Object($base) && $base->get($field) === $this->get("config.WholesaleTrading.price_denied_message")) {
-			return $this->get("config.WholesaleTrading.price_denied_message");
-		} else if ($base === $this->get("config.WholesaleTrading.price_denied_message")) {
-			return $this->get("config.WholesaleTrading.price_denied_message");
-		}
-
-		return parent::price_format($base, $field, $thousand_delim, $decimal_delim);
-	}
-
-	function disabled($disabled)
-	{
-		if ($disabled) {
-			print("disabled");
-		}
-	}	
-
-	function checked($checked)
-	{
-		if ($checked) {
-			return "checked";
-		}
-	}
-
-	function isEven($val)
-	{
-		return ($val % 2 == 0);
-	}
-
-	function selectString($first, $second, $print_first)
-	{
-		if ($print_first) {
-			print $first;
-		} else {
-			print $second;
-		}	
-	}
-
 	function invertSign($value)
 	{
 		return -$value;

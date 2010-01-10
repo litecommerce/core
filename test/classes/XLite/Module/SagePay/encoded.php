@@ -23,7 +23,7 @@ function func_SagePay_getTxCode($pm, $order)
 }
 
 /////////////////////////////////// SagePay VSP Direct ////////////////////////////////////
-function func_SagePayDirect_process(&$_this, &$order)
+function func_SagePayDirect_process($_this, $order)
 {
 	$vendor = $_this->get("params.vendor_name");
 	$vendorTxCode = func_SagePay_getTxCode($_this, $order);
@@ -94,7 +94,7 @@ function func_SagePayDirect_process(&$_this, &$order)
 	}
 }
 
-function func_SagePayDirect_action_return(&$_this, &$order, $payment)
+function func_SagePayDirect_action_return($_this, $order, $payment)
 {
 	$trxData = array(
 		"MD"	=> $_this->get("MD"),
@@ -109,7 +109,7 @@ function func_SagePayDirect_action_return(&$_this, &$order, $payment)
 }
 
 
-function func_SagePay_response_handling($response, &$order, &$payment)
+function func_SagePay_response_handling($response, $order, &$payment)
 {
 	$detailLabels = array();
 
@@ -408,7 +408,7 @@ $payment->xlite->logger->log("RESPONSE ARRAY: ".var_export($responseArray, true)
 }
 
 /////////////////////////////////////////// Helper //////////////////////////////////
-function func_SagePay_getState(&$profile, $field, $customField)
+function func_SagePay_getState($profile, $field, $customField)
 {
     if (preg_match("/billing/", $field)) {
         if ($profile->get("billing_country") != "US")

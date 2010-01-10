@@ -3,7 +3,7 @@
 * Hiden methods
 */
 
-function Shipping_ups_getRates(&$_this, $order)
+function Shipping_ups_getRates($_this, $order)
 {
     // original code of Shipping_ups::getRates()
     
@@ -66,7 +66,7 @@ function Shipping_ups_getRates(&$_this, $order)
     return $rates;
 }
 
-function Shipping_ups_parseResponse(&$_this, $response, $destination, $originCountry)
+function Shipping_ups_parseResponse($_this, $response, $destination, $originCountry)
 {
     // original code
     $_this->error = "";

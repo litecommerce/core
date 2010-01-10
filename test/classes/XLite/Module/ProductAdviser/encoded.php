@@ -6,7 +6,7 @@
 * * @version $Id$
 * */
 
-function ProductAdviser_updateInventory(&$_this, &$item)
+function ProductAdviser_updateInventory($_this, $item)
 {
 	if ($_this->xlite->get("PA_InventorySupport") && $_this->config->get("ProductAdviser.customer_notifications_enabled")) {
 		if ($item->get("outOfStock")) {
@@ -62,7 +62,7 @@ function ProductAdviser_checkedOut(&$products)
     }
 }
 
-function ProductAdviser_getRelatedProducts(&$_this)
+function ProductAdviser_getRelatedProducts($_this)
 {
 	if (isset($_this->_RelatedProducts)) {
 		return $_this->_RelatedProducts; 
@@ -99,7 +99,7 @@ function ProductAdviser_getRelatedProducts(&$_this)
     return $_this->_RelatedProducts; 
 }
 
-function ProductAdviser_getProductsAlsoBuy(&$_this)
+function ProductAdviser_getProductsAlsoBuy($_this)
 {
 	if (isset($_this->_ProductsAlsoBuy)) {
 		return $_this->_ProductsAlsoBuy; 
@@ -136,7 +136,7 @@ function ProductAdviser_getProductsAlsoBuy(&$_this)
     return $_this->_ProductsAlsoBuy; 
 }
 
-function ProductAdviser_updateProduct(&$_this)
+function ProductAdviser_updateProduct($_this)
 {
     if (!$_this->config->get("ProductAdviser.customer_notifications_enabled")) {
     	return;
@@ -159,7 +159,7 @@ function ProductAdviser_updateProduct(&$_this)
 	}
 }
 
-function ProductAdviser_action_add(&$_this)
+function ProductAdviser_action_add($_this)
 {
 	if ($_this->xlite->get("PA_InventorySupport") && $_this->config->get("ProductAdviser.customer_notifications_enabled")) {
 		if (!is_null($_this->cart->get("outOfStock"))) {

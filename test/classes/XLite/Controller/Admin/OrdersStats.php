@@ -67,12 +67,12 @@ class XLite_Controller_Admin_OrdersStats extends XLite_Controller_Admin_Stats
         $order = new XLite_Model_Order();
         $date = $this->get("monthDate");
         // fetch orders for this month
-        array_map(array(&$this, "summarize"), $order->findAll("date>=$date"));
+        array_map(array($this, "summarize"), $order->findAll("date>=$date"));
 
         parent::handleRequest();
     }
 
-    function save($index, &$order, $paid = false)
+    function save($index, $order, $paid = false)
     {
         if ($order->get("date") >= $this->get("todayDate")) {
             $this->sum($index, "today", $order->get("total"), $paid);

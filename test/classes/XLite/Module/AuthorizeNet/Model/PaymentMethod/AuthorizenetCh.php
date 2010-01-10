@@ -60,7 +60,7 @@ class XLite_Module_AuthorizeNet_Model_PaymentMethod_AuthorizenetCh extends XLite
         $this->processor = new XLite_Module_AuthorizeNet_Processor();
     }
 
-    function process(&$cart)
+    function process($cart)
     {
         return $this->processor->process($cart, $this);
     }
@@ -70,7 +70,7 @@ class XLite_Module_AuthorizeNet_Model_PaymentMethod_AuthorizenetCh extends XLite
         return $this->processor->handleConfigRequest();
     }
 
-    function initRequest(&$cart, &$request)
+    function initRequest($cart, &$request)
     {
         $request->data['x_Method'] = 'ECHECK';
         $request->data['x_Echeck_Type'] = 'WEB';

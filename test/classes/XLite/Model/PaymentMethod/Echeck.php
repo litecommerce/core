@@ -50,7 +50,7 @@ class XLite_Model_PaymentMethod_Echeck extends XLite_Model_PaymentMethod
     var $formTemplate = "checkout/echeck.tpl";
     var $secure = true;
 
-    function process(&$cart)
+    function process($cart)
     {
         $cart->set("detailLabels", array(
                     "ch_routing_number" => "ABA routing number",
@@ -63,7 +63,7 @@ class XLite_Model_PaymentMethod_Echeck extends XLite_Model_PaymentMethod
         $cart->update();
     }
 
-    function handleRequest(&$cart)
+    function handleRequest($cart)
     {
         $this->process($cart);
         $status = $cart->get("status");

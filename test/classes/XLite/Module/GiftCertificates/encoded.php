@@ -9,7 +9,7 @@
 /* This is an implementation of the order changeGCdebit method. See
 * kernel/Order.php in this directory.
 */
-function GiftCertificates_changeGCdebit(&$_this, $sign)
+function GiftCertificates_changeGCdebit($_this, $sign)
 {
 	if (!is_null($_this->get("gc"))) {
 		$gc = $_this->get("gc");

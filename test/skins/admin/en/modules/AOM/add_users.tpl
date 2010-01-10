@@ -31,7 +31,7 @@
     <th>Login</th>
 	<th>Username</th>
 </tr>
-<tr FOREACH="pager.pageData,profile" class="{getRowClass(#TableRow#)}">
+<tr FOREACH="pager.pageData,profile" class="{getRowClass(#0#,#TableRow#)}">
 	<td valign="top"><input type="radio" name="profile_id" value="{profile.profile_id}" checked="{isSelected(id,#0#)}"></td>
     <td valign="top">{profile.login}</td>
     <td valign="top">{profile.billing_firstname:h} {profile.billing_lastname:h}</td>

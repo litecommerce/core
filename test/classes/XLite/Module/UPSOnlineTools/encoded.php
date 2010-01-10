@@ -51,7 +51,7 @@ define("MIN_PACKAGE_WEIGHT", 0.1);	// Packages min weigh in pounds.
 define("PACKING_SIMPLIFY_AFTER", 24);
 define("PACKING_EXECUTION_TIME", 3600);
 
-function UPSOnlineTools_getRates(&$_this, $order)
+function UPSOnlineTools_getRates($_this, $order)
 {
     // original code of Shipping_ups::getRates()
 
@@ -165,7 +165,7 @@ function UPSOnlineTools_getRates(&$_this, $order)
     return $rates;
 }
 
-function UPSOnlineTools_parseResponse(&$_this, $response, $destination, $originCountry)
+function UPSOnlineTools_parseResponse($_this, $response, $destination, $originCountry)
 {
     // original code
     $_this->error = "";
@@ -250,7 +250,7 @@ function UPSOnlineTools_getNameUPS($name)
 }
 
 
-function UPSOnlineTools_setAccount(&$_this, $userinfo, &$error)
+function UPSOnlineTools_setAccount($_this, $userinfo, &$error)
 {
 	$devlicense = $_this->config->get("UPSOnlineTools.devlicense");
 	if ($_this->getLicense($ups_licensetext)) return 2;
@@ -387,7 +387,7 @@ function UPSOnlineTools_getKey($pos, $length)
 	return $result;
 }
 
-function UPSOnlineTools_checkAddress(&$_this, $shipping_country, $shipping_state, $shipping_custom_state, $shipping_city, $shipping_zipcode, &$av_result, &$request_result)
+function UPSOnlineTools_checkAddress($_this, $shipping_country, $shipping_state, $shipping_custom_state, $shipping_city, $shipping_zipcode, &$av_result, &$request_result)
 {
 	$options = $_this->getOptions();
 	if ($options->get("av_status") == "Y" && $shipping_country == "US") {
@@ -475,7 +475,7 @@ EOT;
 	return false;
 }
 
-function UPSOnlineTools_getOptions(&$_this)
+function UPSOnlineTools_getOptions($_this)
 {
 	static $options = null;
 	if (!is_null($options)) {
@@ -492,7 +492,7 @@ function UPSOnlineTools_getOptions(&$_this)
 	return $options;
 }
 
-function UPSOnlineTools_setConfig(&$_this, $name, $value)
+function UPSOnlineTools_setConfig($_this, $name, $value)
 {
 	if (in_array($name, array('UPS_username', 'UPS_password', 'UPS_accesskey')))
 		$value = UPSOnlineTools_encode($value);
@@ -1296,7 +1296,7 @@ function UPSOnlineTools_solve_binpack($width, $length, $height, $weight, &$items
 
 
 // Solver's classes hiden methods
-function UPSOnlineTools_placeBox(&$_this, $_width, $_length)
+function UPSOnlineTools_placeBox($_this, $_width, $_length)
 {
 	if (!$_this->isPlaceable($_width, $_length))
 		return false;
@@ -1327,7 +1327,7 @@ function UPSOnlineTools_placeBox(&$_this, $_width, $_length)
 	return $sub;
 }
 
-function UPSOnlineTools_progressive_solve(&$_this, &$items)
+function UPSOnlineTools_progressive_solve($_this, &$items)
 {
 	$use_overlaped = true;
 	do {
@@ -1370,7 +1370,7 @@ function UPSOnlineTools_progressive_solve(&$_this, &$items)
 	return true;
 }
 
-function UPSOnlineTools_progressive_placeItem(&$_this, &$level, &$items, $item_weight_limit)
+function UPSOnlineTools_progressive_placeItem($_this, &$level, &$items, $item_weight_limit)
 {
 	// sorting...
 	$avg_height = ceil($_this->height * 0.5);
@@ -1516,7 +1516,7 @@ function UPSOnlineTools_progressive_placeItem(&$_this, &$level, &$items, $item_w
 	return false;
 }
 
-function UPSOnlineTools_getNextLevel(&$_this, $overlaped=true)
+function UPSOnlineTools_getNextLevel($_this, $overlaped=true)
 {
 	if ($_this->getLevelsCount() <= 0) {
 		$level = new XLite_Module_UPSOnlineTools_Model_ContainerLevel();

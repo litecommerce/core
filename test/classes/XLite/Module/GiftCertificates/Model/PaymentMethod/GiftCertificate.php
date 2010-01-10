@@ -48,7 +48,7 @@ class XLite_Module_GiftCertificates_Model_PaymentMethod_GiftCertificate extends 
     var $formTemplate = "modules/GiftCertificates/checkout.tpl";
     var $processorName = "Gift certificate";
 
-    function handleRequest(&$cart)
+    function handleRequest($cart)
     {
 		$gcid = trim($_POST["gcid"]);
 		$gc = new XLite_Module_GiftCertificates_Model_GiftCertificate($gcid);

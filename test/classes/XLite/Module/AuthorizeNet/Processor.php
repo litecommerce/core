@@ -71,7 +71,7 @@ class XLite_Module_AuthorizeNet_Processor extends XLite_Base
             "Z" => "5 digit ZIP matches, Address (Street) does not"
             );
 
-    function process(&$cart, &$paymentMethod)
+    function process($cart, &$paymentMethod)
     {
         require_once LC_MODULES_DIR . 'AuthorizeNet' . LC_DS . 'encoded.php';
         AuthorizeNet_processor_process($this, $cart, $paymentMethod);

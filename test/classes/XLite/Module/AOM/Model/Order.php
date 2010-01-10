@@ -333,13 +333,10 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
         parent::setDetails($value);
     }
 
-	function clone()
+	function __clone()
 	{
-		if ( function_exists("func_is_clone_deprecated") && func_is_clone_deprecated() ) {
-			$clone = parent::cloneObject();
-		} else {
-			$clone = parent::clone();
-		}
+		$clone = parent::__clone();
+
 		require_once LC_MODULES_DIR . 'AOM' . LC_DS . 'encoded.php';
 		return aom_order_clone($this, $clone);	
 	} //  }}}
@@ -712,11 +709,11 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
         }
     } // }}}
 
-	function updateInventory(&$item)
+	function updateInventory($item)
 	{
 		if (!$this->xlite->get("InventoryTrackingEnabled")) return;
 		if ($this->doNotCheckInventory) return;
-		parent::updateInventory(&$item);
+		parent::updateInventory($item);
 	}
 
 	function calcShippingCost()

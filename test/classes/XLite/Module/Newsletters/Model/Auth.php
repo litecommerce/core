@@ -43,7 +43,7 @@
 */
 class XLite_Module_Newsletters_Model_Auth extends XLite_Model_Auth implements XLite_Base_IDecorator
 {
-    function unregister(&$profile)
+    function unregister($profile)
     {
         parent::unregister($profile);
         // delete profile subscriptions

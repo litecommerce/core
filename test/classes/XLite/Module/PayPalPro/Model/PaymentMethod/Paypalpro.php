@@ -92,7 +92,7 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_Paypalpro extends XLite_Model_P
 		Payment_method_paypalpro_checkServiceURL($this);
 	}
 
-	function process(&$order) // {{{ 
+	function process($order) // {{{ 
 	{
 		require_once LC_MODULES_DIR . 'PayPalPro' . LC_DS . 'encoded.php';
 		Payment_method_paypalpro_process($this,$order);
@@ -160,7 +160,7 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_Paypalpro extends XLite_Model_P
 		return $order->get("profile.shippingState." . $shippingState);
 	}
 
-	function getDirectPaymentRequest(&$order) // {{{
+	function getDirectPaymentRequest($order) // {{{
 	{
 		$profile 	= $order->get("profile.properties");
 		$card	 	= $this->cc_info;

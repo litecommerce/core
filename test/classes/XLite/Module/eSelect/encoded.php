@@ -18,7 +18,7 @@ function func_eSelect_getXID()
 	return sprintf("%'920d", time());
 }
 
-function func_eSelect_process(&$cart, &$_this)
+function func_eSelect_process($cart, $_this)
 {
 	// get eSelect params
 	$params = $_this->get("params");
@@ -112,7 +112,7 @@ function func_eSelect_process(&$cart, &$_this)
 }	
 
 
-function func_eSelect_action_return(&$_this, &$order, &$payment)
+function func_eSelect_action_return($_this, $order, &$payment)
 {
 	parse_str($_this->get("MD"), $data);
 
@@ -150,7 +150,7 @@ function func_eSelect_action_return(&$_this, &$order, &$payment)
 }
 
 
-function func_eSelect_performAuthPurchase(&$order, $cc_info, &$payment, $amount, $crypt_type=null, $cavv=null)
+function func_eSelect_performAuthPurchase($order, $cc_info, &$payment, $amount, $crypt_type=null, $cavv=null)
 {
 	// get eSelect params
 	$params = $payment->get("params");
@@ -345,7 +345,7 @@ function func_eSelect_xmlToArray($xmlData)
 	return $tree;
 }
 
-function func_eSelect_getState(&$profile, $field, $customField)
+function func_eSelect_getState($profile, $field, $customField)
 {
 	$stateName = "";
 	$state = new XLite_Model_State();

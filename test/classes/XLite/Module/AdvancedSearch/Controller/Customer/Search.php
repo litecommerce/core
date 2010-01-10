@@ -39,7 +39,7 @@
 * @version $Id$
 */
 
-class XLite_Module_AdvancedSearch_Controller_Customer_Search extends Dialog_search // {{{
+class XLite_Module_AdvancedSearch_Controller_Customer_Search extends XLite_Controller_Customer_Search implements XLite_Base_IDecorator
 {
 	function getCount() // {{{
 	{

@@ -39,7 +39,7 @@
 * @version $Id$
 */
 
-class XLite_Module_AdvancedSearch_Model_Profile extends Profile // {{{
+class XLite_Module_AdvancedSearch_Model_Profile extends XLite_Model_Profile implements XLite_Base_IDecorator
 {
 	public function __construct($id = null)
 	{

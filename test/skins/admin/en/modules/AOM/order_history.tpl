@@ -37,7 +37,7 @@
 					<th>Details</th>
 				</tr>	
 				<tbody IF="order.orderHistory">
-				<tr class="{getRowClass(#TableRow#)}" FOREACH="order.orderHistory,key,history">
+				<tr class="{getRowClass(#0#,#TableRow#)}" FOREACH="order.orderHistory,key,history">
 					<td valign="top" width="120" nowrap>{time_format(history.date)}</td>
 					<td valign="top" width="120" nowrap>{history.login}</td>
 					<td id="open_details{key}" onClick="VisibleBox('details{key}')"><b>Details</b> <img src="images/modules/AOM/close.gif">

@@ -35,37 +35,74 @@
 +------------------------------------------------------------------------------+
 */
 
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
+/* vim: set expandtab tabstop=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
 
 /**
-* Dialog_HTMLCatalog
 *
-* @package Module_HTMLCatalog
+* @package Module_DemoMode
 * @access public
 * @version $Id$
 */
-class XLite_Module_HTMLCatalog_base_Dialog extends XLite_Controller_Abstract implements XLite_Base_IDecorator
+class XLite_Module_DemoMode_Controller_Abstract extends XLite_Controller_Abstract implements XLite_Base_IDecorator
 {
-    function getLoginURL()
+    function init()
     {
-        $url = parent::getLoginURL();
-        if ($this->xlite->get("ignoreCustomerSecurity")) {
-            $sid = $this->session->getName() . "=" . $this->session->getID();
-            if (strpos($url, $sid) !== false) {
-            	if (strpos($url, $sid . "&") !== false) {
-                	$sid = $sid . "&";
-                }
-                $url = str_replace($sid, "", $url);
-                $lastSymbol = substr($url, strlen($url)-1, 1);
-                if ($lastSymbol == "?" || $lastSymbol == "&") {
-                	$url = substr($url, 0, strlen($url)-1);
-                }
-            }
+        $target = isset($_REQUEST["target"]) ? strtolower($_REQUEST["target"]) : "main";
+        $action = isset($_REQUEST["action"]) ? strtolower($_REQUEST["action"]) : "default";
+        if ($this->isDeniedAction($target, $action) && !$this->session->get("superUser")) {
+            $this->redirect(ADMIN_SELF . "?target=demo_mode");
+            die();
         }
-        return $url;
+        if (!$this->xlite->is("adminZone")) {
+            $this->xlite->set("FlyoutCategoriesEnabled", false);
+        }
+
+        parent::init();
+    }
+
+    function isDeniedAction($target, $action)
+    {
+        return
+        (
+            $target == "catalog" && $action == "build" ||
+            $target == "catalog" && $action == "clear" ||
+            $target == "users" && $action == "delete" ||
+            (($target == "category" || $target == "categories") && ($action == "delete" || $action == "delete_all")) ||
+            $target == "wysiwyg" && $action != "default" ||
+            $target == "import_catalog" && $action == "import_products" && isset($_REQUEST["delete_products"]) ||
+            $target == "profile" && $action == "delete" ||
+            $target == "db" && $action != "default" ||
+			$target == "image_files" && $action != "default" ||
+			$target == "image_edit" && $action != "default" ||
+			$target == "css_edit" && $action == "save" ||
+			$target == "css_edit" && $action == "restore_default" ||
+			$target == "xcart_import" && $action != "default" || 
+			$target == "files" || $target == "test" ||
+            $target == "advanced_security" && $action != "default" ||
+            $target == "template_editor" && $action != "default" && $action != "extra_pages" && $action != "advanced" && $action != "advanced_edit" && $action != "page_edit" ||
+            ($target == "modules" && ($action == "install" || $action == "uninstall")) ||
+            ($target == "module" && $action == "update" && $_REQUEST["page"] == "Egoods") ||
+            ($target == "settings" && $action == "phpinfo") ||
+            ($target == "ups_online_tool" && $action == "next" && $this->session->get("ups_step") == 2)
+    	);
+    }
+
+    function redirect($url = null)
+    {
+        if (!$this->xlite->is("adminZone")) {
+            $forward = $this->xlite->session->get("forwardUrl");
+            if (isset($forward)) {
+        		$currentUrl = $this->getUrl();
+        		if (strpos($currentUrl, $forward) === false) {
+                    $this->xlite->session->set("forwardUrl", null);
+                    $this->xlite->session->writeClose();
+        		}
+        	}
+        }
+
+        parent::redirect($url);
     }
 }
-
 // WARNING :
 // Please ensure that you have no whitespaces / empty lines below this message.
 // Adding a whitespace or an empty line below this line will cause a PHP error.

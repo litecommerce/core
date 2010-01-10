@@ -200,7 +200,7 @@
     <td width=10 align=center><input id="profile_ids" type="checkbox" checked onclick="setChecked('ecommerce_reports_data', 'profile_ids', this.checked);"></td>
     <td nowrap width=100% align=left>User</td>
 </tr>
-<tr FOREACH="profiles,pid,pro" class="{getRowClass(#TableRow#,##)}">
+<tr FOREACH="profiles,pid,pro" class="{getRowClass(pid,#TableRow#,##)}">
     <td width=10 align=center><input id="profile_ids" type="checkbox" name="profile_ids[]" value="{pro.profile_id}" checked></td>
     <td nowrap><a href="admin.php?target=order_list&login={pro.login:r}"><u>&quot;{pro.billing_title:h} {pro.billing_firstname:h} {pro.billing_lastname:h}&quot; &lt;{pro.login:h}&gt;</u></a></td>
 </tr>

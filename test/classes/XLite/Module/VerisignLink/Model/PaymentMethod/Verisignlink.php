@@ -47,18 +47,18 @@ class XLite_Module_VerisignLink_Model_PaymentMethod_Verisignlink extends XLite_M
     var $configurationTemplate = "modules/VerisignLink/config.tpl";
     var $formTemplate ="modules/VerisignLink/checkout.tpl";
 
-    function handleRequest(&$cart)
+    function handleRequest($cart)
     {
         require_once LC_MODULES_DIR . 'VerisignLink' . LC_DS . 'encoded.php';
         PaymentMethod_VerisignLink_handleRequest($this, $cart);
     }
 
-	function getOrderId(&$cart)
+	function getOrderId($cart)
 	{
 		return $cart->get("order_id");
 	}
 
-	function getPaymentURL(&$cart)
+	function getPaymentURL($cart)
 	{
 		return $this->xlite->ShopUrl("classes/modules/VerisignLink/redirect.php"); 
 	}

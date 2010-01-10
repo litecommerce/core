@@ -43,7 +43,7 @@
 
 class XLite_Module_CardinalCommerce_Model_PaymentMethodVerisignCc extends XLite_Module_VeriSign_Model_PaymentMethod_VerisignCc implements XLite_Base_IDecorator
 {
-    function initRequest(&$request)
+    function initRequest($request)
     {
 		$cmpi_result = $this->get("CardinalMPI");
         if(isset($cmpi_result)) {

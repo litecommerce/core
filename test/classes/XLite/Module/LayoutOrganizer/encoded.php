@@ -6,7 +6,7 @@
 * * @version $Id$
 * */  
 
-function LayoutOrganizer_updateChildrenTemplates(&$_this, $only_categories = false)
+function LayoutOrganizer_updateChildrenTemplates($_this, $only_categories = false)
 {
 	if (!$only_categories) {
     	$products = $_this->getProducts("custom_template < '0'");
@@ -40,7 +40,7 @@ function LayoutOrganizer_updateChildrenTemplates(&$_this, $only_categories = fal
 	}
 }
 
-function LayoutOrganizer_enableChildren(&$_this, $only_categories = false)
+function LayoutOrganizer_enableChildren($_this, $only_categories = false)
 {
 	if (!$only_categories) {
         $kernelVersion = $_this->xlite->config->get("Version.version");
@@ -112,7 +112,7 @@ function LayoutOrganizer_isInvariable($scheme_id)
 	}
 }
 
-function LayoutOrganizer_action_update(&$_this)
+function LayoutOrganizer_action_update($_this)
 {
 	if (!(isset($_this->schemes_list) && is_array($_this->schemes_list))) {
     	$_this->params[] = "status";
@@ -232,7 +232,7 @@ function LayoutOrganizer_action_update(&$_this)
 	$_this->scheme_id = $saved_scheme_id;
 }
 
-function LayoutOrganizer_action_delete(&$_this)
+function LayoutOrganizer_action_delete($_this)
 {
 	if (!isset($_this->modified_scheme_id)) {
     	$_this->params[] = "status";

@@ -51,7 +51,7 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepaydirectCc extends XLite_Mod
     var $hasConfigurationForm = true;
     var $processorName = "SagePay VSP Direct";
 
-    function process(&$cart)
+    function process($cart)
     {
 		require_once("modules/SagePay/encoded.php");
 		return func_SagePayDirect_process($this, $cart);

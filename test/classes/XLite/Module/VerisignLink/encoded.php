@@ -2,7 +2,7 @@
 /*
 * Hidden methods
 */
-function PaymentMethod_VerisignLink_handleRequest(&$_this, &$cart)
+function PaymentMethod_VerisignLink_handleRequest($_this, $cart)
 {
     $params = $_this->params;
     $error = null;

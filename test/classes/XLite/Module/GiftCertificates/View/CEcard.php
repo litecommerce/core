@@ -1,4 +1,4 @@
-<?
+<?php
 
 class XLite_Module_GiftCertificates_View_CECard extends XLite_View
 {

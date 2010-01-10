@@ -197,7 +197,7 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
 		return (($row % 2) == 0) ? true : false;
 	}
 
-	function getRowClass($row,$odd_css_class,$even_css_class)
+	function getRowClass($row,$odd_css_class,$even_css_class = null)
 	{
 		return ($this->isOddRow($row)) ? $odd_css_class : $even_css_class;
 	}

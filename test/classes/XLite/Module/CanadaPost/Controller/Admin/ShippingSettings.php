@@ -39,7 +39,7 @@
 * @version $Id$
 */
 
-class XLite_Module_CanadaPost_Controller_Admin_ShippingSettings extends Admin_Dialog_shipping_settings // {{{
+class XLite_Module_CanadaPost_Controller_Admin_ShippingSettings extends XLite_Controller_Admin_ShippingSettings implements XLite_Base_IDecorator
 {
 	public function __construct() 
 	{

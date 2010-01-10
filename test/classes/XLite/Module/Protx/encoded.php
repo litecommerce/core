@@ -23,7 +23,7 @@ function func_Protx_getTxCode($pm, $order)
 }
 
 /////////////////////////////////// Protx VSP Direct ////////////////////////////////////
-function func_ProtxDirect_process(&$_this, &$order)
+function func_ProtxDirect_process($_this, $order)
 {
 	$vendor = $_this->get("params.vendor_name");
 	$vendorTxCode = func_Protx_getTxCode($_this, $order);
@@ -93,7 +93,7 @@ function func_ProtxDirect_process(&$_this, &$order)
 	}
 }
 
-function func_ProtxDirect_action_return(&$_this, &$order, $payment)
+function func_ProtxDirect_action_return($_this, $order, $payment)
 {
 	$trxData = array(
 		"MD"	=> $_this->get("MD"),
@@ -108,7 +108,7 @@ function func_ProtxDirect_action_return(&$_this, &$order, $payment)
 }
 
 
-function func_Protx_response_handling($response, &$order, &$payment)
+function func_Protx_response_handling($response, $order, &$payment)
 {
 	$detailLabels = array();
 
@@ -395,7 +395,7 @@ $payment->xlite->logger->log("RESPONSE ARRAY: ".var_export($responseArray, true)
 }
 
 /////////////////////////////////////////// Helper //////////////////////////////////
-function func_Protx_getState(&$profile, $field, $customField)
+function func_Protx_getState($profile, $field, $customField)
 {
     $stateName = "";
     $state = new XLite_Model_State();

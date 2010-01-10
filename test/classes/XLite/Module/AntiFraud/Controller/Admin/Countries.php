@@ -39,7 +39,7 @@
 * @version $Id$
 */
 
-class XLite_Module_AntiFraud_Controller_Admin_Countries extends Admin_Dialog_countries // {{{
+class XLite_Module_AntiFraud_Controller_Admin_Countries extends XLite_Controller_Admin_Abstract implements XLite_Base_IDecorator
 {
 	function action_update()
 	{

@@ -175,7 +175,7 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
 		$this->config->set("General.price_format",$price_format);
     } // }}}
 
-    function found(&$order, $name) // {{{
+    function found($order, $name) // {{{
     {
         return !is_null($order->get($name)) && $order->get($name) > 0;
     } // }}}

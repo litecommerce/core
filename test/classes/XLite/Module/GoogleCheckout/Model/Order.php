@@ -57,7 +57,7 @@ class XLite_Module_GoogleCheckout_Model_Order extends XLite_Model_Order implemen
         if (method_exists($this, $methodName)) {
 			$params = func_get_args();
 			array_shift($params);
-			return call_user_func_array(array(&$this, $methodName), $params);
+			return call_user_func_array(array($this, $methodName), $params);
         }
 
 		return "";

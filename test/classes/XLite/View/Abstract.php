@@ -435,7 +435,7 @@ class XLite_View_Abstract extends XLite_Base
 		return (($row % 2) == 0) ? true : false;
 	}
 
-	function getRowClass($row, $odd_css_class, $even_css_class)
+	function getRowClass($row, $odd_css_class, $even_css_class = null)
 	{
 		return ($this->isOddRow($row)) ? $odd_css_class : $even_css_class;
 	}

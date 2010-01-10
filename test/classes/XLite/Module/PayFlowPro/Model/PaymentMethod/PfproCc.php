@@ -51,7 +51,7 @@ class XLite_Module_PayFlowPro_Model_PaymentMethod_PfproCc extends XLite_Model_Pa
     var $hasConfigurationForm = true;
     var $processorName = "PayFlowPro";
 
-    function process(&$cart)
+    function process($cart)
     {
 		require_once LC_MODULES_DIR . 'PayFlowPro' . LC_DS . 'encoded.php';
         return func_PayFlowPro_process($cart, $this);

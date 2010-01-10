@@ -187,7 +187,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 		return array("global_discount", "discount", "payedByGC", "shipping_cost");
 	}
 
-	function saveOriginalValues(&$order) // {{{
+	function saveOriginalValues($order) // {{{
 	{
 		$originalValues = $order->get("details.originalValues");
         if (is_null($originalValues)) {
@@ -198,7 +198,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 		$order->set("details.originalValues",$originalValues);
 	} // }}}
 
-	function saveCurrentValues(&$order, $calculate = true) // {{{
+	function saveCurrentValues($order, $calculate = true) // {{{
 	{
 		// Set cart instance for correct tax calculation
 		$this->_cart = $order;
@@ -401,7 +401,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 	 * Warning: before calling this function make sure, that the order is no more used in current PHP session,
 	 *          because the values are not pushed back to the Order object.
 	 */
-	function updateOrderAsCart(&$order)
+	function updateOrderAsCart($order)
 	{
 		$orig_properties = $order->get("properties");
 		$orig_details = $order->get("details");
@@ -684,7 +684,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 		return aom_split_order($this);
 	} // }}}		
  
- 	function _updateCartDC(&$cart, $dc)
+ 	function _updateCartDC($cart, $dc)
 	{
 		$cart->set("DC", $dc);
 		$cart->calcTotal();
@@ -965,7 +965,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 		return $ccDetails;
     }
 
-	function addDetails(&$order)
+	function addDetails($order)
 	{
 		if ($this->xlite->get("mm.activeModules.AdvancedSecurity") && is_null($this->session->get("masterPassword"))) { 
 			return;
@@ -988,7 +988,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 		$order->set("detailLabels", $detailLabels);
 	}
 	
-	function getRowClass($css_class) // {{{
+	function getRowClass($row, $css_class, $reserved = null) // {{{
 	{
 		return (($this->totals_row_counter++ % 2) == 0 ? "" : $css_class);
 	} // }}}

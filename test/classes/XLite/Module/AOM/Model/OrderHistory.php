@@ -138,7 +138,7 @@ class XLite_Module_AOM_Model_OrderHistory extends XLite_Model_Abstract
 		return false;
 	}
 
-	function log(&$order, $cloneOrder = null, $ordersItems = null, $action = null) // {{{ 
+	function log($order, $cloneOrder = null, $ordersItems = null, $action = null) // {{{ 
 	{
 		$history = array();
 		if ($action == "create_order")

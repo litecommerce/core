@@ -67,7 +67,7 @@ function GoogleCheckout_parseResponse($_this, $response)
 }
 
 
-function GoogleCheckout_sendRequest(&$_this, &$payment, &$data)
+function GoogleCheckout_sendRequest($_this, &$payment, &$data)
 {
 	$auth = base64_encode($payment["merchant_id"].":".$payment["merchant_key"]);
 	$h = array(
@@ -128,7 +128,7 @@ function GoogleCheckout_getXML_Object()
 	return new XLite_Module_GoogleCheckout_Model_XML();
 }
 
-function GoogleCheckout_sendGoogleCheckoutRequest(&$_this, &$order)
+function GoogleCheckout_sendGoogleCheckoutRequest($_this, $order)
 {
 	$params = $_this->get("params");
 
@@ -147,7 +147,7 @@ function GoogleCheckout_sendGoogleCheckoutRequest(&$_this, &$order)
 ///////////////////// Google request\callback\response methods /////////////////////
 ////////////////////////////////////////////////////////////////////////////////////
 
-function GoogleCheckout_getGoogleCheckoutXML_Calculation(&$_this, $address, $shipping, $discounts)
+function GoogleCheckout_getGoogleCheckoutXML_Calculation($_this, $address, $shipping, $discounts)
 {
 	// switch to customer area
 	$_old_admin_zone = $_this->xlite->get("adminZone");
@@ -454,7 +454,7 @@ function GoogleCheckout_getShippingClassesSQL_STRING()
 //************************** GoogleCheckout Notification Section ******************
 //*********************************************************************************
 
-function GoogleCheckout_new_order_notification(&$_this, $xmlData)
+function GoogleCheckout_new_order_notification($_this, $xmlData)
 {
 	if ($_this->getXMLDataByPath($xmlData, "NEW-ORDER-NOTIFICATION/FINANCIAL-ORDER-STATE" != "REVIEWING")) {
 		return false;
@@ -656,7 +656,7 @@ if ($is_new_profile) {
 }
 
 
-function GoogleCheckout_risk_information_notification(&$_this, $xmlData)
+function GoogleCheckout_risk_information_notification($_this, $xmlData)
 {
 	$xmlData = $_this->getXMLDataByPath($xmlData, "RISK-INFORMATION-NOTIFICATION");
 	$googleId = $xmlData["GOOGLE-ORDER-NUMBER"];
@@ -696,7 +696,7 @@ function GoogleCheckout_risk_information_notification(&$_this, $xmlData)
 }
 
 
-function GoogleCheckout_order_state_change_notification(&$_this, $xmlData)
+function GoogleCheckout_order_state_change_notification($_this, $xmlData)
 {
 	$xmlData = $_this->getXMLDataByPath($xmlData, "ORDER-STATE-CHANGE-NOTIFICATION");
 	$googleId = $xmlData["GOOGLE-ORDER-NUMBER"];
@@ -753,7 +753,7 @@ function GoogleCheckout_order_state_change_notification(&$_this, $xmlData)
 	return true;
 }
 
-function GoogleCheckout_order_charge_amount_notification(&$_this, $xmlData)
+function GoogleCheckout_order_charge_amount_notification($_this, $xmlData)
 {
 	$xmlData = $_this->getXMLDataByPath($xmlData, "CHARGE-AMOUNT-NOTIFICATION");
 	$googleId = $xmlData["GOOGLE-ORDER-NUMBER"];
@@ -770,7 +770,7 @@ function GoogleCheckout_order_charge_amount_notification(&$_this, $xmlData)
 	return true;
 }
 
-function GoogleCheckout_order_refund_amount_notification(&$_this, $xmlData)
+function GoogleCheckout_order_refund_amount_notification($_this, $xmlData)
 {
 	$xmlData = $_this->getXMLDataByPath($xmlData, "REFUND-AMOUNT-NOTIFICATION");
 	$googleId = $xmlData["GOOGLE-ORDER-NUMBER"];
@@ -799,7 +799,7 @@ function GoogleCheckout_order_refund_amount_notification(&$_this, $xmlData)
 //************************ CoogleCheckout Order Management Section ****************
 //*********************************************************************************
 
-function GoogleCheckout_OrderCancel(&$_this, $googleId, $_reason, $_comment)
+function GoogleCheckout_OrderCancel($_this, $googleId, $_reason, $_comment)
 {
 	$params = $_this->get("params");
 
@@ -821,7 +821,7 @@ EOT;
 }
 
 
-function GoogleCheckout_OrderCharge(&$_this, $googleId, $_amount)
+function GoogleCheckout_OrderCharge($_this, $googleId, $_amount)
 {
 	$params = $_this->get("params");
 	$currency = $params["currency"];
@@ -840,7 +840,7 @@ EOT;
 	return ($response["ERROR"]["ERROR-MESSAGE"]) ? false : true;
 }
 
-function GoogleCheckout_OrderSendMessage(&$_this, $googleId, $_message, $_send_email)
+function GoogleCheckout_OrderSendMessage($_this, $googleId, $_message, $_send_email)
 {
 	$params = $_this->get("params");
 
@@ -861,7 +861,7 @@ EOT;
 	return (($response["ERROR"]["ERROR-MESSAGE"]) ? $response["ERROR"]["ERROR-MESSAGE"] : true);
 }
 
-function GoogleCheckout_OrderArchive(&$_this, $googleId)
+function GoogleCheckout_OrderArchive($_this, $googleId)
 {
 	$params = $_this->get("params");
 
@@ -874,7 +874,7 @@ EOT;
 	return (($response["ERROR"]["ERROR-MESSAGE"]) ? $response["ERROR"]["ERROR-MESSAGE"] : true);
 }
 
-function GoogleCheckout_OrderUnArchive(&$_this, $googleId)
+function GoogleCheckout_OrderUnArchive($_this, $googleId)
 {
 	$params = $_this->get("params");
 
@@ -887,7 +887,7 @@ EOT;
 	return (($response["ERROR"]["ERROR-MESSAGE"]) ? $response["ERROR"]["ERROR-MESSAGE"] : true);
 }
 
-function GoogleCheckout_OrderProcess(&$_this, $googleId)
+function GoogleCheckout_OrderProcess($_this, $googleId)
 {
 	$params = $_this->get("params");
 
@@ -900,7 +900,7 @@ EOT;
 	return (($response["ERROR"]["ERROR-MESSAGE"]) ? $response["ERROR"]["ERROR-MESSAGE"] : true);
 }
 
-function GoogleCheckout_OrderMerchantOrderNumber(&$_this, $googleId, $_number)
+function GoogleCheckout_OrderMerchantOrderNumber($_this, $googleId, $_number)
 {
 	$params = $_this->get("params");
 
@@ -917,7 +917,7 @@ EOT;
 	return (($response["ERROR"]["ERROR-MESSAGE"]) ? $response["ERROR"]["ERROR-MESSAGE"] : true);
 }
 
-function GoogleCheckout_OrderAddTrackingData(&$_this, $googleId, $_tracking, $_carrier)
+function GoogleCheckout_OrderAddTrackingData($_this, $googleId, $_tracking, $_carrier)
 {
 	$params = $_this->get("params");
 
@@ -939,7 +939,7 @@ EOT;
     return (($response["ERROR"]["ERROR-MESSAGE"]) ? $response["ERROR"]["ERROR-MESSAGE"] : true);
 }
 
-function GoogleCheckout_OrderDeliver(&$_this, $googleId, $_send_email)
+function GoogleCheckout_OrderDeliver($_this, $googleId, $_send_email)
 {
     $params = $_this->get("params");
 
@@ -963,7 +963,7 @@ EOT;
     return (($response["ERROR"]["ERROR-MESSAGE"]) ? $response["ERROR"]["ERROR-MESSAGE"] : true);
 }
 
-function GoogleCheckout_OrderRefund(&$_this, $googleId, $_amount, $_reason, $_comment)
+function GoogleCheckout_OrderRefund($_this, $googleId, $_amount, $_reason, $_comment)
 {
 	$params = $_this->get("params");
 	$currency = $params["currency"];
@@ -999,7 +999,7 @@ function GoogleCheckout_getOrderByGoogleId($googleId)
 	return null;
 }
 
-function GoogleCheckout_process_chargeable_order(&$_this, $order)
+function GoogleCheckout_process_chargeable_order($_this, $order)
 {
 	if ($order->get("google_details.risks_set") && $order->get("google_details.chargeable_set")) {
 		// Deferred notifications order-state-change-notification and

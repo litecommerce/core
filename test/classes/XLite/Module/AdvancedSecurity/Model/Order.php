@@ -124,13 +124,10 @@ class XLite_Module_AdvancedSecurity_Model_Order extends XLite_Model_Order implem
 		return $text;
 	}
 
-	function clone()
+	function __clone()
 	{
-		if (function_exists("func_is_clone_deprecated") && func_is_clone_deprecated()) {
-			$clone = parent::cloneObject();
-		} else {
-			$clone = parent::clone();
-		}
+		$clone = parent::__clone();
+
 		$clone->set('details', $this->get('details'));
 		// if the master password is not enterred, the secure details are copied as is from the original order
 		$clone->properties['secureDetails'] = $this->properties['secureDetails'];

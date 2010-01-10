@@ -43,7 +43,7 @@
 
 class XLite_Module_CardinalCommerce_Model_PaymentMethodNetbillingCc extends XLite_Module_Netbilling_Model_PaymentMethod_NetbillingCc implements XLite_Base_IDecorator
 {
-    function initRequest(&$cart, &$request)
+    function initRequest($cart, &$request)
     {
 		$cmpi_result = $this->get("CardinalMPI");
         if(isset($cmpi_result)) {

@@ -28,7 +28,6 @@
 | PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
 | THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
 | SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
 |                                                                              |
 | The Initial Developer of the Original Code is Creative Development LLC       |
 | Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
@@ -36,66 +35,35 @@
 +------------------------------------------------------------------------------+
 */
 
-/* vim: set expandtab tabstop=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
+/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
 /**
-* Class description.
+* Dialog_HTMLCatalog
 *
-* @package Module_UPSOnlineTools
+* @package Module_HTMLCatalog
 * @access public
 * @version $Id$
-*
 */
-
-class XLite_Module_UPSOnlineTools_base_Dialog extends XLite_Controller_Abstract implements XLite_Base_IDecorator
+class XLite_Module_HTMLCatalog_Controller_Abstract extends XLite_Controller_Abstract implements XLite_Base_IDecorator
 {
-    function isShowAV()
+    function getLoginURL()
     {
-        $target = $this->get('target');
-        $mode = $this->get('mode');
-        if ($target == 'profile'|| ($target == 'checkout' && $mode == 'register')) {
-            $av_result = $this->session->get('ups_av_result');
-            if (count($av_result) > 0 || $this->session->get('ups_av_error')) return true;
+        $url = parent::getLoginURL();
+        if ($this->xlite->get("ignoreCustomerSecurity")) {
+            $sid = $this->session->getName() . "=" . $this->session->getID();
+            if (strpos($url, $sid) !== false) {
+            	if (strpos($url, $sid . "&") !== false) {
+                	$sid = $sid . "&";
+                }
+                $url = str_replace($sid, "", $url);
+                $lastSymbol = substr($url, strlen($url)-1, 1);
+                if ($lastSymbol == "?" || $lastSymbol == "&") {
+                	$url = substr($url, 0, strlen($url)-1);
+                }
+            }
         }
-        else {
-			$this->session->set('ups_av_result', null);
-			$this->session->set('ups_av_error', null);
-		}
-
-        return false;
+        return $url;
     }
-
-    function getUpsUsed() 
-    {
-        if (!isset($this->_ups_profile)) {
-            $this->_ups_profile = new XLite_Model_Profile();
-            $this->_ups_profile->set('properties', $this->session->get('ups_used'));
-        }
-
-        return $this->_ups_profile;
-    }
-
-	function isSuggestionExists()
-	{
-		$av_result = $this->session->get('ups_av_result');
-		return (count($av_result) > 0) ? true : false;
-	}
-
-	function isAVError()
-	{
-		return $this->session->get('ups_av_error');
-	}
-
-	function getAVErrorMessage()
-	{
-		$errcode = $this->session->get('ups_av_errorcode');
-		if (empty($errcode)) {
-			return "Unable to connect. UPS OnLine&reg; Tools Address Validation service is not available.";
-		} else {
-			return "UPS OnLine&reg; Tools Address Validation returned an error: (".$errcode.") ".$this->session->get('ups_av_errordescr');
-		}
-	}
-
 }
 
 // WARNING :

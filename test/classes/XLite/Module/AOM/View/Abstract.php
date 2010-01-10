@@ -32,82 +32,19 @@
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
 /**
-*	 
+* 
 *
-* @package Module_MultiCurrency
+* @package AOM
 * @access public
 * @version $Id$
 */
 
-class XLite_Module_MultiCurrency_base_Widget extends XLite_View_Abstract implements XLite_Base_IDecorator
-{ // {{{
-
-	var $currencies 		= null;
-	var $defaultCurrency 	= null;
-
-	function getCurrencies() // {{{
+class XLite_Module_AOM_View_Abstract extends XLite_View_Abstract implements XLite_Base_IDecorator
+{
+	function invertSign($value)
 	{
-		if(is_null($this->currencies)) {
-			$currency = new XLite_Module_MultiCurrency_Model_Currency();
-			$this->currencies = $currency->findAll("enabled = 1 and base = 0");
-		}
-		return $this->currencies;
-
-	} // }}}
-	
-	function getDefaultCurrency() // {{{ 
-	{
-		if (is_null($this->defaultCurrency)) { 
-			$this->defaultCurrency = new XLite_Module_MultiCurrency_Model_Currency();
-			$this->defaultCurrency->find("base = 1");
-		}	
-		return $this->defaultCurrency;
-	} // }}}
-
-	function price_format($base, $field = "", $thousand_delim = null, $decimal_delim = null) // {{{
-	{
-        $price_format 	= $this->config->get("General.price_format");
-        $price		 	= is_Object($base) ? $base->get($field) : $base;
-		$default		= $this->get("defaultCurrency");
-		$currencies 	= $this->get("currencies");
-		
-		$this->config->set("General.price_format",$default->get("price_format"));
-		$result = parent::price_format($price, $field, $thousand_delim, $decimal_delim);
-		if (!empty($currencies) && ($this->isTargetAllowed())) {
-			$additional = "";
-			foreach ($currencies as $currency) {
-				$this->config->set("General.price_format",$currency->get("price_format"));
-				$currency_price = $price * $currency->get('exchange_rate');
-				$currency_price = parent::price_format($currency_price, $field, $thousand_delim, $decimal_delim);
-				if ($this->auth->is('logged')&&$this->config->get('MultiCurrency.country_currency')) {
-					if ($currency->inCurrencyCountries($this->auth->get("profile.billing_country")))
-						$additional .= $currency_price . ", ";
-				} else {
-					$additional .= $currency_price . ", ";
-				}
-			}	
-			if (!empty($additional)) $result .= " (" . substr($additional,0,-2) . ")";
-		}
-
-		return $result;
-	} // }}}
-	
-	function isTargetAllowed() // {{{
-	{
-		$result = true;
-		$target = $this->get("target");
-		if ($this->xlite->is("adminZone")) {
-			$page = $this->get("page");
-			if ((in_array($target, array('order', 'create_order'))) && (in_array($page, array('order_info','order_preview')))) {
-				$result = false;
-			}
-		} else {
-			$exceptionTargets = array('checkoutSuccess', 'order');
-			$result = !in_array($target, $exceptionTargets);
-		}
-		return $result;
-	}  // }}}
-
+		return sprintf("%02f", (-($value)));
+	}
 } // }}}
 
 // WARNING:

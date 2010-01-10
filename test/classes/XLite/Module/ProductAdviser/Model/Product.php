@@ -222,7 +222,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
     	return $this->_ProductMainCategory;
     }
 
-	function import(&$options)
+	public function import(array $options)
 	{
 		parent::import($options);
 

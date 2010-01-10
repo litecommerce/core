@@ -8,7 +8,7 @@
 * @version $Id$
 */
  
- 	function Payment_method_paypalpro_checkServiceURL(&$_this)
+ 	function Payment_method_paypalpro_checkServiceURL($_this)
  	{
 		$params = $_this->get("params");
 		switch($params["solution"]) 
@@ -34,7 +34,7 @@
 		}
  	}
 
- 	function Payment_method_paypalpro_process(&$_this,&$order) // {{{ 
+ 	function Payment_method_paypalpro_process($_this,$order) // {{{ 
 	{
 		switch($_this->get("params.solution")) 
 		{
@@ -47,7 +47,7 @@
 		}
 	} // }}} 
 
-	function standardRequest(&$_this, $order) // {{{ 
+	function standardRequest($_this, $order) // {{{ 
 	{
 	    if (strcasecmp($_this->get("params.standard.login"),$_POST["business"]) != 0) {
         	die("IPN validation error: PayPal account doesn't match: ".$_POST["business"]. ". Please contact administrator.");
@@ -171,7 +171,7 @@
 		return self::PAYMENT_SUCCESS; 
 	} // }}}
 
-    function proRequest(&$_this,&$order) // {{{
+    function proRequest($_this,$order) // {{{
     {
 		$response = PayPalPro_sendRequest($_this->get("params.pro"),$_this->getDirectPaymentRequest($order));
 		if (is_null($response)) {
@@ -214,7 +214,7 @@
 		$order->update();
     } // }}}
 
-  function paypalExpressHandleRequest(&$_this,&$order) // {{{ 
+  function paypalExpressHandleRequest($_this,$order) // {{{ 
   {
 	$request = new XLite_Model_HTTPS();
 	if(is_null($order->get("details.token"))) {

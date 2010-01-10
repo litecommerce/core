@@ -45,13 +45,13 @@ class XLite_Module_NetworkMerchants_Model_PaymentMethod_NetworkmerchantsCc exten
     var $hasConfigurationForm = true;
     var $processorName = "NetworkMerchants";
 
-    function process(&$cart)
+    function process($cart)
     {
 		require_once("modules/NetworkMerchants/encoded.php");
         return func_NetworkMerchants_process($cart, $this);
     }
 
-	function initRequest(&$cart, &$request) 
+	function initRequest($cart, &$request) 
 	{
 		if ($this->xlite->get("cc_initRequestAlternate")) {
 			$_object = new XLite_Module_CardinalCommerce_Model_PaymentMethodNetworkmerchantsCc();

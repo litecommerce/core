@@ -46,7 +46,7 @@
 	<td align=center>Average price</td>
 	<td align=center>Total</td>
 </tr>	
-<tr FOREACH="productSales,pidx,ps" valign=top class="{getRowClass(#TableRow#,##)}">
+<tr FOREACH="productSales,pidx,ps" valign=top class="{getRowClass(pidx,#TableRow#,##)}">
 	<td>
         <a href="admin.php?target=product&product_id={ps.product_id}"><u>{ps.order_item.product.name:h}</u></a>
         <widget module="ProductOptions" template="modules/EcommerceReports/selected_options.tpl" item="{ps.order_item}" visible="{split_options}">

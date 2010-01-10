@@ -48,7 +48,7 @@ class XLite_Module_SkipJack_Model_PaymentMethod_SkipjackCc extends XLite_Model_P
     var $hasConfigurationForm = true;
     var $processorName = "SkipJack";
 
-    function process(&$cart)
+    function process($cart)
     {
 		require_once('modules/SkipJack/encoded.php');
         return func_SkipJack_process($cart, $this);

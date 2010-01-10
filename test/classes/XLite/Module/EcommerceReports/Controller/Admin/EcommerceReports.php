@@ -215,7 +215,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports extends XL
     } // }}}
     
     // SELECT extra fields {{{
-    function getSelect()
+    function getSelect($ot, $it, $pt)
     {
         return "";
     }
@@ -223,7 +223,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports extends XL
     {
         return "";
     }
-    function getWhere()
+    function getWhere($ot, $it, $pt)
     {
         return "";
     } // }}}
@@ -317,7 +317,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports extends XL
         return $ids;
     } // }}}        
 
-    function getRowClass($class1, $class2) // {{{
+    function getRowClass($row, $class1, $class2 = null) // {{{
     {
         static $idx;
         if (!isset($idx)) $idx = 0;

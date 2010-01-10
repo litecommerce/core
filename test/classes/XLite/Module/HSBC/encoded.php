@@ -1,11 +1,11 @@
 <?php
 
-    function func_PaymentMethod_cc_hsbc_getUserId(&$_this, &$cart)
+    function func_PaymentMethod_cc_hsbc_getUserId($_this, $cart)
     {
 		return strrev(md5($cart->get("profile.login")));
 	}
 
-    function func_PaymentMethod_cc_hsbc_getCwd(&$_this)
+    function func_PaymentMethod_cc_hsbc_getCwd($_this)
     {    
         $s = $_this->xlite->get("options.primary_installation.path");   
 		if ($s!="") 		
@@ -20,7 +20,7 @@
         return $path;
 	}
 
-    function func_PaymentMethod_cc_hsbc_handleRequest(&$_this, &$cart)
+    function func_PaymentMethod_cc_hsbc_handleRequest($_this, $cart)
     {
 //////////////////////////////////
 // debug code

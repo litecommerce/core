@@ -72,7 +72,7 @@ class XLite_Controller_Admin_TopSellers extends XLite_Controller_Admin_Stats
 
         $order = new XLite_Model_Order();
         $date = $this->get("monthDate");
-        array_map(array(&$this, "collect"), $order->findAll("(status='P' OR status='C') AND date>=$date"));
+        array_map(array($this, "collect"), $order->findAll("(status='P' OR status='C') AND date>=$date"));
         $this->sort("todayItems");
         $this->sort("weekItems");
         $this->sort("monthItems");
@@ -116,7 +116,7 @@ class XLite_Controller_Admin_TopSellers extends XLite_Controller_Admin_Stats
                 $this->topProducts[$name][$id]["amount"] += $item->get("amount");
             }
         }            
-        usort($this->topProducts[$name], array(&$this, "cmpProducts"));
+        usort($this->topProducts[$name], array($this, "cmpProducts"));
         $topProducts = array_chunk(array_reverse($this->topProducts[$name]), 10);
         $this->topProducts[$name] = $topProducts[0];
     }

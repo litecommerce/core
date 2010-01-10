@@ -28,103 +28,63 @@
 | PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
 | THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
 | SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
 |                                                                              |
 | The Initial Developer of the Original Code is Creative Development LLC       |
 | Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
 | Development LLC. All Rights Reserved.                                        |
 +------------------------------------------------------------------------------+
 */
-
-/* vim: set expandtab tabstop=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
+/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
 /**
-* Component base class
+* Widget_ProductAdviser description.
 *
-* @package Base
+* @package Module_ProductAdviser
+* @access public
 * @version $Id$
 */
-class XLite_Module_DemoMode_base_Component extends XLite_View implements XLite_Base_IDecorator
+class XLite_Module_ProductAdviser_View_Abstract extends XLite_View_Abstract implements XLite_Base_IDecorator
 {
+    function isArrayPointerNth($arrayPointer, $arrayPointerCheck)
+    {
+		if ($this->xlite->get("PAPartialWidget")) {
+			return parent::isArrayPointerNth($arrayPointer, $arrayPointerCheck);
+		}
 
-	function init()
+    	$arrayPointerCheck = intval($arrayPointerCheck);
+
+    	if ($arrayPointerCheck <= 0) {
+    		return false;
+    	}
+
+    	return (($arrayPointer % $arrayPointerCheck) == 0) ? true : false;
+    }
+
+    function isArrayPointerEven($arrayPointer)
+    {
+		if ($this->xlite->get("PAPartialWidget")) {
+			return parent::isArrayPointerEven($arrayPointer);
+		}
+
+    	return ($this->isArrayPointerNth($arrayPointer, 2)) ? true : false;
+    }
+
+    function isArrayPointerOdd($arrayPointer)
+    {
+		if ($this->xlite->get("PAPartialWidget")) {
+			return parent::isArrayPointerOdd($arrayPointer);
+		}
+
+    	return ($this->isArrayPointerNth($arrayPointer, 2)) ? false : true;
+    }
+
+	function getPercents($columns)
 	{
-		if ($this->xlite->is("adminZone")) {
-			foreach ($_REQUEST as $name=>$value) {
-				if (isset($_REQUEST[$name])) {
-                    $_REQUEST[$name] = $this->_validateRequestDataDemo($_REQUEST[$name], $name);
-                }
-                if (isset($_GET[$name])) {
-                    $_GET[$name] = $this->_validateRequestDataDemo($_GET[$name], $name);
-                }
-                if (isset($_POST[$name])) {
-                    $_POST[$name] = $this->_validateRequestDataDemo($_POST[$name], $name);
-                }
-			}
-		}
-
-		parent::init();
-	}
-
-	function _needStripHTMLtagsDemo($name)
-	{
-		if (isset($_REQUEST["target"]) && $_REQUEST["target"] == "news_messages") {
-			return in_array($name, array("body", "subject"));
-		}
-
-		switch ($name) {
-			case "sku":
-			case "name":
-			case "description":
-			case "brief_description":
-			case "meta_desc":
-				return true;
-			break;
-
-			default:
-				return false;
-			break;
-		}
-
-		return false;
-	}
-
-	function _stripTagsDemo($value, $name) {
-		$value = $this->_stripSQLinjection($value, $name);
-
-		if ($this->_needStripHTMLtagsDemo($name)) {
-			// strip all HTML tags
-			$value = strip_tags($value);
-		}
-
-		return $value;
-	}
-
-	function _stripArrayTagsDemo(&$data, $name)
-	{
-		foreach($data as $key => $value) {
-			if (!is_array($value)) {
-				$data[$key] = $this->_stripTagsDemo($value, $name);
-			} else {
-				$data[$key] = $this->_stripArrayTagsDemo($value, $name);
-			}
-		}
-
-		return $data;
-	}
-
-	function _validateRequestDataDemo(&$value, $name)
-	{
-		if (!is_array($value)) {
-			$value = $this->_stripTagsDemo($value, $name);
-		} else {
-			$value = $this->_stripArrayTagsDemo($value, $name);
-		}
-
-		return $value;
+		return (int) (($columns > 0) ? (round((100 / $columns))) : 0);
 	}
 
 }
+
 // WARNING :
 // Please ensure that you have no whitespaces / empty lines below this message.
 // Adding a whitespace or an empty line below this line will cause a PHP error.

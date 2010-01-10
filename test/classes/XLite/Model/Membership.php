@@ -176,7 +176,7 @@ class XLite_Model_Membership extends XLite_Model_Abstract
 	{
 		if (!is_array($memberships)) $memberships = (array) $this->get("memberships");
 
-		uasort($memberships, array(&$this, "cmp"));
+		uasort($memberships, array($this, "cmp"));
 		return $memberships;
 	}
 

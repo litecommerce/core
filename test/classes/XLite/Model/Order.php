@@ -707,7 +707,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
         $this->_createItem($item);
     } // }}}
 
-    function deleteItem(&$item) // {{{
+    function deleteItem($item) // {{{
     {
         $item->delete();
         $this->refresh("items");
@@ -719,7 +719,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
     * @param OrderItem $item The order item to update
     * @access public
     */
-    function updateItem(&$item) // {{{
+    function updateItem($item) // {{{
     {
         if (!is_null($this->_items)) {
 			for($i = 0; $i < count($this->_items); $i++) {

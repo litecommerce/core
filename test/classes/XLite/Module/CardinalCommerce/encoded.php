@@ -3,7 +3,7 @@
 * Hidden methods
 */
 
-function CardinalCommerce_isSupported(&$_this, $pm)
+function CardinalCommerce_isSupported($_this, $pm)
 {
 	if (!isset($pm)) {
     	$pm = $_this->cart->get("paymentMethod");
@@ -24,7 +24,7 @@ function CardinalCommerce_isSupported(&$_this, $pm)
 	}
 }
 
-function CardinalCommerce_checkout_cmpi(&$_this)
+function CardinalCommerce_checkout_cmpi($_this)
 {
 	if (!($_this->session->isRegistered("cmpiRequest") && $_this->session->get("cmpiRequest"))) {
 		$_this->redirect("cart.php?target=cart");

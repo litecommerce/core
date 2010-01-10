@@ -50,7 +50,7 @@ class XLite_Module_PlugnPay_Model_PaymentMethod_PlugnpayCc extends XLite_Model_P
 	var $configurationTemplate = "modules/PlugnPay/config.tpl";
 	var $hasConfigurationForm = true;
 	
-    function process(&$cart)
+    function process($cart)
     {
 		require_once LC_MODULES_DIR . 'PlugnPay' . LC_DS . 'encoded.php';
         return func_PlugnPay_process($cart, $this);

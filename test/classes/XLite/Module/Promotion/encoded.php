@@ -17,7 +17,7 @@ function func_in_category_recursive($product, $category)
     return false;
 }
 
-function func_calc_discount(&$order)
+function func_calc_discount($order)
 {
     $d = 0;
     if ($order->call("DC.checkCondition", $order)) {

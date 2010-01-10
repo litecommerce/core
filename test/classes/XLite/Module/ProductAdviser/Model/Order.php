@@ -76,7 +76,7 @@ class XLite_Module_ProductAdviser_Model_Order extends XLite_Model_Order implemen
 		ProductAdviser_checkedOut($products);
 	}
 
-    function updateInventory(&$item)
+    function updateInventory($item)
     {
     	$requiredAmount = $item->get("amount");
     	parent::updateInventory($item);

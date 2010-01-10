@@ -140,7 +140,7 @@ class XLite_Module_Newsletters_Model_NewsSubscriber extends XLite_Model_Abstract
         $mailer->send();                         
     }
     
-    function import($list_id, $fname)
+    function importSubscribers($list_id, $fname)
     {
         if (($subscribers = file($fname)) === false) {
             echo "failed to open CSV file $fname";

@@ -42,7 +42,7 @@ function func_wholesaleTrading_get_access_list($access)
 	return split(",", $access);
 }
 
-function func_wholesaleTrading_set_membership(&$_this, &$profile, $product)
+function func_wholesaleTrading_set_membership($_this, $profile, $product)
 {
 	$membership = $profile->get("membership");
 	$membership_exp_date = $profile->get("membership_exp_date");
@@ -119,7 +119,7 @@ function func_wholesaleTrading_set_membership(&$_this, &$profile, $product)
 	$profile->update();
 }
 
-function func_wholesaleTrading_calc_global_discount(&$_this, $subtotal)
+function func_wholesaleTrading_calc_global_discount($_this, $subtotal)
 {
 	$global_discount = 0;
 	$gd = new XLite_Module_WholesaleTrading_Model_GlobalDiscount();
