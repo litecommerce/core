@@ -39,7 +39,7 @@ class XLite_Core_Decorator extends XLite_Base implements XLite_Base_ISingleton
 						if (!isset($this->classDecorators[$parentClass])) {
 							$this->classDecorators[$parentClass] = array();
 						}
-						$this->classDecorators[$parentClass][$className] = 0;
+						$this->classDecorators[$parentClass][$className] = 1;
 					}
 				}
 			}

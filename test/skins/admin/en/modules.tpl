@@ -96,7 +96,6 @@ Use this section to manage add-on components of your online store.
 {else:}
 <p IF="!xlite.mm.modules"><b>&gt;&gt;&nbsp;You have no modules installed&nbsp;&lt;&lt;</b></p>
 <p IF="xlite.mm.modules">You have <b>{xlite.mm.modulesNumber}</b> module{if:!xlite.mm.modulesNumber=#1#}s{end:} installed and <b>{xlite.mm.activeModulesNumber}</b> module{if:!xlite.mm.activeModulesNumber=#1#}s{end:} activated.</p>
-<widget module="LiveUpdating" template="modules/LiveUpdating/modules_update.tpl">
 {end:}
 
 <table cellpadding="0" cellspacing="0" border="0" width="100%">

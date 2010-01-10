@@ -49,7 +49,6 @@
 <span IF="target=#top_sellers#">&nbsp;::&nbsp;<a href="admin.php?target=orders_stats" class="NavigationPath">Top sellers</a></span>
 <span IF="target=#searchStat#">&nbsp;::&nbsp;<a href="admin.php?target=searchStat" class="NavigationPath">Search statistics</a></span>
 <span IF="target=#import_users#">&nbsp;::&nbsp;<a href="admin.php?target=import_users" class="NavigationPath">Import users</a></span>
-<span IF="target=#license#">&nbsp;::&nbsp;<a href="admin.php?target=license" class="NavigationPath">License</a></span>
 <span IF="target=#recent_login#">&nbsp;::&nbsp;<a href="admin.php?target=recent_login" class="NavigationPath">Login history</a></span>
 <widget module="AOM" template="modules/AOM/location.tpl">
 <span IF="target=#template_editor#" class="NavigationPath">&nbsp;::&nbsp;<a href="admin.php?target=template_editor" class="NavigationPath">Template editor</a>{if:node}&nbsp;::&nbsp;{node}{end:}{if:file.path}&nbsp;::&nbsp;{file.path}{end:}</span>
@@ -70,7 +69,6 @@
 <widget module="EcommerceReports" template="modules/EcommerceReports/location.tpl">
 <widget module="Newsletters" template="modules/Newsletters/location.tpl">
 <widget module="UPSOnlineTools" template="modules/UPSOnlineTools/location.tpl">
-<widget module="LiveUpdating" template="modules/LiveUpdating/location.tpl">
 <widget module="FlyoutCategories" template="modules/FlyoutCategories/location.tpl">
 <widget module="ProductAdviser" template="modules/ProductAdviser/location.tpl">
 <widget module="LayoutOrganizer" template="modules/LayoutOrganizer/location.tpl">
