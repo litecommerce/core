@@ -51,7 +51,7 @@ class XLite_Module_ePDQ_Model_PaymentMethod_EpdqCc extends XLite_Model_PaymentMe
 
     function handleRequest(&$cart)
     {
-		require_once "modules/ePDQ/encoded.php";
+		require_once LC_MODULES_DIR . 'ePDQ' . LC_DS . 'encoded.php';
         func_PaymentMethod_epdq_cc_handleRequest($this, $cart);
     }
 

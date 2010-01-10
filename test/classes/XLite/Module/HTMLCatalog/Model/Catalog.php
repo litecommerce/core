@@ -691,7 +691,7 @@ class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Model_FlexyCompiler
     function process($url) // {{{
     {
 		if (version_compare($this->config->get("Version.version"), "2.2.35") <= 0) {
-			@include_once("modules/HTMLCatalog/functions.php");
+			@include_once LC_MODULES_DIR . 'HTMLCatalog' . LC_DS . 'functions.php';
 		}
 
 		$current_limit = @ini_get("memory_limit");

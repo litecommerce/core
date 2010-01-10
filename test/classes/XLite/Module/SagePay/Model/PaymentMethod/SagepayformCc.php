@@ -46,7 +46,7 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepayformCc extends XLite_Model
 
     function handleRequest(&$cart)
     {
-        require_once "modules/SagePay/encoded.php";
+        require_once LC_MODULES_DIR . 'SagePay' . LC_DS . 'encoded.php';
         PaymentMethod_SagePayForm_handleRequest($this, $cart);
     }
 
@@ -97,7 +97,7 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepayformCc extends XLite_Model
 
 	function getCryptedInfo($cart)
 	{
-		include_once "modules/SagePay/encoded.php";
+		require_once LC_MODULES_DIR . 'SagePay' . LC_DS . 'encoded.php';
 
 		return func_SagePayForm_compileInfoCrypt($this, $cart);
 	}

@@ -227,7 +227,7 @@ class XLite_Module_UPSOnlineTools_Model_ContainerLevel extends XLite_Base
 
 	function optimizeSubspaces($method)
 	{
-		include_once "modules/UPSOnlineTools/encoded.php";
+		require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
 
 		// optimize: try to combine subspaces
 		UPSOnlineTools_optimize_subspaces($this->subspaces, $method);

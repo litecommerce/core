@@ -52,7 +52,7 @@ class XLite_Module_Egoods_Model_Order extends XLite_Model_Order implements XLite
 
 	function Egoods_processed()
 	{
-		require_once "modules/Egoods/encoded.php";
+		require_once LC_MODULES_DIR . 'Egoods' . LC_DS . 'encoded.php';
 		func_moduleEgoods_send_files($this);
 		func_moduleEgoods_send_pins($this);
 	}

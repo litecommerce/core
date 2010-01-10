@@ -46,7 +46,7 @@ class XLite_Module_GoogleCheckout_Model_ShippingRate extends XLite_Model_Shippin
 
 	function getGoogleCheckoutXML()
 	{
-		include_once "modules/GoogleCheckout/encoded.php";
+		require_once LC_MODULES_DIR . 'GoogleCheckout' . LC_DS . 'encoded.php';
 
 		// Shipping method name
 		$str = $this->get("shipping.name");

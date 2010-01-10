@@ -68,7 +68,7 @@ class XLite_Module_InventoryTracking_Model_Order extends XLite_Model_Order imple
 
     function updateInventory(&$item)
     {
-        require_once "modules/InventoryTracking/encoded.php";
+        require_once LC_MODULES_DIR . 'InventoryTracking' . LC_DS . 'encoded.php';
         $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
 		if ($this->xlite->get("ProductOptionsEnabled") && $item->get("product.productOptions")&& $item->get("product.tracking")) {
             /* KOI8-R comment:
@@ -130,7 +130,7 @@ class XLite_Module_InventoryTracking_Model_Order extends XLite_Model_Order imple
     function changeInventory($status)
     {
 		$inventory_changed = false;
-        require_once "modules/InventoryTracking/encoded.php";
+        require_once LC_MODULES_DIR . 'InventoryTracking' . LC_DS . 'encoded.php';
         // update product(s) inventory        
         foreach ($this->get("items") as $item) {
             $inventory = new XLite_Module_InventoryTracking_Model_Inventory();

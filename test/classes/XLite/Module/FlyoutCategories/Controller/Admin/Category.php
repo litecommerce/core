@@ -53,7 +53,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_Category extends XLite_Cont
 	{
 		parent::init();
 
-		include_once "modules/FlyoutCategories/encoded.php";
+		require_once LC_MODULES_DIR . 'FlyoutCategories' . LC_DS . 'encoded.php';
 		$this->xlite->gdlib_enabled = (FlyoutCategories_gdLibEnabled()) ? 1 : 0;
 	}
 

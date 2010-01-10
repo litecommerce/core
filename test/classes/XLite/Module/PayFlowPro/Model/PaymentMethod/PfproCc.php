@@ -53,7 +53,7 @@ class XLite_Module_PayFlowPro_Model_PaymentMethod_PfproCc extends XLite_Model_Pa
 
     function process(&$cart)
     {
-		require_once "modules/PayFlowPro/encoded.php";
+		require_once LC_MODULES_DIR . 'PayFlowPro' . LC_DS . 'encoded.php';
         return func_PayFlowPro_process($cart, $this);
     }
 	

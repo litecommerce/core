@@ -340,7 +340,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 		} else {
 			$clone = parent::clone();
 		}
-		include_once "modules/AOM/encoded.php";
+		require_once LC_MODULES_DIR . 'AOM' . LC_DS . 'encoded.php';
 		return aom_order_clone($this, $clone);	
 	} //  }}}
 

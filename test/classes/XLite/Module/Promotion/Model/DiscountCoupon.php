@@ -89,7 +89,7 @@ class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_Abstract
 			break;
 
 			case "category":
-        		require_once "modules/Promotion/encoded.php";
+        		require_once LC_MODULES_DIR . 'Promotion' . LC_DS . 'encoded.php';
 
 				$category = $this->get("category");
 				$cart = XLite_Model_Cart::getInstance();

@@ -57,7 +57,7 @@ class XLite_Module_GoogleCheckout_Controller_Admin_PaymentMethod extends XLite_C
     		"Accept" => "application/xml"
     	);  
 
-        require_once "modules/GoogleCheckout/encoded.php";
+        require_once LC_MODULES_DIR . 'GoogleCheckout' . LC_DS . 'encoded.php';
 		$https = GoogleCheckout_getHTTPS_Object();
     	$https->data     = $data;
     	$https->method   = "POST";
@@ -140,7 +140,7 @@ class XLite_Module_GoogleCheckout_Controller_Admin_PaymentMethod extends XLite_C
         	die(CALLBACK_PASSED_MESSAGE);
 		}
 
-        require_once "modules/GoogleCheckout/encoded.php";
+        require_once LC_MODULES_DIR . 'GoogleCheckout' . LC_DS . 'encoded.php';
 		$xml = GoogleCheckout_getXML_Object();
 		$parsed = $xml->parse($this->httpRawPostData);
 

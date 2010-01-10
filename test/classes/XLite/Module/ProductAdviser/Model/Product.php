@@ -51,7 +51,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
 
     function getRelatedProducts()
     {
-        require_once "modules/ProductAdviser/encoded.php";
+        require_once LC_MODULES_DIR . 'ProductAdviser' . LC_DS . 'encoded.php';
 		ProductAdviser_getRelatedProducts($this);
 
         return $this->_RelatedProducts; 
@@ -59,7 +59,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
 
     function getProductsAlsoBuy()
     {
-        require_once "modules/ProductAdviser/encoded.php";
+        require_once LC_MODULES_DIR . 'ProductAdviser' . LC_DS . 'encoded.php';
 		ProductAdviser_getProductsAlsoBuy($this);
 
         return $this->_ProductsAlsoBuy; 
@@ -179,7 +179,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
     {
         parent::update();
 
-        require_once "modules/ProductAdviser/encoded.php";
+        require_once LC_MODULES_DIR . 'ProductAdviser' . LC_DS . 'encoded.php';
 		ProductAdviser_updateProduct($this);
     }
 

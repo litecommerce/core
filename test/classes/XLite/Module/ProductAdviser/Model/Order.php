@@ -72,7 +72,7 @@ class XLite_Module_ProductAdviser_Model_Order extends XLite_Model_Order implemen
 			return;
 		}
 
-        require_once "modules/ProductAdviser/encoded.php";
+        require_once LC_MODULES_DIR . 'ProductAdviser' . LC_DS . 'encoded.php';
 		ProductAdviser_checkedOut($products);
 	}
 
@@ -81,7 +81,7 @@ class XLite_Module_ProductAdviser_Model_Order extends XLite_Model_Order implemen
     	$requiredAmount = $item->get("amount");
     	parent::updateInventory($item);
 
-        require_once "modules/ProductAdviser/encoded.php";
+        require_once LC_MODULES_DIR . 'ProductAdviser' . LC_DS . 'encoded.php';
 		ProductAdviser_updateInventory($this, $item);
     }
 }

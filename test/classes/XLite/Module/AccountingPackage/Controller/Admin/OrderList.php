@@ -99,7 +99,7 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
 
     function action_export_qb() // {{{
     {
-        require_once "modules/AccountingPackage/encoded.php";
+        require_once LC_MODULES_DIR . 'AccountingPackage' . LC_DS . 'encoded.php';
         AccountingPackage_export_qb($this);
     } // }}}
     
@@ -170,7 +170,7 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
     {
 		$price_format = $this->config->get("General.price_format");
         $this->config->set("General.price_format","%s");
-        require_once "modules/AccountingPackage/encoded.php";
+        require_once LC_MODULES_DIR . 'AccountingPackage' . LC_DS . 'encoded.php';
         AccountingPackage_export($this, $format);
 		$this->config->set("General.price_format",$price_format);
     } // }}}

@@ -45,14 +45,14 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_PaypalproExpress extends Paymen
 	
 	function handleRequest(&$order) // {{{
 	{
-		require_once "modules/PayPalPro/encoded.php";
+		require_once LC_MODULES_DIR . 'PayPalPro' . LC_DS . 'encoded.php';
 		return paypalExpressHandleRequest($this,$order);	
 	} // }}}
 	
 	function sendExpressCheckoutRequest(&$order) // {{{
 	{
 		$pm = XLite_Model_PaymentMethod::factory('paypalpro');
-		require_once "modules/PayPalPro/encoded.php";
+		require_once LC_MODULES_DIR . 'PayPalPro' . LC_DS . 'encoded.php';
 		$response = PayPalPro_sendRequest($pm->get("params.pro"),$this->setExpressCheckoutRequest($order,$pm->get("params.pro")));
 		$xml = new XLite_Model_XML();
         $response = $xml->parse($response);
@@ -99,7 +99,7 @@ EOT;
 	function sendExpressCheckoutDetailsRequest(&$token) // {{{ 
 	{
 		$pm = XLite_Model_PaymentMethod::factory('paypalpro');
-		require_once "modules/PayPalPro/encoded.php";
+		require_once LC_MODULES_DIR . 'PayPalPro' . LC_DS . 'encoded.php';
 		$response = PayPalPro_sendRequest($pm->get("params.pro"),$this->getExpressCheckoutRequest($pm->get("params.pro"), $token));
 		$xml = new XLite_Model_XML();
 	    $response = $xml->parse($response);

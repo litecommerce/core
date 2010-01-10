@@ -76,7 +76,7 @@ class XLite_Module_eSelect_Controller_Customer_Eselect extends XLite_Controller_
 			$order = $this->get("order");
 			$payment = XLite_Model_PaymentMethod::factory('eselect_cc');
 
-			include_once "modules/eSelect/encoded.php";
+			require_once LC_MODULES_DIR . 'eSelect' . LC_DS . 'encoded.php';
 			func_eSelect_action_return($this, $order, $payment);
 		}
 

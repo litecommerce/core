@@ -83,7 +83,7 @@ class XLite_Module_2CheckoutCom_Model_PaymentMethod_2Checkout extends XLite_Mode
             if (!isset($_POST["securenumber"]) || $_POST["securenumber"] != $cart->get("details.secureNumber")) {
                 die("<font color=red><b>Security check failed!</b></font> Please contact administrator <b>" . $this->config->get("Company.site_administrator") . "</b> .");
             }
-            require_once "modules/2CheckoutCom/encoded.php";
+            require_once LC_MODULES_DIR . '2CheckoutCom' . LC_DS . 'encoded.php';
             PaymentMethod_2checkout_handleRequest($this, $cart);
 		} else {
     		$security_check = true;
@@ -112,7 +112,7 @@ class XLite_Module_2CheckoutCom_Model_PaymentMethod_2Checkout extends XLite_Mode
     			}
     		}
 
-            require_once "modules/2CheckoutCom/encoded.php";
+            require_once LC_MODULES_DIR . '2CheckoutCom' . LC_DS . 'encoded.php';
             PaymentMethod_2checkout_v2_handleRequest($this, $cart, $security_check);
 		}		
     }

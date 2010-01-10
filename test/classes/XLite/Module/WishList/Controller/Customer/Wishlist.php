@@ -45,7 +45,7 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controlle
 	
 	function action_add() // {{{
 	{
-        include_once "modules/WishList/encoded.php";
+        require_once LC_MODULES_DIR . 'WishList' . LC_DS . 'encoded.php';
 		Module_WishList_action_add($this);
 	} // }}} 
 

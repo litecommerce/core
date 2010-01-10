@@ -52,7 +52,7 @@ class XLite_Module_ChronoPay_Model_PaymentMethod_Chronopay extends XLite_Model_P
 
     function handleRequest(&$cart)
     {
-		require_once "modules/ChronoPay/encoded.php";
+		require_once LC_MODULES_DIR . 'ChronoPay' . LC_DS . 'encoded.php';
 		PaymentMethod_chronopay_handleRequest($this, $cart);
 	}
 

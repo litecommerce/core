@@ -93,7 +93,7 @@ class XLite_Module_Newsletters_Controller_Customer_News extends XLite_Controller
 			$this->redirect("cart.php");
 			return;
 		}
-        require_once "modules/Newsletters/encoded.php";
+        require_once LC_MODULES_DIR . 'Newsletters' . LC_DS . 'encoded.php';
         // confirm subscription
         $confirmed = func_newsletters_check_code($this->get("email"), $this->get("code"));
 
@@ -151,7 +151,7 @@ class XLite_Module_Newsletters_Controller_Customer_News extends XLite_Controller
             return;
         }
         // send subscribe confirmation
-        require_once "modules/Newsletters/encoded.php";
+        require_once LC_MODULES_DIR . 'Newsletters' . LC_DS . 'encoded.php';
 
         $ns = new XLite_Module_Newsletters_Model_NewsSubscriber();
         $ns->request($this->get("email"));

@@ -63,7 +63,7 @@ class XLite_Module_Newsletters_Model_NewsSubscriber extends XLite_Model_Abstract
     
     function subscribe($email, $list_id, $verbose = true)
     {
-        require_once "modules/Newsletters/encoded.php";
+        require_once LC_MODULES_DIR . 'Newsletters' . LC_DS . 'encoded.php';
         if ($this->find("list_id=$list_id AND email='".addslashes(strtolower($email))."'")) {
             return SUBSCRIBER_EXISTS;
         }

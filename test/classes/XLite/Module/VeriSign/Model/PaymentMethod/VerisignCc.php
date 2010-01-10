@@ -54,7 +54,7 @@ class XLite_Module_VeriSign_Model_PaymentMethod_VerisignCc extends XLite_Model_P
 
     function process(&$cart)
     {
-		require_once "modules/VeriSign/encoded.php";
+		require_once LC_MODULES_DIR . 'VeriSign' . LC_DS . 'encoded.php';
         return func_Verisign_process($cart, $this);
     }
 	

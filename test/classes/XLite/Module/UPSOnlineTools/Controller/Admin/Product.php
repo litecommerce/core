@@ -53,7 +53,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Product extends XLite_Control
 
 	function handleRequest()
 	{
-		include_once "modules/UPSOnlineTools/encoded.php";
+		require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
 
 		$product = $this->get("product");
 
@@ -77,7 +77,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Product extends XLite_Control
 			}
 
 			// overweight check
-			include_once "modules/UPSOnlineTools/encoded.php";
+			require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
 			$weight = UPSOnlineTools_convertWeight($product->get("weight"), $this->config->get("General.weight_unit"), "lbs", 2);
 
 			if ($packaging["weight_limit"] > 0 && $weight > $packaging["weight_limit"]) {
@@ -97,7 +97,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Product extends XLite_Control
 
 	function action_settings_update()
 	{
-		include_once "modules/UPSOnlineTools/encoded.php";
+		require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
 
 		$properties = array();
 

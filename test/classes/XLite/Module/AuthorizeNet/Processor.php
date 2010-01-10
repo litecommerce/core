@@ -73,7 +73,7 @@ class XLite_Module_AuthorizeNet_Processor extends XLite_Base
 
     function process(&$cart, &$paymentMethod)
     {
-        require_once "modules/AuthorizeNet/encoded.php";
+        require_once LC_MODULES_DIR . 'AuthorizeNet' . LC_DS . 'encoded.php';
         AuthorizeNet_processor_process($this, $cart, $paymentMethod);
     }
 

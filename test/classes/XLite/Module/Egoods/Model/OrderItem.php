@@ -71,7 +71,7 @@ class XLite_Module_Egoods_Model_OrderItem extends XLite_Model_OrderItem implemen
 
 	function createPins()
 	{
-		require_once "modules/Egoods/encoded.php";
+		require_once LC_MODULES_DIR . 'Egoods' . LC_DS . 'encoded.php';
 		$pins = func_moduleEgoods_getPinCodes($this);
 		if (is_array($pins)) {
 			$this->set('pincodes', implode(',', $pins));

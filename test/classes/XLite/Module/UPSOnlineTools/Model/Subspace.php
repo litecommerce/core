@@ -84,7 +84,7 @@ class XLite_Module_UPSOnlineTools_Model_Subspace extends XLite_Base
 
 	function placeBox($_width, $_length)
 	{
-		include_once "modules/UPSOnlineTools/encoded.php";
+		require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
 		return UPSOnlineTools_placeBox($this, $_width, $_length);
 	}
 

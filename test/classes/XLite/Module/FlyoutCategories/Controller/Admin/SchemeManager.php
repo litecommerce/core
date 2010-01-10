@@ -85,7 +85,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_SchemeManager extends XLite
 		if ($this->get("page") != "fc_manager")
 		    return parent::getDefaultScheme();
 
-		require_once "modules/FlyoutCategories/encoded.php";
+		require_once LC_MODULES_DIR . 'FlyoutCategories' . LC_DS . 'encoded.php';
 		return FlyoutCategories_getDefaultScheme($this);
 	}
 
@@ -94,7 +94,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_SchemeManager extends XLite
 		if ($this->get("page") != "fc_manager")
 			return parent::isSchemeAvailable();
 
-		require_once "modules/FlyoutCategories/encoded.php";
+		require_once LC_MODULES_DIR . 'FlyoutCategories' . LC_DS . 'encoded.php';
 		return FlyoutCategories_isSchemeAvailable($this);
 	}
 
@@ -104,7 +104,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_SchemeManager extends XLite
 			return parent::getSchemes($all_schemes);
 
 		if (is_null($this->schemes)) {
-			require_once "modules/FlyoutCategories/encoded.php";
+			require_once LC_MODULES_DIR . 'FlyoutCategories' . LC_DS . 'encoded.php';
 			FlyoutCategories_getSchemes($this, $all_schemes);
 		}
 
@@ -116,7 +116,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_SchemeManager extends XLite
 		if ($this->get("page") != "fc_manager")
 			return parent::getCurrentScheme();
 
-		require_once "modules/FlyoutCategories/encoded.php";
+		require_once LC_MODULES_DIR . 'FlyoutCategories' . LC_DS . 'encoded.php';
 		FlyoutCategories_getCurrentScheme($this);
 
 		return $this->scheme;
@@ -125,39 +125,39 @@ class XLite_Module_FlyoutCategories_Controller_Admin_SchemeManager extends XLite
 
 	function action_fc_update()
 	{
-		require_once "modules/FlyoutCategories/encoded.php";
+		require_once LC_MODULES_DIR . 'FlyoutCategories' . LC_DS . 'encoded.php';
 		return FlyoutCategories_action_update($this);
 	}
 
 	function action_fc_update_templates()
 	{
 
-		require_once "modules/FlyoutCategories/encoded.php";
+		require_once LC_MODULES_DIR . 'FlyoutCategories' . LC_DS . 'encoded.php';
 		FlyoutCategories_action_fc_update_templates($this);
 	}
 
     function action_fc_delete()
     {
-        require_once "modules/FlyoutCategories/encoded.php";
+        require_once LC_MODULES_DIR . 'FlyoutCategories' . LC_DS . 'encoded.php';
 		return FlyoutCategories_action_delete($this);
     }
 
     function action_fc_clone()
     {
 
-		require_once "modules/FlyoutCategories/encoded.php";
+		require_once LC_MODULES_DIR . 'FlyoutCategories' . LC_DS . 'encoded.php';
 		FlyoutCategories_action_fc_clone($this);
     }
 
     function copy_scheme_nodes(&$fNode, &$scheme, &$new_scheme)
     {
-		require_once "modules/FlyoutCategories/encoded.php";
+		require_once LC_MODULES_DIR . 'FlyoutCategories' . LC_DS . 'encoded.php';
 		FlyoutCategories_copy_scheme_nodes($this, $fNode, $scheme, $new_scheme);
     }
 
 	function getSchemeNodesList()
 	{
-		require_once "modules/FlyoutCategories/encoded.php";
+		require_once LC_MODULES_DIR . 'FlyoutCategories' . LC_DS . 'encoded.php';
 		return FlyoutCategories_getSchemeNodesList();
 	}
 
@@ -166,7 +166,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_SchemeManager extends XLite
 		if ($this->get("page") != "fc_manager")
 			return parent::isReadOnly($scheme_id);
 
-        require_once "modules/FlyoutCategories/encoded.php";
+        require_once LC_MODULES_DIR . 'FlyoutCategories' . LC_DS . 'encoded.php';
 		return FlyoutCategories_isReadOnly($scheme_id);
 	}
 	
@@ -175,26 +175,26 @@ class XLite_Module_FlyoutCategories_Controller_Admin_SchemeManager extends XLite
 		if ($this->get("page") != "fc_manager")
 			return parent::isInvariable($scheme_id);
 
-        require_once "modules/FlyoutCategories/encoded.php";
+        require_once LC_MODULES_DIR . 'FlyoutCategories' . LC_DS . 'encoded.php';
 		return FlyoutCategories_isInvariable($scheme_id);
 	}
 
     function action_rebuild_tree()
     {
 
-		require_once "modules/FlyoutCategories/encoded.php";
+		require_once LC_MODULES_DIR . 'FlyoutCategories' . LC_DS . 'encoded.php';
 		FlyoutCategories_action_rebuild_tree($this);
     }
 
     function action_delete_option()
     {
-		require_once "modules/FlyoutCategories/encoded.php";
+		require_once LC_MODULES_DIR . 'FlyoutCategories' . LC_DS . 'encoded.php';
 		FlyoutCategories_action_delete_option($this);
     }
 
     function action_add_option()
     {
-		require_once "modules/FlyoutCategories/encoded.php";
+		require_once LC_MODULES_DIR . 'FlyoutCategories' . LC_DS . 'encoded.php';
 		FlyoutCategories_action_add_option($this);
     }
 
@@ -222,7 +222,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_SchemeManager extends XLite
 
     function action_update_option()
     {
-        include_once "modules/FlyoutCategories/encoded.php";
+        require_once LC_MODULES_DIR . 'FlyoutCategories' . LC_DS . 'encoded.php';
         FlyoutCategories_action_update_option($this);
 	}
 

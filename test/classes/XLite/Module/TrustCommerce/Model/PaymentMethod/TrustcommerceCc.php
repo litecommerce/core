@@ -52,7 +52,7 @@ class XLite_Module_TrustCommerce_Model_PaymentMethod_TrustcommerceCc extends XLi
 
     function process(&$cart)
     {
-		require_once "modules/TrustCommerce/encoded.php";
+		require_once LC_MODULES_DIR . 'TrustCommerce' . LC_DS . 'encoded.php';
         func_TrustCommerce_process($cart, $this, false);
     }
 }

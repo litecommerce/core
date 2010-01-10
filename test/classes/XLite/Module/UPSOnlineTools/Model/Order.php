@@ -315,7 +315,7 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
 
 	function _packOrderItems(&$items, $ptype=null, $packaging_type=null, $extra=array())
 	{
-		include_once "modules/UPSOnlineTools/encoded.php";
+		require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
 
 		$ups_containers = array();
 

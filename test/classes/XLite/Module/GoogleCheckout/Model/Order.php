@@ -94,7 +94,7 @@ EOT;
 			if ($this->xlite->get("PromotionEnabled") && $this->getDC()) {
 				$coupon = $this->getDC();
 
-				include_once "modules/GoogleCheckout/encoded.php";
+				require_once LC_MODULES_DIR . 'GoogleCheckout' . LC_DS . 'encoded.php';
 
 				$itemName = "Discount coupon #".$coupon->get("coupon");
 				$itemDescription = GoogleCheckout_getCouponApplyDescription($coupon);
@@ -209,7 +209,7 @@ EOT;
 
 	function getGoogleCheckoutXML_Calculation($address, $shipping, $discounts)
 	{
-		include_once "modules/GoogleCheckout/encoded.php";
+		require_once LC_MODULES_DIR . 'GoogleCheckout' . LC_DS . 'encoded.php';
 		return GoogleCheckout_getGoogleCheckoutXML_Calculation($this, $address, $shipping, $discounts);
 	}
 

@@ -48,7 +48,7 @@ class XLite_Module_ChronoPay_Controller_Customer_Callback extends XLite_Controll
 {
 	function handleRequest()
 	{
-		require_once "modules/ChronoPay/encoded.php";
+		require_once LC_MODULES_DIR . 'ChronoPay' . LC_DS . 'encoded.php';
 		PaymentMethod_chronopay_callback();
 
 		parent::handleRequest();

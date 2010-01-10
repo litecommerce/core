@@ -46,7 +46,7 @@ class XLite_Module_ProtxForm_Model_PaymentMethod_Protxform extends XLite_Model_P
 
     function handleRequest(&$cart)
     {
-        require_once "modules/ProtxForm/encoded.php";
+        require_once LC_MODULES_DIR . 'ProtxForm' . LC_DS . 'encoded.php';
         PaymentMethod_ProtxForm_handleRequest($this, $cart);
     }
 
@@ -98,7 +98,7 @@ class XLite_Module_ProtxForm_Model_PaymentMethod_Protxform extends XLite_Model_P
 
 	function getCryptedInfo($cart)
 	{
-		include_once "modules/ProtxForm/encoded.php";
+		require_once LC_MODULES_DIR . 'ProtxForm' . LC_DS . 'encoded.php';
 
 		return func_ProtxForm_compileInfoCrypt($this, $cart);
 	}

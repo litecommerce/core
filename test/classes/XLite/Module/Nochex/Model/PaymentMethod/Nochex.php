@@ -46,7 +46,7 @@ class XLite_Module_Nochex_Model_PaymentMethod_Nochex extends XLite_Model_Payment
 	
 	function handleRequest($order)
 	{
-		include_once "modules/Nochex/encoded.php";
+		require_once LC_MODULES_DIR . 'Nochex' . LC_DS . 'encoded.php';
 		PaymentMethod_nochex_handleRequest($order,$this);
 	}
 	

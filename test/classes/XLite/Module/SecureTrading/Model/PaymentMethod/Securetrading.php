@@ -53,7 +53,7 @@ class XLite_Module_SecureTrading_Model_PaymentMethod_Securetrading extends XLite
 	var $formTemplate = "modules/SecureTrading/checkout.tpl";
 
 	function handleRequest(&$order) { 
-		require_once "modules/SecureTrading/encoded.php";
+		require_once LC_MODULES_DIR . 'SecureTrading' . LC_DS . 'encoded.php';
 		PaymentMethod_securetrading_handleRequest($this, $order, true);
 	}
 	function getTotalCost(&$cart)	{

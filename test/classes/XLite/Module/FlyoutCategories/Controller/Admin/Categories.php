@@ -714,19 +714,19 @@ function opera_click() {
 
     function processTreeItem(&$item)
     {
-		include_once "modules/FlyoutCategories/encoded.php";
+		require_once LC_MODULES_DIR . 'FlyoutCategories' . LC_DS . 'encoded.php';
 		FlyoutCategories_processTreeItem($this, $item);
     }
 
 	function buildTree(&$parent)
 	{
-		include_once "modules/FlyoutCategories/encoded.php";
+		require_once LC_MODULES_DIR . 'FlyoutCategories' . LC_DS . 'encoded.php';
 		return FlyoutCategories_buildTree($this, $parent);
 	}
 
 	function isFCatGDlibEnabled()
 	{
-		include_once "modules/FlyoutCategories/encoded.php";
+		require_once LC_MODULES_DIR . 'FlyoutCategories' . LC_DS . 'encoded.php';
 		return FlyoutCategories_gdLibEnabled();
 	}
 

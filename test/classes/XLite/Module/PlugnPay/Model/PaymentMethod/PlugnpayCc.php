@@ -52,7 +52,7 @@ class XLite_Module_PlugnPay_Model_PaymentMethod_PlugnpayCc extends XLite_Model_P
 	
     function process(&$cart)
     {
-		require_once "modules/PlugnPay/encoded.php";
+		require_once LC_MODULES_DIR . 'PlugnPay' . LC_DS . 'encoded.php';
         return func_PlugnPay_process($cart, $this);
     }
 }

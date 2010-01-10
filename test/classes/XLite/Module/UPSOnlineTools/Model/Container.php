@@ -72,19 +72,19 @@ class XLite_Module_UPSOnlineTools_Model_Container extends XLite_Base
 		$this->getWeightLimit(0);
 		$this->setOptimizeMethod(OPTIMIZE_ALL);
 
-		include_once "modules/UPSOnlineTools/encoded.php";
+		require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
 	}
 
 
 	function progressive_solve(&$items)
 	{
-		include_once "modules/UPSOnlineTools/encoded.php";
+		require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
 		return UPSOnlineTools_progressive_solve($this, $items);
 	}
 
 	function progressive_placeItem(&$level, &$items, $item_weight_limit)
 	{
-		include_once "modules/UPSOnlineTools/encoded.php";
+		require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
 		return UPSOnlineTools_progressive_placeItem($this, $level, $items, $item_weight_limit);
 	}
 
@@ -152,7 +152,7 @@ class XLite_Module_UPSOnlineTools_Model_Container extends XLite_Base
 
 	function getNextLevel($use_overlaped=true)
 	{
-		include_once "modules/UPSOnlineTools/encoded.php";
+		require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
 		return UPSOnlineTools_getNextLevel($this, $use_overlaped);
 	}
 

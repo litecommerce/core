@@ -80,7 +80,7 @@ class XLite_Module_Protx_Controller_Customer_Protxdirect extends XLite_Controlle
 			$order = $this->get("order");
             $payment = XLite_Model_PaymentMethod::factory('protxdirect_cc');
 
-			include_once "modules/Protx/encoded.php";
+			require_once LC_MODULES_DIR . 'Protx' . LC_DS . 'encoded.php';
 			func_ProtxDirect_action_return($this, $order, $payment);
 		}
 

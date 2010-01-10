@@ -50,7 +50,7 @@ class XLite_Module_Newsletters_Controller_Admin_NewsSubscribers extends XLite_Co
     function init()
     {
         parent::init();
-        require_once "modules/Newsletters/encoded.php";
+        require_once LC_MODULES_DIR . 'Newsletters' . LC_DS . 'encoded.php';
     }
     
     function getList()

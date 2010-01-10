@@ -62,7 +62,7 @@ class XLite_Module_SagePay_Controller_Customer_Sagepayform extends XLite_Control
 
 	function action_return()
 	{
-		require_once "modules/SagePay/encoded.php";
+		require_once LC_MODULES_DIR . 'SagePay' . LC_DS . 'encoded.php';
 
 		$paymentMethod = XLite_Model_PaymentMethod::factory('sagepayform_cc');
 		$result = func_SagePayForm_action_return($this, $paymentMethod);

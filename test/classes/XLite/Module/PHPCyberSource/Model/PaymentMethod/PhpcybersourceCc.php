@@ -62,7 +62,7 @@ class XLite_Module_PHPCyberSource_Model_PaymentMethod_PhpcybersourceCc extends X
 
 	function process(&$cart) // {{{ 
 	{
-		include_once "modules/PHPCyberSource/encoded.php";
+		require_once LC_MODULES_DIR . 'PHPCyberSource' . LC_DS . 'encoded.php';
 		return PaymentMethod_cybersource_process($this, $cart);
 	} // }}}
 

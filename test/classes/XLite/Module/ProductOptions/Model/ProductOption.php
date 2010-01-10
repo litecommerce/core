@@ -94,7 +94,7 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
 
     function getProductOptions() // {{{
     {
-        require_once "modules/ProductOptions/encoded.php";
+        require_once LC_MODULES_DIR . 'ProductOptions' . LC_DS . 'encoded.php';
         if (is_null($this->productOptions)) {
             $this->productOptions = func_get_product_options($this);
         }    

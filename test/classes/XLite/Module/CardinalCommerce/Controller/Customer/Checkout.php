@@ -48,7 +48,7 @@ class XLite_Module_CardinalCommerce_Controller_Customer_Checkout extends XLite_C
 {
     function isSupportedByCardinalCommerce($pm=null)
     {
-        require_once "modules/CardinalCommerce/encoded.php";
+        require_once LC_MODULES_DIR . 'CardinalCommerce' . LC_DS . 'encoded.php';
         return CardinalCommerce_isSupported($this, $pm);
     }
 
@@ -143,7 +143,7 @@ document.frm_redirect.submit();
 	
 	function action_checkout_cmpi()
     {
-        require_once "modules/CardinalCommerce/encoded.php";
+        require_once LC_MODULES_DIR . 'CardinalCommerce' . LC_DS . 'encoded.php';
         CardinalCommerce_checkout_cmpi($this);
     }
 
@@ -288,7 +288,7 @@ document.frm.submit();
 	}
 }
 
-require_once "modules/CardinalCommerce/encoded.php";
+require_once LC_MODULES_DIR . 'CardinalCommerce' . LC_DS . 'encoded.php';
 
 // WARNING :
 // Please ensure that you have no whitespaces / empty lines below this message.

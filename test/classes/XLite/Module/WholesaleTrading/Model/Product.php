@@ -130,7 +130,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 			return $found_options;
 		}	
 
-		require_once "modules/WholesaleTrading/encoded.php";
+		require_once LC_MODULES_DIR . 'WholesaleTrading' . LC_DS . 'encoded.php';
 		func_wholesaleTrading_selections($dst, $found_options);
 		
 		// remove options marked as exceptions {{{ 

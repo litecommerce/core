@@ -63,7 +63,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_Module extends XLite_Contro
             return $this->schemes;
         }
 
-		require_once "modules/FlyoutCategories/encoded.php";
+		require_once LC_MODULES_DIR . 'FlyoutCategories' . LC_DS . 'encoded.php';
 		$sm = FlyoutCategories_getSchemeManagerDialog($this);
 
         $sm->initLayout();

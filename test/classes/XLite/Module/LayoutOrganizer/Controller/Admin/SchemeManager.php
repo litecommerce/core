@@ -173,7 +173,7 @@ class XLite_Module_LayoutOrganizer_Controller_Admin_SchemeManager extends XLite_
 
     function action_delete()
     {
-        require_once "modules/LayoutOrganizer/encoded.php";
+        require_once LC_MODULES_DIR . 'LayoutOrganizer' . LC_DS . 'encoded.php';
 		return LayoutOrganizer_action_delete($this);
     }
 
@@ -241,7 +241,7 @@ class XLite_Module_LayoutOrganizer_Controller_Admin_SchemeManager extends XLite_
 
     function action_update()
     {
-        require_once "modules/LayoutOrganizer/encoded.php";
+        require_once LC_MODULES_DIR . 'LayoutOrganizer' . LC_DS . 'encoded.php';
 		return LayoutOrganizer_action_update($this);
 	}
 
@@ -290,13 +290,13 @@ class XLite_Module_LayoutOrganizer_Controller_Admin_SchemeManager extends XLite_
 	
 	function isReadOnly($scheme_id)
 	{
-        require_once "modules/LayoutOrganizer/encoded.php";
+        require_once LC_MODULES_DIR . 'LayoutOrganizer' . LC_DS . 'encoded.php';
 		return LayoutOrganizer_isReadOnly($scheme_id);
 	}
 	
 	function isInvariable($scheme_id)
 	{
-        require_once "modules/LayoutOrganizer/encoded.php";
+        require_once LC_MODULES_DIR . 'LayoutOrganizer' . LC_DS . 'encoded.php';
 		return LayoutOrganizer_isInvariable($scheme_id);
 	}
 }

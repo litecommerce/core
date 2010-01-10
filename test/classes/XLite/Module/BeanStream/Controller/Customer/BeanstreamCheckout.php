@@ -77,7 +77,7 @@ class XLite_Module_BeanStream_Controller_Customer_BeanstreamCheckout extends XLi
 			$order = $this->get("order");
 			$payment = XLite_Model_PaymentMethod::factory('beanstream_cc');
 
-			include_once "modules/BeanStream/encoded.php";
+			require_once LC_MODULES_DIR . 'BeanStream' . LC_DS . 'encoded.php';
 			func_BeanStream_action_return($this, $order, $payment);
 		}
 

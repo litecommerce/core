@@ -76,7 +76,7 @@ class XLite_Module_FlyoutCategories_Model_Category extends XLite_Model_Category 
 
 	function resizeSmallImage($_width, $src_image=null, $filesystem=null)
 	{
-		include_once "modules/FlyoutCategories/encoded.php";
+		require_once LC_MODULES_DIR . 'FlyoutCategories' . LC_DS . 'encoded.php';
 		if (!FlyoutCategories_gdLibEnabled()) {
 			$this->_err_code = "wrong_gd_lib";
 			return false;

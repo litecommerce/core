@@ -46,7 +46,7 @@
 * @version $Id$
 */
 
-include_once "modules/UPSOnlineTools/encoded.php";
+require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
 
 class XLite_Module_UPSOnlineTools_Model_PackItem extends XLite_Base
 {

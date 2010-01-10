@@ -57,7 +57,7 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Product extends XLite_Contr
 
 	function action_update_access()
 	{
-		require_once "modules/WholesaleTrading/encoded.php";
+		require_once LC_MODULES_DIR . 'WholesaleTrading' . LC_DS . 'encoded.php';
 		
 		$pa = new XLite_Module_WholesaleTrading_Model_ProductAccess();
 		$found = false;

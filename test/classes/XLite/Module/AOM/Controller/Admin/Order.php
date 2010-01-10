@@ -121,13 +121,13 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 	
 	function getCloneOrder() // {{{ 
 	{
-		include_once "modules/AOM/encoded.php";
+		require_once LC_MODULES_DIR . 'AOM' . LC_DS . 'encoded.php';
 		return aom_get_clone_order($this);
 	} // }}}	
 
 	function getProfile() // {{{
 	{
-		include_once "modules/AOM/encoded.php";
+		require_once LC_MODULES_DIR . 'AOM' . LC_DS . 'encoded.php';
 		return aom_get_profile($this);
 	} // }}}
 	
@@ -680,7 +680,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 
 	function action_split_order() // {{{ 
 	{
-		include_once "modules/AOM/encoded.php";
+		require_once LC_MODULES_DIR . 'AOM' . LC_DS . 'encoded.php';
 		return aom_split_order($this);
 	} // }}}		
  

@@ -65,7 +65,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
 
     function action_update() 
     {
-		include_once "modules/UPSOnlineTools/encoded.php";
+		require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
 
         $settings = $this->get('settings');
 
@@ -116,7 +116,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
 
     function action_test() 
     {
-		include_once "modules/UPSOnlineTools/encoded.php";
+		require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
         $this->ups = new XLite_Module_UPS_Model_Shipping_Ups();
 
 		$ptype = $this->xlite->get("config.UPSOnlineTools.packing_algorithm");
@@ -176,7 +176,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
     
 	function isGDlibEnabled()
 	{
-		include_once "modules/UPSOnlineTools/encoded.php";
+		require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
 		return UPSOnlineTools_gdlib_valid();
 	}
 

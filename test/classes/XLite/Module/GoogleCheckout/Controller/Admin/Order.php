@@ -95,7 +95,7 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
 
 		if ($this->get("action")) {
 			$this->payment_method = new XLite_Model_PaymentMethod("google_checkout");
-			include_once "modules/GoogleCheckout/encoded.php";
+			require_once LC_MODULES_DIR . 'GoogleCheckout' . LC_DS . 'encoded.php';
 		}
 
 		$this->googleId = addslashes($this->get("orderGoogleId"));

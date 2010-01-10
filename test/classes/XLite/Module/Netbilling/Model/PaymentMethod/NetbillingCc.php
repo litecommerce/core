@@ -54,7 +54,7 @@ class XLite_Module_Netbilling_Model_PaymentMethod_NetbillingCc extends XLite_Mod
     
     function process(&$cart)
     {
-		require_once "modules/Netbilling/encoded.php";
+		require_once LC_MODULES_DIR . 'Netbilling' . LC_DS . 'encoded.php';
         return func_Netbilling_processor_process($cart, $this);
     }
 

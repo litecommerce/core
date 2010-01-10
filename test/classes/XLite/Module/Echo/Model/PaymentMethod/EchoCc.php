@@ -54,7 +54,7 @@ class XLite_Module_Echo_Model_PaymentMethod_EchoCc extends XLite_Model_PaymentMe
     
     function process(&$cart)
     {
-		require_once "modules/Echo/encoded.php";
+		require_once LC_MODULES_DIR . 'Echo' . LC_DS . 'encoded.php';
         return func_Echo_processor_process($cart, $this);
     }
 

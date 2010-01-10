@@ -61,7 +61,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
 
 	function calcGlobalDiscount($subtotal)
 	{
-		require_once "modules/WholesaleTrading/encoded.php";
+		require_once LC_MODULES_DIR . 'WholesaleTrading' . LC_DS . 'encoded.php';
 		$global_discount = func_wholesaleTrading_calc_global_discount($this, $subtotal);
 		$global_discount = min(abs($subtotal), abs($global_discount));
 		return $global_discount;
@@ -181,7 +181,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
 	{
 		if (is_null($this->_applied_global_discount)) {
 			$subtotal = parent::calcSubTotal();
-			require_once "modules/WholesaleTrading/encoded.php";
+			require_once LC_MODULES_DIR . 'WholesaleTrading' . LC_DS . 'encoded.php';
 			func_wholesaleTrading_calc_global_discount($this, $subtotal);
 			if (is_null($this->_applied_global_discount)) $this->_applied_global_discount = new XLite_Module_WholesaleTrading_Model_GlobalDiscount();
 		}
@@ -222,7 +222,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
 		foreach ($items as $item) {
 			if ($item->is('product.sellingMembership')) {
 				$profile = $this->get('origProfile');
-				require_once "modules/WholesaleTrading/encoded.php";
+				require_once LC_MODULES_DIR . 'WholesaleTrading' . LC_DS . 'encoded.php';
 				func_wholesaleTrading_set_membership($this, $profile, $item->get('product'));
 				$profile->update();
 				break;

@@ -202,27 +202,27 @@ class XLite_Module_GoogleCheckout_Model_PaymentMethod_GoogleCheckout extends XLi
 			break;
 
 			case "NEW-ORDER-NOTIFICATION":
-				include_once "modules/GoogleCheckout/encoded.php";
+				require_once LC_MODULES_DIR . 'GoogleCheckout' . LC_DS . 'encoded.php';
 				GoogleCheckout_new_order_notification($this, $xmlData);
 			break;
 
 			case "RISK-INFORMATION-NOTIFICATION":
-				include_once "modules/GoogleCheckout/encoded.php";
+				require_once LC_MODULES_DIR . 'GoogleCheckout' . LC_DS . 'encoded.php';
 				GoogleCheckout_risk_information_notification($this, $xmlData);
 			break;
 
 			case "ORDER-STATE-CHANGE-NOTIFICATION":
-				include_once "modules/GoogleCheckout/encoded.php";
+				require_once LC_MODULES_DIR . 'GoogleCheckout' . LC_DS . 'encoded.php';
 				GoogleCheckout_order_state_change_notification($this, $xmlData);
 			break;
 
 			case "CHARGE-AMOUNT-NOTIFICATION":
-				include_once "modules/GoogleCheckout/encoded.php";
+				require_once LC_MODULES_DIR . 'GoogleCheckout' . LC_DS . 'encoded.php';
 				GoogleCheckout_order_charge_amount_notification($this, $xmlData);
 			break;
 
 			case "REFUND-AMOUNT-NOTIFICATION":
-				include_once "modules/GoogleCheckout/encoded.php";
+				require_once LC_MODULES_DIR . 'GoogleCheckout' . LC_DS . 'encoded.php';
 				GoogleCheckout_order_refund_amount_notification($this, $xmlData);
 			break;
 
@@ -297,7 +297,7 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
 
 	function sendGoogleCheckoutRequest(&$order)
 	{
-		require_once "modules/GoogleCheckout/encoded.php";
+		require_once LC_MODULES_DIR . 'GoogleCheckout' . LC_DS . 'encoded.php';
 		return GoogleCheckout_sendGoogleCheckoutRequest($this, $order);
 	}
 

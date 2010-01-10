@@ -140,13 +140,13 @@ class XLite_Module_LayoutOrganizer_Model_Category extends XLite_Model_Category i
 
 	function updateChildrenTemplates($only_categories = false)
 	{
-        require_once "modules/LayoutOrganizer/encoded.php";
+        require_once LC_MODULES_DIR . 'LayoutOrganizer' . LC_DS . 'encoded.php';
 		LayoutOrganizer_updateChildrenTemplates($this, $only_categories);
 	}
 
 	function enableChildren($only_categories = false)
 	{
-        require_once "modules/LayoutOrganizer/encoded.php";
+        require_once LC_MODULES_DIR . 'LayoutOrganizer' . LC_DS . 'encoded.php';
 		LayoutOrganizer_enableChildren($this, $only_categories);
 	}
 

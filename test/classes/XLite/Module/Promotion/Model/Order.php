@@ -346,7 +346,7 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
 
 	function _inCategoryRecursive($product, $category)
 	{
-        require_once "modules/Promotion/encoded.php";
+        require_once LC_MODULES_DIR . 'Promotion' . LC_DS . 'encoded.php';
 		return func_in_category_recursive($product, $category);
 	}
 
@@ -419,7 +419,7 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
 	function calcDiscount()
 	{
         // calculate discount coupon discount
-        require_once "modules/Promotion/encoded.php";
+        require_once LC_MODULES_DIR . 'Promotion' . LC_DS . 'encoded.php';
         func_calc_discount($this);
 	}
 

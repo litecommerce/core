@@ -88,13 +88,13 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_Paypalpro extends XLite_Model_P
 
 	function checkServiceURL()
 	{
-		include_once "modules/PayPalPro/encoded.php";
+		require_once LC_MODULES_DIR . 'PayPalPro' . LC_DS . 'encoded.php';
 		Payment_method_paypalpro_checkServiceURL($this);
 	}
 
 	function process(&$order) // {{{ 
 	{
-		include_once "modules/PayPalPro/encoded.php";
+		require_once LC_MODULES_DIR . 'PayPalPro' . LC_DS . 'encoded.php';
 		Payment_method_paypalpro_process($this,$order);
 	} // }}} 
 

@@ -53,7 +53,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_ShippingSettings extends XLit
 			return $this->_shippings;
 		}
 
-        require_once "modules/UPSOnlineTools/encoded.php";
+        require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
 		parent::getShippings();
 
 		foreach($this->_shippings as $shippingKey => $shipping) {

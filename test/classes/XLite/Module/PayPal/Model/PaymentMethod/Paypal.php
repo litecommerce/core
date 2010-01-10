@@ -70,7 +70,7 @@ class XLite_Module_PayPal_Model_PaymentMethod_Paypal extends XLite_Model_Payment
 
     function handleRequest(&$order)
     {
-        require_once "modules/PayPal/encoded.php";
+        require_once LC_MODULES_DIR . 'PayPal' . LC_DS . 'encoded.php';
         PaymentMethod_paypal_handleRequest($this, $order);
     }
 

@@ -91,7 +91,7 @@ class XLite_Module_Affiliate_Model_PlanCommission extends XLite_Model_Abstract
 
     function getOrderCommissions()
     {
-        require_once "modules/Affiliate/encoded.php";
+        require_once LC_MODULES_DIR . 'Affiliate' . LC_DS . 'encoded.php';
         return func_Affiliate_calc_order_commissions($this);
     }
 

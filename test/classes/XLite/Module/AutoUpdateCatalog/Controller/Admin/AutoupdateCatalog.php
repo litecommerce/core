@@ -86,7 +86,7 @@ echo '<a href="admin.php?target=catalog&action=build&xlite_form_id='.$this->get(
         }
         $catalog->set("recursive", false);
 
-        require_once "modules/AutoUpdateCatalog/encoded.php"; // functions
+        require_once LC_MODULES_DIR . 'AutoUpdateCatalog' . LC_DS . 'encoded.php'; // functions
 
         func_refresh_start();
         echo "Updating HTML catalog, please wait ..<br><br>\n";

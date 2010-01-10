@@ -89,7 +89,7 @@ EOT;
 
 	function GoogleCheckout_encode_string($str)
 	{
-		include_once "modules/GoogleCheckout/encoded.php";
+		require_once LC_MODULES_DIR . 'GoogleCheckout' . LC_DS . 'encoded.php';
 		return GoogleCheckout_encode_utf8_string($str);
 	}
 }

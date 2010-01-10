@@ -120,7 +120,7 @@ class XLite_Module_Newsletters_Model_NewsLetter extends XLite_Model_Abstract
             $mailer->set("newsSubject", $this->get("subject"));
             $mailer->set("newsBody", $this->get("body"));
 			if ($this->get("list_id")) {
-                require_once "modules/Newsletters/encoded.php";
+                require_once LC_MODULES_DIR . 'Newsletters' . LC_DS . 'encoded.php';
                 $mailer->set("list", $this->get("newsList"));
                 $mailer->set("code", func_newsletters_gen_code(strtolower($subscriber)));
 				$mailer->set("email", $subscriber);

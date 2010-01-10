@@ -171,14 +171,14 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports extends XL
 
     function getRawProducts() // {{{
     {
-        require_once "modules/EcommerceReports/encoded.php";
+        require_once LC_MODULES_DIR . 'EcommerceReports' . LC_DS . 'encoded.php';
         return func_EcommerceReports_getRawProducts($this);
     } // }}}
 
     function getRawItems($unique=false) // {{{
     {
     	if (is_null($this->rawItems)) {
-        	require_once "modules/EcommerceReports/encoded.php";
+        	require_once LC_MODULES_DIR . 'EcommerceReports' . LC_DS . 'encoded.php';
         	$this->rawItems = func_EcommerceReports_getRawItems($this, $unique);
         }
 		return $this->rawItems;

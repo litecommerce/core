@@ -52,7 +52,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Cart extends XLite_Control
     {
         parent::action_add();
 
-        require_once "modules/ProductAdviser/encoded.php";
+        require_once LC_MODULES_DIR . 'ProductAdviser' . LC_DS . 'encoded.php';
 		ProductAdviser_action_add($this);
     }
 

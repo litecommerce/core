@@ -49,7 +49,7 @@ class XLite_Module_VerisignLink_Model_PaymentMethod_Verisignlink extends XLite_M
 
     function handleRequest(&$cart)
     {
-        require_once "modules/VerisignLink/encoded.php";
+        require_once LC_MODULES_DIR . 'VerisignLink' . LC_DS . 'encoded.php';
         PaymentMethod_VerisignLink_handleRequest($this, $cart);
     }
 
