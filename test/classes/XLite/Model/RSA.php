@@ -37,7 +37,7 @@
 */
 
 if (!extension_loaded("gmp")) {
-    require_once "compat/gmp.php";
+	require_once LC_ROOT_DIR . 'compat' . LC_DS . 'gmp.php';
 }
 /**
 * Class provides functions to handle RSA encryption/decryption

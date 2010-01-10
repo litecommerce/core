@@ -117,7 +117,7 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
         return null;
     } // }}}
     
-    function getUrl() // {{{
+    function getUrl($params = null) // {{{
     {
         if ($this->get("editor") != "advanced") {
             $this->set("zone", null);

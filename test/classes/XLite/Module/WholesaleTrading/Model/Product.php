@@ -442,12 +442,9 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 		}
 	}
     
-    function clone() {
-		if ( function_exists("func_is_clone_deprecated") && func_is_clone_deprecated() ) {
-			$p = parent::cloneObject();
-		} else {
-			$p = parent::clone();
-		}
+    function __clone()
+	{
+		$p = parent::__clone();
 
         $originalId = $this->get("product_id");
         $newId = $p->get("product_id");        

@@ -38,6 +38,8 @@
 
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
+require_once LC_ROOT_DIR . 'lib' . LC_DS . 'Log.php';
+
 /**
 * Tge Log_null class is a concrete implementation of the Log::
 * abstract class which suppress messages.

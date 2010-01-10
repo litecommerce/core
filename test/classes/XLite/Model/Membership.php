@@ -45,7 +45,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Model_Membership extends Base // {{{
+class XLite_Model_Membership extends XLite_Model_Abstract
 {
     var $fields = array
     (
@@ -161,7 +161,7 @@ class XLite_Model_Membership extends Base // {{{
 		$config->createOption("Memberships","membershipsCollection", serialize($memberships));    
 	} // }}}
 
- 	function findAll() // {{{
+ 	function findAll($where = null, $orderby = null, $groupby = null, $limit = null) // {{{
 	{
 		$result = array();
 		$memberships = (array) $this->sortMemberships();

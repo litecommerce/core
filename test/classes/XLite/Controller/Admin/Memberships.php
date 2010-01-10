@@ -47,7 +47,7 @@
 *
 */
 
-class XLite_Controller_Admin_Memberships extends Admin_Dialog // {{{
+class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_Abstract
 {
 	var $params = array("target", "mode");
 	

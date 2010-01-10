@@ -68,7 +68,7 @@ $GLOBALS['TEMPLATE_REFERENCE_PARAMS'] = array(
 * @package $Package$
 * @version $Id$
 */
-class XLite_Model_WysiwygMediator extends XLite_Base
+class XLite_Model_Wysiwyg_Mediator extends XLite_Base
 {
     var $widgetClass = "WysiwygMediatorWidget";
     var $templateClass = "Template";

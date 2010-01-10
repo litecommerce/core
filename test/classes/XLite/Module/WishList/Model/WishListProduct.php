@@ -39,7 +39,7 @@
 * @version $Id$	
 */
 
-class XLite_Module_WishList_Model_WishListProduct extends Base // {{{
+class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
 {
 	var $product 	= null;
 	var $orderItem 	= null;

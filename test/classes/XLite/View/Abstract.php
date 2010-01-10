@@ -530,7 +530,7 @@ class XLite_View_Abstract extends XLite_Base
     	return strtoupper(md5(strval($string)));
     }
 
-    function getSidebarBoxStatus($boxHead)
+    function getSidebarBoxStatus($boxHead = null)
     {
 		if ($this->xlite->is("adminZone")) 
 		{

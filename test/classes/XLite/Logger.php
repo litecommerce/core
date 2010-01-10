@@ -51,7 +51,8 @@ define('LOGGER_DEFAULT_IDENT', 'X-Lite');
 * @access public
 * @version $Id$
 */
-class XLite_Logger {
+class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
+{
     /**
     * Logger options.
     *
@@ -72,22 +73,18 @@ class XLite_Logger {
     * @access public
     * @return void
     */
-    function Logger()
+    public function __construct()
     {
-        global $options;
-        $this->_options = array_merge($this->_options, $options["log_details"]);
-    }
-    
+		parent::__construct();
 
-    function &singleton()
-    {
-        static $logger;
-        if (!isset($logger)) {
-            $logger = new Logger();
-        }
-        return $logger;
+        $this->_options = array_merge($this->_options, XLite::getInstance()->getOptions('log_details'));
     }
     
+    public static function getInstance()
+    {
+        return self::_getInstance(__CLASS__);
+    }
+
     /**
     * Writes message to log. Creates Log object instance if necessary.
     *
@@ -103,11 +100,12 @@ class XLite_Logger {
     */
     function log($message, $level = null)
     {
-        require_once "Log.php";
+		require_once LC_ROOT_DIR . 'lib' . LC_DS . 'Log.php';
+
         $logger = Log::singleton($this->getType(),
-                                 $this->getName(),
-                                 $this->getIdent()
-                                 );
+                                  $this->getName(),
+                                  $this->getIdent()
+                                  );
         if (is_null($level)) {
             $level = $this->getLevel();
         }

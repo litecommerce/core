@@ -39,7 +39,7 @@
 * @version $Id$
 */
 
-class XLite_Module_WishList_Controller_Customer_Wishlist extends Dialog // {{{
+class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controller_Customer_Abstract
 {
 	var $params = array("target", "mode");
 	

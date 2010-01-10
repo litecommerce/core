@@ -39,7 +39,7 @@
 * @version $Id$	
 */
 
-class XLite_Module_WishList_base_Dialog extends Dialog // {{{
+class XLite_Module_WishList_Controller_Abstract extends XLite_Controller_Abstract implements XLite_Base_IDecorator
 {
 	var $wishlist = null;
 

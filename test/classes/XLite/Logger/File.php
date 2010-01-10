@@ -38,6 +38,8 @@
 * vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 */
 
+require_once LC_ROOT_DIR . 'lib' . LC_DS . 'Log.php';
+
 /**
 * The Log_file class is a concrete implementation of the Log::
 * abstract class which writes message to a text file.

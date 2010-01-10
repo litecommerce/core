@@ -115,12 +115,15 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
         $this->config = $cfg->readConfig();
         $this->profiler->log('cfg_time');
 
-        $this->logger = XLite_Model_Logger::getInstance();
+        $this->logger = XLite_Logger::getInstance();
 
         // start session
         $session = XLite_Model_Session::getInstance();
         $this->session = $session->start();
         $this->profiler->log("ss_time");
+
+		// Check conditions and (if needed) rebuild cache
+		XLite_Core_Decorator::getInstance()->rebuildCache();
 
         // attempt to initialize modules subsystem
         $this->mm = new XLite_Model_ModulesManager();

@@ -104,7 +104,7 @@ class XLite_Module_WholesaleTrading_Model_WholesalePricing extends XLite_Model_A
 		return $data;
 	} // }}}
 
-    function _import(&$options) // {{{
+    function _import(array $options) // {{{
     {
         static $line_no;
         if (!isset($line_no)) $line_no = 1; else $line_no++;
