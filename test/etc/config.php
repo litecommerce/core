@@ -18,6 +18,8 @@
 ;
 [database_details]
 hostspec = ""
+socket   = ""
+port     = ""
 database = ""
 username = ""
 password = ""

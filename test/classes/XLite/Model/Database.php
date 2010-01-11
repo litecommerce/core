@@ -39,7 +39,6 @@
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
 define('BACKUP_LIMIT_COUNT', 10);
-define('DBTABLE_PREFIX', 'xlite_');
 
 // define DB backup properties
 define('SQL_DUMP_DIR', 'var/backup/');
@@ -55,6 +54,8 @@ define('SQL_UPLOAD_DIR', 'var/tmp/');
 */
 class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
 {
+	const DBTABLE_PREFIX = 'xlite_';
+
     // properties {{{
 
     /**
@@ -96,6 +97,8 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
         // profile db connect
         $time = microtime(true);
         $options = XLite::getInstance()->getOptions('database_details');
+
+		$options['hostspec'] .= (empty($options['socket']) ? (empty($options['port']) ? '' : ':' . $options['port']) : ':' . $options['socket']);
 
 		if (!empty($options['persistent'])&&function_exists('mysql_pconnect')) {
 			if (!($this->connection = @mysql_pconnect($options["hostspec"], $options["username"], $options["password"]))) 
@@ -179,6 +182,27 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
         return $result;
 	} // }}}
 
+	public function getColumn($sql, $columnName)
+	{
+		if ($this->hasCachedResult($sql)) {
+            return $this->getCachedResult($sql);
+        }
+
+        $res = $this->query($sql);
+        $result = array();
+        while($row = mysql_fetch_assoc($res)) {
+			if (isset($row[$columnName])) {
+				$index = $row[$columnName];
+				unset($row[$columnName]);
+    	        $result[$index] = array_merge($row, isset($result[$index]) ? $result[$index] : array());
+			}
+        }
+        @mysql_free_result($res);
+        // cache result
+        $this->cacheResult($sql, $result);
+        return $result;
+	}
+
 	function query($sql) // {{{
 	{
         $profiler = new XLite_Model_Profiler();
@@ -202,7 +226,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
     */
     function getTableByAlias($alias = '') // {{{
     {
-        return DBTABLE_PREFIX . $alias;
+        return self::DBTABLE_PREFIX . $alias;
     } // }}}
 
     function isTableExists($table) // {{{
@@ -495,7 +519,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
         $tables = array();
         foreach ($this->getAll("SHOW TABLES") as $table) {
             $data = array_values($table);
-            if (strncmp($data[0], DBTABLE_PREFIX, strlen(DBTABLE_PREFIX))==0) {
+            if (strncmp($data[0], self::DBTABLE_PREFIX, strlen(self::DBTABLE_PREFIX))==0) {
                 $tables[] = $data[0];
             }    
         }

@@ -37,7 +37,7 @@
 
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
-define('FEATURED_PRODUCTS_TABLE', DBTABLE_PREFIX.'featured_products');
+define('FEATURED_PRODUCTS_TABLE', XLite_Model_Database::DBTABLE_PREFIX . 'featured_products');
 
 /**
 * Adds "Featured Products" page to customer's zone
@@ -75,24 +75,7 @@ class XLite_Module_FeaturedProducts_Main extends XLite_Module_Abstract
      */
     protected $enabled = true;
 
-    var $isFree = true;
-    var $minVer = "2.0";
     var $showSettingsForm = true;
-
-    function init()
-	{
-		parent::init();
-        if ($this->xlite->is("adminZone")) {
-        }
-	}
-
-    function uninstall()
-    {
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
-
-        parent::uninstall();
-    }
 }
 
 // WARNING :

@@ -35,6 +35,30 @@
 */
 /* vim: set expandtab tabstop=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
 
+/**
+ * Parse config.ini files and return config options 
+ * 
+ * @return array
+ * @since  3.0
+ */
+function funcParseConfgFile($section = '')
+{
+	$options = parse_ini_file(LC_ROOT_DIR . 'etc' . LC_DS . 'config.php', true);
+
+	if (is_array($options)) {
+		if (file_exists(LC_ROOT_DIR . 'etc' . LC_DS . 'config.local.php')) {
+			$optionsLocal = parse_ini_file(LC_ROOT_DIR . 'etc' . LC_DS . 'config.local.php', true);
+			if (is_array($optionsLocal)) {
+				$options = array_merge($options, $optionsLocal);
+			}
+		}
+	} else {
+		die ('Unable to read/parse configuration file(s)');
+	}
+
+	return empty($section) ? $options : (isset($options[$section]) ? $options[$section] : null);
+}
+
 function func_is_array_unique($arr, &$firstValue, $skipValue="") {
     if (!is_array($arr)) {
     	return false;
@@ -364,13 +388,8 @@ function copyRecursive($from, $to, $mode = 0666, $dir_mode = 0777) { // {{{
     }
 } // }}}
 
-function mkdirRecursive($dir, $mode = 0777) { // {{{
-	if ($mode == 0777) {
-		$mode = get_filesystem_permissions(0777);
-	} elseif ($mode == 0755) {
-		$mode = get_filesystem_permissions(0755);
-	}
-
+function mkdirRecursive($dir, $mode = 0777)
+{
 	$dirstack = array();
     while (!@is_dir($dir) && $dir != '/') {
 		array_unshift($dirstack, $dir);
@@ -390,7 +409,7 @@ function mkdirRecursive($dir, $mode = 0777) { // {{{
         }
 	}
 	return $ret;
-} // }}}
+}
 
 function unlinkRecursive($dir) { // {{{
     if (substr($dir,-1) == '/' || substr($dir,-1) == '\\') {

@@ -3,15 +3,6 @@
 abstract class XLite_Module_Abstract extends XLite_Model_Module
 {
 	/**
-	 * Module dependencies
-	 * 
-	 * @var    array
-	 * @access protected
-	 * @since  3.0
-	 */
-	protected $dependencies = array();
-
-	/**
 	 * Module version 
 	 * 
 	 * @var    string
@@ -99,18 +90,6 @@ abstract class XLite_Module_Abstract extends XLite_Model_Module
     }
 
 	/**
-	 * Return module dependencies 
-	 * 
-	 * @return array
-	 * @access public
-	 * @since  3.0
-	 */
-	public function getDependencies()
-	{
-		return $this->dependencies;
-	}
-
-	/**
 	 * Return module version
 	 * 
 	 * @return string
@@ -160,5 +139,17 @@ abstract class XLite_Module_Abstract extends XLite_Model_Module
 
         parent::uninstall();
     }
+
+	/**
+	 * Return module dependencies 
+	 * 
+	 * @return array
+     * @access public
+	 * @since  3.0
+	 */
+	public static function getDependencies()
+	{
+		return array();
+	}
 }
 
