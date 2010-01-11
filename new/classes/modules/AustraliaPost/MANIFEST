@@ -1,6 +1,0 @@
-module_id=2550
-name=AustraliaPost
-description="This module introduces Australia Post real-time shipping cost calculations"
-enabled=1
-version=2.2.RC2
-dependencies=

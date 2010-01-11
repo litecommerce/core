@@ -1,6 +1,0 @@
-module_id=2005
-name=WishList
-description="This module introduces 'Wish List' and 'Send to Friend' features"
-enabled=1
-version=2.7.RC5
-dependencies=

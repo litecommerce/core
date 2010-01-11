@@ -1,6 +1,0 @@
-module_id=760
-name=MultiCategories
-description=Allows to arrange products in several categories
-enabled=1
-version=2.5
-dependencies=

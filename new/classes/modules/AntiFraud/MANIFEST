@@ -1,6 +1,0 @@
-module_id=763
-name=AntiFraud
-description=Antifraud Service
-enabled=1
-version=2.7.RC1
-dependencies=

@@ -1,6 +1,0 @@
-module_id=5020
-name=SnsIntegration
-description=Sales-n-Stats integration module
-enabled=1
-version=1.7RC1
-dependencies=

@@ -1,6 +1,0 @@
-module_id=3000
-name=Promotion
-description="PromotionTools module introduces mechanisms for managing special offers, bonus points and discount coupons"
-enabled=1
-version=2.29.RC13
-dependencies=

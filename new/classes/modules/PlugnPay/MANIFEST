@@ -1,6 +1,0 @@
-module_id=1350
-name=PlugnPay
-description=PlugnPay credit card payment processor
-enabled=1
-version=2.3
-dependencies=

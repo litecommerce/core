@@ -1,6 +1,0 @@
-module_id=2521
-name=UPSOnlineTools
-description="This module enables the access to UPS OnLine Tools."
-enabled=1
-version=2.1.RC13
-dependencies=

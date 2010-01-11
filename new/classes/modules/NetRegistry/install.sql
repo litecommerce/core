@@ -1,2 +1,0 @@
-ALTER TABLE xlite_modules CHANGE version version varchar(12) NOT NULL DEFAULT '0';
-INSERT INTO xlite_payment_methods SET payment_method = 'netregistry_cc', name = 'Credit Card', details = 'Visa, Mastercard, American Express', orderby = '15', class = 'netregistry_cc', enabled = 0, params = 'a:3:{s:7:"param01";s:0:"";s:7:"param02";s:0:"";s:7:"param09";s:70:"https://4tknox.au.com:443/cgi-bin/themerchant.au.com/ecom/external2.pl";}';

@@ -1,6 +1,0 @@
-module_id=1390
-name=LinkPoint
-description=LinkPoint credit card payment processor
-enabled=1
-version=2.3
-dependencies=

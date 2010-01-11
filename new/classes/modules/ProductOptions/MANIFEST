@@ -1,6 +1,0 @@
-module_id=2000
-name=ProductOptions
-description="This module introduces support for product options, enabling you to provide customers with a choice of product variants."
-enabled=1
-version=2.26.RC6
-dependencies=

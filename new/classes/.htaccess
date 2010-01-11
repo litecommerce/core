@@ -1,8 +1,0 @@
-Options -Indexes
-<IfModule mod_access.c>
-<Files ~ "(\.lst|\.sql|MANIFEST|CHANGELOG)">
-Deny from all 
-</Files>
-
-Allow from all
-</IfModule>

@@ -1,9 +1,0 @@
-Version 2.5:
-- [!] 16 Mar 2005, Sheriff - Bug: There was an incompatibility between Multicategories and DetailedImages modules (the updating detailed images process was stopped in the Multicategories validator). Fixed.
-- [!] 07 Mar 2005, Asd - Bug: The compiled code/templates cache was not cleaned up during the module uninstallation. Fixed.
-
-Version 2.4:
-- [!] 21 Jan 2005, Sheriff - Bug: The "clone" action for a product was stopped in the validator (the categories list was always marked as a "requied field" even if it was filled in correctly). Fixed.
-
-Version 2.3:
-    - Fixed a bug regarding CSV catalog export/import.

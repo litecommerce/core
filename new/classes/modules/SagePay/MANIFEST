@@ -1,6 +1,0 @@
-module_id=44930
-name=SagePay
-description="VSP Direct and VSP Form credit card payment processor (former Protx)"
-enabled=1
-version=2.0
-dependencies=

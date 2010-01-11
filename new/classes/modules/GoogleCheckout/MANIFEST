@@ -1,6 +1,0 @@
-module_id=1410
-name=GoogleCheckout
-description="GoogleCheckout module"
-enabled=1
-version=2.1.RC2
-dependencies=

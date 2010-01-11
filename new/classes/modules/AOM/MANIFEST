@@ -1,6 +1,0 @@
-module_id=5040
-name=AOM
-description="This module provides your online store with an advanced order management tool."
-enabled=1
-version=2.10.RC19
-dependencies=

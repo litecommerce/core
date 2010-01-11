@@ -1,6 +1,0 @@
-module_id=4444
-name=Newsletters
-description="This module allows you to create and manage news lists and send newsletters"
-enabled=1
-version=2.13.RC3
-dependencies=

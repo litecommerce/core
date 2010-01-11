@@ -1,8 +1,0 @@
-Options -Indexes
-<IfModule mod_access.c> 
-<files "*.gif"> 
-Allow from all  
-</files> 
-
-Deny from all 
-</IfModule> 

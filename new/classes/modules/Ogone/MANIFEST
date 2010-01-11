@@ -1,6 +1,0 @@
-module_id=1340
-name=Ogone
-description=Ogone credit card payment processor
-enabled=1
-version=2.3
-dependencies=

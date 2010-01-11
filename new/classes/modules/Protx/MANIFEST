@@ -1,6 +1,0 @@
-module_id=1376
-name=Protx
-description=Protx VSP Direct and Protx VSP Form credit card payment processor
-enabled=1
-version=2.1.RC1
-dependencies=

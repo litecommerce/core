@@ -1,6 +1,0 @@
-Version 2.2:
-- [!] 23 Jun 2005, Sheriff - Bug: When HTTPS was turned on in the customer zone, the module caused a redirect to an HTTP location. Fixed.
-
-Version 2.1:
-- [!] 07 Mar 2005, Asd - Bug: The compiled code/templates cache was not cleaned up during the module uninstallation. Fixed.
-

@@ -1,6 +1,0 @@
-module_id=1295
-name=Nochex
-description=Nochex payment gateway
-enabled=1
-version=2.2
-dependencies=

@@ -1,5 +1,0 @@
-Version 2.2:
-- [+] 12 Jan 2007, Sheriff - Bug (0015287): The value of the CVN Code  was not sended to the payment gateway (on FreeBSD-based platform only). Fixed.
-
-Version 2.1:
-- [+] 21 Nov 2005, Asd - Bug (0004902): The value (Auth/Capture) of the option "Transaction Type" was handled incorrectly. Fixed.

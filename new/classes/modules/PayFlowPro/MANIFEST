@@ -1,6 +1,0 @@
-module_id=1385
-name=PayFlowPro
-description="PayFlow Pro credit card payment processor"
-enabled=1
-version=2.6
-dependencies=

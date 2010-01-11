@@ -1,6 +1,0 @@
-module_id=302
-name=MultiCurrency
-description=This module introduces support for multiple currencies
-enabled=1
-version=2.2RC2
-dependencies=

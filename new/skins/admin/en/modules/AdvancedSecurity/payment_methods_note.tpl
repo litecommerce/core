@@ -1,1 +1,0 @@
-<p class="ErrorMessage" IF="advancedSecurityDisplayNote">Note: Offline credit card method (credit_card) will not be available in Customer Zone because the AdvancedSecurity add-on module is not configured correctly. Please deactivate it or complete the configuration process.</p>

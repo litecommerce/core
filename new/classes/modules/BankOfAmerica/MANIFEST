@@ -1,6 +1,0 @@
-module_id=1370
-name=BankOfAmerica
-description=BankOfAmerica credit card payment processor
-enabled=1
-version=2.2
-dependencies=

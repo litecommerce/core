@@ -1,6 +1,0 @@
-module_id=1345
-name=eWAYxml
-description=eWAYxml credit card payment processor
-enabled=1
-version=2.3
-dependencies=

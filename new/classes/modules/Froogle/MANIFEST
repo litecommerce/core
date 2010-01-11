@@ -1,6 +1,0 @@
-module_id=5030
-name=Froogle
-description="This module allows you export product information into Froogle format"
-enabled=1
-version=2.10.RC2
-dependencies=

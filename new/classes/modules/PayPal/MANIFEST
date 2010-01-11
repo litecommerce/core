@@ -1,6 +1,0 @@
-module_id=1010
-name=PayPal
-description=PayPal payment processor
-enabled=1
-version=2.5
-dependencies=

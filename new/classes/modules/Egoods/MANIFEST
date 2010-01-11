@@ -1,6 +1,0 @@
-module_id=5000
-name=Egoods
-description="This module introduces support for downloadable product sales (e-books, audio and video files, software and PIN codes)"
-enabled=1
-version=2.9.RC4
-dependencies=

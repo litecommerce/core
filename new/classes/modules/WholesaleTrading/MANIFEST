@@ -1,6 +1,0 @@
-module_id=1495
-name=WholesaleTrading
-description="This module introduces wholesale trading business logic support"
-enabled=1
-version=2.24.RC26
-dependencies=

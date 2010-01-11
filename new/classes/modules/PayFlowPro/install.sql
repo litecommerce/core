@@ -1,2 +1,0 @@
-ALTER TABLE xlite_modules CHANGE version version varchar(12) NOT NULL DEFAULT '0';
-INSERT INTO xlite_payment_methods SET payment_method = 'payflowpro_cc', name = 'Credit Card', details = 'Visa, Mastercard, American Express', orderby = '30', class = 'payflowpro_cc', enabled = 0, params = 'a:7:{s:7:"param01";s:0:"";s:7:"param04";s:0:"";s:7:"param02";s:0:"";s:7:"param03";s:0:"";s:8:"testmode";s:1:"Y";s:7:"param07";s:1:"S";s:8:"currency";s:3:"USD";}';

@@ -1,6 +1,0 @@
-module_id=2540
-name=CanadaPost
-description="This module introduces CanadaPost real-time shipping cost calculations"
-enabled=1
-version=2.4.RC1
-dependencies=

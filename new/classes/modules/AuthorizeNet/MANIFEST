@@ -1,6 +1,0 @@
-module_id=1000
-name=AuthorizeNet
-description=Authorize.Net credit card payment processor
-enabled=1
-version=2.5
-dependencies=

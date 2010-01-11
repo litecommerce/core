@@ -1,6 +1,0 @@
-module_id=40003
-name=CyberSource
-description=CyberSource credit card payment processor
-enabled=1
-version=2.6.RC2
-dependencies=

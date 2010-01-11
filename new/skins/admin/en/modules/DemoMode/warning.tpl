@@ -1,1 +1,0 @@
-<b>In the demo store, the information on this page affects only your browser's session and is not visible by others. Changes made to this page won't affect other visitors. To cleanup changes, just close your browser. To view this site in a different window, press Ctrl+N - this will open a new window inside the current session.</b>

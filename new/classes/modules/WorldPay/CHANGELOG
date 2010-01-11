@@ -1,9 +1,0 @@
-Version 2.4
-- [+] 23 Sep 2009, Isden - Improvement (0073567): RBS WorldPay payment gateway updates were implemented.
-- [!] 03 Sep 2007, Alien - Bug (0025240): The payment could not be processed due to the error: the MD5 signature could not be verified. Fixed. 
-
-Version 2.3:
-- [+] 08 Jan 2007, Sheriff - Improvement (0011464): WorldPay response verification procedure was improved.
-- [!] 11 Dec 2006, Sheriff - Bug (0014311): The address field value passed to the payment gateway was ill-formed. Fixed.
-
-

@@ -1,2 +1,0 @@
-Co./Last Name{delimiter}First Name{delimiter}Deposit Account{delimiter}Invoice #{delimiter}Invoice Date{delimiter}Amount Applied{crlf}
-{foreach:orders,oid,order}{if:order.processed}{order.order_id}: {order.profile.billing_lastname}{delimiter}{order.profile.billing_firstname}{delimiter}{deposit_account}{delimiter}{order.order_id}{delimiter}{date_format(order,#date#)}{delimiter}{order.total}{crlf}{end:}{end:}

@@ -1,7 +1,0 @@
-module_id=1290
-name=ChronoPay
-description="ChronoPay WEB payment gateway"
-enabled=1
-version=2.0
-dependencies=
-

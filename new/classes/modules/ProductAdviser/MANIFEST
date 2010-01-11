@@ -1,6 +1,0 @@
-module_id=2050
-name=ProductAdviser
-description="ProductAdviser add-on introduces multiple cross-selling features and a customer notification mechanism."
-enabled=1
-version=2.12.RC4
-dependencies=

@@ -1,4 +1,0 @@
-Version 2.1:
-- [+] 26 Nov 2007, Osipov - Improvement (0013439): integration using new API was implemented, now the values of Approval Redirect and Decline Redirect fields do not affect the module operation. 
-- [!] 01 Nov 2007, Osipov - Bug (0024912): the module did not work correctly with HTTPS::OpenSSL, as a result customers were redirected to the error page. 
-- [+] 13 Jun 2007, Dragon - Improvement: the support of 3D Secure Verified by Visa / MasterCard has been added.

@@ -1,6 +1,0 @@
-module_id=800
-name=HTMLCatalog
-description="HTML catalog add-on module is a complete tool for generating an HTML mirror of the product catalog."
-enabled=1
-version=2.16.RC9
-dependencies=

@@ -1,2 +1,0 @@
-ALTER TABLE xlite_modules CHANGE version version varchar(12) NOT NULL DEFAULT '0';
-INSERT INTO xlite_payment_methods SET  payment_method = 'plugnpay_cc', name = 'Credit Card', details = 'Visa, Mastercard, American Express', orderby = '15', class = 'plugnpay_cc', enabled = 0, params = 'O:8:"stdClass":4:{s:7:"param01";s:0:"";s:7:"param03";s:17:"pay1.plugnpay.com";s:7:"param05";s:1:"0";s:7:"param04";s:0:"";}';
