@@ -1,6 +1,6 @@
 <?php
 
-class XLite_Module_GiftCertificates_View_CECard extends XLite_View
+class XLite_Module_GiftCertificates_View_CEcard extends XLite_View
 {
     var $gc = null;
 

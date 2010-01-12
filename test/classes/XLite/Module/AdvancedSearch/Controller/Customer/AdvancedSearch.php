@@ -39,7 +39,7 @@
 * @version $Id$
 */
 
-class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLite_Controller_Abstract
+class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLite_Controller_Customer_Abstract
 {
     var $params = array("target", "mode", "substring");
     var $products = null;

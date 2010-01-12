@@ -37,8 +37,6 @@
 
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
-define('FEATURED_PRODUCTS_TABLE', XLite_Model_Database::DBTABLE_PREFIX . 'featured_products');
-
 /**
 * Adds "Featured Products" page to customer's zone
 *
@@ -48,6 +46,8 @@ define('FEATURED_PRODUCTS_TABLE', XLite_Model_Database::DBTABLE_PREFIX . 'featur
 */
 class XLite_Module_FeaturedProducts_Main extends XLite_Module_Abstract
 {
+	const FEATURED_PRODUCTS_TABLE = 'xlite_featured_products';
+
     /**
      * Module version
      *

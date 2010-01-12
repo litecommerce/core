@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_DetailedImages_Controller_Customer_Image extends XLite_Controller_Customer_Image
+class XLite_Module_DetailedImages_Controller_Customer_Image extends XLite_Controller_Customer_Image implements XLite_Base_IDecorator
 {
     function action_detailed_images()
     {

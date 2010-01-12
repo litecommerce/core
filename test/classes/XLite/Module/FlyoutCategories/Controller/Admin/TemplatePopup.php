@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_FlyoutCategories_Controller_Admin_TemplatePopup extends XLite_Controller_Admin_TemplateEditor
+class XLite_Module_FlyoutCategories_Controller_Admin_TemplatePopup extends XLite_Controller_Admin_TemplateEditor implements XLite_Base_IDecorator
 {
     var $template = "modules/FlyoutCategories/template_popup.tpl";
 
