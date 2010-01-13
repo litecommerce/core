@@ -61,7 +61,7 @@ class XLite_Module_SnsIntegration_Controller_Customer_Product extends XLite_Cont
 	
     function sendAction($action) // {{{
     {
-		require_once("modules/SnsIntegration/include/misc.php");
+		require_once LC_MODULES_DIR . 'SnsIntegration' . LC_DS . 'include' . LC_DS . 'misc.php';
 		$snsClientId  = func_get_sns_client_id();
 		$category = new XLite_Model_Category($this->get("category_id"));
 		$actions = array();

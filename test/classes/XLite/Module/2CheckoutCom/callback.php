@@ -12,7 +12,8 @@ if (isset($_POST["product_id"])) {
     unset($_POST["product_id"]);
 }
 			
-chdir("../../..");
-include "cart.php";
+// FIXME - is it needed?
+// chdir("../../..");
 
-?>
+include LC_ROOT_DIR . 'cart.php';
+

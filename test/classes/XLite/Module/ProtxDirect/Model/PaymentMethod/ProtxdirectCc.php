@@ -53,7 +53,7 @@ class XLite_Module_ProtxDirect_Model_PaymentMethod_ProtxdirectCc extends XLite_M
 
     function process($cart)
     {
-		require_once("modules/ProtxDirect/encoded.php");
+		require_once LC_MODULES_DIR . 'ProtxDirect' . LC_DS . 'encoded.php';
 		return func_ProtxDirect_process($this, $cart);
     }
 

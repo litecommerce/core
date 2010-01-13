@@ -53,7 +53,7 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepaydirectCc extends XLite_Mod
 
     function process($cart)
     {
-		require_once("modules/SagePay/encoded.php");
+		require_once LC_MODULES_DIR . 'SagePay' . LC_DS . 'encoded.php';
 		return func_SagePayDirect_process($this, $cart);
     }
 

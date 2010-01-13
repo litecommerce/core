@@ -36,6 +36,9 @@
 +------------------------------------------------------------------------------+
 */
 
+// FIXME - is this file needed??????
+
+
 /* vim: set expandtab tabstop=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
 
 define('PATCH_APPLIED', 1);

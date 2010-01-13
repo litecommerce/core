@@ -224,7 +224,7 @@ EOT;
             return false;
         }
         
-        require_once "Archive/Tar.php";
+        require_once LC_ROOT_DIR . 'lib' . LC_DS . 'Archive' . LC_DS . 'Tar.php';
 		
 		$ar = new Archive_Tar($dest_file);
         $files = $ar->listContent();

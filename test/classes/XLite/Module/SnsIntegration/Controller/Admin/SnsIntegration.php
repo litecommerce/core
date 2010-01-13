@@ -46,7 +46,7 @@ class XLite_Module_SnsIntegration_Controller_Admin_SnsIntegration extends XLite_
         $this->startPage();
         $this->set("silent", 1);
         echo "<html><body>\n";
-        require_once("modules/SnsIntegration/include/misc.php");
+        require_once LC_MODULES_DIR . 'SnsIntegration' . LC_DS . 'include' . LC_DS . 'misc.php';
 
         $orders = new XLite_Model_Order();
         foreach ($orders->findAll("status in ('C', 'P')") as $order) {

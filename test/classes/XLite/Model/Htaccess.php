@@ -38,6 +38,8 @@
 
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
+// FIXME - need to completely revise
+
 /**
 * Waiting IP list for admin zone.
 *

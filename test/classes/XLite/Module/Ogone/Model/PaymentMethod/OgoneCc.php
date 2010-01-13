@@ -52,7 +52,7 @@ class XLite_Module_Ogone_Model_PaymentMethod_OgoneCc extends XLite_Model_Payment
 
     function process($cart)
     {
-		require_once('modules/Ogone/encoded.php');
+		require_once LC_MODULES_DIR . 'Ogone' . LC_DS . 'encoded.php';
 		func_Ogone_process($cart, $this);
     }
 }

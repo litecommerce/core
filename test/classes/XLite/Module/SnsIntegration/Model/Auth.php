@@ -82,7 +82,8 @@ class XLite_Module_SnsIntegration_Model_Auth extends XLite_Model_Auth implements
 
     function sendProfileAction($profile, $action) // {{{
     {    
-        require_once("modules/SnsIntegration/include/misc.php");
+        require_once LC_MODULES_DIR . 'SnsIntegration' . LC_DS . 'include' . LC_DS . 'misc.php';
+
         $snsClientId  = func_get_sns_client_id(); 
         
         $actions = array();

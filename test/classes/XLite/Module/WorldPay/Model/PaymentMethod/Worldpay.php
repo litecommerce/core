@@ -55,7 +55,7 @@ class XLite_Module_WorldPay_Model_PaymentMethod_Worldpay extends XLite_Model_Pay
 
     function handleRequest($cart)
     {
-		require_once "classes/modules/WorldPay/encoded.php";
+		require_once LC_MODULES_DIR . 'WorldPay' . LC_DS . 'encoded.php';
         func_PaymentMethod_worldpay_handleRequest($this, $cart);
     }
 

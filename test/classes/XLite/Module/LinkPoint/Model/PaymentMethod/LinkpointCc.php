@@ -52,7 +52,7 @@ class XLite_Module_LinkPoint_Model_PaymentMethod_LinkpointCc extends XLite_Model
 
     function process($cart)
     {
-		require_once("modules/LinkPoint/encoded.php");
+		require_once LC_MODULES_DIR . 'LinkPoint' . LC_DS . 'encoded.php';
         return func_LinkPoint_process($cart, $this);
     }
 }

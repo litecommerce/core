@@ -19,9 +19,9 @@ class Decorator
     const INFO_EXTENDS       = 'extends';
     const INFO_EXTENDS_ORIG  = 'extends_orig';
     const INFO_IS_DECORATOR  = 'is_decorator';
-	const INFO_IS_SINGLETON  = 'is_singleton';
+    const INFO_IS_SINGLETON  = 'is_singleton';
     const INFO_IS_ROOT_CLASS = 'is_top_class';
-	const INFO_CLASS_TYPE    = 'class_type';
+    const INFO_CLASS_TYPE    = 'class_type';
 
     /**
      * Pattern to parse PHP files
@@ -201,22 +201,22 @@ class Decorator
 
         if (!empty($info[self::INFO_IS_ROOT_CLASS]) && preg_match(self::CLASS_PATTERN, $content, $matches)) {
 
-			$body = "\n";
-			if (!empty($info[self::INFO_IS_SINGLETON])) {
-				$body .= "\t" . 'public static function getInstance()' . "\n"
-						. "\t" . '{' . "\n\t\t" . 'return self::_getInstance(__CLASS__);' . "\n\t" . '}' . "\n";
-			}
+            $body = "\n";
+            if (!empty($info[self::INFO_IS_SINGLETON])) {
+                $body .= "\t" . 'public static function getInstance()' . "\n"
+                        . "\t" . '{' . "\n\t\t" . 'return self::_getInstance(__CLASS__);' . "\n\t" . '}' . "\n";
+            }
 
             // Top level class in decorator chain - has an empty body
             $content = '<?php' . "\n" . $this->getClassComment($info) . "\n" . $matches[1] . 'class ' 
-					   . (isset($info[self::INFO_CLASS]) ? $info[self::INFO_CLASS] : $matches[3])
+                       . (isset($info[self::INFO_CLASS]) ? $info[self::INFO_CLASS] : $matches[3])
                        . (isset($info[self::INFO_EXTENDS]) ? ' extends ' . $info[self::INFO_EXTENDS] : '')
                        . (isset($matches[6]) ? $matches[6] : '') . "\n" . '{' . $body . '}' . "\n";
         } else {
 
             // Replace class and name of class which extends the current one
             $replace = "\n" . $this->getClassComment($info) . "\n" 
-					   . (isset($info[self::INFO_CLASS_TYPE]) ? $info[self::INFO_CLASS_TYPE] . ' ' : '$1') . '$2 ' 
+                       . (isset($info[self::INFO_CLASS_TYPE]) ? $info[self::INFO_CLASS_TYPE] . ' ' : '$1') . '$2 ' 
                        . (isset($info[self::INFO_CLASS]) ? $info[self::INFO_CLASS] : '$3') 
                        . (isset($info[self::INFO_EXTENDS]) ? ' extends ' . $info[self::INFO_EXTENDS] : '$4') 
                        . '$6' . "\n" . '{';
@@ -268,7 +268,7 @@ class Decorator
         return in_array('XLite_Base_IDecorator', explode(',', str_replace(' ', '', trim($implements))));
     }
 
-	/**
+    /**
      * Check if current class implements the "ISingleton" interface
      *
      * @param array $implements list of implemented inerfaces
@@ -384,7 +384,7 @@ class Decorator
         return $this->getDbHandler()->query($sql)->fetchAll(PDO::FETCH_ASSOC | PDO::FETCH_COLUMN);
     }
 
-	/**
+    /**
      * Perform SQL query (single value)
      *
      * @param string $sql SQL query to execute
@@ -419,7 +419,7 @@ class Decorator
      */
     protected function isDeveloperMode()
     {
-		return $this->fetchColumn('SELECT value FROM xlite_config WHERE category = \'General\' AND name = \'developer_mode\'');
+        return $this->fetchColumn('SELECT value FROM xlite_config WHERE category = \'General\' AND name = \'developer_mode\'');
     }
 
     /**
@@ -534,10 +534,10 @@ class Decorator
 
             foreach ($this->getActiveModules() as $module) {
 
-				// Fetch dependencies from db
-				$dependencies = $this->fetchColumn(
-					'SELECT dependencies FROM xlite_modules WHERE name= \'' . addslashes($module) . '\''
-				);
+                // Fetch dependencies from db
+                $dependencies = $this->fetchColumn(
+                    'SELECT dependencies FROM xlite_modules WHERE name= \'' . addslashes($module) . '\''
+                );
                 $this->moduleDependencies[$module] = empty($dependencies) ? array() : explode(',', $dependencies);
             }
         }
@@ -654,7 +654,7 @@ class Decorator
                                 self::INFO_EXTENDS      => $extends,
                                 self::INFO_EXTENDS_ORIG => $extends,
                                 self::INFO_IS_DECORATOR => $this->isDecorator($implements),
-								self::INFO_IS_SINGLETON => $this->isSingleton($implements),
+                                self::INFO_IS_SINGLETON => $this->isSingleton($implements),
                             );
                         }
                     }
@@ -773,7 +773,7 @@ class Decorator
                 self::INFO_CLASS        => $rootClass,
                 self::INFO_CLASS_ORIG   => $class,
                 self::INFO_EXTENDS_ORIG => $this->classesInfo[$class][self::INFO_EXTENDS_ORIG],
-				self::INFO_CLASS_TYPE   => 'abstract',
+                self::INFO_CLASS_TYPE   => 'abstract',
             );
         }
     }

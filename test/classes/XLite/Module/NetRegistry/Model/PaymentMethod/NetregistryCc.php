@@ -53,7 +53,7 @@ class XLite_Module_NetRegistry_Model_PaymentMethod_NetregistryCc extends XLite_M
 
     function process($cart)
     {
-		require_once("modules/NetRegistry/encoded.php");
+		require_once LC_MODULES_DIR . 'NetRegistry' . LC_DS . 'encoded.php';
         return func_NetRegistry_process($cart, $this, false);
     }
 }

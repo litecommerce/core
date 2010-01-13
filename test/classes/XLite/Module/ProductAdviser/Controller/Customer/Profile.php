@@ -46,6 +46,8 @@
 */
 class XLite_Module_ProductAdviser_Controller_Customer_Profile extends XLite_Controller_Customer_Profile implements XLite_Base_IDecorator
 {
+	public $from = null;
+
     function init()
     {
     	parent::init();

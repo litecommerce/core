@@ -69,8 +69,10 @@ function Shipping_aupost_queryRates($_this, $options, $originalZipcode, $destina
     foreach($stypes as $stype => $stype_name) {
         $php_errormsg = "";
         $_this->error = "";
-        require_once "PEAR.php";
-        require_once "HTTP/Request.php";
+
+        require_once LC_ROOT_DIR . 'lib' . LC_DS . 'PEAR.php';
+        require_once LC_ROOT_DIR . 'lib' . LC_DS . 'HTTP' . LC_DS . 'Request.php';
+
         $http = new HTTP_Request($ap_host . $ap_url); 
         $http->_timeout = 5; // can't wait long when we are in shopping cart
         $track_errors = ini_get("track_errors");

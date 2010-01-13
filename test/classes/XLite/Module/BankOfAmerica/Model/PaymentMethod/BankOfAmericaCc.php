@@ -52,11 +52,9 @@ class XLite_Module_BankOfAmerica_Model_PaymentMethod_BankOfAmericaCc extends XLi
 
     function process($cart)
     {
-		require_once "classes/modules/BankOfAmerica/encoded.php";
+		require_once LC_MODULES_DIR . 'BankOfAmerica' . LC_DS . 'encoded.php';
+
         func_BankOfAmerica_process($cart, $this);
     }
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+

@@ -57,7 +57,7 @@ class XLite_Module_SnsIntegration_Controller_Admin_Module extends XLite_Controll
 
 	function checkSNSConnection()
 	{
-		require_once("modules/SnsIntegration/include/misc.php");
+		require_once LC_MODULES_DIR . 'SnsIntegration' . LC_DS . 'include' . LC_DS . 'misc.php';
 		$actions = array();
 		$action = "name=TestConnection";
 		$actions[]= $action;

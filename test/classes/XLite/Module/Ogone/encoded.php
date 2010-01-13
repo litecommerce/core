@@ -555,7 +555,9 @@ $post[] = "OwnerZip=".$userinfo["b_zipcode"];
 $post[] = "Withroot=yes";
 $post[] = "REMOTE_ADDR=".$REMOTE_ADDR;
 #SHA-1(OrderID + Amount + Currency + Cardno + PSPID + operation + additional string)
-include_once('modules/Ogone/kernel/sha1.php');
+
+include_once LC_MODULES_DIR . 'Ogone' . LC_DS . 'kernel' . LC_DS . 'sha1.php';
+
 $post[] = "SHASign=".sha1($pp_shift.$_orderids.(100*$cart["total_cost"]).$pp_curr.$userinfo["card_number"].$pp_merch.$pp_secret);
 
 // LiteCommerce code {{{

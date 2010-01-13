@@ -50,7 +50,7 @@ class XLite_Module_CyberSource_Model_PaymentMethod_CybersourceCc extends XLite_M
 
     function process($cart)
     {
-		require_once('modules/CyberSource/encoded.php');
+		require_once LC_MODULES_DIR . 'CyberSource' . LC_DS . 'encoded.php';
         return func_CyberSource_process($cart, $this);
     }
 }

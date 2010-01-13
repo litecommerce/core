@@ -41,8 +41,11 @@
 	$_REQUEST["target"] = "callback";
 	$_REQUEST["action"]	= "callback";
 	$_REQUEST["order_id"] = $_GET["order_id"];
-	chdir("../../..");
-	include_once "cart.php";	
+
+	// FIXME - is it needed?
+	// chdir("../../..");
+
+	include_once LC_ROOT_DIR . 'cart.php';	
 
 // WARNING:
 // Please ensure that you have no whitespaces / empty lines below this message.

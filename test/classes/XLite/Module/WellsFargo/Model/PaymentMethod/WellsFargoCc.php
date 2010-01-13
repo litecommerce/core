@@ -51,7 +51,7 @@ class XLite_Module_WellsFargo_Model_PaymentMethod_WellsFargoCc extends XLite_Mod
 
     function handleRequest($cart)
     {
-		require_once "classes/modules/WellsFargo/encoded.php";
+		require_once LC_MODULES_DIR . 'WellsFargo' . LC_DS . 'encoded.php';
         func_PaymentMethod_wells_fargo_cc_handleRequest($this, $cart);
     }
 

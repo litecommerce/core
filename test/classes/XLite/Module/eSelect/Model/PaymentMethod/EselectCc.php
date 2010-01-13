@@ -54,7 +54,7 @@ class XLite_Module_eSelect_Model_PaymentMethod_EselectCc extends XLite_Model_Pay
 	
     function process($cart)
 	{
-		require_once('modules/eSelect/encoded.php');
+		require_once LC_MODULES_DIR . 'eSelect' . LC_DS . 'encoded.php';
 		func_eSelect_process($cart, $this);
 	}
 

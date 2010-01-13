@@ -7,8 +7,10 @@ $gcheckout_timestamp = ((float)$usec + (float)$sec);
 $_REQUEST["target"] = $_POST["target"] = "payment_method";
 $_REQUEST["action"] = $_POST["action"] = "callback";
 $_REQUEST["payment_method"] = $_POST["payment_method"] = "google_checkout";
-			
-chdir("../../..");
-include "admin.php";
+
+// FIXME - is this needed?
+// chdir("../../..");
+
+include LC_ROOT_DIR . 'admin.php';
 
 ?>

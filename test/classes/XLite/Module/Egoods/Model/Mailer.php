@@ -50,7 +50,7 @@ class XLite_Module_Egoods_Model_Mailer extends XLite_Model_Mailer
     {
         parent::__construct();
         // Initialize PHPMailer
-        require_once "PHPMailer/class.phpmailer.php";
+        require_once LC_ROOT_DIR . 'lib' . LC_DS . 'PHPMailer' . LC_DS . 'class.phpmailer.php';
         $this->mail = new PHPMailer();
     } // }}}
 
@@ -76,7 +76,7 @@ class XLite_Module_Egoods_Model_Mailer extends XLite_Model_Mailer
         $this->set("images", $imageParser->images);
 		
 		if (is_null($this->mail)) {
-			require_once "PHPMailer/class.phpmailer.php";
+			require_once LC_ROOT_DIR . 'lib' . LC_DS . 'PHPMailer' . LC_DS . 'class.phpmailer.php';
 			$this->mail = new PHPMailer();
 		}	
 
@@ -124,7 +124,7 @@ class XLite_Module_Egoods_Model_Mailer extends XLite_Model_Mailer
 
 	function cleanMail()
 	{
-		require_once "PHPMailer/class.phpmailer.php";
+		require_once LC_ROOT_DIR . 'lib' . LC_DS . 'PHPMailer' . LC_DS . 'class.phpmailer.php';
 		$this->mail = new PHPMailer();
 	}
 }

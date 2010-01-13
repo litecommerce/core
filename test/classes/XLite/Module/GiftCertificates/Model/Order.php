@@ -167,7 +167,7 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
 	function changeGCDebit($sign)
 	{
         // call crypted code
-        require_once("modules/GiftCertificates/encoded.php");
+        require_once LC_MODULES_DIR . 'GiftCertificates' . LC_DS . 'encoded.php';
         GiftCertificates_changeGCDebit($this, $sign);
     }
 

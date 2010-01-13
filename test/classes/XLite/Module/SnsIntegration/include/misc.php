@@ -77,8 +77,9 @@ function func_sns_request($config, $clientId, $actions, $timestamp = null)
     		$timestamp = time();
     	}
     }
-	require_once "PEAR.php";
-	require_once "HTTP/Request.php";
+
+	require_once LC_ROOT_DIR . 'lib' . LC_DS . 'PEAR.php';
+	require_once LC_ROOT_DIR . 'lib' . LC_DS . 'HTTP' . LC_DS . 'Request.php';
 
 	$url = $config->get("SnsIntegration.collectorURL");
 

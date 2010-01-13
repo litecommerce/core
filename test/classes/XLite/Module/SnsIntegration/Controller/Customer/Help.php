@@ -52,7 +52,7 @@ class XLite_Module_SnsIntegration_Controller_Customer_Help extends XLite_Control
     {
 		parent::action_contactus();
 		
-		require_once("modules/SnsIntegration/include/misc.php");
+		require_once LC_MODULES_DIR . 'SnsIntegration' . LC_DS . 'include' . LC_DS . 'misc.php';
 		$snsClientId  = func_get_sns_client_id();
 		
 		$actions = array();
@@ -80,7 +80,7 @@ class XLite_Module_SnsIntegration_Controller_Customer_Help extends XLite_Control
 		if ($mode == "privacy_statement" ||
 		$mode == "terms_conditions") {
 
-			require_once("modules/SnsIntegration/include/misc.php");
+			require_once LC_MODULES_DIR . 'SnsIntegration' . LC_DS . 'include' . LC_DS . 'misc.php';
 			$snsClientId  = func_get_sns_client_id();
 
 			$actions = array();

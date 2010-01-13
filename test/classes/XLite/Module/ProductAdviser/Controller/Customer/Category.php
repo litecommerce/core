@@ -69,6 +69,8 @@ class XLite_Module_ProductAdviser_Controller_Customer_Category extends XLite_Con
         	$check = array();
             $check[] = "type='" . CUSTOMER_NOTIFICATION_PRICE . "'";
 
+			$email = '';
+
     		if ($this->auth->is("logged")) {
     			$profile = $this->auth->get("profile");
         		$profile_id = $profile->get("profile_id");

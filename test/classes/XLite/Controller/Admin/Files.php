@@ -51,10 +51,13 @@ class XLite_Controller_Admin_Files extends XLite_Controller_Admin_Abstract
     var $count = 0; //total files count;
     var $action = "default";
     
+	// FIXME - check this function 
     function handleRequest()
     {
-        require_once "Archive/Tar.php";
+        require_once LC_ROOT_DIR . 'lib' . LC_DS . 'Archive' . LC_DS . 'Tar.php';
+
         parent::handleRequest();
+
         die();
     }
     

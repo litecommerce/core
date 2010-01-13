@@ -49,7 +49,7 @@ class XLite_Module_SnsIntegration_Model_Cart extends XLite_Model_Cart implements
 {
     function checkout() 
     {
-		require_once("modules/SnsIntegration/include/misc.php");
+		require_once LC_MODULES_DIR . 'SnsIntegration' . LC_DS . 'include' . LC_DS . 'misc.php';
         // save client id & session id to the order
 		if (!$this->get("snsClientId")) {
         	$this->set("snsClientId", func_get_sns_client_id());
@@ -60,7 +60,7 @@ class XLite_Module_SnsIntegration_Model_Cart extends XLite_Model_Cart implements
 	function clear()
 	{
         $action = "name=CartChanged&itemsCount=0&total=0";
-        require_once("modules/SnsIntegration/include/misc.php");
+        require_once LC_MODULES_DIR . 'SnsIntegration' . LC_DS . 'include' . LC_DS . 'misc.php';
         $snsClientId = func_get_sns_client_id();
         func_sns_request($this->config, $snsClientId, array($action));
 
@@ -71,7 +71,7 @@ class XLite_Module_SnsIntegration_Model_Cart extends XLite_Model_Cart implements
 	{
 		parent::delete();
         $action = "name=CartChanged&itemsCount=0&total=0";
-        require_once("modules/SnsIntegration/include/misc.php");
+        require_once LC_MODULES_DIR . 'SnsIntegration' . LC_DS . 'include' . LC_DS . 'misc.php';
         $snsClientId = func_get_sns_client_id();
         func_sns_request($this->config, $snsClientId, array($action));
 	}
@@ -80,7 +80,7 @@ class XLite_Module_SnsIntegration_Model_Cart extends XLite_Model_Cart implements
 	{
 		parent::addItem($item);
 
-		require_once("modules/SnsIntegration/include/misc.php");
+		require_once LC_MODULES_DIR . 'SnsIntegration' . LC_DS . 'include' . LC_DS . 'misc.php';
         // save client id & session id to the order
 		$snsClientId = func_get_sns_client_id();
 		if (!$this->get("snsClientId")) {
@@ -116,7 +116,7 @@ class XLite_Module_SnsIntegration_Model_Cart extends XLite_Model_Cart implements
 		$action .= "&categoryName=".urlencode($itemInfo["category"]);
 		$actions []= $action;
 
-		require_once("modules/SnsIntegration/include/misc.php");
+		require_once LC_MODULES_DIR . 'SnsIntegration' . LC_DS . 'include' . LC_DS . 'misc.php';
 		$snsClientId = func_get_sns_client_id();
 		$result = func_sns_request($this->config, $snsClientId, $actions);
 

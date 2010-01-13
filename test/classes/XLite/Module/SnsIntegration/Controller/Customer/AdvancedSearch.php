@@ -45,7 +45,7 @@ class XLite_Module_SnsIntegration_Controller_Customer_AdvancedSearch extends XLi
     function getProducts() // {{{
     {
 		if (isset($this->mode) && isset($this->action) && $this->snsActionSend !== true && is_array($this->search)) {
-			require_once("modules/SnsIntegration/include/misc.php");
+			require_once LC_MODULES_DIR . 'SnsIntegration' . LC_DS . 'include' . LC_DS . 'misc.php';
 			$snsClientId  = func_get_sns_client_id();
 			$actions = array();
 			$action = "name=AdvancedSearch";

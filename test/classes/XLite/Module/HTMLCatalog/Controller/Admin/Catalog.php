@@ -167,7 +167,7 @@ document.location="admin.php?target=catalog&mode=success";
 	function isMemoryLimitChangeable()
 	{
 		if (version_compare($this->config->get("Version.version"), "2.2.35") <= 0) {
-			@include_once("modules/HTMLCatalog/functions.php");
+			@include_once LC_MODULES_DIR . 'HTMLCatalog' . LC_DS . 'functions.php';
 		}
 
 		$memory_limit = $this->get("memoryLimit");

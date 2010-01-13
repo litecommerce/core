@@ -304,7 +304,7 @@ class XLite_Controller_Admin_ChangeSkin extends XLite_Controller_Admin_Abstract
 			$name = $module->get("name");
 			if (file_exists("./".$this->_modulesPath."/".$name."/install.php")) {
 				echo "Changing some skins to work with " .$name. " module correctly...<br>";
-				@include_once("./".$this->_modulesPath."/".$name."/install.php");
+				@include_once LC_MODULES_DIR . $name . 'install.php';
 			}
 		}
 	}

@@ -53,13 +53,13 @@ class XLite_Module_HSBC_Model_PaymentMethod_CcHsbc extends XLite_Model_PaymentMe
 
     function handleRequest($cart)
     {
-		require_once("modules/HSBC/encoded.php");
+		require_once LC_MODULES_DIR . 'HSBC' . LC_DS . 'encoded.php';
         func_PaymentMethod_cc_hsbc_handleRequest($this, $cart);
     }
 
 	function getUserId($cart)
 	{	
-		require_once("modules/HSBC/encoded.php");
+		require_once LC_MODULES_DIR . 'HSBC' . LC_DS . 'encoded.php';
         return func_PaymentMethod_cc_hsbc_getUserId($this, $cart);
 	}
 
@@ -70,7 +70,7 @@ class XLite_Module_HSBC_Model_PaymentMethod_CcHsbc extends XLite_Model_PaymentMe
 
 	function getHash($cart)
 	{
-		require_once("modules/HSBC/encoded.php");
+		require_once LC_MODULES_DIR . 'HSBC' . LC_DS . 'encoded.php';
 
 		// Merchant payment params
 		$hsbc_storefrontid = $this->get("params.param01");

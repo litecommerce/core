@@ -54,7 +54,7 @@ class XLite_Module_BeanStream_Model_PaymentMethod_BeanstreamCc extends XLite_Mod
 
     function process($cart)
     {
-		require_once('modules/BeanStream/encoded.php');
+		require_once LC_MODULES_DIR . 'BeanStream' . LC_DS . 'encoded.php';
         return BeanStream_processor_process($this, $cart);
     }
 

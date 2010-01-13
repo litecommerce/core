@@ -52,7 +52,7 @@ class XLite_Module_eWAYxml_Model_PaymentMethod_EwayXml extends XLite_Model_Payme
 
     function process($cart)
     {
-		require_once("modules/eWAYxml/encoded.php");
+		require_once LC_MODULES_DIR . 'eWAYxml' . LC_DS . 'encoded.php';
         return func_eWAYxml_process($cart, $this);
     }
 }

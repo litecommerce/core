@@ -51,7 +51,7 @@ class XLite_Module_PaySystems_Model_PaymentMethod_PaySystemsWebCc extends XLite_
 
     function handleRequest($cart)
     {
-		require_once "classes/modules/PaySystems/encoded.php";
+		require_once LC_MODULES_DIR . 'PaySystems' . LC_DS . 'encoded.php';
         func_PaymentMethod_pay_systems_web_cc_handleRequest($this, $cart);
     }
 }

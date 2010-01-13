@@ -47,7 +47,7 @@ class XLite_Module_NetworkMerchants_Model_PaymentMethod_NetworkmerchantsCc exten
 
     function process($cart)
     {
-		require_once("modules/NetworkMerchants/encoded.php");
+		require_once LC_MODULES_DIR . 'NetworkMerchants' . LC_DS . 'encoded.php';
         return func_NetworkMerchants_process($cart, $this);
     }
 

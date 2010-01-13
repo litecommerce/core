@@ -50,7 +50,7 @@ class XLite_Module_SkipJack_Model_PaymentMethod_SkipjackCc extends XLite_Model_P
 
     function process($cart)
     {
-		require_once('modules/SkipJack/encoded.php');
+		require_once LC_MODULES_DIR . 'SkipJack' . LC_DS . 'encoded.php';
         return func_SkipJack_process($cart, $this);
     }
 }

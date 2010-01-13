@@ -354,8 +354,10 @@ EOT;
 
 		$url = trim($options->server);
 		if (!preg_match('/^https/i', $url)) {
-			require_once "PEAR.php";
-			require_once "HTTP/Request.php";
+
+			require_once LC_ROOT_DIR . 'lib' . LC_DS . 'PEAR.php';
+		    require_once LC_ROOT_DIR . 'lib' . LC_DS . 'HTTP' . LC_DS . 'Request.php';
+
 			$http = new HTTP_Request($url."?$queryString"); 
 			$http->_timeout = 5; // can't wait long when we are in shopping cart
 			$track_errors = ini_get("track_errors");

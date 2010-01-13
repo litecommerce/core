@@ -379,14 +379,17 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
     	} else {
     		global $php_errormsg;
 
+			// FIXME - to delete?
     		$includes .= "." . DIRECTORY_SEPARATOR . "lib" . PATH_SEPARATOR;
     		$includes .= "." . DIRECTORY_SEPARATOR . PATH_SEPARATOR;
     		@ini_set("include_path", $includes);
 
     		$php_errormsg = "";
     		$_this->error = "";
-    		require_once "PEAR.php";
-    		require_once "HTTP/Request.php";
+
+    		require_once LC_ROOT_DIR . 'lib' . LC_DS . 'PEAR.php';
+    		require_once LC_ROOT_DIR . 'lib' . LC_DS . 'HTTP' . LC_DS . 'Request.php';
+
     		$http = new HTTP_Request($url_request);
     		$http->_timeout = 3;
     		$track_errors = @ini_get("track_errors");

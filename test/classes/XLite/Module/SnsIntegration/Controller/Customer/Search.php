@@ -51,7 +51,7 @@ class XLite_Module_SnsIntegration_Controller_Customer_Search extends XLite_Contr
     function getProducts() // {{{
     {
 		if ($this->snsActionSend !== true) {
-			require_once("modules/SnsIntegration/include/misc.php");
+			require_once LC_MODULES_DIR . 'SnsIntegration' . LC_DS . 'include' . LC_DS . 'misc.php';
 			$snsClientId  = func_get_sns_client_id();
 			$actions = array();
 			$action = "name=SiteSearch";
