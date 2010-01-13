@@ -55,7 +55,7 @@ class XLite_Controller_Customer_Login extends XLite_Controller_Customer_Abstract
     {
         $this->profile = $this->auth->login($_POST["login"], $_POST["password"]);
 
-        if ($this->profile == ACCESS_DENIED) {
+        if ($this->profile === ACCESS_DENIED) {
             $this->set("valid", false);
             return;
         }   

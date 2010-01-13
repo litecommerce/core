@@ -44,6 +44,8 @@
 */
 class XLite_Module_Affiliate_Controller_Abstract extends XLite_Controller_Abstract implements XLite_Base_IDecorator
 {
+	protected $shopLayout = null;
+
     function init()
     {
         parent::init();

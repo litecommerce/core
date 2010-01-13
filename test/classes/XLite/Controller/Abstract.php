@@ -348,7 +348,7 @@ abstract class XLite_Controller_Abstract extends XLite_View
         $this->xlite->profiler->enabled = false;
         $this->xlite->done();
 
-		if ($this->get(returnUrlAbsolute))
+		if ($this->get('returnUrlAbsolute'))
 		{
 			header("Location: " . $location);
 		} 

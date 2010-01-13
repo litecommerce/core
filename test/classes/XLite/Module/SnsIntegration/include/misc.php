@@ -48,23 +48,20 @@ define('PERSONALIZE_CLIENT_ID', 'personal_client_id');
 
 function func_get_sns_client_id()
 {
-    $client_id = (int)$_COOKIE[PERSONALIZE_CLIENT_ID];
-    if (!empty($client_id)) {
-        return $client_id;
-    }
+	if (!empty($_COOKIE[PERSONALIZE_CLIENT_ID])) {
+		return intval($_COOKIE[PERSONALIZE_CLIENT_ID]);
+	}
 
-    $remote_addr = $_SERVER['REMOTE_ADDR'];
-    $forwarded_for = $_SERVER['HTTP_X_FORWARDED_FOR'];
-    if (!empty($forwarded_for)) {
-        $remote_addr = substr($forwarded_for . ", " . $remote_addr, 0, 255);
-    }
+	$remote_addr = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
 
-    $accept_language = $_SERVER["HTTP_ACCEPT_LANGUAGE"];
-    $user_agent = $_SERVER["HTTP_USER_AGENT"];
+	if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+		$remote_addr = substr($_SERVER['HTTP_X_FORWARDED_FOR'] . ', ' . $remote_addr, 0, 255);
+	}
 
-    $token = crc32($remote_addr) ^ crc32($accept_language) ^ crc32($user_agent);
+    $accept_language = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : '';
+    $user_agent      = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
 
-    return $token;
+    return crc32($remote_addr) ^ crc32($accept_language) ^ crc32($user_agent);
 }
 
 function func_sns_request($config, $clientId, $actions, $timestamp = null)
