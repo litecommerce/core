@@ -51,6 +51,8 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
 
 	protected $options = null;
 
+	protected $globalFlags = array();
+
 	public $config = null;
 
 	public $_xlite_form_id = null;
@@ -233,6 +235,16 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     {
         return version_compare(PHP_VERSION, $version, '<');
     }
+
+	public function setGlobalFlag($name, $value)
+	{
+		$this->globalFlags[$name] = $value;
+	}
+
+	public function getGlobalFlag($name)
+	{
+		return isset($this->globalFlags[$name]) ? $this->globalFlags[$name] : null;
+	}
 }
 
 // WARNING :

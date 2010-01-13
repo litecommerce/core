@@ -58,7 +58,7 @@ class XLite_Logger_Client extends Log
     * @param string $ident     (optional) The identification field.
     * @param array  $conf      (ignored) The connection configuration array.
     */
-    function Log_debug($log_name, $ident = '', $conf = false) {
+    function __construct($log_name, $ident = '', $conf = false) {
         $this->ident = $ident;
     }
 

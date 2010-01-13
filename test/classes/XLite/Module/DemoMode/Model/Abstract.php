@@ -44,7 +44,7 @@ class XLite_Module_DemoMode_Model_Abstract extends XLite_Model_Abstract implemen
 		parent::__construct($id);
 		global $safeData;
 		if (!isset($safeData)) {
-			$safeData = $this->session->get('safeData');
+			$safeData = XLite_Model_Session::getInstance()->get('safeData');
 			if (is_null($safeData)) {
 				$safeData = array();
 			}
@@ -62,7 +62,7 @@ class XLite_Module_DemoMode_Model_Abstract extends XLite_Model_Abstract implemen
 			$ptr = $ptr[$key];
 		}
 		$ptr = $value;
-		$this->session->set('safeData', $safeData);
+		XLite_Model_Session::getInstance()->set('safeData', $safeData);
 	}
 
 	function _getSessionVar($path)
@@ -83,7 +83,7 @@ class XLite_Module_DemoMode_Model_Abstract extends XLite_Model_Abstract implemen
 
 	function _updateProperties(array $properties = array())
 	{
-		if (!$this->session->get("superUser")) {
+		if (!XLite_Model_Session::getInstance()->get("superUser")) {
 			$path = array($this->alias, '');
 			foreach ($this->primaryKey as $pkey) {
 				$path[] = $properties[$pkey];
@@ -101,7 +101,7 @@ class XLite_Module_DemoMode_Model_Abstract extends XLite_Model_Abstract implemen
 
 	function update()
 	{
-		if (!$this->session->get("superUser")) {
+		if (!XLite_Model_Session::getInstance()->get("superUser")) {
 			$path = array($this->alias, '');
 			foreach ($this->primaryKey as $pkey) {
 				$path[] = $this->properties[$pkey];

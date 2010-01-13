@@ -140,7 +140,7 @@ class XLite_Model_Abstract extends XLite_Base
         $args = func_get_args();
         if (count($args)) {
             for ($i=0; $i<count($this->primaryKey); $i++) {
-                if (!is_null($args[$i])) {
+                if (isset($args[$i]) && !is_null($args[$i])) {
 					if ($this->primaryKey[$i] == $this->autoIncrement) {
 						if (!is_numeric($args[$i])) $args[$i] = 0;
 					}

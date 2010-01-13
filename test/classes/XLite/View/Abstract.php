@@ -360,11 +360,11 @@ class XLite_View_Abstract extends XLite_Base
         }
     }
 
-    function isEqual(&$base1, &$base2, $field) {
+    function isEqual($base1, $base2, $field) {
         return $base1->get($field) == $base2->get($field);
     }
 
-    function isEmpty(&$data)
+    function isEmpty($data)
     {	
         return empty($data);
     }

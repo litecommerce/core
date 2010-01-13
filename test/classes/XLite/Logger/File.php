@@ -72,7 +72,7 @@ class XLite_Logger_File extends Log {
      * @param $ident    (optional) The identity string.
      * @param $conf     (optional) The configuration array.
      */
-    function Log_file ($log_name, $ident = '', $conf = false) {
+    function __construct ($log_name, $ident = '', $conf = false) {
         $filename_pattern = "/\.php$/";
         if(!preg_match($filename_pattern, $log_name)){
             $log_name .= ".php";

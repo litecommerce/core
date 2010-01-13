@@ -50,7 +50,7 @@ require_once LC_ROOT_DIR . 'lib' . LC_DS . 'Log.php';
 */
 class XLite_Logger_Null extends Log
 {
-    function Log_null()
+    function __construct()
     {
     }
 

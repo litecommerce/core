@@ -362,7 +362,7 @@ abstract class XLite_Controller_Abstract extends XLite_View
     * Get the full URL of the page.
     * Example: shopURL("cart.php") = "http://domain/dir/cart.php
     */
-    function shopURL($url, $secure = false)
+    function shopURL($url, $secure = false, $pure_url = false)
     {
 		return $this->xlite->shopURL($url, $secure);
     }

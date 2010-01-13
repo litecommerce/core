@@ -50,7 +50,7 @@ class XLite_Module_ProductAdviser_Model_Notification extends XLite_Model_Abstrac
 	(
 		"notify_id" 		=> 0,
 		"type" 				=> "",
-		"status"			=> CUSTOMER_NOTIFICATION_QUEUED,
+		"status"			=> CUSTOMER_REQUEST_QUEUED,
 		"notify_key"		=> "",
 		"date" 				=> 0,
 		"profile_id" 		=> 0,

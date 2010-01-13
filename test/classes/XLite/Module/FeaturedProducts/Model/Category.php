@@ -44,6 +44,8 @@
 */
 class XLite_Module_FeaturedProducts_Model_Category extends XLite_Model_Category implements XLite_Base_IDecorator
 {
+	protected $featuredProducts = null;
+
     function getFeaturedProducts()
     {
         if (is_null($this->featuredProducts)) {

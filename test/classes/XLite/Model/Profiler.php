@@ -45,7 +45,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
+class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton 
 {
     var $queries = array();
     var $query_time = array();

@@ -551,8 +551,9 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 
     function calcTotal()
     {
-		if ($this->xlite->AOM_skip_calcTotal)
+		if (XLite::getInstance()->getGlobalFlag('AOM_skip_calcTotal')) {
 			return;
+		}
 
         $this->_saveTotals();
 
