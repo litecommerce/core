@@ -54,8 +54,8 @@ define('PL', "PL");
 define('OTHER_ORIGINS', "OTHER_ORIGINS");*/
 
 class XLite_Module_UPSOnlineTools_Model_Shipping_Ups extends XLite_Model_Shipping_Online
-{
-    var $error = 0;
+{	
+    public $error = 0;
 
     public function __construct($param = null)
     {

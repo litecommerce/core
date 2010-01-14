@@ -47,8 +47,8 @@
 *
 */
 class XLite_Controller_Admin_PaymentMethods extends XLite_Controller_Admin_Abstract
-{
-	var $configurableMethods;
+{	
+	public $configurableMethods;
 
 	function hasConfigurableMethods()
 	{

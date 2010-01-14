@@ -43,13 +43,13 @@
 * @access public
 */
 class XLite_Module_Egoods_Model_PinSettings extends XLite_Model_Abstract
-{
-	var $alias = "pin_settings";
+{	
+	public $alias = "pin_settings";	
 
-	var $primaryKey = array("product_id");
-	var $defaultOrder = "product_id";
+	public $primaryKey = array("product_id");	
+	public $defaultOrder = "product_id";	
 
-	var $fields = array(
+	public $fields = array(
 			"product_id"	=> 0,
 			"pin_type"		=> '',
 			"gen_cmd_line"	=> '',

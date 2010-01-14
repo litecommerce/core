@@ -813,7 +813,7 @@ class Decorator
         if ($this->isNeedRebuild()) {
 
             // Trying to create folder if not exists
-            if (!$this->isCacheDirExists() && !@mkdir(LC_CLASSES_CACHE_DIR, 0755)) {
+            if (!$this->isCacheDirExists() && !mkdirRecursive(LC_CLASSES_CACHE_DIR, 0755)) {
                 die ('Unable to create classes cache directory');
             }
 

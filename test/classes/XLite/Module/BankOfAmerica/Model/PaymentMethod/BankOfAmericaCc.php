@@ -45,10 +45,10 @@
 * @version $Id$
 */
 class XLite_Module_BankOfAmerica_Model_PaymentMethod_BankOfAmericaCc extends XLite_Model_PaymentMethod_CreditCard
-{
-	var $configurationTemplate = "modules/BankOfAmerica/config.tpl";
-	var $hasConfigurationForm = true;
-	var $processorName = "BankOfAmerica";
+{	
+	public $configurationTemplate = "modules/BankOfAmerica/config.tpl";	
+	public $hasConfigurationForm = true;	
+	public $processorName = "BankOfAmerica";
 
     function process($cart)
     {

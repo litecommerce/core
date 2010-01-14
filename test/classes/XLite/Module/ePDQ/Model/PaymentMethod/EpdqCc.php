@@ -43,11 +43,11 @@
 * @version $Id$
 */
 class XLite_Module_ePDQ_Model_PaymentMethod_EpdqCc extends XLite_Model_PaymentMethod_CreditCard
-{
-	var $configurationTemplate = "modules/ePDQ/config.tpl";
-	var $formTemplate = "modules/ePDQ/checkout.tpl";
-    var $hasConfigurationForm = true;
-    var $processorName = "ePDQ";
+{	
+	public $configurationTemplate = "modules/ePDQ/config.tpl";	
+	public $formTemplate = "modules/ePDQ/checkout.tpl";	
+    public $hasConfigurationForm = true;	
+    public $processorName = "ePDQ";
 
     function handleRequest($cart)
     {

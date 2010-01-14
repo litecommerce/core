@@ -45,11 +45,11 @@
 * @version $Id$
 */
 class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
-{
-    var $tmpdir    = null;
-    var $homedir   = null;
-    var $exe       = null;
-    var $recipient = null;
+{	
+    public $tmpdir    = null;	
+    public $homedir   = null;	
+    public $exe       = null;	
+    public $recipient = null;
 
 	protected $_publicKey = null;
 	protected $_publicKeyInfo = null;

@@ -44,12 +44,12 @@
 * @version $Id$
 */
 class XLite_Module_GiftCertificates_Validator_GCValidator extends XLite_Validator_Abstract
-{
-    var $template = "modules/GiftCertificates/gc_validator.tpl";
-    var $doesnotexist = false;
-    var $expired = false;
-    var $notactive = false;
-    var $gcid = null;
+{	
+    public $template = "modules/GiftCertificates/gc_validator.tpl";	
+    public $doesnotexist = false;	
+    public $expired = false;	
+    public $notactive = false;	
+    public $gcid = null;
     
     function isValid()
     {

@@ -46,8 +46,8 @@
 * @version $Id$
 */
 class XLite_Controller_Customer_Category extends XLite_Controller_Customer_Abstract
-{
-    var $params = array("target", "category_id");
+{	
+    public $params = array("target", "category_id");
 
     function init()
     {

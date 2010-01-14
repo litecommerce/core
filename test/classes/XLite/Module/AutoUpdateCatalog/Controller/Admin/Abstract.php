@@ -44,8 +44,8 @@
 *
 */
 class XLite_Module_AutoUpdateCatalog_Controller_Admin_Abstract extends XLite_Controller_Admin_Abstract implements XLite_Base_IDecorator
-{
-	var $isAlreadyRedirected = false;
+{	
+	public $isAlreadyRedirected = false;
 
     function get($name)
     {

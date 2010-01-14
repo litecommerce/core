@@ -45,8 +45,8 @@
 */
 
 class XLite_Module_SnsIntegration_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
-{
-    var $sendSnsCartChanged = false;
+{	
+    public $sendSnsCartChanged = false;
 
     public function __construct($param = null) // {{{
     {

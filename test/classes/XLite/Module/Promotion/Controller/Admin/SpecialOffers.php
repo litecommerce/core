@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Module_Promotion_Controller_Admin_SpecialOffers extends XLite_Controller_Admin_Abstract
-{
-    var $specialOffers = null;
+{	
+    public $specialOffers = null;
 
 	function getSpecialOffers()
     {

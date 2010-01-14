@@ -47,24 +47,24 @@
 */
 
 class XLite_Module_UPSOnlineTools_Model_Container extends XLite_Base
-{
-	var $container_id;
-	var $width, $length, $height;
-	var $weight_limit;
-	var $weight;
-	var $levels;
+{	
+	public $container_id;	
+	public $width, $length, $height;	
+	public $weight_limit;	
+	public $weight;	
+	public $levels;	
 
-	var $threshold;
-	var $optimize_method;
+	public $threshold;	
+	public $optimize_method;	
 
-	var $container_type;
+	public $container_type;
 
-	// shipping params
-	var $additional_handling = false;
-	var $declared_value = 0;
-	var $declared_value_set = false;
+	// shipping params	
+	public $additional_handling = false;	
+	public $declared_value = 0;	
+	public $declared_value_set = false;	
 
-	var $extra_item_ids = null;
+	public $extra_item_ids = null;
 
 	public function __construct()
 	{

@@ -44,8 +44,8 @@
 * @version $Id$
 */
 class XLite_Module_LayoutOrganizer_Model_TemplatesScheme extends XLite_Model_Abstract
-{
-	var $fields = array
+{	
+	public $fields = array
 	(
 		"scheme_id" 	=> 0,
 		"type"			=> 0,
@@ -55,11 +55,11 @@ class XLite_Module_LayoutOrganizer_Model_TemplatesScheme extends XLite_Model_Abs
 		"cat_template"	=> "",
 		"scat_template"	=> "",
 		"prod_template"	=> "",
-	);
-	var $primaryKey = array("scheme_id");
-    var $autoIncrement = "scheme_id";
-	var $defaultOrder = "order_by, name";
-	var $alias = "templates_schemes";
+	);	
+	public $primaryKey = array("scheme_id");	
+    public $autoIncrement = "scheme_id";	
+	public $defaultOrder = "order_by, name";	
+	public $alias = "templates_schemes";
 
 	function getFileName()
 	{

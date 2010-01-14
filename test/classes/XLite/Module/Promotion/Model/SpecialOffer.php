@@ -48,8 +48,8 @@
 * @version $Id$
 */
 class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_Abstract
-{
-    var $fields = array(
+{	
+    public $fields = array(
 		'offer_id' => 0,
 		'date' => 0,
 		'start_date' => 0,
@@ -70,20 +70,20 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_Abstract
 		'order_id' => 0,
 		'bonusAllCountries' => 1,
 		'bonusCountries' => ''
-		);
-	var $alias = "special_offers";
-	var $autoIncrement = "offer_id";
-	var $_range = "order_id=0";
+		);	
+	public $alias = "special_offers";	
+	public $autoIncrement = "offer_id";	
+	public $_range = "order_id=0";	
 
-	var $product = null;
-	var $category = null;
-	var $products = null;
-	var $bonusProducts = null;
-	var $bonusCategory = null;
-	var $bonusPrices = null;
-	var $defaultOrder = "date";
-	var $condition = null;
-	var $bonus = null;
+	public $product = null;	
+	public $category = null;	
+	public $products = null;	
+	public $bonusProducts = null;	
+	public $bonusCategory = null;	
+	public $bonusPrices = null;	
+	public $defaultOrder = "date";	
+	public $condition = null;	
+	public $bonus = null;
 	
 	function getProduct()
     {

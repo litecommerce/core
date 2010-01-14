@@ -44,8 +44,8 @@
 * @version $Id$
 */
 class XLite_Module_Affiliate_View_PartnerFieldValidator extends XLite_Validator_Abstract
-{
-    var $template = "common/required_validator.tpl";
+{	
+    public $template = "common/required_validator.tpl";
     
     function isVisible()
     {

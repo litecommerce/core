@@ -44,9 +44,9 @@
 * @version $Id$
 */
 class XLite_Module_ProductAdviser_Controller_Admin_CustomerNotifications extends XLite_Controller_Admin_Abstract
-{
-	var $notifications = null;
-	var $notificationsNumber = 0;
+{	
+	public $notifications = null;	
+	public $notificationsNumber = 0;
 
 	public function __construct()
 	{

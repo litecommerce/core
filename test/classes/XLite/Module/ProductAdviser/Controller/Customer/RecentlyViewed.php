@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Module_ProductAdviser_Controller_Customer_RecentlyViewed extends XLite_Controller_Abstract
-{
-	var $productsNumber = 0;
+{	
+	public $productsNumber = 0;
 
     function getRecentliesProducts()
     {

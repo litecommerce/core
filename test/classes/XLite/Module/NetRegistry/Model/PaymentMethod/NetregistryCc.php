@@ -46,10 +46,10 @@
 * @version $Id$
 */
 class XLite_Module_NetRegistry_Model_PaymentMethod_NetregistryCc extends XLite_Model_PaymentMethod_CreditCard
-{
-	var $configurationTemplate = "modules/NetRegistry/config.tpl";
-    var $hasConfigurationForm = true;
-    var $processorName = "NetRegistry";
+{	
+	public $configurationTemplate = "modules/NetRegistry/config.tpl";	
+    public $hasConfigurationForm = true;	
+    public $processorName = "NetRegistry";
 
     function process($cart)
     {

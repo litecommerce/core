@@ -43,8 +43,8 @@
 * @version $Id$
 */
 class XLite_Module_Affiliate_Controller_Customer_PartnerBannerStats extends XLite_Module_Affiliate_Controller_Partner
-{
-    var $statsTotal = array("views" => 0, "click" => 0, "rate" => 0);
+{	
+    public $statsTotal = array("views" => 0, "click" => 0, "rate" => 0);
 
     function fillForm()
     {

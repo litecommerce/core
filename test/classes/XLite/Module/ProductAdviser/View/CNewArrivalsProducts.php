@@ -46,9 +46,9 @@
 * @version $Id$
 */
 class XLite_Module_ProductAdviser_View_CNewArrivalsProducts extends XLite_View
-{
-	var $productsNumber = 0;
-	var $additionalPresent = false;
+{	
+	public $productsNumber = 0;	
+	public $additionalPresent = false;
 
     function getVisible()
     {

@@ -46,15 +46,15 @@
 * @version $Id$
 */
 class XLite_Model_FieldValue extends XLite_Model_Abstract
-{
-    var $fields = array(
+{	
+    public $fields = array(
             "product_id" => 0,
             "field_id"   => 0,
             "value"      => "",
-            );
+            );	
 
-    var $primaryKey = array("product_id", "field_id");
-    var $alias      = "extra_field_values";
+    public $primaryKey = array("product_id", "field_id");	
+    public $alias      = "extra_field_values";
 } 
 
 // WARNING:

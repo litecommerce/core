@@ -40,30 +40,30 @@
 */
 class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Order implements XLite_Base_IDecorator
 {
-	// settings // {{{  
-	var $page = "order_info";
-	var $totals_row_counter = 0;
-	var $profile_row_counter = 0;
-	var $pages = array 
+	// settings // {{{	  
+	public $page = "order_info";	
+	public $totals_row_counter = 0;	
+	public $profile_row_counter = 0;	
+	public $pages = array 
 	(
 		"order_info" 	=> "Order #%s Info",
 		"order_history" => "Order History",
 		"order_edit"	=> "Edit Order"
-	); 
+	);	 
 			
-	var $pageTemplates = array 
+	public $pageTemplates = array 
 	(
 		"order_info"	=> "modules/AOM/order.tpl",
 		"order_history"	=> "modules/AOM/order_history.tpl",
 		"order_edit"	=> "modules/AOM/order_edit.tpl",		
 		"order_preview" => "modules/AOM/order_edit/preview.tpl"
-	);
+	);	
 			
-	var $clone_order 	= null;
-	var $profile		= null;
-	var $clone_profile 	= null;
-	var $products	 	= null;
-	var $productsFound 	= null;
+	public $clone_order 	= null;	
+	public $profile		= null;	
+	public $clone_profile 	= null;	
+	public $products	 	= null;	
+	public $productsFound 	= null;
 
  	// }}}   
 

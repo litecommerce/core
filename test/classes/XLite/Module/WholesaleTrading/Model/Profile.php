@@ -43,9 +43,9 @@
 * @version $Id$
 */
 class XLite_Module_WholesaleTrading_Model_Profile extends XLite_Model_Profile implements XLite_Base_IDecorator
-{
-	var $_membershipChanged = false;
-	var $_oldMembership = "";
+{	
+	public $_membershipChanged = false;	
+	public $_oldMembership = "";
 
 	public function __construct($p_id = null)
 	{

@@ -46,9 +46,9 @@
 * @version $Id$
 */
 class XLite_Controller_Customer_Search extends XLite_Controller_Customer_Abstract
-{
-    var $params = array("target", "substring");
-    var $products = null;
+{	
+    public $params = array("target", "substring");	
+    public $products = null;
     
     function init()
     {

@@ -46,17 +46,17 @@
 * @version $Id$
 */
 class XLite_Module_Newsletters_Model_NewsList extends XLite_Model_Abstract
-{
-    var $fields = array(
+{	
+    public $fields = array(
             "list_id"  => 0,
             "name" => "",
             "description"  => "",
             "show_as_news" => 0,
             "enabled" => 1
-            );
+            );	
 
-    var $autoIncrement = "list_id";
-    var $alias = "newslists";
+    public $autoIncrement = "list_id";	
+    public $alias = "newslists";
 
 	protected $showedListsNumber = null;
 

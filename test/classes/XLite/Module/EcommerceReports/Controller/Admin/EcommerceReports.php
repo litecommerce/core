@@ -43,17 +43,17 @@
 * @version $Id$
 */
 class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports extends XLite_Controller_Admin_Stats
-{
-    var $page = "product_sales";    
-    var $pages = array(
+{	
+    public $page = "product_sales";	    
+    public $pages = array(
             'general_stats' => 'General statistics',
             'product_sales' => 'Product sales',
             'sales_dynamics' => 'Sales dynamics',
             'geographic_sales' => 'Sales by geography',
             'sp_stats' => 'Shipping/Payment stats',
             'focused_audience' => 'Focused audience'
-            );
-    var $rawItems = null;
+            );	
+    public $rawItems = null;
 
     function init() // {{{
     {

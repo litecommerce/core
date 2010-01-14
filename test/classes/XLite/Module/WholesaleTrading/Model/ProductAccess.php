@@ -48,25 +48,25 @@ class XLite_Module_WholesaleTrading_Model_ProductAccess extends XLite_Model_Abst
     /**
     * @var string $alias The product access database table alias.
     * @access public
-    */
-    var $alias = "product_access";
+    */	
+    public $alias = "product_access";	
 
-    var $primaryKey = array("product_id");
+    public $primaryKey = array("product_id");	
     
-    var $importError = "";
+    public $importError = "";
 
     /**
     * @var array $fields product access properties.
     * @access private
-    */
-    var $fields = array(
+    */	
+    public $fields = array(
 			"product_id"		=> 0,
 			"show_group"		=> 'all',
 			"show_price_group"	=> 'all',
 			"sell_group"		=> 'all'
-        );
+        );	
 
-    var $importFields = array(
+    public $importFields = array(
 			"NULL"				=> false,
             "sku"       		=> false,
 			"product"           => false,

@@ -43,13 +43,13 @@
 * @access public
 */
 class XLite_Module_Egoods_Model_DownloadableLink extends XLite_Model_Abstract
-{
-	var $alias = "downloadable_links";
+{	
+	public $alias = "downloadable_links";	
 
-	var $primaryKey = array("access_key");
-	var $defaultOrder = "file_id";
+	public $primaryKey = array("access_key");	
+	public $defaultOrder = "file_id";	
 
-	var $fields = array(
+	public $fields = array(
 			"access_key"			=> '',
 			"file_id"				=> 0,
 			"available_downloads"	=> 9999,

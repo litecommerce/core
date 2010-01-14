@@ -49,26 +49,26 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
     /**
     * @var string $alias The credit cards database table alias.
     * @access public
-    */
-    var $alias = "inventories";
+    */	
+    public $alias = "inventories";	
 
-    var $primaryKey = array("inventory_id");
-    var $defaultOrder = "inventory_id";
+    public $primaryKey = array("inventory_id");	
+    public $defaultOrder = "inventory_id";
 
     /**
     * @var array $fields The inventory card properties.
     * @access private
-    */
-    var $fields = array(
+    */	
+    public $fields = array(
             'inventory_id'    => '',  
             'inventory_sku'   => '',
             'amount'          => 0,
             'low_avail_limit' => 10,
             'enabled'         => 1,
             'order_by'        => 0,
-        );
+        );	
 
-    var $importFields = array(
+    public $importFields = array(
             "NULL" => false,
             "sku"  => false,
             "name" => false,

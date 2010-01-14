@@ -44,18 +44,18 @@
 * @version $Id$
 */
 class XLite_Module_ProductAdviser_Model_ProductRecentlyViewed extends XLite_Model_Abstract
-{
-	var $fields = array
+{	
+	public $fields = array
 	(
 		"sid"			=> "",
 		"product_id" 	=> 0,
 		"views_number"	=> 0,
 		"last_viewed"	=> 0,
-	);
-	var $primaryKey = array("sid", "product_id");
-	var $alias = "products_recently_viewed";
-	var $defaultOrder = "views_number DESC, last_viewed DESC";
-	var $product = null;
+	);	
+	public $primaryKey = array("sid", "product_id");	
+	public $alias = "products_recently_viewed";	
+	public $defaultOrder = "views_number DESC, last_viewed DESC";	
+	public $product = null;
 
 	public function __construct()
 	{

@@ -46,8 +46,8 @@
 */
 
 class XLite_Validator_ArrayFieldValidator extends XLite_Validator_Abstract
-{
-    var $template = "common/required_validator.tpl";
+{	
+    public $template = "common/required_validator.tpl";
 
     function isValid()
     {

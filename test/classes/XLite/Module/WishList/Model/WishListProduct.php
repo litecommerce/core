@@ -40,22 +40,22 @@
 */
 
 class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
-{
-	var $product 	= null;
-	var $orderItem 	= null;
+{	
+	public $product 	= null;	
+	public $orderItem 	= null;	
    	
-	var $fields = array (
+	public $fields = array (
 		"item_id"		=>  0,
 		"wishlist_id"	=>	0,
 		"product_id"	=> 	0,
 		"amount"		=>  0,
 		"purchased"		=> 	0,
 		"options"		=> 	0,
-		"order_by"		=>	0);
+		"order_by"		=>	0);	
 		
-	var $alias 			= "wishlist_products";
-	var $defaultOrder 	= "order_by";
-	var $primaryKey 	= array("item_id","wishlist_id");
+	public $alias 			= "wishlist_products";	
+	public $defaultOrder 	= "order_by";	
+	public $primaryKey 	= array("item_id","wishlist_id");
 
 	function getProduct() // {{{ 
 	{

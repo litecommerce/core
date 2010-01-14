@@ -46,9 +46,9 @@
 * @version $Id$
 */
 class XLite_View_ImageUpload extends XLite_View
-{
-	var $showDelete = true;
-    var $template = "common/image_upload.tpl";
+{	
+	public $showDelete = true;	
+    public $template = "common/image_upload.tpl";
 
     function hasImage()
     {

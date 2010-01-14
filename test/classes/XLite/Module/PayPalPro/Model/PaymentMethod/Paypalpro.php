@@ -41,8 +41,8 @@
 
 class XLite_Module_PayPalPro_Model_PaymentMethod_Paypalpro extends XLite_Model_PaymentMethod_CreditCard
 {
-	// Pending reasons array // {{{ 
-	 var $pendingReasons = array(
+	// Pending reasons array // {{{	 
+	 public $pendingReasons = array(
 		'echeck' => 'The payment is pending because it was made by an eCheck, which has not yet cleared',
 		'multi_currency' => 'You do not have a balance in the currency sent, and you do not have your Payment Receiving Preferences set to automatically convert and accept this payment. You must manually accept or deny this payment',
 		'intl' => 'The payment is pending because you, the merchant, hold an international account and do not have a withdrawal method.  You must manually accept or deny this payment from your Account Overview',
@@ -53,8 +53,8 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_Paypalpro extends XLite_Model_P
 		'other' => 'The payment is pending for some reason. For more information, contact PayPal customer service'
 	 	); // }}}
 
-		// avsResponses and cvvResponses // {{{
-	var $avsResponses = array(
+		// avsResponses and cvvResponses // {{{	
+	public $avsResponses = array(
 		"A"	=> "Address only (no ZIP)",
 		"B" => "Address only (no ZIP)",
 		"C" => "None",
@@ -71,8 +71,8 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_Paypalpro extends XLite_Model_P
 		"W" => "Whole ZIP",
 	   	"X" => "Exact match",
 		"Y"	=> "Yes",
-		"Z" => "ZIP");		
-	var $cvvResponses = array ( 
+		"Z" => "ZIP");			
+	public $cvvResponses = array ( 
 		"M" => "Match",
 		"N" => "Not match",
 		"P" => "Not processed",
@@ -81,10 +81,10 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_Paypalpro extends XLite_Model_P
 		"X" => "No response");	
 	// }}} 																			 
 
-  	// properties // {{{  
-   	var $configurationTemplate = "modules/PayPalPro/config.tpl";
-	var $processorName = "PayPal Pro";
-	var $phone = array(); // }}}
+  	// properties // {{{	  
+   	public $configurationTemplate = "modules/PayPalPro/config.tpl";	
+	public $processorName = "PayPal Pro";	
+	public $phone = array(); // }}}
 
 	function checkServiceURL()
 	{

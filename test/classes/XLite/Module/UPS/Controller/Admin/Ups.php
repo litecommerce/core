@@ -46,29 +46,29 @@
 *
 */
 class XLite_Module_UPS_Controller_Admin_Ups extends XLite_Controller_Admin_ShippingSettings
-{
-    var $params = array("target", "updated");
+{	
+    public $params = array("target", "updated");	
 
-    var $settings;
-    var $error = '';
-    var $updated = false;
-    var $testResult = false; // this is a test request
+    public $settings;	
+    public $error = '';	
+    public $updated = false;	
+    public $testResult = false; // this is a test request	
 
-    var $page = "ups";
+    public $page = "ups";	
 
-    var $pickups = array( // pickup types
+    public $pickups = array( // pickup types
         "01" => "Daily Pickup (wholesale)",
         "03" => "Customer Counter",
         "06" => "One Time Pickup",
         "07" => "On Call Air Pickup",
         "19" => "Letter Center",
-        "20" => "Air Service Center");
+        "20" => "Air Service Center");	
     
-  	var $weight_units = array (
+  	public $weight_units = array (
 		"LBS"	=> "lbs",
-		"KGS"	=> "kgs"); 
+		"KGS"	=> "kgs");	 
 
-    var $packagings = array(
+    public $packagings = array(
         "00" => "Unknown",
         "01" => "UPS letter",
         "02" => "Package",

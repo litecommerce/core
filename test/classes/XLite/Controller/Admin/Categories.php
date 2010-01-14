@@ -47,8 +47,8 @@
 *
 */
 class XLite_Controller_Admin_Categories extends XLite_Controller_Admin_Abstract
-{
-    var $params = array('target', 'category_id');
+{	
+    public $params = array('target', 'category_id');
     
     function getCategories()
     {

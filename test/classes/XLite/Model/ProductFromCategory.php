@@ -46,8 +46,8 @@
 * @package Kernel
 */
 class XLite_Model_ProductFromCategory extends XLite_Model_Product
-{
-    var $fetchKeysOnly = true;
+{	
+    public $fetchKeysOnly = true;
 
     public function __construct($catId = null)
     {

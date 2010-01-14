@@ -50,8 +50,8 @@ define('ORDER_EXPIRATION_TIME', 3600 * 24); // one day
 */
 class XLite_Model_Order extends XLite_Model_Abstract
 {
-    // Order properties {{{
-    var $fields = array(
+    // Order properties {{{	
+    public $fields = array(
             'order_id' => '',       // primary key
             'profile_id' => '',     // profile data at the moment of the purchase
             'orig_profile_id' => '',// original profile id
@@ -68,27 +68,27 @@ class XLite_Model_Order extends XLite_Model_Abstract
             'detail_labels' => '',  // order data field names
             'notes' => '',          // notes entered by the customer
             'taxes' => ''           // serialized tax array
-        );
+        );	
     
-    var $autoIncrement = "order_id";
-    var $alias = "orders";
+    public $autoIncrement = "order_id";	
+    public $alias = "orders";
         
     /**
     * cache properties
-    */
-    var $_origProfile = null;
-    var $_profile = null;
-    var $_paymentMethod = null;
-    var $_shippingMethod = null;
-    var $_items = null;
-    var $_details = null;
-    var $_detailLabels = null;
-    var $_shippingRates = null;
-    var $_taxes = null;
+    */	
+    public $_origProfile = null;	
+    public $_profile = null;	
+    public $_paymentMethod = null;	
+    public $_shippingMethod = null;	
+    public $_items = null;	
+    public $_details = null;	
+    public $_detailLabels = null;	
+    public $_shippingRates = null;	
+    public $_taxes = null;	
 
-    var $_statusChanged = false;
-    var $_oldStatus = 'I';
-    var $_range = "status!='T'";
+    public $_statusChanged = false;	
+    public $_oldStatus = 'I';	
+    public $_range = "status!='T'";
 
     // }}}
 

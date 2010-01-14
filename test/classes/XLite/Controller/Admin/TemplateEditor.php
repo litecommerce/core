@@ -47,31 +47,31 @@
 *
 */
 class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstract
-{
-    var $params = array('target', 'editor', 'zone');
-    var $editor = "basic";
-    var $basicTemplatesRO = array();
+{	
+    public $params = array('target', 'editor', 'zone');	
+    public $editor = "basic";	
+    public $basicTemplatesRO = array();	
 
-    var $pages = array(
+    public $pages = array(
             'basic' => 'Basic templates',
             'mail' => 'Mail templates',
             'extra_pages' => 'User-defined pages',
             'advanced' => 'Advanced templates'
-            );
+            );	
     
-    var $pageTemplates = array(
+    public $pageTemplates = array(
             "advanced" => "template_editor/advanced.tpl",
             "extra_pages" => "template_editor/extra_pages.tpl",
             "basic" => "template_editor/basic.tpl",
             "mail" => "template_editor/mail.tpl",
-            );
+            );	
 
-    var $welcome_page = array(
+    public $welcome_page = array(
             "3-columns_classic",
             "3-columns_modern"
-            );
+            );	
 
-	var $default_templates = array(
+	public $default_templates = array(
 			"welcome.tpl",
 			"news.tpl",
 			"phones.tpl",

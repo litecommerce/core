@@ -43,10 +43,10 @@
 * @version $Id$
 */
 class XLite_Module_SkipJack_Model_PaymentMethod_SkipjackCc extends XLite_Model_PaymentMethod_CreditCard
-{
-	var $configurationTemplate = "modules/SkipJack/config.tpl";
-    var $hasConfigurationForm = true;
-    var $processorName = "SkipJack";
+{	
+	public $configurationTemplate = "modules/SkipJack/config.tpl";	
+    public $hasConfigurationForm = true;	
+    public $processorName = "SkipJack";
 
     function process($cart)
     {

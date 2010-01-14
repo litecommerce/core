@@ -39,18 +39,18 @@
 * @version $Id$
 */
 class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
-{
-	var $orderStatus = null;
-	var $_productItems = null;
-	var $_substatusChanged = false;
-    var $_oldSubstatus = '';
+{	
+	public $orderStatus = null;	
+	public $_productItems = null;	
+	public $_substatusChanged = false;	
+    public $_oldSubstatus = '';	
 	
-    var $_save_totals = array();
-	var $_save_fields = array("shipping_cost", "tax", "taxes", "total");
+    public $_save_totals = array();	
+	public $_save_fields = array("shipping_cost", "tax", "taxes", "total");	
 
-	var $doNotCheckInventory = false;
-	var $doNotChangeShippingCost = false;
-	var $doNotChangeGlobalDiscount = false;
+	public $doNotCheckInventory = false;	
+	public $doNotChangeShippingCost = false;	
+	public $doNotChangeGlobalDiscount = false;
 
 	public function __construct($id = null) // {{{
     {

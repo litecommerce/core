@@ -55,22 +55,22 @@ set_time_limit(0); // building catalog is a long-time operation..
 * @version $Id$
 */
 class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Model_FlexyCompiler
-{
-    var $verbose     = true; // show process diagnostic
-    var $recursive   = true;
-    var $total       = 1;
-    var $incomplete  = false;
-    var $pageUrls    = array(); // store catalog URL's found in current page
-    var $storeUrls   = array(); // store all found catalog links
-    var $urlsProceed = array();  // save already processed catalog URL
+{	
+    public $verbose     = true; // show process diagnostic	
+    public $recursive   = true;	
+    public $total       = 1;	
+    public $incomplete  = false;	
+    public $pageUrls    = array(); // store catalog URL's found in current page	
+    public $storeUrls   = array(); // store all found catalog links	
+    public $urlsProceed = array();  // save already processed catalog URL
 
-    // experimental params
-    var $category_id = null; // start with this category
-    var $page_id     = null;       
-    var $product_id  = null;  // start with this product
-    var $buildCategories = null; // true || false
-    var $buildProducts   = null; // -- // --
-    var $topCategory = null;
+    // experimental params	
+    public $category_id = null; // start with this category	
+    public $page_id     = null;	       
+    public $product_id  = null;  // start with this product	
+    public $buildCategories = null; // true || false	
+    public $buildProducts   = null; // -- // --	
+    public $topCategory = null;
 
     function getCatalogDir() // {{{
     {

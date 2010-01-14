@@ -67,11 +67,11 @@ class XLite_Module_MultiCurrency_Main extends XLite_Module_Abstract
      * @since  3.0
      */
     protected $enabled = true;
- // {{{
+ // {{{	
 
-	var $isFree = true;
-	var $showSettingsForm = true;
-	var $minVer = "2.0";
+	public $isFree = true;	
+	public $showSettingsForm = true;	
+	public $minVer = "2.0";
 
 	function init() // {{{ 
 	{

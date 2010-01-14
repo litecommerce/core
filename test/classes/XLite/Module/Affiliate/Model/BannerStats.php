@@ -42,8 +42,8 @@
 * @version $Id$
 */
 class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
-{
-    var $fields = array(
+{	
+    public $fields = array(
             "stat_id"     => null,
             "stat_type"    => "",    // stat_type := C | V, click and view
             "partner_id"    => 0,
@@ -51,13 +51,13 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
             "banner_id"    => null,
             "date"         => 0,
             "referrer"    => null,
-            );
+            );	
 
-    var $autoIncrement = "stat_id";
-    var $alias = "banner_stats";
-    var $defaultOrder = "date";
+    public $autoIncrement = "stat_id";	
+    public $alias = "banner_stats";	
+    public $defaultOrder = "date";	
 
-    var $partner = null;
+    public $partner = null;
 
     /**
     * Logs view banner request

@@ -1,8 +1,8 @@
 <?php
 
 class XLite_Module_Promotion_Validator_PromotionMembershipValidator extends XLite_Validator_RequiredValidator
-{
-	var $template = "common/required_validator.tpl";
+{	
+	public $template = "common/required_validator.tpl";
 
 	function isValid()
 	{

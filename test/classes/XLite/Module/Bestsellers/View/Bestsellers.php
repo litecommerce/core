@@ -45,9 +45,9 @@
 * @version $Id$
 */
 class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View
-{
-    var $bestsellers = null;
-    var $ids = array();
+{	
+    public $bestsellers = null;	
+    public $ids = array();
 
     function getVisible()
     {

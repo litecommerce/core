@@ -48,10 +48,10 @@
 * @version $Id$
 */
 class XLite_Module_USPS_Model_Shipping_Usps extends XLite_Model_Shipping_Online
-{
-    var $error = "";
-    var $xmlError = false;
-    var $translations = array(
+{	
+    public $error = "";	
+    public $xmlError = false;	
+    public $translations = array(
         "EXPRESS" => "Express Mail",
         "PRIORITY" => "Priority Mail",
         "PARCEL" => "Parcel Post",
@@ -59,10 +59,10 @@ class XLite_Module_USPS_Model_Shipping_Usps extends XLite_Model_Shipping_Online
         "FIRST CLASS" => "First Class",
         "FIRSTCLASS" => "First Class",
         "MEDIA" => "Media",
-        "BPM" => "Bound Printed Matter");
+        "BPM" => "Bound Printed Matter");	
 
-    var $configCategory = "USPS";
-    var $optionsFields = array("userid","password","server","container_express","container_priority","mailtype","machinable","package_size","value_of_content","dim_lenght","dim_width","dim_height","dim_girth","fcmailtype");
+    public $configCategory = "USPS";	
+    public $optionsFields = array("userid","password","server","container_express","container_priority","mailtype","machinable","package_size","value_of_content","dim_lenght","dim_width","dim_height","dim_girth","fcmailtype");
 
     function getModuleName()
     {

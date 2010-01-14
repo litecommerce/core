@@ -44,17 +44,17 @@
 * @version $Id$
 */
 class XLite_Module_ProductAdviser_Model_RelatedProduct extends XLite_Model_Abstract
-{
-	var $fields = array
+{	
+	public $fields = array
 	(
 		"product_id" 				=> 0,
 		"related_product_id" 		=> 0,
 		"order_by" 					=> 0
-	);
-	var $primaryKey = array("related_product_id", "product_id");
-	var $defaultOrder = "order_by";
-	var $alias = "related_products";
-	var $product = null;
+	);	
+	public $primaryKey = array("related_product_id", "product_id");	
+	public $defaultOrder = "order_by";	
+	public $alias = "related_products";	
+	public $product = null;
 
     function filter()
     {

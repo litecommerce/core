@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Module_ProductOptions_Controller_Admin_InventoryTrackingOption extends XLite_Controller_Admin_Abstract
-{
-    var $optdata = array();
+{	
+    public $optdata = array();
 
     function handleRequest()
     {

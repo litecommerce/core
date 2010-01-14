@@ -50,23 +50,23 @@ class XLite_Model_State extends XLite_Model_Abstract
     /**
     * @var string $alias The State database table alias.
     * @access public
-    */
-    var $alias = "states";
+    */	
+    public $alias = "states";
 
     /**
     * @var array $fields The state properties.
     * @access private
-    */
-    var $fields = array(
+    */	
+    public $fields = array(
             'state_id' => '',
             'state'    => '',  
             'code'     => '',
             'country_code'     => '',
             'shipping_zone' => 0
-        );
+        );	
 
-    var $autoIncrement = "state_id";
-    var $defaultOrder = "state";
+    public $autoIncrement = "state_id";	
+    public $defaultOrder = "state";
 
     function readAll()
     {

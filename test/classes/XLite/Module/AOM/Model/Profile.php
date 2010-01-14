@@ -39,8 +39,8 @@
 * @version $Id$
 */
 class XLite_Module_AOM_Model_Profile extends XLite_Model_Profile implements XLite_Base_IDecorator
-{
-	var $_AOMIgnoreMembershipChanged = false;
+{	
+	public $_AOMIgnoreMembershipChanged = false;
 
 	function membershipChanged($oldMembership, $newMembership)
 	{

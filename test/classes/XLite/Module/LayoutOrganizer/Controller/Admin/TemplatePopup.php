@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Module_LayoutOrganizer_Controller_Admin_TemplatePopup extends XLite_Controller_Admin_TemplateEditor implements XLite_Base_IDecorator
-{
-    var $template = "modules/LayoutOrganizer/template_popup.tpl";
+{	
+    public $template = "modules/LayoutOrganizer/template_popup.tpl";
 
     public function __construct()
     {

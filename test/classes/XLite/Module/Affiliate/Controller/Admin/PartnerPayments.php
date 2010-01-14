@@ -44,10 +44,10 @@
 *
 */
 class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Controller_Admin_Abstract
-{
-    var $crlf = "\r\n";
-    var $hasReady = false;
-    var $found = 0;
+{	
+    public $crlf = "\r\n";	
+    public $hasReady = false;	
+    public $found = 0;
 
     function handleRequest()
     {

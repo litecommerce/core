@@ -47,11 +47,11 @@
 * @version $Id$
 */
 class XLite_Module_WorldPay_Model_PaymentMethod_Worldpay extends XLite_Model_PaymentMethod_CreditCard
-{
-	var $configurationTemplate = "modules/WorldPay/config.tpl";
-	var $formTemplate = "modules/WorldPay/checkout.tpl";
-	var $processorName = "RBS WorldPay";
-	var $hasConfugurationForm = true;
+{	
+	public $configurationTemplate = "modules/WorldPay/config.tpl";	
+	public $formTemplate = "modules/WorldPay/checkout.tpl";	
+	public $processorName = "RBS WorldPay";	
+	public $hasConfugurationForm = true;
 
     function handleRequest($cart)
     {

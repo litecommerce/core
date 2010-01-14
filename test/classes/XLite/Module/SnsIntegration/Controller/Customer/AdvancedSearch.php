@@ -39,8 +39,8 @@
 * @version $Id$
 */
 class XLite_Module_SnsIntegration_Controller_Customer_AdvancedSearch extends XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch implements XLite_Base_IDecorator
-{
-	var $snsActionSend = false;
+{	
+	public $snsActionSend = false;
 
     function getProducts() // {{{
     {

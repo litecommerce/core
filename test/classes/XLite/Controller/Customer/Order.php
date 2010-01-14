@@ -46,10 +46,10 @@
 * @version $Id$
 */
 class XLite_Controller_Customer_Order extends XLite_Controller_Customer_Abstract
-{
-    var $params = array("target", "order_id");
-    var $order = null;
-    var $isAccessDenied = false;
+{	
+    public $params = array("target", "order_id");	
+    public $order = null;	
+    public $isAccessDenied = false;
 
     function getTemplate()
     {

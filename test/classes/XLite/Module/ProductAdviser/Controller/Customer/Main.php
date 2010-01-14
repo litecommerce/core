@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Module_ProductAdviser_Controller_Customer_Main extends XLite_Controller_Customer_Main implements XLite_Base_IDecorator
-{
-	var $priceNotified = array();
+{	
+	public $priceNotified = array();
 
     function init()
     {

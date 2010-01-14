@@ -46,10 +46,10 @@
 */
 
 class XLite_Module_FlyoutCategories_Controller_Admin_SchemeManager extends XLite_Module_LayoutOrganizer_Controller_Admin_SchemeManager implements XLite_Base_IDecorator
-{
-	var $schemes = null;
-	var $scheme = null;
-	var $customerLayoutPath = "";
+{	
+	public $schemes = null;	
+	public $scheme = null;	
+	public $customerLayoutPath = "";
 
     function init()
     {

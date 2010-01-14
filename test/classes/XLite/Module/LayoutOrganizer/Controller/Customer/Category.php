@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Module_LayoutOrganizer_Controller_Customer_Category extends XLite_Controller_Customer_Category implements XLite_Base_IDecorator
-{
-	var $_rowNumber;
+{	
+	public $_rowNumber;
 	
     function init()
     {

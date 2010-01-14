@@ -42,10 +42,10 @@
 * @version $Id$
 */
 class XLite_Module_Affiliate_View_PartnerSelect extends XLite_View
-{
-    var $template = "modules/Affiliate/select_partner.tpl";
-    var $formField = "partner_id";
-    var $allOption = true;
+{	
+    public $template = "modules/Affiliate/select_partner.tpl";	
+    public $formField = "partner_id";	
+    public $allOption = true;
 
     function init()
     {

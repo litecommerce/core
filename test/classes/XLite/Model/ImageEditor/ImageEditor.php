@@ -47,11 +47,11 @@
 */
 
 class XLite_Model_ImageEditor_ImageEditor extends XLite_Base
-{
-    var $images      = array();
-    var $images_path;
-    var $error       = false;
-    var $uploadError = '';
+{	
+    public $images      = array();	
+    public $images_path;	
+    public $error       = false;	
+    public $uploadError = '';
 
     public function __construct($iniFile = null)
     {

@@ -46,8 +46,8 @@
 * @version $Id$
 */
 class XLite_Model_ProductInventory extends XLite_Model_Product implements XLite_Base_ISingleton
-{
-    var $importFields = array(
+{	
+    public $importFields = array(
             "NULL"  => false,
             "sku"   => false,
             "name"  => false,

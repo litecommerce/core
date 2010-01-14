@@ -44,10 +44,10 @@
 * @version $Id$
 */
 class XLite_Module_GoogleCheckout_View_GoogleAltCheckout extends XLite_View
-{
-    var $template = "modules/GoogleCheckout/main_alt_checkout.tpl";
-    var $GCMerchantID = null;
-    var $CurrentSkin = null;
+{	
+    public $template = "modules/GoogleCheckout/main_alt_checkout.tpl";	
+    public $GCMerchantID = null;	
+    public $CurrentSkin = null;
 
     function initGoogleData()
     {

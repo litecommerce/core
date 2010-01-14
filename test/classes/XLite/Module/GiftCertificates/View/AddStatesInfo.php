@@ -45,9 +45,9 @@
 * @version 
 */
 class XLite_Module_GiftCertificates_View_AddStatesInfo extends XLite_View_Abstract
-{
+{	
     
-    var $template = "js/select_states_begin_js.tpl";
+    public $template = "js/select_states_begin_js.tpl";
 
     function isIgnoreErrors()
     {

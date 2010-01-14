@@ -56,15 +56,15 @@ define('MAIL_SKINS', 'mail');
 * @version $Id$
 */
 class XLite_Model_Upgrade extends XLite_Model_Abstract
-{
-    var $fields = array(
+{	
+    public $fields = array(
         "from_ver" => "",
         "to_ver" => "",
-        "date" => "0");
-    var $alias = "upgrades";
-    var $primaryKey = array("from_ver", "to_ver");
-    var $_interactive = true; // interactive upgrade; show upgrade messages
-    var $failed = false;
+        "date" => "0");	
+    public $alias = "upgrades";	
+    public $primaryKey = array("from_ver", "to_ver");	
+    public $_interactive = true; // interactive upgrade; show upgrade messages	
+    public $failed = false;
 
     function setInteractive($bool) 
     {

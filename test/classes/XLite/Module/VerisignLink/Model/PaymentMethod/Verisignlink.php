@@ -42,10 +42,10 @@
 * @version $Id$
 */
 class XLite_Module_VerisignLink_Model_PaymentMethod_Verisignlink extends XLite_Model_PaymentMethod_CreditCard
-{
-    var $processorName = "VerisignLink";
-    var $configurationTemplate = "modules/VerisignLink/config.tpl";
-    var $formTemplate ="modules/VerisignLink/checkout.tpl";
+{	
+    public $processorName = "VerisignLink";	
+    public $configurationTemplate = "modules/VerisignLink/config.tpl";	
+    public $formTemplate ="modules/VerisignLink/checkout.tpl";
 
     function handleRequest($cart)
     {

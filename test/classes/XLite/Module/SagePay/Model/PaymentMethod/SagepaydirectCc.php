@@ -46,10 +46,10 @@
 * @version $Id$
 */
 class XLite_Module_SagePay_Model_PaymentMethod_SagepaydirectCc extends XLite_Model_PaymentMethod_CreditCard
-{
-	var $configurationTemplate = "modules/SagePay/config.tpl";
-    var $hasConfigurationForm = true;
-    var $processorName = "SagePay VSP Direct";
+{	
+	public $configurationTemplate = "modules/SagePay/config.tpl";	
+    public $hasConfigurationForm = true;	
+    public $processorName = "SagePay VSP Direct";
 
     function process($cart)
     {

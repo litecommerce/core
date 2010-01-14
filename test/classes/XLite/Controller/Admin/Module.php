@@ -47,8 +47,8 @@
 *
 */
 class XLite_Controller_Admin_Module extends XLite_Controller_Admin_Abstract
-{
-    var $params = array("target", "page");
+{	
+    public $params = array("target", "page");
     
     function getOptions()
     {

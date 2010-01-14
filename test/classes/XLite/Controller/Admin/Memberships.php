@@ -48,8 +48,8 @@
 */
 
 class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_Abstract
-{
-	var $params = array("target", "mode");
+{	
+	public $params = array("target", "mode");
 	
     function action_update() // {{{
     {

@@ -45,20 +45,20 @@
 * @version $Id$
 */
 class XLite_Model_Config extends XLite_Model_Abstract
-{
-    var $fields = array(
+{	
+    public $fields = array(
         'category' => '',
         'name' => '',
         'comment' => '',
         'value' => '',
         'category' => '',
         'orderby' => '0',
-        'type' => 'text');
+        'type' => 'text');	
     
-    var $primaryKey = array('category', 'name');
-    var $alias = 'config';
-    var $defaultOrder = "orderby";
-    var $configClass = "XLite_Model_Config";
+    public $primaryKey = array('category', 'name');	
+    public $alias = 'config';	
+    public $defaultOrder = "orderby";	
+    public $configClass = "XLite_Model_Config";
     
     // GET methods {{{
     function getCategories()

@@ -44,11 +44,11 @@
 * @version $Id$
 */
 class XLite_View_Button extends XLite_View
-{
-    var $template = "common/button.tpl";
-    var $href = "#";
-    var $label = "Submit";
-    var $img = null;
+{	
+    public $template = "common/button.tpl";	
+    public $href = "#";	
+    public $label = "Submit";	
+    public $img = null;
 
     function init() {
         parent::init();

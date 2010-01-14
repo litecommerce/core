@@ -43,12 +43,12 @@
 * @version $Id$
 */
 class XLite_Module_Promotion_Model_SpecialOfferMembership extends XLite_Model_Abstract
-{
-	var $fields = array (
+{	
+	public $fields = array (
 		'offer_id'	=> 0,
-		'membership' => '');
-	var $primaryKey = array ("offer_id","membership");
-	var $alias = "special_offer_memberships";
+		'membership' => '');	
+	public $primaryKey = array ("offer_id","membership");	
+	public $alias = "special_offer_memberships";
 }
 
 ?>

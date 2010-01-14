@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Module_Promotion_Controller_Customer_Cart extends XLite_Controller_Customer_Cart implements XLite_Base_IDecorator
-{
-	var $discountCouponResult = false;
+{	
+	public $discountCouponResult = false;
 
 	function handleRequest()
 	{

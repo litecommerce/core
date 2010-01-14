@@ -46,10 +46,10 @@
 * @version $Id$
 */
 class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton 
-{
-    var $queries = array();
-    var $query_time = array();
-    var $enabled = false;
+{	
+    public $queries = array();	
+    public $query_time = array();	
+    public $enabled = false;
 
 	public static function getInstance()
 	{

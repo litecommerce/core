@@ -44,8 +44,8 @@
 * @version $Id$
 */
 class XLite_Module_Newsletters_View_Bulletin extends XLite_View
-{
-    var $template = "modules/Newsletters/bulletin.tpl";
+{	
+    public $template = "modules/Newsletters/bulletin.tpl";
 
     function getLastNews()
     {

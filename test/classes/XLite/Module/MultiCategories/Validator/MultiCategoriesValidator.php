@@ -44,8 +44,8 @@
 * @version $Id$
 */
 class XLite_Module_MultiCategories_Validator_MultiCategoriesValidator extends XLite_Validator_RequiredValidator
-{
-    var $template = "common/required_validator.tpl";
+{	
+    public $template = "common/required_validator.tpl";
     
     function isValid()
     {

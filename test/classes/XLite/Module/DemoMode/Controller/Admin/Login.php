@@ -38,9 +38,9 @@
 /* vim: set expandtab tabstop=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
 
 class XLite_Module_DemoMode_Controller_Admin_Login extends XLite_Controller_Admin_Login implements XLite_Base_IDecorator
-{
-    var $login = "demo@litecommerce.com";
-    var $password = "demo";
+{	
+    public $login = "demo@litecommerce.com";	
+    public $password = "demo";
 
     function action_login()
     {

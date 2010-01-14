@@ -43,8 +43,8 @@
 * @version $Id$
 */
 class XLite_Module_Affiliate_Controller_Customer_PartnerPayments extends XLite_Module_Affiliate_Controller_Partner
-{
-    var $totalPaid = 0.00;
+{	
+    public $totalPaid = 0.00;
 
     function getPayments()
     {

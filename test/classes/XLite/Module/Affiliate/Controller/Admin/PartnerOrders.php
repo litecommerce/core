@@ -44,9 +44,9 @@
 *
 */
 class XLite_Module_Affiliate_Controller_Admin_PartnerOrders extends XLite_Controller_Admin_Abstract
-{
-    var $params = array('target', 'mode', 'order_id1', 'order_id2', 'partner_id', 'status', 'payment_status');
-    var $crlf = "\r\n";
+{	
+    public $params = array('target', 'mode', 'order_id1', 'order_id2', 'partner_id', 'status', 'payment_status');	
+    public $crlf = "\r\n";
 
     function action_export() // {{{
     {

@@ -50,9 +50,9 @@ define("STYLE", 2);
 * @version $Id$
 */
 class XLite_Model_CssEditor extends XLite_Base
-{
-    var $cssFile;
-    var $style = array();
+{	
+    public $cssFile;	
+    public $style = array();
 
     public function __construct($cssFile = null)
     {

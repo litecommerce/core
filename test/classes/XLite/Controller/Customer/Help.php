@@ -46,8 +46,8 @@
 * @version $Id$
 */
 class XLite_Controller_Customer_Help extends XLite_Controller_Customer_Abstract
-{
-    var $params = array("target", "mode");
+{	
+    public $params = array("target", "mode");
 
     function fillForm()
     {

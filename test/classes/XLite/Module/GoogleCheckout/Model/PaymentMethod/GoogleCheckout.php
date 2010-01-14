@@ -46,19 +46,19 @@ define('CALLBACK_ERROR_ILLEGAL_ORDER_ID', 4);
 */
 
 class XLite_Module_GoogleCheckout_Model_PaymentMethod_GoogleCheckout extends XLite_Model_PaymentMethod 
-{
-	var $configurationTemplate = "modules/GoogleCheckout/config.tpl";
-	var $processorName = "GoogleCheckout";
+{	
+	public $configurationTemplate = "modules/GoogleCheckout/config.tpl";	
+	public $processorName = "GoogleCheckout";	
 
-	var $avs_info = array(
+	public $avs_info = array(
 		"Y" => "Full AVS match (address and postal code)",
 		"P" => "Partial AVS match (postal code only)",
 		"A" => "Partial AVS match (address only)",
 		"N" => "No AVS match",
 		"U" => "AVS not supported by issuer"
-	);
+	);	
 
-	var $cvn_info = array(
+	public $cvn_info = array(
 		"M" => "CVN match",
 		"N" => "No CVN match",
 		"U" => "CVN not available",

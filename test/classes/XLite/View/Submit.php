@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_View_Submit extends XLite_View_Button
-{
-    var $template = "common/submit.tpl";
+{	
+    public $template = "common/submit.tpl";
 }
 
 // WARNING :

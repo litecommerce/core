@@ -42,10 +42,10 @@
 * @version $Id$
 */
 class XLite_Module_Affiliate_Controller_Admin_SalesStats extends XLite_Module_Affiliate_Controller_Admin_PartnerStats
-{
-    var $qty = 0;
-    var $saleTotal = 0;
-    var $commissionsTotal = 0;
+{	
+    public $qty = 0;	
+    public $saleTotal = 0;	
+    public $commissionsTotal = 0;
 
     function getPageTemplate()
     {

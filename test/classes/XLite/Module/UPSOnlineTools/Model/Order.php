@@ -47,8 +47,8 @@
 */
 
 class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
-{
-	var $_ups_containers = null;
+{	
+	public $_ups_containers = null;
 
 	public function __construct($id=null)
 	{

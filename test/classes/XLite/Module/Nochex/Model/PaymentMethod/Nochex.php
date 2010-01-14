@@ -39,10 +39,10 @@
 */
 
 class XLite_Module_Nochex_Model_PaymentMethod_Nochex extends XLite_Model_PaymentMethod_CreditCard
-{
-    var $configurationTemplate = "modules/Nochex/config.tpl";
-    var $formTemplate = "modules/Nochex/checkout.tpl";
-    var $processorName = "Nochex";
+{	
+    public $configurationTemplate = "modules/Nochex/config.tpl";	
+    public $formTemplate = "modules/Nochex/checkout.tpl";	
+    public $processorName = "Nochex";
 	
 	function handleRequest($order)
 	{

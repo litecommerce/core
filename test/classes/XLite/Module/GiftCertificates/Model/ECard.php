@@ -45,17 +45,17 @@
 * @version $Id$
 */
 class XLite_Module_GiftCertificates_Model_ECard extends XLite_Model_Abstract
-{
-    var $alias = "ecards";
-    var $fields = array(
+{	
+    public $alias = "ecards";	
+    public $fields = array(
         'ecard_id' => '',
         'template' => '', // use this template as e-mail body
         'order_by' => 0,
-        'enabled' => 1);
-    var $autoIncrement = 'ecard_id';
-    var $defaultOrder = 'order_by';
-    var $thumbnail = null;
-    var $image = null;
+        'enabled' => 1);	
+    public $autoIncrement = 'ecard_id';	
+    public $defaultOrder = 'order_by';	
+    public $thumbnail = null;	
+    public $image = null;
 
     function getThumbnail()
     {

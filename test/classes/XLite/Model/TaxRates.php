@@ -63,14 +63,14 @@ define('TAX_TOLOWERCASE', 1);
 * @version $Id$
 */
 class XLite_Model_TaxRates extends XLite_Base
-{
-    var $_rates;
+{	
+    public $_rates;
     /**
     * "default tax schema name" => array of rate rules
-    */
-    var $_predefinedSchemas = array();
-    var $_taxValues = array();
-    var $_conditionValues = array();
+    */	
+    public $_predefinedSchemas = array();	
+    public $_taxValues = array();	
+    public $_conditionValues = array();
     
     public function __construct()
     {

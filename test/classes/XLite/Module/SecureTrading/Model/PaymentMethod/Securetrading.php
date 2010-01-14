@@ -46,11 +46,11 @@
 */
 
 class XLite_Module_SecureTrading_Model_PaymentMethod_Securetrading extends XLite_Model_PaymentMethod_CreditCard
-{
+{	
 
-	var $configurationTemplate = "modules/SecureTrading/config.tpl";
-	var $processorName = "SecureTrading";
-	var $formTemplate = "modules/SecureTrading/checkout.tpl";
+	public $configurationTemplate = "modules/SecureTrading/config.tpl";	
+	public $processorName = "SecureTrading";	
+	public $formTemplate = "modules/SecureTrading/checkout.tpl";
 
 	function handleRequest($order) { 
 		require_once LC_MODULES_DIR . 'SecureTrading' . LC_DS . 'encoded.php';

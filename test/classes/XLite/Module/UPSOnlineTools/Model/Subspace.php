@@ -46,10 +46,10 @@
 * @version $Id$
 */
 class XLite_Module_UPSOnlineTools_Model_Subspace extends XLite_Base
-{
-	var $width, $length;
-	var $left, $top;
-	var $upper_limit;
+{	
+	public $width, $length;	
+	public $left, $top;	
+	public $upper_limit;
 
 	function init($_width, $_length, $_left=0, $_top=0)
 	{

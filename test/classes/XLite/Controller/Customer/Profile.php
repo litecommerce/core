@@ -46,10 +46,10 @@
 * @version $Id$
 */
 class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_Abstract
-{
-    var $params = array("target", "mode", "submode", "returnUrl"); // mode ::= register | modify | success | delete 
-    var $mode = "register"; // default mode
-    var $submode = "warning"; // delete profile status: warning | confirmed | cancelled
+{	
+    public $params = array("target", "mode", "submode", "returnUrl"); // mode ::= register | modify | success | delete	 
+    public $mode = "register"; // default mode	
+    public $submode = "warning"; // delete profile status: warning | confirmed | cancelled
 
 	function fillForm()
 	{

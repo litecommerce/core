@@ -42,8 +42,8 @@
 * @version $Id$
 */
 class XLite_Module_Affiliate_Model_PartnerField extends XLite_Model_Abstract
-{
-    var $fields = array (
+{	
+    public $fields = array (
             "field_id" => 0,
             "field_type" => "Text",
             "name" => "",
@@ -53,11 +53,11 @@ class XLite_Module_Affiliate_Model_PartnerField extends XLite_Model_Abstract
             "orderby" => 0,
             "required" => 1,
             "enabled" => 1,
-            );
+            );	
 
-    var $autoIncrement = "field_id";
-    var $alias = "partner_fields";
-    var $defaultOrder = "orderby";
+    public $autoIncrement = "field_id";	
+    public $alias = "partner_fields";	
+    public $defaultOrder = "orderby";
 
     function filter()
     {

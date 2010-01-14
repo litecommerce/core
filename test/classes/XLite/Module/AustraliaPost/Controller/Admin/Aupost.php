@@ -40,13 +40,13 @@
 */
 
 class XLite_Module_AustraliaPost_Controller_Admin_Aupost extends XLite_Controller_Admin_ShippingSettings
-{
-	var $params = array("target", "updated");
-	var $page		="aupost";	
-	var $updated 	= false;	
-	var $testResult = false;
-	var $settings;	
-	var $rates 		= array();
+{	
+	public $params = array("target", "updated");	
+	public $page		="aupost";		
+	public $updated 	= false;		
+	public $testResult = false;	
+	public $settings;		
+	public $rates 		= array();
 
 	public function __construct() // {{{ 
 	{

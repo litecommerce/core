@@ -43,10 +43,10 @@
 * @version $Id$
 */
 class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReportsData extends XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics
-{
-    var $type = "bars"; // type := bars | lines
-    var $limit = 50;    // limit for type "bars"
-    var $signature = "Sales dynamics";
+{	
+    public $type = "bars"; // type := bars | lines	
+    public $limit = 50;    // limit for type "bars"	
+    public $signature = "Sales dynamics";
 
     function init() 
     {

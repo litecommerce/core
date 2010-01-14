@@ -46,8 +46,8 @@
 * @version $Id$
 */
 class XLite_Controller_Customer_Main extends XLite_Controller_Customer_Abstract
-{
-    var $params = array("target", "page");
+{	
+    public $params = array("target", "page");
 
     function handleRequest()
     {

@@ -46,11 +46,11 @@
 * @version $Id$
 */
 class XLite_Controller_Admin_ShippingRates extends XLite_Controller_Admin_ShippingSettings
-{
-    var $params = array('target', 'shipping_zone_range', 'shipping_id_range');
+{	
+    public $params = array('target', 'shipping_zone_range', 'shipping_id_range');	
     
-    var $shipping_id_range = "";
-    var $shipping_zone_range = "";
+    public $shipping_id_range = "";	
+    public $shipping_zone_range = "";
 
     function getPageTemplate()
     {

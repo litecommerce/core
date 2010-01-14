@@ -46,10 +46,10 @@
 * @version $Id$
 */
 class XLite_Module_UPSOnlineTools_Controller_Admin_Product extends XLite_Controller_Admin_Product implements XLite_Base_IDecorator
-{
-	var $product_oversize = false;
-	var $product_overweight = false;
-	var $current_packaging = null;
+{	
+	public $product_oversize = false;	
+	public $product_overweight = false;	
+	public $current_packaging = null;
 
 	function handleRequest()
 	{

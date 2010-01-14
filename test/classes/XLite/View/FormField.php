@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_View_FormField extends XLite_View
-{
-    var $field = null;
+{	
+    public $field = null;
 
     /**
     * Used in form field components to display a form field according to

@@ -44,9 +44,9 @@
 * @version $Id$
 */
 class XLite_Module_GiftCertificates_Model_PaymentMethod_GiftCertificate extends XLite_Model_PaymentMethod
-{
-    var $formTemplate = "modules/GiftCertificates/checkout.tpl";
-    var $processorName = "Gift certificate";
+{	
+    public $formTemplate = "modules/GiftCertificates/checkout.tpl";	
+    public $processorName = "Gift certificate";
 
     function handleRequest($cart)
     {

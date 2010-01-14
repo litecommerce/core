@@ -47,16 +47,16 @@
 * @version $Id$
 */
 class XLite_Module_UPSOnlineTools_Model_ContainerLevel extends XLite_Base
-{
-	var $level_id;
-	var $bottom;
-	var $height;
+{	
+	public $level_id;	
+	public $bottom;	
+	public $height;	
 
-	var $subspaces;
-	var $items;
+	public $subspaces;	
+	public $items;	
 
-	var $used_spaces;
-	var $dirt_spaces;
+	public $used_spaces;	
+	public $dirt_spaces;
 
 	// Initialize level
 	function init($_bottom, $_width, $_length, $_height)

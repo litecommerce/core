@@ -39,10 +39,10 @@
 * @version $Id$
 */
 class XLite_Module_Protx_Model_PaymentMethod_ProtxformCc extends XLite_Model_PaymentMethod_CreditCard
-{
-    var $processorName = "Protx VSP Form";
-	var $hasConfigurationForm = true;
-    var $configurationTemplate = "modules/Protx/config.tpl";
+{	
+    public $processorName = "Protx VSP Form";	
+	public $hasConfigurationForm = true;	
+    public $configurationTemplate = "modules/Protx/config.tpl";
 
     function handleRequest($cart)
     {

@@ -46,14 +46,14 @@
 * @version $Id$
 */
 class XLite_Controller_Admin_ProductPopup extends XLite_Controller_Admin_Abstract
-{
-    var $params = array("target", "formName", "spanName", "formField", 'mode', 'search_productsku', 'substring', 'search_category', 'subcategory_search', 'pageID', 'status');
-    var $template = "product_popup.tpl";
-	// search form parameters
-	var $extra_parameters = '<input type="hidden" name="mode" value="search">';
-	var $form_target = 'product_popup';
-	var $form_action = 'default';
-    var $products = null;
+{	
+    public $params = array("target", "formName", "spanName", "formField", 'mode', 'search_productsku', 'substring', 'search_category', 'subcategory_search', 'pageID', 'status');	
+    public $template = "product_popup.tpl";
+	// search form parameters	
+	public $extra_parameters = '<input type="hidden" name="mode" value="search">';	
+	public $form_target = 'product_popup';	
+	public $form_action = 'default';	
+    public $products = null;
 
     function getProducts()
     {

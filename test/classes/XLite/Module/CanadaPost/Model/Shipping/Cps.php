@@ -39,12 +39,12 @@
 * @version $Id$
 */
 class XLite_Module_CanadaPost_Model_Shipping_Cps extends XLite_Model_Shipping_Online 
-{
+{	
 
-	var $configCategory = "CanadaPost";
-	var $optionsFields	= array("merchant_id","length","width","height","packed","insured","currency_rate","test_server");
-    var $error = "";
-    var $xmlError = false;
+	public $configCategory = "CanadaPost";	
+	public $optionsFields	= array("merchant_id","length","width","height","packed","insured","currency_rate","test_server");	
+    public $error = "";	
+    public $xmlError = false;
 
     function getKgs($order) // {{{
     {

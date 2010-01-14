@@ -44,11 +44,11 @@
 * @version $Id$
 */
 class XLite_View_Date extends XLite_View_FormField
-{
-    var $params = array();
-    var $lowerYear = 2000;
-    var $higherYear = 2035;
-    var $template = "common/date.tpl";
+{	
+    public $params = array();	
+    public $lowerYear = 2000;	
+    public $higherYear = 2035;	
+    public $template = "common/date.tpl";
 
     function init()
     {

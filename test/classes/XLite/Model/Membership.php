@@ -46,17 +46,17 @@
 * @version $Id$
 */
 class XLite_Model_Membership extends XLite_Model_Abstract
-{
-    var $fields = array
+{	
+    public $fields = array
     (
     	"membership_id" => 0,
         "membership"	=> "",
         "orderby"		=> ""
-    );
-	var $isRead         = true;		
-	var $memberships    = null;		
-    var $countRequested = null;
-    var $countGranted   = null;
+    );	
+	public $isRead         = true;			
+	public $memberships    = null;			
+    public $countRequested = null;	
+    public $countGranted   = null;
 
 	function getMemberships() // {{{
 	{

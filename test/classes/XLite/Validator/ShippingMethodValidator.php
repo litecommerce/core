@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Validator_ShippingMethodValidator extends XLite_Validator_RequiredValidator
-{
-    var $template = "common/shipping_method_validator.tpl";
+{	
+    public $template = "common/shipping_method_validator.tpl";
     
     function isValid()
     {

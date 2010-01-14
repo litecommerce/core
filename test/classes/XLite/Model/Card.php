@@ -50,21 +50,21 @@ class XLite_Model_Card extends XLite_Model_Abstract
     /**
     * @var string $alias The credit cards database table alias.
     * @access public
-    */
-    var $alias = "card_types";
+    */	
+    public $alias = "card_types";	
 
-    var $primaryKey = array("code");
+    public $primaryKey = array("code");
 
     /**
     * default payment method orider field
-    */
-    var $defaultOrder = "orderby";
+    */	
+    public $defaultOrder = "orderby";
 
     /**
     * @var array $fields The card properties.
     * @access private
-    */
-    var $fields = array(
+    */	
+    public $fields = array(
             'code'       => '',  
             'card_type'  => '',
             'cvv2'       => 1,

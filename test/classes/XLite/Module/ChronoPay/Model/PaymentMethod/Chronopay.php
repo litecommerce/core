@@ -45,10 +45,10 @@
 * @version $Id$
 */
 class XLite_Module_ChronoPay_Model_PaymentMethod_Chronopay extends XLite_Model_PaymentMethod_CreditCard
-{
-	var $configurationTemplate = "modules/ChronoPay/config.tpl";
-    var $processorName = "ChronoPay";
-    var $formTemplate ="modules/ChronoPay/checkout.tpl";
+{	
+	public $configurationTemplate = "modules/ChronoPay/config.tpl";	
+    public $processorName = "ChronoPay";	
+    public $formTemplate ="modules/ChronoPay/checkout.tpl";
 
     function handleRequest($cart)
     {

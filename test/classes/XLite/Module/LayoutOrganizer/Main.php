@@ -63,10 +63,10 @@ class XLite_Module_LayoutOrganizer_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $enabled = true;
+    protected $enabled = true;	
 
-	var $minVer = '2.1.1';
-    var $showSettingsForm = true;
+	public $minVer = '2.1.1';	
+    public $showSettingsForm = true;
 
     function init()
     {

@@ -42,10 +42,10 @@
 * @version $Id$
 */
 class XLite_Module_Affiliate_View_PartnerField extends XLite_View
-{
-    var $field = null;
-    var $formField = null;
-    var $partner = null;
+{	
+    public $field = null;	
+    public $formField = null;	
+    public $partner = null;
 
     function getValue()
     {

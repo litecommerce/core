@@ -47,15 +47,15 @@
 * @version $Id$
 */
 class XLite_Module_AuthorizeNet_Processor extends XLite_Base
-{
-    var $cvverr = array(
+{	
+    public $cvverr = array(
             "M" => "Card Code matches",
             "N" => "Card Code does not match",
             "P" => "Card Code was not processed",
             "S" => "Card code should be on card but was not indicated",
             "U" => "Issuer was not certified for Card Code"
-            );
-    var $avserr = array(
+            );	
+    public $avserr = array(
             "A" => "Address (Street) matches, ZIP does not",
 			"B"	=> "Address information not provided for AVS check",
             "E" => "AVS error",

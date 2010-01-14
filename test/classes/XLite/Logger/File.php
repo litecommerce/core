@@ -55,11 +55,11 @@ class XLite_Logger_File extends Log {
     
     // {{{ properties
     
-    /** String holding the filename of the logfile. */
-    var $filename = '';
+    /** String holding the filename of the logfile. */	
+    public $filename = '';
 
-    /** Integer holding the file handle. */
-    var $fp = '';
+    /** Integer holding the file handle. */	
+    public $fp = '';
 
     // }}}
     

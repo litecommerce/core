@@ -46,9 +46,9 @@
 * @version $Id$
 */
 class XLite_Model_PaymentMethod_Echeck extends XLite_Model_PaymentMethod
-{
-    var $formTemplate = "checkout/echeck.tpl";
-    var $secure = true;
+{	
+    public $formTemplate = "checkout/echeck.tpl";	
+    public $secure = true;
 
     function process($cart)
     {

@@ -42,8 +42,8 @@
 * @version $Id$
 */
 class XLite_Module_Affiliate_Model_Banner extends XLite_Model_Abstract
-{
-    var $fields = array(
+{	
+    public $fields = array(
             "banner_id"    => null,
             "name"         => "",
             "banner_source"=> "D",
@@ -58,12 +58,12 @@ class XLite_Module_Affiliate_Model_Banner extends XLite_Model_Abstract
             "height"       => 0,
             "banner_width" => 0,
             "banner_height"=> 0,
-            );
+            );	
 
-    var $autoIncrement = "banner_id";
-    var $alias = "banners";
-    var $defaultOrder = "banner_id";
-    var $image = null;    
+    public $autoIncrement = "banner_id";	
+    public $alias = "banners";	
+    public $defaultOrder = "banner_id";	
+    public $image = null;    
 
     function getImage()
     {

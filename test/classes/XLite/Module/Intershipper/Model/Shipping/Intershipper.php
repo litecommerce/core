@@ -45,25 +45,25 @@
 * @version $Id$
 */
 class XLite_Module_Intershipper_Model_Shipping_Intershipper extends XLite_Model_Shipping_Online
-{
-    var $error = "";
-    var $xmlError = false;
-    var $translations = array(
+{	
+    public $error = "";	
+    public $xmlError = false;	
+    public $translations = array(
         "UGN" => "Ground (Non-Machinable)",
         "UGM" => "Ground (Machinable)",
         "UWE" => "World Wide Express",
         "UWP" => "Worldwide Express Plus",
         "UWX" => "World Wide Expedited",
-        "UGD" => "Next Day Air");
+        "UGD" => "Next Day Air");	
         
-    var $carriers = array(    
+    public $carriers = array(    
         "DHL" => "DHL",
         "FDX" => "FedEx",
         "UPS" => "UPS",
-        "USP" => "USPS");
+        "USP" => "USPS");	
 
-    var $configCategory = "Intershipper";
-    var $optionsFields = array("userid","password","delivery","pickup","length","width","height","dunit","packaging","contents","insvalue");
+    public $configCategory = "Intershipper";	
+    public $optionsFields = array("userid","password","delivery","pickup","length","width","height","dunit","packaging","contents","insvalue");
 
     function getModuleName()
     {

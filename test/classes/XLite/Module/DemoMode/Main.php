@@ -64,9 +64,9 @@ class XLite_Module_DemoMode_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $enabled = false;
+    protected $enabled = false;	
 
-    var $isFree = true;
+    public $isFree = true;
 
     function init()
     {

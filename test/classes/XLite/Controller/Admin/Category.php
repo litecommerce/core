@@ -47,20 +47,20 @@
 *
 */
 class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
-{
-    var $page = "category_modify";
-    var $pages = array
+{	
+    public $page = "category_modify";	
+    public $pages = array
     (
     	"category_modify"		=> "Add/Modify category",
-    );
-    var $pageTemplates = array
+    );	
+    public $pageTemplates = array
     (
     	"category_modify"  		=> "categories/add_modify_body.tpl",
     	"extra_fields"  		=> "categories/category_extra_fields.tpl",
-    );
+    );	
 
-    var $params = array('target', 'category_id', 'mode', 'message', 'page');
-    var $order_by = 0;
+    public $params = array('target', 'category_id', 'mode', 'message', 'page');	
+    public $order_by = 0;
     
     function init()
     {

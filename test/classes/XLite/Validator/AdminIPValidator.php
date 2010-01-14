@@ -48,8 +48,8 @@
 define('IPV4_REGEXP_WILDCARD', '/^(25[0-5]|2[0-4][0-9]|\*|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|\*|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|\*|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|\*|[01]?[0-9][0-9]?)$/');
 
 class XLite_Validator_AdminIPValidator extends XLite_Validator_Abstract
-{
-    var $template = "common/ip_validator.tpl";
+{	
+    public $template = "common/ip_validator.tpl";
 
     function isValid()
     {

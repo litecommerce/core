@@ -47,8 +47,8 @@
 *
 */
 class XLite_Controller_Admin_ExtraFields extends XLite_Controller_Admin_Abstract
-{
-	var $_categories = null;
+{	
+	public $_categories = null;
 
     function fillForm()
     {

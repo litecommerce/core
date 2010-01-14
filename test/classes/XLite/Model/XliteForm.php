@@ -50,21 +50,21 @@ class XLite_Model_XliteForm extends XLite_Model_Abstract
     /**
     * @var string $alias The forms database table alias.
     * @access public
-    */
-    var $alias = "forms";
+    */	
+    public $alias = "forms";	
 
-    var $primaryKey = array("form_id", "session_id");
+    public $primaryKey = array("form_id", "session_id");
 
     /**
     * default payment method orider field
-    */
-    var $defaultOrder = "date";
+    */	
+    public $defaultOrder = "date";
 
     /**
     * @var array $fields The form properties.
     * @access private
-    */
-    var $fields = array(
+    */	
+    public $fields = array(
         'form_id'    => '',
         'session_id'  => '',
         'date'       => 0

@@ -45,15 +45,15 @@
 * @version $Id$
 */
 class XLite_Module_FeaturedProducts_Model_FeaturedProduct extends XLite_Model_Abstract
-{
-	var $fields = array(
+{	
+	public $fields = array(
 		"product_id" => 0,
 		"category_id" => 0,
-		"order_by" => 0);
-	var $primaryKey = array("category_id","product_id");
-	var $defaultOrder = "order_by";
-	var $alias = "featured_products";
-	var $product = null;
+		"order_by" => 0);	
+	public $primaryKey = array("category_id","product_id");	
+	public $defaultOrder = "order_by";	
+	public $alias = "featured_products";	
+	public $product = null;
 
     function filter()
     {

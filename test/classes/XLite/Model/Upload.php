@@ -71,15 +71,15 @@ class XLite_Model_Upload extends XLite_Base
     *   LC_UPLOAD_TARGET_RO - target dir is not writable (error)
     *   LC_UPLOAD_MAX_SIZE  - max size error (error)
     *   LC_UPLOAD_UNK       - unknown error (error)
-    */
-    var $code;
-    var $_dir;
+    */	
+    public $code;	
+    public $_dir;	
 
-    var $name;
-    var $type;
-    var $size;
-    var $tmp_name;
-    var $error;
+    public $name;	
+    public $type;	
+    public $size;	
+    public $tmp_name;	
+    public $error;
 
     public function __construct($uploadArray = array())
     {

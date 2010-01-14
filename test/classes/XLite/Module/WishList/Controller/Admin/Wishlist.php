@@ -46,9 +46,9 @@
 */
 
 class XLite_Module_WishList_Controller_Admin_Wishlist extends XLite_Controller_Admin_Abstract
-{ // {{{ 
+{ // {{{	 
 	
-	var $wishlist = null;
+	public $wishlist = null;
 	
 	function getTemplate() // {{{ 
 	{

@@ -48,10 +48,10 @@
 * @version $Id$
 */
 class XLite_Module_AuthorizeNet_Model_PaymentMethod_AuthorizenetCh extends XLite_Model_PaymentMethod_Echeck
-{
-    var $processor;
-    var $configurationTemplate = "modules/AuthorizeNet/config.tpl";
-    var $processorName = "Authorize.Net";
+{	
+    public $processor;	
+    public $configurationTemplate = "modules/AuthorizeNet/config.tpl";	
+    public $processorName = "Authorize.Net";
 
 
     public function __construct($id = null)

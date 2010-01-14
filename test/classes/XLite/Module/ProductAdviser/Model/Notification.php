@@ -45,8 +45,8 @@
 */
 
 class XLite_Module_ProductAdviser_Model_Notification extends XLite_Model_Abstract
-{
-	var $fields = array
+{	
+	public $fields = array
 	(
 		"notify_id" 		=> 0,
 		"type" 				=> "",
@@ -60,15 +60,15 @@ class XLite_Module_ProductAdviser_Model_Notification extends XLite_Model_Abstrac
 		"product_options" 	=> "",
 		"quantity" 			=> 0,
 		"price" 			=> 0,
-	);
-	var $primaryKey = array("notify_id");
-    var $autoIncrement = "notify_id";
-	var $defaultOrder = "date";
-	var $alias = "customers_notifications";
+	);	
+	public $primaryKey = array("notify_id");	
+    public $autoIncrement = "notify_id";	
+	public $defaultOrder = "date";	
+	public $alias = "customers_notifications";	
 
-	var $ntfProduct = null;
-	var $errorPresent = false;
-	var $errorDescription;
+	public $ntfProduct = null;	
+	public $errorPresent = false;	
+	public $errorDescription;
 
     function _beforeSave() 
     {

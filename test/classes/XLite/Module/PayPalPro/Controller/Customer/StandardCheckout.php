@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Module_PayPalPro_Controller_Customer_StandardCheckout extends XLite_Controller_Customer_Checkout implements XLite_Base_IDecorator
-{
-	var $registerForm = null;
+{	
+	public $registerForm = null;
 
 	public function __construct()
 	{

@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Module_Promotion_Controller_Admin_DiscountCoupon extends XLite_Controller_Admin_Abstract
-{
-	var $params = array("target", "coupon_id");
+{	
+	public $params = array("target", "coupon_id");
 
 	function getDC() // {{{
 	{

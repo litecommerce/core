@@ -52,8 +52,8 @@
 * @version $Id$
 */
 class XLite_Module_PayPal_Model_PaymentMethod_Paypal extends XLite_Model_PaymentMethod
-{
-    var $pendingReasons = array(
+{	
+    public $pendingReasons = array(
         'echeck' => 'The payment is pending because it was made by an eCheck, which has not yet cleared',
         'multi_currency' => 'You do not have a balance in the currency sent, and you do not have your Payment Receiving Preferences set to automatically convert and accept this payment. You must manually accept or deny this payment',
         'intl' => 'The payment is pending because you, the merchant, hold an international account and do not have a withdrawal method.  You must manually accept or deny this payment from your Account Overview',
@@ -62,11 +62,11 @@ class XLite_Module_PayPal_Model_PaymentMethod_Paypal extends XLite_Model_Payment
         'upgrade' => 'The payment is pending because it was made via credit card and you, the merchant, must upgrade your account to Business or Premier status in order to receive the funds',
         'unilateral' => 'The payment is pending because it was made to an email address that is not yet registered or confirmed',
         'other' => 'The payment is pending for some reason. For more information, contact PayPal customer service'
-        );
+        );	
 
-    var $configurationTemplate = "modules/PayPal/config.tpl";
-    var $formTemplate = "modules/PayPal/checkout.tpl";
-    var $processorName = "PayPal";
+    public $configurationTemplate = "modules/PayPal/config.tpl";	
+    public $formTemplate = "modules/PayPal/checkout.tpl";	
+    public $processorName = "PayPal";
 
     function handleRequest($order)
     {

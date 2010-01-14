@@ -46,8 +46,8 @@
 *
 */
 class XLite_Module_UPSOnlineTools_Model_XML extends XLite_Model_XML
-{
-	var $parser_encode = "";
+{	
+	public $parser_encode = "";
 
     function parse($xml) {
         if (!is_scalar($xml)) {

@@ -40,9 +40,9 @@
 */
 
 class XLite_Module_MultiCurrency_Model_Currency extends XLite_Model_Abstract
-{ // {{{
+{ // {{{	
 	
-	var $fields = array(
+	public $fields = array(
 			"currency_id" 	=> 0,
 			"code"			=> "",
 			"name"			=> "",
@@ -51,11 +51,11 @@ class XLite_Module_MultiCurrency_Model_Currency extends XLite_Model_Abstract
 			"base"			=> 0,	
 			"enabled"		=> 0,
 			"order_by"		=> 0,
-			"countries"		=> "");
+			"countries"		=> "");	
 
-    var $autoIncrement = "currency_id";
-    var $alias = "country_currencies";
-    var $defaultOrder = "base,order_by,code";
+    public $autoIncrement = "currency_id";	
+    public $alias = "country_currencies";	
+    public $defaultOrder = "base,order_by,code";
 
 	function inCurrencyCountries($country_code) // {{{
 	{

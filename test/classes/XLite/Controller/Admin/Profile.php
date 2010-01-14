@@ -46,10 +46,10 @@
 * @version $Id$
 */
 class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
-{
-    var $params = array("target", "mode", "profile_id", "backUrl"); // mode ::= register | modify | success | delete 
-    var $mode = "modify"; // default mode
-    var $backUrl = "admin.php?target=users";
+{	
+    public $params = array("target", "mode", "profile_id", "backUrl"); // mode ::= register | modify | success | delete	 
+    public $mode = "modify"; // default mode	
+    public $backUrl = "admin.php?target=users";
 
 	protected $profile = null;
 

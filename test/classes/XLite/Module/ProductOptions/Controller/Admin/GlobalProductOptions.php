@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Module_ProductOptions_Controller_Admin_GlobalProductOptions extends XLite_Controller_Admin_Abstract
-{
-	var $_categories = null;
+{	
+	public $_categories = null;
 
     function getCategories() // {{{
     {

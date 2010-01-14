@@ -44,8 +44,8 @@
 * @version $Id$
 */
 class XLite_Module_Newsletters_Controller_Customer_News extends XLite_Controller_Abstract
-{
-    var $params = array("target", "mode", "news_id");
+{	
+    public $params = array("target", "mode", "news_id");
 
     function init()
     {

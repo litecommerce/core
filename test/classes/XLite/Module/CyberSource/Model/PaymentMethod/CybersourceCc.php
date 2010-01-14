@@ -43,10 +43,10 @@
 * @version $Id$
 */
 class XLite_Module_CyberSource_Model_PaymentMethod_CybersourceCc extends XLite_Model_PaymentMethod_CreditCard
-{
-	var $configurationTemplate = "modules/CyberSource/config.tpl";
-    var $hasConfigurationForm = true;
-    var $processorName = "CyberSource";
+{	
+	public $configurationTemplate = "modules/CyberSource/config.tpl";	
+    public $hasConfigurationForm = true;	
+    public $processorName = "CyberSource";
 
     function process($cart)
     {

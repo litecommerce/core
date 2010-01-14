@@ -47,10 +47,10 @@
 */
 
 class XLite_Module_eSelect_Model_PaymentMethod_EselectCc extends XLite_Model_PaymentMethod_CreditCard
-{
-	var $configurationTemplate = "modules/eSelect/config.tpl";
-    var $hasConfigurationForm = true;
-    var $processorName = "eSelect";
+{	
+	public $configurationTemplate = "modules/eSelect/config.tpl";	
+    public $hasConfigurationForm = true;	
+    public $processorName = "eSelect";
 	
     function process($cart)
 	{

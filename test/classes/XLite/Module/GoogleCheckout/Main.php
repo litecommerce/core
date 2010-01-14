@@ -72,10 +72,10 @@ class XLite_Module_GoogleCheckout_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $enabled = true;
+    protected $enabled = true;	
 
-    var $minVer = "2.1.2";
-    var $showSettingsForm = true;
+    public $minVer = "2.1.2";	
+    public $showSettingsForm = true;
 
     function getSettingsForm()
     {

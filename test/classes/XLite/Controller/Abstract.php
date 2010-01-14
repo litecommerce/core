@@ -46,11 +46,11 @@
 * @version $Id$
 */
 abstract class XLite_Controller_Abstract extends XLite_View
-{
-    var $params = array('target');
-    var $template = "main.tpl";
-    var $dumpStarted = false; // startDump was called
-    var $locationPath = array(); // path for dialog location
+{	
+    public $params = array('target');	
+    public $template = "main.tpl";	
+    public $dumpStarted = false; // startDump was called	
+    public $locationPath = array(); // path for dialog location
 
 	protected $product = null;
 

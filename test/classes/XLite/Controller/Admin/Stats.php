@@ -46,10 +46,10 @@
 * @version $Id$
 */
 class XLite_Controller_Admin_Stats extends XLite_Controller_Admin_Abstract
-{
-    var $params = array('target');
-    var $page = "orders_stats";
-    var $pages = array('orders_stats' => 'Order statistics',
+{	
+    public $params = array('target');	
+    public $page = "orders_stats";	
+    public $pages = array('orders_stats' => 'Order statistics',
                        'top_sellers' => 'Top sellers',
                        'searchStat' => 'Search statistics',
                        );

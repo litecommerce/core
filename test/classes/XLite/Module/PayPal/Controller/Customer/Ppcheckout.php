@@ -43,8 +43,8 @@
 */
 
 class XLite_Module_PayPal_Controller_Customer_Ppcheckout extends XLite_Controller_Customer_Checkout
-{
-    var $registerForm = null;
+{	
+    public $registerForm = null;
 
     function init()
     {

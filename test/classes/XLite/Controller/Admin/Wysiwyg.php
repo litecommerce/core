@@ -46,10 +46,10 @@
 * @version $Id$
 */
 class XLite_Controller_Admin_Wysiwyg extends XLite_Controller_Admin_Abstract
-{
-    var $builder = null;
-    var $exportTemplates = array("main.tpl", "common/print_invoice.tpl");
-    var $shortcuts = array(
+{	
+    public $builder = null;	
+    public $exportTemplates = array("main.tpl", "common/print_invoice.tpl");	
+    public $shortcuts = array(
             "var/html/main.html"=>"Storefront (aka Main page)", 
             "var/html/register_form.html"=>"User registration form",
             "var/html/profile.html"=>"User profile form",

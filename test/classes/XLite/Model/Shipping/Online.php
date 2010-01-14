@@ -47,8 +47,8 @@ define('SHIPPING_CACHE_EXPIRATION', 3600*12); // half of a day
 * @version $Id$
 */
 class XLite_Model_Shipping_Online extends XLite_Model_Shipping
-{
-    var $optionsTable;
+{	
+    public $optionsTable;
 
     function getOptions()
     {

@@ -44,10 +44,10 @@
 * @version $Id$
 */
 class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product implements XLite_Base_IDecorator
-{
-	var $_RelatedProducts = null;
-	var $_ProductsAlsoBuy = null;
-	var $_ProductMainCategory = null;
+{	
+	public $_RelatedProducts = null;	
+	public $_ProductsAlsoBuy = null;	
+	public $_ProductMainCategory = null;
 
     function getRelatedProducts()
     {

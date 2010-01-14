@@ -42,10 +42,10 @@
 * @version $Id$
 */
 class XLite_Module_Affiliate_Controller_Admin_PartnerStats extends XLite_Controller_Admin_Abstract
-{
-    var $params = array('target');
-    var $page = "banner_stats";
-    var $pages = array('banner_stats' => 'Banner statistics',
+{	
+    public $params = array('target');	
+    public $page = "banner_stats";	
+    public $pages = array('banner_stats' => 'Banner statistics',
                        'sales_stats' => 'Referred sales',
                        'top_performers' => 'Top performers',
                        'partners_tree' => 'Affiliate tree',

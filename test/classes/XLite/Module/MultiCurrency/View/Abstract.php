@@ -40,9 +40,9 @@
 */
 
 class XLite_Module_MultiCurrency_View_Abstract extends XLite_View_Abstract implements XLite_Base_IDecorator
-{
-	var $currencies 		= null;
-	var $defaultCurrency 	= null;
+{	
+	public $currencies 		= null;	
+	public $defaultCurrency 	= null;
 
 	function getCurrencies() // {{{
 	{

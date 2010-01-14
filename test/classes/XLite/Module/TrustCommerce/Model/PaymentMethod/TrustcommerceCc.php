@@ -45,10 +45,10 @@
 * @version $Id$
 */
 class XLite_Module_TrustCommerce_Model_PaymentMethod_TrustcommerceCc extends XLite_Model_PaymentMethod_CreditCard
-{
-	var $configurationTemplate = "modules/TrustCommerce/config.tpl";
-	var $processorName = "TrustCommerce";
-	var $hasConfigurationForm = true;
+{	
+	public $configurationTemplate = "modules/TrustCommerce/config.tpl";	
+	public $processorName = "TrustCommerce";	
+	public $hasConfigurationForm = true;
 
     function process($cart)
     {

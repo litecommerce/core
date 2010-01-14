@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Validator_EmailValidator extends XLite_Validator_Abstract
-{
-    var $template = "common/email_validator.tpl";
+{	
+    public $template = "common/email_validator.tpl";
     
     function isValid()
     {

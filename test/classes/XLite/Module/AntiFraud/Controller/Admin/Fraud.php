@@ -40,10 +40,10 @@
 */
 
 class XLite_Module_AntiFraud_Controller_Admin_Fraud extends XLite_Controller_Admin_Abstract
-{
-	var $params = array("target", "mode", "order_id");
-	var $order = null;
-	var $response = null;
+{	
+	public $params = array("target", "mode", "order_id");	
+	public $order = null;	
+	public $response = null;
 
 	function getTemplate() 
 	{

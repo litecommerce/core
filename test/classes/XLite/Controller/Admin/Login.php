@@ -45,9 +45,9 @@
 * @version $Id$
 */
 class XLite_Controller_Admin_Login extends XLite_Controller_Abstract
-{
-    var $template = "login.tpl";
-    var $returnUrl = "admin.php";
+{	
+    public $template = "login.tpl";	
+    public $returnUrl = "admin.php";
 
 	function fillForm()
 	{

@@ -57,15 +57,15 @@
 * @version $Id$
 */
 class XLite_Model_ExtraPage extends XLite_Base
-{
-    var $templatePrefix; // = "skins/$zone/en/";
-    var $page; // a page identifier
-    var $title;
-    var $content; // a page content
-    var $template; // the page's template
-    var $pageLine = "<widget template=\"common/dialog.tpl\" body=\"%s.tpl\" head=\"%s\" visible=\"{page=#%s#}\">";
+{	
+    public $templatePrefix; // = "skins/$zone/en/";	
+    public $page; // a page identifier	
+    public $title;	
+    public $content; // a page content	
+    public $template; // the page's template	
+    public $pageLine = "<widget template=\"common/dialog.tpl\" body=\"%s.tpl\" head=\"%s\" visible=\"{page=#%s#}\">";	
 
-    var $isRead = false;
+    public $isRead = false;
 
 	protected $zone = null;
 

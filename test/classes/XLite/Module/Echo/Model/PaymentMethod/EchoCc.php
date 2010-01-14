@@ -47,10 +47,10 @@
 * @version $Id$
 */
 class XLite_Module_Echo_Model_PaymentMethod_EchoCc extends XLite_Model_PaymentMethod_CreditCard
-{
-    var $processorName = "Echo";
-	var $configurationTemplate = "modules/Echo/config.tpl";
-	var $hasCongifurationForm = true;
+{	
+    public $processorName = "Echo";	
+	public $configurationTemplate = "modules/Echo/config.tpl";	
+	public $hasCongifurationForm = true;
     
     function process($cart)
     {

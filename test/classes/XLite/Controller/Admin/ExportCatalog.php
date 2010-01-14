@@ -46,15 +46,15 @@
 * @version $Id$
 */
 class XLite_Controller_Admin_ExportCatalog extends XLite_Controller_Admin_Abstract
-{
-    var $params = array('target', 'page');
-    var $pages = array('products' => 'Export products',
+{	
+    public $params = array('target', 'page');	
+    public $pages = array('products' => 'Export products',
                        'extra_fields' => 'Export extra fields'
-                       );
-    var $pageTemplates = array('products' => 'product/export.tpl',
+                       );	
+    public $pageTemplates = array('products' => 'product/export.tpl',
                                'extra_fields' => 'product/export_fields.tpl'
-                               );
-    var $page = "products";
+                               );	
+    public $page = "products";
 
     function handleRequest()
     {

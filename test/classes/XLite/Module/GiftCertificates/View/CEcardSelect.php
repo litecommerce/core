@@ -44,9 +44,9 @@
 * @version $Id$
 */
 class XLite_Module_GiftCertificates_View_CEcardSelect extends XLite_View
-{
-    var $params = array("gcid");
-    var $ecards = null;
+{	
+    public $params = array("gcid");	
+    public $ecards = null;
 
     function getECards()
     {

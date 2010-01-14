@@ -45,14 +45,14 @@
 * @version $Id$
 */
 class XLite_Module_ProductOptions_Model_OptionValidator extends XLite_Model_Abstract
-{
-    var $fields = array(
+{	
+    public $fields = array(
             "product_id"  => 0,
             "javascript_code"  => ""
-            );
+            );	
 
-    var $primaryKey = array("product_id");
-    var $alias = "product_options_js";
+    public $primaryKey = array("product_id");	
+    public $alias = "product_options_js";
 } 
 
 // WARNING:

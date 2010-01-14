@@ -46,8 +46,8 @@
 * @version $Id$
 */
 class XLite_Model_ExtraField extends XLite_Model_Abstract
-{
-    var $fields = array(
+{	
+    public $fields = array(
             "field_id" => 0,    // primary key
             "product_id" => 0,
             "name"     => "",
@@ -56,13 +56,13 @@ class XLite_Model_ExtraField extends XLite_Model_Abstract
             "order_by" => 0,
 			"parent_field_id" => 0,
 			"categories" => "",
-            );
+            );	
 
-    var $autoIncrement = "field_id";
-    var $alias         = "extra_fields";
-    var $defaultOrder  = "order_by,name";
+    public $autoIncrement = "field_id";	
+    public $alias         = "extra_fields";	
+    public $defaultOrder  = "order_by,name";	
 
-    var $importFields = array(
+    public $importFields = array(
         "NULL" => false,
         "name" => false,
         "sku" => false,

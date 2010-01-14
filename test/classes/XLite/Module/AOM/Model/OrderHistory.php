@@ -42,19 +42,19 @@ func_define('ORDER_HISTORY_CHANGED_MESSAGE', 'Changed');
 * @version $Id$
 */
 class XLite_Module_AOM_Model_OrderHistory extends XLite_Model_Abstract
-{
-	var $fields = array("order_history_id" 	=> '',
+{	
+	public $fields = array("order_history_id" 	=> '',
 						"order_id"			=> '',
 						"login"				=> '',	
 						"date"				=> '',
 						"changes"			=> '',	
-						"secureChanges"		=> '');
+						"secureChanges"		=> '');	
 
-	var $autoIncrement = "order_history_id";
-	var $alias = "order_history";					
-	var $_changes = null;
+	public $autoIncrement = "order_history_id";	
+	public $alias = "order_history";						
+	public $_changes = null;	
 
-	var $secure_prefix = array("cc_");
+	public $secure_prefix = array("cc_");
 
 	function get($name) {
 		if ($name == 'changes') 

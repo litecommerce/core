@@ -63,8 +63,8 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
     * 
     * @var    options
     * @access private
-    */
-    var $options = array(
+    */	
+    public $options = array(
             'phptype'  => 'mysql_xlite',
             'dbsyntax' => false,
             'username' => '',
@@ -78,12 +78,12 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
 
     /**
     * Database connection resource
-    */
-    var $connection = null;
-    var $connected = false;
+    */	
+    public $connection = null;	
+    public $connected = false;	
     
-    var $cache = array();
-    var $cacheEnabled = false;
+    public $cache = array();	
+    public $cacheEnabled = false;
     // }}}
 
 

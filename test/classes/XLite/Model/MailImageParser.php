@@ -39,10 +39,10 @@
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
 class XLite_Model_MailImageParser extends XLite_Model_FlexyCompiler
-{
-    var $webdir;
-    var $images;
-    var $counter;
+{	
+    public $webdir;	
+    public $images;	
+    public $counter;
 
 	function flexy() { }
 

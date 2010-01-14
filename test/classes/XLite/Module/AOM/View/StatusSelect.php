@@ -44,10 +44,10 @@
 * @version $Id$
 */
 class XLite_Module_AOM_View_StatusSelect extends XLite_View_StatusSelect implements XLite_Base_IDecorator
-{
-    var $allOption 	= false; 
-	var $statuses	= null;
-	var $template	= "modules/AOM/common/select_status.tpl";
+{	
+    public $allOption 	= false;	 
+	public $statuses	= null;	
+	public $template	= "modules/AOM/common/select_status.tpl";
 
     function getStatuses()
     {

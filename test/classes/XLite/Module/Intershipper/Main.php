@@ -71,11 +71,11 @@ class XLite_Module_Intershipper_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $enabled = true;
+    protected $enabled = true;	
 
     
-    var $showSettingsForm = true;
-    var $minVer = "2.0";
+    public $showSettingsForm = true;	
+    public $minVer = "2.0";
 
     function getSettingsForm()
     {

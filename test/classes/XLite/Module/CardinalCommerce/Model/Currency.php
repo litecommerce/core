@@ -46,17 +46,17 @@ class XLite_Module_CardinalCommerce_Model_Currency extends XLite_Model_Abstract
     /**
     * @var string $alias The ProductFavorites database table alias.
     * @access public
-    */
-    var $alias = "currencies";
+    */	
+    public $alias = "currencies";	
 
-    var $primaryKey = array("code");
-    var $defaultOrder = "name";
+    public $primaryKey = array("code");	
+    public $defaultOrder = "name";
 
     /**
     * @var array $fields The Currency properties.
     * @access private
-    */
-    var $fields = array
+    */	
+    public $fields = array
     (
     	"code"		=> "",
         "code_int" 	=> 0,

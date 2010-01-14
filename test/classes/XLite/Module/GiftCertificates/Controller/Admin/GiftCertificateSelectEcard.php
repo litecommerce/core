@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificateSelectEcard extends XLite_Controller_Admin_Abstract
-{
-    var $params = array("target", "gcid");
+{	
+    public $params = array("target", "gcid");
 
     function action_update()
     {

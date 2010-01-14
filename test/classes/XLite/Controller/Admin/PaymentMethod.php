@@ -47,11 +47,11 @@
 *
 */
 class XLite_Controller_Admin_PaymentMethod extends XLite_Controller_Admin_Abstract
-{
-    var $params = array("target", "payment_method", "updated", "error");
-    var $pm = null;
-    var $error = '';
-    var $updated = false;
+{	
+    public $params = array("target", "payment_method", "updated", "error");	
+    public $pm = null;	
+    public $error = '';	
+    public $updated = false;
 
     function getPM()
     {

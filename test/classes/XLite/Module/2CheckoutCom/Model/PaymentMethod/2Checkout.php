@@ -49,15 +49,15 @@
 * @version $Id$
 */
 class XLite_Module_2CheckoutCom_Model_PaymentMethod_2Checkout extends XLite_Model_PaymentMethod_CreditCard
-{
-    var $cvverr = array(
+{	
+    public $cvverr = array(
             "M" => "Match",
             "N" => "Wrong CVV2 code",
             "P" => "CVV2 code was not processed",
             "S" => "Please specify your CVV2 code",
             "U" => "Issuer unable to process request"
-            );
-    var $avserr = array(
+            );	
+    public $avserr = array(
             "A" => "Wrong billing address: Address (Street) matches, ZIP does not",
             "E" => "Wrong billing address",
             "N" => "Wrong billing address: No Match on Address (Street) or ZIP",
@@ -69,11 +69,11 @@ class XLite_Module_2CheckoutCom_Model_PaymentMethod_2Checkout extends XLite_Mode
             "X" => "Exact AVS Match",
             "Y" => "Wrong billing address: Address (Street) and 5 digit ZIP match",
             "Z" => "Wrong billing address: 5 digit ZIP matches, Address (Street) does not"
-            );
+            );	
 
-    var $processorName = "2Checkout.com";
-    var $configurationTemplate = "modules/2CheckoutCom/config.tpl";
-    var $formTemplate ="modules/2CheckoutCom/checkout.tpl";
+    public $processorName = "2Checkout.com";	
+    public $configurationTemplate = "modules/2CheckoutCom/config.tpl";	
+    public $formTemplate ="modules/2CheckoutCom/checkout.tpl";
 
     function handleRequest($cart)
     {

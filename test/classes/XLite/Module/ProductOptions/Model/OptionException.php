@@ -45,15 +45,15 @@
 * @version $Id$
 */
 class XLite_Module_ProductOptions_Model_OptionException extends XLite_Model_Abstract
-{
-    var $fields = array(
+{	
+    public $fields = array(
             "option_id"  => 0,
             "product_id" => 0,
             "exception"  => ""
-            );
+            );	
 
-    var $autoIncrement = "option_id";
-    var $alias = "product_options_ex";
+    public $autoIncrement = "option_id";	
+    public $alias = "product_options_ex";
 
     function hasExceptions($product_id)
     {

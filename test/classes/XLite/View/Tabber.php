@@ -47,11 +47,11 @@
 * @version $Id$
 */
 class XLite_View_Tabber extends XLite_View_Abstract
-{
-    var $tabPages = "pages"; // name of dialog's array with "tab" => "head"
-    var $switch;
-    var $template = "common/tabber.tpl";
-    var $tabPagesInfo = array();
+{	
+    public $tabPages = "pages"; // name of dialog's array with "tab" => "head"	
+    public $switch;	
+    public $template = "common/tabber.tpl";	
+    public $tabPagesInfo = array();
 
     function getPages()
     {

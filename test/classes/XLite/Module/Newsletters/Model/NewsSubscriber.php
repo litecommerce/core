@@ -50,16 +50,16 @@ func_define("SUBSCRIBE_FAILED", -1);
 * @version $Id$
 */
 class XLite_Module_Newsletters_Model_NewsSubscriber extends XLite_Model_Abstract
-{
-    var $fields = array(
+{	
+    public $fields = array(
             "list_id"  => 0,
             "email" => "",
             "since_date"  => 0,
-            );
+            );	
 
-    var $primaryKey = array("list_id", "email");
-    var $alias = "news_subscribers";
-    var $defaultOrder = "since_date,email";
+    public $primaryKey = array("list_id", "email");	
+    public $alias = "news_subscribers";	
+    public $defaultOrder = "since_date,email";
     
     function subscribe($email, $list_id, $verbose = true)
     {

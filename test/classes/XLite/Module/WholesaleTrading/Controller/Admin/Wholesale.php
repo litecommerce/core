@@ -43,8 +43,8 @@
 * @version $Id$
 */
 class XLite_Module_WholesaleTrading_Controller_Admin_Wholesale extends XLite_Controller_Admin_Abstract
-{
-    var $params = array("target"); 
+{	
+    public $params = array("target"); 
     
     function action_options() // {{{
     {

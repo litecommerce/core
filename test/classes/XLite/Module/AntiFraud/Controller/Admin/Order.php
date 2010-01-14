@@ -40,9 +40,9 @@
 */
 
 class XLite_Module_AntiFraud_Controller_Admin_Order extends XLite_Controller_Admin_Order implements XLite_Base_IDecorator
-{
-	var $order = null;
-	var $country = null;
+{	
+	public $order = null;	
+	public $country = null;
 	
 	function init() 
 	{

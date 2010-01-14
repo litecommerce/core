@@ -43,8 +43,8 @@
 * @version $Id$
 */
 class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports
-{
-    var $crlf = "\r\n";
+{	
+    public $crlf = "\r\n";
 
     function getProfiles() // {{{
     {

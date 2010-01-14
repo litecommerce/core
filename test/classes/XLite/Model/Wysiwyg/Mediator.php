@@ -69,21 +69,21 @@ $GLOBALS['TEMPLATE_REFERENCE_PARAMS'] = array(
 * @version $Id$
 */
 class XLite_Model_Wysiwyg_Mediator extends XLite_Base
-{
-    var $widgetClass = "WysiwygMediatorWidget";
-    var $templateClass = "Template";
-    var $imagesDir = HTML_BUILDER_IMAGES_DIR;
-    var $templateEditableParams  = null;
-    var $templateReferenceParams = null;
-    var $hrefPrefix = '';
-    var $pageTarget = null;
-    var $pageMode = null;
-	var $dummy_images = array();
-	//var $showMemoryUsage = true;		// uncomment this line to show memory usage
-	var $__memoryUsageMax = 0;
-	var $__memoryUsageMin = 0;
-	var $__buildFullTreeCounter = 0;
-	var $__buildFullTreeCounterMax = 0;
+{	
+    public $widgetClass = "WysiwygMediatorWidget";	
+    public $templateClass = "Template";	
+    public $imagesDir = HTML_BUILDER_IMAGES_DIR;	
+    public $templateEditableParams  = null;	
+    public $templateReferenceParams = null;	
+    public $hrefPrefix = '';	
+    public $pageTarget = null;	
+    public $pageMode = null;	
+	public $dummy_images = array();
+	//var $showMemoryUsage = true;		// uncomment this line to show memory usage	
+	public $__memoryUsageMax = 0;	
+	public $__memoryUsageMin = 0;	
+	public $__buildFullTreeCounter = 0;	
+	public $__buildFullTreeCounterMax = 0;
 
     public function __construct()
     {

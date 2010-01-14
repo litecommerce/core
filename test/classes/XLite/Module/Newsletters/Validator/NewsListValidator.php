@@ -44,8 +44,8 @@
 * @version $Id$
 */
 class XLite_Module_Newsletters_Validator_NewsListValidator extends XLite_Validator_RequiredValidator
-{
-    var $template = "modules/Newsletters/common/news_list_validator.tpl";
+{	
+    public $template = "modules/Newsletters/common/news_list_validator.tpl";
     
     function isValid()
     {

@@ -43,9 +43,9 @@
 * @version $Id$
 */
 class XLite_Module_Affiliate_Controller_Customer_PartnerLogin extends XLite_Controller_Customer_Login
-{
-    var $template = "modules/Affiliate/login.tpl";
-    var $partnerZoneUrl = "cart.php?target=partner";
+{	
+    public $template = "modules/Affiliate/login.tpl";	
+    public $partnerZoneUrl = "cart.php?target=partner";
     
     function handleRequest()
     {

@@ -45,9 +45,9 @@
 * @version $Id$
 */
 class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_Abstract
-{
-    var $params = array('target', 'mode', 'order_id1', 'order_id2', 'login', 'status');
-    var $noSuchUser = false;
+{	
+    public $params = array('target', 'mode', 'order_id1', 'order_id2', 'login', 'status');	
+    public $noSuchUser = false;
 
 	protected $action = '';
 

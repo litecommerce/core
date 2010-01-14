@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstract
-{
-    var $fields = array(
+{	
+    public $fields = array(
             "option_id"  		=> 0,
             "product_id" 		=> 0,
             "optclass"   		=> "",
@@ -58,13 +58,13 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
             "orderby"    		=> 0,
             "parent_option_id"	=> 0,
             "categories"		=> ""
-            );
+            );	
 
-    var $autoIncrement = "option_id";
-    var $alias = "product_options";
-    var $defaultOrder = "orderby";
+    public $autoIncrement = "option_id";	
+    public $alias = "product_options";	
+    public $defaultOrder = "orderby";	
 
-    var $importFields = array
+    public $importFields = array
     (
     	"sku"  => 0,
         "name" => 1,

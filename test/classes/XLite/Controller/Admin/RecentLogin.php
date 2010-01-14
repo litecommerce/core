@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Controller_Admin_RecentLogin extends XLite_Controller_Admin_Abstract
-{
-	var $params = array("target");
+{	
+	public $params = array("target");
 
     function getSecure()
     {

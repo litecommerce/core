@@ -45,10 +45,10 @@
 * @version $Id$
 */
 class XLite_View extends XLite_View_Abstract
-{
-    var $params = array();
-    var $components = array();
-    var $valid = true;
+{	
+    public $params = array();	
+    public $components = array();	
+    public $valid = true;
 
 	protected $returnUrl = null;
     

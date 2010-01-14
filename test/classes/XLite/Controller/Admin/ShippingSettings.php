@@ -46,15 +46,15 @@
 * @version $Id$
 */
 class XLite_Controller_Admin_ShippingSettings extends XLite_Controller_Admin_Abstract
-{
-    var $params = array('target');
-    var $page = "shipping_methods";
-    var $pages = array('shipping_methods' => 'Methods ',
+{	
+    public $params = array('target');	
+    public $page = "shipping_methods";	
+    public $pages = array('shipping_methods' => 'Methods ',
 	     			   'shipping_zones' => 'Zones',
                        'shipping_rates' => 'Charges'
-                       );
+                       );	
 
-    var $_shippings = null;
+    public $_shippings = null;
 
 	function getShippings()
 	{

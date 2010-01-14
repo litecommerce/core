@@ -60,17 +60,17 @@ require_once LC_ROOT_DIR . 'lib' . LC_DS . 'Net' . LC_DS . 'URL.php';
 * @version $Id$
 */
 class XLite_Model_HTTPS extends XLite_Base
-{
-    var $method = 'POST';
-    var $url = '';
-    var $data = array();
-    var $conttype = "application/x-www-form-urlencoded";
-    var $cert = null;
-    var $kcert = null;
-    var $response = null;
-    var $curlErrorCode = 0;
-    var $urlencoded = false;
-    var $headers = array();
+{	
+    public $method = 'POST';	
+    public $url = '';	
+    public $data = array();	
+    public $conttype = "application/x-www-form-urlencoded";	
+    public $cert = null;	
+    public $kcert = null;	
+    public $response = null;	
+    public $curlErrorCode = 0;	
+    public $urlencoded = false;	
+    public $headers = array();
 
     /**
     * Add header
@@ -478,9 +478,9 @@ class XLite_Model_HTTPS extends XLite_Base
         }
 
         return HTTPS_SUCCESS;
-    }
+    }	
 
-    var $curlErrors = array(
+    public $curlErrors = array(
 '1' =>
 'Unsupported protocol "PROTO". This build of curl has no support for this protocol.',
 '2' =>

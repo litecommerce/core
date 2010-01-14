@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Controller_Abstract
-{
-    var $product = null;
+{	
+    public $product = null;
 
 	function init()
 	{

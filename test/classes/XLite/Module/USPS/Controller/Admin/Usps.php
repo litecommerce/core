@@ -38,39 +38,39 @@
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
 class XLite_Module_USPS_Controller_Admin_Usps extends XLite_Controller_Admin_ShippingSettings
-{
-    var $params = array("target", "updated");
-    var $settings;
-    var $error = '';
-    var $updated = false;
-    var $testResult = false; // this is a test request
+{	
+    public $params = array("target", "updated");	
+    public $settings;	
+    public $error = '';	
+    public $updated = false;	
+    public $testResult = false; // this is a test request
     // test data
-    // var $ounces = 1;
-    // var $destinationCountry = "United Kingdom (Great Britain)";
-    // var $ZipDestination = "73003";
-    var $page = "usps";
+    //	 public $ounces = 1;
+    //	 public $destinationCountry = "United Kingdom (Great Britain)";
+    //	 public $ZipDestination = "73003";	
+    public $page = "usps";	
 
-    var $mailtypes = array
+    public $mailtypes = array
     (
         "Package" => "Package",
         "Postcards or Aerogrammes" => "Postcards or Aerogrammes",
         "Matter for the Blind" => "Matter for the Blind",
         "Envelope" => "Envelope"
-    );
-    var $containers_express = array
+    );	
+    public $containers_express = array
     (
         "NONE"					=> "None",
 		"FLAT RATE ENVELOPE"	=> "Express Mail Flat Rate Envelope",
-	);
-    var $containers_priority = array
+	);	
+    public $containers_priority = array
     (
         "NONE"					=> "None",
 		"FLAT RATE ENVELOPE"	=> "Priority Mail Flat Rate Envelope",
 		"FLAT RATE BOX"			=> "Priority Mail Flat Rate Box",
 		"RECTANGULAR"			=> "Priority Mail Rectangular (Large)",
 		"NONRECTANGULAR"		=> "Priority Mail Non Rectangular (Large)",
-	);
-    var $fcmailtypes = array
+	);	
+    public $fcmailtypes = array
     (
         "LETTER" 	=> "Letter",
         "FLAT" 		=> "Flat",

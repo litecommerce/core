@@ -73,9 +73,9 @@ class XLite_Module_FeaturedProducts_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $enabled = true;
+    protected $enabled = true;	
 
-    var $showSettingsForm = true;
+    public $showSettingsForm = true;
 }
 
 // WARNING :

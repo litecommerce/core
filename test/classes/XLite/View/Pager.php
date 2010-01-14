@@ -47,12 +47,12 @@
 * @version $Id$
 */
 class XLite_View_Pager extends XLite_View
-{
-    var $data = array();
-    var $template = "common/pager.tpl";
-    var $pageID = 0;
-    var $params = array("pageID");
-    var $itemsPerPage = 10;
+{	
+    public $data = array();	
+    public $template = "common/pager.tpl";	
+    public $pageID = 0;	
+    public $params = array("pageID");	
+    public $itemsPerPage = 10;
 
 	protected $pages = null;
 

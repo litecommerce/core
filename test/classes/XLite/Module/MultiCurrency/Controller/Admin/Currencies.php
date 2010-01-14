@@ -40,12 +40,12 @@
 */
 
 class XLite_Module_MultiCurrency_Controller_Admin_Currencies extends XLite_Controller_Admin_Abstract
-{ 
+{	 
 	
-	var $params = array("target");
-	var $countries = null;
-	var $allCurrencies = null;
-	var $defaultCurrency = null;
+	public $params = array("target");	
+	public $countries = null;	
+	public $allCurrencies = null;	
+	public $defaultCurrency = null;
 
 	function getDefaultCurrency() // {{{
 	{

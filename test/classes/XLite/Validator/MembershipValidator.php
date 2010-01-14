@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Validator_MembershipValidator extends XLite_Validator_Abstract
-{
-    var $template = "common/membership_validator.tpl";
+{	
+    public $template = "common/membership_validator.tpl";
     
     function isValid()
     {

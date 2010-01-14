@@ -47,16 +47,16 @@
 *
 */
 class XLite_Controller_Admin_Db extends XLite_Controller_Admin_Abstract
-{
-	var $params = array('target', 'page');
-	var $page = "db_backup";
-	var $pages = array( "db_backup" 	=> "Backup database",
-						"db_restore" 	=> "Restore database");
-	var $pageTemplates = array(	"db_backup" 	=> "db/backup.tpl",
-								"db_restore"	=> "db/restore.tpl");
-   	var $upload_max_filesize;
-   	var $sqldump_dir = SQL_DUMP_DIR;
-    var $sqldump_file = SQL_DUMP_FILE;
+{	
+	public $params = array('target', 'page');	
+	public $page = "db_backup";	
+	public $pages = array( "db_backup" 	=> "Backup database",
+						"db_restore" 	=> "Restore database");	
+	public $pageTemplates = array(	"db_backup" 	=> "db/backup.tpl",
+								"db_restore"	=> "db/restore.tpl");	
+   	public $upload_max_filesize;	
+   	public $sqldump_dir = SQL_DUMP_DIR;	
+    public $sqldump_file = SQL_DUMP_FILE;
     
     function handleRequest()
     {

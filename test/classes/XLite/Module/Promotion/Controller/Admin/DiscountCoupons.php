@@ -51,8 +51,8 @@ define('DIALOG_SORT_MODE_USED', 3);
 * @version $Id$
 */
 class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Controller_Admin_Abstract
-{
-	var $couponExists = false;
+{	
+	public $couponExists = false;
 
 	function init()
 	{

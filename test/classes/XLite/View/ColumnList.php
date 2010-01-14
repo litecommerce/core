@@ -46,10 +46,10 @@
 * @version $Id$
 */
 class XLite_View_ColumnList extends XLite_View
-{
-    var $columnCount = 2;
-    var $template = "common/column_list.tpl";
-    var $columns = array();
+{	
+    public $columnCount = 2;	
+    public $template = "common/column_list.tpl";	
+    public $columns = array();
 
     function getColumns()
     {

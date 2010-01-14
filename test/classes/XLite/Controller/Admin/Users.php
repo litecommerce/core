@@ -47,8 +47,8 @@
 *
 */
 class XLite_Controller_Admin_Users extends XLite_Controller_Admin_Abstract
-{
-    var $params = array('target', 'mode', 'substring', 'user_type', 'membership');
+{	
+    public $params = array('target', 'mode', 'substring', 'user_type', 'membership');
 
 	protected $users = null;
 

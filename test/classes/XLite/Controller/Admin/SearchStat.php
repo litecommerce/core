@@ -46,10 +46,10 @@
 * @version $Id$
 */
 class XLite_Controller_Admin_SearchStat extends XLite_Controller_Admin_Stats
-{
-    var $params = array("target", "listOrder");
-    var $order = "query";
-    var $orders = array(
+{	
+    public $params = array("target", "listOrder");	
+    public $order = "query";	
+    public $orders = array(
             "query" => "query",
             "count" => "count desc",
             "product count" => "product_count desc");

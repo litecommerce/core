@@ -49,15 +49,15 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
 {
     /**
     * Reference to the order/cart object
-    */
-    var $order = null;
+    */	
+    public $order = null;
 
     /**
     * A reference to the product object or null if there is no product
-    */
-    var $product = null;
+    */	
+    public $product = null;	
 
-    var $fields = array(
+    public $fields = array(
         'order_id'    => '',
         'item_id'     => '',
         'orderby'     => 0,
@@ -65,11 +65,11 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
         'product_name'  => '',
         'product_sku'  => '',
         'price'       => '0',
-        'amount'      => '1');
+        'amount'      => '1');	
 
-    var $primaryKey = array('order_id', 'item_id');
-    var $alias = 'order_items';
-    var $defaultOrder = "orderby";
+    public $primaryKey = array('order_id', 'item_id');	
+    public $alias = 'order_items';	
+    public $defaultOrder = "orderby";
 
 	public function __construct()
 	{

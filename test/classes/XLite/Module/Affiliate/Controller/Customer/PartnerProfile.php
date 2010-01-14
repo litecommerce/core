@@ -43,10 +43,10 @@
 * @version $Id$
 */
 class XLite_Module_Affiliate_Controller_Customer_PartnerProfile extends XLite_Module_Affiliate_Controller_Partner
-{
-    var $params = array("target", "mode", "submode", "returnUrl","parent"); // mode ::= register | modify | success | delete
-    var $mode = "register";
-    var $submode = "warning"; // delete profile status: warning | confirmed | cancelled
+{	
+    public $params = array("target", "mode", "submode", "returnUrl","parent"); // mode ::= register | modify | success | delete	
+    public $mode = "register";	
+    public $submode = "warning"; // delete profile status: warning | confirmed | cancelled
 
 
     function getTemplate() // {{{

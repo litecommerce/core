@@ -45,10 +45,10 @@
 * @version $Id$
 */
 class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificateEcard extends XLite_Controller_Admin_Abstract
-{
-    var $params = array("target", "ecard_id");
-    var $ecard = null;
-    var $returnUrl = "admin.php?target=gift_certificate_ecards";
+{	
+    public $params = array("target", "ecard_id");	
+    public $ecard = null;	
+    public $returnUrl = "admin.php?target=gift_certificate_ecards";
     
     function getECard()
     {

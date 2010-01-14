@@ -38,34 +38,34 @@
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
 class XLite_Module_Intershipper_Controller_Admin_Intershipper extends XLite_Controller_Admin_ShippingSettings
-{
-    var $params = array("target", "updated");
-    var $settings;
-    var $error = '';
-    var $updated = false;
-    var $testResult = false; // this is a test request
-    var $page = "intershipper";
+{	
+    public $params = array("target", "updated");	
+    public $settings;	
+    public $error = '';	
+    public $updated = false;	
+    public $testResult = false; // this is a test request	
+    public $page = "intershipper";	
 
-    var $deliveries = array(
+    public $deliveries = array(
         "COM" => "Commercial delivery",
         "RES" => "Residential delivery",
-        );
-    var $pickups = array(
+        );	
+    public $pickups = array(
         "DRP" => "Drop of at carrier location",
         "SCD" => "Regularly Scheduled Pickup",
         "PCK" => "Schedule A Special Pickup"
-        );
-    var $dunits = array(
+        );	
+    public $dunits = array(
         "IN" => "Inches",
         "CM" => "Centimeters"
-        );
-    var $packagings = array(
+        );	
+    public $packagings = array(
         "BOX" => "Box",
         "ENV" => "Envelope",
         "LTR" => "Letter",
         "TUB" => "Tube"
-        );
-    var $contents_types = array(
+        );	
+    public $contents_types = array(
         "OTR" => "Other: Most shipments will use this code",
         "LQD" => "Liquid",
         "AHM" => "Accessible HazMat",

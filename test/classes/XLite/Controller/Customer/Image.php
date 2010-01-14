@@ -46,8 +46,8 @@
 * @version $Id$
 */
 class XLite_Controller_Customer_Image extends XLite_Controller_Customer_Abstract
-{
-    var $params = array('target', 'action', 'id');
+{	
+    public $params = array('target', 'action', 'id');
     
     function handleRequest()
     {

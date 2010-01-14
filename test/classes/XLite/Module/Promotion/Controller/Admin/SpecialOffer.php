@@ -46,10 +46,10 @@
 * @version $Id$
 */
 class XLite_Module_Promotion_Controller_Admin_SpecialOffer extends XLite_Controller_Admin_Abstract
-{
-    var $params = array("target", "offer_id", "mode");
-	var $bonusAllCountries = 1;
-    var $countries = null;
+{	
+    public $params = array("target", "offer_id", "mode");	
+	public $bonusAllCountries = 1;	
+    public $countries = null;
 
 	function getCountries()
 	{

@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Module_GiftCertificates_View_SpambotArrest extends XLite_View_Abstract
-{
-    var $template = "common/spambot_arrest.tpl";
+{	
+    public $template = "common/spambot_arrest.tpl";
 
     function isIgnoreErrors()
     {

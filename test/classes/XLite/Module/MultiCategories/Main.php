@@ -71,10 +71,10 @@ class XLite_Module_MultiCategories_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $enabled = true;
+    protected $enabled = true;	
 
-    var $isFree = true;
-    var $minVer = "2.1.2";
+    public $isFree = true;	
+    public $minVer = "2.1.2";
 
     function init()
     {

@@ -39,10 +39,10 @@
 /* vim: set expandtab tabstop=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
 
 class XLite_Model_Wysiwyg_ImportParser extends XLite_Model_FlexyCompiler // {{{
-{
-    var $imagesDir = null;
-    var $template = null;
-    var $templateName = null;
+{	
+    public $imagesDir = null;	
+    public $template = null;	
+    public $templateName = null;
 
     function postprocess() // {{{
     {

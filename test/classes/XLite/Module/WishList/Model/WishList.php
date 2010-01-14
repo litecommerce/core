@@ -40,19 +40,19 @@
 */
 
 class XLite_Module_WishList_Model_WishList extends XLite_Model_Abstract
-{ // {{{
+{ // {{{	
 
-	var $fields = array (
+	public $fields = array (
 		"wishlist_id"	=>	0,
 		"profile_id"	=>  0,
 		"order_by"		=>	0,
-		"date"			=> '');
+		"date"			=> '');	
 		
-	var $alias 			= "wishlist";
-	var $defaultOrder 	= "wishlist_id";
-	var $primaryKey 	= array("wishlist_id","profile_id");
-	var $autoIncrement 	= "wishlist_id";
-	var $profile		= null;
+	public $alias 			= "wishlist";	
+	public $defaultOrder 	= "wishlist_id";	
+	public $primaryKey 	= array("wishlist_id","profile_id");	
+	public $autoIncrement 	= "wishlist_id";	
+	public $profile		= null;
 
 	function getProducts() // {{{
 	{

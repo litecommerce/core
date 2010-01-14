@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Controller_Customer_Captcha extends XLite_Controller_Customer_Abstract
-{
-    var $params = array('target', 'id');
+{	
+    public $params = array('target', 'id');
     
     function handleRequest()
     {

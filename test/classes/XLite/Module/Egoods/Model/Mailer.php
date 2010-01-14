@@ -43,8 +43,8 @@
 * @version $Id$
 */
 class XLite_Module_Egoods_Model_Mailer extends XLite_Model_Mailer
-{
-	var $clean_after_send = true;
+{	
+	public $clean_after_send = true;
 
     public function __construct() // {{{
     {

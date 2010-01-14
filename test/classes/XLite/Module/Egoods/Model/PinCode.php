@@ -43,13 +43,13 @@
 * @access public
 */
 class XLite_Module_Egoods_Model_PinCode extends XLite_Model_Abstract
-{
-	var $alias = "pin_codes";
+{	
+	public $alias = "pin_codes";	
 
-	var $primaryKey = array("pin_id");
-	var $defaultOrder = "pin_id";
+	public $primaryKey = array("pin_id");	
+	public $defaultOrder = "pin_id";	
 
-	var $fields = array
+	public $fields = array
 	(
 		"pin_id"		=> 0,
 		"pin"			=> '',
@@ -57,9 +57,9 @@ class XLite_Module_Egoods_Model_PinCode extends XLite_Model_Abstract
 		"product_id"	=> 0,
 		"item_id"		=> '',
 		"order_id"		=> 0
-	);
+	);	
 
-	var	$importFields = array
+	public $importFields = array
 	(
 		"NULL"			=> false,
 		"pin"			=> false,

@@ -49,18 +49,18 @@
 define("NOTIFY_INTERVAL", 24 * 60 *60);
 
 class XLite_Model_WaitingIP extends XLite_Model_Abstract
-{
-    var $fields = array(
+{	
+    public $fields = array(
                     "id" => "0",
                     "ip" => "",
                     "unique_key" => "",
                     "first_date" => "0",
                     "last_date" => "0",
                     "count" => "0"
-                    );
+                    );	
 
-    var $autoIncrement = "id";
-    var $alias = "waitingips";
+    public $autoIncrement = "id";	
+    public $alias = "waitingips";
 
     function generateUniqueKey()
     {

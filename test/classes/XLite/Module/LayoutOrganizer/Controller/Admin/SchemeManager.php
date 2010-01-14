@@ -45,10 +45,10 @@
 * @version $Id$
 */
 class XLite_Module_LayoutOrganizer_Controller_Admin_SchemeManager extends XLite_Controller_Admin_TemplateEditor
-{
-	var $schemes = null;
-	var $scheme = null;
-	var $customerLayoutPath = "";
+{	
+	public $schemes = null;	
+	public $scheme = null;	
+	public $customerLayoutPath = "";
 
     public function __construct()
     {

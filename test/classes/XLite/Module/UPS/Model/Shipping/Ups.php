@@ -54,13 +54,13 @@ define('OTHER_ORIGINS', "OTHER_ORIGINS");
 * @version $Id$
 */
 class XLite_Module_UPS_Model_Shipping_Ups extends XLite_Model_Shipping_Online
-{
-    var $error = "";
-    var $xmlError = false;
+{	
+    public $error = "";	
+    public $xmlError = false;	
 
-    var $services; // initialized in constructor because of PHP bug
-    var $configCategory = "UPS";
-    var $optionsFields;
+    public $services; // initialized in constructor because of PHP bug	
+    public $configCategory = "UPS";	
+    public $optionsFields;
 
     public function __construct($param = null)
     {

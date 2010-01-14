@@ -43,18 +43,18 @@
 * @access public
 */
 class XLite_Module_Egoods_Model_DownloadableFile extends XLite_Model_Abstract
-{
-	var $alias = "downloadable_files";
-	var $autoIncrement = "file_id";
+{	
+	public $alias = "downloadable_files";	
+	public $autoIncrement = "file_id";	
 
-	var $primaryKey = array("file_id");
-	var $defaultOrder = "file_id";
+	public $primaryKey = array("file_id");	
+	public $defaultOrder = "file_id";
 
 	/**
 	 * @var array $fields downloadable files properties.
 	 * @access private
-	 */
-	var $fields = array(
+	 */	
+	public $fields = array(
 			"file_id"				=> 0,
 			"product_id"			=> 0,
 			"store_type"			=> 'F',

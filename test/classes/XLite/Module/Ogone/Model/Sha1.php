@@ -14,10 +14,10 @@ class XLite_Module_Ogone_Model_Sha1 {
 	/*
 	 * Configurable variables. You may need to tweak these to be compatible with
 	 * the server-side, but the defaults work in most cases.
-	 */
-	var $hexcase = 0;  /* hex output format. 0 - lowercase; 1 - uppercase        */
-	var $b64pad  = ""; /* base-64 pad character. "=" for strict RFC compliance   */
-	var $chrsz   = 8;  /* bits per input character. 8 - ASCII; 16 - Unicode      */
+	 */	
+	public $hexcase = 0;  /* hex output format. 0 - lowercase; 1 - uppercase        */	
+	public $b64pad  = ""; /* base-64 pad character. "=" for strict RFC compliance   */	
+	public $chrsz   = 8;  /* bits per input character. 8 - ASCII; 16 - Unicode      */
 	
 	/*
 	 * These are the functions you'll usually want to call

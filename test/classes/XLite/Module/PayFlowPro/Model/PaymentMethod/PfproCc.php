@@ -46,10 +46,10 @@
 * @version $Id$
 */
 class XLite_Module_PayFlowPro_Model_PaymentMethod_PfproCc extends XLite_Model_PaymentMethod_CreditCard
-{
-	var $configurationTemplate = "modules/PayFlowPro/config.tpl";
-    var $hasConfigurationForm = true;
-    var $processorName = "PayFlowPro";
+{	
+	public $configurationTemplate = "modules/PayFlowPro/config.tpl";	
+    public $hasConfigurationForm = true;	
+    public $processorName = "PayFlowPro";
 
     function process($cart)
     {

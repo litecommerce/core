@@ -65,8 +65,8 @@
 * @version $Id$
 */
 class XLite_Model_XML extends XLite_Base
-{
-    var $xml_parser;
+{	
+    public $xml_parser;
 
     function _xmlError($xml)
     {

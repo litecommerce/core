@@ -46,15 +46,15 @@
 * @version $Id$
 */
 class XLite_Model_FlexyCompiler extends XLite_Base
-{
-	var $source; // Flexy template source code
-	var $phpcode;
-    var $phpinitcode;
-	var $file = ''; // file name
-    var $widgetCounter = 0;
-    var $substitutionStart = array();
-	var $substitutionEnd = array();
-	var $substitutionValue = array();
+{	
+	public $source; // Flexy template source code	
+	public $phpcode;	
+    public $phpinitcode;	
+	public $file = ''; // file name	
+    public $widgetCounter = 0;	
+    public $substitutionStart = array();	
+	public $substitutionEnd = array();	
+	public $substitutionValue = array();
 
 	function parse()
 	{

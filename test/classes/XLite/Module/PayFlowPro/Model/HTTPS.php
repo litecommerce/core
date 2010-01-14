@@ -52,8 +52,8 @@ require_once LC_ROOT_DIR . 'lib' . LC_DS . 'Net' . LC_DS . 'URL.php';
 * @version $Id$
 */
 class XLite_Module_PayFlowPro_Model_HTTPS extends XLite_Model_HTTPS
-{
-    var $headers = array();
+{	
+    public $headers = array();
 
     function addHeader($name, $value=null)
     {

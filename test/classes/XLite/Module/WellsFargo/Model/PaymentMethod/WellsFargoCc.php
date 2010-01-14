@@ -43,11 +43,11 @@
 * @version $Id$
 */
 class XLite_Module_WellsFargo_Model_PaymentMethod_WellsFargoCc extends XLite_Model_PaymentMethod_CreditCard
-{
-	var $configurationTemplate = "modules/WellsFargo/config.tpl";
-	var $processorName = "Wells Fargo";
-	var $hasConfigurationForm = true;
-	var $formTemplate = "modules/WellsFargo/checkout.tpl";
+{	
+	public $configurationTemplate = "modules/WellsFargo/config.tpl";	
+	public $processorName = "Wells Fargo";	
+	public $hasConfigurationForm = true;	
+	public $formTemplate = "modules/WellsFargo/checkout.tpl";
 
     function handleRequest($cart)
     {

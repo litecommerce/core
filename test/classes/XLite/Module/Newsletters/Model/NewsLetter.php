@@ -46,27 +46,27 @@
 * @version $Id$
 */
 class XLite_Module_Newsletters_Model_NewsLetter extends XLite_Model_Abstract
-{
-    var $fields = array(
+{	
+    public $fields = array(
             "news_id"  => 0,
             "subject" => "",
             "body" => "",
             "send_date"  => 0,
             "list_id" => 0,
-            );
+            );	
 
-    var $autoIncrement = "news_id";
-    var $alias = "newsletters";
-    var $defaultOrder= "send_date DESC";
+    public $autoIncrement = "news_id";	
+    public $alias = "newsletters";	
+    public $defaultOrder= "send_date DESC";	
 
-    var $from    = "";
-    var $subject = "";
-    var $body    = "";
+    public $from    = "";	
+    public $subject = "";	
+    public $body    = "";	
     
-    var $dir = "modules/Newsletters/newsletter";
-    var $customHeaders = array();
+    public $dir = "modules/Newsletters/newsletter";	
+    public $customHeaders = array();	
 
-    var $testMode = false;
+    public $testMode = false;
 
     public function __construct($id = null)
     {

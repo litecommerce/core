@@ -46,11 +46,11 @@
 * @version $Id$
 */
 class XLite_Controller_Admin_UpdateInventory extends XLite_Controller_Admin_Abstract
-{
-    var $params = array('target', 'page');
-    var $pages = array('pricing' => 'Update pricing');
-    var $pageTemplates = array('pricing' => 'product/update_inventory.tpl');
-    var $page = "pricing";   
+{	
+    public $params = array('target', 'page');	
+    public $pages = array('pricing' => 'Update pricing');	
+    public $pageTemplates = array('pricing' => 'product/update_inventory.tpl');	
+    public $page = "pricing";   
 
 	protected $inventory = null;                
 

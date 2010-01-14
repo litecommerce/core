@@ -50,12 +50,12 @@
 * @version $Id$
 */
 class XLite_View_ProductSelect extends XLite_View
-{
-	var $formName = "";
-	var $formField = "product";
-	var $label = "Select product ...";
-	var $template = "common/select_product.tpl";
-    var $product = null;
+{	
+	public $formName = "";	
+	public $formField = "product";	
+	public $label = "Select product ...";	
+	public $template = "common/select_product.tpl";	
+    public $product = null;
 
     function getName()
     {

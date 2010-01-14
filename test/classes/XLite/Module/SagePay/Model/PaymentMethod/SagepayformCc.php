@@ -39,10 +39,10 @@
 * @version $Id$
 */
 class XLite_Module_SagePay_Model_PaymentMethod_SagepayformCc extends XLite_Model_PaymentMethod_CreditCard
-{
-    var $processorName = "SagePay VSP Form";
-	var $hasConfigurationForm = true;
-    var $configurationTemplate = "modules/SagePay/config.tpl";
+{	
+    public $processorName = "SagePay VSP Form";	
+	public $hasConfigurationForm = true;	
+    public $configurationTemplate = "modules/SagePay/config.tpl";
 
     function handleRequest($cart)
     {

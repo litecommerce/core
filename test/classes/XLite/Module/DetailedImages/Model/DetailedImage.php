@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstract
-{
-    var $fields = array(
+{	
+    public $fields = array(
             "image_id"     => 0,
             "product_id"   => 0,
             "image_source" => "D",
@@ -54,12 +54,12 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstra
             "alt"          => "",
             "enabled"      => 1,
             "order_by"     => 0
-            );
+            );	
 
-    var $alias = "images";
-    var $autoIncrement = "image_id";
-    var $defaultOrder = "order_by";
-    var $image = null;
+    public $alias = "images";	
+    public $autoIncrement = "image_id";	
+    public $defaultOrder = "order_by";	
+    public $image = null;
 
     function getImage() // {{{
     {

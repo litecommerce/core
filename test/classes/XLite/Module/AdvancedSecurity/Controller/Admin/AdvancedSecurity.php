@@ -45,9 +45,9 @@
 * @version $Id$
 */
 class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XLite_Controller_Admin_Abstract
-{
-    var $params = array("target", "mode");
-    var $sample = "The quick brown fox jumps over the lazy dog.";
+{	
+    public $params = array("target", "mode");	
+    public $sample = "The quick brown fox jumps over the lazy dog.";
     
     function action_orders() // {{{
     {

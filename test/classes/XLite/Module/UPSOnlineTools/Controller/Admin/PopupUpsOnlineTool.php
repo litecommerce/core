@@ -48,8 +48,8 @@
 */
 
 class XLite_Module_UPSOnlineTools_Controller_Admin_PopupUpsOnlineTool extends XLite_Module_UPSOnlineTools_Controller_Admin_UpsOnlineTool
-{
-    var $template = "modules/UPSOnlineTools/settings/popup_license.tpl"; 
+{	
+    public $template = "modules/UPSOnlineTools/settings/popup_license.tpl"; 
 
     function getLicenseText() {
         $obj = new XLite_Module_UPS_Model_Shipping_Ups();

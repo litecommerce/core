@@ -42,17 +42,17 @@
 * @version $Id$
 */
 class XLite_Module_Affiliate_Model_PlanCommission extends XLite_Model_Abstract
-{
-    var $fields = array(
+{	
+    public $fields = array(
             "plan_id" => 0,
             "commission" => "0.00",
             "commission_type" => '%',
             "item_id" => 0,
             "item_type" => "",
-            );
+            );	
 
-    var $alias = "partner_plan_commissions";
-    var $primaryKey = array("plan_id", "item_id", "item_type");
+    public $alias = "partner_plan_commissions";	
+    public $primaryKey = array("plan_id", "item_id", "item_type");
 
     function getProduct()
     {

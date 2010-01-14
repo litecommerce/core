@@ -44,14 +44,14 @@
 * @version $Id$
 */
 class XLite_View_CategorySelect extends XLite_View
-{
-    var $categories;
-    var $field;
-    var $formName;
-    var $selectedCategory = null;
-    var $allOption = false;
-    var $noneOption = false;
-    var $template = "common/select_category.tpl";
+{	
+    public $categories;	
+    public $field;	
+    public $formName;	
+    public $selectedCategory = null;	
+    public $allOption = false;	
+    public $noneOption = false;	
+    public $template = "common/select_category.tpl";
 
     function getCategoriesCondition()
     {

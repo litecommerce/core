@@ -38,8 +38,8 @@
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
 class XLite_Module_XCartImport_Controller_Admin_XcartImport extends XLite_Controller_Admin_Abstract
-{
-    var $importedProductOptions;
+{	
+    public $importedProductOptions;
     
     function fillForm()
     {
@@ -587,9 +587,9 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
                 $v["children"][0]["value"] = $this->id_map[$class][$id];
             }
         }
-    }
+    }	
     
-    var $category_links = array();
+    public $category_links = array();
 
     function map_membership(&$data)
     {

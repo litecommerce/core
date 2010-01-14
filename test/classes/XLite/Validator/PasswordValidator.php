@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Validator_PasswordValidator extends XLite_Validator_Abstract
-{
-    var $template = "common/password_validator.tpl";
+{	
+    public $template = "common/password_validator.tpl";
     
     function isValid()
     {

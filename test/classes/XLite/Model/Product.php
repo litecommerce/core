@@ -46,8 +46,8 @@
 * @version $Id$
 */
 class XLite_Model_Product extends XLite_Model_Abstract
-{
-    var $fields = array(
+{	
+    public $fields = array(
             "product_id"        => 0,    // primary key
             "sku"               => "",
             "name"              => "",
@@ -65,14 +65,14 @@ class XLite_Model_Product extends XLite_Model_Abstract
             "image_type"        => "",
             "tax_class"         => "",
 			"free_shipping"		=> 0	
-            );
+            );	
 
-    var $autoIncrement = "product_id";
-    var $alias = "products";
-    var $defaultOrder = "order_by,name";
+    public $autoIncrement = "product_id";	
+    public $alias = "products";	
+    public $defaultOrder = "order_by,name";	
 
-    var $image = null;
-    var $thumbnail = null;
+    public $image = null;	
+    public $thumbnail = null;
 
     /**
     * Return the Image instance for this product.

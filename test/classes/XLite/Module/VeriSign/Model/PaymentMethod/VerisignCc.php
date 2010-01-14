@@ -47,10 +47,10 @@
 * @version $Id$
 */
 class XLite_Module_VeriSign_Model_PaymentMethod_VerisignCc extends XLite_Model_PaymentMethod_CreditCard
-{
-	var $configurationTemplate = "modules/VeriSign/config.tpl";
-    var $hasConfigurationForm = true;
-    var $processorName = "VeriSign";
+{	
+	public $configurationTemplate = "modules/VeriSign/config.tpl";	
+    public $hasConfigurationForm = true;	
+    public $processorName = "VeriSign";
 
     function process($cart)
     {

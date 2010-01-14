@@ -43,8 +43,8 @@
 * @version $Id$
 */
 class XLite_Module_Affiliate_Controller_Customer_PartnerProduct extends XLite_Module_Affiliate_Controller_Partner
-{
-    var $params = array('target', 'product_id', 'schema', 'mode', 'backUrl');
+{	
+    public $params = array('target', 'product_id', 'schema', 'mode', 'backUrl');
 
     function initView()
     {

@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Module_WholesaleTrading_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_ImportCatalog implements XLite_Base_IDecorator
-{
-    var $unique_identifier = null;
+{	
+    public $unique_identifier = null;
 
     public function __construct()
     {

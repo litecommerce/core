@@ -40,11 +40,11 @@
 */
 
 class XLite_Module_PHPCyberSource_Model_PaymentMethod_PhpcybersourceCc extends XLite_Model_PaymentMethod_CreditCard 
-{
-	var $configurationTemplate 	= "modules/PHPCyberSource/config.tpl";
-	var $hasConfigurationForm	= true;
-	var $processorName			= "PHPCyberSource";
-	var $responses 				= array(
+{	
+	public $configurationTemplate 	= "modules/PHPCyberSource/config.tpl";	
+	public $hasConfigurationForm	= true;	
+	public $processorName			= "PHPCyberSource";	
+	public $responses 				= array(
 		101	=> "The request is missing one or more required fields.",					
 		102	=> "One or more fields in the request contains invalid data.",
 		150	=> "General system failure.",

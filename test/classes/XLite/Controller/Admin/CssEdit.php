@@ -48,8 +48,8 @@
 */
 
 class XLite_Controller_Admin_CssEdit extends XLite_Controller_Admin_Abstract
-{
-    var $params = array('target', 'mode', 'style_id', 'status');
+{	
+    public $params = array('target', 'mode', 'style_id', 'status');
 
     function getLocale() // {{{
     {

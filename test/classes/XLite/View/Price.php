@@ -44,9 +44,9 @@
 * @version $Id$
 */
 class XLite_View_Price extends XLite_View
-{
-    var $template = "common/price_plain.tpl";
-    var $product;
+{	
+    public $template = "common/price_plain.tpl";	
+    public $product;
 
     function isSalePriceEnabled()
     {

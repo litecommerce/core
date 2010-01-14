@@ -43,10 +43,10 @@
 * @version $Id$
 */
 class XLite_Module_WholesaleTrading_Controller_Customer_Cart extends XLite_Module_WholesaleTrading_Controller_Customer_CartUpdate implements XLite_Base_IDecorator
-{
-	var $updateErrors = null;
-	var $params = array("target","mode");
-	var $currentItem = null;
+{	
+	public $updateErrors = null;	
+	public $params = array("target","mode");	
+	public $currentItem = null;
 	
     function action_add()
     {

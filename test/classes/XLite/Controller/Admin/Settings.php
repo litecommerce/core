@@ -47,10 +47,10 @@
 *
 */
 class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
-{
-    var $params = array('target', 'page');
-    var $page = "General";
-    var $_waiting_list = null;
+{	
+    public $params = array('target', 'page');	
+    public $page = "General";	
+    public $_waiting_list = null;
 
     function handleRequest()
     {

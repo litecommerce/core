@@ -71,11 +71,11 @@ class XLite_Module_AdvancedSecurity_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $enabled = true;
+    protected $enabled = true;	
 
-    var $minVer = "2.0";
-    var $isFree = true;
-    var $showSettingsForm = true;
+    public $minVer = "2.0";	
+    public $isFree = true;	
+    public $showSettingsForm = true;
     
     function getSettingsForm() {
         return "admin.php?target=advanced_security";

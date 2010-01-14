@@ -47,9 +47,9 @@
 */
 class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 {
-    // mode ::= null | register | notAllowed | noShipping | paymentMethod | details | success | error
-    var $params = array("target");
-    var $mode = null;
+    // mode ::= null | register | notAllowed | noShipping | paymentMethod | details | success | error	
+    public $params = array("target");	
+    public $mode = null;
 
     function handleRequest()
     {

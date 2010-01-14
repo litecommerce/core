@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Module_Egoods_Model_Product extends XLite_Model_Product implements XLite_Base_IDecorator
-{
-	var $egoodsNumber = null;
+{	
+	public $egoodsNumber = null;
 
 	public function __construct($p_id = null)
 	{

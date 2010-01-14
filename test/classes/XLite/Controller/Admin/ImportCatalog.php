@@ -47,16 +47,16 @@
 */
 
 class XLite_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_Abstract
-{
-    var $params = array("target", "page", "import_error");
-    var $page = "products"; // the default import page
-    var $pages = array('products' => 'Import products',
+{	
+    public $params = array("target", "page", "import_error");	
+    public $page = "products"; // the default import page	
+    public $pages = array('products' => 'Import products',
                        'extra_fields' => 'Import extra fields'
-                       );
-    var $pageTemplates = array("products" => "product/import.tpl",
+                       );	
+    public $pageTemplates = array("products" => "product/import.tpl",
                                "extra_fields" => "product/import_fields.tpl"
-                               );
-    var $category_id = null;
+                               );	
+    public $category_id = null;
 
     function handleRequest()
     {

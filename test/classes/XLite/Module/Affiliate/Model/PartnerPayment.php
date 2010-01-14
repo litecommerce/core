@@ -42,8 +42,8 @@
 * @version $Id$
 */
 class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
-{
-    var $fields = array (
+{	
+    public $fields = array (
             "payment_id" => null,
             "partner_id" => 0,
             "order_id"   => 0,
@@ -52,16 +52,16 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
             "add_date"   => 0,
             "paid_date"  => 0,
             "affiliate"  => 0
-            );
+            );	
 
-    var $autoIncrement = "payment_id";
-    var $alias = "partner_payments";
-    var $defaultOrder = "add_date, affiliate";
+    public $autoIncrement = "payment_id";	
+    public $alias = "partner_payments";	
+    public $defaultOrder = "add_date, affiliate";	
 
-    var $partner;
-    var $parent;
-    var $order;
-    var $affiliates;
+    public $partner;	
+    public $parent;	
+    public $order;	
+    public $affiliates;
 
     function charge($order) // {{{
     {

@@ -46,12 +46,12 @@
 * @version $Id$
 */
 class XLite_View_MailExplorer extends XLite_View_ColumnList
-{
-    var $subject = "subject.tpl";
-    var $body = "body.tpl";
-    var $signature = "signature.tpl";
-    var $template = "template_editor/mail_list.tpl";
-    var $templates = array();
+{	
+    public $subject = "subject.tpl";	
+    public $body = "body.tpl";	
+    public $signature = "signature.tpl";	
+    public $template = "template_editor/mail_list.tpl";	
+    public $templates = array();
 
     function getLocale() // {{{
     {

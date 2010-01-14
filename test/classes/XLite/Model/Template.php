@@ -46,10 +46,10 @@
 * @version $Id$
 */
 class XLite_Model_Template extends XLite_Model_FileNode
-{
-    var $file; // file name
-    var $comment; // template comment (null if not available)
-    var $content; // template file content (null if not read)
+{	
+    public $file; // file name	
+    public $comment; // template comment (null if not available)	
+    public $content; // template file content (null if not read)
 
     public function __construct($path = null, $comment = null)
     {

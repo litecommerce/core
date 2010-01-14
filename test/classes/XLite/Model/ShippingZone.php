@@ -46,11 +46,11 @@
 * @version $Id$
 */
 class XLite_Model_ShippingZone extends XLite_Model_Abstract
-{
-    var $fields = array(
+{	
+    public $fields = array(
         "shipping_zone" => 0
-        );
-    var $isRead = true;    
+        );	
+    public $isRead = true;    
 
     public function __construct($zone = null)
     {

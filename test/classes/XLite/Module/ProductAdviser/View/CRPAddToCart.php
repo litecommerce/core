@@ -36,8 +36,8 @@
 */
 
 class XLite_Module_ProductAdviser_View_CRPAddToCart extends XLite_View_Button
-{
-	var $p_id = null;
+{	
+	public $p_id = null;
 	
     function gethref()
     {

@@ -45,11 +45,11 @@
 * @version $Id$
 */
 class XLite_View_MembershipSelect extends XLite_View_FormField
-{
-    var $value = "%";
-    var $allOption = false;
-    var $pendingOption = false;
-    var $template = "common/select_membership.tpl";
+{	
+    public $value = "%";	
+    public $allOption = false;	
+    public $pendingOption = false;	
+    public $template = "common/select_membership.tpl";
 }
 
 // WARNING :

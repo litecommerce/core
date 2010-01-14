@@ -39,12 +39,12 @@
 * @version $Id$
 */
 class XLite_Module_AustraliaPost_Model_Shipping_Aupost extends XLite_Model_Shipping_Online 
-{
+{	
 
-	var $configCategory = "AustraliaPost";
-	var $optionsFields	= array("length","width","height","currency_rate");
-    var $error = "";
-    var $xmlError = false;
+	public $configCategory = "AustraliaPost";	
+	public $optionsFields	= array("length","width","height","currency_rate");	
+    public $error = "";	
+    public $xmlError = false;
 
     function getWeightInGrams($order, $weight_unit=null) // {{{
     {

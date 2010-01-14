@@ -45,8 +45,8 @@ set_time_limit(0); // sending messages is a long-time operation...
 * @version $Id$
 */
 class XLite_Module_Newsletters_Controller_Admin_NewsMessages extends XLite_Controller_Admin_Abstract
-{
-    var $params = array("target", "list_id", "news_id");
+{	
+    public $params = array("target", "list_id", "news_id");
 
     function init()
     {

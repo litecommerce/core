@@ -46,8 +46,8 @@
 * @version $Id$
 */
 class XLite_Controller_Admin_ImportUsers extends XLite_Controller_Admin_Abstract
-{
-    var $import_error = false;
+{	
+    public $import_error = false;
 
     function init()
     {

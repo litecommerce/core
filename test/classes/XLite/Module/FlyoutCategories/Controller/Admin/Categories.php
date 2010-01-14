@@ -40,14 +40,14 @@
 * @version $Id$
 */
 class XLite_Module_FlyoutCategories_Controller_Admin_Categories extends XLite_Controller_Admin_Categories implements XLite_Base_IDecorator
-{
-	var $categoriesMenu = array();
-	var $categoriesMenuMode = 0;
-	var $customerLayout = null;
-	var $redirect_back = true;
-	var $_categories_processed = 0;
-	var $_html2js_cache_size = 1024;
-	var $catalog_key = "";
+{	
+	public $categoriesMenu = array();	
+	public $categoriesMenuMode = 0;	
+	public $customerLayout = null;	
+	public $redirect_back = true;	
+	public $_categories_processed = 0;	
+	public $_html2js_cache_size = 1024;	
+	public $catalog_key = "";
 
     function getZIndex()
     {

@@ -46,10 +46,10 @@
 */
 
 class XLite_Module_WishList_Controller_Admin_Wishlists extends XLite_Controller_Admin_Abstract
-{ // {{{
+{ // {{{	
 
-	var $params = array("target","mode","start_id","end_id","email","sku","product");
-	var $wishlists = null;
+	public $params = array("target","mode","start_id","end_id","email","sku","product");	
+	public $wishlists = null;
 
 	function getWishlists() // {{{
 	{

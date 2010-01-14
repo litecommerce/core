@@ -47,8 +47,8 @@
 */
 
 class XLite_Module_CardinalCommerce_Controller_Customer_CcInfoPopup extends XLite_Controller_Abstract
-{
-    var $template = "modules/CardinalCommerce/cc_info_popup.tpl";
+{	
+    public $template = "modules/CardinalCommerce/cc_info_popup.tpl";
 }
 // WARNING :
 // Please ensure that you have no whitespaces / empty lines below this message.

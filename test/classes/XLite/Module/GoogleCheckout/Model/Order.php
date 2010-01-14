@@ -38,8 +38,8 @@
 * @version $Id$
 */
 class XLite_Module_GoogleCheckout_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
-{
-	var $GoogleCheckout_profile = null;
+{	
+	public $GoogleCheckout_profile = null;
 
 	public function __construct($id=null)
 	{

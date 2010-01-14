@@ -40,10 +40,10 @@
 * @version $Id$
 */
 class XLite_Module_NetworkMerchants_Model_PaymentMethod_NetworkmerchantsCc extends XLite_Model_PaymentMethod_CreditCard
-{
-	var $configurationTemplate = "modules/NetworkMerchants/config.tpl";
-    var $hasConfigurationForm = true;
-    var $processorName = "NetworkMerchants";
+{	
+	public $configurationTemplate = "modules/NetworkMerchants/config.tpl";	
+    public $hasConfigurationForm = true;	
+    public $processorName = "NetworkMerchants";
 
     function process($cart)
     {

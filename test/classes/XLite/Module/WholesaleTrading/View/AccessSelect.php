@@ -43,13 +43,13 @@
 * @version $Id$
 */
 class XLite_Module_WholesaleTrading_View_AccessSelect extends XLite_View
-{
-    var $field;
-    var $formName;
-    var $selectedGroups = null;
-    var $allOption = false;
-    var $noneOption = false;
-    var $template = "modules/WholesaleTrading/product_access/access_select.tpl";
+{	
+    public $field;	
+    public $formName;	
+    public $selectedGroups = null;	
+    public $allOption = false;	
+    public $noneOption = false;	
+    public $template = "modules/WholesaleTrading/product_access/access_select.tpl";
 
     function getSelectedGroups()
     {

@@ -71,23 +71,23 @@ class XLite_Model_Category extends XLite_Model_Abstract
     /**
     * @var string $autoIncrement The category database table primary key
     * @access private
-    */
-    var $autoIncrement = "category_id";
+    */	
+    public $autoIncrement = "category_id";
 
     /**
     * @var string $defaultOrder The category database records default order
     * @access private
-    */
-    var $defaultOrder = "order_by,name";
+    */	
+    public $defaultOrder = "order_by,name";
 
     /**
     * @var string $alias The category database table alias
     * @access public
-    */
-    var $alias = "categories";
-    var $parent = null;
-    var $image = null;
-	var $_string_path = null;
+    */	
+    public $alias = "categories";	
+    public $parent = null;	
+    public $image = null;	
+	public $_string_path = null;
     
     function cloneObject()
     {       

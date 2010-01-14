@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Model_Country extends XLite_Model_Abstract
-{
-    var $fields = array(
+{	
+    public $fields = array(
             'country'   => '',
             'code'      => '',
             'language'  => '',
@@ -54,10 +54,10 @@ class XLite_Model_Country extends XLite_Model_Abstract
             'enabled'   => 1,
             'eu_member' => 'N',
             'shipping_zone' => 0
-        );
-    var $primaryKey = array("code");    
-    var $alias = "countries";
-    var $defaultOrder = "country";
+        );	
+    public $primaryKey = array("code");	    
+    public $alias = "countries";	
+    public $defaultOrder = "country";
 
     public function __construct($code = null)
     {

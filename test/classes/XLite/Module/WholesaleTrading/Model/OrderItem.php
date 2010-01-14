@@ -43,8 +43,8 @@
 * @version $Id$
 */
 class XLite_Module_WholesaleTrading_Model_OrderItem extends XLite_Model_OrderItem implements XLite_Base_IDecorator
-{
-	var $_itemChanged = false;
+{	
+	public $_itemChanged = false;
 
 	public function __construct()
 	{

@@ -44,8 +44,8 @@
 *
 */
 class XLite_Module_Affiliate_Controller_Admin_PlanCommissions extends XLite_Controller_Admin_Abstract
-{
-    var $params = array("target", "plan_id");
+{	
+    public $params = array("target", "plan_id");
     
     function action_update_commission()
     {

@@ -44,8 +44,8 @@
 *
 */
 class XLite_Module_Affiliate_Controller_Admin_Partners extends XLite_Controller_Admin_Abstract
-{
-    var $params = array("target", "search", "filter", "partnerStatus", "plan_id", "plan", "startDateMonth", "startDateDay", "startDateYear", "endDateMonth", "endDateDay", "endDateYear", "itemsPerPage");
+{	
+    public $params = array("target", "search", "filter", "partnerStatus", "plan_id", "plan", "startDateMonth", "startDateDay", "startDateYear", "endDateMonth", "endDateDay", "endDateYear", "itemsPerPage");
 
     function fillForm()
     {

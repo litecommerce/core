@@ -59,8 +59,8 @@ class XLite_Model_Session extends XLite_Base implements XLite_Base_ISingleton
     * Session data containter.
     * @var array $_data
     * @access private
-    */
-    var $_data = array();
+    */	
+    public $_data = array();
 
     /**
     * Session options.

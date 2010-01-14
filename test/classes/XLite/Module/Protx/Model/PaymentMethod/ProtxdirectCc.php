@@ -46,10 +46,10 @@
 * @version $Id$
 */
 class XLite_Module_Protx_Model_PaymentMethod_ProtxdirectCc extends XLite_Model_PaymentMethod_CreditCard
-{
-	var $configurationTemplate = "modules/Protx/config.tpl";
-    var $hasConfigurationForm = true;
-    var $processorName = "Protx VSP Direct";
+{	
+	public $configurationTemplate = "modules/Protx/config.tpl";	
+    public $hasConfigurationForm = true;	
+    public $processorName = "Protx VSP Direct";
 
     function process($cart)
     {

@@ -54,8 +54,8 @@ require_once LC_ROOT_DIR . 'lib' . LC_DS . 'Net' . LC_DS . 'URL.php';
 * @version $Id$
 */
 class XLite_Module_GoogleCheckout_Model_HTTPS extends XLite_Model_HTTPS
-{
-	var $headers = null;
+{	
+	public $headers = null;
 
 	function getHeaders($slashed=false)
 	{

@@ -46,19 +46,19 @@
 * @version $Id$
 */
 class XLite_Controller_Admin_Product extends XLite_Controller_Admin_Abstract
-{
-    var $params = array('target', 'product_id', 'page', 'backUrl');
-    var $page = "info";
-    var $backUrl = "admin.php?target=product_list";
+{	
+    public $params = array('target', 'product_id', 'page', 'backUrl');	
+    public $page = "info";	
+    public $backUrl = "admin.php?target=product_list";	
 
-    var $pages = array
+    public $pages = array
     (
     	'info'  => 'Product info',
         'extra_fields' => 'Extra fields',
         'links' => 'HTML links',
-    );
+    );	
 
-    var $pageTemplates = array
+    public $pageTemplates = array
     (
     	'info'    => 'product/info.tpl',
         'extra_fields' => 'product/extra_fields_form.tpl',

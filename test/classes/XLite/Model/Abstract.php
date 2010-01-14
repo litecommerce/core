@@ -88,14 +88,14 @@ class XLite_Model_Abstract extends XLite_Base
     /**
     * Shows whether the object data have been read from DB or not
     * @var boolean $isRead
-    */
-    var $isRead = false;
+    */	
+    public $isRead = false;
 
     /**
     * Checks whether the object data exists in DB
     * @var boolen $isPersistent
-    */
-    var $isPersistent = false;
+    */	
+    public $isPersistent = false;
     
     /**
     * Contains SQL ORDER clause used by default by findAll() if no order
@@ -107,18 +107,18 @@ class XLite_Model_Abstract extends XLite_Base
     /**
     * Contains SQL WHERE clause used by default by findAll()
     * @var string $_range
-    */
-    var $_range;
+    */	
+    public $_range;
 
     /**
     * If set to true, findAll will fetch only primary keys (isRead=false)
-    */
-    var $fetchKeysOnly = false;
+    */	
+    public $fetchKeysOnly = false;
 
     /**
     * If set to true, findAll will fetch only object' indexes
-    */
-    var $fetchObjIdxOnly = false;
+    */	
+    public $fetchObjIdxOnly = false;
     
     // }}}
 

@@ -45,9 +45,9 @@
 
 
 class XLite_Module_Affiliate_Controller_Customer_AffiliateHelp extends XLite_Controller_Customer_Help
-{
-	var $params = array("target","mode");
-	var $template = "modules/Affiliate/main.tpl";
+{	
+	public $params = array("target","mode");	
+	public $template = "modules/Affiliate/main.tpl";
 }
 
 ?>

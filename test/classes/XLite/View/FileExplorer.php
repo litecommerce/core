@@ -46,8 +46,8 @@
 * @version $Id$
 */
 class XLite_View_FileExplorer extends XLite_View_ColumnList
-{
-    var $template = "common/file_explorer.tpl";
+{	
+    public $template = "common/file_explorer.tpl";
 
     function getLocale() // {{{
     {

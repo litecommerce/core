@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Controller_Admin_AddIp extends XLite_Controller_Abstract
-{
-    var $template = "add_ip.tpl";
+{	
+    public $template = "add_ip.tpl";
 
     function init()
     {

@@ -44,10 +44,10 @@
 */
 class XLite_View_ExtraFields extends XLite_View
 {
-	public $ef = null;
+	public $ef = null;	
 
-    var $template = "extra_fields.tpl";
-    var $product;
+    public $template = "extra_fields.tpl";	
+    public $product;
 
     function init()
     {

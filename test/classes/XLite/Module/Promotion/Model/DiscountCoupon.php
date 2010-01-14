@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_Abstract
-{
-	var $fields = array(
+{	
+	public $fields = array(
 		"coupon_id" => "", // coupon unique id
 		"parent_id" => "", // parent coupon id
 		"new_link_mode" => 0, // link mode flag: 0 - via the same 'coupon' field, 1 - via 'parent_id' field, pointing to parent
@@ -62,14 +62,14 @@ class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_Abstract
 		"minamount" => 0, // minimum order total
 		"product_id" => 0, // discount on product
 		"category_id" => 0, // discount on category
-		);
+		);	
 
-	var $alias = "discount_coupons";
-	var $autoIncrement = "coupon_id";
-	var $order = null;
-	var $product = null;
-	var $category = null;
-	var $_oldCouponCode = null;
+	public $alias = "discount_coupons";	
+	public $autoIncrement = "coupon_id";	
+	public $order = null;	
+	public $product = null;	
+	public $category = null;	
+	public $_oldCouponCode = null;
 
 	function checkCondition($order)
 	{

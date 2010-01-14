@@ -54,18 +54,18 @@ define("CHECK_INTERVAL", 1 * 24 * 60);
 
 
 class XLite_Model_Htaccess extends XLite_Model_Abstract
-{
-    var $fields = array(
+{	
+    public $fields = array(
                     "id" => "0",
                     "filename" => "",
                     "content" => "",
                     "hash" => ""
-                    );
+                    );	
 
-    var $autoIncrement = "id";
-    var $alias = "htaccess";
+    public $autoIncrement = "id";	
+    public $alias = "htaccess";	
 
-    var $htaccess_list = array(
+    public $htaccess_list = array(
                             "var/.htaccess",
                             ".htaccess",
                             "classes/.htaccess",

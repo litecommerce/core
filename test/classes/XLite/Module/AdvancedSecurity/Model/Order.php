@@ -46,9 +46,9 @@ func_define('ORDER_CRYPTED_MESSAGE', '-- This data is encrypted. Please enter ma
 * @version $Id$
 */
 class XLite_Module_AdvancedSecurity_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
-{
-    var $gpg;
-	var $_detailsModified = false; // shows if the order details were modified
+{	
+    public $gpg;	
+	public $_detailsModified = false; // shows if the order details were modified
 
 	protected $_secureDetails = null;
 

@@ -58,8 +58,8 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
     *
     * @var    options
     * @access private
-    */
-    var $_options = array(
+    */	
+    public $_options = array(
             'type'  => LOGGER_DEFAULT_TYPE,
             'name'  => LOGGER_DEFAULT_NAME,
             'level' => LOGGER_DEFAULT_LEVEL,

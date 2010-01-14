@@ -52,10 +52,10 @@ class XLite_Model_Layout extends XLite_Base implements XLite_Base_ISingleton
     *
     * @var Elements $elements Skin templates list.
     * @access private
-    */
-    var $list = array();
-    var $skin = null;
-    var $locale = null;
+    */	
+    public $list = array();	
+    public $skin = null;	
+    public $locale = null;
 
 	public static function getInstance()
     {

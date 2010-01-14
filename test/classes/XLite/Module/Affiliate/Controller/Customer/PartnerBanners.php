@@ -43,8 +43,8 @@
 * @version $Id$
 */
 class XLite_Module_Affiliate_Controller_Customer_PartnerBanners extends XLite_Module_Affiliate_Controller_Partner
-{
-    var $params = array('target', 'mode', 'category_id');
+{	
+    public $params = array('target', 'mode', 'category_id');
     
     function getBanners()
     {

@@ -40,8 +40,8 @@
 */
 
 class XLite_Module_WishList_Controller_Customer_Cart extends XLite_Controller_Customer_Cart implements XLite_Base_IDecorator
-{
-	var $currentItem = null;
+{	
+	public $currentItem = null;
 	
 	function action_add() // {{{
 	{

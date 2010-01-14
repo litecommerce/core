@@ -43,13 +43,13 @@
 * @version $Id$
 */
 class XLite_Module_HSBC_Model_PaymentMethod_CcHsbc extends XLite_Model_PaymentMethod_CreditCard
-{
-	var $configurationTemplate = "modules/HSBC/config.tpl";
-	var $formTemplate = "modules/HSBC/checkout.tpl";
-	var $processorName = "HSBC";
-	var $hasConfigurationForm = true;
-	var $timestamp = null;
-	var $merchant_data = null;
+{	
+	public $configurationTemplate = "modules/HSBC/config.tpl";	
+	public $formTemplate = "modules/HSBC/checkout.tpl";	
+	public $processorName = "HSBC";	
+	public $hasConfigurationForm = true;	
+	public $timestamp = null;	
+	public $merchant_data = null;
 
     function handleRequest($cart)
     {

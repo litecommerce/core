@@ -46,8 +46,8 @@
 * @version $Id$
 */
 class XLite_Validator_StateValidator extends XLite_Validator_Abstract
-{
-    var $template = "common/state_validator.tpl";
+{	
+    public $template = "common/state_validator.tpl";
 
     /**
     * Validates a form field.

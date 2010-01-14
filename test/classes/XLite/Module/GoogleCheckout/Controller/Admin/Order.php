@@ -44,10 +44,10 @@
 * @version $Id$
 */
 class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controller_Admin_Order implements XLite_Base_IDecorator
-{
-	var $page = "order_info";
-	var $payment_method = null;
-	var $googleId = null;
+{	
+	public $page = "order_info";	
+	public $payment_method = null;	
+	public $googleId = null;
 
 	function init()
 	{

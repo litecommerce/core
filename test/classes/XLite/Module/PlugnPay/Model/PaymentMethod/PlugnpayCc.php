@@ -45,10 +45,10 @@
 * @version $Id$
 */
 class XLite_Module_PlugnPay_Model_PaymentMethod_PlugnpayCc extends XLite_Model_PaymentMethod_CreditCard
-{
-	var $processorName = "PlugnPay";
-	var $configurationTemplate = "modules/PlugnPay/config.tpl";
-	var $hasConfigurationForm = true;
+{	
+	public $processorName = "PlugnPay";	
+	public $configurationTemplate = "modules/PlugnPay/config.tpl";	
+	public $hasConfigurationForm = true;
 	
     function process($cart)
     {

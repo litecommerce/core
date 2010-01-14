@@ -46,12 +46,12 @@
 * @version $Id$
 */
 class XLite_Controller_Admin_TopSellers extends XLite_Controller_Admin_Stats
-{
-    var $todayItems = array();
-    var $weekItems = array();
-    var $monthItems = array();
-    var $sort_by = "amount";
-    var $counter = array(0,1,2,3,4,5,6,7,8,9);
+{	
+    public $todayItems = array();	
+    public $weekItems = array();	
+    public $monthItems = array();	
+    public $sort_by = "amount";	
+    public $counter = array(0,1,2,3,4,5,6,7,8,9);
 
     function getPageTemplate()
     {

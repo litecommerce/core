@@ -48,9 +48,9 @@
 */
 
 class XLite_Module_BeanStream_Model_PaymentMethod_BeanstreamCc extends XLite_Model_PaymentMethod_CreditCard
-{
-    var $configurationTemplate = 'modules/BeanStream/config.tpl';
-    var $processorName = 'BeanStream';
+{	
+    public $configurationTemplate = 'modules/BeanStream/config.tpl';	
+    public $processorName = 'BeanStream';
 
     function process($cart)
     {

@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Module_Egoods_Controller_Customer_Download extends XLite_Controller_Abstract
-{
-    var $params = array("mode");
+{	
+    public $params = array("mode");
 
 	function action_download()
 	{

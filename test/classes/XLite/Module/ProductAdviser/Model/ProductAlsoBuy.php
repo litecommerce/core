@@ -44,16 +44,16 @@
 * @version $Id$
 */
 class XLite_Module_ProductAdviser_Model_ProductAlsoBuy extends XLite_Model_Abstract
-{
-	var $fields = array
+{	
+	public $fields = array
 	(
 		"product_id" 			=> 0,
 		"product_id_also_buy"	=> 0,
 		"counter"				=> 0,
-	);
-	var $primaryKey = array("product_id", "product_id_also_buy");
-	var $alias = "products_also_buy";
-	var $defaultOrder = "product_id, product_id_also_buy, counter DESC";
+	);	
+	public $primaryKey = array("product_id", "product_id_also_buy");	
+	public $alias = "products_also_buy";	
+	public $defaultOrder = "product_id, product_id_also_buy, counter DESC";
 
 	function cleanRelations($product_id)
 	{

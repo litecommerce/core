@@ -55,10 +55,10 @@ class XLite_Controller_Admin_Modules extends XLite_Controller_Admin_Abstract
 		XLite_Model_Module::MODULE_GENERAL   => 'Add-ons',
 		XLite_Model_Module::MODULE_3RD_PARTY => '3rd party modules',
 		XLite_Model_Module::MODULE_UNKNOWN   => 'Unknown',
-	);
+	);	
 
-    var $success = true; // last operation status: true or false
-    var $_sort_modules = null;
+    public $success = true; // last operation status: true or false	
+    public $_sort_modules = null;
 
 	protected $modules = null;
 

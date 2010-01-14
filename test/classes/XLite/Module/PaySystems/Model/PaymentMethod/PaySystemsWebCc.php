@@ -43,11 +43,11 @@
 * @version $Id$
 */
 class XLite_Module_PaySystems_Model_PaymentMethod_PaySystemsWebCc extends XLite_Model_PaymentMethod_CreditCard
-{
-	var $configurationTemplate = "modules/PaySystems/config.tpl";
-	var $formTemplate = "modules/PaySystems/checkout.tpl";
-	var $hasConfigurationForm = true;
-	var $processorName = "PaySystems";
+{	
+	public $configurationTemplate = "modules/PaySystems/config.tpl";	
+	public $formTemplate = "modules/PaySystems/checkout.tpl";	
+	public $hasConfigurationForm = true;	
+	public $processorName = "PaySystems";
 
     function handleRequest($cart)
     {

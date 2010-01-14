@@ -45,18 +45,18 @@
 * @version $Id$
 */
 class XLite_View_RegisterForm extends XLite_View
-{
-    var $params = array("success");
+{	
+    public $params = array("success");
 
 	protected $success = false;
 
-    // profile data
-    var $profile = null;
-    // whether to login user after successful registration or not
-    var $autoLogin = true;
-    // true if the user already exists in the register form
-    var $userExists = false;
-    var $allowAnonymous = false;
+    // profile data	
+    public $profile = null;
+    // whether to login user after successful registration or not	
+    public $autoLogin = true;
+    // true if the user already exists in the register form	
+    public $userExists = false;	
+    public $allowAnonymous = false;
 
     function init()
     {

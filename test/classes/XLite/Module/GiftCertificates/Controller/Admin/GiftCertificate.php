@@ -45,9 +45,9 @@
 * @version $Id$
 */
 class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificate extends XLite_Controller_Admin_Abstract
-{
-    var $params = array("target", "gc");
-    var $gc = null;
+{	
+    public $params = array("target", "gc");	
+    public $gc = null;
 
     function getGC()
     {

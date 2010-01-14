@@ -43,10 +43,10 @@
 * @version $Id$
 */
 class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Controller_Admin_OrderList implements XLite_Base_IDecorator
-{
-    var $delimiter  = "\t";
-    var $crlf       = "\r\n";
-    var $dateParams = array(
+{	
+    public $delimiter  = "\t";	
+    public $crlf       = "\r\n";	
+    public $dateParams = array(
             'startDateMonth',
             'startDateDay',
             'startDateYear',

@@ -44,10 +44,10 @@
 * @version $Id$
 */
 class XLite_Module_AOM_Controller_Admin_CreateOrder extends XLite_Controller_Admin_Order
-{
-	var $page = "order_edit";
-	var $pages = array("order_edit" => "Create order #%s");
-    var $pageTemplates = array 
+{	
+	public $page = "order_edit";	
+	public $pages = array("order_edit" => "Create order #%s");	
+    public $pageTemplates = array 
     (
     	"order_edit" => "modules/AOM/order_edit.tpl",
 		"order_preview" => "modules/AOM/order_edit/preview.tpl"

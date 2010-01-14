@@ -42,10 +42,10 @@
 * @version $Id$
 */
 class XLite_Module_PayFlowLink_Model_PaymentMethod_Payflowlink extends XLite_Model_PaymentMethod_CreditCard
-{
-    var $processorName = "PayFlowLink";
-    var $configurationTemplate = "modules/PayFlowLink/config.tpl";
-    var $formTemplate ="modules/PayFlowLink/checkout.tpl";
+{	
+    public $processorName = "PayFlowLink";	
+    public $configurationTemplate = "modules/PayFlowLink/config.tpl";	
+    public $formTemplate ="modules/PayFlowLink/checkout.tpl";
 
     public function __construct($id = null) 
     {

@@ -55,9 +55,9 @@ define('GC_EXPIRED', 4);
 * @version $Id$
 */
 class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_Abstract
-{
-	var $alias = "giftcerts";
-	var $fields = array(
+{	
+	public $alias = "giftcerts";	
+	public $fields = array(
 		"gcid" => "", // GC unique ID (primary key)
 		"profile_id" => "", // certificate creator
 		"purchaser" => "", // 'From' field
@@ -84,11 +84,11 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_Ab
 		"expiration_date" => "",
 		"exp_email_sent" => 0,
         "ecard_id" => ""
-		);
-	var $primaryKey = array("gcid");
-    var $ecard = null;
-    var $recipientState = null;
-    var $recipientCountry = null;
+		);	
+	public $primaryKey = array("gcid");	
+    public $ecard = null;	
+    public $recipientState = null;	
+    public $recipientCountry = null;
 
     function getFormattedMessage()
     {

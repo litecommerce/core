@@ -45,10 +45,10 @@
 * @version $Id$
 */
 class XLite_Module_eWAYxml_Model_PaymentMethod_EwayXml extends XLite_Model_PaymentMethod_CreditCard
-{
-	var $configurationTemplate = "modules/eWAYxml/config.tpl";
-    var $hasConfigurationForm = true;
-    var $processorName = "eWAYxml";
+{	
+	public $configurationTemplate = "modules/eWAYxml/config.tpl";	
+    public $hasConfigurationForm = true;	
+    public $processorName = "eWAYxml";
 
     function process($cart)
     {

@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificates extends XLite_Controller_Admin_Abstract
-{
-    var $giftCertificates = null;
+{	
+    public $giftCertificates = null;
 
     function getGiftCertificates()
     {

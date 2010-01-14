@@ -40,13 +40,13 @@
 */
 
 class XLite_Module_CanadaPost_Controller_Admin_Cps extends XLite_Controller_Admin_ShippingSettings
-{
-	var $params = array("target", "updated");
-	var $page		="cps";	
-	var $updated 	= false;	
-	var $testResult = false;
-	var $settings;	
-	var $rates 		= array();
+{	
+	public $params = array("target", "updated");	
+	public $page		="cps";		
+	public $updated 	= false;		
+	public $testResult = false;	
+	public $settings;		
+	public $rates 		= array();
 
 	public function __construct() // {{{ 
 	{

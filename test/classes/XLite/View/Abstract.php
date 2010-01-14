@@ -52,14 +52,14 @@ class XLite_View_Abstract extends XLite_Base
     *
     * @var    string
     * @access private
-    */
-    var $template = null;
+    */	
+    public $template = null;	
 
-    var $visible = true;
+    public $visible = true;	
 
-    var $extraWidgets = null;
+    public $extraWidgets = null;	
 
-    var $widgets = array();
+    public $widgets = array();
 
     /**
     * Initializes the widget tree. The only what it does is just compile

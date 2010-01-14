@@ -46,8 +46,8 @@
 * @version $Id$
 */
 class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controller_Admin_ExportCatalog implements XLite_Base_IDecorator
-{
-    var $fp = null;
+{	
+    public $fp = null;
 
     public function __construct()
     {

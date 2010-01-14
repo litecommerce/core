@@ -49,13 +49,13 @@
 define('QUERY_SEARCH_STAT_LENGTH', 64);
 
 class XLite_Model_SearchStat extends XLite_Model_Abstract
-{
-    var $fields = array(
+{	
+    public $fields = array(
         "query" => "",
         "product_count" => "0",
-        "count" => "0");
-    var $alias = "search_stat";
-    var $primaryKey = array("query");
+        "count" => "0");	
+    public $alias = "search_stat";	
+    public $primaryKey = array("query");
     
     function add($query, $foundCount) {
     	$query = strtolower($query);

@@ -45,9 +45,9 @@
 * @version $Id$
 */
 class XLite_Validator_CaptchaValidator extends XLite_Validator_Abstract
-{
-    var $template = "common/captcha_validator.tpl";
-    var $validation_required = array( // array: target => array(action, option_name);
+{	
+    public $template = "common/captcha_validator.tpl";	
+    public $validation_required = array( // array: target => array(action, option_name);
                     'help'                 => array('action'=>'contactus', 'option'=>'on_contactus'),
                     'profile'              => array('action'=>'register',  'option'=>'on_register'),
                     'partner_profile'      => array('action'=>'register',  'option'=>'on_partner_register'),

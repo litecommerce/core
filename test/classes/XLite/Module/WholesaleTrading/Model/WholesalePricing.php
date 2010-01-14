@@ -48,27 +48,27 @@ class XLite_Module_WholesaleTrading_Model_WholesalePricing extends XLite_Model_A
 	/**
 	 * @var string $alias The product access database table alias.
 	 * @access public
-	 */
-	var $alias = "wholesale_pricing";
+	 */	
+	public $alias = "wholesale_pricing";	
 
-	var $primaryKey = array("price_id");
-	var $defaultOrder = "amount";
+	public $primaryKey = array("price_id");	
+	public $defaultOrder = "amount";	
     
-    var $importError = "";
+    public $importError = "";
 
 	/**
 	 * @var array $fields product access properties.
 	 * @access private
-	 */
-	var $fields = array(
+	 */	
+	public $fields = array(
 			"price_id"		=> 0,
 			"product_id"	=> 0,
 			"amount"		=> 0,
 			"price"			=> 0.00,
 			"membership"	=> ''
-			);
+			);	
 
-	var	$importFields = array(
+	public $importFields = array(
 			"NULL"			=> false,
 			"product"		=> false,
 			"sku"			=> false,	

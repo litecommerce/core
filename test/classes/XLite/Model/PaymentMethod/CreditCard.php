@@ -46,9 +46,9 @@
 * @version $Id$
 */
 class XLite_Model_PaymentMethod_CreditCard extends XLite_Model_PaymentMethod
-{
-    var $formTemplate = "checkout/credit_card.tpl";
-    var $secure = true;
+{	
+    public $formTemplate = "checkout/credit_card.tpl";	
+    public $secure = true;
 
     function process($cart)
     {

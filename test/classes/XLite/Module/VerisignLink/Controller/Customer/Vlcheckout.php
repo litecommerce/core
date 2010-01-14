@@ -43,8 +43,8 @@
 */
 
 class XLite_Module_VerisignLink_Controller_Customer_Vlcheckout extends XLite_Controller_Customer_Checkout
-{
-    var $registerForm = null;
+{	
+    public $registerForm = null;
 
     function init()
     {

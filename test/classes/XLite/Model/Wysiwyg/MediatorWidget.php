@@ -39,14 +39,14 @@
 /* vim: set expandtab tabstop=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
 
 class XLite_Model_Wysiwyg_MediatorWidget extends XLite_View_Abstract // {{{
-{
-    var $attributes = array();
-    var $attributesEvaled = array();
-    var $code = "";
-    var $parent = false;
-    var $editing = false;
-    var $parentWidget = null;
-    var $templateType = null;
+{	
+    public $attributes = array();	
+    public $attributesEvaled = array();	
+    public $code = "";	
+    public $parent = false;	
+    public $editing = false;	
+    public $parentWidget = null;	
+    public $templateType = null;
 
     function setAttributesEvaled($params)
     {

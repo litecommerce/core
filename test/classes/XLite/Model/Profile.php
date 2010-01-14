@@ -54,8 +54,8 @@ class XLite_Model_Profile extends XLite_Model_Abstract
     *
     * Pay attention to using the "access_level", "status" and 
     * "membership" fields. Prevent modifications with POST'ed data
-    */
-    var $fields = array(
+    */	
+    public $fields = array(
               'profile_id' => null,
                 'order_id' => '0',
 	               'login' => '',
@@ -100,24 +100,24 @@ class XLite_Model_Profile extends XLite_Model_Abstract
 	          'membership' => '',
 	  'pending_membership' => '',
            'sidebar_boxes' => ''
-    );
+    );	
         
-    var $_securefields = array(
+    public $_securefields = array(
               'profile_id' => null,
 	        'access_level' => '0',
 	         'first_login' => '0',
 	          'last_login' => '0',
 	          'membership' => ''
-            );
+            );	
 
-    var $_adminSecurefields = array(
+    public $_adminSecurefields = array(
               'last_login' => '0'
-            );
+            );	
 
-    var $autoIncrement = "profile_id";
-    var $alias = "profiles";
-    var $defaultOrder = "login";
-    var $_range = "order_id=0";
+    public $autoIncrement = "profile_id";	
+    public $alias = "profiles";	
+    public $defaultOrder = "login";	
+    public $_range = "order_id=0";
     
     // }}}
 

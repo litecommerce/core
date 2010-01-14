@@ -45,12 +45,12 @@
 * @version $Id$
 */
 class XLite_Controller_Customer_OrderList extends XLite_Controller_Customer_Abstract
-{
-    var $params = array('target', 'mode', 'order_id1', 'order_id2', 'status');
-	var $order_id1 = "";
-	var $order_id2 = "";
-	var $status = "";
-    var $orders = null;
+{	
+    public $params = array('target', 'mode', 'order_id1', 'order_id2', 'status');	
+	public $order_id1 = "";	
+	public $order_id2 = "";	
+	public $status = "";	
+    public $orders = null;
 
     function set($name, $value)
     {

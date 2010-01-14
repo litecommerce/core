@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Module_ProductAdviser_Controller_Customer_Cart extends XLite_Controller_Customer_Cart implements XLite_Base_IDecorator
-{
-	var $rejectedItemInfo = null;
+{	
+	public $rejectedItemInfo = null;
 
     function action_add()
     {

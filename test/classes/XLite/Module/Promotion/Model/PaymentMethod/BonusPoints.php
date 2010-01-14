@@ -48,9 +48,9 @@
 * @version $Id$
 */
 class XLite_Module_Promotion_Model_PaymentMethod_BonusPoints extends XLite_Model_PaymentMethod
-{
-    var $processorName = "Promotion/bonus points";
-    var $formTemplate = "modules/Promotion/checkout.tpl";
+{	
+    public $processorName = "Promotion/bonus points";	
+    public $formTemplate = "modules/Promotion/checkout.tpl";
 	
     function handleRequest($cart)
     {

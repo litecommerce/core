@@ -57,8 +57,8 @@ require_once LC_ROOT_DIR . 'lib' . LC_DS . 'Net' . LC_DS . 'URL.php';
 * @version $Id$
 */
 class XLite_Module_UPSOnlineTools_Model_HTTPS extends XLite_Model_HTTPS
-{
-	var $use_ssl3 = false;
+{	
+	public $use_ssl3 = false;
 
 	function useSslV3($use)
 	{

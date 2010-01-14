@@ -41,9 +41,9 @@
  *
  */
 class XLite_Controller_Admin_CcCert extends XLite_Controller_Admin_Abstract
-{
+{	
 
-	var $params = array("target", "cc_processor");
+	public $params = array("target", "cc_processor");
 	
 	function action_update()
 	{

@@ -44,8 +44,8 @@
 *
 */
 class XLite_Module_AutoUpdateCatalog_Controller_Admin_AutoupdateCatalog extends XLite_Controller_Admin_Abstract
-{
-    var $params = array("target", "returnUrl");
+{	
+    public $params = array("target", "returnUrl");
 
     function getCatalog() // {{{
     {

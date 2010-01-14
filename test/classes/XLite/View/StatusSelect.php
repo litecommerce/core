@@ -45,9 +45,9 @@
 * @version $Id$
 */
 class XLite_View_StatusSelect extends XLite_View_FormField
-{
-    var $template = "common/select_status.tpl";
-    var $allOption = false; 
+{	
+    public $template = "common/select_status.tpl";	
+    public $allOption = false; 
 }
 
 // WARNING :

@@ -42,8 +42,8 @@
 * @version $Id$
 */
 class XLite_Module_Affiliate_View_RichBanner extends XLite_View
-{
-    var $template = "modules/Affiliate/empty.tpl";
+{	
+    public $template = "modules/Affiliate/empty.tpl";
 
     function display()
     {

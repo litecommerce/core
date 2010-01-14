@@ -48,14 +48,14 @@
 */
 
 class XLite_Controller_Admin_ChangeSkin extends XLite_Controller_Admin_Abstract
-{
-	var $_currentSkin = null;
-	var $currentSkinName = null;
-	var $_templatesRepository = "skins_original";
-	var $_schemasRepository = "schemas";
-	var $_skins = null;
-	var $_templatesDirectory = "skins";
-	var $_modulesPath = "classes/modules";
+{	
+	public $_currentSkin = null;	
+	public $currentSkinName = null;	
+	public $_templatesRepository = "skins_original";	
+	public $_schemasRepository = "schemas";	
+	public $_skins = null;	
+	public $_templatesDirectory = "skins";	
+	public $_modulesPath = "classes/modules";
 
 	function getDirectoriesToCreate()
 	{

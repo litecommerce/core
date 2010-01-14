@@ -47,9 +47,9 @@
 *
 */
 class XLite_Controller_Admin_Files extends XLite_Controller_Admin_Abstract
-{
-    var $count = 0; //total files count;
-    var $action = "default";
+{	
+    public $count = 0; //total files count;	
+    public $action = "default";
     
 	// FIXME - check this function 
     function handleRequest()

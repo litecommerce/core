@@ -50,11 +50,11 @@ define("DISABLE_UPS_EDIT_ORDER", true);
 
 class XLite_Module_UPSOnlineTools_Controller_Admin_Order extends XLite_Controller_Admin_Order implements XLite_Base_IDecorator
 {
-	// visual coords for default box image "ups_box.gif"
-	var $_img_left = 57;
-	var $_img_top = 17;
-	var $_img_width = 82;
-	var $_img_height = 86;
+	// visual coords for default box image "ups_box.gif"	
+	public $_img_left = 57;	
+	public $_img_top = 17;	
+	public $_img_width = 82;	
+	public $_img_height = 86;
 
 	function init()
 	{

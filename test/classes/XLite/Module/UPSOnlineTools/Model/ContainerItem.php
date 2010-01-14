@@ -46,13 +46,13 @@
 * @version $Id$
 */
 class XLite_Module_UPSOnlineTools_Model_ContainerItem extends XLite_Base
-{
-	var $item_id;
-	var $global_id;
+{	
+	public $item_id;	
+	public $global_id;	
 
-	var $left, $top;
-	var $width, $length, $height;
-	var $weight;
+	public $left, $top;	
+	public $width, $length, $height;	
+	public $weight;
 
 	function setPosition($_left, $_top)
 	{

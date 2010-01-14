@@ -66,11 +66,11 @@ class XLite_Module_AdvancedSearch_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $enabled = true;
+    protected $enabled = true;	
 
-    var $isFree = true;
-	var $minVer = "2.1";
-	var $showSettingsForm = true;	
+    public $isFree = true;	
+	public $minVer = "2.1";	
+	public $showSettingsForm = true;	
 
 	function getSettingsForm() // {{{
 	{

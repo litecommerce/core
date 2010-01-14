@@ -40,8 +40,8 @@
 */
 
 class XLite_Module_AntiFraud_Model_Country extends XLite_Model_Country implements XLite_Base_IDecorator
-{
-	var $riskCountry = null;
+{	
+	public $riskCountry = null;
 
 	public function __construct($id = null) // {{{ 
 	{

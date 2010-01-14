@@ -52,16 +52,16 @@ if (!defined('GC_DISABLED')) {
 * @version $Id$
 */
 class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
-{
-	var $gc = null;
+{	
+	public $gc = null;	
 
-    var $skipShippingCostRecursion = false;
+    public $skipShippingCostRecursion = false;	
 
-    var $shippedCertificates = null;
+    public $shippedCertificates = null;	
 
-    var $shippedItems = null;
+    public $shippedItems = null;	
 
-    var $shippingCost = null;
+    public $shippingCost = null;
 
     public function __construct($param = null)
     {

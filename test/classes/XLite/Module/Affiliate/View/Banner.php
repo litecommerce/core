@@ -42,11 +42,11 @@
 * @version $Id$
 */
 class XLite_Module_Affiliate_View_Banner extends XLite_View
-{
-    var $type = "iframe"; // type ::= iframe | js | ssi
-    var $src = null;
-    var $width = 120;
-    var $height = 240;
+{	
+    public $type = "iframe"; // type ::= iframe | js | ssi	
+    public $src = null;	
+    public $width = 120;	
+    public $height = 240;
 
     function getTemplate()
     {

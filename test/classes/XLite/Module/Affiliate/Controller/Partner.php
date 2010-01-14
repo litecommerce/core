@@ -43,8 +43,8 @@
 * @version $Id$
 */
 class XLite_Module_Affiliate_Controller_Partner extends XLite_Controller_Abstract
-{
-    var $template = "modules/Affiliate/main.tpl";
+{	
+    public $template = "modules/Affiliate/main.tpl";
 
     function fillForm()
     {

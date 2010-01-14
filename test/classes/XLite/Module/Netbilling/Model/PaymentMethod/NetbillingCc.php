@@ -47,10 +47,10 @@
 * @version $Id$
 */
 class XLite_Module_Netbilling_Model_PaymentMethod_NetbillingCc extends XLite_Model_PaymentMethod_CreditCard
-{
-    var $processorName = "Netbilling";
-	var $configurationTemplate = "modules/Netbilling/config.tpl";
-	var $hsaCongifurationForm = true;
+{	
+    public $processorName = "Netbilling";	
+	public $configurationTemplate = "modules/Netbilling/config.tpl";	
+	public $hsaCongifurationForm = true;
     
     function process($cart)
     {

@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_View_StateSelect extends XLite_View_FormField
-{
-    var $template = "common/select_state.tpl";
+{	
+    public $template = "common/select_state.tpl";
 
 	protected $state = null;
     

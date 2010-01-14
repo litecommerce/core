@@ -48,24 +48,24 @@ class XLite_Module_WholesaleTrading_Model_PurchaseLimit extends XLite_Model_Abst
     /**
     * @var string $alias The product access database table alias.
     * @access public
-    */
-    var $alias = "purchase_limit";
+    */	
+    public $alias = "purchase_limit";	
 
-    var $primaryKey = array("product_id");
+    public $primaryKey = array("product_id");	
     
-    var $importError = "";
+    public $importError = "";
 
     /**
     * @var array $fields product access properties.
     * @access private
-    */
-    var $fields = array(
+    */	
+    public $fields = array(
 			"product_id"	=> 0,
 			"min"			=> "",
 			"max"			=> "",
-        );
+        );	
     
-	var	$importFields = array(
+	public $importFields = array(
 			"NULL"			=> false,
 			"product"		=> false,
 			"sku"			=> false,	

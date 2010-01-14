@@ -49,20 +49,20 @@
 require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
 
 class XLite_Module_UPSOnlineTools_Model_PackItem extends XLite_Base
-{
-	var $width = MIN_DIM_SIZE;
-	var $length = MIN_DIM_SIZE;
-	var $height = MIN_DIM_SIZE;
+{	
+	public $width = MIN_DIM_SIZE;	
+	public $length = MIN_DIM_SIZE;	
+	public $height = MIN_DIM_SIZE;	
 
-	var $weight = MIN_PACKAGE_WEIGHT;
+	public $weight = MIN_PACKAGE_WEIGHT;	
 
-	var $declaredValue = 0;
-	var $handle_care = false;
-	var $additional_handling = false;
-	var $OrderItemId = 0;
-	var $GlobalId = 0;
+	public $declaredValue = 0;	
+	public $handle_care = false;	
+	public $additional_handling = false;	
+	public $OrderItemId = 0;	
+	public $GlobalId = 0;	
 
-	var $packaging = 0;
+	public $packaging = 0;
 
 
 function dump()

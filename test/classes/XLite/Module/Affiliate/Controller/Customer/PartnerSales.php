@@ -43,12 +43,12 @@
 * @version $Id$
 */
 class XLite_Module_Affiliate_Controller_Customer_PartnerSales extends XLite_Module_Affiliate_Controller_Partner
-{
-    var $qty              = 0;
-    var $saleTotal        = 0;
-    var $commissionsTotal = 0;
-    var $affiliatePending = 0;
-    var $affiliatePaid    = 0;
+{	
+    public $qty              = 0;	
+    public $saleTotal        = 0;	
+    public $commissionsTotal = 0;	
+    public $affiliatePending = 0;	
+    public $affiliatePaid    = 0;
 
     function getSalesStats()
     {

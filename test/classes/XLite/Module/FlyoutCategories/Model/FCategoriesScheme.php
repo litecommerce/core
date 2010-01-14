@@ -45,8 +45,8 @@
 */
 
 class XLite_Module_FlyoutCategories_Model_FCategoriesScheme extends XLite_Model_Abstract
-{
-	var $fields = array
+{	
+	public $fields = array
 	(
 		"scheme_id" 	=> 0,
 		"name"			=> "",
@@ -55,13 +55,13 @@ class XLite_Module_FlyoutCategories_Model_FCategoriesScheme extends XLite_Model_
 		"max_depth"		=> "7",
 		"explorer"		=> 0,
 		"options"		=> '',
-	);
-	var $primaryKey = array("scheme_id");
-    var $autoIncrement = "scheme_id";
-	var $defaultOrder = "order_by, name";
-	var $alias = "fcategories_schemes";
+	);	
+	public $primaryKey = array("scheme_id");	
+    public $autoIncrement = "scheme_id";	
+	public $defaultOrder = "order_by, name";	
+	public $alias = "fcategories_schemes";	
 
-	var $commercialSkins = array(
+	public $commercialSkins = array(
         "Icons" => array("FashionBoutique", "GiftsShop", "SummerSports", "WinterSports"),
         "Explorer" => array("FashionBoutique", "GiftsShop", "SummerSports", "WinterSports"),
         "Horizontal Menu" => array("FashionBoutique", "GiftsShop", "SummerSports", "WinterSports"),

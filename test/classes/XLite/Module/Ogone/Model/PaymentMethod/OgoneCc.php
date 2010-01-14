@@ -45,10 +45,10 @@
 * @version $Id$
 */
 class XLite_Module_Ogone_Model_PaymentMethod_OgoneCc extends XLite_Model_PaymentMethod_CreditCard
-{
-	var $configurationTemplate = "modules/Ogone/config.tpl";
-    var $hasConfigurationForm = true;
-    var $processorName = "Ogone";
+{	
+	public $configurationTemplate = "modules/Ogone/config.tpl";	
+    public $hasConfigurationForm = true;	
+    public $processorName = "Ogone";
 
     function process($cart)
     {

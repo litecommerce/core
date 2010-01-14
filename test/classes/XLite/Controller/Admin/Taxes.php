@@ -47,21 +47,21 @@
 *
 */
 class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
-{
-    var $params = array('target', 'page', 'mode', 'ind');
-    var $page = "options";
-    var $pages = array('options' => 'Tax Options',
+{	
+    public $params = array('target', 'page', 'mode', 'ind');	
+    public $page = "options";	
+    public $pages = array('options' => 'Tax Options',
                        'rates' => 'Rates/Conditions',
-                       'schemes' => 'Tax Scheme Definitions');
+                       'schemes' => 'Tax Scheme Definitions');	
 					   
-	var $pageTemplates = array( "options" => "tax/options.tpl", 
+	public $pageTemplates = array( "options" => "tax/options.tpl", 
 								"rates" => "tax/rates.tpl",	
 								"schemes"	=> "tax/schemas.tpl",
-								"add_rate"	=> "tax/add.tpl"); 
-	var $taxes;
-    var $_rates;
-    var $_levels;
-    var $invalidExpressions = array();
+								"add_rate"	=> "tax/add.tpl");	 
+	public $taxes;	
+    public $_rates;	
+    public $_levels;	
+    public $invalidExpressions = array();
     
     function init()
     {

@@ -45,10 +45,10 @@
 * @version $Id$
 */
 class XLite_Module_GiftCertificates_Controller_Customer_PreviewEcard extends XLite_Controller_Abstract
-{
-    var $params = array('target', 'gcid');
-    var $gc = null;
-    var $template = "modules/GiftCertificates/preview.tpl";
+{	
+    public $params = array('target', 'gcid');	
+    public $gc = null;	
+    public $template = "modules/GiftCertificates/preview.tpl";
     
     function getGC()
     {

@@ -43,13 +43,13 @@
 * @access public
 */
 class XLite_Module_Egoods_Model_DownloadsStatistics extends XLite_Model_Abstract
-{
-	var $alias = "downloads_statistics";
+{	
+	public $alias = "downloads_statistics";	
 
-	var $primaryKey = array("file_id");
-	var $defaultOrder = "file_id";
+	public $primaryKey = array("file_id");	
+	public $defaultOrder = "file_id";	
 
-	var $fields = array(
+	public $fields = array(
 			"file_id"	=> 0,
 			"date"		=> 0,
 			"headers"	=> '',

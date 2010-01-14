@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Validator_RangeValidator extends XLite_Validator_Abstract
-{
-    var $template = "common/range_validator.tpl";
+{	
+    public $template = "common/range_validator.tpl";
     
     function isValid()
     {

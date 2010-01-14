@@ -45,11 +45,11 @@
 * @version $Id$
 */
 class XLite_Controller_Admin_ProductList extends XLite_Controller_Admin_Abstract
-{
-    var $params = array('target', 'mode', 'search_productsku', 'substring', 'search_category', 'subcategory_search', 'pageID', 'status');
+{	
+    public $params = array('target', 'mode', 'search_productsku', 'substring', 'search_category', 'subcategory_search', 'pageID', 'status');	
 
-    var $productsList = null;
-    var $productsFound = 0;
+    public $productsList = null;	
+    public $productsFound = 0;
 
     function _getExtraParams()
     {

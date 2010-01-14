@@ -44,10 +44,10 @@
 * @version $Id$
 */
 class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Controller_Admin_Product implements XLite_Base_IDecorator
-{
-	var $productsFound = 0;
-	var $notifyPresentedHash = array();
-	var $priceNotifyPresented = null;
+{	
+	public $productsFound = 0;	
+	public $notifyPresentedHash = array();	
+	public $priceNotifyPresented = null;
 
 	public function __construct()
 	{

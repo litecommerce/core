@@ -43,14 +43,14 @@
 * @version $Id$
 */
 class XLite_Module_Promotion_Model_SpecialOfferProduct extends XLite_Model_Abstract
-{
-	var $fields = array(
+{	
+	public $fields = array(
 		'offer_id' 		=> 0,
 		'product_id' 	=> 0,
 		'type'			=> '' 
-	);
-	var $primaryKey = array("offer_id","product_id","type");
-	var $alias = "special_offer_products";
+	);	
+	public $primaryKey = array("offer_id","product_id","type");	
+	public $alias = "special_offer_products";
 }
 // WARNING :
 // Please ensure that you have no whitespaces / empty lines below this message.

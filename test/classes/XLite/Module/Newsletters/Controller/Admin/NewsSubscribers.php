@@ -44,8 +44,8 @@
 * @version $Id$
 */
 class XLite_Module_Newsletters_Controller_Admin_NewsSubscribers extends XLite_Controller_Admin_Abstract
-{
-    var $params = array("target", "list_id", "subscriber", "sortby");
+{	
+    public $params = array("target", "list_id", "subscriber", "sortby");
 
     function init()
     {

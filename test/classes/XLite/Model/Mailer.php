@@ -67,14 +67,14 @@ define('CRLF', "\r\n");
 * @version $Id$
 */
 class XLite_Model_Mailer extends XLite_View
-{
-    var $subjectTemplate	= "subject.tpl";
-    var $bodyTemplate		= "body.tpl";
-    var $signatureTemplate	= "signature.tpl";
-    var $langLocale			= "en";
-    var $langPath			= "lib/PHPMailer/language/";
-    var $charset			= "iso-8859-1";
-    var $templatesSkin		= null;
+{	
+    public $subjectTemplate	= "subject.tpl";	
+    public $bodyTemplate		= "body.tpl";	
+    public $signatureTemplate	= "signature.tpl";	
+    public $langLocale			= "en";	
+    public $langPath			= "lib/PHPMailer/language/";	
+    public $charset			= "iso-8859-1";	
+    public $templatesSkin		= null;
 
     public function __construct() // {{{
     {

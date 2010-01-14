@@ -44,8 +44,8 @@
 * @version $Id$
 */
 class XLite_Module_ProductOptions_Validator_RequiredValidator extends XLite_Validator_Abstract
-{
-    var $template = "common/required_validator.tpl";
+{	
+    public $template = "common/required_validator.tpl";
 
     public function __construct()
     {

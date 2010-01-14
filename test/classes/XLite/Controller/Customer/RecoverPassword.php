@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Controller_Customer_RecoverPassword extends XLite_Controller_Customer_Abstract
-{
-    var $params = array("target", "mode", "email", "link_mailed");
+{	
+    public $params = array("target", "mode", "email", "link_mailed");
 
     function action_recover_password()
     {

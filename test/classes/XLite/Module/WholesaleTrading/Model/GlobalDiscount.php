@@ -48,16 +48,16 @@ class XLite_Module_WholesaleTrading_Model_GlobalDiscount extends XLite_Model_Abs
     /**
     * @var string $alias The product access database table alias.
     * @access public
-    */
-    var $alias = "global_discount";
+    */	
+    public $alias = "global_discount";	
 
-    var $primaryKey = array("discount_id");
+    public $primaryKey = array("discount_id");
 
     /**
     * @var array $fields product access properties.
     * @access private
-    */
-    var $fields = array(
+    */	
+    public $fields = array(
 			"discount_id"	=> 0,
 			"subtotal"		=> "",
 			"discount"		=> "",

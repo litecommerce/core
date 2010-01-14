@@ -60,19 +60,19 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
     /**
     * Contains the available Modules list.
     */
-/*    var $modules = array();
+/*	    public $modules = array();
 
     /**
     * Contains the active (enabled) Modules list.
     */
-/*    var $activeModules = array();
-    var $activeModulesNumber = 0;
-    var $activeModulesHash = null;
+/*	    public $activeModules = array();	
+    public $activeModulesNumber = 0;	
+    public $activeModulesHash = null;	
 
-    var $errorArchiveCorrupted = false;
-    var $errorBrokenDependencies = false;
-    var $errorDependencies = null; // array of module_name=>dependend modules
-    var $error = ''; // internal archiver error message
+    public $errorArchiveCorrupted = false;	
+    public $errorBrokenDependencies = false;	
+    public $errorDependencies = null; // array of module_name=>dependend modules	
+    public $error = ''; // internal archiver error message
 
     /**
     * Returns the list of active (enabled) modules. 

@@ -44,10 +44,10 @@
 * @version $Id$
 */
 class XLite_Module_AOM_View_OrderStatus extends XLite_Module_AOM_View_StatusSelect
-{
-    var $allOption 	= false; 
-	var $template 	= "modules/AOM/common/statuses.tpl";
-	var $statuses	= null;
+{	
+    public $allOption 	= false;	 
+	public $template 	= "modules/AOM/common/statuses.tpl";	
+	public $statuses	= null;
 }
 
 // WARNING :

@@ -45,9 +45,9 @@
 * @version $Id$
 */
 class XLite_Module_WholesaleTrading_Controller_Admin_PriceList extends XLite_Controller_Admin_Abstract
-{
-	var $params = array('target', 'mode', 'category', 'include_subcategories', 'membership');
-	var $_priceList;
+{	
+	public $params = array('target', 'mode', 'category', 'include_subcategories', 'membership');	
+	public $_priceList;
 	
 	function getTemplate()
 	{

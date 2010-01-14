@@ -46,12 +46,12 @@
 * @version $Id$
 */
 class XLite_View_TabberPage extends XLite_Base
-{
-    var $name;
-    var $header;
-    var $widget;
-    var $selected = false; // set by Tabber
-    var $url; // set by Tabber
+{	
+    public $name;	
+    public $header;	
+    public $widget;	
+    public $selected = false; // set by Tabber	
+    public $url; // set by Tabber
 }
 // WARNING :
 // Please ensure that you have no whitespaces / empty lines below this message.

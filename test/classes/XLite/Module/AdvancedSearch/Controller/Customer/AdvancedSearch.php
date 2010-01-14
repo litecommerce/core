@@ -40,11 +40,11 @@
 */
 
 class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLite_Controller_Customer_Abstract
-{
-    var $params = array("target", "mode", "substring");
-    var $products = null;
-	var $search = null;
-	var $profile = null;
+{	
+    public $params = array("target", "mode", "substring");	
+    public $products = null;	
+	public $search = null;	
+	public $profile = null;
 
 	function getProfile()
 	{

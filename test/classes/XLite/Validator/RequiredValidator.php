@@ -45,8 +45,8 @@
 * @version $Id$
 */
 class XLite_Validator_RequiredValidator extends XLite_Validator_Abstract
-{
-    var $template = "common/required_validator.tpl";
+{	
+    public $template = "common/required_validator.tpl";
     
     function isValid()
     {

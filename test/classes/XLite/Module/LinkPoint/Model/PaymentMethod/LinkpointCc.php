@@ -45,10 +45,10 @@
 * @version $Id$
 */
 class XLite_Module_LinkPoint_Model_PaymentMethod_LinkpointCc extends XLite_Model_PaymentMethod_CreditCard
-{
-	var $configurationTemplate = "modules/LinkPoint/config.tpl";
-    var $hasConfigurationForm = true;
-    var $processorName = "LinkPoint";
+{	
+	public $configurationTemplate = "modules/LinkPoint/config.tpl";	
+    public $hasConfigurationForm = true;	
+    public $processorName = "LinkPoint";
 
     function process($cart)
     {
