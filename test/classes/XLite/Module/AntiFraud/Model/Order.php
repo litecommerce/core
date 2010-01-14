@@ -114,7 +114,7 @@ class XLite_Module_AntiFraud_Model_Order extends XLite_Model_Order implements XL
 	{
 		$address = $this->get("details.customer_ip");
 		preg_match('/^<(.*)>$/',$address,$address);
-		return $address[1];
+		return isset($address[1]) ? $address[1] : '';
 	}	
 
 	function checkFraud()

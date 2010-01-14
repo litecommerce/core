@@ -117,7 +117,7 @@ class XLite_Module_SnsIntegration_Model_Order extends XLite_Model_Order implemen
             $this->sendSnsCartChanged = false;
             $action = "name=CartChanged&itemsCount=" . count($this->get("items")) . "&total=" . $this->get("total");
             require_once LC_MODULES_DIR . 'SnsIntegration' . LC_DS . 'include' . LC_DS . 'misc.php';
-            $snsClientId = $_COOKIE[PERSONALIZE_CLIENT_ID];
+            $snsClientId = isset($_COOKIE[PERSONALIZE_CLIENT_ID]) ? $_COOKIE[PERSONALIZE_CLIENT_ID] : null;
             func_sns_request($this->config, $snsClientId, array($action));
         }
     } // }}}

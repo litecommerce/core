@@ -140,6 +140,8 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
     	$check = array();
         $check[] = "type='" . CUSTOMER_NOTIFICATION_PRODUCT . "'";
 
+		$email = '';
+
 		if ($this->auth->is("logged")) {
 			$profile = $this->auth->get("profile");
     		$profile_id = $profile->get("profile_id");
@@ -186,6 +188,8 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
 		if (!isset($this->priceNotified)) {
         	$check = array();
             $check[] = "type='" . CUSTOMER_NOTIFICATION_PRICE . "'";
+
+			$email = '';
 
     		if ($this->auth->is("logged")) {
     			$profile = $this->auth->get("profile");

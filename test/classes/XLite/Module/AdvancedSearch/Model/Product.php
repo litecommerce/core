@@ -115,7 +115,9 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
 			$product = new XLite_Model_Product();
             $product->fetchKeysOnly = true;
 			$products = in_array(true, $field_values) ? $product->findAll($search_query, $orderby) : array();
-		} 
+		}
+
+		$field_ids = array(); 
 		
 		if ($_extra_fields && strlen($keywords[0]) > 0) {
 			$field_values = array
@@ -126,7 +128,6 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
 			$search_query = $this->getSearchQuery($field_values, $keywords, $logic); 
 			
 			$extraField = new XLite_Model_ExtraField();	
-			$field_ids = array();
 			if (true == ($globalExtraFields = $extraField->findAll("product_id = 0 AND (" . $search_query.")"))) {
 				foreach($globalExtraFields as $gef) 
 					if (!is_null($gef->get("categories"))) {
@@ -172,6 +173,8 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
                 }
             }
 		}
+
+		$option_ids = array();
 
 		if ($_options&&$this->xlite->get("ProductOptionsEnabled")) {
 			$field_values = array

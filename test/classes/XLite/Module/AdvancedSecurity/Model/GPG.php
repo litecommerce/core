@@ -51,6 +51,11 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
     var $exe       = null;
     var $recipient = null;
 
+	protected $_publicKey = null;
+	protected $_publicKeyInfo = null;
+	protected $_secretKey = null;
+    protected $_secretKeyInfo = null;
+
     public function __construct() // {{{
     {
         parent::__construct();

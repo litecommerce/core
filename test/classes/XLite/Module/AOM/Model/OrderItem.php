@@ -40,7 +40,6 @@
 */
 class XLite_Module_AOM_Model_OrderItem extends XLite_Model_OrderItem implements XLite_Base_IDecorator
 {
-
 	public function __construct($id = null) // {{{
 	{
 		$this->fields["product_name"] = '';
@@ -175,6 +174,15 @@ class XLite_Module_AOM_Model_OrderItem extends XLite_Model_OrderItem implements 
 		}
 		return "";
 	}
+
+	function _buildInsert()
+    {
+        if (isset($this->properties['aom_extra']) && is_array($this->properties['aom_extra'])) {
+            $this->properties['aom_extra'] = serialize($this->properties['aom_extra']);
+        }
+
+        return parent::_buildInsert();
+    }
 }
 
 // WARNING:

@@ -4,7 +4,7 @@ Your shopping cart is empty.
 </p>
 
 <form IF="!cart.empty" name="cart_form" action="cart.php" method="POST">
-<input type="hidden" foreach="params,param" name="{param}" value="{get(param)}"/>
+<input type="hidden" foreach="dialog.allparams,param,v" name="{param}" value="{v}"/>
 <input type="hidden" name="action" value="update">
 <p align=justify>The items in your shopping cart are listed below. To remove any item click "Delete Item". To place your order, please click "CHECKOUT".</p>
 

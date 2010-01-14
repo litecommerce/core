@@ -51,7 +51,7 @@ class XLite_Module_PayPalPro_Controller_Customer_StandardCheckout extends XLite_
 	public function __construct()
 	{
 		parent::__construct();
-		if (($_REQUEST["target"] == "checkout") && ($_REQUEST["paypal_result"] == "cancel")) {
+		if (($_REQUEST["target"] == "checkout") && (isset($_REQUEST["paypal_result"]) && $_REQUEST["paypal_result"] == "cancel")) {
 			$this->cart = XLite_Model_Cart::getInstance();
 			if ($this->cart->get("status") == "Q") {
 				// revert back to I if the payment is cancelled at the PayPal side

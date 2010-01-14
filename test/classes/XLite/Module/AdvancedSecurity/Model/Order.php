@@ -50,6 +50,8 @@ class XLite_Module_AdvancedSecurity_Model_Order extends XLite_Model_Order implem
     var $gpg;
 	var $_detailsModified = false; // shows if the order details were modified
 
+	protected $_secureDetails = null;
+
     public function __construct($id = null)
     {
         $this->fields['secureDetails'] = ''; // GPG encrypted order details

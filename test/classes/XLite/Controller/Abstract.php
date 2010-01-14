@@ -52,11 +52,11 @@ abstract class XLite_Controller_Abstract extends XLite_View
     var $dumpStarted = false; // startDump was called
     var $locationPath = array(); // path for dialog location
 
-	protected $cart = null;
-
 	protected $product = null;
 
 	protected $category = null;
+
+	public $cart = null;
 
     function getAllParams($exeptions = null)
     {

@@ -46,6 +46,8 @@
 */
 class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product implements XLite_Base_IDecorator
 {
+	protected $inventory = null;
+
 	public function __construct($id = null)
 	{
 		$this->fields["tracking"] = 0;

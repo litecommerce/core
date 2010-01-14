@@ -81,6 +81,9 @@ class XLite_Module_Affiliate_Model_Order extends XLite_Model_Order implements XL
     function storePartnerClick()
     {
         if ($this->get("partnerClick") == 0) { // first time order's placed 
+
+			$partnerClick = false;
+
             if ($this->session->isRegistered("PartnerClick")) {
                 $partnerClick = $this->session->get("PartnerClick");
             } elseif (isset($_COOKIE["PartnerClick"])) {
