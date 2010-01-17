@@ -37,7 +37,7 @@
 * vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 */
 
-define('LC_DIR', realpath('.'));
+define('LC_DIR', realpath(dirname(dirname(__FILE__))));
 
 // It's the feature of PHP 5. We need to explicitly define current time zone.
 // See also http://bugs.php.net/bug.php?id=48914

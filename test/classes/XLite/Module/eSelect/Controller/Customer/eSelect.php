@@ -43,9 +43,8 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_eSelect_Controller_Customer_Eselect extends XLite_Controller_Customer_Checkout
+class XLite_Module_eSelect_Controller_Customer_eSelect extends XLite_Controller_Customer_Checkout
 {
-
 	function init()
 	{
 		if (!is_object($this->registerForm) || is_null($this->registerForm)) {
