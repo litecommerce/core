@@ -3,6 +3,15 @@
 abstract class XLite_Module_Abstract extends XLite_Model_Module
 {
 	/**
+     * Module type
+     *
+     * @var    int
+     * @access protected
+     * @since  3.0
+     */
+    protected $type = self::MODULE_3RD_PARTY;
+
+	/**
 	 * Module version 
 	 * 
 	 * @var    string
@@ -99,6 +108,18 @@ abstract class XLite_Module_Abstract extends XLite_Model_Module
     }
 
 	/**
+	 * Return module type 
+	 * 
+	 * @return int
+	 * @access public
+	 * @since  3.0
+	 */
+	public function getType()
+	{
+		return $this->type;
+	}
+
+	/**
 	 * Return module version
 	 * 
 	 * @return string
@@ -147,7 +168,7 @@ abstract class XLite_Module_Abstract extends XLite_Model_Module
     }
 
 	/**
-	 * Clean up cache
+	 * Clean up cache; FIXME - to delete?
 	 * 
 	 * @return void
 	 * @access public

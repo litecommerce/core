@@ -3,6 +3,15 @@
 class XLite_Module_Protx_Main extends XLite_Module_Abstract
 {
     /**
+     * Module type
+     *
+     * @var    int
+     * @access protected
+     * @since  3.0
+     */
+    protected $type = self::MODULE_PAYMENT;
+
+    /**
      * Module version
      *
      * @var    string
@@ -27,7 +36,7 @@ class XLite_Module_Protx_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $enabled = true;	
+    protected $enabled = false;	
 
 	public $minVer = "2.0";	
 	public $showSettingsForm = true;

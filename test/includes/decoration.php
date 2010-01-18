@@ -348,7 +348,6 @@ class Decorator
             PDO::ATTR_AUTOCOMMIT               => true,
             PDO::ATTR_ERRMODE                  => PDO::ERRMODE_SILENT,
             PDO::ATTR_PERSISTENT               => false,
-            PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
         );
 
         return new PDO($this->getConnectionString($options), $user, $password, $connectionParams);

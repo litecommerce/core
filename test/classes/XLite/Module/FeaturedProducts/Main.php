@@ -46,6 +46,15 @@
 */
 class XLite_Module_FeaturedProducts_Main extends XLite_Module_Abstract
 {
+    /**
+     * Module type
+     *
+     * @var    int
+     * @access protected
+     * @since  3.0
+     */
+    protected $type = self::MODULE_GENERAL;
+
 	const FEATURED_PRODUCTS_TABLE = 'xlite_featured_products';
 
     /**

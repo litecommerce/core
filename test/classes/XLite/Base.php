@@ -17,7 +17,7 @@ class XLite_Base
 		// Application
         global $xlite;
 
-        if (isset($xlite)) {
+        if (isset($xlite) && is_object($xlite)) {
             $this->xlite = $xlite;
             $this->auth = $xlite->get('auth');
             $this->session = $xlite->get('session');

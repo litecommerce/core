@@ -47,15 +47,6 @@ function setHeaderChecked(key)
     }
 }
 
-function uninstallModule(moduleForm, moduleID, moduleName)
-{
-	if (confirm('Are you sure you want to uninstall ' + moduleName + ' add-on?')) {
-		moduleForm.module_id.value = moduleID;
-		moduleForm.module_name.value = moduleName;
-		moduleForm.action.value = 'uninstall';
-		moduleForm.submit();
-	}
-}
 // -->
 </script>
 
@@ -66,14 +57,7 @@ Use this section to manage add-on components of your online store.
 <hr>
 <p class="adminParagraph"><b class="Star">Warning:</b> It is strongly recommended that you close the shop for maintenance on the <a href="admin.php?target=settings"><u>General settings</u></a> page before performing any operations on this page!</p>
 
-<span class="ErrorMessage" IF="!modulesForUpdate=##"><b>Warning!</b> Since some of the add-ons affecting the work of the other modules were upgraded we strongly recommend you to re-install the following ones to avoid their malfunction:
-<ul FOREACH="modulesForUpdate,moduleName">
-<li>{moduleName}</li>
-</ul></span>
-
 <span class="ErrorMessage" IF="xlite.mm.error">{xlite.mm.error:h}<br></span>
-
-<span class="ErrorMessage" IF="xlite.mm.errorLockingCache">&gt;&gt; Unable to lock cache for updating its structure. Please, check file permissions on the /var/tmp directory. &lt;&lt;<br></span>
 
 <span IF="xlite.mm.errorBrokenDependencies">
 <p class="ErrorMessage">&gt;&gt; Unable to {action} module {xlite.mm.moduleName} &lt;&lt;</p>
@@ -94,55 +78,35 @@ Use this section to manage add-on components of your online store.
 <a IF="xlite.session.safe_mode&!config.General.safe_mode" href="{url}&safe_mode=off&auth_code={xlite.options.installer_details.auth_code}"><u><b>Turn OFF temporarily enabled safe mode</b></u></a>
 </p>
 {else:}
-<p IF="!xlite.mm.modules"><b>&gt;&gt;&nbsp;You have no modules installed&nbsp;&lt;&lt;</b></p>
-<p IF="xlite.mm.modules">You have <b>{xlite.mm.modulesNumber}</b> module{if:!xlite.mm.modulesNumber=#1#}s{end:} installed and <b>{xlite.mm.activeModulesNumber}</b> module{if:!xlite.mm.activeModulesNumber=#1#}s{end:} activated.</p>
+<p />You have <b>{xlite.mm.getActiveModulesNumber()}</b> module{if:!xlite.mm.getActiveModulesNumber()=#1#}s{end:} activated.</p>
 {end:}
 
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 
 {* Display payment modules *}
 
-<tbody {*IF="getSortModules(#8#)"*}>
-<widget template="modules_body.tpl" caption="Commercial payment modules" key="8">
+<tbody *IF="getModules(#1#)">
+<widget template="modules_body.tpl" caption="Payment modules" key="1">
 </tbody>
 
 
 {* Display shipping modules *}
 
-<tbody IF="getSortModules(#4#)">
-<widget template="modules_body.tpl" caption="Commercial shipping modules" key="4">
-</tbody>
-
-
-{* Display commercial modules *}
-
 <tbody IF="getSortModules(#2#)">
-{if:getSortModules(#8#)|getSortModules(#4#)}
-<widget template="modules_body.tpl" caption="Other commercial modules" key="2">
-{else:}
-<widget template="modules_body.tpl" caption="Commercial modules" key="2">
-{end:}
+<widget template="modules_body.tpl" caption="Shipping modules" key="2">
 </tbody>
 
+{* Display regular modules *}
 
-{* Display commercial skin modules *}
-
-<tbody IF="getSortModules(#16#)">
-<widget template="modules_body.tpl" caption="Commercial skin modules" key="16">
-</tbody>
-
-
-{* Display free modules *}
-
-<tbody IF="getSortModules(#1#)">
-<widget template="modules_body.tpl" caption="Free modules" key="1">
+<tbody IF="getSortModules(#4#)">
+<widget template="modules_body.tpl" caption="Add-ons" key="4">
 </tbody>
 
 
 {* Display 3rd party modules *}
 
-<tbody IF="getSortModules(#4096#)">
-<widget template="modules_body.tpl" caption="3rd party modules" key="4096">
+<tbody IF="getSortModules(#5#)">
+<widget template="modules_body.tpl" caption="3rd party modules" key="5">
 </tbody>
 
 </table>

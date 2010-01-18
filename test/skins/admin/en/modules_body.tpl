@@ -20,7 +20,6 @@
 			    <th nowrap class="TableHead">Active<br><input id="activate_modules_{widget.key}" type="checkbox" onClick="this.blur();setChecked('modules_form_{widget.key}','active_module_{widget.key}',this.checked,'{widget.key}');"></th>
 			    <th class="TableHead" width="100%">Description</th>
 			    <th class="TableHead">Version</th>
-			    <th class="TableHead">&nbsp;</th>
 			</tr>
 			<tbody FOREACH="getModules(widget.key),module_idx,module">
 			<tr valign=middle nowrap class="{getRowClass(module_idx,#DialogBox#,#TableRow#)}">
@@ -51,7 +50,6 @@
 				<td align=center><input id="active_module_{widget.key}" type="checkbox" name="active_modules[]" value="{module.module_id}" checked="{module.enabled}" onClick="javascript:this.blur();checkUpdated('{widget.key}')"></td>
 				<td>{module.description}</td>
 				<td align=center>{module.version}</td>
-				<td><input type="button" value=" Uninstall " onClick="uninstallModule(modules_form_{widget.key}, '{module.module_id}', '{addSlashes(module.name)}')"></td>
 			</tr>    
 			<tr IF="module.brokenDependencies">
 				<td colspan=4 class=ErrorMessage valign=top>&gt;&gt;Cannot initialize module {module.name:h}: dependency modules are not available<br>{foreach:module.brokenDependencies,idx,dep}<li> {dep:h}<br>{end:}</td>

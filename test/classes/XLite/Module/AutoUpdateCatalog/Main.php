@@ -44,13 +44,13 @@
 class XLite_Module_AutoUpdateCatalog_Main extends XLite_Module_Abstract
 {
     /**
-     * Module dependencies
+     * Module type
      *
-     * @var    array
+     * @var    int
      * @access protected
      * @since  3.0
      */
-    protected $dependencies = array('Array');
+    protected $type = self::MODULE_GENERAL;
 
     /**
      * Module version

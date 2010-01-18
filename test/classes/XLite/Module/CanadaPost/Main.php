@@ -42,6 +42,15 @@
 class XLite_Module_CanadaPost_Main extends XLite_Module_Abstract
 {
     /**
+     * Module type
+     *
+     * @var    int
+     * @access protected
+     * @since  3.0
+     */
+    protected $type = self::MODULE_SHIPPING;
+
+    /**
      * Module version
      *
      * @var    string

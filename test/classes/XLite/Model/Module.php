@@ -72,7 +72,7 @@ class XLite_Model_Module extends XLite_Model_Abstract
         'enabled'      => 0,
         'version'      => '',
         'dependencies' => '', 
-        'type'           => self::MODULE_UNKNOWN,
+        'type'         => self::MODULE_UNKNOWN,
         'access_date'  => 0
     );
     

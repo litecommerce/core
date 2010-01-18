@@ -644,7 +644,7 @@ EOT;
 
 	public function getModules($type = null)
 	{
-		return $this->getModule()->findAll();
+		return $this->getModule()->findAll(is_null($type) ? '' : 'type = \'' . $type . '\'');
 	}
 
 	public function getActiveModules()
@@ -658,6 +658,11 @@ EOT;
 		}
 
 		return $this->activeModules;
+	}
+
+	public function getActiveModulesNumber()
+	{
+		return count($this->getActiveModules());
 	}
 
 	public function changeModuleStatus(XLite_Model_Module $module, $status)

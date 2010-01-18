@@ -48,6 +48,15 @@
 class XLite_Module_BeanStream_Main extends XLite_Module_Abstract
 {
     /**
+     * Module type
+     *
+     * @var    int
+     * @access protected
+     * @since  3.0
+     */
+    protected $type = self::MODULE_PAYMENT;
+
+    /**
      * Module version
      *
      * @var    string

@@ -116,11 +116,11 @@ CREATE TABLE xlite_log (
 
 DROP TABLE IF EXISTS xlite_modules;
 CREATE TABLE xlite_modules (
-  module_id int(11) unsigned NOT NULL default '0',
+  module_id int(11) NOT NULL auto_increment,
   name varchar(64) NOT NULL default '',
   description varchar(255) NOT NULL default '',
   enabled int(1) unsigned NOT NULL default '0',
-  dependencies varchar(255) NOT NULL default '',
+  dependencies varchar(1024) NOT NULL default '',
   version varchar(12) NOT NULL default '0',
   type int(11) unsigned default '0' NOT NULL,
   access_date int(11) NOT NULL DEFAULT 0,
