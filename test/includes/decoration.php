@@ -732,8 +732,10 @@ class Decorator
                     $this->getModulePriority($this->getModuleNameByClassName($class));
             }
 
-            // This info are no more needed
-            unset($this->classesInfo[$class][self::INFO_EXTENDS]);
+			// These fields are not needed
+            if (empty($info[self::INFO_EXTENDS])) {
+                unset($this->classesInfo[$class][self::INFO_EXTENDS]);
+            }
             unset($this->classesInfo[$class][self::INFO_IS_DECORATOR]);
         }
     }

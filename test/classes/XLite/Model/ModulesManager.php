@@ -672,5 +672,12 @@ EOT;
             $module->update();
         }
     }
+
+	public function isActiveModule($moduleName)
+	{
+		$activeModules = $this->getActiveModules();
+
+		return !empty($activeModules[$moduleName]);
+	}
 }
 

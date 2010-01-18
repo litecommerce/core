@@ -411,7 +411,7 @@ class XLite_Model_FlexyCompiler extends XLite_Base
     {
         if (!isset($attrs["name"])) {
             // create name for the widget
-            $attrs["name"] = 'widget->_' . $this->widgetCounter++;
+            $attrs["name"] = '_' . $this->widgetCounter++;
         } 
         if (!isset($attrs["class"])) {
             $attrs["class"] = 'XLite_View_Abstract';
@@ -422,7 +422,7 @@ class XLite_Model_FlexyCompiler extends XLite_Base
     {
     	$result = "";
 
-		$wName = isset($attrs['name']) ? str_replace('->', '.', $attrs['name']) : '';
+		$wName = isset($attrs['name']) ? $attrs['name'] : '';
 
     	$targetPreFound = array_key_exists("target", $attrs);
     	$targetFound = (empty($this->_internalDisplayCode) && ($targetPreFound || array_key_exists("module", $attrs))) ? true : false;
@@ -441,28 +441,32 @@ class XLite_Model_FlexyCompiler extends XLite_Base
         	$result .= $resultTarget;
     	}
 
-        $result .= 'if($t->isDisplayRequired(array(';
+		$hasName = (strlen($wName) > 0);
+		$wName   = 'widget->' . $wName;
+
+        $result .= 'if(' . ($hasName ? 'isset($t->' . $wName . ') && ' : '') .  '$t->isDisplayRequired(array(';
         $attrsN = 0;
         $attrsC = count($attrs) - 1;
-        $wNameLength = strlen($wName);
         foreach ($attrs as $a => $v) {
-        	if ($wNameLength > 0) {
-            	$result .= '"'.$a.'"=>' . '$t->get(\'' . $wName . '.' . $a . '\')' . (($attrsN < $attrsC) ? ',' : '');
-            } else {
-            	$result .= '"'.$a.'"=>' . $this->flexyAttribute($v) . (($attrsN < $attrsC) ? ',' : '');
-            }
+			$result .= '\'' . $a . '\'=>' 
+					   . ($hasName ? '$t->' . $wName . '->get(\'' . $a . '\')' :  $this->flexyAttribute($v))
+					   . (($attrsN < $attrsC) ? ',' : '');
         }
         $result .= "))){";
 
-        if (empty($this->_internalDisplayCode)) {
+        if (empty($this->_internalDisplayCode) && $hasName) {
             foreach ($attrs as $name=>$value) {
                 // setup only dynamic properties
                 if (strpos($value, '{') === false) {
                     continue;
                 }
-                $result .= '$t->set(\'' . $wName . '.' . $name . '\',' . (($targetPreFound && $name == "visible") ? ('$t->_attributes[\'' . $name . '\']') : $this->flexyAttribute($value)) . ');'; 
+				if ($targetPreFound && $name == 'visible') {
+					$result .= 'if (isset($t->_attributes[\'' . $name . '\'])) $t->' . $wName . '->set(\'' . $name . '\', $t->_attributes[\'' . $name . '\']);';
+				} else {
+					$result .= '$t->' . $wName . '->set(\'' . $name . '\', ' . $this->flexyAttribute($value) . ');';
+				}
             }
-            $result .= '$t->call(\'' . $wName . '.display\');}';
+            $result .= '$t->' . $wName . '->display();}';
 
         	if ($targetFound) {
             	$result .= "}";
@@ -496,34 +500,33 @@ class XLite_Model_FlexyCompiler extends XLite_Base
         $attrsN = 0;
         $attrsC = count($attrs) - 1;
         foreach ($attrs as $a => $v) {
-            $result .= '"'.$a.'"=>' . $this->flexyAttribute($v) . (($attrsN < $attrsC) ? ',' : '');
+            $result .= '\'' . $a . '\'=>' . $this->flexyAttribute($v) . (($attrsN < $attrsC) ? ',' : '');
             $attrsN ++;
         }
         $result .= "))){\n";
             
         if (empty($this->_internalInitCode)) {
-            $wName = $attrs['name'];
+            $wName = 'widget->' . $attrs['name'];
             $class = $attrs['class'];
             $result .= '$t->' . $wName . ' = new ' . $class . "();\n";
             $result .= '$t->' . $wName . '->component = $t;' . "\n";
             $result .= '$t->widget->addWidget($t->' . $wName . ");\n";
-            if ($class instanceof XLite_View) {
+            if (is_subclass_of($class, 'XLite_View')) {
                 $result .= '$t->addComponent($t->' . $wName . ");\n";
             }
 
-            $wName = str_replace('->', '.', $attrs['name']);
             foreach ($attrs as $name => $value) {
                 if ($name != 'target' && $name != 'class' && $name != 'name' && $name != 'hidden') {
-                    $result .= '$t->set(\'' . $wName . '.' . $name . '\',' . '$t->_attributes[\'' . $name . '\']' . ");\n";
+					$result .= 'if (isset($t->_attributes[\'' . $name . '\'])) $t->' . $wName . '->set(\'' . $name . '\', $t->_attributes[\'' . $name . '\']);' . "\n";
                 }
             }
             if (isset($attrs['hidden'])) {
-                $result .= "\$t->set('$wName.visible', false);\n";
+				$result .= '$t->' . $wName . '->set(\'visible\', false);' . "\n";
             }
-            $result .= "\$t->call('${wName}.init');\n}";
+			$result .= '$t->' . $wName . '->init();' . "\n" . '}';
 
         	if ($targetFound) {
-            	$result .= "\n}";
+            	$result .= "\n" . '}';
         	}
         }
 

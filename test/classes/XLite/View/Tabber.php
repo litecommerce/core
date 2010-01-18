@@ -108,7 +108,7 @@ class XLite_View_Tabber extends XLite_View_Abstract
     	foreach($pages as $page_idx => $pagesArray) {
     		$pagesHeadersLength = 0;
     		foreach($pagesArray as $page) {
-    			$pagesHeadersLength += strlen($page->header);
+    			$pagesHeadersLength += (is_null($page) ? 0 : strlen($page->header));
     			if ($pagesHeadersLength > $pagesHeadersLengthMax) {
     				$pagesHeadersLengthMax = $pagesHeadersLength;
     			}

@@ -61,6 +61,8 @@ class XLite_View_Abstract extends XLite_Base
 
     public $widgets = array();
 
+	public $_attributes = array();
+
     /**
     * Initializes the widget tree. The only what it does is just compile
     * and include the corresponding var/run/skins/.../template.tpl.init.php 
@@ -156,54 +158,36 @@ class XLite_View_Abstract extends XLite_Base
     
     function includeCompiledFile($includeFileProp)
     {
-        global $options;
-        if($this->get("xlite.suMode") == 0){
-            $file_permission = isset($options['filesystem_permissions']['nonprivileged_permission_file']) ? base_convert($options['filesystem_permissions']['nonprivileged_permission_file'], 8, 10): 0644;
-            $dir_permission = isset($options['filesystem_permissions']['nonprivileged_permission_dir']) ? base_convert($options['filesystem_permissions']['nonprivileged_permission_dir'], 8, 10) : 0755;
-        } else {
-            $file_permission = isset($options['filesystem_permissions']['privileged_permission_file']) ? base_convert($options['filesystem_permissions']['privileged_permission_file'], 8, 10) : 0600;
-            $dir_permission = isset($options['filesystem_permissions']['privileged_permission_dir']) ? base_convert($options['filesystem_permissions']['privileged_permission_dir'], 8, 10) : 0711;
-        }
+        ('' != $this->get("template")) || $this->_die("template is not set");
 
-        if ($this->get("template") == "") {
-            func_die("template is not set");
-        }
-        $includeFile = $this->get($includeFileProp);
-        $templateFile = $this->get("templateFile");
-        $initFile = $this->get("initFile");
-        $displayFile = $this->get("displayFile");
+        $includeFile  = $this->get($includeFileProp);
+        $templateFile = $this->getTemplateFile();
 
-        if (!@filemtime($templateFile) && $this->is("ignoreErrors")) {
-            return;
-        }
         if (!file_exists($includeFile) || filemtime($includeFile) != filemtime($templateFile)) {
-            // compiled file name
-            // compile
+
             $fc = new XLite_Model_FlexyCompiler();
             $fc->set("source", file_get_contents($templateFile));
-            $layout = XLite_Model_Layout::getInstance();
-            $path = $layout->getPath();
-            $fc->set("url_rewrite", "images:" . $path . "images");
+            $fc->set("url_rewrite", "images:" . XLite_Model_Layout::getInstance()->getPath() . "images");
             $fc->set("file", $templateFile);
             $fc->parse();
-            mkdirRecursive(dirname($displayFile), $dir_permission);
-            if($cfp = @fopen($displayFile, 'wb')) {
-                fwrite($cfp,$fc->get("phpcode"));
-                fclose($cfp);
-                @chmod($displayFile, $file_permission);
-                @touch($displayFile, filemtime($templateFile));
-            }
-            mkdirRecursive(dirname($initFile), $dir_permission);
-            if($cfp = @fopen($initFile, 'wb')) {
-                fwrite($cfp,$fc->get("phpinitcode"));
-                fclose($cfp);
-                @chmod($initFile, $file_permission);
-                @touch($initFile, filemtime($templateFile));
-            }
+
+			$initFile    = $this->get("initFile");
+	        $displayFile = $this->get("displayFile");
+
+			foreach (array('phpcode' => $displayFile, 'phpinitcode' => $initFile) as $code => $file) {
+				$file = LC_ROOT_DIR . $file;
+				if (!file_exists($dir = dirname($file))) {
+		            mkdirRecursive($dir, 0755);
+				}
+				file_put_contents($file, $fc->get($code));
+			}
         }
         $t = $this->getThisVar();
         $caller = $t->get('widget');
         $t->widget = $this;
+
+		// var_dump($includeFile);
+
         $result = include $includeFile;
         if (!$result) {
             $_error = "unable to read template file: $includeFile";
@@ -474,35 +458,34 @@ class XLite_View_Abstract extends XLite_Base
         return $text1;
     }
 
-    function isInitRequired($attributes)
+    function isInitRequired(array $attrs)
     {
-        if (!$this->isDisplayRequired($attributes)) {
-            return false;
+		$result = true;
+
+		if (!$this->isDisplayRequired($attrs)) {
+            $result = false;
+        } elseif (isset($attrs["name"])) {
+			$name   = $attrs["name"];
+			$result = empty($this->widget->$name);
         }
-        if (isset($attributes["name"])) {
-            $name = str_replace("->", ".", $attributes["name"]);
-            if (!is_null($this->get($name))) {
-                return false; // do not initialize twice
-            }
-        }
-        return true;
+
+        return $result;
     }
 
-    function isDisplayRequired($attributes)
+    function isDisplayRequired(array $attrs)
     {
-        $this->_attributes = $attributes;
+		$result = true;
+        $this->_attributes = $attrs;
 
-        if (isset($attributes["target"])) {
-            if (isset($_REQUEST["target"]) && !in_array($_REQUEST["target"], explode(',',$attributes["target"]))) {
-                return false;
-            }
+        if (isset($attrs['target']) && isset($_REQUEST['target']) && !in_array($_REQUEST['target'], explode(',', $attrs['target']))) {
+			$result = false;
         }
-        if (isset($attributes["module"])) {
-            if (is_null($this->xlite->get("mm.activeModules." . $attributes["module"]))) {
-                return false;
-            }
+
+        if (isset($attrs['module']) && !XLite_Model_ModulesManager::getInstance()->isActiveModule($attrs['module'])) {
+			$result = false;
         }
-        return true;
+
+        return $result;
     }
     
     function getDialog()

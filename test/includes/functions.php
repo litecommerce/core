@@ -613,7 +613,11 @@ function func_read_classes($base = "", $list = "classes.lst", $verbose = true) {
 
 } // }}}
 
-function func_die($message) { // {{{
+function func_die($message)
+{
+	// FIXME
+	die ($message);
+
 	static $ignore;
 	static $trace_message;
 
