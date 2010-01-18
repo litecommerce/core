@@ -149,39 +149,12 @@ class XLite_Controller_Admin_Modules extends XLite_Controller_Admin_Abstract
 
     function action_update()
     {
-        if (!isset($_REQUEST["active_modules"])) {
-            $_REQUEST["active_modules"] = array();
-        }
-        if (!isset($_REQUEST["installed_modules"])) {
-            $_REQUEST["installed_modules"] = array();
-        }
+		$activeModules = isset($_REQUEST["active_modules"]) ? $_REQUEST["active_modules"] : array();
 
-		$modules = $this->xlite->mm->get("modules");
-		$modulesOff = array();
-		foreach($_REQUEST["installed_modules"] as $m_id) {
-			if (!in_array($m_id, $_REQUEST["active_modules"])) {
-				$modulesOff[] = $m_id;
-			}
-		}
-
-		$modulesList = array();
-		foreach($modules as $m) {
-			if ($m->get("enabled") || (!$m->get("enabled") && $m->get("brokenDependencies"))) {
-    			$m_id = $m->get("module_id");
-    			if (!in_array($m_id, $modulesOff)) {
-    				$modulesList[] = $m->get("module_id");
-    			}
-    		}
-		}
-		foreach($_REQUEST["active_modules"] as $m_id) {
-			if (!in_array($m_id, $modulesOff)) {
-				$modulesList[] = $m_id;
-			}
-		}
-        if (!$this->xlite->mm->updateModules($modulesList)) {
-            $this->set("valid", false);
+		if (!XLite_Model_ModulesManager::getInstance()->updateModules($activeModules)) {
+			$this->set("valid", false);
             $this->hidePageHeader();
-        }
+		}
     }
 
     function action_uninstall()

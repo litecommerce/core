@@ -88,7 +88,7 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
         $this->includedFilesTotal = 0;
         foreach (get_included_files() as $file) {
             $this->includedFiles[] = $file;
-            $size = filesize($file);
+            $size = @filesize($file);
             $this->includedFileSizes[] = $size;
             $this->includedFilesTotal += $size;
         }

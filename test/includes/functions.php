@@ -731,7 +731,8 @@ function func_starts_with($str, $start) { // {{{
     return substr($str, 0, strlen($start)) == $start;
 } // }}}
 
-function func_cleanup_cache($cache, $verbose = false) { // {{{
+// FIXME - to remove?
+/*function func_cleanup_cache($cache, $verbose = false) { // {{{
     $cacheDir = "var/run";
     if ($verbose) {
     	echo "Cleaning up $cache cache ";
@@ -777,7 +778,7 @@ function func_cleanup_cache($cache, $verbose = false) { // {{{
     } elseif ($verbose) {
     	echo "$cacheDir/$cache ... [<font color=red>NOT FOUND</font>]<br>";
     }
-} // }}}
+}*/ // }}}
 
 //
 // This function create file lock in temporaly directory

@@ -163,7 +163,7 @@ class XLite_View_Abstract extends XLite_Base
         $includeFile  = $this->get($includeFileProp);
         $templateFile = $this->getTemplateFile();
 
-        if (!file_exists($includeFile) || filemtime($includeFile) != filemtime($templateFile)) {
+        if (!file_exists($includeFile) || (filemtime($includeFile) != filemtime($templateFile))) {
 
             $fc = new XLite_Model_FlexyCompiler();
             $fc->set("source", file_get_contents($templateFile));
@@ -180,6 +180,7 @@ class XLite_View_Abstract extends XLite_Base
 		            mkdirRecursive($dir, 0755);
 				}
 				file_put_contents($file, $fc->get($code));
+				touch($file, filemtime($templateFile));
 			}
         }
         $t = $this->getThisVar();

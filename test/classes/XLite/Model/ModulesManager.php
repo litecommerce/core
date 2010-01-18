@@ -630,17 +630,17 @@ EOT;
     } 
 
 	/**
-     * Cleanup cache
+     * Cleanup cache; FIXME - to remove???
      *
      * @return void
      * @access public
      * @since  1.0
      */
-    public function cleanupCompileCache()
+    /*public function cleanupCompileCache()
     {
         func_cleanup_cache('classes');
         func_cleanup_cache('skins');
-    }
+    }*/
 
 	public function getModules($type = null)
 	{
@@ -671,6 +671,9 @@ EOT;
 			$this->changeModuleStatus($module, in_array($module->get("module_id"), $moduleIDs));
             $module->update();
         }
+
+		$decorator = new Decorator();
+		$decorator->rebuildCache(true);
     }
 
 	public function isActiveModule($moduleName)

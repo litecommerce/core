@@ -294,10 +294,10 @@ class Decorator
     protected function getConfigOptions($section = '')
     {
         if (is_null($this->configOptions)) {
-            $this->configOptions = funcParseConfgFile($section);
+            $this->configOptions = funcParseConfgFile();
         }
 
-        return $this->configOptions;
+        return empty($section) ? $this->configOptions : (isset($this->configOptions[$section]) ? $this->configOptions[$section] : null);
     }
 
     /**
@@ -803,19 +803,37 @@ class Decorator
         chmod($fileName, 0644);
     }
 
+	/**
+	 * Delete the directory with compiled classes 
+	 * 
+	 * @return void
+	 * @access public
+	 * @since  3.0
+	 */
+	public function cleanUpCache()
+	{
+		unlinkRecursive(LC_CLASSES_CACHE_DIR);
+		unlinkRecursive(LC_SKINS_CACHE_DIR);
+	}
+
     /**
      * Check and (if needed) rebuild cache
      * 
+	 * @param bool $force flag to force rebuild
+	 *
      * @return void
      * @access public
      * @since  3.0
      */
-    public function rebuildCache()
+    public function rebuildCache($force = false)
     {
-        if ($this->isNeedRebuild()) {
+        if ($this->isNeedRebuild() || $force) {
 
-            // Trying to create folder if not exists
-            if (!$this->isCacheDirExists() && !mkdirRecursive(LC_CLASSES_CACHE_DIR, 0755)) {
+			// Remove old files
+			$this->cleanUpCache();
+
+            // Trying to create folder
+            if (!mkdirRecursive(LC_CLASSES_CACHE_DIR, 0755)) {
                 die ('Unable to create classes cache directory');
             }
 

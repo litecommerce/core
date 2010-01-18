@@ -108,45 +108,6 @@ inifile = "layout.ini"
 locale = en
 
 ;
-; Template engine configuration options.
-;
-[HTML_Template_Flexy]
-compileDir = "var/run/"
-verbose = Off
-max_forms_per_session = 100
-
-;
-; Classes decorator configuration options
-;
-[decorator_details]
-compileDir = "var/run/classes/"
-lockDir = "var/tmp/"
-
-;
-; Filesystem permissions
-;
-; permission_mode:
-;     0 - mean that the non-privileged permissions should be used.
-;         One should use this value if the web-user, PHP user and the
-;         owner of LiteCommerce files are different.
-;     1 - means that the web-user, PHP user and the owner of the
-;         LiteCommerce files is the same. In this case the
-;         privileged permissions are used.
-; NOTE: The 1 value is more secure, but if you are not sure what web-user and PHP-user
-;       are used on your server, you should use the 0 value for this option. If the web-user,
-;       PHP-user and the files owner are different users on your server, usage of the 1 value
-;       for this option causes problems with the store displaying.
-[filesystem_permissions]
-permission_mode = 0
-nonprivileged_permission_dir_all = "0777"
-nonprivileged_permission_file_all = "0666"
-nonprivileged_permission_dir = "0755"
-nonprivileged_permission_file = "0644"
-privileged_permission_dir = "0711"
-privileged_permission_file = "0600"
-privileged_permission_file_nonphp = "0644"
-
-;
 ; Profiler settings
 ;
 [profiler_details]

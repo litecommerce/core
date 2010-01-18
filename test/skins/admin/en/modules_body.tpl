@@ -48,7 +48,7 @@
 					</table>
 				</td>
 
-				<td align=center><input id="active_module_{widget.key}" type="checkbox" name="active_modules[]" value="{module.module_id}" checked="{module.enabled}" onClick="javascript:this.blur();checkUpdated('{widget.key}')"><input type="hidden" name="installed_modules[]" value="{module.module_id}"></td>
+				<td align=center><input id="active_module_{widget.key}" type="checkbox" name="active_modules[]" value="{module.module_id}" checked="{module.enabled}" onClick="javascript:this.blur();checkUpdated('{widget.key}')"></td>
 				<td>{module.description}</td>
 				<td align=center>{module.version}</td>
 				<td><input type="button" value=" Uninstall " onClick="uninstallModule(modules_form_{widget.key}, '{module.module_id}', '{addSlashes(module.name)}')"></td>
