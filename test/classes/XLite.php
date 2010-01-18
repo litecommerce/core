@@ -84,6 +84,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
 	{
 		if (is_null($this->options)) {
 			$this->options = $this->parseConfigFile();
+			$this->options['host_details']['web_dir_wo_slash'] = rtrim($this->options['host_details']['web_dir'], '/');
 		}
 
 		$result = $this->options;

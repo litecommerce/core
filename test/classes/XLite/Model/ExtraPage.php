@@ -85,7 +85,7 @@ class XLite_Model_ExtraPage extends XLite_Base
     function getLocale() // {{{
     {
         if (is_null($this->locale)) {
-            $this->locale = $this->get("xlite.options.skin_details.locale");
+            $this->locale = XLite::getInstance()->getOptions(array('skin_details', 'locale'));
         }
         return $this->locale;
     } // }}}
@@ -93,7 +93,7 @@ class XLite_Model_ExtraPage extends XLite_Base
     function getZone()
     {
         if (is_null($this->zone)) {
-            $this->zone = $this->get("xlite.options.skin_details.skin");
+            $this->zone = XLite::getInstance()->getOptions(array('skin_details', 'skin'));
         }
         return $this->zone;
     }
@@ -367,11 +367,9 @@ class XLite_Model_ExtraPage extends XLite_Base
 
 	function getRelativeTemplatePath($file)
 	{
-		$skin_details = $this->xlite->get("options.skin_details");
-		return str_replace("skins/" . $skin_details->get("skin") . "/" . $skin_details->get("locale") . "/", "", $file);
+		$skin_details = XLite::getInstance()->getOptions('skin_details');
+
+		return str_replace('skins/' . $skin_details['skin'] . '/' . $skin_details['locale'] . '/', '', $file);
 	}
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+

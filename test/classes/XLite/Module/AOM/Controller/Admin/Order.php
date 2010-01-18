@@ -248,7 +248,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 		// Switch layout to castomer area
 		$layout = XLite_Model_Layout::getInstance();
 		$active_skin = $layout->get("skin");
-		$layout->set("skin", $this->xlite->get("options.skin_details.skin"));
+		$layout->set("skin", XLite::getInstance()->getOptions(array('skin_details', 'skin')));
 
 		$mail->compose(
 				$this->config->get("Company.orders_department"),

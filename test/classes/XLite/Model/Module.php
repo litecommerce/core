@@ -101,97 +101,7 @@ class XLite_Model_Module extends XLite_Model_Abstract
      * @access protected
      * @since  1.0
      */
-    protected $defaultOrder = 'module_id';
-
-    /**
-     * Required LiteCommerce version to install this mod 
-     * 
-     * @var    string
-     * @access protected
-     * @since  1.0
-     */
-    protected $minVer = '3.0';
-
-    /**
-     * Determines if we need to show setting form for this module
-     * 
-     * @var    bool
-     * @access protected
-     * @since  1.0
-     */
-    protected $showSettingsForm = false;
-
-
-    /**
-     * Show service message
-     * 
-     * @param string $message text to display
-     *  
-     * @return void
-     * @access protected
-     * @since  1.0
-     */
-    protected function printMessage($message)
-    {
-        echo $message . '\n';
-        func_flush();
-    }
-
-    /**
-     * Show link for return 
-     * 
-     * @return void
-     * @access protected
-     * @since  1.0
-     */
-    protected function addLink()
-    {
-        $this->printMessage('<a href="admin.php?target=modules">Click here to return to admin zone</a>');
-    }
-
-    /**
-     * Custom approach to determine current area 
-     * 
-     * @return string
-     * @access protected
-     * @since  1.0
-     */
-    protected function getZone()
-    {
-        if (is_null($this->zone)) {
-            $this->zone = XLite::getInstance()->getOptions(array('skin_details', 'skin'));
-        }
-
-        return $this->zone;
-    }
-
-    /**
-     * Show the failure message
-     * 
-     * @return void
-     * @access protected
-     * @since  1.0
-     */
-    protected function failure()
-    {
-        $this->printMessage('</pre><p><b><font color=red>Failed to install module ' . $this->get('name') . '</font></b><br><br>');
-        $this->addLink();
-    }
-
-    /**
-     * Called from install() when installation is complete.
-     * Inserts a module row in the xilte_modules table and show the success message
-     * 
-     * @return void
-     * @access protected
-     * @since  1.0
-     */
-    protected function success()
-    {
-        $this->isExists() ? $this->update() : $this->create();
-        $this->printMessage('</pre><p><b>Module ' . $this->get('name') . ' has been installed.</b><br><br>');
-        $this->addLink();
-    }
+    protected $defaultOrder = 'name';
 
     /**
      * Overlay a template
@@ -225,136 +135,24 @@ class XLite_Model_Module extends XLite_Model_Abstract
     }
 
     /**
-     * clearModuleType. FIXME - to delete? 
-     * 
-     * @param mixed $moduleType module type
-     *  
-     * @return void
-     * @access public
-     * @since  1.0
-     */
-    public function clearModuleType($moduleType = null)
-    {
-        $this->xlite->_paymentMethodRegistered = 0;
-        $this->xlite->_shippingMethodRegistered = 0;
-
-        if (isset($moduleType)) {
-            $this->set('type', $moduleType);
-        }
-    }
-
-    /**
-     * Check if current module depends on a passed one
-     *
-     * @param string $moduleName module to check
-     *
-     * @return bool
-     * @access public
-     * @since  1.0
-     */
-    public function isDependsOn($moduleName)
-    {
-        return in_array($moduleName, $this->getDependencies());
-    }
-
-    /**
      * Return link to settings form
      *
      * @return string
      * @access public
      * @since  1.0
      */
-    public function getSettingsForm()
+    public function getSettingsFormLink()
     {
-        return $this->showSettingsForm ? 'admin.php?target=module&page=' . $this->get('name') : '';
+		return /*is_null($link = $this->__call('showSettingsForm')) ?*/ 'admin.php?target=module&page=' . $this->get('name')/* : $link*/;
     }
 
-    /**
-     * Install module
-     * 
-     * @return void
-     * @access public
-     * @since  1.0
-     */
-    public function install()
-    {
-        echo '<pre>';
-
-        // check module version
-        $version = $this->get('minVer');
-        $name    = $this->get('name');
-
-        if (0 > version_compare($this->config->get('Version')->get('version'), $version)) {
-
-            $this->printMessage(
-                $name . 'module can be installed only on LiteCommerce version ' . $version
-                . ' or higher.<br>Please upgrade your shopping cart to verions ' . $version . '<br>'
-            );
-            $this->failure();
-
-        } else {
-
-            // execute PHP install code
-            @include LC_MODULES_DIR . $name . LC_DS . 'install.php';
-    
-            // execute SQL install code
-            $sql = LC_MODULES_DIR . $name . LC_DS . 'install.sql';
-
-            if (is_readable($sql) && !query_upload($sql, $this->db->connection, true)) {
-                $this->failure();
-            } else {
-                // execute PHP post-install code
-                @include LC_MODULES_DIR . $name . LC_DS . 'post-install.php';
-                $this->success();
-            }
-        }
-    }
-
-    /**
-     * Uninstall module
-     * 
-     * @return void
-     * @access public
-     * @since  1.0
-     */
-    public function uninstall()
-    {
-        // Disable module first
-        $this->set('enabled', 0);
-        $this->update();
-
-        $name = $this->get('name');
-
-        // execute SQL uninstall code
-        $sql = LC_MODULES_DIR . $name . LC_DS . 'uninstall.sql';
-
-        if (is_readable($sql) && !query_upload($sql, $this->db->connection, true)) {
-            $this->failure();
-        } else {
-            $zone = $this->getZone();
-            $skinFolders = array(
-                array('admin', 'en', 'modules'),
-                array('admin', 'en', 'images', 'modules'),
-                array($zone,   'en', 'modules'),
-                array($zone,   'en', 'images', 'modules'),
-                array('mail',  'en', 'modules'),
-            );
-
-            foreach ($skinFolders as $folder) {
-                unlinkRecursive(LC_SKINS_DIR . implode(LC_DS, $folder) . LC_DS . $name);
-            }
-            unlinkRecursive(LC_MODULES_DIR . $name);
-
-            $this->delete();
-            $this->printMessage('The module $name has been successfully uninstalled<br>');
-            $this->addLink();
-        }
-    }
-
-	public function __call($name, array $arguments)
+	public function __call($method, array $args = array())
 	{
-		// TODO - call the certain module function
-		echo $name;die;
+		if (!@class_exists($className = 'XLite_Module_' . $this->get('name') . '_Main')) {
+			require_once LC_MODULES_DIR . $this->get('name') . LC_DS . 'Main.php' ;
+		}
+
+		return call_user_func_array(array($className, $method), $args);
 	}
 }
 

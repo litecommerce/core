@@ -47,6 +47,8 @@
 */
 class XLite_View_MailExplorer extends XLite_View_ColumnList
 {	
+	protected $locale = null;
+
     public $subject = "subject.tpl";	
     public $body = "body.tpl";	
     public $signature = "signature.tpl";	
@@ -56,7 +58,7 @@ class XLite_View_MailExplorer extends XLite_View_ColumnList
     function getLocale() // {{{
     {
         if (is_null($this->locale)) {
-            $this->locale = $this->get("xlite.options.skin_details.locale");
+            $this->locale = XLite::getInstance()->getOptions(array('skin_details', 'locale'));
         }
         return $this->locale;
     } // }}}

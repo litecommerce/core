@@ -96,12 +96,6 @@ class XLite_Module_2CheckoutCom_Main extends XLite_Module_Abstract
         
         $this->registerPaymentMethod('2Checkout');
 
-        $webDir = $this->xlite->get("options.host_details.web_dir");
-        if (substr($webDir, -1) == "/") {
-            $webDir = substr($webDir, 0, -1);
-        }
-        $this->xlite->set("options.host_details.web_dir_wo_slash", $webDir);
-
         $pm = XLite_Model_PaymentMethod::factory('2Checkout');
 		$params = $pm->get("params");
 		if (!isset($params["version"])) {
@@ -110,18 +104,5 @@ class XLite_Module_2CheckoutCom_Main extends XLite_Module_Abstract
             $pm->update();
 		}
     }
-
-    function uninstall()
-    {
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
-
-        parent::uninstall();
-    }
-
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

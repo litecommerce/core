@@ -49,10 +49,14 @@
 
 class XLite_Controller_Admin_ImageEdit extends XLite_Controller_Admin_Abstract
 {
+	protected $locale = null;
+
+    protected $zone = null;
+
     function getLocale() // {{{
     {
         if (is_null($this->locale)) {
-            $this->locale = $this->get("xlite.options.skin_details.locale");
+            $this->locale = XLite::getInstance()->getOptions(array('skin_details', 'locale')); 
         }
         return $this->locale;
     } // }}}
@@ -60,7 +64,7 @@ class XLite_Controller_Admin_ImageEdit extends XLite_Controller_Admin_Abstract
     function getZone()
     {
         if (is_null($this->zone)) {
-            $this->zone = $this->get("xlite.options.skin_details.skin");
+            $this->zone = XLite::getInstance()->getOptions(array('skin_details', 'skin'));
         }
         return $this->zone;
     }
@@ -87,7 +91,3 @@ class XLite_Controller_Admin_ImageEdit extends XLite_Controller_Admin_Abstract
     }
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

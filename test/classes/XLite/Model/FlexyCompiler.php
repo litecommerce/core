@@ -720,21 +720,29 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 			$str = substr($str, $len);
 			return $result;
 		}
+
 		$len = strcspn($str, '=&|,)(:');
-		if ($len<strlen($str) && substr($str, $len, 1) == '(') { // method call
-			$result = '$t->call(\'' . substr($str, 0, $len) . '\'';
+		if ($len < strlen($str) && substr($str, $len, 1) == '(') { // method call
+
+			$token  = substr($str, 0, $len);
+			$method = (false !== ($dotPos = strrpos($token, '.'))) ? substr($token, $dotPos + 1) : $token;
+
+			$result = '$t->' . ((false === $dotPos) ? '' : 'get(\'' . substr($str, 0, $dotPos) . '\')->') . $method;
+
 			$str = substr($str, $len);
+			$params = array();
+
             if (substr($str, 1, 1) != ')') {
     			while (substr($str, 0, 1) != ')') {
 	    			$str = substr($str,1); // eat , or (
 		    		if (strlen($str) == 0) $this->error("No closing )");
-			    	$result .= ',' . $this->flexyExpression($str);
+			    	$params[] = $this->flexyExpression($str);
     			}
   	    	    $str = substr($str,1); // eat )
             } else {
                 $str = substr($str,2); // eat ()
             }
-			return $result . ")";
+			return $result . '(' . implode(',', $params) . ')';
 		}
         if ($len) {
     		// field

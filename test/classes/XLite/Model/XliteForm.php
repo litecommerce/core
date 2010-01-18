@@ -97,9 +97,7 @@ class XLite_Model_XliteForm extends XLite_Model_Abstract
 
 	function getMaxFormsPerSession()
 	{
-		$max_count = $this->xlite->get("options.HTML_Template_Flexy.max_forms_per_session");
-		if ($max_count <= 0) $max_count = 100;
-		return $max_count;
+		return (0 >= ($maxCount = XLite::getInstance()->getOptions(array('HTML_Template_Flexy', 'max_forms_per_session')))) ? 100 : $maxCount;
 	}
 }
 

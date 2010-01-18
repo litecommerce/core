@@ -526,8 +526,8 @@ function opera_click() {
 
 	function getRelativeTemplatePath($file)
 	{
-		$skin_details = $this->xlite->get("options.skin_details");
-		return str_replace("skins/" . $skin_details->get("skin") . "/" . $skin_details->get("locale") . "/", "", $file);
+		$skin_details = XLite::getInstance()->getOptions('skin_details');
+		return str_replace("skins/" . $skin_details['skin'] . "/" . $skin_details['locale'] . "/", "", $file);
 	}
 
 	function fc_explorer_scheme()

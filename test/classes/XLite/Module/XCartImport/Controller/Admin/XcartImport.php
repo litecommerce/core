@@ -50,7 +50,7 @@ class XLite_Module_XCartImport_Controller_Admin_XcartImport extends XLite_Contro
             // default params
             if (is_null($this->xlite->get("mm.activeModules.DemoMode"))) {
                 foreach (array("hostspec","database","username","password") as $param) {
-                    $this->set($param, $this->xlite->get("options.database_details.$param"));
+                    $this->set($param, XLite::getInstance()->getOptions(array('database_details', $param)));
                 }
             }
             $this->import_users = true;

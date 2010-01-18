@@ -29,7 +29,7 @@
 
 </SCRIPT>
 
-<SCRIPT language="JavaScript" IF="!semaphoreCreate(#SidebarBoxJS#)">
+<SCRIPT language="JavaScript">
 function ChangeBoxBody(bodyId)
 {
 	sidebar_box_statuses[bodyId] = (sidebar_box_statuses[bodyId] == 1) ? "0" : "1";

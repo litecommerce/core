@@ -3,59 +3,13 @@
 abstract class XLite_Module_Abstract extends XLite_Model_Module
 {
 	/**
-     * Module type
-     *
-     * @var    int
-     * @access protected
-     * @since  3.0
-     */
-    protected $type = self::MODULE_3RD_PARTY;
-
-	/**
-	 * Module version 
-	 * 
-	 * @var    string
-	 * @access protected
-	 * @since  3.0
-	 */
-	protected $version = '1.0';
-
-	/**
-	 * Module description 
-	 * 
-	 * @var    string
-	 * @access protected
-	 * @since  3.0
-	 */
-	protected $description = '';
-
-	/**
-	 * Determines if module is switched on/off
-	 * 
-	 * @var    bool
-	 * @access protected
-	 * @since  3.0
-	 */
-	protected $enabled = true;
-
-	/**
-	 * List of dependend modules
-	 * 
-	 * @var    array
-	 * @access protected
-	 * @since  3.0
-	 */
-	protected $dependencies = array();
-
-
-	/**
 	 * Return module name by class name
 	 * 
 	 * @return string
 	 * @access protected
 	 * @since  3.0
 	 */
-	protected function getName()
+	protected function getModuleName()
 	{
 		return preg_match('/XLite_Module_(\w+)_Main/', get_class($this), $matches) ?
 			$matches[1] : $this->_die('Module class name is invalid - "' . get_class($this) . '"');
@@ -73,7 +27,7 @@ abstract class XLite_Module_Abstract extends XLite_Model_Module
 	protected function registerPaymentMethod($name)
 	{
 		$method = new XLite_Model_PaymentMethod();
-		$class  = 'Module_' . $this->getName() . '_Model_PaymentMethod_' . XLite_Core_Converter::convertToCamelCase($name);
+		$class  = 'Module_' . $this->getModuleName() . '_Model_PaymentMethod_' . XLite_Core_Converter::convertToCamelCase($name);
 
 		return $method->registerMethod($name, $class);
 	}
@@ -90,7 +44,7 @@ abstract class XLite_Module_Abstract extends XLite_Model_Module
 	protected function registerShippingModule($name)
 	{
 		$shipping = new XLite_Model_Shipping();
-		$class  = 'Module_' . $this->getName() . '_Model_Shipping_' . XLite_Core_Converter::convertToCamelCase($name);
+		$class  = 'Module_' . $this->getModuleName() . '_Model_Shipping_' . XLite_Core_Converter::convertToCamelCase($name);
 
 		return $shipping->registerShippingModule($name, $class);
 	}
@@ -114,9 +68,9 @@ abstract class XLite_Module_Abstract extends XLite_Model_Module
 	 * @access public
 	 * @since  3.0
 	 */
-	public function getType()
+	public static function getType()
 	{
-		return $this->type;
+		return self::MODULE_3RD_PARTY;
 	}
 
 	/**
@@ -126,9 +80,9 @@ abstract class XLite_Module_Abstract extends XLite_Model_Module
 	 * @access public
 	 * @since  3.0
 	 */
-	public function getVersion()
+	public static function getVersion()
 	{
-		return $this->version;
+		return '1.0';
 	}
 
 	/**
@@ -138,22 +92,35 @@ abstract class XLite_Module_Abstract extends XLite_Model_Module
 	 * @access public
 	 * @since  3.0
 	 */
-	public function getDescription()
+	public static function getDescription()
 	{
-		return $this->description;
+		return '';
 	}
 
 	/**
-	 * Return module status 
+	 * Determines if we need to show settings form link
 	 * 
 	 * @return bool
 	 * @access public
 	 * @since  3.0
 	 */
-	public function isEnabled()
-	{
-		return (true === $this->enabled); 
-	}
+	public static function showSettingsForm()
+    {
+		return false;
+    }
+
+	/**
+	 * Return link to settings form.
+	 * See Model/Module.php
+	 * 
+	 * @return mixed
+	 * @access public
+	 * @since  3.0
+	 */
+	public function getSettingsForm()
+    {
+		return null;
+    }
 
 	/**
      * Return module dependencies
@@ -162,24 +129,23 @@ abstract class XLite_Module_Abstract extends XLite_Model_Module
      * @access public
      * @since  3.0
      */
-    public function getDependencies()
+    public static function getDependencies()
     {
-        return $this->dependencies;
+        return array();
     }
 
 	/**
-	 * Clean up cache; FIXME - to delete?
-	 * 
-	 * @return void
-	 * @access public
-	 * @since  3.0
-	 */
-	public function uninstall()
+     * Check if current module depends on a passed one
+     *
+     * @param string $moduleName module to check
+     *
+     * @return bool
+     * @access public
+     * @since  1.0
+     */
+    public static function isDependsOn($moduleName)
     {
-        func_cleanup_cache('classes');
-        func_cleanup_cache('skins');
-
-        parent::uninstall();
+        return in_array($moduleName, self::getDependencies());
     }
 }
 

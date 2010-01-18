@@ -121,7 +121,7 @@ class XLite_Model_Mailer extends XLite_View
 		// Switch layout to castomer area
 		$layout = XLite_Model_Layout::getInstance();
 		$this->templatesSkin = $layout->get("skin");
-		$layout->set("skin", $this->xlite->get("options.skin_details.skin"));
+		$layout->set("skin", XLite::getInstance()->getOptions(array('skin_details', 'skin')));
     }
 
     /**

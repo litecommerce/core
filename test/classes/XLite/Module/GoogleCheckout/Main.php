@@ -95,13 +95,6 @@ class XLite_Module_GoogleCheckout_Main extends XLite_Module_Abstract
     {
         parent::init();
 
-        $webDir = $this->xlite->get("options.host_details.web_dir");
-        if (substr($webDir, -1) == "/") {
-            $webDir = substr($webDir, 0, -1);
-        }
-        $this->xlite->set("options.host_details.web_dir_wo_slash", $webDir);
-
-        
         $this->registerPaymentMethod('google_checkout');
 
 		$payment_method = XLite_Model_PaymentMethod::factory('google_checkout');

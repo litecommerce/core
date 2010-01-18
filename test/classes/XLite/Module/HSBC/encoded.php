@@ -7,7 +7,7 @@
 
     function func_PaymentMethod_cc_hsbc_getCwd($_this)
     {    
-        $s = $_this->xlite->get("options.primary_installation.path");   
+        $s = XLite::getInstance()->getOptions(array('primary_installation', 'path'));   
 		if ($s!="") 		
 		{
                $enc = 105 ^ ((ord(substr($s, 0, 1)) - 101)*16 + ord(substr($s, 1, 1)) - 101);

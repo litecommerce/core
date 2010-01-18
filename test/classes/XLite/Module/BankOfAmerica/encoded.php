@@ -1,13 +1,8 @@
 <?php
-	function func_BankOfAmerica_process(&$lite_cart, &$paymentMethod, $debug = false)
+	function func_BankOfAmerica_process($lite_cart, $paymentMethod, $debug = false)
 	{
-		//global $options;
-		/*
-		$http_host = $lite_cartoptions["host_details"]["http_host"];
-		$web_dir = $options["host_details"]["web_dir"];
-		*/
-		$http_host = $lite_cart->xlite->get("options.host_details.http_host");
-		$web_dir = $lite_cart->xlite->get("options.host_details.web_dir");
+		$http_host = XLite::getInstance()->getOptions(array('host_details', 'http_host'));
+		$web_dir   = XLite::getInstance()->getOptions(array('host_details', 'web_dir'));
 		//
 		// *********************** PREPARE ************************
 		//

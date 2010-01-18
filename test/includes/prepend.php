@@ -84,6 +84,6 @@ require_once LC_ROOT_DIR . 'includes' . LC_DS . 'decoration.php';
  */
 function __autoload($className)
 {
-	require LC_CLASSES_CACHE_DIR . str_replace('_', LC_DS, $className) . '.php';
+	include_once LC_CLASSES_CACHE_DIR . str_replace('_', LC_DS, $className) . '.php';
 }
 

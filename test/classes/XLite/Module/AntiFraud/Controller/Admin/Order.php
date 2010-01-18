@@ -55,7 +55,7 @@ class XLite_Module_AntiFraud_Controller_Admin_Order extends XLite_Controller_Adm
 		$post = array();
 		$post["mode"] = "add_ip";
 		$post["ip"]	= $this->get("order.address");
-		$post["shop_host"] = func_parse_host($this->xlite->options->host_details->http_host);
+		$post["shop_host"] = func_parse_host(XLite::getInstance()->getOptions(array('host_details', 'http_host')));
 		$post["reason"] = strip_tags($this->get("fraud_comment"));
 		$post["service_key"] = $this->config->get("AntiFraud.antifraud_license");
 		$request = new XLite_Model_HTTPS();

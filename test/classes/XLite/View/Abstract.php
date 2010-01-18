@@ -77,17 +77,8 @@ class XLite_View_Abstract extends XLite_Base
 
     function isVerbose()
     {
-        if 
-        (
-        	$this->xlite->get("options.HTML_Template_Flexy.verbose") === true 
-        	||
-            $this->xlite->get("options.HTML_Template_Flexy.verbose") === "On" 
-            ||
-            $this->xlite->get("options.HTML_Template_Flexy.verbose") == 1
-        ) 
-        	return true;
-        else
-        	return false;
+		return !is_null($verbose = XLite::getInstance()->getOptions(array('HTML_Template_Flexy', 'verbose'))) 
+			   && (true === $verbose || 'On' === $verbose || 1 == $verbose);
     }
 
     /**

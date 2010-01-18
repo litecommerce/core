@@ -90,29 +90,11 @@ class XLite_Module_SecureTrading_Main extends XLite_Module_Abstract
 		return "admin.php?target=payment_method&payment_method=securetrading";
 	}
 
-	function init() {
-
+	function init()
+	{
 		parent::init();
 		
 		$this->registerPaymentMethod('securetrading');
-
-        $webDir = $this->xlite->get("options.host_details.web_dir");
-        if (substr($webDir, -1) == "/") {
-            $webDir = substr($webDir, 0, -1);
-        }
-        $this->xlite->set("options.host_details.web_dir_wo_slash", $webDir);
 	}
-
-    function uninstall()
-    {
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
-
-        parent::uninstall();
-    }
-	
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+

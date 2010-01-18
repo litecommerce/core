@@ -413,14 +413,16 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
 		}
 
 		$subpath = "";
-		if ($this->xlite->get("options.primary_installation.path")) {
+		$xlite = XLite::getInstance();
+
+		if ($xlite->getOptions(array('primary_installation', 'path'))) {
 			// deal with ASPE shop
 			$subpath = "/admin.php?target=payment_method&action=callback&payment_method=google_checkout";
 		} else {
 			$subpath = "/classes/modules/GoogleCheckout/callback.php";
 		}
 
-		return "http" . $secureTestmode . "://" . $this->xlite->options->get("host_details.https_host") . $this->xlite->options->get("host_details.web_dir_wo_slash") . $subpath;
+		return "http" . $secureTestmode . "://" . $xlite->getOptions(array('host_details', 'https_host')) . $xlite->getOptions(array('host_details', 'web_dir_wo_slash')) . $subpath;
 	}
 
 	function getOrderMerchantNote($order, $paymentParams)

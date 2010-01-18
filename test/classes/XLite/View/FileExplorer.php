@@ -47,12 +47,14 @@
 */
 class XLite_View_FileExplorer extends XLite_View_ColumnList
 {	
+	protected $locale = null;
+
     public $template = "common/file_explorer.tpl";
 
     function getLocale() // {{{
     {
         if (is_null($this->locale)) {
-            $this->locale = $this->get("xlite.options.skin_details.locale");
+            $this->locale = XLite::getInstance()->getOptions(array('skin_details', 'locale'));
         }
         return $this->locale;
     } // }}}
@@ -60,7 +62,7 @@ class XLite_View_FileExplorer extends XLite_View_ColumnList
 
     function getPath($zone = "default")
     {
-        return "skins/".$zone."/".$this->get('locale');
+        return 'skins' LC_DS . $zone . LC_DS . $this->getLocale();
     }
 
     function getData()
@@ -121,7 +123,4 @@ class XLite_View_FileExplorer extends XLite_View_ColumnList
         return $this->children;
     }
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+

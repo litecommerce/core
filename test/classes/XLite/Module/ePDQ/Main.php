@@ -92,29 +92,9 @@ class XLite_Module_ePDQ_Main extends XLite_Module_Abstract
 
     function init()
     {
-        
         parent::init();
         
-	    // plug in  kernel/PaymentMethod/epdq_cc.php module
         $this->registerPaymentMethod('epdq_cc');
-        $webDir = $this->xlite->get("options.host_details.web_dir");
-        if (substr($webDir, -1) == "/") {
-            $webDir = substr($webDir, 0, -1);
-        }
-        $this->xlite->set("options.host_details.web_dir_wo_slash", $webDir);
     }
-
-    function uninstall()
-    {
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
-
-        parent::uninstall();
-    }
-
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

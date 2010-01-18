@@ -56,8 +56,7 @@ class XLite_Module_Affiliate_Controller_Abstract extends XLite_Controller_Abstra
             if ($this->get("config.Affiliate.partner_cookie_lifetime")) {
                 // store for "lifetime" days
                 $expire = time() + $this->get("config.Affiliate.partner_cookie_lifetime") * 3600 * 24;
-                $host = $this->get("xlite.options.host_details.http_host");
-                $domain = func_parse_host($host);
+                $domain = func_parse_host(XLite::getInstance()->getOptions(array('host_details', 'http_host')));
                 setcookie("PartnerID", $_GET["partner"], $expire, "/", $domain);
                 setcookie("PartnerClick", $stats->get("stat_id"), $expire, "/", $domain);
             }
