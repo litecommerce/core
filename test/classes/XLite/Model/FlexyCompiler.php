@@ -46,7 +46,10 @@
 * @version $Id$
 */
 class XLite_Model_FlexyCompiler extends XLite_Base
-{	
+{
+	protected $_internalDisplayCode = false;
+	protected $_internalInitCode = false;
+	
 	public $source; // Flexy template source code	
 	public $phpcode;	
     public $phpinitcode;	
@@ -411,7 +414,7 @@ class XLite_Model_FlexyCompiler extends XLite_Base
     {
         if (!isset($attrs["name"])) {
             // create name for the widget
-            $attrs["name"] = '_' . $this->widgetCounter++;
+            $attrs["name"] = 'widget->_' . $this->widgetCounter++;
         } 
         if (!isset($attrs["class"])) {
             $attrs["class"] = 'XLite_View_Abstract';
@@ -425,7 +428,7 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 		$wName = isset($attrs['name']) ? $attrs['name'] : '';
 
     	$targetPreFound = array_key_exists("target", $attrs);
-    	$targetFound = (empty($this->_internalDisplayCode) && ($targetPreFound || array_key_exists("module", $attrs))) ? true : false;
+    	$targetFound = (!$this->_internalDisplayCode && ($targetPreFound || array_key_exists("module", $attrs))) ? true : false;
     	if ($targetFound) {
     		$attrTarget = array();
     		if (array_key_exists("target", $attrs)) {
@@ -442,7 +445,6 @@ class XLite_Model_FlexyCompiler extends XLite_Base
     	}
 
 		$hasName = (strlen($wName) > 0);
-		$wName   = 'widget->' . $wName;
 
         $result .= 'if(' . ($hasName ? 'isset($t->' . $wName . ') && ' : '') .  '$t->isDisplayRequired(array(';
         $attrsN = 0;
@@ -454,7 +456,7 @@ class XLite_Model_FlexyCompiler extends XLite_Base
         }
         $result .= "))){";
 
-        if (empty($this->_internalDisplayCode) && $hasName) {
+        if (!$this->_internalDisplayCode && $hasName) {
             foreach ($attrs as $name=>$value) {
                 // setup only dynamic properties
                 if (strpos($value, '{') === false) {
@@ -480,7 +482,7 @@ class XLite_Model_FlexyCompiler extends XLite_Base
     {
     	$result = "";
 
-    	$targetFound = (empty($this->_internalInitCode) && (array_key_exists("target", $attrs) || array_key_exists("module", $attrs))) ? true : false;
+    	$targetFound = (!$this->_internalInitCode && (array_key_exists("target", $attrs) || array_key_exists("module", $attrs))) ? true : false;
     	if ($targetFound) {
     		$attrTarget = array();
     		if (array_key_exists("target", $attrs)) {
@@ -505,12 +507,12 @@ class XLite_Model_FlexyCompiler extends XLite_Base
         }
         $result .= "))){\n";
             
-        if (empty($this->_internalInitCode)) {
-            $wName = 'widget->' . $attrs['name'];
+        if (!$this->_internalInitCode) {
+            $wName = $attrs['name'];
             $class = $attrs['class'];
             $result .= '$t->' . $wName . ' = new ' . $class . "();\n";
             $result .= '$t->' . $wName . '->component = $t;' . "\n";
-            $result .= '$t->widget->addWidget($t->' . $wName . ");\n";
+            $result .= '$t->addWidget($t->' . $wName . ");\n";
             if (is_subclass_of($class, 'XLite_View')) {
                 $result .= '$t->addComponent($t->' . $wName . ");\n";
             }

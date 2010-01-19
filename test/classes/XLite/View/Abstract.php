@@ -236,7 +236,7 @@ class XLite_View_Abstract extends XLite_Base
     * @param string $etc The string to add to truncated field value
     * @return string The truncated string
     */
-    function truncate(&$baseObject, $field, $length = 0, $etc = "...", $break_words = false)
+    function truncate($baseObject, $field, $length = 0, $etc = "...", $break_words = false)
     {
         if (is_scalar($baseObject)) {
             $string = $baseObject;
@@ -458,7 +458,7 @@ class XLite_View_Abstract extends XLite_Base
             $result = false;
         } elseif (isset($attrs["name"])) {
 			$name   = $attrs["name"];
-			$result = empty($this->widget->$name);
+			$result = !isset($this->$name);
         }
 
         return $result;
@@ -489,7 +489,7 @@ class XLite_View_Abstract extends XLite_Base
         return $d;
     }
 
-    function addWidget(&$w) 
+    function addWidget($w) 
     {
         $this->widgets[] = $w;
         $w->parentWidget = $this;
