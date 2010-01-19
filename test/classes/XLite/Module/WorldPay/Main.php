@@ -53,7 +53,10 @@ class XLite_Module_WorldPay_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $type = self::MODULE_PAYMENT;
+    public static function getType()
+    {
+        return self::MODULE_PAYMENT;
+    }
 
     /**
      * Module version
@@ -62,7 +65,10 @@ class XLite_Module_WorldPay_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $version = '2.4';
+    public static function getVersion()
+    {
+        return '2.4';
+    }
 
     /**
      * Module description
@@ -71,16 +77,10 @@ class XLite_Module_WorldPay_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $description = 'RBS WorldPay payment gateway';
-
-    /**
-     * Determines if module is switched on/off
-     *
-     * @var    bool
-     * @access protected
-     * @since  3.0
-     */
-    protected $enabled = true;	
+    public static function getDescription()
+    {
+        return 'RBS WorldPay payment gateway';
+    }	
 
 	public $minVer = "2.0";	
 	public $showSettingsForm = true;

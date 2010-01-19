@@ -53,7 +53,10 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $type = self::MODULE_GENERAL;
+    public static function getType()
+    {
+        return self::MODULE_GENERAL;
+    }
 
     /**
      * Module version
@@ -62,7 +65,10 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $version = '2.12.RC4';
+    public static function getVersion()
+    {
+        return '2.12.RC4';
+    }
 
     /**
      * Module description
@@ -71,16 +77,10 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $description = 'ProductAdviser add-on introduces multiple cross-selling features and a customer notification mechanism';
-
-    /**
-     * Determines if module is switched on/off
-     *
-     * @var    bool
-     * @access protected
-     * @since  3.0
-     */
-    protected $enabled = true;	
+    public static function getDescription()
+    {
+        return 'ProductAdviser add-on introduces multiple cross-selling features and a customer notification mechanism';
+    }	
 
 	public $minVer = '2.1.2';	
     public $showSettingsForm = true;

@@ -53,7 +53,10 @@ class XLite_Module_XCartImport_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $type = self::MODULE_GENERAL;
+    public static function getType()
+    {
+        return self::MODULE_GENERAL;
+    }
 
     /**
      * Module version
@@ -62,7 +65,10 @@ class XLite_Module_XCartImport_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $version = '2.6.RC1';
+    public static function getVersion()
+    {
+        return '2.6.RC1';
+    }
 
     /**
      * Module description
@@ -71,16 +77,10 @@ class XLite_Module_XCartImport_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $description = 'Import data from X-Cart Gold';
-
-    /**
-     * Determines if module is switched on/off
-     *
-     * @var    bool
-     * @access protected
-     * @since  3.0
-     */
-    protected $enabled = true;	
+    public static function getDescription()
+    {
+        return 'Import data from X-Cart Gold';
+    }	
 
     public $isFree = true;	
     public $minVer = "2.0";

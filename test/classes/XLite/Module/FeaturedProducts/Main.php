@@ -46,16 +46,19 @@
 */
 class XLite_Module_FeaturedProducts_Main extends XLite_Module_Abstract
 {
-    /**
+	const FEATURED_PRODUCTS_TABLE = 'xlite_featured_products';
+
+	/**
      * Module type
      *
      * @var    int
      * @access protected
      * @since  3.0
      */
-    protected $type = self::MODULE_GENERAL;
-
-	const FEATURED_PRODUCTS_TABLE = 'xlite_featured_products';
+    public static function getType()
+    {
+        return self::MODULE_GENERAL;
+    }
 
     /**
      * Module version
@@ -64,7 +67,10 @@ class XLite_Module_FeaturedProducts_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $version = '2.8';
+    public static function getVersion()
+    {
+        return '2.8';
+    }
 
     /**
      * Module description
@@ -73,16 +79,10 @@ class XLite_Module_FeaturedProducts_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $description = 'This module enables featured products list';
-
-    /**
-     * Determines if module is switched on/off
-     *
-     * @var    bool
-     * @access protected
-     * @since  3.0
-     */
-    protected $enabled = true;	
+    public static function getDescription()
+    {
+        return 'This module enables featured products list';
+    }
 
     public $showSettingsForm = true;
 }

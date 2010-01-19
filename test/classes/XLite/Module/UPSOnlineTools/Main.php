@@ -47,7 +47,10 @@ class XLite_Module_UPSOnlineTools_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $type = self::MODULE_SHIPPING;
+    public static function getType()
+    {
+        return self::MODULE_SHIPPING;
+    }
 
     /**
      * Module version
@@ -56,7 +59,10 @@ class XLite_Module_UPSOnlineTools_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $version = '2.1.RC13';
+    public static function getVersion()
+    {
+        return '2.1.RC13';
+    }
 
     /**
      * Module description
@@ -65,16 +71,10 @@ class XLite_Module_UPSOnlineTools_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $description = 'This module enables the access to UPS OnLine Tools';
-
-    /**
-     * Determines if module is switched on/off
-     *
-     * @var    bool
-     * @access protected
-     * @since  3.0
-     */
-    protected $enabled = true;	
+    public static function getDescription()
+    {
+        return 'This module enables the access to UPS OnLine Tools';
+    }	
 
     public $minVer = "2.1.2";	
     public $showSettingsForm = true;

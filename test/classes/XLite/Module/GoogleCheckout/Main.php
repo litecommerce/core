@@ -54,7 +54,10 @@ class XLite_Module_GoogleCheckout_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $type = self::MODULE_GENERAL;
+    public static function getType()
+    {
+        return self::MODULE_GENERAL;
+    }
 
     /**
      * Module version
@@ -63,7 +66,10 @@ class XLite_Module_GoogleCheckout_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $version = '2.1.RC2';
+    public static function getVersion()
+    {
+        return '2.1.RC2';
+    }
 
     /**
      * Module description
@@ -72,16 +78,10 @@ class XLite_Module_GoogleCheckout_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $description = 'GoogleCheckout module';
-
-    /**
-     * Determines if module is switched on/off
-     *
-     * @var    bool
-     * @access protected
-     * @since  3.0
-     */
-    protected $enabled = true;	
+    public static function getDescription()
+    {
+        return 'GoogleCheckout module';
+    }	
 
     public $minVer = "2.1.2";	
     public $showSettingsForm = true;

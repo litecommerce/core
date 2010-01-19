@@ -53,7 +53,10 @@ class XLite_Module_WholesaleTrading_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $type = self::MODULE_GENERAL;
+    public static function getType()
+    {
+        return self::MODULE_GENERAL;
+    }
 
     /**
      * Module version
@@ -62,7 +65,10 @@ class XLite_Module_WholesaleTrading_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $version = '2.24.RC26';
+    public static function getVersion()
+    {
+        return '2.24.RC26';
+    }
 
     /**
      * Module description
@@ -71,16 +77,10 @@ class XLite_Module_WholesaleTrading_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $description = 'This module introduces wholesale trading business logic support';
-
-    /**
-     * Determines if module is switched on/off
-     *
-     * @var    bool
-     * @access protected
-     * @since  3.0
-     */
-    protected $enabled = true;	
+    public static function getDescription()
+    {
+        return 'This module introduces wholesale trading business logic support';
+    }	
 
 	public $showSettingsForm = true;	
 	public $minVer = "2.1.2";

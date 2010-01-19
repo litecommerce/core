@@ -52,7 +52,10 @@ class XLite_Module_Newsletters_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $type = self::MODULE_GENERAL;
+    public static function getType()
+    {
+        return self::MODULE_GENERAL;
+    }
 
     /**
      * Module version
@@ -61,7 +64,10 @@ class XLite_Module_Newsletters_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $version = '2.13.RC3';
+    public static function getVersion()
+    {
+        return '2.13.RC3';
+    }
 
     /**
      * Module description
@@ -70,16 +76,10 @@ class XLite_Module_Newsletters_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $description = 'This module allows you to create and manage news lists and send newsletters';
-
-    /**
-     * Determines if module is switched on/off
-     *
-     * @var    bool
-     * @access protected
-     * @since  3.0
-     */
-    protected $enabled = true;	
+    public static function getDescription()
+    {
+        return 'This module allows you to create and manage news lists and send newsletters';
+    }	
 
     public $minVer = "2.1.0";	
     public $showSettingsForm = true;

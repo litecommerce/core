@@ -9,7 +9,10 @@ class XLite_Module_Protx_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $type = self::MODULE_PAYMENT;
+    public static function getType()
+    {
+        return self::MODULE_PAYMENT;
+    }
 
     /**
      * Module version
@@ -18,7 +21,10 @@ class XLite_Module_Protx_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $version = '2.1.RC1';
+    public static function getVersion()
+    {
+        return '2.1.RC1';
+    }
 
     /**
      * Module description
@@ -27,16 +33,10 @@ class XLite_Module_Protx_Main extends XLite_Module_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $description = 'Protx VSP Direct and Protx VSP Form credit card payment processor';
-
-    /**
-     * Determines if module is switched on/off
-     *
-     * @var    bool
-     * @access protected
-     * @since  3.0
-     */
-    protected $enabled = false;	
+    public static function getDescription()
+    {
+        return 'Protx VSP Direct and Protx VSP Form credit card payment processor';
+    }	
 
 	public $minVer = "2.0";	
 	public $showSettingsForm = true;
