@@ -102,74 +102,38 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepaydirectCc extends XLite_Mod
 		}
 	}
 
+	function getOrderStatus($type, $default = 'Q')
+    {
+        $param  = 'status_' . $type;
+        $params = $this->get('params');
+
+        return (isset($params['sub' . $param]) && $this->xlite->AOMEnabled) ?
+                    $params['sub' . $param] : (isset($params[$param]) ? $params[$param] : $default);
+    }
+
 	function getOrderAuthStatus() // {{{
 	{
-		$status = "auth";
-		$param = "status_$status";
-		$params = $this->get("params");
-		if ($params["sub$param"] && $this->xlite->AOMEnabled) {
-			return $params["sub$param"];
-		} elseif ($params[$param]) {
-			return $params[$param];
-		} else {
-			return "Q";
-		}
+		return $this->getOrderStatus('auth');
 	} // }}}
 
 	function getOrderRejectStatus() // {{{
 	{
-		$status = "reject";
-		$param = "status_$status";
-		$params = $this->get("params");
-		if ($params["sub$param"] && $this->xlite->AOMEnabled) {
-			return $params["sub$param"];
-		} elseif ($params[$param]) {
-			return $params[$param];
-		} else {
-			return "F";
-		}
+		return $this->getOrderStatus('reject', 'F');
 	} // }}}
 
 	function getOrderSuccessNo3dStatus() // {{{
 	{
-		$status = "success_no3d";
-		$param = "status_$status";
-		$params = $this->get("params");
-		if ($params["sub$param"] && $this->xlite->AOMEnabled) {
-			return $params["sub$param"];
-		} elseif ($params[$param]) {
-			return $params[$param];
-		} else {
-			return "P";
-		}
+		return $this->getOrderStatus('success_no3d', 'P');
 	} // }}}
 
 	function getOrderSuccess3dOkStatus() // {{{
 	{
-		$status = "success_3dok";
-		$param = "status_$status";
-		$params = $this->get("params");
-		if ($params["sub$param"] && $this->xlite->AOMEnabled) {
-			return $params["sub$param"];
-		} elseif ($params[$param]) {
-			return $params[$param];
-		} else {
-			return "P";
-		}
+		return $this->getOrderStatus('success_3dok', 'P');
 	} // }}}
 
 	function getOrderSuccess3dFailStatus() // {{{
 	{
-		$status = "success_3dfail";
-		$param = "status_$status";
-		$params = $this->get("params");
-		if ($params["sub$param"] && $this->xlite->AOMEnabled) {
-			return $params["sub$param"];
-		} elseif ($params[$param]) {
-			return $params[$param];
-		} else {
-			return "Q";
-		}
+		return $this->getOrderStatus('success_3dfail');
 	} // }}}
 
 	function handleConfigRequest() // {{{

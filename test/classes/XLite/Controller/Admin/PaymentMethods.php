@@ -47,24 +47,23 @@
 *
 */
 class XLite_Controller_Admin_PaymentMethods extends XLite_Controller_Admin_Abstract
-{	
-	public $configurableMethods;
+{
+	protected $configurableMethods = null;
 
 	function hasConfigurableMethods()
 	{
-		if (isset($this->configurableMethods)) {
-			return $this->configurableMethods;
-		}
+		if (is_null($this->configurableMethods)) {
 
-		$this->configurableMethods = false;
-	    $pm = new XLite_Model_PaymentMethod();
-	    $methods = $pm->readAll();
-	    foreach($methods as $pm) {
-	    	if (!is_null($pm->get("configurationTemplate"))) {
-	    		$this->configurableMethods = true;
-	    		break;
-	    	}
-	    }
+			$this->configurableMethods = false;
+			$pm = new XLite_Model_PaymentMethod();
+			
+			foreach($pm->readAll() as $pm) {
+				if (!is_null($pm->configurationTemplate)) {
+					$this->configurableMethods = true;
+					break;
+				}
+			}
+		}
 
 	    return $this->configurableMethods;
 	}

@@ -38,7 +38,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_ProtxForm_Model_PaymentMethod_Protxform extends XLite_Model_PaymentMethod_CreditCard
+class XLite_Module_ProtxForm_Model_PaymentMethod_ProtxformCc extends XLite_Model_PaymentMethod_CreditCard
 {	
     public $processorName = "ProtxForm";	
 	public $hasConfigurationForm = true;	

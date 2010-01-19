@@ -109,9 +109,7 @@ class XLite_Base
             $func = 'is' . $name;
             return $this->$func();
         }
-        if (isset($this->$name)) {
-            return $this->$name;
-        }
+		return $this->$name;
 		}
 
         return null;
@@ -155,28 +153,21 @@ class XLite_Base
 
 	function call($name) // {{{
     {
+		$obj = $this;
+
         if (strpos($name, '.')) {
-            $obj = $this;
+
             $names = explode('.', $name);
-            $last = array_pop($names);
+            $last  = array_pop($names);
+
             foreach ($names as $n) {
-                $obj = $obj->get($n);
-                if (is_null($obj)) {
+				if (is_null($obj = $obj->get($n))) {
                     return null;
                 }
             }
-            if (method_exists($obj, $last)) {
-                $params = func_get_args();
-                array_shift($params);
-                return call_user_func_array(array($obj, $last), $params);
-            }
-            return null;
-        } else if (method_exists($this, $name)){
-            $params = func_get_args();
-            array_shift($params);
-            return call_user_func_array(array($this, $name), $params);
         }
-        return null;
+
+        return call_user_func_array(array($obj, $name), array_shift(func_get_args()));;
     } // }}}
 
 	/**
@@ -194,5 +185,16 @@ class XLite_Base
             $this->set($key, $value);
         }
     }
+
+	public function __get($name)
+	{
+		return null;
+	}
+
+	public function __call($method, array $args = array())
+    {
+        return null;
+    }
+
 }
 

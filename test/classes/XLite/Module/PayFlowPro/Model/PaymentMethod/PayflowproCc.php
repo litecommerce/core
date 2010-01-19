@@ -45,7 +45,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_PayFlowPro_Model_PaymentMethod_PfproCc extends XLite_Model_PaymentMethod_CreditCard
+class XLite_Module_PayFlowPro_Model_PaymentMethod_PayflowproCc extends XLite_Model_PaymentMethod_CreditCard
 {	
 	public $configurationTemplate = "modules/PayFlowPro/config.tpl";	
     public $hasConfigurationForm = true;	

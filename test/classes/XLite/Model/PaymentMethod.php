@@ -90,6 +90,32 @@ class XLite_Model_PaymentMethod extends XLite_Model_Abstract
 		'MoneyOrdering' => 'Model_PaymentMethod_Offline',
 	);
 
+	/**
+	 * Handler to use/iterate on methods 
+	 * 
+	 * @var    array
+	 * @access protected
+	 * @since  3.0
+	 */
+	protected $handler = array(
+        'class_name'   => null,
+        'class_object' => null,
+    );
+
+	protected function getHandler($name = null)
+	{
+		if (is_null($name)) {
+			$name = $this->get('payment_method');
+		}
+
+		if (is_null($this->handler['class_object']) || $name != $this->handler['class_name']) {
+			$this->handler['class_object'] = self::factory($name);
+			$this->handler['class_name']   = $name;
+		}
+
+		return $this->handler['class_object'];
+	}
+
     /**
      * Define available methods range 
      * 
@@ -224,9 +250,25 @@ class XLite_Model_PaymentMethod extends XLite_Model_Abstract
 	 */
 	public static function factory($name)
 	{
+		if (empty(self::$registeredPaymentMethods[$name])) {
+			die ('Payment method "' . $name . '" is not registered');
+		}
+
 		$className = 'XLite_' . self::$registeredPaymentMethods[$name];
 
 		return new $className($name);
 	}
+
+	public function __get($name)
+	{
+		return property_exists($handler = $this->getHandler(), $name) ?
+			$handler->$name : parent::__get($name);
+	}
+
+	public function __call($method, array $args = array())
+    {
+        return method_exists($handler = $this->getHandler(), $method) ?
+			call_user_func_array(array($handler, $method), $args) : parent::__call($method, $args);
+    }
 }
 

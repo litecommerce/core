@@ -768,7 +768,12 @@ class Decorator
             $this->classesInfo[$currentClass][self::INFO_EXTENDS] = $rootClass;
             $this->classesInfo[$class][self::INFO_IS_ROOT_CLASS] = true;
 
-            // Assign new (reserved) name to root class and save other info
+			// Wrong class name
+			if (!isset($this->classesInfo[$class][self::INFO_FILE])) {
+				die ('Decorator: undefined class - "' . $class . '"');
+			}
+
+			// Assign new (reserved) name to root class and save other info
             $this->classesInfo[$rootClass] = array(
                 self::INFO_FILE         => $this->classesInfo[$class][self::INFO_FILE],
                 self::INFO_CLASS        => $rootClass,
