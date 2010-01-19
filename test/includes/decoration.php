@@ -39,6 +39,15 @@ class Decorator
     const DECORATOR_IDENTIFIER = '____DECORATOR____';
 
 
+	/**
+	 * Current value of the "max_execution_time" INI setting
+	 * 
+	 * @var    mixed
+	 * @access protected
+	 * @since  3.0
+	 */
+	protected $maxExecutionTime = null;
+
     /**
      * Tags in decorator comments 
      * 
@@ -115,6 +124,53 @@ class Decorator
      */
     protected $modulePriorities = null;
 
+
+	/**
+	 * Return current value of the "max_execution_time" INI setting 
+	 * 
+	 * @return int|string
+	 * @access protected
+	 * @since  3.0
+	 */
+	protected function getMaxExecutionTime()
+	{
+		if (is_null($this->maxExecutionTime)) {
+			$this->maxExecutionTime = @ini_get('max_execution_time');
+		}
+
+		return $this->maxExecutionTime;
+	}
+
+	/**
+     * Set value for the "max_execution_time" INI setting
+     *
+     * @return void
+     * @access protected
+     * @since  3.0
+     */
+    protected function setMaxExecutionTime()
+    {
+		// Save original value
+		$this->getMaxExecutionTime();
+
+		@set_time_limit(180);
+	}
+
+	/**
+     * Restore original value of the "max_execution_time" INI setting
+     *
+     * @return void
+     * @access protected
+     * @since  3.0
+     */
+    protected function restoreMaxExecutionTime()
+    {
+		$time = $this->getMaxExecutionTime();
+
+		if (!empty($time)) {
+			@set_time_limit($time);
+		}
+    }
 
     /**
      * Return class name by class file path 
@@ -833,6 +889,8 @@ class Decorator
     {
         if ($this->isNeedRebuild() || $force) {
 
+			$this->setMaxExecutionTime();
+
 			// Remove old files
 			$this->cleanUpCache();
 
@@ -851,6 +909,8 @@ class Decorator
             foreach ($this->classesInfo as $class => $info) {
                 $this->writeClassFile($class, $info);
             }
+
+			$this->restoreMaxExecutionTime();
         }
     }
 

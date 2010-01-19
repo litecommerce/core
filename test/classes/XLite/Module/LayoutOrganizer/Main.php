@@ -95,25 +95,11 @@ class XLite_Module_LayoutOrganizer_Main extends XLite_Module_Abstract
      */
     public function init()
     {
-
         parent::init();
-        // admin frontend - specific class decorations
-        if ($this->xlite->is("adminZone")) {
-		}
 
-		if ($this->xlite->mm->get("activeModules.ShowcaseOrganizer")) {
-			$modules = $this->xlite->mm->get("modules");
-			$ids = array();
-        	foreach ($modules as $module) {
-        		if ($module->get("name") != "ShowcaseOrganizer" && $module->get("enabled") ) {
-        			$ids[] = $module->get("module_id");
-        		}
-			}
-			$this->xlite->mm->updateModules($ids);
-			$this->session->set("ShowcaseOrganizerOff", true);
-		}
+		$this->disableMutuallyModule('ShowcaseOrganizer');
 
-    	$this->xlite->set("LayoutOrganizerEnabled", true);
+    	XLite::getInstance()->set("LayoutOrganizerEnabled", true);
     }
 }
 

@@ -53,7 +53,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Product extends XLite_Co
 				// recover product_id if unset by read() method
 				$this->product->set("product_id", $_REQUEST['product_id']);
 			}
-			if ($_REQUEST['action'] != "buynow") {
+			if (!isset($_REQUEST['action']) || 'buynow' != $_REQUEST['action']) {
 				// don't show the product if it is available for direct sale only
 				$this->product->assignDirectSaleAvailable(false);
 				$this->product = null;

@@ -49,6 +49,19 @@ abstract class XLite_Module_Abstract extends XLite_Model_Module
 		return $shipping->registerShippingModule($name, $class);
 	}
 
+	protected function disableMutuallyModule($moduleName, $sessionParam = null)
+    {
+        if (XLite_Model_ModulesManager::getInstance()->isActiveModule($moduleName)) {
+
+            XLite_Model_ModulesManager::getInstance()->changeModuleStatus($moduleName, false, true);
+
+            if (is_null($sessionParam)) {
+                $sessionParam = $moduleName . 'Off';
+            }
+            XLite_Model_Session::getInstance()->set($sessionParam, true);
+        }
+    }
+
 
 	/**
      * Method to initialize concrete module instance

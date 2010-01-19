@@ -127,29 +127,6 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
 	}
 	
 	/**
-	 * Iterate on the "Modules" directory
-	 * 
-	 * @param array $callback callback function to apply for each module
-	 *  
-	 * @return array
-	 * @access protected
-	 * @since  1.0
-	 */
-	protected function iterateOverModules(array $callback)
-	{
-		$result = array();
-
-		foreach (new DirectoryIterator(LC_MODULES_DIR) as $fileInfo) {
-			if ($fileInfo->isDir() && !$fileInfo->isDot()) {
-				$name = $fileInfo->getFilename();
-				$result[$name] = call_user_func_array($callback, array($name));
-			}
-		}
-
-		return $result;
-	}
-
-	/**
 	 * Run the "init" function for all active modules
 	 * 
 	 * @return void
@@ -162,6 +139,7 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
 			$className = 'XLite_Module_' . $module->get('name') . '_Main';
 			$moduleObject = new $className();
 			$moduleObject->init();
+			$moduleObject = null;
 		}
 	}
 
@@ -210,9 +188,8 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
 		return $this->getModule()->findAll(is_null($type) ? '' : 'type = \'' . $type . '\'');
 	}
 
-	public function getActiveModules()
+	public function getActiveModules($moduleName = null)
 	{
-		// FIXME
 		if (is_null($this->activeModules)) {
 			$this->activeModules = array();
 			foreach ($this->getModule()->findAll('enabled = \'1\'') as $module) {
@@ -220,7 +197,7 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
 			}
 		}
 
-		return $this->activeModules;
+		return is_null($moduleName) ? $this->activeModules : isset($this->activeModules[$moduleName]);
 	}
 
 	public function getActiveModulesNumber()
@@ -228,27 +205,39 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
 		return count($this->getActiveModules());
 	}
 
-	public function changeModuleStatus(XLite_Model_Module $module, $status)
+	public function rebuildCache()
+	{
+		$decorator = new Decorator();
+        $decorator->rebuildCache(true);
+        $decorator = null;
+	}
+
+	public function changeModuleStatus($module, $status, $rebuildCach = false)
     {
-        return $status ? $module->enable() : $module->disable();
+		if (!($module instanceof XLite_Model_Module)) {
+			$module = new XLite_Model_Module($module);
+		}
+
+        $status ? $module->enable() : $module->disable();
+		$module->update();
+
+		if ($rebuildCach) {
+			$this->rebuildCache();
+		}
     }
 
 	public function updateModules(array $moduleIDs)
     {
         foreach ($this->getModules() as $module) {
 			$this->changeModuleStatus($module, in_array($module->get("module_id"), $moduleIDs));
-            $module->update();
         }
 
-		$decorator = new Decorator();
-		$decorator->rebuildCache(true);
+		$this->rebuildCache();
     }
 
 	public function isActiveModule($moduleName)
 	{
-		$activeModules = $this->getActiveModules();
-
-		return !empty($activeModules[$moduleName]);
+		return $this->getActiveModules($moduleName);
 	}
 }
 

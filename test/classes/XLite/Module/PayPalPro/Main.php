@@ -129,17 +129,7 @@ class XLite_Module_PayPalPro_Main extends XLite_Module_Abstract
            		break;
        	}
 
-        if ($this->xlite->mm->get('activeModules.PayPal')) {
-            $modules = $this->xlite->mm->get('modules');
-            $ids = array();
-            foreach ($modules as $module) {
-                if ($module->get('name') != 'PayPal' && $module->get('enabled') ) {
-                    $ids[] = $module->get('module_id');
-                }
-            }
-            $this->xlite->mm->updateModules($ids);
-            $this->session->set('PayPalOff', true);
-        }
+		$this->disableMutuallyModule('PayPal');
 
         $this->xlite->set('PayPalProEnabled', true);
         $this->xlite->set('PayPalProSolution',$pm->get('params.solution'));

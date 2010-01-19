@@ -93,22 +93,6 @@ class XLite_Module_ShowcaseOrganizer_Main extends XLite_Module_Abstract
     {
         return true;
     }	
-	public $isFree = true;
-
-    /**
-     * Perform some actions at startup
-     *
-     * @return void
-     * @access public
-     * @since  3.0
-     */
-    public function init()
-    {
-        parent::init();
-        if ($this->xlite->is("adminZone")) {
-        }
-
-    }
 }
 
 // WARNING :

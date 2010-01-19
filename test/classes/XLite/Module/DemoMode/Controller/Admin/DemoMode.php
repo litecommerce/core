@@ -86,9 +86,9 @@ class XLite_Module_DemoMode_Controller_Admin_DemoMode extends XLite_Controller_A
                     break;
                 }
             }
-        }   
-		$this->xlite->mm->updateModules($_REQUEST["active_modules"]);
-
+        }
+ 
+		XLite_Model_ModulesManager::getInstance()->updateModules($_REQUEST["active_modules"]);
 
         if (isset($_REQUEST["forwardUrl"])) {
 			$forward = "";

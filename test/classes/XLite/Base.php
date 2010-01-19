@@ -193,7 +193,7 @@ class XLite_Base
 
 	public function __call($method, array $args = array())
     {
-        return null;
+        $this->_die('Trying to call undefined class method; class - "' . get_class($this) . '", function - "' . $method . '"');
     }
 
 }

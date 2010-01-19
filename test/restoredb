@@ -30,34 +30,11 @@ $modules = opendir("classes/XLite/Module");
 while (($dir = readdir($modules)) !== false) {
 	if ($dir{0}!='.' && is_dir("classes/XLite/Module/$dir")) {
 
-		$file = 'classes/XLite/Module/' . $dir . '/Main.php';
+		require_once 'classes/XLite/Module/' . $dir . '/Main.php';
 
-		// FIXME - remove
-		if (!file_exists($file)) continue;
+		mysql_query('REPLACE INTO xlite_modules SET name = \'' . $dir . '\', type = \'' . call_user_func(array('XLite_Module_' . $dir . '_Main', 'getType')) . '\'');
 
-		require_once $file;
-		$moduleName = 'XLite_Module_' . $dir . '_Main';
-		$module = new $moduleName();
-
-		$list = array(
-			'name'         => $dir,
-			'description'  => $module->getDescription(),
-			'enabled'      => $module->isEnabled(),
-			'dependencies' => implode(',', $module->getDependencies()),
-			'version'      => $module->getVersion(),
-			'type'         => $module->getType(),
-		);
-
-		$queryParams = array();
-		foreach ($list as $key => $value) {
-			$queryParams[] = $key . ' = \'' . $value . '\'';
-		}
-
-		mysql_query("REPLACE INTO xlite_modules SET " . join(',', $queryParams));
-		$sqlFile = "classes/XLite/Module/$dir/install.sql";
-		if (file_exists($sqlFile)) {
-			query_upload($sqlFile, $connection, true);
-		}
+		!file_exists($sqlFile = 'classes/XLite/Module/' . $dir . '/install.sql') || query_upload($sqlFile, $connection, true);
 	}
 }
 closedir($modules);

@@ -59,7 +59,7 @@ class XLite_Module_Protx_Main extends XLite_Module_Abstract
      */
     public static function getSettingsForm()
 	{
-		return "admin.php?target=payment_method&payment_method=protxdirectCc";
+		return 'admin.php?target=payment_method&payment_method=protxdirectCc';
 	}
 
     /**
@@ -73,35 +73,23 @@ class XLite_Module_Protx_Main extends XLite_Module_Abstract
     {
         parent::init();
 
-        $pm = new XLite_Model_PaymentMethod();
-		$pm->find('payment_method = \'protxdirect_cc\'');
+        $pm = new XLite_Model_PaymentMethod('protxdirect_cc');
 
-		switch($pm->get("params.solution")) {
+		switch($pm->get('params.solution')) {
 
-			case "form":
+			case 'form':
 				$this->registerPaymentMethod('protxform_cc');
 				break;
 
-			case "direct":
+			case 'direct':
 			default:
 				$this->registerPaymentMethod('protxdirect_cc');
 				break;
 		}
 
-		if ($this->xlite->mm->get("activeModules.ProtxDirect")) {
-			$modules = $this->xlite->mm->get("modules");
-			$ids = array();
-			foreach ($modules as $module) {
-				if ($module->get("name") != "ProtxDirect" && $module->get("enabled") ) {
-					$ids[] = $module->get("module_id");
-				}
-			}
+		$this->disableMutuallyModule('ProtxDirect');
 
-			$this->xlite->mm->updateModules($ids);
-			$this->session->set("ProtxDirectOff", true);
-		}
-
-		$this->xlite->set("ProtxEnabled", true);
+		$this->xlite->set('ProtxEnabled', true);
     }
 }
 
