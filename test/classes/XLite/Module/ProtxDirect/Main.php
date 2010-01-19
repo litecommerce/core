@@ -83,30 +83,44 @@ class XLite_Module_ProtxDirect_Main extends XLite_Module_Abstract
         return 'Protx VSP Direct credit card payment processor';
     }	
 
-	public $minVer = "2.0";	
-	public $showSettingsForm = true;
+    /**
+     * Determines if we need to show settings form link
+     *
+     * @return bool
+     * @access public
+     * @since  3.0
+     */
+    public static function showSettingsForm()
+    {
+        return true;
+    }
 
-	function getSettingsForm()
+    /**
+     * Return link to settings form
+     *
+     * @return string
+     * @access public
+     * @since  3.0
+     */
+    public static function getSettingsForm()
 	{
 		return "admin.php?target=payment_method&payment_method=protxdirect_cc";
 	}
 
-    function init()
+    /**
+     * Perform some actions at startup
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function init()
     {
         
         parent::init();
         
         $this->registerPaymentMethod('protxdirect_cc');
     }
-
-    function uninstall()
-    {
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
-
-        parent::uninstall();
-    }
-
 }
 
 // WARNING :

@@ -37,11 +37,26 @@ class XLite_Module_Egoods_Main extends XLite_Module_Abstract
     {
         return 'Support for downloadable product sales (e-books, audio and video files, software and PIN codes)';
     }	
+    /**
+     * Determines if we need to show settings form link
+     *
+     * @return bool
+     * @access public
+     * @since  3.0
+     */
+    public static function showSettingsForm()
+    {
+        return true;
+    }	
 
-	public $showSettingsForm = true;	
-	public $minVer = "2.0";
-	
-    function init()
+    /**
+     * Perform some actions at startup
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function init()
     {
         parent::init();
 

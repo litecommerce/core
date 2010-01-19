@@ -83,16 +83,6 @@ class XLite_Module_XCartImport_Main extends XLite_Module_Abstract
     }	
 
     public $isFree = true;	
-    public $minVer = "2.0";
-
-    function uninstall()
-    {
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
-
-        parent::uninstall();
-    }
-
 }
 
 // WARNING :

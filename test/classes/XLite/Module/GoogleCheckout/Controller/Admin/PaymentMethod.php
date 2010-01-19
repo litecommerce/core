@@ -89,10 +89,7 @@ class XLite_Module_GoogleCheckout_Controller_Admin_PaymentMethod extends XLite_C
 
 	function getAccessLevel()
     {
-        if ($this->action == "callback") {
-            return 0;
-        }
-        return parent::getAccessLevel();
+        return (isset($this->action) && 'callback' == $this->action) ? 0 : parent::getAccessLevel();
     }
 
 	function checkDisableCustomerNotif($value)

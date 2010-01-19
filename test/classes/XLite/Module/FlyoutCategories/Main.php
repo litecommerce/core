@@ -76,10 +76,26 @@ class XLite_Module_FlyoutCategories_Main extends XLite_Module_Abstract
         return 'Allows to change the layout of your categories pages instantly';
     }	
 
-	public $minVer = "2.1.2";	
-    public $showSettingsForm = true;
+    /**
+     * Determines if we need to show settings form link
+     *
+     * @return bool
+     * @access public
+     * @since  3.0
+     */
+    public static function showSettingsForm()
+    {
+        return true;
+    }
 
-    function init()
+    /**
+     * Perform some actions at startup
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function init()
     {
         parent::init();
 
@@ -92,15 +108,6 @@ class XLite_Module_FlyoutCategories_Main extends XLite_Module_Abstract
         $scheme = new XLite_Module_FlyoutCategories_Model_FCategoriesScheme($this->get("config.FlyoutCategories.scheme"));
         $this->xlite->set('FlyoutCategoriesCssPath', 'styles/'.$scheme->get('options.color.value').'.css');
 		$this->xlite->set("FlyoutCategoriesEnabled", true);
-    }
-
-
-    function uninstall()
-    {
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
-
-        parent::uninstall();
     }
 }
 

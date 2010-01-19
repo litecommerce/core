@@ -78,15 +78,39 @@ class XLite_Module_AdvancedSearch_Main extends XLite_Module_Abstract
     }	
 
     public $isFree = true;	
-	public $minVer = "2.1";	
-	public $showSettingsForm = true;	
 
-	function getSettingsForm() // {{{
+    /**
+     * Determines if we need to show settings form link
+     *
+     * @return bool
+     * @access public
+     * @since  3.0
+     */
+    public static function showSettingsForm()
+    {
+        return true;
+    }	
+
+    /**
+     * Return link to settings form
+     *
+     * @return string
+     * @access public
+     * @since  3.0
+     */
+    public static function getSettingsForm() // {{{
 	{
 		return "admin.php?target=advanced_search";
 	} // }}}
-		
-	function init() // {{{
+
+    /**
+     * Perform some actions at startup
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function init() // {{{
 	{
 		parent::init();
         $this->xlite->set("AdvancedSearchEnabled", true);

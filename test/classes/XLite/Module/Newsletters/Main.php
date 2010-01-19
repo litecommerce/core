@@ -81,10 +81,26 @@ class XLite_Module_Newsletters_Main extends XLite_Module_Abstract
         return 'This module allows you to create and manage news lists and send newsletters';
     }	
 
-    public $minVer = "2.1.0";	
-    public $showSettingsForm = true;
+    /**
+     * Determines if we need to show settings form link
+     *
+     * @return bool
+     * @access public
+     * @since  3.0
+     */
+    public static function showSettingsForm()
+    {
+        return true;
+    }
 
-    function init()
+    /**
+     * Perform some actions at startup
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function init()
     {
         parent::init();
 
@@ -96,15 +112,6 @@ class XLite_Module_Newsletters_Main extends XLite_Module_Abstract
         if ($this->xlite->is("adminZone")) {
         }
     }
-
-    function uninstall()
-    {
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
-
-        parent::uninstall();
-    }
-
 }
 
 // WARNING :

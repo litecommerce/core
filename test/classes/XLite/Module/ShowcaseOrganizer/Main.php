@@ -82,26 +82,33 @@ class XLite_Module_ShowcaseOrganizer_Main extends XLite_Module_Abstract
         return 'Allows to configure product list look&feel';
     }	
 
-    public $minVer = "2.0";	
-	public $showSettingsForm = true;	
+    /**
+     * Determines if we need to show settings form link
+     *
+     * @return bool
+     * @access public
+     * @since  3.0
+     */
+    public static function showSettingsForm()
+    {
+        return true;
+    }	
 	public $isFree = true;
 
-    function init()
+    /**
+     * Perform some actions at startup
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function init()
     {
         parent::init();
         if ($this->xlite->is("adminZone")) {
         }
 
     }
-
-    function uninstall()
-    {
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
-
-        parent::uninstall();
-    }
-
 }
 
 // WARNING :

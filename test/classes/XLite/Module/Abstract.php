@@ -117,7 +117,7 @@ abstract class XLite_Module_Abstract extends XLite_Model_Module
 	 * @access public
 	 * @since  3.0
 	 */
-	public function getSettingsForm()
+	public static function getSettingsForm()
     {
 		return null;
     }

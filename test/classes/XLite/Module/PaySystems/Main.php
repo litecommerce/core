@@ -82,9 +82,14 @@ class XLite_Module_PaySystems_Main extends XLite_Module_Abstract
         return 'PaySystems Payment Gateway';
     }	
 
-	public $minVer = "2.0";
-
-    function init()
+    /**
+     * Perform some actions at startup
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function init()
     {
         
         parent::init();
@@ -92,15 +97,6 @@ class XLite_Module_PaySystems_Main extends XLite_Module_Abstract
 	    // plug in  kernel/PaymentMethod/pay_systems_web_cc.php module
         $this->registerPaymentMethod('pay_systems_web_cc');
     }
-
-    function uninstall()
-    {
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
-
-        parent::uninstall();
-    }
-
 }
 
 // WARNING :

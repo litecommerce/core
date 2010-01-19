@@ -82,15 +82,38 @@ class XLite_Module_HSBC_Main extends XLite_Module_Abstract
         return 'HSBC Payment Gateway';
     }	
 
-	public $minVer = "2.0";	 
-	public $showSettingsForm = true;
+    /**
+     * Determines if we need to show settings form link
+     *
+     * @return bool
+     * @access public
+     * @since  3.0
+     */
+    public static function showSettingsForm()
+    {
+        return true;
+    }
 
-    function getSettingsForm() // {{{ 
+    /**
+     * Return link to settings form
+     *
+     * @return string
+     * @access public
+     * @since  3.0
+     */
+    public static function getSettingsForm() // {{{ 
     {
         return "admin.php?target=payment_method&payment_method=cc_hsbc";
     } // }}}
 
-    function init()
+    /**
+     * Perform some actions at startup
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function init()
     {
         
         parent::init();
@@ -98,15 +121,6 @@ class XLite_Module_HSBC_Main extends XLite_Module_Abstract
 	    // plug in  kernel/PaymentMethod/cc_hsbc.php module
         $this->registerPaymentMethod('cc_hsbc');
     }
- 
-    function uninstall()
-    {
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
-
-        parent::uninstall();
-    }
-   
 }
 
 // WARNING :

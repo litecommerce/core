@@ -75,40 +75,59 @@ class XLite_Module_PayPalPro_Main extends XLite_Module_Abstract
     {
         return 'This module introduces support for several PayPal website payment solutions';
     }	
+    /**
+     * Determines if we need to show settings form link
+     *
+     * @return bool
+     * @access public
+     * @since  3.0
+     */
+    public static function showSettingsForm()
+    {
+        return true;
+    }
 
-	public $showSettingsForm = true;
-
-	function getSettingsForm() // {{{
+    /**
+     * Return link to settings form
+     *
+     * @return string
+     * @access public
+     * @since  3.0
+     */
+    public static function getSettingsForm() // {{{
     {
         return 'admin.php?target=payment_method&payment_method=paypalpro';
 
     } // }}}
 
-    function init() // {{{
+    /**
+     * Perform some actions at startup
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function init() // {{{
     {
         parent::init();
 
-		$pm = new XLite_Model_PaymentMethod();
+		$pm = new XLite_Model_PaymentMethod('paypalpro');
 
-		if ($pm->find('payment_method = \'paypalpro\'')) {
+        switch($pm->get('params.solution')) {
 
-	        switch($pm->get('params.solution')) {
+            case 'standard':
+   	            $this->registerPaymentMethod('paypalpro');
+				XLite_Model_PaymentMethod::factory('paypalpro')->checkServiceURL();
+           		break;
 
-	            case 'standard':
-    	            $this->registerPaymentMethod('paypalpro');
-					XLite_Model_PaymentMethod::factory('paypalpro')->checkServiceURL();
-            		break;
+            case 'pro':
+   	            $this->registerPaymentMethod('paypalpro');
+				// DO NOT add "break" here
 
-	            case 'pro':
-    	            $this->registerPaymentMethod('paypalpro');
-        	        $this->registerPaymentMethod('paypalpro_express');
-            		break;
-
-	            case 'express':
-    	            $this->registerPaymentMethod('paypalpro_express');
-        		    break;
-        	}
-		}
+			case 'express':
+       	        $this->registerPaymentMethod('paypalpro_express');
+           		break;
+       	}
 
         if ($this->xlite->mm->get('activeModules.PayPal')) {
             $modules = $this->xlite->mm->get('modules');
@@ -125,7 +144,7 @@ class XLite_Module_PayPalPro_Main extends XLite_Module_Abstract
         $this->xlite->set('PayPalProEnabled', true);
         $this->xlite->set('PayPalProSolution',$pm->get('params.solution'));
 
-        if ('standard' !== $pm->get('params.solution') && XLite_Model_PaymentMethod::isRegisteredMethod('paypalpro_express')) {
+        if ('standard' !== $pm->get('params.solution')) {
 			XLite::getInstance()->set('PayPalProExpressEnabled', XLite_Model_PaymentMethod::factory('paypalpro_express')->get('enabled'));
         }
     }

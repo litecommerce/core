@@ -82,10 +82,26 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
         return 'ProductAdviser add-on introduces multiple cross-selling features and a customer notification mechanism';
     }	
 
-	public $minVer = '2.1.2';	
-    public $showSettingsForm = true;
+    /**
+     * Determines if we need to show settings form link
+     *
+     * @return bool
+     * @access public
+     * @since  3.0
+     */
+    public static function showSettingsForm()
+    {
+        return true;
+    }
 
-	function init() 
+    /**
+     * Perform some actions at startup
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function init() 
 	{
 		parent::init();
 
@@ -167,14 +183,6 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
 			$cfg = new XLite_Model_Config();
             $cfg->createOption("ProductAdviser", $option, $number);
 		}
-	}
-
-	function uninstall()
-	{
-		func_cleanup_cache("skins");
-		func_cleanup_cache("classes");
-
-		parent::uninstall();
 	}
 }
 

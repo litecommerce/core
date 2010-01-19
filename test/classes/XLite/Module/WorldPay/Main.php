@@ -82,30 +82,44 @@ class XLite_Module_WorldPay_Main extends XLite_Module_Abstract
         return 'RBS WorldPay payment gateway';
     }	
 
-	public $minVer = "2.0";	
-	public $showSettingsForm = true;
+    /**
+     * Determines if we need to show settings form link
+     *
+     * @return bool
+     * @access public
+     * @since  3.0
+     */
+    public static function showSettingsForm()
+    {
+        return true;
+    }
 
-	function getSettingsForm()
+    /**
+     * Return link to settings form
+     *
+     * @return string
+     * @access public
+     * @since  3.0
+     */
+    public static function getSettingsForm()
 	{
 		return "admin.php?target=payment_method&payment_method=worldpay";
 	}
-	
-    function init()
+
+    /**
+     * Perform some actions at startup
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function init()
     {
         parent::init();
         
 	    // plug in  kernel/PaymentMethod/worldpay.php module
         $this->registerPaymentMethod('worldpay');
     }
-
-    function uninstall()
-    {
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
-
-        parent::uninstall();
-    }
-
 }
 
 // WARNING :

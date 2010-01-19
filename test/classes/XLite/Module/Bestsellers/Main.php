@@ -83,15 +83,17 @@ class XLite_Module_Bestsellers_Main extends XLite_Module_Abstract
     }	
 
     public $isFree = true;	
-    public $minVer = "2.0";	
-    public $showSettingsForm = true;
-	
-    function uninstall()
-    {
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
 
-        parent::uninstall();
+    /**
+     * Determines if we need to show settings form link
+     *
+     * @return bool
+     * @access public
+     * @since  3.0
+     */
+    public static function showSettingsForm()
+    {
+        return true;
     }
 }
 

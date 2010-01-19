@@ -83,8 +83,17 @@ class XLite_Module_FeaturedProducts_Main extends XLite_Module_Abstract
     {
         return 'This module enables featured products list';
     }
-
-    public $showSettingsForm = true;
+    /**
+     * Determines if we need to show settings form link
+     *
+     * @return bool
+     * @access public
+     * @since  3.0
+     */
+    public static function showSettingsForm()
+    {
+        return true;
+    }
 }
 
 // WARNING :

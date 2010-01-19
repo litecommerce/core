@@ -82,23 +82,19 @@ class XLite_Module_LinkPoint_Main extends XLite_Module_Abstract
         return 'LinkPoint credit card payment processor';
     }	
 
-	public $minVer = "2.0";
-
-    function init()
+    /**
+     * Perform some actions at startup
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function init()
     {
         parent::init();
         
         $this->registerPaymentMethod('linkpoint_cc');
     }
-
-    function uninstall()
-    {
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
-
-        parent::uninstall();
-    }
-
 }
 
     function lp_func_https_request ($method, $url, $vars, $cert) {

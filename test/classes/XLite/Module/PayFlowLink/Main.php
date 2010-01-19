@@ -78,58 +78,43 @@ class XLite_Module_PayFlowLink_Main extends XLite_Module_Abstract
         return 'PayFlow Link credit card payment processor';
     }	
 
-    public $minVer = "2.0";	
-    public $showSettingsForm = true;
+    /**
+     * Determines if we need to show settings form link
+     *
+     * @return bool
+     * @access public
+     * @since  3.0
+     */
+    public static function showSettingsForm()
+    {
+        return true;
+    }
 
-    function getSettingsForm()
+    /**
+     * Return link to settings form
+     *
+     * @return string
+     * @access public
+     * @since  3.0
+     */
+    public static function getSettingsForm()
     {
        return "admin.php?target=payment_method&payment_method=payflowlink";
     }
 
-    function init()
+    /**
+     * Perform some actions at startup
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function init()
     {
         parent::init();
 
         
         $this->registerPaymentMethod('payflowlink');
-    }
-
-    function uninstall()
-    {
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
-
-        parent::uninstall();
-    }
-
-    function isOldKernel()
-    {
-    	if (!isset($this->_kernelNonSuppVersion)) {
-    		$configVersion = $this->config->get("Version.version");
-    		$configVersion = str_replace(" build ", ".", $configVersion);
-            $this->_kernelNonSuppVersion = version_compare("2.2.21", $configVersion, ">=");
-    	}
-
-    	return $this->_kernelNonSuppVersion;
-    }
-    
-    function get($name)
-    {
-		$value = parent::get($name);
-    	if ($name == "type" && $this->isOldKernel()) {
-    		$value = MODULE_COMMERCIAL_PAYMENT;
-    	}
-
-        return $value;
-    }
-
-    function set($name, $value)
-    {
-        if ($name == "type" && $this->isOldKernel()) {
-        	$value = MODULE_COMMERCIAL_PAYMENT;
-        }
-
-        parent::set($name, $value);
     }
 }
 

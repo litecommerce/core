@@ -74,10 +74,26 @@ class XLite_Module_LayoutOrganizer_Main extends XLite_Module_Abstract
         return 'This module allows you to flexibly customize the look and feel of your store catalog';
     }	
 
-	public $minVer = '2.1.1';	
-    public $showSettingsForm = true;
+    /**
+     * Determines if we need to show settings form link
+     *
+     * @return bool
+     * @access public
+     * @since  3.0
+     */
+    public static function showSettingsForm()
+    {
+        return true;
+    }
 
-    function init()
+    /**
+     * Perform some actions at startup
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function init()
     {
 
         parent::init();
@@ -98,14 +114,6 @@ class XLite_Module_LayoutOrganizer_Main extends XLite_Module_Abstract
 		}
 
     	$this->xlite->set("LayoutOrganizerEnabled", true);
-    }
-
-    function uninstall()
-    {
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
-
-        parent::uninstall();
     }
 }
 

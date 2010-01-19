@@ -76,15 +76,38 @@ class XLite_Module_PHPCyberSource_Main extends XLite_Module_Abstract
     {
         return 'CyberSource credit card payment processor [PHP API]';
     }	
+    /**
+     * Determines if we need to show settings form link
+     *
+     * @return bool
+     * @access public
+     * @since  3.0
+     */
+    public static function showSettingsForm()
+    {
+        return true;
+    }
 
-	public $showSettingsForm = true;
-
-	function getSettingsForm()
+    /**
+     * Return link to settings form
+     *
+     * @return string
+     * @access public
+     * @since  3.0
+     */
+    public static function getSettingsForm()
     {
         return "admin.php?target=payment_method&payment_method=cybersource_cc";
     }
 
-    function init()
+    /**
+     * Perform some actions at startup
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function init()
     {
 		parent::init();
 

@@ -76,29 +76,43 @@ class XLite_Module_Nochex_Main extends XLite_Module_Abstract
         return 'Nochex payment gateway';
     }	
 
-	
-	public $minVer = "2.0";	
-	public $showSettingsForm = true;
-    
-    function getSettingsForm()
+    /**
+     * Determines if we need to show settings form link
+     *
+     * @return bool
+     * @access public
+     * @since  3.0
+     */
+    public static function showSettingsForm()
+    {
+        return true;
+    }
+
+    /**
+     * Return link to settings form
+     *
+     * @return string
+     * @access public
+     * @since  3.0
+     */
+    public static function getSettingsForm()
     {
        return "admin.php?target=payment_method&payment_method=nochex";
     }
 
-	function init()
+    /**
+     * Perform some actions at startup
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function init()
     {
         parent::init();
         // plug in the kernel/PaymentMethod/nochex.php module
         
         $this->registerPaymentMethod('nochex');
-    }
-
-    function uninstall()
-    {
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
-
-        parent::uninstall();
     }
 }
 

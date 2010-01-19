@@ -76,10 +76,26 @@ class XLite_Module_AOM_Main extends XLite_Module_Abstract
     {
         return 'This module provides your online store with an advanced order management tool';
     }	
+    /**
+     * Determines if we need to show settings form link
+     *
+     * @return bool
+     * @access public
+     * @since  3.0
+     */
+    public static function showSettingsForm()
+    {
+        return true;
+    }
 
-	public $showSettingsForm = true;
-
-	function init() // {{{
+    /**
+     * Perform some actions at startup
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function init() // {{{
     {
         parent::init();
 

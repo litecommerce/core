@@ -143,7 +143,7 @@ class XLite_Model_Module extends XLite_Model_Abstract
      */
     public function getSettingsFormLink()
     {
-		return /*is_null($link = $this->__call('showSettingsForm')) ?*/ 'admin.php?target=module&page=' . $this->get('name')/* : $link*/;
+		return is_null($link = $this->__call('getSettingsForm')) ? 'admin.php?target=module&page=' . $this->get('name') : $link;
     }
 
 	public function __call($method, array $args = array())

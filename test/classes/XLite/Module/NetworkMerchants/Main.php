@@ -77,15 +77,38 @@ class XLite_Module_NetworkMerchants_Main extends XLite_Module_Abstract
         return 'NetworkMerchants credit card payment processor';
     }	
 
-	public $minVer = "2.0";	
-    public $showSettingsForm = true;
-    
-    function getSettingsForm()
+    /**
+     * Determines if we need to show settings form link
+     *
+     * @return bool
+     * @access public
+     * @since  3.0
+     */
+    public static function showSettingsForm()
+    {
+        return true;
+    }
+
+    /**
+     * Return link to settings form
+     *
+     * @return string
+     * @access public
+     * @since  3.0
+     */
+    public static function getSettingsForm()
     {
        return "admin.php?target=payment_method&payment_method=networkmerchants_cc";
     }
 
-    function init()
+    /**
+     * Perform some actions at startup
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function init()
     {
         parent::init();
 
@@ -93,14 +116,6 @@ class XLite_Module_NetworkMerchants_Main extends XLite_Module_Abstract
         $this->registerPaymentMethod('networkmerchants_cc');
 
 		$this->xlite->set("NetworkMerchantsEnabled", true);
-    }
-
-    function uninstall()
-    {
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
-
-        parent::uninstall();
     }
 }
 

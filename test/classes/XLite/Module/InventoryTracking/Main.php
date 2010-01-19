@@ -80,24 +80,32 @@ class XLite_Module_InventoryTracking_Main extends XLite_Module_Abstract
         return 'Inventory tracking module';
     }	
 
-    public $minVer = "2.0";	
-    public $showSettingsForm = true;
-	
-    function init()
+    /**
+     * Determines if we need to show settings form link
+     *
+     * @return bool
+     * @access public
+     * @since  3.0
+     */
+    public static function showSettingsForm()
+    {
+        return true;
+    }
+
+    /**
+     * Perform some actions at startup
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function init()
     {
         parent::init();
         if ($this->xlite->is("adminZone")) {
         }
 
 		$this->xlite->set("InventoryTrackingEnabled",true);
-    }
-
-    function uninstall()
-    {
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
-
-        parent::uninstall();
     }
 }
 

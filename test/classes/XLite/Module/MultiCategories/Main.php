@@ -83,9 +83,15 @@ class XLite_Module_MultiCategories_Main extends XLite_Module_Abstract
     }	
 
     public $isFree = true;	
-    public $minVer = "2.1.2";
 
-    function init()
+    /**
+     * Perform some actions at startup
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function init()
     {
         parent::init();
 
@@ -93,15 +99,6 @@ class XLite_Module_MultiCategories_Main extends XLite_Module_Abstract
 		}
         
     }
-
-    function uninstall()
-    {
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
-
-        parent::uninstall();
-    }
-
 }
 
 // WARNING :

@@ -82,9 +82,14 @@ class XLite_Module_eWAYxml_Main extends XLite_Module_Abstract
         return 'eWAYxml credit card payment processor';
     }	
 
-	public $minVer = "2.0";
-
-	function init()
+    /**
+     * Perform some actions at startup
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function init()
 	{
 	
 		parent::init();
@@ -92,15 +97,6 @@ class XLite_Module_eWAYxml_Main extends XLite_Module_Abstract
 		
 		$this->registerPaymentMethod('eway_xml');
 	}
-
-    function uninstall()
-    {
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
-
-        parent::uninstall();
-    }
-
 }
 
 

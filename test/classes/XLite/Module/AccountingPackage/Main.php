@@ -80,26 +80,33 @@ class XLite_Module_AccountingPackage_Main extends XLite_Module_Abstract
         return 'Integration with QuickBooks, Peachtree and MYOB';
     }	
 
-    public $minVer = "2.0";	
-    public $showSettingsForm = true;	
+    /**
+     * Determines if we need to show settings form link
+     *
+     * @return bool
+     * @access public
+     * @since  3.0
+     */
+    public static function showSettingsForm()
+    {
+        return true;
+    }	
     public $isFree = true;
 
-    function init()
+    /**
+     * Perform some actions at startup
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function init()
     {
         parent::init();
         // admin backoffice - specific class decorations
         if ($this->xlite->is("adminZone")) {
         }
     }
-
-    function uninstall()
-    {
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
-
-        parent::uninstall();
-    }
-
 }
 
 // WARNING :

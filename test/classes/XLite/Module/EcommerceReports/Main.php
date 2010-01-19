@@ -81,15 +81,6 @@ class XLite_Module_EcommerceReports_Main extends XLite_Module_Abstract
     {
         return 'EcommerceReports';
     }
-
-    function uninstall()
-    {
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
-
-        parent::uninstall();
-    }
-
 }
 
 // WARNING :

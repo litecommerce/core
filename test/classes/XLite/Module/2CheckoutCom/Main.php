@@ -82,15 +82,38 @@ class XLite_Module_2CheckoutCom_Main extends XLite_Module_Abstract
         return '2Checkout.com credit card payment processor gateway';
     }	
 
-    public $minVer = "2.0";	
-    public $showSettingsForm = true;
-
-    function getSettingsForm()
+    /**
+     * Determines if we need to show settings form link
+     *
+     * @return bool
+     * @access public
+     * @since  3.0
+     */
+    public static function showSettingsForm()
     {
-       return "admin.php?target=payment_method&payment_method=2checkout";
+        return true;
     }
 
-    function init()
+    /**
+     * Return link to settings form
+     *
+     * @return string
+     * @access public
+     * @since  3.0
+     */
+    public static function getSettingsForm()
+    {
+       return "admin.php?target=payment_method&payment_method=2Checkout";
+    }
+
+    /**
+     * Perform some actions at startup
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function init()
     {
         parent::init();
         

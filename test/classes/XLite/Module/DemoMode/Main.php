@@ -77,7 +77,14 @@ class XLite_Module_DemoMode_Main extends XLite_Module_Abstract
 
     public $isFree = true;
 
-    function init()
+    /**
+     * Perform some actions at startup
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function init()
     {
         parent::init();
         $mm = new XLite_Model_Module();

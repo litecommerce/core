@@ -79,10 +79,26 @@ class XLite_Module_MultiCurrency_Main extends XLite_Module_Abstract
  // {{{	
 
 	public $isFree = true;	
-	public $showSettingsForm = true;	
-	public $minVer = "2.0";
+    /**
+     * Determines if we need to show settings form link
+     *
+     * @return bool
+     * @access public
+     * @since  3.0
+     */
+    public static function showSettingsForm()
+    {
+        return true;
+    }	
 
-	function init() // {{{ 
+    /**
+     * Perform some actions at startup
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function init() // {{{ 
 	{
 		parent::init();
 		$this->xlite->set("MultiCurrencyEnabled",true);
