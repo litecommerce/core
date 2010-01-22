@@ -450,35 +450,50 @@ class XLite_View_Abstract extends XLite_Base
         return $text1;
     }
 
-    function isInitRequired(array $attrs)
+    /*function isInitRequired(array $attrs)
     {
-		$result = true;
-
 		if (!$this->isDisplayRequired($attrs)) {
-            $result = false;
+
+            return false;
+
         } elseif (isset($attrs["name"])) {
-			$name   = $attrs["name"];
-			$result = !isset($this->$name);
+
+			$name = $attrs["name"];
+
+			return !isset($this->$name);
         }
 
-        return $result;
-    }
+        return true;
 
-    function isDisplayRequired(array $attrs)
+		return !isset($attrs['target']) || isset($_REQUEST['target']) || in_array($_REQUEST['target'], explode(',', $attrs['target']));
+    }*/
+
+	public function setAttributes(array $attrs)
+	{
+		foreach ($attrs as $name => $value) {
+			$this->$name = $value;
+		}
+	}
+
+	public function isInitRequired(array $target)
+	{
+		return !isset($_REQUEST['target']) || in_array($_REQUEST['target'], $target);
+	}
+
+    /*function isDisplayRequired(array $attrs)
     {
-		$result = true;
         $this->_attributes = $attrs;
 
         if (isset($attrs['target']) && isset($_REQUEST['target']) && !in_array($_REQUEST['target'], explode(',', $attrs['target']))) {
-			$result = false;
+			return false;
         }
 
         if (isset($attrs['module']) && !XLite_Model_ModulesManager::getInstance()->isActiveModule($attrs['module'])) {
-			$result = false;
+			return false;
         }
 
-        return $result;
-    }
+        return true;
+    }*/
     
     function getDialog()
     {

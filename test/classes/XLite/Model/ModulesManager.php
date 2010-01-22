@@ -88,7 +88,23 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
 	 */
 	protected $module = null;
 
+	/**
+	 * List of active modules (array with module names as the keys) 
+	 * 
+	 * @var    array
+	 * @access protected
+	 * @since  3.0
+	 */
 	protected $activeModules = null;
+
+	/**
+	 * Flag; determines if we need to cleanup (and, as a result, to rebuild) classes and templates cache
+	 * 
+	 * @var    bool
+	 * @access protected
+	 * @since  3.0
+	 */
+	protected $isNeedToCleanupCache = false;
 
 
 	/**
@@ -176,7 +192,7 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
 		}
 
 		if ($this->config->get('General.safe_mode') || XLite_Model_Session::getInstance()->isRegistered('safe_mode')) {
-			$this->cleanupCompileCache();
+			$this->isNeedToCleanupCache = true;
 			$this->set('safeMode', true);
 		} 
 
@@ -205,14 +221,13 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
 		return count($this->getActiveModules());
 	}
 
-	public function rebuildCache()
+	public function cleanupCache()
 	{
 		$decorator = new Decorator();
-        $decorator->rebuildCache(true);
-        $decorator = null;
+        $decorator->cleanupCache();
 	}
 
-	public function changeModuleStatus($module, $status, $rebuildCach = false)
+	public function changeModuleStatus($module, $status, $cleanupCache = false)
     {
 		if (!($module instanceof XLite_Model_Module)) {
 			$module = new XLite_Model_Module($module);
@@ -221,8 +236,8 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
         $status ? $module->enable() : $module->disable();
 		$module->update();
 
-		if ($rebuildCach) {
-			$this->rebuildCache();
+		if ($cleanupCache) {
+			$this->isNeedToCleanupCache = true;
 		}
     }
 
@@ -232,12 +247,17 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
 			$this->changeModuleStatus($module, in_array($module->get("module_id"), $moduleIDs));
         }
 
-		$this->rebuildCache();
+		$this->isNeedToCleanupCache = true;;
     }
 
 	public function isActiveModule($moduleName)
 	{
 		return $this->getActiveModules($moduleName);
+	}
+
+	public function __destruct()
+	{
+		!$this->isNeedToCleanupCache || $this->cleanupCache();
 	}
 }
 

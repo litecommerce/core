@@ -82,11 +82,6 @@ class XLite_Model_Mailer extends XLite_View
         $this->set("name", "MailMessage");
     } // }}}
 
-    function isInitRequired(array $attributes)
-    {
-        return $this->isDisplayRequired($attributes);
-    }
-
     function set($name, $value)
     {
     	switch($name) {

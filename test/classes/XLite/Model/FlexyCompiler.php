@@ -49,6 +49,10 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 {
 	protected $_internalDisplayCode = false;
 	protected $_internalInitCode = false;
+
+	protected $initializedWidgets = array();
+
+	// protected $mainAttributes = array('module', 'target');
 	
 	public $source; // Flexy template source code	
 	public $phpcode;	
@@ -321,30 +325,32 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 			$this->attachFormID($i);
 
 			if ($token["type"] == "tag" || $token["type"] == "open-close-tag") {
-				if ($this->findAttr($i+1, "if", $pos)) {
-					if ($this->findClosingTag($i, $pos1)) {
-						$expr = $this->flexyCondition($this->getTokenText($pos+1));
-						$this->subst($token["start"], 0, "<?php if($expr){?>");
-						$this->subst($this->tokens[$pos]["start"], $this->tokens[$pos]["end"], '');
-						$this->subst($this->tokens[$pos1]["end"]-1, $this->tokens[$pos1]["end"], "><?php }?>");
-					}
-				} else if ($this->findAttr($i+1, "iff", $pos)) {
-					$expr = $this->flexyCondition($this->getTokenText($pos+1));
-					$this->subst($token["start"], 0, "<?php if($expr){?>");
-					$this->subst($this->tokens[$pos]["start"], $this->tokens[$pos]["end"], '');
-					$this->subst($this->tokens[$i]["end"]-1, $this->tokens[$i]["end"], "><?php }?>");
-				} else if ($this->findAttr($i+1, "foreach", $pos)) {
-					if ($this->findClosingTag($i, $pos1)) {
-						list($expr,$k,$forvar) = $this->flexyForeach($this->getTokenText($pos+1));
+
+				if ($this->findAttr($i+1, 'if', $pos)) {
+                    if ($this->findClosingTag($i, $pos1)) {
+                        $expr = $this->flexyCondition($this->getTokenText($pos+1));
+                        $this->subst($token['start'], 0, '<?php if (' . $expr . '): ?>');
+                        $this->subst($this->tokens[$pos]['start'], $this->tokens[$pos]['end'], '');
+                        $this->subst($this->tokens[$pos1]['end']-1, $this->tokens[$pos1]['end'], '><?php endif; ?>');
+                    }
+                } elseif ($this->findAttr($i+1, "iff", $pos)) {
+                    $expr = $this->flexyCondition($this->getTokenText($pos+1));
+                    $this->subst($token["start"], 0, "<?php if($expr){?>");
+                    $this->subst($this->tokens[$pos]["start"], $this->tokens[$pos]["end"], '');
+                    $this->subst($this->tokens[$i]["end"]-1, $this->tokens[$i]["end"], "><?php }?>");
+                } else if ($this->findAttr($i+1, "foreach", $pos)) {
+                    if ($this->findClosingTag($i, $pos1)) {
+                        list($expr,$k,$forvar) = $this->flexyForeach($this->getTokenText($pos+1));
                         $exprNumber = "$forvar"."ArraySize";
                         $exprCounter = "$forvar"."ArrayPointer";
-						$this->subst($token["start"], 0, "<?php \$$forvar = isset(\$t->$forvar) ? \$t->$forvar : null; \$_foreach_var = $expr; if (!is_null(\$_foreach_var)) { \$t->$exprNumber=count(\$_foreach_var); \$t->$exprCounter=0; } if (!is_null(\$_foreach_var)) foreach(\$_foreach_var as $k){ \$t->$exprCounter++; ?>");
-						$this->subst($this->tokens[$pos]["start"], $this->tokens[$pos]["end"], '');
-						$this->subst($this->tokens[$pos1]["end"]-1, $this->tokens[$pos1]["end"], "><?php } \$t->$forvar = \$$forvar; ?>");
-					} else {
-						$this->error("No closing tag for foreach");
-					}
-				}
+                        $this->subst($token["start"], 0, "<?php \$$forvar = isset(\$t->$forvar) ? \$t->$forvar : null; \$_foreach_var = $expr; if (!is_null(\$_foreach_var)) { \$t->$exprNumber=count(\$_foreach_var); \$t->$exprCounter=0; } if (!is_null(\$_foreach_var)) foreach(\$_foreach_var as $k){ \$t->$exprCounter++; ?>");
+                        $this->subst($this->tokens[$pos]["start"], $this->tokens[$pos]["end"], '');
+                        $this->subst($this->tokens[$pos1]["end"]-1, $this->tokens[$pos1]["end"], "><?php } \$t->$forvar = \$$forvar; ?>");
+                    } else {
+                        $this->error("No closing tag for foreach");
+                    }
+                }
+
 				if ($this->findAttr($i+1, "selected", $pos)) {
 					if (isset($this->tokens[$pos+1]["type"]) && $this->tokens[$pos+1]["type"] == "attribute-value") {
 						$expr = $this->flexyCondition($this->getTokenText($pos+1));
@@ -360,8 +366,7 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 						$this->subst($this->tokens[$pos]["start"], $this->tokens[$pos]["end"], "<?php if($expr) echo 'checked';?>");
 					}
 				}
-            }
-            if ($token["type"] == "tag" || $token["type"] == "open-close-tag") {
+
                 if (!strcasecmp($token["name"], "widget")) {
                     $attrs = array();
                     // widget display code
@@ -377,9 +382,10 @@ class XLite_Model_FlexyCompiler extends XLite_Base
                             break;
                         }
                     }
-                    $this->processWidgetAttrs($attrs);
-                    $this->subst($token["start"], $token["end"]-1, "<?php " . $this->widgetDisplayCode($attrs) . " ?");
-                    $this->phpinitcode .= $this->widgetInitCode($attrs);
+
+                    list($target, $module, $name) = $this->processWidgetAttrs($attrs);
+					$this->phpinitcode .= $this->widgetInitCode($attrs, $target, $module, $name);
+					$this->subst($token["start"], $token["end"]-1, "<?php " . $this->widgetDisplayCode($attrs, $name) . " ?");
                 }
 			}
             if ($token["type"] == "flexy") {
@@ -412,125 +418,82 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 
     function processWidgetAttrs(&$attrs)
     {
-        if (!isset($attrs["name"])) {
-            // create name for the widget
-            $attrs["name"] = 'widget->_' . $this->widgetCounter++;
-        } 
-        if (!isset($attrs["class"])) {
-            $attrs["class"] = 'XLite_View_Abstract';
+		$target = isset($attrs['target']) ? $attrs['target'] : null;
+		$module = isset($attrs['module']) ? $attrs['module'] : null;
+
+		unset($attrs['target']);
+		unset($attrs['module']);
+
+		$name = isset($attrs['name']) ? $attrs['name'] : 'widget->_' . $this->widgetCounter++;
+		unset($attrs['name']);
+
+        if (!isset($attrs['class'])) {
+            $attrs['class'] = 'XLite_View_Abstract';
         }
+
+		if (isset($attrs['if'])) {
+			$attrs['IF'] = $attrs['if'];
+			unset($attrs['if']);
+		}
+
+		return array($target, $module, $name);
     }
 
-    function widgetDisplayCode($attrs, $nested=false)
+    function widgetDisplayCode($attrs, $name)
     {
-    	$result = "";
-
-		$wName = isset($attrs['name']) ? $attrs['name'] : '';
-
-    	$targetPreFound = array_key_exists("target", $attrs);
-    	$targetFound = (!$this->_internalDisplayCode && ($targetPreFound || array_key_exists("module", $attrs))) ? true : false;
-    	if ($targetFound) {
-    		$attrTarget = array();
-    		if (array_key_exists("target", $attrs)) {
-    			$attrTarget["target"] = $attrs["target"];
-    		}
-    		if (array_key_exists("module", $attrs)) {
-    			$attrTarget["module"] = $attrs["module"];
-    		}
-    		$this->_internalDisplayCode = true;
-    		$resultTarget = $this->widgetDisplayCode($attrTarget, true);
-    		$this->_internalDisplayCode = false;
-
-        	$result .= $resultTarget;
-    	}
-
-		$hasName = (strlen($wName) > 0);
-
-        $result .= 'if(' . ($hasName ? 'isset($t->' . $wName . ') && ' : '') .  '$t->isDisplayRequired(array(';
-        $attrsN = 0;
-        $attrsC = count($attrs) - 1;
-        foreach ($attrs as $a => $v) {
-			$result .= '\'' . $a . '\'=>' 
-					   . ($hasName ? '$t->' . $wName . '->get(\'' . $a . '\')' :  $this->flexyAttribute($v))
-					   . (($attrsN < $attrsC) ? ',' : '');
-        }
-        $result .= "))){";
-
-        if (!$this->_internalDisplayCode && $hasName) {
-            foreach ($attrs as $name=>$value) {
-                // setup only dynamic properties
-                if (strpos($value, '{') === false) {
-                    continue;
-                }
-				if ($targetPreFound && $name == 'visible') {
-					$result .= 'if (isset($t->_attributes[\'' . $name . '\'])) $t->' . $wName . '->set(\'' . $name . '\', $t->_attributes[\'' . $name . '\']);';
-				} else {
-					$result .= '$t->' . $wName . '->set(\'' . $name . '\', ' . $this->flexyAttribute($value) . ');';
-				}
-            }
-            $result .= '$t->' . $wName . '->display();}';
-
-        	if ($targetFound) {
-            	$result .= "}";
-        	}
-        }
-
-        return $result;
+		return 'isset($t->' . $name . ') && $t->' . $name . '->display();';
     }
 
-    function widgetInitCode($attrs)
+    function widgetInitCode(array $attrs, $target, $module, $name)
     {
-    	$result = "";
+		$result = '';
 
-    	$targetFound = (!$this->_internalInitCode && (array_key_exists("target", $attrs) || array_key_exists("module", $attrs))) ? true : false;
-    	if ($targetFound) {
-    		$attrTarget = array();
-    		if (array_key_exists("target", $attrs)) {
-    			$attrTarget["target"] = $attrs["target"];
-    		}
-    		if (array_key_exists("module", $attrs)) {
-    			$attrTarget["module"] = $attrs["module"];
-    		}
-    		$this->_internalInitCode = true;
-    		$resultTarget = $this->widgetInitCode($attrTarget);
-    		$this->_internalInitCode = false;
+		if (!isset($this->initializedWidgets[$name]) && XLite_Model_ModulesManager::getInstance()->isActiveModule($module)) {
 
-        	$result .= $resultTarget;
-    	}
+			$intend = array('main' => '', 'cnd' => '');
 
-        $result .= 'if($t->isInitRequired(array(';
-        $attrsN = 0;
-        $attrsC = count($attrs) - 1;
-        foreach ($attrs as $a => $v) {
-            $result .= '\'' . $a . '\'=>' . $this->flexyAttribute($v) . (($attrsN < $attrsC) ? ',' : '');
-            $attrsN ++;
-        }
-        $result .= "))){\n";
-            
-        if (!$this->_internalInitCode) {
-            $wName = $attrs['name'];
+			if ($checkTarget = !is_null($target)) {
+
+				$result .= 'if ($t->isInitRequired(array(\'' 
+						. str_replace(',', '\',\'', preg_replace('/[^\w,]+/', '', $target)) . '\'))):' . "\n";
+
+				$intend['main'] .= '  ';
+			}
+
+			if ($checkCondition = isset($attrs['IF'])) {
+				$intend['cnd'] = $intend['main'];
+				$result .= $intend['cnd'] . 'if (' . $this->flexyCondition($attrs['IF']) . '):' . "\n";
+				$intend['main'] .= '  ';
+				unset($attrs['IF']);
+			}
+
             $class = $attrs['class'];
-            $result .= '$t->' . $wName . ' = new ' . $class . "();\n";
-            $result .= '$t->' . $wName . '->component = $t;' . "\n";
-            $result .= '$t->addWidget($t->' . $wName . ");\n";
-            if (is_subclass_of($class, 'XLite_View')) {
-                $result .= '$t->addComponent($t->' . $wName . ");\n";
+
+            $result .= $intend['main'] . '$t->' . $name . ' = new ' . $class . '();' . "\n";
+            $result .= $intend['main'] . '$t->' . $name . '->component = $t;' . "\n";
+            $result .= $intend['main'] . '$t->widget->addWidget($t->' . $name . ');' . "\n";
+            if (class_exists($class, false) && is_subclass_of($class, 'XLite_View')) {
+                $result .= $intend['main'] . '$t->addComponent($t->' . $name . ');' . "\n";
             }
 
-            foreach ($attrs as $name => $value) {
-                if ($name != 'target' && $name != 'class' && $name != 'name' && $name != 'hidden') {
-					$result .= 'if (isset($t->_attributes[\'' . $name . '\'])) $t->' . $wName . '->set(\'' . $name . '\', $t->_attributes[\'' . $name . '\']);' . "\n";
+			if (!empty($attrs)) {
+                $result .= $intend['main'] . '$t->' . $name . '->setAttributes(array(';
+                foreach ($attrs as $key => $value) {
+                    $result .= '\'' . $key . '\'=>' . $this->flexyAttribute($value) . ',';
                 }
+                $result .= '));' . "\n";
             }
-            if (isset($attrs['hidden'])) {
-				$result .= '$t->' . $wName . '->set(\'visible\', false);' . "\n";
-            }
-			$result .= '$t->' . $wName . '->init();' . "\n" . '}';
 
-        	if ($targetFound) {
-            	$result .= "\n" . '}';
-        	}
-        }
+			if (isset($attrs['hidden'])) {
+                $result .= ' $t->' . $name . '->set(\'visible\', false);' . "\n";
+            }
+
+            $result .= $intend['main'] . '$t->' . $name . '->init();' . "\n" 
+					. ($checkCondition ? $intend['cnd'] . 'endif;' . "\n" : '') 
+					. ($checkTarget ? 'endif;' . "\n" : '') . "\n";
+
+			$this->initializedWidgets[$name] = true;
+		}
 
         return $result;
     }
