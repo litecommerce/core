@@ -47,6 +47,8 @@
 */
 class XLite_View_Abstract extends XLite_Base
 {
+	protected $dialog = null;
+
     /**
     * Widget template filename.
     *
@@ -72,13 +74,7 @@ class XLite_View_Abstract extends XLite_Base
     */
     function init()
     {
-        $this->includeCompiledFile("initFile"); // see getInitFile()
-    }
-
-    function isVerbose()
-    {
-		return !is_null($verbose = XLite::getInstance()->getOptions(array('HTML_Template_Flexy', 'verbose'))) 
-			   && (true === $verbose || 'On' === $verbose || 1 == $verbose);
+        $this->includeCompiledFile($this->getInitFile());
     }
 
     /**
@@ -89,105 +85,83 @@ class XLite_View_Abstract extends XLite_Base
     */
     function display()
     {
-        if (!$this->is("visible")) {
-            return;
-        }
-        if ($this->isVerbose()) {
-        	$templateName = $this->get("template");
-        	if (is_array($this->xlite->layout->list) && isset($this->xlite->layout->list[$templateName])) {
-        		$templateName = $this->xlite->layout->list[$templateName];
-        	}
-            print "<!-- start: $templateName -->";
-        }
-        $this->includeCompiledFile("displayFile"); // see getDisplayFile()
-        if ($this->isVerbose()) {
-            print "<!-- end: $templateName -->";
-        }
+		if ($this->isVisible()) {
+			$this->includeCompiledFile($this->getDisplayFile());
+		}
     }
 
     function isVisible()
     {
-        if ( is_null($this->get("mode")) || is_null($this->get("dialog")) ||
-            !is_null($this->get("mode")) && in_array($this->get("dialog.mode"), explode(',',$this->get("mode")))) {
-            if (!$this->visible) {
-                return false;
-            }
-            if (isset($this->parentWidget) && !$this->parentWidget->isVisible()) {
-                return false;
-            }
-            return true;
-        } else {
-            return false;
+		$result = $this->visible;
+
+        if (!is_null($this->mode) && !is_null($this->getDialog())) {
+
+            $result = in_array($this->getDialog()->mode, explode(',', $this->mode));
+
+        } elseif (!is_null($this->parentWidget)) {
+
+            $result = $this->parentWidget->isVisible();
         }
+
+        return $result;
     }
 
     function getTemplateFile()
     {
-        if (isset($this->templateFile)) {
-            // for debugging
-            return $this->templateFile;
-        }
-
-        return XLite_Model_Layout::getInstance()->getLayout($this->get("template"));
+		return isset($this->templateFile) ? $this->templateFile : XLite_Model_Layout::getInstance()->getLayout($this->template);
     }
 
     function getDisplayFile()
     {
-        return $this->get("compileDir") . '/' . $this->get("templateFile") . ".php";
+        return LC_COMPILE_DIR . $this->getTemplateFile() . '.php';
     }
     
     function getInitFile()
     {
-        return $this->get("compileDir") . '/' . $this->get("templateFile") . ".init.php";
+        return LC_COMPILE_DIR . $this->getTemplateFile() . '.init.php';
     }
  
-    function getCompileDir()
+    function includeCompiledFile($includeFile)
     {
-        return is_null($this->xlite->getOptions(array('HTML_Template_Flexy', 'compileDir')))
-			? 'var' . LC_DS . 'run' : $this->xlite->getOptions(array('HTML_Template_Flexy', 'compileDir'));
-    }
-    
-    function includeCompiledFile($includeFileProp)
-    {
-        ('' != $this->get("template")) || $this->_die("template is not set");
+        if (is_null($this->template)) {
+			$this->_die("template is not set");
+		}
 
-        $includeFile  = $this->get($includeFileProp);
-        $templateFile = $this->getTemplateFile();
+		$templateFile = $this->getTemplateFile();
 
         if (!file_exists($includeFile) || (filemtime($includeFile) != filemtime($templateFile))) {
 
             $fc = new XLite_Model_FlexyCompiler();
-            $fc->set("source", file_get_contents($templateFile));
-            $fc->set("url_rewrite", "images:" . XLite_Model_Layout::getInstance()->getPath() . "images");
-            $fc->set("file", $templateFile);
+            $fc->set('source', file_get_contents($templateFile));
+            $fc->set('url_rewrite', 'images:' . XLite_Model_Layout::getInstance()->getPath() . 'images');
+            $fc->set('file', $templateFile);
             $fc->parse();
 
-			$initFile    = $this->get("initFile");
-	        $displayFile = $this->get("displayFile");
+			$files = array(
+				'phpcode'     => $this->getDisplayFile(),
+				'phpinitcode' => $this->getInitFile(),
+			);
 
-			foreach (array('phpcode' => $displayFile, 'phpinitcode' => $initFile) as $code => $file) {
-				$file = LC_ROOT_DIR . $file;
+			foreach ($files as $code => $file) {
+
 				if (!file_exists($dir = dirname($file))) {
 		            mkdirRecursive($dir, 0755);
 				}
-				file_put_contents($file, $fc->get($code));
+
+				file_put_contents($file, $fc->$code);
 				touch($file, filemtime($templateFile));
 			}
         }
+
         $t = $this->getThisVar();
-        $caller = $t->get('widget');
+        $caller = $t->widget;
         $t->widget = $this;
 
-		// var_dump($includeFile);
-
         $result = include $includeFile;
+
         if (!$result) {
             $_error = "unable to read template file: $includeFile";
-            if ($GLOBALS['XLITE_SELF'] == "cart.php") {
-                func_shop_closed("Warning: $_error");
-            } else {
-                func_die("Error: $_error");
-            }
+			($GLOBALS['XLITE_SELF'] == 'cart.php') ? func_shop_closed("Warning: $_error") : func_die("Error: $_error");
         }
 
         $t->widget = $caller;
@@ -195,10 +169,7 @@ class XLite_View_Abstract extends XLite_Base
 
     function getThisVar()
     {
-        if(isset($this->component)) {
-            return $this->component;
-        }
-        return $this;
+        return isset($this->component) ? $this->component : $this;
     }
     
     /**
@@ -416,7 +387,7 @@ class XLite_View_Abstract extends XLite_Base
 		return ($this->isOddRow($row)) ? $odd_css_class : $even_css_class;
 	}
 
-    function wrap($object, $prop, $width)
+    function wrap(XLite_Base $object, $prop, $width)
     {
         if ($prop) {
             $text = $object->get($prop);
@@ -450,24 +421,6 @@ class XLite_View_Abstract extends XLite_Base
         return $text1;
     }
 
-    /*function isInitRequired(array $attrs)
-    {
-		if (!$this->isDisplayRequired($attrs)) {
-
-            return false;
-
-        } elseif (isset($attrs["name"])) {
-
-			$name = $attrs["name"];
-
-			return !isset($this->$name);
-        }
-
-        return true;
-
-		return !isset($attrs['target']) || isset($_REQUEST['target']) || in_array($_REQUEST['target'], explode(',', $attrs['target']));
-    }*/
-
 	public function setAttributes(array $attrs)
 	{
 		foreach ($attrs as $name => $value) {
@@ -475,33 +428,23 @@ class XLite_View_Abstract extends XLite_Base
 		}
 	}
 
-	public function isInitRequired(array $target)
+	public function isInitRequired(array $target, $isVisible = true)
 	{
-		return !isset($_REQUEST['target']) || in_array($_REQUEST['target'], $target);
+		return (!isset($_REQUEST['target']) || in_array($_REQUEST['target'], $target)) && $isVisible;
 	}
 
-    /*function isDisplayRequired(array $attrs)
-    {
-        $this->_attributes = $attrs;
-
-        if (isset($attrs['target']) && isset($_REQUEST['target']) && !in_array($_REQUEST['target'], explode(',', $attrs['target']))) {
-			return false;
-        }
-
-        if (isset($attrs['module']) && !XLite_Model_ModulesManager::getInstance()->isActiveModule($attrs['module'])) {
-			return false;
-        }
-
-        return true;
-    }*/
-    
     function getDialog()
     {
-        $d = $this;
-        while (!is_null($d) && !($d instanceof XLite_Controller_Abstract)) {
-            $d = $d->component;
+		if (is_null($this->dialog)) {
+
+            $this->dialog = $this;
+
+            while (!is_null($this->dialog) && !($this->dialog instanceof XLite_Controller_Abstract)) {
+                $this->dialog = $this->dialog->component;
+            }
         }
-        return $d;
+
+        return $this->dialog;
     }
 
     function addWidget($w) 

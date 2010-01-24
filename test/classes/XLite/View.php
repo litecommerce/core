@@ -99,7 +99,7 @@ class XLite_View extends XLite_View_Abstract
     {
         $components = $this->get("components");
         for ($i=0; $i<count($components); $i++) {
-            if ($components[$i]->is("visible")) {
+            if ($components[$i]->isVisible()) {
                 $components[$i]->fillForm();
             }
         }
@@ -116,7 +116,7 @@ class XLite_View extends XLite_View_Abstract
         // merge with subcomponents
         $components = $this->get("components");
         for ($i=0; $i<count($components); $i++) {
-            if ($components[$i]->is("visible")) {
+            if ($components[$i]->isVisible()) {
                 $result = array_merge($result, $components[$i]->get("allParams"));
             }
         }
@@ -145,7 +145,7 @@ class XLite_View extends XLite_View_Abstract
         }
         $components = $this->get("components");
         for ($i=0; $i<count($components); $i++) {
-            if ($components[$i]->is("visible") && !$components[$i]->is("valid") && !$components[$i]->is("validationUnnecessary")) {
+            if ($components[$i]->isVisible() && !$components[$i]->isValid() && !$components[$i]->is("validationUnnecessary")) {
                 return false;
             }
         }
@@ -165,7 +165,7 @@ class XLite_View extends XLite_View_Abstract
             if (strstr($name, '.') || $name=='auth' || $name=='xlite' || $name=='session' || $name=='config' || $name=='logger' || $name=='db' || $name=='template' || $name=='params' || isset($this->$name))
                 continue;
 			
-        	if (!($this->xlite->is("adminZone") || $this->xlite->is("aspZone"))) {
+        	if (!$this->xlite->is("adminZone")) {
         		$value = $this->_validateRequestData($value, $name);
                 if ($this->_requestValueUpdated) {
 					$this->_requestUpdated = true;

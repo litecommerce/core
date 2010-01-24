@@ -49,16 +49,17 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View
     public $bestsellers = null;	
     public $ids = array();
 
-    function getVisible()
+    function isVisible()
     {
-        if (!$this->get("bestsellers")) {
-            return false;
-        }
-        return $this->visible;
+        return $this->getBestsellers();
     }
 
     function getBestsellers()
     {
+		if (!is_null($this->bestsellers)) {
+			return $this->bestsellers;
+		}
+
         $category = $this->get("category");
         $cat_id = $category->get("category_id");
 

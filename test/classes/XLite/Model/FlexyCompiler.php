@@ -448,7 +448,10 @@ class XLite_Model_FlexyCompiler extends XLite_Base
     {
 		$result = '';
 
-		if (!isset($this->initializedWidgets[$name]) && XLite_Model_ModulesManager::getInstance()->isActiveModule($module)) {
+		if (
+			!isset($this->initializedWidgets[$name]) 
+			&& (is_null($module) || XLite_Model_ModulesManager::getInstance()->isActiveModule($module))
+		) {
 
 			$intend = array('main' => '', 'cnd' => '');
 
@@ -460,11 +463,18 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 				$intend['main'] .= '  ';
 			}
 
-			if ($checkCondition = isset($attrs['IF'])) {
+			$condition = array();
+			foreach (array('IF', 'visible') as $attr) {
+				if (isset($attrs[$attr])) {
+					$condition[] = $this->flexyCondition($attrs[$attr]);
+				}
+			}
+			unset($attrs['IF']);
+
+			if ($checkCondition = !empty($condition)) {
 				$intend['cnd'] = $intend['main'];
-				$result .= $intend['cnd'] . 'if (' . $this->flexyCondition($attrs['IF']) . '):' . "\n";
+				$result .= $intend['cnd'] . 'if (' . implode(' && ', $condition) . '):' . "\n";
 				$intend['main'] .= '  ';
-				unset($attrs['IF']);
 			}
 
             $class = $attrs['class'];

@@ -49,7 +49,7 @@ class XLite_Module_ProductAdviser_View_CRecentliesProducts extends XLite_View
 	public $productsNumber = 0;	
 	public $additionalPresent = false;
 
-    function getVisible()
+    function isVisible()
     {
     	if ($this->config->get("ProductAdviser.number_recently_viewed") <= 0) {
     		return false;

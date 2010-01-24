@@ -894,16 +894,16 @@ class Decorator
 			// Remove old files
 			$this->cleanUpCache();
 
-            // Trying to create folder
-            if (!mkdirRecursive(LC_CLASSES_CACHE_DIR, 0755)) {
-                die ('Unable to create classes cache directory');
-            }
-
             // Prepare classes list
             $this->createClassTree();
             $this->normalizeModuleControllerNames();
             $this->createDecoratorTree();
             $this->mergeClassAndDecoratorTrees();
+
+			// Trying to create folder
+            if (!mkdirRecursive(LC_CLASSES_CACHE_DIR, 0755)) {
+                die ('Unable to create classes cache directory');
+            }
 
             // Write file to the cache directory
             foreach ($this->classesInfo as $class => $info) {

@@ -50,7 +50,7 @@ class XLite_Module_ProductAdviser_View_CNewArrivalsProducts extends XLite_View
 	public $productsNumber = 0;	
 	public $additionalPresent = false;
 
-    function getVisible()
+    function isVisible()
     {
     	if ($this->config->get("ProductAdviser.number_new_arrivals") <= 0) {
     		return false;

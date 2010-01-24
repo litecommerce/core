@@ -47,7 +47,9 @@ class XLite_Module_AOM_Controller_Admin_OrderList extends XLite_Controller_Admin
 {	
 	public $orders = null;	
 	public $params = array('target', 'mode', 'start_order_id', 'end_order_id', 'login', 'status', 'person_info', 'product_name', 'period', 'start_total', 'end_total', 'payment_method', 'shipping_id');	
-	public $_shippingRates = null;
+
+	protected $_paymentMethods = null;
+	protected $_shippingRates  = null;
 	
 	function getOrders() // {{{
 	{
@@ -158,13 +160,17 @@ class XLite_Module_AOM_Controller_Admin_OrderList extends XLite_Controller_Admin
 
     function getPaymentMethods() // {{{ 
     {
-        
-        return $paymentMethod->get("activeMethods");
+		if (!is_null($this->_paymentMethods)) {
+	        $paymentMethod = new XLite_Model_PaymentMethod();
+			$this->_paymentMethods = $paymentMethod->getActiveMethods();
+		}
+
+        return $this->_paymentMethods;
     } // }}}
 
     function getShippingRates() // {{{
     {
-    	if (isset($this->_shippingRates)) {
+    	if (!is_null($this->_shippingRates)) {
     		return $this->_shippingRates;
     	}
 

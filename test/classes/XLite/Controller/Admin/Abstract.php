@@ -47,22 +47,9 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
 {
 	protected $recentAdmins = null;
 
-    function getLicenseWarningParam()
-    {
-        return !empty($GLOBALS["license_warning_param"]) ? $GLOBALS["license_warning_param"] : null;
-    }
-
-    function getLicenseWarning()
-    {
-        return !empty($GLOBALS["license_warning"]) ? $GLOBALS["license_warning"] : null;
-    }
-
     function getCustomerZoneWarning()
     {
-        if ($this->get("xlite.config.General.shop_closed") == "Y")
-            return "maintenance_mode";
-        
-        return null;
+        return ('Y' == XLite::getInstance()->config->General->shop_closed) ? 'maintenance_mode' : null;
     }
 
     function getAccessLevel()
@@ -102,7 +89,7 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
         return $this->get("config.Security.admin_security");
     }
 
-    function &getRecentAdmins()
+    function getRecentAdmins()
     {
         if ($this->auth->isLogged() && is_null($this->recentAdmins)) {
             $profile = new XLite_Model_Profile();
@@ -180,7 +167,7 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
 
     function hidePageHeader()
     {
-		$this->set("silent", false);
+		$this->silent = false;
 
     	$code =<<<EOT
 <script language="javascript">
@@ -221,7 +208,3 @@ EOT;
 	}
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

@@ -52,11 +52,21 @@ abstract class XLite_Controller_Abstract extends XLite_View
     public $dumpStarted = false; // startDump was called	
     public $locationPath = array(); // path for dialog location
 
+	protected $silent = false;
+
+	protected $returnUrlAbsolute = false;
+	protected $returnUrl = null;
+
 	protected $product = null;
 
 	protected $category = null;
 
 	public $cart = null;
+
+	protected function getReturnUrl()
+	{
+		return $this->returnUrl;
+	}
 
     function getAllParams($exeptions = null)
     {
@@ -212,16 +222,14 @@ abstract class XLite_Controller_Abstract extends XLite_View
             return;
         }
 
-        if ($this->is("valid")) {
+        if ($this->isValid()) {
             // call action method
             $action = "action_" . $_REQUEST['action'];
-            if (method_exists($this, $action)) {
-                $this->$action();
-            }
+			$this->$action();
+
             // action can change valid to false
-            if ($this->is("valid") && !$this->is("silent")) {
-                $this->redirect();
-                return;
+            if ($this->isValid() && !$this->silent) {
+                return $this->redirect();
             }    
         }
 
@@ -302,7 +310,7 @@ abstract class XLite_Controller_Abstract extends XLite_View
     function output()
     {
         $this->xlite->profiler->log("request_time");
-        if (!$this->is("silent")) {
+        if (!$this->silent) {
             ob_start();
             $this->startPage();
             $this->display();
@@ -332,30 +340,18 @@ abstract class XLite_Controller_Abstract extends XLite_View
     }
 
     function redirect($url = null)
-    {
-        $location = $this->get("url");
-        if (!is_null($this->get("returnUrl"))) {
-            $location = $this->get("returnUrl");
-        } elseif (!is_null($url)) {
-            $location = $url;
-        }
+	{
+		$location = is_null($returnUrl = $this->getReturnUrl()) ? (is_null($url) ? $this->getUrl() : $url) : $returnUrl; 
 
 		// filter xlite_form_id from redirect url
-		$action = $this->get("action");
+		$action = $this->get('action');
 		if (empty($action))
 		    $location = $this->filterXliteFormID($location);
 
-        $this->xlite->profiler->enabled = false;
-        $this->xlite->done();
+        XLite_Model_Profiler::getInstance()->enabled = false;
+        XLite::getInstance()->done();
 
-		if ($this->get('returnUrlAbsolute'))
-		{
-			header("Location: " . $location);
-		} 
-		else
-		{
-        	header("Location: " . $this->shopURL($location, $this->get("secure")));
-        }
+		header('Location: ' . ($this->returnUrlAbsolute ? $location : $this->shopURL($location, $this->get('secure'))));
     }
 
     /**
@@ -364,7 +360,7 @@ abstract class XLite_Controller_Abstract extends XLite_View
     */
     function shopURL($url, $secure = false, $pure_url = false)
     {
-		return $this->xlite->shopURL($url, $secure);
+		return XLite::getInstance()->shopURL($url, $secure);
     }
 
     function getProperties()

@@ -68,7 +68,7 @@
 <p>
 <widget target="access_denied" template="access_denied.tpl">
 <widget module="DemoMode" target="settings,payment_method,payment_methods,modules,memberships" template="common/dialog.tpl" body="modules/DemoMode/warning.tpl" head="Demo mode warning">
-<widget template="common/dialog.tpl" head="Customer zone warning" body="customer_zone_warning.tpl" visible="{customerZoneWarning}">
+<widget template="common/dialog.tpl" head="Customer zone warning" body="customer_zone_warning.tpl" visible="{getCustomerZoneWarning()}">
 <widget target="main" template="common/dialog.tpl" head="Welcome to the Administrator Zone" body="menu.tpl">
 <widget target="modules" template="common/dialog.tpl" head="Modules" body="modules.tpl">
 <widget target="module" template="common/dialog.tpl" head="Module {page} settings" body="general_settings.tpl">

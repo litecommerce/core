@@ -48,18 +48,6 @@
 */
 class XLite_Controller_Admin_Modules extends XLite_Controller_Admin_Abstract
 {
-	protected $sections = array(
-		XLite_Model_Module::MODULE_PAYMENT   => 'Payment modules', 
-		XLite_Model_Module::MODULE_SHIPPING  => 'Shipping modules',
-		XLite_Model_Module::MODULE_SKIN      => 'Skin modules',
-		XLite_Model_Module::MODULE_GENERAL   => 'Add-ons',
-		XLite_Model_Module::MODULE_3RD_PARTY => '3rd party modules',
-		XLite_Model_Module::MODULE_UNKNOWN   => 'Unknown',
-	);	
-
-    public $success = true; // last operation status: true or false	
-    public $_sort_modules = null;
-
 	protected $modules = null;
 
 	protected $currentModuleType = null;
@@ -71,80 +59,7 @@ class XLite_Controller_Admin_Modules extends XLite_Controller_Admin_Abstract
 			$this->modules = XLite_Model_ModulesManager::getInstance()->getModules($type);
 		}
 
-    	/*if (isset($this->modules)) {
-    		return $this->modules;
-    	}
-		
-		$modules = $this->xlite->mm->get("modules");
-		$this->modules = array();
-		if (is_array($modules)) {
-			for($i=0; $i<count($modules); $i++) {
-				if ($modules[$i]->get("enabled")) {
-					$this->modules[] = $modules[$i];
-				}
-			}
-			for($i=0; $i<count($modules); $i++) {
-				if (!$modules[$i]->get("enabled")) {
-					$this->modules[] = $modules[$i];
-				}
-			}
-		}*/
-
 		return $this->modules;
-    }
-
-	function getSortModules($type=0)
-	{
-		$type = intval($type);
-		if (is_null($this->_sort_modules)) {
-			$this->_sort_modules = array();
-		}
-		if (isset($this->_sort_modules[$type]) && is_array($this->_sort_modules[$type])) {
-			return $this->_sort_modules[$type];
-		} else {
-			$this->_sort_modules[$type] = array();
-		}
-
-		$temp = $this->get("modules");
-		foreach((array)$temp as $v) {
-			if ($v->get("type") == XLite_Model_Module::MODULE_UNKNOWN) {
-				// FIXME
-				// $v->set("type", $this->xlite->mm->getPredefinedModuleType($v->get("name")));
-				$v->update();
-			}
-			if ($v->get("type") == $type){
-				$this->_sort_modules[$type][$v->get("name")] = $v;
-			}
-		}
-
-		ksort($this->_sort_modules[$type]);
-
-		return $this->_sort_modules[$type];
-	}
-
-    function getModulesForUpdate()
-    {
-        $modules = $this->getModules();
-        $res = array();
-        foreach ($modules as $module) {
-            if ($module->is('needUpdate'))
-                $res[] = $module->get('name');
-        }
-        if (count($res)>0) return $res;
-        return "";
-    }
-
-    function action_install()
-    {
-        if (!isset($_REQUEST["mode"]) || $_REQUEST["mode"]!="cp") {
-            $this->startDump();
-		}
-        if (!$this->xlite->mm->install()) {
-            $this->set("valid", false);
-            $this->hidePageHeader();
-        } else {
-            $this->set("silent", true);
-        }
     }
 
     function action_update()
@@ -152,28 +67,9 @@ class XLite_Controller_Admin_Modules extends XLite_Controller_Admin_Abstract
 		$activeModules = isset($_REQUEST["active_modules"]) ? $_REQUEST["active_modules"] : array();
 
 		if (!XLite_Model_ModulesManager::getInstance()->updateModules($activeModules)) {
-			$this->set("valid", false);
+			$this->valid = false;
             $this->hidePageHeader();
 		}
     }
-
-    function action_uninstall()
-    {
-		if (!isset($_REQUEST["mode"]) || $_REQUEST["mode"]!="cp") {
-			$this->startDump();
-		}
-        // uninstall and delete module
-        $moduleName = $_REQUEST["module_name"];
-        if (!$this->xlite->mm->uninstallModule($moduleName)) {
-            $this->set("valid", false);
-			$this->hidePageHeader();
-		} else {
-        	$this->set("silent", true);
-        }
-    }
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

@@ -613,7 +613,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
 	
 	function getRegistration($tax)
 	{
-		return $tax["registration"];
+		return isset($tax['registration']) ? $tax['registration'] : null;
 	}
 	
     function getNoteTaxName($node)

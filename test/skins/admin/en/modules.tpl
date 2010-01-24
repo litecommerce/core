@@ -84,49 +84,16 @@ Use this section to manage add-on components of your online store.
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 
 {* Display payment modules *}
-
-<tbody *IF="getModules(#1#)">
-<widget template="modules_body.tpl" caption="Payment modules" key="1">
-</tbody>
-
+<widget template="modules_body.tpl" caption="Payment modules" key="1" IF="getModules(#1#)" />
 
 {* Display shipping modules *}
-
-<tbody IF="getSortModules(#2#)">
-<widget template="modules_body.tpl" caption="Shipping modules" key="2">
-</tbody>
+<widget template="modules_body.tpl" caption="Shipping modules" key="2" IF="getModules(#2#)" />
 
 {* Display regular modules *}
-
-<tbody IF="getSortModules(#4#)">
-<widget template="modules_body.tpl" caption="Add-ons" key="4">
-</tbody>
-
+<widget template="modules_body.tpl" caption="Add-ons" key="4" IF="getModules(#4#)" />
 
 {* Display 3rd party modules *}
-
-<tbody IF="getSortModules(#5#)">
-<widget template="modules_body.tpl" caption="3rd party modules" key="5">
-</tbody>
+<widget template="modules_body.tpl" caption="3rd party modules" key="5" IF="getModules(#5#)" />
 
 </table>
 
-<br>
-
-<table border=0 cellpadding=5 width=100%>
-<form action="admin.php" method="POST" enctype="multipart/form-data">
-<tr>
-    <td class="AdminTitle"><hr>Install new module</td>
-</tr>    
-<tr>
-    <td>Select module .tar file: <input type="file" name="module_file"></td>
-</tr>
-<tr>
-    <td>
-    <input type="hidden" name="target" value="modules">
-    <input type="hidden" name="action" value="install">
-    <input type="submit" value=" Install ">
-    </td>
-</tr>
-</form>
-</table>

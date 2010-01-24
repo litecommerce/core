@@ -75,7 +75,6 @@ class XLite_Base
     */
     function get($name) // {{{
     {
-		if (!empty($name)) {
         if (strpos($name, '.')) {
             $obj = $this;
             foreach (explode('.', $name) as $n) {
@@ -107,12 +106,10 @@ class XLite_Base
         }
         if (method_exists($this, 'is' . $name)) {
             $func = 'is' . $name;
+			// echo get_class($this) . '---> ' . $func . '()' . "\n";
             return $this->$func();
         }
 		return $this->$name;
-		}
-
-        return null;
     } // }}}
 
 	function set($name, $value) // {{{
