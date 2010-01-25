@@ -243,18 +243,15 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
 		return $result;
     }
 
-	public function updateModules(array $moduleIDs)
+	public function updateModules(array $moduleIDs, $type = null)
     {
-		$result = true;
-
-        foreach ($this->getModules() as $module) {
-			$moduleResult = $this->changeModuleStatus($module, in_array($module->get("module_id"), $moduleIDs));
-			$result = $result && $moduleResult;
+        foreach ($this->getModules($type) as $module) {
+			$this->changeModuleStatus($module, in_array($module->get("module_id"), $moduleIDs));
         }
 
 		$this->isNeedToCleanupCache = true;
 
-		return $result;
+		return true;
     }
 
 	public function isActiveModule($moduleName)

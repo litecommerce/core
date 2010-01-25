@@ -8,7 +8,7 @@
         {truncate(item.brief_description,#300#):h}<br>
         <br>
         
-        <widget module="ProductOptions" template="modules/ProductOptions/selected_options.tpl" visible="{item.hasOptions()}" item="{item}">
+        <widget module="ProductOptions" template="modules/ProductOptions/selected_options.tpl" visible="{item&item.hasOptions()}" item="{item}">
 
         <FONT IF="{item.sku}" class="ProductDetails">SKU: {item.sku}</FONT><br>
 

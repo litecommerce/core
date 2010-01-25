@@ -47,7 +47,7 @@
 */
 class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
 {	
-    public $currentItem = null;
+    protected $currentItem = null;
 
     function getCurrentItem()
     {

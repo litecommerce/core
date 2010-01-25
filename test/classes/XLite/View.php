@@ -194,7 +194,6 @@ class XLite_View extends XLite_View_Abstract
 		switch ($name) {
 			case "category_id":
 			case "product_id":
-			case "module_id":
 			case "order_id":
 			case "profile_id":
 			case "orig_profile_id":

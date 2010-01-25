@@ -98,7 +98,19 @@ class XLite_Module_PayPalPro_Main extends XLite_Module_Abstract
     {
         return 'admin.php?target=payment_method&payment_method=paypalpro';
 
-    } // }}}
+    }
+
+	/**
+     * Return list of modules whitch are not allowed to be enbled at one time
+     *
+     * @return array
+     * @access public
+     * @since  3.0
+     */
+    public static function getMutualModules()
+    {
+        return array_merge(parent::getMutualModules(), array('PayPal'));
+    }
 
     /**
      * Perform some actions at startup
@@ -128,8 +140,6 @@ class XLite_Module_PayPalPro_Main extends XLite_Module_Abstract
        	        $this->registerPaymentMethod('paypalpro_express');
            		break;
        	}
-
-		$this->disableMutuallyModule('PayPal');
 
         $this->xlite->set('PayPalProEnabled', true);
         $this->xlite->set('PayPalProSolution',$pm->get('params.solution'));

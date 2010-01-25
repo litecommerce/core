@@ -140,7 +140,7 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
 		if (!is_array($valid_names)) $valid_names = array();
 
 		$key = $cmd_file;
-		if (strlen($valid_names[$key]) > 0) {
+		if (isset($valid_names[$key]) && strlen($valid_names[$key]) > 0) {
 			return $valid_names[$key];
 		}
 

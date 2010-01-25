@@ -86,6 +86,18 @@ class XLite_Module_LayoutOrganizer_Main extends XLite_Module_Abstract
         return true;
     }
 
+	/**
+     * Return list of modules whitch are not allowed to be enbled at one time
+     *
+     * @return array
+     * @access public
+     * @since  3.0
+     */
+    public static function getMutualModules()
+    {
+        return array_merge(parent::getMutualModules(), array('ShowcaseOrganizer'));
+    }
+
     /**
      * Perform some actions at startup
      *
@@ -96,8 +108,6 @@ class XLite_Module_LayoutOrganizer_Main extends XLite_Module_Abstract
     public function init()
     {
         parent::init();
-
-		$this->disableMutuallyModule('ShowcaseOrganizer');
 
     	XLite::getInstance()->set("LayoutOrganizerEnabled", true);
     }

@@ -42,7 +42,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_WholesaleTrading_Controller_Customer_Cart extends XLite_Module_WholesaleTrading_Controller_Customer_CartUpdate implements XLite_Base_IDecorator
+class XLite_Module_WholesaleTrading_Controller_Customer_Cart extends XLite_Controller_Customer_Cart implements XLite_Base_IDecorator
 {	
 	public $updateErrors = null;	
 	public $params = array("target","mode");	
@@ -141,10 +141,11 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Cart extends XLite_Modul
 		}
 	  	  
     }
+
+	function updateCart()
+    {
+        if($this->xlite == null || !$this->xlite->get("dont_update_cart"))
+            parent::updateCart();
+    }
 }
 
-
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

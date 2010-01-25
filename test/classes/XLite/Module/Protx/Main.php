@@ -62,6 +62,18 @@ class XLite_Module_Protx_Main extends XLite_Module_Abstract
 		return 'admin.php?target=payment_method&payment_method=protxdirectCc';
 	}
 
+	/**
+     * Return list of modules whitch are not allowed to be enbled at one time
+     *
+     * @return array
+     * @access public
+     * @since  3.0
+     */
+    public static function getMutualModules()
+    {
+        return array_merge(parent::getMutualModules(), array('ProtxDirect', 'ProtxForm'));
+    }
+
     /**
      * Perform some actions at startup
      *
@@ -86,8 +98,6 @@ class XLite_Module_Protx_Main extends XLite_Module_Abstract
 				$this->registerPaymentMethod('protxdirect_cc');
 				break;
 		}
-
-		$this->disableMutuallyModule('ProtxDirect');
 
 		$this->xlite->set('ProtxEnabled', true);
     }

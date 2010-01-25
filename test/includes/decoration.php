@@ -124,6 +124,15 @@ class Decorator
      */
     protected $modulePriorities = null;
 
+	/**
+	 * Modules whitch are not allowed to be enbled at one time
+	 * 
+	 * @var    array
+	 * @access protected
+	 * @since  3.0
+	 */
+	protected $mutualModules = null;
+
 
 	/**
 	 * Return current value of the "max_execution_time" INI setting 
@@ -434,9 +443,9 @@ class Decorator
      * @access protected
      * @since  3.0
      */
-    protected function fetchAll($sql)
+    protected function fetchAll($sql, $flags = PDO::FETCH_ASSOC)
     {
-        return $this->getDbHandler()->query($sql)->fetchAll(PDO::FETCH_ASSOC | PDO::FETCH_COLUMN);
+        return $this->getDbHandler()->query($sql)->fetchAll($flags);
     }
 
     /**
@@ -544,6 +553,30 @@ class Decorator
         return $result;
     }
 
+	/**
+	 * Return list of modules whitch are not allowed to be enbled at one time
+	 * 
+	 * @return array
+	 * @access protected
+	 * @since  3.0
+	 */
+	protected function getMutualModules()
+	{
+		if (is_null($this->mutualModules)) {
+
+			$this->mutualModules = $this->fetchAll(
+				'SELECT name, mutual_modules FROM xlite_modules WHERE enabled = \'1\' AND mutual_modules != \'\'',
+				PDO::FETCH_ASSOC | PDO::FETCH_GROUP | PDO::FETCH_UNIQUE | PDO::FETCH_COLUMN
+			);
+
+			foreach ($this->mutualModules as &$module) {
+				$module = explode(',', $module);
+			}
+		}
+
+		return $this->mutualModules;
+	}
+
     /**
      * Return list of active modules 
      * 
@@ -551,13 +584,35 @@ class Decorator
      * @access protected
      * @since  3.0
      */
-    protected function getActiveModules()
+    protected function getActiveModules($moduleName = null)
     {
         if (is_null($this->activeModules)) {
-            $this->activeModules = $this->fetchAll('SELECT name FROM xlite_modules WHERE enabled = \'1\'');
+
+            $this->activeModules = $this->fetchAll(
+				'SELECT name, \'1\' FROM xlite_modules WHERE enabled = \'1\'',
+				PDO::FETCH_ASSOC | PDO::FETCH_GROUP | PDO::FETCH_UNIQUE | PDO::FETCH_COLUMN
+			);
+
+			$modulesToDisable = array();
+
+			foreach ($this->getMutualModules() as $module => $dependencies) {
+				if (isset($this->activeModules[$module])) {
+					foreach ($dependencies as $dependendModule) {
+						unset($this->activeModules[$dependendModule]);
+						$modulesToDisable[] = $dependendModule;
+					}
+				}
+			}
+
+			if (!empty($modulesToDisable)) {
+				$modulesToDisable = array_unique($modulesToDisable);
+				$query = 'UPDATE xlite_modules SET enabled = \'0\' WHERE name IN '
+						 . '(' . implode(',', array_fill(0, count($modulesToDisable), '?')) . ')';
+				$this->getDbHandler()->prepare($query)->execute($modulesToDisable);
+			}
         }
 
-        return $this->activeModules;
+        return is_null($moduleName) ? $this->activeModules : isset($this->activeModules[$moduleName]);
     }
 
     /**
@@ -571,7 +626,7 @@ class Decorator
      */
     protected function isActiveModule($moduleName)
     {
-        return is_null($moduleName) || in_array($moduleName, $this->getActiveModules());
+        return is_null($moduleName) || $this->getActiveModules($moduleName);
     }
 
     /**
@@ -591,7 +646,7 @@ class Decorator
 
                 // Fetch dependencies from db
                 $dependencies = $this->fetchColumn(
-                    'SELECT dependencies FROM xlite_modules WHERE name= \'' . addslashes($module) . '\''
+                    'SELECT dependencies FROM xlite_modules WHERE name = \'' . addslashes($module) . '\''
                 );
                 $this->moduleDependencies[$module] = empty($dependencies) ? array() : explode(',', $dependencies);
             }

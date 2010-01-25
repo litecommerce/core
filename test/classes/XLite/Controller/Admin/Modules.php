@@ -65,8 +65,9 @@ class XLite_Controller_Admin_Modules extends XLite_Controller_Admin_Abstract
     function action_update()
     {
 		$activeModules = isset($_REQUEST["active_modules"]) ? $_REQUEST["active_modules"] : array();
+		$moduleType = isset($_REQUEST["module_type"]) ? $_REQUEST["module_type"] : null;
 
-		if (!XLite_Model_ModulesManager::getInstance()->updateModules($activeModules)) {
+		if (!XLite_Model_ModulesManager::getInstance()->updateModules($activeModules, $moduleType)) {
 			$this->valid = false;
             $this->hidePageHeader();
 		}

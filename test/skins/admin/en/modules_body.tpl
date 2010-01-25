@@ -1,6 +1,6 @@
 
 <form IF="xlite.mm.modules" action="admin.php" method="post" name="modules_form_{widget.key}">
-
+<input type="hidden" name="module_type" value="{widget.key}" />
 <tr>
 	<td>
 		<table cellspacing=0 cellpadding=0 border=0 width="100%">

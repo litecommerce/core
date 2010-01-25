@@ -66,14 +66,11 @@ class XLite_Model_Module extends XLite_Model_Abstract
      * @since  1.0
      */
     protected $fields = array(
-        'module_id'    => 0,
-        'name'         => '',
-        'description'  => '',
-        'enabled'      => 0,
-        'version'      => '',
-        'dependencies' => '', 
-        'type'         => self::MODULE_UNKNOWN,
-        'access_date'  => 0
+        'module_id'      => 0,
+        'name'           => '',
+        'enabled'        => 0,
+        'dependencies'   => '', 
+        'mutual_modules' => '',
     );
     
     /**

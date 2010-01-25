@@ -116,20 +116,17 @@ CREATE TABLE xlite_log (
 
 DROP TABLE IF EXISTS xlite_modules;
 CREATE TABLE xlite_modules (
-  module_id int(11) NOT NULL auto_increment,
+  module_id int(6) NOT NULL auto_increment,
   name varchar(64) NOT NULL default '',
-  description varchar(255) NOT NULL default '',
   enabled int(1) unsigned NOT NULL default '0',
   dependencies varchar(1024) NOT NULL default '',
-  version varchar(12) NOT NULL default '0',
-  type int(11) unsigned default '0' NOT NULL,
-  access_date int(11) NOT NULL DEFAULT 0,
-  PRIMARY KEY  (name),
-  KEY module_id (module_id),
-  KEY description (description),
+  mutual_modules varchar(1024) NOT NULL default '',
+  type int(1) unsigned NOT NULL default '0',
+  PRIMARY KEY (module_id),
+  UNIQUE KEY (name),
   KEY enabled (enabled),
   KEY dependencies (dependencies),
-  KEY version (version),
+  KEY mutual_modules (mutual_modules),
   KEY type (type)
 ) TYPE=MyISAM;
 
