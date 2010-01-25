@@ -416,16 +416,34 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 		$this->phpcode = $this->substitute();
 	}
 
+	protected function unsetAttributes(array &$attrs, array $keys)
+	{
+		foreach ($keys as $key) {
+			unset($attrs[$key]);
+		}
+	}
+
+	protected function setAttributesCode(array $attrs, $name)
+	{
+		$result = '';
+
+        if (!empty($attrs)) {
+            $result .= '$t->' . $name . '->setAttributes(array(';
+            foreach ($attrs as $key => $value) {
+                $result .= '\'' . $key . '\'=>' . $this->flexyAttribute($value) . ',';
+            }
+            $result .= ')); ';
+        }
+
+		return $result;
+	}
+
     function processWidgetAttrs(&$attrs)
     {
 		$target = isset($attrs['target']) ? $attrs['target'] : null;
 		$module = isset($attrs['module']) ? $attrs['module'] : null;
 
-		unset($attrs['target']);
-		unset($attrs['module']);
-
 		$name = isset($attrs['name']) ? $attrs['name'] : 'widget->_' . $this->widgetCounter++;
-		unset($attrs['name']);
 
         if (!isset($attrs['class'])) {
             $attrs['class'] = 'XLite_View_Abstract';
@@ -433,18 +451,19 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 
 		if (isset($attrs['if'])) {
 			$attrs['IF'] = $attrs['if'];
-			unset($attrs['if']);
 		}
+
+		$this->unsetAttributes($attrs, array('target', 'module', 'name', 'if'));
 
 		return array($target, $module, $name);
     }
 
     function widgetDisplayCode($attrs, $name)
     {
-		return 'isset($t->' . $name . ') && $t->' . $name . '->display();';
+		return 'if (isset($t->' . $name . ')): ' . $this->setAttributesCode($attrs, $name) . '$t->' . $name . '->display(); endif;';
     }
 
-    function widgetInitCode(array $attrs, $target, $module, $name)
+    function widgetInitCode(array &$attrs, $target, $module, $name)
     {
 		$result = '';
 
@@ -478,6 +497,7 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 			}
 
             $class = $attrs['class'];
+			unset($attrs['class']);
 
             $result .= $intend['main'] . '$t->' . $name . ' = new ' . $class . '();' . "\n";
             $result .= $intend['main'] . '$t->' . $name . '->component = $t;' . "\n";
@@ -486,17 +506,14 @@ class XLite_Model_FlexyCompiler extends XLite_Base
                 $result .= $intend['main'] . '$t->addComponent($t->' . $name . ');' . "\n";
             }
 
-			if (!empty($attrs)) {
-                $result .= $intend['main'] . '$t->' . $name . '->setAttributes(array(';
-                foreach ($attrs as $key => $value) {
-                    $result .= '\'' . $key . '\'=>' . $this->flexyAttribute($value) . ',';
-                }
-                $result .= '));' . "\n";
-            }
+			$this->unsetAttributes($attrs, array('IF', 'class'));
+			$result .= $this->setAttributesCode($attrs, $name);
 
 			if (isset($attrs['hidden'])) {
                 $result .= ' $t->' . $name . '->set(\'visible\', false);' . "\n";
             }
+
+			$this->unsetAttributes($attrs, array('hidden', 'template'));
 
             $result .= $intend['main'] . '$t->' . $name . '->init();' . "\n" 
 					. ($checkCondition ? $intend['cnd'] . 'endif;' . "\n" : '') 
