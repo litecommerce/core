@@ -211,8 +211,10 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
         }
 
         parent::init();
-        
-        $this->registerForm->set("mode", "register");
+       
+		if (!empty($this->registerForm)) { 
+	        $this->registerForm->set("mode", "register");
+		}
     }
 
 

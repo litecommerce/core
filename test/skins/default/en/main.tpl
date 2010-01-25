@@ -261,7 +261,7 @@
 <widget template="common/sidebar_box.tpl" dir="mini_cart" head="Shopping cart">
 <widget template="common/sidebar_box.tpl" dir="login" name="loginWidget" head="Authentication" IF="{!auth.isLogged()}" />
 <widget template="common/sidebar_box.tpl" dir="profile" name="profileWidget" head="Your profile" IF="{auth.isLogged()}" />
-<widget template="common/sidebar_box.tpl" dir="authentication" name="authenticationWidget" head="Authentication" IF="{auth.isLogged()}" / >
+<widget template="common/sidebar_box.tpl" dir="authentication" name="authenticationWidget" head="Authentication" IF="{auth.isLogged()}" />
 <widget module="Newsletters" template="common/sidebar_box.tpl" dir="modules/Newsletters/menu_news" head="News">
 <widget module="ProductAdviser" target="main,category,product,cart,RecentlyViewed" class="XLite_Module_ProductAdviser_View_CNewArrivalsProducts" template="common/sidebar_box.tpl" head="New Arrivals" dir="modules/ProductAdviser/NewArrivals">
 <widget module="ProductAdviser" target="main,category,product,cart" class="XLite_Module_ProductAdviser_View_CRecentliesProducts" template="common/sidebar_box.tpl" head="Recently viewed" dir="modules/ProductAdviser/RecentlyViewed">

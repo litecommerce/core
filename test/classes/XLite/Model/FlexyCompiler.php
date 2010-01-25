@@ -326,7 +326,7 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 
 			if ($token["type"] == "tag" || $token["type"] == "open-close-tag") {
 
-				if ($this->findAttr($i+1, 'if', $pos)) {
+				if ($this->findAttr($i+1, 'if', $pos) && (0 !== strcasecmp($token['name'], 'widget'))) {
                     if ($this->findClosingTag($i, $pos1)) {
                         $expr = $this->flexyCondition($this->getTokenText($pos+1));
                         $this->subst($token['start'], 0, '<?php if (' . $expr . '): ?>');
@@ -438,7 +438,7 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 		return $result;
 	}
 
-    function processWidgetAttrs(&$attrs)
+    function processWidgetAttrs(array &$attrs)
     {
 		$target = isset($attrs['target']) ? $attrs['target'] : null;
 		$module = isset($attrs['module']) ? $attrs['module'] : null;
@@ -458,68 +458,60 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 		return array($target, $module, $name);
     }
 
-    function widgetDisplayCode($attrs, $name)
+    function widgetDisplayCode(array &$attrs, $name)
     {
-		return 'if (isset($t->' . $name . ')): ' . $this->setAttributesCode($attrs, $name) . '$t->' . $name . '->display(); endif;';
+		$condition = 'isset($t->' . $name . ')';
+
+		if (isset($attrs['IF'])) {
+			$condition .= ' && (' . $this->flexyCondition($attrs['IF']) . ')';
+			unset($attrs['IF']);
+		}
+
+		return 'if (' . $condition . '): ' . $this->setAttributesCode($attrs, $name) . '$t->' . $name . '->display(); endif;';
     }
 
-    function widgetInitCode(array &$attrs, $target, $module, $name)
+    function widgetInitCode(array &$attrs, $target, $module, &$name)
     {
 		$result = '';
 
-		if (
-			!isset($this->initializedWidgets[$name]) 
-			&& (is_null($module) || XLite_Model_ModulesManager::getInstance()->isActiveModule($module))
-		) {
+		if (is_null($module) || XLite_Model_ModulesManager::getInstance()->isActiveModule($module)) {
 
-			$intend = array('main' => '', 'cnd' => '');
+			$intend = '';
 
 			if ($checkTarget = !is_null($target)) {
 
-				$result .= 'if ($t->isInitRequired(array(\'' 
-						. str_replace(',', '\',\'', preg_replace('/[^\w,]+/', '', $target)) . '\'))):' . "\n";
+				$preparedTarget = preg_replace('/[^\w,]+/', '', $target);
 
-				$intend['main'] .= '  ';
+				$result .= 'if ($t->isInitRequired(array(\'' . str_replace(',', '\',\'', $preparedTarget) . '\'))):' . "\n";
+
+				$intend .= '  ';
+				$name   .= '_' . str_replace(',', '_', $preparedTarget);
 			}
 
-			$condition = array();
-			foreach (array('IF', 'visible') as $attr) {
-				if (isset($attrs[$attr])) {
-					$condition[] = $this->flexyCondition($attrs[$attr]);
-				}
+			if (!isset($this->initializedWidgets[$name])) {
+
+	            $class = $attrs['class'];
+				unset($attrs['class']);
+
+	            $result .= $intend . '$t->' . $name . ' = new ' . $class . '();' . "\n";
+    	        $result .= $intend . '$t->' . $name . '->component = $t;' . "\n";
+        	    $result .= $intend . '$t->widget->addWidget($t->' . $name . ');' . "\n";
+            	if (class_exists($class, false) && is_subclass_of($class, 'XLite_View')) {
+	                $result .= $intend . '$t->addComponent($t->' . $name . ');' . "\n";
+    	        }
+
+				$result .= $intend . $this->setAttributesCode($attrs, $name) . "\n";
+
+				if (isset($attrs['hidden'])) {
+    	            $result .= ' $t->' . $name . '->set(\'visible\', false);' . "\n";
+        	    }
+
+				$this->unsetAttributes($attrs, array('hidden', 'template'));
+
+    	        $result .= $intend . '$t->' . $name . '->init();' . "\n" . ($checkTarget ? 'endif;' . "\n" : '') . "\n";
+
+				$this->initializedWidgets[$name] = true;
 			}
-			unset($attrs['IF']);
-
-			if ($checkCondition = !empty($condition)) {
-				$intend['cnd'] = $intend['main'];
-				$result .= $intend['cnd'] . 'if (' . implode(' && ', $condition) . '):' . "\n";
-				$intend['main'] .= '  ';
-			}
-
-            $class = $attrs['class'];
-			unset($attrs['class']);
-
-            $result .= $intend['main'] . '$t->' . $name . ' = new ' . $class . '();' . "\n";
-            $result .= $intend['main'] . '$t->' . $name . '->component = $t;' . "\n";
-            $result .= $intend['main'] . '$t->widget->addWidget($t->' . $name . ');' . "\n";
-            if (class_exists($class, false) && is_subclass_of($class, 'XLite_View')) {
-                $result .= $intend['main'] . '$t->addComponent($t->' . $name . ');' . "\n";
-            }
-
-			$this->unsetAttributes($attrs, array('IF', 'class'));
-			$result .= $this->setAttributesCode($attrs, $name);
-
-			if (isset($attrs['hidden'])) {
-                $result .= ' $t->' . $name . '->set(\'visible\', false);' . "\n";
-            }
-
-			$this->unsetAttributes($attrs, array('hidden', 'template'));
-
-            $result .= $intend['main'] . '$t->' . $name . '->init();' . "\n" 
-					. ($checkCondition ? $intend['cnd'] . 'endif;' . "\n" : '') 
-					. ($checkTarget ? 'endif;' . "\n" : '') . "\n";
-
-			$this->initializedWidgets[$name] = true;
 		}
 
         return $result;

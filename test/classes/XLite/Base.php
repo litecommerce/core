@@ -155,7 +155,7 @@ class XLite_Base
         if (strpos($name, '.')) {
 
             $names = explode('.', $name);
-            $last  = array_pop($names);
+            $name  = array_pop($names);
 
             foreach ($names as $n) {
 				if (is_null($obj = $obj->get($n))) {
@@ -164,7 +164,9 @@ class XLite_Base
             }
         }
 
-        return call_user_func_array(array($obj, $name), array_shift(func_get_args()));;
+		$params = func_get_args();
+
+        return call_user_func_array(array($obj, $name), array_shift($params));
     } // }}}
 
 	/**

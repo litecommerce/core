@@ -64,9 +64,9 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
         	$this->latest_point = $this->new_latest_point;
     	}
         $this->new_latest_point = microtime(true);
-        $this->$timePoint = $this->new_latest_point - $this->start_time;
+        $this->$timePoint = number_format($this->new_latest_point - $this->start_time, 4);
         $timePointDelta = $timePoint . "_delta";
-        $this->$timePointDelta = $this->new_latest_point - $this->latest_point;
+        $this->$timePointDelta = number_format($this->new_latest_point - $this->latest_point, 4);
     }
     
     function start($start)

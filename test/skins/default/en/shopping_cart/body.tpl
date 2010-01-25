@@ -10,7 +10,7 @@ Your shopping cart is empty.
 
 <div FOREACH="cart.items,cart_id,item">
 <p>
-<widget template="shopping_cart/item.tpl" IF="item.useStandardTemplate"/>
+<widget template="shopping_cart/item.tpl" IF="item.isUseStandardTemplate()" />
 <widget module="GiftCertificates" template="modules/GiftCertificates/item.tpl" IF="item.gcid"/>
 </div>
 <IMG SRC="images/spacer.gif" class=DialogBorder WIDTH="100%" HEIGHT=1 BORDER="0" alt="">

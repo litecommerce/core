@@ -92,18 +92,12 @@ class XLite_View_Abstract extends XLite_Base
 
     function isVisible()
     {
-		$result = $this->visible;
+		$mode   = $this->mode;
+        $dialog = $this->getDialog();
 
-        if (!is_null($this->mode) && !is_null($this->getDialog())) {
+        $result = (empty($mode) || empty($dialog)) ? $this->visible : in_array($dialog->mode, explode(',', $mode));
 
-            $result = in_array($this->getDialog()->mode, explode(',', $this->mode));
-
-        } elseif (!is_null($this->parentWidget)) {
-
-            $result = $this->parentWidget->isVisible();
-        }
-
-        return $result;
+        return ($result && !is_null($this->parentWidget)) ? $this->parentWidget->isVisible() : $result;
     }
 
     function getTemplateFile()
@@ -276,12 +270,14 @@ class XLite_View_Abstract extends XLite_Base
         } else {
             $price = $base;
         }    
-        if ($price{0} == '-' || $price{0} == '+') {
-            $sign = $price{0};
+
+		if (substr($price, 0, 1) == '-' || substr($price, 0, 1) == '+') {
+            $sign  = substr($price, 0, 1);
             $price = substr($price, 1);
         } else {
             $sign = '';
         }
+
         $price = $this->_price_format($price);
         $pos = false;
         if ($decimal_delim) {
