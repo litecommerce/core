@@ -195,5 +195,16 @@ class XLite_Base
         $this->_die('Trying to call undefined class method; class - "' . get_class($this) . '", function - "' . $method . '"');
     }
 
+	public function getComplex($name)
+	{
+		$obj = $this;
+
+		foreach (explode('.', $name) as $part) {
+			$obj = is_array($obj) ? (isset($obj[$part]) ? $obj[$part] : null) : $obj->get($part);
+			if (is_null($obj)) return null;
+		}
+
+		return $obj;
+	}
 }
 

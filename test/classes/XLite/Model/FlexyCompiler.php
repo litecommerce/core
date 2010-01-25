@@ -710,8 +710,9 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 
 			$token  = substr($str, 0, $len);
 			$method = (false !== ($dotPos = strrpos($token, '.'))) ? substr($token, $dotPos + 1) : $token;
+			$field  = substr($str, 0, $dotPos);
 
-			$result = '$t->' . ((false === $dotPos) ? '' : 'get(\'' . substr($str, 0, $dotPos) . '\')->') . $method;
+			$result = '$t->' . ((false === $dotPos) ? '' : 'get' . (strrpos($field, '.') ? 'Complex' : '') . '(\'' . $field . '\')->') . $method;
 
 			$str = substr($str, $len);
 			$params = array();
@@ -730,7 +731,8 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 		}
         if ($len) {
     		// field
-            $result = '$t->get(\'' . substr($str, 0, $len) . "')";
+			$field  = substr($str, 0, $len);
+            $result = '$t->get' . (strpos($field, '.') ? 'Complex' : '') . '(\'' . $field . "')";
         } else {
             $result = "";
         }
