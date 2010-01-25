@@ -82,9 +82,8 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
     public $connection = null;	
     public $connected = false;	
     
-    public $cache = array();	
-    public $cacheEnabled = false;
-    // }}}
+    protected $cache = array();	
+    protected $cacheEnabled = true;
 
 
 	public static function getInstance()
@@ -109,7 +108,6 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
         if (!@mysql_select_db($options["database"], $this->connection)) {
             $this->_die(mysql_error());
         }
-        @mysql_query("SET sql_mode='MYSQL40'", $this->connection);
         $this->connected = true;
 
         XLite_Model_Profiler::getInstance()->dbConnectTime = microtime(true) - $time;
@@ -543,7 +541,3 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
     // }}}
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

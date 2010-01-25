@@ -206,5 +206,10 @@ class XLite_Base
 
 		return $obj;
 	}
+
+	public function isComplex($name)
+    {
+        return (bool) $this->getComplex($name);
+    }
 }
 

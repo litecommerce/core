@@ -71,14 +71,14 @@ class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_Abstra
     function init()
     {
         parent::init();
-		if ($this->profileForm->isFromCheckout()) {
+
+		if (isset($this->profileForm) && $this->profileForm->isFromCheckout()) {
+
             $cart = XLite_Model_Cart::getInstance();
-            if (!$cart->isEmpty()) {
-            	$this->profileForm->profile = $cart->get("profile");
-    		} else {
-    			$this->_initAuthProfile();
-            }
+			$cart->isEmpty() ? $this->_initAuthProfile() : $this->profileForm->profile = $cart->get('profile');
+
 		} else {
+
 			$this->_initAuthProfile();
         }
     }
