@@ -68,9 +68,9 @@ class XLite_Module_PHPCyberSource_Model_PaymentMethod_PhpcybersourceCc extends X
 
 	function createAuthRequest($cart) // {{{ 
 	{
-		$profile  = $cart->get("profile.properties");
-		$shippingState 	= $cart->get("profile.shippingState.code");
-		$billingState	= $cart->get("profile.billingState.code");
+		$profile  = $cart->getComplex('profile.properties');
+		$shippingState 	= $cart->getComplex('profile.shippingState.code');
+		$billingState	= $cart->getComplex('profile.billingState.code');
 
 		$order 	  = $cart->get("properties");
 		$params	  = $this->get("params");

@@ -64,14 +64,14 @@ class XLite_Module_ProductOptions_Controller_Customer_Cart extends XLite_Control
         if (!is_null($this->getCurrentItem()->get('invalidOptions'))) {
             // got exception (invalid options combination)
             // build invalid options URL
-            $io = $this->get("currentItem.invalidOptions");
+            $io = $this->getComplex('currentItem.invalidOptions');
             $invalid_options = "";
             foreach ($io as $i => $o) {
                 $invalid_options .= "&" . urlencode("invalid_options[$i]") . "=" . urlencode($o);
             }
             // delete item from cart and switch back to product details
 			$key = $this->getCurrentItem()->get('key');
-			$cart_items = $this->get("cart.items");
+			$cart_items = $this->getComplex('cart.items');
 			for ($i = 0; $i < count($cart_items); $i++) {
 				if ($cart_items[$i]->get("key") == $key) {
 					$this->cart->deleteItem($cart_items[$i]);

@@ -254,7 +254,7 @@ EOT;
 			$google_id = $this->getXMLDataByPath($xmlData, "NEW-ORDER-NOTIFICATION/GOOGLE-ORDER-NUMBER");
 			$order = $this->getOrderFromCallback($xmlData, "NEW-ORDER-NOTIFICATION", false);
 			if ($order != null) {
-				$order_num = $this->get("params.order_prefix").$order->get("order_id");
+				$order_num = $this->getComplex('params.order_prefix').$order->get("order_id");
 				GoogleCheckout_OrderMerchantOrderNumber($this, $google_id, $order_num);
 			}
 		}
@@ -406,8 +406,8 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
 	function getCallbackURL()
 	{
 		$secureTestmode = "s";
-		if ($this->get("params.testmode") == "Y") {
-			if ((bool) $this->get("params.secure_testmode")) {
+		if ($this->getComplex('params.testmode') == "Y") {
+			if ((bool) $this->getComplex('params.secure_testmode')) {
 				$secureTestmode = "";
 			}
 		}

@@ -78,16 +78,16 @@ function func_sns_request($config, $clientId, $actions, $timestamp = null)
 	require_once LC_ROOT_DIR . 'lib' . LC_DS . 'PEAR.php';
 	require_once LC_ROOT_DIR . 'lib' . LC_DS . 'HTTP' . LC_DS . 'Request.php';
 
-	$url = $config->get("SnsIntegration.collectorURL");
+	$url = $config->getComplex('SnsIntegration.collectorURL');
 
-	if (!(strlen($url) > 0 && strlen($config->get("SnsIntegration.collectorLanguage")) > 0)) {
+	if (!(strlen($url) > 0 && strlen($config->getComplex('SnsIntegration.collectorLanguage')) > 0)) {
 		return false;
 	}
 	if ($url == "http://" || $url == "https://") {
 		return false;
 	}
 
-	$url .= "/event." . $config->get("SnsIntegration.collectorLanguage");
+	$url .= "/event." . $config->getComplex('SnsIntegration.collectorLanguage');
 
     $logger = new XLite_Logger();
     $logger->log("SnS request at $url:");
@@ -102,8 +102,8 @@ function func_sns_request($config, $clientId, $actions, $timestamp = null)
     	$http->_method = HTTP_REQUEST_METHOD_POST;
     	$http->addPostData("clientId",$clientId);
     	$http->addPostData("timestamp", $timestamp);
-        $http->addPostData("passphrase", $config->get("SnsIntegration.passphrase"));
-    	$http->addPostData("shopDisplayName", $config->get("SnsIntegration.shopDisplayName"));
+        $http->addPostData("passphrase", $config->getComplex('SnsIntegration.passphrase'));
+    	$http->addPostData("shopDisplayName", $config->getComplex('SnsIntegration.shopDisplayName'));
     	$http->addPostData("site", $config->xlite->shopUrl(""));
 
     	$n = 0;
@@ -126,8 +126,8 @@ function func_sns_request($config, $clientId, $actions, $timestamp = null)
         $postData = array();
     	$postData["clientId"] = $clientId;
     	$postData["timestamp"] = $timestamp;
-        $postData["passphrase"] = $config->get("SnsIntegration.passphrase");
-    	$postData["shopDisplayName"] = $config->get("SnsIntegration.shopDisplayName");
+        $postData["passphrase"] = $config->getComplex('SnsIntegration.passphrase');
+    	$postData["shopDisplayName"] = $config->getComplex('SnsIntegration.shopDisplayName');
     	$postData["site"] = $config->xlite->shopUrl("");
     	$n = 0;
     	foreach ($actions as $action) {
@@ -154,13 +154,13 @@ function func_sns_request($config, $clientId, $actions, $timestamp = null)
 
 function func_sns_profile_params($profile)
 {
-    $action = "&billing_country=" . urlencode($profile->get("billingCountry.country"));
+    $action = "&billing_country=" . urlencode($profile->getComplex('billingCountry.country'));
     $action .= "&billing_city=" . urlencode($profile->get("billing_city"));
     $action .= "&billing_company=" . urlencode($profile->get("billing_company"));
     $action .= "&billing_fax=" . urlencode($profile->get("billing_fax"));
     $action .= "&billing_phone=" . urlencode($profile->get("billing_phone"));
     $action .= "&billing_address=" . urlencode($profile->get("billing_address"));
-    $action .= "&billing_state=" . urlencode($profile->get("billingState.code"));
+    $action .= "&billing_state=" . urlencode($profile->getComplex('billingState.code'));
     $action .= "&billing_zipcode=" . urlencode($profile->get("billing_zipcode"));
     $action .= "&email=" . urlencode($profile->get("login"));
     $action .= "&billing_firstname=" . urlencode($profile->get("billing_firstname"));

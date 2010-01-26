@@ -92,20 +92,20 @@ class XLite_Module_AutoUpdateCatalog_Controller_Admin_Abstract extends XLite_Con
             case "add_product":
             case "product_list":
                 $autoUpdate = true;
-                $confirm = $this->get("config.AutoUpdateCatalog.confirm_product_update");
+                $confirm = $this->getComplex('config.AutoUpdateCatalog.confirm_product_update');
             break;
 
             case "category":
             case "categories":
             case "global_product_options":
                 $autoUpdate = true;
-                $confirm = $this->get("config.AutoUpdateCatalog.confirm_category_update");
+                $confirm = $this->getComplex('config.AutoUpdateCatalog.confirm_category_update');
 			break;
 
             case "extra_fields":
             	if ($this->action != "add_field" || ($this->action == "add_field" && $this->enabled != 0)) {
                     $autoUpdate = true;
-                    $confirm = $this->get("config.AutoUpdateCatalog.confirm_category_update");
+                    $confirm = $this->getComplex('config.AutoUpdateCatalog.confirm_category_update');
                 }
 			break;
         }    

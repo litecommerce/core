@@ -52,9 +52,9 @@ class XLite_Module_WishList_Controller_Abstract extends XLite_Controller_Abstrac
 
 		if(is_null($this->wishlist)) {
 			$this->wishlist = new XLite_Module_WishList_Model_WishList();
-			$found = $this->wishlist->find("profile_id = ". $this->auth->get("profile.profile_id"));
+			$found = $this->wishlist->find("profile_id = ". $this->auth->getComplex('profile.profile_id'));
 			if(!$found) { 
-				$this->wishlist->set("profile_id", $this->auth->get("profile.profile_id"));
+				$this->wishlist->set("profile_id", $this->auth->getComplex('profile.profile_id'));
 				$this->wishlist->set("date", time());
 				$this->wishlist->create(); 
 			}	

@@ -81,8 +81,8 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controlle
 		$Mailer = new XLite_Model_Mailer();
 		$Mailer->wishlist_recipient = $this->wishlist_recipient;
 		$Mailer->items = $this->get("items");
-		$Mailer->customer = $this->auth->get("profile.billing_firstname")." ".$this->auth->get("profile.billing_lastname");
-		$Mailer->compose($this->get("config.Company.site_administrator"),$this->wishlist_recipient,"modules/WishList/send");
+		$Mailer->customer = $this->auth->getComplex('profile.billing_firstname')." ".$this->auth->getComplex('profile.billing_lastname');
+		$Mailer->compose($this->getComplex('config.Company.site_administrator'),$this->wishlist_recipient,"modules/WishList/send");
 		$Mailer->send();	
 		$this->set("mode","MessageSent");
 		

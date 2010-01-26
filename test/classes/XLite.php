@@ -130,8 +130,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
         $this->logger = XLite_Logger::getInstance();
 
         // start session
-        $session = XLite_Model_Session::getInstance();
-        $this->session = $session->start();
+        $this->session = XLite_Model_Session::getInstance();
         $this->profiler->log("ss_time");
 
         // attempt to initialize modules subsystem
@@ -230,7 +229,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     		return false;
     	}
 
-		if ($this->get("config.General.shop_closed")) {
+		if ($this->getComplex('config.General.shop_closed')) {
 			if ($this->auth->is("logged") && $this->auth->isAdmin($this->auth->get("profile"))) {
     			return false;
 			} else {

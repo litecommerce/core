@@ -63,7 +63,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerSales extends XLite_Modu
                     $this->get("startDate"),
                     $this->get("endDate") + 24 * 3600,
                     $this->get("product_id"),
-                    $this->get("auth.profile.profile_id"),
+                    $this->getComplex('auth.profile.profile_id'),
                     $this->get("payment_status"),
                     null,
                     null,
@@ -116,13 +116,13 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerSales extends XLite_Modu
     {
         if ($pp->get("affiliate") == 0) {  // it's a partner buyer
             $this->salesStats[] = $pp;
-            foreach ($pp->get("order.items") as $item) {
+            foreach ($pp->getComplex('order.items') as $item) {
                 $this->qty += $item->get("amount");
             }
-            if ($pp->is("order.processed")) {
-                $this->items = array_merge($this->items, $pp->get("order.items"));
+            if ($pp->isComplex('order.processed')) {
+                $this->items = array_merge($this->items, $pp->getComplex('order.items'));
             }    
-            $this->salesTotal += $pp->get("order.subtotal");
+            $this->salesTotal += $pp->getComplex('order.subtotal');
         } else { // it's a partner affiliate
             if ($pp->get("paid")) { // 
                 $this->affiliatePaid += $pp->get("commissions");

@@ -85,7 +85,7 @@ class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Control
 					$rp = $this->product->getRelatedProducts();
 					if (is_array($rp) && count($rp) > 0) {
 						foreach($rp as $rp_item) {
-							if ($rp_item->get("product.product_id") == $product->get("product_id")) {
+							if ($rp_item->getComplex('product.product_id') == $product->get("product_id")) {
                         		$removedItems[$p_key] = true;
 							}
 						}
@@ -258,7 +258,7 @@ class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Control
 
 	function isRelatedProductsEnabled()
 	{
-		return (($this->config->get("ProductAdviser.admin_related_products_enabled") == "Y") ? true : false);
+		return (($this->config->getComplex('ProductAdviser.admin_related_products_enabled') == "Y") ? true : false);
 	}
 }
 

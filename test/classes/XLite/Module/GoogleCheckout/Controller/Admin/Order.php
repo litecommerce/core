@@ -103,60 +103,60 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
 
 	function getOrderGoogleId()
 	{
-		return $this->get("order.google_id");
+		return $this->getComplex('order.google_id');
 	}
 
 	function isValidGoogleOrder()
 	{
-		return ($this->get("order.google_id") > 0) ? true : false;
+		return ($this->getComplex('order.google_id') > 0) ? true : false;
 	}
 
 
 	function isGoogleAllowCharge()
 	{
-		return ((in_array($this->get("order.google_details.financial_state"), array("REVIEWING", "CHARGEABLE", "CHARGED")) && $this->get("order.googleRemainCharge") > 0) ? true : false);
+		return ((in_array($this->getComplex('order.google_details.financial_state'), array("REVIEWING", "CHARGEABLE", "CHARGED")) && $this->getComplex('order.googleRemainCharge') > 0) ? true : false);
 	}
 
 	function isGoogleAllowRefund()
 	{
 		// disallow refund order if order total equal or lower than zero
 		// in case order payed by bonus points
-		if ($this->get("order.total") <= 0) {
+		if ($this->getComplex('order.total') <= 0) {
 			return false;
 		}
 
-		return (($this->get("order.google_details.financial_state") == "CHARGED" && in_array($this->get("order.google_status"), array("", "P"))) ? true : false);
+		return (($this->getComplex('order.google_details.financial_state') == "CHARGED" && in_array($this->getComplex('order.google_status'), array("", "P"))) ? true : false);
 	}
 
 	function isGoogleAllowCancel()
 	{
 		// disallow cancel order if order total equal or lower than zero
 		// in case order payed by bonus points
-		if ($this->get("order.total") <= 0) {
+		if ($this->getComplex('order.total') <= 0) {
 			return false;
 		}
 
-		return ((in_array($this->get("order.google_details.financial_state"), array("CHARGEABLE", "PAYMENT_DECLINED")) || $this->get("order.google_status") == "R") ? true : false);
+		return ((in_array($this->getComplex('order.google_details.financial_state'), array("CHARGEABLE", "PAYMENT_DECLINED")) || $this->getComplex('order.google_status') == "R") ? true : false);
 	}
 
 	function isGoogleAllowDeliver()
 	{
-		return ((in_array($this->get("order.google_details.fulfillment_state"), array("NEW", "PROCESSING"))) ? true : false);
+		return ((in_array($this->getComplex('order.google_details.fulfillment_state'), array("NEW", "PROCESSING"))) ? true : false);
 	}
 
 	function isGoogleAllowProcess()
 	{
-		return (($this->get("order.google_details.fulfillment_state") == "NEW") ? true : false);
+		return (($this->getComplex('order.google_details.fulfillment_state') == "NEW") ? true : false);
 	}
 
 	function isGoogleAllowAcrhive()
 	{
-		return ((in_array($this->get("order.google_details.fulfillment_state"), array("DELIVERED", "WILL_NOT_DELIVER")) || in_array($this->get("order.google_details.financial_state"), array("PAYMENT_DECLINED", "CANCELLED", "CANCELLED_BY_GOOGLE"))) ? true : false);
+		return ((in_array($this->getComplex('order.google_details.fulfillment_state'), array("DELIVERED", "WILL_NOT_DELIVER")) || in_array($this->getComplex('order.google_details.financial_state'), array("PAYMENT_DECLINED", "CANCELLED", "CANCELLED_BY_GOOGLE"))) ? true : false);
 	}
 
 	function isGoogleOrderCanceled()
 	{
-		return (($this->get("order.google_status") == "C") ? true : false);
+		return (($this->getComplex('order.google_status') == "C") ? true : false);
 	}
 
 

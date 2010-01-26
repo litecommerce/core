@@ -146,7 +146,7 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
     function getDateDue($date, $format = null) // {{{
     {
         if (is_null($format)) {
-            $format = $this->get("config.General.date_format");
+            $format = $this->getComplex('config.General.date_format');
         }
         return strftime($format, $date);
     } // }}}
@@ -168,7 +168,7 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
     
     function export($format) // {{{
     {
-		$price_format = $this->config->get("General.price_format");
+		$price_format = $this->config->getComplex('General.price_format');
         $this->config->set("General.price_format","%s");
         require_once LC_MODULES_DIR . 'AccountingPackage' . LC_DS . 'encoded.php';
         AccountingPackage_export($this, $format);

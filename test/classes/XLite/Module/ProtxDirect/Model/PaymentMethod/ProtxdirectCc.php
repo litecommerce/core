@@ -66,7 +66,7 @@ class XLite_Module_ProtxDirect_Model_PaymentMethod_ProtxdirectCc extends XLite_M
 
 	function getReturnUrl() // {{{ 
 	{
-		$url = $this->xlite->shopURL("cart.php?target=protxdirect_checkout&action=return", $this->get("config.Security.customer_security"));
+		$url = $this->xlite->shopURL("cart.php?target=protxdirect_checkout&action=return", $this->getComplex('config.Security.customer_security'));
 		return $this->prepareUrl($url);
 	}   // }}}
 
@@ -88,7 +88,7 @@ class XLite_Module_ProtxDirect_Model_PaymentMethod_ProtxdirectCc extends XLite_M
 			}
 		}
 
-		$subtag = (($this->get("params.testmode") == "N") ? "" : "test");
+		$subtag = (($this->getComplex('params.testmode') == "N") ? "" : "test");
 		switch ($type) {
 			case "callback":
 				return "https://ukvps$subtag.protx.com/VPSDirectAuth/Callback3D.asp";

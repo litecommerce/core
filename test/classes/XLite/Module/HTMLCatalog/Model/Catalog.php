@@ -427,12 +427,12 @@ class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Model_FlexyCompiler
         if (!is_null($this->topCategory)) {
             $id = $this->topCategory;
         } else {
-            $id = $this->get("config.HTMLCatalog.catalog_category");
+            $id = $this->getComplex('config.HTMLCatalog.catalog_category');
         }    
         if (!empty($id)) {
             $category = new XLite_Model_Category($id);
         } else {
-            $category = $this->get("xlite.factory.Category.topCategory");
+            $category = $this->getComplex('xlite.factory.Category.topCategory');
         }    
         return $category;
     } // }}}
@@ -459,8 +459,8 @@ class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Model_FlexyCompiler
             $products = $category->get("products");
 
             // build category HTML page(s) (subcategories & products)
-            if ($this->get("config.HTMLCatalog.catalog_pages") == "both" || $this->get("config.HTMLCatalog.catalog_pages") == "categories") {
-                $pages = ceil(count($products) / $this->get("config.General.products_per_page"));
+            if ($this->getComplex('config.HTMLCatalog.catalog_pages') == "both" || $this->getComplex('config.HTMLCatalog.catalog_pages') == "categories") {
+                $pages = ceil(count($products) / $this->getComplex('config.General.products_per_page'));
                 $pages = $pages == 0 ? 1 : $pages;
 
 				// check if the category is visible
@@ -512,7 +512,7 @@ class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Model_FlexyCompiler
 			global $object;
     		if (is_null($this->get("onlyProduct")) || !(!is_null($this->get("onlyProduct")) && $this->get("onlyProduct") == 0)) {
                 for ($i = 0; $i < count($products); $i++) {
-                    if ($this->get("config.HTMLCatalog.catalog_pages") == "both" || $this->get("config.HTMLCatalog.catalog_pages") == "products") {
+                    if ($this->getComplex('config.HTMLCatalog.catalog_pages') == "both" || $this->getComplex('config.HTMLCatalog.catalog_pages') == "products") {
                         if (is_array($products[$i]) && isset($products[$i]["class"]) && isset($products[$i]["data"])) {
                         	if ($old_class != $products[$i]["class"] || !is_object($object)) {
                         		$old_class = $products[$i]["class"];
@@ -617,7 +617,7 @@ class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Model_FlexyCompiler
 
     function getCategoryUrl($category_id, $page_id = 0) // {{{
     {
-        $topID = $this->get("xlite.factory.Category.topCategory.category_id");
+        $topID = $this->getComplex('xlite.factory.Category.topCategory.category_id');
         $pageID = "";
         if ($category_id == $topID) {
             return CART_SELF;
@@ -636,7 +636,7 @@ class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Model_FlexyCompiler
 	{
 		$noCatalog = false;
         // remove entire catalog if configured
-        if ($this->get("config.HTMLCatalog.drop_catalog")) {
+        if ($this->getComplex('config.HTMLCatalog.drop_catalog')) {
             unlinkRecursive($this->getCatalogPath());
 			@mkdir($this->getCatalogPath(), 0777);
 			$noCatalog = true;
@@ -656,7 +656,7 @@ class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Model_FlexyCompiler
         // create index file
         @touch($this->getCatalogIndex());
         @chmod($this->getCatalogIndex(), 0666);
-        if (version_compare($this->config->get("Version.version"), "2.2.39", "ge")) {
+        if (version_compare($this->config->getComplex('Version.version'), "2.2.39", "ge")) {
             $htaccess = new XLite_Model_Htaccess();
             if ($htaccess->find("filename='catalog/.htaccess'"))
                 $htaccess->restoreFile();
@@ -681,7 +681,7 @@ class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Model_FlexyCompiler
             } 
             closedir($dh);
         }
-        if (version_compare($this->config->get("Version.version"), "2.2.39", "ge")) {
+        if (version_compare($this->config->getComplex('Version.version'), "2.2.39", "ge")) {
             $htaccess = new XLite_Model_Htaccess();
             if ($htaccess->find("filename='catalog/.htaccess'")) 
                 $htaccess->restoreFile();
@@ -690,7 +690,7 @@ class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Model_FlexyCompiler
 
     function process($url) // {{{
     {
-		if (version_compare($this->config->get("Version.version"), "2.2.35") <= 0) {
+		if (version_compare($this->config->getComplex('Version.version'), "2.2.35") <= 0) {
 			@include_once LC_MODULES_DIR . 'HTMLCatalog' . LC_DS . 'functions.php';
 		}
 
@@ -711,7 +711,7 @@ class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Model_FlexyCompiler
                     $filename = $this->createFileName($url);
                     $this->updateIndex($url, $filename, $this->pageUrls[$url]);
                     // check for building limit
-                    if ($this->total % ($this->get("config.HTMLCatalog.catalog_pages_count") + 1) == 0) {
+                    if ($this->total % ($this->getComplex('config.HTMLCatalog.catalog_pages_count') + 1) == 0) {
                         $this->set("incomplete", true);
                     }
 
@@ -740,7 +740,7 @@ class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Model_FlexyCompiler
         $this->total++;
         $this->updateIndex($url, $filename, $this->pageUrls[$url]);
         // check for building limit
-        if ($this->total % ($this->get("config.HTMLCatalog.catalog_pages_count") + 1) == 0) {
+        if ($this->total % ($this->getComplex('config.HTMLCatalog.catalog_pages_count') + 1) == 0) {
             $this->set("incomplete", true);
         }
 
@@ -981,12 +981,12 @@ class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Model_FlexyCompiler
 
     function isCategoryLink($href) // {{{
     {
-         return preg_match("/".CART_SELF."\?target=category/i", $href) && ($this->get("config.HTMLCatalog.catalog_pages") == "both" || $this->get("config.HTMLCatalog.catalog_pages") == "categories");
+         return preg_match("/".CART_SELF."\?target=category/i", $href) && ($this->getComplex('config.HTMLCatalog.catalog_pages') == "both" || $this->getComplex('config.HTMLCatalog.catalog_pages') == "categories");
     } // }}}
     
     function isProductLink($href) // {{{
     {
-        return preg_match("/".CART_SELF."\?target=product/i", $href) && ($this->get("config.HTMLCatalog.catalog_pages") == "both" || $this->get("config.HTMLCatalog.catalog_pages") == "products");
+        return preg_match("/".CART_SELF."\?target=product/i", $href) && ($this->getComplex('config.HTMLCatalog.catalog_pages') == "both" || $this->getComplex('config.HTMLCatalog.catalog_pages') == "products");
     } // }}}
     
     function getObjectName(&$obj, $field=null)
@@ -1001,11 +1001,11 @@ class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Model_FlexyCompiler
 
     function getCategoryFileName(&$request, $category)
     {
-    	$catname = $this->config->get("HTMLCatalog.category_name_format");
+    	$catname = $this->config->getComplex('HTMLCatalog.category_name_format');
     	$catname = str_replace("%cid", $category->get("category_id"), $catname);
     	$catname = str_replace("%cname", $this->getObjectName($category), $catname);
         if (isset($request["pageID"]) && $request["pageID"] != 0) {
-    		$pagename = str_replace("%page", $request["pageID"], $this->config->get("HTMLCatalog.category_page_format"));
+    		$pagename = str_replace("%page", $request["pageID"], $this->config->getComplex('HTMLCatalog.category_page_format'));
         } else {
     		$pagename = "";
         }
@@ -1016,11 +1016,11 @@ class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Model_FlexyCompiler
 
     function getProductFileName(&$request, $category, &$product)
     {
-    	$prodname = $this->config->get("HTMLCatalog.product_name_format");
+    	$prodname = $this->config->getComplex('HTMLCatalog.product_name_format');
     	$prodname = str_replace("%cid", $category->get("category_id"), $prodname);
     	$prodname = str_replace("%cname", $this->getObjectName($category), $prodname);
         if (isset($request["pageID"]) && $request["pageID"] != 0) {
-    		$pagename = str_replace("%page", $request["pageID"], $this->config->get("HTMLCatalog.category_page_format"));
+    		$pagename = str_replace("%page", $request["pageID"], $this->config->getComplex('HTMLCatalog.category_page_format'));
         } else {
     		$pagename = "";
         }
@@ -1118,9 +1118,9 @@ class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Model_FlexyCompiler
             } else {
                 echo "[<font color=red>FAILED!</font>]";
             }
-            if ($this->get("config.HTMLCatalog.catalog_memory") && function_exists('memory_get_usage')) {
+            if ($this->getComplex('config.HTMLCatalog.catalog_memory') && function_exists('memory_get_usage')) {
                 printf(" (%.2f Mb used)", $GLOBALS['memory_usage']);
-				// $maxMemoryUsage = $this->config->get("HTMLCatalog.memory_usage");
+				// $maxMemoryUsage = $this->config->getComplex('HTMLCatalog.memory_usage');
 				// if ($maxMemoryUsage < $GLOBALS['memory_usage']) {
 				// 	if (!is_object($this->cfg)) {
             	// 		$this->cfg = new XLite_Model_Config();

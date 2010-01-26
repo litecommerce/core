@@ -144,7 +144,7 @@ class XLite_Model_CssEditor extends XLite_Base
     function restoreDefault()
     {
         $file = $this->get("cssFile");
-        $orig = preg_replace("/^(skins)/", "schemas/templates/" . $this->config->get("Skin.skin"), $file);
+        $orig = preg_replace("/^(skins)/", "schemas/templates/" . $this->config->getComplex('Skin.skin'), $file);
         is_readable($orig) or die("$orig: file not found");
         if (is_writeable($file)) {
             unlink($file);

@@ -82,7 +82,7 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
 			if ($this->xlite->is("adminZone") && ($this->get("payedByGC") > 0)) {
 				$this->_payedByGC = min($this->get("total"), $this->get("payedByGC"));
 			} else {
-				$this->_payedByGC = min($this->get("total"), $this->get("gc.debit"));
+				$this->_payedByGC = min($this->get("total"), $this->getComplex('gc.debit'));
 			}
 			$this->set("total", $this->get("total") - $this->_payedByGC);
 		} else {
@@ -220,7 +220,7 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
             $count = $this->countShippedCertificates();
             if ($count) {
                 $this->shippingCost = $this->hasShippedItems() ? parent::getShippingCost() : 0;
-               	$this->shippingCost += $count*$this->config->get("GiftCertificates.shippingCost");
+               	$this->shippingCost += $count*$this->config->getComplex('GiftCertificates.shippingCost');
             } else {
                 $this->shippingCost = parent::getShippingCost();
             }
@@ -241,7 +241,7 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
     	if (!isset($this->shippedCertificates)) {
             $count = 0;
             foreach ($this->get("items") as $item) {
-                if (!is_null($item->get("gc")) && $item->get("gc.send_via") == "P") {
+                if (!is_null($item->get("gc")) && $item->getComplex('gc.send_via') == "P") {
                     $count++;
                 }
             }
@@ -285,7 +285,7 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
     	if ($property != "shippingTaxes") {
     		parent::set($property, $value);
     	} else {
-    		if ($this->getItemsCount() == $this->countShippedCertificates() && !$this->config->get("Taxes.prices_include_tax")) {
+    		if ($this->getItemsCount() == $this->countShippedCertificates() && !$this->config->getComplex('Taxes.prices_include_tax')) {
     			parent::set($property, array());
     		} else {
     			parent::set($property, $value);

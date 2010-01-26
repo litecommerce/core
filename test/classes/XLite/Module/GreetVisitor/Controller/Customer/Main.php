@@ -20,7 +20,7 @@ class XLite_Module_GreetVisitor_Controller_Customer_Main extends XLite_Controlle
 		$auth    = XLite_Model_Auth::getInstance();
 
         if ($auth->isLogged()) {
-            $first_last = $auth->get('profile.billing_firstname') . ' ' . $auth->get('profile.billing_lastname');
+            $first_last = $auth->getComplex('profile.billing_firstname') . ' ' . $auth->getComplex('profile.billing_lastname');
             setcookie("GreetingCookie", $first_last, time() + 3600 * 24 * 180, "/", func_parse_host($options['http_host']));
 			setcookie("GreetingCookie", $first_last, time() + 3600 * 24 * 180, "/", func_parse_host($options['https_host']));
         }

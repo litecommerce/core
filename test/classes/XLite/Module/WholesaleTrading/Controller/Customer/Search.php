@@ -47,7 +47,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Search extends XLite_Con
 {
     function init() // {{{
     {
-	    if ($this->config->get("WholesaleTrading.direct_addition")) {
+	    if ($this->config->getComplex('WholesaleTrading.direct_addition')) {
 			$this->session->set("DirectSaleAvailable", null);
 		}
         parent::init();

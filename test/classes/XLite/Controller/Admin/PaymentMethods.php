@@ -70,7 +70,7 @@ class XLite_Controller_Admin_PaymentMethods extends XLite_Controller_Admin_Abstr
 
     function action_update()
     {
-    	$default_offline_payment = $this->config->get("Payments.default_offline_payment");
+    	$default_offline_payment = $this->config->getComplex('Payments.default_offline_payment');
 
         foreach ($this->data as $id => $data) {
             if (array_key_exists("enabled", $data)) {

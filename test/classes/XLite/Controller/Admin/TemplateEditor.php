@@ -271,7 +271,7 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
     function getExtraPages() // {{{
     {
         if (is_null($this->extraPages)) {
-            $this->extraPages = $this->get("extraPage.pages");
+            $this->extraPages = $this->getComplex('extraPage.pages');
         }    
         return $this->extraPages;
     } // }}}
@@ -283,7 +283,7 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
 			foreach ($this->extraPages as $ep) {
 				$page = $ep->get("page");
 				$title = $ep->get("title");
-				$content = $ep->get("template.content");
+				$content = $ep->getComplex('template.content');
 
 				$_REQUEST["page"] = $page;
 				$this->extraPage = null;
@@ -425,7 +425,7 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
         $file->set("path", "skins_original");
         $file->set("newPath", "skins");
         $file->copy();
-		$file->set("path", sprintf("schemas/templates/%s",$this->config->get("Skin.skin")));
+		$file->set("path", sprintf("schemas/templates/%s",$this->config->getComplex('Skin.skin')));
         $file->set("newPath", "skins");
         $file->copy();
         $this->afterAdvanced();
@@ -435,7 +435,7 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
     {
         $file = $this->get("file");
         $to = $_REQUEST["selected_file"];
-		$schema_file = preg_replace("/^(skins)/", sprintf("schemas/templates/%s",$this->config->get("Skin.skin")), $to);
+		$schema_file = preg_replace("/^(skins)/", sprintf("schemas/templates/%s",$this->config->getComplex('Skin.skin')), $to);
 		$from = (file_exists($schema_file) ? $schema_file : preg_replace("/^(skins)/", "skins_original", $to));
         copyRecursive($from, $to);
         $this->afterAdvanced();

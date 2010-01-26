@@ -163,21 +163,6 @@ class XLite_Model_Abstract extends XLite_Base
     } // }}}
 
     /**
-    * Sets the properties for this object from the specified array.
-    *
-    * @access public
-    * @param array $properties The associative array with properties
-    */
-    function setProperties($properties) // {{{
-    {
-        foreach ($properties as $field => $value) {
-            if (array_key_exists($field, $this->fields)) {
-                $this->set($field, $properties[$field]);
-            }    
-        }
-    } // }}}
-
-    /**
     * Returns the properties of this object. Reads the object from database
     * if necessary.
     *
@@ -1018,9 +1003,23 @@ class XLite_Model_Abstract extends XLite_Base
     {
         return sprintf("%.02f", round(doubleval($price), 2));
     }
+
+    /**
+     * Sets the properties for this object from the specified array 
+     * 
+     * @param array $properties the associative array with propertie
+     *  
+     * @return void
+	 * @access public
+     * @since  3.0
+     */
+    public function setProperties(array $properties)
+    {
+        foreach ($properties as $field => $value) {
+			if (isset($this->fields[$field])) {
+                $this->set($field, $properties[$field]);
+            }
+        }
+    }
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

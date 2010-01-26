@@ -277,7 +277,7 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
 
 	function getFilePath($filename, $webdir = false)
 	{
-		$images_directory = $this->config->get("Images.images_directory");
+		$images_directory = $this->config->getComplex('Images.images_directory');
 		if (!(isset($images_directory) && strlen(trim($images_directory)) > 0)) {
 			$images_directory = IMAGES_DIR;
 		}

@@ -336,7 +336,7 @@ abstract class XLite_Controller_Abstract extends XLite_View
     */
     function getAccessLevel()
     {
-        return $this->get("auth.customerAccessLevel");
+        return $this->getComplex('auth.customerAccessLevel');
     }
 
     function redirect($url = null)
@@ -389,7 +389,7 @@ abstract class XLite_Controller_Abstract extends XLite_View
 
     public function getLoginURL()
 	{
-		return $this->shopUrl($this->get('xlite.script'));
+		return $this->shopUrl($this->getComplex('xlite.script'));
 	}
 
     function getPageTemplate()
@@ -482,15 +482,15 @@ abstract class XLite_Controller_Abstract extends XLite_View
 
 	function getCharset()
 	{
-		$charset = $this->get("cart.profile.billingCountry.charset");
+		$charset = $this->getComplex('cart.profile.billingCountry.charset');
 		if ($charset)
 			return $charset;
 
 		if ($this->auth->isLogged()) {
 			$profile = $this->auth->get("profile");
-			return $profile->get("billingCountry.charset");
+			return $profile->getComplex('billingCountry.charset');
 		} else {
-			$country = $this->config->get("General.default_country");
+			$country = $this->config->getComplex('General.default_country');
 			$obj = new XLite_Model_Country($country);
 			return ($obj->get("charset")) ? $obj->get("charset") : "iso-8859-1";
 		}
@@ -499,7 +499,7 @@ abstract class XLite_Controller_Abstract extends XLite_View
 	function getEmailValidatorRegExp()
 	{
 		$values = array();
-		$domains = split(",| |;|\||\/", $this->config->get("Email.valid_email_domains"));
+		$domains = split(",| |;|\||\/", $this->config->getComplex('Email.valid_email_domains'));
 		foreach ((array)$domains as $key=>$val) {
 			if (!trim($val))
 				continue;
@@ -542,7 +542,7 @@ abstract class XLite_Controller_Abstract extends XLite_View
 
     function checkHtaccess()
     {
-        if($this->get("config.Security.htaccess_protection") == "Y"){
+        if($this->getComplex('config.Security.htaccess_protection') == "Y"){
             $htaccess = new XLite_Model_Htaccess();
             $htaccess->checkFiles();
         }

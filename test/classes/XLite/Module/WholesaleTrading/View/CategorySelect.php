@@ -52,7 +52,7 @@ class XLite_Module_WholesaleTrading_View_CategorySelect extends XLite_View_Categ
 
 	function isCategorySelected($id)
 	{
-		return in_array($id, explode(";", $this->get("config.WholesaleTrading.bulk_categories")));
+		return in_array($id, explode(";", $this->getComplex('config.WholesaleTrading.bulk_categories')));
 	}
 }
 

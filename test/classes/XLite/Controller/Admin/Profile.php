@@ -69,8 +69,8 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
     function handleRequest()
     {
         if ($this->get("mode") == "delete") {
-            if (!$this->is("profile.admin") ||
-                !$this->is("profile.enabled") ||
+            if (!$this->isComplex('profile.admin') ||
+                !$this->isComplex('profile.enabled') ||
                 !$this->auth->isLastAdmin($this->get("profile"))) {
                 // perform delete; no confirmation
                 $_REQUEST['action'] = "delete";
@@ -114,7 +114,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
     {
         $this->registerForm->action_register();
         if ($this->registerForm->get("mode") == "success") {
-            $this->set("returnUrl", "admin.php?target=profile&profile_id=" . $this->registerForm->get("profile.profile_id"));
+            $this->set("returnUrl", "admin.php?target=profile&profile_id=" . $this->registerForm->getComplex('profile.profile_id'));
         }
     }
 

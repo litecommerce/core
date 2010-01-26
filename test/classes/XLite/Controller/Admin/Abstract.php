@@ -73,7 +73,7 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
             return;
         }
 
-        if(!$this->isIgnoredTarget() && $this->get("xlite.config.Security.admin_ip_protection") == "Y" && !$this->auth->isValidAdminIP($this) && !($_REQUEST['target'] == 'payment_method' && $_REQUEST['action']=='callback')){
+        if(!$this->isIgnoredTarget() && $this->getComplex('xlite.config.Security.admin_ip_protection') == "Y" && !$this->auth->isValidAdminIP($this) && !($_REQUEST['target'] == 'payment_method' && $_REQUEST['action']=='callback')){
             $this->redirect("admin.php?target=login&mode=access_denied");
             return;
         }
@@ -86,14 +86,14 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
         if ($this->session->get("no_https")) {
             return false;
         }
-        return $this->get("config.Security.admin_security");
+        return $this->getComplex('config.Security.admin_security');
     }
 
     function getRecentAdmins()
     {
         if ($this->auth->isLogged() && is_null($this->recentAdmins)) {
             $profile = new XLite_Model_Profile();
-            $this->recentAdmins = $profile->findAll("access_level>='".$this->get("auth.adminAccessLevel")."' AND last_login>'0'", "last_login ASC", null, "0, 7");
+            $this->recentAdmins = $profile->findAll("access_level>='".$this->getComplex('auth.adminAccessLevel')."' AND last_login>'0'", "last_login ASC", null, "0, 7");
         }    
         return $this->recentAdmins;
     }
@@ -130,7 +130,7 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
 <?php   }
 ?>
     <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->get("charset"); ?>">
-    <LINK href="skins/<?php echo $this->xlite->get("layout.skin"); ?>/en/style.css"  rel=stylesheet type=text/css>
+    <LINK href="skins/<?php echo $this->xlite->getComplex('layout.skin'); ?>/en/style.css"  rel=stylesheet type=text/css>
 </HEAD>
 <BODY leftmargin="0" topmargin="0" rightmargin="0" bottommargin="0" marginwidth="0" marginheight="0"><?php
         if ($scroll_down) {
@@ -145,7 +145,7 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
     <TABLE border="0" width="100%" cellpadding="0" cellspacing="0" valign=top>
     <TR class="displayPageHeader" height="18">
         <TD align=left class="displayPageHeader" valign=middle width="50%">&nbsp;&nbsp;&nbsp;LiteCommerce</TD>
-        <TD align=right class="displayPageHeader" valign=middle width="50%">Version: <?php echo $this->config->get("Version.version"); ?>&nbsp;&nbsp;&nbsp;</TD>
+        <TD align=right class="displayPageHeader" valign=middle width="50%">Version: <?php echo $this->config->getComplex('Version.version'); ?>&nbsp;&nbsp;&nbsp;</TD>
     </TR>
     </TABLE>
 </TD>
@@ -204,7 +204,7 @@ EOT;
 
 	public function getLoginURL()
 	{
-		return $this->shopUrl($this->get('xlite.script'), $this->get('config.Security.admin_security'));
+		return $this->shopUrl($this->getComplex('xlite.script'), $this->getComplex('config.Security.admin_security'));
 	}
 }
 

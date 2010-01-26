@@ -26,7 +26,7 @@ function BeanStream_parse_str($str)
 
 function BeanStream_get_order_number($cart)
 {
-    $params = $cart->get("paymentMethod.params");
+    $params = $cart->getComplex('paymentMethod.params');
 	$order_id = ((!empty($params["order_prefix"]))?($params["order_prefix"] . "_"):"") . $cart->get("order_id");
 	return $order_id;
 }
@@ -58,7 +58,7 @@ function BeanStream_processor_process($_this, $cart)
 		"requestType"       => "BACKEND",
         "vbvEnabled"        => (($params["vbvEnabled"]) ? "1" : "0"),
         "scEnabled"         => (($params["scEnabled"]) ? "1" : "0"),
-        "termUrl"           => $_this->xlite->shopUrl("classes/modules/BeanStream/callback.php", $_this->get("config.Security.customer_security")),
+        "termUrl"           => $_this->xlite->shopUrl("classes/modules/BeanStream/callback.php", $_this->getComplex('config.Security.customer_security')),
         "merchant_id"		=> $params["merchant_id"],
 		"username"			=> $params["username"],
 		"password"			=> $params["password"],

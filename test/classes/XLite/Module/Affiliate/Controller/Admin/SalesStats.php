@@ -118,13 +118,13 @@ class XLite_Module_Affiliate_Controller_Admin_SalesStats extends XLite_Module_Af
     
     function sumSale($pp)
     {
-        foreach ($pp->get("order.items") as $item) {
+        foreach ($pp->getComplex('order.items') as $item) {
             $this->qty += $item->get("amount");
         }
-        if ($pp->is("order.processed")) {
-                $this->items = is_array($this->items) ? array_merge($this->items, $pp->get("order.items")) : $pp->get("order.items");
+        if ($pp->isComplex('order.processed')) {
+                $this->items = is_array($this->items) ? array_merge($this->items, $pp->getComplex('order.items')) : $pp->getComplex('order.items');
         }    
-        $this->salesTotal += $pp->get("order.subtotal");
+        $this->salesTotal += $pp->getComplex('order.subtotal');
         $this->commissionsTotal += $pp->get("commissions");
     }
 }

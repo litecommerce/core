@@ -78,7 +78,7 @@ class XLite_Model_Session extends XLite_Base implements XLite_Base_ISingleton
 
 	public static function getInstance()
     {
-        return self::_getInstance(__CLASS__);
+        return self::_getInstance(__CLASS__ . '_' . LC_SESSION_TYPE);
     }
  
     /**
@@ -90,20 +90,7 @@ class XLite_Model_Session extends XLite_Base implements XLite_Base_ISingleton
         parent::__construct();
 
 		$xlite = XLite::getInstance();
-		$this->options = array_merge($this->options, $xlite->getOptions('session_details'), $xlite->getOptions('host_details'));
-    }
-
-    /**
-    * Singleton method. Attempts to return a reference to concrete Session
-    * instance, only creating a new instance if no Session instance
-    * currently exists.
-    *
-    * @return               The concrete Session reference
-    *                       on error.
-    */
-    public function start()
-    {
-		return call_user_func(array('XLite_Model_Session_' . $this->getType(), 'getInstance'));
+		$this->options = array_merge($this->options, XLite::getInstance()->getOptions('host_details'));
     }
 
     /**

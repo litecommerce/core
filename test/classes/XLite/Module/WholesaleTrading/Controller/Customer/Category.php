@@ -53,11 +53,11 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
 	
     function init() // {{{
     {
-		if (in_array($_REQUEST["category_id"], explode(";", $this->get("config.WholesaleTrading.bulk_categories")))) {
+		if (in_array($_REQUEST["category_id"], explode(";", $this->getComplex('config.WholesaleTrading.bulk_categories')))) {
 			$layout = XLite_Model_Layout::getInstance();
 			$layout->addLayout("category_products.tpl", "modules/WholesaleTrading/bulk_category_products.tpl");
 		}
-	    if ($this->config->get("WholesaleTrading.direct_addition")) {
+	    if ($this->config->getComplex('WholesaleTrading.direct_addition')) {
 			$this->session->set("DirectSaleAvailable", null);
 		}
         parent::init();
@@ -104,7 +104,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
 			$this->add_products($products);
 			$this->add_products($opt_products);
 
-            if ($this->config->get("General.redirect_to_cart")) {
+            if ($this->config->getComplex('General.redirect_to_cart')) {
                  $this->set("returnUrl", "cart.php?target=cart");
              }
 		} else {
@@ -244,7 +244,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
 		$items = $this->cart->get('items');
 		$exists_amount = 0;
 		for ($i=0; $i < count($items); $i++) {
-			if ($items[$i]->get('product.product_id') == $product_id) {
+			if ($items[$i]->getComplex('product.product_id') == $product_id) {
 				$exists_amount += $items[$i]->get('amount');
 			}
 		}
@@ -364,7 +364,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
 	function getProductExpandedItems($product)
 	{
 		$items = (array) $product->get("expandedItems");
-		if ($this->xlite->get("InventoryTrackingEnabled") && $this->get("config.InventoryTracking.exclude_product") && 
+		if ($this->xlite->get("InventoryTrackingEnabled") && $this->getComplex('config.InventoryTracking.exclude_product') && 
 			$this->xlite->get("ProductOptionsEnabled") && $product->hasOptions() && $product->get("tracking")) {
 			// remove out-of-stock options combinations from the expanded items list
 			$product_id = $product->get("product_id");

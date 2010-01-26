@@ -154,9 +154,9 @@ class XLite_Module_AOM_Model_OrderItem extends XLite_Model_OrderItem implements 
 
 	function hasWholesalePricing() // {{{
 	{
-		if ($this->xlite->get("mm.activeModules.WholesaleTrading")) {
+		if ($this->xlite->getComplex('mm.activeModules.WholesaleTrading')) {
 			$wholesale = new XLite_Module_WholesaleTrading_Model_WholesalePricing() 	;
-			return count($wholesale->findAll("product_id='" . $this->get("product.product_id") . "' AND amount<= '" . $this->get("amount") . "' AND (membership='all' OR membership='" . $this->get("order.profile.membership") . "')"));
+			return count($wholesale->findAll("product_id='" . $this->getComplex('product.product_id') . "' AND amount<= '" . $this->get("amount") . "' AND (membership='all' OR membership='" . $this->getComplex('order.profile.membership') . "')"));
 		} else {
 			return false;
 		}

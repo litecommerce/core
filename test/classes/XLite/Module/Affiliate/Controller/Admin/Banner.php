@@ -50,7 +50,7 @@ class XLite_Module_Affiliate_Controller_Admin_Banner extends XLite_Controller_Ad
     function initView()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-            $this->set("properties", $this->get("banner.properties"));
+            $this->set("properties", $this->getComplex('banner.properties'));
         }
     }
 

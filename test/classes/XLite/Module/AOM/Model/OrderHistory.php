@@ -97,7 +97,7 @@ class XLite_Module_AOM_Model_OrderHistory extends XLite_Model_Abstract
 
 		$secureChanges = "";
 
-		if (!$this->xlite->get("config.AOM.cc_info_history")) {
+		if (!$this->xlite->getComplex('config.AOM.cc_info_history')) {
 			foreach ($value as $key=>$val) {
 				if ( is_array($val) ) {
 					foreach ($val as $k=>$v) {
@@ -109,7 +109,7 @@ class XLite_Module_AOM_Model_OrderHistory extends XLite_Model_Abstract
 			}
 		}
 
-		if ( $this->xlite->get("config.AOM.cc_info_history") && $this->xlite->mm->get("activeModules.AdvancedSecurity") && $this->xlite->is("adminZone") && $this->get("config.AdvancedSecurity.gpg_crypt_db") ) {
+		if ( $this->xlite->getComplex('config.AOM.cc_info_history') && $this->xlite->mm->getComplex('activeModules.AdvancedSecurity') && $this->xlite->is("adminZone") && $this->getComplex('config.AdvancedSecurity.gpg_crypt_db') ) {
 			foreach ($value as $key=>$val) {
 				if ( is_array($val) ) {
 					foreach ($val as $k=>$v) {
@@ -243,8 +243,8 @@ class XLite_Module_AOM_Model_OrderHistory extends XLite_Model_Abstract
 			}
             $changedStatus = new XLite_Module_AOM_Model_OrderStatus();
             $changedStatus->find("status = '".$_POST["substatus"]."'");
-			if ($order->get("orderStatus.name") != $changedStatus->get("name"))	{
-		    	$history['status'] = $order->get("orderStatus.name");
+			if ($order->getComplex('orderStatus.name') != $changedStatus->get("name"))	{
+		    	$history['status'] = $order->getComplex('orderStatus.name');
 				$history['changedStatus'] = $changedStatus->get("name");
 			}
 		}
@@ -256,7 +256,7 @@ class XLite_Module_AOM_Model_OrderHistory extends XLite_Model_Abstract
 		if (!empty($history)) {
             $orderHistory = new XLite_Module_AOM_Model_OrderHistory();
 			$orderHistory->set("order_id",$order->get("order_id"));
-			$orderHistory->set("login",$this->auth->get("profile.login"));
+			$orderHistory->set("login",$this->auth->getComplex('profile.login'));
 			$orderHistory->set("changes", $history);
 			$orderHistory->set("date",time());
 			$orderHistory->create();

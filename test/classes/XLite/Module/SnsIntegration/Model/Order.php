@@ -64,7 +64,7 @@ class XLite_Module_SnsIntegration_Model_Order extends XLite_Model_Order implemen
 		if (!is_null($product)) {
 		    $result["id"] = $product->get("product_id");
 		    $result["name"] = $product->get("name");
-		    $result["category"] = $product->get("categories.0.stringPath");
+		    $result["category"] = $product->getComplex('categories.0.stringPath');
 		} else {
 		    if ($this->xlite->get("GiftCertificatesEnabled")) {
                 $gc = $item->getGC();

@@ -121,7 +121,7 @@ class XLite_Module_SagePay_Main extends XLite_Module_Abstract
 		$pm = new XLite_Model_PaymentMethod();
         $pm->find('payment_method = \'sagepaydirect_cc\'');
 
-		switch($pm->get("params.solution")) {
+		switch($pm->getComplex('params.solution')) {
 			case "form":
 				$this->registerPaymentMethod('sagepayform_cc');
 			break;

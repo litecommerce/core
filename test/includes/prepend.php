@@ -67,6 +67,9 @@ define('LC_OS_IS_WIN', LC_OS_CODE === 'win');
 define('CART_SELF', 'cart.php');
 define('ADMIN_SELF', 'admin.php');
 
+// Session type
+define('LC_SESSION_TYPE', 'Sql');
+
 
 // Some common functions
 require_once LC_ROOT_DIR . 'includes' . LC_DS . 'functions.php';

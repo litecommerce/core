@@ -57,12 +57,12 @@ class XLite_Module_ePDQ_Model_PaymentMethod_EpdqCc extends XLite_Model_PaymentMe
 
 	function getePDQdata($cart)
 	{
-		$merchant = $this->get("params.param01");
-		$clientid = $this->get("params.param02");
-		$phrase   = $this->get("params.param03");
-		$currency = $this->get("params.param04");
-		$auth     = $this->get("params.param05");
-		$cpi_logo = $this->get("params.param06");
+		$merchant = $this->getComplex('params.param01');
+		$clientid = $this->getComplex('params.param02');
+		$phrase   = $this->getComplex('params.param03');
+		$currency = $this->getComplex('params.param04');
+		$auth     = $this->getComplex('params.param05');
+		$cpi_logo = $this->getComplex('params.param06');
 		$ordr = $cart->get("order_id");
 
 #the following parameters have been obtained earlier in the merchant's webstore: clientid, passphrase, oid, currencycode, total
@@ -77,7 +77,7 @@ class XLite_Module_ePDQ_Model_PaymentMethod_EpdqCc extends XLite_Model_PaymentMe
 
 		$request = new XLite_Model_HTTPS();
 		$request->urlencoded = true;
-		$request->url = $this->get("params.param08");
+		$request->url = $this->getComplex('params.param08');
 		$request->data = $_params;
 		$request->request();
 		return $request->response;

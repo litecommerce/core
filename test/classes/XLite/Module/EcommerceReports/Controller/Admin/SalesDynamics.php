@@ -114,7 +114,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
                     "labels" => array(),
                     );
             $func = "sumSale" . $this->get("show");
-            $startDate = $this->get("period.fromDate");
+            $startDate = $this->getComplex('period.fromDate');
             $items = $this->get("rawItems");
             $x = array();
             $y = array();

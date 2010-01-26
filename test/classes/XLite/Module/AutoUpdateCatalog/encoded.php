@@ -152,7 +152,7 @@ function func_product_update(&$dialog, $product_id, $category_id, $callback=fals
 	if ($product->filter()) {
 	    $catalog->process($url); // rebuild product page and index
 	} else {
-		if ($dialog->get("config.HTMLCatalog.drop_catalog")) {
+		if ($dialog->getComplex('config.HTMLCatalog.drop_catalog')) {
 			$catalog->delete($url);
 		}	
 	}

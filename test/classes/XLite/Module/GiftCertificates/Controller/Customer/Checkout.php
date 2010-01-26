@@ -54,7 +54,7 @@ class XLite_Module_GiftCertificates_Controller_Customer_Checkout extends XLite_C
 
     function checkCertificatesExpiration()
     {
-        if (!$this->xlite->get("config.GiftCertificates.expiration_email")) return;
+        if (!$this->xlite->getComplex('config.GiftCertificates.expiration_email')) return;
         $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate();
         $where = (array) $gc->getExpirationConditions();
         $where = implode(" AND ", $where);

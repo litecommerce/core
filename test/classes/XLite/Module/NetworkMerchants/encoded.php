@@ -16,7 +16,7 @@ function func_NetworkMerchants_process(&$lite_cart, &$paymentMethod, $debug = fa
 
     // Store values for X-Cart $config variable here
     $config = array ();
-    $config ["Company"]["orders_department"] = $lite_cart->config->get("Company.orders_department");
+    $config ["Company"]["orders_department"] = $lite_cart->config->getComplex('Company.orders_department');
 
     // Store values for X-Cart $cart variable here
     $cart = array ();
@@ -38,7 +38,7 @@ function func_NetworkMerchants_process(&$lite_cart, &$paymentMethod, $debug = fa
     $userinfo ["b_city"] = $profile->get("billing_city");
     $userinfo ["b_address"] = $profile->get("billing_address");
     $userinfo ["b_zipcode"] = $profile->get("billing_zipcode");
-	$userinfo ["b_state"] = $profile->get("billingState.code");
+	$userinfo ["b_state"] = $profile->getComplex('billingState.code');
 	$userinfo ["b_country"] = $profile->get("billing_country");
 
     $userinfo ["s_firstname"] = $profile->get("shipping_firstname");
@@ -46,7 +46,7 @@ function func_NetworkMerchants_process(&$lite_cart, &$paymentMethod, $debug = fa
     $userinfo ["s_city"] = $profile->get("shipping_city");
     $userinfo ["s_address"] = $profile->get("shipping_address");
     $userinfo ["s_zipcode"] = $profile->get("shipping_zipcode");
-	$userinfo ["s_state"] = $profile->get("shippingState.code");
+	$userinfo ["s_state"] = $profile->getComplex('shippingState.code');
 	$userinfo ["s_country"] = $profile->get("shipping_country");
 
     $userinfo ["phone"] = $profile->get("billing_phone");

@@ -103,13 +103,13 @@ class XLite_Controller_Admin_AddProduct extends XLite_Controller_Admin_Abstract
 
     function action_images()
     {
-        $tn = $this->get("product.thumbnail");
+        $tn = $this->getComplex('product.thumbnail');
         if ($tn->handleRequest() != IMAGE_OK && $tn->_shouldProcessUpload) {
         	$this->set("valid", false);
         	$this->set("thumbnail_read_only", true);
         }
 
-        $img = $this->get("product.image"); 
+        $img = $this->getComplex('product.image'); 
         if ($img->handleRequest() != IMAGE_OK && $img->_shouldProcessUpload) {
         	$this->set("valid", false);
         	$this->set("image_read_only", true);

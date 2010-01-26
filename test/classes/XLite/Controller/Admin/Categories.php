@@ -68,8 +68,8 @@ class XLite_Controller_Admin_Categories extends XLite_Controller_Admin_Abstract
     function getLocationPath()
     {
         $result = array();
-        if ($this->get("category.category_id") != 0) {
-            foreach ($this->get("category.path") as $category) {
+        if ($this->getComplex('category.category_id') != 0) {
+            foreach ($this->getComplex('category.path') as $category) {
 				$name = $category->get("name");
 				while (isset($result[$name])) {
 					$name .= " ";

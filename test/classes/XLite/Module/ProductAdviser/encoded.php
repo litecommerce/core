@@ -8,7 +8,7 @@
 
 function ProductAdviser_updateInventory($_this, $item)
 {
-	if ($_this->xlite->get("PA_InventorySupport") && $_this->config->get("ProductAdviser.customer_notifications_enabled")) {
+	if ($_this->xlite->get("PA_InventorySupport") && $_this->config->getComplex('ProductAdviser.customer_notifications_enabled')) {
 		if ($item->get("outOfStock")) {
 			$rejectedItemInfo = new StdClass();
         	$rejectedItem = $item;
@@ -77,7 +77,7 @@ function ProductAdviser_getRelatedProducts($_this)
 			$addSign = true;
 			$addSign &= $rp->filter();
 			$addSign &= $rp->is("available");
-			$productCategory = $rp->get("category.category_id");
+			$productCategory = $rp->getComplex('category.category_id');
 			// additional check
 			if (!$rp->is("available") || (isset($rp->properties) && is_array($rp->properties) && !isset($rp->properties["enabled"]))) {
 				// removing link to non-existing product
@@ -114,7 +114,7 @@ function ProductAdviser_getProductsAlsoBuy($_this)
 			$addSign = true;
 			$addSign &= $rp->filter();
 			$addSign &= $rp->is("available");
-			$productCategory = $rp->get("category.category_id");
+			$productCategory = $rp->getComplex('category.category_id');
 			// additional check
 			if (!$rp->is("available") || (isset($rp->properties) && is_array($rp->properties) && !isset($rp->properties["enabled"]))) {
 				// removing link to non-existing product
@@ -138,7 +138,7 @@ function ProductAdviser_getProductsAlsoBuy($_this)
 
 function ProductAdviser_updateProduct($_this)
 {
-    if (!$_this->config->get("ProductAdviser.customer_notifications_enabled")) {
+    if (!$_this->config->getComplex('ProductAdviser.customer_notifications_enabled')) {
     	return;
     }
 	$price = $_this->xlite->get("productChangedPrice");
@@ -161,7 +161,7 @@ function ProductAdviser_updateProduct($_this)
 
 function ProductAdviser_action_add($_this)
 {
-	if ($_this->xlite->get("PA_InventorySupport") && $_this->config->get("ProductAdviser.customer_notifications_enabled")) {
+	if ($_this->xlite->get("PA_InventorySupport") && $_this->config->getComplex('ProductAdviser.customer_notifications_enabled')) {
 		if (!is_null($_this->cart->get("outOfStock"))) {
 			$rejectedItemInfo = new StdClass();
         	$rejectedItem = new XLite_Model_OrderItem();

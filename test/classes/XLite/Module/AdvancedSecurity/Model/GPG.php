@@ -65,7 +65,7 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
         //
 
         // use config value
-        $exe = $this->get("config.AdvancedSecurity.gpg_binary_path");
+        $exe = $this->getComplex('config.AdvancedSecurity.gpg_binary_path');
         if (!is_null($exe) && @file_exists($exe)) {
             $this->exe = $exe;
         }
@@ -86,7 +86,7 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
         //
 
 	// use config value
-	$cfg_home = $this->get("config.AdvancedSecurity.gpg_home");
+	$cfg_home = $this->getComplex('config.AdvancedSecurity.gpg_home');
 	$home = realpath($cfg_home);
 	if (!is_null($cfg_home) && $cfg_home != "" && @is_dir($home)) {
 	    $home = $this->validatePath($home, true);
@@ -101,7 +101,7 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
         //
         // GnuPG user ID
         //
-        $this->recipient = $this->get("config.AdvancedSecurity.gpg_user_id");
+        $this->recipient = $this->getComplex('config.AdvancedSecurity.gpg_user_id');
 
         //
         // Temporary directory
@@ -315,7 +315,7 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
         } else {
             return "";
         }    
-		$cmd = $this->exe . " --armor --yes --no-tty --disable-mdc --no-random-seed-file --no-verbose --no-greeting --no-secmem-warning --no-permission-warning --no-options --no-random-seed-file --homedir " . $this->homedir . $target . "\"" . $this->get("config.AdvancedSecurity.gpg_user_id") . "\"";
+		$cmd = $this->exe . " --armor --yes --no-tty --disable-mdc --no-random-seed-file --no-verbose --no-greeting --no-secmem-warning --no-permission-warning --no-options --no-random-seed-file --homedir " . $this->homedir . $target . "\"" . $this->getComplex('config.AdvancedSecurity.gpg_user_id') . "\"";
 		$data = $this->execGPG($cmd);
         return $data;
     } // }}}
@@ -358,7 +358,7 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
 
     function isPasswordValid($pass = null) // {{{
     {
-        $password = is_null($pass) ? $this->get("session.masterPassword") : $pass;
+        $password = is_null($pass) ? $this->getComplex('session.masterPassword') : $pass;
         return $this->decrypt($this->encrypt("test"), $password) == "test";
     } // }}}
 

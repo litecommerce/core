@@ -50,7 +50,7 @@ class XLite_Module_SnsIntegration_Dialog extends XLite_Controller_Abstract imple
     // distinguish current site - either http or https
     function getSnsTrackerURL()
     {
-		return $this->config->get("SnsIntegration.collectorURL");
+		return $this->config->getComplex('SnsIntegration.collectorURL');
     }
 }
 

@@ -69,7 +69,7 @@ class XLite_Module_AOM_Controller_Admin_Module extends XLite_Controller_Admin_Mo
 
 	function isEmailCheckedAOM($email)
 	{
-		$value = $this->xlite->config->get("AOM.order_update_notification");
+		$value = $this->xlite->config->getComplex('AOM.order_update_notification');
 		if (!is_array($value))
 			return false;
 

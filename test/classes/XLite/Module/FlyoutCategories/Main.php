@@ -105,8 +105,8 @@ class XLite_Module_FlyoutCategories_Main extends XLite_Module_Abstract
 			$this->addLayout("modules/LayoutOrganizer/main.tpl", "modules/FlyoutCategories/schemes_manager.tpl");
 		}
 
-        $scheme = new XLite_Module_FlyoutCategories_Model_FCategoriesScheme($this->get("config.FlyoutCategories.scheme"));
-        $this->xlite->set('FlyoutCategoriesCssPath', 'styles/'.$scheme->get('options.color.value').'.css');
+        $scheme = new XLite_Module_FlyoutCategories_Model_FCategoriesScheme($this->getComplex('config.FlyoutCategories.scheme'));
+        $this->xlite->set('FlyoutCategoriesCssPath', 'styles/'.$scheme->getComplex('options.color.value').'.css');
 		$this->xlite->set("FlyoutCategoriesEnabled", true);
     }
 }

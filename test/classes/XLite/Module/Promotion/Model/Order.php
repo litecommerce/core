@@ -65,15 +65,15 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
 	*/
 	function getPayByPoints()
 	{
-		if ($this->config->get("Promotion.bonusPointsCost") <= 0) {
+		if ($this->config->getComplex('Promotion.bonusPointsCost') <= 0) {
 			return 0;
 		}
 
 		$payedByPoints = $this->get("payedByPoints");
 		if ($payedByPoints != 0.00) {
-			return ceil($payedByPoints / $this->config->get("Promotion.bonusPointsCost"));
+			return ceil($payedByPoints / $this->config->getComplex('Promotion.bonusPointsCost'));
 		}
-		$payByPoints = min($this->get("origProfile.bonusPoints"), ceil($this->getMaxPayByPoints() / $this->config->get("Promotion.bonusPointsCost")));
+		$payByPoints = min($this->getComplex('origProfile.bonusPoints'), ceil($this->getMaxPayByPoints() / $this->config->getComplex('Promotion.bonusPointsCost')));
 		return (int)$payByPoints;
 	}
 
@@ -83,7 +83,7 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
 
 		$tax = isset($allTaxes['Tax']) ? $allTaxes['Tax'] : 0;
 
-		if ($this->config->get("Taxes.prices_include_tax")) {
+		if ($this->config->getComplex('Taxes.prices_include_tax')) {
 			$shippingTaxes = $this->get("shippingTaxes");
 			$tax = $shippingTaxes['Tax'];
 		}
@@ -95,11 +95,11 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
 	*/
 	function getTotalBonusPoints()
 	{
-		if ($this->config->get("Promotion.bonusPointsCost") <= 0) {
+		if ($this->config->getComplex('Promotion.bonusPointsCost') <= 0) {
 			return 0;
 		}
 		
-		return ceil($this->getMaxPayByPoints() / $this->config->get("Promotion.bonusPointsCost"));
+		return ceil($this->getMaxPayByPoints() / $this->config->getComplex('Promotion.bonusPointsCost'));
 	}
 	
 	function getOrderAppliedBonuses()
@@ -194,13 +194,13 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
 
 	function promotionStatusChanged($sign=-1)
     {
-		if ($this->config->get("Promotion.bonusPointsCost") <= 0) {
+		if ($this->config->getComplex('Promotion.bonusPointsCost') <= 0) {
 			return;
 		}
 
         // decrease bonus points
-        $this->addBonusPoints($sign * ceil($this->get("payedByPoints") / $this->config->get("Promotion.bonusPointsCost")));
-        $dc = $this->get("DC.peer");
+        $this->addBonusPoints($sign * ceil($this->get("payedByPoints") / $this->config->getComplex('Promotion.bonusPointsCost')));
+        $dc = $this->getComplex('DC.peer');
         if (!is_null($dc)) {
             if ($dc->get("status") != "D") {
             	// increase/decrease times the discount coupon used times
@@ -218,8 +218,8 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
 	function processed()
 	{
         $this->logger->log("->Order::processed(), ".$this->_parentList());
-		if ($this->config->get("Promotion.earnBonusPointsRate")) {
-			$this->addBonusPoints((int)($this->get("subtotal") * $this->config->get("Promotion.earnBonusPointsRate")));
+		if ($this->config->getComplex('Promotion.earnBonusPointsRate')) {
+			$this->addBonusPoints((int)($this->get("subtotal") * $this->config->getComplex('Promotion.earnBonusPointsRate')));
 		}
 		$this->addBonusPointsSpecialOffer(1);
         parent::processed();
@@ -228,8 +228,8 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
 
 	function declined()
 	{
-		if ($this->config->get("Promotion.earnBonusPointsRate")) {
-			$this->addBonusPoints(-(int)($this->get("subtotal") * $this->config->get("Promotion.earnBonusPointsRate")));
+		if ($this->config->getComplex('Promotion.earnBonusPointsRate')) {
+			$this->addBonusPoints(-(int)($this->get("subtotal") * $this->config->getComplex('Promotion.earnBonusPointsRate')));
 		}
 		$this->addBonusPointsSpecialOffer(-1);
 		parent::declined();
@@ -397,11 +397,11 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
 
 	function isFreeShipping()
 	{
-		$defaultCountry = $this->config->get("General.default_country");
+		$defaultCountry = $this->config->getComplex('General.default_country');
 		if (!$this->auth->is("logged") && isset($defaultCountry)) {
 			$destCountry = $defaultCountry;
 		} else {
-			$destCountry = $this->get("profile.shipping_country");
+			$destCountry = $this->getComplex('profile.shipping_country');
 		}
 
 		foreach ($this->getAppliedBonuses() as $so) {
@@ -409,7 +409,7 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
 				return true;
 			}
 		}
-		if ($this->get("DC.type") == "freeship") {
+		if ($this->getComplex('DC.type') == "freeship") {
             $discount = $this->get("DC");
             return $discount->checkCondition($this);
 		}
@@ -446,22 +446,22 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
         $this->calcTax();
 
         $total = $this->get("subtotal");
-        if ( !$this->config->get("Taxes.prices_include_tax") ) {
+        if ( !$this->config->getComplex('Taxes.prices_include_tax') ) {
    	        $total += $this->get("tax");
        	}
-        if ( $this->config->get("Taxes.prices_include_tax") ) {
+        if ( $this->config->getComplex('Taxes.prices_include_tax') ) {
    	        $total += $this->get("shippingTax");
        	}
 
         $this->originalTotal = $this->get("subtotal") + $this->get("shippingCost");
-   	    if ( !$this->config->get("Taxes.prices_include_tax") ) {
+   	    if ( !$this->config->getComplex('Taxes.prices_include_tax') ) {
        	    $this->originalTotal += $this->get("tax");
         }
-		if ( $this->config->get("Taxes.prices_include_tax") ) {
+		if ( $this->config->getComplex('Taxes.prices_include_tax') ) {
 			$this->originalTotal += $this->get("shippingTax");
 		}
 
-		if ($this->config->get("Taxes.prices_include_tax") && !$this->get("config.Taxes.discounts_after_taxes")) {
+		if ($this->config->getComplex('Taxes.prices_include_tax') && !$this->getComplex('config.Taxes.discounts_after_taxes')) {
 			$discount = $this->get("taxedDiscount");
 		} else {
 			$discount = $this->get("discount");
@@ -503,7 +503,7 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
 		$this->_items = null;
 
 		if (floatval($this->get("discount")) > 0) {
-			if (!($this->get("config.Taxes.prices_include_tax") && $this->get("config.Taxes.discounts_after_taxes"))) {
+			if (!($this->getComplex('config.Taxes.prices_include_tax') && $this->getComplex('config.Taxes.discounts_after_taxes'))) {
 
 				$rates = $this->getTaxedDiscountRates();
 				$result = $this->_addTaxes($result, $rates);
@@ -527,7 +527,7 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
     	$number = 0;
     	foreach($items as $item) {
     		if ($item->get("bonusItem")) {
-    			if ($offer->_isConditionalProduct($item->get("product")) || $offer->_isConditionalCategory($item->get("product.category")) || $offer->_isConditionalProductPrice($item->get("product"))) {
+    			if ($offer->_isConditionalProduct($item->get("product")) || $offer->_isConditionalCategory($item->getComplex('product.category')) || $offer->_isConditionalProductPrice($item->get("product"))) {
     				$number ++;
     			}
     		}
@@ -551,7 +551,7 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
 		$discount = $this->get("discount");
 		if ($discount == 0) return $discount;
 
-		$is_percent_discount = ($this->get("DC.type") == "percent");
+		$is_percent_discount = ($this->getComplex('DC.type') == "percent");
 		if ($is_percent_discount) return $discount;
 
 		$taxes = (array) $this->getTaxedDiscountRates();
@@ -571,8 +571,8 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
 			$tax_items = array();
 			$tax_values = array();
 			foreach ($items as $k=>$i) {
-				if ($this->config->get("Taxes.prices_include_tax")) {
-					$i->set("price", $i->get("product.price"));
+				if ($this->config->getComplex('Taxes.prices_include_tax')) {
+					$i->set("price", $i->getComplex('product.price'));
 				} 
 				$skip_flag = $i->_skipTaxingWholesalePrice;
 				$i->_skipTaxingWholesalePrice = true;
@@ -597,20 +597,20 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
 		$result = array();
 		if ($discount <= 0) return $result;
 
-		$is_percent_discount = ($this->get("DC.type") == "percent");
+		$is_percent_discount = ($this->getComplex('DC.type') == "percent");
 
 		$ignore_discount = 0;
 		$ignore_percent = 0;
 		if ($this->xlite->get("WholesaleTradingEnabled")) {
 			// check whether WholesaleTrading has already applied an absolute global discount:
 			$global_discount = $this->get("global_discount");
-			$is_absolute_global_discount = ($this->get("appliedGlobalDiscount.discount_type") == "a");
-			$is_percent_global_discount = ($this->get("appliedGlobalDiscount.discount_type") == "p");
+			$is_absolute_global_discount = ($this->getComplex('appliedGlobalDiscount.discount_type') == "a");
+			$is_percent_global_discount = ($this->getComplex('appliedGlobalDiscount.discount_type') == "p");
 			if ($is_absolute_global_discount) {
 				$ignore_discount = $global_discount;
 			}
 			if ($is_percent_global_discount) {
-				$ignore_percent = $this->get("appliedGlobalDiscount.discount");
+				$ignore_percent = $this->getComplex('appliedGlobalDiscount.discount');
 			}
 		}
 
@@ -623,7 +623,7 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
 		foreach ($tax_items as $k=>$i) {
 			if ($discount <= 0) break;
 			$taxRates->setOrderItem($i);
-			if (!$this->config->get("Taxes.prices_include_tax")) {
+			if (!$this->config->getComplex('Taxes.prices_include_tax')) {
 				$item_cost = $i->get("taxableTotal");
 			} else {
 				$skip_flag = $i->_skipTaxingWholesalePrice;
@@ -649,7 +649,7 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
 				}
 			}
 
-			$taxable_discount = ($is_percent_discount)?$this->formatCurrency($item_cost * $this->get("DC.discount") / 100):$discount;
+			$taxable_discount = ($is_percent_discount)?$this->formatCurrency($item_cost * $this->getComplex('DC.discount') / 100):$discount;
 			$cost = min(abs($item_cost), abs($taxable_discount));
 			$taxRates->_conditionValues["cost"] = abs($cost) * -1;
 			$taxRates->_conditionValues["amount"] = 1;
@@ -660,7 +660,7 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
 
 			$discount_taxes = $taxRates->get("allTaxes");
             foreach ($discount_taxes as $tax_name => $tax_value) {
-                if (!$this->config->get("Taxes.discounts_after_taxes")) {
+                if (!$this->config->getComplex('Taxes.discounts_after_taxes')) {
                     $discount_taxes[$tax_name] = $tax_value / 100;
                 } else {
                     // KOI8-R: значит не надо изменять значение скидки на величину налога, т.к. 

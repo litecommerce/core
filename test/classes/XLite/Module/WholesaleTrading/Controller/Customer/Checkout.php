@@ -48,10 +48,10 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Checkout extends XLite_C
     function isShowWholesalerFields()
     {
         if (
-            $this->get('xlite.config.WholesaleTrading.WholesalerFieldsTaxId')   == "Y" ||
-            $this->get('xlite.config.WholesaleTrading.WholesalerFieldsVat')     == "Y" ||
-            $this->get('xlite.config.WholesaleTrading.WholesalerFieldsGst')     == "Y" ||
-            $this->get('xlite.config.WholesaleTrading.WholesalerFieldsPst')     == "Y"
+            $this->getComplex('xlite.config.WholesaleTrading.WholesalerFieldsTaxId')   == "Y" ||
+            $this->getComplex('xlite.config.WholesaleTrading.WholesalerFieldsVat')     == "Y" ||
+            $this->getComplex('xlite.config.WholesaleTrading.WholesalerFieldsGst')     == "Y" ||
+            $this->getComplex('xlite.config.WholesaleTrading.WholesalerFieldsPst')     == "Y"
             ) {
                 return true;
             }

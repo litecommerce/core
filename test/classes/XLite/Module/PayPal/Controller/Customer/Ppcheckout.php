@@ -79,9 +79,9 @@ class XLite_Module_PayPal_Controller_Customer_Ppcheckout extends XLite_Controlle
 ?>
 <HTML>
 <BODY onload="javascript: document.paypal_form.submit();">
-<FORM name="paypal_form" action="<?php echo $pm->get("params.url"); ?>" method="POST">
+<FORM name="paypal_form" action="<?php echo $pm->getComplex('params.url'); ?>" method="POST">
 <INPUT type=hidden name=cmd value="_ext-enter">
-<INPUT type=hidden name=invoice value="<?php echo $pm->get("params.prefix"); ?><?php echo $this->cart->get("order_id"); ?>">
+<INPUT type=hidden name=invoice value="<?php echo $pm->getComplex('params.prefix'); ?><?php echo $this->cart->get("order_id"); ?>">
 <INPUT type=hidden name=redirect_cmd value="_xclick">
 <INPUT type=hidden name=mrb value="R-2JR83330TB370181P">
 <INPUT type=hidden name=pal value="RDGQCFJTT6Y6A">
@@ -90,7 +90,7 @@ class XLite_Module_PayPal_Controller_Customer_Ppcheckout extends XLite_Controlle
 <INPUT type=hidden name=last_name value="<?php echo $profile->get("billing_lastname"); ?>">
 <INPUT type=hidden name=address1 value="<?php echo $profile->get("billing_address"); ?>">
 <INPUT type=hidden name=city value="<?php echo $profile->get("billing_city"); ?>">
-<INPUT type=hidden name=state value="<?php echo $profile->get("billingState.code"); ?>">
+<INPUT type=hidden name=state value="<?php echo $profile->getComplex('billingState.code'); ?>">
 <INPUT type=hidden name=country value="<?php echo $profile->get("billing_country"); ?>">
 <INPUT type=hidden name=zip value="<?php echo $profile->get("billing_zipcode"); ?>">
 <INPUT type=hidden name=day_phone_a value="<?php echo $pm->getDayPhoneA($profile); ?>">
@@ -99,15 +99,15 @@ class XLite_Module_PayPal_Controller_Customer_Ppcheckout extends XLite_Controlle
 <INPUT type=hidden name=night_phone_a value="<?php echo $pm->getDayPhoneA($profile); ?>">
 <INPUT type=hidden name=night_phone_b value="<?php echo $pm->getDayPhoneB($profile); ?>">
 <INPUT type=hidden name=night_phone_c value="<?php echo $pm->getDayPhoneC($profile); ?>">
-<INPUT type=hidden name=business value="<?php echo $pm->get("params.login"); ?>">
+<INPUT type=hidden name=business value="<?php echo $pm->getComplex('params.login'); ?>">
 <INPUT type=hidden name=item_name value="<?php echo $pm->getItemName($this->cart); ?>">
 <INPUT type=hidden name=amount value="<?php echo $this->cart->get("total"); ?>">
-<INPUT type=hidden name=currency_code value="<?php echo $pm->get("params.currency"); ?>">
+<INPUT type=hidden name=currency_code value="<?php echo $pm->getComplex('params.currency'); ?>">
 <INPUT type="hidden" name="bn" value="x-cart">
 <INPUT type=hidden name=return value="<?php echo $this->shopURL("cart.php?target=ppcheckout"); ?>&action=return&order_id=<?php echo $this->cart->get("order_id"); ?>">
 <INPUT type=hidden name=cancel_return value="<?php echo $this->shopURL("cart.php?target=checkout"); ?>">
 <INPUT type=hidden name=notify_url value="<?php echo $this->shopURL("cart.php?target=callback"); ?>&action=callback&order_id=<?php echo $this->cart->get("order_id"); ?>">
-<INPUT type=hidden name=image_url value="<?php echo $pm->get("params.image_url"); ?>">
+<INPUT type=hidden name=image_url value="<?php echo $pm->getComplex('params.image_url'); ?>">
 <CENTER>Please wait while connecting to <b>PayPal</b> payment gateway...</CENTER>
 </FORM>
 </BODY>
@@ -140,7 +140,7 @@ class XLite_Module_PayPal_Controller_Customer_Ppcheckout extends XLite_Controlle
 
 	function isSecure() // {{{ 
 	{
-		return $this->get("config.Security.customer_security");
+		return $this->getComplex('config.Security.customer_security');
 	} // }}} 
 
 }

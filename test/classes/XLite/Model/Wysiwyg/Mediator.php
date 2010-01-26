@@ -623,7 +623,7 @@ EOT;
         }
 
         copyFile(HTML_BUILDER_PATH . 'style.css', $templatesDir . 'style.css');
-		$fileList = $this->get("htmlStorage.fileList");
+		$fileList = $this->getComplex('htmlStorage.fileList');
 		if (!is_array($fileList) || count($fileList) == 0) {
 			$this->errors++;
             print "<font color=red>WARNING: Nothing to import or directory " . HTML_BUILDER_PATH . 'images'  . " does not exist or is not readable! </font>";
@@ -666,7 +666,7 @@ EOT;
     function increase_memory_limit($amount = 8)
     {
         //increase memory limit dynamically
-        if(!$this->get("xlite.memoryLimitChangeable"))
+        if(!$this->getComplex('xlite.memoryLimitChangeable'))
             return;
 
         $amount = (int) $amount;

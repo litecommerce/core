@@ -98,8 +98,8 @@ class XLite_Module_Promotion_Model_Cart extends XLite_Model_Cart implements XLit
         $op = $this->get("origProfile");
         $status = $this->get("status");
 		if ($status == "P" || $status == "Q" || $status == "C") {
-			if ($this->get("payedByPoints") > $op->get("bonusPoints")*$this->config->get("Promotion.bonusPointsCost")) {
-				$this->set("payedByPoints", $op->get("bonusPoints")*$this->config->get("Promotion.bonusPointsCost"));
+			if ($this->get("payedByPoints") > $op->get("bonusPoints")*$this->config->getComplex('Promotion.bonusPointsCost')) {
+				$this->set("payedByPoints", $op->get("bonusPoints")*$this->config->getComplex('Promotion.bonusPointsCost'));
 			}
 		}
         $this->calcTotals();
@@ -214,7 +214,7 @@ class XLite_Module_Promotion_Model_Cart extends XLite_Model_Cart implements XLit
 				$item = $items[$i];
 				if (!is_null($item->get("product"))) {
 					$product_id = $item->get("product_id");
-					$_bonusPrices = $item->get("order._bonusPrices");
+					$_bonusPrices = $item->getComplex('order._bonusPrices');
 					$item->order->_bonusPrices = false;
 					$price = $item->get("price");
 					$item->order->_bonusPrices = $_bonusPrices;
@@ -482,7 +482,7 @@ class XLite_Module_Promotion_Model_Cart extends XLite_Model_Cart implements XLit
 	function validateDiscountCoupon($couponCode = null)
 	{
 		if (is_null($couponCode)) {
-			$couponCode = $this->get("DC.coupon");
+			$couponCode = $this->getComplex('DC.coupon');
 		}
 		$coupon = new XLite_Module_Promotion_Model_DiscountCoupon();
 		if (!$coupon->find("coupon='$couponCode' AND order_id=0")) {

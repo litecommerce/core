@@ -121,7 +121,7 @@ class XLite_Module_GiftCertificates_Model_OrderItem extends XLite_Model_OrderIte
 	function delete()
 	{
 		// remove disabled GCs
-		if (!is_null($this->get("gc")) && $this->get("gc.status") == "D") {
+		if (!is_null($this->get("gc")) && $this->getComplex('gc.status') == "D") {
 			$this->call("gc.delete");
 		}
 		parent::delete();
@@ -131,7 +131,7 @@ class XLite_Module_GiftCertificates_Model_OrderItem extends XLite_Model_OrderIte
 	{
         $gc = $this->get("gc");
 		if (!is_null($gc)) {
-			return $this->is("gc.exists");
+			return $this->isComplex('gc.exists');
 		}
 		return parent::isValid();
 	}
@@ -151,7 +151,7 @@ class XLite_Module_GiftCertificates_Model_OrderItem extends XLite_Model_OrderIte
     function hasOptions()
     {
         // check if the ProductOptions module is on
-        if (is_null($this->xlite->get("mm.activeModules.ProductOptions"))) {
+        if (is_null($this->xlite->getComplex('mm.activeModules.ProductOptions'))) {
             return false;
         }
         if (is_null($this->get("product"))) {

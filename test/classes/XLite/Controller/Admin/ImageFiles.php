@@ -50,7 +50,7 @@ class XLite_Controller_Admin_ImageFiles extends XLite_Controller_Admin_Abstract
     function getImagesDir()
     {
 		$images = $this->get("imageClasses");
-        return ($this->get("xlite.config.Images.images_directory") != "") ? $this->get("xlite.config.Images.images_directory") : IMAGES_DIR;        
+        return ($this->getComplex('xlite.config.Images.images_directory') != "") ? $this->getComplex('xlite.config.Images.images_directory') : IMAGES_DIR;        
     }
 
 	function action_move_to_filesystem($from = false)

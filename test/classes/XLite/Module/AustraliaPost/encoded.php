@@ -2,17 +2,17 @@
 
 function Shipping_aupost_getRates($_this, $order)
 {
-	if ((is_null($order->get("profile")) && !$_this->config->get("General.def_calc_shippings_taxes")) || $order->get("weight") == 0 || $_this->config->get("Company.location_country") != "AU") {
+	if ((is_null($order->get("profile")) && !$_this->config->getComplex('General.def_calc_shippings_taxes')) || $order->get("weight") == 0 || $_this->config->getComplex('Company.location_country') != "AU") {
         return array();
     }
 
 	$options = $_this->get("options");
 
-	$originalZipcode = $_this->config->get("Company.location_zipcode");
+	$originalZipcode = $_this->config->getComplex('Company.location_zipcode');
     $weight = $_this->getWeightInGrams($order);
 	if (is_null($order->get("profile"))) {
-    	$destinationCountry = $_this->config->get("General.default_country");
-    	$destinationZipcode = $_this->config->get("General.default_zipcode");
+    	$destinationCountry = $_this->config->getComplex('General.default_country');
+    	$destinationZipcode = $_this->config->getComplex('General.default_zipcode');
 	} else {
     	$profile 	 = $order->get("profile");
     	$destinationCountry = $profile->get("shipping_country");

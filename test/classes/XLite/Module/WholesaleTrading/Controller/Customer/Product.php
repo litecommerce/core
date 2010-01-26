@@ -86,7 +86,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Product extends XLite_Co
 		if ($pl->find("product_id=" . $product->get("product_id"))) {
 			$category_id = $this->get("category_id");
 			if (!isset($category_id)) {
-				$category_id = $product->get("Category.category_id");
+				$category_id = $product->getComplex('Category.category_id');
 				$this->set("category_id", $category_id);
 			}
 			return false;
@@ -104,7 +104,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Product extends XLite_Co
 
     function isAvailableForSale()
     {
-		if (!$this->is("product.saleAvailable")) {
+		if (!$this->isComplex('product.saleAvailable')) {
 			return false;
 		}	
         return parent::isAvailableForSale();
@@ -113,7 +113,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Product extends XLite_Co
 	function getWholesalePricing()
 	{
 		if (is_null($this->wholesale_pricing)) {
-			$product = new XLite_Model_Product($this->get("product.product_id"));
+			$product = new XLite_Model_Product($this->getComplex('product.product_id'));
 			$this->wholesale_pricing = $product->getWholesalePricing();
 		}	
 		return $this->wholesale_pricing;

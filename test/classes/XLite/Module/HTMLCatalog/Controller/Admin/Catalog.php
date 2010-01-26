@@ -110,8 +110,8 @@ document.location="<?php echo $url; ?>";
 
     function failure()
     {
-        if (!is_null($this->get("catalog.error"))) {
-            print "<font color=red>" . $this->get("catalog.error") . "</font>";
+        if (!is_null($this->getComplex('catalog.error'))) {
+            print "<font color=red>" . $this->getComplex('catalog.error') . "</font>";
         }
 ?>
 <br><br>LiteCommerce was unabled to build HTML catalog. Possible reasons and solutions:<br>
@@ -166,7 +166,7 @@ document.location="admin.php?target=catalog&mode=success";
 
 	function isMemoryLimitChangeable()
 	{
-		if (version_compare($this->config->get("Version.version"), "2.2.35") <= 0) {
+		if (version_compare($this->config->getComplex('Version.version'), "2.2.35") <= 0) {
 			@include_once LC_MODULES_DIR . 'HTMLCatalog' . LC_DS . 'functions.php';
 		}
 

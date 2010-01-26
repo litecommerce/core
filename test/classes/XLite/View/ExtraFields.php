@@ -57,19 +57,19 @@ class XLite_View_ExtraFields extends XLite_View
  
     function getExtraFields()
     {
-		$this->extraFields = $this->get("product.extraFields");
+		$this->extraFields = $this->getComplex('product.extraFields');
 
 		if (isset($this->product_id)) 
 		{
 			$product = new XLite_Model_Product($this->product_id);
 			if (is_object($product))
 			{
-    			if ($this->config->get("General.enable_extra_fields_inherit") == "Y") {
+    			if ($this->config->getComplex('General.enable_extra_fields_inherit') == "Y") {
     				$isAdminZone = $this->xlite->get("adminZone");
     				$this->xlite->set("adminZone", true);
     			}
 				$product_categories = $product->getCategories();
-    			if ($this->config->get("General.enable_extra_fields_inherit") == "Y") {
+    			if ($this->config->getComplex('General.enable_extra_fields_inherit') == "Y") {
     				$this->xlite->set("adminZone", $isAdminZone);
     			}
                 $extraFields_root = array();

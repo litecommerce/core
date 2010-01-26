@@ -45,7 +45,7 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_Login extends XLite_Control
 {
 	function action_clear_password()
 	{
-		if ($this->xlite->get("config.AdvancedSecurity.clr_mp_logoff")) {
+		if ($this->xlite->getComplex('config.AdvancedSecurity.clr_mp_logoff')) {
     		$orderDialog = new XLite_Controller_Admin_Order();
     		$orderDialog->action_clear_password();
     	}

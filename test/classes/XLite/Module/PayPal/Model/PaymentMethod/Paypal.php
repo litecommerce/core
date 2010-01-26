@@ -101,7 +101,7 @@ class XLite_Module_PayPal_Model_PaymentMethod_Paypal extends XLite_Model_Payment
 
     function getItemName($order)
     {
-        return $this->config->get("Company.company_name") . " order #" . $order->get("order_id");
+        return $this->config->getComplex('Company.company_name') . " order #" . $order->get("order_id");
     }
 }
 

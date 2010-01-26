@@ -48,7 +48,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Modul
     {
         if (is_null($this->shippingMethods)) {
             $this->shippingMethods = array();
-            $table = $this->get("order.table");
+            $table = $this->getComplex('order.table');
             $ids = $this->order->db->getAll("SELECT shipping_id, COUNT(*) as num_used FROM $table WHERE status!='T' GROUP BY shipping_id ORDER BY num_used DESC");
             foreach ($ids as $id) {
                 $sid = $id["shipping_id"];
@@ -73,7 +73,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Modul
     {
         if (is_null($this->paymentMethods)) {
             $this->paymentMethods = array();
-            $table = $this->get("order.table");
+            $table = $this->getComplex('order.table');
             $pms = $this->order->db->getAll("SELECT payment_method, COUNT(*) as num_used FROM $table WHERE status!='T' GROUP BY payment_method ORDER BY num_used DESC");
             foreach ($pms as $id) {
                 $pn = $id["payment_method"];
@@ -97,9 +97,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Modul
     {
         if (is_null($this->orders)) {
             $this->orders = array();
-            $table = $this->get("order.table");
-            $fd = $this->get("period.fromDate");
-            $td = $this->get("period.toDate");
+            $table = $this->getComplex('order.table');
+            $fd = $this->getComplex('period.fromDate');
+            $td = $this->getComplex('period.toDate');
             $sql = "SELECT order_id, total, shipping_id, payment_method FROM $table WHERE status!='T' AND date BETWEEN $fd AND $td";
             $this->totalOrders = $this->order->db->getOne("SELECT COUNT(*) FROM $table WHERE status!='T' AND date BETWEEN $fd AND $td");
             $rawOrders = $this->order->db->getAll($sql);

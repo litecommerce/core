@@ -46,7 +46,7 @@ class XLite_Module_Affiliate_Controller_Customer_Banner extends XLite_Controller
 {
     function getTemplate()
     {
-        return "modules/Affiliate/" . $this->get("banner.type") . "_banner.tpl";
+        return "modules/Affiliate/" . $this->getComplex('banner.type') . "_banner.tpl";
     }
 
     function getBanner()

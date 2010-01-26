@@ -7,11 +7,11 @@
         $order->set("details.errorDescription", null);
         $order->set("detailLabels.errorDescription", null);
 
-		if ($_POST['to_email'] != $_this->get("params.param01")) {
+		if ($_POST['to_email'] != $_this->getComplex('params.param01')) {
 			$order->set("status","F");
             $order->set("detailLabels.error", "Error :");
             $order->set("details.error", "Fraud attempt");
-		} elseif ($_POST['transaction_id'] == $order->get("details.transaction_id")) {
+		} elseif ($_POST['transaction_id'] == $order->getComplex('details.transaction_id')) {
 		 	$order->set("status","F");
 			$order->set("detailLabels.error", "Error");
 			$order->set("details.error", "Duplicate transaction : " . $_POST['transaction_id']);

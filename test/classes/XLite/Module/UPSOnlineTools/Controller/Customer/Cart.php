@@ -58,7 +58,7 @@ class XLite_Module_UPSOnlineTools_Controller_Customer_Cart extends XLite_Control
 			$this->shipping = null;
 			if (count($newrates) > 0) {
 				$new_shipping_rate = array_shift($newrates);
-				$this->shipping = $new_shipping_rate->get('shipping.shipping_id');
+				$this->shipping = $new_shipping_rate->getComplex('shipping.shipping_id');
 			}
 			$_REQUEST["shipping"] = $this->shipping;
 		}

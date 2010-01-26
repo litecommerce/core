@@ -87,7 +87,7 @@ class XLite_Module_ProductAdviser_Controller_Admin_CustomerNotifications extends
 
 		parent::init();
 
-		if (!$this->config->get("ProductAdviser.customer_notifications_enabled")) {
+		if (!$this->config->getComplex('ProductAdviser.customer_notifications_enabled')) {
 			$this->set("returnUrl", "admin.php?target=module&page=ProductAdviser");
 			$this->redirect();
 		}
@@ -363,7 +363,7 @@ class XLite_Module_ProductAdviser_Controller_Admin_CustomerNotifications extends
                     $mail->set("ignoreDefaultSubjectBody", true);
 					$dir = "modules/ProductAdviser/notifications/".$notification->get("type")."/";
                     $mail->compose(
-                            $this->config->get("Company.site_administrator"),
+                            $this->config->getComplex('Company.site_administrator'),
                             $notification->get("email"),
                             $dir);
                     echo "Sending notification to <b>".$notification->get("email")."</b>...";

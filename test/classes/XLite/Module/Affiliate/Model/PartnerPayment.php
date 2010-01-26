@@ -87,8 +87,8 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
         $mail->payment = $this;
         $mail->partner = new XLite_Model_Profile($this->get("partner_id"));
         $mail->compose(
-                $this->config->get("Company.orders_department"),
-                $mail->get("partner.login"),
+                $this->config->getComplex('Company.orders_department'),
+                $mail->getComplex('partner.login'),
                 "modules/Affiliate/partner_order_processed");
         $mail->send();
     } // }}}
@@ -99,7 +99,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
          * NOTE: possible limitation for 1-tier affiliates
          *
         if (!$this->xlite->is("adminZone")) {
-            return $this->get("partner_id") == $this->get("auth.profile.profile_id");
+            return $this->get("partner_id") == $this->getComplex('auth.profile.profile_id');
         }
         */
         return parent::filter();
@@ -171,7 +171,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
         // filter payments by order status
         $result1 = array();
         foreach ($result as $pp) {
-            if (!empty($orderStatus) && $pp->get("order.status") != $orderStatus) {
+            if (!empty($orderStatus) && $pp->getComplex('order.status') != $orderStatus) {
                 continue;
             }
             $result1[] = $pp;
@@ -180,7 +180,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
         if (is_numeric($productID)) {
             $result2 = array();
             foreach ($result as $pp) {
-                foreach ($pp->get("order.items") as $item) {
+                foreach ($pp->getComplex('order.items') as $item) {
                     if (empty($productID) || $item->get("product_id") == $productID) {
                         $result2[] = $pp;
                     }
@@ -194,8 +194,8 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
     function pay($partnerID) // {{{
     {
         foreach ((array)$this->findAll("partner_id=$partnerID") as $payment) {
-            if ($payment->is("order.processed")) { // process all order payments
-                foreach ((array)$payment->findAll("order_id=".$payment->get("order.order_id")) as $pp)
+            if ($payment->isComplex('order.processed')) { // process all order payments
+                foreach ((array)$payment->findAll("order_id=".$payment->getComplex('order.order_id')) as $pp)
                 {
                     if (!$pp->get("paid") && $pp->get("partner_id") == $partnerID) {
                     	$pp->set("paid", 1);
@@ -225,7 +225,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
                 $paid = ($data["paid"] == "Y" || $data["paid"] == "y");
                 $p->set("paid", $paid);
                 $p->update();
-                echo "<tr><td>Partner: ".$p->get("partner.billing_firstname")." ".$p->get("partner.billing_lastname")." &lt;".$p->get("partner.login")."&gt;</td><td>Commissions: ".$w->price_format($p->get("commissions"))."</td><td>Status: " . ($paid ? "PAID" : "CANCELLED")."</td></tr>";
+                echo "<tr><td>Partner: ".$p->getComplex('partner.billing_firstname')." ".$p->getComplex('partner.billing_lastname')." &lt;".$p->getComplex('partner.login')."&gt;</td><td>Commissions: ".$w->price_format($p->get("commissions"))."</td><td>Status: " . ($paid ? "PAID" : "CANCELLED")."</td></tr>";
             }
             echo "</table>";
         } else {

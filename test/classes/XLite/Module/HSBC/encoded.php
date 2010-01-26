@@ -2,7 +2,7 @@
 
     function func_PaymentMethod_cc_hsbc_getUserId($_this, $cart)
     {
-		return strrev(md5($cart->get("profile.login")));
+		return strrev(md5($cart->getComplex('profile.login')));
 	}
 
     function func_PaymentMethod_cc_hsbc_getCwd($_this)
@@ -44,7 +44,7 @@
 //////////////////////////////////
 //payment method code
 //////////////////////////////////
-		if ($_POST["MerchantData"] != $cart->get("details.secure_id")) {
+		if ($_POST["MerchantData"] != $cart->getComplex('details.secure_id')) {
 			// user attempting to access order owned by another user
 			die();
 		}

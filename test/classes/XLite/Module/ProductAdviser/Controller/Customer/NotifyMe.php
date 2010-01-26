@@ -143,7 +143,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
 		if (!$this->isPriceNotificationEnabled()) {
 			return;
 		}
-		if (!$this->is("product.priceNotificationAllowed")) {
+		if (!$this->isComplex('product.priceNotificationAllowed')) {
 			return;
 		}
         if (!isset($_REQUEST["email"]) || (isset($_REQUEST["email"]) && strlen(trim($_REQUEST["email"]))==0)) {
@@ -186,13 +186,13 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
 
 	function isPriceNotificationEnabled()
 	{
-		$mode = $this->config->get("ProductAdviser.customer_notifications_mode");
+		$mode = $this->config->getComplex('ProductAdviser.customer_notifications_mode');
 		return (($mode & 1) != 0) ? true : false;
 	}
 
 	function isProductNotificationEnabled()
 	{
-		$mode = $this->config->get("ProductAdviser.customer_notifications_mode");
+		$mode = $this->config->getComplex('ProductAdviser.customer_notifications_mode');
 		return (($mode & 2) != 0) ? true : false;
 	}
 }

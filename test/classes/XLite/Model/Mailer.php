@@ -159,17 +159,17 @@ class XLite_Model_Mailer extends XLite_View
                                  $this->get("langPath"));
 
         // --- SMTP settings ---
-        if ($this->xlite->get("config.Email.use_smtp")) {
+        if ($this->xlite->getComplex('config.Email.use_smtp')) {
             $this->mail->Mailer = "smtp";
-            $this->mail->Host = $this->xlite->get("config.Email.smtp_server_url");
-            $this->mail->Port = $this->xlite->get("config.Email.smtp_server_port");
-            if ($this->xlite->get("config.Email.use_smtp_auth")) {
+            $this->mail->Host = $this->xlite->getComplex('config.Email.smtp_server_url');
+            $this->mail->Port = $this->xlite->getComplex('config.Email.smtp_server_port');
+            if ($this->xlite->getComplex('config.Email.use_smtp_auth')) {
                 $this->mail->SMTPAuth = true;
-                $this->mail->Username = $this->xlite->get("config.Email.smtp_username");
-                $this->mail->Password = $this->xlite->get("config.Email.smtp_password");	
+                $this->mail->Username = $this->xlite->getComplex('config.Email.smtp_username');
+                $this->mail->Password = $this->xlite->getComplex('config.Email.smtp_password');	
             }
-            if (!$this->xlite->isPHPEarlier('5.1.0') && in_array($this->xlite->get("config.Email.smtp_security"), array('ssl', 'tls'))) {
-                $this->mail->SMTPSecure = $this->xlite->get("config.Email.smtp_security");
+            if (!$this->xlite->isPHPEarlier('5.1.0') && in_array($this->xlite->getComplex('config.Email.smtp_security'), array('ssl', 'tls'))) {
+                $this->mail->SMTPSecure = $this->xlite->getComplex('config.Email.smtp_security');
             }
         }
 

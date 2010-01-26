@@ -147,7 +147,7 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product impl
 	{
 		$p = parent::__clone();
 
-		if ($this->config->get("ProductOptions.clone_product_options")) {
+		if ($this->config->getComplex('ProductOptions.clone_product_options')) {
 
 			$id = $p->get("product_id");
 
@@ -182,7 +182,7 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product impl
 				$optionException->create();
 			}
 			
-		    if ($this->xlite->get("InventoryTrackingEnabled")&& $this->config->get('InventoryTracking.clone_inventory'))
+		    if ($this->xlite->get("InventoryTrackingEnabled")&& $this->config->getComplex('InventoryTracking.clone_inventory'))
     	        $this->cloneInventory($p, true);
 		}	
 			return $p;
@@ -235,7 +235,7 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product impl
 			return parent::isInStock();
 		}
 
-		if (!$this->xlite->get("mm.activeModules.InventoryTracking")) return true;
+		if (!$this->xlite->getComplex('mm.activeModules.InventoryTracking')) return true;
 
 		// dublicate code of the method Module_InventoryTracking_Product::isInStock(): {{{
 		$options = (array) $this->get("productOptions");
@@ -258,7 +258,7 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product impl
 			$out_of_stock = $inv->count("inventory_id LIKE '$product_id|%' AND amount <= 0");
 			return ($out_of_stock < $max_options);
 		} else {
-			$out_of_stock = ($this->get("inventory.found") && ($this->get("inventory.amount") <= 0));
+			$out_of_stock = ($this->getComplex('inventory.found') && ($this->getComplex('inventory.amount') <= 0));
 			return !$out_of_stock;
 		}
 		return true;

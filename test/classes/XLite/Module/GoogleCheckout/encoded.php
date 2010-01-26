@@ -418,11 +418,11 @@ function GoogleCheckout_getCouponApplyDescription($coupon)
 	} else {
 		switch ($coupon->get("applyTo")) {
 			case "product":
-				$msg = "Coupon #$coupon_code has been applied to product '".$coupon->get("product.name")."'.";
+				$msg = "Coupon #$coupon_code has been applied to product '".$coupon->getComplex('product.name')."'.";
 			break;
 
 			case "category":
-				$msg = "Coupon #$coupon_code has been applied to category '".$coupon->get("category.name")."'.";
+				$msg = "Coupon #$coupon_code has been applied to category '".$coupon->getComplex('category.name')."'.";
 			break;
 
 			default:
@@ -617,7 +617,7 @@ if ($is_new_profile) {
 	$profile->set("login", $billing_addr["EMAIL"]);
 	$profile->set("access_level", 0);
 
-	if ($pm->get("params.disable_customer_notif")) {
+	if ($pm->getComplex('params.disable_customer_notif')) {
 		$old_dc_mailer = $_this->xlite->get("GoogleCheckoutDCNMailer");
 		$_this->xlite->set("GoogleCheckoutDCNMailer", true);
 	}
@@ -634,11 +634,11 @@ if ($is_new_profile) {
 	$profile->update();
 	$order->succeed();
 
-	if ($pm->get("params.disable_customer_notif")) {
+	if ($pm->getComplex('params.disable_customer_notif')) {
 		$_this->xlite->set("GoogleCheckoutDCNMailer", $old_dc_mailer);
 	}
 
-	$session_id = strrev(base64_decode($order->get("google_details.gid")));
+	$session_id = strrev(base64_decode($order->getComplex('google_details.gid')));
 	if ($session_id) {
 		$sql_table = $_this->db->getTableByAlias("sessions");
 		$sql = "SELECT data FROM $sql_table WHERE id='$session_id';";
@@ -781,7 +781,7 @@ function GoogleCheckout_order_refund_amount_notification($_this, $xmlData)
 	}
 
 	if ($order->get("google_status") != "C") {
-		if (abs($order->get("google_details.total_charge_amount") - $xmlData["TOTAL-REFUND-AMOUNT"]) == 0) {
+		if (abs($order->getComplex('google_details.total_charge_amount') - $xmlData["TOTAL-REFUND-AMOUNT"]) == 0) {
 			$order->set("google_status", "R");
 		} else {
 			$order->set("google_status", "P");
@@ -1001,14 +1001,14 @@ function GoogleCheckout_getOrderByGoogleId($googleId)
 
 function GoogleCheckout_process_chargeable_order($_this, $order)
 {
-	if ($order->get("google_details.risks_set") && $order->get("google_details.chargeable_set")) {
+	if ($order->getComplex('google_details.risks_set') && $order->getComplex('google_details.chargeable_set')) {
 		// Deferred notifications order-state-change-notification and
 		// risk-information-notification both received.
 
 		$googleId = $order->get("google_id");
 
 		// Check merchant calculation flag
-		if (!$order->get("google_details.calc") && $_this->get("params.merchant_calc")) {
+		if (!$order->getComplex('google_details.calc') && $_this->getComplex('params.merchant_calc')) {
 			// Merchant calculation invalid - cancel the order.
 			$_this->xlite->logger->log("CANCEL order - Google merchant calculation not valid.");
 
@@ -1018,7 +1018,7 @@ function GoogleCheckout_process_chargeable_order($_this, $order)
 
 		// Check risks
 		$details = $order->get("google_details");
-		if (!in_array($details["avs"], (array)$_this->get("params.check_avs")) || !in_array($details["cvn"], (array)$_this->get("params.check_cvn")) || ($_this->get("params.check_prot") && !$details["eligible"])) {
+		if (!in_array($details["avs"], (array)$_this->getComplex('params.check_avs')) || !in_array($details["cvn"], (array)$_this->getComplex('params.check_cvn')) || ($_this->getComplex('params.check_prot') && !$details["eligible"])) {
 			$order->set("detailLabels.riskCheck", "Risk check");
 			$order->set("details.riskCheck", "FAILED");
 			$order->update();

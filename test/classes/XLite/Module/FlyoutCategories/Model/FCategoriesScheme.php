@@ -126,9 +126,9 @@ class XLite_Module_FlyoutCategories_Model_FCategoriesScheme extends XLite_Model_
 	}
 
 	function updateCommercialSkinsColors($options) {
-		$selected_skin = $this->config->get("Skin.skin");
+		$selected_skin = $this->config->getComplex('Skin.skin');
 		$scheme = parent::get("name");
-		$all_modules = (array) $this->xlite->get("mm.activeModules");
+		$all_modules = (array) $this->xlite->getComplex('mm.activeModules');
 		$modules = array();
 		foreach ($all_modules as $name=>$active) {
 			if ($active) $modules[] = $name;

@@ -7,7 +7,7 @@ function Shipping_usps_getRates($_this, $order)
 {
     // original code
     
-    if ((is_null($order->get("profile")) && !$_this->config->get("General.def_calc_shippings_taxes")) || $order->get("weight") == 0 || $order->get("payment_method") == "COD") {
+    if ((is_null($order->get("profile")) && !$_this->config->getComplex('General.def_calc_shippings_taxes')) || $order->get("weight") == 0 || $order->get("payment_method") == "COD") {
         return array();
     }
 
@@ -17,11 +17,11 @@ function Shipping_usps_getRates($_this, $order)
 	}
 
 	if (is_null($order->get("profile"))) {
-    	$destinationCountry = $_this->config->get("General.default_country");
+    	$destinationCountry = $_this->config->getComplex('General.default_country');
 	} else {
-    	$destinationCountry = $order->get("profile.shipping_country");
+    	$destinationCountry = $order->getComplex('profile.shipping_country');
 	}
-    if ($destinationCountry != $_this->config->get("Company.location_country")) {
+    if ($destinationCountry != $_this->config->getComplex('Company.location_country')) {
         return $_this->_getInternationalRates($order);
     } else { 
         return $_this->_getNationalRates($order);

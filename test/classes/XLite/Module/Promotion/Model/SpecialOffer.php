@@ -99,7 +99,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_Abstract
    	
 	function getMembership()
 	{	
-		return $this->auth->get("profile.membership");
+		return $this->auth->getComplex('profile.membership');
 	}
  
 	function getCategory()
@@ -325,7 +325,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_Abstract
 				$this->condition["Amount"] = $this->get("amount");
 				break;
 			case "orderTotal":
-				$this->condition["Total"] =  sprintf($this->config->get("General.price_format"), sprintf("%.02f",$this->get("amount")));
+				$this->condition["Total"] =  sprintf($this->config->getComplex('General.price_format'), sprintf("%.02f",$this->get("amount")));
 				break;
 			case "productSet":
 					$this->products = null;
@@ -430,7 +430,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_Abstract
 				}
 				return false;
 			case "freeShipping":			 
-				return $this->checkCountry($order->get("profile.shipping_country"));
+				return $this->checkCountry($order->getComplex('profile.shipping_country'));
 	        case "bonusPoints": 
 				return true;	
 		}			   
@@ -464,7 +464,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_Abstract
 				$membership = new XLite_Module_Promotion_Model_SpecialOfferMembership();
 				$memberships = $membership->findAll("offer_id = ". $this->get("offer_id"));
 				foreach($memberships as $membership_) {
-					if ($order->get("profile.membership") == $membership_->get("membership")) {
+					if ($order->getComplex('profile.membership') == $membership_->get("membership")) {
 						return true;
 					}
 				}
@@ -472,7 +472,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_Abstract
 			return false;
 		case "bonusPoints":
 			if (!is_null($order->get("profile"))) {
-				return $order->get("profile.bonusPoints") >= $this->get("amount");
+				return $order->getComplex('profile.bonusPoints') >= $this->get("amount");
 			}
 			return false;
 		}
@@ -528,7 +528,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_Abstract
 				if ($bonusPrice->get("product_id") == $product->get("product_id") || !is_null($bonusPrice->get("category")) && $order->_inCategoryRecursive($product, $bonusPrice->get("category"))) {
 					if ($bonusPrice->get("bonusType") == '$') {
 						$price = $bonusPrice->get("price");
-        				if ($this->config->get("Taxes.prices_include_tax")) {
+        				if ($this->config->getComplex('Taxes.prices_include_tax')) {
 							$item->set("originalBonusPrice", $price);
 							$product->set("price", $price);
 							$price = $product->get("listPrice");
@@ -536,7 +536,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_Abstract
 						return $price;
 					} else {
 						$price = $bonusPrice->get("price") * $price / 100;
-        				if ($this->config->get("Taxes.prices_include_tax") && $this->_calcTaxedPrice) {
+        				if ($this->config->getComplex('Taxes.prices_include_tax') && $this->_calcTaxedPrice) {
 							$item->set("originalBonusPrice", $price);
 							$product->set("price", $price);
 							$price = $product->get("listPrice");
@@ -551,7 +551,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_Abstract
 
 	function compareOffers(&$offer1, &$offer2, $order)
 	{
-	    $offerScheme = $this->xlite->config->get("Promotion.offerScheme");
+	    $offerScheme = $this->xlite->config->getComplex('Promotion.offerScheme');
 	    if (!$offerScheme) {
 			return 0;
 	    }
@@ -827,7 +827,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_Abstract
 		if (is_null($product)) {
 			return false;
 		}
-		if (!is_null($this->get("product")) && $this->get("product.product_id") == $product->get("product_id")) {
+		if (!is_null($this->get("product")) && $this->getComplex('product.product_id') == $product->get("product_id")) {
 			return true;
 		}
 		foreach ($this->get("products") as $p) {

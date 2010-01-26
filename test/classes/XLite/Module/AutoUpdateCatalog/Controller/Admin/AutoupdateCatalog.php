@@ -143,11 +143,11 @@ document.location="<?php echo $url; ?>";
 
     function rebuildFlyoutCategories()
     {
-    	if ($this->xlite->get("FlyoutCategoriesEnabled") && $this->get("config.FlyoutCategories.force_js_in_layout")) {
+    	if ($this->xlite->get("FlyoutCategoriesEnabled") && $this->getComplex('config.FlyoutCategories.force_js_in_layout')) {
     		$dialog = new XLite_Module_FlyoutCategories_Controller_Admin_Module();
     		$dialog->action_rebuild_tree();
 
-        	if ($this->get("config.FlyoutCategories.force_js_in_layout")) {
+        	if ($this->getComplex('config.FlyoutCategories.force_js_in_layout')) {
     			$catalog = $this->get("catalog");
                 $catalog->buildFCJS();
         	}
@@ -156,10 +156,10 @@ document.location="<?php echo $url; ?>";
 
     function action_categories() // {{{
     {
-        $topID = $this->get("xlite.factory.Category.topCategory.category_id");
+        $topID = $this->getComplex('xlite.factory.Category.topCategory.category_id');
         if ($this->post["action"] == "delete") {
             if ($this->category_id == $topID) {
-            	if ($this->config->get("HTMLCatalog.drop_catalog")) {
+            	if ($this->config->getComplex('HTMLCatalog.drop_catalog')) {
                     // delete all categories & product pages
                     $catalog = $this->get("catalog");
                     $catalog->clear();
@@ -170,7 +170,7 @@ document.location="<?php echo $url; ?>";
             } else {    
                 $category = new XLite_Model_Category($category_id);
                 $sub = $this->updateLog["categories"];
-            	if ($this->config->get("HTMLCatalog.drop_catalog")) {
+            	if ($this->config->getComplex('HTMLCatalog.drop_catalog')) {
                     // delete subcategories
                     for ($i = 0; $i < count($sub); $i++) {
                         func_categories_delete($this, $sub[$i]);
@@ -196,10 +196,10 @@ document.location="<?php echo $url; ?>";
             // category_id is a modified category ID
             $category = new XLite_Model_Category($this->category_id);
             $parent = $category->get("parent");
-            $topID = $this->get("xlite.factory.Category.topCategory.category_id");
+            $topID = $this->getComplex('xlite.factory.Category.topCategory.category_id');
             // top category updated - rebuild the whole catalog
             if ($topID == $parent) {
-            	if ($this->config->get("HTMLCatalog.drop_catalog")) {
+            	if ($this->config->getComplex('HTMLCatalog.drop_catalog')) {
                     // delete all categories & product pages
                     $catalog = $this->get("catalog");
                     $catalog->clear();
@@ -214,7 +214,7 @@ document.location="<?php echo $url; ?>";
                 // update parent page (category orderby could has been changed)
                 func_categories_update($this, $parent, null, true);
             } else { // status set to "disabled"
-            	if ($this->config->get("HTMLCatalog.drop_catalog")) {
+            	if ($this->config->getComplex('HTMLCatalog.drop_catalog')) {
                 	func_categories_delete($this, $this->category_id);
                 }
                 // update parent
@@ -406,7 +406,7 @@ document.location="<?php echo $url; ?>";
             foreach ($category_ids as $category_id => $foo) {
                 $category = new XLite_Model_Category($category_id);
                 $parent = $category->get("parent");
-                $topID = $this->get("xlite.factory.Category.topCategory.category_id");
+                $topID = $this->getComplex('xlite.factory.Category.topCategory.category_id');
                 // top category updated - rebuild the whole catalog
                 if ($topID == $parent) {
                     // delete all categories & product pages
@@ -432,7 +432,7 @@ document.location="<?php echo $url; ?>";
         foreach ($this->post["categories"] as $category_id) {
             $category = new XLite_Model_Category($category_id);
             $parent = $category->get("parent");
-            $topID = $this->get("xlite.factory.Category.topCategory.category_id");
+            $topID = $this->getComplex('xlite.factory.Category.topCategory.category_id');
             // top category updated - rebuild the whole catalog
             if ($topID == $parent) {
                 // delete all categories & product pages
@@ -460,7 +460,7 @@ document.location="<?php echo $url; ?>";
 		}
 
         // check for building limit
-        if ($this->xlite->processedSteps["counter"]++ % ($this->get("config.HTMLCatalog.catalog_pages_count")) == 0) {
+        if ($this->xlite->processedSteps["counter"]++ % ($this->getComplex('config.HTMLCatalog.catalog_pages_count')) == 0) {
 			$catalog = $this->get("catalog");
             $catalog->goAdmin();
 die("!!!");

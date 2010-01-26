@@ -42,7 +42,7 @@ class XLite_Module_DemoMode_Controller_Customer_Profile extends XLite_Controller
     function getSecure()
     {
         if (($this->mode == "modify" || $this->mode == "login") && (strpos($_SERVER["HTTP_REFERER"], "https:") !== false && strpos($_SERVER["HTTP_REFERER"], "target=checkout") !== false)) {
-            return $this->get("config.Security.customer_security");
+            return $this->getComplex('config.Security.customer_security');
         }
         return false;
     }

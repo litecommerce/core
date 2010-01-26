@@ -80,8 +80,8 @@ class XLite_Module_2CheckoutCom_Model_PaymentMethod_2Checkout extends XLite_Mode
 		$params = $this->get("params");
 		if ($params["version"] != 2) {
     		// Authorize.Net now returns all POST in lowercase.
-            if (!isset($_POST["securenumber"]) || $_POST["securenumber"] != $cart->get("details.secureNumber")) {
-                die("<font color=red><b>Security check failed!</b></font> Please contact administrator <b>" . $this->config->get("Company.site_administrator") . "</b> .");
+            if (!isset($_POST["securenumber"]) || $_POST["securenumber"] != $cart->getComplex('details.secureNumber')) {
+                die("<font color=red><b>Security check failed!</b></font> Please contact administrator <b>" . $this->config->getComplex('Company.site_administrator') . "</b> .");
             }
             require_once LC_MODULES_DIR . '2CheckoutCom' . LC_DS . 'encoded.php';
             PaymentMethod_2checkout_handleRequest($this, $cart);
@@ -119,13 +119,13 @@ class XLite_Module_2CheckoutCom_Model_PaymentMethod_2Checkout extends XLite_Mode
 
     function createSecureNumber($order)
     {
-        if (!$order->get("details.secureNumber")) {
+        if (!$order->getComplex('details.secureNumber')) {
             $num = generate_code();
             $order->set("details.secureNumber", $num);
             $order->update();
             return $num;
         }
-        return $order->get("details.secureNumber");
+        return $order->getComplex('details.secureNumber');
     }
 
     function price($value=null)

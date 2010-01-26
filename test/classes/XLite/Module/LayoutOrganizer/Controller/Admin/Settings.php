@@ -49,7 +49,7 @@ class XLite_Module_LayoutOrganizer_Controller_Admin_Settings extends XLite_Contr
     function action_update()
     {
 		if ($this->page == "General") {
-			$oldTemplate = $this->config->get("General.subcategories_look");
+			$oldTemplate = $this->config->getComplex('General.subcategories_look');
 		}
 
         parent::action_update();
@@ -57,7 +57,7 @@ class XLite_Module_LayoutOrganizer_Controller_Admin_Settings extends XLite_Contr
 		if ($this->page == "General") {
             $cfg = new XLite_Model_Config();
             $this->config = $cfg->readConfig();
-			$newTemplate = $this->config->get("General.subcategories_look");
+			$newTemplate = $this->config->getComplex('General.subcategories_look');
 			if (strcmp($newTemplate, $oldTemplate) != 0) {
 				$cat = new XLite_Model_Category();
             	$categories  = $cat->findAll("parent = '0'");

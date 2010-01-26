@@ -92,7 +92,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
         echo "Sending newsletters .. ";
         if (!empty($recipients)) {
             $nl = new XLite_Module_Newsletters_Model_NewsLetter();
-            $nl->compose($this->get("config.Company.site_administrator"),
+            $nl->compose($this->getComplex('config.Company.site_administrator'),
                          $recipients,
                          $this->get("subject"),
                          $this->get("body")
@@ -432,8 +432,8 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
 	function hasProduct($user_id, $product_id) // {{{
 	{
 		$product = new XLite_Model_Product();
-		$fromDate = $this->get("period.fromDate");
-		$toDate   = $this->get("period.toDate");
+		$fromDate = $this->getComplex('period.fromDate');
+		$toDate   = $this->getComplex('period.toDate');
 		$ot = $product->db->getTableByAlias("orders");
 		$it = $product->db->getTableByAlias("order_items");
 
@@ -457,8 +457,8 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
 	function hasCategory($user_id, $category_id) // {{{
 	{
 		$product = new XLite_Model_Product();
-		$fromDate = $this->get("period.fromDate");
-		$toDate   = $this->get("period.toDate");
+		$fromDate = $this->getComplex('period.fromDate');
+		$toDate   = $this->getComplex('period.toDate');
 		$ot = $product->db->getTableByAlias("orders");
 		$it = $product->db->getTableByAlias("order_items");
 		$lt	= $product->db->getTableByAlias("product_links");

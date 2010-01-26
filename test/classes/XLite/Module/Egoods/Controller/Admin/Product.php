@@ -56,7 +56,7 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 
     function fillForm() // {{{
     {
-        $nowPlusExp = time()+24*3600*$this->config->get("Egoods.exp_days");
+        $nowPlusExp = time()+24*3600*$this->config->getComplex('Egoods.exp_days');
         $this->set("new_exp_date", $nowPlusExp);
         parent::fillForm();
     } // }}}
@@ -79,7 +79,7 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
     		$df->create();
     		
     		if ($_POST["new_remote"] == "Y") {
-    			$path = $this->get('xlite.config.Egoods.egoods_store_dir') . '/' . $df->get('file_id');
+    			$path = $this->getComplex('xlite.config.Egoods.egoods_store_dir') . '/' . $df->get('file_id');
     			mkdirRecursive($path);
     			$file_name = $path . '/' . $_FILES['new_remote_file']['name'];
     			if (is_uploaded_file($_FILES['new_remote_file']['tmp_name'])) {
@@ -106,7 +106,7 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 		) {
     		
     		if ($_POST['remote'] == 'Y') {
-    			$path = $this->get('xlite.config.Egoods.egoods_store_dir') . '/' . $df->get('file_id');
+    			$path = $this->getComplex('xlite.config.Egoods.egoods_store_dir') . '/' . $df->get('file_id');
     			mkdirRecursive($path);
     			$file_name = $path . '/' . $_FILES['remote_file']['name'];
     			if (is_uploaded_file($_FILES['remote_file']['tmp_name'])) {
@@ -254,11 +254,11 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 	{
 		$pin_settings = new XLite_Module_Egoods_Model_PinSettings();
 		$action = "";
-		if ($pin_settings->find('product_id=' . $this->get('product.product_id'))) {
+		if ($pin_settings->find('product_id=' . $this->getComplex('product.product_id'))) {
 			$action = "update";
 		} else {
 			$action = "create";
-			$pin_settings->set('product_id', $this->get('product.product_id'));
+			$pin_settings->set('product_id', $this->getComplex('product.product_id'));
 		}
 		$pin_settings->set('pin_type', $_POST['pin_src']);
 		isset($this->low_available_limit) ? $pin_settings->set('low_available_limit',$this->low_available_limit) : $pin_settings->set('low_available_limit',0);	
@@ -269,9 +269,9 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 	{
 		$pin_settings = new XLite_Module_Egoods_Model_PinSettings();
 		$action = '';
-		if (!$pin_settings->find("product_id=" . $this->get('product.product_id'))) {
+		if (!$pin_settings->find("product_id=" . $this->getComplex('product.product_id'))) {
 			$action = 'create';
-			$pin_settings->set('product_id', $this->get('product.product_id'));
+			$pin_settings->set('product_id', $this->getComplex('product.product_id'));
 		} else {	
 			$action = 'update';
 		}
@@ -281,7 +281,7 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 
 	function isValidEgoodsStoreDir() // {{{
 	{
-		$store_dir = $this->get('xlite.config.Egoods.egoods_store_dir');
+		$store_dir = $this->getComplex('xlite.config.Egoods.egoods_store_dir');
 		if (!is_dir($store_dir) || !is_writable($store_dir)) {
 			return false;
 		}

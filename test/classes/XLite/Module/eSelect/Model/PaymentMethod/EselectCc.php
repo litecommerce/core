@@ -67,7 +67,7 @@ class XLite_Module_eSelect_Model_PaymentMethod_EselectCc extends XLite_Model_Pay
 
 	function getReturnUrl() // {{{ 
 	{
-		$url = $this->xlite->shopURL("cart.php?target=eselect_checkout&action=return", $this->get("config.Security.customer_security"));
+		$url = $this->xlite->shopURL("cart.php?target=eselect_checkout&action=return", $this->getComplex('config.Security.customer_security'));
 		return $this->prepareUrl($url);
 	}   // }}}
 
@@ -117,11 +117,11 @@ class XLite_Module_eSelect_Model_PaymentMethod_EselectCc extends XLite_Model_Pay
 	function getMonerisMPG_URL()
 	{
 		$url = "";
-		if ($this->get("params.account_type") == "CA")
+		if ($this->getComplex('params.account_type') == "CA")
 		{
-			$url = "https://".(($this->get("params.testmode") == "Y") ? "esqa.moneris.com" : "www3.moneris.com").":443/gateway2/servlet/MpgRequest";
+			$url = "https://".(($this->getComplex('params.testmode') == "Y") ? "esqa.moneris.com" : "www3.moneris.com").":443/gateway2/servlet/MpgRequest";
 		} else {
-			$url ="https://".(($this->get("params.testmode") == "Y") ? "esplusqa" : "esplus").".moneris.com:443/gateway_us/servlet/MpgRequest";
+			$url ="https://".(($this->getComplex('params.testmode') == "Y") ? "esplusqa" : "esplus").".moneris.com:443/gateway_us/servlet/MpgRequest";
 		}
 
 		return $url;
@@ -130,10 +130,10 @@ class XLite_Module_eSelect_Model_PaymentMethod_EselectCc extends XLite_Model_Pay
 	function getMonerisMPI_URL()
 	{
 		$url = "";
-		if ($this->get("params.account_type") == "CA") {
-        	$url = "https://".(($this->get("params.testmode") == "Y") ? "esqa" : "www3").".moneris.com:443/mpi/servlet/MpiServlet";
+		if ($this->getComplex('params.account_type') == "CA") {
+        	$url = "https://".(($this->getComplex('params.testmode') == "Y") ? "esqa" : "www3").".moneris.com:443/mpi/servlet/MpiServlet";
 		} else {
-			$url = "https://".(($this->get("params.testmode") == "Y") ? "esplusqa" : "esplus").".moneris.com:443/mpi/servlet/MpiServlet";
+			$url = "https://".(($this->getComplex('params.testmode') == "Y") ? "esplusqa" : "esplus").".moneris.com:443/mpi/servlet/MpiServlet";
 		}
 
 		return $url;

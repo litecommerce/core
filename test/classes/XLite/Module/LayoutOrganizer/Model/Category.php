@@ -68,13 +68,13 @@ class XLite_Module_LayoutOrganizer_Model_Category extends XLite_Model_Category i
             		$cfg = new XLite_Model_Config();
             		$this->config = $cfg->readConfig();
             	}
-			return $this->config->get("LayoutOrganizer.template");
+			return $this->config->getComplex('LayoutOrganizer.template');
 			case "sc_custom_template":
             	if ($this->xlite->get("reReadConfig")) {
             		$cfg = new XLite_Model_Config();
             		$this->config = $cfg->readConfig();
             	}
-			return $this->config->get("General.subcategories_look");
+			return $this->config->getComplex('General.subcategories_look');
 			case "p_custom_template":
 			return "product_details.tpl";
 		}

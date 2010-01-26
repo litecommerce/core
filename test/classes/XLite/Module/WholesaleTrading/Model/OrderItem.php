@@ -89,13 +89,13 @@ class XLite_Module_WholesaleTrading_Model_OrderItem extends XLite_Model_OrderIte
         }
         
         // if not a product, return parent value
-        if (!$this->get("product.product_id")) {
+        if (!$this->getComplex('product.product_id')) {
             return parent::get("price");
         }
         $product = $this->get("product");
 		if (!isset($this->wholesale_prices)) {
 			$wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
-			$this->wholesale_prices = $wp->getProductPrices($product->get("product_id"), $this->get("amount"), "OR membership='" . $this->get("order.profile.membership") . "'");
+			$this->wholesale_prices = $wp->getProductPrices($product->get("product_id"), $this->get("amount"), "OR membership='" . $this->getComplex('order.profile.membership') . "'");
 		}	
 		if (count($this->wholesale_prices) == 0) {
 			$price = parent::get("price");
@@ -106,7 +106,7 @@ class XLite_Module_WholesaleTrading_Model_OrderItem extends XLite_Model_OrderIte
 		}
 
 		$price = $this->wholesale_prices[count($this->wholesale_prices) - 1]->get("price");
-		if ($this->config->get("Taxes.prices_include_tax")) {
+		if ($this->config->getComplex('Taxes.prices_include_tax')) {
 			$product->set("price", $price);
 			if (!$this->_skipTaxingWholesalePrice) {
 				$price = $product->get("listPrice");

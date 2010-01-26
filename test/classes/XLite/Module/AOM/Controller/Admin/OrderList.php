@@ -203,7 +203,7 @@ class XLite_Module_AOM_Controller_Admin_OrderList extends XLite_Controller_Admin
         $unique_shippings = array();
         $excluded_shipping_rates = array();
         foreach ($shipping_rates as $key => $val) {
-        	$shipping_id = $val->get("shipping.shipping_id");
+        	$shipping_id = $val->getComplex('shipping.shipping_id');
         	if (!isset($unique_shippings[$shipping_id])) {
         		$unique_shippings[$shipping_id] = true;
         	} else {

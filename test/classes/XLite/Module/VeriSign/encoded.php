@@ -21,15 +21,15 @@
 
         // Store values for X-Cart $userinfo variable here
         $userinfo = array ();
-        $userinfo ["firstname"] = $lite_cart->get("profile.billing_firstname");
-        $userinfo ["lastname"] = $lite_cart->get("profile.billing_lastname");
-        $userinfo ["b_city"] = $lite_cart->get("profile.billing_city");
-        $userinfo ["b_address"] = $lite_cart->get("profile.billing_address");
-        $userinfo ["b_state"] = $lite_cart->get("profile.billingState.state");
-        $userinfo ["b_zipcode"] = $lite_cart->get("profile.billing_zipcode");
-        $userinfo ["b_country"] = $lite_cart->get("profile.billingCountry.country");
-        $userinfo ["phone"] = $lite_cart->get("profile.billing_phone");
-        $userinfo ["email"] = $lite_cart->get("profile.login");
+        $userinfo ["firstname"] = $lite_cart->getComplex('profile.billing_firstname');
+        $userinfo ["lastname"] = $lite_cart->getComplex('profile.billing_lastname');
+        $userinfo ["b_city"] = $lite_cart->getComplex('profile.billing_city');
+        $userinfo ["b_address"] = $lite_cart->getComplex('profile.billing_address');
+        $userinfo ["b_state"] = $lite_cart->getComplex('profile.billingState.state');
+        $userinfo ["b_zipcode"] = $lite_cart->getComplex('profile.billing_zipcode');
+        $userinfo ["b_country"] = $lite_cart->getComplex('profile.billingCountry.country');
+        $userinfo ["phone"] = $lite_cart->getComplex('profile.billing_phone');
+        $userinfo ["email"] = $lite_cart->getComplex('profile.login');
         $userinfo ["card_number"] = $paymentMethod->cc_info["cc_number"];
         $userinfo ["card_expire"] = $paymentMethod->cc_info["cc_date"];
         $userinfo ["card_cvv2"] = $paymentMethod->cc_info["cc_cvv2"];
@@ -87,11 +87,11 @@
 			mkdir($certdir);
 		} 
 		
-		$cert_file = $lite_cart->get('config.verisign_cc.file_name');
+		$cert_file = $lite_cart->getComplex('config.verisign_cc.file_name');
 		if (is_null($cert_file)) {
 			die ('no certificate installed');
 		}	
-		$cert_text = $lite_cart->get('config.verisign_cc.cert_text');
+		$cert_text = $lite_cart->getComplex('config.verisign_cc.cert_text');
 		$handle = fopen($certdir . "/" . $cert_file, "w");
 		fwrite($handle, $cert_text);
 		fclose($handle);

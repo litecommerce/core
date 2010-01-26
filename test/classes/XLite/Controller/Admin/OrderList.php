@@ -169,12 +169,12 @@ class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_Abstract
 
     function getRecentOrders()
     {
-        if ($this->config->get("General.recent_orders")) {
+        if ($this->config->getComplex('General.recent_orders')) {
             $order = new XLite_Model_Order();
             $order->collectGarbage();
             $where = "status in ('Q','P')";
             $count = $order->count($where);
-            $from = $count - $this->config->get("General.recent_orders");
+            $from = $count - $this->config->getComplex('General.recent_orders');
             if ($from < 0) {
                 $from = 0;
             }

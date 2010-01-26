@@ -55,7 +55,7 @@ class XLite_Controller_Customer_Category extends XLite_Controller_Customer_Abstr
 		if (isset($this->category_id) && empty($this->category_id)) {
             return $this->redirect("cart.php");
 		}
-        $this->set("pager.itemsPerPage", $this->get("config.General.products_per_page"));
+        $this->set("pager.itemsPerPage", $this->getComplex('config.General.products_per_page'));
         if (!isset($_REQUEST["action"])) {
             $this->session->set("productListURL", $this->get("url"));
         }
@@ -64,7 +64,7 @@ class XLite_Controller_Customer_Category extends XLite_Controller_Customer_Abstr
     function getLocationPath()
     {
         $result = array();
-        foreach ($this->get("category.path") as $category) {
+        foreach ($this->getComplex('category.path') as $category) {
             $name = $category->get("name");
             while (isset($result[$name])) {
             	$name .= " ";
@@ -76,7 +76,7 @@ class XLite_Controller_Customer_Category extends XLite_Controller_Customer_Abstr
 
     function getTitle() 
     {
-        return ($this->get("category.meta_title") ? $this->get("category.meta_title") : $this->get("category.name"));
+        return ($this->getComplex('category.meta_title') ? $this->getComplex('category.meta_title') : $this->getComplex('category.name'));
     }
 
     /**
@@ -84,7 +84,7 @@ class XLite_Controller_Customer_Category extends XLite_Controller_Customer_Abstr
     */
     function getDescription()
     {
-        $description = $this->get("category.description");
+        $description = $this->getComplex('category.description');
         if (empty($description)) {
             $description = null;
         }
@@ -94,7 +94,7 @@ class XLite_Controller_Customer_Category extends XLite_Controller_Customer_Abstr
     function getMetaDescription()
     {
         $description = $this->getDescription();
-        return ($this->get("category.meta_desc") ? $this->get("category.meta_desc") : $description);
+        return ($this->getComplex('category.meta_desc') ? $this->getComplex('category.meta_desc') : $description);
     }
 
     /**
@@ -102,12 +102,12 @@ class XLite_Controller_Customer_Category extends XLite_Controller_Customer_Abstr
     */
     function getKeywords()
     {
-        return $this->get("category.meta_tags");
+        return $this->getComplex('category.meta_tags');
     }
 
     function handleRequest()
     {
-        if (!$this->is("category.exists") || !$this->is("category.enabled")) {
+        if (!$this->isComplex('category.exists') || !$this->isComplex('category.enabled')) {
             return $this->redirect("cart.php");
         }
         parent::handleRequest();

@@ -51,10 +51,10 @@ class XLite_Module_Newsletters_View_Bulletin extends XLite_View
     {
         if (is_null($this->lastNews)) {
             $nl = new XLite_Module_Newsletters_Model_NewsLetter();
-            $recent_messages = $this->get("config.Newsletters.recent_messages");
+            $recent_messages = $this->getComplex('config.Newsletters.recent_messages');
             $nls = $nl->findAll();
             $count = count($nls);
-            if ($this->config->get("Newsletters.news_order") == "D") {
+            if ($this->config->getComplex('Newsletters.news_order') == "D") {
                 $maxNL = $recent_messages > $count ? $count - 1: $recent_messages - 1;
                 $minNL = 0;
             } else {

@@ -64,7 +64,7 @@ class XLite_Module_GiftCertificates_Controller_Customer_AddGiftCertificate exten
                     $profile = $auth->get("profile");
                     $this->gc->set("purchaser", $profile->get("billing_title") . " " . $profile->get("billing_firstname") . " " . $profile->get("billing_lastname"));
                 }
-                $this->gc->set("recipient_country", $this->config->get("General.default_country"));
+                $this->gc->set("recipient_country", $this->config->getComplex('General.default_country'));
             }
         }
         return $this->gc;
@@ -72,7 +72,7 @@ class XLite_Module_GiftCertificates_Controller_Customer_AddGiftCertificate exten
 
 	function fillForm()
 	{
-        $this->set("properties", $this->get("gc.properties"));
+        $this->set("properties", $this->getComplex('gc.properties'));
     }
 
     function isGCAdded()
@@ -82,7 +82,7 @@ class XLite_Module_GiftCertificates_Controller_Customer_AddGiftCertificate exten
         $items = $this->cart->get("items");
         $found = false;
         for ($i=0; $i<count($items); $i++) {
-            if ($items[$i]->get("gcid") == $this->get("gc.gcid")) {
+            if ($items[$i]->get("gcid") == $this->getComplex('gc.gcid')) {
                 $found = true;
                 break;
             }
@@ -97,7 +97,7 @@ class XLite_Module_GiftCertificates_Controller_Customer_AddGiftCertificate exten
         $found = false;
 		$items = $this->cart->get("items");
 		for ($i=0; $i<count($items); $i++) {
-			if ($items[$i]->get("gcid") == $this->get("gc.gcid")) {
+			if ($items[$i]->get("gcid") == $this->getComplex('gc.gcid')) {
 				$items[$i]->set("GC", $this->get("gc"));
 				$items[$i]->update();
                 $found = true;
@@ -113,7 +113,7 @@ class XLite_Module_GiftCertificates_Controller_Customer_AddGiftCertificate exten
 			$this->cart->update();
     		$items = $this->cart->get("items");
     		for ($i=0; $i<count($items); $i++) {
-    			if ($items[$i]->get("gcid") == $this->get("gc.gcid")) {
+    			if ($items[$i]->get("gcid") == $this->getComplex('gc.gcid')) {
     				$this->cart->updateItem($items[$i]);
     			}
     		}
@@ -124,7 +124,7 @@ class XLite_Module_GiftCertificates_Controller_Customer_AddGiftCertificate exten
     function action_select_ecard()
     {
         $this->saveGC();
-        $this->set("returnUrl", "cart.php?target=gift_certificate_ecards&gcid=" . $this->get("gc.gcid"));
+        $this->set("returnUrl", "cart.php?target=gift_certificate_ecards&gcid=" . $this->getComplex('gc.gcid'));
     }
 
     function action_delete_ecard()
@@ -141,7 +141,7 @@ class XLite_Module_GiftCertificates_Controller_Customer_AddGiftCertificate exten
     function action_preview_ecard()
     {
         $this->saveGC();
-        $this->set("returnUrl", "cart.php?target=preview_ecard&gcid=" . $this->get("gc.gcid"));
+        $this->set("returnUrl", "cart.php?target=preview_ecard&gcid=" . $this->getComplex('gc.gcid'));
     }
 
     function saveGC()
@@ -157,14 +157,14 @@ class XLite_Module_GiftCertificates_Controller_Customer_AddGiftCertificate exten
     		$gc->set("add_date", time());
 			if (!$gc->get("expiration_date")) {
 				$month = 30 * 24 * 3600;
-				$gc->set("expiration_date", time() + $month * $this->get("gc.defaultExpirationPeriod"));
+				$gc->set("expiration_date", time() + $month * $this->getComplex('gc.defaultExpirationPeriod'));
 			}
 
         	if ($gc->get("gcid")) {
                 $gc->update();
             } else {
                 $gc->set("gcid", $gc->generateGC());
-				$gc->set("profile_id", $this->xlite->get("auth.profile.profile_id"));
+				$gc->set("profile_id", $this->xlite->getComplex('auth.profile.profile_id'));
                 $gc->create();
             }
         }
@@ -194,7 +194,7 @@ class XLite_Module_GiftCertificates_Controller_Customer_AddGiftCertificate exten
     
     function isVersionUpper2_1()
 	{	
-		return ($this->get("config.Version.version") >= "2.2") ? true : false;
+		return ($this->getComplex('config.Version.version') >= "2.2") ? true : false;
 	}
 
 }

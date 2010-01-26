@@ -78,7 +78,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Product extends XLite_Control
 
 			// overweight check
 			require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
-			$weight = UPSOnlineTools_convertWeight($product->get("weight"), $this->config->get("General.weight_unit"), "lbs", 2);
+			$weight = UPSOnlineTools_convertWeight($product->get("weight"), $this->config->getComplex('General.weight_unit'), "lbs", 2);
 
 			if ($packaging["weight_limit"] > 0 && $weight > $packaging["weight_limit"]) {
 				$this->product_overweight = true;
@@ -137,7 +137,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Product extends XLite_Control
 	function getCurrentPackaging()
 	{
 		$ups = new XLite_Module_UPS_Model_Shipping_Ups();
-		$dims = $ups->getUPSContainerDims($this->get("product.ups_packaging"));
+		$dims = $ups->getUPSContainerDims($this->getComplex('product.ups_packaging'));
 
 		return $dims;
 	}

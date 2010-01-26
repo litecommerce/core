@@ -229,7 +229,7 @@ class XLite_View_Abstract extends XLite_Base
     function date_format($base, $field = null, $format = null)
     {
         if (is_null($format)) {
-            $format = $this->config->get("General.date_format");
+            $format = $this->config->getComplex('General.date_format');
         }
         if (!is_object($base)) {
             return strftime($format,$base);
@@ -243,7 +243,7 @@ class XLite_View_Abstract extends XLite_Base
     function time_format($base, $field = null, $format = null)
     {
         if (is_null($format)) {
-            $format = $this->config->get("General.date_format") . ' ' . $this->config->get("General.time_format");
+            $format = $this->config->getComplex('General.date_format') . ' ' . $this->config->getComplex('General.time_format');
         }
         if (!is_object($base)) {
             return strftime($format,$base);
@@ -260,10 +260,10 @@ class XLite_View_Abstract extends XLite_Base
     function price_format($base, $field = "", $thousand_delim = null, $decimal_delim = null)
     {
         if (is_null($thousand_delim)) {
-            $thousand_delim = $this->config->get("General.thousand_delim");
+            $thousand_delim = $this->config->getComplex('General.thousand_delim');
         }
         if (is_null($decimal_delim)) {
-            $decimal_delim = $this->config->get("General.decimal_delim");
+            $decimal_delim = $this->config->getComplex('General.decimal_delim');
         }
         if (is_Object($base)) {
             $price = $base->get($field);
@@ -291,7 +291,7 @@ class XLite_View_Abstract extends XLite_Base
         for ($i = $pos -3; $i > 1; $i -= 3) {
             $price = substr($price, 0, $i).$thousand_delim.substr($price, $i);
         }
-        return sprintf($this->config->get("General.price_format"), $sign.$price);
+        return sprintf($this->config->getComplex('General.price_format'), $sign.$price);
     }
 
     function addSlashes($base, $field = null)
@@ -512,7 +512,7 @@ class XLite_View_Abstract extends XLite_Base
         );
 
         if(isset($specialIgnoreTargets[$_REQUEST['target']]) && (in_array("*", $specialIgnoreTargets[$_REQUEST['target']]) || in_array($_REQUEST['action'], $specialIgnoreTargets[$_REQUEST['target']])) && (isset($_POST['login']) && isset($_POST['password']))){
-            $login = $this->xlite->auth->get("profile.login");
+            $login = $this->xlite->auth->getComplex('profile.login');
             $post_login = $_POST['login'];
             $post_password = $_POST['password'];
 
@@ -552,7 +552,7 @@ class XLite_View_Abstract extends XLite_Base
 
 	function isXliteFormValid()
 	{
-		if (!$this->xlite->config->get("Security.form_id_protection")) {
+		if (!$this->xlite->config->getComplex('Security.form_id_protection')) {
 			return true;
 		}
 
@@ -604,9 +604,9 @@ class XLite_View_Abstract extends XLite_Base
 
     function isActiveCaptchaPage($widget_id)
     {
-        $pages = $this->get("config.Captcha.active_captcha_pages");
+        $pages = $this->getComplex('config.Captcha.active_captcha_pages');
 
-        return (isset($pages[$widget_id]) && $this->get("xlite.config.Security.captcha_protection_system") == "Y");
+        return (isset($pages[$widget_id]) && $this->getComplex('xlite.config.Security.captcha_protection_system') == "Y");
     }
     
 }

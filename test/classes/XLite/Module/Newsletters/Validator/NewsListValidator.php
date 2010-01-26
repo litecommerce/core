@@ -57,7 +57,7 @@ class XLite_Module_Newsletters_Validator_NewsListValidator extends XLite_Validat
 			return true;
 		}
 
-        if ($this->get("dialog.actionPerformed")) {
+        if ($this->getComplex('dialog.actionPerformed')) {
 			return true;
         }
 

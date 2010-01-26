@@ -70,7 +70,7 @@ class XLite_Module_InventoryTracking_Model_Order extends XLite_Model_Order imple
     {
         require_once LC_MODULES_DIR . 'InventoryTracking' . LC_DS . 'encoded.php';
         $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
-		if ($this->xlite->get("ProductOptionsEnabled") && $item->get("product.productOptions")&& $item->get("product.tracking")) {
+		if ($this->xlite->get("ProductOptionsEnabled") && $item->getComplex('product.productOptions')&& $item->getComplex('product.tracking')) {
             /* KOI8-R comment:
             Если у продукта есть опции, и Track with product options выставлено, то попадаем сюда
             Объясняю на примере:
@@ -135,7 +135,7 @@ class XLite_Module_InventoryTracking_Model_Order extends XLite_Model_Order imple
         foreach ($this->get("items") as $item) {
             $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
             $key = $item->get("key");
-			if ($this->xlite->get("ProductOptionsEnabled") && $item->get("product.productOptions") && $item->get("product.tracking")) {
+			if ($this->xlite->get("ProductOptionsEnabled") && $item->getComplex('product.productOptions') && $item->getComplex('product.tracking')) {
                 // product has product options
                 $inventories = $inventory->findAll("inventory_id LIKE '".$item->get("product_id")."|%' AND enabled=1", "order_by");
                 foreach ($inventories as $i) {
@@ -158,7 +158,7 @@ class XLite_Module_InventoryTracking_Model_Order extends XLite_Model_Order imple
     function checkedOut()
     {
         // decrease product(s) inventory  with placed order
-        if ($this->get("config.InventoryTracking.track_placed_order")) {
+        if ($this->getComplex('config.InventoryTracking.track_placed_order')) {
             $this->changeInventory(true);
         }
         parent::checkedOut();
@@ -166,7 +166,7 @@ class XLite_Module_InventoryTracking_Model_Order extends XLite_Model_Order imple
     
     function uncheckedOut()
     {
-        if ($this->get("config.InventoryTracking.track_placed_order")) {
+        if ($this->getComplex('config.InventoryTracking.track_placed_order')) {
             $this->changeInventory(false);
         }
         parent::uncheckedOut();
@@ -175,7 +175,7 @@ class XLite_Module_InventoryTracking_Model_Order extends XLite_Model_Order imple
     function processed()
     {
         // decrease product(s) inventory  with processed order
-        if (!$this->get("config.InventoryTracking.track_placed_order")) {
+        if (!$this->getComplex('config.InventoryTracking.track_placed_order')) {
             $this->changeInventory(true);
         }    
         parent::processed();
@@ -184,7 +184,7 @@ class XLite_Module_InventoryTracking_Model_Order extends XLite_Model_Order imple
     function declined()
     {
         // increase inventory if order was processed
-        if ($this->_oldStatus == 'P' && !$this->get("config.InventoryTracking.track_placed_order")) {
+        if ($this->_oldStatus == 'P' && !$this->getComplex('config.InventoryTracking.track_placed_order')) {
             $this->changeInventory(false);
         }
         parent::declined();

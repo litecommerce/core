@@ -64,7 +64,7 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepaydirectCc extends XLite_Mod
 
 	function getReturnUrl() // {{{ 
 	{
-		$url = $this->xlite->shopURL("cart.php?target=sagepaydirect_checkout&action=return", $this->get("config.Security.customer_security"));
+		$url = $this->xlite->shopURL("cart.php?target=sagepaydirect_checkout&action=return", $this->getComplex('config.Security.customer_security'));
 		return $this->prepareUrl($url);
 	}   // }}}
 
@@ -86,7 +86,7 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepaydirectCc extends XLite_Mod
 			}
 		}
 
-		$subtag = (($this->get("params.testmode") == "N") ? "live" : "test");
+		$subtag = (($this->getComplex('params.testmode') == "N") ? "live" : "test");
 		switch ($type) {
 			case "callback":
                 return "https://$subtag.sagepay.com:443/gateway/service/direct3dcallback.vsp";

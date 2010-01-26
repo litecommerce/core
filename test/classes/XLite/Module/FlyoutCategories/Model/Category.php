@@ -71,7 +71,7 @@ class XLite_Module_FlyoutCategories_Model_Category extends XLite_Model_Category 
 
 	function getSmallImageURL() // {{{
 	{
-        return $this->get("smallImage.url");
+        return $this->getComplex('smallImage.url');
 	} // }}}
 
 	function resizeSmallImage($_width, $src_image=null, $filesystem=null)
@@ -123,7 +123,7 @@ class XLite_Module_FlyoutCategories_Model_Category extends XLite_Model_Category 
 		}
 
 		ob_start();
-		imagejpeg($dst, "", $this->xlite->get("config.FlyoutCategories.resize_quality"));
+		imagejpeg($dst, "", $this->xlite->getComplex('config.FlyoutCategories.resize_quality'));
 		$content = ob_get_contents();
 		ob_end_clean();
 

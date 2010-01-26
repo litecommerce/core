@@ -151,7 +151,7 @@ class XLite_Model_Htaccess extends XLite_Model_Abstract
 
     function checkFiles()
     {
-        $last_date = $this->get("xlite.config.Htaccess.last_date");
+        $last_date = $this->getComplex('xlite.config.Htaccess.last_date');
         $now = time();
         if(($now - $last_date) < CHECK_INTERVAL)
             return;
@@ -246,8 +246,8 @@ class XLite_Model_Htaccess extends XLite_Model_Abstract
         $mail->adminMail = true;
         $mail->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
         $mail->compose(
-                $this->config->get("Company.site_administrator"),
-                $this->config->get("Company.site_administrator"),
+                $this->config->getComplex('Company.site_administrator'),
+                $this->config->getComplex('Company.site_administrator'),
                 "htaccess_notify");
         $mail->send();
     }

@@ -175,7 +175,7 @@ class XLite_Model_Shipping_Online extends XLite_Model_Shipping
     {
         
         $w = $order->get("weight");
-        switch ($this->config->get("General.weight_unit")) {
+        switch ($this->config->getComplex('General.weight_unit')) {
         case 'lbs': return ceil($w*16.0);
         case 'oz':  return ceil($w*1.0);
         case 'kg':  return ceil($w*35.2740);

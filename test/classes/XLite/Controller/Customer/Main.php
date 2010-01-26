@@ -51,9 +51,9 @@ class XLite_Controller_Customer_Main extends XLite_Controller_Customer_Abstract
 
     function handleRequest()
     {
-        if ($this->config->get("General.add_on_mode")) {
+        if ($this->config->getComplex('General.add_on_mode')) {
             // switch to cart in Add-on mode
-            $addOnModePage = $this->config->get("General.add_on_mode_page");
+            $addOnModePage = $this->config->getComplex('General.add_on_mode_page');
             if ($addOnModePage != "cart.php") {
             	$this->redirect($addOnModePage);
             } else {

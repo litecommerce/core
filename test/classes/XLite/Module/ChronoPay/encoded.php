@@ -58,7 +58,7 @@ function PaymentMethod_chronopay_callback()
 		$pm = $cart->get("paymentMethod");
 
 		# security issue
-		if ($pm->get("payment_method") != "chronopay" || !$pm->get("params.secure_ip") || !isset($_SERVER['REMOTE_ADDR']) || $_SERVER['REMOTE_ADDR'] != $pm->get("params.secure_ip")) {
+		if ($pm->get("payment_method") != "chronopay" || !$pm->getComplex('params.secure_ip') || !isset($_SERVER['REMOTE_ADDR']) || $_SERVER['REMOTE_ADDR'] != $pm->getComplex('params.secure_ip')) {
 			$_REQUEST["error_descr"] = " (Wrong ChronoPay payment gateway IP)";
 			$_REQUEST["error"] = "1";
 		}

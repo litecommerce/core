@@ -123,7 +123,7 @@ class XLite_Controller_Admin_Sbjs extends XLite_Controller_Admin_Abstract
 			$this->sidebar_box_statuses = array();
         	if ($this->auth->is("logged")) 
         	{
-        		$this->sidebar_box_statuses = unserialize($this->auth->get("profile.sidebar_boxes"));
+        		$this->sidebar_box_statuses = unserialize($this->auth->getComplex('profile.sidebar_boxes'));
         	}
 		}
 		else

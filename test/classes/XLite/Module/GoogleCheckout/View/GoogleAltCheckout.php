@@ -60,7 +60,7 @@ class XLite_Module_GoogleCheckout_View_GoogleAltCheckout extends XLite_View
     		if ($enabled) {
     			$params = $pm->get("params");
     			$this->GCMerchantID = $params["merchant_id"];
-    			$this->CurrentSkin = strval($this->get("dialog.config.Skins.skin"));
+    			$this->CurrentSkin = strval($this->getComplex('dialog.config.Skins.skin'));
     		} else {
     			$this->GCMerchantID = null;
     		}
@@ -78,8 +78,8 @@ class XLite_Module_GoogleCheckout_View_GoogleAltCheckout extends XLite_View
 			"checkout",
 			"cart"
 		);
-    	$cart = $this->get("dialog.cart");
-    	$dialogTarget = $this->get("dialog.target");
+    	$cart = $this->getComplex('dialog.cart');
+    	$dialogTarget = $this->getComplex('dialog.target');
     	if (is_object($cart) && !$cart->is("empty") && !in_array($dialogTarget, $targets)) {
     		if (in_array($dialogTarget, $targetsProfile)) {
     			$this->set("dialog.google_checkout_profile", true);
@@ -104,7 +104,7 @@ class XLite_Module_GoogleCheckout_View_GoogleAltCheckout extends XLite_View
 
 		$url = array();
 		$url[] = "http";
-		$url[] = ($this->get("dialog.secure")) ? "s" : "";
+		$url[] = ($this->getComplex('dialog.secure')) ? "s" : "";
 		$url[] = "://sandbox.google.com/checkout/buttons/checkout.gif?merchant_id=";
 		$url[] = $this->GCMerchantID;
 		$url[] = "&w=160&h=43&style=trans&variant=$variant&loc=en_US";
@@ -134,7 +134,7 @@ class XLite_Module_GoogleCheckout_View_GoogleAltCheckout extends XLite_View
 
 	function isGoogleAllowPay()
 	{
-		$cart = $this->get("dialog.cart");
+		$cart = $this->getComplex('dialog.cart');
 		if (is_null($cart) || !is_object($cart)) {
 			$cart = XLite_Model_Cart::getInstance();
 		}

@@ -50,8 +50,8 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeneralStats extends XLite_
             $this->gs = array();
             $this->order = $order = new XLite_Model_Order();
             $this->table = $table = $order->db->getTableByAlias($order->alias);
-            $fd = $this->get("period.fromDate");
-            $td = $this->get("period.toDate");
+            $fd = $this->getComplex('period.fromDate');
+            $td = $this->getComplex('period.toDate');
             // total orders
             $this->gs["placed"] = $order->db->getOne("SELECT COUNT(*) FROM $table WHERE status!='T' AND date BETWEEN $fd AND $td");
             // queued
@@ -91,7 +91,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeneralStats extends XLite_
 
             // Promotion add-on
             // discounts
-            if ($this->get("xlite.mm.activeModules.Promotion")) {
+            if ($this->getComplex('xlite.mm.activeModules.Promotion')) {
                 $discount = $order->db->getOne("SELECT SUM(discount) FROM $table WHERE status!='T' AND date BETWEEN $fd AND $td");
                 $payedByPoints = $order->db->getOne("SELECT SUM(payedByPoints) FROM $table WHERE status!='T' AND date BETWEEN $fd AND $td");
             } else {
@@ -102,7 +102,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeneralStats extends XLite_
             $this->gs["payedByPoints"] = $payedByPoints;
             
             // GiftCertificates add-on
-            if ($this->get("xlite.mm.activeModules.GiftCertificates")) {
+            if ($this->getComplex('xlite.mm.activeModules.GiftCertificates')) {
                 $payedByGC = $order->db->getOne("SELECT SUM(payedByGC) FROM $table WHERE status!='T' AND date BETWEEN $fd AND $td");
             } else {
                 $payedByGC = 0;
@@ -110,7 +110,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeneralStats extends XLite_
             $this->gs["payedByGC"] = $payedByGC;
             
             // Wholesalers add-on
-            if ($this->get("xlite.mm.activeModules.WholesaleTrading")) {
+            if ($this->getComplex('xlite.mm.activeModules.WholesaleTrading')) {
                 $global_discount = $order->db->getOne("SELECT SUM(global_discount) FROM $table WHERE status!='T' AND date BETWEEN $fd AND $td");
             } else {
                 $global_discount = 0;

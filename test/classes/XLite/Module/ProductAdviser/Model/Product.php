@@ -96,7 +96,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
     function create()
     {
     	parent::create();
-    	if ($this->config->get("ProductAdviser.period_new_arrivals") > 0) {
+    	if ($this->config->getComplex('ProductAdviser.period_new_arrivals') > 0) {
     		$added = time();
             //$added = mktime(date("H", $added), 0, 0, date("m", $added), date("d", $added), date("Y", $added));
             $product_id = $this->get("product_id");
@@ -136,7 +136,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
 	function getNewArrival()
 	{
         $stats = new XLite_Module_ProductAdviser_Model_ProductNewArrivals();
-        $timeCondition = $this->config->get("ProductAdviser.period_new_arrivals") * 3600;
+        $timeCondition = $this->config->getComplex('ProductAdviser.period_new_arrivals') * 3600;
 		$timeLimit = time();
         if (!$stats->find("product_id='".$this->get("product_id")."'")) {
         	return 0;
@@ -161,7 +161,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
 
         parent::set($property, $value);
 
-        if (!$this->config->get("ProductAdviser.customer_notifications_enabled")) {
+        if (!$this->config->getComplex('ProductAdviser.customer_notifications_enabled')) {
         	return;
         }
     	if ($property == "price") {
@@ -202,7 +202,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
     function checkSafetyMode()
     {
     	if ($this->_checkSafetyMode()) {
-    		$category_id = $this->get("category.category_id");
+    		$category_id = $this->getComplex('category.category_id');
     	}
     }
 
@@ -250,7 +250,7 @@ There <?php echo ($pricingCAI == 1) ? "is" : "are"; ?> <b><font color=blue><?php
 		if (intval($this->get("price")) <= 0) {
 			return false;
 		}
-		$mode = $this->config->get("ProductAdviser.customer_notifications_mode");
+		$mode = $this->config->getComplex('ProductAdviser.customer_notifications_mode');
 		return (($mode & 1) != 0) ? true : false;
 	}
 

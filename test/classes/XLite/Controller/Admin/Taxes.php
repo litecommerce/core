@@ -101,7 +101,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
    	
    	function action_add_tax()	
 	{
-        $taxes = unserialize($this->config->get("Taxes.taxes"));
+        $taxes = unserialize($this->config->getComplex('Taxes.taxes'));
         if ($_POST["new_name"] != "") {
 			if (empty($_POST['new_pos'])) {
 				$_POST["new_pos"] = ((int)(max(is_array($_POST["pos"]) ? $_POST["pos"] : array("1"))/10)+1)*10;
@@ -141,7 +141,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
     function action_delete_tax()
     {
 		if ($this->get("deleted")) {
-	        $taxes = unserialize($this->config->get("Taxes.taxes"));
+	        $taxes = unserialize($this->config->getComplex('Taxes.taxes'));
 			$deleted = $this->get("deleted");
 			foreach($deleted as $key => $value) {
 				unset($taxes[$key]);

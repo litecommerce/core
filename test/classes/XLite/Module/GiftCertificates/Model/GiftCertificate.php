@@ -118,7 +118,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_Ab
             $mail = new XLite_Model_Mailer();
             $mail->gc = $this;
             $mail->compose(
-                $this->config->get("Company.site_administrator"), 
+                $this->config->getComplex('Company.site_administrator'), 
                 $this->get("recipient_email"),
                 "modules/GiftCertificates");
             $mail->send();
@@ -137,7 +137,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_Ab
             return GC_DOESNOTEXIST;
         }
         
-		$estimated_expiration = $this->get("add_date") + $this->config->get("GiftCertificates.expiration") * 30 * 24 * 3600;
+		$estimated_expiration = $this->get("add_date") + $this->config->getComplex('GiftCertificates.expiration') * 30 * 24 * 3600;
         if (($this->get("status") == 'E') || (time() > $this->get("expirationDate"))) {
             if ($this->get("status") != 'E') {
                 $this->set("status", "E");
@@ -211,7 +211,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_Ab
 
 	function getDefaultExpirationPeriod()
 	{
-		$expiration = $this->xlite->get("config.GiftCertificates.expiration");
+		$expiration = $this->xlite->getComplex('config.GiftCertificates.expiration');
 		return $expiration;
 	}
 
@@ -235,18 +235,18 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_Ab
 
 	function isDisplayWarning()
 	{
-		$days = $this->xlite->get("config.GiftCertificates.expiration_warning_days");
+		$days = $this->xlite->getComplex('config.GiftCertificates.expiration_warning_days');
 		$warn_time = $days * 24 * 3600;
 		$exp_date = $this->getExpirationDate();
 		$warn_date = $exp_date - $warn_time;
 		if ((time() >= $warn_date) && (time() <= $exp_date)) {
-			if ($this->xlite->get("config.GiftCertificates.expiration_email") && (!$this->get("exp_email_sent"))) {
+			if ($this->xlite->getComplex('config.GiftCertificates.expiration_email') && (!$this->get("exp_email_sent"))) {
 				if (($this->get("debit") > 0) && ($this->get("status") == "A")) {
 					// send warning notification
 					$mailer = new XLite_Model_Mailer();
 					$mailer->cert = $this;
 					$mailer->compose(
-						$this->xlite->get("config.Company.site_administrator"),
+						$this->xlite->getComplex('config.Company.site_administrator'),
 						$this->get("recipient_email"),
 						'modules/GiftCertificates/expiration_notification'
 					);
@@ -264,7 +264,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_Ab
     function getExpirationConditions()
     {
         $now = time();
-        $warning_days = $this->xlite->get("config.GiftCertificates.expiration_warning_days");
+        $warning_days = $this->xlite->getComplex('config.GiftCertificates.expiration_warning_days');
         $exp_time = $now + ($warning_days * 24 * 3600);
         $where = array();
         $where[] = "expiration_date > '$now' AND expiration_date < '$exp_time'";

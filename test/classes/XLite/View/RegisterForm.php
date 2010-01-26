@@ -66,7 +66,7 @@ class XLite_View_RegisterForm extends XLite_View
     
     function isShowMembership()
     {
-        return count($this->config->get("Memberships.memberships")) > 0;
+        return count($this->config->getComplex('Memberships.memberships')) > 0;
     }
 
     function isFromCheckout()
@@ -78,13 +78,13 @@ class XLite_View_RegisterForm extends XLite_View
     {
         if ($this->get("mode") == "register") {
             // default registration form values
-            $this->billing_country = $this->config->get("General.default_country");
-            $this->billing_zipcode = $this->config->get("General.default_zipcode");
+            $this->billing_country = $this->config->getComplex('General.default_country');
+            $this->billing_zipcode = $this->config->getComplex('General.default_zipcode');
             $this->shipping_country = "";
             $this->billing_state = $this->shipping_state = "";
         }
         if ($this->get("mode") == "modify" && !is_null($this->get("profile"))) {
-            $this->set("properties", $this->get("profile.properties"));
+            $this->set("properties", $this->getComplex('profile.properties'));
             // don't show passwords
             $this->password = $this->confirm_password = "";
         }

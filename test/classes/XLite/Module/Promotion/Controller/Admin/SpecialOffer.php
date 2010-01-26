@@ -62,7 +62,7 @@ class XLite_Module_Promotion_Controller_Admin_SpecialOffer extends XLite_Control
 
 	function hasMemberships()
 	{
-		$memberships = $this->get("config.Memberships.memberships");
+		$memberships = $this->getComplex('config.Memberships.memberships');
 		return !empty($memberships);
 	}
 
@@ -85,7 +85,7 @@ class XLite_Module_Promotion_Controller_Admin_SpecialOffer extends XLite_Control
     function fillForm()
     {
         // default form values
-		$this->set("properties", $this->get("specialOffer.properties"));
+		$this->set("properties", $this->getComplex('specialOffer.properties'));
 
 	    parent::fillForm();
 		
@@ -94,14 +94,14 @@ class XLite_Module_Promotion_Controller_Admin_SpecialOffer extends XLite_Control
     function init()
     {
         parent::init();
-		$this->product = $this->get("specialOffer.product");
-		$this->category = $this->get("specialOffer.category");
-		$this->products = $this->get("specialOffer.products");
-		$this->bonusProducts = $this->get("specialOffer.bonusProducts");
-		$this->bonusPrices = $this->get("specialOffer.bonusPrices");
-		$this->bonusCategory = $this->get("specialOffer.bonusCategory");
-        $this->conditionType = $this->get("specialOffer.conditionType");
-        $this->bonusType = $this->get("specialOffer.bonusType");
+		$this->product = $this->getComplex('specialOffer.product');
+		$this->category = $this->getComplex('specialOffer.category');
+		$this->products = $this->getComplex('specialOffer.products');
+		$this->bonusProducts = $this->getComplex('specialOffer.bonusProducts');
+		$this->bonusPrices = $this->getComplex('specialOffer.bonusPrices');
+		$this->bonusCategory = $this->getComplex('specialOffer.bonusCategory');
+        $this->conditionType = $this->getComplex('specialOffer.conditionType');
+        $this->bonusType = $this->getComplex('specialOffer.bonusType');
 	}
 
 	function isSelectedMembership($selected_membership)
@@ -123,9 +123,9 @@ class XLite_Module_Promotion_Controller_Admin_SpecialOffer extends XLite_Control
 		}
 		$this->set("specialOffer.properties", $_POST);
 		// if a new offer, adds one
-		if (!$this->is("specialOffer.isPersistent")) {
+		if (!$this->isComplex('specialOffer.isPersistent')) {
 			$this->call("specialOffer.create");
-            $this->set("offer_id",  $this->get("specialOffer.offer_id"));
+            $this->set("offer_id",  $this->getComplex('specialOffer.offer_id'));
 		} else {
 			$this->call("specialOffer.update");
 		}

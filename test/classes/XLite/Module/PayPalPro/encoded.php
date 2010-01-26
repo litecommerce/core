@@ -36,7 +36,7 @@
 
  	function Payment_method_paypalpro_process($_this,$order) // {{{ 
 	{
-		switch($_this->get("params.solution")) 
+		switch($_this->getComplex('params.solution')) 
 		{
 			case "standard": 
 				standardRequest($_this, $order); 
@@ -49,13 +49,13 @@
 
 	function standardRequest($_this, $order) // {{{ 
 	{
-	    if (strcasecmp($_this->get("params.standard.login"),$_POST["business"]) != 0) {
+	    if (strcasecmp($_this->getComplex('params.standard.login'),$_POST["business"]) != 0) {
         	die("IPN validation error: PayPal account doesn't match: ".$_POST["business"]. ". Please contact administrator.");
 		}
 
-		if (is_null($order->get("details.reason"))) {
+		if (is_null($order->getComplex('details.reason'))) {
     	    $request = new XLite_Model_HTTPS();
-    	   	$request->url = $_this->get("params.standard.mode") ? $_this->get("params.standard.live_url") : $_this->get("params.standard.test_url");
+    	   	$request->url = $_this->getComplex('params.standard.mode') ? $_this->getComplex('params.standard.live_url') : $_this->getComplex('params.standard.test_url');
     	    $_POST["cmd"] = "_notify-validate";
     	    $request->data = $_POST;
     	    $request->request();
@@ -67,7 +67,7 @@
 				$order->update();
 				return self::PAYMENT_FAILURE; 
      		} elseif (preg_match("/VERIFIED/i",$request->response)) {
-    			$txn_id = ($order->get("details.reason") ? "" : $order->get("details.txn_id")); 
+    			$txn_id = ($order->getComplex('details.reason') ? "" : $order->getComplex('details.txn_id')); 
     		}	
 
     		$payment_status = $_POST["payment_status"];
@@ -78,7 +78,7 @@
 					$postTotal = sprintf("%.2f", $_POST["mc_gross"]);
 					if ((strcasecmp($payment_status,"Completed") != 0) || 
 						($total != $postTotal) || 
-						($_this->get("params.standard.currency") != $_POST["mc_currency"])) {
+						($_this->getComplex('params.standard.currency') != $_POST["mc_currency"])) {
 						$order->set("details.error", "Duplicate transaction -".$_POST["txn_id"]);
 						$order->set("detailLabels.error", "Error");
 						$order->set("status","F");
@@ -109,7 +109,7 @@
 
                         die("IPN validation error: PayPal amount doesn't match. Please contact administrator.");
                     }
-                    $currency = $_this->get("params.standard.currency");
+                    $currency = $_this->getComplex('params.standard.currency');
                     if ($currency != $_POST["mc_currency"]) {
                         $order->set("details.error", "Hacking attempt!");
                         $order->set("detailLabels.error", "Error");
@@ -122,7 +122,7 @@
                     }
 
 					if (strcasecmp($payment_status,"Pending") == 0) {
-    					$order->set("status", ($_this->get("params.standard.use_queued")) ? "Q" : "I");
+    					$order->set("status", ($_this->getComplex('params.standard.use_queued')) ? "Q" : "I");
     		            $order->set("details.reason", $_this->pendingReasons[$_POST["pending_reason"]]);
     		            $order->set("detailLabels.reason", "Pending Reason");
     		            $order->set("details.error", null);
@@ -136,10 +136,10 @@
 					$order->update();
         		}
 			}	// if ("Completed" || "Pending")
-		} else {	// if (is_null($order->get("details.reason")))
-		    $order_payment_status = $order->get("details.payment_status");
-		    $order_txn_id = $order->get("details.txn_id");
-		    $order_reason = $order->get("details.reason");
+		} else {	// if (is_null($order->getComplex('details.reason')))
+		    $order_payment_status = $order->getComplex('details.payment_status');
+		    $order_txn_id = $order->getComplex('details.txn_id');
+		    $order_reason = $order->getComplex('details.reason');
     		$payment_status = $_POST["payment_status"];
 
 			if ($order_payment_status == "Pending" && $order_txn_id == $_POST["txn_id"] && $order_reason == $_this->pendingReasons[$_POST["payment_type"]]) {
@@ -152,7 +152,7 @@
 
 				if (strcasecmp($payment_status,"Completed") == 0 || strcasecmp($payment_status, "Pending") == 0) {
     				if (strcasecmp($payment_status,"Pending") == 0) {
-    					$order->set("status", ($_this->get("params.standard.use_queued")) ? "Q" : "I");
+    					$order->set("status", ($_this->getComplex('params.standard.use_queued')) ? "Q" : "I");
     		            $order->set("details.reason", $_this->pendingReasons[$_POST["pending_reason"]]);
     		            $order->set("detailLabels.reason", "Pending Reason");
     		            $order->set("details.error", null);
@@ -173,7 +173,7 @@
 
     function proRequest($_this,$order) // {{{
     {
-		$response = PayPalPro_sendRequest($_this->get("params.pro"),$_this->getDirectPaymentRequest($order));
+		$response = PayPalPro_sendRequest($_this->getComplex('params.pro'),$_this->getDirectPaymentRequest($order));
 		if (is_null($response)) {
 			$order->set("details.error", $response);
 			$order->set("detailLabels.error", "HTTPS Error");
@@ -186,7 +186,7 @@
 			}
 			$response = $response["SOAP-ENV:ENVELOPE"]["SOAP-ENV:BODY"]["_0"]["DODIRECTPAYMENTRESPONSE"];
 			if ($response["ACK"] == 'Success' || $response["ACK"] == 'SuccessWithWarning') {
-				$_this->get("params.pro.type") ? $order->set("status","P") : $order->set("status","Q");
+				$_this->getComplex('params.pro.type') ? $order->set("status","P") : $order->set("status","Q");
 				$order->set("details.avscode", $_this->avsResponses[$response["AVSCODE"]]);
 				$order->set("detailLabels.avscode","AVS Code");	
                 $order->set("details.cvvcode", $_this->cvvResponses[$response["CVV2CODE"]]);
@@ -217,12 +217,12 @@
   function paypalExpressHandleRequest($_this,$order) // {{{ 
   {
 	$request = new XLite_Model_HTTPS();
-	if(is_null($order->get("details.token"))) {
+	if(is_null($order->getComplex('details.token'))) {
 		$express_checkout = new XLite_Module_PayPalPro_Controller_Customer_ExpressCheckout();	
 		$express_checkout->action_profile();
 	}
 	$pm = XLite_Model_PaymentMethod::factory('paypalpro');
-	$response = PayPalPro_sendRequest($pm->get("params.pro"),$_this->finishExpressCheckoutRequest($order,$pm->get("params.pro")));
+	$response = PayPalPro_sendRequest($pm->getComplex('params.pro'),$_this->finishExpressCheckoutRequest($order,$pm->getComplex('params.pro')));
     $xml = new XLite_Model_XML();
     $response = $xml->parse($response);
 

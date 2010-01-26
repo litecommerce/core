@@ -87,7 +87,7 @@ class XLite_Module_Protx_Main extends XLite_Module_Abstract
 
         $pm = new XLite_Model_PaymentMethod('protxdirect_cc');
 
-		switch($pm->get('params.solution')) {
+		switch($pm->getComplex('params.solution')) {
 
 			case 'form':
 				$this->registerPaymentMethod('protxform_cc');

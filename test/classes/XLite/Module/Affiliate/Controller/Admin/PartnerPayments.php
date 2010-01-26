@@ -135,13 +135,13 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Cont
         if (!isset($this->payments[$id])) {
             $this->payments[$id] = array();
             $this->payments[$id]["partner"] = $payment->get("partner");
-            $this->payments[$id]["min_limit"] = $payment->get("partner.partnerPlan.payment_limit");
+            $this->payments[$id]["min_limit"] = $payment->getComplex('partner.partnerPlan.payment_limit');
             $this->payments[$id]["approved"] = 0;
             $this->payments[$id]["pending"] = 0;
             $this->payments[$id]["paid"] = 0;
             $this->payments[$id]["ready"] = false;
         }
-        if (!$payment->is("order.processed")) {
+        if (!$payment->isComplex('order.processed')) {
             $this->payments[$id]["pending"] = sprintf("%.02f", doubleval($this->payments[$id]["pending"] + $payment->get("commissions")));
         } elseif ($payment->get("paid")) {
             $this->payments[$id]["paid"] = sprintf("%.02f", doubleval($this->payments[$id]["paid"] + $payment->get("commissions")));

@@ -65,17 +65,17 @@ class XLite_Module_AntiFraud_Controller_Admin_Fraud extends XLite_Controller_Adm
 		if (isset($this->ip)) 
 			return $this->ip;
 		else 
-			return $this->get("order.address");
+			return $this->getComplex('order.address');
 	}	
 	
 	function getZipcode() 
 	{
-		return isset($this->zipcode) ? $this->zipcode : $this->auth->get("profile.billing_zipcode");
+		return isset($this->zipcode) ? $this->zipcode : $this->auth->getComplex('profile.billing_zipcode');
 	}
 
     function getCity() 
     {
-        return isset($this->city) ? $this->city : $this->auth->get("profile.billing_city");
+        return isset($this->city) ? $this->city : $this->auth->getComplex('profile.billing_city');
     }
 
 	function getResponse()
@@ -95,7 +95,7 @@ class XLite_Module_AntiFraud_Controller_Admin_Fraud extends XLite_Controller_Adm
 	function check_ip($check_distance)
 	{
 		$post = array();
-		$post["service_key"] = $this->config->get("AntiFraud.antifraud_license");
+		$post["service_key"] = $this->config->getComplex('AntiFraud.antifraud_license');
 		$post["ip"] = $this->get("ip");
 	
 		$properties = $this->get("properties");
@@ -110,7 +110,7 @@ class XLite_Module_AntiFraud_Controller_Admin_Fraud extends XLite_Controller_Adm
 		
 		$request = new XLite_Model_HTTPS();
 		$request->data = $post;
-		$request->url = $this->config->get('AntiFraud.antifraud_url')."/check_ip.php";
+		$request->url = $this->config->getComplex('AntiFraud.antifraud_url')."/check_ip.php";
 		$request->request();
 		if ($request->error) {
 			return array

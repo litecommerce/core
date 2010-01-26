@@ -49,7 +49,7 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
 	function getProfile()
 	{
 		if (is_null($this->profile)) 
-			$this->profile = new XLite_Model_Profile($this->auth->get("profile.profile_id"));
+			$this->profile = new XLite_Model_Profile($this->auth->getComplex('profile.profile_id'));
 		return $this->profile;
 	}
 
@@ -62,12 +62,12 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
 
         parent::init();
 
-        $this->set("pager.itemsPerPage", $this->get("config.General.products_per_page"));
+        $this->set("pager.itemsPerPage", $this->getComplex('config.General.products_per_page'));
         if (!isset($this->action)) {
             $this->session->set("productListURL", $this->get("url"));
 		}
-		if ($this->get("properties.search")) {
-		    $this->session->set("search", $this->get("properties.search"));
+		if ($this->getComplex('properties.search')) {
+		    $this->session->set("search", $this->getComplex('properties.search'));
 		}
 
 		$this->search = $this->session->get("search");
@@ -96,7 +96,7 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
     {
         if (!isset($this->mode)) return array();
 
-        is_null($this->get("properties.search")) ?  $properties = $this->session->get("search") : $properties = $this->get("properties.search");
+        is_null($this->getComplex('properties.search')) ?  $properties = $this->session->get("search") : $properties = $this->getComplex('properties.search');
 
         if (!empty($properties["substring"])&&!isset($properties["title"])&&!isset($properties["brief_description"])&&!isset($properties["description"])&&!isset($properties["meta_tags"])&&!isset($properties["extra_fields"])&&!isset($properties["options"])) return array();
         if (is_null($this->products)) {
@@ -167,14 +167,14 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
 	
 	function getPrices()
 	{
-		$prices = unserialize($this->config->get("AdvancedSearch.prices"));
+		$prices = unserialize($this->config->getComplex('AdvancedSearch.prices'));
 		usort($prices, array($this,"cmp"));
 		return $prices;
 	}
 	
 	function getWeights()
 	{
-     	$weights =  unserialize($this->config->get("AdvancedSearch.weights"));
+     	$weights =  unserialize($this->config->getComplex('AdvancedSearch.weights'));
         usort($weights, array($this,"cmp"));
         return $weights;
 	}

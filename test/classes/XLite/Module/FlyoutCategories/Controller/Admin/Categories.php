@@ -57,7 +57,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_Categories extends XLite_Co
 	function getActiveScheme()
 	{
 		if ( is_null($this->_scheme) ) {
-			$scheme_id = $this->get("config.FlyoutCategories.scheme");
+			$scheme_id = $this->getComplex('config.FlyoutCategories.scheme');
 			$this->_scheme = new XLite_Module_FlyoutCategories_Model_FCategoriesScheme($scheme_id);
 		}
 
@@ -122,7 +122,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_Categories extends XLite_Co
             $contents = explode("\n", $contents);
             foreach($contents as $strPtr => $str) {
             	if (strpos($str, $fd2Name) !== false) {
-            	    if ($this->get("config.FlyoutCategories.force_js_in_layout")) {
+            	    if ($this->getComplex('config.FlyoutCategories.force_js_in_layout')) {
                 	    $htmlPart = array_slice($contents, 0, $strPtr+1);
                 	    $jsPart = array_slice($contents, $strPtr+1);
                 	    $jsPart = $this->_prepareJScode($jsPart);
@@ -161,7 +161,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_Categories extends XLite_Co
 	{
 		// generate small icons for all categories
 		if ($this->get("auto_generate")) {
-			$width = $this->xlite->get("config.FlyoutCategories.smallimage_width");
+			$width = $this->xlite->getComplex('config.FlyoutCategories.smallimage_width');
 
 			$co = new XLite_Model_Category();
 			$categories = $co->findAll();
@@ -194,9 +194,9 @@ class XLite_Module_FlyoutCategories_Controller_Admin_Categories extends XLite_Co
             ),
 		);
 
-		$memberships = $this->xlite->config->get("Memberships.membershipsCollection");
+		$memberships = $this->xlite->config->getComplex('Memberships.membershipsCollection');
 		if (!is_array($memberships) || count($memberships) <= 0) {
-			$values = $this->xlite->config->get("Memberships.memberships");
+			$values = $this->xlite->config->getComplex('Memberships.memberships');
 			foreach ($values as $value) {
 				$memberships[] = array("membership" => $value);
 			}
@@ -252,7 +252,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_Categories extends XLite_Co
 		$config = new XLite_Model_Config();
 		$config->createOption("FlyoutCategories", "last_categories_processed", 0);
 
-		if ($this->get("config.FlyoutCategories.scheme") <= 0)
+		if ($this->getComplex('config.FlyoutCategories.scheme') <= 0)
 			return;
 
 
@@ -735,7 +735,7 @@ function opera_click() {
 		parent::action_delete();
 
 		// rebuild cache if new category added
-		if ($this->get("config.FlyoutCategories.category_autoupdate")) {
+		if ($this->getComplex('config.FlyoutCategories.category_autoupdate')) {
 			$delete_return_url = $this->shopURL("admin.php?target=categories&category_id=0");
 			$this->action_build_categories($delete_return_url);
 		}

@@ -237,7 +237,7 @@ class XLite_Model_CaptchaGenerator extends XLite_Base
     function generateCode($length)
     {
     	$str_num = "";
-        $mode = $this->get("config.Captcha.captcha_type");
+        $mode = $this->getComplex('config.Captcha.captcha_type');
         if($mode == "numbers"){
             $fisrt = 48;
             $last  = 57;

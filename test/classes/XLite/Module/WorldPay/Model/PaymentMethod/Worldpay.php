@@ -61,22 +61,22 @@ class XLite_Module_WorldPay_Model_PaymentMethod_Worldpay extends XLite_Model_Pay
 
     function getWorldPayURL()
     {
-        return ($this->get("params.test") == "N") ? 'https://select.wp3.rbsworldpay.com/wcc/purchase' : "https://select-test.wp3.rbsworldpay.com/wcc/purchase";
+        return ($this->getComplex('params.test') == "N") ? 'https://select.wp3.rbsworldpay.com/wcc/purchase' : "https://select-test.wp3.rbsworldpay.com/wcc/purchase";
     }
 
     function getTestMode()
     {
-        return ($this->get("params.test") == "N") ? "0" : "100";
+        return ($this->getComplex('params.test') == "N") ? "0" : "100";
     }
 
     function getCartId($oid)
     {
-        return $this->get("params.prefix").$oid;
+        return $this->getComplex('params.prefix').$oid;
     }
 
     function getNameField($cart)
     {
-        switch ($this->get("params.test")) {
+        switch ($this->getComplex('params.test')) {
             case 'A':
                 $result = 'AUTHORISED';
                 break;
@@ -102,11 +102,11 @@ class XLite_Module_WorldPay_Model_PaymentMethod_Worldpay extends XLite_Model_Pay
      */
     function getMD5Signature($cart)
     {
-        if (!is_null($this->get("params.md5HashValue"))) {
+        if (!is_null($this->getComplex('params.md5HashValue'))) {
    
-            $plain = $this->get("params.md5HashValue") . ':' .
+            $plain = $this->getComplex('params.md5HashValue') . ':' .
                 $this->formatTotal($cart->get('total')) . ':' .
-                $this->get("params.currency") . ':' .
+                $this->getComplex('params.currency') . ':' .
                 $this->getCartId($cart->get('order_id'));
             $md5sum = md5($plain);
 			$this->logger->log("Worldpay:getMD5Signature($plain): $md5sum");

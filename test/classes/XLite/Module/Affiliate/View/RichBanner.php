@@ -49,16 +49,16 @@ class XLite_Module_Affiliate_View_RichBanner extends XLite_View
     {
         // display banner.body HTML code
         if (!is_null($this->get("banner"))) {
-            $body = $this->get("banner.body");
+            $body = $this->getComplex('banner.body');
             // rewrite A HREF
-            $body = str_replace("[url]", "<a href=\"" . $this->get("href") . "\" target=\"".$this->get("banner.link_target"). "\">", $body);
+            $body = str_replace("[url]", "<a href=\"" . $this->get("href") . "\" target=\"".$this->getComplex('banner.link_target'). "\">", $body);
             $body = str_replace("[/url]", "</a>", $body);
             // rewrite object
-            $type = $this->get("banner.image.banner_type");
+            $type = $this->getComplex('banner.image.banner_type');
             if ($type == "image/swf" || $type == "image/swc") {
                 // rewrite FLASH movie
-                $width = $this->get("banner.width");
-                $height = $this->get("banner.height");
+                $width = $this->getComplex('banner.width');
+                $height = $this->getComplex('banner.height');
                 $src = $this->get("src");
                 $obj =<<<EOT
 <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0" width="$width" height="$height" id="banner" align="middle">

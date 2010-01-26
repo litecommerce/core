@@ -45,7 +45,7 @@ class XLite_Module_WishList_Controller_Customer_Checkout extends XLite_Controlle
 	{
 		if ($this->auth->get('profile')) {
 			$wishlist = new XLite_Module_WishList_Model_WishList();
-			$wishlist->find("profile_id = ". $this->auth->get('profile.profile_id'));
+			$wishlist->find("profile_id = ". $this->auth->getComplex('profile.profile_id'));
 			$wishlist_products = $wishlist->get("products");
 		
 			if (!empty($wishlist_products)) 

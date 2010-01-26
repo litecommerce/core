@@ -51,16 +51,16 @@ class XLite_Module_Affiliate_View_PartnerField extends XLite_View
     {
         // form submitted
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            return isset($_POST[$this->formField][$this->get("field.field_id")]) ?
-                          $_POST[$this->formField][$this->get("field.field_id")] : null;
+            return isset($_POST[$this->formField][$this->getComplex('field.field_id')]) ?
+                          $_POST[$this->formField][$this->getComplex('field.field_id')] : null;
         }
         // value from partner's profile
-        elseif (!is_null($this->get("partner.partner_fields.".$this->get("field.field_id")))) {
-            return $this->get("partner.partner_fields.".$this->get("field.field_id")); 
+        elseif (!is_null($this->get("partner.partner_fields.".$this->getComplex('field.field_id')))) {
+            return $this->get("partner.partner_fields.".$this->getComplex('field.field_id')); 
         }
         // default field value
         else {
-            return $this->get("field.value");
+            return $this->getComplex('field.value');
         }
     }
 

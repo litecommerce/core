@@ -47,7 +47,7 @@ function func_wholesaleTrading_set_membership($_this, $profile, $product)
 	$membership = $profile->get("membership");
 	$membership_exp_date = $profile->get("membership_exp_date");
 
-	if (!empty($membership) && $membership != $product->get('selling_membership') && !$_this->config->get("WholesaleTrading.override_membership")) return; 
+	if (!empty($membership) && $membership != $product->get('selling_membership') && !$_this->config->getComplex('WholesaleTrading.override_membership')) return; 
 
 	$period = array(
 			"d" => 0,

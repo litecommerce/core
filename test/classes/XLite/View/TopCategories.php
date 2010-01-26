@@ -54,7 +54,7 @@ class XLite_View_TopCategories extends XLite_View
         // get root categories
         if (is_null($this->categories)) {
             $category = new XLite_Model_Category(); 
-            $this->categories = $category->get("topCategory.subcategories");
+            $this->categories = $category->getComplex('topCategory.subcategories');
         }
         return $this->categories;
     }

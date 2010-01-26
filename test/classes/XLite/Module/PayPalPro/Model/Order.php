@@ -60,7 +60,7 @@ class XLite_Module_PayPalPro_Model_Order extends XLite_Model_Order implements XL
 
 	function isPayPalProfileRetrieved()
 	{
-		return ((is_null($this->get("details.token"))) ? false : true);
+		return ((is_null($this->getComplex('details.token'))) ? false : true);
 	}
 }
 // WARNING :

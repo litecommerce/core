@@ -66,7 +66,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerBannerStats extends XLit
         if (is_null($this->stats)) {
             $stats = new XLite_Module_Affiliate_Model_BannerStats();
             $this->stats = $stats->search(
-                    $this->get("auth.profile.profile_id"),
+                    $this->getComplex('auth.profile.profile_id'),
                     $this->get("startDate"),
                     $this->get("endDate")+24*3600,
                     $this->get("sort_by"),

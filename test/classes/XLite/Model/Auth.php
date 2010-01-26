@@ -162,14 +162,14 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
             // pass this data to the mailer
             $mailer->profile = $profile; 
 			$mailer->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
-            $mailer->compose($this->get("config.Company.site_administrator"),
+            $mailer->compose($this->getComplex('config.Company.site_administrator'),
                              $profile->get("login"),
                              "signin_notification"
                              );
             $mailer->send();
             // send new profile signin notification to admin
-            $mailer->compose($this->get("config.Company.site_administrator"),
-                             $this->get("config.Company.users_department"),
+            $mailer->compose($this->getComplex('config.Company.site_administrator'),
+                             $this->getComplex('config.Company.users_department'),
                              "signin_admin_notification"
                              );
             $mailer->send();
@@ -214,7 +214,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
 
         // update current shopping cart/order data
         $cart = XLite_Model_Cart::getInstance();
-        if ($cart->get("profile.order_id")) {
+        if ($cart->getComplex('profile.order_id')) {
             $cart->call("profile.modifyProperties", $_REQUEST);
             $this->copyBillingInfo($cart->get("profile"));
             $cart->call("profile.update");
@@ -231,15 +231,15 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         $mailer->set("profile", $profile);
 		$mailer->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
         $mailer->compose(
-                $this->get("config.Company.users_department"),
+                $this->getComplex('config.Company.users_department'),
                 $profile->get("login"),
                 "profile_modified"
                 );
         $mailer->send();
         // notify administration devision (users department)
         $mailer->compose(
-                $this->get("config.Company.site_administrator"),
-                $this->get("config.Company.users_department"),
+                $this->getComplex('config.Company.site_administrator'),
+                $this->getComplex('config.Company.users_department'),
                 "profile_admin_modified"
                 );
         $mailer->send();
@@ -292,7 +292,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         // read profile data
         $profile->read();
         // get current profile from session
-        $current = $this->get("session.profile_id");
+        $current = $this->getComplex('session.profile_id');
         if ($current == $profile->get("profile_id")) {
             // log off first
             $this->logoff();
@@ -302,15 +302,15 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         $mailer->set("profile", $profile);
 		$mailer->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
         $mailer->compose(
-                $this->get("config.Company.users_department"),
+                $this->getComplex('config.Company.users_department'),
                 $profile->get("login"),
                 "profile_deleted"
                 );
         $mailer->send();
         // send mail notification about deleted profile to admin
         $mailer->compose(
-                $this->get("config.Company.site_administrator"),
-                $this->get("config.Company.users_department"),
+                $this->getComplex('config.Company.site_administrator'),
+                $this->getComplex('config.Company.users_department'),
                 "profile_admin_deleted"
                 );
         $mailer->send();        
@@ -453,8 +453,8 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         $mailer->set("HTTP_X_FORWARDED_FOR", isset($_SERVER["HTTP_X_FORWARDED_FOR"]) ? $_SERVER["HTTP_X_FORWARDED_FOR"] : "unknown");
 		$mailer->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
         $mailer->compose(
-                            $this->get("config.Company.site_administrator"),
-                            $this->get("config.Company.site_administrator"),
+                            $this->getComplex('config.Company.site_administrator'),
+                            $this->getComplex('config.Company.site_administrator'),
                             "login_error"
                             );
         $mailer->send();
@@ -467,7 +467,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     */
     function logoff() // {{{
     {
-        $this->set("session.last_profile_id", $this->get("session.profile_id"));
+        $this->set("session.last_profile_id", $this->getComplex('session.profile_id'));
         $this->set("session.profile_id", null);
         $this->set("session.anonymous", null);
     } // }}}
@@ -498,7 +498,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         }
 
         if (is_null($profile_id)) {
-            $profile_id = intval($this->get("session.profile_id"));
+            $profile_id = intval($this->getComplex('session.profile_id'));
         }
         if (is_null($profile_id) || $profile_id <= 0) {
             return null; // not logged
@@ -572,7 +572,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         {
             $this->_die("Auth::isAuthorized(): Authorization failed: resource invalid");
         }
-        return $this->get('profile.access_level') >= $resource->get("accessLevel");
+        return $this->getComplex('profile.access_level') >= $resource->get("accessLevel");
     } // }}}
 
 
@@ -591,7 +591,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
             return IP_INVALID;
         }
 
-        $valid_ips = $this->get("xlite.config.SecurityIP.allow_admin_ip");
+        $valid_ips = $this->getComplex('xlite.config.SecurityIP.allow_admin_ip');
         if((!is_array($valid_ips) || count($valid_ips) < 1) && !$checkOnly){
             $valid_ips_object = new XLite_Model_Config();
 			$admin_ip = serialize(array(array("ip" => $admin_ip, "comment" => "Default admin IP")));
@@ -662,7 +662,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         $mailer = new XLite_Model_Mailer();
         $mailer->url = $this->xlite->shopURL("cart.php?target=recover_password&action=confirm&email=".urlencode($profile->get("login"))."&request_id=".$profile->get("password"));
 		$mailer->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
-        $mailer->compose($this->config->get('Company.users_department'),
+        $mailer->compose($this->config->getComplex('Company.users_department'),
                          $profile->get("login"),
                          "recover_request"
                          );
@@ -684,9 +684,9 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         $profile->set("password", md5($pass));
         $profile->update();
         $mailer->set("profile", $profile);
-		$mailer->set("charset", $profile->get("billingCountry.charset"));
+		$mailer->set("charset", $profile->getComplex('billingCountry.charset'));
         $mailer->compose(
-                $this->get("config.Company.users_department"),
+                $this->getComplex('config.Company.users_department'),
                 $profile->get("login"),
                 "recover_recover"
                 );

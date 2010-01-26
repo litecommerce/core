@@ -111,7 +111,7 @@ class XLite_Module_Froogle_Main extends XLite_Module_Abstract
 
     function isImprovedExport()
     {
-    	$lcVersion = $this->config->get("Version.version");
+    	$lcVersion = $this->config->getComplex('Version.version');
     	$lcVersion = str_replace(" build ", ".", $lcVersion);
         if (version_compare($lcVersion, "2.2") < 0) {
 			$classMethods = array_map("strtolower", get_class_methods(get_parent_class(get_class($this))));

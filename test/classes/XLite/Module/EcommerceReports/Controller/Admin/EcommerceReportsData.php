@@ -52,7 +52,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReportsData extend
     {
         parent::init();
         // get request data from session
-        $salesDynamics = $this->get("session.salesDynamics");
+        $salesDynamics = $this->getComplex('session.salesDynamics');
         if (is_array($salesDynamics) && !empty($salesDynamics)) {
             $this->mapRequest($salesDynamics);
         }

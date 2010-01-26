@@ -71,7 +71,7 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstra
 
 	function getImageURL() // {{{
 	{
-		return $this->get("image.url");
+		return $this->getComplex('image.url');
 	} // }}}
 
     function findImages($product_id = 0) // {{{

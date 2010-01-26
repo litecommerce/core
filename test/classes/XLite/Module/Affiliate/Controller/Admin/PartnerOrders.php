@@ -94,7 +94,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerOrders extends XLite_Contro
     
     function getOrder() // {{{
     {
-        return $this->get("sale.order");
+        return $this->getComplex('sale.order');
     } // }}}
     
     function fillForm() // {{{

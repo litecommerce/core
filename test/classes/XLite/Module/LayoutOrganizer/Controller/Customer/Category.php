@@ -57,7 +57,7 @@ class XLite_Module_LayoutOrganizer_Controller_Customer_Category extends XLite_Co
         }
 
         // default products list template
-        $template = $this->get("config.LayoutOrganizer.template");
+        $template = $this->getComplex('config.LayoutOrganizer.template');
         if (is_object($category) && $category->get("custom_template") != 0 && $category->get("custom_template_enabled")) {
 			$template_custom = $category->get("template_name");
 			if (strlen($template_custom) > 0) {
@@ -80,7 +80,7 @@ class XLite_Module_LayoutOrganizer_Controller_Customer_Category extends XLite_Co
     				$template = substr($template, strlen($layout->getPath()));
     			}
 				// overriding default subcategories list template
-				$layout->addLayout($this->get("config.General.subcategories_look"), $template);
+				$layout->addLayout($this->getComplex('config.General.subcategories_look'), $template);
     		}
         }
         

@@ -142,7 +142,7 @@ class XLite_Controller_Admin_Users extends XLite_Controller_Admin_Abstract
 		$login = $profile->get("login");
         if (strlen($login) > 0) {
             $login = urlencode($login);
-            $year = $this->config->get("Company.start_year");
+            $year = $this->config->getComplex('Company.start_year');
             $date = getdate(time());
         	$this->set("returnUrl", "admin.php?target=order_list&mode=search&login=$login&startDateDay=1&startDateMonth=1&startDateYear=$year&endDateDay=$date[mday]&endDateMonth=$date[mon]&endDateYear=$date[year]");
         } else {

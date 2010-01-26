@@ -130,7 +130,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
 
 	function getImageURL() // {{{
 	{
-        return $this->get("image.url");
+        return $this->getComplex('image.url');
 	} // }}}
 
     /**
@@ -381,7 +381,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
         } else {
             $path = $name;
         }
-        $topID = $this->get("topCategory.category_id");
+        $topID = $this->getComplex('topCategory.category_id');
         $category_id = $topID;
         foreach ($path as $n) {
             $category = new XLite_Model_Category();
@@ -402,7 +402,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
         if (!is_array($path)) {
             $path = $this->parseCategoryField($path, false);
         }
-        $topID = $this->get("topCategory.category_id");
+        $topID = $this->getComplex('topCategory.category_id');
         $category_id = $topID;
         foreach ($path as $n) {
             $category = new XLite_Model_Category();
@@ -420,7 +420,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
     	$result = true;
 
         if ($this->auth->is("logged")) {
-            $membership = $this->auth->get("profile.membership");
+            $membership = $this->auth->getComplex('profile.membership');
         } else {
             $membership = '';
         }

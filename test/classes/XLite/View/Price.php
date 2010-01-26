@@ -50,17 +50,17 @@ class XLite_View_Price extends XLite_View
 
     function isSalePriceEnabled()
     {
-        return $this->get("config.General.enable_sale_price") && $this->CalcSaveValue(false) > 0;
+        return $this->getComplex('config.General.enable_sale_price') && $this->CalcSaveValue(false) > 0;
     }
 
     function isSaveEnabled()
     {
-        return $this->get("config.General.you_save") != "N";
+        return $this->getComplex('config.General.you_save') != "N";
     }
 
     function CalcSaveValue($full = true)
     {
-         switch ($this->get("config.General.you_save")) {
+         switch ($this->getComplex('config.General.you_save')) {
             case "YP":
                 $value = round(($this->product->get("sale_price") - $this->product->get("listPrice")) / $this->product->get("sale_price") * 100) . ($full ? " %" : "");
                 break;

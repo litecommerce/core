@@ -307,7 +307,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
 			return $statusGlobal;
 		}
 
-        return ($this->xlite->config->get("General.direct_product_url")) ? true : false;
+        return ($this->xlite->config->getComplex('General.direct_product_url')) ? true : false;
     }
 
     function getCategoriesNumber($where = null, $orderby = null, $useCache = false)
@@ -427,17 +427,17 @@ class XLite_Model_Product extends XLite_Model_Abstract
 
 	function getThumbnailURL() // {{{
 	{
-        return $this->get("thumbnail.url");
+        return $this->getComplex('thumbnail.url');
 	} // }}}
 
 	function getImageURL() // {{{
 	{
-        return $this->get("image.url");
+        return $this->getComplex('image.url');
 	} // }}}
 
 	function getTaxedPrice() // {{{
     {
-        if (!$this->config->get("Taxes.prices_include_tax")) {
+        if (!$this->config->getComplex('Taxes.prices_include_tax')) {
             return parent::get("price");
         }
 
@@ -453,8 +453,8 @@ class XLite_Model_Product extends XLite_Model_Abstract
             }
         } else {
             $profile = new XLite_Model_Profile();
-            $profile->set("shipping_country", $this->config->get("General.default_country"));
-            $profile->set("billing_country", $this->config->get("General.default_country"));
+            $profile->set("shipping_country", $this->config->getComplex('General.default_country'));
+            $profile->set("billing_country", $this->config->getComplex('General.default_country'));
         }
         // setup customer's info
         $order = new XLite_Model_Order();
@@ -480,12 +480,12 @@ class XLite_Model_Product extends XLite_Model_Abstract
 
     function getPriceMessage() // {{{
     {
-        if ($this->config->get("Taxes.prices_include_tax")) {
+        if ($this->config->getComplex('Taxes.prices_include_tax')) {
             if (!isset($this->_taxes)) {
                 $this->get("listPrice");
             }
             if (isset($this->_taxes["Tax"]) && $this->_taxes["Tax"]!=0) {
-                return $this->config->get("Taxes.include_tax_message");
+                return $this->config->getComplex('Taxes.include_tax_message');
             }
         }
         return "";

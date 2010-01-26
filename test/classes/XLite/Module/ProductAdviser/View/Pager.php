@@ -75,7 +75,7 @@ class XLite_Module_ProductAdviser_View_Pager extends XLite_View_Pager
     {
     	if (parent::get("pageIDX")) {
             $result = array();
-            $params = $this->get("dialog.allParams");
+            $params = $this->getComplex('dialog.allParams');
 			$params["pageID"] = null;
 			if (parent::get("extraParameter") && isset($_REQUEST[parent::get("extraParameter")])) {
 				$params[parent::get("extraParameter")] = $_REQUEST[parent::get("extraParameter")];
@@ -91,7 +91,7 @@ class XLite_Module_ProductAdviser_View_Pager extends XLite_View_Pager
             }
     	} else {
             $result = array();
-            $params = $this->get("dialog.allParams");
+            $params = $this->getComplex('dialog.allParams');
 			if (parent::get("extraParameter") && isset($_REQUEST[parent::get("extraParameter")])) {
 				$params[parent::get("extraParameter")] = $_REQUEST[parent::get("extraParameter")];
 			}

@@ -16,7 +16,7 @@ if (!defined('PROTX_FORM_DEBUG_LOG')) {
 function func_Protx_getTxCode($pm, $order)
 {
 	$stamp = substr(md5(uniqid(time())), 0, 4);
-	$vendorTxCode = substr($pm->get("params.order_prefix"), 0, 20)."_".$order->get("order_id")."_".$stamp;
+	$vendorTxCode = substr($pm->getComplex('params.order_prefix'), 0, 20)."_".$order->get("order_id")."_".$stamp;
 	$vendorTxCode = substr($vendorTxCode, 0, 40);
 	$vendorTxCode = preg_replace("/[^\d\w_]/", "_", $vendorTxCode);
 	return $vendorTxCode;
@@ -25,13 +25,13 @@ function func_Protx_getTxCode($pm, $order)
 /////////////////////////////////// Protx VSP Direct ////////////////////////////////////
 function func_ProtxDirect_process($_this, $order)
 {
-	$vendor = $_this->get("params.vendor_name");
+	$vendor = $_this->getComplex('params.vendor_name');
 	$vendorTxCode = func_Protx_getTxCode($_this, $order);
-	$currency = (($_this->get("params.currency")) ? $_this->get("params.currency") : "USD");
+	$currency = (($_this->getComplex('params.currency')) ? $_this->getComplex('params.currency') : "USD");
 
 	$profile = $order->get("profile");
 
-	$TxType = $_this->get("params.trans_type");
+	$TxType = $_this->getComplex('params.trans_type');
 	if (!in_array($TxType, array("AUTHENTICATE", "PAYMENT", "PAYMENT"))) {
 		$TxType = "AUTHENTICATE";
 	}
@@ -64,9 +64,9 @@ function func_ProtxDirect_process($_this, $order)
 		"CustomerEMail"    => $profile->get("login"),
         "Basket"           => func_Protx_getBasket($order),
 		"GiftAidPayment"   => 0,
-		"ApplyAVSCV2"		=> $_this->get("params.ApplyAVSCV2"),
+		"ApplyAVSCV2"		=> $_this->getComplex('params.ApplyAVSCV2'),
 		"ClientIPAddress"	=> $_this->get("clientIP"),
-		"Apply3DSecure"		=> $_this->get("params.Apply3DSecure")
+		"Apply3DSecure"		=> $_this->getComplex('params.Apply3DSecure')
 	);
 
 	$trxData = array_merge($trxData, $_this->get("ccDetails"));
@@ -248,7 +248,7 @@ function func_Protx_response_handling($response, $order, &$payment)
 function func_ProtxForm_compileInfoCrypt($_this, $order)
 {
 	$vendorTxCode = func_Protx_getTxCode($_this, $order);
-	$currency = (($_this->get("params.currency")) ? $_this->get("params.currency") : "USD");
+	$currency = (($_this->getComplex('params.currency')) ? $_this->getComplex('params.currency') : "USD");
 
 	$profile = $order->get("profile");
 
@@ -261,7 +261,7 @@ function func_ProtxForm_compileInfoCrypt($_this, $order)
 		"FailureURL"	=> $_this->getFailureUrl($order->get("order_id")),
 		"CustomerName"	=> $profile->get("shipping_firstname")." ".$profile->get("shipping_lastname"),
 		"CustomerEMail"	=> $profile->get("login"),
-		"eMailMessage"	=> $_this->get("params.eMailMessage"),
+		"eMailMessage"	=> $_this->getComplex('params.eMailMessage'),
 		"BillingAddress"	=> $profile->get("billing_address")." ".$profile->get("billing_city")." ".func_Protx_getState($profile, "billing_state", "billing_custom_state")." ".$profile->get("billing_country"),
 		"BillingPostCode"	=> $profile->get("billing_zipcode"),
 		"DeliveryAddress"	=> $profile->get("shipping_address")." ".$profile->get("shipping_city")." ".func_Protx_getState($profile, "shipping_state", "shipping_custom_state")." ".$profile->get("shipping_country"),
@@ -270,8 +270,8 @@ function func_ProtxForm_compileInfoCrypt($_this, $order)
 		"ContactFax"	=> $profile->get("billing_fax"),
 		"Basket"		=> func_Protx_getBasket($order, true),
 		"AllowGiftAid"	=> "0",
-		"ApplyAVSCV2"	=> $_this->get("params.ApplyAVSCV2"),
-		"Apply3DSecure"	=> $_this->get("params.Apply3DSecure")
+		"ApplyAVSCV2"	=> $_this->getComplex('params.ApplyAVSCV2'),
+		"Apply3DSecure"	=> $_this->getComplex('params.Apply3DSecure')
 	);
 
 if (PROTX_FORM_DEBUG_LOG) {
@@ -279,7 +279,7 @@ $_this->xlite->logger->log("Protx VSP Form crypt:".var_export($trxData, true));
 }
 
 	$trxData = func_ProtxForm_prepareTrxData($trxData);
-	$crypt = base64_encode(func_ProtxForm_simpleXor($trxData, $_this->get('params.xor_password')));
+	$crypt = base64_encode(func_ProtxForm_simpleXor($trxData, $_this->getComplex('params.xor_password')));
 
 	return $crypt;
 }
@@ -299,7 +299,7 @@ function func_ProtxForm_action_return($_this, $paymentMethod)
 		return false;
 
 	$crypt = preg_replace("/ /", "+", $crypt);
-	$response = func_ProtxForm_simpleXor(base64_decode($crypt), $paymentMethod->get('params.xor_password'));
+	$response = func_ProtxForm_simpleXor(base64_decode($crypt), $paymentMethod->getComplex('params.xor_password'));
 
 	$responseArray = array();
 	$nodes = explode("&", $response);

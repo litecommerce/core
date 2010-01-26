@@ -49,7 +49,7 @@ class XLite_Module_GoogleCheckout_Model_ShippingRate extends XLite_Model_Shippin
 		require_once LC_MODULES_DIR . 'GoogleCheckout' . LC_DS . 'encoded.php';
 
 		// Shipping method name
-		$str = $this->get("shipping.name");
+		$str = $this->getComplex('shipping.name');
 		$value = strval($str);
 		$value = str_replace("\n", " ", $value);
 		$value = str_replace("\r", " ", $value);
@@ -67,7 +67,7 @@ class XLite_Module_GoogleCheckout_Model_ShippingRate extends XLite_Model_Shippin
 		}
 	    $shippingName = htmlspecialchars($newValue);
 
-		$shippingPrice = sprintf("%.02f", doubleval($this->xlite->config->get("GoogleCheckout.default_shipping_cost")));
+		$shippingPrice = sprintf("%.02f", doubleval($this->xlite->config->getComplex('GoogleCheckout.default_shipping_cost')));
 		$currency = $this->getGoogleCheckoutCurrency();
 
 		return <<<EOT

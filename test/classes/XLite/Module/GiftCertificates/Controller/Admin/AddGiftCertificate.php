@@ -64,7 +64,7 @@ class XLite_Module_GiftCertificates_Controller_Admin_AddGiftCertificate extends 
                     $profile = $auth->get("profile");
                     $this->gc->set("purchaser", $profile->get("billing_title") . " " . $profile->get("billing_firstname") . " " . $profile->get("billing_lastname"));
                 }
-                $this->gc->set("recipient_country", $this->config->get("General.default_country"));
+                $this->gc->set("recipient_country", $this->config->getComplex('General.default_country'));
             }
         }
         return $this->gc;
@@ -72,10 +72,10 @@ class XLite_Module_GiftCertificates_Controller_Admin_AddGiftCertificate extends 
 
 	function fillForm()
 	{
-        $this->set("properties", $this->get("gc.properties"));
+        $this->set("properties", $this->getComplex('gc.properties'));
 		if (!$this->get("expiration_date")) {
 			$month = 30 * 24 * 3600;
-			$this->set("expiration_date", time() + $month * $this->get("gc.defaultExpirationPeriod"));
+			$this->set("expiration_date", time() + $month * $this->getComplex('gc.defaultExpirationPeriod'));
 		}
 		parent::fillForm();
     }
@@ -89,7 +89,7 @@ class XLite_Module_GiftCertificates_Controller_Admin_AddGiftCertificate extends 
     function action_select_ecard()
     {
         $this->saveGC();
-        $this->set("returnUrl", "admin.php?target=gift_certificate_select_ecard&gcid=" . $this->get("gc.gcid"));
+        $this->set("returnUrl", "admin.php?target=gift_certificate_select_ecard&gcid=" . $this->getComplex('gc.gcid'));
     }
 
     function action_delete_ecard()
@@ -106,7 +106,7 @@ class XLite_Module_GiftCertificates_Controller_Admin_AddGiftCertificate extends 
     function action_preview_ecard()
     {
         $this->saveGC();
-        $this->set("returnUrl", "admin.php?target=preview_ecard&gcid=" . $this->get("gc.gcid"));
+        $this->set("returnUrl", "admin.php?target=preview_ecard&gcid=" . $this->getComplex('gc.gcid'));
     }
 
     function saveGC()
@@ -161,7 +161,7 @@ class XLite_Module_GiftCertificates_Controller_Admin_AddGiftCertificate extends 
     
     function isVersionUpper2_1()
 	{	
-		return ($this->get("config.Version.version") >= "2.2") ? true : false;
+		return ($this->getComplex('config.Version.version') >= "2.2") ? true : false;
 	}
 }
 // WARNING :

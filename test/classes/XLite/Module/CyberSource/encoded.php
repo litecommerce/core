@@ -33,15 +33,15 @@
 
         // Store values for X-Cart $userinfo variable here
         $userinfo = array ();
-        $userinfo ["firstname"] = $lite_cart->get("profile.billing_firstname");
-        $userinfo ["lastname"] = $lite_cart->get("profile.billing_lastname");
-        $userinfo ["b_city"] = $lite_cart->get("profile.billing_city");
-        $userinfo ["b_address"] = $lite_cart->get("profile.billing_address");
-        $userinfo ["b_state"] = $lite_cart->get("profile.billingState.code");
-        $userinfo ["b_zipcode"] = $lite_cart->get("profile.billing_zipcode");
-        $userinfo ["b_country"] = $lite_cart->get("profile.billing_country");
-        $userinfo ["phone"] = $lite_cart->get("profile.billing_phone");
-        $userinfo ["email"] = $lite_cart->get("profile.login");
+        $userinfo ["firstname"] = $lite_cart->getComplex('profile.billing_firstname');
+        $userinfo ["lastname"] = $lite_cart->getComplex('profile.billing_lastname');
+        $userinfo ["b_city"] = $lite_cart->getComplex('profile.billing_city');
+        $userinfo ["b_address"] = $lite_cart->getComplex('profile.billing_address');
+        $userinfo ["b_state"] = $lite_cart->getComplex('profile.billingState.code');
+        $userinfo ["b_zipcode"] = $lite_cart->getComplex('profile.billing_zipcode');
+        $userinfo ["b_country"] = $lite_cart->getComplex('profile.billing_country');
+        $userinfo ["phone"] = $lite_cart->getComplex('profile.billing_phone');
+        $userinfo ["email"] = $lite_cart->getComplex('profile.login');
         $userinfo ["card_number"] = $paymentMethod->cc_info["cc_number"];
         $userinfo ["card_expire"] = $paymentMethod->cc_info["cc_date"];
         $userinfo ["card_cvv2"] = $paymentMethod->cc_info["cc_cvv2"];

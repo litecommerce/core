@@ -113,7 +113,7 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
 
 	function getImageURL() // {{{
 	{
-		return $this->get("product.imageURL");
+		return $this->getComplex('product.imageURL');
 	} // }}}
 
 	function getUrl() // {{{

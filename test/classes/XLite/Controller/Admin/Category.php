@@ -68,7 +68,7 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
 
     	if ($this->mode != "add" && $this->mode == "modify") {
 			$this->pages["category_modify"] = "Modify category";
-			if ($this->config->get("General.enable_categories_extra_fields")) {
+			if ($this->config->getComplex('General.enable_categories_extra_fields')) {
 				$this->pages["extra_fields"] = "Extra fields";
 			}
 		} else {
@@ -78,7 +78,7 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
 
     function fillForm()
     {
-        $this->set("properties", $this->get("category.properties"));
+        $this->set("properties", $this->getComplex('category.properties'));
     }
 
     function getCategories()
@@ -148,16 +148,16 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
     function getLocationPath()
     {
         $result = array();
-        if ($this->get("mode") == "add" && $this->get("parentCategory.category_id") != 0) {
-            foreach ($this->get("parentCategory.path") as $category) {
+        if ($this->get("mode") == "add" && $this->getComplex('parentCategory.category_id') != 0) {
+            foreach ($this->getComplex('parentCategory.path') as $category) {
 				$name = $category->get("name");
 				while (isset($result[$name])) {
 					$name .= " ";
 				}
 				$result[$name] = "admin.php?target=categories&category_id=" . $category->get("category_id");
             }
-        } else if ($this->get("category.category_id") != 0) {
-            foreach ($this->get("category.path") as $category) {
+        } else if ($this->getComplex('category.category_id') != 0) {
+            foreach ($this->getComplex('category.path') as $category) {
 				$name = $category->get("name");
 				while (isset($result[$name])) {
 					$name .= " ";

@@ -10,7 +10,7 @@
 
 function aom_order_clone($_this, $clone) 
 {
-	if ($_this->xlite->get("mm.activeModules.Promotion")) {
+	if ($_this->xlite->getComplex('mm.activeModules.Promotion')) {
 		foreach ($_this->getAppliedBonuses() as $specialOffer) {
 			if ( function_exists("func_is_clone_deprecated") && func_is_clone_deprecated() ) {
 				$cloneSpecialOffer = $specialOffer->cloneObject();
@@ -21,7 +21,7 @@ function aom_order_clone($_this, $clone)
 			$cloneSpecialOffer->update();
 		}
 		$cart = new XLite_Model_Cart($clone->get("order_id"));
-		$cart->set("DC", $_this->get("orderDC.peer"));
+		$cart->set("DC", $_this->getComplex('orderDC.peer'));
 	}
 
 	$items = $_this->get("items");

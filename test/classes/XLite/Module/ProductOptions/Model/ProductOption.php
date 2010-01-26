@@ -222,7 +222,7 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
 					$product->set("price", $newProductPrice);
 				}
 			}
-            if (!$this->config->get("Taxes.prices_include_tax")) {
+            if (!$this->config->getComplex('Taxes.prices_include_tax')) {
             	$productPrice = $product->get("listPrice");
             } else {
             	$productPrice = $product->get("price");
@@ -239,7 +239,7 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
 
 		$price = $productPrice + $price;
 
-        if ($this->config->get("Taxes.prices_include_tax")) {
+        if ($this->config->getComplex('Taxes.prices_include_tax')) {
         	$product->set("price", $this->formatCurrency($price));
         	$price = $product->get("listPrice");
         }
@@ -253,7 +253,7 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
 
     function modifiedPrice($opt, $ignoreProductPrice=false) // {{{
     {
-        if (!$this->config->get("ProductOptions.absolute_price_format") && !$this->config->get("Taxes.prices_include_tax")) {
+        if (!$this->config->getComplex('ProductOptions.absolute_price_format') && !$this->config->getComplex('Taxes.prices_include_tax')) {
 			return abs($opt->surcharge);
         }
 
@@ -262,7 +262,7 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
 			$p = new XLite_Model_Product($this->get("product_id"));
 			$full_price = $p->getFullPrice($amount=1);
 			if (doubleval($full_price) != $full_price) $full_price = null;
-			if ($this->config->get("Taxes.prices_include_tax") && !is_null($full_price)) {
+			if ($this->config->getComplex('Taxes.prices_include_tax') && !is_null($full_price)) {
 				$full_price = $p->get("price"); // restore product full price without taxes
 			}
 		}
@@ -272,7 +272,7 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
 
     function modifiedWeight($opt) // {{{
     {
-        if (!$this->config->get("ProductOptions.absolute_weight_format")) {
+        if (!$this->config->getComplex('ProductOptions.absolute_weight_format')) {
         	return $opt->weight_modifier;
         }
 

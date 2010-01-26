@@ -100,10 +100,10 @@ class XLite_Module_CardinalCommerce_Main extends XLite_Module_Abstract
     {
         parent::init();
 
-        if ($this->xlite->mm->get("activeModules.VeriSign")) {
+        if ($this->xlite->mm->getComplex('activeModules.VeriSign')) {
 		}
 
-		$build_ver = $this->xlite->config->get("Version.version");
+		$build_ver = $this->xlite->config->getComplex('Version.version');
 		if (version_compare($build_ver, "2.2", ">=") && version_compare($build_ver, "2.2.35", "<=")) {
 			$this->xlite->set("cc_initRequestAlternate", true);
 		} else {

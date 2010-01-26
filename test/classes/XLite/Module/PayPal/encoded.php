@@ -9,23 +9,23 @@ function PaymentMethod_paypal_handleRequest($_this, $order)
 
     // validate IPN
     /*
-    if ($_this->get("params.login") != $_POST["receiver_email"]) {
+    if ($_this->getComplex('params.login') != $_POST["receiver_email"]) {
         die("IPN validation error: PayPal account doesn't match: ".$_POST["receiver_email"]. ". Please contact administrator.");
     }
     */
     // less secure email check
-    if ($_this->get("params.login") != $_POST["business"]) {
+    if ($_this->getComplex('params.login') != $_POST["business"]) {
         die("IPN validation error: PayPal account doesn't match: ".$_POST["business"]. ". Please contact administrator.");
     }
 
 	$order_status = $order->get("status");
-    if ($_this->get("params.use_queued")) {
+    if ($_this->getComplex('params.use_queued')) {
 		$order_status = "F";
     }
     
     // send notification
     $https = new XLite_Model_HTTPS();
-    $https->url = $_this->get("params.url");
+    $https->url = $_this->getComplex('params.url');
     $_POST["cmd"] = "_notify-validate";
     $https->data = $_POST;
     $https->request();
@@ -33,7 +33,7 @@ function PaymentMethod_paypal_handleRequest($_this, $order)
         $order->set("details.error", $https->error);
         $order->set("detailLabels.error", "HTTPS Error");
     } else if (preg_match("/VERIFIED/i", $https->response)) {
-		$txn_id = ($order->get("details.reason") ? "" : $order->get("details.txn_id")); 
+		$txn_id = ($order->getComplex('details.reason') ? "" : $order->getComplex('details.txn_id')); 
 
         if ($_POST["txn_id"] == $txn_id) {
             $order->set("details.error", "Duplicate transaction ".$_POST["txn_id"]);

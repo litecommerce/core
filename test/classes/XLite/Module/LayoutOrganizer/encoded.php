@@ -12,7 +12,7 @@ function LayoutOrganizer_updateChildrenTemplates($_this, $only_categories = fals
     	$products = $_this->getProducts("custom_template < '0'");
     	$p_custom_template = $_this->getTemplate("p_custom_template");
     	foreach($products as $product) {
-    		if ($product->get("parent.category_id") == $_this->get("category_id")) {
+    		if ($product->getComplex('parent.category_id') == $_this->get("category_id")) {
             	$product->set("template_name", $p_custom_template);
                 $product->update();
     		}
@@ -43,7 +43,7 @@ function LayoutOrganizer_updateChildrenTemplates($_this, $only_categories = fals
 function LayoutOrganizer_enableChildren($_this, $only_categories = false)
 {
 	if (!$only_categories) {
-        $kernelVersion = $_this->xlite->config->get("Version.version");
+        $kernelVersion = $_this->xlite->config->getComplex('Version.version');
         if (version_compare($kernelVersion, "2.2", ">=")) {
             $productIDs = $_this->getProductIDs("custom_template < '0'");
             $enabled = $_this->get("p_custom_template_enabled");
@@ -51,7 +51,7 @@ function LayoutOrganizer_enableChildren($_this, $only_categories = false)
                 // KOI8-R comment: потому что $productID - это не чисто int значение,
                 // это "немножко" массив
                 $product = new XLite_Model_Product((int) $productID["data"]["product_id"]);
-                if ($product->get("parent.category_id") == $_this->get("category_id")) {
+                if ($product->getComplex('parent.category_id') == $_this->get("category_id")) {
                     $product->set("custom_template_enabled", $enabled);
                     $product->update();
                 }
@@ -60,7 +60,7 @@ function LayoutOrganizer_enableChildren($_this, $only_categories = false)
             $products = $_this->getProducts("custom_template < '0'");
             $enabled = $_this->get("p_custom_template_enabled");
             foreach($products as $product) {
-                if ($product->get("parent.category_id") == $_this->get("category_id")) {
+                if ($product->getComplex('parent.category_id') == $_this->get("category_id")) {
                     $product->set("custom_template_enabled", $enabled);
                     $product->update();
                 }

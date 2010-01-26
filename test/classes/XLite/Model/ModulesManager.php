@@ -182,7 +182,7 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
 			}
 		}
 
-		if ($this->config->get('General.safe_mode') || XLite_Model_Session::getInstance()->isRegistered('safe_mode')) {
+		if ($this->config->getComplex('General.safe_mode') || XLite_Model_Session::getInstance()->isRegistered('safe_mode')) {
 			XLite::getInstance()->setCleanUpCacheFlag(true);
 			$this->set('safeMode', true);
 		} 

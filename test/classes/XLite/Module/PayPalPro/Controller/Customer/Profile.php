@@ -48,7 +48,7 @@ class XLite_Module_PayPalPro_Controller_Customer_Profile extends XLite_Controlle
 {
 	function handleRequest() // {{{  
 	{
-		if ($this->get("mode") == "modify" && $this->cart->get("PaymentMethod.payment_method") == "paypalpro_express") {
+		if ($this->get("mode") == "modify" && $this->cart->getComplex('PaymentMethod.payment_method') == "paypalpro_express") {
 			$express_checkout = new XLite_Module_PayPalPro_Controller_Customer_ExpressCheckout();
 			$express_checkout->action_profile();
 		} 

@@ -9,7 +9,7 @@
 
 function Shipping_cps_getRates($_this, $order)
 {
-	if ((is_null($order->get("profile")) && !$_this->config->get("General.def_calc_shippings_taxes")) || $order->get("weight") == 0 || $_this->config->get("Company.location_country") != 'CA') {
+	if ((is_null($order->get("profile")) && !$_this->config->getComplex('General.def_calc_shippings_taxes')) || $order->get("weight") == 0 || $_this->config->getComplex('Company.location_country') != 'CA') {
         return array();
     }
 
@@ -19,14 +19,14 @@ function Shipping_cps_getRates($_this, $order)
 	}
 
 	$options->packed == 'Y' ? $packed = "<readyToShip/>" : $packed = "";
-	$originalZipcode = $_this->config->get("Company.location_zipcode");
-	$originalCountry = $_this->config->get("Company.location_country");
+	$originalZipcode = $_this->config->getComplex('Company.location_zipcode');
+	$originalCountry = $_this->config->getComplex('Company.location_country');
 	$options->insured ? $itemsPrice = $options->insured * $options->currency_rate : $itemsPrice = $order->get('subtotal') * $options->currency_rate;
 	$weight		 = $_this->getKgs($order);
 	$description = $order->get("description");
 	if (is_null($order->get("profile"))) {
-    	$destinationCountry = $_this->config->get("General.default_country");
-    	$destinationZipcode = $_this->config->get("General.default_zipcode");
+    	$destinationCountry = $_this->config->getComplex('General.default_country');
+    	$destinationZipcode = $_this->config->getComplex('General.default_zipcode');
     	$destinationState   = "Other";
     	$destinationCity    = "City";
 	} else {
@@ -34,7 +34,7 @@ function Shipping_cps_getRates($_this, $order)
     	$destinationCountry = $profile->get("shipping_country");
     	$destinationCity    = $profile->get("shipping_city");
     	$destinationZipcode = $profile->get("shipping_zipcode");
-    	$destinationState   = $profile->get("shippingState.code");
+    	$destinationState   = $profile->getComplex('shippingState.code');
     	if (empty($destinationState)) $destinationState = "Other";
 	}	
 

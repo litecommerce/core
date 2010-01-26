@@ -83,7 +83,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
 		}
 
         if (is_array($settings)) {
-            $cc = $this->config->get('Company.location_country');
+            $cc = $this->config->getComplex('Company.location_country');
             $settings['dim_units'] = (in_array($cc, array("CA","DO","PR","US"))?'inches':'cm');
             foreach($settings as $name=>$value) {
                 $config = new XLite_Model_Config();
@@ -106,7 +106,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
 
 	function getWeightUnit()
 	{
-		$originCountry = $this->config->get("Company.location_country");
+		$originCountry = $this->config->getComplex('Company.location_country');
 		if (in_array($originCountry, array("DO","PR","US"))) {
 			return "lbs";
 		} else {
@@ -119,7 +119,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
 		require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
         $this->ups = new XLite_Module_UPS_Model_Shipping_Ups();
 
-		$ptype = $this->xlite->get("config.UPSOnlineTools.packing_algorithm");
+		$ptype = $this->xlite->getComplex('config.UPSOnlineTools.packing_algorithm');
 		$total_weight = $this->get("pounds");
 		$ups_containers = array();
 		$container = new XLite_Module_UPSOnlineTools_Model_Container();
@@ -128,7 +128,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
 			default:
 				// fixed-size container
 
-				$container->setDimensions($this->xlite->get("config.UPSOnlineTools.width"), $this->xlite->get("config.UPSOnlineTools.length"), $this->xlite->get("config.UPSOnlineTools.height"));
+				$container->setDimensions($this->xlite->getComplex('config.UPSOnlineTools.width'), $this->xlite->getComplex('config.UPSOnlineTools.length'), $this->xlite->getComplex('config.UPSOnlineTools.height'));
 				$container->setWeightLimit(0);
 				$packaging_type = 2;
 			break;
@@ -139,7 +139,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
 			break;
 			case BINPACKING_NORMAL_ALGORITHM:	// pack all items in one package
 			case BINPACKING_OVERSIZE_ALGORITHM:	// pack items in similar containers
-				$packaging_type = $this->xlite->get("config.UPSOnlineTools.packaging_type");
+				$packaging_type = $this->xlite->getComplex('config.UPSOnlineTools.packaging_type');
 				$packData = $this->ups->getUPSContainerDims($packaging_type);
 				$container->setDimensions($packData["width"], $packData["length"], $packData["height"]);
 				$container->setWeightLimit($packData["weight_limit"]);
@@ -150,13 +150,13 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
 		$ups_containers[] = $container;
 
         // Get company state
-		$state_id = $this->config->get("Company.location_state");
+		$state_id = $this->config->getComplex('Company.location_state');
 		if ($state_id != -1) {
 		    $state = new XLite_Model_State($state_id);
 		    $originState = $state->get('code');
 		    unset($state);
 		} else {
-		    $originState = $this->config->get("Company.custom_location_state");
+		    $originState = $this->config->getComplex('Company.custom_location_state');
 		}
 
 		// Get destination state
@@ -169,7 +169,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
 		    $destinationState = $this->get('destination_custom_state');
 		}
 
-        $this->rates = $this->ups->_queryRates($this->get("pounds"), $this->config->get("Company.location_address"), $originState, $this->config->get("Company.location_city"), $this->config->get("Company.location_zipcode"), $this->config->get("Company.location_country"), $this->get("destinationAddress"), $destinationState, $this->get("destinationCity"), $this->get("destinationZipCode"), $this->get("destinationCountry"), $this->ups->get("options"), $ups_containers);
+        $this->rates = $this->ups->_queryRates($this->get("pounds"), $this->config->getComplex('Company.location_address'), $originState, $this->config->getComplex('Company.location_city'), $this->config->getComplex('Company.location_zipcode'), $this->config->getComplex('Company.location_country'), $this->get("destinationAddress"), $destinationState, $this->get("destinationCity"), $this->get("destinationZipCode"), $this->get("destinationCountry"), $this->ups->get("options"), $ups_containers);
         $this->testResult = true;
         $this->valid = false;
     }
@@ -182,7 +182,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
 
 	function isUseDGlibDisplay()
 	{
-		if ($this->isGDlibEnabled() && $this->config->get("UPSOnlineTools.display_gdlib"))
+		if ($this->isGDlibEnabled() && $this->config->getComplex('UPSOnlineTools.display_gdlib'))
 			return true;
 
 		return false;
@@ -213,7 +213,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
 
     function isUseDynamicStates()
 	{
-	    $version = $this->config->get("Version.version");
+	    $version = $this->config->getComplex('Version.version');
 		$ver = explode(".", $version);
 		unset($version);
 		return $ver[0]>1 && $ver[1]>1;

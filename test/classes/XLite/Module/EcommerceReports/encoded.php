@@ -33,8 +33,8 @@ function func_EcommerceReports_getRawItems(&$dlg, $unique=true)
         $rawProducts = $dlg->get("rawProducts");
         if (!empty($rawProducts)) {
             $ids = implode(",", $rawProducts);
-            $fromDate = $dlg->get("period.fromDate");
-            $toDate   = $dlg->get("period.toDate");
+            $fromDate = $dlg->getComplex('period.fromDate');
+            $toDate   = $dlg->getComplex('period.toDate');
             $product = new XLite_Model_Product();
             $ot = $product->db->getTableByAlias("orders");
             $it = $product->db->getTableByAlias("order_items");

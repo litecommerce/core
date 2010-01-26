@@ -181,7 +181,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 	function getFullPrice($amount, $optionIndex = null, $use_wholesale_price = true)
 	{
         if (!$this->is("priceAvailable") && !$this->xlite->is("adminZone")) {
-            return $this->get("config.WholesaleTrading.price_denied_message");
+            return $this->getComplex('config.WholesaleTrading.price_denied_message');
         }
 
 		$wholesale_price = false;
@@ -243,7 +243,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 			$this->product_access = new XLite_Module_WholesaleTrading_Model_ProductAccess();
 			$this->product_access->set("product_id", $this->get("product_id"));
 		}
-		return $this->product_access->groupInAccessList($this->auth->get("profile.membership"), $action . "_group");
+		return $this->product_access->groupInAccessList($this->auth->getComplex('profile.membership'), $action . "_group");
 	}
 	
 	function isShowAvailable()
@@ -300,7 +300,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 
 	function isDirectSaleAvailable()
 	{
-	    if ($this->config->get("WholesaleTrading.direct_addition")) {
+	    if ($this->config->getComplex('WholesaleTrading.direct_addition')) {
 			$this->assignDirectSaleAvailable($this->_available_action("sell"));
 			return $this->_available_action("sell");
 		} else {
@@ -333,7 +333,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 	function get($name)
 	{
 		if ($name == "price" && !$this->is("priceAvailable") && !$this->xlite->is("adminZone")) {
-			return $this->get("config.WholesaleTrading.price_denied_message");
+			return $this->getComplex('config.WholesaleTrading.price_denied_message');
 		}
 		return parent::get($name);
 	}
@@ -341,7 +341,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 	function getListPrice()
 	{
 		if (!$this->is("priceAvailable") && !$this->xlite->is("adminZone")) {
-			return $this->get("config.WholesaleTrading.price_denied_message");
+			return $this->getComplex('config.WholesaleTrading.price_denied_message');
 		}
 		return parent::getListPrice();
 	}
@@ -360,14 +360,14 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 		if (is_null($this->wholesale_pricing)) {
 			$wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
 			$sqlStr = "product_id=" . $this->get('product_id');
-			$sqlStr .= ( $this->auth->is("logged") ) ? " AND (membership='all' OR membership='" . $this->auth->get("profile.membership") . "')" : " AND membership='all'";
+			$sqlStr .= ( $this->auth->is("logged") ) ? " AND (membership='all' OR membership='" . $this->auth->getComplex('profile.membership') . "')" : " AND membership='all'";
 			$wholesale_pricing = $wp->findAll($sqlStr);
 			$wholesale_pricing_hash = array();
 			foreach ($wholesale_pricing as $wpIdx => $wp) {
 				if (!isset($wholesale_pricing_hash[$wp->get("amount")])) {
 					$wholesale_pricing_hash[$wp->get("amount")] = $wpIdx;
 				} else {
-					if ($this->auth->is("logged") && $this->auth->get("profile.membership") == $wp->get("membership") && $wholesale_pricing[$wholesale_pricing_hash[$wp->get("amount")]]->get("membership") == "all") {
+					if ($this->auth->is("logged") && $this->auth->getComplex('profile.membership') == $wp->get("membership") && $wholesale_pricing[$wholesale_pricing_hash[$wp->get("amount")]]->get("membership") == "all") {
 						$wholesale_pricing_hash[$wp->get("amount")] = $wpIdx;
 					}
 				}
@@ -379,7 +379,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 			}
 		}
 
-		if ($this->config->get("Taxes.prices_include_tax")) {
+		if ($this->config->getComplex('Taxes.prices_include_tax')) {
 			$oldPrice = $this->get("price");
 
 			foreach($this->wholesale_pricing as $wp_idx => $wp) {
@@ -449,7 +449,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
         $originalId = $this->get("product_id");
         $newId = $p->get("product_id");        
         
-		if ($this->config->get("WholesaleTrading.clone_wholesale_productaccess")) {            
+		if ($this->config->getComplex('WholesaleTrading.clone_wholesale_productaccess')) {            
             $productAccess = new XLite_Module_WholesaleTrading_Model_ProductAccess();
             foreach ($productAccess->findAll("product_id=$originalId") as $access) {
                 $foo = new XLite_Module_WholesaleTrading_Model_ProductAccess();
@@ -461,7 +461,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
             }
         }
         
-        if ($this->config->get("WholesaleTrading.clone_wholesale_purchaselimit")) {            
+        if ($this->config->getComplex('WholesaleTrading.clone_wholesale_purchaselimit')) {            
             $purchaseLimit = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
             foreach ($purchaseLimit->findAll("product_id=$originalId") as $limit) {
                 $foo = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
@@ -472,7 +472,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
             }
         }
             
-        if ($this->config->get("WholesaleTrading.clone_wholesale_pricing")) {
+        if ($this->config->getComplex('WholesaleTrading.clone_wholesale_pricing')) {
             $wholesalePricing = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
             foreach ($wholesalePricing->findAll("product_id=$originalId") as $pricing) {
                 $foo = new XLite_Module_WholesaleTrading_Model_WholesalePricing();

@@ -53,12 +53,12 @@ class XLite_Module_Egoods_Model_OrderItem extends XLite_Model_OrderItem implemen
 	
 	function isEgood()
 	{
-		return $this->is('product.egood');
+		return $this->isComplex('product.egood');
 	}
 
 	function isPin()
 	{
-		return $this->is('product.pin');
+		return $this->isComplex('product.pin');
 	}
 
 	function getPinCodes()
@@ -88,8 +88,8 @@ class XLite_Module_Egoods_Model_OrderItem extends XLite_Model_OrderItem implemen
 		if ($this->is('egood') && $amount > 0) {
 		    if ($this->is('pin')) {
 			    $pin = new XLite_Module_Egoods_Model_PinCode();
-    			if ($amount > $pin->getFreePinCount($this->get('product.product_id'))) {
-	    			$amount = $pin->getFreePinCount($this->get('product.product_id'));
+    			if ($amount > $pin->getFreePinCount($this->getComplex('product.product_id'))) {
+	    			$amount = $pin->getFreePinCount($this->getComplex('product.product_id'));
 		    		if ($amount <= 0) {
 			    		$amount = 1;
 				    }
@@ -148,7 +148,7 @@ class XLite_Module_Egoods_Model_OrderItem extends XLite_Model_OrderItem implemen
 				$record['name'] = basename($file->get('data'));
 				$record['link'] = $this->xlite->shopURL("cart.php?target=download&action=download&acc=") . $link_id;
 				$record['expires'] = $link->get('expire_on');
-				$record['exp_time'] = $this->get('xlite.config.Egoods.exp_days');
+				$record['exp_time'] = $this->getComplex('xlite.config.Egoods.exp_days');
 				$record['downloads'] = $link->get('available_downloads');
 				$record['delivery'] = $file->get('delivery');
 				$this->_egoods []= $record;

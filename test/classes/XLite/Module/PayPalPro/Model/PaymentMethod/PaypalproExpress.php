@@ -53,7 +53,7 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_PaypalproExpress extends XLite_
 	{
 		$pm = XLite_Model_PaymentMethod::factory('paypalpro');
 		require_once LC_MODULES_DIR . 'PayPalPro' . LC_DS . 'encoded.php';
-		$response = PayPalPro_sendRequest($pm->get("params.pro"),$this->setExpressCheckoutRequest($order,$pm->get("params.pro")));
+		$response = PayPalPro_sendRequest($pm->getComplex('params.pro'),$this->setExpressCheckoutRequest($order,$pm->getComplex('params.pro')));
 		$xml = new XLite_Model_XML();
         $response = $xml->parse($response);
         return $response["SOAP-ENV:ENVELOPE"]["SOAP-ENV:BODY"]["_0"]["SETEXPRESSCHECKOUTRESPONSE"];
@@ -64,7 +64,7 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_PaypalproExpress extends XLite_
 		$cart = $order->get("properties");
 		$returnUrl = $this->get("returnUrl");
 		$cancelUrl = $this->get("cancelUrl");
-		$returnToken = ($order->get("details.token")) ? "<Token>".$order->get("details.token")."</Token>" : "";
+		$returnToken = ($order->getComplex('details.token')) ? "<Token>".$order->getComplex('details.token')."</Token>" : "";
 		$paymentAction = ($payment['type']) ? 'Sale' : 'Authorization';
 
     	return <<<EOT
@@ -100,7 +100,7 @@ EOT;
 	{
 		$pm = XLite_Model_PaymentMethod::factory('paypalpro');
 		require_once LC_MODULES_DIR . 'PayPalPro' . LC_DS . 'encoded.php';
-		$response = PayPalPro_sendRequest($pm->get("params.pro"),$this->getExpressCheckoutRequest($pm->get("params.pro"), $token));
+		$response = PayPalPro_sendRequest($pm->getComplex('params.pro'),$this->getExpressCheckoutRequest($pm->getComplex('params.pro'), $token));
 		$xml = new XLite_Model_XML();
 	    $response = $xml->parse($response);
 		return $response["SOAP-ENV:ENVELOPE"]["SOAP-ENV:BODY"]["_0"]["GETEXPRESSCHECKOUTDETAILSRESPONSE"];
@@ -135,13 +135,13 @@ EOT;
 	function finishExpressCheckoutRequest($order, &$payment) // {{{
 	{
 		$pm = XLite_Model_PaymentMethod::factory('paypalpro');
-		$payment = $pm->get("params.pro");
+		$payment = $pm->getComplex('params.pro');
         $cart = $order->get("properties");
 		$invoiceId  = $payment['prefix'].$cart['order_id'];
 		$paymentAction = ($payment['type']) ? 'Sale' : 'Authorization';
         $notifyUrl  = $this->get("notifyUrl");
-		$token 		= $order->get("details.token");
-		$payer_id 	= $order->get("details.payer_id");
+		$token 		= $order->getComplex('details.token');
+		$payer_id 	= $order->getComplex('details.payer_id');
 		return <<<EOT
 <?xml version="1.0" encoding="utf-8"?>
 <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
@@ -184,13 +184,13 @@ EOT;
 
 	function getReturnUrl() // {{{ 
 	{
-		$url = $this->xlite->shopURL("cart.php?target=express_checkout&action=retrieve_profile", $this->get("config.Security.customer_security"));
+		$url = $this->xlite->shopURL("cart.php?target=express_checkout&action=retrieve_profile", $this->getComplex('config.Security.customer_security'));
 		return $this->prepareUrl($url);
 	}	// }}} 
 
 	function getCancelUrl() // {{{ 
 	{
-		$url = $this->xlite->shopURL("cart.php?target=checkout", $this->get("config.Security.customer_security"));
+		$url = $this->xlite->shopURL("cart.php?target=checkout", $this->getComplex('config.Security.customer_security'));
 		return $this->prepareUrl($url);
 	} // }}} 
 

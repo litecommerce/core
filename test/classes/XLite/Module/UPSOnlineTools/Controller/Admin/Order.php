@@ -61,7 +61,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Order extends XLite_Controlle
 		parent::init();
 
 		// Disable edit order if shipping method UPSOnlineTools
-		if (DISABLE_UPS_EDIT_ORDER === true && $this->get("order.shippingMethod.class") == "ups" && $this->xlite->get("AOMEnabled")) {
+		if (DISABLE_UPS_EDIT_ORDER === true && $this->getComplex('order.shippingMethod.class') == "ups" && $this->xlite->get("AOMEnabled")) {
 			unset($this->pages["order_edit"]);
 			unset($this->pageTemplates["order_edit"]);
 			if ($this->get("page") == "order_edit") {
@@ -83,7 +83,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Order extends XLite_Controlle
 
 	function getUPSContainers()
 	{
-		return $this->get("order.ups_containers");
+		return $this->getComplex('order.ups_containers');
 	}
 
 	function countUPSContainers()
@@ -95,7 +95,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Order extends XLite_Controlle
 	function hasUPSValidContainers()
 	{
 		$order = $this->get("order");
-		if ($order->get("shippingMethod.class") != "ups") {
+		if ($order->getComplex('shippingMethod.class') != "ups") {
 			return false;
 		}
 
@@ -166,7 +166,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Order extends XLite_Controlle
 				$items_list[$k][$field_name] = $product->get($field_name);
 			}
 
-			$items_list[$k]["weight_lbs"] = UPSOnlineTools_convertWeight($product->get("weight"), $this->config->get("General.weight_unit"), "lbs", 2);
+			$items_list[$k]["weight_lbs"] = UPSOnlineTools_convertWeight($product->get("weight"), $this->config->getComplex('General.weight_unit'), "lbs", 2);
 		}
 
 		return array_values($items_list);
@@ -185,7 +185,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Order extends XLite_Controlle
 
 		$order = $this->get("order");
 
-		if (UPSOnlineTools_gdlib_valid() && $this->config->get("UPSOnlineTools.display_gdlib")) {
+		if (UPSOnlineTools_gdlib_valid() && $this->config->getComplex('UPSOnlineTools.display_gdlib')) {
 			// GDlib
 			return '<img src="cart.php?target=image&mode=ups_container_level_details&order_id='.$order->get("order_id").'&container='.$container_id.'&level='.$level_id.'&id='.$this->xlite->session->getID().'" border=2 alt="Container #'.($container_id + 1).', Layer #'.($level_id + 1).'">';
 		}
@@ -226,7 +226,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Order extends XLite_Controlle
 		}
 
 		// display container details based on <div>...</div>
-		$result = UPSOnlineTools_displayLevel_div($container["width"], $container["length"], $level["items"], $level["dirt_spaces"], $this->config->get("UPSOnlineTools.visual_container_width"), $level_id);
+		$result = UPSOnlineTools_displayLevel_div($container["width"], $container["length"], $level["items"], $level["dirt_spaces"], $this->config->getComplex('UPSOnlineTools.visual_container_width'), $level_id);
 
 		return $result;
 	}

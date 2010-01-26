@@ -51,16 +51,16 @@ class XLite_Module_InventoryTracking_Controller_Customer_Cart extends XLite_Cont
     function updateCart()
     {
         parent::updateCart();
-        if ($this->get("action") == "add" && !is_null($this->get("cart.outOfStock"))) {
-            $product_id = $this->get("cart.outOfStock");
+        if ($this->get("action") == "add" && !is_null($this->getComplex('cart.outOfStock'))) {
+            $product_id = $this->getComplex('cart.outOfStock');
             $category_id = intval($this->category_id);
             if ($category_id == 0) {
         		$product = new XLite_Model_Product($product_id);
-				$category_id = $product->get("category.category_id");
+				$category_id = $product->getComplex('category.category_id');
             }
             $this->addReturnUrl = "cart.php?target=product&product_id=$product_id&category_id=$category_id&mode=out_of_stock";
         }
-		if ($this->get("action") == "add" && $this->get("cart.exceeding"))	
+		if ($this->get("action") == "add" && $this->getComplex('cart.exceeding'))	
 		{
 			 $this->addReturnUrl = "cart.php?target=cart&mode=exceeding";
 		}

@@ -83,7 +83,7 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
         if (is_null($product)) {
             $this->set("product_id", 0);
         } else {
-        	if ($this->config->get("Taxes.prices_include_tax")) {
+        	if ($this->config->getComplex('Taxes.prices_include_tax')) {
         		$this->set("price", $this->formatCurrency($product->get("taxedPrice")));
         	} else {
             	$this->set("price", $product->get("price"));
@@ -156,7 +156,7 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
 
     function getWeight()
     {
-        return $this->get("product.weight") * $this->get("amount");
+        return $this->getComplex('product.weight') * $this->get("amount");
     }
 
     function getRealProduct()
@@ -239,7 +239,7 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
 	{
 	    $product = $this->get("product");
 	    if (is_object($product)) {
-			$res = $this->is("product.exists") && $this->get("product.product_id") && $this->get("amount")>0;
+			$res = $this->isComplex('product.exists') && $this->getComplex('product.product_id') && $this->get("amount")>0;
 		} else {
 			$res = $this->get("amount")>0;
 		}
@@ -260,7 +260,7 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
     */
     function isShipped()
     {
-		return !$this->get("product.free_shipping");
+		return !$this->getComplex('product.free_shipping');
     }
 
     /**
@@ -269,7 +269,7 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
     function getURL()
     {
     	$url = CART_SELF . "?target=product&product_id=" . $this->get("product_id");
-    	$category_id = $this->get("product.category.category_id");
+    	$category_id = $this->getComplex('product.category.category_id');
     	if ($category_id) {
     		$url .= "&category_id=" . $category_id;
     	}

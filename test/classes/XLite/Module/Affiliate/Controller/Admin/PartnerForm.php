@@ -49,7 +49,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerForm extends XLite_Controll
     {
         parent::init();
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
-            $this->mapRequest($this->get("xlite.factory.PartnerField.fields"));
+            $this->mapRequest($this->getComplex('xlite.factory.PartnerField.fields'));
         }
     }
     

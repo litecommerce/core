@@ -56,7 +56,7 @@ class XLite_Module_Promotion_Model_PaymentMethod_BonusPoints extends XLite_Model
     {
 		$payedByPoints = $_POST["payedByPoints"];
 		$details = $cart->get("details");
-		if ($cart->get("origProfile.bonusPoints") < $payedByPoints) {
+		if ($cart->getComplex('origProfile.bonusPoints') < $payedByPoints) {
             $details["error"] = "No enought points";
             $cart->set("details", $details);
             $cart->update();
@@ -70,7 +70,7 @@ class XLite_Module_Promotion_Model_PaymentMethod_BonusPoints extends XLite_Model
 			return self::PAYMENT_FAILURE;
 		}
 
-		$cart->set("payedByPoints", min($payedByPoints * $this->config->get("Promotion.bonusPointsCost"), $cart->getMaxPayByPoints()));
+		$cart->set("payedByPoints", min($payedByPoints * $this->config->getComplex('Promotion.bonusPointsCost'), $cart->getMaxPayByPoints()));
 		$cart->calcTotals();
 		if ($cart->get("total") > 0) {
 			$cart->set("payment_method", ""); // choose payment method once again
@@ -88,7 +88,7 @@ class XLite_Module_Promotion_Model_PaymentMethod_BonusPoints extends XLite_Model
     {
         if ($name == "enabled" && !$this->xlite->is("adminZone")) {
             if ($this->auth->is("logged")) {
-                if ($this->auth->get("profile.bonusPoints") == 0) {
+                if ($this->auth->getComplex('profile.bonusPoints') == 0) {
                     // no bonus points, no payment method
                     return false;
                 }

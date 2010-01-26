@@ -150,7 +150,7 @@ class XLite_Controller_Admin_Wysiwyg extends XLite_Controller_Admin_Abstract
 
     function isMemoryLimitChangeable()
     {
-        return $this->get("xlite.memoryLimitChangeable");
+        return $this->getComplex('xlite.memoryLimitChangeable');
     }
 
     function getMemoryLimit()

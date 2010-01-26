@@ -45,7 +45,7 @@ class XLite_Module_AntiFraud_Controller_Admin_OrderList extends XLite_Controller
 		{
 			$this->params[] = "show_factor";
 			$this->params[] = "risk_factor";
-			if (!isset($this->risk_factor)) $this->risk_factor = $this->config->get("AntiFraud.antifraud_risk_factor");
+			if (!isset($this->risk_factor)) $this->risk_factor = $this->config->getComplex('AntiFraud.antifraud_risk_factor');
 
 			parent::init();			
 		}
@@ -59,7 +59,7 @@ class XLite_Module_AntiFraud_Controller_Admin_OrderList extends XLite_Controller
 					if (!is_object($order)) {
 						$order = new XLite_Model_Order($order['data']['order_id']);
 					}
-					if ($order->get("details.af_result.total_trust_score") < $this->risk_factor)
+					if ($order->getComplex('details.af_result.total_trust_score') < $this->risk_factor)
 						unset($orders[$key]);
 				}	
 			}

@@ -106,9 +106,9 @@ class XLite_Module_Newsletters_Controller_Admin_NewsMessages extends XLite_Contr
         	$this->session->set("sendMailsInfo", $_REQUEST);
     	}
 
-    	if (intval($this->get("config.Newsletters.subscribers_per_page_mail")) > 0) {
-			if (intval($this->get("config.Newsletters.subscribers_per_page_mail")) != $this->get("config.Newsletters.subscribers_per_page_mail")) {
-				$this->config->set("Newsletters.subscribers_per_page_mail", intval($this->get("config.Newsletters.subscribers_per_page_mail")));
+    	if (intval($this->getComplex('config.Newsletters.subscribers_per_page_mail')) > 0) {
+			if (intval($this->getComplex('config.Newsletters.subscribers_per_page_mail')) != $this->getComplex('config.Newsletters.subscribers_per_page_mail')) {
+				$this->config->set("Newsletters.subscribers_per_page_mail", intval($this->getComplex('config.Newsletters.subscribers_per_page_mail')));
 			}
 ?>
 <SCRIPT language="javascript">
@@ -127,7 +127,7 @@ class XLite_Module_Newsletters_Controller_Admin_NewsMessages extends XLite_Contr
     	} else {
 			$this->config->set("Newsletters.subscribers_per_page_mail", 0);
     	}
-    	$this->subscribers_per_page_mail = $this->get("config.Newsletters.subscribers_per_page_mail");
+    	$this->subscribers_per_page_mail = $this->getComplex('config.Newsletters.subscribers_per_page_mail');
     }
 
     function action_send_message()
@@ -235,7 +235,7 @@ class XLite_Module_Newsletters_Controller_Admin_NewsMessages extends XLite_Contr
 		echo "[<i>".($sender_idx+1)."</i>] Sending e-mail to: <b>$email</b>...<br>"; flush();
 
         // check for sending limit
-        if (($sender_idx+1) % ($this->get("config.Newsletters.subscribers_per_page_mail")) == 0) {
+        if (($sender_idx+1) % ($this->getComplex('config.Newsletters.subscribers_per_page_mail')) == 0) {
         	$this->session->set("sendedMails", $sender_idx);
     		$this->session->writeClose();
 

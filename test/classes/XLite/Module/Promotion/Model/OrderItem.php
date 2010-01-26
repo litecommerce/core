@@ -66,8 +66,8 @@ class XLite_Module_Promotion_Model_OrderItem extends XLite_Model_OrderItem imple
 
 		global $calcAllTaxesInside;
 
-        if (!is_null($this->get("product")) && $this->is("order._bonusPrices")) {
-			if ($this->get("config.Taxes.prices_include_tax") && !$this->get("config.Taxes.discounts_after_taxes") && !$calcAllTaxesInside) {
+        if (!is_null($this->get("product")) && $this->isComplex('order._bonusPrices')) {
+			if ($this->getComplex('config.Taxes.prices_include_tax') && !$this->getComplex('config.Taxes.discounts_after_taxes') && !$calcAllTaxesInside) {
 				// calculate original item price without taxes...
 				$p = new XLite_Model_Product($this->get("product_id"));
 				$p->set("price", 100.00); // use a 100 dollar product
@@ -75,15 +75,15 @@ class XLite_Module_Promotion_Model_OrderItem extends XLite_Model_OrderItem imple
 				$orig_price = $price * 100 / $taxed100;
 				$price = $orig_price;
 			}
-			if (!($this->get("config.Taxes.prices_include_tax") && $this->get("config.Taxes.discounts_after_taxes") && $calcAllTaxesInside)) {
+			if (!($this->getComplex('config.Taxes.prices_include_tax') && $this->getComplex('config.Taxes.discounts_after_taxes') && $calcAllTaxesInside)) {
 				// take bonuses into account
-				foreach ($this->get("order.appliedBonuses") as $bonus) {
+				foreach ($this->getComplex('order.appliedBonuses') as $bonus) {
 					if ($bonus->get("bonusType") == "discounts" || $this->get("bonusItem")) {
 						$price = $bonus->getBonusPrice($this, $price);
 					}
 				}
 			}
-			if ($this->get("config.Taxes.prices_include_tax") && !$this->get("config.Taxes.discounts_after_taxes") && !$calcAllTaxesInside) {
+			if ($this->getComplex('config.Taxes.prices_include_tax') && !$this->getComplex('config.Taxes.discounts_after_taxes') && !$calcAllTaxesInside) {
 				$p = new XLite_Model_Product($this->get("product_id"));
 				$p->set("price", $price);
 				$price = $p->getTaxedPrice();
@@ -92,15 +92,15 @@ class XLite_Module_Promotion_Model_OrderItem extends XLite_Model_OrderItem imple
 
         // discount coupon price for this item
         if ($this->isDiscountCouponApplies()) {
-            if ($this->get("order.DC.type") == "absolute") {
-                $price = max(0, $price - $this->get("order.DC.discount"));
+            if ($this->getComplex('order.DC.type') == "absolute") {
+                $price = max(0, $price - $this->getComplex('order.DC.discount'));
             }
-            if ($this->get("order.DC.type") == "percent") {
-                $price *= (100 - $this->get("order.DC.discount")) / 100;
+            if ($this->getComplex('order.DC.type') == "percent") {
+                $price *= (100 - $this->getComplex('order.DC.discount')) / 100;
             }
         }
 
-		if ($this->config->get("Promotion.only_positive_price")) {
+		if ($this->config->getComplex('Promotion.only_positive_price')) {
             if ($price < 0) {
             	$price = 0;
             }
@@ -133,9 +133,9 @@ class XLite_Module_Promotion_Model_OrderItem extends XLite_Model_OrderItem imple
 		if ($this->get("bonusItem")) {
 			return true;
 		}
-		if ($this->is("order._bonusPrices") && !is_null($this->get("product"))) {
+		if ($this->isComplex('order._bonusPrices') && !is_null($this->get("product"))) {
 			// take bonuses into account
-			foreach ($this->get("order.appliedBonuses") as $bonus) {
+			foreach ($this->getComplex('order.appliedBonuses') as $bonus) {
 				if ($bonus->get("conditionType") != "eachNth" || $this->get("bonusItem")) {
 					return true;
 				}
@@ -151,15 +151,15 @@ class XLite_Module_Promotion_Model_OrderItem extends XLite_Model_OrderItem imple
 
 	function isDiscountCouponApplies()
 	{
-		if (!is_null($this->get("order.DC"))) {
+		if (!is_null($this->getComplex('order.DC'))) {
 			// discount coupon is set
-			if ($this->get("order.DC.applyTo") == "product") {
-				if ($this->get("product_id") == $this->get("order.DC.product_id")) {
+			if ($this->getComplex('order.DC.applyTo') == "product") {
+				if ($this->get("product_id") == $this->getComplex('order.DC.product_id')) {
 					return true;
 				}
 			}
-			if ($this->get("order.DC.applyTo") == "category" && !is_null($this->get("product"))) {
-				if ($this->order->_inCategoryRecursive($this->get("product"), $this->get("order.DC.category"))) {
+			if ($this->getComplex('order.DC.applyTo') == "category" && !is_null($this->get("product"))) {
+				if ($this->order->_inCategoryRecursive($this->get("product"), $this->getComplex('order.DC.category'))) {
 					return true;
 				}
 			}

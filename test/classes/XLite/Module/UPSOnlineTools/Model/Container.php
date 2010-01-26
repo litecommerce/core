@@ -208,7 +208,7 @@ class XLite_Module_UPSOnlineTools_Model_Container extends XLite_Base
 		$summ = 0;
 		foreach ((array)$this->getLevels() as $level) {
 			foreach ((array)$level->getItems() as $item) {
-				$summ += $item->get("orderItem.product.declaredValue");
+				$summ += $item->getComplex('orderItem.product.declaredValue');
 			}
 		}
 

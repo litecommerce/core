@@ -59,7 +59,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_Abstract extends XLite_Cont
 				case "add":
 				case "delete":
 				case "icon":
-					if ($this->get("config.FlyoutCategories.scheme") > 0) {
+					if ($this->getComplex('config.FlyoutCategories.scheme') > 0) {
 						$config = new XLite_Model_Config();
 						$config->createOption("FlyoutCategories", "category_changed", 1);
 					}
@@ -68,7 +68,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_Abstract extends XLite_Cont
 						break;
 
 					// rebuild layout
-					if ($this->get("config.FlyoutCategories.category_autoupdate")) {
+					if ($this->getComplex('config.FlyoutCategories.category_autoupdate')) {
 						$dialog = new XLite_Controller_Admin_Categories();
 
 						$return_url = null;
@@ -86,13 +86,13 @@ class XLite_Module_FlyoutCategories_Controller_Admin_Abstract extends XLite_Cont
 		}
 
 		if ($target == "memberships" && $this->get("action")) {
-			if ($this->get("config.FlyoutCategories.scheme") > 0) {
+			if ($this->getComplex('config.FlyoutCategories.scheme') > 0) {
 				$config = new XLite_Model_Config();
 				$config->createOption("FlyoutCategories", "category_changed", 1);
 			}
 
 			// Rebuild FlyoutCategories cache
-			if ($this->get("config.FlyoutCategories.category_autoupdate")) {
+			if ($this->getComplex('config.FlyoutCategories.category_autoupdate')) {
 				$dialog = new XLite_Controller_Admin_Categories();
 				$dialog->action_build_categories();
 			}

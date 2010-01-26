@@ -77,7 +77,7 @@ function func_change_inventory($order, $status, &$inventory, $item)
     $inventory->set("amount", $amount);
     $inventory->update();
     // check low_avail_limit
-    if ($order->get("config.InventoryTracking.send_notification")) {
+    if ($order->getComplex('config.InventoryTracking.send_notification')) {
         $inventory->checkLowLimit($item);
     }    
 

@@ -67,7 +67,7 @@ class XLite_Module_Affiliate_Model_PlanCommission extends XLite_Model_Abstract
     function getBasicCommission()
     {
         $bc = new XLite_Module_Affiliate_Model_PlanCommission();
-        if ($bc->find("plan_id=".$this->get("order.partner.plan")." AND item_id=0 AND item_type='B'")) {
+        if ($bc->find("plan_id=".$this->getComplex('order.partner.plan')." AND item_id=0 AND item_type='B'")) {
             return $bc;
         }
         return null;
@@ -75,7 +75,7 @@ class XLite_Module_Affiliate_Model_PlanCommission extends XLite_Model_Abstract
     function getProductCommission($product_id)
     {
         $pc = new XLite_Module_Affiliate_Model_PlanCommission();
-        if ($pc->find("plan_id=".$this->get("order.partner.plan")." AND item_id=$product_id AND item_type='P'")) {
+        if ($pc->find("plan_id=".$this->getComplex('order.partner.plan')." AND item_id=$product_id AND item_type='P'")) {
             return $pc;
         }
         return null;
@@ -83,7 +83,7 @@ class XLite_Module_Affiliate_Model_PlanCommission extends XLite_Model_Abstract
     function getCategoryCommission($category_id)
     {
         $cc = new XLite_Module_Affiliate_Model_PlanCommission();
-        if ($cc->find("plan_id=".$this->get("order.partner.plan")." AND item_id=$category_id AND item_type='C'")) {
+        if ($cc->find("plan_id=".$this->getComplex('order.partner.plan')." AND item_id=$category_id AND item_type='C'")) {
             return $cc;
         }
         return null;
@@ -99,7 +99,7 @@ class XLite_Module_Affiliate_Model_PlanCommission extends XLite_Model_Abstract
     {
         $this->order = $order;
         $commissions = 0;
-        $ap = new XLite_Module_Affiliate_Model_AffiliatePlan($order->get("partner.plan"));
+        $ap = new XLite_Module_Affiliate_Model_AffiliatePlan($order->getComplex('partner.plan'));
         if ($ap->is("enabled")) {
             $commissions = $this->get("orderCommissions");
         }            

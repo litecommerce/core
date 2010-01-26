@@ -201,7 +201,7 @@ class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_Abstract
 			}
 			$this->_children = (array) $this->findAll("order_id<>'0' AND $condition", "order_id");
 			foreach($this->_children as $child_key => $child) {
-				if (is_null($child->get("order")) || $child->get("order.status") == "T") {
+				if (is_null($child->get("order")) || $child->getComplex('order.status') == "T") {
 					unset($this->_children[$child_key]);
 				}
 			}

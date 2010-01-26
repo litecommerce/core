@@ -87,7 +87,7 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
                 return $this->_carrier = $sm->get("class");
 			}
 
-			$this->_carrier = ((count($carriers) > 1) ? $this->get('shippingMethod.class') : "");
+			$this->_carrier = ((count($carriers) > 1) ? $this->getComplex('shippingMethod.class') : "");
         }
         return $this->_carrier;
     }
@@ -98,9 +98,9 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
             $return = array();
             $rates = $this->getShippingRates();
             foreach($rates as $rate) {
-                $class = $rate->get('shipping.class');
+                $class = $rate->getComplex('shipping.class');
                 if(!isset($return[$class]))
-                    $return[$class] = $rate->get('shipping.carrier');
+                    $return[$class] = $rate->getComplex('shipping.carrier');
             }
             $this->_carriers = array();
             if (count($return) > 1) {
@@ -116,7 +116,7 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
         if (is_null($carrier)) $carrier = $this->getCarrier();
         if (!$carrier || !is_array($rates)) return $rates;
         foreach($rates as $k=>$rate)
-            if ($carrier != $rate->get('shipping.class')) unset($rates[$k]);
+            if ($carrier != $rate->getComplex('shipping.class')) unset($rates[$k]);
         return $rates;
     }
 
@@ -200,9 +200,9 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
 		$containers = array();
 
 		// build list of all used packaging
-		$packaging_ids = array($this->xlite->get("config.UPSOnlineTools.packaging_type"));
+		$packaging_ids = array($this->xlite->getComplex('config.UPSOnlineTools.packaging_type'));
 		foreach ((array)$this->get("items") as $item) {
-			$packaging_ids[] = $item->get("product.ups_packaging");
+			$packaging_ids[] = $item->getComplex('product.ups_packaging');
 		}
 		$packaging_ids = array_unique($packaging_ids);
 
@@ -214,10 +214,10 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
 		$itemsSkip = array();
 		$itemsFailed = array();
 
-		$packing_algorithm = $this->xlite->get("config.UPSOnlineTools.packing_algorithm");
+		$packing_algorithm = $this->xlite->getComplex('config.UPSOnlineTools.packing_algorithm');
 
 		// prevent execution timeout.
-		if (count($items) > $this->xlite->get("config.UPSOnlineTools.packing_limit")) {
+		if (count($items) > $this->xlite->getComplex('config.UPSOnlineTools.packing_limit')) {
 			$packing_algorithm = BINPACKING_SIMPLE_MAX_SIZE;
 		}
 
@@ -234,7 +234,7 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
 				$packaging = $item->get("packaging");
 
 				if ($packaging == PACKAGING_TYPE_NONE) {
-					$packaging = $this->xlite->get("config.UPSOnlineTools.packaging_type");
+					$packaging = $this->xlite->getComplex('config.UPSOnlineTools.packaging_type');
 				}
 				if ($packaging == $packaging_id || $is_single_container) {
 					$itemsProceed[] = $item;
@@ -320,11 +320,11 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
 		$ups_containers = array();
 
 		if (is_null($ptype)) {
-			$ptype = $this->xlite->get("config.UPSOnlineTools.packing_algorithm");
+			$ptype = $this->xlite->getComplex('config.UPSOnlineTools.packing_algorithm');
 		}
 
 		if (is_null($packaging_type)) {
-			$packaging_type = $this->xlite->get("config.UPSOnlineTools.packaging_type");
+			$packaging_type = $this->xlite->getComplex('config.UPSOnlineTools.packaging_type');
 		}
 
 		$total_weight = 0;
@@ -356,9 +356,9 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
 					}
 				} else {
 					// fixed-size container or unknown
-					$_width = $this->xlite->get("config.UPSOnlineTools.width");
-					$_length = $this->xlite->get("config.UPSOnlineTools.length");
-					$_height = $this->xlite->get("config.UPSOnlineTools.height");
+					$_width = $this->xlite->getComplex('config.UPSOnlineTools.width');
+					$_length = $this->xlite->getComplex('config.UPSOnlineTools.length');
+					$_height = $this->xlite->getComplex('config.UPSOnlineTools.height');
 				}
 
 				$weight_limit = 150; // lbs
@@ -493,7 +493,7 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
 
 						$oi = new XLite_Model_OrderItem();
 						if ($oi->find("item_id='".addslashes($item_id)."'")) {
-							if ($oi->get("product.ups_add_handling")) {
+							if ($oi->getComplex('product.ups_add_handling')) {
 								$ups_containers[$container_id]->setAdditionalHandling(true);
 								$found = true;
 								break;
@@ -514,12 +514,12 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
 
 function cmp_carrier_array($a, $b)
 {
-    $class_a = $a->get('shipping.class');
-    $class_b = $b->get('shipping.class');
+    $class_a = $a->getComplex('shipping.class');
+    $class_b = $b->getComplex('shipping.class');
     if ($class_a == 'ups' && $class_b != 'ups') return false;
     if ($class_b == 'ups' && $class_a != 'ups') return true;
-    $pos_a = $a->get('shipping.order_by');
-    $pos_b = $b->get('shipping.order_by');
+    $pos_a = $a->getComplex('shipping.order_by');
+    $pos_b = $b->getComplex('shipping.order_by');
     return ($pos_a > $pos_b);
 }
 

@@ -57,7 +57,7 @@ class XLite_Module_Promotion_Model_Profile extends XLite_Model_Profile implement
 	{
 		if ($name == "bonusPointsDollar") {
 			
-			return $this->config->get("Promotion.bonusPointsCost") * $this->get("bonusPoints");
+			return $this->config->getComplex('Promotion.bonusPointsCost') * $this->get("bonusPoints");
 		} else {
 			return parent::get($name);
 		}

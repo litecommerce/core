@@ -43,7 +43,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_ImageFiles extends XLite_Co
 {
 	function checkFlyoutCategories()
 	{
-    	if ( substr($this->index, 0, 8) == "category" && $this->get("config.FlyoutCategories.scheme") > 0 ) {
+    	if ( substr($this->index, 0, 8) == "category" && $this->getComplex('config.FlyoutCategories.scheme') > 0 ) {
     		$config = new XLite_Model_Config();
     		$config->createOption("FlyoutCategories", "category_changed", 1);
     	}
@@ -53,7 +53,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_ImageFiles extends XLite_Co
     {
     	parent::init();
 
-    	if (!($this->action) && $this->xlite->get("config.FlyoutCategories.category_changed") && $this->xlite->get("config.FlyoutCategories.category_autoupdate")) {
+    	if (!($this->action) && $this->xlite->getComplex('config.FlyoutCategories.category_changed') && $this->xlite->getComplex('config.FlyoutCategories.category_autoupdate')) {
     		$config = new XLite_Model_Config();
     		$config->createOption("FlyoutCategories", "category_changed", 0);
     		$this->xlite->set("config.FlyoutCategories.category_changed", false);

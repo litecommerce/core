@@ -44,11 +44,11 @@ class XLite_Module_XCartImport_Controller_Admin_XcartImport extends XLite_Contro
     function fillForm()
     {
         parent::fillForm();
-        if ($this->config->get("XCartImport.params")) {
-            $this->set("properties", $this->config->get("XCartImport.params"));
+        if ($this->config->getComplex('XCartImport.params')) {
+            $this->set("properties", $this->config->getComplex('XCartImport.params'));
         } else {
             // default params
-            if (is_null($this->xlite->get("mm.activeModules.DemoMode"))) {
+            if (is_null($this->xlite->getComplex('mm.activeModules.DemoMode'))) {
                 foreach (array("hostspec","database","username","password") as $param) {
                     $this->set($param, XLite::getInstance()->getOptions(array('database_details', $param)));
                 }
@@ -108,7 +108,7 @@ X-Cart data has been removed.<br>
         } else {
             $this->memberships = array();
             
-            foreach ($this->config->get("Memberships.memberships") as $ms) {
+            foreach ($this->config->getComplex('Memberships.memberships') as $ms) {
                 $this->memberships[$ms] = true;
             }
             if ($this->import_users) {
@@ -286,12 +286,12 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
         	$this->importTable("select * from xcart_products_categories", "products_categories");
 		}
 
-		if (!is_null($this->xlite->get("mm.activeModules.ProductOptions"))) {
+		if (!is_null($this->xlite->getComplex('mm.activeModules.ProductOptions'))) {
 			$this->importedProductOptions = array();
             $this->importTable("SELECT c.classid, c.productid, c.class, c.classtext, c.orderby, c.is_modifier, o.option_name FROM xcart_classes as c LEFT OUTER JOIN xcart_class_options as o ON c.classid = o.classid;", "productoption");
 			$this->importTable("select * from xcart_product_options_ex", "optionexception");
 		}
-		if (!is_null($this->xlite->get("mm.activeModules.DetailedImages"))) {
+		if (!is_null($this->xlite->getComplex('mm.activeModules.DetailedImages'))) {
 			if ($this->get("db_version") == '41') {
 				$this->importTable("select * from xcart_images_D", "detailedimage");
 			} else {

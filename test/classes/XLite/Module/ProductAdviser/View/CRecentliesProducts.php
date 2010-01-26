@@ -51,7 +51,7 @@ class XLite_Module_ProductAdviser_View_CRecentliesProducts extends XLite_View
 
     function isVisible()
     {
-    	if ($this->config->get("ProductAdviser.number_recently_viewed") <= 0) {
+    	if ($this->config->getComplex('ProductAdviser.number_recently_viewed') <= 0) {
     		return false;
     	}
 
@@ -78,7 +78,7 @@ class XLite_Module_ProductAdviser_View_CRecentliesProducts extends XLite_View
 
 		$product_id = $this->getDialogProductId();
 
-        $maxViewed = $this->config->get("ProductAdviser.number_recently_viewed");
+        $maxViewed = $this->config->getComplex('ProductAdviser.number_recently_viewed');
         $products = array();
         $productsStats = array();
         $statsOffset = 0;

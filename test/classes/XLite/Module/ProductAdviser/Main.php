@@ -138,7 +138,7 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
 		/////////////////////////////////////
 		// "Product also buy" section
 		if ($this->xlite->is("adminZone")) {
-			if ($this->config->get("ProductAdviser.admin_products_also_buy_enabled") != "Y") {
+			if ($this->config->getComplex('ProductAdviser.admin_products_also_buy_enabled') != "Y") {
 				$cfg = new XLite_Model_Config();
                 $cfg->createOption("ProductAdviser", "products_also_buy_enabled", "N");
 			}
@@ -149,7 +149,7 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
 		// "Customer Notifications" section
 		if ($this->xlite->is("adminZone")) {
 			$this->validateConfig("number_notifications", 1);
-			$customer_notifications_enabled = ($this->config->get("ProductAdviser.customer_notifications_mode") == "0") ? "N" : "Y";
+			$customer_notifications_enabled = ($this->config->getComplex('ProductAdviser.customer_notifications_mode') == "0") ? "N" : "Y";
 			$cfg = new XLite_Model_Config();
             $cfg->createOption("ProductAdviser", "customer_notifications_enabled", $customer_notifications_enabled);
 		}
@@ -168,7 +168,7 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
 
 	function validateConfig($option, $limit=0)
 	{
-		$number_orig = $this->config->get("ProductAdviser.".$option);
+		$number_orig = $this->config->getComplex('ProductAdviser.' . $option);
 		$number = intval($number_orig);
 		$number_updated = false;
 		if ($number < $limit) {

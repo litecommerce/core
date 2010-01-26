@@ -71,13 +71,13 @@ class XLite_Controller_Customer_CheckoutSuccess extends XLite_Controller_Custome
 
 	function getCharset()
 	{
-		$charset = $this->get("order.profile.billingCountry.charset");
+		$charset = $this->getComplex('order.profile.billingCountry.charset');
 		return ($charset) ? $charset : parent::getCharset();
 	}
 
     function getSecure()
     {
-        return $this->get("config.Security.customer_security");
+        return $this->getComplex('config.Security.customer_security');
     }
 }
 // WARNING :

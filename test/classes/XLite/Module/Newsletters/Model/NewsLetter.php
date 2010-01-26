@@ -71,7 +71,7 @@ class XLite_Module_Newsletters_Model_NewsLetter extends XLite_Model_Abstract
     public function __construct($id = null)
     {
         parent::__construct($id);
-        $this->defaultOrder = $this->config->get("Newsletters.news_order") == "D" ? "send_date DESC" : "send_date ASC";
+        $this->defaultOrder = $this->config->getComplex('Newsletters.news_order') == "D" ? "send_date DESC" : "send_date ASC";
     }
 
     function compose($from, $subscribers, $subject, $body, $dir = "")
@@ -125,7 +125,7 @@ class XLite_Module_Newsletters_Model_NewsLetter extends XLite_Model_Abstract
                 $mailer->set("code", func_newsletters_gen_code(strtolower($subscriber)));
 				$mailer->set("email", $subscriber);
             }
-			$mailer->compose($this->get("config.Company.site_administrator"),
+			$mailer->compose($this->getComplex('config.Company.site_administrator'),
                          $subscriber,
                          $this->get("dir"));
  			$mailer->send();                         
@@ -167,7 +167,7 @@ class XLite_Module_Newsletters_Model_NewsLetter extends XLite_Model_Abstract
     function filter()
     {
         if (!$this->xlite->is("adminZone")) {
-            return $this->get("newsList.show_as_news");
+            return $this->getComplex('newsList.show_as_news');
         }
         return parent::filter();
     }

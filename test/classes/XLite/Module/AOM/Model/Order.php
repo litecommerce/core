@@ -107,13 +107,13 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
     function getLocationCountry() // {{{
     {
         $country = new XLite_Model_Country();
-        $country->find("code = '".$this->config->get("Company.location_country")."'");
+        $country->find("code = '".$this->config->getComplex('Company.location_country')."'");
         return $country;
     }   // }}} 
 
     function getLocationState() // {{{
     {
-        $state = new XLite_Model_State($this->config->get("Company.location_state"));
+        $state = new XLite_Model_State($this->config->getComplex('Company.location_state'));
         return $state;
     }   // }}} 
 	
@@ -124,7 +124,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
         }
 
         if ($this->xlite->get("InventoryTrackingEnabled")) {
-	        if ($this->get("config.InventoryTracking.track_placed_order")) {
+	        if ($this->getComplex('config.InventoryTracking.track_placed_order')) {
     	        $this->changeInventory(false);
 	        }
         }
@@ -146,7 +146,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 		}
 
         if ($this->xlite->get("InventoryTrackingEnabled")) {
-            if ($this->get("config.InventoryTracking.track_placed_order")) {
+            if ($this->getComplex('config.InventoryTracking.track_placed_order')) {
                 $this->changeInventory(true);
             }
         }
@@ -179,8 +179,8 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 	function modulesProcessed()
 	{
 		if ($this->xlite->get("PromotionEnabled")) {
-	        if ($this->config->get("Promotion.earnBonusPointsRate")) {
-	            $this->addBonusPoints((int)($this->get("subtotal") * $this->config->get("Promotion.earnBonusPointsRate")));
+	        if ($this->config->getComplex('Promotion.earnBonusPointsRate')) {
+	            $this->addBonusPoints((int)($this->get("subtotal") * $this->config->getComplex('Promotion.earnBonusPointsRate')));
     	    }
         	$this->addBonusPointsSpecialOffer(1);
 		}
@@ -190,7 +190,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 		}
 
         if ($this->xlite->get("InventoryTrackingEnabled")) {
-            if (!$this->get("config.InventoryTracking.track_placed_order")) {
+            if (!$this->getComplex('config.InventoryTracking.track_placed_order')) {
                 $this->changeInventory(true);
             }
         }
@@ -218,14 +218,14 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 	function modulesDeclined()
 	{
         if ($this->xlite->get("PromotionEnabled")) {
-            if ($this->config->get("Promotion.earnBonusPointsRate")) {
-	            $this->addBonusPoints(-(int)($this->get("subtotal") * $this->config->get("Promotion.earnBonusPointsRate")));
+            if ($this->config->getComplex('Promotion.earnBonusPointsRate')) {
+	            $this->addBonusPoints(-(int)($this->get("subtotal") * $this->config->getComplex('Promotion.earnBonusPointsRate')));
             }
             $this->addBonusPointsSpecialOffer(-1);
         }
 
 		if ($this->xlite->get("InventoryTrackingEnabled")) {
-	        if (!$this->get("config.InventoryTracking.track_placed_order")) {
+	        if (!$this->getComplex('config.InventoryTracking.track_placed_order')) {
     	        $this->changeInventory(false);
         	}
 		}   
@@ -273,7 +273,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 		$orderStatus = $this->get("orderStatus");
 	    $status = $orderStatus->get("status");
         $oldStatus = ($this->_oldSubstatus == '') ? $this->_oldStatus : $this->_oldSubstatus;
-        if ($this->xlite->config->get("AOM.status_inheritance")) {
+        if ($this->xlite->config->getComplex('AOM.status_inheritance')) {
             if ($orderStatus->get('parent') !== '') {
                 $status = $orderStatus->get('parent');
             }
@@ -293,8 +293,8 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 			if ($orderStatus->get("email")) {
 				$mail->set("adminMail", true);
 		        $mail->compose(
-    		            $this->config->get("Company.site_administrator"),
-        		        $this->config->get("Company.orders_department"),
+    		            $this->config->getComplex('Company.site_administrator'),
+        		        $this->config->getComplex('Company.orders_department'),
             		    "modules/AOM/status_changed_admin");
 		        $mail->send();
 			}
@@ -305,8 +305,8 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 				$layout->set("skin", XLite::getInstance()->getOptions(array('skin_details', 'skin')));
 				$mail->set("adminMail", false);
     		    $mail->compose(
-        		        $this->config->get("Company.orders_department"),
-           			    $this->get("profile.login"),
+        		        $this->config->getComplex('Company.orders_department'),
+           			    $this->getComplex('profile.login'),
                 		"modules/AOM/status_changed");
 		        $mail->send();
 
@@ -366,7 +366,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 		if($this->xlite->is("adminZone")) {
 			$checkTaxesInside = $this->xlite->get("AOMcalcAllTaxesInside");
 			if (!isset($checkTaxesInside)) {
-    			if (!$this->config->get("Taxes.prices_include_tax")) {
+    			if (!$this->config->getComplex('Taxes.prices_include_tax')) {
     				$this->xlite->set("AOMcalcAllTaxesInside", true);
     			} else {
                 	$taxRates = new XLite_Model_TaxRates();
@@ -477,7 +477,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 			}
 		}
 
-		if ($this->config->get("Taxes.prices_include_tax")) {
+		if ($this->config->getComplex('Taxes.prices_include_tax')) {
 			$taxed_global_discount = $this->get("taxedGlobalDiscount");
 			$applied_global_discount = ($taxed_global_discount > 0)?$taxed_global_discount:$global_discount;
 		} else {
@@ -494,10 +494,10 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
         $this->calcTax();
 
 		$total = $this->get("subtotal") + $this->get("shipping_cost") - $discount - $this->get("payedByGC");
-		if ( !$this->config->get("Taxes.prices_include_tax") ) { 
+		if ( !$this->config->getComplex('Taxes.prices_include_tax') ) { 
 			$total += $this->get("tax");
 		}
-		if ( $this->config->get("Taxes.prices_include_tax") ) { 
+		if ( $this->config->getComplex('Taxes.prices_include_tax') ) { 
 			$total += $this->get("shippingTax");
 		}
 
@@ -518,7 +518,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 		if (!is_object($dc)) $dc = new XLite_Module_Promotion_Model_DiscountCoupon();
 		if ($dc->get("type") != "absolute") {
 			// if percent (or undefined) discount value differs from its original value, then the discount is absolute
-			if ($this->get("config.Taxes.prices_include_tax") && $this->xlite->AOM_product_originalPrice) {
+			if ($this->getComplex('config.Taxes.prices_include_tax') && $this->xlite->AOM_product_originalPrice) {
 				// calculate taxed subtotal manually:
 				global $calcAllTaxesInside;
 				$calcAllTaxesInside_orig = $calcAllTaxesInside;
@@ -541,7 +541,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 			}
 		}
 
-		if ($this->config->get("Taxes.prices_include_tax")) {
+		if ($this->config->getComplex('Taxes.prices_include_tax')) {
 			$taxed_discount = $this->get("taxedDiscount");
 			$applied_discount = ($taxed_discount > 0)?$taxed_discount:$applied_discount;
 		}
@@ -588,7 +588,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 	    if ($substatus->get("parent") == '') {
             $_POST['status'] = $value;
 			$this->set("status",$value);
-            if (!$this->xlite->config->get("AOM.status_inheritance")) {
+            if (!$this->xlite->config->getComplex('AOM.status_inheritance')) {
                 $_POST['substatus'] = "";
                 $this->set("substatus","");
 	        }
@@ -664,7 +664,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 	function calcAllItemsTaxedPrice()
 	{
         $this->_items = null;
-		if ( !$this->config->get("Taxes.prices_include_tax") )
+		if ( !$this->config->getComplex('Taxes.prices_include_tax') )
 			return;
         $taxRates = new XLite_Model_TaxRates();
         $taxRates->set("order", $this);

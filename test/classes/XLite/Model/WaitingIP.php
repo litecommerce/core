@@ -91,8 +91,8 @@ class XLite_Model_WaitingIP extends XLite_Model_Abstract
         $mail->adminMail = true;
         $mail->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
         $mail->compose(
-                $this->config->get("Company.site_administrator"),
-                $this->config->get("Company.site_administrator"),
+                $this->config->getComplex('Company.site_administrator'),
+                $this->config->getComplex('Company.site_administrator'),
                 "new_ip_notify_admin");
         $mail->send();
     }

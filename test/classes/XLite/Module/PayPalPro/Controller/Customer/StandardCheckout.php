@@ -91,7 +91,7 @@ class XLite_Module_PayPalPro_Controller_Customer_StandardCheckout extends XLite_
 <BODY onload="javascript: document.paypal_form.submit();">
 <FORM name="paypal_form" action="<?php echo $pm->get("standardUrl"); ?>" method="POST">
 <INPUT type=hidden name=cmd value="_ext-enter">
-<INPUT type=hidden name=invoice value="<?php echo $pm->get("params.standard.prefix"); ?><?php echo $this->cart->get("order_id"); ?>">
+<INPUT type=hidden name=invoice value="<?php echo $pm->getComplex('params.standard.prefix'); ?><?php echo $this->cart->get("order_id"); ?>">
 <INPUT type=hidden name=redirect_cmd value="_xclick">
 <INPUT type=hidden name=mrb value="R-2JR83330TB370181P">
 <INPUT type=hidden name=pal value="RDGQCFJTT6Y6A">
@@ -110,15 +110,15 @@ class XLite_Module_PayPalPro_Controller_Customer_StandardCheckout extends XLite_
 <INPUT type=hidden name=night_phone_a value="<?php echo $pm->getPhone($this->cart,"a"); ?>"> 
 <INPUT type=hidden name=night_phone_b value="<?php echo $pm->getPhone($this->cart,"b"); ?>">
 <INPUT type=hidden name=night_phone_c value="<?php echo $pm->getPhone($this->cart,"c"); ?>">
-<INPUT type=hidden name=business value="<?php echo $pm->get("params.standard.login"); ?>">
+<INPUT type=hidden name=business value="<?php echo $pm->getComplex('params.standard.login'); ?>">
 <INPUT type=hidden name=item_name value="<?php echo $pm->getItemName($this->cart); ?>">
 <INPUT type=hidden name=amount value="<?php echo $this->cart->get("total"); ?>">
-<INPUT type=hidden name=currency_code value="<?php echo $pm->get("params.standard.currency"); ?>">
+<INPUT type=hidden name=currency_code value="<?php echo $pm->getComplex('params.standard.currency'); ?>">
 <INPUT type="hidden" name="bn" value="x-cart">
-<INPUT type=hidden name=return value="<?php echo $this->shopURL("cart.php?target=checkout", $this->get("config.Security.customer_security")); ?>&action=return&order_id=<?php echo $this->cart->get("order_id"); ?>">
-<INPUT type=hidden name=cancel_return value="<?php echo $this->shopURL("cart.php?target=checkout", $this->get("config.Security.customer_security")); ?>&paypal_result=cancel">
+<INPUT type=hidden name=return value="<?php echo $this->shopURL("cart.php?target=checkout", $this->getComplex('config.Security.customer_security')); ?>&action=return&order_id=<?php echo $this->cart->get("order_id"); ?>">
+<INPUT type=hidden name=cancel_return value="<?php echo $this->shopURL("cart.php?target=checkout", $this->getComplex('config.Security.customer_security')); ?>&paypal_result=cancel">
 <INPUT type=hidden name=notify_url value="<?php echo $this->shopURL("cart.php?target=callback"); ?>&action=callback&order_id=<?php echo $this->cart->get("order_id"); ?>">
-<INPUT type=hidden name=image_url value="<?php echo $pm->get("params.standard.logo"); ?>">
+<INPUT type=hidden name=image_url value="<?php echo $pm->getComplex('params.standard.logo'); ?>">
 <CENTER>Please wait while connecting to <b>PayPal</b> payment gateway...</CENTER>
 </FORM>
 </BODY>
@@ -129,7 +129,7 @@ class XLite_Module_PayPalPro_Controller_Customer_StandardCheckout extends XLite_
 
     function isSecure() // {{{ 
     {
-		return $this->get("config.Security.customer_security");
+		return $this->getComplex('config.Security.customer_security');
 	} // }}} 
 						
 } // }}} 

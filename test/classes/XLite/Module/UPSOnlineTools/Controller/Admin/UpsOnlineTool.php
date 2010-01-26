@@ -61,7 +61,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsOnlineTool extends XLite_C
     }
 
     function getHaveAccount() {
-        return ($this->config->get('UPSOnlineTools.UPS_username') && $this->config->get('UPSOnlineTools.UPS_password') && $this->config->get('UPSOnlineTools.UPS_accesskey'));
+        return ($this->config->getComplex('UPSOnlineTools.UPS_username') && $this->config->getComplex('UPSOnlineTools.UPS_password') && $this->config->getComplex('UPSOnlineTools.UPS_accesskey'));
     }
 
     function processStep_2() {
@@ -172,7 +172,7 @@ EOT;
 	{
         $ret = array();
 
-        $profile = $this->auth->get("profile.properties");
+        $profile = $this->auth->getComplex('profile.properties');
         $ret['contact_name'] = $profile['billing_firstname'].' '.$profile['billing_lastname'];
         $ret['title_name'] = $profile['billing_title'];
         $ret['company'] = $profile['billing_company'];
@@ -184,7 +184,7 @@ EOT;
         $ret['phone'] = $profile['billing_phone'];
         $ret['email'] = $profile['login'];
 
-		$ret['state'] = $this->auth->get("profile.billingState.code");
+		$ret['state'] = $this->auth->getComplex('profile.billingState.code');
 
         return $ret;
     }

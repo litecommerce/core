@@ -51,7 +51,7 @@ class XLite_Module_GoogleCheckout_Controller_Admin_PaymentMethod extends XLite_C
 {
     function sendRequest(&$payment, $url, $data)
     {
-    	$auth = base64_encode($payment->get("params.merchant_id").":".$payment->get("params.merchant_key"));
+    	$auth = base64_encode($payment->getComplex('params.merchant_id').":".$payment->getComplex('params.merchant_key'));
     	$h = array(
     		"Authorization" => "Basic ".$auth,
     		"Accept" => "application/xml"

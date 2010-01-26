@@ -75,7 +75,7 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View
 
         // select category products
         $products = "";
-        if ($cat_id != $category->get("topCategory.category_id")) {
+        if ($cat_id != $category->getComplex('topCategory.category_id')) {
             // get all subcategories ID
             $this->getSubcategories($category);
             if (empty($this->ids)) {
@@ -103,10 +103,10 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View
         $products_table = $this->db->getTableByAlias("products");
 		
 		$limit = 0;
-        if (!is_null($this->get("config.Bestsellers.number_of_bestsellers")) && 
-            is_numeric($this->get("config.Bestsellers.number_of_bestsellers")))
+        if (!is_null($this->getComplex('config.Bestsellers.number_of_bestsellers')) && 
+            is_numeric($this->getComplex('config.Bestsellers.number_of_bestsellers')))
         {
-            $limit = $this->get("config.Bestsellers.number_of_bestsellers");
+            $limit = $this->getComplex('config.Bestsellers.number_of_bestsellers');
         } else {
         	$limit = 5;
         }

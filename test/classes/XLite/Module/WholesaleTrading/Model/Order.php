@@ -71,7 +71,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
 	{
 		$global_discount = $this->get("global_discount");
 		if ($global_discount > 0) {
-			if ($this->config->get("Taxes.prices_include_tax") && !$this->get("config.Taxes.discounts_after_taxes")) {
+			if ($this->config->getComplex('Taxes.prices_include_tax') && !$this->getComplex('config.Taxes.discounts_after_taxes')) {
 				$taxed_global_discount = $this->getTaxedGlobalDiscount();
 				$subtotal -= $taxed_global_discount;
 			} else {
@@ -88,10 +88,10 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
 		$discount = $this->get("global_discount");
 		if ($discount == 0) return $discount;
 
-		$is_percent_discount = ($this->get("appliedGlobalDiscount.discount_type") == "p");
+		$is_percent_discount = ($this->getComplex('appliedGlobalDiscount.discount_type') == "p");
 		if ($is_percent_discount) return $discount;
 
-        if ($this->config->get("Taxes.prices_include_tax") && $this->config->get("Taxes.discounts_after_taxes")) {
+        if ($this->config->getComplex('Taxes.prices_include_tax') && $this->config->getComplex('Taxes.discounts_after_taxes')) {
             $taxed_discount = $discount;
         } else {
             $taxes = (array) $this->getTaxedGlobalDiscountRates();
@@ -112,8 +112,8 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
 			$tax_items = array();
 			$tax_values = array();
 			foreach ($items as $k=>$i) {
-				if ($this->config->get("Taxes.prices_include_tax")) {
-					$i->set("price", $i->get("product.price"));
+				if ($this->config->getComplex('Taxes.prices_include_tax')) {
+					$i->set("price", $i->getComplex('product.price'));
 				} 
 				$skip_flag = $i->_skipTaxingWholesalePrice;
 				$i->_skipTaxingWholesalePrice = true;
@@ -134,7 +134,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
 	function getTaxedGlobalDiscountRates()
 	{
 		$discount = $this->get("global_discount");
-		$is_percent_discount = ($this->get("appliedGlobalDiscount.discount_type") == "p");
+		$is_percent_discount = ($this->getComplex('appliedGlobalDiscount.discount_type') == "p");
 
 		$result = array();
 		if ($discount <= 0) return $result;
@@ -148,7 +148,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
 		foreach ($tax_items as $k=>$i) {
 			if ($discount <= 0) break;
 			$taxRates->setOrderItem($i);
-			if (!$this->config->get("Taxes.prices_include_tax")) {
+			if (!$this->config->getComplex('Taxes.prices_include_tax')) {
 				$item_cost = $i->get("taxableTotal");
 			} else {
 				$skip_flag = $i->_skipTaxingWholesalePrice;
@@ -157,7 +157,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
 				$i->_skipTaxingWholesalePrice = $skip_flag;
 			}
 
-			$taxable_discount = ($is_percent_discount)?$this->formatCurrency($item_cost * $this->get("appliedGlobalDiscount.discount") / 100):$discount;
+			$taxable_discount = ($is_percent_discount)?$this->formatCurrency($item_cost * $this->getComplex('appliedGlobalDiscount.discount') / 100):$discount;
 			$cost = min(abs($item_cost), abs($taxable_discount));
 			$taxRates->_conditionValues["cost"] = abs($cost) * -1;
 			$taxRates->_conditionValues["amount"] = 1;
@@ -193,7 +193,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
     	$result = parent::calcAllTaxes();
 
 		if (floatval($this->get("global_discount")) > 0) {
-			if (!($this->get("config.Taxes.prices_include_tax") && $this->get("config.Taxes.discounts_after_taxes"))) {
+			if (!($this->getComplex('config.Taxes.prices_include_tax') && $this->getComplex('config.Taxes.discounts_after_taxes'))) {
 				$rates = $this->getTaxedGlobalDiscountRates();
 				$result = $this->_addTaxes($result, $rates);
 				// after discount correction taxes should be adjusted to default format to avoid rounding problems
@@ -220,7 +220,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
 	{
 		$items = $this->get('items');
 		foreach ($items as $item) {
-			if ($item->is('product.sellingMembership')) {
+			if ($item->isComplex('product.sellingMembership')) {
 				$profile = $this->get('origProfile');
 				require_once LC_MODULES_DIR . 'WholesaleTrading' . LC_DS . 'encoded.php';
 				func_wholesaleTrading_set_membership($this, $profile, $item->get('product'));

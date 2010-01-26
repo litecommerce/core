@@ -118,7 +118,7 @@ class XLite_Controller_Admin_Login extends XLite_Controller_Abstract
         if ($this->session->get("no_https")) {
             return false;
         }
-        return $this->get("config.Security.admin_security");
+        return $this->getComplex('config.Security.admin_security');
     }
 }
 

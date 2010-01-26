@@ -56,7 +56,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerPayments extends XLite_M
             $this->payments = array();
             $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
             $table = $pp->db->getTableByAlias($pp->alias);
-            $partnerID = $this->get("auth.profile.profile_id");
+            $partnerID = $this->getComplex('auth.profile.profile_id');
             if ($this->get("period") == "period") {
                 $startDate = $this->get("startDate");
                 $endDate = $this->get("endDate") + 24 * 3600;

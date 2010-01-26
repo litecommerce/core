@@ -82,7 +82,7 @@ class XLite_Module_ProductOptions_Model_OrderItem extends XLite_Model_OrderItem 
             }
         }
         // get product options, change option indexes to option values
-        $product_options = $this->get("product.productOptions");
+        $product_options = $this->getComplex('product.productOptions');
         foreach ($product_options as $product_option) {
             $class = $product_option->get("optclass");
             if (isset($options[$class])) {
@@ -104,7 +104,7 @@ class XLite_Module_ProductOptions_Model_OrderItem extends XLite_Model_OrderItem 
             }
         }
         // check for option exceptions
-        $exceptions_list = $this->get("product.optionExceptions");
+        $exceptions_list = $this->getComplex('product.optionExceptions');
         foreach ($exceptions_list as $k => $v) {
             $exceptions = array();
             $exception = $v->get("exception");
@@ -206,7 +206,7 @@ class XLite_Module_ProductOptions_Model_OrderItem extends XLite_Model_OrderItem 
 					if (doubleval($full_price) != $full_price) $full_price = null;
 					if (!is_null($full_price)) {
 						$originalPrice = $full_price;
-						if ($this->config->get("Taxes.prices_include_tax")) {
+						if ($this->config->getComplex('Taxes.prices_include_tax')) {
 							$full_price = $p->get("price"); // restore product full price without taxes
 						}
 					}
@@ -226,7 +226,7 @@ class XLite_Module_ProductOptions_Model_OrderItem extends XLite_Model_OrderItem 
 				$full_price = $p->getFullPrice($this->get("amount"));
 				if (doubleval($full_price) != $full_price) $full_price = null;
 				if (!is_null($full_price)) {
-					if ($this->config->get("Taxes.prices_include_tax")) {
+					if ($this->config->getComplex('Taxes.prices_include_tax')) {
 						$full_price = $p->get("price"); // restore product full price without taxes
 					}
 					$price = $full_price;

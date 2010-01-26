@@ -43,12 +43,12 @@ class XLite_Module_AdvancedSearch_Controller_Admin_AdvancedSearch extends XLite_
 {
 	function getAllPrices() // {{{ 
 	{
-		return unserialize($this->config->get("AdvancedSearch.prices"));
+		return unserialize($this->config->getComplex('AdvancedSearch.prices'));
 	} // }}}
 
 	function getAllWeights() // {{{ 
 	{
-        return unserialize($this->config->get("AdvancedSearch.weights"));
+        return unserialize($this->config->getComplex('AdvancedSearch.weights'));
 	} // }}}	
 	
 	function action_update() // {{{ 
@@ -71,7 +71,7 @@ class XLite_Module_AdvancedSearch_Controller_Admin_AdvancedSearch extends XLite_
 	function action_delete() // {{{ 
 	{
 		if (isset($this->deleted_prices)) {
-		    $prices = unserialize($this->config->get('AdvancedSearch.prices'));
+		    $prices = unserialize($this->config->getComplex('AdvancedSearch.prices'));
 			foreach($this->deleted_prices as $key => $value) {
 				unset($prices[$value]);	
 			}
@@ -82,7 +82,7 @@ class XLite_Module_AdvancedSearch_Controller_Admin_AdvancedSearch extends XLite_
             $config->update();
 		}
         if (isset($this->deleted_weights)) {
-            $weights = unserialize($this->config->get('AdvancedSearch.weights'));
+            $weights = unserialize($this->config->getComplex('AdvancedSearch.weights'));
             foreach($this->deleted_weights as $key => $value) {
                 unset($weights[$value]);
             }
@@ -97,7 +97,7 @@ class XLite_Module_AdvancedSearch_Controller_Admin_AdvancedSearch extends XLite_
 	function action_add() // {{{ 
 	{
 		if (isset($this->new_price) && is_array($this->new_price) && strlen($this->new_price["start"]) > 0 && strlen($this->new_price["end"]) > 0) { 
-			$prices = unserialize($this->config->get("AdvancedSearch.prices"));
+			$prices = unserialize($this->config->getComplex('AdvancedSearch.prices'));
 		    $prices[] = $this->new_price;
 			$config = new XLite_Model_Config();
 			$config->set('category','AdvancedSearch');
@@ -106,7 +106,7 @@ class XLite_Module_AdvancedSearch_Controller_Admin_AdvancedSearch extends XLite_
 			$config->update();
 		}
         if (isset($this->new_weight) && is_array($this->new_weight) && strlen($this->new_weight["start"]) > 0 && strlen($this->new_weight["end"]) > 0) { 
-            $weights = unserialize($this->config->get("AdvancedSearch.weights"));
+            $weights = unserialize($this->config->getComplex('AdvancedSearch.weights'));
             $weights[] = $this->new_weight;
             $config = new XLite_Model_Config();
             $config->set('category','AdvancedSearch');

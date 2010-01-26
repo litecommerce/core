@@ -58,7 +58,7 @@ class XLite_Module_GiftCertificates_Controller_Customer_CheckGiftCertificate ext
 	}
 	function getFound()
     {
-        return $this->is("foundgc.exists");
+        return $this->isComplex('foundgc.exists');
     }
     function getNotFound()
     {

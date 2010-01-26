@@ -52,7 +52,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
     function init()
     {
 		$product_id = intval($_REQUEST["product_id"]);
-		if ($product_id > 0 && $this->config->get("ProductAdviser.number_recently_viewed") > 0 && $this->xlite->get("HTMLCatalogWorking") != true) {
+		if ($product_id > 0 && $this->config->getComplex('ProductAdviser.number_recently_viewed') > 0 && $this->xlite->get("HTMLCatalogWorking") != true) {
     		$referer = (isset($_SERVER["HTTP_REFERER"])) ? $_SERVER["HTTP_REFERER"] : "NO_HTTP_REFERER";
             $referer = md5($referer);
             $referers = ($this->session->isRegistered("HTTP_REFERER")) ? $this->session->get("HTTP_REFERER") : array();
@@ -85,8 +85,8 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
 
         parent::init();
 
-		if ($this->xlite->get("PA_InventorySupport") && $this->config->get("ProductAdviser.customer_notifications_enabled") && is_object($this->getProduct())) {
-			if ($this->product->get("inventory.amount") == 0 && $this->product->get("tracking") == 0) {
+		if ($this->xlite->get("PA_InventorySupport") && $this->config->getComplex('ProductAdviser.customer_notifications_enabled') && is_object($this->getProduct())) {
+			if ($this->product->getComplex('inventory.amount') == 0 && $this->product->get("tracking") == 0) {
     			$this->rejectedItemInfo = new XLite_Base();
     			$this->rejectedItemInfo->set("product_id", $this->product->get("product_id"));
     			$this->rejectedItemInfo->set("product", new XLite_Model_Product($this->product->get("product_id")));
@@ -124,7 +124,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
 
     function getRejectedItem()
     {
-		if (!($this->xlite->get("PA_InventorySupport") && $this->config->get("ProductAdviser.customer_notifications_enabled"))) {
+		if (!($this->xlite->get("PA_InventorySupport") && $this->config->getComplex('ProductAdviser.customer_notifications_enabled'))) {
 			return null;
 		}
 
@@ -133,7 +133,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
 
 	function isNotificationSaved($rejectedItemInfo)
 	{
-		if (!$this->config->get("ProductAdviser.customer_notifications_enabled")) {
+		if (!$this->config->getComplex('ProductAdviser.customer_notifications_enabled')) {
 			return true;
 		}
 
@@ -181,7 +181,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
 
 	function getPriceNotificationSaved()
 	{
-		if (!$this->config->get("ProductAdviser.customer_notifications_enabled")) {
+		if (!$this->config->getComplex('ProductAdviser.customer_notifications_enabled')) {
 			return true;
 		}
 
@@ -217,13 +217,13 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
 
 	function isPriceNotificationEnabled()
 	{
-		$mode = $this->config->get("ProductAdviser.customer_notifications_mode");
+		$mode = $this->config->getComplex('ProductAdviser.customer_notifications_mode');
 		return (($mode & 1) != 0) ? true : false;
 	}
 
 	function isProductNotificationEnabled()
 	{
-		$mode = $this->config->get("ProductAdviser.customer_notifications_mode");
+		$mode = $this->config->getComplex('ProductAdviser.customer_notifications_mode');
 		return (($mode & 2) != 0) ? true : false;
 	}
 
@@ -242,16 +242,16 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
 			}
 		}
 
-        if ($this->config->get("General.redirect_to_cart")) {
+        if ($this->config->getComplex('General.redirect_to_cart')) {
             $this->set("returnUrl", "cart.php?target=cart");
         }
 	}
 
     function isShowBulkAddForm()
     {
-        if (!$this->xlite->get("config.ProductAdviser.rp_show_buynow")) return false;
-        if (!$this->xlite->get("config.ProductAdviser.rp_bulk_shopping")) return false;
-        $products = (array) $this->get("pager.pageData");
+        if (!$this->xlite->getComplex('config.ProductAdviser.rp_show_buynow')) return false;
+        if (!$this->xlite->getComplex('config.ProductAdviser.rp_bulk_shopping')) return false;
+        $products = (array) $this->getComplex('pager.pageData');
         foreach ($products as $p) {
             if (!$p->call("product.checkHasOptions")) return true;
         }

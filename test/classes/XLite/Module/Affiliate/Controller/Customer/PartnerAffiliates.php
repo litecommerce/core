@@ -46,7 +46,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerAffiliates extends XLite
     function getRoot()
     {
         if (is_null($this->root)) {
-            $this->root = $this->get("auth.profile");
+            $this->root = $this->getComplex('auth.profile');
         }
         return $this->root;
     }

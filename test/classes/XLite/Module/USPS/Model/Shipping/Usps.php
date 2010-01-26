@@ -79,11 +79,11 @@ class XLite_Module_USPS_Model_Shipping_Usps extends XLite_Model_Shipping_Online
     {
         $options = $this->getOptions();
         $ounces = $this->getOunces($order);
-        $ZipOrigination = $this->config->get("Company.location_zipcode");
+        $ZipOrigination = $this->config->getComplex('Company.location_zipcode');
     	if (is_null($order->get("profile"))) {
-        	$ZipDestination = $order->config->get("General.default_zipcode");
+        	$ZipDestination = $order->config->getComplex('General.default_zipcode');
     	} else {
-        	$ZipDestination = $order->get("profile.shipping_zipcode");
+        	$ZipDestination = $order->getComplex('profile.shipping_zipcode');
     	}
 
         // check national shipping rates cache
@@ -276,9 +276,9 @@ EOT;
     {
         $ounces = $this->getOunces($order);
     	if (is_null($order->get("profile"))) {
-    		$destinationCountry = $this->config->get("General.default_country");
+    		$destinationCountry = $this->config->getComplex('General.default_country');
     	} else {
-        	$destinationCountry = $order->get("profile.shippingCountry.country");
+        	$destinationCountry = $order->getComplex('profile.shippingCountry.country');
     	}
 
         $options = $this->getOptions();

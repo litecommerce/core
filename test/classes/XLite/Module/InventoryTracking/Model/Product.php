@@ -70,7 +70,7 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
     	$result = parent::filter();
 
         // check for active inventory card amount
-		if (!$this->xlite->is("adminZone") && $this->get("config.InventoryTracking.exclude_product")) {
+		if (!$this->xlite->is("adminZone") && $this->getComplex('config.InventoryTracking.exclude_product')) {
 			$result &= $this->isInStock();
 		}
 
@@ -99,7 +99,7 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
 			$out_of_stock = $inv->count("inventory_id LIKE '$product_id|%' AND amount <= 0");
 			return ($out_of_stock < $max_options);
 		} else {
-			$out_of_stock = ($this->get("inventory.found") && ($this->get("inventory.amount") <= 0));
+			$out_of_stock = ($this->getComplex('inventory.found') && ($this->getComplex('inventory.amount') <= 0));
 			return !$out_of_stock;
 		}
 		return true;
@@ -151,10 +151,10 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
 
 		if($properties['optclass']!=$old_properties['optclass'])	
 			foreach($inventories as $inventory_) {
-				$inventory = new XLite_Module_InventoryTracking_Model_Inventory($inventory_->get('properties.inventory_id'));
+				$inventory = new XLite_Module_InventoryTracking_Model_Inventory($inventory_->getComplex('properties.inventory_id'));
 				$inventory->delete();
 				$inventory->set('properties',$inventory_->get('properties'));
-				$inventory->set('inventory_id',preg_replace('/'.$old_properties['optclass'].':/',$properties['optclass'].":",$inventory_->get('properties.inventory_id')));
+				$inventory->set('inventory_id',preg_replace('/'.$old_properties['optclass'].':/',$properties['optclass'].":",$inventory_->getComplex('properties.inventory_id')));
 				$inventory->create();
 			}
 
@@ -254,7 +254,7 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
 
 		$p->set("tracking", 0);
 		$p->update(); 
-		if ($this->config->get("InventoryTracking.clone_inventory")) {
+		if ($this->config->getComplex('InventoryTracking.clone_inventory')) {
 			$p  = $this->cloneInventory($p);
 		}
 		$this->xlite->set("ITisCloneProduct", false);
@@ -264,11 +264,11 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
 	function createDefaultInventory()
 	{
 		
-        if (!$this->xlite->get("ITisCloneProduct") && $this->config->get("InventoryTracking.create_inventory")) {
+        if (!$this->xlite->get("ITisCloneProduct") && $this->config->getComplex('InventoryTracking.create_inventory')) {
             $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
 			$inventory->set("inventory_id",$this->get("product_id"));
-			$inventory->set("amount",$this->config->get("InventoryTracking.inventory_amount"));
-			$inventory->set("low_avail_limit",$this->config->get("InventoryTracking.low_amount"));
+			$inventory->set("amount",$this->config->getComplex('InventoryTracking.inventory_amount'));
+			$inventory->set("low_avail_limit",$this->config->getComplex('InventoryTracking.low_amount'));
 			$inventory->set("enabled",1);
 			$inventory->create();
 		}

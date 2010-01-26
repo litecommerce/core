@@ -186,7 +186,7 @@ class XLite_Model_ExtraField extends XLite_Model_Abstract
                     $data[] = "";
                     break;
                 case "sku":
-                    $data[] = $this->get("product.sku");
+                    $data[] = $this->getComplex('product.sku');
                     break;
                 case "category":
 					$properties = $this->get("properties");
@@ -210,7 +210,7 @@ class XLite_Model_ExtraField extends XLite_Model_Abstract
 					} 
                     break;
                 case "product":
-                    $data[] = $this->get("product.name");
+                    $data[] = $this->getComplex('product.name');
                     break;
                 default:    
                     $data[] = $this->get($field);

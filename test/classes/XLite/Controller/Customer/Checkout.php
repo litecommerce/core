@@ -105,7 +105,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 
     function _initCheckZeroTotal()
     {
-    	return (($this->cart->get("total") == 0) && (strlen($this->config->get("Payments.default_offline_payment")) > 0)) ? true : false;
+    	return (($this->cart->get("total") == 0) && (strlen($this->config->getComplex('Payments.default_offline_payment')) > 0)) ? true : false;
 	}
 
 	function _initCheckNotPayment()
@@ -179,7 +179,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
                 }
     		break;
     		case "zeroTotal":
-				$_POST["payment_id"] = $this->config->get("Payments.default_offline_payment");
+				$_POST["payment_id"] = $this->config->getComplex('Payments.default_offline_payment');
 				$this->action_payment();
                 $this->cart->checkout();
 				$this->action_checkout();
@@ -259,7 +259,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
             }
     		$cart = XLite_Model_Cart::getInstance();
      		if (!$cart->isEmpty()) {
-     			$cart->set("profile_id", $this->auth->get("profile.profile_id"));
+     			$cart->set("profile_id", $this->auth->getComplex('profile.profile_id'));
      			$cart->update();
     			$this->recalcCart();
      		}
@@ -307,7 +307,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
         $this->session->set("last_order_id", $this->cart->get("order_id"));
         $this->cart->clear();
         // anonymous checkout: logoff
-        if ($this->auth->get("profile.order_id")) {
+        if ($this->auth->getComplex('profile.order_id')) {
             $this->auth->logoff();
         }
     }
@@ -338,7 +338,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
         } else {
             $order_id_name = "order_id";
         }
-        $status = $this->get("order.status");
+        $status = $this->getComplex('order.status');
         if ($status == "P" || $status == "C" || $status == "Q") {
             $this->success();
             $this->set("returnUrl", "cart.php?target=checkoutSuccess&order_id=" . $_REQUEST["order_id"]);
@@ -349,7 +349,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 
     function isSecure()
     {
-        return $this->get("config.Security.customer_security");
+        return $this->getComplex('config.Security.customer_security');
     }
 
     function getCountriesStates()
@@ -362,7 +362,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 
     function isDisplayNumber()
     {
-        return $this->get("xlite.config.General.display_check_number");
+        return $this->getComplex('xlite.config.General.display_check_number');
     }
 }
 

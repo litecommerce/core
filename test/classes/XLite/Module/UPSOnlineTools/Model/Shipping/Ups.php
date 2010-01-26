@@ -781,9 +781,9 @@ EOT;
 			default:
 				$dims = array(
 					"name" => "Your package",
-					"width" => $this->xlite->get("config.UPSOnlineTools.width"),
-					"length" => $this->xlite->get("config.UPSOnlineTools.length"),
-					"height" => $this->xlite->get("config.UPSOnlineTools.height"),
+					"width" => $this->xlite->getComplex('config.UPSOnlineTools.width'),
+					"length" => $this->xlite->getComplex('config.UPSOnlineTools.length'),
+					"height" => $this->xlite->getComplex('config.UPSOnlineTools.height'),
 					"weight_limit" => 0, // weight limit not set (N/A)
 				);
 
@@ -826,7 +826,7 @@ EOT;
         if ($license)
             return 0;
 
-        $devlicense = $this->config->get("UPSOnlineTools.devlicense");
+        $devlicense = $this->config->getComplex('UPSOnlineTools.devlicense');
 
         $request=<<<EOT
 <?xml version='1.0' encoding='ISO-8859-1'?>
@@ -884,7 +884,7 @@ EOT;
 
 	function getShippingCacheExpiration()
 	{
-		return $this->xlite->config->get("UPSOnlineTools.cache_autoclean") * 86400;
+		return $this->xlite->config->getComplex('UPSOnlineTools.cache_autoclean') * 86400;
 	}
 
 	function _checkCache($table, $fields)

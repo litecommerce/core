@@ -90,7 +90,7 @@ class XLite_Module_WholesaleTrading_Model_Profile extends XLite_Model_Profile im
 			// Notify customer
 			$mail->adminMail = false;
 			$mail->compose(
-					$this->config->get("Company.orders_department"),
+					$this->config->getComplex('Company.orders_department'),
 					$this->get("login"),
 					"modules/WholesaleTrading/membership_expired");
 			$mail->send();
@@ -98,8 +98,8 @@ class XLite_Module_WholesaleTrading_Model_Profile extends XLite_Model_Profile im
 			// Notify admin
 			$mail->adminMail = true;
 			$mail->compose(
-					$this->config->get("Company.site_administrator"),
-					$this->config->get("Company.orders_department"),
+					$this->config->getComplex('Company.site_administrator'),
+					$this->config->getComplex('Company.orders_department'),
 					"modules/WholesaleTrading/membership_expired_admin");
 			$mail->send();
 
@@ -192,7 +192,7 @@ class XLite_Module_WholesaleTrading_Model_Profile extends XLite_Model_Profile im
 
 		$mail->adminMail = false;
 		$mail->compose(
-				$this->config->get("Company.orders_department"),
+				$this->config->getComplex('Company.orders_department'),
 				$this->get("login"),
 				$template);
 		$mail->send();
@@ -201,10 +201,10 @@ class XLite_Module_WholesaleTrading_Model_Profile extends XLite_Model_Profile im
     function isShowWholesalerFields()
     {
         if (
-            $this->get('xlite.config.WholesaleTrading.WholesalerFieldsTaxId')   == "Y" ||
-            $this->get('xlite.config.WholesaleTrading.WholesalerFieldsVat')     == "Y" ||
-            $this->get('xlite.config.WholesaleTrading.WholesalerFieldsGst')     == "Y" ||
-            $this->get('xlite.config.WholesaleTrading.WholesalerFieldsPst')     == "Y"
+            $this->getComplex('xlite.config.WholesaleTrading.WholesalerFieldsTaxId')   == "Y" ||
+            $this->getComplex('xlite.config.WholesaleTrading.WholesalerFieldsVat')     == "Y" ||
+            $this->getComplex('xlite.config.WholesaleTrading.WholesalerFieldsGst')     == "Y" ||
+            $this->getComplex('xlite.config.WholesaleTrading.WholesalerFieldsPst')     == "Y"
             ) {
                 return true;
             }

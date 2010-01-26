@@ -162,7 +162,7 @@ class XLite_Module_Froogle_Model_Product extends XLite_Model_Product implements 
 	function getFroogleLabel()
 	{
 		$label = "";
-		switch ($this->get("config.Froogle.export_label")) {
+		switch ($this->getComplex('config.Froogle.export_label')) {
 			case "meta_tags":
 				$label = $this->_stripSpecials($this->get("meta_tags"));
 			break;
@@ -173,7 +173,7 @@ class XLite_Module_Froogle_Model_Product extends XLite_Model_Product implements 
 				$label = $this->_stripSpecials($this->get("meta_desc"));
 			break;
 			case "custom":
-				$label = $this->get("config.Froogle.export_custom_label");
+				$label = $this->getComplex('config.Froogle.export_custom_label');
 			break;
 			default:
 				// category
@@ -194,7 +194,7 @@ class XLite_Module_Froogle_Model_Product extends XLite_Model_Product implements 
 
 	function getFrooglePrice()
 	{
-		if (!$this->config->get("Taxes.prices_include_tax")) {
+		if (!$this->config->getComplex('Taxes.prices_include_tax')) {
 			$price = $this->get("price");
 		} else {
 			$price = $this->get("listPrice");
@@ -205,7 +205,7 @@ class XLite_Module_Froogle_Model_Product extends XLite_Model_Product implements 
 
 	function getFroogleBrand()
 	{
-		return $this->xlite->get("config.Froogle.froogle_brand");
+		return $this->xlite->getComplex('config.Froogle.froogle_brand');
 	}
 
 	function getFroogleCondition()
@@ -215,13 +215,13 @@ class XLite_Module_Froogle_Model_Product extends XLite_Model_Product implements 
 
 	function getFroogleExpirationDate()
 	{
-		$exp_date = time() + ($this->xlite->get("config.Froogle.froogle_expiration") * 86400);
+		$exp_date = time() + ($this->xlite->getComplex('config.Froogle.froogle_expiration') * 86400);
 		return date("Y-m-d", $exp_date);
 	}
 
 	function getFroogleId()
 	{
-		$out = $this->xlite->get("config.Froogle.froogle_id_format");
+		$out = $this->xlite->getComplex('config.Froogle.froogle_id_format');
 
 		if (strpos($out, "%psku") !== false) {
 			$out = str_replace("%psku", $this->get("sku"), $out);

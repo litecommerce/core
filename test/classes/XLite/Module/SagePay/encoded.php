@@ -16,7 +16,7 @@ if (!defined('SAGEPAY_FORM_DEBUG_LOG')) {
 function func_SagePay_getTxCode($pm, $order)
 {
 	$stamp = substr(md5(uniqid(time())), 0, 4);
-	$vendorTxCode = substr($pm->get("params.order_prefix"), 0, 20)."_".$order->get("order_id")."_".$stamp;
+	$vendorTxCode = substr($pm->getComplex('params.order_prefix'), 0, 20)."_".$order->get("order_id")."_".$stamp;
 	$vendorTxCode = substr($vendorTxCode, 0, 40);
 	$vendorTxCode = preg_replace("/[^\d\w_]/", "_", $vendorTxCode);
 	return $vendorTxCode;
@@ -25,13 +25,13 @@ function func_SagePay_getTxCode($pm, $order)
 /////////////////////////////////// SagePay VSP Direct ////////////////////////////////////
 function func_SagePayDirect_process($_this, $order)
 {
-	$vendor = $_this->get("params.vendor_name");
+	$vendor = $_this->getComplex('params.vendor_name');
 	$vendorTxCode = func_SagePay_getTxCode($_this, $order);
-	$currency = (($_this->get("params.currency")) ? $_this->get("params.currency") : "USD");
+	$currency = (($_this->getComplex('params.currency')) ? $_this->getComplex('params.currency') : "USD");
 
 	$profile = $order->get("profile");
 
-	$TxType = $_this->get("params.trans_type");
+	$TxType = $_this->getComplex('params.trans_type');
 	if (!in_array($TxType, array("AUTHENTICATE", "PAYMENT", "PAYMENT"))) {
 		$TxType = "AUTHENTICATE";
 	}
@@ -66,8 +66,8 @@ function func_SagePayDirect_process($_this, $order)
 	$trxData["Basket"] = func_SagePay_getBasket($order);
 	$trxData["GiftAidPayment"] = 0;
 	$trxData["ClientIPAddress"] = $_this->get("clientIP");
-	$trxData["Apply3DSecure"] = $_this->get("params.Apply3DSecure");
-	$trxData["ApplyAVSCV2"] = $_this->get("params.ApplyAVSCV2");
+	$trxData["Apply3DSecure"] = $_this->getComplex('params.Apply3DSecure');
+	$trxData["ApplyAVSCV2"] = $_this->getComplex('params.ApplyAVSCV2');
 
 	$trxData = array_merge($trxData, $_this->get("ccDetails"));
 
@@ -249,7 +249,7 @@ function func_SagePay_response_handling($response, $order, &$payment)
 function func_SagePayForm_compileInfoCrypt($_this, $order)
 {
 	$vendorTxCode = func_SagePay_getTxCode($_this, $order);
-	$currency = (($_this->get("params.currency")) ? $_this->get("params.currency") : "USD");
+	$currency = (($_this->getComplex('params.currency')) ? $_this->getComplex('params.currency') : "USD");
 
 	$profile = $order->get("profile");
 
@@ -278,12 +278,12 @@ function func_SagePayForm_compileInfoCrypt($_this, $order)
 		"ContactFax" 		=> $profile->get("billing_fax"),
 		"CustomerEMail" 	=> $profile->get("login"),
 		"Basket" 		=> func_SagePay_getBasket($order, true),
-		"eMailMessage" 		=> $_this->get("params.eMailMessage"),
+		"eMailMessage" 		=> $_this->getComplex('params.eMailMessage'),
 		"FailureURL"		=> $_this->getFailureUrl($order->get("order_id")),
         	"GiftAidPayment"    	=> 0,
         	"ClientIPAddress"   	=> $_this->get("clientIP"),
-		"Apply3DSecure"     	=> $_this->get("params.Apply3DSecure"),
-		"ApplyAVSCV2"           => $_this->get("params.ApplyAVSCV2")
+		"Apply3DSecure"     	=> $_this->getComplex('params.Apply3DSecure'),
+		"ApplyAVSCV2"           => $_this->getComplex('params.ApplyAVSCV2')
     );
 
 if (SAGEPAY_FORM_DEBUG_LOG) {
@@ -292,7 +292,7 @@ $_this->xlite->logger->log("SagePay VSP Form crypt:".var_export($trxData, true))
 
 	$trxData = func_SagePay_clean_inputs($trxData);
 	$trxData = func_SagePayForm_prepareTrxData($trxData);
-	$crypt = base64_encode(func_SagePayForm_simpleXor($trxData, $_this->get('params.xor_password')));
+	$crypt = base64_encode(func_SagePayForm_simpleXor($trxData, $_this->getComplex('params.xor_password')));
 
 	return $crypt;
 }
@@ -312,7 +312,7 @@ function func_SagePayForm_action_return($_this, $paymentMethod)
 		return false;
 
 	$crypt = preg_replace("/ /", "+", $crypt);
-	$response = func_SagePayForm_simpleXor(base64_decode($crypt), $paymentMethod->get('params.xor_password'));
+	$response = func_SagePayForm_simpleXor(base64_decode($crypt), $paymentMethod->getComplex('params.xor_password'));
 
 	$responseArray = array();
 	$nodes = explode("&", $response);

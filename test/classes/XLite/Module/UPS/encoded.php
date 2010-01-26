@@ -7,7 +7,7 @@ function Shipping_ups_getRates($_this, $order)
 {
     // original code of Shipping_ups::getRates()
     
-    if ((is_null($order->get("profile")) && !$_this->config->get("General.def_calc_shippings_taxes")) || $order->get("weight") == 0) {
+    if ((is_null($order->get("profile")) && !$_this->config->getComplex('General.def_calc_shippings_taxes')) || $order->get("weight") == 0) {
         return array();
     }
 
@@ -17,14 +17,14 @@ function Shipping_ups_getRates($_this, $order)
 	}
 
     $pounds = sprintf("%15.1f", $_this->getOunces($order)/16.00);
-    $originZipCode = $_this->config->get("Company.location_zipcode");
-    $originCountry = $_this->config->get("Company.location_country");
+    $originZipCode = $_this->config->getComplex('Company.location_zipcode');
+    $originCountry = $_this->config->getComplex('Company.location_country');
 	if (is_null($order->get("profile"))) {
-    	$destinationCountry = $_this->config->get("General.default_country");
-    	$destinationZipCode = $_this->config->get("General.default_zipcode");
+    	$destinationCountry = $_this->config->getComplex('General.default_country');
+    	$destinationZipCode = $_this->config->getComplex('General.default_zipcode');
 	} else {
-        $destinationZipCode = $order->get("profile.shipping_zipcode");
-        $destinationCountry = $order->get("profile.shipping_country");
+        $destinationZipCode = $order->getComplex('profile.shipping_zipcode');
+        $destinationCountry = $order->getComplex('profile.shipping_country');
 	}
     if ($order->get("payment_method") == "COD") {
         $codvalue = $order->get("subtotal");

@@ -42,12 +42,12 @@ class XLite_Module_WishList_Controller_Customer_Product extends XLite_Controller
 {
 	function getSenderName() // {{{
 	{
-		return isset($this->sender_name) ? $this->sender_name : $this->auth->get("profile.billing_firstname")." ".$this->auth->get("profile.billing_lastname");
+		return isset($this->sender_name) ? $this->sender_name : $this->auth->getComplex('profile.billing_firstname')." ".$this->auth->getComplex('profile.billing_lastname');
 	} // }}} 
 
   	function getSenderEmail() 
     {
-        return isset($this->sender_email) ? $this->sender_email : $this->auth->get("profile.login");
+        return isset($this->sender_email) ? $this->sender_email : $this->auth->getComplex('profile.login');
     }
 
 

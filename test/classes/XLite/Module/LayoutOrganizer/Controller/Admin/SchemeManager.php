@@ -100,8 +100,8 @@ class XLite_Module_LayoutOrganizer_Controller_Admin_SchemeManager extends XLite_
 		$scheme->set("enabled", 1);
 		$scheme->set("name", $this->getDefaultSchemeName());
 		$scheme->set("order_by", 0);
-		$scheme->set("cat_template", $this->customerLayoutPath . $this->get("config.LayoutOrganizer.template"));
-		$scheme->set("scat_template", $this->customerLayoutPath . $this->get("config.General.subcategories_look"));
+		$scheme->set("cat_template", $this->customerLayoutPath . $this->getComplex('config.LayoutOrganizer.template'));
+		$scheme->set("scat_template", $this->customerLayoutPath . $this->getComplex('config.General.subcategories_look'));
 		$scheme->set("prod_template", $this->customerLayoutPath . "product_details.tpl");
 
 		return $scheme;

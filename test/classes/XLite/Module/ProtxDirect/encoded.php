@@ -12,19 +12,19 @@ if (!defined('PROTX_DIRECT_DEBUG_LOG')) {
 
 function func_ProtxDirect_process($_this, $order)
 {
-	$vendor = $_this->get("params.vendor_name");
-//	$vendorTxCode = $_this->get("params.order_prefix").$order->get("order_id")."_".uniqid(time())."";
+	$vendor = $_this->getComplex('params.vendor_name');
+//	$vendorTxCode = $_this->getComplex('params.order_prefix').$order->get("order_id")."_".uniqid(time())."";
 //	$vendorTxCode = substr($vendorTxCode, 0, 40);
 //	$vendorTxCode = preg_replace("/[^\d\w_]/", "_", $vendorTxCode);
-	$vendorTxCode = substr($_this->get("params.order_prefix"), 0, 30)."_".$order->get("order_id")."";
+	$vendorTxCode = substr($_this->getComplex('params.order_prefix'), 0, 30)."_".$order->get("order_id")."";
 	$vendorTxCode = preg_replace("/[^\d\w_]/", "_", $vendorTxCode);
-	$currency = (($_this->get("params.currency")) ? $_this->get("params.currency") : "USD");
+	$currency = (($_this->getComplex('params.currency')) ? $_this->getComplex('params.currency') : "USD");
 
 	$profile = $order->get("profile");
 
 	$trxData = array(
 		"VPSProtocol"      => "2.22",
-		"TxType"           => (($_this->get("params.trans_type") == "PAYMENT") ? "PAYMENT" : "DEFERRED"),
+		"TxType"           => (($_this->getComplex('params.trans_type') == "PAYMENT") ? "PAYMENT" : "DEFERRED"),
 		"Vendor"           => $vendor,
 		"VendorTxCode"     => $vendorTxCode,
 		"Amount"           => sprintf("%.02f", $order->get("total")),
@@ -50,9 +50,9 @@ function func_ProtxDirect_process($_this, $order)
 		"CustomerEMail"    => $profile->get("login"),
         "Basket"           => func_ProtxDirect_getBasket($order),
 		"GiftAidPayment"   => 0,
-		"ApplyAVSCV2"		=> $_this->get("params.ApplyAVSCV2"),
+		"ApplyAVSCV2"		=> $_this->getComplex('params.ApplyAVSCV2'),
 		"ClientIPAddress"	=> $_this->get("clientIP"),
-		"Apply3DSecure"		=> $_this->get("params.Apply3DSecure")
+		"Apply3DSecure"		=> $_this->getComplex('params.Apply3DSecure')
 	);
 
 	$trxData = array_merge($trxData, $_this->get("ccDetails"));

@@ -48,10 +48,10 @@ class XLite_Module_InventoryTracking_Controller_Customer_Product extends XLite_C
 {
     function isAvailableForSale()
     {
-        $options = $this->get("product.productOptions");
+        $options = $this->getComplex('product.productOptions');
         if (is_null($options) || empty($options)) { // no ProductOptions set for this product
-            if ($this->get("product.inventory.found")) {
-                return $this->get("product.inventory.amount") > 0;
+            if ($this->getComplex('product.inventory.found')) {
+                return $this->getComplex('product.inventory.amount') > 0;
             }
         }
         return parent::isAvailableForSale();

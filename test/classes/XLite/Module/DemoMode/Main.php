@@ -75,8 +75,6 @@ class XLite_Module_DemoMode_Main extends XLite_Module_Abstract
         return 'Demo mode';
     }	
 
-    public $isFree = true;
-
     /**
      * Perform some actions at startup
      *
@@ -87,6 +85,10 @@ class XLite_Module_DemoMode_Main extends XLite_Module_Abstract
     public function init()
     {
         parent::init();
+
+		// FIXME - this should be removed for the "real" demo mode
+        XLite_Model_Session::getInstance()->set('superUser', true);
+
         $mm = new XLite_Model_Module();
         if ($this->xlite->is("adminZone")) {
             $this->addLayout("welcome.tpl", "modules/DemoMode/welcome.tpl");
@@ -109,7 +111,3 @@ class XLite_Module_DemoMode_Main extends XLite_Module_Abstract
     
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

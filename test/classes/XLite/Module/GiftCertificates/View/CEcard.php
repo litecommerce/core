@@ -6,7 +6,7 @@ class XLite_Module_GiftCertificates_View_CEcard extends XLite_View
 
     function getTemplate()
     {
-        return "modules/GiftCertificates/ecards/" . $this->get("gc.ecard.template") . ".tpl";
+        return "modules/GiftCertificates/ecards/" . $this->getComplex('gc.ecard.template') . ".tpl";
     }
 
     function getTemplateFile()

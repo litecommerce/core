@@ -59,17 +59,17 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerSummary extends XLite_Mo
                     "paid" => 0.00,
                     );
             $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
-            foreach ((array)$pp->findAll("partner_id=".$this->get("auth.profile.profile_id")) as $payment) {
+            foreach ((array)$pp->findAll("partner_id=".$this->getComplex('auth.profile.profile_id')) as $payment) {
                 if ($payment->get("affiliate") == 0) {
                     $this->sales["total"]++;
                 }    
-                if ($payment->get("affiliate") == 0 && !$payment->is("order.processed")) {
+                if ($payment->get("affiliate") == 0 && !$payment->isComplex('order.processed')) {
                     $this->sales["queued"]++;
                 }
-                if (!$payment->is("order.processed")) {
+                if (!$payment->isComplex('order.processed')) {
                     $this->sales["pending"] += $payment->get("commissions");
                 }
-                if ($payment->is("order.processed") && !$payment->get("paid")) {
+                if ($payment->isComplex('order.processed') && !$payment->get("paid")) {
                     $this->sales["approved"] += $payment->get("commissions");
                 }
                 if ($payment->get("paid")) {

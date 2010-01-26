@@ -59,7 +59,7 @@ function UPSOnlineTools_getRates($_this, $order)
 	$_this->xlite->session->set("ups_failed_items", false);
 	$_this->xlite->session->set("ups_rates_error", false);
 
-    if ((is_null($order->get("profile")) && !$_this->config->get("General.def_calc_shippings_taxes")) || $order->get("weight") == 0) {
+    if ((is_null($order->get("profile")) && !$_this->config->getComplex('General.def_calc_shippings_taxes')) || $order->get("weight") == 0) {
         return array();
     }
 
@@ -68,40 +68,40 @@ function UPSOnlineTools_getRates($_this, $order)
 		return array();
 	}
 
-    $originAddress = $_this->config->get("Company.location_address");
-    $originCity = $_this->config->get("Company.location_city");
-    $originZipCode = $_this->config->get("Company.location_zipcode");
-    $originCountry = $_this->config->get("Company.location_country");
+    $originAddress = $_this->config->getComplex('Company.location_address');
+    $originCity = $_this->config->getComplex('Company.location_city');
+    $originZipCode = $_this->config->getComplex('Company.location_zipcode');
+    $originCountry = $_this->config->getComplex('Company.location_country');
 
 	//Define company state
-    $state_id = $_this->config->get("Company.location_state");
+    $state_id = $_this->config->getComplex('Company.location_state');
     if ($state_id != -1) {
 		$state = new XLite_Model_State($state_id);
 		$originState = $state->get('code');
 		unset($state);
 	} else {
-		$originState = $_this->config->get("Company.location_custom_state");
+		$originState = $_this->config->getComplex('Company.location_custom_state');
 	}
 
 	if (is_null($order->get("profile"))) {
         $destinationAddress = "";
 		$destinationCity = "";
         $destinationState = "";
-    	$destinationCountry = $_this->config->get("General.default_country");
-    	$destinationZipCode = $_this->config->get("General.default_zipcode");
+    	$destinationCountry = $_this->config->getComplex('General.default_country');
+    	$destinationZipCode = $_this->config->getComplex('General.default_zipcode');
 	} else {
-        $destinationAddress = $order->get("profile.shipping_address");
-        $destinationCity = $order->get("profile.shipping_city");
-        $destinationZipCode = $order->get("profile.shipping_zipcode");
-        $destinationCountry = $order->get("profile.shipping_country");
+        $destinationAddress = $order->getComplex('profile.shipping_address');
+        $destinationCity = $order->getComplex('profile.shipping_city');
+        $destinationZipCode = $order->getComplex('profile.shipping_zipcode');
+        $destinationCountry = $order->getComplex('profile.shipping_country');
 		// Define destination state
-		$state_id = $order->get("profile.shipping_state");
+		$state_id = $order->getComplex('profile.shipping_state');
 		if ($state_id != -1) {
 			$state = $state = new XLite_Model_State($state_id);
 			$destinationState = $state->get('code');
 			unset($state);
 		} else {
-			$destinationState = $order->get("profile.shipping_custom_state");
+			$destinationState = $order->getComplex('profile.shipping_custom_state');
 		}
 	}
 
@@ -252,9 +252,9 @@ function UPSOnlineTools_getNameUPS($name)
 
 function UPSOnlineTools_setAccount($_this, $userinfo, &$error)
 {
-	$devlicense = $_this->config->get("UPSOnlineTools.devlicense");
+	$devlicense = $_this->config->getComplex('UPSOnlineTools.devlicense');
 	if ($_this->getLicense($ups_licensetext)) return 2;
-		$version = $_this->xlite->get("config.Version.version");
+		$version = $_this->xlite->getComplex('config.Version.version');
 
 	if (is_numeric($userinfo['state'])) {
 		$obj = new XLite_Model_State($userinfo['state']);
@@ -1654,7 +1654,7 @@ function UPSOnlineTools_displayLevel_gdlib($width, $length, $items, $dirt_region
 
 function UPSOnlineTools_displayContainer_div($_this, $container, $_left, $_top, $_width, $_height)
 {
-	if (!isset($container["levels"]) || count($container["levels"]) <= 0 || $_this->xlite->config->get("UPSOnlineTools.display_gdlib")) {
+	if (!isset($container["levels"]) || count($container["levels"]) <= 0 || $_this->xlite->config->getComplex('UPSOnlineTools.display_gdlib')) {
 		return;
 	}
 
@@ -1673,7 +1673,7 @@ function UPSOnlineTools_displayContainer_div($_this, $container, $_left, $_top, 
 
 	$level_index = 0;
 	foreach ($container["levels"] as $level) {
-		if ($_this->xlite->config->get("UPSOnlineTools.level_display_method") == 1) {
+		if ($_this->xlite->config->getComplex('UPSOnlineTools.level_display_method') == 1) {
 			// proportional
 			$height = ceil($level["height"] * $deltaH);
 			$top = - floor($level["bottom"] * $deltaH) + $_top + $_height - $height;

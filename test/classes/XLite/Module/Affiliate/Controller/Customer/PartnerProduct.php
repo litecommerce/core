@@ -50,7 +50,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerProduct extends XLite_Mo
     {
         parent::initView();
         if (is_null($this->get("update"))) {
-            $schema = $this->get("config.Miscellaneous.partner_product_banner");
+            $schema = $this->getComplex('config.Miscellaneous.partner_product_banner');
             foreach ($schema as $param => $value) {
                 $this->$param = $value;
             }
@@ -58,7 +58,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerProduct extends XLite_Mo
             // update config values
             $config = new XLite_Model_Config();
             if ($config->find("name='partner_product_banner'")) {
-                $schema = $this->get("config.Miscellaneous.partner_product_banner");
+                $schema = $this->getComplex('config.Miscellaneous.partner_product_banner');
                 foreach ($schema as $param => $value) {
                     $schema[$param] = $this->$param;
                 }

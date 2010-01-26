@@ -70,12 +70,12 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
         // switch back to product catalog or to shopping cart
         global $_SERVER;
         $this->set("returnUrlAbsolute", false);
-        $productListUrl = $this->config->get("General.add_on_mode") && isset($_SERVER["HTTP_REFERER"]) ? $_SERVER["HTTP_REFERER"] : $this->session->get("productListURL");
-        if ($this->config->get("General.redirect_to_cart")) {
+        $productListUrl = $this->config->getComplex('General.add_on_mode') && isset($_SERVER["HTTP_REFERER"]) ? $_SERVER["HTTP_REFERER"] : $this->session->get("productListURL");
+        if ($this->config->getComplex('General.redirect_to_cart')) {
             $this->session->set("continueURL", $productListUrl);
         } else {
             $this->set("returnUrl", $productListUrl);
-            $this->set("returnUrlAbsolute", $this->config->get("General.add_on_mode") && isset($_SERVER["HTTP_REFERER"]));
+            $this->set("returnUrlAbsolute", $this->config->getComplex('General.add_on_mode') && isset($_SERVER["HTTP_REFERER"]));
         }
     }
 

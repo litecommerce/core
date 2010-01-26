@@ -11,7 +11,7 @@ function FlyoutCategories_processTreeChunk($_this, &$chunk)
 	foreach($chunk as $chunk_item) {
 		$_this->processTreeItem($chunk_item);
 
-		if ( $count <= $_this->get("activeScheme.max_depth") ) {
+		if ( $count <= $_this->getComplex('activeScheme.max_depth') ) {
 			if (isset($chunk_item->subcategories)) {
 				$_this->processTree($chunk_item);
 			}
@@ -50,7 +50,7 @@ function FlyoutCategories_buildTree($_this, &$parent)
 	$sql = "SELECT parent, category_id FROM $table WHERE parent=$category_id ORDER BY $order_by, parent, category_id";
 
 	$subcategories = array();
-	if ($parent->depth <= $_this->get("activeScheme.max_depth")) {
+	if ($parent->depth <= $_this->getComplex('activeScheme.max_depth')) {
 		$adminZone = $_this->xlite->is("adminZone");
 		$_this->xlite->set("adminZone", false);
 
@@ -213,7 +213,7 @@ function FlyoutCategories_action_delete($_this)
 	}
 
 	// Check for active scheme
-	$id = $_this->get("config.FlyoutCategories.scheme");
+	$id = $_this->getComplex('config.FlyoutCategories.scheme');
 	if ( $scheme->get("scheme_id") == $id ) {
 		$cfg = new XLite_Model_Config();
 		$cfg->createOption("FlyoutCategories", "scheme", 0);
@@ -522,13 +522,13 @@ function FlyoutCategories_getCurrentScheme($_this)
 
 function FlyoutCategories_checkUpdateCategories($_this)
 {
-	if ( $_this->get("config.FlyoutCategories.scheme") > 0 ) {
+	if ( $_this->getComplex('config.FlyoutCategories.scheme') > 0 ) {
 		$config = new XLite_Model_Config();
 		$config->createOption("FlyoutCategories", "category_changed", 1);
 	}
 
 	// rebuild layout
-	if ($_this->get("config.FlyoutCategories.category_autoupdate")) {
+	if ($_this->getComplex('config.FlyoutCategories.category_autoupdate')) {
 		$dialog = new XLite_Controller_Admin_Categories();
 		$dialog->set("silent", true);
 		$dialog->action_build_categories();

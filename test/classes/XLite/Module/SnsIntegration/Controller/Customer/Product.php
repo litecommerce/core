@@ -50,9 +50,9 @@ class XLite_Module_SnsIntegration_Controller_Customer_Product extends XLite_Cont
 	function handleRequest() // {{{
 	{
 		$mode = $this->get("sns_mode");
-		if ($mode == "featured_product" && $this->get("xlite.mm.activeModules.FeaturedProducts")) {
+		if ($mode == "featured_product" && $this->getComplex('xlite.mm.activeModules.FeaturedProducts')) {
 			$this->sendAction("FeaturedProductSelected");
-		} else if ($mode == "bestseller" && $this->get("xlite.mm.activeModules.Bestsellers")) {
+		} else if ($mode == "bestseller" && $this->getComplex('xlite.mm.activeModules.Bestsellers')) {
 			$this->sendAction("BestsellerSelected");
 		}
 
@@ -67,7 +67,7 @@ class XLite_Module_SnsIntegration_Controller_Customer_Product extends XLite_Cont
 		$actions = array();
 		$action = "name=$action";
 		$action .= "&productId=" . $this->get("product_id");
-		$action .= "&productName=" . urlencode($this->get("product.name"));
+		$action .= "&productName=" . urlencode($this->getComplex('product.name'));
 		$action .= "&categoryName=" . urlencode($category->get("name"));
 		$actions[]= $action;
 		func_sns_request($this->config, $snsClientId, $actions);

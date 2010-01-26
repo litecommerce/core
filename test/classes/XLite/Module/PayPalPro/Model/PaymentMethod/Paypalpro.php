@@ -100,14 +100,14 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_Paypalpro extends XLite_Model_P
 
 	function getFormTemplate() // {{{ 
 	{
-		return ($this->get("params.solution") == 'standard') ? "modules/PayPalPro/standard_checkout.tpl" : $this->formTemplate;
+		return ($this->getComplex('params.solution') == 'standard') ? "modules/PayPalPro/standard_checkout.tpl" : $this->formTemplate;
 	} // }}}
 		
 	function getPhone($cart, $type = "a") // {{{  
 	{
 		if (empty($this->phone)) {
-			$phone = preg_replace('/[ ()-]/',"",$cart->get("profile.billing_phone"));
-            $isUS = ($cart->get("profile.billing_country") == "US");
+			$phone = preg_replace('/[ ()-]/',"",$cart->getComplex('profile.billing_phone'));
+            $isUS = ($cart->getComplex('profile.billing_country') == "US");
             $this->phone['a'] = $isUS ? substr($phone, -10, -7) : "";
             $this->phone['b'] = $isUS ? substr($phone, -7, -4) : $phone;
             $this->phone['c'] = $isUS ? substr($phone, -4) : "";
@@ -117,7 +117,7 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_Paypalpro extends XLite_Model_P
 
 	function getItemName($cart) // {{{ 
 	{
-		return $this->config->get("Company.company_name"). " order #".$cart->get("order_id");
+		return $this->config->getComplex('Company.company_name'). " order #".$cart->get("order_id");
 	} // }}}
 
 	function getIpAddress() // {{{
@@ -138,31 +138,31 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_Paypalpro extends XLite_Model_P
 	
 	function getBillingState($order)
 	{
-		$billingState = $order->get("profile.billingState.code");
+		$billingState = $order->getComplex('profile.billingState.code');
 		if (empty($billingState)) {
 			return "International";
 		}
 
-		$country = $order->get("profile.billing_country");
+		$country = $order->getComplex('profile.billing_country');
 		$billingState = ($country == "US" || $country == "CA") ? "code" : "state";
 		return $order->get("profile.billingState." . $billingState);
 	}
 
 	function getShippingState($order)
 	{
-		$shippingState = $order->get("profile.shippingState.code");
+		$shippingState = $order->getComplex('profile.shippingState.code');
 		if (empty($shippingState)) {
 			return "International";
 		}
 
-		$country = $order->get("profile.shipping_country");
+		$country = $order->getComplex('profile.shipping_country');
 		$shippingState = ($country == "US" || $country == "CA") ? "code" : "state";
 		return $order->get("profile.shippingState." . $shippingState);
 	}
 
 	function getDirectPaymentRequest($order) // {{{
 	{
-		$profile 	= $order->get("profile.properties");
+		$profile 	= $order->getComplex('profile.properties');
 		$card	 	= $this->cc_info;
 		$cart	 	= $order->get("properties");
 		$payment	= $this->get("params");
@@ -260,7 +260,7 @@ EOT;
 
 	function getStandardUrl() // {{{ 
 	{
-		return	$this->get("params.standard.mode") ? "https://www.paypal.com/cgi-bin/webscr" : "https://www.sandbox.paypal.com/cgi-bin/webscr";
+		return	$this->getComplex('params.standard.mode') ? "https://www.paypal.com/cgi-bin/webscr" : "https://www.sandbox.paypal.com/cgi-bin/webscr";
 	} // }}} 	
 } // }}}
 

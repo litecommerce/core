@@ -62,7 +62,7 @@ class XLite_View_FileExplorer extends XLite_View_ColumnList
 
     function getPath($zone = "default")
     {
-        return 'skins' LC_DS . $zone . LC_DS . $this->getLocale();
+        return 'skins' . LC_DS . $zone . LC_DS . $this->getLocale();
     }
 
     function getData()

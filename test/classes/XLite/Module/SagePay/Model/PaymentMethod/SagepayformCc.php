@@ -57,12 +57,12 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepayformCc extends XLite_Model
 
 	function getSuccessUrl($order_id)
 	{
-		return $this->xlite->shopURL("cart.php?target=sagepayform_checkout&action=return", $this->get("config.Security.customer_security"));
+		return $this->xlite->shopURL("cart.php?target=sagepayform_checkout&action=return", $this->getComplex('config.Security.customer_security'));
 	}
 
 	function getFailureUrl($order_id)
 	{
-		return $this->xlite->shopURL("cart.php?target=sagepayform_checkout&action=return&failed=1", $this->get("config.Security.customer_security"));
+		return $this->xlite->shopURL("cart.php?target=sagepayform_checkout&action=return&failed=1", $this->getComplex('config.Security.customer_security'));
 	}
 
 	function get($name)
@@ -83,7 +83,7 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepayformCc extends XLite_Model
 //////////// Fill "SagePay VSP Form" form methods ////////////
 	function getVendorName()
 	{
-		return $this->get("params.vendor_name");
+		return $this->getComplex('params.vendor_name');
 	}
 
 	function getFormPostUrl($is_simulator=false)
@@ -91,7 +91,7 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepayformCc extends XLite_Model
 		if ($is_simulator) {
             return "https://test.sagepay.com/Simulator/VSPFormGateway.asp";
 		}
-        $subtag = (($this->get("params.testmode") == "N") ? "live" : "test");
+        $subtag = (($this->getComplex('params.testmode') == "N") ? "live" : "test");
 		return "https://$subtag.sagepay.com/gateway/service/vspform-register.vsp";
 	}
 
@@ -104,8 +104,8 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepayformCc extends XLite_Model
 
 	function getPaymentType()
 	{
-		if (in_array($this->get("params.trans_type"), array("PAYMENT", "DEFERRED", "AUTHENTICATE")))
-			return $this->get("params.trans_type");
+		if (in_array($this->getComplex('params.trans_type'), array("PAYMENT", "DEFERRED", "AUTHENTICATE")))
+			return $this->getComplex('params.trans_type');
 
 		return "AUTHENTICATE";
 	}

@@ -112,7 +112,7 @@ class XLite_Module_Egoods_Controller_Customer_Download extends XLite_Controller_
 		$product_id = $df->get('product_id');
 		
 		$product = new XLite_Model_Product($product_id);
-		if (!$product->isFreeForMembership($this->get('cart.profile.membership'))) {
+		if (!$product->isFreeForMembership($this->getComplex('cart.profile.membership'))) {
 			$this->set('returnUrl', 'cart.php?target=download&mode=file_access_denied&reason=M');
 			return;
 		}

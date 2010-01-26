@@ -257,7 +257,7 @@ EOT;
 	function isGoogleAllowPay()
 	{
 		foreach ($this->get("items") as $item) {
-			if ($item->get("product.google_disabled"))
+			if ($item->getComplex('product.google_disabled'))
 				return false;
 		}
 
@@ -293,7 +293,7 @@ EOT;
 		$disableCustomerNotif = $this->xlite->get("GoogleCheckoutDCN");
 		if (!isset($disableCustomerNotif)) {
     		$pmGC = XLite_Model_PaymentMethod::factory('google_checkout');
-    		$disableCustomerNotif = $pmGC->get("params.disable_customer_notif");
+    		$disableCustomerNotif = $pmGC->getComplex('params.disable_customer_notif');
             $this->xlite->set("GoogleCheckoutDCN", $disableCustomerNotif);
 		}
 
@@ -322,12 +322,12 @@ EOT;
 
 	function getGoogleRemainRefund()
 	{
-		return max(0, $this->get("google_details.total_charge_amount") - $this->get("google_details.refund_amount"));
+		return max(0, $this->getComplex('google_details.total_charge_amount') - $this->getComplex('google_details.refund_amount'));
 	}
 
 	function getGoogleRemainCharge()
 	{
-		return max(0, $this->get("google_total") - $this->get("google_details.total_charge_amount"));
+		return max(0, $this->get("google_total") - $this->getComplex('google_details.total_charge_amount'));
 	}
 
 	function setGoogleDetails($value)
@@ -365,7 +365,7 @@ EOT;
 
 	function isGoogleDiscountCouponsAvailable()
 	{
-		if ($this->xlite->get("PromotionEnabled") && ($this->config->get("Promotion.allowDC"))) {
+		if ($this->xlite->get("PromotionEnabled") && ($this->config->getComplex('Promotion.allowDC'))) {
 			if (!is_null($this->getDC())) {
 				return false;
 			}

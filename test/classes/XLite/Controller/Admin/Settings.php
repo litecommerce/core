@@ -54,7 +54,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
 
     function handleRequest()
     {
-        if($this->get("page") == "Captcha" && ($this->get("xlite.config.Security.captcha_protection_system") != "Y" || !$this->isGDLibLoaded())){
+        if($this->get("page") == "Captcha" && ($this->getComplex('xlite.config.Security.captcha_protection_system') != "Y" || !$this->isGDLibLoaded())){
             $this->redirect("admin.php?target=settings");
         }
 
@@ -68,11 +68,11 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
 
     function getPages()
     {
-        $categories = $this->get("settings.categories");
-        $names = $this->get("settings.categoryNames");
+        $categories = $this->getComplex('settings.categories');
+        $names = $this->getComplex('settings.categoryNames');
         $pages = array();
         for ($i = 0; $i < count($categories); $i++) {
-            if((!$this->isGDLibLoaded() || $this->get("xlite.config.Security.captcha_protection_system") != "Y") && $categories[$i] == "Captcha")
+            if((!$this->isGDLibLoaded() || $this->getComplex('xlite.config.Security.captcha_protection_system') != "Y") && $categories[$i] == "Captcha")
                 continue;
             $pages[$categories[$i]] = $names[$i];
         }
@@ -173,7 +173,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
                                                 continue;
                                             }
                                         } else {
-                                            if($this->get("xlite.suMode") != 0) {
+                                            if($this->getComplex('xlite.suMode') != 0) {
                                                 if(!@chmod($file, $mode)){
                                                     $res["error"] = "wrong_owner";
                                                     $result[] = $res;
@@ -218,7 +218,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
                                                 continue;
                                             }
                                         } else {
-                                            if($this->get("xlite.suMode") != 0 || strpos($dir, "var") !== false) {
+                                            if($this->getComplex('xlite.suMode') != 0 || strpos($dir, "var") !== false) {
                                                 if(!@chmod($dir, $mode)){
                                                     $res["error"] = "wrong_owner";
                                                     $result[] = $res;
@@ -251,7 +251,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
     {
         global $options;
 
-        if($this->get("xlite.suMode") == 0){
+        if($this->getComplex('xlite.suMode') == 0){
             if(strpos($dir, "var") === false){
                 $mode = 0777;
             } else {
@@ -274,7 +274,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
     {
         global $options;
 
-        if($this->get("xlite.suMode") == 0){
+        if($this->getComplex('xlite.suMode') == 0){
             $mode = isset($options['filesystem_permissions']['nonprivileged_permission_file']) ? base_convert($options['filesystem_permissions']['nonprivileged_permission_file'], 8, 10) : 0644;
         } else {
             $mode = isset($options['filesystem_permissions']['privileged_permission_file']) ? base_convert($options['filesystem_permissions']['privileged_permission_file'],8, 10) : 0600;
@@ -310,7 +310,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
                         continue;
                     }
                 } else {
-                    if($this->get("xlite.suMode") != 0 || strpos($dir, "var") !== false) {
+                    if($this->getComplex('xlite.suMode') != 0 || strpos($dir, "var") !== false) {
                         if(!@chmod($fullpath, $mode)){
                             $subdir_errors[] = $fullpath;
                             continue;
@@ -516,7 +516,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
 
     function getAllowedList()
     {
-        return $this->get("xlite.config.SecurityIP.allow_admin_ip");
+        return $this->getComplex('xlite.config.SecurityIP.allow_admin_ip');
     }
 
     function action_add_new_ip()

@@ -125,7 +125,7 @@ class XLite_Module_PayPalPro_Main extends XLite_Module_Abstract
 
 		$pm = new XLite_Model_PaymentMethod('paypalpro');
 
-        switch($pm->get('params.solution')) {
+        switch($pm->getComplex('params.solution')) {
 
             case 'standard':
    	            $this->registerPaymentMethod('paypalpro');
@@ -142,9 +142,9 @@ class XLite_Module_PayPalPro_Main extends XLite_Module_Abstract
        	}
 
         $this->xlite->set('PayPalProEnabled', true);
-        $this->xlite->set('PayPalProSolution',$pm->get('params.solution'));
+        $this->xlite->set('PayPalProSolution',$pm->getComplex('params.solution'));
 
-        if ('standard' !== $pm->get('params.solution')) {
+        if ('standard' !== $pm->getComplex('params.solution')) {
 			XLite::getInstance()->set('PayPalProExpressEnabled', XLite_Model_PaymentMethod::factory('paypalpro_express')->get('enabled'));
         }
     }

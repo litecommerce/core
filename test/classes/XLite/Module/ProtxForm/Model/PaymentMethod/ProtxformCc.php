@@ -57,12 +57,12 @@ class XLite_Module_ProtxForm_Model_PaymentMethod_ProtxformCc extends XLite_Model
 
 	function getSuccessUrl($order_id)
 	{
-		return $this->xlite->shopURL("cart.php?target=protxform_checkout&action=return", $this->get("config.Security.customer_security"));
+		return $this->xlite->shopURL("cart.php?target=protxform_checkout&action=return", $this->getComplex('config.Security.customer_security'));
 	}
 
 	function getFailureUrl($order_id)
 	{
-		return $this->xlite->shopURL("cart.php?target=protxform_checkout&action=return&failed=1", $this->get("config.Security.customer_security"));
+		return $this->xlite->shopURL("cart.php?target=protxform_checkout&action=return&failed=1", $this->getComplex('config.Security.customer_security'));
 	}
 
 	function getSucessedStatus()
@@ -84,7 +84,7 @@ class XLite_Module_ProtxForm_Model_PaymentMethod_ProtxformCc extends XLite_Model
 //////////// Fill "Protx VSP Form" form methods ////////////
 	function getVendorName()
 	{
-		return $this->get("params.vendor");
+		return $this->getComplex('params.vendor');
 	}
 
 	function getFormPostUrl($is_simulator=false)
@@ -93,7 +93,7 @@ class XLite_Module_ProtxForm_Model_PaymentMethod_ProtxformCc extends XLite_Model
 			return "https://ukvpstest.protx.com/VSPSimulator/VSPFormGateway.asp";
 		}
 
-		return (($this->get("params.testmode") == "N") ? "https://ukvps.protx.com/vps2form/submit.asp" : "https://ukvpstest.protx.com/vps2form/submit.asp");
+		return (($this->getComplex('params.testmode') == "N") ? "https://ukvps.protx.com/vps2form/submit.asp" : "https://ukvpstest.protx.com/vps2form/submit.asp");
 	}
 
 	function getCryptedInfo($cart)
@@ -105,8 +105,8 @@ class XLite_Module_ProtxForm_Model_PaymentMethod_ProtxformCc extends XLite_Model
 
 	function getPaymentType()
 	{
-		if (in_array($this->get("params.trans_type"), array("PAYMENT", "DEFERRED")))
-			return $this->get("params.trans_type");
+		if (in_array($this->getComplex('params.trans_type'), array("PAYMENT", "DEFERRED")))
+			return $this->getComplex('params.trans_type');
 
 		return "DEFERRED";
 	}

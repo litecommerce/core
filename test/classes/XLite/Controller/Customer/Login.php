@@ -61,7 +61,7 @@ class XLite_Controller_Customer_Login extends XLite_Controller_Customer_Abstract
         }   
         if (is_null($this->get("returnUrl"))) {
             $cart = XLite_Model_Cart::getInstance();
-            $url = $this->get("xlite.script");
+            $url = $this->getComplex('xlite.script');
             if (!$cart->get("empty")) {
                 $url .= "?target=cart";
             }
@@ -83,9 +83,9 @@ class XLite_Controller_Customer_Login extends XLite_Controller_Customer_Abstract
     function action_logoff()
     {
         $this->auth->logoff();
-        $this->returnUrl = $this->get("xlite.script");
+        $this->returnUrl = $this->getComplex('xlite.script');
         if (!$this->cart->get("empty")) {
-        	if ($this->config->get("Security.logoff_clear_cart") == "Y") {
+        	if ($this->config->getComplex('Security.logoff_clear_cart') == "Y") {
             	$this->cart->delete();
         	} else {
 				$this->recalcCart();
@@ -96,7 +96,7 @@ class XLite_Controller_Customer_Login extends XLite_Controller_Customer_Abstract
     function getSecure()
     {
         if ($this->get("action") == "login") {
-            return $this->get("config.Security.customer_security");
+            return $this->getComplex('config.Security.customer_security');
         }
         return false;
     }

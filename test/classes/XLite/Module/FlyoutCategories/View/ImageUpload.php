@@ -51,7 +51,7 @@ class XLite_Module_FlyoutCategories_View_ImageUpload extends XLite_View_ImageUpl
 	function isFS()
 	{
 		if ($this->get("field") == "smallimage") {
-			$source = $this->get("object.smallImage.smallimage_source");
+			$source = $this->getComplex('object.smallImage.smallimage_source');
 			if ($source == "F") {
 				return true;
 			}

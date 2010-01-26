@@ -59,9 +59,9 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Abstra
 
 	function handleRequest()
 	{
-		if (!$this->is("product.exists")) {
-			if ($this->is("category.exists") && $this->is("category.enabled")) {
-				 return $this->redirect("cart.php?target=category&category_id=".$this->get("category.category_id"));
+		if (!$this->isComplex('product.exists')) {
+			if ($this->isComplex('category.exists') && $this->isComplex('category.enabled')) {
+				 return $this->redirect("cart.php?target=category&category_id=".$this->getComplex('category.category_id'));
 			}
 
 			return $this->redirect("cart.php");
@@ -77,14 +77,14 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Abstra
 
     function getLocationPath()
     {
-        if($this->get("config.General.add_on_mode")){
-            return array($this->get("product.name") => $this->get("url"));
+        if($this->getComplex('config.General.add_on_mode')){
+            return array($this->getComplex('product.name') => $this->get("url"));
         }
 
         $result = array();
-        $path = $this->get("category.path");
+        $path = $this->getComplex('category.path');
         if (!is_null($path)) {
-            foreach ($this->get("category.path") as $category) {
+            foreach ($this->getComplex('category.path') as $category) {
                 $name = $category->get("name");
                 while (isset($result[$name])) {
                 	$name .= " ";
@@ -92,7 +92,7 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Abstra
                 $result[$name] = "cart.php?target=category&category_id=" . $category->get("category_id");
             }
         }    
-        $name = $this->get("product.name");
+        $name = $this->getComplex('product.name');
         while (isset($result[$name])) {
         	$name .= " ";
         }
@@ -104,14 +104,14 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Abstra
 	
 	function getTitle()
 	{
-		return ($this->get("product.meta_title") ? $this->get("product.meta_title") : $this->get("product.name"));
+		return ($this->getComplex('product.meta_title') ? $this->getComplex('product.meta_title') : $this->getComplex('product.name'));
 	}
 	
     function getDescription()
     {
-        $description = $this->get("product.description");
+        $description = $this->getComplex('product.description');
         if (empty($description)) {
-            $description = $this->get("product.brief_description");
+            $description = $this->getComplex('product.brief_description');
         }
 		return $description;
     }
@@ -119,12 +119,12 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Abstra
 	function getMetaDescription()
 	{
 		$description = $this->getDescription();	
-		return ($this->get("product.meta_desc") ? $this->get("product.meta_desc") : $description);
+		return ($this->getComplex('product.meta_desc') ? $this->getComplex('product.meta_desc') : $description);
 	}
     // 'keywords' meta tag
     function getKeywords()
     {
-		return $this->get("product.meta_tags");
+		return $this->getComplex('product.meta_tags');
     }
 
     function isAvailableForSale()

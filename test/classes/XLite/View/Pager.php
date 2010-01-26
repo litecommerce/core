@@ -100,7 +100,7 @@ class XLite_View_Pager extends XLite_View
     function getPageUrls()
     {
         $result = array();
-        $params = $this->get("dialog.allParams");
+        $params = $this->getComplex('dialog.allParams');
         $dialog = $this->get("dialog");
         for ($i = 0; $i < count($this->get("pages")); $i++) {
             $params["pageID"] = $i;

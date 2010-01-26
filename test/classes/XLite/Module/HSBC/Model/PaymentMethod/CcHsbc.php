@@ -65,7 +65,7 @@ class XLite_Module_HSBC_Model_PaymentMethod_CcHsbc extends XLite_Model_PaymentMe
 
 	function getTransactionType()
 	{
-		return ($this->get("params.param05") == "capture") ? "Capture" : "Auth";
+		return ($this->getComplex('params.param05') == "capture") ? "Capture" : "Auth";
 	}
 
 	function getHash($cart)
@@ -73,10 +73,10 @@ class XLite_Module_HSBC_Model_PaymentMethod_CcHsbc extends XLite_Model_PaymentMe
 		require_once LC_MODULES_DIR . 'HSBC' . LC_DS . 'encoded.php';
 
 		// Merchant payment params
-		$hsbc_storefrontid = $this->get("params.param01");
-		$hsbc_hashkey = $this->get("params.param02");
-		$hsbc_mode = $this->get("params.param03"); 
-		$hsbc_currency = $this->get("params.param04");
+		$hsbc_storefrontid = $this->getComplex('params.param01');
+		$hsbc_hashkey = $this->getComplex('params.param02');
+		$hsbc_mode = $this->getComplex('params.param03'); 
+		$hsbc_currency = $this->getComplex('params.param04');
 		$hsbc_trans_type = $this->get("transactionType");
 		// additional params
 		$MerchantData = $this->getMerchantData($cart);
@@ -98,24 +98,24 @@ class XLite_Module_HSBC_Model_PaymentMethod_CcHsbc extends XLite_Model_PaymentMe
 
 
 		$billing_info = array(
-			"BillingAddress1" 		=> $cart->get("profile.billing_address"),
-			"BillingCity" 			=> $cart->get("profile.billing_city"),
+			"BillingAddress1" 		=> $cart->getComplex('profile.billing_address'),
+			"BillingCity" 			=> $cart->getComplex('profile.billing_city'),
 			"BillingCountry" 		=> $this->getIsoCode("billing_country", $cart),
 			"BillingCounty" 		=> $this->getBillingState($cart),
-			"BillingFirstName" 		=> $cart->get("profile.billing_firstname"),
-			"BillingLastName" 		=> $cart->get("profile.billing_lastname"),
-			"BillingPostal" 		=> $cart->get("profile.billing_zipcode"),
-			"ShopperEmail" 			=> $cart->get("profile.login")
+			"BillingFirstName" 		=> $cart->getComplex('profile.billing_firstname'),
+			"BillingLastName" 		=> $cart->getComplex('profile.billing_lastname'),
+			"BillingPostal" 		=> $cart->getComplex('profile.billing_zipcode'),
+			"ShopperEmail" 			=> $cart->getComplex('profile.login')
 		);
 
 		$shipping_info = array (
-			"ShippingAddress1"		=> $cart->get("profile.shipping_address"),
-			"ShippingCity" 			=> $cart->get("profile.shipping_city"),
+			"ShippingAddress1"		=> $cart->getComplex('profile.shipping_address'),
+			"ShippingCity" 			=> $cart->getComplex('profile.shipping_city'),
 			"ShippingCountry" 		=> $this->getIsoCode("shipping_country", $cart),
 			"ShippingCounty" 		=> $this->getShippingState($cart),
-			"ShippingFirstName" 	=> $cart->get("profile.shipping_firstname"),
-			"ShippingLastName" 		=> $cart->get("profile.shipping_lastname"),
-			"ShippingPostal" 		=> $cart->get("profile.shipping_zipcode")
+			"ShippingFirstName" 	=> $cart->getComplex('profile.shipping_firstname'),
+			"ShippingLastName" 		=> $cart->getComplex('profile.shipping_lastname'),
+			"ShippingPostal" 		=> $cart->getComplex('profile.shipping_zipcode')
 		);
 
 		$post = array_merge($post_data, $billing_info, $shipping_info);
@@ -423,27 +423,27 @@ class XLite_Module_HSBC_Model_PaymentMethod_CcHsbc extends XLite_Model_PaymentMe
 
 	function getCurrency()
 	{
-		return $this->get('params.param04');
+		return $this->getComplex('params.param04');
 	}
 
 	function getHsbcMode()
 	{
-		return $this->get('params.param03');	
+		return $this->getComplex('params.param03');	
 	}
 
 	function getStoreFrontId()
 	{
-		return $this->get('params.param01');
+		return $this->getComplex('params.param01');
 	}
 
 	function getBillingState($cart)
 	{
-		return $cart->get('profile.billing_state') ? $cart->get("profile.billingState.state") : "n/a";
+		return $cart->getComplex('profile.billing_state') ? $cart->getComplex('profile.billingState.state') : "n/a";
 	}
 
 	function getShippingState($cart)
 	{
-		return $cart->get("profile.shipping_state") ? $cart->get("profile.shippingState.state") : "n/a";
+		return $cart->getComplex('profile.shipping_state') ? $cart->getComplex('profile.shippingState.state') : "n/a";
 	}
 
 	function getResultURL()

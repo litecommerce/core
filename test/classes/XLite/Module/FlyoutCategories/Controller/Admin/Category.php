@@ -59,7 +59,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_Category extends XLite_Cont
 
 	function getSmallImageWidth()
 	{
-		return $this->xlite->get("config.FlyoutCategories.smallimage_width");
+		return $this->xlite->getComplex('config.FlyoutCategories.smallimage_width');
 	}
 
     function action_modify()
@@ -90,7 +90,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_Category extends XLite_Cont
 		}
 
 		// rebuild cache if new category added
-		if ($this->get("config.FlyoutCategories.category_autoupdate")) {
+		if ($this->getComplex('config.FlyoutCategories.category_autoupdate')) {
 			$dialog = new XLite_Controller_Admin_Categories();
 			$dialog->action_build_categories($this->category_update_return_url());
 		}
@@ -128,7 +128,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_Category extends XLite_Cont
 		}
 
 		// rebuild cache if new category added
-		if ($this->get("config.FlyoutCategories.category_autoupdate")) {
+		if ($this->getComplex('config.FlyoutCategories.category_autoupdate')) {
 			if ($this->get("target") == "category" && $this->get("action") == "add" && $this->get("message") == "added") {
 				$dialog = new XLite_Controller_Admin_Categories();
 				$dialog->action_build_categories($this->category_add_return_url());
@@ -185,7 +185,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_Category extends XLite_Cont
 		parent::action_delete();
 
 		// rebuild cache if new category added
-		if ($this->get("config.FlyoutCategories.category_autoupdate")) {
+		if ($this->getComplex('config.FlyoutCategories.category_autoupdate')) {
 			$dialog = new XLite_Controller_Admin_Categories();
 			$dialog->action_build_categories($delete_return_url);
 		}

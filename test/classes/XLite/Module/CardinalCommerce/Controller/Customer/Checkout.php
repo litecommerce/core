@@ -150,7 +150,7 @@ document.frm_redirect.submit();
 	function Cardinal_lookup_method()
 	{
 		$currency = new XLite_Module_CardinalCommerce_Model_Currency();
-        $currency->find("code='".$this->config->get("CardinalCommerce.current_currency")."'");
+        $currency->find("code='".$this->config->getComplex('CardinalCommerce.current_currency')."'");
 
     	$hash = array
     	(
@@ -158,8 +158,8 @@ document.frm_redirect.submit();
     		(
         		"MsgType" 			=> "cmpi_lookup",
         		"Version" 			=> "1.5",
-    			"ProcessorId" 		=> $this->config->get("CardinalCommerce.processor_id"),
-    			"MerchantId" 		=> $this->config->get("CardinalCommerce.merchant_id"),
+    			"ProcessorId" 		=> $this->config->getComplex('CardinalCommerce.processor_id'),
+    			"MerchantId" 		=> $this->config->getComplex('CardinalCommerce.merchant_id'),
         		"OrderNumber" 		=> $this->cart->get("order_id"),
         		"PurchaseAmount" 	=> $this->price_format($this->cart->get("total")),
         		"RawAmount" 		=> preg_replace("/\D/Ss","", sprintf("%.2f", $this->cart->get("total"))),
@@ -167,14 +167,14 @@ document.frm_redirect.submit();
         		"PAN" 				=> $this->cc_info["cc_number"],
         		"PANExpr" 			=> substr($this->cc_info["cc_date"], 2).substr($this->cc_info["cc_date"], 0, 2),
         		"UserAgent" 		=> (isset($_SERVER["HTTP_USER_AGENT"]) ? $_SERVER["HTTP_USER_AGENT"] : "unknown"),
-        		"EMail" 			=> $this->cart->get("profile.login"),
-        		"FirstName" 		=> $this->cart->get("profile.billing_firstname"),
-        		"LastName" 			=> $this->cart->get("profile.billing_lastname"),
-        		"Address1" 			=> $this->cart->get("profile.billing_address"),
-        		"City" 				=> $this->cart->get("profile.billing_city"),
-        		"State" 			=> $this->cart->get("profile.billingState.code"),
-        		"PostalCode" 		=> $this->cart->get("profile.billing_zipcode"),
-        		"CountryCode" 		=> $this->cart->get("profile.billing_country"),
+        		"EMail" 			=> $this->cart->getComplex('profile.login'),
+        		"FirstName" 		=> $this->cart->getComplex('profile.billing_firstname'),
+        		"LastName" 			=> $this->cart->getComplex('profile.billing_lastname'),
+        		"Address1" 			=> $this->cart->getComplex('profile.billing_address'),
+        		"City" 				=> $this->cart->getComplex('profile.billing_city'),
+        		"State" 			=> $this->cart->getComplex('profile.billingState.code'),
+        		"PostalCode" 		=> $this->cart->getComplex('profile.billing_zipcode'),
+        		"CountryCode" 		=> $this->cart->getComplex('profile.billing_country'),
         		"IPAddress" 		=> (isset($_SERVER["REMOTE_ADDR"]) ? $_SERVER["REMOTE_ADDR"] : "unknown"),
         		"BrowserHeader" 	=> "*/*",
     		)
@@ -198,7 +198,7 @@ setTimeout('refresh()', 15000);
 		$start_time = time();
 		$cmpi_lookup_timeout = 15;
 		$this->xlite->set("httpsTimeOut", $cmpi_lookup_timeout);	
-    	list($header, $res) = func_https_request2("POST", $this->config->get("CardinalCommerce.transaction_url"), array("cmpi_msg=".$xml));
+    	list($header, $res) = func_https_request2("POST", $this->config->getComplex('CardinalCommerce.transaction_url'), array("cmpi_msg=".$xml));
 		$this->xlite->set("httpsTimeOut", null);
 		
 ?>     

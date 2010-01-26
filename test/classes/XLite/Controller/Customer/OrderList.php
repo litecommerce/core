@@ -99,7 +99,7 @@ class XLite_Controller_Customer_OrderList extends XLite_Controller_Customer_Abst
 
     function getSecure()
     {
-        return $this->get("config.Security.customer_security");
+        return $this->getComplex('config.Security.customer_security');
     }
 }
 // WARNING :

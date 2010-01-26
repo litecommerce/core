@@ -61,7 +61,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Main extends XLite_Control
 
 	function getPriceNotificationSaved($product_id)
 	{
-		if (!$this->config->get("ProductAdviser.customer_notifications_enabled")) {
+		if (!$this->config->getComplex('ProductAdviser.customer_notifications_enabled')) {
 			return true;
 		}
 
@@ -97,13 +97,13 @@ class XLite_Module_ProductAdviser_Controller_Customer_Main extends XLite_Control
 
 	function isPriceNotificationEnabled()
 	{
-		$mode = $this->config->get("ProductAdviser.customer_notifications_mode");
+		$mode = $this->config->getComplex('ProductAdviser.customer_notifications_mode');
 		return (($mode & 1) != 0) ? true : false;
 	}
 
 	function isProductNotificationEnabled()
 	{
-		$mode = $this->config->get("ProductAdviser.customer_notifications_mode");
+		$mode = $this->config->getComplex('ProductAdviser.customer_notifications_mode');
 		return (($mode & 2) != 0) ? true : false;
 	}
 }

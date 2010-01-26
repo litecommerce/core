@@ -53,7 +53,7 @@ class XLite_Controller_Customer_Search extends XLite_Controller_Customer_Abstrac
     function init()
     {
         parent::init();
-        $this->set("pager.itemsPerPage", $this->get("config.General.products_per_page"));
+        $this->set("pager.itemsPerPage", $this->getComplex('config.General.products_per_page'));
         if (!isset($_REQUEST["action"])) {
             $this->session->set("productListURL", $this->get("url"));
         }

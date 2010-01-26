@@ -22,7 +22,7 @@
             $cart->set("detailLabels.transId", "Transaction ID");
         }
 
-        if (isset($_POST["authAmount"]) && $_this->get("params.check_total")) {
+        if (isset($_POST["authAmount"]) && $_this->getComplex('params.check_total')) {
     		$total = $cart->get("total");
             if ($total != $_POST["authAmount"]) {
                 $cart->set("details.error", "Hacking attempt!");
@@ -32,8 +32,8 @@
             	$status = "F";
             }
         }
-        if (isset($_POST["authCurrency"]) && $_this->get("params.check_currency")) {
-            $currency = $_this->get("params.currency");
+        if (isset($_POST["authCurrency"]) && $_this->getComplex('params.check_currency')) {
+            $currency = $_this->getComplex('params.currency');
             if ($currency != $_POST["authCurrency"]) {
                 $cart->set("details.error", "Hacking attempt!");
                 $cart->set("detailLabels.error", "Error");
@@ -46,7 +46,7 @@
         $cart->set("status", $status);
         $cart->update();
 
-		$backUrl = $cart->xlite->shopURL("cart.php?target=checkout&action=return&order_id=".$cart->get("order_id"), $cart->get("config.Security.customer_security"));
+		$backUrl = $cart->xlite->shopURL("cart.php?target=checkout&action=return&order_id=".$cart->get("order_id"), $cart->getComplex('config.Security.customer_security'));
 ?>
 <html>
 <body onLoad="javascript: document.location = '<?php echo $backUrl;?>'">

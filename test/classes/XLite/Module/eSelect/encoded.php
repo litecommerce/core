@@ -165,7 +165,7 @@ function func_eSelect_performAuthPurchase($order, $cc_info, &$payment, $amount, 
 	// build transaction type string
 
 	$area_prefix = "";
-	if ($payment->get("params.account_type") != "CA") {
+	if ($payment->getComplex('params.account_type') != "CA") {
 		$area_prefix = "us_";
 		$transaction_type = array("us");
 	}

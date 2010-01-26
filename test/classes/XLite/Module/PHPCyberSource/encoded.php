@@ -62,7 +62,7 @@ function FreeBSD_cybersource_process($_this, $cart)
 	$post[] = "customer_phone=".$profile->get("billing_phone");
 	$post[] = "bill_address1=".$profile->get('billing_address');
 	$post[] = "bill_city=".$profile->get('billing_city');
-	$post[] = "bill_state=".$profile->get('billingState.code');
+	$post[] = "bill_state=".$profile->getComplex('billingState.code');
 	$post[] = "bill_zip=".$profile->get('billing_zipcode');
 	$post[] = "bill_country=".$profile->get('billing_country');
 	$post[] = "customer_cc_number=".$card['cc_number'];

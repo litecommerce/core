@@ -48,7 +48,7 @@ class XLite_Module_GoogleCheckout_View_StatusSelect extends XLite_View_StatusSel
 {
 	function isGoogleCheckoutOrder()
 	{
-		$order = $this->get("dialog.order");
+		$order = $this->getComplex('dialog.order');
 		if (is_object($order)) {
 			$pm = $order->get("paymentMethod");
 			if ($pm->get("payment_method") == "google_checkout" && $order->get("google_id") > 0) {

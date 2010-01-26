@@ -103,9 +103,9 @@ class XLite_Model_Shipping extends XLite_Model_Abstract
 	 */
 	protected function getZone(XLite_Model_Order $order)
     {
-        if (!($zone = $order->get('profile.shippingState.shipping_zone'))) {
-			if (!($zone = $order->get('profile.shippingCountry.shipping_zone'))) {
-				$defaultCountry = new XLite_Model_Country($this->config->get('General.default_country'));
+        if (!($zone = $order->getComplex('profile.shippingState.shipping_zone'))) {
+			if (!($zone = $order->getComplex('profile.shippingCountry.shipping_zone'))) {
+				$defaultCountry = new XLite_Model_Country($this->config->getComplex('General.default_country'));
 				if (!($zone = $defaultCountry->get('shipping_zone'))) {
 					$zone = 0;
 				}

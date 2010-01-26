@@ -70,10 +70,10 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Cart extends XLite_Contr
 		if (!isset($_REQUEST["opt_product_qty"])) {
     		// min/max purchase amount check
     		$pl = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
-    		if ($pl->find("product_id=" . $this->get('currentItem.product.product_id'))) {
+    		if ($pl->find("product_id=" . $this->getComplex('currentItem.product.product_id'))) {
     			$exists_amount = 0;
     			for ($i=0; $i < count($items); $i++) {
-    				if ($items[$i]->get('product.product_id') == $this->get('currentItem.product.product_id')) {
+    				if ($items[$i]->getComplex('product.product_id') == $this->getComplex('currentItem.product.product_id')) {
     					$exists_amount += $items[$i]->get('amount');
     				}
     			}
@@ -96,7 +96,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Cart extends XLite_Contr
  
         parent::action_add();
 
-	    if ($this->config->get("WholesaleTrading.direct_addition")) {
+	    if ($this->config->getComplex('WholesaleTrading.direct_addition')) {
     		$this->product->assignDirectSaleAvailable(false);
     	}
 	}
@@ -107,7 +107,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Cart extends XLite_Contr
 		$raw_items = array();
 		$amounts = $this->get("amount");
 		for ($i = 0; $i < count($items); $i++) {
-			$key = $items[$i]->get("product.product_id");
+			$key = $items[$i]->getComplex('product.product_id');
 			if ($key == NULL) continue;
 			(!isset($raw_items[$key])) ? $raw_items[$key] = $amounts[$i] : $raw_items[$key] += $amounts[$i];	
 		}

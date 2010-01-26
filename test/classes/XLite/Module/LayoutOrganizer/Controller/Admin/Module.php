@@ -59,7 +59,7 @@ class XLite_Module_LayoutOrganizer_Controller_Admin_Module extends XLite_Control
     function action_update()
     {
 		if ($this->page == "LayoutOrganizer") {
-			$oldTemplate = $this->config->get("LayoutOrganizer.template");
+			$oldTemplate = $this->config->getComplex('LayoutOrganizer.template');
 		}
 
         parent::action_update();
@@ -67,7 +67,7 @@ class XLite_Module_LayoutOrganizer_Controller_Admin_Module extends XLite_Control
 		if ($this->page == "LayoutOrganizer") {
             $cfg = new XLite_Model_Config();
             $this->config = $cfg->readConfig();
-			$newTemplate = $this->config->get("LayoutOrganizer.template");
+			$newTemplate = $this->config->getComplex('LayoutOrganizer.template');
 			if (strcmp($newTemplate, $oldTemplate) != 0) {
 				$cat = new XLite_Model_Category();
             	$categories  = $cat->findAll("parent = '0'");

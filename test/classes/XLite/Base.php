@@ -63,59 +63,6 @@ class XLite_Base
         return self::$instances[$className];
     }
 
-	/**
-    * Returns boolean property value named $name.
-    * If no property found, returns null.
-    */
-    function is($name) // {{{
-    {
-        return (bool) $this->get($name);
-    } // }}}
-
-	/**
-    * Returns property value named $name.
-    * If no property found, returns null.
-    * The value is returned by reference.
-    */
-    function get($name) // {{{
-    {
-        if (strpos($name, '.')) {
-            $obj = $this;
-            foreach (explode('.', $name) as $n) {
-                if (isset($a)) {
-                    unset($a);
-                }
-                if (is_array($obj)) {
-                    $a = isset($obj[$n]) ? $obj[$n] : null;
-                    $obj = $a;
-                } else {
-                    if (!method_exists($obj,'get')) {
-                        if (($obj instanceof stdClass) && isset($obj->$n)) {
-                            return $obj->$n;
-                        }
-                        return null;
-                    }
-                    $a = $obj->get($n);
-                    $obj = $a;
-                }
-                if (is_null($obj)) {
-                    return null;
-                }
-            }
-            return $obj;
-        }
-        if (method_exists($this, 'get' . $name)) {
-            $func = 'get' . $name;
-            return $this->$func();
-        }
-        if (method_exists($this, 'is' . $name)) {
-            $func = 'is' . $name;
-			// echo get_class($this) . '---> ' . $func . '()' . "\n";
-            return $this->$func();
-        }
-		return $this->$name;
-    } // }}}
-
 	function set($name, $value) // {{{
     {
         if (strpos($name, '.')) {
@@ -173,32 +120,89 @@ class XLite_Base
         return call_user_func_array(array($obj, $name), array_shift($params));
     } // }}}
 
-	/**
-    * Maps the specified associative array to this object properties.
-    *
-    * @access public
-    * @param array $assoc The associative array
-    */
-    function setProperties($assoc) // {{{
-    {
-        if (!is_array($assoc)) {
-            $this->_die("argument must be an array");
-        }
-        foreach ($assoc as $key => $value) {
-            $this->set($key, $value);
-        }
-    }
 
+
+
+	/**
+	 * "Magic" getter. It's called when object property is not found
+	 * 
+	 * @param string $name property name
+	 *  
+	 * @return mixed
+	 * @access public
+	 * @since  3.0
+	 */
 	public function __get($name)
 	{
 		return null;
 	}
 
+	/**
+	 * "Magic" caller. It's called when object method is not found
+	 * 
+	 * @param string $method method to call
+	 * @param array  $args   call arrguments
+	 *  
+	 * @return void
+	 * @access public
+	 * @since  3.0
+	 */
 	public function __call($method, array $args = array())
     {
         $this->_die('Trying to call undefined class method; class - "' . get_class($this) . '", function - "' . $method . '"');
     }
 
+    /**
+     * Returns property value named $name. If no property found, returns null 
+     * 
+     * @param string $name property name
+     *  
+     * @return mixed
+     * @access public
+     * @since  3.0
+     */
+    public function get($name)
+    {
+        // FIXME - devcode; must be removed
+        if (strpos($name, '.')) {
+            $this->_die(get_class($this) . ': method get() - invalid name passed ("' . $name . '")');
+        }
+
+        if (method_exists($this, 'get' . $name)) {
+            $func = 'get' . $name;
+            return $this->$func();
+        }
+
+        if (method_exists($this, 'is' . $name)) {
+            $func = 'is' . $name;
+            return $this->$func();
+        }
+
+        return $this->$name;
+    }
+
+    /**
+     * Returns boolean property value named $name. If no property found, returns null
+     * 
+     * @param string $name property name
+     *  
+     * @return bool
+     * @since  3.0
+     */
+    public function is($name)
+    {
+        return (bool) $this->get($name);
+    }
+
+	/**
+	 * Backward compatibility - the ability to use "<arg_1> . <arg_2> . ... . <arg_N>" chains in getters
+	 * 
+	 * @param string $name list of params delimeted by the "." (dot)
+	 *  
+	 * @return mixed
+	 * @access public
+	 * @since  3.0
+	 */
 	public function getComplex($name)
 	{
 		$obj = $this;
@@ -211,9 +215,34 @@ class XLite_Base
 		return $obj;
 	}
 
+	/**
+     * Backward compatibility - the ability to use "<arg_1> . <arg_2> . ... . <arg_N>" chains in getters
+     *
+     * @param string $name list of params delimeted by the "." (dot)
+     *
+     * @return mixed
+     * @access public
+     * @since  3.0
+     */
 	public function isComplex($name)
     {
         return (bool) $this->getComplex($name);
+    }
+
+    /**
+     * Maps the specified associative array to this object properties 
+     * 
+     * @param array $assoc array of properties to set
+     *  
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function setProperties(array $assoc)
+    {
+        foreach ($assoc as $key => $value) {
+            $this->set($key, $value);
+        }
     }
 }
 

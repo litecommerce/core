@@ -86,20 +86,6 @@ suppress_errors = Off
 suppress_logging_errors = Off
 
 ;
-; -----------------
-;  Session details
-; -----------------
-;
-; Possible session types:
-;
-;   sql
-;   php
-;   debug
-;
-[session_details]
-type = Sql
-
-;
 ; Skin details
 ;
 [skin_details]

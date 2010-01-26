@@ -61,15 +61,15 @@ class XLite_Module_ProductOptions_Controller_Customer_Product extends XLite_Cont
 
     function getValidatorJSCode()
     {
-        return $this->get("product.optionValidator");
+        return $this->getComplex('product.optionValidator');
     }
 
     function isAvailableForSale()
     {
 		if ($this->xlite->get("InventoryTrackingEnabled")) {
         	$product = $this->get("product"); 
-            if ($product->get("inventory.found") && !$product->get("tracking")) {
-                return $product->get("inventory.amount") > 0;
+            if ($product->getComplex('inventory.found') && !$product->get("tracking")) {
+                return $product->getComplex('inventory.amount') > 0;
             }
 		}
         return parent::isAvailableForSale();

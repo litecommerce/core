@@ -53,7 +53,7 @@ class XLite_Controller_Admin_RecentLogin extends XLite_Controller_Admin_Abstract
         if ($this->session->get("no_https")) {
             return false;
         }
-        return $this->get("config.Security.admin_security");
+        return $this->getComplex('config.Security.admin_security');
     }
 }
 

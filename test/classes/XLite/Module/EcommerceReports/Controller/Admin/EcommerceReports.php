@@ -233,12 +233,12 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports extends XL
         static $currentDate;
 
         $step = "_next" . ucfirst($this->get("stat_step"));
-        if (isset($currentDate) && $currentDate == $this->get("period.toDate")) {
+        if (isset($currentDate) && $currentDate == $this->getComplex('period.toDate')) {
             return false;
         }
-        $currentDate = $this->$step($this->tsToDate( isset($currentDate) ? $currentDate : $this->get("period.fromDate") ));
-        if ($currentDate > $this->get("period.toDate")) {
-            $currentDate = $this->get("period.toDate");
+        $currentDate = $this->$step($this->tsToDate( isset($currentDate) ? $currentDate : $this->getComplex('period.fromDate') ));
+        if ($currentDate > $this->getComplex('period.toDate')) {
+            $currentDate = $this->getComplex('period.toDate');
         }
         return $currentDate;
     }

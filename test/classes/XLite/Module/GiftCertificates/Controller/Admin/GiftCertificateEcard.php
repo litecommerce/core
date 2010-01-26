@@ -72,7 +72,7 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificateEcard extend
             $_POST["template"] = $_POST["new_template"];
         }
         $this->set("ecard.properties", $_POST);
-        if ($this->is("ecard.isPersistent")) {
+        if ($this->isComplex('ecard.isPersistent')) {
             $this->call("ecard.update");
         } else {
             $this->call("ecard.create");
@@ -82,10 +82,10 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificateEcard extend
 
     function action_images()
     {
-        $tn = $this->get("ecard.thumbnail");
+        $tn = $this->getComplex('ecard.thumbnail');
         $tn->handleRequest();
             
-        $img = $this->get("ecard.image");
+        $img = $this->getComplex('ecard.image');
         $img->handleRequest();
     }
 

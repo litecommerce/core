@@ -58,7 +58,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Cart extends XLite_Control
 
     function getRejectedItem()
     {
-		if (!($this->xlite->get("PA_InventorySupport") && $this->config->get("ProductAdviser.customer_notifications_enabled"))) {
+		if (!($this->xlite->get("PA_InventorySupport") && $this->config->getComplex('ProductAdviser.customer_notifications_enabled'))) {
 			return null;
 		}
 
@@ -139,13 +139,13 @@ class XLite_Module_ProductAdviser_Controller_Customer_Cart extends XLite_Control
 
 	function isPriceNotificationEnabled()
 	{
-		$mode = $this->config->get("ProductAdviser.customer_notifications_mode");
+		$mode = $this->config->getComplex('ProductAdviser.customer_notifications_mode');
 		return (($mode & 1) != 0) ? true : false;
 	}
 
 	function isProductNotificationEnabled()
 	{
-		$mode = $this->config->get("ProductAdviser.customer_notifications_mode");
+		$mode = $this->config->getComplex('ProductAdviser.customer_notifications_mode');
 		return (($mode & 2) != 0) ? true : false;
 	}
 }

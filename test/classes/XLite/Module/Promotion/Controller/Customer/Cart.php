@@ -97,7 +97,7 @@ class XLite_Module_Promotion_Controller_Customer_Cart extends XLite_Controller_C
 	
 	function isShowDCForm()
 	{
-		return is_null($this->cart->get("DC")) && !$this->cart->is("empty") && $this->config->get("Promotion.allowDC");
+		return is_null($this->cart->get("DC")) && !$this->cart->is("empty") && $this->config->getComplex('Promotion.allowDC');
 	}
 
 }

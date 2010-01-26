@@ -52,7 +52,7 @@ class XLite_Module_ProductAdviser_View_CNewArrivalsProducts extends XLite_View
 
     function isVisible()
     {
-    	if ($this->config->get("ProductAdviser.number_new_arrivals") <= 0) {
+    	if ($this->config->getComplex('ProductAdviser.number_new_arrivals') <= 0) {
     		return false;
     	}
 
@@ -80,7 +80,7 @@ class XLite_Module_ProductAdviser_View_CNewArrivalsProducts extends XLite_View
 
     function isDisplayedDialog()
     {
-        if ($this->config->get("ProductAdviser.new_arrivals_type") == "dialog" && isset($this->dialog)) {
+        if ($this->config->getComplex('ProductAdviser.new_arrivals_type') == "dialog" && isset($this->dialog)) {
         	return true;
         } else {
         	return isset($this->target) ? true : false;
@@ -91,9 +91,9 @@ class XLite_Module_ProductAdviser_View_CNewArrivalsProducts extends XLite_View
     {
         if 
         (
-        	($this->config->get("ProductAdviser.new_arrivals_type") == "dialog" && !isset($this->dialog)) 
+        	($this->config->getComplex('ProductAdviser.new_arrivals_type') == "dialog" && !isset($this->dialog)) 
         	||
-        	($this->config->get("ProductAdviser.new_arrivals_type") != "dialog" && isset($this->dialog)) 
+        	($this->config->getComplex('ProductAdviser.new_arrivals_type') != "dialog" && isset($this->dialog)) 
         )
         {
         	return (isset($this->target) && ($this->target == "NewArrivals") && isset($this->dialog)) ? true : false;
@@ -123,12 +123,12 @@ class XLite_Module_ProductAdviser_View_CNewArrivalsProducts extends XLite_View
 
 	function recursiveArrivalsSearch($_category)
 	{
-		if (!$this->isDisplayedDialog() && $this->additionalPresent && count($this->_new_arrival_products) >= $this->config->get("ProductAdviser.number_new_arrivals")) {
+		if (!$this->isDisplayedDialog() && $this->additionalPresent && count($this->_new_arrival_products) >= $this->config->getComplex('ProductAdviser.number_new_arrivals')) {
 			return true;
 		}
 
 		$timeLimit = time();
-		$timeCondition = $this->config->get("ProductAdviser.period_new_arrivals") * 3600;
+		$timeCondition = $this->config->getComplex('ProductAdviser.period_new_arrivals') * 3600;
 		$category_id = $_category->get("category_id");
 
 		$obj = new XLite_Module_ProductAdviser_Model_ProductNewArrivals();
@@ -152,7 +152,7 @@ class XLite_Module_ProductAdviser_View_CNewArrivalsProducts extends XLite_View
 
 			$obj = new XLite_Module_ProductAdviser_Model_ProductNewArrivals($product_id);
 			if ($this->checkArrivalCondition($_category, $obj)) {
-				if (!$this->isDisplayedDialog() && count($this->_new_arrival_products) >= $this->config->get("ProductAdviser.number_new_arrivals")) {
+				if (!$this->isDisplayedDialog() && count($this->_new_arrival_products) >= $this->config->getComplex('ProductAdviser.number_new_arrivals')) {
 					$this->additionalPresent = true;
 					return true;
 				}
@@ -215,7 +215,7 @@ class XLite_Module_ProductAdviser_View_CNewArrivalsProducts extends XLite_View
 
 
 		// recursive search
-		if ($this->config->get("ProductAdviser.category_new_arrivals")) {
+		if ($this->config->getComplex('ProductAdviser.category_new_arrivals')) {
 			$this->_new_arrival_products = array();
 			$this->additionalPresent = false;
 
@@ -247,12 +247,12 @@ class XLite_Module_ProductAdviser_View_CNewArrivalsProducts extends XLite_View
 			return $products;
 		}
 
-        $maxViewed = $this->config->get("ProductAdviser.number_new_arrivals");
+        $maxViewed = $this->config->getComplex('ProductAdviser.number_new_arrivals');
         $products = array();
         $productsStats = array();
         $statsOffset = 0;
         $stats = new XLite_Module_ProductAdviser_Model_ProductNewArrivals();
-        $timeCondition = $this->config->get("ProductAdviser.period_new_arrivals") * 3600;
+        $timeCondition = $this->config->getComplex('ProductAdviser.period_new_arrivals') * 3600;
 		$timeLimit = time();
         $maxSteps = ($this->isDisplayedDialog()) ? 1 : ceil($stats->count("new='Y' OR ((updated + '$timeCondition') > '$timeLimit')") / $maxViewed);
 

@@ -67,7 +67,7 @@ class XLite_Controller_Customer_Order extends XLite_Controller_Customer_Abstract
             parent::handleRequest();
             return;
         } else {
-            if ($this->auth->is("logged") && $this->auth->get("profile.profile_id") == $this->get("order.orig_profile_id")) {
+            if ($this->auth->is("logged") && $this->auth->getComplex('profile.profile_id') == $this->getComplex('order.orig_profile_id')) {
                 parent::handleRequest();
                 return;
             }    
@@ -85,13 +85,13 @@ class XLite_Controller_Customer_Order extends XLite_Controller_Customer_Abstract
 
 	function getCharset()
 	{
-		$charset = $this->get("order.profile.billingCountry.charset");
+		$charset = $this->getComplex('order.profile.billingCountry.charset');
 		return ($charset) ? $charset : parent::getCharset();
 	}
 
     function getSecure()
     {
-        return $this->get("config.Security.customer_security");
+        return $this->getComplex('config.Security.customer_security');
     }
 }
 // WARNING :

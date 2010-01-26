@@ -42,6 +42,7 @@ class XLite_Module_DemoMode_Model_Abstract extends XLite_Model_Abstract implemen
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
+
 		global $safeData;
 		if (!isset($safeData)) {
 			$safeData = XLite_Model_Session::getInstance()->get('safeData');

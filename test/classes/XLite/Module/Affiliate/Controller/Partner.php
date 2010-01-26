@@ -62,7 +62,7 @@ class XLite_Module_Affiliate_Controller_Partner extends XLite_Controller_Abstrac
 
     function getSecure()
     {
-        return $this->get("config.Security.customer_security");
+        return $this->getComplex('config.Security.customer_security');
     }
 }
 

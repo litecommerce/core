@@ -91,7 +91,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_Module extends XLite_Contro
 
 	function action_update()
 	{
-		$oldScheme = $this->get("config.FlyoutCategories.scheme");
+		$oldScheme = $this->getComplex('config.FlyoutCategories.scheme');
 		parent::action_update();
 
 		$update = false;
@@ -112,7 +112,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_Module extends XLite_Contro
 	{
 		parent::action_update();
 
-		$scheme_id = $this->get("config.FlyoutCategories.scheme");
+		$scheme_id = $this->getComplex('config.FlyoutCategories.scheme');
 		$scheme = new XLite_Module_FlyoutCategories_Model_FCategoriesScheme();
 		if ( $scheme->find("scheme_id='".$scheme_id."'") ) {
 			$properties = $_REQUEST;
@@ -142,7 +142,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_Module extends XLite_Contro
 	{
 		$this->set("config.FlyoutCategories.force_js_in_layout", (bool) $this->force_js_in_layout);
 		$this->params[] = "status";
-		if ($this->get("config.FlyoutCategories.scheme") <= 0) {
+		if ($this->getComplex('config.FlyoutCategories.scheme') <= 0) {
 			$this->set("status", "disabled");
 			return;
 		}
@@ -160,7 +160,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_Module extends XLite_Contro
 	function GetFlyoutCatScheme()
 	{
 		if ( is_null($this->_fc_scheme) ) {
-			$scheme = $this->get("config.FlyoutCategories.scheme");
+			$scheme = $this->getComplex('config.FlyoutCategories.scheme');
 			$this->_fc_scheme = new XLite_Module_FlyoutCategories_Model_FCategoriesScheme($scheme);
 			$this->_fc_scheme->get("options");
 		}
@@ -170,7 +170,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_Module extends XLite_Contro
 
 	function IsCategoryOverload()
 	{
-		return ($this->xlite->get("config.FlyoutCategories.last_categories_processed") > 300) ? true : false;
+		return ($this->xlite->getComplex('config.FlyoutCategories.last_categories_processed') > 300) ? true : false;
 	}
 
 	function getFlyoutSchemeManagerPageURL()
