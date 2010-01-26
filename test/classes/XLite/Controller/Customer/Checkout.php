@@ -255,7 +255,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
             if (!strlen($this->get("password"))) {
                 // is anonymous?
                 $this->auth->set("profile.order_id", $this->cart->get("order_id"));
-                $this->auth->call("profile.update");
+                $this->auth->getProfile()->update();
             }
     		$cart = XLite_Model_Cart::getInstance();
      		if (!$cart->isEmpty()) {

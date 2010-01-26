@@ -112,7 +112,8 @@ class XLite_Module_PayPalPro_Controller_Customer_ExpressCheckout extends XLite_C
                 $this->auth->set("profile.order_id", $this->cart->get("order_id"));
 	     	}
 														
-			$this->auth->call("profile.update");
+			XLite_Model_Auth::getInstance()->getProfile()->update();
+
 			$this->cart->set("paymentMethod",$pm);
             $this->cart->set("details.token",$response["GETEXPRESSCHECKOUTDETAILSRESPONSEDETAILS"]["TOKEN"]);
             $this->cart->set("details.payer_id",$details["PAYERID"]);
@@ -126,7 +127,3 @@ class XLite_Module_PayPalPro_Controller_Customer_ExpressCheckout extends XLite_C
 	}
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

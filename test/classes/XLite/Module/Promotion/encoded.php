@@ -20,7 +20,7 @@ function func_in_category_recursive($product, $category)
 function func_calc_discount($order)
 {
     $d = 0;
-    if ($order->call("DC.checkCondition", $order)) {
+    if (!is_null($ds = $order->getDC()) && $dc->checkCondition($order)) {
         if ($order->getComplex('DC.applyTo') == "total") {
             // return only total discount
             $subtotal = $order->get("discountableTotal");
@@ -33,4 +33,4 @@ function func_calc_discount($order)
 	$d = min($order->get("subtotal"), $d);
     $order->set("discount", $order->formatCurrency($d));
 }
-?>
+

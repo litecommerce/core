@@ -47,7 +47,7 @@
 class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificateEcard extends XLite_Controller_Admin_Abstract
 {	
     public $params = array("target", "ecard_id");	
-    public $ecard = null;	
+    protected $ecard = null;	
     public $returnUrl = "admin.php?target=gift_certificate_ecards";
     
     function getECard()
@@ -71,26 +71,21 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificateEcard extend
         if (!empty($_POST["new_template"])) {
             $_POST["template"] = $_POST["new_template"];
         }
-        $this->set("ecard.properties", $_POST);
-        if ($this->isComplex('ecard.isPersistent')) {
-            $this->call("ecard.update");
-        } else {
-            $this->call("ecard.create");
-        }
+
+		$this->getECard()->set('properties', $_POST);
+		$this->getECard()->isPersistent ? $this->getECard()->update() : $this->getECard()->create();
+
         $this->action_images();
     }
 
     function action_images()
     {
-        $tn = $this->getComplex('ecard.thumbnail');
+        $tn = $this->getECard()->get('thumbnail');
         $tn->handleRequest();
             
-        $img = $this->getComplex('ecard.image');
+        $img = $this->getECard()->get('image');
         $img->handleRequest();
     }
 
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+

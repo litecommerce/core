@@ -213,11 +213,11 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         $this->copyBillingInfo($profile);
 
         // update current shopping cart/order data
-        $cart = XLite_Model_Cart::getInstance();
-        if ($cart->getComplex('profile.order_id')) {
-            $cart->call("profile.modifyProperties", $_REQUEST);
-            $this->copyBillingInfo($cart->get("profile"));
-            $cart->call("profile.update");
+        $cartProfile = XLite_Model_Cart::getInstance()->getProfile();
+        if ($cartProfile->get('order_id')) {
+			$cartProfile->modifyProperties($_REQUEST);
+			$this->copyBillingInfo($cartProfile);
+			$cartProfile->update();
         }
 
         // modify and update profile

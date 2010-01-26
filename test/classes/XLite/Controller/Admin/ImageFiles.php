@@ -58,7 +58,7 @@ class XLite_Controller_Admin_ImageFiles extends XLite_Controller_Admin_Abstract
         $this->startDump();
 		$images = $this->get("imageClasses");
 		$imageClass = $images[$_REQUEST["index"]];
-		$n = $imageClass->call("image.moveToFilesystem", $from);
+		$n = $imageClass->getImage()->moveToFilesystem($from);
 		$m = $this->xlite->get("realyMovedImages");
 
 		echo "<br><b>$m image" . (($m != 1) ? "s":"") . " from $n image" . (($n != 1) ? "s":"") . " " . (($m != 1) ? "are":"is") . " moved.</b><br>";
@@ -73,7 +73,7 @@ class XLite_Controller_Admin_ImageFiles extends XLite_Controller_Admin_Abstract
 	{
 		$images = $this->get("imageClasses");
 		$imageClass = $images[$_REQUEST["index"]];
-		$imageClass->call("image.setDefaultSource", $this->get("default_source"));
+		$imageClass->getImage()->setDefaultSource($this->get("default_source"));
 	}
 
     /**

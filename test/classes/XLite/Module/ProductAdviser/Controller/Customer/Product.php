@@ -253,13 +253,9 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
         if (!$this->xlite->getComplex('config.ProductAdviser.rp_bulk_shopping')) return false;
         $products = (array) $this->getComplex('pager.pageData');
         foreach ($products as $p) {
-            if (!$p->call("product.checkHasOptions")) return true;
+            if (!$p->get('product')->checkHasOptions()) return true;
         }
         return false;
     }
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

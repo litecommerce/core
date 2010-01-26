@@ -63,11 +63,11 @@ class XLite_Controller_Customer_Callback extends XLite_Controller_Customer_Abstr
         if (!$cart->is("exists")) {
             $this->_die("Order #".$cart->get("order_id")." was not found. Please contact administrator.");
         }
-        $cart->call("paymentMethod.handleRequest", $cart);
+
+		// FIXME - orginal code; the "handleRequest" function is not exists for the "PaymentMethod" class
+        $cart->getPaymentMethod()->handleRequest($cart);
+
         $this->set("silent", true);
     }
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+

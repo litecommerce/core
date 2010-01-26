@@ -85,6 +85,8 @@ class XLite_Model_Wysiwyg_Mediator extends XLite_Base
 	public $__buildFullTreeCounter = 0;	
 	public $__buildFullTreeCounterMax = 0;
 
+	protected $htmlStorage = null;
+
     public function __construct()
     {
 		$this->__memoryUsageMin = 1024.0 * 1024.0 * 1024.0 * 1024.0;
@@ -547,7 +549,7 @@ EOT;
 $navigation<hr width=100%>$widget
 EOT;
         }
-        $this->call("htmlStorage.save", $file, $source);
+        $this->getHtmlStorage()->save($file, $source);
     }
     
     function _getComment(&$root, $link = false)
@@ -631,7 +633,8 @@ EOT;
         foreach ($fileList as $name) {
             $this->increase_memory_limit();
 
-            $source = $this->call("htmlStorage.read", $name);
+            $source = $this->getHtmlStorage()->read($name);
+
             // save template
             print "Importing from $name ";
             if ($this->importPage($source)) {

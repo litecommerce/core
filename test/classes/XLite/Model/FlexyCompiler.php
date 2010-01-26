@@ -500,7 +500,7 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 	                $result .= $intend . '$t->addComponent($t->' . $name . ');' . "\n";
     	        }
 
-				$result .= $intend . $this->setAttributesCode($attrs, $name) . "\n";
+				$result .= $intend . $this->setAttributesCode(array_diff_key($attrs, array('visible' => true)), $name) . "\n";
 
 				if (isset($attrs['hidden'])) {
     	            $result .= ' $t->' . $name . '->set(\'visible\', false);' . "\n";

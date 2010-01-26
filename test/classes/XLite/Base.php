@@ -99,28 +99,6 @@ class XLite_Base
         }
     }
 
-	function call($name) // {{{
-    {
-		$obj = $this;
-
-        if (strpos($name, '.')) {
-
-            $names = explode('.', $name);
-            $name  = array_pop($names);
-
-            foreach ($names as $n) {
-				if (is_null($obj = $obj->get($n))) {
-                    return null;
-                }
-            }
-        }
-
-		$params = func_get_args();
-
-        return call_user_func_array(array($obj, $name), array_shift($params));
-    } // }}}
-
-
 
 
 	/**

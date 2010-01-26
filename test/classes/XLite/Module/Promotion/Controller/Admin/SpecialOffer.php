@@ -123,11 +123,11 @@ class XLite_Module_Promotion_Controller_Admin_SpecialOffer extends XLite_Control
 		}
 		$this->set("specialOffer.properties", $_POST);
 		// if a new offer, adds one
-		if (!$this->isComplex('specialOffer.isPersistent')) {
-			$this->call("specialOffer.create");
-            $this->set("offer_id",  $this->getComplex('specialOffer.offer_id'));
+		if (!$this->getSpecialOffer()->isPersistent) {
+			$this->getSpecialOffer()->create();
+            $this->set("offer_id",  $this->getSpecialOffer()->get('offer_id'));
 		} else {
-			$this->call("specialOffer.update");
+			$this->getSpecialOffer()->update();
 		}
         $this->set("mode", "details");
 	}

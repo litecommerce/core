@@ -189,18 +189,12 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
 	
 	function hasThumbnail()
 	{
-	    if (!$this->isValid() && $this->getRealProduct()) {
-			return $this->realProduct->hasThumbnail();
-	    }
-		return $this->call("product.hasThumbnail");
+		return (!$this->isValid() && $this->getRealProduct()) ? $this->realProduct->hasThumbnail() : $this->getProduct()->hasThumbnail();
 	}
 
 	function getThumbnailURL()
 	{
-	    if (!$this->isValid() && $this->getRealProduct()) {
-			return $this->realProduct->getThumbnailURL();
-	    }
-		return $this->call("product.getThumbnailURL");
+		return (!$this->isValid() && $this->getRealProduct()) ? $this->realProduct->getThumbnailURL() : $this->getProduct()->getThumbnailURL();
 	}
     
 	/**

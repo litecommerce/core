@@ -1034,18 +1034,19 @@ class XLite_Model_Order extends XLite_Model_Abstract
         $this->delete();
     }
 
-    function delete() // {{{
+    function delete()
     {
-        foreach ($this->get("items") as $item) {
+        foreach ($this->getItems() as $item) {
             $this->deleteItem($item);
         }
-        if (!is_null($this->get("profile")) && $this->get("status") != 'T') {
-            $p = $this->get("profile");
-            // don't remove profile if this is a cart object
-            $this->call("profile.delete");
+
+		// don't remove profile if this is a cart object
+        if (!is_null($this->getProfile()) && $this->get('status') != 'T') {
+           $this->getProfile()->delete(); 
         }
+
         parent::delete();
-    } // }}}
+    }
 
     /**
     * Removes expired 'T' orders (carts)

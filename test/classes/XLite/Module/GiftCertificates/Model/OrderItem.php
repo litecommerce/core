@@ -46,7 +46,7 @@
 */
 class XLite_Module_GiftCertificates_Model_OrderItem extends XLite_Model_OrderItem implements XLite_Base_IDecorator
 {	
-    public $gc = null;
+    protected $gc = null;
 
     public function __construct()
     {
@@ -76,32 +76,32 @@ class XLite_Module_GiftCertificates_Model_OrderItem extends XLite_Model_OrderIte
 	}
 	function getTaxableTotal()
 	{
-		if (!is_null($this->get("gc"))) {
+		if (!is_null($this->getGC())) {
 			return 0;
 		}
 		return parent::getTaxableTotal();
 	}
     function isShipped()
     {
-		if (!is_null($this->get("gc"))) {
+		if (!is_null($this->getGC())) {
 	        return false;
 		}
 		return parent::isShipped();
     }
 	function getDescription()
 	{
-		if (!is_null($this->get("gc"))) { 
+		if (!is_null($this->getGC())) { 
 			return "Gift certificate # ".$this->get("gcid");
 		}
 		return parent::getDescription();
 	}
     function getDiscountablePrice()
     {
-        return is_null($this->get("gc")) ? parent::getDiscountablePrice() : 0;
+        return is_null($this->getGC()) ? parent::getDiscountablePrice() : 0;
     }
 	function getShortDescription($limit = 30)
 	{
-		if (!is_null($this->get("gc"))) { 
+		if (!is_null($this->getGC())) { 
 			return "GC #".$this->get("gcid");
 		}
 		return parent::getShortDescription($limit);
@@ -121,17 +121,17 @@ class XLite_Module_GiftCertificates_Model_OrderItem extends XLite_Model_OrderIte
 	function delete()
 	{
 		// remove disabled GCs
-		if (!is_null($this->get("gc")) && $this->getComplex('gc.status') == "D") {
-			$this->call("gc.delete");
+		if (!is_null($this->getGC()) && $this->getGC()->get('status') == "D") {
+			$this->getGC()->delete();
 		}
 		parent::delete();
 	}
 
 	function isValid()
 	{
-        $gc = $this->get("gc");
+        $gc = $this->getGC();
 		if (!is_null($gc)) {
-			return $this->isComplex('gc.exists');
+			return $this->getGC()->is('exists');
 		}
 		return parent::isValid();
 	}

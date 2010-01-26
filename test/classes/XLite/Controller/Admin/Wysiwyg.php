@@ -83,7 +83,7 @@ class XLite_Controller_Admin_Wysiwyg extends XLite_Controller_Admin_Abstract
         $this->_resetLayout();
         if (!isset($_REQUEST["mode"]) || $_REQUEST["mode"] != "cp") {
             print "<pre>\n";
-            if ($this->call("builder.export", $this->exportTemplates)) {
+            if ($this->getBuilder()->export($this->exportTemplates)) {
                 print "\n\nA set of HTML pages generated successfully.<br>The pages are located in the 'var/html' subfolder of your LiteCommerce installation.\n";
             } else {
                 print "\n\n<b><form color=red>There were errors in templates; please correct them and try again. Use the <a href='admin.php?target=template_editor&editor=advanced'>Template editor</a> to change templates.</font></b>\n";
@@ -91,7 +91,7 @@ class XLite_Controller_Admin_Wysiwyg extends XLite_Controller_Admin_Abstract
             print "</pre>";
         } else {
             ob_start();
-            if ($this->call("builder.export", $this->exportTemplates)) {
+            if ($this->getBuilder()->export($this->exportTemplates)) {
                 ob_end_clean();
                 print "OK";
             } else {
@@ -109,7 +109,7 @@ class XLite_Controller_Admin_Wysiwyg extends XLite_Controller_Admin_Abstract
         $this->_resetLayout();
         if (!isset($_REQUEST["mode"]) || $_REQUEST["mode"] != "cp") { 
             print "<pre>\n";
-            if ($this->call("builder.import")) {
+            if ($this->getBuilder()->import()) {
                 print "\n\nA set of template files generated successfully.\n";
             } else {
                 print "\n\nThere were errors in html files; please correct them and try again.\n";
@@ -117,7 +117,7 @@ class XLite_Controller_Admin_Wysiwyg extends XLite_Controller_Admin_Abstract
             print "</pre>";
         } else {
             ob_start();
-            if ($this->call("builder.import")) {
+            if ($this->getBuilder()->import()) {
                 ob_end_clean();
                 print "OK";
             } else {

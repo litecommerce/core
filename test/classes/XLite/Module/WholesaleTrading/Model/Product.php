@@ -400,8 +400,8 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 	function getPurchaseLimit()
 	{
 		$purchase_limit = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
-		$found = $purchase_limit->find("product_id =" . $this->get("product_id"));
-		return $found ? $purchase_limit : false;
+
+		return $purchase_limit->find("product_id =" . $this->get("product_id")) ? $purchase_limit : false;
 	}
 
     function delete()
