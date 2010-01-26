@@ -108,7 +108,7 @@ class XLite_Model_Config extends XLite_Model_Abstract
         return $this->get("type") == "select";
     }
     
-    function isSelected($property, $value, $prop = null)
+    function isSelected($property, $value = null, $prop = null)
     {
         return parent::isSelected("value", $property);
     }

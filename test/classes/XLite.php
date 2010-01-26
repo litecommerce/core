@@ -47,6 +47,15 @@
 */
 class XLite extends XLite_Base implements XLite_Base_ISingleton
 {
+	/**
+     * Flag; determines if we need to cleanup (and, as a result, to rebuild) classes and templates cache
+     *
+     * @var    bool
+     * @access protected
+     * @since  3.0
+     */
+    protected $isNeedToCleanupCache = false;
+
     protected $adminZone = false;
 
 	protected $options = null;
@@ -246,9 +255,19 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
 	{
 		return isset($this->globalFlags[$name]) ? $this->globalFlags[$name] : null;
 	}
+
+	public function setCleanUpCacheFlag($flag)
+    {
+        $this->isNeedToCleanupCache = (true === $flag);
+    }
+
+	public function __destruct()
+	{
+		if ($this->isNeedToCleanupCache) {
+			XLite_Model_ModulesManager::getInstance()->cleanupCache();
+		}
+
+		parent::__destruct();
+	}
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

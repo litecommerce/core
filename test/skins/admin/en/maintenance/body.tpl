@@ -4,4 +4,4 @@
 <widget module="EcommerceReports" template="modules/EcommerceReports/maintenance.tpl">
 <widget module="XCartImport" template="modules/XCartImport/menu.tpl">
 <hr color=black>
-<a href="admin.php?target=cleanup">Cleanup cache</a><br>
+<a href="admin.php?target=cache_management&action=rebuild">Re-build cache</a><br>

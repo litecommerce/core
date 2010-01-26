@@ -441,16 +441,12 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
         for ($i=0; $i<count($options); $i++) {
             $name = $options[$i]->get("name");
             $type = $options[$i]->get("type");
-            if ($type=='checkbox') {
-                if (empty($_REQUEST[$name])) {
-                    $val = 'N';
-                } else {
-                    $val = 'Y';
-                }
-            } elseif ($type == "serialized" && is_array($_POST[$name])) {
+			if ($type=='checkbox') {
+                $val = empty($_REQUEST[$name]) ? 'N' : 'Y';
+            } elseif ($type == "serialized" && isset($_POST[$name]) && is_array($_POST[$name])) {
                 $val = serialize($_POST[$name]);
             } else {
-                $val = trim($_REQUEST[$name]);
+                $val = isset($_REQUEST[$name]) ? trim($_REQUEST[$name]) : '';
             }
 
             if($name == "captcha_length"){

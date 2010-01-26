@@ -32,6 +32,10 @@ class XLite_Base
 		$GLOBALS['memory_usage'] = max(isset($GLOBALS['memory_usage']) ? $GLOBALS['memory_usage'] : 0, memory_get_usage()) / 1024 / 1024;
 	}
 
+	public function __destruct()
+	{
+	}
+
 	protected function _die($message)
 	{
 		// TODO - add logging

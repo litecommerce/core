@@ -97,15 +97,6 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
 	 */
 	protected $activeModules = null;
 
-	/**
-	 * Flag; determines if we need to cleanup (and, as a result, to rebuild) classes and templates cache
-	 * 
-	 * @var    bool
-	 * @access protected
-	 * @since  3.0
-	 */
-	protected $isNeedToCleanupCache = false;
-
 
 	/**
 	 * Instantiate moduel object
@@ -192,7 +183,7 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
 		}
 
 		if ($this->config->get('General.safe_mode') || XLite_Model_Session::getInstance()->isRegistered('safe_mode')) {
-			$this->isNeedToCleanupCache = true;
+			XLite::getInstance()->setCleanUpCacheFlag(true);
 			$this->set('safeMode', true);
 		} 
 
@@ -221,6 +212,12 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
 		return count($this->getActiveModules());
 	}
 
+	public function rebuildCache()
+	{
+		$decorator = new Decorator();
+		$decorator->rebuildCache(true);
+	}
+
 	public function cleanupCache()
 	{
 		$decorator = new Decorator();
@@ -237,7 +234,7 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
 		$result = $module->update();
 
 		if ($cleanupCache) {
-			$this->isNeedToCleanupCache = true;
+			XLite::getInstance()->setCleanUpCacheFlag(true);
 		}
 
 		return $result;
@@ -249,7 +246,7 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
 			$this->changeModuleStatus($module, in_array($module->get("module_id"), $moduleIDs));
         }
 
-		$this->isNeedToCleanupCache = true;
+		XLite::getInstance()->setCleanUpCacheFlag(true);
 
 		return true;
     }
@@ -257,11 +254,6 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
 	public function isActiveModule($moduleName)
 	{
 		return $this->getActiveModules($moduleName);
-	}
-
-	public function __destruct()
-	{
-		!$this->isNeedToCleanupCache || $this->cleanupCache();
 	}
 }
 

@@ -4,6 +4,10 @@
 
 <!-- [head] -->
 <HEAD>
+	<script type="text/javascript" IF="xlite.config.General.developer_mode">
+  	  if (document.getElementById("rebuild_cache_block")) document.getElementById("rebuild_cache_block").style.display = "none";
+	</script>
+
 <TITLE>LiteCommerce online store builder
 {if:target=#category#&!title=##} - {end:}
 {if:target=#product#&!title=##} - {end:}

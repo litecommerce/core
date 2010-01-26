@@ -181,6 +181,16 @@ class Decorator
 		}
     }
 
+	protected function showJavaScriptBlock()
+	{
+		$code = '<table id="rebuild_cache_block"><tr>'
+				. '<td><img src="skins/progress_indicator.gif" /></td>'
+				. '<td>Re-building cache, please wait...</td>'
+				. '</tr></table>';
+
+		func_flush('<script language="javascript">document.write(\'' . $code . '\');</script>' . "\n");
+	}
+
     /**
      * Return class name by class file path 
      * 
@@ -474,17 +484,19 @@ class Decorator
         return file_exists(LC_CLASSES_CACHE_DIR) && is_dir(LC_CLASSES_CACHE_DIR) && is_readable(LC_CLASSES_CACHE_DIR);
     }
 
-    /**
-     * Check if LiteCommerce is in so called "developer mode" (forced to rebuild cache) 
-     * 
+	/**
+	 * Check if LiteCommerce is in so called "developer mode" (forced to rebuild cache)
+     *
      * @return bool
      * @access protected
      * @since  3.0
      */
-    protected function isDeveloperMode()
-    {
-        return $this->fetchColumn('SELECT value FROM xlite_config WHERE category = \'General\' AND name = \'developer_mode\'');
-    }
+	protected function isDeveloperMode()
+	{
+		$query = 'SELECT value FROM xlite_config WHERE category = \'General\' AND name = \'developer_mode\'';
+
+		return ('Y' === $this->fetchColumn($query)) && empty($_REQUEST['action']);
+	}
 
     /**
      * Check if cache rebuild is required
@@ -495,7 +507,7 @@ class Decorator
      */
     protected function isNeedRebuild()
     {
-        return !$this->isCacheDirExists() || $this->isDeveloperMode();
+        return !$this->isCacheDirExists();
     }
 
     /**
@@ -942,12 +954,11 @@ class Decorator
      */
     public function rebuildCache($force = false)
     {
-        if ($this->isNeedRebuild() || $force) {
+        if ($this->isNeedRebuild() || $this->isDeveloperMode() || $force) {
+
+			$this->showJavaScriptBlock();
 
 			$this->setMaxExecutionTime();
-
-			// Remove old files
-			$this->cleanUpCache();
 
             // Prepare classes list
             $this->createClassTree();
@@ -955,10 +966,10 @@ class Decorator
             $this->createDecoratorTree();
             $this->mergeClassAndDecoratorTrees();
 
-			// Trying to create folder
-            if (!mkdirRecursive(LC_CLASSES_CACHE_DIR, 0755)) {
-                die ('Unable to create classes cache directory');
-            }
+			// Remove old files
+			if ($this->isCacheDirExists()) {
+				$this->cleanUpCache();
+			}
 
             // Write file to the cache directory
             foreach ($this->classesInfo as $class => $info) {

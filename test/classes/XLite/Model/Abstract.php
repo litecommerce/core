@@ -817,7 +817,7 @@ class XLite_Model_Abstract extends XLite_Base
     *
     * @access public
     */
-    function isSelected($property, $value, $prop = null) // {{{
+    function isSelected($property, $value = null, $prop = null) // {{{
     {
         if (is_object($value)) {
             return $this->get($property) == $value->get($prop);
