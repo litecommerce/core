@@ -86,7 +86,7 @@ class XLite_Module_AOM_Controller_Admin_OrderStatuses extends XLite_Controller_A
 		if (is_null($this->letters)) {
 			foreach($this->get("orderStatuses") as $key => $status) {
 				$used[] = $key;
-				if (!is_null($status["children"])) 
+				if (isset($status["children"]) && is_array($status["children"])) 
 					foreach($status["children"] as $key_ => $child) {
 						$used[] = $key_;
 					}				

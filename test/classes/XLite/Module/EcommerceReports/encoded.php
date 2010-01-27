@@ -26,7 +26,7 @@ function func_EcommerceReports_getRawProducts(&$dlg)
     return $dlg->rawProducts;
 }
 
-function func_EcommerceReports_getRawItems(&$dlg, $unique=true)
+function func_EcommerceReports_getRawItems($dlg, $unique=true)
 {
     if (is_null($dlg->rawItems)) {
         $dlg->rawItems = array();
@@ -46,6 +46,9 @@ function func_EcommerceReports_getRawItems(&$dlg, $unique=true)
             $inStates = $dlg->getInStates($pt);
             $inCities = $dlg->getInCities($pt);
             $inMembership = $dlg->getInMembership($pt);
+
+			$options = '';
+
             $sql = "SELECT $it.item_id, $it.order_id, $ot.date, ".
                 "          $ot.orig_profile_id, $ot.total, ".
                 "          $it.product_id, $it.price, $it.amount, ".

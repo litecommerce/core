@@ -591,7 +591,8 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
             return IP_INVALID;
         }
 
-        $valid_ips = $this->getComplex('xlite.config.SecurityIP.allow_admin_ip');
+        $valid_ips = $this->xlite->config->SecurityIP->allow_admin_ip;
+
         if((!is_array($valid_ips) || count($valid_ips) < 1) && !$checkOnly){
             $valid_ips_object = new XLite_Model_Config();
 			$admin_ip = serialize(array(array("ip" => $admin_ip, "comment" => "Default admin IP")));
@@ -604,24 +605,25 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
             }
         } else {
             $is_valid = false;
-            $valid_list = $valid_ips;
-            foreach($valid_list as $ip_array){
-                $ip = $ip_array["ip"];
-                if(!preg_match($ip_v4_regexp_wildcard, $ip, $ip_bytes)) break;
+            if (is_array($valid_list = $valid_ips)) {
+	            foreach($valid_list as $ip_array){
+    	            $ip = $ip_array["ip"];
+        	        if(!preg_match($ip_v4_regexp_wildcard, $ip, $ip_bytes)) break;
 
-                $allow = true;
-                for($i = 1; $i <=4; $i++){
-                    if($ip_bytes[$i] != "*" && ($ip_bytes[$i] != $admin_ip_bytes[$i])){
-                        $allow = false;
-                        break;
-                    }
-                }
+    	            $allow = true;
+	                for($i = 1; $i <=4; $i++){
+        	            if($ip_bytes[$i] != "*" && ($ip_bytes[$i] != $admin_ip_bytes[$i])){
+            	            $allow = false;
+                	        break;
+	                    }
+    	            }
 
-                if($allow){
-                    $is_valid = true;
-                    break;
-                }
-            }
+        	        if($allow){
+            	        $is_valid = true;
+                	    break;
+	                }
+    	        }
+			}
 
             if(!$is_valid){
                 if ($checkOnly) return IP_INVALID;

@@ -47,6 +47,8 @@
 */
 class XLite_Controller_Admin_OrdersStats extends XLite_Controller_Admin_Stats
 {
+	protected $stats = array();
+
     function getPageTemplate()
     {
         return "orders_stats.tpl";

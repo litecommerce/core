@@ -55,6 +55,13 @@ class XLite_Controller_Admin_CssEdit extends XLite_Controller_Admin_Abstract
 	
     public $params = array('target', 'mode', 'style_id', 'status');
 
+	protected function getStyleAttribute($attr, $index)
+	{
+		$style = $this->getEditor()->getStyle();
+
+		return isset($style[$attr][$index]) ? $style[$attr][$index] : null;
+	}
+
     function getLocale() // {{{
     {
         if (is_null($this->locale)) {
@@ -104,22 +111,18 @@ class XLite_Controller_Admin_CssEdit extends XLite_Controller_Admin_Abstract
 
     function css_style($index)
     {
-        return $this->get("editor.style.style.$index");
+		return $this->getStyleAttribute('style', $index);
     }
 
     function css_class($index)
     {
-        return $this->get("editor.style.element.$index");
+		return $this->getStyleAttribute('element', $index);
     }
 
     function css_comment($index)
     {
-        return $this->get("editor.style.comment.$index");
+		return $this->getStyleAttribute('comment', $index);
     }
 
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

@@ -83,12 +83,12 @@ class XLite_Model_ProductInventory extends XLite_Model_Product implements XLite_
         // search for product by SKU
         if (!empty($properties["sku"]) && $product->find("sku='".addslashes($properties["sku"])."'")) {
             // update
-            $this->updateInventory($line, $product, $properties);
+            $this->updateProductInventory($line, $product, $properties);
         }
         // search for product by NAME
         elseif (empty($properties["sku"]) && !empty($properties["name"]) && $product->find("name='".addslashes($properties["name"])."'")) {
             // update
-            $this->updateInventory($line, $product, $properties);
+            $this->updateProductInventory($line, $product, $properties);
         }
         // die if product not found
         else {
@@ -101,7 +101,7 @@ class XLite_Model_ProductInventory extends XLite_Model_Product implements XLite_
         }
     } // }}}
 
-    function updateInventory($line, &$product, $properties)
+    function updateProductInventory($line, $product, $properties)
     {
         echo "<b>line# $line:</b> updating product ".$product->get("name")."<br>\n";
         $product->setProperties($properties);
@@ -109,7 +109,3 @@ class XLite_Model_ProductInventory extends XLite_Model_Product implements XLite_
     }
 } 
 
-// WARNING:
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

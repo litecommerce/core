@@ -74,9 +74,9 @@ Use this section to define types of credit cards accepted at your store.<hr>
 				    <td width="30%">
 				        <input type="text" name="card_type" size="24" value="{card_type}" style="width: 200px">
 				    </td>
-				    <td width="7%" align="center"><input type="checkbox" name="cvv2" value="1" checked="{card.isCVV2()}"></td>
-				    <td width="10%" align="center"><input type="checkbox" name="enabled" value="1" checked="{card.enabled}"></td>
-				    <td width="10%" align="center"><input type="text" name="orderby" {if:orderby}value="{orderby}"{else:}value="{card.orderby}"{end:} size="10%" maxlength="5"></td>
+				    <td width="7%" align="center"><input type="checkbox" name="cvv2" value="1" /></td>
+				    <td width="10%" align="center"><input type="checkbox" name="enabled" value="1" /></td>
+				    <td width="10%" align="center"><input type="text" name="orderby" value="{orderby}" size="10%" maxlength="5" /></td>
 				</tr>
 			</table>
 		</td>

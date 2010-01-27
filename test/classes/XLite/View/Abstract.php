@@ -499,8 +499,16 @@ class XLite_View_Abstract extends XLite_Base
             "callback" => array("*"),
 			"upgrade" => array("version", "upgrade")
 		);
+
+		
                             
-        if (isset($ignoreTargets[$_REQUEST['target']]) && (in_array("*", $ignoreTargets[$_REQUEST['target']]) || in_array($_REQUEST['action'], $ignoreTargets[$_REQUEST['target']]))) { 
+        if (
+			isset($ignoreTargets[$_REQUEST['target']]) 
+			&& (
+				in_array("*", $ignoreTargets[$_REQUEST['target']]) 
+				|| (isset($_REQUEST['action']) && in_array($_REQUEST['action'], $ignoreTargets[$_REQUEST['target']]))
+			)
+		) { 
             return true;
         }
 
@@ -511,7 +519,16 @@ class XLite_View_Abstract extends XLite_Base
             "wysiwyg" => array("export", "import")
         );
 
-        if(isset($specialIgnoreTargets[$_REQUEST['target']]) && (in_array("*", $specialIgnoreTargets[$_REQUEST['target']]) || in_array($_REQUEST['action'], $specialIgnoreTargets[$_REQUEST['target']])) && (isset($_POST['login']) && isset($_POST['password']))){
+        if(
+			isset($specialIgnoreTargets[$_REQUEST['target']]) 
+			&& (
+				in_array("*", $specialIgnoreTargets[$_REQUEST['target']]) 
+				|| (isset($_REQUEST['action']) && in_array($_REQUEST['action'], $specialIgnoreTargets[$_REQUEST['target']]))
+			) 
+			&& (
+				isset($_POST['login']) && isset($_POST['password'])
+			)
+		) {
             $login = $this->xlite->auth->getComplex('profile.login');
             $post_login = $_POST['login'];
             $post_password = $_POST['password'];

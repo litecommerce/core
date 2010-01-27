@@ -182,7 +182,7 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
                     if ($name == "name" || $name == "sku")
                         return $this->get("product_$name");
                 }
-            return $this->get("product.$name");
+            return $this->getProduct()->get($name);
         }
         return parent::get($name);
     }

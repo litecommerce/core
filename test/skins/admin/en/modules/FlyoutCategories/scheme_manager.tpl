@@ -305,8 +305,8 @@ function switchToSimpleMode()
 
 </form>
 
-</span>
 {end:}  {* //if:xlite.session.fc_expert_mode *}
+</span>
 
 <script language="JavaScript" IF="option_name">
 	ChangeOptionType('{optionParams.type}', opt_points);

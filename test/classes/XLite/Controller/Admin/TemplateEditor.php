@@ -113,13 +113,10 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
         return $this->treePages;
     } // }}}
 
-    function getPageTemplate() // {{{
+    function getPageTemplate()
     {
-        if (isset($this->pageTemplates[$this->get("editor")])) {
-            return $this->pageTemplates[$this->get("editor")];
-        }
-        return null;
-    } // }}}
+        return isset($this->pageTemplates[$this->get("editor")]) ? $this->pageTemplates[$this->get("editor")] : null;
+    }
     
     function getUrl($params = null) // {{{
     {
@@ -177,15 +174,15 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
         } elseif ($zone == "admin") {
         } else {
 			$shortcuts = array(
-				new FileNode("skins/$zone/$locale/main.tpl", null, SHOW_FULL_PATH),
-				new FileNode("skins/$zone/$locale/category_products.tpl", null, SHOW_FULL_PATH),
-				new FileNode("skins/$zone/$locale/category_subcategories.tpl", null, SHOW_FULL_PATH),
-				new FileNode("skins/$zone/$locale/product_details.tpl", null, SHOW_FULL_PATH),
-				new FileNode("skins/$zone/$locale/checkout", "Checkout pages", SHOW_FULL_PATH),
-				new FileNode("skins/$zone/$locale/common/invoice.tpl", "Invoice form template", SHOW_FULL_PATH),
-				new FileNode("skins/$zone/$locale/common/print_invoice.tpl", "Printable Invoice form template", SHOW_FULL_PATH),
-				new FileNode("cart.html", null, SHOW_FULL_PATH),
-				new FileNode("shop_closed.html", "Shop is closed warning template", SHOW_FULL_PATH),
+				new XLite_Model_FileNode("skins/$zone/$locale/main.tpl", null, SHOW_FULL_PATH),
+				new XLite_Model_FileNode("skins/$zone/$locale/category_products.tpl", null, SHOW_FULL_PATH),
+				new XLite_Model_FileNode("skins/$zone/$locale/category_subcategories.tpl", null, SHOW_FULL_PATH),
+				new XLite_Model_FileNode("skins/$zone/$locale/product_details.tpl", null, SHOW_FULL_PATH),
+				new XLite_Model_FileNode("skins/$zone/$locale/checkout", "Checkout pages", SHOW_FULL_PATH),
+				new XLite_Model_FileNode("skins/$zone/$locale/common/invoice.tpl", "Invoice form template", SHOW_FULL_PATH),
+				new XLite_Model_FileNode("skins/$zone/$locale/common/print_invoice.tpl", "Printable Invoice form template", SHOW_FULL_PATH),
+				new XLite_Model_FileNode("cart.html", null, SHOW_FULL_PATH),
+				new XLite_Model_FileNode("shop_closed.html", "Shop is closed warning template", SHOW_FULL_PATH),
 			);
         }    
         return $shortcuts;
@@ -451,7 +448,3 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
     // }}}
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

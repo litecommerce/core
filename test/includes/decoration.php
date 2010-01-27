@@ -270,7 +270,7 @@ class Decorator
             }
         }
 
-        return "\n" . '/**' . "\n" . ' * ' . implode("\n" . ' * ', $comment) . "\n" . ' */';
+        return "\n\n" . '/**' . "\n" . ' * ' . implode("\n" . ' * ', $comment) . "\n" . ' */';
     }
 
     /**
@@ -295,14 +295,14 @@ class Decorator
             }
 
             // Top level class in decorator chain - has an empty body
-            $content = '<?php' . "\n" . $this->getClassComment($info) . "\n" . $matches[1] . 'class ' 
+            $content = '<?php' . $this->getClassComment($info) . "\n" . $matches[1] . 'class ' 
                        . (isset($info[self::INFO_CLASS]) ? $info[self::INFO_CLASS] : $matches[3])
                        . (isset($info[self::INFO_EXTENDS]) ? ' extends ' . $info[self::INFO_EXTENDS] : '')
                        . (isset($matches[6]) ? $matches[6] : '') . "\n" . '{' . $body . '}' . "\n";
         } else {
 
             // Replace class and name of class which extends the current one
-            $replace = "\n" . $this->getClassComment($info) . "\n" 
+            $replace = $this->getClassComment($info) . "\n" 
                        . (isset($info[self::INFO_CLASS_TYPE]) ? $info[self::INFO_CLASS_TYPE] . ' ' : '$1') . '$2 ' 
                        . (isset($info[self::INFO_CLASS]) ? $info[self::INFO_CLASS] : '$3') 
                        . (isset($info[self::INFO_EXTENDS]) ? ' extends ' . $info[self::INFO_EXTENDS] : '$4') 

@@ -60,9 +60,11 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
 								"add_rate"	=> "tax/add.tpl");	 
 	public $taxes;	
     public $_rates;	
-    public $_levels;	
-    public $invalidExpressions = array();
-    
+    public $_levels;
+	
+	protected $invalidExpressions = array();
+    protected $invalidFormula = array();
+ 
     function init()
     {
         parent::init();
@@ -654,14 +656,23 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
 
     function getCondVarName($expr)
     {
-        $expr = $expr["action"];
-        list($name) = explode(':=', $expr);
+		$name = null;
+
+		if (isset($expr["action"]) && is_string($expr["action"])) {
+	        list($name) = explode(':=', $expr["action"]);
+		}
+
         return $name;
     }
 
     function getVarValue($expr)
     {
-        list($name,$value) = explode(':=', $expr);
+		$value = null;
+
+		if (is_string($expr)) {
+	        list($name, $value) = explode(':=', $expr);
+		}
+
         return $value;
     }
 

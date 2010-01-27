@@ -63,7 +63,10 @@ class XLite_Controller_Admin_SearchStat extends XLite_Controller_Admin_Stats
     {
         if (is_null($this->searchStat)) {
             $searchStat = new XLite_Model_SearchStat();
-            $this->searchStat = $searchStat->findAll("", $this->orders[$this->get("listOrder")]);
+            $this->searchStat = $searchStat->findAll(
+				null,
+				isset($this->orders[$this->get("listOrder")]) ? $this->orders[$this->get("listOrder")] : null
+			);
         }
         return $this->searchStat;
     }
@@ -76,7 +79,3 @@ class XLite_Controller_Admin_SearchStat extends XLite_Controller_Admin_Stats
 
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

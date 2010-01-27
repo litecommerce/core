@@ -21,7 +21,7 @@ Use this tool to replace LiteCommerce standard graphic elements with your store'
         </td>
     </tr>
 	{if:image.example}
-	<tr><td>Example: <br>{image.example:h}{getExample(key):h}</td></tr>
+	<tr><td>Example: <br>{image.example:h}</td></tr>
 	{end:}
 	{if:image.recommended_size}
 	<tr><td>Recommended size: {image.recommended_size}</td></tr>

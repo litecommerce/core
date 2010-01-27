@@ -155,7 +155,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
             case 'openssl'		: return $this->openssl_version(); break;
             case 'check_files'  :
                                     $result = array();
-                                    $files = array("cart.html", "LICENSE");
+                                    $files = array("cart.html");
                                     foreach ($files as $file) {
                                         $mode = $this->getFilePermission($file);
                                         $modeStr = $this->getFilePermissionStr($file);
@@ -310,7 +310,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
                         continue;
                     }
                 } else {
-                    if($this->getComplex('xlite.suMode') != 0 || strpos($dir, "var") !== false) {
+                    if($this->getComplex('xlite.suMode') != 0 || strpos($fullpath, "var") !== false) {
                         if(!@chmod($fullpath, $mode)){
                             $subdir_errors[] = $fullpath;
                             continue;

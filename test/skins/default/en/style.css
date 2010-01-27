@@ -3,31 +3,22 @@ BODY,P,DIV,TH,TD,P,INPUT,SELECT,TEXTAREA {
 }
 
 HTML {
-    height: 100%;
-    margin:0;
-    padding:0;
+	height: 100%; margin:0; padding:0;
 }
 
 BODY {
-    height: 100%;
-	margin-top: 0px; 
-	margin-bottom: 0px; 
-	margin-left: 0px; 
-	margin-right: 0px; 
-	background-color: #FFFFFF;
-    margin: 0px; 
-    padding: 0px;
+	height: 100%; 	margin-top: 0px; 	margin-bottom: 0px; 	margin-left: 0px; 	margin-right: 0px; 	background-color: #FFFFFF; margin: 0px; padding: 0px;
 }
 
 FORM {
-    MARGIN: 0px;
+	MARGIN: 0px;
 }
 
 /*
 Main template main.tpl wallpaper.
 */
 .Wallpaper {
-    background-image: url("images/head_back_long.jpg"); background-repeat: no-repeat; background-COLOR: #8CC2E6;
+	background-image: url("images/head_back_long.jpg"); background-repeat: no-repeat; background-COLOR: #8CC2E6;
 }
 
 A:link {
@@ -155,8 +146,7 @@ Tab
 Text in the categories list
 */
 .CategoriesList {
-	FONT-SIZE: 12px;
-	COLOR: #4F5964;
+	FONT-SIZE: 12px; 	COLOR: #4F5964;
 }
 
 /*
@@ -177,8 +167,7 @@ Border color of dialog boxes
 Titles of dialog boxes
 */
 .DialogTitle {
-	FONT-WEIGHT: normal; FONT-SIZE: 12px; COLOR: #FFFFFF; FONT-FAMILY: Tahoma;
-	BACKGROUND-COLOR: #2B7AA0;
+	FONT-WEIGHT: normal; FONT-SIZE: 12px; COLOR: #FFFFFF; FONT-FAMILY: Tahoma; 	BACKGROUND-COLOR: #2B7AA0;
 }
 
 /*
@@ -255,14 +244,14 @@ Product price
 Save
 */
 .Save {
-    FONT-SIZE: 11px; COLOR: #F34348;
+	FONT-SIZE: 11px; COLOR: #F34348;
 }
 
 /*
 Product price title
 */
 .MarketPrice {
-    FONT-SIZE: 11px; COLOR: #4F5964;
+	FONT-SIZE: 11px; COLOR: #4F5964;
 }
 
 /*
@@ -331,6 +320,7 @@ Labels for form submit buttons
 .Button {
 	FONT-FAMILY: Tahoma; FONT-SIZE: 11px; FONT-WEIGHT: normal; COLOR: #FFFFFF;
 }
+
 A.ButtonLink:link {
 	FONT-FAMILY: Tahoma; FONT-SIZE: 11px; FONT-WEIGHT: normal; COLOR: #FFFFFF; TEXT-DECORATION: none;
 }
@@ -346,7 +336,6 @@ A.ButtonLink:hover {
 A.ButtonLink:active {
 	FONT-FAMILY: Tahoma; FONT-SIZE: 11px; FONT-WEIGHT: normal; COLOR: #FFFFFF; TEXT-DECORATION: none;
 }
-
 
 /*
 Error message text
@@ -384,39 +373,35 @@ Header background
 }
 
 .AomTableHead {
-    BACKGROUND-COLOR: #E5EBEF;
-    FONT-SIZE: 12px;
-    FONT-WEIGHT: bold;
+	BACKGROUND-COLOR: #E5EBEF; FONT-SIZE: 12px; FONT-WEIGHT: bold;
 }
+
 .Input {
-    BORDER : solid;
-    BORDER-WIDTH : 1px; 
-    BORDER-COLOR : #B2B2B3;
-    WIDTH : 100%;
+	BORDER : solid; BORDER-WIDTH : 1px; BORDER-COLOR : #B2B2B3; WIDTH : 100%;
 }
+
 .OrderTitle {
-    COLOR : #516176;
-    FONT-WEIGHT: bold;
+	COLOR : #516176; FONT-WEIGHT: bold;
 }
 
 A.AomMenu:link {
-        color: #466479; TEXT-DECORATION: none;
-        font-size : 11px
+	color: #466479; TEXT-DECORATION: none; font-size : 11px
 }
+
 A.AomMenu:visited {
-        color: #466479; TEXT-DECORATION: none;
-        font-size : 11px
+	color: #466479; TEXT-DECORATION: none; font-size : 11px
 }
+
 A.AomMenu:hover {
-        color: #466479; TEXT-DECORATION: underline;
-        font-size : 11px
+	color: #466479; TEXT-DECORATION: underline; font-size : 11px
 }
-A.AomMenu:active  {
-        color: #466479; TEXT-DECORATION: none;
-        font-size : 11px;
+
+A.AomMenu:active {
+	color: #466479; TEXT-DECORATION: none; font-size : 11px;
 }
+
 .AomProductDetailsTitle {
-        COLOR: #000000; FONT-WEIGHT: bold; FONT-SIZE: 10px;
+	COLOR: #000000; FONT-WEIGHT: bold; FONT-SIZE: 10px;
 }
 
 /*
@@ -506,78 +491,63 @@ Style for gift certificate title
 }
 
 A.TopTabLink:link {
-	FONT-FAMILY: Verdana; TEXT-DECORATION: none;
-	FONT-WEIGHT: bold; FONT-SIZE: 12px; COLOR: #6EAAC4;
+	FONT-FAMILY: Verdana; TEXT-DECORATION: none; 	FONT-WEIGHT: bold; FONT-SIZE: 12px; COLOR: #6EAAC4;
 }
 
 A.TopTabLink:visited {
-	FONT-FAMILY: Verdana; TEXT-DECORATION: none;
-	FONT-WEIGHT: bold; FONT-SIZE: 12px; COLOR: #6EAAC4;
+	FONT-FAMILY: Verdana; TEXT-DECORATION: none; 	FONT-WEIGHT: bold; FONT-SIZE: 12px; COLOR: #6EAAC4;
 }
 
 A.TopTabLink:hover {
-	FONT-FAMILY: Verdana; TEXT-DECORATION: underline;
-	FONT-WEIGHT: bold; FONT-SIZE: 12px; COLOR: #6EAAC4;
+	FONT-FAMILY: Verdana; TEXT-DECORATION: underline; 	FONT-WEIGHT: bold; FONT-SIZE: 12px; COLOR: #6EAAC4;
 }
 
 A.TopTabLink:active {
-	FONT-FAMILY: Verdana; TEXT-DECORATION: none;
-	FONT-WEIGHT: bold; FONT-SIZE: 12px; COLOR: #6EAAC4;
+	FONT-FAMILY: Verdana; TEXT-DECORATION: none; 	FONT-WEIGHT: bold; FONT-SIZE: 12px; COLOR: #6EAAC4;
 }
 
 .ProductNamesList {
-	FONT-FAMILY: Tahoma; 
-	FONT-WEIGHT: bold; FONT-SIZE: 11px; COLOR: #4F5964;
+	FONT-FAMILY: Tahoma; 	FONT-WEIGHT: bold; FONT-SIZE: 11px; COLOR: #4F5964;
 }
 
 A.AdvancedSearchLink:link {
-	FONT-FAMILY: Verdana; TEXT-DECORATION: underline;
-	FONT-WEIGHT: normal; FONT-SIZE: 9px; COLOR: #888888;
+	FONT-FAMILY: Verdana; TEXT-DECORATION: underline; 	FONT-WEIGHT: normal; FONT-SIZE: 9px; COLOR: #888888;
 }
 
 A.AdvancedSearchLink:visited {
-	FONT-FAMILY: Verdana; TEXT-DECORATION: underline;
-	FONT-WEIGHT: normal; FONT-SIZE: 9px; COLOR: #888888;
+	FONT-FAMILY: Verdana; TEXT-DECORATION: underline; 	FONT-WEIGHT: normal; FONT-SIZE: 9px; COLOR: #888888;
 }
 
 A.AdvancedSearchLink:hover {
-	FONT-FAMILY: Verdana; TEXT-DECORATION: underline;
-	FONT-WEIGHT: normal; FONT-SIZE: 9px; COLOR: #888888;
+	FONT-FAMILY: Verdana; TEXT-DECORATION: underline; 	FONT-WEIGHT: normal; FONT-SIZE: 9px; COLOR: #888888;
 }
 
 A.AdvancedSearchLink:active {
-	FONT-FAMILY: Verdana; TEXT-DECORATION: underline;
-	FONT-WEIGHT: normal; FONT-SIZE: 9px; COLOR: #888888;
+	FONT-FAMILY: Verdana; TEXT-DECORATION: underline; 	FONT-WEIGHT: normal; FONT-SIZE: 9px; COLOR: #888888;
 }
 
 .NewsDate {
-	FONT-FAMILY: Verdana; TEXT-DECORATION: none;
-	FONT-WEIGHT: bold; FONT-SIZE: 11px; COLOR: #2B7AA0;
+	FONT-FAMILY: Verdana; TEXT-DECORATION: none; 	FONT-WEIGHT: bold; FONT-SIZE: 11px; COLOR: #2B7AA0;
 }
 
 .WelcomeHeader {
-	FONT-FAMILY: Tahoma; TEXT-DECORATION: none;
-	FONT-WEIGHT: bold; FONT-SIZE: 12px; COLOR: #4F5964;
+	FONT-FAMILY: Tahoma; TEXT-DECORATION: none; 	FONT-WEIGHT: bold; FONT-SIZE: 12px; COLOR: #4F5964;
 }
 
 A.GoLink:link {
-	FONT-FAMILY: Tahoma; TEXT-DECORATION: none;
-	FONT-WEIGHT: normal; FONT-SIZE: 12px; COLOR: #21698B;
+	FONT-FAMILY: Tahoma; TEXT-DECORATION: none; 	FONT-WEIGHT: normal; FONT-SIZE: 12px; COLOR: #21698B;
 }
 
 A.GoLink:visited {
-	FONT-FAMILY: Tahoma; TEXT-DECORATION: none;
-	FONT-WEIGHT: normal; FONT-SIZE: 12px; COLOR: #21698B;
+	FONT-FAMILY: Tahoma; TEXT-DECORATION: none; 	FONT-WEIGHT: normal; FONT-SIZE: 12px; COLOR: #21698B;
 }
 
 A.GoLink:hover {
-	FONT-FAMILY: Tahoma; TEXT-DECORATION: none;
-	FONT-WEIGHT: normal; FONT-SIZE: 12px; COLOR: #21698B;
+	FONT-FAMILY: Tahoma; TEXT-DECORATION: none; 	FONT-WEIGHT: normal; FONT-SIZE: 12px; COLOR: #21698B;
 }
 
 A.GoLink:active {
-	FONT-FAMILY: Tahoma; TEXT-DECORATION: none;
-	FONT-WEIGHT: normal; FONT-SIZE: 12px; COLOR: #21698B;
+	FONT-FAMILY: Tahoma; TEXT-DECORATION: none; 	FONT-WEIGHT: normal; FONT-SIZE: 12px; COLOR: #21698B;
 }
 
 .SearchButtonBG {
@@ -585,9 +555,7 @@ A.GoLink:active {
 }
 
 .MainHeaderBG {
-	background-image: url('images/header_hr.gif');
-	background-repeat: repeat-x; 
-	background-position: bottom;
+	background-image: url('images/header_hr.gif'); 	background-repeat: repeat-x; 	background-position: bottom;
 }
 
 .CommonButtonBG {
@@ -599,8 +567,7 @@ A.GoLink:active {
 }
 
 .CommonButton2LeftBG {
-	background-image: url('images/btn2_left.gif');
-	background-repeat: no-repeat;
+	background-image: url('images/btn2_left.gif'); 	background-repeat: no-repeat;
 }
 
 .CommonButton2CenterBG {
@@ -612,19 +579,11 @@ A.GoLink:active {
 }
 
 .SidebarBoxLeftBG {
-	background-image: url('images/menu_2.gif');
-	background-repeat: no-repeat; 
-	background-position: right;
+	background-image: url('images/menu_2.gif'); 	background-repeat: no-repeat; 	background-position: right;
 }
 
 .SidebarBoxCenterBG {
-	background-image: url('images/menu_1.gif');
-	background-repeat: no-repeat; 
-	background-position: left;
-	color: #FFFFFF; 
-	font-size: 12px; 
-	font-weight: bold; 
-	font-family: Tahoma;
+	background-image: url('images/menu_1.gif'); 	background-repeat: no-repeat; 	background-position: left; 	color: #FFFFFF; 	font-size: 12px; 	font-weight: bold; 	font-family: Tahoma;
 }
 
 .TabSelectedBG {
@@ -660,11 +619,11 @@ A.GoLink:active {
 }
 
 TABLE.Container {
-    HEIGHT: 100%;
-
+	HEIGHT: 100%;
 }
 
 A.captcha {
-    FONT-SIZE: 11px;
-    TEXT-DECORATION: underline;
+	FONT-SIZE: 11px; TEXT-DECORATION: underline;
 }
+
+

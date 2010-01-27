@@ -53,6 +53,8 @@ class XLite_Controller_Admin_TopSellers extends XLite_Controller_Admin_Stats
     public $sort_by = "amount";	
     public $counter = array(0,1,2,3,4,5,6,7,8,9);
 
+	protected $topProducts = array();
+
     function getPageTemplate()
     {
         return "top_sellers.tpl";
@@ -82,8 +84,7 @@ class XLite_Controller_Admin_TopSellers extends XLite_Controller_Admin_Stats
 
     function getTopProduct($period, $pos, $property)
     {
-        $val = $this->get("topProducts." . $period . "Items." . $pos . "." . $property);
-        return is_null($val) ? "" : $val;
+        return is_null($val = $this->getComplex("topProducts." . $period . "Items." . $pos . "." . $property)) ? "" : $val;
     }
 
     function collect($order)
@@ -118,7 +119,7 @@ class XLite_Controller_Admin_TopSellers extends XLite_Controller_Admin_Stats
         }            
         usort($this->topProducts[$name], array($this, "cmpProducts"));
         $topProducts = array_chunk(array_reverse($this->topProducts[$name]), 10);
-        $this->topProducts[$name] = $topProducts[0];
+        $this->topProducts[$name] = isset($topProducts[0]) ? $topProducts[0] : null;
     }
 
     function cmpProducts($p1, $p2)
@@ -131,7 +132,4 @@ class XLite_Controller_Admin_TopSellers extends XLite_Controller_Admin_Stats
     }
 
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+

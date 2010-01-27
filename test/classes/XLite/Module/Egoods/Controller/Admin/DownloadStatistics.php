@@ -28,7 +28,6 @@
 | PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
 | THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
 | SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
 |                                                                              |
 | The Initial Developer of the Original Code is Creative Development LLC       |
 | Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
@@ -39,34 +38,43 @@
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
 /**
-*
-* @package Module_FlyoutCategories
+* @package Module_Egoods
 * @access public
 * @version $Id$
 */
-class XLite_Module_FlyoutCategories_Controller_Admin_TemplatePopup extends XLite_Controller_Admin_TemplateEditor implements XLite_Base_IDecorator
-{	
-    public $template = "modules/FlyoutCategories/template_popup.tpl";
+class XLite_Module_Egoods_Controller_Admin_DownloadStatistics extends XLite_Controller_Admin_Stats
+{
+	function getStat()
+	{
+		if (!isset($this->stats)) {
+			$ds = new XLite_Module_Egoods_Model_DownloadsStatistics();
+			$this->stats = $ds->findAll();
+		}
+		return $this->stats;
+	}
 
-    public function __construct()
-    {
-    	$this->params[] = "formName";
-    	$this->params[] = "formField";
+	function getProductName($file_id, $trim=25)
+	{
+		$df = new XLite_Module_Egoods_Model_DownloadableFile($file_id);
+		$product = new XLite_Model_Product($df->get('product_id'));
+		$name = $product->get('name');
+		if (strlen($name) <= $trim) {
+			return $name;
+		} else {
+			return substr($name, 0, $trim) . "...";
+		}
+	}
 
-    	parent::__construct();
-    }
+	function getProductHref($file_id)
+	{
+		$df = new XLite_Module_Egoods_Model_DownloadableFile($file_id);
+		$product = new XLite_Model_Product($df->get('product_id'));
+		return "admin.php?target=product&product_id=" . $product->get('product_id') . "&page=downloadable_files";
+	}
 
-    function init()
-    {
-    	if (!isset($_REQUEST["node"])) {
-    		$_REQUEST["node"] = "skins/default/en/modules/FlyoutCategories";
-    	}
-
-    	parent::init();
-    }
+	function getPageTemplate()
+	{
+		return "modules/Egoods/download_statisics.tpl";
+	}
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
