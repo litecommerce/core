@@ -490,7 +490,7 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 				$intend .= '  ';
 			}
 
-			if (!isset($this->initializedWidgets[$name])) {
+			if ($checkTarget || !isset($this->initializedWidgets[$name])) {
 
 	            $class = $attrs['class'];
 				unset($attrs['class']);
@@ -502,7 +502,8 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 	                $result .= $intend . '$t->addComponent($t->' . $name . ');' . "\n";
     	        }
 
-				$result .= $intend . $this->setAttributesCode(array_diff_key($attrs, array('visible' => true)), $name) . "\n";
+				$initAttrs = array_diff_key($attrs, array('visible' => true, self::DISPLAY_CONDITION => true, 'IF' => true));
+				$result .= $intend . $this->setAttributesCode($initAttrs, $name) . "\n";
 
 				if (isset($attrs['hidden'])) {
     	            $result .= ' $t->' . $name . '->set(\'visible\', false);' . "\n";
