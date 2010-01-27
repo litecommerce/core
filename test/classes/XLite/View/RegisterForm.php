@@ -50,8 +50,8 @@ class XLite_View_RegisterForm extends XLite_View
 
 	protected $success = false;
 
-    // profile data	
-    public $profile = null;
+	public $profile = null;
+
     // whether to login user after successful registration or not	
     public $autoLogin = true;
     // true if the user already exists in the register form	
@@ -61,6 +61,7 @@ class XLite_View_RegisterForm extends XLite_View
     function init()
     {
         parent::init();
+
         $this->mapRequest();
     }
     
@@ -74,7 +75,12 @@ class XLite_View_RegisterForm extends XLite_View
         return (strpos($this->returnUrl, "target=checkout") !== false) ? true : false;
     }
 
-    function fillForm()
+    function getSuccess()
+    {
+        return $this->is("valid") && $this->success;
+    }
+
+	function fillForm()
     {
         if ($this->get("mode") == "register") {
             // default registration form values
@@ -83,17 +89,14 @@ class XLite_View_RegisterForm extends XLite_View
             $this->shipping_country = "";
             $this->billing_state = $this->shipping_state = "";
         }
-        if ($this->get("mode") == "modify" && !is_null($this->get("profile"))) {
-            $this->set("properties", $this->getComplex('profile.properties'));
+
+        if (!is_null($this->profile)) {
+            $this->set("properties", $this->profile->get('properties'));
             // don't show passwords
             $this->password = $this->confirm_password = "";
         }
-        parent::fillForm();
-    }
 
-    function getSuccess()
-    {
-        return $this->is("valid") && $this->success;
+        parent::fillForm();
     }
     
     function action_register()
@@ -162,7 +165,4 @@ class XLite_View_RegisterForm extends XLite_View
     }
     
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+

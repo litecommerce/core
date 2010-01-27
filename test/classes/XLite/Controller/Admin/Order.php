@@ -51,11 +51,7 @@ class XLite_Controller_Admin_Order extends XLite_Controller_Admin_Abstract
 
     function getTemplate()
     {
-        if ($this->get("mode") == "invoice") {
-            // print invoice
-            return "common/print_invoice.tpl";
-        }
-        return $this->template;
+        return ('invoice' == $this->get('mode')) ? 'common/print_invoice.tpl' : $this->template;
     }
 
     function getOrder()
@@ -74,13 +70,9 @@ class XLite_Controller_Admin_Order extends XLite_Controller_Admin_Abstract
             $_POST["details"]["cc_date"] = "--- Removed ---";
             $_POST["details"]["cc_cvv2"] = "--- Removed ---";
         }
-        $this->set("order.properties", $_POST);
+        $this->getOrder()->set('properties', $_POST);
         $this->order->update();
     }
     
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

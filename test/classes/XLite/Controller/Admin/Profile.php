@@ -64,9 +64,8 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
     {
         parent::init();
 
-		if (!is_null($this->profileForm)) {
-	        $this->profileForm->profile = $this->get("profile");
-		}
+		$this->profileForm->profile = $this->getProfile();
+		$this->profileForm->fillForm();
     }
 
     function handleRequest()
@@ -87,6 +86,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
         if (is_null($this->profile)) {
             $this->profile = new XLite_Model_Profile($this->get("profile_id"));
         }
+
         return $this->profile;
     }
 

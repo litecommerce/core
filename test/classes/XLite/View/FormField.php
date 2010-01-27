@@ -57,7 +57,7 @@ class XLite_View_FormField extends XLite_View
      */
     public function getValue()
     {
-		return is_null($this->component) ? $this->value : (is_null($field = $this->field) ? null : $this->component->$field);
+		return (is_null($this->component) || is_null($field = $this->field) || is_null($value = $this->component->$field)) ? $this->value : $value;
     }
 }
 

@@ -9,6 +9,7 @@ else
 }
 </script>
 {end:}
+
 <select name="{field}" {if:xlite.GoogleCheckoutEnabled&googleCheckoutOrder}disabled{end:} {if:pm=#credit_card#}onChange="javascript: status_change(this)"{end:}>
 <option value="" IF="allOption">All</option>
 <option value="Q" selected="{value=#Q#}">Queued</option>

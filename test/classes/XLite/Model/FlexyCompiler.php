@@ -47,6 +47,8 @@
 */
 class XLite_Model_FlexyCompiler extends XLite_Base
 {
+	const DISPLAY_CONDITION = '____display_cnd____';
+
 	protected $_internalDisplayCode = false;
 	protected $_internalInitCode = false;
 
@@ -460,12 +462,13 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 
     function widgetDisplayCode(array &$attrs, $name)
     {
-		$condition = 'isset($t->' . $name . ')';
+		$condition = 'isset($t->' . $name . ')' . (isset($attrs[self::DISPLAY_CONDITION]) ? ' && ' . $attrs[self::DISPLAY_CONDITION] : '');
 
 		if (isset($attrs['IF'])) {
 			$condition .= ' && (' . $this->flexyCondition($attrs['IF']) . ')';
-			unset($attrs['IF']);
 		}
+
+		$this->unsetAttributes($attrs, array('IF', self::DISPLAY_CONDITION));
 
 		return 'if (' . $condition . '): ' . $this->setAttributesCode($attrs, $name) . '$t->' . $name . '->display(); endif;';
     }
@@ -481,11 +484,10 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 			if ($checkTarget = !is_null($target)) {
 
 				$preparedTarget = preg_replace('/[^\w,]+/', '', $target);
+				$attrs[self::DISPLAY_CONDITION] = '$t->isDisplayRequired(array(\'' . str_replace(',', '\',\'', $preparedTarget) . '\'))';
 
-				$result .= 'if ($t->isInitRequired(array(\'' . str_replace(',', '\',\'', $preparedTarget) . '\'))):' . "\n";
-
+				$result .= 'if (' . $attrs[self::DISPLAY_CONDITION] . '):' . "\n";
 				$intend .= '  ';
-				$name   .= '_' . str_replace(',', '_', $preparedTarget);
 			}
 
 			if (!isset($this->initializedWidgets[$name])) {

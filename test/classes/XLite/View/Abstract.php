@@ -102,7 +102,7 @@ class XLite_View_Abstract extends XLite_Base
 
     function getTemplateFile()
     {
-		return isset($this->templateFile) ? $this->templateFile : XLite_Model_Layout::getInstance()->getLayout($this->template);
+		return isset($this->templateFile) ? $this->templateFile : XLite_Model_Layout::getInstance()->getLayout($this->get('template'));
     }
 
     function getDisplayFile()
@@ -117,7 +117,7 @@ class XLite_View_Abstract extends XLite_Base
  
     function includeCompiledFile($includeFile)
     {
-        if (is_null($this->template)) {
+        if (is_null($this->get('template'))) {
 			$this->_die("template is not set");
 		}
 
@@ -424,9 +424,9 @@ class XLite_View_Abstract extends XLite_Base
 		}
 	}
 
-	public function isInitRequired(array $target, $isVisible = true)
+	public function isDisplayRequired(array $target)
 	{
-		return (!isset($_REQUEST['target']) || in_array($_REQUEST['target'], $target)) && $isVisible;
+		return !isset($_REQUEST['target']) || in_array($_REQUEST['target'], $target);
 	}
 
     function getDialog()
@@ -628,7 +628,3 @@ class XLite_View_Abstract extends XLite_Base
     
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
