@@ -71,7 +71,7 @@ Use this section to manage the list of existing countries. This list is used in 
 		<form action="admin.php" method="post" name="countries_form">
 		<input type="hidden" name="target" value="countries">
 		<input type="hidden" name="action" value="update">
-		<tr FOREACH="xlite.factory.Country.readAll(),country_idx,country" class="{getRowClass(country_idx,#DialogBox#,#TableRow#)}">
+		<tr FOREACH="xlite.factory.XLite_Model_Country.readAll(),country_idx,country" class="{getRowClass(country_idx,#DialogBox#,#TableRow#)}">
 		    <td align="center"><a href="admin.php?target=states&country_code={country.code}" title="Click here to view states of country" onClick="this.blur();"><u>{country.code}</u></a></td>
 		    <td>
 		        <input type="text" size="34" maxlength="50" name="countries[{country.code}][country]" value="{country.country:r}">

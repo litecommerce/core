@@ -40,10 +40,10 @@ class XLite_Model_Shipping extends XLite_Model_Abstract
      * Filed to use in ORDERBY clause
      *
      * @var    string
-     * @access protected
+     * @access public
      * @since  3.0
      */
-    protected $defaultOrder = "order_by, name";
+    public $defaultOrder = "order_by, name";
 
 	/**
 	 * List of registered shipping modules

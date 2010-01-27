@@ -31,7 +31,7 @@
 	<td>Payment method:&nbsp;</td>
 	<td>
 		<select name="payment_method">
-			<option FOREACH="xlite.factory.PaymentMethod.findAll(),payment_method" selected="{isSelected(payment_method,#name#,payment_method)}">{payment_method.name}</option>
+			<option FOREACH="xlite.factory.XLite_Model_PaymentMethod.findAll(),payment_method" selected="{isSelected(payment_method,#name#,payment_method)}">{payment_method.name}</option>
 		</select>
 	</td>
 </tr>

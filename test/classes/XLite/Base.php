@@ -40,6 +40,8 @@ class XLite_Base
 	{
 		// TODO - add logging
 
+		debug_print_backtrace();
+
 		die ($message);
 	}
 

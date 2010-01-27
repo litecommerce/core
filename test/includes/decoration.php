@@ -133,6 +133,15 @@ class Decorator
 	 */
 	protected $mutualModules = null;
 
+	/**
+	 * List of module controllers which names are needed to be normalized
+	 * 
+	 * @var    array
+	 * @access protected
+	 * @since  3.0
+	 */
+	protected $normalizedControllers = array();
+
 
 	/**
 	 * Return current value of the "max_execution_time" INI setting 
@@ -250,6 +259,9 @@ class Decorator
      */
     protected function getClassComment(array $info)
     {
+		// TODO - check if comment is needed
+		return '';
+
         $comment = array(self::DECORATOR_IDENTIFIER);
 
         foreach ($this->commentFields as $field => $tag) {
@@ -297,6 +309,11 @@ class Decorator
                        . '$6' . "\n" . '{';
             $content = preg_replace(self::CLASS_PATTERN, $replace, $content);
         }
+
+		// Change name of normalized classes in PHP code
+		foreach ($this->normalizedControllers as $oldClass => $newClass) {
+			$content = preg_replace('/' . $oldClass . '/i', $newClass, $content);
+		}
 
         return $content;
     }
@@ -795,9 +812,6 @@ class Decorator
      */
     protected function normalizeModuleControllerNames()
     {
-        // List of renamed classes
-        $normalized = array();
-
         foreach ($this->classesInfo as $class => $info) {
 
             // Only rename classes which are not decorates controllers
@@ -818,15 +832,15 @@ class Decorator
                 // Rename and save data
                 $this->classesInfo[$newClass] = array_merge($info, array(self::INFO_CLASS => $newClass));
                 unset($this->classesInfo[$class]);
-                $normalized[$class] = $newClass;
+                $this->normalizedControllers[$class] = $newClass;
             }
         }
 
         // Rename classes in the "INFO_EXTENDS" field
         foreach ($this->classesInfo as $class => $info) {
 
-            if (isset($normalized[$info[self::INFO_EXTENDS]])) {
-                $this->classesInfo[$class][self::INFO_EXTENDS] = $normalized[$info[self::INFO_EXTENDS]];
+            if (isset($this->normalizedControllers[$info[self::INFO_EXTENDS]])) {
+                $this->classesInfo[$class][self::INFO_EXTENDS] = $this->normalizedControllers[$info[self::INFO_EXTENDS]];
             }
         }
     }
@@ -956,7 +970,9 @@ class Decorator
     {
         if ($this->isNeedRebuild() || $this->isDeveloperMode() || $force) {
 
-			$this->showJavaScriptBlock();
+			if (empty($_REQUEST['action'])) {
+				$this->showJavaScriptBlock();
+			}
 
 			$this->setMaxExecutionTime();
 

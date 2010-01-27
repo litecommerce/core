@@ -349,7 +349,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
 		$options = XLite::getInstance()->getOptions('host_details');
 
         foreach (array($options['http_host'], $options['https_host']) as $host) {
-            @setcookie('last_login', $login, time() + 3600 * 24 * $this->get('config.General.login_lifetime', '/', func_parse_host($host)));
+            @setcookie('last_login', $login, time() + 3600 * 24 * $this->config->General->login_lifetime, '/', func_parse_host($host));
         }
     } // }}}
 

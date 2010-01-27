@@ -24,7 +24,7 @@
     <td>
         <select class="FixedSelect" disabled>
             <option value="" selected="{pending_plan=##}">- select plan -</option>
-            <option FOREACH="xlite.factory.AffiliatePlan.findAll(),ap" value="{ap.plan_id}" selected="{pending_plan=ap.plan_id}">{ap.title:h}</option>
+            <option FOREACH="xlite.factory.XLite_Module_Affiliate_Model_AffiliatePlan.findAll(),ap" value="{ap.plan_id}" selected="{pending_plan=ap.plan_id}">{ap.title:h}</option>
         </select>
         <input type=hidden name="pending_plan" value="{pending_plan}">
     </td>
@@ -36,7 +36,7 @@
     <td>
         <select class="FixedSelect" name="plan">
             <option value="" selected="{plan=##}">- not assigned -</option>
-            <option FOREACH="xlite.factory.AffiliatePlan.findAll(),ap" value="{ap.plan_id}" selected="{ap.plan_id=plan}">{ap.title:h}</option>
+            <option FOREACH="xlite.factory.XLite_Module_Affiliate_Model_AffiliatePlan.findAll(),ap" value="{ap.plan_id}" selected="{ap.plan_id=plan}">{ap.title:h}</option>
         </select>
     </td>
     <td>&nbsp;</td>

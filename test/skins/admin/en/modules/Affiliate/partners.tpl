@@ -30,7 +30,7 @@
             <td>    
                 <select name="plan_id">
                     <option value="" selected="{plan_id=##}">All</option>
-                    <option FOREACH="xlite.factory.AffiliatePlan.findAll(),ap" value="{ap.plan_id}" selected="{ap.plan_id=plan_id}">{ap.title:h}</option>
+                    <option FOREACH="xlite.factory.XLite_Module_Affiliate_Model_AffiliatePlan.findAll(),ap" value="{ap.plan_id}" selected="{ap.plan_id=plan_id}">{ap.title:h}</option>
                 </select>
                 <br><input type=radio name=plan value=plan checked="plan=#plan#"> Granted plan
                 <br><input type=radio name=plan value=pending_plan checked="plan=#pending_plan#"> Sign-up plan
@@ -97,7 +97,7 @@
     <td>{time_format(partner.partner_signup)}</td>
     <td>
         &nbsp;
-        {foreach:xlite.factory.AffiliatePlan.findAll(),ap}
+        {foreach:xlite.factory.XLite_Module_Affiliate_Model_AffiliatePlan.findAll(),ap}
             {if:ap.plan_id=partner.plan}
                 {ap.title:h}
             {end:}
@@ -119,7 +119,7 @@
             <select name=new_plan>
                 <option value="">- do not change -</option>
                 <option value="0">- not assigned -</option>
-                <option FOREACH="xlite.factory.AffiliatePlan.findAll(),ap" value="{ap.plan_id}">{ap.title:h}</option>
+                <option FOREACH="xlite.factory.XLite_Module_Affiliate_Model_AffiliatePlan.findAll(),ap" value="{ap.plan_id}">{ap.title:h}</option>
             </select>
         </td>
     </tr>

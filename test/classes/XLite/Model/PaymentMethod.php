@@ -33,10 +33,10 @@ class XLite_Model_PaymentMethod extends XLite_Model_Abstract
      * Filed to use in ORDERBY clause 
      * 
      * @var    string
-     * @access protected
+     * @access public
      * @since  3.0
      */
-    protected $defaultOrder = 'orderby';
+    public $defaultOrder = 'orderby';
 
     /**
      * Db table fields 

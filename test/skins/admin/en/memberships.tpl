@@ -1,5 +1,5 @@
 <script language="Javascript">
-	var invalid_data_exp = /{xlite.factory.Membership.stripRegExp:h}/g;
+	var invalid_data_exp = /{xlite.factory.XLite_Model_Membership.stripRegExp:h}/g;
 	var current_memberships = new Array();
 {foreach:memberships,m_id,m}
 	current_memberships['{m_id}'] = '{m.membership}';

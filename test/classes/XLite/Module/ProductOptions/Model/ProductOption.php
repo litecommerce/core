@@ -431,7 +431,7 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
 		return $ids;
 	}
 
-	function deleteProductsList(&$products, $categories)
+	function deleteProductsList(array &$products, $categories)
 	{
 		if (!is_array($categories)) {
 			$categories = explode("|", $categories);

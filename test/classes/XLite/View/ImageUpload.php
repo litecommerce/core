@@ -63,12 +63,7 @@ class XLite_View_ImageUpload extends XLite_View
 
     function isFS()
     {
-        $field = $this->get("field");
-        $object = $this->get("object");
-        return $this->get("object.$field.defaultSource") == "F";
+		return ('F' == $this->getComplex('object.' . $this->get('field') . '.defaultSource'));
     }
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+

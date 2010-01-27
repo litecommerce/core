@@ -47,7 +47,7 @@
 class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
 {	
 	public $_bonusPrices = true; // getPrice & getSubTotal return bonus prices	
-	public $DC = null;	
+	protected $DC = null;	
 	public $_getDiscountedShippingCost = false;	
     public $_appliedBonuses = null;	
 	public $_count_all_products = false;

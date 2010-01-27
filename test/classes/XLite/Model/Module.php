@@ -95,10 +95,11 @@ class XLite_Model_Module extends XLite_Model_Abstract
      * Default SQL ORDER clause 
      * 
      * @var    string
-     * @access protected
+     * @access public
      * @since  1.0
      */
-    protected $defaultOrder = 'name';
+    public $defaultOrder = 'name';
+
 
     /**
      * Overlay a template

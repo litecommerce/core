@@ -47,7 +47,9 @@
 class XLite_Module_WholesaleTrading_Controller_Admin_PriceList extends XLite_Controller_Admin_Abstract
 {	
 	public $params = array('target', 'mode', 'category', 'include_subcategories', 'membership');	
-	public $_priceList;
+	
+	protected $_priceList = array();
+	protected $wholesale_pricing = array();
 	
 	function getTemplate()
 	{
@@ -64,7 +66,7 @@ class XLite_Module_WholesaleTrading_Controller_Admin_PriceList extends XLite_Con
 			$include_subcategories = true;
 		}
 		$cat = new XLite_Model_Category($category_id); 
-		$this->_priceList []= $cat;
+		$this->_priceList[] = $cat;
 		
 		if ($include_subcategories == true) {
 			foreach ($cat->get('subcategories') as $sc) {
@@ -75,8 +77,8 @@ class XLite_Module_WholesaleTrading_Controller_Admin_PriceList extends XLite_Con
 	
 	function getPriceList()
 	{
-		$inc_subcategories = isset($_REQUEST['include_subcategories']);
-		$this->fillPriceList($_REQUEST['category'], $inc_subcategories);
+		$this->fillPriceList(isset($_REQUEST['category']) ? $_REQUEST['category'] : '', isset($_REQUEST['include_subcategories']));
+
 		return $this->_priceList;
 	}
 
@@ -98,7 +100,4 @@ class XLite_Module_WholesaleTrading_Controller_Admin_PriceList extends XLite_Con
 		return count($this->getWholesalePricing($product_id));
 	}
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+

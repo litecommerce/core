@@ -83,7 +83,7 @@
   <td valign="middle">
     <select name="tax_class">
         <option value="">None</option>
-    	<option FOREACH="xlite.factory.TaxRates.productClasses,_tax_class" selected="product.tax_class=_tax_class">{_tax_class}</option>
+    	<option FOREACH="xlite.factory.XLite_Model_TaxRates.productClasses,_tax_class" selected="product.tax_class=_tax_class">{_tax_class}</option>
 	</select>
   </td>
 </tr>

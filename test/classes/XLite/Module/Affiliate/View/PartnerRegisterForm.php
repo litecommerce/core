@@ -84,7 +84,7 @@ class XLite_Module_Affiliate_View_PartnerRegisterForm extends XLite_View_Registe
             $this->profile = $this->auth->get("profile");
         }
         if (is_null($this->profile)) {
-            $this->profile = new XLite_Model_Profile($_REQUEST["profile_id"]);
+            $this->profile = new XLite_Model_Profile(isset($_REQUEST["profile_id"]) ? $_REQUEST["profile_id"] : null);
         }
         return $this->profile;
     }

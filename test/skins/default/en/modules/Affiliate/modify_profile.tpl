@@ -218,7 +218,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
     <td></td>
     <td>
         <select class="FixedSelect" disabled>
-            <option FOREACH="xlite.factory.AffiliatePlan.findAll(),ap" value="{ap.plan_id}" selected="{ap.plan_id=pending_plan}">{ap.title:h}</option>
+            <option FOREACH="xlite.factory.XLite_Module_Affiliate_Model_AffiliatePlan.findAll(),ap" value="{ap.plan_id}" selected="{ap.plan_id=pending_plan}">{ap.title:h}</option>
         </select>
         <input type=hidden name="pending_plan" value="{pending_plan}">
     </td>
@@ -229,7 +229,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
     <td></td>
     <td>
         <select class="FixedSelect" disabled>
-            <option FOREACH="xlite.factory.AffiliatePlan.findAll(),ap" value="{ap.plan_id}" selected="{ap.plan_id=plan}">{ap.title:h}</option>
+            <option FOREACH="xlite.factory.XLite_Module_Affiliate_Model_AffiliatePlan.findAll(),ap" value="{ap.plan_id}" selected="{ap.plan_id=plan}">{ap.title:h}</option>
         </select>
     </td>
     <td>&nbsp;</td>

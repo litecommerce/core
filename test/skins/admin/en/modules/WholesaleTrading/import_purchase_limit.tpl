@@ -13,7 +13,7 @@ This page allows you to import purchase limit from CSV file.<hr>
 <tr>
     <td colspan=2><widget template="modules/WholesaleTrading/field_order.tpl"></td>
 </tr>
-<tr FOREACH="xlite.factory.PurchaseLimit.getImportFields(#purchase_limit_layout#),id,fields">
+<tr FOREACH="xlite.factory.XLite_Module_WholesaleTrading_Model_PurchaseLimit.getImportFields(#purchase_limit_layout#),id,fields">
     <td width=1>{id}:</td>
     <td width=99%>
         <select name="purchase_limit_layout[{id}]">

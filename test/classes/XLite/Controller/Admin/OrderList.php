@@ -49,8 +49,6 @@ class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_Abstract
     public $params = array('target', 'mode', 'order_id1', 'order_id2', 'login', 'status');	
     public $noSuchUser = false;
 
-	protected $action = '';
-
 	protected $orders = null;
 
     function fillForm()

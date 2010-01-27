@@ -124,7 +124,7 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
         parent::delete();
     }
 
-    function parseInventoryOptions(&$properties)
+    function parseInventoryOptions($properties)
     {
         $options = $properties["options"];
         $options = explode("\r\n",$options);
@@ -138,7 +138,7 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
         return $options;
     }
 
-	function updateInventory(&$properties)
+	function updateInventory($properties)
 	{
 		if ($properties['opttype'] == 'Text'|| $properties['opttype'] == 'Textarea') return;	
 		
@@ -179,7 +179,7 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
 		}
 	}
 		
-	function deleteInventory(&$properties)
+	function deleteInventory($properties)
 	{
 		$inventory = new XLite_Module_InventoryTracking_Model_Inventory();
         $deleted_inventories = $inventory->findAll("inventory_id LIKE '".$properties['product_id']."|%".addslashes($properties['optclass'])."%'");
@@ -208,7 +208,7 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
 
 	}
 	
-	function cloneInventory(&$product, $options = false)
+	function cloneInventory($product, $options = false)
 	{
 		 $id = $product->get("product_id");
 

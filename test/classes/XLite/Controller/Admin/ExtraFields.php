@@ -61,7 +61,7 @@ class XLite_Controller_Admin_ExtraFields extends XLite_Controller_Admin_Abstract
     
     function isCategorySelected($name, $categoryID)
     {
-        return in_array($categoryID, (array)$_POST[$name]);
+        return (isset($_POST[$name]) && is_array($_POST[$name])) ? in_array($categoryID, $_POST[$name]) : false;
     }
     
     function getCategories() // {{{

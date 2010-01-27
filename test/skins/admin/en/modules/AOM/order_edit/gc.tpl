@@ -74,9 +74,9 @@
 	</td>
     <td valign="top" class="ProductDetailsTitle" IF="target=#order#&!order.GC">No Gift Certificates applied</td>
 	<td IF="target=#order#">&nbsp;</td>
-	<td valign="top" IF="cloneOrder.GCCopy">
-		{if:!cloneOrder.gcCopy.validate()=#1#}
-		<widget template="modules/AOM/gift_info.tpl" gc="{cloneOrder.GCCopy}">
+	<td valign="top" IF="cloneOrder.getGCCopy()">
+		{if:cloneOrder.gcCopy.validate()=#1#}
+		<widget template="modules/AOM/gift_info.tpl" gc="{cloneOrder.getGCCopy()}">
 		<table>
 			<tr>
 				<td>
@@ -88,7 +88,7 @@
             GiftCertificate #{cloneOrder.gcid} was deleted.
         {end:}
 	</td>
-    <td valign="top" class="ProductDetailsTitle" IF="!cloneOrder.GCCopy">No Gift Certificates applied</td>
+    <td valign="top" class="ProductDetailsTitle" IF="!cloneOrder.getGCCopy()">No Gift Certificates applied</td>
 </tr>
 </table>
 </form>

@@ -38,7 +38,7 @@ This page allows you to configure partner registration form <a href="#default_fi
 
 <!-- fields list -->
 <a name=additional_fields></a>
-<table FOREACH="xlite.factory.PartnerField.findAll(),pidx,partnerField" border=0>
+<table FOREACH="xlite.factory.XLite_Module_Affiliate_Model_PartnerField.findAll(),pidx,partnerField" border=0>
 
 <form action="admin.php#additional_fields" method=POST>
 <input type=hidden name=target value=partner_form>

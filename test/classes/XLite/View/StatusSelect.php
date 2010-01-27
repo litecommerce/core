@@ -50,7 +50,3 @@ class XLite_View_StatusSelect extends XLite_View_FormField
     public $allOption = false; 
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

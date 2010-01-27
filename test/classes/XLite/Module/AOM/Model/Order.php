@@ -420,8 +420,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 
 	function getGCCopy()
 	{
-		$gc = parent::getGC();
-		return $gc;
+		return method_exists($this, 'getGC') ? $this->getGC() : null;
 	}
 
 	function getOrderDC() // {{{

@@ -6,6 +6,6 @@
 {end:}
 {if:option.isName(#current_currency#)}
 <select name="{option.name}">
-	<option FOREACH="xlite.factory.Currency.findAll(),currency" value="{currency.code}" selected="{option.value=currency.code}">{currency.code}: {currency.name}</option>
+	<option FOREACH="xlite.factory.XLite_Module_CardinalCommerce_Model_Currency.findAll(),currency" value="{currency.code}" selected="{option.value=currency.code}">{currency.code}: {currency.name}</option>
 </select>
 {end:}

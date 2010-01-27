@@ -55,7 +55,8 @@ class XLite_View_ProductSelect extends XLite_View
 	public $formField = "product";	
 	public $label = "Select product ...";	
 	public $template = "common/select_product.tpl";	
-    public $product = null;
+
+    protected $product = null;
 
     function getName()
     {
@@ -65,19 +66,11 @@ class XLite_View_ProductSelect extends XLite_View
 	function getProduct()
 	{
         if (is_null($this->product)) {
-            $field = $this->formField . "_id";
-            $productId = $this->get("dialog.$field");
-            if ($productId) {
-                $this->product = new XLite_Model_Product($this->get("dialog.$field"));
-            } else {
-                $this->product = null;
-            }
+			$this->product = ($productId = $this->getDialog()->get($this->formField . '_id')) ? new XLite_Model_Product($productId) : null;
         }
+
         return $this->product;
 	}
 
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+

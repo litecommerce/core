@@ -47,7 +47,7 @@ class XLite_Module_MultiCurrency_View_Abstract extends XLite_View_Abstract imple
 	function getCurrencies() // {{{
 	{
 		if(is_null($this->currencies)) {
-			$currency = new XLite_Module_MultiCurrency_Model_Currency();
+			$currency = new XLite_Module_MultiCurrency_Model_CurrencyCountries();
 			$this->currencies = $currency->findAll("enabled = 1 and base = 0");
 		}
 		return $this->currencies;
@@ -57,7 +57,7 @@ class XLite_Module_MultiCurrency_View_Abstract extends XLite_View_Abstract imple
 	function getDefaultCurrency() // {{{ 
 	{
 		if (is_null($this->defaultCurrency)) { 
-			$this->defaultCurrency = new XLite_Module_MultiCurrency_Model_Currency();
+			$this->defaultCurrency = new XLite_Module_MultiCurrency_Model_CurrencyCountries();
 			$this->defaultCurrency->find("base = 1");
 		}	
 		return $this->defaultCurrency;

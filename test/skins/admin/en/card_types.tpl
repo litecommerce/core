@@ -23,7 +23,7 @@ Use this section to define types of credit cards accepted at your store.<hr>
 			    	<th class="TableHead">Pos.</th>
 				    <th class="TableHead">&nbsp;</th>
 				</tr>
-				<tr FOREACH="xlite.factory.Card.readAll(),card_idx,card" class="{getRowClass(card_idx,#DialogBox#,#TableRow#)}">
+				<tr FOREACH="xlite.factory.XLite_Model_Card.readAll(),card_idx,card" class="{getRowClass(card_idx,#DialogBox#,#TableRow#)}">
 				    <td width="15%">
 				        {card.code:h}
 				        <input type="hidden" name="card_types[{card.code}][code]" value="{card.code}">

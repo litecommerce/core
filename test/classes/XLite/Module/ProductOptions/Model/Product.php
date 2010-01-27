@@ -217,11 +217,14 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product impl
     	    $result = $this->db->getAll($sql);
 
 	        if (is_array($result) && count($result) > 0) {
+
+				$class = 'XLite_Module_ProductOptions_Model_' . $class_name;
+
     	        foreach ($result as $info) {
     	        	if ($class_name == "ProductOption" && $info["object_product_id"] == 0) {
     	        		continue;	// global product option
     	        	}
-					$obj = new $class_name($info["object_key"]);
+					$obj = new $class($info["object_key"]);
             	    $obj->delete();
 	            }
     	    }			

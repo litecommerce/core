@@ -147,7 +147,9 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 	} // }}}
 	
 	function getOrdersItems() // {{{ 
-	{	
+	{
+		$items = array();
+	
 		// Set cart instance for correct tax calculation
 		$this->_cart = $this->get("order");
 

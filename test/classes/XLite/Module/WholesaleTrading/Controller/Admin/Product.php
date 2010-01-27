@@ -159,18 +159,12 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Product extends XLite_Contr
 
 	function getValidatyModifier()
 	{
-		$p = $this->getComplex('product.validaty_period');
-		return $p{0};
+		return substr($this->getProduct()->get('validaty_period'), 0, 1);
 	}
 
 	function getValidatyPeriod()
 	{
-		$p = $this->getComplex('product.validaty_period');
-		return substr($p, 1);
+		return substr($this->getProduct()->get('validaty_period'), 1);
 	}
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

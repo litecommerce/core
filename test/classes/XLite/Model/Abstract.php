@@ -102,7 +102,7 @@ class XLite_Model_Abstract extends XLite_Base
     * is specified.
     * @var string $defaultOrder
     */
-    protected $defaultOrder;
+    public $defaultOrder;
 
     /**
     * Contains SQL WHERE clause used by default by findAll()

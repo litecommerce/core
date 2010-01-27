@@ -83,9 +83,11 @@ class XLite_View_Pager extends XLite_View
     	if (!isset($this->_baseObj)) {
     		$this->_baseObj = new XLite_Model_Abstract();
     	}
+
         $pages = $this->get("pages");
-        $pageData = $pages[$this->get("pageID")];
-        if (is_array($pageData)) {
+		$pageData = empty($pages[$this->get("pageID")]) ? array() : $pages[$this->get("pageID")];
+
+        if (!empty($pageData)) {
         	for($i=0; $i<count($pageData); $i++) {
                 if (isset($pageData[$i])) {
                     if ($this->_baseObj->isObjectDescriptor($pageData[$i])) {
@@ -94,6 +96,7 @@ class XLite_View_Pager extends XLite_View
                 }
         	}
         }
+
         return $pageData;
     }
 
@@ -121,7 +124,3 @@ class XLite_View_Pager extends XLite_View
 
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

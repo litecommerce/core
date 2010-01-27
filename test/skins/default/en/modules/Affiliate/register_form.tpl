@@ -227,7 +227,7 @@ The form below allows you to create a partner profile. Do not forget that this i
     <td>
         <select class="FixedSelect" name="pending_plan">
             <option value="" selected="{pending_plan=##}">Select one..</option>
-            <span FOREACH="xlite.factory.AffiliatePlan.findAll(),ap">
+            <span FOREACH="xlite.factory.XLite_Module_Affiliate_Model_AffiliatePlan.findAll(),ap">
             <span IF="ap.plan_id=config.Affiliate.default_plan">
             <option value="{ap.plan_id}" selected="{ap.plan_id=pending_plan}">{ap.title:h} (default)</option>
             </span>

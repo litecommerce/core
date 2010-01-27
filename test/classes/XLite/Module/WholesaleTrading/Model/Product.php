@@ -428,7 +428,9 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 		$products_table = $this->db->getTableByAlias("products");
 		$classes = array("ProductAccess", "PurchaseLimit", "WholesalePricing");
 		foreach ($classes as $class) {
-			$obj = new $class();
+
+			$className = 'XLite_Module_WholesaleTrading_Model_' . $class;
+			$obj = new $className();
 
 			$class_table = $obj->getTable();
 			$sql = "SELECT DISTINCT(o.product_id) AS product_id FROM ".$class_table." o LEFT OUTER JOIN $products_table p ON o.product_id=p.product_id WHERE p.product_id IS NULL";

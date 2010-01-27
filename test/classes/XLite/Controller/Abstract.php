@@ -222,7 +222,7 @@ abstract class XLite_Controller_Abstract extends XLite_View
             return;
         }
 
-        if ($this->isValid()) {
+        if ($this->isValid() && !empty($_REQUEST['action'])) {
             // call action method
             $action = "action_" . $_REQUEST['action'];
 			$this->$action();

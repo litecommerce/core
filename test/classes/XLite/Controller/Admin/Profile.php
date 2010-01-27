@@ -63,7 +63,10 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
     function init()
     {
         parent::init();
-        $this->profileForm->profile = $this->get("profile");
+
+		if (!is_null($this->profileForm)) {
+	        $this->profileForm->profile = $this->get("profile");
+		}
     }
 
     function handleRequest()

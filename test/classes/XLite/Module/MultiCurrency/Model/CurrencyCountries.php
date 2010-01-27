@@ -39,9 +39,8 @@
 * @version $Id$
 */
 
-class XLite_Module_MultiCurrency_Model_Currency extends XLite_Model_Abstract
-{ // {{{	
-	
+class XLite_Module_MultiCurrency_Model_CurrencyCountries extends XLite_Model_Abstract
+{	
 	public $fields = array(
 			"currency_id" 	=> 0,
 			"code"			=> "",
@@ -66,7 +65,3 @@ class XLite_Module_MultiCurrency_Model_Currency extends XLite_Model_Abstract
 
 } // }}}
 
-// WARNING:
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

@@ -96,7 +96,7 @@
   Settings/Taxes/add rate/condition dialog</i></td>
   <td valign="middle">
     <select name="tax_class"><option value="" selected="tax_class=##">None</option>
-	<option FOREACH="xlite.factory.TaxRates.productClasses,_taxClass" option="{_taxClass}" selected="tax_class=_taxClass">{_taxClass}</option>
+	<option FOREACH="xlite.factory.XLite_Model_TaxRates.productClasses,_taxClass" option="{_taxClass}" selected="tax_class=_taxClass">{_taxClass}</option>
 	</select>
   </td>
 </tr>

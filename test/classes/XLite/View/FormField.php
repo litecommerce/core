@@ -46,22 +46,18 @@
 */
 class XLite_View_FormField extends XLite_View
 {	
-    public $field = null;
+    protected $field = null;
 
     /**
-    * Used in form field components to display a form field according to
-    * the 'field' property.  
-    */      
-    function getValue()
+     * Used in form field components to display a form field according to the 'field' property 
+     * 
+     * @return mixed
+     * @access public
+     * @since  3.0
+     */
+    public function getValue()
     {
-        if (!is_null($this->field) && !is_null($this->get("component." . $this->field))) {
-            return $this->get("component." . $this->field);
-        }
-        return isset($this->value) ? $this->value : null;
+		return is_null($this->component) ? $this->value : (is_null($field = $this->field) ? null : $this->component->$field);
     }
-
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+

@@ -9,7 +9,7 @@
     {end:}
     </td>
 </tr>
-<tr FOREACH="xlite.factory.ExtraField.importFields,id,fields">
+<tr FOREACH="xlite.factory.XLite_Model_ExtraField.importFields,id,fields">
     <td width=1>{id}:</td>
     <td width=99%>
         <select name="fields_layout[{id}]">
