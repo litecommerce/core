@@ -53,8 +53,6 @@ $GLOBALS['TEXT_QUALIFIERS'] = array("double_quote"=>'"',"single_quote"=>"'");
 */
 class XLite_Model_Abstract extends XLite_Base
 {
-    // properties {{{
-
     /**
     * The SQL database table alias for object
     * @var string $alias
@@ -120,35 +118,9 @@ class XLite_Model_Abstract extends XLite_Base
     */	
     public $fetchObjIdxOnly = false;
     
-    // }}}
 
-    /**
-    * Constructs a new database object. The options argument list
-    * is a primary key value. If it is specified, the object is
-    * created as isPersistent, otherwise - !isPersistent.
-    *
-    * @access public
-    */
-    public function __construct() // {{{
-    {
-        parent::__construct(); 
-        if (!empty($this->autoIncrement)) {
-            // if auto-increment is specified, make it a primary key
-            // of this table
-            $this->primaryKey = array($this->autoIncrement);
-        }
-        $args = func_get_args();
-        if (count($args)) {
-            for ($i=0; $i<count($this->primaryKey); $i++) {
-                if (isset($args[$i]) && !is_null($args[$i])) {
-					if ($this->primaryKey[$i] == $this->autoIncrement) {
-						if (!is_numeric($args[$i])) $args[$i] = 0;
-					}
-                    $this->set($this->primaryKey[$i], $args[$i]);
-                }
-            }
-        }
-    } // }}}
+	protected $fieldNames = array();
+
 
     /**
     * Returns the SQL database table name for this object. Uses "alias"
@@ -159,111 +131,13 @@ class XLite_Model_Abstract extends XLite_Base
     */
     function getTable() // {{{
     {
-        return XLite_Model_Database::getInstance()->getTableByAlias($this->alias);
-    } // }}}
-
-    /**
-    * Returns the properties of this object. Reads the object from database
-    * if necessary.
-    *
-    * @access public
-    * @return array The properties array
-    */
-    function getProperties() // {{{
-    {
-        if (!$this->isRead && $this->isPersistent) {
-            $this->isRead = $this->read();
-        }
-        return $this->properties;
-    } // }}}
-    
-    /**
-    * Attempts to find the database record for this object and fill
-    * the object properties with data found.
-    *
-    * @access public
-    * @param string $where The SQL WHERE statement to find object for
-    * @return boolean True if database record for this object found,
-    *                 false otherwise
-    */
-    function find($where, $order = null) // {{{
-    {
-        $where = $this->_buildWhere($where);
-        $this->sql = $this->_buildSelect($where, $order); // build select query
-        $result = $this->db->getRow($this->sql);
-        if (is_null($result)) {
-            return false;
-        } else {
-            $this->_updateProperties($result);
-            return $this->filter();
-        }    
+        return $this->db->getTableByAlias($this->alias);
     } // }}}
 
     function filter()
     {
         return true;
     }
-
-    /**
-    * Attempts to read All database records for this class.
-    *
-    * @access public
-    * @param string $where The SQL WHERE statement to find data
-    * @param string $orderby The SQL ORDER BY statement to sort data
-    * @return array The array of this class objects.
-    */
-    function findAll($where = null, $orderby = null, $groupby = null, $limit = null) // {{{
-    {
-        // apply the default order
-        if (empty($orderby)) {
-            if (!empty($this->defaultOrder))
-                $orderby = $this->defaultOrder;
-        }
-        $where = $this->_buildWhere($where);
-        // build select query
-        $this->sql = $this->_buildSelect($where, $orderby, $groupby, $limit); 
-        $result = $this->db->getAll($this->sql);
-        if (!is_array($result)) {
-            $this->_die ($this->sql.": wrong result");
-        }
-        $objects = array();
-        // create class instance for every row found
-        $rows_number = count($result);
-        for ($row_key=0; $row_key<$rows_number; $row_key++) {
-            $class = get_class($this);
-            $object = new $class();
-            if ($this->fetchKeysOnly) {
-                $object->isPersistent = true;
-                $object->isRead = false;
-                $object->properties = $result[$row_key];
-                $object_key = array("class" => $class, "data" => $result[$row_key]);
-            } else {
-                $object->isPersistent = true;
-                $object->isRead = true;
-                $instance = $object->_updateProperties($result[$row_key]);
-				if (is_object($instance)) {
-					$instance->_updateProperties($result[$row_key]);
-			        $object = $instance;
-				} 
-            }
-            if ($object->filter()) {
-            	if ($this->fetchKeysOnly) {
-            		if ($this->fetchObjIdxOnly) {
-                    	unset($object);
-                    	$objects[] = $object_key;
-                    	unset($object_key);
-                    } else {
-                    	$objects[] = $object;
-                    	unset($object);
-                    }
-                } else {
-                	$objects[] = $object;
-                	unset($object);
-                }
-            }
-        }
-        return $objects;
-    } // }}}
 
     function isObjectDescriptor(&$descriptor) {
         if (is_array($descriptor) && isset($descriptor["class"]) && isset($descriptor["data"])) {
@@ -321,47 +195,6 @@ class XLite_Model_Abstract extends XLite_Base
         return true;
     } // }}}
 
-    /**
-    * Wrapps findAll() method with the default arguments.
-    *
-    * @access public
-    * @return array The array of class objects
-    */
-    function readAll() // {{{
-    {
-        return $this->findAll();
-    } // }}}
-    
-    /**
-    * Reads the database data for this object. Dies for non-persistens
-    * objects (object which are not exist in database)
-    *
-    * @access public
-    * @return boolean True if data found / false otherwise
-    */
-    function read() // {{{
-    {
-        // read data for persisten object
-        if ($this->isPersistent) {
-            // build select query
-            $this->sql = $this->_buildRead();
-            $result = $this->db->getRow($this->sql);
-            if (!is_null($result)) {
-                $this->_updateProperties($result);
-                if (!$this->filter()) {
-                    $this->properties = $this->fields; // default properties
-                } else {
-                    return true;
-                }
-            }
-            return false;
-        }
-        // die otherwise
-        else {
-            $this->_die("Unable to read unspecified row for $this->alias");
-       }
-    } // }}}
-        
     function _aggregate($field, $aggregate, $where = null) // {{{
     {
         $sql = "SELECT $aggregate($field) FROM " . $this->getTable();
@@ -391,30 +224,6 @@ class XLite_Model_Abstract extends XLite_Base
         return $this->_aggregate($field, "AVG", $where);
     } // }}}
 
-    /**
-    * Creates an associative array with index = object primary key.
-    * 
-    * @access public
-    * @param array $ar The array of objects
-    * @param string field The field to use as an index
-    * @return array The associative array
-    */
-    function _assocArray(&$ar, $field) // {{{
-    {
-        $result = array();
-        for ($i=0; $i<count($ar); $i++) {
-    		if (is_array($ar[$i]) && isset($ar[$i]["class"]) && isset($ar[$i]["data"])) {
-        		$object = new $ar[$i]["class"];
-                $object->isPersistent = true;
-                $object->isRead = false;
-                $object->properties = $ar[$i]["data"];
-                $ar[$i] = $object;
-    		}
-            $result[$ar[$i]->get($field)] = $ar[$i];
-        }
-        return $result;
-    } // }}}
- 
     /**
     * Checks whether the database record exists for this object
     *
@@ -533,90 +342,6 @@ class XLite_Model_Abstract extends XLite_Base
     } // }}}
 
     /**
-    * Returns the specified property of this object. Read the object data
-    * from dataase if necessary.
-    *
-    * #access public
-    * @param string $property The property name
-    * @return mixed The property value
-    */
-    function get($property) // {{{
-    {
-        // default value
-        $value = null;
-        
-        // check whether the property exists
-        if (array_key_exists($property, $this->fields))
-        {
-            // return persisten object property value
-            if ($this->isPersistent) {
-                // read object data if necessary
-                if (!$this->isRead && $property != $this->autoIncrement) {
-                    $this->isRead = $this->read();
-                }
-            }
-            // if object is not persisten but property set
-            if (isset($this->properties[$property])) {
-                $value = $this->properties[$property];
-            }
-            // return the default property value otherwise
-            else {
-                $value = $this->fields[$property];
-            }
-        } else {
-            $value = parent::get($property);
-        }
-        return $value;
-    } // }}}
-
-    /**
-    * Sets the specified property value/
-    *
-    * @access public
-    * @param string $property The property name
-    * @param mixed $value The property value
-    */
-    function set($property, $value) // {{{
-    {
-        if (!is_scalar($property)) {
-            $this->_die($property . " not a scalar");
-        }
-        if (array_key_exists($property, $this->fields)) {
-            // set isRead to FALSE if object has not been read yet
-            if (array_search($property, $this->primaryKey)) {
-                $this->isRead = false; 
-            }
-            if (is_null($value)) {
-                if (isset($this->properties[$property])) {
-                	unset($this->properties[$property]);
-                }
-            } else {    
-                $this->properties[$property] = $value;
-            }    
-            $this->isPersistent = $this->_allKeysSet();
-        } else {
-            parent::set($property, $value);
-        }
-    } // }}}
-
-    /**
-    * Checks whether the all primary keys for this object are set or not.
-    *
-    * @access private
-    * @return boolean True if all keys are set / false otherwise
-    */
-    function _allKeysSet() // {{{
-    {
-        foreach ($this->primaryKey as $field) {
-            if (!isset($this->properties[$field]) || 
-                strlen($this->properties[$field]) == 0) {
-                return false;
-            }    
-        }
-        return true;
-    } // }}}
-    
-    /**
     * Builds the SQL INSERT statement query for this object properties.
     * 
     * @access private
@@ -641,73 +366,6 @@ class XLite_Model_Abstract extends XLite_Base
         return "INSERT INTO $table ($fields) VALUES ($values)";
     } // }}}
     
-    /**
-    * Builds the SQL SELECT statement for this object.
-    *
-    * @access private
-    * @param string $where The SQL WHERE statement for select
-    * @param string $orderby the The SQL ORDER BY statement for select
-    * @return string The SELECT statement
-    */
-    function _buildSelect($where = null, $orderby = null, $groupby = null, $limit = null) // {{{
-    {
-        if (!$this->fetchKeysOnly) {
-			$fields = array_keys($this->fields);
-            $fields = implode(",", $fields);
-        } else {
-            $fields = implode(",", $this->primaryKey);
-        }
-        $table = $this->getTable();
-        $sql = "SELECT $fields FROM $table";
-        if (!empty($where)) {
-            $sql .= " WHERE $where";
-        }
-        if (!empty($groupby)) {
-            $sql .= " GROUP BY $groupby";
-        }
-        if (!empty($orderby)) {
-            $sql .= " ORDER BY $orderby";
-        }
-        if (!empty($limit)) {
-            $sql .= " LIMIT $limit";
-        }
-        return $sql;
-    } // }}}
-    
-    function _buildWhere($where) // {{{
-    {
-        // apply the default range
-        if (!empty($this->_range)) {
-            if (empty($where)) {
-                $where = $this->_range;
-            } else {
-                $where = "$this->_range AND $where";
-            }
-        }    
-        return $where;
-    } // }}}
-    
-    /**
-    * Builds SQL query for reading the database data for this object
-    * by primary key.
-    *
-    * @access private
-    * @return string the SQL SELECT statement
-    */
-    function _buildRead() // {{{
-    {
-        $condition = array();
-        foreach ($this->primaryKey as $field) {
-            $condition[] = "$field='".addslashes($this->properties[$field])."'";
-        }
-        $condition = implode(" AND ", $condition);
-        $fko = $this->fetchKeysOnly;
-        $this->fetchKeysOnly = false;
-        $sql = $this->_buildSelect($condition);
-        $this->fetchKeysOnly = $fko;
-        return $sql;
-    } // }}}
-
     /**
     * Builds the SQL DELETE statement to delete this object database record.
     *
@@ -754,28 +412,6 @@ class XLite_Model_Abstract extends XLite_Base
         $values = implode(',', $values);
         $table = $this->getTable();
         return 'UPDATE ' . $table . ' SET ' . $values . ' WHERE ' . $condition;
-    } // }}}
-    
-    /**
-    * Updates the object properties with specified array values. Sets
-    * persistent and read flags.
-    *
-    * @access private
-    * @param array $properties The properties values array
-    */
-    function _updateProperties(array $properties = array()) // {{{
-    {
-        if (!empty($properties) && sizeof($properties)) {
-            foreach ($properties as $key => $value) {
-                if (array_key_exists($key, $this->fields) && 
-                    !array_key_exists($key, $this->properties))
-                {
-                    $this->properties[$key] = $properties[$key];
-                }
-            }
-            $this->isPersistent = true;
-            $this->isRead = true;
-        }
     } // }}}
     
     /**
@@ -1004,6 +640,179 @@ class XLite_Model_Abstract extends XLite_Base
         return sprintf("%.02f", round(doubleval($price), 2));
     }
 
+
+
+
+
+    /**
+     * Creates an associative array with index = object primary key 
+     * 
+     * @param array  $objects array of objects
+     * @param string $field   field to use as an index
+     *  
+     * @return array
+     * @access protected
+     * @since  3.0
+     */
+    protected function _assocArray(array $objects, $field)
+    {
+        $result = array();
+
+		foreach ($objects as $object) {
+			if (is_array($object) && isset($object['class']) && isset($object['data'])) {
+				$properties = $object['data'];
+				$object = new $object['class'];
+				$object->isPersistent = true;
+                $object->isRead = false;
+                $object->properties = $properties;
+				unset($properties);
+			}
+
+			$result[$object->get($field)] = $object;
+		}
+
+        return $result;
+    }
+
+    /**
+     * Checks whether the all primary keys for this object are set or not 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0
+     */
+    protected function _allKeysSet()
+    {
+        foreach ($this->primaryKey as $field) {
+			if (empty($this->properties[$field])) return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Updates the object properties with specified array values. Sets persistent and read flags 
+     * 
+     * @param array $properties property values array
+     *  
+     * @return void
+     * @access protected
+     * @since  3.0
+     */
+    protected function _updateProperties(array $properties = array())
+    {
+		$this->properties = array_merge(array_intersect_key($properties, $this->fieldNames), $this->properties);
+		$this->isPersistent = $this->isRead = true;
+    }
+
+	/**
+	 * Compose the "WHERE" condition for SQL queries
+	 * 
+	 * @param string $where condition
+	 *  
+	 * @return string
+	 * @access protected
+	 * @since  3.0
+	 */
+	protected function _buildWhere($where)
+    {
+		return empty($this->_range) ? $where : $this->_range . (empty($where) ? '' : ' AND ' . $where);
+    }
+
+    /**
+     * Builds the SQL SELECT statement for this object 
+     * 
+	 * @param mixed $where   "where" condition
+     * @param mixed $orderby "orderby" condition
+     * @param mixed $groupby "groupby" condition
+     * @param mixed $limit   "limit" condition
+     *  
+     * @return string
+     * @access protected
+     * @since  3.0
+     */
+    protected function _buildSelect($where = null, $orderby = null, $groupby = null, $limit = null)
+    {
+		$sql = 'SELECT ' 
+			   . implode(',', $this->fetchKeysOnly ? $this->primaryKey : array_keys($this->fieldNames)) 
+			   . ' FROM ' . $this->getTable();
+
+		foreach (
+			array(
+				'WHERE'    => $where,
+				'GROUP BY' => $groupby,
+				'ORDER BY' => $orderby,
+				'LIMIT'    => $limit,
+			) as $statement => $condition
+		) {
+			empty($condition) || ($sql .= ' ' . $statement . ' ' . $condition);
+		}
+
+        return $sql;
+    }
+
+    /**
+     * Builds SQL query for reading the database data for this object by primary key 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0
+     */
+    protected function _buildRead()
+    {
+        $condition = array();
+
+        foreach ($this->primaryKey as $field) {
+            $condition[] = $field . ' = \'' . addslashes($this->properties[$field]) . '\'';
+        }
+
+        $fko = $this->fetchKeysOnly;
+        $this->fetchKeysOnly = false;
+        $sql = $this->_buildSelect(implode(' AND ', $condition));
+        $this->fetchKeysOnly = $fko;
+
+        return $sql;
+    }
+
+
+    /**
+     * Constructs a new database object. The options argument list is a primary key value.
+	 * If it is specified, the object is created as isPersistent, otherwise - !isPersistent 
+     * 
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+		// if auto-increment is specified, make it a primary key of this table
+        empty($this->autoIncrement) || ($this->primaryKey = array($this->autoIncrement));
+
+		$this->generateFieldNamesHash();
+
+		foreach (func_get_args() as $index => $arg) {
+            empty($arg) || $this->set($this->primaryKey[$index], $arg);
+        }
+    }
+
+    /**
+     * Returns the properties of this object. Reads the object from database if necessary 
+     * 
+     * @return array
+     * @access public
+     * @since  3.0
+     */
+    public function getProperties()
+    {
+        if (!$this->isRead && $this->isPersistent) {
+            $this->isRead = $this->read();
+        }
+
+        return $this->properties;
+    }
+
     /**
      * Sets the properties for this object from the specified array 
      * 
@@ -1016,10 +825,190 @@ class XLite_Model_Abstract extends XLite_Base
     public function setProperties(array $properties)
     {
         foreach ($properties as $field => $value) {
-			if (isset($this->fields[$field])) {
-                $this->set($field, $properties[$field]);
-            }
+			isset($this->fieldNames[$field]) && $this->set($field, $properties[$field]);
         }
     }
+
+	/**
+     * (Re)Generate field names cache
+     *
+     * @return void
+     * @access protected
+     * @since  3.0
+     */
+	public function generateFieldNamesHash()
+	{
+		$this->fieldNames = array_fill_keys(array_keys($this->fields), true);
+	}
+
+    /**
+     * Returns the specified property of this object. Read the object data from dataase if necessary 
+     * 
+     * @param string $property field name
+     *  
+     * @return mixed
+     * @access public
+     * @since  3.0
+     */
+    public function get($property)
+    {
+		// check whether the property exists
+		if (isset($this->fieldNames[$property])) {
+
+			// read object data if necessary
+			if ($this->isPersistent && !$this->isRead && $property != $this->autoIncrement) {
+				$this->isRead = $this->read();
+			}
+
+			return isset($this->properties[$property]) ? $this->properties[$property] : $this->fields[$property];
+		}
+		
+		return parent::get($property);
+    }
+
+    /**
+     * Sets the specified property value 
+     * 
+     * @param string $property field name
+     * @param mixed  $value    field value
+     *  
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function set($property, $value)
+    {
+		if (isset($this->fieldNames[$property])) {
+
+			// set isRead to FALSE if object has not been read yet
+			// FIXME - is it needed???
+			// in_array($property, $this->primaryKey) && ($this->isRead = false);
+
+			$this->properties[$property] = $value;
+			$this->isPersistent = $this->_allKeysSet();
+
+		} else {
+
+			parent::set($property, $value);
+		}
+    }
+
+    /**
+     * Reads the database data for this object. Dies for non-persistens objects (object which are not exist in database) 
+     * 
+     * @return bool true if data found / false otherwise
+     * @access public
+     * @since  3.0
+     */
+    public function read()
+    {
+        // read data for persisten object
+        if ($this->isPersistent) {
+
+            // build select query
+            if (!is_null($result = $this->db->getRow($this->sql = $this->_buildRead()))) {
+
+                $this->_updateProperties($result);
+
+                if ($this->filter()) {
+					return true;
+				}
+
+				// default properties
+				$this->properties = $this->fields;
+            }
+
+            return false;
+        }
+
+        // die otherwise
+		$this->_die('Unable to read unspecified row for ' . $this->alias);
+    }
+
+    /**
+     * Wrapps findAll() method with the default arguments 
+     * 
+     * @return array
+     * @access public
+     * @since  3.0
+     */
+    public function readAll()
+    {
+        return $this->findAll();
+    }
+
+    /**
+     * Attempts to find the database record for this object and fill the object properties with data found
+     * 
+	 * @param mixed $where "where" condition
+     * @param mixed $order "orderby" condition
+     *  
+     * @return bool
+     * @access public
+     * @since  3.0
+     */
+    public function find($where, $order = null)
+    {
+        if (is_null($result = $this->db->getRow($this->sql = $this->_buildSelect($this->_buildWhere($where), $order)))) {
+            return false;
+		}
+
+		$this->_updateProperties($result);
+
+		return $this->filter();
+    }
+
+    /**
+     * Attempts to read All database records for this class 
+     * 
+     * @param mixed $where   "where" condition
+     * @param mixed $orderby "orderby" condition
+     * @param mixed $groupby "groupby" condition
+     * @param mixed $limit   "limit" condition
+     *  
+     * @return void
+	 * @access public
+     * @since  3.0
+     */
+    public function findAll($where = null, $orderby = null, $groupby = null, $limit = null)
+    {
+        // apply the default order
+        if (empty($orderby) && !empty($this->defaultOrder)) {
+			$orderby = $this->defaultOrder;
+        }
+
+        $where = $this->_buildWhere($where);
+
+        // build select query
+        $this->sql = $this->_buildSelect($where, $orderby, $groupby, $limit);
+        $result = $this->db->getAll($this->sql);
+
+		$class = get_class($this);
+        $objects = array();
+
+        // create class instance for every row found
+		foreach ($result as $row) {
+
+			$object = new $class();
+			$object->isPersistent = true;
+
+			if ($this->fetchKeysOnly) {
+				$object->isPersistent = true;
+				$object->isRead = false;
+				$object->properties = $row;
+				$object_key = array('class' => $class, 'data' => $row);
+			} else {
+				$object->_updateProperties($row);
+			}
+
+			if ($object->filter()) {
+				$objects[] = ($this->fetchKeysOnly && $this->fetchObjIdxOnly) ? $object_key : $object;
+			}
+
+			unset($object);
+		}
+
+        return $objects;
+    } 
 }
 
