@@ -32,10 +32,6 @@ class XLite_Base
 		$GLOBALS['memory_usage'] = max(isset($GLOBALS['memory_usage']) ? $GLOBALS['memory_usage'] : 0, memory_get_usage()) / 1024 / 1024;
 	}
 
-	public function __destruct()
-	{
-	}
-
 	protected function _die($message)
 	{
 		// TODO - add logging
@@ -64,44 +60,6 @@ class XLite_Base
 
         return self::$instances[$className];
     }
-
-	function set($name, $value) // {{{
-    {
-        if (strpos($name, '.')) {
-            $obj = $this;
-            $names = explode('.', $name);
-            $last = array_pop($names);
-            foreach ($names as $n) {
-                if (is_array($obj)) {
-                    $obj = $obj[$n];
-                } else {
-                    $prevObj = $obj;
-                    $obj = $obj->get($n);
-                    $prevVal = $obj;
-                    $prevProp = $n;
-                }
-                if (is_null($obj)) {
-                    return;
-                }
-            }
-            if (is_array($obj)) {
-                $obj[$last] = $value;
-                $prevObj->set($prevProp, $prevVal);
-            } else {
-                if (!method_exists($obj,'set')) {
-                    $this->_die("No setter for " . get_class($this) . "." . $name);
-                }
-                $obj->set($last, $value);
-            }
-        } else if (method_exists($this, 'set' . $name)) {
-            $func = 'set' . $name;
-            $this->$func($value);
-        } else {
-            $this->$name = $value;
-        }
-    }
-
-
 
 	/**
 	 * "Magic" getter. It's called when object property is not found
@@ -161,6 +119,26 @@ class XLite_Base
         return $this->$name;
     }
 
+	/**
+	 * Set object property 
+	 * 
+	 * @param string $name  property name
+	 * @param mixed  $value property value
+	 *  
+	 * @return void
+	 * @access public
+	 * @since  3.0
+	 */
+	public function set($name, $value)
+    {
+        if (method_exists($this, 'set' . $name)) {
+            $func = 'set' . $name;
+            $this->$func($value);
+        } else {
+            $this->$name = $value;
+        }
+    }
+
     /**
      * Returns boolean property value named $name. If no property found, returns null
      * 
@@ -194,6 +172,41 @@ class XLite_Base
 
 		return $obj;
 	}
+
+	/**
+	 * Backward compatibility - the ability to use "<arg_1> . <arg_2> . ... . <arg_N>" chains in setters 
+	 * 
+	 * @param string $name  list of params delimeted by the "." (dot)
+	 * @param mixed  $value value to set_
+	 *  
+	 * @return void
+	 * @access public
+	 * @since  3.0
+	 */
+	public function setComplex($name, $value)
+    {
+		$obj = $this;
+		$last = array_pop($names = explode('.', $name));
+
+		foreach ($names as $part) {
+
+			if (is_array($obj)) {
+				$obj = $obj[$part];
+			} else {
+				$prevObj = $obj;
+                $prevVal = $obj = $obj->get($prevProp = $part);
+			}
+       
+			if (is_null($obj)) return;
+		}
+
+		if (is_array($obj)) {
+			$obj[$last] = $value;
+			$prevObj->set($prevProp, $prevVal);
+		} else {
+			$obj->set($last, $value);
+		}
+    }
 
 	/**
      * Backward compatibility - the ability to use "<arg_1> . <arg_2> . ... . <arg_N>" chains in getters
