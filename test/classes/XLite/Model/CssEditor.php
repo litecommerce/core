@@ -57,7 +57,6 @@ class XLite_Model_CssEditor extends XLite_Base
     public function __construct($cssFile = null)
     {
         $this->set("cssFile", $cssFile);
-        parent::__construct();
     }
 
     function getItems()

@@ -74,7 +74,6 @@ class XLite_Model_TaxRates extends XLite_Base
     
     public function __construct()
     {
-        parent::__construct();
         $this->_createOneGlobalTax();
         $this->_createUSStateRates();
         $this->_createVatTax();

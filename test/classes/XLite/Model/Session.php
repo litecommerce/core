@@ -87,9 +87,6 @@ class XLite_Model_Session extends XLite_Base implements XLite_Base_ISingleton
     */
     public function __construct()
     {
-        parent::__construct();
-
-		$xlite = XLite::getInstance();
 		$this->options = array_merge($this->options, XLite::getInstance()->getOptions('host_details'));
     }
 

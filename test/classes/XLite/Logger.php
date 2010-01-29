@@ -75,8 +75,6 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
     */
     public function __construct()
     {
-		parent::__construct();
-
         $this->_options = array_merge($this->_options, XLite::getInstance()->getOptions('log_details'));
     }
     

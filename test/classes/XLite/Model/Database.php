@@ -83,7 +83,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
     public $connected = false;	
     
     protected $cache = array();	
-    protected $cacheEnabled = true;
+    protected $cacheEnabled = false;
 
 
 	public static function getInstance()

@@ -44,8 +44,10 @@
 * @package Kernel
 * @version $Id$
 */
-class XLite_Model_Config extends XLite_Model_Abstract
+class XLite_Model_Config extends XLite_Model_Abstract implements XLite_Base_ISingleton
 {	
+	protected $parsedData = null;
+
     public $fields = array(
         'category' => '',
         'name' => '',
@@ -133,8 +135,12 @@ class XLite_Model_Config extends XLite_Model_Abstract
     /**
     * Read config variables
     */
-    function readConfig() // {{{
+    public function readConfig($force = false)
     {
+		if (!is_null($this->parsedData) && !$force) {
+			return $this->parsedData;
+		}
+
         $config = new XLite_Base();
 		$row = new $this->configClass;
         $r = $row->iterate();
@@ -170,7 +176,8 @@ class XLite_Model_Config extends XLite_Model_Abstract
 		} else {
 			$config->Memberships->membershipsCollection = array();
 		}
-        return $config;
+
+        return ($this->parsedData = $config); 
     } // }}}
 
     function createOption($category, $name, $value, $type = null, $comment = null, $orderby = null) // {{{
@@ -204,9 +211,18 @@ class XLite_Model_Config extends XLite_Model_Abstract
             $config->create();
         }
     } // }}}
+
+
+	public function update()
+	{
+		parent::update();
+
+		$this->readConfig(true);
+	}
+
+	public static function getInstance()
+    {
+        return self::_getInstance(__CLASS__)->readConfig();
+    }
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

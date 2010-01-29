@@ -90,20 +90,21 @@ class XLite_Model_Wysiwyg_Mediator extends XLite_Base
     public function __construct()
     {
 		$this->__memoryUsageMin = 1024.0 * 1024.0 * 1024.0 * 1024.0;
-        parent::__construct();
         $this->templateEditableParams = $GLOBALS['TEMPLATE_EDITABLE_PARAMS'];
         $this->templateReferenceParams = $GLOBALS['TEMPLATE_REFERENCE_PARAMS'];
     }
 
     function _showMemoryUsage()
     {
-		if ($GLOBALS['memory_usage'] > $this->__memoryUsageMax) {
-			$this->__memoryUsageMax = $GLOBALS['memory_usage'];
+		$memoryUsage = memory_get_usage() / 1024 / 1024;
+
+		if ($memoryUsage > $this->__memoryUsageMax) {
+			$this->__memoryUsageMax = $memoryUsage;
 		}
-		if ($GLOBALS['memory_usage'] < $this->__memoryUsageMin) {
-			$this->__memoryUsageMin = $GLOBALS['memory_usage'];
+		if ($memoryUsage < $this->__memoryUsageMin) {
+			$this->__memoryUsageMin = $memoryUsage;
 		}
-     	printf(" (MEMORY - min: %.2f Mb, current: %.2f Mb, max: %.2f Mb) (CALL DEPTH - current: %d, max: %d) ", $this->__memoryUsageMin, $GLOBALS['memory_usage'], $this->__memoryUsageMax, $this->__buildFullTreeCounter, $this->__buildFullTreeCounterMax);
+     	printf(" (MEMORY - min: %.2f Mb, current: %.2f Mb, max: %.2f Mb) (CALL DEPTH - current: %d, max: %d) ", $this->__memoryUsageMin, $memoryUsage, $this->__memoryUsageMax, $this->__buildFullTreeCounter, $this->__buildFullTreeCounterMax);
     }
 
     function buildFullTree(&$widget)

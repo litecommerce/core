@@ -1118,8 +1118,8 @@ class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Model_FlexyCompiler
             } else {
                 echo "[<font color=red>FAILED!</font>]";
             }
-            if ($this->getComplex('config.HTMLCatalog.catalog_memory') && function_exists('memory_get_usage')) {
-                printf(" (%.2f Mb used)", $GLOBALS['memory_usage']);
+            if ($this->getComplex('config.HTMLCatalog.catalog_memory')) {
+                printf(" (%.2f Mb used)", memory_get_usage() / 1024 / 1024);
 				// $maxMemoryUsage = $this->config->getComplex('HTMLCatalog.memory_usage');
 				// if ($maxMemoryUsage < $GLOBALS['memory_usage']) {
 				// 	if (!is_object($this->cfg)) {

@@ -125,7 +125,7 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
 <?php 
 if (function_exists('memory_get_usage')) {
 ?>
-<tr><td style="FONT-WEIGHT: bold; COLOR: red ">MEMORY USAGE</td><td><?php printf("%.2f Mb used", $GLOBALS['memory_usage']); ?></td></tr>
+<tr><td style="FONT-WEIGHT: bold; COLOR: red ">MEMORY USAGE</td><td><?php printf("%.2f Mb used", memory_get_usage() / 1024 / 1024); ?></td></tr>
 <?php 
 }
 ?>

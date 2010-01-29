@@ -73,7 +73,6 @@ class XLite_Model_ExtraPage extends XLite_Base
 
     public function __construct()
     {
-        parent::__construct();
         $this->pagesTemplate = $this->get("templatePrefix") . "pages.tpl";
         $this->locationTemplate = $this->get("templatePrefix") . "location.tpl";
         //$this->menuTemplate = $this->get("templatePrefix") . "help/body.tpl";

@@ -52,7 +52,3 @@ class XLite_Model_Factory extends XLite_Base
     }
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

@@ -785,8 +785,6 @@ class XLite_Model_Abstract extends XLite_Base
      */
     public function __construct()
     {
-        parent::__construct();
-
 		// if auto-increment is specified, make it a primary key of this table
         empty($this->autoIncrement) || ($this->primaryKey = array($this->autoIncrement));
 

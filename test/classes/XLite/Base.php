@@ -12,26 +12,31 @@ class XLite_Base
      */
     protected static $instances = array();
 
-	public function __construct()
-	{
-		// Application
-        global $xlite;
+	/**
+	 * Singletons accessible directly from each object (see the "__get" method)
+	 * 
+	 * @var    array
+	 * @access protected
+	 * @since  3.0
+	 */
+	protected static $singletons = array(
+        'xlite'   => 'XLite',
+        'auth'    => 'XLite_Model_Auth',
+        'session' => 'XLite_Model_Session',
+        'db'      => 'XLite_Model_Database',
+        'logger'  => 'XLite_Logger',
+		'config'  => 'XLite_Model_Config',
+    );
 
-        if (isset($xlite) && is_object($xlite)) {
-            $this->xlite = $xlite;
-            $this->auth = $xlite->get('auth');
-            $this->session = $xlite->get('session');
-            $this->config = $xlite->get('config');
-            $this->db = $xlite->get('db');
-            $this->logger = $xlite->get('logger');
-        } else {
-            $xlite = true;
-        }
-
-		// MB used
-		$GLOBALS['memory_usage'] = max(isset($GLOBALS['memory_usage']) ? $GLOBALS['memory_usage'] : 0, memory_get_usage()) / 1024 / 1024;
-	}
-
+	/**
+	 * Stop script execution 
+	 * 
+	 * @param string $message text to display
+	 *  
+	 * @return void
+	 * @access protected
+	 * @since  3.0
+	 */
 	protected function _die($message)
 	{
 		// TODO - add logging
@@ -72,7 +77,7 @@ class XLite_Base
 	 */
 	public function __get($name)
 	{
-		return null;
+		return isset(self::$singletons[$name]) ? call_user_func(array(self::$singletons[$name], 'getInstance')) : null;
 	}
 
 	/**

@@ -4,8 +4,6 @@ abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstr
 {
 	public function __construct()
     {
-        parent::__construct();
-
 		$this->cart = XLite_Model_Cart::getInstance();
 		// cleanup processed cart for non-checkout pages
 		$target = isset($_REQUEST['target']) ? $_REQUEST['target'] : '';

@@ -62,8 +62,6 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
 
 	protected $globalFlags = array();
 
-	public $config = null;
-
 	public $_xlite_form_id = null;
 
 	public static function getInstance()
@@ -118,20 +116,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
         $this->profiler = XLite_Model_Profiler::getInstance();
         $this->profiler->start($this->getOptions(array('profiler_details', 'enabled')));
 
-		$this->db = XLite_Model_Database::getInstance();
         $this->db->connect();
-        $this->profiler->log('db_time');
-
-        // read configuration data from database
-        $cfg = new XLite_Model_Config();
-        $this->config = $cfg->readConfig();
-        $this->profiler->log('cfg_time');
-
-        $this->logger = XLite_Logger::getInstance();
-
-        // start session
-        $this->session = XLite_Model_Session::getInstance();
-        $this->profiler->log("ss_time");
 
         // attempt to initialize modules subsystem
         $this->mm = new XLite_Model_ModulesManager();
@@ -141,22 +126,9 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
         $this->layout = XLite_Model_Layout::getInstance();
         $this->layout->initFromGlobals();
         
-        $this->auth = XLite_Model_Auth::getInstance();
+        // $this->auth = XLite_Model_Auth::getInstance();
 
         $this->profiler->log("init_time");
-
-        //check memory_limit_changeable
-        $memory_limit = @ini_get("memory_limit");
-        if (func_check_memory_limit($memory_limit, func_convert_to_byte($memory_limit) + 1024)) {
-            func_check_memory_limit(0, $memory_limit);
-            $this->memoryLimitChangeable = true;
-        } else {
-            $this->memoryLimitChangeable = false;
-        }
-
-        $this->suMode = (1 == $this->getOptions(array('filesystem_permissions', 'permission_mode')));
-
-        $this->instanceUniqID = md5(uniqid(rand(), true));
     }
 
     /**

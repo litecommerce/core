@@ -52,8 +52,6 @@ class XLite_Model_FileNode extends XLite_Base
 {
     public function __construct($path = null, $comment = null, $options = 0)
     {
-        parent::__construct();
-
         $this->path = $path;
         $this->comment = $comment;
         $this->options = $options;
