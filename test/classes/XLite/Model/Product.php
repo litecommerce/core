@@ -491,39 +491,6 @@ class XLite_Model_Product extends XLite_Model_Abstract
         return "";
     } // }}}
 
-    function filter() // {{{
-    {
-        $result = parent::filter();
-        if (!$this->xlite->is("adminZone")) {
-            if ($this->db->cacheEnabled) {
-                global $productsFiltered;
-                if (!isset($productsFiltered) || (isset($productsFiltered) && !is_array($productsFiltered))) {
-                	$productsFiltered = array();
-                }
-
-                $pid = $this->get("product_id");
-                if (isset($productsFiltered[$pid])) {
-                	return $productsFiltered[$pid];
-                }
-            }
-
-            if (!$this->get("enabled")) {
-        		$result = false;
-            }
-            if ($this->get("categoriesNumber") == 0) {
-        		$result = false;
-            }
-            if ($this->get("product_id") == 0) {
-        		$result = false;
-            }
-
-            if ($this->db->cacheEnabled) {
-        		$productsFiltered[$pid] = $result;
-        	}
-        }
-        return $result;
-    } // }}}
-
     function isAvailable() // {{{
     {
         return $this->is("exists") && $this->filter();
@@ -978,9 +945,21 @@ class XLite_Model_Product extends XLite_Model_Abstract
 
 		return $result;
 	}
+
+
+
+	/**
+	 * Restrictions for product 
+	 * 
+	 * @return bool
+	 * @access public
+	 * @since  3.0
+	 */
+	public function filter()
+    {
+		// NOTE - for speedup we do not check if product is assigned for at least one category 
+
+		return $this->xlite->adminZone ? parent::filter() : $this->get('enabled');
+    }
 } 
 
-// WARNING:
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
