@@ -54,6 +54,8 @@ abstract class XLite_Controller_Abstract extends XLite_View
 
 	protected $silent = false;
 
+	protected $pageTemplates = array();
+
 	protected $returnUrlAbsolute = false;
 	protected $returnUrl = null;
 

@@ -122,7 +122,7 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstra
         if ($newImg->get("source") == "F") {
             $fnPrevious = $newImg->get("data");
         }
-        $newImg->set($_image->autoIncrement, $id);
+        $newImg->setComplex($_image->autoIncrement, $id);
         if ($newImg->get("source") == "F") {
 			// createFileName
 	        if (is_null($id)) {

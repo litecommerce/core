@@ -56,7 +56,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_ImageFiles extends XLite_Co
     	if (!($this->action) && $this->xlite->getComplex('config.FlyoutCategories.category_changed') && $this->xlite->getComplex('config.FlyoutCategories.category_autoupdate')) {
     		$config = new XLite_Model_Config();
     		$config->createOption("FlyoutCategories", "category_changed", 0);
-    		$this->xlite->set("config.FlyoutCategories.category_changed", false);
+    		$this->xlite->setComplex("config.FlyoutCategories.category_changed", false);
 
 			$dialog = new XLite_Controller_Admin_Categories();
 			$dialog->set("silent", true);

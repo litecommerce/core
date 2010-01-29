@@ -66,7 +66,7 @@ class XLite_View extends XLite_View_Abstract
 						$this->_requestUpdated = true;
 					}
 				}
-                $this->set($name, $_REQUEST[$name]);
+                $this->setComplex($name, $_REQUEST[$name]);
             }
         }
 
@@ -181,7 +181,7 @@ class XLite_View extends XLite_View_Abstract
                 }
         	}
 
-            $this->set($name, $value);
+            $this->setComplex($name, $value);
         }
 
 		if ($this->_requestUpdated) {

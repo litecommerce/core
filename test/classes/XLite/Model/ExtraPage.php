@@ -351,7 +351,7 @@ class XLite_Model_ExtraPage extends XLite_Base
 
         $attributes = $this->getPageLinkAttributes();
         foreach ($attributes as $attr) {
-			$component->set($attr, $template->get($attr));
+			$component->setComplex($attr, $template->get($attr));
         }
 
         ob_start();

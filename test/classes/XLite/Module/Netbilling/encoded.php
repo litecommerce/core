@@ -97,7 +97,7 @@ $_this->xlite->logger->log("Response:\n".var_export($response, true)."\n");
 	$detailLabels["auth_date"] = "Auth date";
 	$detailLabels["result"] = "Result";
 
-	$cart->set("details.status_code", $status_code);
+	$cart->setComplex("details.status_code", $status_code);
 
 	if (in_array($status_code, array("1", "T", "I"))) {
 		// success
@@ -117,24 +117,24 @@ $_this->xlite->logger->log("Response:\n".var_export($response, true)."\n");
 			break;
 		}
 
-		$cart->set("details.auth_code", $response["auth_code"]);
-		$cart->set("details.result", $result);
+		$cart->setComplex("details.auth_code", $response["auth_code"]);
+		$cart->setComplex("details.result", $result);
 
 		$detailLabels["auth_code"] = "Auth code";
 		$detailLabels["result"] = "Result";
 
 		if ($response["settle_amount"]) {
-			$cart->set("details.settle_amount", $response["settle_amount"]);
+			$cart->setComplex("details.settle_amount", $response["settle_amount"]);
 			$detailLabels["settle_amount"] = "Settle amount";
 		}
 
 		if ($response["settle_currency"]) {
-			$cart->set("details.settle_currency", $response["settle_currency"]);
+			$cart->setComplex("details.settle_currency", $response["settle_currency"]);
 			$detailLabels["settle_currency"] = "Settle currency";
 		}
 
 		unset($detailLabels["error"]);
-		$cart->set("setails.error", null);
+		$cart->setComplex("setails.error", null);
 	} else {
 		// failed
 		$cart->set("status", $_this->get("failedStatus"));
@@ -147,19 +147,19 @@ $_this->xlite->logger->log("Response:\n".var_export($response, true)."\n");
 			default: $error = "Unknown failed response."; break;
 		}
 
-		$cart->set("details.error", $error);
+		$cart->setComplex("details.error", $error);
 		$detailLabels["error"] = "Error";
 	}
 
 	if ($status_code != "D") {
-		$cart->set("details.trans_id", $response["trans_id"]);
+		$cart->setComplex("details.trans_id", $response["trans_id"]);
 		$detailLabels["trans_id"] = "Transaction ID";
 	}
 
-	$cart->set("details.avs_code", $_this->getAVSString($response["avs_code"]));
-	$cart->set("details.cvv2_code", $_this->getCVV2String($response["cvv2_code"]));
-	$cart->set("details.auth_msg", $response["auth_msg"]);
-	$cart->set("details.auth_date", $response["auth_date"]);
+	$cart->setComplex("details.avs_code", $_this->getAVSString($response["avs_code"]));
+	$cart->setComplex("details.cvv2_code", $_this->getCVV2String($response["cvv2_code"]));
+	$cart->setComplex("details.auth_msg", $response["auth_msg"]);
+	$cart->setComplex("details.auth_date", $response["auth_date"]);
 
 	$detailLabels["avs_code"] = "AVS code";
 	$detailLabels["cvv2_code"] = "CVV2 code";

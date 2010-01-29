@@ -62,7 +62,7 @@ class XLite_View_Date extends XLite_View_FormField
         if (!is_null($this->get($dayField)) && !is_null($this->get($monthField)) && !is_null($this->get($yearField))) {
             // read form fields
             $date = mktime(0,0,0,$this->get($monthField), $this->get($dayField), $this->get($yearField));
-            $this->set("component." . $this->get("field"), $date); 
+            $this->setComplex("component." . $this->get("field"), $date); 
         }
     }
 
@@ -102,9 +102,9 @@ class XLite_View_Date extends XLite_View_FormField
         $monthField = $this->get("field") . "Month";
         $yearField = $this->get("field") . "Year";
         $date = getdate($value);
-        $this->set($dayField, $date["mday"]);
-        $this->set($monthField, $date["mon"]);
-        $this->set($yearField, $date["year"]);
+        $this->setComplex($dayField, $date["mday"]);
+        $this->setComplex($monthField, $date["mon"]);
+        $this->setComplex($yearField, $date["year"]);
     }
 
     function getMonth()

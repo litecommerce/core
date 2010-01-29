@@ -4,15 +4,15 @@
 		if (isset($_POST["cc_status"])) {
 			if ($_POST["cc_status"] != "pass") {
 				$status = "F";
-				$cart->set("details.error", $_POST["cc_status"]);
+				$cart->setComplex("details.error", $_POST["cc_status"]);
 			} else {
 				$status = "P";
 			}
 
-			$cart->set("details.ps_order_id", $_POST["orderid"]);
-			$cart->set("details.ps_sku", $_POST["sku"]);
+			$cart->setComplex("details.ps_order_id", $_POST["orderid"]);
+			$cart->setComplex("details.ps_sku", $_POST["sku"]);
 			$cart->set("detailLabels.ps_order_id", "Order ID");
-			$cart->set("detailLabels.ps_sku", "SKU");
+			$cart->setComplex("detailLabels.ps_sku", "SKU");
 
 			$cart->set("status", $status);
 			$cart->update();

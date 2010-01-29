@@ -121,7 +121,7 @@ class XLite_Module_2CheckoutCom_Model_PaymentMethod_2Checkout extends XLite_Mode
     {
         if (!$order->getComplex('details.secureNumber')) {
             $num = generate_code();
-            $order->set("details.secureNumber", $num);
+            $order->setComplex("details.secureNumber", $num);
             $order->update();
             return $num;
         }

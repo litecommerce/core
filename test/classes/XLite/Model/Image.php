@@ -148,7 +148,7 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
                         $this->typeField      => ""
                         );
 				$this->generateFieldNamesHash();
-                $this->set($imageClass->idField, $id);
+                $this->setComplex($imageClass->idField, $id);
             } else {
                 $this->_die("Image class $class is not registered");
             }
@@ -165,7 +165,7 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
         if ($newImg->get("source") == "F") {
         	$fnPrevious = $newImg->get("data");
         }
-        $newImg->set($this->autoIncrement, $id);
+        $newImg->setComplex($this->autoIncrement, $id);
         if ($newImg->get("source") == "F") {
         	$fnNew = $newImg->createFileName($id);
             $newImg->copyImageFile($fnPrevious, $fnNew);

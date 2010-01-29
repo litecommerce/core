@@ -581,7 +581,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
             				}
             				if ($obj_field_updated)
             				{
-            					$ef_child->set($obj_field, $obj_field_value);
+            					$ef_child->setComplex($obj_field, $obj_field_value);
             				}
             			}
 						$ef_child->set("product_id", $this->get("product_id"));

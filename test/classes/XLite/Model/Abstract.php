@@ -274,7 +274,7 @@ class XLite_Model_Abstract extends XLite_Base
             $result = $this->db->query($this->sql);
             // get auto_increment field value
             if (!empty($this->autoIncrement)) {
-                $this->set($this->autoIncrement, mysql_insert_id($this->db->connection));
+                $this->setComplex($this->autoIncrement, mysql_insert_id($this->db->connection));
             }
             // fill unspecified fields with default values
             foreach ($this->fields as $field => $default) {
@@ -307,7 +307,7 @@ class XLite_Model_Abstract extends XLite_Base
 				$new = new self;
 				$new->set("properties", $this->get("properties"));
             }*/
-            $new->set($this->autoIncrement, null);
+            $new->setComplex($this->autoIncrement, null);
             $new->create();
             return $new;
         } else {
@@ -793,7 +793,7 @@ class XLite_Model_Abstract extends XLite_Base
 		$this->generateFieldNamesHash();
 
 		foreach (func_get_args() as $index => $arg) {
-            empty($arg) || $this->set($this->primaryKey[$index], $arg);
+            empty($arg) || $this->setComplex($this->primaryKey[$index], $arg);
         }
     }
 
@@ -825,7 +825,7 @@ class XLite_Model_Abstract extends XLite_Base
     public function setProperties(array $properties)
     {
         foreach ($properties as $field => $value) {
-			isset($this->fieldNames[$field]) && $this->set($field, $properties[$field]);
+			isset($this->fieldNames[$field]) && $this->setComplex($field, $properties[$field]);
         }
     }
 

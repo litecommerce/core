@@ -277,7 +277,7 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
 
 		if ($result === true) {
 			$order = $this->get("order");
-			$order->set("google_details.google_archived", 1);
+			$order->setComplex("google_details.google_archived", 1);
 			$order->update();
 
 			$this->setGoogleSuccess("order_archived");
@@ -292,7 +292,7 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
 
 		if ($result === true) {
 			$order = $this->get("order");
-			$order->set("google_details.google_archived", 0);
+			$order->setComplex("google_details.google_archived", 0);
 			$order->update();
 
 			$this->setGoogleSuccess("order_unarchived");

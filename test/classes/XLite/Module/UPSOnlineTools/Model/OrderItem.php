@@ -62,7 +62,7 @@ class XLite_Module_UPSOnlineTools_Model_OrderItem extends XLite_Model_OrderItem 
 		// dimension
 		$item = new XLite_Module_UPSOnlineTools_Model_PackItem();
 		foreach (array("width", "height", "length") as $field) {
-			$item->set($field, $p->get("ups_".$field));
+			$item->setComplex($field, $p->get("ups_".$field));
 		}
 
 		// weight

@@ -96,7 +96,7 @@ class XLite_Module_LayoutOrganizer_Controller_Admin_Category extends XLite_Contr
 
     function updateCategoryTemplate($category, $scheme_id, $template_type)
     {
-    	$category->set($template_type, $scheme_id);
+    	$category->setComplex($template_type, $scheme_id);
         $category->update();
         if ($scheme_id < 0) {
         	$category->updateTemplate($template_type, $category->getParentTemplate($template_type));

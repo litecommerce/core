@@ -30,45 +30,45 @@ function PaymentMethod_paypal_handleRequest($_this, $order)
     $https->data = $_POST;
     $https->request();
     if ($https->error) {
-        $order->set("details.error", $https->error);
+        $order->setComplex("details.error", $https->error);
         $order->set("detailLabels.error", "HTTPS Error");
     } else if (preg_match("/VERIFIED/i", $https->response)) {
 		$txn_id = ($order->getComplex('details.reason') ? "" : $order->getComplex('details.txn_id')); 
 
         if ($_POST["txn_id"] == $txn_id) {
             $order->set("details.error", "Duplicate transaction ".$_POST["txn_id"]);
-            $order->set("detailLabels.error", "Error");
+            $order->setComplex("detailLabels.error", "Error");
             $order->update();
         } else {
-	        $order->set("details.txn_id", $_POST["txn_id"]);
+	        $order->setComplex("details.txn_id", $_POST["txn_id"]);
 	        $order->set("detailLabels.txn_id", "Transaction ID");
-	        $order->set("details.payment_status", $_POST["payment_status"]);
+	        $order->setComplex("details.payment_status", $_POST["payment_status"]);
 	        $order->set("detailLabels.payment_status", "Payment Status");
 			if (isset($_POST["memo"])) {
-	            $order->set("details.memo", $_POST["memo"]);
+	            $order->setComplex("details.memo", $_POST["memo"]);
 	            $order->set("detailLabels.memo", "Customer notes entered on the PayPal page");
 	        }
 			switch ($_POST["payment_status"]) {
 				case "Pending" 	: 
 					$order->set("status","Q");
-		            $order->set("details.reason", $_this->pendingReasons[$_POST["pending_reason"]]);
+		            $order->setComplex("details.reason", $_this->pendingReasons[$_POST["pending_reason"]]);
 		            $order->set("detailLabels.reason", "Pending Reason");
-		            $order->set("details.error", null);
+		            $order->setComplex("details.error", null);
 					break;
 				case "Completed" : 
 					$order->set("status","P");
-		            $order->set("details.error", null);
+		            $order->setComplex("details.error", null);
 					break;
 				default 	:
 					$order->set("status","F");
 					$order->set("details.error", "Your order was declined. Please contact administrator.");
-		            $order->set("detailLabels.error", "Error");
+		            $order->setComplex("detailLabels.error", "Error");
 					break;
 			}	 
         }
     } else {
         $order->set("details.error", "Your order was not verified");
-        $order->set("detailLabels.error", "Error");
+        $order->setComplex("detailLabels.error", "Error");
     }
 	$order->set("status", $order_status);
     $order->update();

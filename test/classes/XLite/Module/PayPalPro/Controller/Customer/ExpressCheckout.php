@@ -109,14 +109,14 @@ class XLite_Module_PayPalPro_Controller_Customer_ExpressCheckout extends XLite_C
 	        	$profile->set("billing_zipcode",$details["ADDRESS"]["POSTALCODE"]);
                 $this->auth->register($profile);
                 $this->auth->loginProfile($profile);
-                $this->auth->set("profile.order_id", $this->cart->get("order_id"));
+                $this->auth->setComplex("profile.order_id", $this->cart->get("order_id"));
 	     	}
 														
 			XLite_Model_Auth::getInstance()->getProfile()->update();
 
 			$this->cart->set("paymentMethod",$pm);
-            $this->cart->set("details.token",$response["GETEXPRESSCHECKOUTDETAILSRESPONSEDETAILS"]["TOKEN"]);
-            $this->cart->set("details.payer_id",$details["PAYERID"]);
+            $this->cart->setComplex("details.token", $response["GETEXPRESSCHECKOUTDETAILSRESPONSEDETAILS"]["TOKEN"]);
+            $this->cart->setComplex("details.payer_id", $details["PAYERID"]);
 			$this->updateCart();
 
 			$this->set("returnUrl","cart.php?target=checkout");

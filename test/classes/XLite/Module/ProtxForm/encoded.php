@@ -106,16 +106,16 @@ $_this->xlite->logger->log("Protx VSP Form response Error: Order #$order_id not 
 
 	if ($responseArray["Status"] == "OK") {
 		// success
-		$order->set("details.Status", $responseArray["Status"]);
-		$order->set("details.StatusDetail", $responseArray["StatusDetail"]);
-		$order->set("details.VPSTxId", $responseArray["VPSTxId"]);
-		$order->set("details.TxAuthNo", $responseArray["TxAuthNo"]);
-		$order->set("details.AVSCV2", $responseArray["AVSCV2"]);
-		$order->set("details.AddressResult", $responseArray["AddressResult"]);
-		$order->set("details.PostCodeResult", $responseArray["PostCodeResult"]);
-		$order->set("details.CV2Result", $responseArray["CV2Result"]);
-		$order->set("details.3DSecureStatus", $responseArray["3DSecureStatus"]);
-		$order->set("details.CAVV", $responseArray["CAVV"]);
+		$order->setComplex("details.Status", $responseArray["Status"]);
+		$order->setComplex("details.StatusDetail", $responseArray["StatusDetail"]);
+		$order->setComplex("details.VPSTxId", $responseArray["VPSTxId"]);
+		$order->setComplex("details.TxAuthNo", $responseArray["TxAuthNo"]);
+		$order->setComplex("details.AVSCV2", $responseArray["AVSCV2"]);
+		$order->setComplex("details.AddressResult", $responseArray["AddressResult"]);
+		$order->setComplex("details.PostCodeResult", $responseArray["PostCodeResult"]);
+		$order->setComplex("details.CV2Result", $responseArray["CV2Result"]);
+		$order->setComplex("details.3DSecureStatus", $responseArray["3DSecureStatus"]);
+		$order->setComplex("details.CAVV", $responseArray["CAVV"]);
 
 		$order->set("detailLabels", array(
 			"Status"		=> "Status",
@@ -133,8 +133,8 @@ $_this->xlite->logger->log("Protx VSP Form response Error: Order #$order_id not 
 		$order->set("status", $paymentMethod->get("sucessedStatus"));
 	} else {
 		// failed
-		$order->set("details.error", $responseArray["StatusDetail"]);
-		$order->set("details.Status", $responseArray["Status"]);
+		$order->setComplex("details.error", $responseArray["StatusDetail"]);
+		$order->setComplex("details.Status", $responseArray["Status"]);
 
 		$order->set("detailLabels", array(
 			"Status"	=> "Status",

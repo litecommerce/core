@@ -97,7 +97,7 @@ class XLite_Controller_Admin_CssEdit extends XLite_Controller_Admin_Abstract
     function action_save()
     {
         $editor = $this->get("editor");
-        $editor->set("style.style.$this->style_id", $this->style);
+        $editor->setComplex("style.style.$this->style_id", $this->style);
 
         $editor->save();
         $this->set("status", "updated");

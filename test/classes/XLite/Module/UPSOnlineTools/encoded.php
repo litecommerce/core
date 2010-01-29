@@ -486,7 +486,7 @@ function UPSOnlineTools_getOptions($_this)
 	foreach(array('UPS_username', 'UPS_password', 'UPS_accesskey') as $name) {
 		$val = $options->get($name);
 		$val = UPSOnlineTools_decode($val);
-		$options->set($name, $val);
+		$options->setComplex($name, $val);
 	}
 
 	return $options;

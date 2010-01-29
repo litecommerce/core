@@ -286,8 +286,8 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
 			return self::PAYMENT_SILENT;
 		} else {
 			$error = $response["ERROR"]["ERROR-MESSAGE"];
-			$order->set("details.error", (($error) ? $error : "Unknown"));
-			$order->set("detailLabels.error", "Error");
+			$order->setComplex("details.error", (($error) ? $error : "Unknown"));
+			$order->setComplex("detailLabels.error", "Error");
 			$order->update();
 
 			return self::PAYMENT_FAILURE;

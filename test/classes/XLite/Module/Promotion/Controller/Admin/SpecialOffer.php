@@ -121,7 +121,7 @@ class XLite_Module_Promotion_Controller_Admin_SpecialOffer extends XLite_Control
 		if ($_POST["conditionType"] == "eachNth") {
 			$_POST["bonusType"] = "specialPrices";
 		}
-		$this->set("specialOffer.properties", $_POST);
+		$this->setComplex("specialOffer.properties", $_POST);
 		// if a new offer, adds one
 		if (!$this->getSpecialOffer()->isPersistent) {
 			$this->getSpecialOffer()->create();

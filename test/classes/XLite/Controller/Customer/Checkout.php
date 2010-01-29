@@ -254,7 +254,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
             $this->auth->loginProfile($this->registerForm->get("profile"));
             if (!strlen($this->get("password"))) {
                 // is anonymous?
-                $this->auth->set("profile.order_id", $this->cart->get("order_id"));
+                $this->auth->setComplex("profile.order_id", $this->cart->get("order_id"));
                 $this->auth->getProfile()->update();
             }
     		$cart = XLite_Model_Cart::getInstance();
@@ -280,7 +280,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
         $pm = $this->cart->get("paymentMethod");
         if (!is_null($pm)) {
             $notes = isset($_POST["notes"]) ? $_POST["notes"] : '';
-            $this->set("cart.notes", $notes);
+            $this->setComplex("cart.notes", $notes);
 
             switch($pm->handleRequest($this->cart)) {
 

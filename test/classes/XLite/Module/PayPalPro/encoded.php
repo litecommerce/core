@@ -61,7 +61,7 @@
     	    $request->request();
     		
     		if ($request->error) {
-    	        $order->set("details.error", $request->error);
+    	        $order->setComplex("details.error", $request->error);
     	        $order->set("detailLabels.error", "HTTPS Error");
     			$order->set("status","F");
 				$order->update();
@@ -80,7 +80,7 @@
 						($total != $postTotal) || 
 						($_this->getComplex('params.standard.currency') != $_POST["mc_currency"])) {
 						$order->set("details.error", "Duplicate transaction -".$_POST["txn_id"]);
-						$order->set("detailLabels.error", "Error");
+						$order->setComplex("detailLabels.error", "Error");
 						$order->set("status","F");
 						$order->update();
 						return self::PAYMENT_FAILURE;
@@ -88,12 +88,12 @@
 						// ignore duplicate transaction
 					}
         	    } else {
-        	        $order->set("details.txn_id", $_POST["txn_id"]);
+        	        $order->setComplex("details.txn_id", $_POST["txn_id"]);
         	        $order->set("detailLabels.txn_id", "Transaction ID");
-        	        $order->set("details.payment_status", $payment_status);
+        	        $order->setComplex("details.payment_status", $payment_status);
         	        $order->set("detailLabels.payment_status", "Payment Status");
         			if (isset($_POST["memo"])) {
-        	            $order->set("details.memo", $_POST["memo"]);
+        	            $order->setComplex("details.memo", $_POST["memo"]);
         	            $order->set("detailLabels.memo", "Customer notes entered on the PayPal page");
         	        }
 
@@ -101,7 +101,7 @@
             		$postTotal = sprintf("%.2f", $_POST["mc_gross"]);
                     if ($total != $postTotal) {
                         $order->set("details.error", "Hacking attempt!");
-                        $order->set("detailLabels.error", "Error");
+                        $order->setComplex("detailLabels.error", "Error");
                         $order->set("details.errorDescription", "Total amount doesn't match: Order total=".$total.", PayPal amount=".$_POST["mc_gross"]);
                         $order->set("detailLabels.errorDescription", "Hacking attempt details");
                         $order->set("status","F");
@@ -112,7 +112,7 @@
                     $currency = $_this->getComplex('params.standard.currency');
                     if ($currency != $_POST["mc_currency"]) {
                         $order->set("details.error", "Hacking attempt!");
-                        $order->set("detailLabels.error", "Error");
+                        $order->setComplex("detailLabels.error", "Error");
                         $order->set("details.errorDescription", "Currency code doesn't match: Order currency=".$currency.", PayPal currency=".$_POST["mc_currency"]);
                         $order->set("detailLabels.errorDescription", "Hacking attempt details");
                         $order->set("status","F");
@@ -123,14 +123,14 @@
 
 					if (strcasecmp($payment_status,"Pending") == 0) {
     					$order->set("status", ($_this->getComplex('params.standard.use_queued')) ? "Q" : "I");
-    		            $order->set("details.reason", $_this->pendingReasons[$_POST["pending_reason"]]);
+    		            $order->setComplex("details.reason", $_this->pendingReasons[$_POST["pending_reason"]]);
     		            $order->set("detailLabels.reason", "Pending Reason");
-    		            $order->set("details.error", null);
-						$order->set("details.errorDescription", null);
+    		            $order->setComplex("details.error", null);
+						$order->setComplex("details.errorDescription", null);
     				} else {
     					$order->set("status","P");
-    		            $order->set("details.error", null);
-						$order->set("details.errorDescription", null);
+    		            $order->setComplex("details.error", null);
+						$order->setComplex("details.errorDescription", null);
         			}	 
 
 					$order->update();
@@ -143,24 +143,24 @@
     		$payment_status = $_POST["payment_status"];
 
 			if ($order_payment_status == "Pending" && $order_txn_id == $_POST["txn_id"] && $order_reason == $_this->pendingReasons[$_POST["payment_type"]]) {
-    	        $order->set("details.payment_status", $payment_status);
+    	        $order->setComplex("details.payment_status", $payment_status);
     	        $order->set("detailLabels.payment_status", "Payment Status");
     			if (isset($_POST["memo"])) {
-    	            $order->set("details.memo", $_POST["memo"]);
+    	            $order->setComplex("details.memo", $_POST["memo"]);
     	            $order->set("detailLabels.memo", "Customer notes entered on the PayPal page");
     	        }
 
 				if (strcasecmp($payment_status,"Completed") == 0 || strcasecmp($payment_status, "Pending") == 0) {
     				if (strcasecmp($payment_status,"Pending") == 0) {
     					$order->set("status", ($_this->getComplex('params.standard.use_queued')) ? "Q" : "I");
-    		            $order->set("details.reason", $_this->pendingReasons[$_POST["pending_reason"]]);
+    		            $order->setComplex("details.reason", $_this->pendingReasons[$_POST["pending_reason"]]);
     		            $order->set("detailLabels.reason", "Pending Reason");
-    		            $order->set("details.error", null);
-    					$order->set("details.errorDescription", null);
+    		            $order->setComplex("details.error", null);
+    					$order->setComplex("details.errorDescription", null);
     				} else {
     					$order->set("status","P");
-    		            $order->set("details.error", null);
-    					$order->set("details.errorDescription", null);
+    		            $order->setComplex("details.error", null);
+    					$order->setComplex("details.errorDescription", null);
     				}
 					
 					$order->update();
@@ -175,7 +175,7 @@
     {
 		$response = PayPalPro_sendRequest($_this->getComplex('params.pro'),$_this->getDirectPaymentRequest($order));
 		if (is_null($response)) {
-			$order->set("details.error", $response);
+			$order->setComplex("details.error", $response);
 			$order->set("detailLabels.error", "HTTPS Error");
 			$order->set("status","F");
 		} else {
@@ -187,27 +187,27 @@
 			$response = $response["SOAP-ENV:ENVELOPE"]["SOAP-ENV:BODY"]["_0"]["DODIRECTPAYMENTRESPONSE"];
 			if ($response["ACK"] == 'Success' || $response["ACK"] == 'SuccessWithWarning') {
 				$_this->getComplex('params.pro.type') ? $order->set("status","P") : $order->set("status","Q");
-				$order->set("details.avscode", $_this->avsResponses[$response["AVSCODE"]]);
+				$order->setComplex("details.avscode", $_this->avsResponses[$response["AVSCODE"]]);
 				$order->set("detailLabels.avscode","AVS Code");	
-                $order->set("details.cvvcode", $_this->cvvResponses[$response["CVV2CODE"]]);
+                $order->setComplex("details.cvvcode", $_this->cvvResponses[$response["CVV2CODE"]]);
                 $order->set("detailLabels.cvvcode","CVV2 Code");
 				
-                $order->set("details.transaction_id", $response["TRANSACTIONID"]);
+                $order->setComplex("details.transaction_id", $response["TRANSACTIONID"]);
                 $order->set("detailLabels.transaction_id","Transaction ID");
-				$order->set("details.error", null);
-				$order->set("details.errorDescription", null);
+				$order->setComplex("details.error", null);
+				$order->setComplex("details.errorDescription", null);
 			} else {
 				$order->set("status","F");
 				$order->set("details.error",$response["ERRORS"]["ERRORCODE"].": ".$response["ERRORS"]["SHORTMESSAGE"]);
-				$order->set("detailLabels.error", "Error");
-				$order->set("details.errorDescription",$response["ERRORS"]["LONGMESSAGE"]);
-			    $order->set("detailLabels.errorDescription", "Description");
+				$order->setComplex("detailLabels.error", "Error");
+				$order->setComplex("details.errorDescription", $response["ERRORS"]["LONGMESSAGE"]);
+			    $order->setComplex("detailLabels.errorDescription", "Description");
 			}
 
 			if ($order->get("status") == "F") {
 				if (!isset($response["ERRORS"]["ERRORCODE"]) && isset($responseFault)) {
 					$order->set("details.error", $responseFault["FAULTCODE"] . " - " . $responseFault["FAULTSTRING"]);
-					$order->set("details.errorDescription", $responseFault["DETAIL"]);
+					$order->setComplex("details.errorDescription", $responseFault["DETAIL"]);
 				}
 			}
 		}
@@ -240,29 +240,29 @@
 			break;
 			case "Pending"	 : 
 				$order->set("status","Q");		
-		       	$order->set("details.pending_reason",$details["PAYMENTINFO"]["PENDINGREASON"]);
+		       	$order->setComplex("details.pending_reason", $details["PAYMENTINFO"]["PENDINGREASON"]);
 				$order->set("detailLabels.pending_reason", "Pending reason");
-				$order->set("details.error", null);
+				$order->setComplex("details.error", null);
 			break;
 		}
-		$order->set("details.txn_id",$details["PAYMENTINFO"]["TRANSACTIONID"]);
+		$order->setComplex("details.txn_id", $details["PAYMENTINFO"]["TRANSACTIONID"]);
 		$order->set("detailLabels.txn_id", "Transaction ID");
-		$order->set("details.payment_date",$details["PAYMENTINFO"]["PAYMENTDATE"]);
+		$order->setComplex("details.payment_date", $details["PAYMENTINFO"]["PAYMENTDATE"]);
 		$order->set("detailLabels.payment_date", "Payment date");
-		$order->set("details.error", null);
-		$order->set("details.errorDescription", null);
+		$order->setComplex("details.error", null);
+		$order->setComplex("details.errorDescription", null);
 	} else {
 		$order->set("status","F");
 		$order->set("details.error",$response["ERRORS"]["ERRORCODE"].": ".$response["ERRORS"]["SHORTMESSAGE"]);
-		$order->set("detailLabels.error", "Error");
-		$order->set("details.errorDescription",$response["ERRORS"]["LONGMESSAGE"]);
-		$order->set("detailLabels.errorDescription", "Description");
+		$order->setComplex("detailLabels.error", "Error");
+		$order->setComplex("details.errorDescription", $response["ERRORS"]["LONGMESSAGE"]);
+		$order->setComplex("detailLabels.errorDescription", "Description");
 	}	
 
 	if ($order->get("status") == "F") {
 		if (!isset($response["ERRORS"]["ERRORCODE"]) && isset($responseFault)) {
 			$order->set("details.error", $responseFault["FAULTCODE"] . " - " . $responseFault["FAULTSTRING"]);
-			$order->set("details.errorDescription", $responseFault["DETAIL"]);
+			$order->setComplex("details.errorDescription", $responseFault["DETAIL"]);
 		}
 	}
 

@@ -173,7 +173,7 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
 			foreach($sortConditionsRules as $rule => $ruleCond) {
 				if ($this->isSortSelected($rule)) {
 					$this->params[] = $ruleCond;
-					$this->set($ruleCond, $rule);
+					$this->setComplex($ruleCond, $rule);
 				}
 			}
 		}

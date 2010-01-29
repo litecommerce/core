@@ -82,7 +82,7 @@ class XLite_Module_GoogleCheckout_View_GoogleAltCheckout extends XLite_View
     	$dialogTarget = $this->getComplex('dialog.target');
     	if (is_object($cart) && !$cart->is("empty") && !in_array($dialogTarget, $targets)) {
     		if (in_array($dialogTarget, $targetsProfile)) {
-    			$this->set("dialog.google_checkout_profile", true);
+    			$this->setComplex("dialog.google_checkout_profile", true);
     		}
     		$this->initGoogleData();
     		if (isset($this->GCMerchantID)) {

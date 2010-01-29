@@ -100,6 +100,18 @@ class XLite_Module_UPSOnlineTools_Main extends XLite_Module_Abstract
         return "admin.php?target=ups_online_tool";
     }
 
+	/**
+     * Return list of modules whitch are not allowed to be enbled at one time
+     *
+     * @return array
+     * @access public
+     * @since  3.0
+     */
+    public static function getMutualModules()
+    {
+        return array_merge(parent::getMutualModules(), array('UPS'));
+    }
+
     /**
      * Perform some actions at startup
      *
@@ -118,7 +130,7 @@ class XLite_Module_UPSOnlineTools_Main extends XLite_Module_Abstract
 		// Check UPS account activation
 		$options = $this->config->get("UPSOnlineTools");
 		if (!$options->get("UPS_username") || !$options->get("UPS_password") || !$options->get("UPS_accesskey")) {
-			$this->config->set("UPSOnlineTools.av_status", "N");
+			$this->config->setComplex("UPSOnlineTools.av_status", "N");
 
 		}
     }

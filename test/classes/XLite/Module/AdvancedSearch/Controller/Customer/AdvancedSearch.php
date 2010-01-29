@@ -62,7 +62,7 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
 
         parent::init();
 
-        $this->set("pager.itemsPerPage", $this->getComplex('config.General.products_per_page'));
+        $this->setComplex("pager.itemsPerPage", $this->getComplex('config.General.products_per_page'));
         if (!isset($this->action)) {
             $this->session->set("productListURL", $this->get("url"));
 		}

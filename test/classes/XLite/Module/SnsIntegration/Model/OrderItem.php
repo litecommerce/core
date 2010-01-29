@@ -42,7 +42,7 @@ class XLite_Module_SnsIntegration_Model_OrderItem extends XLite_Model_OrderItem 
     function updateAmount($amount)
     {
         if ($amount && $this->get("amount") != $amount) {
-            $this->set("order.sendSnsCartChanged", true);
+            $this->setComplex("order.sendSnsCartChanged", true);
         }
         parent::updateAmount($amount);
     }

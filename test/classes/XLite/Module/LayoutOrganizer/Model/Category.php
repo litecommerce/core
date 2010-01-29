@@ -117,7 +117,7 @@ class XLite_Module_LayoutOrganizer_Model_Category extends XLite_Model_Category i
 			"p_custom_template" => "p_template_name",
 		);
         
-        $this->set($tplMap[$template_type], $template);
+        $this->setComplex($tplMap[$template_type], $template);
 	}
 
 	function getTemplate($template_type)

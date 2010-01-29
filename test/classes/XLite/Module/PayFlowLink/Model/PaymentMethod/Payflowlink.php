@@ -55,7 +55,7 @@ class XLite_Module_PayFlowLink_Model_PaymentMethod_Payflowlink extends XLite_Mod
                 $this->set("params", array());
             }
             if (!$this->getComplex('params.gateway_url')) {
-                $this->set("params.gateway_url", "https://payflowlink.paypal.com");
+                $this->setComplex("params.gateway_url", "https://payflowlink.paypal.com");
             }    
         }
     }

@@ -108,7 +108,7 @@ class XLite_Module_Newsletters_Controller_Admin_NewsMessages extends XLite_Contr
 
     	if (intval($this->getComplex('config.Newsletters.subscribers_per_page_mail')) > 0) {
 			if (intval($this->getComplex('config.Newsletters.subscribers_per_page_mail')) != $this->getComplex('config.Newsletters.subscribers_per_page_mail')) {
-				$this->config->set("Newsletters.subscribers_per_page_mail", intval($this->getComplex('config.Newsletters.subscribers_per_page_mail')));
+				$this->config->setComplex("Newsletters.subscribers_per_page_mail", intval($this->getComplex('config.Newsletters.subscribers_per_page_mail')));
 			}
 ?>
 <SCRIPT language="javascript">
@@ -125,7 +125,7 @@ class XLite_Module_Newsletters_Controller_Admin_NewsMessages extends XLite_Contr
 </SCRIPT>
 <?php
     	} else {
-			$this->config->set("Newsletters.subscribers_per_page_mail", 0);
+			$this->config->setComplex("Newsletters.subscribers_per_page_mail", 0);
     	}
     	$this->subscribers_per_page_mail = $this->getComplex('config.Newsletters.subscribers_per_page_mail');
     }

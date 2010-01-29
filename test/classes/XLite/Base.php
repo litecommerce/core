@@ -185,8 +185,9 @@ class XLite_Base
 	 */
 	public function setComplex($name, $value)
     {
-		$obj = $this;
-		$last = array_pop($names = explode('.', $name));
+		$obj   = $this;
+		$names = explode('.', $name);
+		$last  = array_pop($names);
 
 		foreach ($names as $part) {
 

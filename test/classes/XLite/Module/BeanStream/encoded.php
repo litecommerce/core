@@ -91,11 +91,11 @@ function BeanStream_processor_process($_this, $cart)
 //$_this->xlite->logger->log("BeanStrean purchase response: ".var_export($response, true));
 //$_this->xlite->logger->log("Beanstream purchase parsed response:".var_export(BeanStream_parse_str($response), true));
 
-    $cart->set("details.error", null);
-    $cart->set("detailLabels.error", null);
+    $cart->setComplex("details.error", null);
+    $cart->setComplex("detailLabels.error", null);
     if (!$response || $request->error) {
-        $cart->set("details.error", $request->error);
-        $cart->set("detailLabels.error", "Error");
+        $cart->setComplex("details.error", $request->error);
+        $cart->setComplex("detailLabels.error", "Error");
         $cart->set("status", $_this->get("orderFailStatus"));
         $cart->update();
     } else {
@@ -129,12 +129,12 @@ function func_BeanStream_action_return($_this, $cart, $pm)
 //$_this->xlite->logger->log("BeanStream VBV Authorization response:".var_export($response, true));
 //$_this->xlite->logger->log("BeanStream VBV Authorization parsed response:".var_export(BeanStream_parse_str($response), true));
 
-	$cart->set("details.error", null);
-	$cart->set("detailLabels.error", null);
+	$cart->setComplex("details.error", null);
+	$cart->setComplex("detailLabels.error", null);
 	if (!$response || $request->error) {
 		// error
 		$cart->set("details.error", "VBV auth. ".$request->error);
-		$cart->set("detailLabels.error", "Error");
+		$cart->setComplex("detailLabels.error", "Error");
 		$cart->set("status", $pm->get("orderFailStatus"));
 		$cart->update();
 	} else {
@@ -155,8 +155,8 @@ function BeanStream_parse_response($cart, $response=array(), $pm)
 
     if ($order_id == $cart->get("order_id") && $response["responseType"] == "T" && $response["trnApproved"] == "1" && $response["ref1"] == $total) {
         // success
-		$cart->set("details.error", null);
-		$cart->set("detailLabels.error", null);
+		$cart->setComplex("details.error", null);
+		$cart->setComplex("detailLabels.error", null);
 
 		$status = $pm->get("orderSuccessStatus");
 		$result = true;
@@ -175,42 +175,42 @@ function BeanStream_parse_response($cart, $response=array(), $pm)
 			$errorMsg = $response["messageText"];
 		}
 		
-		$cart->set("details.error", $errorMsg);
-		$cart->set("detailLabels.error", "Error");
+		$cart->setComplex("details.error", $errorMsg);
+		$cart->setComplex("detailLabels.error", "Error");
 
 		$status = $pm->get("orderFailStatus");
     }
 
 	if ($response["messageText"]) {
-		$cart->set("details.messageText", $response["messageText"]);
+		$cart->setComplex("details.messageText", $response["messageText"]);
 		$cart->set("detailLabels.messageText", "Message Text");
 	} else {
-		$cart->set("details.messageText", null);
-		$cart->set("detailLabels.messageText", null);
+		$cart->setComplex("details.messageText", null);
+		$cart->setComplex("detailLabels.messageText", null);
 	}
 
 	if ($response["authCode"]) {
-		$cart->set("details.authCode", $response["authCode"]);
+		$cart->setComplex("details.authCode", $response["authCode"]);
 		$cart->set("detailLabels.authCode", "Auth code");
 	} else {
-		$cart->set("details.authCode", null);
-		$cart->set("detailLabels.authCode", null);
+		$cart->setComplex("details.authCode", null);
+		$cart->setComplex("detailLabels.authCode", null);
 	}
 
 	if ($response["trnId"]) {
-		$cart->set("details.transid", $response["trnId"]);
+		$cart->setComplex("details.transid", $response["trnId"]);
 		$cart->set("detailLabels.transid", "Transaction Id");
 	} else {
-		$cart->set("details.transid", null);
-		$cart->set("detailLabels.transid", null);
+		$cart->setComplex("details.transid", null);
+		$cart->setComplex("detailLabels.transid", null);
 	}
 
 	if ($response["avsMessage"]) {
-		$cart->set("details.avsMessage", $response["avsMessage"]);
+		$cart->setComplex("details.avsMessage", $response["avsMessage"]);
 		$cart->set("detailLabels.avsMessage", "AVS Message");
 	} else {
-		$cart->set("details.avsMessage", null);
-		$cart->set("detailLabels.avsMessage", null);
+		$cart->setComplex("details.avsMessage", null);
+		$cart->setComplex("detailLabels.avsMessage", null);
 	}
 
 	$cart->set("status", $status);

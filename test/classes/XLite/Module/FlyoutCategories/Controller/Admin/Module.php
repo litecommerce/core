@@ -99,7 +99,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_Module extends XLite_Contro
 			if ($_REQUEST["scheme"] < 0) $_REQUEST["scheme"] = 0;
 			if ( $oldScheme != $_REQUEST["scheme"] ) {
 				$update = true;
-				$this->set("config.FlyoutCategories.scheme", $_REQUEST["scheme"]);
+				$this->setComplex("config.FlyoutCategories.scheme", $_REQUEST["scheme"]);
 			}
 		}
 
@@ -140,7 +140,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_Module extends XLite_Contro
 
 	function action_rebuild_tree()
 	{
-		$this->set("config.FlyoutCategories.force_js_in_layout", (bool) $this->force_js_in_layout);
+		$this->setComplex("config.FlyoutCategories.force_js_in_layout", (bool) $this->force_js_in_layout);
 		$this->params[] = "status";
 		if ($this->getComplex('config.FlyoutCategories.scheme') <= 0) {
 			$this->set("status", "disabled");

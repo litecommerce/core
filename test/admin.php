@@ -59,7 +59,7 @@ $xlite->set("layout.skin", "admin");*/
 $xlite = call_user_func(array(LC_LIBRARY, 'getInstance'));
 $xlite->set("adminZone", true);
 $xlite->initFromGlobals();
-$xlite->set("layout.skin", "admin");
+$xlite->layout->skin = 'admin';
 
 $xlite->run();
 $xlite->done();

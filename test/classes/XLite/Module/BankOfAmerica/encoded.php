@@ -51,7 +51,7 @@
 		} else {
 			$conn_attempts++;
 		}
-		$lite_cart->set("details.connectionAttempts", $conn_attempts);
+		$lite_cart->setComplex("details.connectionAttempts", $conn_attempts);
 		$lite_cart->set("detailLabels.connectionAttempts", "Connection attempts");
 
 		if ($debug) echo "Connection attempt: $conn_attempts<br>";
@@ -227,17 +227,17 @@ if(!empty($ret[ecom_payment_card_verification_rc]))
 			$lite_cart->set("details.cvvMessage", $bill_output ["cvvmes"]);
 			$lite_cart->set("detailLabels.cvvMessage", "CVV message");
 		} else {
-			$lite_cart->set("details.cvvMessage", null);
+			$lite_cart->setComplex("details.cvvMessage", null);
 		}
 		
 		if ($bill_output ["avsmes"]) {
 			$lite_cart->set("details.avsMessage", $bill_output ["avsmes"]);
 			$lite_cart->set("detailLabels.avsMessage", "AVS message");
 		} else {
-			$lite_cart->set("details.avsMessage", null);
+			$lite_cart->setComplex("details.avsMessage", null);
 		}
 
-		$lite_cart->set("details.error", $error);
+		$lite_cart->setComplex("details.error", $error);
 		$lite_cart->set("status", $status);
 		$lite_cart->update();
 	}

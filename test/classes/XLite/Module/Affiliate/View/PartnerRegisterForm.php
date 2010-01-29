@@ -53,7 +53,7 @@ class XLite_Module_Affiliate_View_PartnerRegisterForm extends XLite_View_Registe
             if (isset($this->_savedParent)) {
             	$this->set("parent", $this->_savedParent);
             }
-            $this->set("profile.parent", $this->parent);
+            $this->setComplex("profile.parent", $this->parent);
             // don't show passwords
             $this->password = $this->confirm_password = "";
         }

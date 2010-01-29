@@ -265,8 +265,6 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
 		if ($this->isNeedToCleanupCache) {
 			XLite_Model_ModulesManager::getInstance()->cleanupCache();
 		}
-
-		parent::__destruct();
 	}
 }
 

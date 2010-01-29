@@ -506,7 +506,7 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 				$result .= $intend . $this->setAttributesCode($initAttrs, $name) . "\n";
 
 				if (isset($attrs['hidden'])) {
-    	            $result .= ' $t->' . $name . '->set(\'visible\', false);' . "\n";
+    	            $result .= ' $t->' . $name . '->setComplex(\'visible\', false);' . "\n";
         	    }
 
 				$this->unsetAttributes($attrs, array('hidden', 'template'));

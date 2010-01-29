@@ -57,8 +57,8 @@ class XLite_Module_AntiFraud_Model_Order extends XLite_Model_Order implements XL
     			else
     				$customer_ip = $this->getCustomerIP();
 
-    			$this->set("details.customer_ip","<".$customer_ip.">");
-    			$this->set("details.proxy_ip",$proxy_ip);
+    			$this->setComplex("details.customer_ip", "<".$customer_ip.">");
+    			$this->setComplex("details.proxy_ip", $proxy_ip);
                 
                 $this->checkFraud();
     			$this->xlite->logger->log("->AntiFraud_Order::checkFraud");
@@ -139,7 +139,7 @@ class XLite_Module_AntiFraud_Model_Order extends XLite_Model_Order implements XL
 		$request->request();
 		
 		if ($request->error) {
-			$this->set("details.error",$request->error);
+			$this->setComplex("details.error", $request->error);
 			$this->set("detailLabels.error","HTTPS error");
 			return null;
 		} else {
@@ -157,14 +157,14 @@ class XLite_Module_AntiFraud_Model_Order extends XLite_Model_Order implements XL
     		$processed_orders = $found->count("(status='P' OR status='C') AND orig_profile_id='" . $this->getComplex('origProfile.profile_id') . "' AND order_id<>'" . $this->get("order_id") . "'");
 
     		if ($processed_orders > 0) {
-    			$this->set("details.processed_orders", $processed_orders);
+    			$this->setComplex("details.processed_orders", $processed_orders);
     			$risk_factor_multiplier /= $this->config->getComplex('AntiFraud.processed_orders_multiplier');
     		}
     		
     		$declined_orders = $found->count("(status='D' OR status='F') AND orig_profile_id='" . $this->getComplex('origProfile.profile_id') . "' AND order_id<>'" . $this->get("order_id") . "'");
 
     		if ($declined_orders > 0) {
-    			$this->set("details.declined_orders", $declined_orders);
+    			$this->setComplex("details.declined_orders", $declined_orders);
     			$risk_factor_multiplier *= $this->config->getComplex('AntiFraud.declined_orders_multiplier');
     		}
     		$duplicate_ip = $found->count("orig_profile_id <> ".$this->getComplex('origProfile.profile_id')." AND details LIKE '%".$this->getComplex('details.customer_ip')."%'");
@@ -193,8 +193,8 @@ class XLite_Module_AntiFraud_Model_Order extends XLite_Model_Order implements XL
     			$result["total_trust_score"] = 10;
     		}
     	
-			$this->set("details.af_result",$result);	
-			$this->set("details.af_data",$data); 
+			$this->setComplex("details.af_result", $result);	
+			$this->setComplex("details.af_data", $data); 
 		}
 
 		return $result;

@@ -302,9 +302,9 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
         {
         $page = trim($_POST["page"]);
         $this->extraPage = new XLite_Model_ExtraPage();
-        $this->set("extraPage.page", $page);
-        $this->set("extraPage.title", trim($_POST["title"]));
-        $this->set("extraPage.content", trim($_POST["content"]));
+        $this->setComplex("extraPage.page", $page);
+        $this->setComplex("extraPage.title", trim($_POST["title"]));
+        $this->setComplex("extraPage.content", trim($_POST["content"]));
         if ($this->new_page) {
             $this->extraPage->add();
         } else {

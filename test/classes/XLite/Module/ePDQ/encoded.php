@@ -5,7 +5,7 @@
 				$status = "P";
 			} else {
 				$status = "F";
-				$cart->set("details.error", $_POST["transactionstatus"]);
+				$cart->setComplex("details.error", $_POST["transactionstatus"]);
 			}	
 
 			$cart->set("status", $status);

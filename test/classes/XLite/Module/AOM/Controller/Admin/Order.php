@@ -197,7 +197,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 			foreach ($fields as $field)
 				$originalValues[$field] = $order->get($field);
 	    }
-		$order->set("details.originalValues",$originalValues);
+		$order->setComplex("details.originalValues", $originalValues);
 	} // }}}
 
 	function saveCurrentValues($order, $calculate = true) // {{{
@@ -215,7 +215,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 			foreach ($fields as $field) {
 				if ($properties[$field] != $originalValues[$field]) $originalValues[$field] = $properties[$field];
 			}
-			$order->set("details.originalValues",$originalValues);
+			$order->setComplex("details.originalValues", $originalValues);
 		} else { 
 			// Return "originalPrice" for product, called like: $item->getComplex('product.price');
 			// Prevent tax calculation problem
@@ -229,7 +229,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 
 			foreach($fields as $field) 
 				$currentValues[$field] = $order->get($field);
-			$order->set("details.currentValues",$currentValues);
+			$order->setComplex("details.currentValues", $currentValues);
 		}
 		$order->update();
 	} // }}}
@@ -344,7 +344,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 			$field_values = $this->getUserProfileFields();
 			$cloneProfile->_AOMIgnoreMembershipChanged = true;
 			foreach($field_values as $value) {
-				$cloneProfile->set($value,$properties[$value]);
+				$cloneProfile->setComplex($value, $properties[$value]);
 			}
 			$cloneProfile->update();
 			$cloneProfile->_AOMIgnoreMembershipChanged = false;
@@ -900,7 +900,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 		$orderProfile->_AOMIgnoreMembershipChanged = true;
 		$field_values = $this->getUserProfileFields();
 		foreach($field_values as $value) {
-			$orderProfile->set($value, $cloneProfile[$value]);
+			$orderProfile->setComplex($value, $cloneProfile[$value]);
 		}
 		$orderProfile->update();
 		$orderProfile->_AOMIgnoreMembershipChanged = false;

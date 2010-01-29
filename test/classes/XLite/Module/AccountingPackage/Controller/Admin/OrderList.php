@@ -65,7 +65,7 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
     {
         parent::initView();
         if ($this->get("mode") == "export_myob" || $this->get("mode") == "export_pt") {
-            $this->set("searchOrdersForm.visible", false);
+            $this->setComplex("searchOrdersForm.visible", false);
         }
     } // }}}
     
@@ -169,10 +169,10 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
     function export($format) // {{{
     {
 		$price_format = $this->config->getComplex('General.price_format');
-        $this->config->set("General.price_format","%s");
+        $this->config->setComplex("General.price_format", "%s");
         require_once LC_MODULES_DIR . 'AccountingPackage' . LC_DS . 'encoded.php';
         AccountingPackage_export($this, $format);
-		$this->config->set("General.price_format",$price_format);
+		$this->config->setComplex("General.price_format", $price_format);
     } // }}}
 
     function found($order, $name) // {{{

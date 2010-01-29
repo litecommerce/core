@@ -50,7 +50,7 @@ class XLite_Module_XCartImport_Controller_Admin_XcartImport extends XLite_Contro
             // default params
             if (is_null($this->xlite->getComplex('mm.activeModules.DemoMode'))) {
                 foreach (array("hostspec","database","username","password") as $param) {
-                    $this->set($param, XLite::getInstance()->getOptions(array('database_details', $param)));
+                    $this->setComplex($param, XLite::getInstance()->getOptions(array('database_details', $param)));
                 }
             }
             $this->import_users = true;
@@ -488,7 +488,7 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
                     list($prop, $key) = explode('->', $key);
                     $getter = "get$prop";
                     $o = $obj->$getter();
-                    $o->set($key, $value);
+                    $o->setComplex($key, $value);
                     $o->update();
                 }
             }

@@ -108,7 +108,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
             if (isset($keywords[0]) && $keywords[0] == "billing") {
                 $k = "shipping_" . $keywords[1];
                 if ($this->isEmptySippingInfoField($properties, $k)) {
-                     $profile->set($k, $value);
+                     $profile->setComplex($k, $value);
                 }
             }
         }    
@@ -137,7 +137,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
             $this->encryptPassword($profile->get("password")));
             $anonymous = false;
         } else {
-            $this->set("session.anonymous", true);
+            $this->setComplex("session.anonymous", true);
             $profile->set("isAnonymous", true);
             $anonymous = true;
         }
@@ -336,7 +336,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         // update profile
         $profile->update();
         // save to session
-        $this->set("session.profile_id", $profile->get("profile_id"));
+        $this->setComplex("session.profile_id", $profile->get("profile_id"));
 
         $this->rememberLogin($profile->get("login"));
     } // }}}
@@ -467,9 +467,9 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     */
     function logoff() // {{{
     {
-        $this->set("session.last_profile_id", $this->getComplex('session.profile_id'));
-        $this->set("session.profile_id", null);
-        $this->set("session.anonymous", null);
+        $this->setComplex("session.last_profile_id", $this->getComplex('session.profile_id'));
+        $this->setComplex("session.profile_id", null);
+        $this->setComplex("session.anonymous", null);
     } // }}}
    
     /**

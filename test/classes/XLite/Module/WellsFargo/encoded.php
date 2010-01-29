@@ -27,13 +27,13 @@
 			$status = 'P';
 		} else {
 			$status = 'F';
-			$cart->set('details.error', $errors[$_GET["IOC_response_code"]]);
+			$cart->setComplex('details.error', $errors[$_GET["IOC_response_code"]]);
 		}
 		if (isset($_GET["IOC_order_total_amount"])) {
     		$total = $cart->get("total");
             if ($total != $_GET["IOC_order_total_amount"]) {
                 $cart->set("details.error", "Hacking attempt!");
-                $cart->set("detailLabels.error", "Error");
+                $cart->setComplex("detailLabels.error", "Error");
                 $cart->set("details.errorDescription", "Total amount doesn't match: Order total=".$total.", WellsFargo amount=".$_GET["IOC_order_total_amount"]);
                 $cart->set("detailLabels.errorDescription", "Hacking attempt details");
 				$status = 'F';

@@ -66,7 +66,7 @@ function AuthorizeNet_processor_process($_this, $cart, &$paymentMethod)
         $status = "F";
     } else {
         $transid = $response[6];
-        $cart->set("details.transid", $transid);
+        $cart->setComplex("details.transid", $transid);
         $cart->set("detailLabels.transid", "Authorize.Net Transaction ID");
         // md5 hash check, if configured
         $amount = sprintf("%.2f", $cart->get("total")); 
@@ -80,7 +80,7 @@ function AuthorizeNet_processor_process($_this, $cart, &$paymentMethod)
             strcasecmp($value, $response[37])) {
             // MD5 mismatch
             $cart->set("details.error", $msg = "MD5 hash is invalid: $response[37]. Please contact administrator");
-            $cart->set("detailLabels.error", "Error");
+            $cart->setComplex("detailLabels.error", "Error");
             die("Your order won't go thru. $msg");
             // do not update order
             return;
@@ -96,20 +96,20 @@ function AuthorizeNet_processor_process($_this, $cart, &$paymentMethod)
             }
             $cart->set("detailLabels.cvvMessage", "CVV message");
             if ($response[38]) {
-                $cart->set("details.cvvMessage", $_this->cvverr[$response[38]]);
+                $cart->setComplex("details.cvvMessage", $_this->cvverr[$response[38]]);
             } else {
-                $cart->set("details.cvvMessage", null);
+                $cart->setComplex("details.cvvMessage", null);
             }
             $cart->set("detailLabels.avsMessage", "AVS message");
             if ($response[5]) {
-                $cart->set("details.avsMessage", $_this->avserr[$response[5]]);
+                $cart->setComplex("details.avsMessage", $_this->avserr[$response[5]]);
             } else {
-                $cart->set("details.avsMessage", null);
+                $cart->setComplex("details.avsMessage", null);
             }
         }
     }
-    $cart->set("details.error", $error);
-    $cart->set("detailLabels.error", "Error");
+    $cart->setComplex("details.error", $error);
+    $cart->setComplex("detailLabels.error", "Error");
     $cart->set("status", $status);
     $cart->update();
 }

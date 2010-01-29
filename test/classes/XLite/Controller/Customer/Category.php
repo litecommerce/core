@@ -55,7 +55,7 @@ class XLite_Controller_Customer_Category extends XLite_Controller_Customer_Abstr
 		if (isset($this->category_id) && empty($this->category_id)) {
             return $this->redirect("cart.php");
 		}
-        $this->set("pager.itemsPerPage", $this->getComplex('config.General.products_per_page'));
+        $this->setComplex("pager.itemsPerPage", $this->getComplex('config.General.products_per_page'));
         if (!isset($_REQUEST["action"])) {
             $this->session->set("productListURL", $this->get("url"));
         }

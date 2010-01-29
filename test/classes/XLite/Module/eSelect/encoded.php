@@ -69,8 +69,8 @@ function func_eSelect_process($cart, $_this)
 
 	// payment not configured or error
 	if (!in_array($response_msg, array("Y", "U", "N"))) {
-		$cart->set("details.error", _replace_security_info($mpi_response["MESSAGE"]));
-		$cart->set("detailLabels.error", "Error");
+		$cart->setComplex("details.error", _replace_security_info($mpi_response["MESSAGE"]));
+		$cart->setComplex("detailLabels.error", "Error");
 		$status = $_this->get("orderFailStatus");
 		if ($cart->xlite->AOMEnabled) {
 			$cart->set("orderStatus", $status);
@@ -136,8 +136,8 @@ function func_eSelect_action_return($_this, $order, &$payment)
 	if (strtolower($mpi_response["SUCCESS"]) == "true") {
 		func_eSelect_performAuthPurchase($order, $cc_info, $payment, $purchase_amount, null, $mpi_response["CAVV"]);
 	} else {
-		$order->set("details.error", _replace_security_info($mpi_response["MESSAGE"]));
-		$order->set("detailLabels.error", "Error");
+		$order->setComplex("details.error", _replace_security_info($mpi_response["MESSAGE"]));
+		$order->setComplex("detailLabels.error", "Error");
 		$status = $payment->get("orderFailStatus");
 		if ($order->xlite->AOMEnabled) {
 			$order->set("orderStatus", $status);
@@ -295,12 +295,12 @@ function func_eSelect_performAuthPurchase($order, $cc_info, &$payment, $amount, 
 			$order->set("status", $status);
 		}
 
-		$order->set("details.referenceNum", $receipt["REFERENCENUM"]);
-		$order->set("details.responseCode", $receipt["RESPONSECODE"]);
-		$order->set("details.authCode", $receipt["AUTHCODE"]);
-		$order->set("details.message", $receipt["MESSAGE"]);
-		$order->set("details.avs", $payment->getAVSMessageText($receipt["AVSRESULTCODE"]));
-		$order->set("details.cvd", $payment->getCVDMessageText($receipt["CVDRESULTCODE"]));
+		$order->setComplex("details.referenceNum", $receipt["REFERENCENUM"]);
+		$order->setComplex("details.responseCode", $receipt["RESPONSECODE"]);
+		$order->setComplex("details.authCode", $receipt["AUTHCODE"]);
+		$order->setComplex("details.message", $receipt["MESSAGE"]);
+		$order->setComplex("details.avs", $payment->getAVSMessageText($receipt["AVSRESULTCODE"]));
+		$order->setComplex("details.cvd", $payment->getCVDMessageText($receipt["CVDRESULTCODE"]));
 
 		$orderLabels = array(
 			"referenceNum"	=> "Reference Num",
@@ -322,8 +322,8 @@ function func_eSelect_performAuthPurchase($order, $cc_info, &$payment, $amount, 
 			$order->set("status", $status);
 		}
 
-		$order->set("details.error", _replace_security_info($receipt["MESSAGE"]));
-		$order->set("detailLabels.error", "Error");
+		$order->setComplex("details.error", _replace_security_info($receipt["MESSAGE"]));
+		$order->setComplex("detailLabels.error", "Error");
 
 		$order->update();
 	}

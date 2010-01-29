@@ -175,10 +175,10 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
 		if ($this->isInSafeMode()) {
 
 			if ('on' == $_GET[self::PARAM_SAFE_MODE]) {
-                XLite_Model_Session::getInstance()->set(self::SESSION_VAR_SAFE_MODE, true);
+                XLite_Model_Session::getInstance()->setComplex(self::SESSION_VAR_SAFE_MODE, true);
 				$this->set('safeMode', true);
 			} elseif ('off' == $_GET[self::PARAM_SAFE_MODE]) {
-				XLite_Model_Session::getInstance()->set(self::SESSION_VAR_SAFE_MODE, null);
+				XLite_Model_Session::getInstance()->setComplex(self::SESSION_VAR_SAFE_MODE, null);
 			}
 		}
 

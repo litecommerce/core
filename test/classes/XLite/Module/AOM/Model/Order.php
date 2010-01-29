@@ -576,7 +576,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
     {
         if ( $this->xlite->is("adminZone") && $this->get("manual_edit") ) {
             foreach ($this->_save_fields as $v)
-                $this->set($v, $this->_save_totals[$v]);
+                $this->setComplex($v, $this->_save_totals[$v]);
         }
     }
 

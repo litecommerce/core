@@ -225,7 +225,7 @@ enabled_refresh = false;
 		} elseif (strcmp($res["ErrorNo"], "0") != 0) {
 			// inner error !!!
             $error = "CMPI_ERROR(" . $res["ErrorNo"] . "): " . $res["ErrorDesc"];
-            $this->cart->set("details.cmpi_info", $error);
+            $this->cart->setComplex("details.cmpi_info", $error);
             $this->cart->set("detailLabels.cmpi_info", "Cardinal Commerce Response");
 			if ($res["Enrolled"] == "Y" || $res["Enrolled"] == "N") {
             	$this->cart->set("status", "F");

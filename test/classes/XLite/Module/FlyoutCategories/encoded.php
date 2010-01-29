@@ -283,7 +283,7 @@ function FlyoutCategories_action_fc_clone($_this)
 	$new_scheme->set("name", $scheme->get("name") . " (clone)");
 	foreach ($clone_fields as $v){
 		$data = $scheme->get($v);
-		$new_scheme->set($v, $data);
+		$new_scheme->setComplex($v, $data);
 	}
 	$new_scheme->create();
 

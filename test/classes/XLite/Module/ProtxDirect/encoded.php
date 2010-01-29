@@ -76,15 +76,15 @@ function func_ProtxDirect_process($_this, $order)
 
 		exit;
 	} elseif ($response["Status"] == "OK") {
-		$order->set("details.status", 			$response["Status"]);
-		$order->set("details.statusDetail",		$response["StatusDetail"]);
-		$order->set("details.VPSTxId",			$response["VPSTxId"]);
-		$order->set("details.securityKey",		$response["SecurityKey"]);
-		$order->set("details.TxAuthNo",			$response["TxAuthNo"]);
-		$order->set("details.avscv2",			$response["AVSCV2"]);
-		$order->set("details.addressResult",	$response["AddressResult"]);
-		$order->set("details.posCodeResult",	$response["PostCodeResult"]);
-		$order->set("details.cv2Result",		$response["CV2Result"]);
+		$order->setComplex("details.status", $response["Status"]);
+		$order->setComplex("details.statusDetail", $response["StatusDetail"]);
+		$order->setComplex("details.VPSTxId", $response["VPSTxId"]);
+		$order->setComplex("details.securityKey", $response["SecurityKey"]);
+		$order->setComplex("details.TxAuthNo", $response["TxAuthNo"]);
+		$order->setComplex("details.avscv2", $response["AVSCV2"]);
+		$order->setComplex("details.addressResult", $response["AddressResult"]);
+		$order->setComplex("details.posCodeResult", $response["PostCodeResult"]);
+		$order->setComplex("details.cv2Result", $response["CV2Result"]);
 
 		$detailLabels = array(
 			"status"		=> "Status",
@@ -100,14 +100,14 @@ function func_ProtxDirect_process($_this, $order)
 
 		$order->set("status", $_this->get("sucessedStatus"));
 	} elseif (in_array($response["Status"], array("NOTAUTHED", "REJECTED"))) {
-		$order->set("details.status", 			$response["Status"]);
-		$order->set("details.statusDetail",		$response["StatusDetail"]);
-		$order->set("details.VPSTxId",			$response["VPSTxId"]);
-		$order->set("details.securityKey",		$response["SecurityKey"]);
-		$order->set("details.avscv2",			$response["AVSCV2"]);
-		$order->set("details.addressResult",	$response["AddressResult"]);
-		$order->set("details.posCodeResult",	$response["PostCodeResult"]);
-		$order->set("details.cv2Result",		$response["CV2Result"]);
+		$order->setComplex("details.status", $response["Status"]);
+		$order->setComplex("details.statusDetail", $response["StatusDetail"]);
+		$order->setComplex("details.VPSTxId", $response["VPSTxId"]);
+		$order->setComplex("details.securityKey", $response["SecurityKey"]);
+		$order->setComplex("details.avscv2", $response["AVSCV2"]);
+		$order->setComplex("details.addressResult", $response["AddressResult"]);
+		$order->setComplex("details.posCodeResult", $response["PostCodeResult"]);
+		$order->setComplex("details.cv2Result", $response["CV2Result"]);
 
 		$detailLabels = array(
 			"status"		=> "Status",
@@ -120,18 +120,18 @@ function func_ProtxDirect_process($_this, $order)
 			"cv2Result"		=> "CV2 Result",
 		);
 
-		$order->set("details.error", "(".$response["Status"].") ".$response["StatusDetail"]);
+		$order->setComplex("details.error", "(".$response["Status"].") ".$response["StatusDetail"]);
 		$order->set("status", $_this->get("failedStatus"));
 	} else {
-		$order->set("details.status",		$response["Status"]);
-		$order->set("details.statusDetail",	$response["StatusDetail"]);
+		$order->setComplex("details.status", $response["Status"]);
+		$order->setComplex("details.statusDetail", $response["StatusDetail"]);
 
 		$detailLabels = array(
 			"status"		=> "Status",
 			"statusDetail"	=> "Status Detail"
 		);
 
-		$order->set("details.error", $response["StatusDetail"]);
+		$order->setComplex("details.error", $response["StatusDetail"]);
 		$order->set("status", $_this->get("failedStatus"));
 	}
 
@@ -155,15 +155,15 @@ function func_ProtxDirect_action_return($_this, $order, $payment)
 	// Process response
 	if (in_array($response["Status"], array("OK", "NOTAUTHED", "REJECTED"))) {
 		// success
-		$order->set("details.status", 			$response["Status"]);
-		$order->set("details.statusDetail",		$response["StatusDetail"]);
-		$order->set("details.VPSTxId",			$response["VPSTxId"]);
-		$order->set("details.securityKey",		$response["SecurityKey"]);
-		$order->set("details.avscv2",			$response["AVSCV2"]);
-		$order->set("details.addressResult",	$response["AddressResult"]);
-		$order->set("details.posCodeResult",	$response["PostCodeResult"]);
-		$order->set("details.cv2Result",		$response["CV2Result"]);
-		$order->set("details.3DSecureStatus",	$response["3DSecureStatus"]);
+		$order->setComplex("details.status", $response["Status"]);
+		$order->setComplex("details.statusDetail", $response["StatusDetail"]);
+		$order->setComplex("details.VPSTxId", $response["VPSTxId"]);
+		$order->setComplex("details.securityKey", $response["SecurityKey"]);
+		$order->setComplex("details.avscv2", $response["AVSCV2"]);
+		$order->setComplex("details.addressResult", $response["AddressResult"]);
+		$order->setComplex("details.posCodeResult", $response["PostCodeResult"]);
+		$order->setComplex("details.cv2Result", $response["CV2Result"]);
+		$order->setComplex("details.3DSecureStatus", $response["3DSecureStatus"]);
 
 		$detailLabels = array(
 			"status"		=> "Status",
@@ -178,8 +178,8 @@ function func_ProtxDirect_action_return($_this, $order, $payment)
 		);
 
 		if ($response["Status"] == "OK") {
-			$order->set("details.TxAuthNo", $response["TxAuthNo"]);
-			$order->set("details.cavv", $response["CAVV"]);
+			$order->setComplex("details.TxAuthNo", $response["TxAuthNo"]);
+			$order->setComplex("details.cavv", $response["CAVV"]);
 
 			$detailLabels["cavv"] = "CAVV";
 			$detailLabels["TxAuthNo"] = "TxAuthNo";
@@ -191,14 +191,14 @@ function func_ProtxDirect_action_return($_this, $order, $payment)
 			}
 		} else {
 			$order->set("status", $payment->get("failedStatus"));
-			$order->set("details.error", "(".$response["Status"].") ".$response["StatusDetail"]);
+			$order->setComplex("details.error", "(".$response["Status"].") ".$response["StatusDetail"]);
 		}
 
 	} else {
-		$order->set("details.status",		$response["Status"]);
-		$order->set("details.statusDetail",	$response["StatusDetail"]);
-		$order->set("details.VPSTxId",		$response["VPSTxId"]);
-		$order->set("details.securityKey",	$response["SecurityKey"]);
+		$order->setComplex("details.status", $response["Status"]);
+		$order->setComplex("details.statusDetail", $response["StatusDetail"]);
+		$order->setComplex("details.VPSTxId", $response["VPSTxId"]);
+		$order->setComplex("details.securityKey", $response["SecurityKey"]);
 
 		$detailLabels = array(
 			"status"		=> "Status",
@@ -207,7 +207,7 @@ function func_ProtxDirect_action_return($_this, $order, $payment)
 			"securityKey"	=> "Security Key"
 		);
 
-		$order->set("details.error", "(".$response["Status"].") ".$response["StatusDetail"]);
+		$order->setComplex("details.error", "(".$response["Status"].") ".$response["StatusDetail"]);
 		$order->set("status", $payment->get("failedStatus"));
 	}
 

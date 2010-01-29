@@ -409,7 +409,7 @@ class XLite_Module_HSBC_Model_PaymentMethod_CcHsbc extends XLite_Model_PaymentMe
 	{
 		if (null === $this->merchant_data) {
 			$this->merchant_data = $this->session->getId();
-			$cart->set("details.secure_id", $this->merchant_data);
+			$cart->setComplex("details.secure_id", $this->merchant_data);
 			$cart->update();
 		}	
 		return $this->merchant_data;

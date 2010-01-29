@@ -27,24 +27,24 @@ function PaymentMethod_chronopay_handleRequest($_this, $cart)
 	$transaction_type = $_REQUEST['transaction_type'];
 	if(!$_REQUEST['error'] && isset($_REQUEST["cs1"]) && is_numeric($_REQUEST["cs1"]) && $_REQUEST["cs1"] > 0 && isset($_REQUEST["cs2"]) && $_REQUEST["cs2"] == "chronopay")  {
 		if($transaction_type == 'onetime' || $transaction_type == 'initial' || $transaction_type== 'rebill') {
-			$cart->set('details.transaction_type', $_REQUEST['transaction_type']);
+			$cart->setComplex('details.transaction_type', $_REQUEST['transaction_type']);
 			$cart->set('detailLabels.transaction_type', 'Transaction Type');
-			$cart->set('details.transaction_id', $_REQUEST['transaction_id']);
+			$cart->setComplex('details.transaction_id', $_REQUEST['transaction_id']);
 			$cart->set('detailLabels.transaction_id', 'Transaction ID');
-			$cart->set('details.customer_id', $_REQUEST['customer_id']);
+			$cart->setComplex('details.customer_id', $_REQUEST['customer_id']);
 			$cart->set('detailLabels.customer_id', 'Customer ID');
 
 			$cart->set('status', 'P');
 			$cart->update();
 		} else {
-			$cart->set('details.error', $this->answer[$transaction_type]);
-			$cart->set('detailLabels.error', 'Error');
+			$cart->setComplex('details.error', $this->answer[$transaction_type]);
+			$cart->setComplex('detailLabels.error', 'Error');
 			$cart->set('status', 'F');
 			$cart->update();
 		}
 	}else {
 		$cart->set('details.error', 'Payment Error'.$_REQUEST["error_descr"]);
-		$cart->set('detailLabels.error', 'Error');
+		$cart->setComplex('detailLabels.error', 'Error');
 		$cart->set('status', 'F');
 		$cart->update();
 	}

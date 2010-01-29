@@ -117,13 +117,13 @@ function func_SagePay_response_handling($response, $order, &$payment)
 	switch ($response["Status"]) {
 		case "OK":
 			// success
-			$order->set("details.status", 			$response["Status"]);
-			$order->set("details.statusDetail",		$response["StatusDetail"]);
-			$order->set("details.VPSTxId",			$response["VPSTxId"]);
-			$order->set("details.avscv2",			$response["AVSCV2"]);
-			$order->set("details.addressResult",	$response["AddressResult"]);
-			$order->set("details.posCodeResult",	$response["PostCodeResult"]);
-			$order->set("details.cv2Result",		$response["CV2Result"]);
+			$order->setComplex("details.status", $response["Status"]);
+			$order->setComplex("details.statusDetail", $response["StatusDetail"]);
+			$order->setComplex("details.VPSTxId", $response["VPSTxId"]);
+			$order->setComplex("details.avscv2", $response["AVSCV2"]);
+			$order->setComplex("details.addressResult", $response["AddressResult"]);
+			$order->setComplex("details.posCodeResult", $response["PostCodeResult"]);
+			$order->setComplex("details.cv2Result", $response["CV2Result"]);
 
 			$detailLabels = array(
 				"status"		=> "Status",
@@ -136,28 +136,28 @@ function func_SagePay_response_handling($response, $order, &$payment)
 			);
 
 			if (isset($response["SecurityKey"])) {
-				$order->set("details.securityKey", $response["SecurityKey"]);
+				$order->setComplex("details.securityKey", $response["SecurityKey"]);
 				$detailLabels["securityKey"] = "Security Key";
 			}
 
 			if (isset($response["TxAuthNo"])) {
-				$order->set("details.TxAuthNo", $response["TxAuthNo"]);
+				$order->setComplex("details.TxAuthNo", $response["TxAuthNo"]);
 				$detailLabels["TxAuthNo"] = "TxAuthNo";
 			}
 
 			if (isset($response["CAVV"])) {
-				$order->set("details.cavv", $response["CAVV"]);
+				$order->setComplex("details.cavv", $response["CAVV"]);
 				$detailLabels["cavv"] = "CAVV";
 			}
 
 			if (isset($response["Amount"])) {
-				$order->set("details.amount", $response["Amount"]);
+				$order->setComplex("details.amount", $response["Amount"]);
 				$detailLabels["amount"] = "Amount";
 			}
 
 			$status = $order->get('status');
 			if (isset($response["3DSecureStatus"])) {
-				$order->set("details.3DSecureStatus",   $response["3DSecureStatus"]);
+				$order->setComplex("details.3DSecureStatus", $response["3DSecureStatus"]);
 				$detailLabels["3DSecureStatus"] = "3DSecureStatus";
 
 				if ($response["3DSecureStatus"] == "OK") {
@@ -179,9 +179,9 @@ function func_SagePay_response_handling($response, $order, &$payment)
 
 		case "AUTHENTICATED":
 		case "REGISTERED":
-			$order->set("details.status",			$response["Status"]);
-			$order->set("details.statusDetail",		$response["StatusDetail"]);
-			$order->set("details.VPSTxId",			$response["VPSTxId"]);
+			$order->setComplex("details.status", $response["Status"]);
+			$order->setComplex("details.statusDetail", $response["StatusDetail"]);
+			$order->setComplex("details.VPSTxId", $response["VPSTxId"]);
 
 			$detailLabels = array(
 				"status"		=> "Status",
@@ -190,22 +190,22 @@ function func_SagePay_response_handling($response, $order, &$payment)
 			);
 
 			if (isset($response["3DSecureStatus"])) {
-				$order->set("details.3DSecureStatus",   $response["3DSecureStatus"]);
+				$order->setComplex("details.3DSecureStatus", $response["3DSecureStatus"]);
 				$detailLabels["3DSecureStatus"] = "3DSecureStatus";
 			}
 
 			if (isset($response["SecurityKey"])) {
-				$order->set("details.securityKey", $response["SecurityKey"]);
+				$order->setComplex("details.securityKey", $response["SecurityKey"]);
 				$detailLabels["securityKey"] = "Security Key";
 			}
 
 			if (isset($response["TxAuthNo"])) {
-				$order->set("details.TxAuthNo", $response["TxAuthNo"]);
+				$order->setComplex("details.TxAuthNo", $response["TxAuthNo"]);
 				$detailLabels["TxAuthNo"] = "TxAuthNo";
 			}
 
 			if (isset($response["Amount"])) {
-				$order->set("details.amount", $response["Amount"]);
+				$order->setComplex("details.amount", $response["Amount"]);
 				$detailLabels["amount"] = "Amount";
 			}
 
@@ -219,10 +219,10 @@ function func_SagePay_response_handling($response, $order, &$payment)
 		default:
 		case "NOTAUTHED":
 		case "REJECTED":
-			$order->set("details.status",		$response["Status"]);
-			$order->set("details.statusDetail",	$response["StatusDetail"]);
-			$order->set("details.VPSTxId",		$response["VPSTxId"]);
-			$order->set("details.securityKey",	$response["SecurityKey"]);
+			$order->setComplex("details.status", $response["Status"]);
+			$order->setComplex("details.statusDetail", $response["StatusDetail"]);
+			$order->setComplex("details.VPSTxId", $response["VPSTxId"]);
+			$order->setComplex("details.securityKey", $response["SecurityKey"]);
 
 			$detailLabels = array(
 				"status"		=> "Status",
@@ -230,7 +230,7 @@ function func_SagePay_response_handling($response, $order, &$payment)
 				"VPSTxId"		=> "VPSTxId",
 				"securityKey"	=> "Security Key"
 			);
-			$order->set("details.error", "(".$response["Status"].") ".$response["StatusDetail"]);
+			$order->setComplex("details.error", "(".$response["Status"].") ".$response["StatusDetail"]);
 			if ($order->xlite->AOMEnabled) {
 				$order->set("orderStatus", $payment->get("orderRejectStatus"));
 			} else {

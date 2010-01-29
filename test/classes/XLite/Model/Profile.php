@@ -277,7 +277,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
             if ($found === false || $found === null) {
                 $memberships = $this->config->getComplex('Memberships.memberships');
                 $memberships[] = $properties["membership"];
-                $this->config->set("Memberships.memberships", $memberships);
+                $this->config->setComplex("Memberships.memberships", $memberships);
             }
         }
     } // }}}

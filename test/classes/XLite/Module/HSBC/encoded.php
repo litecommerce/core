@@ -58,7 +58,7 @@
 
             if ($total != $totalPost) {
                 $cart->set("details.error", "Hacking attempt!");
-                $cart->set("detailLabels.error", "Error");
+                $cart->setComplex("detailLabels.error", "Error");
                 $cart->set("details.errorDescription", "Total amount doesn't match: Order total=".$total.", HSBC amount=".$totalPost);
                 $cart->set("detailLabels.errorDescription", "Hacking attempt details");
                 $cart->set("status","F");
@@ -71,7 +71,7 @@
     		$currensy = $params["param04"];
             if ($currensy != $_POST["PurchaseCurrency"]) {
                 $cart->set("details.error", "Hacking attempt!");
-                $cart->set("detailLabels.error", "Error");
+                $cart->setComplex("detailLabels.error", "Error");
                 $cart->set("details.errorDescription", "Currency code doesn't match: Order currency=".$currency.", HSBC currency=".$_POST["PurchaseCurrency"]);
                 $cart->set("detailLabels.errorDescription", "Hacking attempt details");
                 $cart->set("status","F");
@@ -88,7 +88,7 @@
             } elseif ($_POST["CpiResultsCode"] == "9") {
 				$status = $params["status_queued"];
 				$substatus = $_this->getStatusCode("status_queued");
-                $cart->set("detailLabels.Response", "Response");
+                $cart->setComplex("detailLabels.Response", "Response");
                 $cart->set("details.Response", "The transaction was placed in Review state by FraudShield");
             }
 		} else {
@@ -112,8 +112,8 @@
 				"15" => "The customers browser does not support 128-bit encryption.",
 				"16" => "The CPI cannot communicate with the Secure ePayment engine."
 			);
-            $cart->set("detailLabels.error", "Error");
-            $cart->set('details.error', $error_codes[$_POST["CpiResultsCode"]]);
+            $cart->setComplex("detailLabels.error", "Error");
+            $cart->setComplex('details.error', $error_codes[$_POST["CpiResultsCode"]]);
 		}	
         
 //////////////////////////////////

@@ -131,7 +131,7 @@ class XLite_Module_Newsletters_Model_NewsSubscriber extends XLite_Model_Abstract
         $mailer = new XLite_Model_Mailer();
         if (!empty($params)) {
             foreach ($params as $param => $value) {
-                $mailer->set($param, $value);
+                $mailer->setComplex($param, $value);
             }
         }
         $mailer->compose($this->getComplex('config.Company.site_administrator'),

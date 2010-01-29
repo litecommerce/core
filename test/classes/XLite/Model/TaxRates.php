@@ -473,7 +473,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
                     $value = serialize($value);
                 }
                 $conf->set("value", $value); 
-                $this->config->set("Taxes.$name", $value);
+                $this->config->setComplex("Taxes.$name", $value);
                 $conf->update();
             }
         }

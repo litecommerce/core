@@ -47,9 +47,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
     function handleRequest()
     {
         if ($this->get("search")) {
-            $this->set("session.salesDynamics", $_POST);
+            $this->setComplex("session.salesDynamics", $_POST);
         } else {
-            $this->set("session.salesDynamics", null);
+            $this->setComplex("session.salesDynamics", null);
         }
         parent::handleRequest();
     }

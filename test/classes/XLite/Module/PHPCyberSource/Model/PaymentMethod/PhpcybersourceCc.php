@@ -194,15 +194,15 @@ EOT;
 
 	    $response = $xml->parse($response[CYBS_SK_XML_DOCUMENT]);
 	    if ($status == CYBS_S_OK && $response['C:REPLYMESSAGE']['C:DECISION'] == 'ACCEPT') {
-	        $cart->set("details.transaction",$response['C:REPLYMESSAGE']['C:REQUESTID'].':'.$response['C:REPLYMESSAGE']['C:REASONCODE']);
-	        $cart->set("detailLabels.transaction","RequestID");
-   	        $cart->set("details.error",null);
-	        $cart->set("detailLabels.error","");
+	        $cart->setComplex("details.transaction", $response['C:REPLYMESSAGE']['C:REQUESTID'].':'.$response['C:REPLYMESSAGE']['C:REASONCODE']);
+	        $cart->setComplex("detailLabels.transaction", "RequestID");
+   	        $cart->setComplex("details.error", null);
+	        $cart->setComplex("detailLabels.error", "");
 	        $cart->set("status","Q");
 	    } else {
-  	        $cart->set("details.transaction",$response['C:REPLYMESSAGE']['C:REQUESTID'].':'.$response['C:REPLYMESSAGE']['C:REASONCODE']);
-	        $cart->set("detailLabels.transaction","RequestID");
-	        $cart->set("details.error",$response['C:REPLYMESSAGE']['C:REASONCODE']."-".$this->responses[$response['C:REPLYMESSAGE']['C:REASONCODE']]);
+  	        $cart->setComplex("details.transaction", $response['C:REPLYMESSAGE']['C:REQUESTID'].':'.$response['C:REPLYMESSAGE']['C:REASONCODE']);
+	        $cart->setComplex("detailLabels.transaction", "RequestID");
+	        $cart->setComplex("details.error", $response['C:REPLYMESSAGE']['C:REASONCODE']."-".$this->responses[$response['C:REPLYMESSAGE']['C:REASONCODE']]);
 	        $cart->set("detailLabels.error","Reason code");
 	        $cart->set("status","F");
 	    } 
@@ -223,15 +223,15 @@ EOT;
 	    $response = $xml->parse($response[CYBS_SK_XML_DOCUMENT]);
 
         if ($status == CYBS_S_OK && $response['C:REPLYMESSAGE']['C:DECISION'] == 'ACCEPT') {
-            $cart->set("details.transaction",$response['C:REPLYMESSAGE']['C:REQUESTID'].':'.$response['C:REPLYMESSAGE']['C:REASONCODE']);
-            $cart->set("detailLabels.transaction","RequestID");
-   	        $cart->set("details.error",null);
-	        $cart->set("detailLabels.error","");
+            $cart->setComplex("details.transaction", $response['C:REPLYMESSAGE']['C:REQUESTID'].':'.$response['C:REPLYMESSAGE']['C:REASONCODE']);
+            $cart->setComplex("detailLabels.transaction", "RequestID");
+   	        $cart->setComplex("details.error", null);
+	        $cart->setComplex("detailLabels.error", "");
             $cart->set("status","P");
         } else {
-            $cart->set("details.transaction",$response['C:REPLYMESSAGE']['C:REQUESTID'].':'.$response['C:REPLYMESSAGE']['C:REASONCODE']);
-            $cart->set("detailLabels.transaction","RequestID");
-            $cart->set("details.error",$response['C:REPLYMESSAGE']['C:REASONCODE']."-".$this->responses[$response['C:REPLYMESSAGE']['C:REASONCODE']]);
+            $cart->setComplex("details.transaction", $response['C:REPLYMESSAGE']['C:REQUESTID'].':'.$response['C:REPLYMESSAGE']['C:REASONCODE']);
+            $cart->setComplex("detailLabels.transaction", "RequestID");
+            $cart->setComplex("details.error", $response['C:REPLYMESSAGE']['C:REASONCODE']."-".$this->responses[$response['C:REPLYMESSAGE']['C:REASONCODE']]);
             $cart->set("detailLabels.error","Reason Code");
             $cart->set("status","F");
         } 

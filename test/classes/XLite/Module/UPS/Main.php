@@ -101,7 +101,8 @@ class XLite_Module_UPS_Main extends XLite_Module_Abstract
      * @access public
      * @since  3.0
      */
-    public static function getSettingsForm() { 
+    public static function getSettingsForm()
+	{ 
         return "admin.php?target=ups";
     }
 
@@ -120,7 +121,3 @@ class XLite_Module_UPS_Main extends XLite_Module_Abstract
     }
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

@@ -96,13 +96,13 @@ function FreeBSD_cybersource_process($_this, $cart)
 		}
 	if ($ret['ics_rcode'] == 1) {
 		$cart->set("status","P");
-		$cart->set("details.request_id",$ret['request_id']);
+		$cart->setComplex("details.request_id", $ret['request_id']);
 		$cart->set("detailLabels.request_id","Request ID");
-    	$cart->set("details.rmsg",$ret['ics_rmsg']);
+    	$cart->setComplex("details.rmsg", $ret['ics_rmsg']);
         $cart->set("detailLabels.rmsg","Request message");
    		
 	} else {
-        $cart->set("details.error",$ret['ics_rmsg']);
+        $cart->setComplex("details.error", $ret['ics_rmsg']);
 		$cart->set("detailLabels.error","Request error");
 		$cart->set("status","F");
 	}

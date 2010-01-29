@@ -53,7 +53,7 @@ function CardinalCommerce_checkout_cmpi($_this)
 
 	for ($tryCounter=1; $tryCounter<=5; $tryCounter++) {
 		if ($tryCounter > 1) {
-        	$_this->cart->set("details.cmpi_conn_attempt", $tryCounter);
+        	$_this->cart->setComplex("details.cmpi_conn_attempt", $tryCounter);
         	$_this->cart->set("detailLabels.cmpi_conn_attempt", "Authentication Attempt");
         }
 		list($header, $res) = func_https_request2("POST", $_this->config->getComplex('CardinalCommerce.transaction_url'), array("cmpi_msg=".$xml));
@@ -119,7 +119,7 @@ function CardinalCommerce_checkout_cmpi($_this)
 	if($res['ErrorNo'] != 0 && !empty($res["ErrorDesc"])) {
 		$cmpi_info = "CMPI Error (".$res["ErrorNo"]."): ".$res["ErrorDesc"];
         $_this->cart->set("details.error", $res["PAResStatusDesc"] . " Please go back to the payment form to select another form of payment.");
-        $_this->cart->set("detailLabels.error", "Error");			
+        $_this->cart->setComplex("detailLabels.error", "Error");			
 		$rechoosePayment = true;
 	}
 	
@@ -128,10 +128,10 @@ function CardinalCommerce_checkout_cmpi($_this)
 		if ($rechoosePayment) {
 			$cmpi_info = "CMPI Error: ".$res["PAResStatusDesc"];
             $_this->cart->set("details.error", $res["PAResStatusDesc"] . " Please go back to the payment form to select another form of payment.");
-            $_this->cart->set("detailLabels.error", "Error");
+            $_this->cart->setComplex("detailLabels.error", "Error");
 		}
 	}
-    $_this->cart->set("details.cmpi_info", $cmpi_info);
+    $_this->cart->setComplex("details.cmpi_info", $cmpi_info);
     $_this->cart->set("detailLabels.cmpi_info", "Cardinal Commerce Response");
 	$_this->cart->update();
 
