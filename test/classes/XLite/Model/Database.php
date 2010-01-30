@@ -86,7 +86,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
     protected $cacheEnabled = false;
 
 	protected $profiler = null;
-
+	protected $profilerEnabled = false;
 
 	public static function getInstance()
     {
@@ -96,106 +96,105 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
 	public function __construct()
     {
         $this->profiler = XLite_Model_Profiler::getInstance();
+		$this->profilerEnabled = $this->profiler->isEnabled();
     }
 
-    function connect() // {{{
+    public function connect()
     {
         // profile db connect
         $time = microtime(true);
         $options = XLite::getInstance()->getOptions('database_details');
 
-		$options['hostspec'] .= (empty($options['socket']) ? (empty($options['port']) ? '' : ':' . $options['port']) : ':' . $options['socket']);
+		if (!empty($options['socket'])) {
+			$options['hostspec'] .= ':' . $options['socket'];
+		} elseif (!empty($options['port'])) {
+			$options['hostspec'] .= ':' . $options['port'];
+		}
 
-		if (!empty($options['persistent'])&&function_exists('mysql_pconnect')) {
-			if (!($this->connection = @mysql_pconnect($options["hostspec"], $options["username"], $options["password"]))) 
-            $this->_die(mysql_error());
-		} elseif (!($this->connection = @mysql_connect($options["hostspec"], $options["username"], $options["password"]))) {
-            $this->_die(mysql_error());
-        }
-        if (!@mysql_select_db($options["database"], $this->connection)) {
-            $this->_die(mysql_error());
-        }
+		$function = 'mysql_' . ((isset($options['persistent']) && 'on' == strtolower($options['persistent'])) ? 'p' : '') . 'connect';
+
+		($this->connection = @$function($options['hostspec'], $options['username'], $options['password'])) || $this->_die(mysql_error());
+        @mysql_select_db($options['database'], $this->connection) || $this->_die(mysql_error()); 
+
         $this->connected = true;
 
         $this->profiler->dbConnectTime = microtime(true) - $time;
-    } // }}}
-
-    // CACHE methods {{{
-    function hasCachedResult($sql)
-    {
-        return array_key_exists(md5($sql), $this->cache);
     }
 
-    function getCachedResult($sql)
+    protected function getCachedResult($sql)
     {
-        $hash = md5($sql);
-        if ($this->hasCachedResult($sql)) {
-            return $this->cache[$hash];
-        }
-        $this->_die("no cached result found for $sql");
+		return isset($this->cache[$hash = md5($sql)]) ? $this->cache[$hash] : false;
     }
     
-    function cacheResult($sql, $result)
+    protected function cacheResult($sql, $result)
     {
-        if ($this->is("cacheEnabled")) {
-            $this->cache[md5($sql)] = $result;
-        }
+		$this->cache[md5($sql)] = $result;
     }
-    // }}}
     
-	function getOne($sql) // {{{
+	public function getOne($sql)
 	{
-        if ($this->hasCachedResult($sql)) {
-            return $this->getCachedResult($sql);
-        }
-        $res = $this->query($sql);
-		list($result) = @mysql_fetch_row($res);
-        @mysql_free_result($res); 
-        $this->cacheResult($sql, $result);
+		if ($this->cacheEnabled && ($result = $this->getCachedResult($sql))) {
+			return $result;
+		}
+
+		list($result) = @mysql_fetch_row($res = $this->query($sql));
+        @mysql_free_result($res);
+
+		if ($this->cacheEnabled) {
+	        $this->cacheResult($sql, $result);
+		}
+
 		return $result;
-	} // }}}
+	}
     
-	function getAll($sql) // {{{
+	public function getAll($sql)
 	{
-        if ($this->hasCachedResult($sql)) {
-            return $this->getCachedResult($sql);
+        if ($this->cacheEnabled && ($result = $this->getCachedResult($sql))) {
+            return $result;
         }
-        
-        $res = $this->query($sql);
+
 		$result = array();
-		while($row = mysql_fetch_assoc($res)) {
+		$res = $this->query($sql);
+		while ($row = mysql_fetch_assoc($res)) {
 			$result[] = $row;
 		}
         @mysql_free_result($res); 
-        // cache result
-        $this->cacheResult($sql, $result);
-		return $result;
-	} // }}}
 
-	function getRow($sql) // {{{
+		if ($this->cacheEnabled) {
+            $this->cacheResult($sql, $result);
+        }
+
+		return $result;
+	}
+
+	public function getRow($sql)
 	{
-        if ($this->hasCachedResult($sql)) {
-            return $this->getCachedResult($sql);
+		if ($this->cacheEnabled && ($result = $this->getCachedResult($sql))) {
+            return $result;
         }
         
         $result = null;
-        $res = $this->query($sql);
-		$row = @mysql_fetch_assoc($res);
+		$row = @mysql_fetch_assoc($res = $this->query($sql));
         @mysql_free_result($res);
-		$result = $row === false ? null : $row;
-        $this->cacheResult($sql, $result);
+
+		$result = false === $row ? null : $row;
+
+		if ($this->cacheEnabled) {
+            $this->cacheResult($sql, $result);
+        }
+
         return $result;
-	} // }}}
+	}
 
 	public function getColumn($sql, $columnName)
 	{
-		if ($this->hasCachedResult($sql)) {
-            return $this->getCachedResult($sql);
+		if ($this->cacheEnabled && ($result = $this->getCachedResult($sql))) {
+            return $result;
         }
 
-        $res = $this->query($sql);
         $result = array();
-        while($row = mysql_fetch_assoc($res)) {
+		$res = $this->query($sql);
+        while ($row = mysql_fetch_assoc($res)) {
 			if (isset($row[$columnName])) {
 				$index = $row[$columnName];
 				unset($row[$columnName]);
@@ -203,24 +202,29 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
 			}
         }
         @mysql_free_result($res);
-        // cache result
-        $this->cacheResult($sql, $result);
+
+		if ($this->cacheEnabled) {
+            $this->cacheResult($sql, $result);
+        }
+
         return $result;
 	}
 
-	function query($sql) // {{{
+	function query($sql)
 	{
-        $this->profiler->addQuery($sql);
-        $start = microtime(true);
+		if ($this->profilerEnabled) {
+	        $this->profiler->addQuery($sql);
+    	    $start = microtime(true);
+		}
 
-		if (!($res = @mysql_query($sql, $this->connection))) {
-            $this->_die(mysql_errno() . ": " . mysql_error() .  " in " . $sql); 
-        }
+		($res = @mysql_query($sql, $this->connection)) || $this->_die(mysql_errno() . ': ' . mysql_error() .  ' in ' . $sql);
 
-        $this->profiler->setQueryTime($sql, microtime(true) - $start);
+		if ($this->profilerEnabled) {
+	        $this->profiler->setQueryTime($sql, microtime(true) - $start);
+		}
 
         return $res;
-	} // }}}
+	}
 
     /**
     * Returns the SQL Database table name for specified alias.

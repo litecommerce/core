@@ -119,15 +119,13 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
         $this->db->connect();
 
         // attempt to initialize modules subsystem
-        $this->mm = new XLite_Model_ModulesManager();
+        $this->mm = XLite_Model_ModulesManager::getInstance();
         $this->mm->init();
         $this->profiler->log("mm_time");
 
         $this->layout = XLite_Model_Layout::getInstance();
         $this->layout->initFromGlobals();
         
-        // $this->auth = XLite_Model_Auth::getInstance();
-
         $this->profiler->log("init_time");
     }
 
