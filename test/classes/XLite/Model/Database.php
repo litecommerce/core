@@ -85,10 +85,17 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
     protected $cache = array();	
     protected $cacheEnabled = false;
 
+	protected $profiler = null;
+
 
 	public static function getInstance()
     {
         return self::_getInstance(__CLASS__);
+    }
+
+	public function __construct()
+    {
+        $this->profiler = XLite_Model_Profiler::getInstance();
     }
 
     function connect() // {{{
@@ -110,7 +117,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
         }
         $this->connected = true;
 
-        XLite_Model_Profiler::getInstance()->dbConnectTime = microtime(true) - $time;
+        $this->profiler->dbConnectTime = microtime(true) - $time;
     } // }}}
 
     // CACHE methods {{{
@@ -203,15 +210,15 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
 
 	function query($sql) // {{{
 	{
-        $profiler = new XLite_Model_Profiler();
-        $profiler->addQuery($sql);
+        $this->profiler->addQuery($sql);
         $start = microtime(true);
 
 		if (!($res = @mysql_query($sql, $this->connection))) {
             $this->_die(mysql_errno() . ": " . mysql_error() .  " in " . $sql); 
         }
 
-        $profiler->setQueryTime($sql, microtime(true) - $start);
+        $this->profiler->setQueryTime($sql, microtime(true) - $start);
+
         return $res;
 	} // }}}
 

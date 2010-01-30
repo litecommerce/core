@@ -47,7 +47,8 @@
 */
 class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton 
 {	
-    public $queries = array();	
+    protected static $queries = array();	
+
     public $query_time = array();	
     public $enabled = false;
 
@@ -110,9 +111,6 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
 ?>
 <p align=left>
 <table border=0>
-<tr><td style="FONT-WEIGHT: bold;">DB</td><td><?php print $this->db_time; ?> (<?php print $this->db_time_delta; $this->total_time_sum += $this->db_time_delta; ?>)</td></tr>
-<tr><td style="FONT-WEIGHT: bold;">CFG</td><td><?php print $this->cfg_time; ?> (<?php print $this->cfg_time_delta; $this->total_time_sum += $this->cfg_time_delta; ?>)</td></tr>
-<tr><td style="FONT-WEIGHT: bold;">SESSION</td><td><?php print $this->ss_time; ?> (<?php print $this->ss_time_delta; $this->total_time_sum += $this->ss_time_delta; ?>)</td></tr>
 <tr><td style="FONT-WEIGHT: bold;">MM</td><td><?php print $this->mm_time; ?> (<?php print $this->mm_time_delta; $this->total_time_sum += $this->mm_time_delta; ?>)</td></tr>
 <tr><td style="FONT-WEIGHT: bold;">INIT TOTAL</td><td><?php print $this->init_time; ?> (<?php print $this->init_time_delta; $this->total_time_sum += $this->init_time_delta; ?>)</td></tr>
 <tr><td colspan=2>&nbsp;</td></tr>
@@ -137,7 +135,7 @@ if (function_exists('memory_get_usage')) {
 <p>Queries log:
 <p>
 <?php
-foreach ($this->queries as $query => $count) {
+foreach (self::$queries as $query => $count) {
     echo "[" . ($count>3?"<font color=red>$count</font>":$count)."] $query<br>\n";
 }
 ?>
@@ -188,16 +186,16 @@ Included file sizes: <table>{foreach:profiler.includedFiles,file} <tr><td>{file.
         if (strlen($query)>300) {
             $query = substr($query, 0, 300) . ' ...';
         }
-        if (isset($this->queries[$query])) {
-            $this->queries[$query]++;
+        if (isset(self::$queries[$query])) {
+            self::$queries[$query]++;
         } else {
-            $this->queries[$query] = 1;
+            self::$queries[$query] = 1;
         }
     }
 
     function getTotalQueries()
     {
-        return array_sum($this->queries);
+        return array_sum(self::$queries);
     }
 
     function getTotalQueriesTime()
