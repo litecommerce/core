@@ -34,7 +34,7 @@
           </elementProp>
           <elementProp name="web_dir" elementType="Argument">
             <stringProp name="Argument.name">web_dir</stringProp>
-            <stringProp name="Argument.value">/~max/xlite/src</stringProp>
+            <stringProp name="Argument.value">/~xcart/general/projects/xlite/build/src</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>

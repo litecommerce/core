@@ -24,9 +24,19 @@ if (false === defined('PHPUnit_MAIN_METHOD')) {
 define('PATH_TESTS', realpath(dirname(__FILE__)));
 define('PATH_ROOT', realpath(dirname(__FILE__) . '/../..'));
 
-set_include_path(get_include_path()
+if (file_exists(PATH_ROOT . '/test')) {
+    define('PATH_SRC', realpath(PATH_ROOT . '/test'));
+} else {
+    define('PATH_SRC', realpath(PATH_ROOT . '/src'));
+}
+
+
+set_include_path(
+    get_include_path()
     . PATH_SEPARATOR . '/usr/local/share/pear/'
-    . PATH_SEPARATOR . PATH_ROOT . '/src/lib5');
+    . PATH_SEPARATOR . PATH_SRC . '/lib'
+    . PATH_SEPARATOR . PATH_SRC . '/var/run/classes'
+);
 
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
@@ -38,9 +48,9 @@ require_once PATH_TESTS . '/PHPUnit/SeleniumTestCase.php';
 
 // X-Lite classes
 
-chdir(PATH_ROOT . '/src');
+chdir(PATH_SRC);
 
-require_once PATH_ROOT . '/src/includes/prepend.php';
+require_once PATH_SRC . '/includes/prepend.php';
 
 if (!defined('SELENIUM_SOURCE_URL')) {
     $arr = explode('/', realpath(__DIR__ . '/../..'));
@@ -60,94 +70,8 @@ if (isset($_SERVER['argv']) && preg_match('/--log-xml\s+(\S+)\s/s', implode(' ',
 }
 
 PHPUnit_Util_Filter::addDirectoryToFilter(PATH_ROOT . '/.dev');
-PHPUnit_Util_Filter::addDirectoryToFilter(PATH_ROOT . '/src/etc');
-
-// File to check coverage
-
-$classes = array();
-$files = array();
-
-/*
-$dirIterator = new RecursiveDirectoryIterator(PATH_ROOT . '/src/lib5');
-$iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
-foreach ($iterator as $filePath => $fileObject) {
-    if ($fileObject->isFile() && preg_match('/\.php$/Ss', $fileObject->getFilename()) && $fileObject->getFilename() != 'Var_Dump.php') {
-        $data = file_get_contents($filePath);
-        if (preg_match_all('/^\s*class\s+(\S+)(?:\s+extends\s+(\S+))?\s*(?:$|\{)/USm', $data, $match)) {
-            foreach ($match[1] as $k => $v) {
-                $classes[strtolower($v)] = array(
-                    'path' => $filePath,
-                    'parent' => isset($match[2][$k]) ? strtolower($match[2][$k]) : false,
-                    'childs' => array(),
-                    'added' => false,
-                );
-
-            }
-        }
-        $files[$filePath] = array_map('strtolower', $match[1]);
-    }
-}
-*/
-
-$classes['log'] = array(
-    'path' => realpath(PATH_ROOT . '/src/lib5/Log.php'),
-    'parent' => false,
-    'childs' => array(),
-    'added' => false,
-);
-$files[realpath(PATH_ROOT . '/src/lib5/Log.php')] = array('log');
-
-$dirIterator = new RecursiveDirectoryIterator(PATH_ROOT . '/src/classes');
-$iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
-
-$excludeModules = array('Promotion', 'DetailedImages', 'InventoryTracking', 'ProductOptions', 'WholesaleTrading', 'Egoods', 'AdvancedSecurity', 'ProductAdviser', 'AOM');
-foreach ($iterator as $filePath => $fileObject) {
-    if (
-        $fileObject->isFile()
-        && preg_match('/\.php$/Ss', $fileObject->getFilename())
-        && !preg_match('/modules\/(' . implode('|', $excludeModules) . ')\//Ss', $filePath)
-    ) {
-        $data = file_get_contents($filePath);
-        if (preg_match_all('/^\s*class\s+(\S+)(?:\s+extends\s+(\S+))?\s*$/USm', $data, $match)) {
-            foreach ($match[1] as $k => $v) {
-                $classes[strtolower($v)] = array(
-                    'path' => $filePath,
-                    'parent' => isset($match[2][$k]) ? strtolower($match[2][$k]) : false,
-                    'childs' => array(),
-                    'added' => false,
-                );
-                
-            }
-        }
-        $files[$filePath] = array_map('strtolower', $match[1]);
-    }
-}
-
-foreach ($classes as $k => $v) {
-    foreach ($files[$v['path']] as $sub) {
-        if ($classes[$sub]['parent'] && isset($classes[$classes[$sub]['parent']])) {
-        
-            $parent = $classes[$sub]['parent'];
-            $parents = array();
-            while ($parent) {
-                $parents[] = $parent;
-                $parent = $classes[$parent]['parent'];
-            }
-
-            foreach (array_reverse($parents) as $p) {
-                if (!$classes[$p]['added']) {
-                    PHPUnit_Util_Filter::addFileToWhitelist($classes[$p]['path']);
-                    $classes[$p]['added'] = true;
-                }
-            }
-        }
-    }
-    PHPUnit_Util_Filter::addFileToWhitelist($v['path']);
-    $classes[$k]['added'] = true;
-}
-
-unset($classes, $data, $k, $v, $p, $filePath, $fileObject, $match, $parent, $parents, $files, $sub);
-
+PHPUnit_Util_Filter::addDirectoryToFilter(PATH_SRC . '/etc');
+PHPUnit_Util_Filter::addDirectoryToWhitelist(PATH_SRC . '/var/run');
 
 /**
  * Class to run all the tests
@@ -240,7 +164,6 @@ class XLite_Tests_AllTests
             }
         } 
 
-//        error_reporting(E_ERROR | E_NOTICE | E_PARSE);
         error_reporting(E_ALL);
 
         return $suite;

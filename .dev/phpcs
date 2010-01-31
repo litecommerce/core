@@ -2,7 +2,10 @@
 <?php
 error_reporting(E_ALL | E_STRICT);
 
-set_include_path(realpath(dirname(realpath(__FILE__)) . '/lib/PEAR') . PATH_SEPARATOR . get_include_path());
+set_include_path(
+	realpath(dirname(realpath(__FILE__)) . '/lib/PEAR')
+	. PATH_SEPARATOR . get_include_path()
+);
 
 require_once 'lib/PEAR/PHP/CodeSniffer/CLI.php';
 

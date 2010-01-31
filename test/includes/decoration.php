@@ -190,6 +190,14 @@ class Decorator
 		}
     }
 
+	/**
+	 * Show javascript notice block 
+	 * 
+	 * @return void
+	 * @access protected
+	 * @see    ____func_see____
+	 * @since  3.0.0 EE
+	 */
 	protected function showJavaScriptBlock()
 	{
 		$code = '<table id="rebuild_cache_block"><tr>'
@@ -199,6 +207,19 @@ class Decorator
 
 		func_flush('<script language="javascript">document.write(\'' . $code . '\');</script>' . "\n");
 	}
+
+    /**
+     * Show plain text notice block 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0 EE
+     */
+    protected function showPlainTextBlock()
+    {
+        func_flush('Re-building cache, please wait...' . "\n");
+    }
 
     /**
      * Return class name by class file path 
@@ -970,7 +991,10 @@ class Decorator
     {
         if ($this->isNeedRebuild() || $this->isDeveloperMode() || $force) {
 
-			if (empty($_REQUEST['action'])) {
+			if (php_sapi_name() == 'cli') {
+				$this->showPlainTextBlock();
+
+			} elseif (empty($_REQUEST['action'])) {
 				$this->showJavaScriptBlock();
 			}
 

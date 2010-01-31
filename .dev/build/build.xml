@@ -15,6 +15,7 @@
 		<property name="buildDir" location="${root}/build" />
 		<property name="sourceDir" location="${root}" />
 		<property name="jmeterDir" location="${sourceDir}/.dev/lib/jmeter" />
+		<property name="srcDir" location="${sourceDir}/test" />
 	</target>
 
     <target name="set-properties-cc" depends="set-properties-common">
@@ -23,6 +24,7 @@
         <property name="buildDir" location="${root}/build" />
         <property name="sourceDir" location="${root}/source" />
 		<property name="jmeterDir" location="/u/xcart/jakarta-jmeter-2.3.4" />
+        <property name="srcDir" location="${sourceDir}/test" />
     </target>
 
     <target name="set-properties-common">
@@ -45,22 +47,14 @@
 	</target>
 
     <target name="prepare">
-        <exec executable="php" dir="${sourceDir}/src">
-            <arg line="${sourceDir}/src/build_classes.php" />
-        </exec>
         <copy todir="${buildDir}/src">
-			<fileset dir="${sourceDir}/src" />
+			<fileset dir="${srcDir}" />
 		</copy>
 		<delete>
 			<fileset dir="${buildDir}/src" includes="**/*.swp" />
 			<fileset dir="${buildDir}/src" includes="**/*.rej" />
 			<fileset dir="${buildDir}/src" includes="**/*.orig" />
-			<fileset dir="${buildDir}/src/trial" />
-            <fileset dir="${buildDir}/src/tools" />
-            <fileset dir="${buildDir}/src/tests" />
-            <fileset dir="${buildDir}/src/upgrade" />
-            <fileset dir="${buildDir}/src/lib5" />
-            <fileset dir="${buildDir}/src/share" />
+			<fileset dir="${buildDir}/src" includes="**/.svn" />
 		</delete>
         <exec executable="php" dir="${buildDir}/src">
             <arg line="${sourceDir}/.dev/build/devcode_postprocess.php" />
@@ -77,7 +71,7 @@
             <arg line="${sourceDir}/.dev/build/phpdoc_postprocess.php ${apiUrl}" />
         </exec>
 		<exec executable="phpdoc" dir="${buildDir}">
-			<arg line="-ct type -ue on -t ${buildDir}/api -d src/classes/base -it @see -dn LiteCommecrce -dc LiteCommerce" />
+			<arg line="-ct type -ue on -t ${buildDir}/api -d src/classes -it @see -dn LiteCommecrce -dc LiteCommerce" />
 		</exec>
 	</target>
 
@@ -86,29 +80,32 @@
 	<target name="tests-cc" depends="prepare-db,plint,php-codesniffer-cc,phpunit-cc,jmeter,pdepend" />
 
 	<target name="prepare-db">
-        <copy todir="${sourceDir}/src/etc">
+        <copy todir="${srcDir}/etc">
             <fileset file="${sourceDir}/.dev/build/config.local.php" />
         </copy>
-		<exec executable="${sourceDir}/.dev/db.import" dir="${sourceDir}" failonerror="on" />
+		<exec executable="${buildDir}/src/restoredb" dir="${buildDir}/src" failonerror="on" />
+        <exec executable="php" dir="${buildDir}/src">
+            <arg line="${sourceDir}/.dev/build/build-classes.php" />
+        </exec>
 	</target>
 
 	<target name="php-codesniffer">
-		<exec executable="${sourceDir}/.dev/phpcs" dir="${sourceDir}" output="${buildDir}/reports/checkstyle.txt">
-			<arg line="--report=full --standard=${sourceDir}/.dev/code-sniffs/PEAR --ignore=.dev,src/etc src" />
+		<exec executable="${sourceDir}/.dev/phpcs" dir="${buildDir}/src" output="${buildDir}/reports/checkstyle.txt">
+			<arg line="--report=full --standard=${sourceDir}/.dev/code-sniffs/PEAR --ignore=.dev,src/etc,src/var ${buildDir}/src" />
 		</exec>
 	</target>
 
     <target name="php-codesniffer-cc">
         <exec executable="${sourceDir}/.dev/phpcs" dir="${sourceDir}" output="${buildDir}/logs/checkstyle.xml">
-            <arg line="--report=checkstyle --standard=${sourceDir}/.dev/cs/PEAR --ignore=.dev,src/etc src" />
+            <arg line="--report=checkstyle --standard=${sourceDir}/.dev/cs/PEAR --ignore=.dev,src/etc,src/var ${buildDir}/src" />
         </exec>
     </target>
 
 	<target name="phpunit">
-        <copy todir="${sourceDir}">
+        <copy todir="${buildDir}">
             <fileset file="${sourceDir}/.dev/tests/PHPUnit/phpunit_coverage.php" />
         </copy>
-		<exec executable="phpunit" dir="${sourceDir}" failonerror="on" output="${buildDir}/reports/phpunit.txt">
+		<exec executable="phpunit" dir="${buildDir}" failonerror="on" output="${buildDir}/reports/phpunit.txt">
 			<arg line="--log-xml ${buildDir}/logs/phpunit.xml --coverage-html ${buildDir}/logs/coverage xliteAllTests ${sourceDir}/.dev/tests/AllTests.php" />
 		</exec>
         <exec executable="/usr/local/php-530/bin/php" dir="${sourceDir}">
@@ -117,10 +114,10 @@
 	</target>
 
     <target name="phpunit-cc">
-        <copy todir="${sourceDir}">
+        <copy todir="${buildDir}">
             <fileset file="${sourceDir}/.dev/tests/PHPUnit/phpunit_coverage.php" />
         </copy>
-        <exec executable="/u/xcart/bin/phpunit" dir="${sourceDir}" failonerror="on">
+        <exec executable="/u/xcart/bin/phpunit" dir="${buildDir}" failonerror="on">
             <arg line="--log-xml ${buildDir}/logs/phpunit.xml --log-pmd ${buildDir}/logs/phpunit.pmd.xml --log-metrics ${buildDir}/logs/phpunit.metrics.xml --coverage-xml ${buildDir}/logs/phpunit.coverage.xml --coverage-html ${buildDir}/coverage xliteAllTests ${sourceDir}/.dev/tests/AllTests.php" />
         </exec>
 		<exec executable="php" dir="${sourceDir}">
@@ -142,8 +139,8 @@
 	</target>
 
 	<target name="pdepend">
-		<exec executable="php" dir="${sourceDir}">
-			<arg line="${sourceDir}/.dev/pdepend.php --jdepend-chart=${buildDir}/reports/pdepend.svg --overview-pyramid=${buildDir}/reports/pyramid.svg --optimization=best --ignore=${buildDir}/src/etc ${buildDir}/src" />
+		<exec executable="php" dir="${buildDir}">
+			<arg line="${sourceDir}/.dev/pdepend.php --jdepend-chart=${buildDir}/reports/pdepend.svg --overview-pyramid=${buildDir}/reports/pyramid.svg --optimization=best ${buildDir}/src/var/run/classes" />
 		</exec>
 	</target>
 
@@ -151,16 +148,13 @@
 		<exec executable="svn" dir="${sourceDir}" output="${buildDir}/reports/xlite-svn.log">
 			<arg line="log --verbose --xml" />
 		</exec>
-
 		<exec executable="python" dir="${sourceDir}" output="${buildDir}/reports/xlite.gource">
 			<arg line="${sourceDir}/.dev/build/svn-gource.py --filter-dirs ${buildDir}/reports/xlite-svn.log" />
 		</exec>
-
 		<mkdir dir="${buildDir}/reports/statsvn" />
         <exec executable="java" dir="${sourceDir}" output="/dev/null">
             <arg line="-jar ${sourceDir}/.dev/build/statsvn/statsvn.jar -title LiteCommerce -output-dir ${buildDir}/reports/statsvn ${buildDir}/reports/xlite-svn.log ${sourceDir}" />
         </exec>
-
         <delete>
             <fileset file="${buildDir}/reports/xlite-svn.log" />
         </delete>
