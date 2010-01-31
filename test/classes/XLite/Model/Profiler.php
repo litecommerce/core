@@ -50,16 +50,11 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
     protected static $queries = array();	
 
     public $query_time = array();	
-    protected $enabled = false;
+    public $enabled = false;
 
 	public static function getInstance()
 	{
 		return self::_getInstance(__CLASS__);
-	}
-
-	public function isEnabled()
-	{
-		return true === $this->enabled;
 	}
 
     function log($timePoint)

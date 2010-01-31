@@ -201,60 +201,6 @@ class XLite_Model_Product extends XLite_Model_Abstract
     	$this->xlite->set("GlobalQuickCategoriesNumber", false);
     }
     
-    /**
-    * Searches and return products match the specified query.
-    *
-    * @param $subcategory_search boolean search subcategories of $category_id
-    */
-    function advancedSearch($substring, $sku = null, $category_id = null, $subcategory_search = false, $fulltext = false, $onlyindexes = false) // {{{
-    {
-    	$this->_beforeAdvancedSearch($substring, $sku, $category_id, $subcategory_search, $fulltext, $onlyindexes);
-
-        if (empty($category_id)) { // is an empty string
-            $category_id = null;
-        }
-        if (empty($subcategory_search)) { // is an empty string
-            $subcategory_search = false;
-        }
-        $query = null; 
-        $table = $this->db->getTableByAlias($this->alias);
-        if (!empty($substring)) {
-            $substring = addslashes($substring);
-            /* full text search (N/A) {{{
-            if ($fulltext) {
-                $query = "MATCH ($table.name, $table.description, $table.brief_description) AGAINST ('$substring')";
-                $this->defaultOrder = ""; // use default ranking order
-            } else {
-            }
-            }}} */
-            $query = "($table.name LIKE '%$substring%' OR $table.brief_description LIKE '%$substring%' OR $table.description LIKE '%$substring%' OR $table.sku LIKE '%$substring%')";
-        } elseif (!is_null($sku) && !empty($sku)) {
-            // search by SKU only
-            $query = "$table.sku LIKE '%$sku%'";
-        }
-        if (!is_null($category_id)) {
-            $category = new XLite_Model_Category($category_id);
-            $result = $category->getProducts($query, null, false);
-            $result = $this->_assocArray($result, "product_id");
-            $categories = $category->getSubcategories();
-            if ($subcategory_search) {
-                for ($i=0; $i<count($categories); $i++) {
-                    $res1 = $this->advancedSearch($substring, $sku, $categories[$i]->get("category_id"), true, true, $onlyindexes);
-                    $result = array_merge($result, $this->_assocArray($res1, "product_id"));
-                }
-            }
-            return array_values($result);
-        } else {
-            $p = new XLite_Model_Product();
-            $p->fetchKeysOnly = true;
-            if ($onlyindexes) {
-            	$p->fetchObjIdxOnly = true;
-            }
-            $result = $p->findAll($query);
-        }
-        return $result;
-    } // }}}
-    
     function getCategories($where = null, $orderby = null, $useCache = true) // {{{
     {
         if (empty($orderby)) {
@@ -960,6 +906,75 @@ class XLite_Model_Product extends XLite_Model_Abstract
 		// NOTE - for speedup we do not check if product is assigned for at least one category 
 
 		return $this->xlite->adminZone ? parent::filter() : $this->get('enabled');
+    }
+
+	/**
+    * Searches and return products match the specified query.
+    *
+    * @param $subcategory_search boolean search subcategories of $category_id
+    */
+    /**
+     * Searches and return products match the specified query 
+     * 
+     * @param string substring          "substring" param
+     * @param string sku                "sku" param
+     * @param int    category_id        "category_id" param
+     * @param bool   subcategory_search "subcategory_search" param
+     * @param bool   fulltext           "fulltext" param
+     * @param bool   onlyindexes        "onlyindexes" param
+     *  
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function advancedSearch(
+		$substring,
+		$sku = null,
+		$category_id = null,
+		$subcategory_search = false,
+		$fulltext = false,
+		$onlyindexes = false
+	) {
+        $this->_beforeAdvancedSearch($substring, $sku, $category_id, $subcategory_search, $fulltext, $onlyindexes);
+
+		$query = null;
+        $table = $this->db->getTableByAlias($this->alias);
+
+        if (!empty($substring)) {
+
+            $substring = addslashes($substring);
+			$query = '(' . $table . '.name LIKE \'%' . $substring . '%\''
+					 . ' OR ' . $table . '.brief_description LIKE \'%' . $substring . '%\''
+					 . ' OR ' . $table . '.description LIKE \'%' . $substring . '%\''
+					 . ' OR ' . $table . '.sku LIKE \'%' . $substring . '%\'';
+
+        } elseif (!empty($sku)) {
+
+            // search by SKU only
+            $query = $table . '.sku LIKE \'%' . $sku . '%\'';
+        }
+
+        if (!empty($category_id)) {
+
+            $category = new XLite_Model_Category($category_id);
+            $result = $category->getProducts($query, null, false);
+            $result = $this->_assocArray($result, "product_id");
+            $categories = $category->getSubcategories();
+            if (!empty($subcategory_search)) {
+                for ($i=0; $i<count($categories); $i++) {
+                    $res1 = $this->advancedSearch($substring, $sku, $categories[$i]->get("category_id"), true, true, $onlyindexes);
+                    $result = array_merge($result, $this->_assocArray($res1, "product_id"));
+                }
+            }
+            $result = array_values($result);
+
+        } else {
+
+            $p = new XLite_Model_Product();
+            $result = $p->findAll($query);
+        }
+
+        return $result;
     }
 } 
 

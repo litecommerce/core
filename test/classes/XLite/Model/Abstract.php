@@ -139,24 +139,19 @@ class XLite_Model_Abstract extends XLite_Base
         return true;
     }
 
-    function isObjectDescriptor(&$descriptor) {
-        if (is_array($descriptor) && isset($descriptor["class"]) && isset($descriptor["data"])) {
-        	return true;
-        }
-		
-		return false;
+    function isObjectDescriptor($descriptor)
+	{
+		return is_array($descriptor) && isset($descriptor['class']) && isset($descriptor['data']);
     }
 
-    function descriptorToObject(&$descriptor) {
-        if (is_array($descriptor) && isset($descriptor["class"]) && isset($descriptor["data"])) {
-        	$object = new $descriptor["class"];
-            $object->isPersistent = true;
-            $object->isRead = false;
-            $object->properties = $descriptor["data"];
-            return $object;
-        }
+    function descriptorToObject(array $descriptor)
+	{
+		$object = new $descriptor['class'];
+		$object->isPersistent = true;
+		$object->isRead = false;
+		$object->properties = $descriptor['data'];
 
-        return null;
+		return $object;
     }
 
     function iterate($where = null, $orderby = null, $groupby = null, $limit = null) // {{{

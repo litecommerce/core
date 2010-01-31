@@ -48,7 +48,11 @@
 */
 class XLite_View_Pager extends XLite_View
 {	
-    public $data = array();	
+    protected $_data = array();	
+	protected $_pagesCount = 0;
+
+	protected $_baseObj = null;
+
     public $template = "common/pager.tpl";	
     public $pageID = 0;	
     public $params = array("pageID");	
@@ -56,56 +60,60 @@ class XLite_View_Pager extends XLite_View
 
 	protected $pages = null;
 
-    function initView()
+	public function __set($name, $value)
+	{
+		if ('data' == $name) {
+
+            if (0 >= $this->get('itemsPerPage')) {
+                $this->_pagesCount = 1;
+                $this->_data = array($value);
+            } elseif (is_array($value)) {
+                $this->_pagesCount = intval(count($value) / $this->get('itemsPerPage'));
+                $this->_data = array_slice($value, $this->get('pageID') * $this->get('itemsPerPage'), $this->get('itemsPerPage'));
+            }
+
+            unset($value);
+
+        } else {
+
+            $this->$name = $value;
+        }
+	}
+
+    public function initView()
     {
-        parent::initView();
+		parent::initView();
+
         if ($this->get("pageID") === "") {
             $this->set("pageID", 0);
-        } else if ($this->get("pageID") && count($this->get("pages")) <= $this->get("pageID")) {
-            $this->set("pageID", count($this->get("pages")) - 1);
+        } else if ($this->get("pageID") && $this->_pagesCount <= $this->get("pageID")) {
+            $this->set("pageID", $this->_pagesCount - 1);
         }
     }
     
-    function getPages()
+    public function getPageData()
     {
-        if (is_null($this->pages)) {
-            if($this->get("itemsPerPage") == 0){
-                $this->pages = array($this->get("data"));
-            } else {
-                $this->pages = array_chunk($this->get("data"), $this->get("itemsPerPage"));
+		if (!isset($this->_baseObj)) {
+            $this->_baseObj = new XLite_Model_Abstract();
+        }
+
+        if ($this->_baseObj->isObjectDescriptor(current($this->_data))) {
+            foreach ($this->_data as &$object) {
+                $object = $this->_baseObj->descriptorToObject($object);
             }
         }
-        return $this->pages;
+
+        return $this->_data;
     }
 
-    function getPageData()
-    {
-    	if (!isset($this->_baseObj)) {
-    		$this->_baseObj = new XLite_Model_Abstract();
-    	}
-
-        $pages = $this->get("pages");
-		$pageData = empty($pages[$this->get("pageID")]) ? array() : $pages[$this->get("pageID")];
-
-        if (!empty($pageData)) {
-        	for($i=0; $i<count($pageData); $i++) {
-                if (isset($pageData[$i])) {
-                    if ($this->_baseObj->isObjectDescriptor($pageData[$i])) {
-                        $pageData[$i] = $this->_baseObj->descriptorToObject($pageData[$i]);
-                    }
-                }
-        	}
-        }
-
-        return $pageData;
-    }
-
-    function getPageUrls()
+	function getPageUrls()
     {
         $result = array();
-        $params = $this->getComplex('dialog.allParams');
-        $dialog = $this->get("dialog");
-        for ($i = 0; $i < count($this->get("pages")); $i++) {
+
+        $dialog = $this->getDialog();
+        $params = $dialog->get('allParams');
+
+        for ($i = 0; $i < $this->_pagesCount; $i++) {
             $params["pageID"] = $i;
             $result[$i+1] = $dialog->getUrl($params);
         }
@@ -114,13 +122,12 @@ class XLite_View_Pager extends XLite_View
 
     function isMoreThanOnePage()
     {
-        return count($this->get("pages")) > 1;
+        return $this->_pagesCount > 1;
     }
 
     function isCurrentPage($num)
     {
         return $this->get("pageID") + 1 == $num;
     }
-
 }
 
