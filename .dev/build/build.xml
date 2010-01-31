@@ -56,7 +56,7 @@
 			<fileset dir="${buildDir}/src" includes="**/*.orig" />
 			<fileset dir="${buildDir}/src" includes="**/.svn" />
 		</delete>
-        <exec executable="php" dir="${buildDir}/src">
+        <exec executable="/usr/local/php-530/bin/php" dir="${buildDir}/src">
             <arg line="${sourceDir}/.dev/build/devcode_postprocess.php" />
         </exec>
 	</target>
@@ -67,11 +67,11 @@
     </target>
 
 	<target name="php-documentor">
-        <exec executable="php" dir="${buildDir}/src">
+        <exec executable="/usr/local/php-530/bin/php" dir="${buildDir}/src">
             <arg line="${sourceDir}/.dev/build/phpdoc_postprocess.php ${apiUrl}" />
         </exec>
 		<exec executable="phpdoc" dir="${buildDir}">
-			<arg line="-ct type -ue on -t ${buildDir}/api -d src/classes -it @see -dn LiteCommecrce -dc LiteCommerce" />
+			<arg line="-ct type -ue on -t ${buildDir}/api -d src/classes/XLite/Base -it @see -dn LiteCommecrce -dc LiteCommerce" />
 		</exec>
 	</target>
 
@@ -83,10 +83,10 @@
         <copy todir="${srcDir}/etc">
             <fileset file="${sourceDir}/.dev/build/config.local.php" />
         </copy>
-		<exec executable="php" dir="${buildDir}/src" failonerror="on">
+		<exec executable="/usr/local/php-530/bin/php" dir="${buildDir}/src" failonerror="on">
 			<arg line="${buildDir}/src/restoredb" />
 		</exec>
-        <exec executable="php" dir="${buildDir}/src">
+        <exec executable="/usr/local/php-530/bin/php" dir="${buildDir}/src">
             <arg line="${sourceDir}/.dev/build/build-classes.php" />
         </exec>
 	</target>
@@ -122,7 +122,7 @@
         <exec executable="/u/xcart/bin/phpunit" dir="${buildDir}" failonerror="on">
             <arg line="--log-xml ${buildDir}/logs/phpunit.xml --log-pmd ${buildDir}/logs/phpunit.pmd.xml --log-metrics ${buildDir}/logs/phpunit.metrics.xml --coverage-xml ${buildDir}/logs/phpunit.coverage.xml --coverage-html ${buildDir}/coverage xliteAllTests ${sourceDir}/.dev/tests/AllTests.php" />
         </exec>
-		<exec executable="php" dir="${sourceDir}">
+		<exec executable="/usr/local/php-530/bin/php" dir="${sourceDir}">
 			<arg line=".dev/tests/graph.php ${buildDir}/logs/phpunit.xml.speed ${buildDir}/reports ../../../artifacts/xlite" />
 		</exec>
     </target>
@@ -131,7 +131,7 @@
 		<jmeter jmeterhome="${jmeterDir}" testplan="${sourceDir}/.dev/loadtests/JMeterLoadTest.jmx" resultlog="${buildDir}/logs/JMeterResults.jtl">
 		</jmeter>
 		<xslt in="${buildDir}/logs/JMeterResults.jtl" out="${buildDir}/reports/jmeter.html" style="${sourceDir}/.dev/loadtests/jmeter-results-report.xsl" />
-		<exec executable="php" dir="${sourceDir}">
+		<exec executable="/usr/local/php-530/bin/php" dir="${sourceDir}">
 			<arg line=".dev/loadtests/graph.php ${buildDir}/logs/JMeterResults.jtl ${buildDir}/reports ../../../artifacts/xlite" />
 		</exec>
 	</target>
@@ -141,7 +141,7 @@
 	</target>
 
 	<target name="pdepend">
-		<exec executable="php" dir="${buildDir}">
+		<exec executable="/usr/local/php-530/bin/php" dir="${buildDir}">
 			<arg line="${sourceDir}/.dev/pdepend.php --jdepend-chart=${buildDir}/reports/pdepend.svg --overview-pyramid=${buildDir}/reports/pyramid.svg --optimization=best ${buildDir}/src/var/run/classes" />
 		</exec>
 	</target>
