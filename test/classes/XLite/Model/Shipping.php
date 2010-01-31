@@ -161,8 +161,12 @@ class XLite_Model_Shipping extends XLite_Model_Abstract
     {
 		if (!isset(self::$registeredShippingModules[$name]) || !(self::$registeredShippingModules[$name] instanceof self)) {
 			$class = 'XLite_' . $class;
-			self::$registeredShippingModules[$name] = new $class();
-			self::$registeredShippingModules[$name]->set('class', $name);
+			if (class_exists($class)) {
+				self::$registeredShippingModules[$name] = new $class();
+				self::$registeredShippingModules[$name]->set('class', $name);
+			} else {
+				// TODO - add exception throwing
+			}
 		}
     }
 
