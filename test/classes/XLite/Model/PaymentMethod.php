@@ -261,8 +261,13 @@ class XLite_Model_PaymentMethod extends XLite_Model_Abstract
 
 	public function __get($name)
 	{
-		return property_exists($handler = $this->getHandler(), $name) ?
-			$handler->$name : parent::__get($name);
+		$value = parent::__get($name);
+
+		if (is_null($value) && property_exists($handler = $this->getHandler(), $name)) {
+			$value = $handler->$name;
+		}
+
+		return $value;
 	}
 
 	public function __call($method, array $args = array())

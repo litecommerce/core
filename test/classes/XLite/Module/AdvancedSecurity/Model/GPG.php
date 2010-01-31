@@ -132,8 +132,10 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
 	{
 		// lookup cache for adjusted name
 		$cfg = new XLite_Model_Config();
+
+		$valid_names = array();
 		if ($cfg->find("category='AdvancedSecurity' AND name='executable_cache'")) {
-			$valid_names = unserialize($cfg->get("value"));
+			$valid_names = @unserialize($cfg->get("value"));
 		}
 		if (!is_array($valid_names)) $valid_names = array();
 

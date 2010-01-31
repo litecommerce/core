@@ -63,7 +63,7 @@ class XLite_Module_WholesaleTrading_Model_Profile extends XLite_Model_Profile im
 	function _initMembershipHistory($history)
 	{
 		if (!is_array($history)) {
-			$history = unserialize($history);
+			$history = @unserialize($history);
 			$history = ( is_array($history) ) ? $history : array();
 		}
 		if (is_array($history)) {
