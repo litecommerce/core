@@ -83,7 +83,9 @@
         <copy todir="${srcDir}/etc">
             <fileset file="${sourceDir}/.dev/build/config.local.php" />
         </copy>
-		<exec executable="${buildDir}/src/restoredb" dir="${buildDir}/src" failonerror="on" />
+		<exec executable="php" dir="${buildDir}/src" failonerror="on">
+			<arg line="${buildDir}/src/restoredb" />
+		</exec>
         <exec executable="php" dir="${buildDir}/src">
             <arg line="${sourceDir}/.dev/build/build-classes.php" />
         </exec>
