@@ -147,8 +147,7 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
                         $this->sourceField    => "",
                         $this->typeField      => ""
                         );
-				$this->generateFieldNamesHash();
-                $this->setComplex($imageClass->idField, $id);
+                $this->set($imageClass->idField, $id);
             } else {
                 $this->_die("Image class $class is not registered");
             }

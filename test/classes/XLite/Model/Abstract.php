@@ -119,9 +119,6 @@ class XLite_Model_Abstract extends XLite_Base
     public $fetchObjIdxOnly = false;
     
 
-	protected $fieldNames = array();
-
-
     /**
     * Returns the SQL database table name for this object. Uses "alias"
     * property as a key.
@@ -696,7 +693,7 @@ class XLite_Model_Abstract extends XLite_Base
      */
     protected function _updateProperties(array $properties = array())
     {
-		$this->properties = array_merge(array_intersect_key($properties, $this->fieldNames), $this->properties);
+		$this->properties = array_merge(array_intersect_key($properties, $this->fields), $this->properties);
 		$this->isPersistent = $this->isRead = true;
     }
 
@@ -729,7 +726,7 @@ class XLite_Model_Abstract extends XLite_Base
     protected function _buildSelect($where = null, $orderby = null, $groupby = null, $limit = null)
     {
 		$sql = 'SELECT ' 
-			   . implode(',', $this->fetchKeysOnly ? $this->primaryKey : array_keys($this->fieldNames)) 
+			   . implode(',', $this->fetchKeysOnly ? $this->primaryKey : array_keys($this->fields)) 
 			   . ' FROM ' . $this->getTable();
 
 		foreach (
@@ -783,8 +780,6 @@ class XLite_Model_Abstract extends XLite_Base
 		// if auto-increment is specified, make it a primary key of this table
         empty($this->autoIncrement) || ($this->primaryKey = array($this->autoIncrement));
 
-		$this->generateFieldNamesHash();
-
 		foreach (func_get_args() as $index => $arg) {
             empty($arg) || $this->setComplex($this->primaryKey[$index], $arg);
         }
@@ -818,21 +813,9 @@ class XLite_Model_Abstract extends XLite_Base
     public function setProperties(array $properties)
     {
         foreach ($properties as $field => $value) {
-			isset($this->fieldNames[$field]) && $this->setComplex($field, $properties[$field]);
+			isset($this->fields[$field]) && $this->setComplex($field, $properties[$field]);
         }
     }
-
-	/**
-     * (Re)Generate field names cache
-     *
-     * @return void
-     * @access protected
-     * @since  3.0
-     */
-	public function generateFieldNamesHash()
-	{
-		$this->fieldNames = array_fill_keys(array_keys($this->fields), true);
-	}
 
     /**
      * Returns the specified property of this object. Read the object data from dataase if necessary 
@@ -846,7 +829,7 @@ class XLite_Model_Abstract extends XLite_Base
     public function get($property)
     {
 		// check whether the property exists
-		if (isset($this->fieldNames[$property])) {
+		if (isset($this->fields[$property])) {
 
 			// read object data if necessary
 			if ($this->isPersistent && !$this->isRead && $property != $this->autoIncrement) {
@@ -871,7 +854,7 @@ class XLite_Model_Abstract extends XLite_Base
      */
     public function set($property, $value)
     {
-		if (isset($this->fieldNames[$property])) {
+		if (isset($this->fields[$property])) {
 
 			// set isRead to FALSE if object has not been read yet
 			// FIXME - is it needed???
