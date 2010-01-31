@@ -17,13 +17,13 @@
 ; ----------------------
 ;
 [database_details]
-hostspec = "localhost"
-socket   = "/tmp/mysql-5.0.51.sock"
-port     = ""
-database = "xcart_xlite_cc"
-username = "xcart"
-password = "fjgQzklfthlj2489g"
-persistent = Off
+hostspec=localhost
+socket=/tmp/mysql-5.0.51.sock
+port= 
+database=xcart_xlite_cc
+username=xcart
+password=fjgQzklfthlj2489g
+persistent=Off
 
 ;
 ; -----------------------------------------------------------------------
