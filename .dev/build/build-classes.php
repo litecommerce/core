@@ -7,8 +7,6 @@ if (php_sapi_name() != 'cli') {
 }
 
 require_once ('./includes/prepend.php');
-require_once ('./includes/functions.php');
-require_once ('./includes/decoration.php');
 
 $d = new Decorator();
 $d->rebuildCache(true);
