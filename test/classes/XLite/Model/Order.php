@@ -59,7 +59,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
             'subtotal' => '',       
             'shipping_cost' => '',  
             'tax' => '',            // taxes applied to this order (serialized)
-            'shipping_id' => null,  // order shipping method primary key
+            'shipping_id' => 0,     // order shipping method primary key
             'tracking' => '',       // delivery tracking number
             'date' => '',           // date/time when the order purchased, timestamp
             'status' => 'I',        // order status: Queued, Processed, Failed etc.

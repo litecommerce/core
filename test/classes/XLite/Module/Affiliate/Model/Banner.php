@@ -44,7 +44,7 @@
 class XLite_Module_Affiliate_Model_Banner extends XLite_Model_Abstract
 {	
     public $fields = array(
-            "banner_id"    => null,
+            "banner_id"    => 0,
             "name"         => "",
             "banner_source"=> "D",
             "banner_type"  => "image/jpeg", // content (image) type
@@ -52,7 +52,7 @@ class XLite_Module_Affiliate_Model_Banner extends XLite_Model_Abstract
             "body"         => "",
             "align"        => "bottom",
             "alt"          => "",
-            "link_target"       => "_blank", 
+            "link_target"  => "_blank", 
             "enabled"      => 1,
             "width"        => 0,
             "height"       => 0,

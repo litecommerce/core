@@ -44,13 +44,13 @@
 class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
 {	
     public $fields = array(
-            "stat_id"     => null,
-            "stat_type"    => "",    // stat_type := C | V, click and view
-            "partner_id"    => 0,
-            "product_id"    => null,
-            "banner_id"    => null,
-            "date"         => 0,
-            "referrer"    => null,
+            "stat_id"    => 0,
+            "stat_type"  => "",    // stat_type := C | V, click and view
+            "partner_id" => 0,
+            "product_id" => 0,
+            "banner_id"  => 0,
+            "date"       => 0,
+            "referrer"   => '',
             );	
 
     public $autoIncrement = "stat_id";	

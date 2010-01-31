@@ -56,7 +56,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
     * "membership" fields. Prevent modifications with POST'ed data
     */	
     public $fields = array(
-              'profile_id' => null,
+              'profile_id' => 0,
                 'order_id' => '0',
 	               'login' => '',
 	            'password' => '',
@@ -103,7 +103,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
     );	
         
     public $_securefields = array(
-              'profile_id' => null,
+              'profile_id' => 0,
 	        'access_level' => '0',
 	         'first_login' => '0',
 	          'last_login' => '0',
