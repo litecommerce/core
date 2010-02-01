@@ -946,7 +946,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
 			$query = '(' . $table . '.name LIKE \'%' . $substring . '%\''
 					 . ' OR ' . $table . '.brief_description LIKE \'%' . $substring . '%\''
 					 . ' OR ' . $table . '.description LIKE \'%' . $substring . '%\''
-					 . ' OR ' . $table . '.sku LIKE \'%' . $substring . '%\'';
+					 . ' OR ' . $table . '.sku LIKE \'%' . $substring . '%\')';
 
         } elseif (!empty($sku)) {
 
