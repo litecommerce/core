@@ -147,7 +147,6 @@ class PrevJTLLineChart extends phpucLineChart {
 
 	public function setInput(phpucAbstractInput $input)
 	{
-
 		$this->driver = new JTLSVGDriver();
 
         $this->title        = $input->title;
@@ -171,38 +170,40 @@ class PrevJTLLineChart extends phpucLineChart {
 	}
 
 	public function getTimeData() {
-		$xpaths = array();
+        $data = array();
 
 		foreach (glob($this->prevDir . '/*/logs/JMeterResults.jtl') as $f) {
 			$dom = new DOMDocument();
 			if ($dom->load($f, LIBXML_NOERROR)) {
-				$xpaths[] = new DOMXPath($dom);
+				$data[] = $this->calculateAvgTime(new DOMXPath($dom));
 			}
 		}
 
-		$xpaths[] = $this->xpath;
-
-		$predata = array();
-		$data = array();
-		$labels = array();
-		foreach ($xpaths as $i => $xpath) {
-	        $nodes = $xpath->query('//testResults/sampleResult');
-			$sum = 0;
-			$cnt = 0;
-        	foreach ($nodes as $node) {
-				$sum += intval($node->attributes->getNamedItem('time')->nodeValue);
-				$cnt++;
-			}
-			$data[] = round($sum / $cnt, 0);
-		}
+		$data[] = $this->calculateAvgTime($this->xpath);
 
 		return array('Sum requests' => $data);
+	}
+
+	protected function calculateAvgTime(DOMXPath $xpath)
+	{
+    	$nodes = $xpath->query('//testResults/sampleResult');
+        $sum = 0;
+        $cnt = 0;
+        foreach ($nodes as $node) {
+            $sum += intval($node->attributes->getNamedItem('time')->nodeValue);
+            $cnt++;
+        }
+
+        return round($sum / $cnt, 0);
 	}
 }
 
 class HistoryJTLLineChart extends phpucLineChart {
 	public $xpath = null;
 	public $prevDir = null;
+
+	protected $predata = array();
+	protected $labels = array();
 
 	public function setInput(phpucAbstractInput $input)
 	{
@@ -218,9 +219,7 @@ class HistoryJTLLineChart extends phpucLineChart {
 
         $this->data = new ezcGraphChartDataContainer($this);
 
-        $data = $this->getTimeData();
-
-        foreach ($data as $label => $data) {
+        foreach ($this->getTimeData() as $label => $data) {
             $this->data[$label]         = new ezcGraphArrayDataSet($data);
             $this->data[$label]->symbol = ezcGraph::BULLET;
 
@@ -232,34 +231,23 @@ class HistoryJTLLineChart extends phpucLineChart {
 
 	public function getTimeData() {
 		$xpaths = array();
+		$data = array();
 
 		foreach (glob($this->prevDir . '/*/logs/JMeterResults.jtl') as $f) {
 			$dom = new DOMDocument();
 			if ($dom->load($f, LIBXML_NOERROR)) {
-				$xpaths[] = new DOMXPath($dom);
+				$this->processXPath(new DOMXPath($dom));
 			}
 		}
 
-		$xpaths[] = $this->xpath;
+		$this->processXPath($this->xpath);
 
-		$predata = array();
-		$data = array();
-		$labels = array();
-		foreach ($xpaths as $i => $xpath) {
-			$d = $this->processXPath($xpath);
-			$predata[] = $d;
-			foreach ($d as $label => $v) {
-				if (!in_array($label, $labels))
-					$labels[] = $label;
-			}
-		}
-
-		foreach ($labels as $label) {
+		foreach ($this->labels as $label) {
 			$data[$label] = array();
 		}
 
-		foreach ($predata as $d) {
-			foreach ($labels as $label) {
+		foreach ($this->predata as $d) {
+			foreach ($this->labels as $label) {
 				$data[$label][] = isset($d[$label]) ? $d[$label]['avg'] : false;
 			}
 		}
@@ -267,18 +255,19 @@ class HistoryJTLLineChart extends phpucLineChart {
 		return $data;
 	}
 
-	public function processXPath($xpath) {
-		$nodes = $xpath->query('//testResults/sampleResult');
+	public function processXPath(DOMXPath $xpath) {
 		$data = array();
-		foreach ($nodes as $node) {
+
+		foreach ($xpath->query('//testResults/sampleResult') as $node) {
 			$label = $node->attributes->getNamedItem('label')->nodeValue;
 			$len = intval($node->attributes->getNamedItem('time')->nodeValue);
 
-			if (!isset($data[$label]))
+			if (!isset($data[$label])) {
 				$data[$label] = array(
 					'sum' => 0,
-					'cnt' => 0
+					'cnt' => 0,
 				);
+			}
 
 			$data[$label]['sum'] += $len;
 			$data[$label]['cnt']++;
@@ -286,7 +275,13 @@ class HistoryJTLLineChart extends phpucLineChart {
 
 		foreach ($data as $label => $d) {
 			$data[$label]['avg'] = round($d['sum'] / $d['cnt'], 0);
+
+            if (!in_array($label, $this->labels)) {
+                $this->labels[] = $label;
+            }
 		}
+
+        $this->predata[] = $data;
 
 		return $data;
 	}
