@@ -50,7 +50,7 @@
         <copy todir="${buildDir}/src">
 			<fileset dir="${srcDir}" />
 		</copy>
-        <copy todir="${buildDir}/src/.dev">
+        <copy todir="${buildDir}/.dev">
             <fileset dir="${sourceDir}/.dev" />
         </copy>
 		<delete>
@@ -65,6 +65,9 @@
 	</target>
 
 	<target name="create-build">
+		<delete>
+			<fileset dir="${buildDir}/.dev" />
+		</delete>
 		<!--tar destfile="${buildDir}/xlite-${version}.tgz" basedir="${buildDir}/src" compression="gzip" /-->
 		<tar destfile="${buildDir}/xlite-${version}-api.tgz" basedir="${buildDir}/api" compression="gzip" />
     </target>
@@ -83,7 +86,7 @@
 	<target name="tests-cc" depends="prepare-db,plint,php-codesniffer-cc,phpunit-cc,jmeter,pdepend" />
 
 	<target name="prepare-db">
-        <copy todir="${srcDir}/etc">
+        <copy todir="${buildDir}/src/etc">
             <fileset file="${sourceDir}/.dev/build/config.local.php" />
         </copy>
 		<exec executable="/usr/local/php-530/bin/php" dir="${buildDir}/src" failonerror="on">
