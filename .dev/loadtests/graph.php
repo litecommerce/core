@@ -175,8 +175,9 @@ class PrevJTLLineChart extends phpucLineChart {
 
 		foreach (glob($this->prevDir . '/*/logs/JMeterResults.jtl') as $f) {
 			$dom = new DOMDocument();
-			$dom->load($f);
-			$xpaths[] = new DOMXPath($dom);
+			if ($dom->load($f, LIBXML_NOERROR)) {
+				$xpaths[] = new DOMXPath($dom);
+			}
 		}
 
 		$xpaths[] = $this->xpath;
@@ -234,8 +235,9 @@ class HistoryJTLLineChart extends phpucLineChart {
 
 		foreach (glob($this->prevDir . '/*/logs/JMeterResults.jtl') as $f) {
 			$dom = new DOMDocument();
-			$dom->load($f);
-			$xpaths[] = new DOMXPath($dom);
+			if ($dom->load($f, LIBXML_NOERROR)) {
+				$xpaths[] = new DOMXPath($dom);
+			}
 		}
 
 		$xpaths[] = $this->xpath;

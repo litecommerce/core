@@ -104,8 +104,8 @@
 	</target>
 
     <target name="php-codesniffer-cc">
-        <exec executable="${sourceDir}/.dev/phpcs" dir="${sourceDir}" output="${buildDir}/logs/checkstyle.xml">
-            <arg line="--report=checkstyle --standard=${sourceDir}/.dev/cs/PEAR --ignore=.dev,src/etc,src/var ${buildDir}/src" />
+        <exec executable="${sourceDir}/.dev/phpcs" dir="${buildDir}/src" output="${buildDir}/logs/checkstyle.xml">
+            <arg line="--report=checkstyle --standard=${sourceDir}/.dev/code-sniffs/PEAR --ignore=.dev,src/etc,src/var ${buildDir}/src" />
         </exec>
     </target>
 
