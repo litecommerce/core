@@ -35,7 +35,7 @@ class XLite_Module_JoomlaConnector_View extends XLite_View implements XLite_Base
      */
 	protected function getJoomlaURL($target, $action = '', array $params = array())
 	{
-		return '?q=' . implode('/', array(self::JOOMLA_ROOT_NODE, $target, $action)) . '/' . XLite_Core_Converter::buildQuery($params, ':', ',');
+		return parent::buildURL($target, $action, $params);
 	}
 
 
