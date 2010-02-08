@@ -541,13 +541,12 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 
 	function urlRewrite($url)
 	{
-		$urls = explode(';', $this->url_rewrite);
-		foreach($urls as $u) {
-			list ($find, $replace) = explode(':', $u);
+		foreach ($this->url_rewrite as $find => $replace) {
 			if (substr($url, 0, strlen($find)) == $find) {
-				return array(0, strlen($find), $replace);
-			}
+                return array(0, strlen($find), $replace);
+            }
 		}
+
 		return false;
 	}
 	function subst($start, $end, $value)

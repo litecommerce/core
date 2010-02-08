@@ -111,24 +111,6 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
 		return $result;
 	}
 
-    public function initFromGlobals()
-    {
-        $this->profiler = XLite_Model_Profiler::getInstance();
-        $this->profiler->start($this->getOptions(array('profiler_details', 'enabled')));
-
-        $this->db->connect();
-
-        // attempt to initialize modules subsystem
-        $this->mm = XLite_Model_ModulesManager::getInstance();
-        $this->mm->init();
-        $this->profiler->log("mm_time");
-
-        $this->layout = XLite_Model_Layout::getInstance();
-        $this->layout->initFromGlobals();
-        
-        $this->profiler->log("init_time");
-    }
-
     /**
     * Runs the cart.
     *

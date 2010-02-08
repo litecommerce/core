@@ -54,9 +54,9 @@ class XLite_Model_Module extends XLite_Model_Abstract
     const MODULE_PAYMENT   = 1;
     const MODULE_SHIPPING  = 2;
     const MODULE_SKIN      = 3;
-    const MODULE_GENERAL   = 4;
-    const MODULE_3RD_PARTY = 5;
-
+	const MODULE_CONNECTOR = 4;
+    const MODULE_GENERAL   = 5;
+    const MODULE_3RD_PARTY = 6;
 
     /**
      * Module properties 

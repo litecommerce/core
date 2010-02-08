@@ -20,12 +20,14 @@ class XLite_Base
 	 * @since  3.0
 	 */
 	protected static $singletons = array(
-        'xlite'   => 'XLite',
-        'auth'    => 'XLite_Model_Auth',
-        'session' => 'XLite_Model_Session',
-        'db'      => 'XLite_Model_Database',
-        'logger'  => 'XLite_Logger',
-		'config'  => 'XLite_Model_Config',
+        'xlite'    => 'XLite',
+        'auth'     => 'XLite_Model_Auth',
+        'session'  => 'XLite_Model_Session',
+        'db'       => 'XLite_Model_Database',
+        'logger'   => 'XLite_Logger',
+		'config'   => 'XLite_Model_Config',
+		'profiler' => 'XLite_Model_Profiler',
+		'mm'       => 'XLite_Model_ModulesManager',
     );
 
 	/**

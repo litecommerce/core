@@ -62,6 +62,11 @@ class XLite_Model_Layout extends XLite_Base implements XLite_Base_ISingleton
         return self::_getInstance(__CLASS__);
     }
 
+	public function __construct()
+	{
+		$this->initFromGlobals();
+	}
+
     function initFromGlobals()
     {
 		$this->skin   = $this->xlite->getOptions(array('skin_details', 'skin'));

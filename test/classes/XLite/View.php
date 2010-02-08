@@ -45,7 +45,9 @@
 * @version $Id$
 */
 class XLite_View extends XLite_View_Abstract
-{	
+{
+	protected $widgetParams = array();
+	
     public $params = array();	
     public $components = array();	
     public $valid = true;

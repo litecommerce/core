@@ -97,6 +97,8 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
     {
         $this->profiler = XLite_Model_Profiler::getInstance();
 		$this->profilerEnabled = $this->profiler->enabled;
+
+		$this->connected || $this->connect();
     }
 
     public function connect()

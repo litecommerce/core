@@ -58,7 +58,6 @@ $xlite->set("layout.skin", "admin");*/
 // creates cart instance
 $xlite = call_user_func(array(LC_LIBRARY, 'getInstance'));
 $xlite->set("adminZone", true);
-$xlite->initFromGlobals();
 $xlite->layout->skin = 'admin';
 
 $xlite->run();

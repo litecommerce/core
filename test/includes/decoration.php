@@ -1,5 +1,7 @@
 <?php
 
+/* $Id$ */
+
 /**
  * Decorator - classes cache builder
  * 
@@ -10,7 +12,7 @@
 class Decorator
 {
     /**
-     * Indexes in "classesInfo" elements
+     * Indexes in "classesInfo" array
      */
     
     const INFO_FILE          = 'file';
@@ -29,24 +31,24 @@ class Decorator
     const CLASS_PATTERN = '/\s*((?:abstract|final)\s+)?(class|interface)\s+([\w_]+)(\s+extends\s+([\w_]+))?(\s+implements\s+([\w_]+(?:\s*,\s*[\w_]+)*))?\s*(\/\*.*\*\/)?\s*{/USsi';
 
     /**
-     * Suffix for so called "root" decorator class names
+     * Suffix for the so called "root" decorator class names
      */
     const ROOT_CLASS_SUFFIX = 'Abstract';
 
     /**
-     * Identifier to insert into decorator comments
+     * Identifier to insert into the decorator comments
      */
     const DECORATOR_IDENTIFIER = '____DECORATOR____';
 
 
-	/**
-	 * Current value of the "max_execution_time" INI setting
-	 * 
-	 * @var    mixed
-	 * @access protected
-	 * @since  3.0
-	 */
-	protected $maxExecutionTime = null;
+    /**
+     * Current value of the "max_execution_time" INI setting
+     * 
+     * @var    int
+     * @access protected
+     * @since  3.0
+     */
+    protected $maxExecutionTime = null;
 
     /**
      * Tags in decorator comments 
@@ -124,42 +126,42 @@ class Decorator
      */
     protected $modulePriorities = null;
 
-	/**
-	 * Modules whitch are not allowed to be enbled at one time
-	 * 
-	 * @var    array
-	 * @access protected
-	 * @since  3.0
-	 */
-	protected $mutualModules = null;
+    /**
+     * Modules whitch are not allowed to be enbled at one time
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0
+     */
+    protected $mutualModules = null;
 
-	/**
-	 * List of module controllers which names are needed to be normalized
-	 * 
-	 * @var    array
-	 * @access protected
-	 * @since  3.0
-	 */
-	protected $normalizedControllers = array();
+    /**
+     * List of module controllers which names are needed to be normalized
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0
+     */
+    protected $normalizedControllers = array();
 
 
-	/**
-	 * Return current value of the "max_execution_time" INI setting 
-	 * 
-	 * @return int|string
-	 * @access protected
-	 * @since  3.0
-	 */
-	protected function getMaxExecutionTime()
-	{
-		if (is_null($this->maxExecutionTime)) {
-			$this->maxExecutionTime = @ini_get('max_execution_time');
-		}
+    /**
+     * Return current value of the "max_execution_time" INI setting 
+     * 
+     * @return int|string
+     * @access protected
+     * @since  3.0
+     */
+    protected function getMaxExecutionTime()
+    {
+        if (!isset($this->maxExecutionTime)) {
+            $this->maxExecutionTime = @ini_get('max_execution_time');
+        }
 
-		return $this->maxExecutionTime;
-	}
+        return $this->maxExecutionTime;
+    }
 
-	/**
+    /**
      * Set value for the "max_execution_time" INI setting
      *
      * @return void
@@ -168,13 +170,13 @@ class Decorator
      */
     protected function setMaxExecutionTime()
     {
-		// Save original value
-		$this->getMaxExecutionTime();
+        // Save original value
+        $this->getMaxExecutionTime();
 
-		@set_time_limit(180);
-	}
+        @set_time_limit(180);
+    }
 
-	/**
+    /**
      * Restore original value of the "max_execution_time" INI setting
      *
      * @return void
@@ -183,30 +185,30 @@ class Decorator
      */
     protected function restoreMaxExecutionTime()
     {
-		$time = $this->getMaxExecutionTime();
+        $time = $this->getMaxExecutionTime();
 
-		if (!empty($time)) {
-			@set_time_limit($time);
-		}
+        if (!empty($time)) {
+            @set_time_limit($time);
+        }
     }
 
-	/**
-	 * Show javascript notice block 
-	 * 
-	 * @return void
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0 EE
-	 */
-	protected function showJavaScriptBlock()
-	{
-		$code = '<table id="rebuild_cache_block"><tr>'
-				. '<td><img src="skins/progress_indicator.gif" /></td>'
-				. '<td>Re-building cache, please wait...</td>'
-				. '</tr></table>';
+    /**
+     * Show javascript notice block 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0 EE
+     */
+    protected function showJavaScriptBlock()
+    {
+        $code = '<table id="rebuild_cache_block"><tr>'
+                . '<td><img src="skins/progress_indicator.gif" /></td>'
+                . '<td>Re-building cache, please wait...</td>'
+                . '</tr></table>';
 
-		func_flush('<script language="javascript">document.write(\'' . $code . '\');</script>' . "\n");
-	}
+        func_flush('<script language="javascript">document.write(\'' . $code . '\');</script>' . "\n");
+    }
 
     /**
      * Show plain text notice block 
@@ -280,8 +282,8 @@ class Decorator
      */
     protected function getClassComment(array $info)
     {
-		// TODO - check if comment is needed
-		return '';
+        // TODO - check if comment is needed
+        return '';
 
         $comment = array(self::DECORATOR_IDENTIFIER);
 
@@ -312,7 +314,7 @@ class Decorator
             $body = "\n";
             if (!empty($info[self::INFO_IS_SINGLETON])) {
                 $body .= "\t" . 'public static function getInstance()' . "\n"
-                        . "\t" . '{' . "\n\t\t" . 'return self::_getInstance(__CLASS__);' . "\n\t" . '}' . "\n";
+                         . "\t" . '{' . "\n\t\t" . 'return self::_getInstance(__CLASS__);' . "\n\t" . '}' . "\n";
             }
 
             // Top level class in decorator chain - has an empty body
@@ -331,10 +333,10 @@ class Decorator
             $content = preg_replace(self::CLASS_PATTERN, $replace, $content);
         }
 
-		// Change name of normalized classes in PHP code
-		foreach ($this->normalizedControllers as $oldClass => $newClass) {
-			$content = preg_replace('/' . $oldClass . '/i', $newClass, $content);
-		}
+        // Change name of normalized classes in PHP code
+        foreach ($this->normalizedControllers as $oldClass => $newClass) {
+            $content = preg_replace('/' . $oldClass . '/i', $newClass, $content);
+        }
 
         return $content;
     }
@@ -368,6 +370,21 @@ class Decorator
     }
 
     /**
+     * Check if class implements some interface
+     * 
+     * @param string $interfaceName interface to check
+     * @param string $implements    string from class declaration (the "implements ..." part)
+     *  
+     * @return bool
+     * @access protected
+     * @since  3.0
+     */
+    protected function isImplements($interfaceName, $implements)
+    {
+        return in_array($interfaceName, explode(',', str_replace(' ', '', trim($implements))));
+    }
+
+    /**
      * Check if current class implements the "IDecorator" interface
      * 
      * @param array $implements list of implemented inerfaces
@@ -378,7 +395,7 @@ class Decorator
      */
     protected function isDecorator($implements)
     {
-        return in_array('XLite_Base_IDecorator', explode(',', str_replace(' ', '', trim($implements))));
+        return $this->isImplements('XLite_Base_IDecorator', $implements);
     }
 
     /**
@@ -392,7 +409,7 @@ class Decorator
      */
     protected function isSingleton($implements)
     {
-        return in_array('XLite_Base_ISingleton', explode(',', str_replace(' ', '', trim($implements))));
+        return $this->isImplements('XLite_Base_ISingleton', $implements);
     }
 
     /**
@@ -406,7 +423,7 @@ class Decorator
      */
     protected function getConfigOptions($section = '')
     {
-        if (is_null($this->configOptions)) {
+        if (!isset($this->configOptions)) {
             $this->configOptions = funcParseConfgFile();
         }
 
@@ -475,7 +492,7 @@ class Decorator
      */
     protected function getDbHandler()
     {
-        if (is_null($this->dbHandler)) {
+        if (!isset($this->dbHandler)) {
             $this->dbHandler = $this->connectToDb();
         }
 
@@ -522,19 +539,19 @@ class Decorator
         return file_exists(LC_CLASSES_CACHE_DIR) && is_dir(LC_CLASSES_CACHE_DIR) && is_readable(LC_CLASSES_CACHE_DIR);
     }
 
-	/**
-	 * Check if LiteCommerce is in so called "developer mode" (forced to rebuild cache)
+    /**
+     * Check if LiteCommerce is in so called "developer mode" (forced to rebuild cache)
      *
      * @return bool
      * @access protected
      * @since  3.0
      */
-	protected function isDeveloperMode()
-	{
-		$query = 'SELECT value FROM xlite_config WHERE category = \'General\' AND name = \'developer_mode\'';
+    protected function isDeveloperMode()
+    {
+        $query = 'SELECT value FROM xlite_config WHERE category = \'General\' AND name = \'developer_mode\'';
 
-		return ('Y' === $this->fetchColumn($query)) && empty($_REQUEST['action']);
-	}
+        return ('Y' === $this->fetchColumn($query)) && empty($_REQUEST['action']);
+    }
 
     /**
      * Check if cache rebuild is required
@@ -603,29 +620,29 @@ class Decorator
         return $result;
     }
 
-	/**
-	 * Return list of modules whitch are not allowed to be enbled at one time
-	 * 
-	 * @return array
-	 * @access protected
-	 * @since  3.0
-	 */
-	protected function getMutualModules()
-	{
-		if (is_null($this->mutualModules)) {
+    /**
+     * Return list of modules whitch are not allowed to be enbled at one time
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0
+     */
+    protected function getMutualModules()
+    {
+        if (!isset($this->mutualModules)) {
 
-			$this->mutualModules = $this->fetchAll(
-				'SELECT name, mutual_modules FROM xlite_modules WHERE enabled = \'1\' AND mutual_modules != \'\'',
-				PDO::FETCH_ASSOC | PDO::FETCH_GROUP | PDO::FETCH_UNIQUE | PDO::FETCH_COLUMN
-			);
+            $this->mutualModules = $this->fetchAll(
+                'SELECT name, mutual_modules FROM xlite_modules WHERE enabled = \'1\' AND mutual_modules != \'\'',
+                PDO::FETCH_ASSOC | PDO::FETCH_GROUP | PDO::FETCH_UNIQUE | PDO::FETCH_COLUMN
+            );
 
-			foreach ($this->mutualModules as &$module) {
-				$module = explode(',', $module);
-			}
-		}
+            foreach ($this->mutualModules as &$module) {
+                $module = explode(',', $module);
+            }
+        }
 
-		return $this->mutualModules;
-	}
+        return $this->mutualModules;
+    }
 
     /**
      * Return list of active modules 
@@ -636,33 +653,33 @@ class Decorator
      */
     protected function getActiveModules($moduleName = null)
     {
-        if (is_null($this->activeModules)) {
+        if (!isset($this->activeModules)) {
 
             $this->activeModules = $this->fetchAll(
-				'SELECT name, \'1\' FROM xlite_modules WHERE enabled = \'1\'',
-				PDO::FETCH_ASSOC | PDO::FETCH_GROUP | PDO::FETCH_UNIQUE | PDO::FETCH_COLUMN
-			);
+                'SELECT name, \'1\' FROM xlite_modules WHERE enabled = \'1\'',
+                PDO::FETCH_ASSOC | PDO::FETCH_GROUP | PDO::FETCH_UNIQUE | PDO::FETCH_COLUMN
+            );
 
-			$modulesToDisable = array();
+            $modulesToDisable = array();
 
-			foreach ($this->getMutualModules() as $module => $dependencies) {
-				if (isset($this->activeModules[$module])) {
-					foreach ($dependencies as $dependendModule) {
-						unset($this->activeModules[$dependendModule]);
-						$modulesToDisable[] = $dependendModule;
-					}
-				}
-			}
+            foreach ($this->getMutualModules() as $module => $dependencies) {
+                if (isset($this->activeModules[$module])) {
+                    foreach ($dependencies as $dependendModule) {
+                        unset($this->activeModules[$dependendModule]);
+                        $modulesToDisable[] = $dependendModule;
+                    }
+                }
+            }
 
-			if (!empty($modulesToDisable)) {
-				$modulesToDisable = array_unique($modulesToDisable);
-				$query = 'UPDATE xlite_modules SET enabled = \'0\' WHERE name IN '
-						 . '(' . implode(',', array_fill(0, count($modulesToDisable), '?')) . ')';
-				$this->getDbHandler()->prepare($query)->execute($modulesToDisable);
-			}
+            if (!empty($modulesToDisable)) {
+                $modulesToDisable = array_unique($modulesToDisable);
+                $query = 'UPDATE xlite_modules SET enabled = \'0\' WHERE name IN '
+                         . '(' . implode(',', array_fill(0, count($modulesToDisable), '?')) . ')';
+                $this->getDbHandler()->prepare($query)->execute($modulesToDisable);
+            }
         }
 
-        return is_null($moduleName) ? $this->activeModules : isset($this->activeModules[$moduleName]);
+        return isset($moduleName) ? isset($this->activeModules[$moduleName]) : $this->activeModules;
     }
 
     /**
@@ -676,7 +693,7 @@ class Decorator
      */
     protected function isActiveModule($moduleName)
     {
-        return is_null($moduleName) || $this->getActiveModules($moduleName);
+        return !isset($moduleName) || $this->getActiveModules($moduleName);
     }
 
     /**
@@ -688,7 +705,7 @@ class Decorator
      */
     protected function getModuleDependencies()
     {
-        if (is_null($this->moduleDependencies)) {
+        if (!isset($this->moduleDependencies)) {
 
             $this->moduleDependencies = array();
 
@@ -764,7 +781,7 @@ class Decorator
      */
     protected function getModulePriority($moduleName)
     {
-        if (is_null($this->modulePriorities)) {
+        if (!isset($this->modulePriorities)) {
             $this->modulePriorities = $this->calculateModulePriorities($this->getModuleDependencies());
         }
 
@@ -790,7 +807,7 @@ class Decorator
 
                 if ($this->checkFile($filePath)) {
 
-                    // Parse fiel and get class info
+                    // Parse file and get class info
                     list($class, $extends, $implements) = $this->getClassInfo($filePath);
 
                     // Check classes for active modules only
@@ -889,7 +906,7 @@ class Decorator
                     $this->getModulePriority($this->getModuleNameByClassName($class));
             }
 
-			// These fields are not needed
+            // These fields are not needed
             if (empty($info[self::INFO_EXTENDS])) {
                 unset($this->classesInfo[$class][self::INFO_EXTENDS]);
             }
@@ -926,12 +943,12 @@ class Decorator
             $this->classesInfo[$currentClass][self::INFO_EXTENDS] = $rootClass;
             $this->classesInfo[$class][self::INFO_IS_ROOT_CLASS] = true;
 
-			// Wrong class name
-			if (!isset($this->classesInfo[$class][self::INFO_FILE])) {
-				die ('Decorator: undefined class - "' . $class . '"');
-			}
+            // Wrong class name
+            if (!isset($this->classesInfo[$class][self::INFO_FILE])) {
+                die ('Decorator: undefined class - "' . $class . '"');
+            }
 
-			// Assign new (reserved) name to root class and save other info
+            // Assign new (reserved) name to root class and save other info
             $this->classesInfo[$rootClass] = array(
                 self::INFO_FILE         => $this->classesInfo[$class][self::INFO_FILE],
                 self::INFO_CLASS        => $rootClass,
@@ -965,24 +982,24 @@ class Decorator
         chmod($fileName, 0644);
     }
 
-	/**
-	 * Delete the directory with compiled classes 
-	 * 
-	 * @return void
-	 * @access public
-	 * @since  3.0
-	 */
-	public function cleanUpCache()
-	{
-		unlinkRecursive(LC_CLASSES_CACHE_DIR);
-		unlinkRecursive(LC_SKINS_CACHE_DIR);
-	}
+    /**
+     * Delete the directory with compiled classes 
+     * 
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function cleanUpCache()
+    {
+        unlinkRecursive(LC_CLASSES_CACHE_DIR);
+        unlinkRecursive(LC_SKINS_CACHE_DIR);
+    }
 
     /**
      * Check and (if needed) rebuild cache
      * 
-	 * @param bool $force flag to force rebuild
-	 *
+     * @param bool $force flag to force rebuild
+     *
      * @return void
      * @access public
      * @since  3.0
@@ -991,14 +1008,9 @@ class Decorator
     {
         if ($this->isNeedRebuild() || $this->isDeveloperMode() || $force) {
 
-			if (php_sapi_name() == 'cli') {
-				$this->showPlainTextBlock();
+            (('cli' == php_sapi_name()) && $this->showPlainTextBlock()) || (empty($_REQUEST['action']) && $this->showJavaScriptBlock());
 
-			} elseif (empty($_REQUEST['action'])) {
-				$this->showJavaScriptBlock();
-			}
-
-			$this->setMaxExecutionTime();
+            $this->setMaxExecutionTime();
 
             // Prepare classes list
             $this->createClassTree();
@@ -1006,17 +1018,17 @@ class Decorator
             $this->createDecoratorTree();
             $this->mergeClassAndDecoratorTrees();
 
-			// Remove old files
-			if ($this->isCacheDirExists()) {
-				$this->cleanUpCache();
-			}
+            // Remove old files
+            if ($this->isCacheDirExists()) {
+                $this->cleanUpCache();
+            }
 
             // Write file to the cache directory
             foreach ($this->classesInfo as $class => $info) {
                 $this->writeClassFile($class, $info);
             }
 
-			$this->restoreMaxExecutionTime();
+            $this->restoreMaxExecutionTime();
         }
     }
 

@@ -356,15 +356,6 @@ abstract class XLite_Controller_Abstract extends XLite_View
 		header('Location: ' . ($this->returnUrlAbsolute ? $location : $this->shopURL($location, $this->get('secure'))));
     }
 
-    /**
-    * Get the full URL of the page.
-    * Example: shopURL("cart.php") = "http://domain/dir/cart.php
-    */
-    function shopURL($url, $secure = false, $pure_url = false)
-    {
-		return XLite::getInstance()->shopURL($url, $secure);
-    }
-
     function getProperties()
     {
         $result = array();
@@ -548,6 +539,15 @@ abstract class XLite_Controller_Abstract extends XLite_View
             $htaccess = new XLite_Model_Htaccess();
             $htaccess->checkFiles();
         }
+    }
+
+	/**
+    * Get the full URL of the page.
+    * Example: shopURL("cart.php") = "http://domain/dir/cart.php
+    */
+    function shopURL($url, $secure = false, $pure_url = false)
+    {
+        return XLite::getInstance()->shopURL($url, $secure);
     }
 }
 

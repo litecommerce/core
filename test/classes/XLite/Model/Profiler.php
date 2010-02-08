@@ -57,6 +57,11 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
 		return self::_getInstance(__CLASS__);
 	}
 
+	public function __construct()
+	{
+		$this->start(XLite::getInstance()->getOptions(array('profiler_details', 'enabled')));
+	}
+
     function log($timePoint)
     {
     	if (!isset($this->latest_point)) {
@@ -111,9 +116,6 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
 ?>
 <p align=left>
 <table border=0>
-<tr><td style="FONT-WEIGHT: bold;">MM</td><td><?php print $this->mm_time; ?> (<?php print $this->mm_time_delta; $this->total_time_sum += $this->mm_time_delta; ?>)</td></tr>
-<tr><td style="FONT-WEIGHT: bold;">INIT TOTAL</td><td><?php print $this->init_time; ?> (<?php print $this->init_time_delta; $this->total_time_sum += $this->init_time_delta; ?>)</td></tr>
-<tr><td colspan=2>&nbsp;</td></tr>
 <tr><td style="FONT-WEIGHT: bold;">REQUEST</td><td><?php print $this->request_time; ?> (<?php print $this->request_time_delta; $this->total_time_sum += $this->request_time_delta; ?>)</td></tr>
 <tr><td style="FONT-WEIGHT: bold;">RUN (dialog init)</td><td><?php print $this->dialog_init_time; ?> (<?php print $this->dialog_init_time_delta; $this->total_time_sum += $this->dialog_init_time_delta; ?>)</td></tr>
 <tr><td style="FONT-WEIGHT: bold;">RUN (dialog request)</td><td><?php print $this->dialog_handleRequest_time; ?> (<?php print $this->dialog_handleRequest_time_delta; $this->total_time_sum += $this->dialog_handleRequest_time_delta; ?>)</td></tr>

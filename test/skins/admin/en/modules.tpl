@@ -89,11 +89,14 @@ Use this section to manage add-on components of your online store.
 {* Display shipping modules *}
 <widget template="modules_body.tpl" caption="Shipping modules" key="2" IF="getModules(#2#)" />
 
+{* Display connector modules *}
+<widget template="modules_body.tpl" caption="Connectors" key="4" IF="getModules(#4#)" />
+
 {* Display regular modules *}
-<widget template="modules_body.tpl" caption="Add-ons" key="4" IF="getModules(#4#)" />
+<widget template="modules_body.tpl" caption="Add-ons" key="5" IF="getModules(#5#)" />
 
 {* Display 3rd party modules *}
-<widget template="modules_body.tpl" caption="3rd party modules" key="5" IF="getModules(#5#)" />
+<widget template="modules_body.tpl" caption="3rd party modules" key="6" IF="getModules(#6#)" />
 
 </table>
 

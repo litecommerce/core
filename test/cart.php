@@ -56,7 +56,6 @@ $parserTime += getmicrotime() - $time;*/
 
 // creates cart instance
 $xlite = call_user_func(array(LC_LIBRARY, 'getInstance'));
-$xlite->initFromGlobals();
 
 /*$time = getmicrotime();
 $parserTime += getmicrotime() - $time;
