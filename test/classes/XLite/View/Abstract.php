@@ -127,7 +127,7 @@ class XLite_View_Abstract extends XLite_Base
 
             $fc = new XLite_Model_FlexyCompiler();
             $fc->set('source', file_get_contents($templateFile));
-            $fc->set('url_rewrite', array('images' => XLite::getInstance()->shopURL(XLite_Model_Layout::getInstance()->getPath() . 'images/')));
+            $fc->set('url_rewrite', array('images' => XLite::getInstance()->shopURL(XLite_Model_Layout::getInstance()->getPath() . 'images')));
             $fc->set('file', $templateFile);
             $fc->parse();
 

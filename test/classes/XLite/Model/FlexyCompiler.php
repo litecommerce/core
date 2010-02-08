@@ -49,6 +49,8 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 {
 	const DISPLAY_CONDITION = '____display_cnd____';
 
+	const TAG_ARRAY = '_ARRAY_';
+
 	protected $_internalDisplayCode = false;
 	protected $_internalInitCode = false;
 
@@ -673,8 +675,6 @@ class XLite_Model_FlexyCompiler extends XLite_Base
         }
         $result = $this->flexySimpleExpression($str);
 
-		// var_dump($result);
-
         if (substr($str, 0, 1) == '=') { // comparision
             $str = substr($str, 1);
             $result .= '==' . $this->flexyExpression($str);
@@ -687,16 +687,24 @@ class XLite_Model_FlexyCompiler extends XLite_Base
             $str = substr($str, 1);
             $result .= '||' . $this->flexyExpression($str);
         }
+		if (substr($str, 0, 1) == '^') { // array element assignment
+            $str = substr($str, 1);
+            $result .= '=>' . $this->flexyExpression($str);
+        }
+
         return $result;
 	}
 
     function flexySimpleExpression(&$str)
     {
+		// Array declarations
+		//str_replace(
+
 		if (substr($str, 0, 1) == "#") {
 			// find next #
 			$pos = strpos($str, "#", 1);
 			if ($pos===false) $this->error("No closing #");
-			$result = '"' . substr($str, 1, $pos-1) . '"';
+			$result = '\'' . substr($str, 1, $pos-1) . '\'';
 			$str = substr($str, $pos+1);
 			return $result;
 		}
@@ -707,14 +715,18 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 			return $result;
 		}
 
-		$len = strcspn($str, '=&|,)(:');
+		$len = strcspn($str, '=&|,)(:^');
 		if ($len < strlen($str) && substr($str, $len, 1) == '(') { // method call
 
 			$token  = substr($str, 0, $len);
 			$method = (false !== ($dotPos = strrpos($token, '.'))) ? substr($token, $dotPos + 1) : $token;
 			$field  = substr($str, 0, $dotPos);
 
-			$result = '$t->' . ((false === $dotPos) ? '' : 'get' . (strrpos($field, '.') ? 'Complex' : '') . '(\'' . $field . '\')->') . $method;
+			if (self::TAG_ARRAY === $method) {
+				$result = 'array';
+			} else {
+				$result = '$t->' . ((false === $dotPos) ? '' : 'get' . (strrpos($field, '.') ? 'Complex' : '') . '(\'' . $field . '\')->') . $method;
+			}
 
 			$str = substr($str, $len);
 			$params = array();
@@ -734,9 +746,9 @@ class XLite_Model_FlexyCompiler extends XLite_Base
         if ($len) {
     		// field
 			$field  = substr($str, 0, $len);
-            $result = '$t->get' . (strpos($field, '.') ? 'Complex' : '') . '(\'' . $field . "')";
+            $result = '$t->get' . (strpos($field, '.') ? 'Complex' : '') . '(\'' . $field . '\')';
         } else {
-            $result = "";
+            $result = '';
         }
         $str = substr($str, $len);
         return $result;
@@ -744,8 +756,8 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 
     function flexyAttribute($str)
     {
-        if ($str === "") {
-            return "''";
+        if ($str === '') {
+            return '\'\'';
         }
         // find all {..} in $str and replace with flexyExpression()
         $result = "";

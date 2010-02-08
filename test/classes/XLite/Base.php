@@ -28,6 +28,7 @@ class XLite_Base
 		'config'   => 'XLite_Model_Config',
 		'profiler' => 'XLite_Model_Profiler',
 		'mm'       => 'XLite_Model_ModulesManager',
+		'layout'   => 'XLite_Model_Layout',
     );
 
 	/**

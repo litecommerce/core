@@ -6,10 +6,10 @@
  * Singleton to connect to a CMS
  *                         
  * @package    Lite Commerce
- * @subpackage Model        
+ * @subpackage Core        
  * @since      3.0                   
  */
-class XLite_Model_CMSConnector extends XLite_Base implements XLite_Base_ISingleton
+class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleton
 {
 	/**
 	 * List of widgets which can be exported
@@ -30,6 +30,7 @@ class XLite_Model_CMSConnector extends XLite_Base implements XLite_Base_ISinglet
 	 * @since  3.0
 	 */
 	protected $cssFiles = null;
+
 
 	/**
 	 * Method to access the singleton 

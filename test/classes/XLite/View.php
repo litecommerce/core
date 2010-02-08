@@ -53,6 +53,22 @@ class XLite_View extends XLite_View_Abstract
     public $valid = true;
 
 	protected $returnUrl = null;
+
+
+	/**
+	 * Check if widget property exists and is not empty 
+	 * 
+	 * @param string $flagName property name
+	 *  
+	 * @return bool
+	 * @access protected
+	 * @since  3.0
+	 */
+	protected function checkWidgetFlag($flagName)
+    {
+        return !empty($this->$flagName);
+    }
+
     
     function init()
     {
@@ -357,6 +373,24 @@ class XLite_View extends XLite_View_Abstract
 				$var_array[$key] = $stripped;
 			}
 		}
+	}
+
+	/**
+	 * Compose URL from target, action and additional params 
+	 * 
+	 * @param string $target page identifier
+	 * @param string $action action to perform
+	 * @param array  $params additional params
+	 *  
+	 * @return string
+	 * @access public
+	 * @since  3.0
+	 */
+	public function buildURL($target, $action = '', array $params = array())
+	{
+		return XLite::getInstance()->getScript() . '?target=' . $target 
+			   . (empty($action) ? '' : '&action=' . $action)
+			   . (empty($params) ? '' : '&' . http_build_query($params));
 	}
 }
 
