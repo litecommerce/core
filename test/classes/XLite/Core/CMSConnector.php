@@ -126,6 +126,23 @@ class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleto
 	}
 
 	/**
+	 * Check - widget is visible or not 
+	 * 
+	 * @param string $code Widget code
+	 * @param array  $args Widget arguments
+	 *  
+	 * @return boolean
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0 EE
+	 */
+	public function isWidgetVisible($code, array $args)
+	{
+		// TODO - add visibility checking
+		return true;
+	}
+
+	/**
 	 * Return HTML code of a widget 
 	 * 
 	 * @param string $name   widget name
