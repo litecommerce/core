@@ -91,8 +91,11 @@ require_once LC_ROOT_DIR . 'includes' . LC_DS . 'decoration.php';
  * @see    ____func_see____
  * @since  1.0.0
  */
-function __autoload($className)
+function __lc_autoload($className)
 {
-	include_once LC_CLASSES_CACHE_DIR . str_replace('_', LC_DS, $className) . '.php';
+	if (0 === strncmp($className, 'XLite', 5) {
+		require_once (LC_CLASSES_CACHE_DIR . str_replace('_', LC_DS, $className) . '.php');
+	}
 }
 
+spl_autoload_register('__lc_autoload');
