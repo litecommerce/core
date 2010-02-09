@@ -124,10 +124,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
             $target = $_REQUEST['target'] = 'main';
         }
 
-        $dialogClass = 'XLite_Controller_' 
-			. ($this->get('adminZone') ? 'Admin' : 'Customer') . '_' 
-			. preg_replace('/((?:\A|_)([a-zA-Z]))/ie', 'strtoupper(\'\\2\')', $target);
-
+		$dialogClass = XLite_Core_Converter::getControllerClass($target);
         $dialog = new $dialogClass();
         $dialog->init();
         $this->profiler->log("dialog_init_time");

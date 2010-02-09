@@ -409,15 +409,13 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
 	
 	function getURL()
 	{
-
 		if ($this->xlite->is("adminZone")) {
 			$action = $this->imageClass;
 			return "cart.php?target=image&action=$action&id=" . $this->get("id")."&_".rand();
 		}
 
 		if ($this->get("source") == "D") { // database, fetch php
-		    $action = $this->imageClass;
-			return "cart.php?target=image&action=$action&id=" . $this->get("id");
+			return XLite_Core_Converter::buildFullURL('image', $this->imageClass, array('id' => $this->get('id')));
 		} else {
 			return $this->getFilePath($this->get("data"), true);
 		}

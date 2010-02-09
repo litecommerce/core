@@ -61,6 +61,7 @@ class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleto
      */
     protected $jsFiles = null;
 
+
 	/**
 	 * Constructor
 	 * 
@@ -72,6 +73,26 @@ class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleto
 	protected function __construct()
 	{
 		$this->layoutPath = XLite_Model_Layout::getInstance()->getPath();
+	}
+
+	protected function getContent(XLite_View $viewer, array $params = array())
+	{
+		if (!empty($params)) {
+            $attributes = $params;//array();
+            /*foreach ($params as $param) {
+                $attributes[$param->name] = $param->value;
+            }*/
+            $viewer->setAttributes($attributes);
+        }
+
+        $viewer->init();
+
+        ob_start();
+        $viewer->display();
+        $content = ob_get_contents();
+        ob_end_clean();
+
+        return $content;
 	}
 
 	/**
@@ -157,7 +178,9 @@ class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleto
 		$name   = 'XLite_View_' . $name;
 		$object = new $name();
 
-		if (!empty($params)) {
+		return $this->getContent($object, $params);
+
+		/*if (!empty($params)) {
 			$attributes = array();
 			foreach ($params as $param) {
 				$attributes[$param->name] = $param->value;
@@ -172,7 +195,7 @@ class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleto
 		$content = ob_get_contents();
 		ob_end_clean();
 
-		return $content;
+		return $content;*/
 	}
 
 	/**
@@ -258,6 +281,27 @@ class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleto
 	 */
 	public function logOutUser($userId)
 	{
+	}
+
+	/**
+	 * Run a controller
+	 *
+	 * @param string $target controller target
+	 * @param string $action controller action
+	 * @param array  $args   controller arguments
+	 *
+	 * @return string
+	 * @see    ____func_see____
+	 * @since  3.0.0 EE
+	 */
+	public function runFrontController($target, $action, array $args = array())
+	{
+		$name = XLite_Core_Converter::getControllerClass($target);
+		$object = new $name();
+
+		$object->template = 'center.tpl';
+
+		return $this->getContent($object, array('target' => $target, 'action' => $action) + $args);
 	}
 }
 

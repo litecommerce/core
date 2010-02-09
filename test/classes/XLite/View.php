@@ -388,9 +388,7 @@ class XLite_View extends XLite_View_Abstract
 	 */
 	public function buildURL($target, $action = '', array $params = array())
 	{
-		return XLite::getInstance()->getScript() . '?target=' . $target 
-			   . (empty($action) ? '' : '&action=' . $action)
-			   . (empty($params) ? '' : '&' . http_build_query($params));
+		return XLite_Core_Converter::buildURL($target, $action, $params);
 	}
 }
 

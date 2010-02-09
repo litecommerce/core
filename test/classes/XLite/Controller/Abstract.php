@@ -104,7 +104,7 @@ abstract class XLite_Controller_Abstract extends XLite_View
 
     function getCategory()
     {
-        if (is_null($this->category) && isset($_REQUEST["category_id"])) {
+        if (is_null($this->category) && !is_null($this->get("category_id"))) {
             $this->category = new XLite_Model_Category($this->get("category_id"));
         }
         return $this->category;

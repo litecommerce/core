@@ -11,17 +11,52 @@
  */
 class XLite_View_TopCategories extends XLite_View
 {
+	/**
+	 * Title
+	 * 
+	 * @var    string
+	 * @access protected
+	 * @since  1.0.0
+	 */
 	protected $head = 'Categories';
 
+	/**
+	 * Directory contains sidebar content
+	 * 
+	 * @var    string
+	 * @access protected
+	 * @since  1.0.0
+	 */
 	protected $dir = 'categories';
 
+	/**
+	 * Categories cache
+	 * 
+	 * @var    array
+	 * @access protected
+	 * @since  1.0.0
+	 */
 	protected $categories = null;
 
+	/**
+	 * Define the default template 
+	 * 
+	 * @return void
+	 * @access public
+	 * @since  1.0.0
+	 */
 	public function __construct()
 	{
-		$this->template = 'common' . LC_DS . 'sidebar_box.tpl';
+		$this->template = $this->dir . LC_DS . 'body.tpl';
 	}
 
+    /**
+     * Return root categories list 
+     * 
+     * @return array
+     * @access public
+     * @since  1.0.0
+     */
     public function getCategories()
     {
         // get root categories

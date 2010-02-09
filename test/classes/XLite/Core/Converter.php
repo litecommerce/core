@@ -58,4 +58,54 @@ class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
 
 		return implode($separator, $result);
 	}
+
+	/**
+	 * Compose controller class name using target
+	 * 
+	 * @param string $target current target
+	 *  
+	 * @return string
+	 * @access public
+	 * @since  1.0.0
+	 */
+	public static function getControllerClass($target)
+	{
+		return 'XLite_Controller_' 
+			   . (XLite::getInstance()->is('adminZone') ? 'Admin' : 'Customer') 
+			   . '_' . self::convertToCamelCase($target);
+	}
+
+	/**
+     * Compose URL from target, action and additional params
+     *
+     * @param string $target page identifier
+     * @param string $action action to perform
+     * @param array  $params additional params
+     *
+     * @return string
+     * @access public
+     * @since  3.0
+     */
+    public static function buildURL($target, $action = '', array $params = array())
+    {
+        return XLite::getInstance()->getScript() . '?target=' . $target
+               . (empty($action) ? '' : '&action=' . $action)
+               . (empty($params) ? '' : '&' . http_build_query($params));
+    }
+
+	/**
+     * Compose full URL from target, action and additional params
+     *
+     * @param string $target page identifier
+     * @param string $action action to perform
+     * @param array  $params additional params
+     *
+     * @return string
+     * @access public
+     * @since  3.0
+     */
+    public static function buildFullURL($target, $action = '', array $params = array())
+    {
+		return XLite::getInstance()->shopURL(self::buildURL($target, $action, $params));
+	}
 }
