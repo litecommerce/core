@@ -19,6 +19,7 @@ UPDATE xlite_modules SET enabled=1 where name='InventoryTracking';
 UPDATE xlite_modules SET enabled=1 where name='ShowcaseOrganizer';
 UPDATE xlite_modules SET enabled=1 where name='SnsIntegration';
 UPDATE xlite_modules SET enabled=1 where name='MultiCategories';
+UPDATE xlite_modules SET enabled=1 where name='DrupalConnector';
 
 -- Configure look and feel for category products
 UPDATE xlite_config SET value='modules/ShowcaseOrganizer/icons.tpl' WHERE category='ShowcaseOrganizer' AND name='template';

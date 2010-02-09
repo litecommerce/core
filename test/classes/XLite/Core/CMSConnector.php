@@ -12,6 +12,16 @@
 class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleton
 {
 	/**
+	 * Layout path 
+	 * 
+	 * @var    string
+	 * @access protected
+	 * @see    ____var_see____
+	 * @since  3.0.0 EE
+	 */
+	protected $layoutPath = null;
+
+	/**
 	 * List of widgets which can be exported
 	 * 
 	 * @var    array
@@ -19,7 +29,18 @@ class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleto
 	 * @since  3.0
 	 */
 	protected $widgetsList = array(
-		'TopCategories' => 'Top categories side bar (menu)',
+		'TopCategories' => array(
+			'name' => 'Top categories side bar',
+		),
+		'Product' => array(
+			'name' => 'Product side bar',
+			'args' => array(
+				'product_id' => array(
+					'name' => 'Product Id',
+					'type' => 'integer',
+				),
+			),
+		),
 	);
 
 	/**
@@ -31,11 +52,32 @@ class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleto
 	 */
 	protected $cssFiles = null;
 
+    /**
+     * List of Javascript files to export 
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0
+     */
+    protected $jsFiles = null;
+
+	/**
+	 * Constructor
+	 * 
+	 * @return void
+	 * @access protected
+	 * @see    ____func_see____
+	 * @since  3.0.0 EE
+	 */
+	protected function __construct()
+	{
+		$this->layoutPath = XLite_Model_Layout::getInstance()->getPath();
+	}
 
 	/**
 	 * Method to access the singleton 
 	 * 
-	 * @return XLite_Model_CMSConnector
+	 * @return XLite_Core_CMSConnector
 	 * @access public
 	 * @since  3.0
 	 */
@@ -54,6 +96,33 @@ class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleto
 	public function getWidgetsList()
 	{
 		return $this->widgetsList;
+	}
+
+	/**
+	 * Validate widget arguments 
+	 * 
+	 * @param string $code Widget code
+	 * @param array  $args Arguments hash-array
+	 *  
+	 * @return array
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0 EE
+	 */
+	public function validateWidgetArguments($code, array $args)
+	{
+		// TODO - add validation
+		$result = array();
+
+		if ('Product' == $code) {
+
+			if (!isset($args['product_id']) || !is_numeric($args['product_id'])) {
+				$result['product_id'] = array('Product Id is not numeric');
+			}
+
+		}
+
+		return $result;
 	}
 
 	/**
@@ -101,14 +170,77 @@ class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleto
 		if (!isset($this->cssFiles)) {
 
 			$this->cssFiles = array('style.css');
-			$path = XLite_Model_Layout::getInstance()->getPath();
 
 			foreach ($this->cssFiles as &$cssFile) {
-	            $cssFile = XLite::getInstance()->shopURL($path . $cssFile);
+	            $cssFile = XLite::getInstance()->shopURL($this->layoutPath . $cssFile);
     	    }
 		}
 
 		return $this->cssFiles;
+	}
+
+    /**
+     * Prepare and return list of Javascript files to export 
+     * 
+     * @return array
+     * @access public
+     * @since  3.0
+     */
+    public function getJSList()
+    {
+        if (!isset($this->jsFiles)) {
+
+			$this->jsFiles = array();
+
+            foreach ($this->jsFiles as &$jsFile) {
+                $cssFile = XLite::getInstance()->shopURL($this->layoutPath . $jsFile);
+            }
+        }
+
+        return $this->jsFiles;
+    }
+
+	/**
+	 * Set user data 
+	 * 
+	 * @param integer $userId Drupal user id
+	 * @param array   $data   User data
+	 *  
+	 * @return void
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0 EE
+	 */
+	public function setUserData($userId, array $data)
+	{
+	}
+
+	/**
+	 * Log-in user in LC 
+	 * 
+	 * @param integer $userId Drupal user id
+	 *  
+	 * @return void
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0 EE
+	 */
+	public function logInUser($userId)
+	{
+	}
+
+	/**
+	 * Log-out user in LC 
+	 * 
+	 * @param integer $userId Drupal user id
+	 *  
+	 * @return void
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0 EE
+	 */
+	public function logOutUser($userId)
+	{
 	}
 }
 
