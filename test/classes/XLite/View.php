@@ -46,7 +46,7 @@
 */
 class XLite_View extends XLite_View_Abstract
 {
-	protected $widgetParams = array();
+	protected $widgetParams = null;
 	
     public $params = array();	
     public $components = array();	
@@ -56,17 +56,19 @@ class XLite_View extends XLite_View_Abstract
 
 
 	/**
-	 * Check if widget property exists and is not empty 
+	 * Check if a widget requested from certain CMS
 	 * 
-	 * @param string $flagName property name
+	 * @param string $cmsName CMS name to check
 	 *  
 	 * @return bool
 	 * @access protected
-	 * @since  3.0
+	 * @since  1.0.0
 	 */
-	protected function checkWidgetFlag($flagName)
+	protected function checkCurrentCMS($cmsName)
     {
-        return !empty($this->$flagName);
+		$name = XLite_Core_CMSConnector::CURRENT_CMS;
+
+        return $cmsName === $this->$name;
     }
 
     
@@ -375,6 +377,19 @@ class XLite_View extends XLite_View_Abstract
 		}
 	}
 
+
+	/**
+	 * Define widget parameters
+	 * 
+	 * @return void
+	 * @access protected
+	 * @since  1.0.0
+	 */
+	protected function defineWidgetParams()
+	{
+		$this->widgetParams = array();
+	}
+
 	/**
 	 * Compose URL from target, action and additional params 
 	 * 
@@ -389,6 +404,36 @@ class XLite_View extends XLite_View_Abstract
 	public function buildURL($target, $action = '', array $params = array())
 	{
 		return XLite_Core_Converter::buildURL($target, $action, $params);
+	}
+
+	/**
+	 * Return widget parameters list
+	 * 
+	 * @return array
+	 * @access public
+	 * @since  1.0.0
+	 */
+	public function getWidgetParams()
+	{
+		if (is_null($this->widgetParams)) {
+			$this->defineWidgetParams();
+		}
+
+		return $this->widgetParams;
+	}
+
+	/**
+	 * Check passed attributes 
+	 * 
+	 * @param array $attributes attributes to check
+	 *  
+	 * @return array errors list
+	 * @access public
+	 * @since  1.0.0
+	 */
+	public function validateAttributes(array $attributes)
+	{
+		return array();
 	}
 }
 

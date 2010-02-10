@@ -12,11 +12,6 @@
 class XLite_Module_DrupalConnector_View extends XLite_View implements XLite_Base_IDecorator
 {
 	/**
-     * This field determines if Drupal-specific URLs intsead of the default ones
-     */
-    const DRUPAL_REWRITE_URLS = '____DRUPAL_REWRITE_URLS____';
-
-	/**
 	 * It's the the root part of Drupal nodes which are the imported LiteCommerce widgets
 	 */
 	const DRUPAL_ROOT_NODE = 'store';
@@ -35,7 +30,8 @@ class XLite_Module_DrupalConnector_View extends XLite_View implements XLite_Base
      */
 	protected function getDrupalURL($target, $action = '', array $params = array())
 	{
-		return '?q=' . implode('/', array(self::DRUPAL_ROOT_NODE, $target, $action)) . '/' . XLite_Core_Converter::buildQuery($params, ':', ',');
+		return '?q=' . implode('/', array(self::DRUPAL_ROOT_NODE, $target, $action)) 
+			   . '/' . XLite_Core_Converter::buildQuery($params, ':', ',');
 	}
 
 
@@ -52,7 +48,8 @@ class XLite_Module_DrupalConnector_View extends XLite_View implements XLite_Base
      */
     public function buildURL($target, $action = '', array $params = array())
     {
-		return $this->checkWidgetFlag(self::DRUPAL_REWRITE_URLS) ? $this->getDrupalURL($target, $action, $params) : parent::buildURL($target, $action, $params);
+		return $this->checkCurrentCMS(XLite_Module_DrupalConnector_Handler::getCMSName()) ?
+			$this->getDrupalURL($target, $action, $params) : parent::buildURL($target, $action, $params);
     }
 }
 

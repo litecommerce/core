@@ -9,8 +9,14 @@
  * @subpackage Core        
  * @since      3.0                   
  */
-class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleton
+abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleton
 {
+	/**
+     * This field determines currently used CMS
+     */
+    const CURRENT_CMS = '____CMS____';
+
+
 	/**
 	 * Layout path 
 	 * 
@@ -29,18 +35,7 @@ class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleto
 	 * @since  3.0
 	 */
 	protected $widgetsList = array(
-		'TopCategories' => array(
-			'name' => 'Top categories side bar',
-		),
-		'Product' => array(
-			'name' => 'Product side bar',
-			'args' => array(
-				'product_id' => array(
-					'name' => 'Product Id',
-					'type' => 'integer',
-				),
-			),
-		),
+		'TopCategories' => 'Top categories side bar',
 	);
 
 	/**
@@ -63,6 +58,16 @@ class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleto
 
 
 	/**
+	 * Return currently used CMS name 
+	 * 
+	 * @return string
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
+	abstract public static function getCMSName();
+
+
+	/**
 	 * Constructor
 	 * 
 	 * @return void
@@ -75,14 +80,34 @@ class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleto
 		$this->layoutPath = XLite_Model_Layout::getInstance()->getPath();
 	}
 
-	protected function getContent(XLite_View $viewer, array $params = array())
+	/**
+	 * Prepare attributes before set them to a widget
+	 * 
+	 * @param array $attributes attributes to prepare
+	 *  
+	 * @return array
+	 * @access protected
+	 * @since  3.0.0 EE
+	 */
+	protected function prepareAttributes(array $attributes)
 	{
-		if (!empty($params)) {
-            $attributes = $params;//array();
-            /*foreach ($params as $param) {
-                $attributes[$param->name] = $param->value;
-            }*/
-            $viewer->setAttributes($attributes);
+		return array(self::CURRENT_CMS => $this->getCMSName()) + $attributes;
+	}
+
+	/**
+	 * Get widget content 
+	 * 
+	 * @param XLite_View $viewer     viewer object to use
+	 * @param array      $attributes widget attributes
+	 *  
+	 * @return string
+	 * @access protected
+	 * @since  3.0.0 EE
+	 */
+	protected function getContent(XLite_View $viewer, array $attributes = array())
+	{
+		if (!empty($attributes)) {
+            $viewer->setAttributes($this->prepareAttributes($attributes));
         }
 
         $viewer->init();
@@ -120,82 +145,66 @@ class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleto
 	}
 
 	/**
+	 * Return object by class name 
+	 * 
+	 * @param string $name widget class name
+	 *  
+	 * @return XLite_View
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
+	public function getWidgetObject($name)
+	{
+		$name = 'XLite_View_' . $name;
+
+		return new $name();
+	}
+
+	/**
 	 * Validate widget arguments 
 	 * 
-	 * @param string $code Widget code
-	 * @param array  $args Arguments hash-array
+	 * @param string $name       widget identifier
+	 * @param array  $attributes widget attributes
 	 *  
 	 * @return array
 	 * @access public
 	 * @see    ____func_see____
 	 * @since  3.0.0 EE
 	 */
-	public function validateWidgetArguments($code, array $args)
+	public function validateWidgetArguments($name, array $attributes)
 	{
-		// TODO - add validation
-		$result = array();
-
-		if ('Product' == $code) {
-
-			if (!isset($args['product_id']) || !is_numeric($args['product_id'])) {
-				$result['product_id'] = array('Product Id is not numeric');
-			}
-
-		}
-
-		return $result;
+		return $this->getWidgetObject($name)->validateAttributes($attributes);
 	}
 
 	/**
-	 * Check - widget is visible or not 
-	 * 
-	 * @param string $code Widget code
-	 * @param array  $args Widget arguments
-	 *  
-	 * @return boolean
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0 EE
-	 */
-	public function isWidgetVisible($code, array $args)
+     * Check if widget is visible or not
+     *
+     * @param string $name       widget identifier
+     * @param array  $attributes widget attributes
+     *
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0 EE
+     */
+	public function isWidgetVisible($name, array $attributes)
 	{
-		// TODO - add visibility checking
-		return true;
+		return $this->getWidgetObject($name)->isVisible();
 	}
 
 	/**
 	 * Return HTML code of a widget 
 	 * 
-	 * @param string $name   widget name
-	 * @param array  $params array of XLite_Model_WidgetParam objects
+	 * @param string $name       widget name
+	 * @param array  $attributes array of params defined in CMS
 	 *  
 	 * @return string
 	 * @access public
 	 * @since  3.0
 	 */
-	public function getWidgetHTML($name, array $params = array())
+	public function getWidgetHTML($name, array $attributes = array())
 	{
-		$name   = 'XLite_View_' . $name;
-		$object = new $name();
-
-		return $this->getContent($object, $params);
-
-		/*if (!empty($params)) {
-			$attributes = array();
-			foreach ($params as $param) {
-				$attributes[$param->name] = $param->value;
-			}
-			$object->setAttributes($attributes);
-		}
-
-		$object->init();
-
-		ob_start();
-		$object->display();
-		$content = ob_get_contents();
-		ob_end_clean();
-
-		return $content;*/
+		return $this->getContent($this->getWidgetObject($name), $attributes);
 	}
 
 	/**
@@ -364,7 +373,7 @@ class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleto
 	}
 
 	/**
-	 * Get translation table for prfile data
+	 * Get translation table for profile data
 	 * 
 	 * @return array
 	 * @access protected

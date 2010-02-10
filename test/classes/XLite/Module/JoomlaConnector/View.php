@@ -12,17 +12,6 @@
 class XLite_Module_JoomlaConnector_View extends XLite_View implements XLite_Base_IDecorator
 {
 	/**
-     * This field determines if Joomla-specific URLs intsead of the default ones
-     */
-    const JOOMLA_REWRITE_URLS = '____JOOMLA_REWRITE_URLS____';
-
-	/**
-	 * It's the the root part of Joomla nodes which are the imported LiteCommerce widgets
-	 */
-	const JOOMLA_ROOT_NODE = 'lc_widget';
-
-
-	/**
      * Compose URL from target, action and additional params
      *
      * @param string $target page identifier
@@ -33,13 +22,13 @@ class XLite_Module_JoomlaConnector_View extends XLite_View implements XLite_Base
      * @access public
      * @since  3.0
      */
-	protected function getJoomlaURL($target, $action = '', array $params = array())
-	{
-		return parent::buildURL($target, $action, $params);
-	}
+    protected function getJoomlaURL($target, $action = '', array $params = array())
+    {
+        return parent::buildURL($target, $action, $params);
+    }
 
 
-	/**
+    /**
      * Compose URL from target, action and additional params
      *
      * @param string $target page identifier
@@ -52,7 +41,8 @@ class XLite_Module_JoomlaConnector_View extends XLite_View implements XLite_Base
      */
     public function buildURL($target, $action = '', array $params = array())
     {
-		return $this->checkWidgetFlag(self::JOOMLA_REWRITE_URLS) ? $this->getJoomlaURL($target, $action, $params) : parent::buildURL($target, $action, $params);
+        return $this->checkCurrentCMS(XLite_Module_JoomlaConnector_Handler::getCMSName()) ?
+            $this->getJoomlaURL($target, $action, $params) : parent::buildURL($target, $action, $params);
     }
 }
 

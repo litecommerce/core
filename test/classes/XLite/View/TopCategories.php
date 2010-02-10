@@ -50,6 +50,24 @@ class XLite_View_TopCategories extends XLite_View
 		$this->template = $this->dir . LC_DS . 'body.tpl';
 	}
 
+	/**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+		parent::defineWidgetParams();
+
+		// TODO - it's only an example. Must be removed
+        $this->widgetParams += array(
+			new XLite_Model_WidgetParam_String('head', null, 'Box title'),
+			new XLite_Model_WidgetParam_String('test', null, 'Test'),
+		);
+    }
+
     /**
      * Return root categories list 
      * 
@@ -62,7 +80,7 @@ class XLite_View_TopCategories extends XLite_View
         // get root categories
         if (is_null($this->categories)) {
             $category = new XLite_Model_Category(); 
-            $this->categories = $category->getComplex('topCategory.subcategories');
+            $this->categories = $category->getTopCategory()->getSubcategories();
         }
 
         return $this->categories;

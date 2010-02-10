@@ -9,65 +9,22 @@
  * @subpackage Model
  * @since      3.0
  */
-class XLite_Model_WidgetParam extends XLite_Base
+class XLite_Model_WidgetParam extends XLite_Model_WidgetParam_Abstract
 {
 	/**
-	 * Param name 
+	 * Common constructor 
 	 * 
-	 * @var    string
-	 * @access protected
-	 * @since  3.0
-	 */
-	protected $name = null;
-
-	/**
-	 * Param value 
-	 * 
-	 * @var    mixed
-	 * @access protected
-	 * @since  3.0
-	 */
-	protected $value = null;
-
-	/**
-	 * Param label 
-	 * 
-	 * @var    string
-	 * @access protected
-	 * @since  3.0
-	 */
-	protected $label = null;
-
-	/**
-	 * Save passed values in object properties
-	 * 
-	 * @param mixed $value param value
-	 * @param mixed $name  param name
-	 * @param mixed $label param label
+	 * @param string $name  param name
+	 * @param string $value param value
+	 * @param string $label param text label
 	 *  
 	 * @return void
 	 * @access public
-	 * @since  3.0
+	 * @since  1.0.0
 	 */
-	public function __construct($value = null, $name = null, $label = null)
+	public function __construct($name = null, $value = null, $label = null)
 	{
-		$this->name  = $name;
-		$this->value = $value;
-		$this->label = $label;
-	}
-
-	/**
-	 * Return protected property 
-	 * 
-	 * @param string $name property name
-	 *  
-	 * @return mixed
-	 * @access public
-	 * @since  3.0
-	 */
-	public function __get($name)
-	{
-		return isset($this->$name) ? $this->$name : null;
+		$this->setCommonData($name, $value, $label);
 	}
 }
 
