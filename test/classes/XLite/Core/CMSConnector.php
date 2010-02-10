@@ -258,28 +258,32 @@ class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleto
 	/**
 	 * Log-in user in LC 
 	 * 
-	 * @param integer $userId Drupal user id
+	 * @param string $email Email
 	 *  
 	 * @return void
 	 * @access public
 	 * @see    ____func_see____
 	 * @since  3.0.0 EE
 	 */
-	public function logInUser($userId)
+	public function logInUser($email)
 	{
+		$controller = new XLite_Controller_Admin_Login();
+		$profile = $controller->auth->loginSilent($email);
+        
+		return !is_int($profile) || ACCESS_DENIED !== $profile;
 	}
 
 	/**
 	 * Log-out user in LC 
 	 * 
-	 * @param integer $userId Drupal user id
+	 * @param string $email User email
 	 *  
 	 * @return void
 	 * @access public
 	 * @see    ____func_see____
 	 * @since  3.0.0 EE
 	 */
-	public function logOutUser($userId)
+	public function logOutUser($email)
 	{
 	}
 

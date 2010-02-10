@@ -389,21 +389,39 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
             return ACCESS_DENIED;
         }
 
-    	if (
-			isset($_REQUEST[XLite_Model_Session::SESSION_DEFAULT_NAME])
-			&& !(isset($_GET[XLite_Model_Session::SESSION_DEFAULT_NAME]) || isset($_POST[XLite_Model_Session::SESSION_DEFAULT_NAME]))
-		) {
+		$this->sessionRestart();
 
-    		unset($_REQUEST[XLite_Model_Session::SESSION_DEFAULT_NAME]);
-		    $this->xlite->session->set("_".XLite_Model_Session::SESSION_DEFAULT_NAME, XLite_Model_Session::SESSION_DEFAULT_NAME."=".$this->xlite->session->getID());
-		    $this->xlite->session->destroy();
-		    $this->xlite->session->setID(SESSION_DEFAULT_ID);
-		    $this->xlite->session->_initialize();
-        }
         // log in
         $this->loginProfile($profile);
+
         return $profile; 
     } // }}}
+
+	/**
+	 * Session restart after log-in
+	 * 
+	 * @return void
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0 EE
+	 */
+	public function sessionRestart()
+	{
+        if (
+            isset($_REQUEST[XLite_Model_Session::SESSION_DEFAULT_NAME])
+            && !(isset($_GET[XLite_Model_Session::SESSION_DEFAULT_NAME]) || isset($_POST[XLite_Model_Session::SESSION_DEFAULT_NAME]))
+        ) {
+
+            unset($_REQUEST[XLite_Model_Session::SESSION_DEFAULT_NAME]);
+            $this->xlite->session->set(
+				'_' . XLite_Model_Session::SESSION_DEFAULT_NAME,
+				XLite_Model_Session::SESSION_DEFAULT_NAME . '=' . $this->xlite->session->getID()
+			);
+            $this->xlite->session->destroy();
+            $this->xlite->session->setID(SESSION_DEFAULT_ID);
+            $this->xlite->session->_initialize();
+        }
+	}
 
     /**
     * Logs in admin to cart.
