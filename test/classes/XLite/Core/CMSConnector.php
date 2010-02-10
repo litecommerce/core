@@ -255,23 +255,33 @@ class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleto
 	{
         $result = false;
 
+		// Translation profile field names
+        $transTable = $this->getUserTranslationTable();
+
+        $transData = array();
+        foreach ($transTable as $k => $v) {
+            if (isset($data[$k])) {
+                $transData[$v] = $data[$k];
+            }
+        }
+
         $profile = new XLite_Model_Profile();
 
-        if ($profile->find('login = \'' . addslashes($email) . '\'')) {
-			$transTable = $this->getUserTranslationTable();
+    	if ($profile->find('login = \'' . addslashes($email) . '\'')) {
 
-			$transData = array();
-			foreach ($transTable as $k => $v) {
-				if (isset($data[$k])) {
-					$transData[$v] = $data[$k];
-				}
-			}
-
+			// Update
 			if ($transData) {
 	            $profile->modifyProperties($transData);
 				$result = (bool)$profile->update();
 			}
-        }
+
+		} else {
+
+			// Create
+			$transData['login'] = $email;
+			$profile->modifyProperties($transData);
+			$result = (bool)$profile->create();
+		}
 
         return $result;
 	}

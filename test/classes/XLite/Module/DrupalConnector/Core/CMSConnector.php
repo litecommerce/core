@@ -25,5 +25,23 @@ class XLite_Module_DrupalConnector_Core_CMSConnector extends XLite_Core_CMSConne
     {
 		return parent::getWidgetHTML($name, array(new XLite_Model_WidgetParam(true, XLite_Module_DrupalConnector_View::DRUPAL_REWRITE_URLS)) + $params);
 	}
+
+    /**
+     * Get translation table for prfile data
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0 EE
+     */
+    protected function getUserTranslationTable()
+    {
+		$table = parent::getUserTranslationTable();
+
+		$table['pass'] = 'password';
+
+		return $table;
+    }
+
 }
 
