@@ -94,7 +94,7 @@ require_once LC_ROOT_DIR . 'includes' . LC_DS . 'decoration.php';
 function __lc_autoload($className)
 {
 	if (0 === strpos($className, LC_LIBRARY)) {
-		require_once (LC_CLASSES_CACHE_DIR . str_replace('_', LC_DS, $className) . '.php');
+		include_once (LC_CLASSES_CACHE_DIR . str_replace('_', LC_DS, $className) . '.php');
 	}
 }
 
