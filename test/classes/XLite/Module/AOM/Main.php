@@ -109,18 +109,6 @@ class XLite_Module_AOM_Main extends XLite_Module_Abstract
             $this->addLayout("order/order.tpl","modules/AOM/order.tpl");
 
         }
-        if ($this->xlite->getComplex('mm.activeModules.GiftCertificates')) {
-            $this->xlite->set("GiftCertificatesEnabled",true);
-        }
-        if ($this->xlite->getComplex('mm.activeModules.Promotion')) {
-            $this->xlite->set("PromotionEnabled",true);
-        }
-        if ($this->xlite->getComplex('mm.activeModules.Egoods')) {
-            $this->xlite->set("EgoodsEnabled",true);
-        }
-        if ($this->xlite->getComplex('mm.activeModules.Affiliate')) {
-            $this->xlite->set("AffiliateEnabled",true);
-        }
 
         $this->xlite->set("AOMEnabled",true);
     }
