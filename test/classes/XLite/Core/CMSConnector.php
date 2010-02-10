@@ -243,17 +243,62 @@ class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleto
 	/**
 	 * Set user data 
 	 * 
-	 * @param integer $userId Drupal user id
-	 * @param array   $data   User data
+	 * @param string  $email Email
+	 * @param array   $data  User data
 	 *  
 	 * @return void
 	 * @access public
 	 * @see    ____func_see____
 	 * @since  3.0.0 EE
 	 */
-	public function setUserData($userId, array $data)
+	public function setUserData($email, array $data)
 	{
+        $result = false;
+
+        $profile = new XLite_Model_Profile();
+
+        if ($profile->find('login = \'' . addslashes($email) . '\'')) {
+			$transTable = $this->getUserTranslationTable();
+
+			$transData = array();
+			foreach ($transTable as $k => $v) {
+				if (isset($data[$k])) {
+					$transData[$v] = $data[$k];
+				}
+			}
+
+			if ($transData) {
+	            $profile->modifyProperties($transData);
+				$result = (bool)$profile->update();
+			}
+        }
+
+        return $result;
 	}
+
+    /**
+     * Remove user profile
+     * 
+     * @param string $email Email
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0 EE
+     */
+    public function removeUser($email)
+    {
+		$result = false;
+
+        $profile = new XLite_Model_Profile();
+
+        if ($profile->find('login = \'' . addslashes($email) . '\'')) {
+			$profile->delete();
+			$result = true;
+		}
+
+		return $result;
+    }
 
 	/**
 	 * Log-in user in LC 
@@ -267,8 +312,7 @@ class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleto
 	 */
 	public function logInUser($email)
 	{
-		$controller = new XLite_Controller_Admin_Login();
-		$profile = $controller->auth->loginSilent($email);
+		$profile = $this->xlite->auth->loginSilent($email);
         
 		return !is_int($profile) || ACCESS_DENIED !== $profile;
 	}
@@ -283,8 +327,9 @@ class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleto
 	 * @see    ____func_see____
 	 * @since  3.0.0 EE
 	 */
-	public function logOutUser($email)
+	public function logOutUser($email = null)
 	{
+		$this->xlite->auth->logoff();
 	}
 
 	/**
@@ -306,6 +351,19 @@ class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleto
 		$object->template = 'center.tpl';
 
 		return $this->getContent($object, array('target' => $target, 'action' => $action) + $args);
+	}
+
+	/**
+	 * Get translation table for prfile data
+	 * 
+	 * @return array
+	 * @access protected
+	 * @see    ____func_see____
+	 * @since  3.0.0 EE
+	 */
+	protected function getUserTranslationTable()
+	{
+		return array();
 	}
 }
 
