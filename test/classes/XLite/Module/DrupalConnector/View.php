@@ -30,10 +30,11 @@ class XLite_Module_DrupalConnector_View extends XLite_View implements XLite_Base
      */
 	protected function getDrupalURL($target, $action = '', array $params = array())
 	{
-		return '?q=' . implode('/', array(self::DRUPAL_ROOT_NODE, $target, $action)) 
-			   . '/' . XLite_Core_Converter::buildQuery($params, ':', ',');
+		return '?q='
+			. implode('/', array(self::DRUPAL_ROOT_NODE, $target, $action)) 
+			. '/'
+			. XLite_Core_Converter::buildQuery($params, ':', ',');
 	}
-
 
 	/**
      * Compose URL from target, action and additional params
@@ -48,8 +49,9 @@ class XLite_Module_DrupalConnector_View extends XLite_View implements XLite_Base
      */
     public function buildURL($target, $action = '', array $params = array())
     {
-		return $this->checkCurrentCMS(XLite_Module_DrupalConnector_Handler::getCMSName()) ?
-			$this->getDrupalURL($target, $action, $params) : parent::buildURL($target, $action, $params);
+		return $this->checkCurrentCMS(XLite_Module_DrupalConnector_Handler::getCMSName())
+			? $this->getDrupalURL($target, $action, $params)
+			: parent::buildURL($target, $action, $params);
     }
 }
 
