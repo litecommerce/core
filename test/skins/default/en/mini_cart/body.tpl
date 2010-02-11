@@ -24,9 +24,9 @@
 
           <tr>
             <td colspan="2">
-              <img src="images/dark_arrows.gif" width="6" height="6" border="0" align="middle" alt="">&nbsp;<a href="cart.php?target=cart" class="SidebarItems">View cart</a>
+              <img src="images/dark_arrows.gif" width="6" height="6" border="0" align="middle" alt="">&nbsp;<a href="{buildURL(#cart#)}" class="SidebarItems">View cart</a>
               <br>
-              <img src="images/dark_arrows.gif" width="6" height="6" border="0" align="middle" alt="">&nbsp;<a href="cart.php?target=checkout" class="SidebarItems">Checkout</a><br>
+              <img src="images/dark_arrows.gif" width="6" height="6" border="0" align="middle" alt="">&nbsp;<a href="{buildURL(#checkout#)}" class="SidebarItems">Checkout</a><br>
             </td>
           </tr>
 

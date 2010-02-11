@@ -30,7 +30,7 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
 	 * @access public
 	 * @since  1.0.0
 	 */
-	public static function getCMSName()
+	public function getCMSName()
 	{
 		return '____DRUPAL____';
 	}

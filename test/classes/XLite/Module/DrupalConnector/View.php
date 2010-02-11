@@ -49,7 +49,7 @@ class XLite_Module_DrupalConnector_View extends XLite_View implements XLite_Base
      */
     public function buildURL($target, $action = '', array $params = array())
     {
-		return $this->checkCurrentCMS(XLite_Module_DrupalConnector_Handler::getCMSName())
+		return $this->checkCurrentCMS(XLite_Module_DrupalConnector_Handler::getInstance()->getCMSName())
 			? $this->getDrupalURL($target, $action, $params)
 			: parent::buildURL($target, $action, $params);
     }

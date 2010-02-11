@@ -108,11 +108,9 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
     protected function getContent(XLite_View $object, array $attributes = array())
     {
-        if (!empty($attributes)) {
-            $object->setAttributes($this->prepareAttributes($attributes));
-        }
-
+        $object->setAttributes($this->prepareAttributes($attributes));
         $object->init();
+
         $function = ($object instanceof XLite_Controller_Abstract) ? 'handleRequest' : 'display';
 
         ob_start();
@@ -143,10 +141,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      * @access public
      * @since  3.0.0 EE
      */
-    public static function getCMSName()
-	{
-		return null;
-	}
+    abstract public function getCMSName();
 
 	/**
 	 * Return list of widgets which can be exported 

@@ -41,7 +41,7 @@ class XLite_Module_JoomlaConnector_View extends XLite_View implements XLite_Base
      */
     public function buildURL($target, $action = '', array $params = array())
     {
-        return $this->checkCurrentCMS(XLite_Module_JoomlaConnector_Handler::getCMSName()) ?
+        return $this->checkCurrentCMS(XLite_Module_JoomlaConnector_Handler::getInstance()->getCMSName()) ?
             $this->getJoomlaURL($target, $action, $params) : parent::buildURL($target, $action, $params);
     }
 }
