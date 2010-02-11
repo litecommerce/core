@@ -1,3 +1,11 @@
+function LC_SmartySettings()
+	set ts=2
+	set sw=2
+	set sts=2
+	set et
+endfunction
+
+au Filetype smarty call LC_SmartySettings()
 
 " PHP documentor tags
 let g:pdv_cfg_Category   = "Litecommerce"
@@ -6,7 +14,7 @@ let g:pdv_cfg_Author     = "Creative Development LLC <info@cdev.ru>"
 let g:pdv_cfg_Copyright  = "Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved"
 let g:pdv_cfg_License    = "http://www.qtmsoft.com/xpayments_eula.html X-Payments license agreement"
 let g:pdv_cfg_Version    = "SVN: $Id$"
-let g:pdv_cfg_Since      = "3.0.0 EE"
+let g:pdv_cfg_Since      = "3.0.0"
 let g:pdv_cfg_Link       = "http://www.qtmsoft.com/"
 
 let g:pdv_cfg_FileSee    = "____file_see____"
