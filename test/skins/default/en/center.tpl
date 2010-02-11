@@ -81,7 +81,7 @@
 <widget module="WholesaleTrading" target="profile" mode="success" template="modules/WholesaleTrading/membership/register.tpl">
 <widget module="Egoods" template="modules/Egoods/main.tpl">
 <widget module="Newsletters" template="modules/Newsletters/newsletters.tpl">
-<widget module="AdvancedSearch" mode="" target="advanced_search" head="Search for products" template="common/dialog.tpl" body="modules/AdvancedSearch/advanced_search.tpl">
+<widget class="XLite_Module_AdvancedSearch_View_AdvancedSearch" module="AdvancedSearch" mode="" target="advanced_search" template="common/dialog.tpl" />
 <widget module="AdvancedSearch" target="advanced_search" mode="found" template="common/dialog.tpl" body="search_result.tpl" head="Search Result">
 <widget module="WishList" target="wishlist,product" mode="MessageSent" template="common/dialog.tpl" body="modules/WishList/message.tpl" head="Message has been sent">
 <widget module="WishList" target="wishlist" head="Wish List" template="common/dialog.tpl" body="modules/WishList/wishlist.tpl">

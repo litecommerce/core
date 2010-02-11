@@ -39,8 +39,7 @@ function SaveFilters()
     document.adsearch_form.submit();
 }
 </script>
-<form action="cart.php" method="POST" name="adsearch_form">
-<input type="hidden" name="target" value="advanced_search">
+<form action="{buildUrl(#advanced_search#)}" method="POST" name="adsearch_form">
 <input type="hidden" name="mode" value="found">
 <input type="hidden" name="action" value="">
 <table border="0" cellpadding="0" cellspacing="10" width="600">
