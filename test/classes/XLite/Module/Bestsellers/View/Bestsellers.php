@@ -44,131 +44,298 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View
-{	
+class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_SideBarBox
+{
+	/**
+	 * Title
+	 * 
+	 * @var    string
+	 * @access protected
+	 * @since  1.0.0
+	 */
+	protected $head = 'Bestsellers';
+
+	/**
+	 * Directory contains sidebar content
+	 * 
+	 * @var    string
+	 * @access protected
+	 * @since  1.0.0
+	 */
+	protected $dir = 'modules/Bestsellers/menu';
+
+    /**
+     * Bestsellers list (cache)
+     * 
+     * @var    array
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     public $bestsellers = null;	
+
+    /**
+     * Subcategories ids 
+     * 
+     * @var    array
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     public $ids = array();
 
+    /**
+     * Category root id 
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0 EE
+     */
+    protected $rootid = 0;
+
+	/**
+	 * Use current category 
+	 * 
+	 * @var    boolean
+	 * @access protected
+	 * @see    ____var_see____
+	 * @since  3.0.0
+	 */
+	protected $use_node = true;
+
+    /**
+     * Check - visible widget or not 
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     function isVisible()
     {
-        return $this->getBestsellers();
+        return $this->config->Bestsellers->bestsellers_menu && $this->getBestsellers();
     }
 
-    function getBestsellers()
+    /**
+     * Get bestsellers list
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getBestsellers()
     {
-		if (!is_null($this->bestsellers)) {
-			return $this->bestsellers;
+		if (is_null($this->bestsellers)) {
+
+	        $category = $this->get("category");
+    	    $cat_id = $category->get("category_id");
+
+	        $bestsellersCategories = $this->xlite->get("BestsellersCategories");
+    	    if (!(isset($bestsellersCategories) && is_array($bestsellersCategories))) {
+        		$bestsellersCategories = array();
+	        }
+
+    	    if (isset($bestsellersCategories[$cat_id])) {
+        		$this->bestsellers = $bestsellersCategories[$cat_id];
+
+	        } else {
+				$this->calculateBestsellers($cat_id, $category);
+
+           		$bestsellersCategories[$cat_id] = $this->bestsellers;
+            	$this->xlite->set("BestsellersCategories", $bestsellersCategories);
+			}
 		}
 
-        $category = $this->get("category");
-        $cat_id = $category->get("category_id");
+		return $this->bestsellers;
+	}
 
-        $bestsellersCategories = $this->xlite->get("BestsellersCategories");
-        if (!(isset($bestsellersCategories) && is_array($bestsellersCategories))) {
-        	$bestsellersCategories = array();
-        }
+	/**
+	 * Calculate bestsellers list
+	 * 
+	 * @param integer $cat_id Category id
+	 *  
+	 * @return void
+	 * @access protected
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	protected function calculateBestsellers($cat_id, $category)
+	{
+		$this->bestsellers = array();
 
-        if (isset($bestsellersCategories[$cat_id])) {
-        	$this->bestsellers = $bestsellersCategories[$cat_id];
-            return $this->bestsellers;
-        }
-
-        // select category products
         $products = "";
         if ($cat_id != $category->getComplex('topCategory.category_id')) {
+
             // get all subcategories ID
+			$this->ids = array();
             $this->getSubcategories($category);
-            if (empty($this->ids)) {
-                return array();
-            }
-            $categories = join(',', $this->ids);
-			$table = $this->db->getTableByAlias("product_links");
-            $sql = "SELECT product_id FROM $table WHERE category_id IN ($categories)";
+
+            if (!empty($this->ids)) {
+	            $categories = join(',', $this->ids);
+				$table = $this->db->getTableByAlias("product_links");
+        	    $sql = "SELECT product_id FROM $table WHERE category_id IN ($categories)";
             
-            $ids = $category->db->getAll($sql);    
-            foreach ($ids as $id) {
-                $array[] = $id["product_id"];        
-            }
-            // no products found
-            if (empty($array)) {
-                return array();
-            } 
-            $products = join(',', $array);
-            $products = "AND items.product_id IN ($products)";
+	            $ids = $category->db->getAll($sql);    
+    	        foreach ($ids as $id) {
+        	        $array[] = $id["product_id"];        
+            	}
+
+	            if (!empty($array)) {
+		            $products = join(',', $array);
+    		        $products = "AND items.product_id IN ($products)";
+
+				} else {
+					$products = false;
+				}
+
+			} else {
+				$products = false;
+			}
         }
 
         // build SQL query to select bestsellers
-        $order_items_table = $this->db->getTableByAlias("order_items");
-        $orders_table = $this->db->getTableByAlias("orders");
-        $products_table = $this->db->getTableByAlias("products");
+		if (false !== $products) {
+	        $order_items_table = $this->db->getTableByAlias("order_items");
+    	    $orders_table = $this->db->getTableByAlias("orders");
+        	$products_table = $this->db->getTableByAlias("products");
 		
-		$limit = 0;
-        if (!is_null($this->getComplex('config.Bestsellers.number_of_bestsellers')) && 
-            is_numeric($this->getComplex('config.Bestsellers.number_of_bestsellers')))
-        {
-            $limit = $this->getComplex('config.Bestsellers.number_of_bestsellers');
-        } else {
-        	$limit = 5;
-        }
-        if ($limit <= 0) {
-        	$limit = 5;
-        }
-        $limitGrace = $limit * 10;
+			$limit = 0;
+    	    if (
+				!is_null($this->getComplex('config.Bestsellers.number_of_bestsellers')) && 
+	            is_numeric($this->getComplex('config.Bestsellers.number_of_bestsellers'))
+			) {
+	            $limit = $this->getComplex('config.Bestsellers.number_of_bestsellers');
+    	    } else {
+	        	$limit = 5;
+    	    }
 
-        $sql =<<<EOT
-        SELECT items.product_id, sum(items.amount) as amount
-        FROM $order_items_table items
-        LEFT OUTER JOIN $orders_table orders ON items.order_id=orders.order_id
-        LEFT OUTER JOIN $products_table products ON items.product_id=products.product_id
-        WHERE (orders.status='P' OR orders.status='C') AND products.enabled=1
-        $products
-        GROUP BY items.product_id
-        ORDER BY amount DESC
-        LIMIT $limitGrace
+			$limit = max($limit, 0);
+	        $limitGrace = $limit * 10;
+
+	        $sql =<<<EOT
+		   	    SELECT items.product_id, sum(items.amount) as amount
+		        FROM $order_items_table items
+		        LEFT OUTER JOIN $orders_table orders ON items.order_id=orders.order_id
+		        LEFT OUTER JOIN $products_table products ON items.product_id=products.product_id
+		        WHERE (orders.status='P' OR orders.status='C') AND products.enabled=1
+        		$products
+		        GROUP BY items.product_id
+        		ORDER BY amount DESC
+		        LIMIT $limitGrace
 EOT;
 
-        // fill bestsellers array with product instances
-        $best = $category->db->getAll($sql);
-        foreach ($best as $p) {
-            $product = new XLite_Model_Product($p["product_id"]);
-            $categories = $product->get("categories");
-            if (!empty($categories) && $product->filter()) {
-                $product->category_id = $categories[0]->get("category_id");
-                $this->bestsellers[] = $product;
-                if (count($this->bestsellers) == $limit) {
-                	break;
-                }
-            }
-        }
-
-		if (!is_array($this->bestsellers)) {
-			$this->bestsellers = array();
+	        // fill bestsellers array with product instances
+    	    $best = $category->db->getAll($sql);
+	        foreach ($best as $p) {
+    	        $product = new XLite_Model_Product($p["product_id"]);
+	            $categories = $product->get("categories");
+    	        if (!empty($categories) && $product->filter()) {
+        	        $product->category_id = $categories[0]->get("category_id");
+            	    $this->bestsellers[] = $product;
+                	if (count($this->bestsellers) == $limit) {
+	                	break;
+    	            }
+        	    }
+	        }
 		}
-		$bestsellersCategories[$cat_id] = $this->bestsellers;
-		$this->xlite->set("BestsellersCategories", $bestsellersCategories);
-
-        return $this->bestsellers;
     }
 
-    function getCategory()
+    /**
+     * Get category 
+     * 
+     * @return XLite_Model_Category
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCategory()
     {
         $category = new XLite_Model_Category();
-        if (isset($_REQUEST["category_id"])) {
+
+        if ($this->use_node && isset($_REQUEST["category_id"])) {
             $category = new XLite_Model_Category($_REQUEST["category_id"]); 
-        } else {
+
+        } elseif (0 < $this->rootid) {
+			$category = new XLite_Model_Category($this->rootid);
+
+		} else {
             $category = $category->get("topCategory");
         }
         return $category;
     }
 
-    function getSubcategories($category)
+    /**
+     * Get subcategories 
+     * 
+     * @param mixed $category ____param_comment____
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSubcategories($category)
     {
         $this->ids[] = $category->get("category_id");
+
         $categories = $category->getSubcategories();
-        for ($i=0; $i < count($categories); $i++) {
+
+        for ($i = 0; $i < count($categories); $i++) {
             $this->getSubcategories($categories[$i]);
         }
     }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            new XLite_Model_WidgetParam_Checkbox('use_node', 1, 'Use current category id'),
+            new XLite_Model_WidgetParam_String('rootid', 0, 'Category root Id'),
+        );
+    }
+
+    /**
+     * Check passed attributes 
+     * 
+     * @param array $attributes attributes to check
+     *  
+     * @return array errors list
+     * @access public
+     * @since  1.0.0
+     */
+    public function validateAttributes(array $attributes)
+    {
+        $errors = parent::validateAttributes($attributes);
+
+		// Category root id
+		if (!isset($attributes['rootid']) || !is_numeric($attributes['rootid'])) {
+			$errors['rootid'] = 'Category Id is not numeric!';
+		} else {
+			$attributes['rootid'] = intval($attributes['rootid']);
+		}
+
+        if (!$errors && 0 > $attributes['rootid']) {
+            $errors['rootid'] = 'Category Id must be positive integer!';
+		}
+
+		if (!$errors && !$attributes['use_node']) {
+			$category = new XLite_Model_Category($attributes['rootid']);
+
+			if (!$category->isPersistent) {
+				$errors['rootid'] = 'Category with category Id #' . $attributes['rootid'] . ' can not found!';
+			}
+		}
+
+		return $errors;
+    }
+
 }
 
 // WARNING :
