@@ -49,14 +49,6 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Abstra
 {	
     public $params = array("target", "product_id", "category_id");
 
-    function init()
-    {
-		if (isset($_REQUEST["product_id"]) && empty($_REQUEST["product_id"])) {
-            return $this->redirect("cart.php" . ((isset($_REQUEST["category_id"]) && !empty($_REQUEST["category_id"])) ? "?target=category&category_id=" . $_REQUEST["category_id"] : "" ));
-		}
-        parent::init();
-    }
-
 	function handleRequest()
 	{
 		if (!$this->isComplex('product.exists')) {
@@ -72,7 +64,7 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Abstra
 
     function action_buynow()
     {
-        $this->set("returnUrl", "cart.php?target=cart&action=add&product_id=$this->product_id&category_id=$this->category_id");
+		$this->set('returnUrl', $this->buildURL('cart', 'add', array('product_id' => $this->product_id, 'category_id' => $this->category_id)));
     }
 
     function getLocationPath()

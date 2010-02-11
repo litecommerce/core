@@ -426,7 +426,7 @@ class XLite_View_Abstract extends XLite_Base
 
 	public function isDisplayRequired(array $target)
 	{
-		return !isset($_REQUEST['target']) || in_array($_REQUEST['target'], $target);
+		return !isset($this->target) || in_array($this->target, $target);
 	}
 
     function getDialog()

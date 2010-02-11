@@ -95,8 +95,8 @@ abstract class XLite_Controller_Abstract extends XLite_View
 
     function getProduct()
     {
-        if (is_null($this->product) && isset($_REQUEST["product_id"])) {
-            $this->product = new XLite_Model_Product($_REQUEST["product_id"]);
+        if (is_null($this->product) && !is_null($this->get('product_id'))) {
+            $this->product = new XLite_Model_Product($this->get('product_id'));
         }
 
         return $this->product;
@@ -104,8 +104,8 @@ abstract class XLite_Controller_Abstract extends XLite_View
 
     function getCategory()
     {
-        if (is_null($this->category) && !is_null($this->get("category_id"))) {
-            $this->category = new XLite_Model_Category($this->get("category_id"));
+        if (is_null($this->category) && !is_null($this->get('category_id'))) {
+            $this->category = new XLite_Model_Category($this->get('category_id'));
         }
         return $this->category;
     }
@@ -198,7 +198,7 @@ abstract class XLite_Controller_Abstract extends XLite_View
         if (isset($_REQUEST['no_https'])) {
             $this->session->set("no_https", true);
         }
-        if (!isset($_REQUEST['action']) && ($this->get("secure") ^ $this->is("https"))) {
+        if (!isset($this->action) && ($this->get("secure") ^ $this->is("https"))) {
             $this->redirect();
             return;
         }
@@ -218,15 +218,15 @@ abstract class XLite_Controller_Abstract extends XLite_View
         }
 
         parent::handleRequest();
-        if (!isset($_REQUEST['action'])) {
+        if (!isset($this->action)) {
             $this->fillForm();
             $this->output();
             return;
         }
 
-        if ($this->isValid() && !empty($_REQUEST['action'])) {
+        if ($this->isValid() && !empty($this->action)) {
             // call action method
-            $action = "action_" . $_REQUEST['action'];
+            $action = "action_" . $this->action;
 			$this->$action();
 
             // action can change valid to false
@@ -353,7 +353,7 @@ abstract class XLite_Controller_Abstract extends XLite_View
         XLite_Model_Profiler::getInstance()->enabled = false;
         XLite::getInstance()->done();
 
-		header('Location: ' . ($this->returnUrlAbsolute ? $location : $this->shopURL($location, $this->get('secure'))));
+		header('Location: ' . ($this->returnUrlAbsolute ? $this->shopURL($location, $this->get('secure')) : $location));
     }
 
     function getProperties()
@@ -366,18 +366,16 @@ abstract class XLite_Controller_Abstract extends XLite_View
         return $result;
     }
 
-    function getUrl($params = null)
+    function getUrl(array $params = array())
     {
-        if (is_null($params)) {
-            $params = $this->get("allParams");
+		if (empty($params)) {
+            $params = $this->getAllParams();
         }
-        $url = $this->xlite->get("script") . "?";
-        foreach ($params as $param => $value) {
-            if (!is_null($value)) {
-                $url .= $param . '=' . urlencode($value) . '&';
-            }
-        }
-        return rtrim($url, '&');
+
+		$target = isset($params['target']) ? $params['target'] : '';
+		unset($params['target']);
+
+		return $this->buildURL($target, '', $params);
     }
 
     public function getLoginURL()

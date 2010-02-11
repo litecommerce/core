@@ -57,7 +57,7 @@ class XLite_Controller_Customer_Category extends XLite_Controller_Customer_Abstr
 		}
         $this->setComplex("pager.itemsPerPage", $this->getComplex('config.General.products_per_page'));
         if (!isset($_REQUEST["action"])) {
-            $this->session->set("productListURL", $this->get("url"));
+            $this->session->set("productListURL", $this->getUrl());
         }
     }
     

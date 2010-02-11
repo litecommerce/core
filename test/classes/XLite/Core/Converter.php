@@ -88,7 +88,8 @@ class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
      */
     public static function buildURL($target, $action = '', array $params = array())
     {
-        return XLite::getInstance()->getScript() . '?target=' . $target
+        return XLite::getInstance()->getScript() 
+			   . (empty($target) ? '' : '?target=' . $target)
                . (empty($action) ? '' : '&action=' . $action)
                . (empty($params) ? '' : '&' . http_build_query($params));
     }

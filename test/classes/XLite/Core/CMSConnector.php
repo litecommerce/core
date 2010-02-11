@@ -70,15 +70,6 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
     protected $jsFiles = null;
 
 	/**
-	 * Return currently used CMS name 
-	 * 
-	 * @return string
-	 * @access public
-	 * @since  3.0.0 EE
-	 */
-	abstract public static function getCMSName();
-
-	/**
 	 * Constructor
 	 * 
 	 * @return void
@@ -106,30 +97,32 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	}
 
 	/**
-	 * Get widget content 
-	 * 
-	 * @param XLite_View $viewer     viewer object to use
-	 * @param array      $attributes widget attributes
-	 *  
-	 * @return string
-	 * @access protected
-	 * @since  3.0.0 EE
-	 */
-	protected function getContent(XLite_View $viewer, array $attributes = array())
-	{
-		if (!empty($attributes)) {
-            $viewer->setAttributes($this->prepareAttributes($attributes));
+     * Get widget content
+     *
+     * @param XLite_View $object     controller/viewer object to use
+     * @param array      $attributes widget attributes
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getContent(XLite_View $object, array $attributes = array())
+    {
+        if (!empty($attributes)) {
+            $object->setAttributes($this->prepareAttributes($attributes));
         }
 
-        $viewer->init();
+        $object->init();
+        $function = ($object instanceof XLite_Controller_Abstract) ? 'handleRequest' : 'display';
 
         ob_start();
-        $viewer->display();
+        $object->$function();
         $content = ob_get_contents();
         ob_end_clean();
 
         return $content;
-	}
+    }
+	
 
 	/**
 	 * Method to access the singleton 
@@ -142,6 +135,18 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
     {
         return self::_getInstance(__CLASS__);
     }
+
+	/**
+     * Return currently used CMS name
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public static function getCMSName()
+	{
+		return null;
+	}
 
 	/**
 	 * Return list of widgets which can be exported 
@@ -382,9 +387,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 		$name = XLite_Core_Converter::getControllerClass($target);
 		$object = new $name();
 
-		$object->template = 'center.tpl';
-
-		return $this->getContent($object, array('target' => $target, 'action' => $action) + $args);
+		return $this->getContent($object, array('target' => $target, 'action' => $action, 'template' => 'center.tpl') + $args);
 	}
 
 	/**
