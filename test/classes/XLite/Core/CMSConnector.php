@@ -35,7 +35,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 * @since  3.0
 	 */
 	protected $widgetsList = array(
-		'TopCategories' => 'Top categories side bar',
+		'XLite_View_TopCategories' => 'Top categories side bar',
 	);
 
 	/**
@@ -155,8 +155,6 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 */
 	public function getWidgetObject($name)
 	{
-		$name = 'XLite_View_' . $name;
-
 		return new $name();
 	}
 
