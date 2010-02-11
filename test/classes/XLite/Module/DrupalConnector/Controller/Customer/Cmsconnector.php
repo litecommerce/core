@@ -39,61 +39,45 @@
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
 /**
+* CMS connector controller.
 *
 * @package DrupalConnector
 * @access  public
 * @version SVN $Id$
 */
-class XLite_Module_DrupalConnector_Model_Session extends XLite_Model_Session implements XLite_Base_IDecorator
-{
+class XLite_Module_DrupalConnector_Controller_Customer_Cmsconnector extends XLite_Controller_Customer_Abstract
+{	
+    public $params = array('target', 'id');
+
+    function fillForm()
+    {
+    }
+
     /**
-     * Constructor
+     * Landing from another system action 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0 EE
      */
-    public function __construct()
+    function action_landing()
     {
-		parent::__construct();
+		$link = new XLite_Module_DrupalConnector_Model_LandingLink();
 
-		if (defined('LC_CONNECTOR_INITIALIZED')) {
-			$this->options['https_host'] = $_SERVER['HTTP_HOST'];
-			$this->options['http_host']  = $_SERVER['HTTP_HOST'];
+		if (
+			$this->get('id')
+			&& is_string($this->get('id'))
+			&& preg_match(XLite_Module_DrupalConnector_Model_LandingLink::ID_PATTERN, $this->get('id'))
+			&& $link->find('link_id = \'' . $this->get('id') . '\'')
+		) {
+			$this->xlite->session->setID($link->get('session_id'));
+			$this->xlite->session->_fetchData();
 
-            $url = parse_url($_SERVER['REQUEST_URI']);
-
-            $this->options['web_dir']    = $url['path'];
-            $this->options['web_dir_wo_slash'] = preg_replace('/\/$/Ss', '', $this->options['web_dir']);
+			$link->delete();
 		}
+
+		$this->set('returnUrl', 'admin.php');
     }
 
-    /**
-     * Return pointer to the single instance of current class
-     *
-     * @param string $className name of derived class
-     *
-     * @return XLite_Base_Singleton
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0
-     */
-    protected static function _getInstance($className)
-    {
-		return parent::_getInstance($className . '_' . LC_SESSION_TYPE);
-    }
-
-	/**
-	 * Destructor
-	 * 
-	 * @return void
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0 EE
-	 */
-	public function __destruct()
-	{
-		$this->writeClose();
-	}
 }
+

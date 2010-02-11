@@ -39,61 +39,119 @@
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
 /**
+* Class Landing link provides access to landing links to LC from another systems
 *
 * @package DrupalConnector
-* @access  public
 * @version SVN $Id$
 */
-class XLite_Module_DrupalConnector_Model_Session extends XLite_Model_Session implements XLite_Base_IDecorator
+class XLite_Module_DrupalConnector_Model_LandingLink extends XLite_Model_Abstract
 {
-    /**
-     * Constructor
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0 EE
+	/**
+	 * Record TTL (seconds)
      */
-    public function __construct()
-    {
-		parent::__construct();
-
-		if (defined('LC_CONNECTOR_INITIALIZED')) {
-			$this->options['https_host'] = $_SERVER['HTTP_HOST'];
-			$this->options['http_host']  = $_SERVER['HTTP_HOST'];
-
-            $url = parse_url($_SERVER['REQUEST_URI']);
-
-            $this->options['web_dir']    = $url['path'];
-            $this->options['web_dir_wo_slash'] = preg_replace('/\/$/Ss', '', $this->options['web_dir']);
-		}
-    }
+	const TTL = 60;
 
     /**
-     * Return pointer to the single instance of current class
-     *
-     * @param string $className name of derived class
-     *
-     * @return XLite_Base_Singleton
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0
+     * Link id validation pattern (regular expression)
      */
-    protected static function _getInstance($className)
-    {
-		return parent::_getInstance($className . '_' . LC_SESSION_TYPE);
-    }
+	const ID_PATTERN = '/^[a-f0-9]{32}$/Ss';
+
+	public static $_removed = false;
+
+    public $fields = array(
+            'link_id'    => '',
+            'session_id' => '',
+            'expiry'     => 0,
+        );
+
+    public $primaryKey = array('link_id');
+    public $alias = 'landing_links';
+    public $defaultOrder = 'expiry';
 
 	/**
-	 * Destructor
+	 * Constructor
 	 * 
 	 * @return void
 	 * @access public
 	 * @see    ____func_see____
 	 * @since  3.0.0 EE
 	 */
-	public function __destruct()
+	public function __construct()
 	{
-		$this->writeClose();
+		parent::__construct();
+
+		$this->removeExpired();
+	}
+
+	/**
+	 * Create link
+	 * 
+	 * @return void
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0 EE
+	 */
+	public function create()
+	{
+		mt_srand();
+
+		$this->setProperties(
+			array(
+				'link_id'    => md5(mt_rand(0, time())),
+				'session_id' => $this->xlite->session->getID(),
+				'expiry'     => time() + self::TTL,
+			)
+		);
+
+		return parent::create();
+	}
+
+	/**
+	 * Get link 
+	 * 
+	 * @return string
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0 EE
+	 */
+	public function getLink()
+	{
+		$link = null;
+
+		if ($this->isExists() && $this->get('link_id')) {
+			$options = XLite::getInstance()->getOptions('host_details');
+
+			$link = 'http://' . $options['http_host'] . $options['web_dir'];
+			if (substr($link, -1) != '/') {
+				$link .= '/';
+			}
+
+			$link .= 'cart.php?target=cmsconnector&action=landing&id=' . $this->get('link_id');
+		}
+
+		return $link;
+	}
+
+	/**
+	 * Remove expired links
+	 * 
+	 * @return void
+	 * @access protected
+	 * @see    ____func_see____
+	 * @since  3.0.0 EE
+	 */
+	protected function removeExpired()
+	{
+		if (!self::$_removed) {
+			$query = 'DELETE FROM ' . $this->getTable() . ' WHERE expiry < ' . time();
+			$this->db->query($query);
+
+			self::$_removed = true;
+		}
 	}
 }
+
+// WARNING :
+// Please ensure that you have no whitespaces / empty lines below this message.
+// Adding a whitespace or an empty line below this line will cause a PHP error.
+?>

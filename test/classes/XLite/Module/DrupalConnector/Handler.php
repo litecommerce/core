@@ -35,6 +35,22 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
 		return '____DRUPAL____';
 	}
 
+    /**
+     * Get landing link 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0 EE
+     */
+    public function getLandingLink()
+    {
+		$link = new XLite_Module_DrupalConnector_Model_LandingLink();
+		$link->create();
+
+		return $link->getLink();
+    }
+
 	/**
      * Get translation table for prfile data
      *

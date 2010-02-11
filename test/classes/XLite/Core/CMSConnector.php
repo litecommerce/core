@@ -373,6 +373,31 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	}
 
 	/**
+	 * Get session TTL (in seconds) 
+	 * 
+	 * @return integer
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0 EE
+	 */
+	public function getSessionTtl()
+	{
+		return $this->session->getTtl();
+	}
+
+	/**
+	 * Get landing link 
+	 * 
+	 * @return string
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0 EE
+	 */
+	public function getLandingLink()
+	{
+	}
+
+	/**
 	 * Get translation table for profile data
 	 * 
 	 * @return array
