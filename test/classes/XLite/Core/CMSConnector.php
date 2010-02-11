@@ -1,12 +1,24 @@
 <?php
+// vim: set ts=4 sw=4 sts=4 et:
 
-/* $Id$ */
+/**
+ * CMS connector
+ *  
+ * @category  Litecommerce
+ * @package   Core
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://www.qtmsoft.com/xpayments_eula.html X-Payments license agreement
+ * @version   SVN: $Id$
+ * @link      http://www.qtmsoft.com/
+ * @see       ____file_see____
+ * @since     3.0.0 EE
+ */
 
 /**
  * Singleton to connect to a CMS
  *                         
- * @package    Lite Commerce
- * @subpackage Core        
+ * @package    Core
  * @since      3.0                   
  */
 abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleton
@@ -35,7 +47,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 * @since  3.0
 	 */
 	protected $widgetsList = array(
-		'XLite_View_TopCategories' => 'Top categories side bar',
+		'XLite_View_TopCategories' => 'Categories list',
 	);
 
 	/**
@@ -56,7 +68,6 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
     protected $jsFiles = null;
 
-
 	/**
 	 * Return currently used CMS name 
 	 * 
@@ -65,7 +76,6 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 * @since  3.0.0 EE
 	 */
 	abstract public static function getCMSName();
-
 
 	/**
 	 * Constructor
@@ -155,7 +165,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 */
 	public function getWidgetObject($name)
 	{
-		return new $name();
+		return class_exists($name) ? new $name() : null;
 	}
 
 	/**
@@ -171,7 +181,9 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 */
 	public function validateWidgetArguments($name, array $attributes)
 	{
-		return $this->getWidgetObject($name)->validateAttributes($attributes);
+		$widget = $this->getWidgetObject($name);
+
+		return $widget ? $widget->validateAttributes($attributes) : array();
 	}
 
 	/**
@@ -187,7 +199,9 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
 	public function isWidgetVisible($name, array $attributes)
 	{
-		return $this->getWidgetObject($name)->isVisible();
+		$widget = $this->getWidgetObject($name);
+
+		return $widget ? $widget->isVisible() : false;
 	}
 
 	/**
@@ -202,7 +216,9 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 */
 	public function getWidgetHTML($name, array $attributes = array())
 	{
-		return $this->getContent($this->getWidgetObject($name), $attributes);
+		$widget = $this->getWidgetObject($name);
+
+		return $widget ? $this->getContent($widget, $attributes) : null;
 	}
 
 	/**

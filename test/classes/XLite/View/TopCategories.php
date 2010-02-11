@@ -1,15 +1,28 @@
 <?php
+// vim: set ts=4 sw=4 sts=4 et:
 
-/* $Id$ */
+/**
+ * Top categories widget
+ *  
+ * @category  Litecommerce
+ * @package   View
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://www.qtmsoft.com/xpayments_eula.html X-Payments license agreement
+ * @version   SVN: $Id$
+ * @link      http://www.qtmsoft.com/
+ * @see       ____file_see____
+ * @since     3.0.0 EE
+ */
 
 /**
  * Side bar with list of root categories (menu)
  *
- * @package    Lite Commerce
- * @subpackage View
+ * @package    View
+ * @subpackage Widget
  * @since      3.0
  */
-class XLite_View_TopCategories extends XLite_View
+class XLite_View_TopCategories extends XLite_View_SideBarBox
 {
 	/**
 	 * Title
@@ -39,16 +52,14 @@ class XLite_View_TopCategories extends XLite_View
 	protected $categories = null;
 
 	/**
-	 * Define the default template 
+	 * Category root id 
 	 * 
-	 * @return void
-	 * @access public
-	 * @since  1.0.0
+	 * @var    integer
+	 * @access protected
+	 * @see    ____var_see____
+	 * @since  3.0.0 EE
 	 */
-	public function __construct()
-	{
-		$this->template = $this->dir . LC_DS . 'body.tpl';
-	}
+	protected $rootid = 0;
 
 	/**
      * Define widget parameters
@@ -61,11 +72,46 @@ class XLite_View_TopCategories extends XLite_View
     {
 		parent::defineWidgetParams();
 
-		// TODO - it's only an example. Must be removed
         $this->widgetParams += array(
-			new XLite_Model_WidgetParam_String('head', null, 'Box title'),
-			new XLite_Model_WidgetParam_String('test', null, 'Test'),
+			new XLite_Model_WidgetParam_String('rootid', 0, 'Category root Id'),
 		);
+    }
+
+    /**
+     * Check passed attributes 
+     * 
+     * @param array $attributes attributes to check
+     *  
+     * @return array errors list
+     * @access public
+     * @since  1.0.0
+     */
+    public function validateAttributes(array $attributes)
+    {
+        $errors = parent::validateAttributes($attributes);
+
+		if (!isset($attributes['rootid']) || !is_numeric($attributes['rootid'])) {
+			$errors['rootid'] = 'Category Id is not numeric!';
+		} else {
+			$attributes['rootid'] = intval($attributes['rootid']);
+		}
+
+        if (!$errors && 0 > $attributes['rootid']) {
+            $errors['rootid'] = 'Category Id must be positive integer!';
+		}
+
+		if (!$errors && 0 != $attributes['rootid']) {
+			$category = new XLite_Model_Category($attributes['rootid']);
+
+			if (!$category->isPersistent) {
+				$errors['rootid'] = 'Category with category Id #' . $attributes['rootid'] . ' can not found!';
+
+			} elseif (!$category->getSubcategories()) {
+				$errors['rootid'] = 'Category with category Id #' . $attributes['rootid'] . ' has not subcategories!';
+			}
+		}
+
+		return $errors;
     }
 
     /**
@@ -79,8 +125,8 @@ class XLite_View_TopCategories extends XLite_View
     {
         // get root categories
         if (is_null($this->categories)) {
-            $category = new XLite_Model_Category(); 
-            $this->categories = $category->getTopCategory()->getSubcategories();
+	        $category = new XLite_Model_Category(0 < $this->rootid ? $this->rootid : null); 
+            $this->categories = $category->getSubcategories();
         }
 
         return $this->categories;

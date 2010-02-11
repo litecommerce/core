@@ -33,7 +33,7 @@ class XLite_Module_DrupalConnector_View extends XLite_View implements XLite_Base
 		return '?q='
 			. implode('/', array(self::DRUPAL_ROOT_NODE, $target, $action)) 
 			. '/'
-			. XLite_Core_Converter::buildQuery($params, ':', ',');
+			. XLite_Core_Converter::buildQuery($params, '-', '/');
 	}
 
 	/**

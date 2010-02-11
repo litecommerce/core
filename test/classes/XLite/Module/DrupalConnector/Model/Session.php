@@ -62,17 +62,10 @@ class XLite_Module_DrupalConnector_Model_Session extends XLite_Model_Session imp
 			$this->options['https_host'] = $_SERVER['HTTP_HOST'];
 			$this->options['http_host']  = $_SERVER['HTTP_HOST'];
 
-			// FIXME - check for Drupal-specific URLS
-            if ($url = @parse_url($_SERVER['REQUEST_URI'])) {
+            $url = parse_url($_SERVER['REQUEST_URI']);
 
-                $this->options['web_dir']    = $url['path'];
-                $this->options['web_dir_wo_slash'] = preg_replace('/\/$/Ss', '', $this->options['web_dir']);
-
-            } else {
-
-                $this->options['web_dir'] = '/';
-                $this->options['web_dir_wo_slash'] = '';
-            }
+            $this->options['web_dir']    = $url['path'];
+            $this->options['web_dir_wo_slash'] = preg_replace('/\/$/Ss', '', $this->options['web_dir']);
 		}
     }
 
