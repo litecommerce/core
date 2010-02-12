@@ -73,11 +73,11 @@
     </target>
 
 	<target name="php-documentor">
-        <exec executable="/usr/local/php-530/bin/php" dir="${buildDir}/src">
+        <exec executable="/usr/local/php-530/bin/php" dir="${buildDir}/test">
             <arg line="${sourceDir}/.dev/build/phpdoc_postprocess.php ${apiUrl}" />
         </exec>
 		<exec executable="phpdoc" dir="${buildDir}">
-			<arg line="-ct type -ue on -t ${buildDir}/api -d src/classes/XLite/Base -it @see -dn LiteCommecrce -dc LiteCommerce" />
+			<arg line="-ct type -ue on -t ${buildDir}/api -d test/classes/XLite -it @see -dn LiteCommecrce -dc LiteCommerce" />
 		</exec>
 	</target>
 

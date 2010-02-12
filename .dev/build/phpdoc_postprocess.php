@@ -15,7 +15,7 @@ $url = trim(array_shift($_SERVER['argv']));
 if (preg_match('/^https?:\/\/.+\/$/', $url))
 	exit(3);
 
-$prefix = 'XPay';
+$prefix = 'XLite';
 
 $files = getPHPs('./');
 
