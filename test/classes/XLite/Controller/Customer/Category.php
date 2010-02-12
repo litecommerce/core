@@ -112,5 +112,81 @@ class XLite_Controller_Customer_Category extends XLite_Controller_Customer_Abstr
         }
         parent::handleRequest();
     }
+
+    /**
+     * Define page type parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function definePageTypeParams()
+    {
+		parent::definePageTypeParams();
+
+        $this->pageTypeParams[] = new XLite_Model_WidgetParam_String('category_id', 0, 'Category Id');
+    }
+
+    /**
+     * Check passed attributes
+     *
+     * @param array $attributes attributes to check
+     *
+     * @return array errors list
+     * @access public
+     * @since  1.0.0
+     */
+    public function validatePageTypeAttributes(array $attributes)
+    {
+        $errors = parent::validatePageTypeAttributes($attributes);
+
+		if (!isset($attributes['category_id']) || !is_numeric($attributes['category_id'])) {
+			$errors['category_id'] = 'Category Id is not numeric!';
+		} else {
+			$attributes['category_id'] = intval($attributes['category_id']);
+
+			$category = new XLite_Model_Category($attributes['category_id']);
+
+			if (!$category->isPersistent) {
+				$errors['category_id'] = 'Category with category Id #' . $attributes['category_id'] . ' can not found!';
+			}
+		}
+
+		return $errors;
+    }
+
+    /**
+     * Check - page instance visible or not
+     *
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isPageInstanceVisible()
+    {
+		$category = new XLite_Model_Category($this->category_id);
+
+        return $category->isPersistent;
+    }
+
+    /**
+     * Get page instance data (name and URL)
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageInstanceData()
+    {
+		$category = new XLite_Model_Category($this->category_id);
+
+        return array(
+			$category->get('name'),
+			$this->buildURL('category', '', array('category_id' => $this->category_id))
+		);
+    }
+
 }
 

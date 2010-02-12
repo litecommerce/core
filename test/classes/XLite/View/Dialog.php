@@ -2,7 +2,7 @@
 // vim: set ts=4 sw=4 sts=4 et:
 
 /**
- * ____file_title____
+ * Abstract dialog for the center region
  *  
  * @category  Litecommerce
  * @package   View
@@ -16,7 +16,7 @@
  */
 
 /**
- * Dialogs for the center region
+ * Abstract dialog for the center region
  *
  * @package    View
  * @subpackage Widget

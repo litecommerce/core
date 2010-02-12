@@ -65,6 +65,16 @@ abstract class XLite_Controller_Abstract extends XLite_View
 
 	public $cart = null;
 
+	/**
+	 * Page type parameters
+	 * 
+	 * @var    array
+	 * @access protected
+	 * @see    ____var_see____
+	 * @since  3.0.0
+	 */
+	protected $pageTypeParams = null;
+
 	protected function getReturnUrl()
 	{
 		return $this->returnUrl;
@@ -547,5 +557,73 @@ abstract class XLite_Controller_Abstract extends XLite_View
     {
         return XLite::getInstance()->shopURL($url, $secure);
     }
+
+    /**
+     * Define page type parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function definePageTypeParams()
+    {
+        $this->pageTypeParams = array();
+    }
+
+    /**
+     * Return page type parameters list
+     *
+     * @return array
+     * @access public
+     * @since  1.0.0
+     */
+    public function getPageTypeParams()
+    {
+        if (is_null($this->pageTypeParams)) {
+            $this->definePageTypeParams();
+        }
+
+        return $this->pageTypeParams;
+    }
+
+    /**
+     * Check passed attributes
+     *
+     * @param array $attributes attributes to check
+     *
+     * @return array errors list
+     * @access public
+     * @since  1.0.0
+     */
+    public function validatePageTypeAttributes(array $attributes)
+    {
+        return array();
+    }
+
+    /**
+     * Check - page instance visible or not
+     *
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isPageInstanceVisible()
+    {
+        return false;
+    }
+
+	/**
+	 * Get page instance data (name and URL)
+	 * 
+	 * @return array
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	public function getPageInstanceData()
+	{
+		return array(null, null);
+	}
 }
 

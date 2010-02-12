@@ -51,6 +51,10 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         'XLite_View_Minicart'      => 'Minicart',
 	);
 
+    protected $pageTypes = array(
+        'XLite_Controller_Customer_Category' => 'Category page',
+    );
+
 	/**
 	 * List of CSS files to export 
 	 * 
@@ -409,6 +413,59 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	public function getLandingLink()
 	{
 	}
+
+    /**
+     * Get page types 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageTypes()
+    {
+        return $this->pageTypes;
+    }
+
+    public function checkPageInstanceSettings($type, array $settings)
+    {
+        $type = $this->getPageTypeObject($type);
+
+        return $type ? $type->validatePageTypeAttributes($settings) : array();
+    }
+
+    public function isPageInstanceVisible($type, array $settings)
+    {
+        $result = false;
+
+        $type = $this->getPageTypeObject($type);
+
+        if ($type) {
+            $type->setAttributes($this->prepareAttributes($settings));
+            $result = $type->isPageInstanceVisible();
+        }
+
+        return $result;
+    }
+
+    public function getPageInstanceLink($type, array $settings)
+    {
+        $result = array(null, null);
+
+        $type = $this->getPageTypeObject($type);
+
+        if ($type) {
+            $type->setAttributes($this->prepareAttributes($settings));
+            $result = $type->getPageInstanceData();
+        }
+
+        return $result;
+    }
+
+    public function getPageTypeObject($type)
+    {
+        return class_exists($type) ? new $type : null;
+    }
 
 	/**
 	 * Get translation table for profile data
