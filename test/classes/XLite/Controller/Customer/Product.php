@@ -74,21 +74,21 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Abstra
         }
 
         $result = array();
-        $path = $this->getComplex('category.path');
+        $path = $this->getCategory()->getPath();
         if (!is_null($path)) {
-            foreach ($this->getComplex('category.path') as $category) {
+            foreach ($path as $category) {
                 $name = $category->get("name");
                 while (isset($result[$name])) {
                 	$name .= " ";
                 }
-                $result[$name] = "cart.php?target=category&category_id=" . $category->get("category_id");
+                $result[$name] = $this->buildURL('category', '', array('category_id' => $category->get('category_id')));
             }
         }    
-        $name = $this->getComplex('product.name');
+        $name = $this->getProduct()->get('name');
         while (isset($result[$name])) {
         	$name .= " ";
         }
-        $result[$name] = $this->get("url");
+        $result[$name] = $this->getUrl();
         return $result;
     }
 

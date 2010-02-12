@@ -145,7 +145,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
         $parent = $this;
         do {
             $path[] = $parent;
-            $parent = $parent->get("parentCategory");
+            $parent = $parent->getParentCategory();
         } while (!is_null($parent));
         return array_reverse($path);
     } // }}}

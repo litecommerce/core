@@ -64,12 +64,12 @@ class XLite_Controller_Customer_Category extends XLite_Controller_Customer_Abstr
     function getLocationPath()
     {
         $result = array();
-        foreach ($this->getComplex('category.path') as $category) {
+        foreach ($this->getCategory()->getPath() as $category) {
             $name = $category->get("name");
             while (isset($result[$name])) {
             	$name .= " ";
             }
-            $result[$name] = "cart.php?target=category&category_id=" . $category->get("category_id");
+            $result[$name] = $this->buildURL('category', '', array('category_id' => $category->get('category_id')));
         }
         return $result;
     }
