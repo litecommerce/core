@@ -73,7 +73,7 @@
     </target>
 
 	<target name="php-documentor">
-        <exec executable="/usr/local/php-530/bin/php" dir="${buildDir}/test">
+        <exec executable="/usr/local/php-530/bin/php" dir="${buildDir}/src">
             <arg line="${sourceDir}/.dev/build/phpdoc_postprocess.php ${apiUrl}" />
         </exec>
 		<exec executable="phpdoc" dir="${buildDir}">
