@@ -34,6 +34,15 @@ abstract class XLite_View_SideBarBox extends XLite_View
 	protected $dir = null;
 
     /**
+     * Body file name
+     * 
+     * @var    string
+     * @access protected
+     * @since  1.0.0
+     */
+    protected $bodyFile = 'body.tpl';
+
+    /**
      * Define the default template 
      * 
      * @return void
@@ -43,7 +52,7 @@ abstract class XLite_View_SideBarBox extends XLite_View
     public function __construct()
     {
 		if ($this->dir) {
-	        $this->template = $this->dir . LC_DS . 'body.tpl';
+	        $this->template = $this->dir . LC_DS . $this->bodyFile;
 		}
     }
 

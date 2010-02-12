@@ -28,6 +28,15 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
     const CURRENT_CMS = '____CMS____';
 
+    /**
+     * Request remaper calling flag
+     * 
+     * @var    boolean
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0 EE
+     */
+    static public $isCalled = false;
 
 	/**
 	 * Layout path 
@@ -121,6 +130,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
     protected function getContent(XLite_View $object, array $attributes = array())
     {
+        $this->prepareCall();
         $object->setAttributes($this->prepareAttributes($attributes));
         $object->init();
 
@@ -133,7 +143,6 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 
         return $content;
     }
-	
 
 	/**
 	 * Method to access the singleton 
@@ -155,6 +164,15 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      * @since  3.0.0 EE
      */
     abstract public function getCMSName();
+
+    /**
+     * Prepare call
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    abstract protected function prepareCall();
 
 	/**
 	 * Return list of widgets which can be exported 
@@ -472,6 +490,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         $type = $this->getPageTypeObject($type);
 
         if ($type) {
+            $this->prepareCall();
             $type->setAttributes($this->prepareAttributes($settings));
             $result = $type->isPageInstanceVisible();
         }
@@ -497,6 +516,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         $type = $this->getPageTypeObject($type);
 
         if ($type) {
+            $this->prepareCall();
             $type->setAttributes($this->prepareAttributes($settings));
             $result = $type->getPageInstanceData();
         }

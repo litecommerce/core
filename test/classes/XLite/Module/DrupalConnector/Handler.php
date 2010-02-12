@@ -67,5 +67,21 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
 
         return $table;
     }
+
+    /**
+     * Prepare call
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function prepareCall()
+	{
+		if (!self::$isCalled) {
+			XLite_Core_Request::getInstance()->remapRequest();
+
+			self::$isCalled = true;
+		}
+	}
 }
 

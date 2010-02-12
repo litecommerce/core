@@ -54,7 +54,6 @@ class XLite_View extends XLite_View_Abstract
 
 	protected $returnUrl = null;
 
-
 	/**
 	 * Check if a widget requested from certain CMS
 	 * 
