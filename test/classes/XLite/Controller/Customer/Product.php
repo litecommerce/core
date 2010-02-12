@@ -123,6 +123,85 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Abstra
     {
         return true;
     }
+
+    /**
+     * Define page type parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function definePageTypeParams()
+    {
+		parent::definePageTypeParams();
+
+        $this->pageTypeParams[] = new XLite_Model_WidgetParam_String('product_id', 0, 'Product Id');
+    }
+
+    /**
+     * Check passed attributes
+     *
+     * @param array $attributes attributes to check
+     *
+     * @return array errors list
+     * @access public
+     * @since  1.0.0
+     */
+    public function validatePageTypeAttributes(array $attributes)
+    {
+        $errors = parent::validatePageTypeAttributes($attributes);
+
+		if (!isset($attributes['product_id']) || !is_numeric($attributes['product_id'])) {
+			$errors['product_id'] = 'Product Id is not numeric!';
+
+		} else {
+			$attributes['product_id'] = intval($attributes['product_id']);
+
+			$product = new XLite_Model_Product($attributes['product_id']);
+
+			if (!$product->isPersistent) {
+				$errors['product_id'] = 'Product with product Id #' . $attributes['product_id'] . ' can not found!';
+			}
+		}
+
+		return $errors;
+    }
+
+    /**
+     * Check - page instance visible or not
+     *
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isPageInstanceVisible()
+    {
+		$product = new XLite_Model_Product($this->product_id);
+
+        return $product->isPersistent;
+    }
+
+    /**
+     * Get page instance data (name and URL)
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageInstanceData()
+    {
+		$product = new XLite_Model_Product($this->product_id);
+
+		$this->target = 'product';
+
+        return array(
+			$product->get('name'),
+			$this->getUrl(),
+		);
+    }
+
 }
 
 // WARNING :

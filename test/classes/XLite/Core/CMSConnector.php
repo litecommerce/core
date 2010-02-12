@@ -51,8 +51,17 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         'XLite_View_Minicart'      => 'Minicart',
 	);
 
+    /**
+     * Page types 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected $pageTypes = array(
         'XLite_Controller_Customer_Category' => 'Category page',
+        'XLite_Controller_Customer_Product'  => 'Product page',
     );
 
 	/**
@@ -427,6 +436,17 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         return $this->pageTypes;
     }
 
+    /**
+     * Check - valid page instance settings or not
+     * 
+     * @param string $type     Page type code
+     * @param array  $settings Page instance settings
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function checkPageInstanceSettings($type, array $settings)
     {
         $type = $this->getPageTypeObject($type);
@@ -434,6 +454,17 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         return $type ? $type->validatePageTypeAttributes($settings) : array();
     }
 
+    /**
+     * Check - visible page instance or not
+     * 
+     * @param string $type     Page type code
+     * @param array  $settings Page instance settings
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function isPageInstanceVisible($type, array $settings)
     {
         $result = false;
@@ -448,6 +479,17 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         return $result;
     }
 
+    /**
+     * Get page instance data 
+     * 
+     * @param string $type     Page type code
+     * @param array  $settings Page instance settings
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function getPageInstanceLink($type, array $settings)
     {
         $result = array(null, null);
@@ -462,6 +504,16 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         return $result;
     }
 
+    /**
+     * Get page type object 
+     * 
+     * @param string $type Class name
+     *  
+     * @return XLite_Controller_Abstract
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function getPageTypeObject($type)
     {
         return class_exists($type) ? new $type : null;

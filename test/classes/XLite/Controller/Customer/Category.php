@@ -182,9 +182,11 @@ class XLite_Controller_Customer_Category extends XLite_Controller_Customer_Abstr
     {
 		$category = new XLite_Model_Category($this->category_id);
 
+		$this->target = 'category';
+
         return array(
 			$category->get('name'),
-			$this->buildURL('category', '', array('category_id' => $this->category_id))
+			$this->getUrl(),
 		);
     }
 
