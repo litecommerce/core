@@ -76,8 +76,8 @@
         <exec executable="/usr/local/php-530/bin/php" dir="${buildDir}/src">
             <arg line="${sourceDir}/.dev/build/phpdoc_postprocess.php ${apiUrl}" />
         </exec>
-		<exec executable="phpdoc" dir="${buildDir}">
-			<arg line="-ct type -ue on -t ${buildDir}/api -d test/classes/XLite -it @see -dn LiteCommecrce -dc LiteCommerce" />
+		<exec executable="/u/xcart/phpdoc" dir="${buildDir}">
+			<arg line="-ct type -ue off -t ${buildDir}/api -d test/classes/XLite -it @see -dn LiteCommecrce -dc LiteCommerce" />
 		</exec>
 	</target>
 
