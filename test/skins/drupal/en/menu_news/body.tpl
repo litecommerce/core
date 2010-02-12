@@ -1,0 +1,1 @@
+<widget template="news.tpl">
