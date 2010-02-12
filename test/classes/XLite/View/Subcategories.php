@@ -59,10 +59,9 @@ class XLite_View_Subcategories extends XLite_View_Dialog
 
         $this->category_id = $request->category_id;
 
-        $this->body = $this->config->getComplex('General.subcategories_look');
+        $this->body = $this->config->General->subcategories_look;
         $this->visible = in_array($request->target, array(null, 'main', 'category'))
-            && $this->category_id
-            && $this->getComplex('category.subcategories')
+            && $this->getCategory()->getSubcategories()
             && !$this->get('page');
         $this->showLocationPath = true;
         $this->mode = '';
