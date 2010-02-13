@@ -77,8 +77,6 @@ class XLite_Module_AdvancedSearch_Main extends XLite_Module_Abstract
         return 'This module introduces advanced product search to the customer front end';
     }	
 
-    public $isFree = true;	
-
     /**
      * Determines if we need to show settings form link
      *
@@ -98,10 +96,10 @@ class XLite_Module_AdvancedSearch_Main extends XLite_Module_Abstract
      * @access public
      * @since  3.0
      */
-    public static function getSettingsForm() // {{{
+    public static function getSettingsForm()
 	{
 		return "admin.php?target=advanced_search";
-	} // }}}
+	}
 
     /**
      * Perform some actions at startup
@@ -110,23 +108,11 @@ class XLite_Module_AdvancedSearch_Main extends XLite_Module_Abstract
      * @access public
      * @since  3.0
      */
-    public function init() // {{{
+    public function init()
 	{
 		parent::init();
+
         $this->xlite->set("AdvancedSearchEnabled", true);
-	} // }}} 
+	} 
+}
 
-    function uninstall() // {{{
-    {
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
-
-        parent::uninstall();
-    } // }}}
-
-} // }}}
-
-// WARNING:
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

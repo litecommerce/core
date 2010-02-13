@@ -1056,14 +1056,10 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 
 	function aom_cart_instance()
 	{
-		XLite::getInstance()->setGlobalFlag('AOM_skip_calcTotal', true);
+		$this->xlite->set('AOM_skip_calcTotal', true);
 		$this->_cart = XLite_Model_Cart::getInstance();
-		XLite::getInstance()->setGlobalFlag('AOM_skip_calcTotal', false);
+		$this->xlite->set('AOM_skip_calcTotal', false);
 	}
 
 }
 
-// WARNING:
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

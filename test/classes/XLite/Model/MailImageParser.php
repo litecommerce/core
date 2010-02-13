@@ -38,7 +38,7 @@
 
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
-class XLite_Model_MailImageParser extends XLite_Model_FlexyCompiler
+class XLite_Model_MailImageParser extends XLite_Core_FlexyCompiler
 {	
     public $webdir;	
     public $images;	

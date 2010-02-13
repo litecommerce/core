@@ -54,7 +54,7 @@ set_time_limit(0); // building catalog is a long-time operation..
 * @access public
 * @version $Id$
 */
-class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Model_FlexyCompiler
+class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Core_FlexyCompiler
 {	
     public $verbose     = true; // show process diagnostic	
     public $recursive   = true;	

@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_DemoMode_Model_FlexyCompiler extends XLite_Model_FlexyCompiler implements XLite_Base_IDecorator
+class XLite_Module_DemoMode_Core_FlexyCompiler extends XLite_Core_FlexyCompiler implements XLite_Base_IDecorator
 {
     // Flexy substitutions
     function postprocess()

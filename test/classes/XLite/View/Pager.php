@@ -60,6 +60,19 @@ class XLite_View_Pager extends XLite_View
 
 	protected $pages = null;
 
+	/**
+     * Constructor
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct()
+    {
+        $this->pageID = XLite_Core_Request::getInstance()->pageID;
+    }
+
 	public function __set($name, $value)
 	{
 		if ('data' == $name) {

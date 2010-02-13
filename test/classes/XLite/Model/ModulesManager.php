@@ -163,18 +163,6 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
         return self::_getInstance(__CLASS__);
     }
 
-	/**
-	 * Init modules
-	 * 
-	 * @return void
-	 * @access public
-	 * @since  3.0
-	 */
-	public function __construct()
-	{
-		$this->init();
-	}
-
     /**
      * Attempts to initialize the ModulesManager and all active modules
      * 

@@ -1,87 +1,44 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
 
-/* vim: set expandtab tabstop=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
+/* $Id$ */
 
 /**
-* Flexy compiler.
-*
-* @package Kernel
-* @access public
-* @version $Id$
-*/
-class XLite_Model_FlexyCompiler extends XLite_Base
+ * Modified version of the "Flexy" template compiler 
+ * 
+ * @package    Lite Commerce
+ * @subpackage Core
+ * @since      3.0.0 EE
+ */
+class XLite_Core_FlexyCompiler extends XLite_Base
 {
-	const DISPLAY_CONDITION = '____display_cnd____';
-
 	const TAG_ARRAY = '_ARRAY_';
 
-	protected $_internalDisplayCode = false;
-	protected $_internalInitCode = false;
-
-	protected $initializedWidgets = array();
-
-	// protected $mainAttributes = array('module', 'target');
-	
 	public $source; // Flexy template source code	
 	public $phpcode;	
-    public $phpinitcode;	
 	public $file = ''; // file name	
     public $widgetCounter = 0;	
     public $substitutionStart = array();	
 	public $substitutionEnd = array();	
 	public $substitutionValue = array();
 
-	function parse()
+	public function parse()
 	{
 		$this->offset = 0;
 		$this->stack = array();
 		$this->tokens = array();
         $this->widgetNames = array();
 		$this->errorMessage = '';
-        $this->phpinitcode = "<?php\n";
 		$this->html();
 		$this->substitutionStart = array();
 		$this->substitutionEnd = array();
 		$this->substitutionValue = array();
 		$this->postprocess();
-        $this->phpinitcode .= " ?>";
+
+		return $this->phpcode;
 	}
+
+
+
 	function savePosition($offs = 0)
 	{
 		array_push($this->stack, $this->offset+$offs);
@@ -347,9 +304,9 @@ class XLite_Model_FlexyCompiler extends XLite_Base
                         list($expr,$k,$forvar) = $this->flexyForeach($this->getTokenText($pos+1));
                         $exprNumber = "$forvar"."ArraySize";
                         $exprCounter = "$forvar"."ArrayPointer";
-                        $this->subst($token["start"], 0, "<?php \$$forvar = isset(\$t->$forvar) ? \$t->$forvar : null; \$_foreach_var = $expr; if (!is_null(\$_foreach_var)) { \$t->$exprNumber=count(\$_foreach_var); \$t->$exprCounter=0; } if (!is_null(\$_foreach_var)) foreach(\$_foreach_var as $k){ \$t->$exprCounter++; ?>");
+                        $this->subst($token["start"], 0, "<?php \$$forvar = isset(\$this->$forvar) ? \$this->$forvar : null; \$_foreach_var = $expr; if (!is_null(\$_foreach_var)) { \$this->$exprNumber=count(\$_foreach_var); \$this->$exprCounter=0; } if (!is_null(\$_foreach_var)) foreach(\$_foreach_var as $k){ \$this->$exprCounter++; ?>");
                         $this->subst($this->tokens[$pos]["start"], $this->tokens[$pos]["end"], '');
-                        $this->subst($this->tokens[$pos1]["end"]-1, $this->tokens[$pos1]["end"], "><?php } \$t->$forvar = \$$forvar; ?>");
+                        $this->subst($this->tokens[$pos1]["end"]-1, $this->tokens[$pos1]["end"], "><?php } \$this->$forvar = \$$forvar; ?>");
                     } else {
                         $this->error("No closing tag for foreach");
                     }
@@ -388,8 +345,12 @@ class XLite_Model_FlexyCompiler extends XLite_Base
                     }
 
                     list($target, $module, $name) = $this->processWidgetAttrs($attrs);
-					$this->phpinitcode .= $this->widgetInitCode($attrs, $target, $module, $name);
-					$this->subst($token["start"], $token["end"]-1, "<?php " . $this->widgetDisplayCode($attrs, $name) . " ?");
+					$code = $this->widgetDisplayCode($attrs, $target, $module, $name);
+					if (empty($code)) {
+						$this->subst($token['start'], $token['end'] + 1, '');
+					} else {
+						$this->subst($token['start'], $token['end'] - 1, '<?php ' . $code . ' ?');
+					}
                 }
 			}
             if ($token["type"] == "flexy") {
@@ -427,19 +388,15 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 		}
 	}
 
-	protected function setAttributesCode(array $attrs, $name)
+	protected function getAttributesList(array $attrs)
 	{
-		$result = '';
+		$result = array();
 
-        if (!empty($attrs)) {
-            $result .= '$t->' . $name . '->setAttributes(array(';
-            foreach ($attrs as $key => $value) {
-                $result .= '\'' . $key . '\'=>' . $this->flexyAttribute($value) . ',';
-            }
-            $result .= ')); ';
-        }
+		foreach ($attrs as $key => $value) {
+			$result[] = '\'' . $key . '\' => ' . $this->flexyAttribute($value);
+		}
 
-		return $result;
+		return 'array(' . implode(', ', $result) . ')';
 	}
 
     function processWidgetAttrs(array &$attrs)
@@ -447,11 +404,7 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 		$target = isset($attrs['target']) ? $attrs['target'] : null;
 		$module = isset($attrs['module']) ? $attrs['module'] : null;
 
-		$name = isset($attrs['name']) ? $attrs['name'] : 'widget->_' . $this->widgetCounter++;
-
-        if (!isset($attrs['class'])) {
-            $attrs['class'] = 'XLite_View_Abstract';
-        }
+		$name = isset($attrs['name']) ? $attrs['name'] : null;
 
 		if (isset($attrs['if'])) {
 			$attrs['IF'] = $attrs['if'];
@@ -462,66 +415,46 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 		return array($target, $module, $name);
     }
 
-    function widgetDisplayCode(array &$attrs, $name)
-    {
-		$condition = 'isset($t->' . $name . ')' . (isset($attrs[self::DISPLAY_CONDITION]) ? ' && ' . $attrs[self::DISPLAY_CONDITION] : '');
-
-		if (isset($attrs['IF'])) {
-			$condition .= ' && (' . $this->flexyCondition($attrs['IF']) . ')';
-		}
-
-		$this->unsetAttributes($attrs, array('IF', self::DISPLAY_CONDITION));
-
-		return 'if (' . $condition . '): ' . $this->setAttributesCode($attrs, $name) . '$t->' . $name . '->display(); endif;';
-    }
-
-    function widgetInitCode(array &$attrs, $target, $module, &$name)
+    function widgetDisplayCode(array $attrs, $target, $module, $name)
     {
 		$result = '';
 
 		if (is_null($module) || XLite_Model_ModulesManager::getInstance()->isActiveModule($module)) {
 
-			$intend = '';
+			$arguments  = isset($attrs['class']) ? '\'' . $attrs['class'] . '\'' : (isset($name) ? 'null' : '');
+			$arguments .= isset($name) ? ', \'' . $name . '\'' : '';
 
-			if ($checkTarget = !is_null($target)) {
+        	$conditions = array();
 
-				$preparedTarget = preg_replace('/[^\w,]+/', '', $target);
-				$attrs[self::DISPLAY_CONDITION] = '$t->isDisplayRequired(array(\'' . str_replace(',', '\',\'', $preparedTarget) . '\'))';
-
-				$result .= 'if (' . $attrs[self::DISPLAY_CONDITION] . '):' . "\n";
-				$intend .= '  ';
+			if (!is_null($target)) {
+				$conditions[] = '$this->isDisplayRequired(array(\'' 
+								. str_replace(',', '\',\'', preg_replace('/[^\w,]+/', '', $target)) 
+								. '\'))';
 			}
 
-			if ($checkTarget || !isset($this->initializedWidgets[$name])) {
+			if (isset($attrs['IF'])) {
+				$attrs['IF'] = $this->flexyCondition($attrs['IF']);
+				if (!empty($conditions)) {
+					$attrs['IF'] = '(' . $attrs['IF'] . ')';
+				}
+            	$conditions[] = $attrs['IF'];
+			}
 
-	            $class = $attrs['class'];
-				unset($attrs['class']);
+			$this->unsetAttributes($attrs, array('IF', 'class'));
 
-	            $result .= $intend . '$t->' . $name . ' = new ' . $class . '();' . "\n";
-    	        $result .= $intend . '$t->' . $name . '->component = $t;' . "\n";
-        	    $result .= $intend . '$t->widget->addWidget($t->' . $name . ');' . "\n";
-            	if (class_exists($class, false) && is_subclass_of($class, 'XLite_View')) {
-	                $result .= $intend . '$t->addComponent($t->' . $name . ');' . "\n";
-    	        }
+			$result .= '$widget = $this->_getWidget(' 
+					   . (empty($attrs) ? (empty($arguments) ? '' : 'array()') : $this->getAttributesList($attrs)) 
+					   . (empty($arguments) ? '' : ', ' . $arguments) . '); $widget->display();$widget = null;unset($widget);';
 
-				$initAttrs = array_diff_key($attrs, array('visible' => true, self::DISPLAY_CONDITION => true, 'IF' => true));
-				$result .= $intend . $this->setAttributesCode($initAttrs, $name) . "\n";
-
-				if (isset($attrs['hidden'])) {
-    	            $result .= ' $t->' . $name . '->setComplex(\'visible\', false);' . "\n";
-        	    }
-
-				$this->unsetAttributes($attrs, array('hidden', 'template'));
-
-    	        $result .= $intend . '$t->' . $name . '->init();' . "\n" . ($checkTarget ? 'endif;' . "\n" : '') . "\n";
-
-				$this->initializedWidgets[$name] = true;
+			
+			if (!empty($conditions)) {
+				$result = 'if (' . implode(' && ', $conditions) . '): ' . $result . ' endif;';
 			}
 		}
 
-        return $result;
+		return $result;
     }
-    
+
     function substitute()
     {
 		// sort substitutions
@@ -529,9 +462,7 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 		$lastEnd = 0;
 		$result = '';
 		for ($i=0; $i<count($this->substitutionStart); $i++) {
-//			print  $this->substitutionStart[$i] ." replace " .  substr($this->source, $this->substitutionStart[$i], $this->substitutionEnd[$i]-$this->substitutionStart[$i]) . " with " . $this->substitutionValue[$i];
 			if ($lastEnd <= $this->substitutionStart[$i]) {
-//			print " OK\n";
 				$result .= substr($this->source, $lastEnd, $this->substitutionStart[$i]-$lastEnd);
 				$result .= $this->substitutionValue[$i];
 				$lastEnd = $this->substitutionEnd[$i];
@@ -625,7 +556,7 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 			list($expr,$k,$forvar) = $this->flexyForeach(substr($str, 9));
 			$exprNumber = "$forvar"."ArraySize";
 			$exprCounter = "$forvar"."ArrayPointer";
-			return "<?php \$_foreach_var = $expr; if (!is_null(\$_foreach_var)) { \$t->$exprNumber=count(\$_foreach_var); \$t->$exprCounter=0; } if (!is_null(\$_foreach_var)) foreach(\$_foreach_var as $k){ \$t->$exprCounter++; ?>";
+			return "<?php \$_foreach_var = $expr; if (!is_null(\$_foreach_var)) { \$this->$exprNumber=count(\$_foreach_var); \$this->$exprCounter=0; } if (!is_null(\$_foreach_var)) foreach(\$_foreach_var as $k){ \$this->$exprCounter++; ?>";
 		}
 		if (substr($str, 0, 4) == '{if:') {
 			$expr = $this->flexyCondition(substr($str, 4));
@@ -697,9 +628,6 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 
     function flexySimpleExpression(&$str)
     {
-		// Array declarations
-		//str_replace(
-
 		if (substr($str, 0, 1) == "#") {
 			// find next #
 			$pos = strpos($str, "#", 1);
@@ -725,7 +653,7 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 			if (self::TAG_ARRAY === $method) {
 				$result = 'array';
 			} else {
-				$result = '$t->' . ((false === $dotPos) ? '' : 'get' . (strrpos($field, '.') ? 'Complex' : '') . '(\'' . $field . '\')->') . $method;
+				$result = '$this->' . ((false === $dotPos) ? '' : 'get' . (strrpos($field, '.') ? 'Complex' : '') . '(\'' . $field . '\')->') . $method;
 			}
 
 			$str = substr($str, $len);
@@ -746,7 +674,7 @@ class XLite_Model_FlexyCompiler extends XLite_Base
         if ($len) {
     		// field
 			$field  = substr($str, 0, $len);
-            $result = '$t->get' . (strpos($field, '.') ? 'Complex' : '') . '(\'' . $field . '\')';
+            $result = '$this->get' . (strpos($field, '.') ? 'Complex' : '') . '(\'' . $field . '\')';
         } else {
             $result = '';
         }
@@ -801,9 +729,9 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 		if (count($list) == 2) {
 			list ($k, $v) = $list;
             $forvar = $v;
-			$key = "\$t->$k => \$t->$v";
+			$key = "\$this->$k => \$this->$v";
 		} else {
-			$key = "\$t->$list[0]";
+			$key = "\$this->$list[0]";
             $forvar = $list[0];
 		}
 		return array($expr, $key, $forvar);
@@ -890,7 +818,3 @@ class XLite_Model_FlexyCompiler extends XLite_Base
 	}
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

@@ -1,50 +1,14 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*
-* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
-*/
+
+/* $Id$ */
 
 /**
-* The main class for LiteCommerce project. 
-*
-* @package XLite
-* @version $Id$
-* @access public
-*/
+ * Application singleton
+ * 
+ * @package    Lite Commerce
+ * @subpackage XLite_
+ * @since      3.0.0 EE
+ */
 class XLite extends XLite_Base implements XLite_Base_ISingleton
 {
 	/**
@@ -56,19 +20,60 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      */
     protected $isNeedToCleanupCache = false;
 
+    /**
+     * Current area flag
+     * 
+     * @var    bool
+     * @access protected
+     * @since  3.0.0 EE
+     */
     protected $adminZone = false;
 
+	/**
+	 * Config options hash
+	 * 
+	 * @var    array
+	 * @access protected
+	 * @since  3.0.0 EE
+	 */
 	protected $options = null;
 
-	protected $globalFlags = array();
-
+	/**
+	 * TODO - check if it's realy needed 
+	 * 
+	 * @var    mixed
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
 	public $_xlite_form_id = null;
 
-	public static function getInstance()
+	/**
+	 * Called controller 
+	 * 
+	 * @var    XLite_Controller_Abstract
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
+	public static $controller = null;
+
+	/**
+	 * It's not possible to instantiate this class using the "new" operator 
+	 * 
+	 * @return void
+	 * @access protected
+	 * @since  3.0.0 EE
+	 */
+	protected function __construct()
     {
-        return self::_getInstance(__CLASS__);
     }
 
+	/**
+	 * Parse config file and return options list
+	 * 
+	 * @return array
+	 * @access protected
+	 * @since  3.0.0 EE
+	 */
 	protected function parseConfigFile()
 	{
 		$options = parse_ini_file(LC_ROOT_DIR . 'etc' . LC_DS . 'config.php', true);
@@ -87,6 +92,15 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
 		return $options;
 	}
 
+	/**
+	 * Return specified (or the whole list) options 
+	 * 
+	 * @param mixed $names list (or single value) of option names
+	 *  
+	 * @return mixed
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
 	public function getOptions($names = null)
 	{
 		if (is_null($this->options)) {
@@ -111,6 +125,40 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
 		return $result;
 	}
 
+
+	/**
+	 * Use this function to get a reference to this class object
+	 * 
+	 * @return XLite
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
+	public static function getInstance()
+    {
+        return self::_getInstance(__CLASS__);
+    }
+
+    /**
+     * Clean up classes cache (if needed) 
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function __destruct()
+    {
+        if ($this->isNeedToCleanupCache) {
+            XLite_Model_ModulesManager::getInstance()->cleanupCache();
+        }
+    }
+
+
+
+	public function setCleanUpCacheFlag($flag)
+    {
+        $this->isNeedToCleanupCache = (true === $flag);
+    }
+
     /**
     * Runs the cart.
     *
@@ -118,6 +166,8 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     */
     function run()
     {
+		XLite_Model_ModulesManager::getInstance()->init();
+
         if (isset($_REQUEST['target'])) {
             $target = $_REQUEST['target'];
         } else {
@@ -125,12 +175,12 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
         }
 
 		$dialogClass = XLite_Core_Converter::getControllerClass($target);
-        $dialog = new $dialogClass();
-        $dialog->init();
+        self::$controller = new $dialogClass();
+        self::$controller->init();
         $this->profiler->log("dialog_init_time");
-        $dialog->handleRequest();
+        self::$controller->handleRequest();
         $this->profiler->log("dialog_handleRequest_time");
-        $dialog = null;
+        self::$controller = null;
 
         $this->profiler->log("run_time");
     }
@@ -193,27 +243,5 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     {
         return version_compare(PHP_VERSION, $version, '<');
     }
-
-	public function setGlobalFlag($name, $value)
-	{
-		$this->globalFlags[$name] = $value;
-	}
-
-	public function getGlobalFlag($name)
-	{
-		return isset($this->globalFlags[$name]) ? $this->globalFlags[$name] : null;
-	}
-
-	public function setCleanUpCacheFlag($flag)
-    {
-        $this->isNeedToCleanupCache = (true === $flag);
-    }
-
-	public function __destruct()
-	{
-		if ($this->isNeedToCleanupCache) {
-			XLite_Model_ModulesManager::getInstance()->cleanupCache();
-		}
-	}
 }
 

@@ -1,182 +1,277 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
 /**
-* Class Widget is an abstract class for all visual components.
-*
-* @package Base
-* @access public
-* @version $Id$
-*/
+ * XLite_View_Abstract 
+ * 
+ * @package    Lite Commerce
+ * @subpackage ____sub_package____
+ * @since      3.0.0 EE
+ */
 class XLite_View_Abstract extends XLite_Base
 {
-	protected $dialog = null;
+	 /**
+     * Widget template filename
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected $template = null;
 
-    /**
-    * Widget template filename.
-    *
-    * @var    string
-    * @access private
-    */	
-    public $template = null;	
+	/**
+	 * By default, widget is visible
+	 * 
+	 * @var    bool
+	 * @access protected
+	 * @since  3.0.0 EE
+	 */
+	protected $visible = true;
 
-    public $visible = true;	
+	/**
+	 * List of named widgets
+	 * 
+	 * @var    array
+	 * @access protected
+	 * @since  3.0.0 EE
+	 */
+	protected $widgets = array();
 
-    public $extraWidgets = null;	
 
-    public $widgets = array();
-
-	public $_attributes = array();
-
-    /**
-    * Initializes the widget tree. The only what it does is just compile
-    * and include the corresponding var/run/skins/.../template.tpl.init.php 
-    * file.
-    *
-    * @access public
-    */
-    function init()
-    {
-        $this->includeCompiledFile($this->getInitFile());
-    }
-
-    /**
-    * Attempts to display the widget using it template.
-    *
-    * @access public
-    * @return void
-    */
-    function display()
-    {
-		if ($this->isVisible()) {
-			$this->includeCompiledFile($this->getDisplayFile());
+	/**
+	 * Return widget object 
+	 * 
+	 * @param array  $attrs widget attributes
+	 * @param string $class widget class
+	 * @param string $name  widget class
+	 *  
+	 * @return XLite_View_Abstract
+	 * @access protected
+	 * @since  3.0.0 EE
+	 */
+	protected function _getWidget(array $attrs = array(), $class = null, $name = null)
+	{
+		if (isset($name)) {
+			if (!isset($this->widgets[$name])) {
+				$this->$name = $this->widgets[$name] = isset($class) ? new $class() : clone $this;
+			}
+			$widget = $this->widgets[$name];
+		} else {
+			$widget = isset($class) ? new $class() : clone $this;
 		}
-    }
 
-    function isVisible()
+		if (!empty($attrs)) {
+			$widget->setAttributes($attrs);
+		}
+
+		return $widget;
+	}
+
+	/**
+     * Set widget attributes
+     *
+     * @param array $attrs params to set
+     *
+     * @return void
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function setAttributes(array $attrs)
     {
-		$mode   = $this->mode;
-        $dialog = $this->getDialog();
-
-        $result = (empty($mode) || empty($dialog)) ? $this->visible : in_array($dialog->mode, explode(',', $mode));
-
-        return ($result && !is_null($this->parentWidget)) ? $this->parentWidget->isVisible() : $result;
+        foreach ($attrs as $name => $value) {
+            $this->$name = $value;
+        }
     }
 
-    function getTemplateFile()
+	/**
+     * Check if widget is visible
+     *
+     * @return bool
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function isVisible()
     {
-		return isset($this->templateFile) ? $this->templateFile : XLite_Model_Layout::getInstance()->getLayout($this->get('template'));
+        $result = $this->visible;
+
+        if ($result && !empty($this->mode) && isset(XLite::$controller)) {
+            $result = in_array(XLite::$controller->mode, explode(',', $this->mode));
+        }
+
+        return ($result && isset($this->parentWidget)) ? $this->parentWidget->isVisible() : $result;
     }
 
-    function getDisplayFile()
+    /**
+     * Return template file base name
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getTemplateFile()
+    {
+        return XLite_Model_Layout::getInstance()->getLayout($this->get('template'));
+    }
+
+    /**
+     * Return template file full name
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getDisplayFile()
     {
         return LC_COMPILE_DIR . $this->getTemplateFile() . '.php';
     }
-    
-    function getInitFile()
-    {
-        return LC_COMPILE_DIR . $this->getTemplateFile() . '.init.php';
-    }
- 
-    function includeCompiledFile($includeFile)
+
+	/**
+	 * Check if template is up-to-date
+	 * 
+	 * @param string $original original template
+	 * @param string $compiled compiled one
+	 *  
+	 * @return bool
+	 * @access protected
+	 * @since  3.0.0 EE
+	 */
+	protected function checkTemplateStatus($original, $compiled)
+	{
+		return file_exists($compiled) && (filemtime($compiled) == filemtime($original));
+	}
+
+	/**
+	 * Return URL of the skin images folder
+	 * 
+	 * @return string
+	 * @access protected
+	 * @since  3.0.0 EE
+	 */
+	protected function getImagesURL()
+	{
+		return XLite::getInstance()->shopURL(XLite_Model_Layout::getInstance()->getPath() . 'images');
+	}
+
+	/**
+     * Compile and display a template
+     *
+     * @param string $includeFile template to display
+     *
+     * @return void
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function includeCompiledFile($includeFile)
     {
         if (is_null($this->get('template'))) {
-			$this->_die("template is not set");
-		}
+            $this->_die("template is not set");
+        }
 
-		$templateFile = LC_ROOT_DIR . $this->getTemplateFile();
+        $templateFile = LC_ROOT_DIR . $this->getTemplateFile();
 
-        if (!file_exists($includeFile) || (filemtime($includeFile) != filemtime($templateFile))) {
+        if (!$this->checkTemplateStatus($templateFile, $includeFile)) {
 
-            $fc = new XLite_Model_FlexyCompiler();
+            $fc = new XLite_Core_FlexyCompiler();
             $fc->set('source', file_get_contents($templateFile));
-            $fc->set('url_rewrite', array('images' => XLite::getInstance()->shopURL(XLite_Model_Layout::getInstance()->getPath() . 'images')));
+            $fc->set('url_rewrite', array('images' => $this->getImagesURL()));
             $fc->set('file', $templateFile);
-            $fc->parse();
 
-			$files = array(
-				'phpcode'     => $this->getDisplayFile(),
-				'phpinitcode' => $this->getInitFile(),
-			);
+            $file = $this->getDisplayFile();
+            $dir  = dirname($file);
 
-			foreach ($files as $code => $file) {
+            if (!file_exists($dir)) {
+                mkdirRecursive($dir, 0755);
+            }
 
-				if (!file_exists($dir = dirname($file))) {
-		            mkdirRecursive($dir, 0755);
-				}
-
-				file_put_contents($file, $fc->$code);
-				touch($file, filemtime($templateFile));
-			}
+            file_put_contents($file, $fc->parse());
+            touch($file, filemtime($templateFile));
         }
 
-        $t = $this->getThisVar();
-        $caller = $t->widget;
-        $t->widget = $this;
-
-        $result = include $includeFile;
-
-        if (!$result) {
-            $_error = "unable to read template file: $includeFile";
-			($GLOBALS['XLITE_SELF'] == 'cart.php') ? func_shop_closed("Warning: $_error") : func_die("Error: $_error");
-        }
-
-        $t->widget = $caller;
+        include $includeFile;
     }
 
-    function getThisVar()
+	/**
+	 * FIXME - backward compatibility 
+	 * 
+	 * @return XLite_View_Abstract
+	 * @access protected
+	 * @since  3.0.0 EE
+	 */
+	protected function getWidget()
     {
-        return isset($this->component) ? $this->component : $this;
+        return $this;
     }
-    
+
+	/**
+	 * FIXME - backward compatibility
+	 * 
+	 * @return XLite_View_Abstract
+	 * @access protected
+	 * @since  3.0.0 EE
+	 */
+	protected function getDialog()
+    {
+        return isset(XLite::$controller) ? XLite::$controller : $this;
+    }
+
+
+	/**
+	 * FIXME - backward compatibility
+	 * 
+	 * @param string $name property name
+	 *  
+	 * @return mixed
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
+	public function __get($name)
+	{
+		return isset($this->getDialog()->$name) ? $this->getDialog()->$name : parent::__get($name);
+	}
+
+	/**
+	 * FIXME - backward compatibility 
+	 * 
+	 * @param string $method method name
+	 * @param array  $args   call arguments
+	 *  
+	 * @return mixed
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
+	public function __call($method, array $args = array())
+    {
+		return call_user_func_array(array($this->getDialog(), $method), $args);
+    }
+
+	/**
+	 * Initialize widget
+	 * 
+	 * @return void
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
+	public function init()
+    {
+    }
+
     /**
-    * Creates debug dump
-    */
-    function dump($variable = null)
+     * Attempts to display widget using its template 
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function display()
     {
-        if (is_null($variable)) {
-            Var_Dump::display($this);
-        } else {
-            Var_Dump::display($variable);
+        if ($this->isVisible()) {
+            $this->includeCompiledFile($this->getDisplayFile());
         }
     }
+
+
+
+
+
 
     /** 
     * Compares two values.
@@ -417,37 +512,17 @@ class XLite_View_Abstract extends XLite_Base
         return $text1;
     }
 
-	public function setAttributes(array $attrs)
-	{
-		foreach ($attrs as $name => $value) {
-			$this->$name = $value;
-		}
-	}
-
 	public function isDisplayRequired(array $target)
 	{
-		return !isset($this->target) || in_array($this->target, $target);
+		return in_array($this->target, $target);
 	}
 
-    function getDialog()
-    {
-		if (is_null($this->dialog)) {
 
-            $this->dialog = $this;
-
-            while (!is_null($this->dialog) && !($this->dialog instanceof XLite_Controller_Abstract)) {
-                $this->dialog = $this->dialog->component;
-            }
-        }
-
-        return $this->dialog;
-    }
-
-    function addWidget($w) 
+    /*function addWidget($w) 
     {
         $this->widgets[] = $w;
         $w->parentWidget = $this;
-    }
+    }*/
 
     function getCurrentYear()
     {
