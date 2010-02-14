@@ -75,7 +75,7 @@ class XLite_View_Abstract extends XLite_Base
      * @access protected
      * @since  3.0.0 EE
      */
-    protected function setAttributes(array $attrs)
+    public function setAttributes(array $attrs)
     {
         foreach ($attrs as $name => $value) {
             $this->$name = $value;
@@ -89,7 +89,7 @@ class XLite_View_Abstract extends XLite_Base
      * @access protected
      * @since  3.0.0 EE
      */
-    protected function isVisible()
+    public function isVisible()
     {
         $result = $this->visible;
 
