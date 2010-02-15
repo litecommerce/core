@@ -17,10 +17,6 @@
 <widget class="XLite_View_CategoryEmpty" template="common/dialog.tpl">
 <!-- [/catalog] }}} -->
 
-<!-- [search] {{{ -->
-<widget target="search" template="common/dialog.tpl" body="search_result.tpl" head="Search Result">
-<!-- [/search] }}} -->
-
 <!-- [profile] {{{ -->
 <widget module="UPSOnlineTools" template="modules/UPSOnlineTools/main.tpl">
 <!-- [/profile] }}} -->

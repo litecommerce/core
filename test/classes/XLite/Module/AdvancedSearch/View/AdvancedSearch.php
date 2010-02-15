@@ -18,7 +18,7 @@
 /**
  * Advanced search widget 
  * 
- * @package   View
+ * @package    View
  * @subpackage Widget
  * @since      3.0.0 EE
  */
@@ -33,18 +33,25 @@ class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
      */
     protected $head = 'Search for products';
 
-	/**
-	 * Define template 
-	 * 
-	 * @return void
-	 * @access public
-	 * @since  3.0.0 EE
-	 */
-	public function __construct()
-	{
-		parent::__construct();
+    /**
+     * Initilization
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function initView()
+    {
+		parent::initView();
 
 		$this->body = 'modules' . LC_DS . 'AdvancedSearch' . LC_DS . 'advanced_search.tpl';
+
+        $request = XLite_Core_Request::getInstance();
+
+        $this->visible = 'advanced_search' == $request->target;
+
+        $this->mode = '';
 	}
 }
 
