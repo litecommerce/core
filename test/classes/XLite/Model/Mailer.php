@@ -169,7 +169,7 @@ class XLite_Model_Mailer extends XLite_View
                 $this->mail->Username = $this->xlite->getComplex('config.Email.smtp_username');
                 $this->mail->Password = $this->xlite->getComplex('config.Email.smtp_password');	
             }
-            if (!$this->xlite->isPHPEarlier('5.1.0') && in_array($this->xlite->getComplex('config.Email.smtp_security'), array('ssl', 'tls'))) {
+            if (in_array($this->xlite->getComplex('config.Email.smtp_security'), array('ssl', 'tls'))) {
                 $this->mail->SMTPSecure = $this->xlite->getComplex('config.Email.smtp_security');
             }
         }

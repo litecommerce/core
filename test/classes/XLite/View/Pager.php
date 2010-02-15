@@ -46,7 +46,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_View_Pager extends XLite_View
+class XLite_View_Pager extends XLite_View_Abstract
 {	
     protected $_data = array();
 	protected $_pagesCount = 0;

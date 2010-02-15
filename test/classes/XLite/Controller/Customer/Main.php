@@ -93,7 +93,3 @@ class XLite_Controller_Customer_Main extends XLite_Controller_Customer_Abstract
     } // }}}
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

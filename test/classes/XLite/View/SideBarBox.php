@@ -22,7 +22,7 @@
  * @subpackage Widget
  * @since      3.0
  */
-abstract class XLite_View_SideBarBox extends XLite_View
+abstract class XLite_View_SideBarBox extends XLite_View_Abstract
 {
     /**
      * Directory contains sidebar content

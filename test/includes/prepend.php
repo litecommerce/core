@@ -49,10 +49,9 @@ ini_set('display_errors', true);
 
 define('LC_DS', DIRECTORY_SEPARATOR);
 define('LC_ROOT_DIR', rtrim(LC_DIR, LC_DS) . LC_DS);
-define('LC_LIBRARY', 'XLite');
 
 define('LC_CLASSES_DIR', LC_ROOT_DIR . 'classes' . LC_DS);
-define('LC_LIB_DIR', LC_CLASSES_DIR . LC_LIBRARY . LC_DS);
+define('LC_LIB_DIR', LC_CLASSES_DIR . 'XLite' . LC_DS);
 define('LC_MODULES_DIR', LC_LIB_DIR . 'Module' . LC_DS);
 
 define('LC_COMPILE_DIR', LC_ROOT_DIR . 'var' . LC_DS . 'run' . LC_DS);
@@ -68,10 +67,6 @@ define('LC_OS_NAME', substr(php_uname(), 0, strpos(php_uname(),' ')));
 define('LC_OS_CODE', strtolower(substr(LC_OS_NAME, 0, 3)));
 define('LC_OS_IS_WIN', LC_OS_CODE === 'win');
 
-// Endpoints
-define('CART_SELF', 'cart.php');
-define('ADMIN_SELF', 'admin.php');
-
 // Session type
 define('LC_SESSION_TYPE', 'Sql');
 
@@ -81,6 +76,7 @@ require_once LC_ROOT_DIR . 'includes' . LC_DS . 'functions.php';
 
 // Check and (if needed) rebild classes cache
 require_once LC_ROOT_DIR . 'includes' . LC_DS . 'decoration.php';
+
 
 /**
  * Class autoload function
@@ -93,7 +89,8 @@ require_once LC_ROOT_DIR . 'includes' . LC_DS . 'decoration.php';
  */
 function __lc_autoload($className)
 {
-	if (0 === strpos($className, LC_LIBRARY)) {
+	// FIXME - remove checks
+	if (0 === strpos($className, 'XLite')) {
 		$fn = LC_CLASSES_CACHE_DIR . str_replace('_', LC_DS, $className) . '.php';
 		if (file_exists($fn)) {
 			include_once (LC_CLASSES_CACHE_DIR . str_replace('_', LC_DS, $className) . '.php');

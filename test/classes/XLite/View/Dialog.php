@@ -8,7 +8,6 @@
  * @package   View
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license   http://www.qtmsoft.com/xpayments_eula.html X-Payments license agreement
  * @version   SVN: $Id$
  * @link      http://www.qtmsoft.com/
  * @see       ____file_see____
@@ -22,7 +21,7 @@
  * @subpackage Widget
  * @since      3.0
  */
-abstract class XLite_View_Dialog extends XLite_View
+abstract class XLite_View_Dialog extends XLite_View_Abstract
 {
     /**
      * Dialog title 

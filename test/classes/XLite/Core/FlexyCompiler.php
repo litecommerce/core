@@ -37,8 +37,6 @@ class XLite_Core_FlexyCompiler extends XLite_Base
 		return $this->phpcode;
 	}
 
-
-
 	function savePosition($offs = 0)
 	{
 		array_push($this->stack, $this->offset+$offs);
@@ -347,7 +345,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base
                     list($target, $module, $name) = $this->processWidgetAttrs($attrs);
 					$code = $this->widgetDisplayCode($attrs, $target, $module, $name);
 					if (empty($code)) {
-						$this->subst($token['start'], $token['end'] + 1, '');
+						$this->subst($token['start'], $token['end'], '');
 					} else {
 						$this->subst($token['start'], $token['end'] - 1, '<?php ' . $code . ' ?');
 					}
@@ -442,9 +440,9 @@ class XLite_Core_FlexyCompiler extends XLite_Base
 
 			$this->unsetAttributes($attrs, array('IF', 'class'));
 
-			$result .= '$widget = $this->_getWidget(' 
+			$result .= '$this->_getWidget(' 
 					   . (empty($attrs) ? (empty($arguments) ? '' : 'array()') : $this->getAttributesList($attrs)) 
-					   . (empty($arguments) ? '' : ', ' . $arguments) . '); $widget->display();$widget = null;unset($widget);';
+					   . (empty($arguments) ? '' : ', ' . $arguments) . ')->display();';
 
 			
 			if (!empty($conditions)) {

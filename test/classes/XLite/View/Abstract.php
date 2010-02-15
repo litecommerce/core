@@ -7,7 +7,7 @@
  * @subpackage ____sub_package____
  * @since      3.0.0 EE
  */
-class XLite_View_Abstract extends XLite_Base
+class XLite_View_Abstract extends XLite_Core_Handler
 {
 	 /**
      * Widget template filename
@@ -28,7 +28,7 @@ class XLite_View_Abstract extends XLite_Base
 	protected $visible = true;
 
 	/**
-	 * List of named widgets
+	 * List of named widgets; FIXME - backward compatibility
 	 * 
 	 * @var    array
 	 * @access protected
@@ -36,51 +36,15 @@ class XLite_View_Abstract extends XLite_Base
 	 */
 	protected $widgets = array();
 
-
 	/**
-	 * Return widget object 
+	 * Widget params (for exported widgets)
 	 * 
-	 * @param array  $attrs widget attributes
-	 * @param string $class widget class
-	 * @param string $name  widget class
-	 *  
-	 * @return XLite_View_Abstract
+	 * @var    array
 	 * @access protected
 	 * @since  3.0.0 EE
 	 */
-	protected function _getWidget(array $attrs = array(), $class = null, $name = null)
-	{
-		if (isset($name)) {
-			if (!isset($this->widgets[$name])) {
-				$this->$name = $this->widgets[$name] = isset($class) ? new $class() : clone $this;
-			}
-			$widget = $this->widgets[$name];
-		} else {
-			$widget = isset($class) ? new $class() : clone $this;
-		}
+	protected $widgetParams = null;
 
-		if (!empty($attrs)) {
-			$widget->setAttributes($attrs);
-		}
-
-		return $widget;
-	}
-
-	/**
-     * Set widget attributes
-     *
-     * @param array $attrs params to set
-     *
-     * @return void
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    public function setAttributes(array $attrs)
-    {
-        foreach ($attrs as $name => $value) {
-            $this->$name = $value;
-        }
-    }
 
 	/**
      * Check if widget is visible
@@ -190,6 +154,37 @@ class XLite_View_Abstract extends XLite_Base
     }
 
 	/**
+     * Return widget object; FIXME - backward compatibility
+     *
+     * @param array  $attrs widget attributes
+     * @param string $class widget class
+     * @param string $name  widget class
+     *
+     * @return XLite_View_Abstract
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function _getWidget(array $attrs = array(), $class = null, $name = null)
+    {
+        if (isset($name)) {
+            if (!isset($this->widgets[$name])) {
+                $this->$name = $this->widgets[$name] = isset($class) ? new $class() : clone $this;
+            }
+            $widget = $this->widgets[$name];
+        } else {
+            $widget = isset($class) ? new $class() : clone $this;
+        }
+
+        if (!empty($attrs)) {
+            $widget->setAttributes($attrs);
+        }
+
+		$this->init();
+
+        return $widget;
+    }
+
+	/**
 	 * FIXME - backward compatibility 
 	 * 
 	 * @return XLite_View_Abstract
@@ -213,6 +208,33 @@ class XLite_View_Abstract extends XLite_Base
         return isset(XLite::$controller) ? XLite::$controller : $this;
     }
 
+	/**
+     * Called before the display()
+     *
+     * @return void
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function initView()
+    {
+    }
+
+
+	/**
+     * FIXME - backward compatibility
+     *
+     * @param string $name property name
+     *
+     * @return mixed
+     * @access public
+     * @since  3.0.0 EE
+     */
+	public function get($name)
+    {
+		$value = parent::get($name);
+
+        return isset($value) ? $value : XLite::$controller->get($name);
+    }
 
 	/**
 	 * FIXME - backward compatibility
@@ -225,7 +247,9 @@ class XLite_View_Abstract extends XLite_Base
 	 */
 	public function __get($name)
 	{
-		return isset($this->getDialog()->$name) ? $this->getDialog()->$name : parent::__get($name);
+		$value = parent::__get($name);
+
+		return isset($value) ? $value : XLite::$controller->$name;
 	}
 
 	/**
@@ -240,18 +264,7 @@ class XLite_View_Abstract extends XLite_Base
 	 */
 	public function __call($method, array $args = array())
     {
-		return call_user_func_array(array($this->getDialog(), $method), $args);
-    }
-
-	/**
-	 * Initialize widget
-	 * 
-	 * @return void
-	 * @access public
-	 * @since  3.0.0 EE
-	 */
-	public function init()
-    {
+		return call_user_func_array(array(XLite::$controller, $method), $args);
     }
 
     /**
@@ -263,12 +276,54 @@ class XLite_View_Abstract extends XLite_Base
      */
     public function display()
     {
+		$this->initView();
+
         if ($this->isVisible()) {
             $this->includeCompiledFile($this->getDisplayFile());
         }
     }
 
+	/**
+     * Return widget parameters list
+     *
+     * @return array
+     * @access public
+     * @since  1.0.0
+     */
+    public function getWidgetParams()
+    {
+        if (is_null($this->widgetParams)) {
+            $this->defineWidgetParams();
+        }
 
+        return $this->widgetParams;
+    }
+
+	/**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        $this->widgetParams = array();
+    }
+
+	/**
+     * Check passed attributes
+     *
+     * @param array $attributes attributes to check
+     *
+     * @return array errors list
+     * @access public
+     * @since  1.0.0
+     */
+    public function validateAttributes(array $attributes)
+    {
+        return array();
+    }
 
 
 
@@ -529,12 +584,12 @@ class XLite_View_Abstract extends XLite_Base
         return date("Y", time());
     }
 
-    function strMD5($string)
+    /*function strMD5($string)
     {
     	return strtoupper(md5(strval($string)));
-    }
+    }*/
 
-    function getSidebarBoxStatus($boxHead = null)
+    /*function getSidebarBoxStatus($boxHead = null)
     {
 		if ($this->xlite->is("adminZone")) 
 		{
@@ -543,7 +598,7 @@ class XLite_View_Abstract extends XLite_Base
         $dialog->sidebar_box_id = $this->strMD5($boxHead);
 
         return $dialog->getSidebarBoxStatus();
-    }
+    }*/
 
 	function getXliteFormID()
 	{
@@ -566,7 +621,7 @@ class XLite_View_Abstract extends XLite_Base
 		return $form_id;
 	}
 
-	function isIgnoredTarget()
+	/*function isIgnoredTarget()
     {
 		$ignoreTargets = array
 		(
@@ -660,7 +715,7 @@ class XLite_View_Abstract extends XLite_Base
 		}
 		$form->collectGarbage();
 		return true;
-	}
+	}*/
 
     function isGDLibLoaded()
     {

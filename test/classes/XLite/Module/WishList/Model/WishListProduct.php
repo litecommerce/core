@@ -116,9 +116,10 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
 		return $this->getComplex('product.imageURL');
 	} // }}}
 
+	// FIXME
 	function getUrl() // {{{
 	{
-		return CART_SELF . "?target=product&product_id=" . $this->get("product_id");	
+		return XLite::CART_SELF . "?target=product&product_id=" . $this->get("product_id");	
 	} // }}}
 
 	function getTotal() // {{{

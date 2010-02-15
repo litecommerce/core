@@ -258,11 +258,11 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
     }
 
     /**
-    * Returns the item descriptiopn URL in the shopping cart.
+    * Returns the item descriptiopn URL in the shopping cart. FIXME
     */
     function getURL()
     {
-    	$url = CART_SELF . "?target=product&product_id=" . $this->get("product_id");
+    	$url = XLite::CART_SELF . "?target=product&product_id=" . $this->get("product_id");
     	$category_id = $this->getComplex('product.category.category_id');
     	if ($category_id) {
     		$url .= "&category_id=" . $category_id;

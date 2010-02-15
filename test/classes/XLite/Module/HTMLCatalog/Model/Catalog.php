@@ -47,6 +47,8 @@ define('CATALOG_INDEX_RECSIZE', 65535);
 
 set_time_limit(0); // building catalog is a long-time operation..
 
+// FIXME - fix usage of the "CART_SELF" constant and the URL composing mechanism
+
 /**
 * Class Catalog builds the static HTML catalog.
 *
@@ -620,16 +622,16 @@ class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Core_FlexyCompiler
         $topID = $this->getComplex('xlite.factory.Category.topCategory.category_id');
         $pageID = "";
         if ($category_id == $topID) {
-            return CART_SELF;
+            return XLite::CART_SELF;
         } elseif ($page_id != 0) {
             $pageID = "&pageID=".$page_id;
         }    
-        return CART_SELF . "?target=category&category_id=$category_id$pageID";
+        return XLite::CART_SELF . "?target=category&category_id=$category_id$pageID";
     } // }}}
 
     function getProductUrl($product_id, $category_id) // {{{
     {
-        return CART_SELF . "?target=product&product_id=$product_id&category_id=$category_id";
+        return XLite::CART_SELF . "?target=product&product_id=$product_id&category_id=$category_id";
     } // }}}
 
 	function init() // {{{
@@ -967,7 +969,7 @@ class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Core_FlexyCompiler
 
     function isHomeLink($href) // {{{
     {
-        return $href == CART_SELF || $href == $this->xlite->shopUrl(CART_SELF);
+        return $href == XLite::CART_SELF || $href == $this->xlite->shopUrl(XLite::CART_SELF);
     } // }}}
     
     /**
@@ -981,12 +983,12 @@ class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Core_FlexyCompiler
 
     function isCategoryLink($href) // {{{
     {
-         return preg_match("/".CART_SELF."\?target=category/i", $href) && ($this->getComplex('config.HTMLCatalog.catalog_pages') == "both" || $this->getComplex('config.HTMLCatalog.catalog_pages') == "categories");
+         return preg_match("/".XLite::CART_SELF."\?target=category/i", $href) && ($this->getComplex('config.HTMLCatalog.catalog_pages') == "both" || $this->getComplex('config.HTMLCatalog.catalog_pages') == "categories");
     } // }}}
     
     function isProductLink($href) // {{{
     {
-        return preg_match("/".CART_SELF."\?target=product/i", $href) && ($this->getComplex('config.HTMLCatalog.catalog_pages') == "both" || $this->getComplex('config.HTMLCatalog.catalog_pages') == "products");
+        return preg_match("/".XLite::CART_SELF."\?target=product/i", $href) && ($this->getComplex('config.HTMLCatalog.catalog_pages') == "both" || $this->getComplex('config.HTMLCatalog.catalog_pages') == "products");
     } // }}}
     
     function getObjectName(&$obj, $field=null)

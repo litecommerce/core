@@ -1,66 +1,93 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* Profiler
-*
-* @package Kernel
-* @access public
-* @version $Id$
-*/
-class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton 
-{	
-    protected static $queries = array();	
+ * Profiler
+ *  
+ * @category   Lite Commerce
+ * @package    Lite Commerce
+ * @subpackage Model
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @version    SVN: $Id$
+ * @link       http://www.qtmsoft.com/
+ * @since      3.0.0 EE
+ */
 
-    public $query_time = array();	
+
+/**
+ * Profiler 
+ * 
+ * @package    Lite Commerce
+ * @subpackage Model
+ * @since      3.0.0 EE
+ */
+class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton 
+{
+    /**
+     * List of executed queries 
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected static $queries = array();
+
+
+    /**
+     * Determines if profiler is switched on/off
+     * 
+     * @var    bool
+     * @access public
+     * @since  3.0.0 EE
+     */
     public $enabled = false;
 
-	public static function getInstance()
-	{
-		return self::_getInstance(__CLASS__);
-	}
 
-	public function __construct()
-	{
-		$this->start(XLite::getInstance()->getOptions(array('profiler_details', 'enabled')));
-	}
+	/**
+	 * Use this function to get a reference to this class object 
+	 * 
+	 * @return XLite_Model_Profiler
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
+	public static function getInstance()
+    {
+        return self::_getInstance(__CLASS__);
+    }
+
+    /**
+     * Constructor
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function __construct()
+    {
+        $this->start(XLite::getInstance()->getOptions(array('profiler_details', 'enabled')));
+    }
+
+	/**
+     * Destructor
+     *
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function __destruct()
+    {
+		$this->stop();
+    }
+
+
+
+
+
+
+
+
+    public $query_time = array();	
 
     function log($timePoint)
     {
@@ -116,19 +143,8 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
 ?>
 <p align=left>
 <table border=0>
-<tr><td style="FONT-WEIGHT: bold;">REQUEST</td><td><?php print $this->request_time; ?> (<?php print $this->request_time_delta; $this->total_time_sum += $this->request_time_delta; ?>)</td></tr>
-<tr><td style="FONT-WEIGHT: bold;">RUN (dialog init)</td><td><?php print $this->dialog_init_time; ?> (<?php print $this->dialog_init_time_delta; $this->total_time_sum += $this->dialog_init_time_delta; ?>)</td></tr>
-<tr><td style="FONT-WEIGHT: bold;">RUN (dialog request)</td><td><?php print $this->dialog_handleRequest_time; ?> (<?php print $this->dialog_handleRequest_time_delta; $this->total_time_sum += $this->dialog_handleRequest_time_delta; ?>)</td></tr>
-<tr><td style="FONT-WEIGHT: bold;">RUN (TOTAL)</td><td><?php print $this->run_time; ?> (<?php print ($this->dialog_init_time_delta + $this->dialog_handleRequest_time_delta + $this->run_time_delta); $this->total_time_sum += $this->run_time_delta; ?>)</td></tr>
-<tr><td colspan=2>&nbsp;</td></tr>
-<tr><td style="FONT-WEIGHT: bold; COLOR: red ">TOTAL TIME</td><td><?php print $this->stop_time - $this->start_time; ?> (<?php print $this->total_time_sum; ?>)</td></tr>
-<?php 
-if (function_exists('memory_get_usage')) {
-?>
-<tr><td style="FONT-WEIGHT: bold; COLOR: red ">MEMORY USAGE</td><td><?php printf("%.2f Mb used", memory_get_usage() / 1024 / 1024); ?></td></tr>
-<?php 
-}
-?>
+<tr><td style="FONT-WEIGHT: bold; COLOR: red ">EXECUTION TIME</td><td><?php print number_format($this->stop_time - $this->start_time, 4); ?></td></tr>
+<tr><td style="FONT-WEIGHT: bold; COLOR: red ">MEMORY PEAK USAGE</td><td><?php printf("%.2f Mb", memory_get_peak_usage() / 1024 / 1024); ?></td></tr>
 <tr><td colspan=2>&nbsp;</td></tr>
 <tr><td style="FONT-WEIGHT: bold;">TOTAL QUERIES</td><td><?php print $this->getTotalQueries(); ?></td></tr>
 <tr><td style="FONT-WEIGHT: bold;">TOTAL QUERIES TIME</td><td><?php print $this->getTotalQueriesTime(); ?></td></tr>
@@ -216,7 +232,3 @@ Included file sizes: <table>{foreach:profiler.includedFiles,file} <tr><td>{file.
     }
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

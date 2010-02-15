@@ -47,6 +47,9 @@
 */
 class XLite_Model_Layout extends XLite_Base implements XLite_Base_ISingleton
 {
+	public $skin = null;
+	public $locale = null;
+
     /**
     * Skin templates list.
     *
@@ -54,8 +57,6 @@ class XLite_Model_Layout extends XLite_Base implements XLite_Base_ISingleton
     * @access private
     */	
     public $list = array();	
-    public $skin = null;	
-    public $locale = null;
 
 	public static function getInstance()
     {
@@ -63,15 +64,13 @@ class XLite_Model_Layout extends XLite_Base implements XLite_Base_ISingleton
     }
 
 	public function __construct()
-	{
-		$this->initFromGlobals();
-	}
-
-    function initFromGlobals()
     {
-		$this->skin   = $this->xlite->getOptions(array('skin_details', 'skin'));
-		$this->locale = $this->xlite->getOptions(array('skin_details', 'locale'));
-    }
+        foreach (array('skin', 'locale') as $name) {
+            if (!isset($this->$name)) {
+                $this->$name = $this->xlite->getOptions(array('skin_details', $name));
+            }
+        }
+	}
 
     /**
     * Adds layout template file for the specified widget
@@ -112,7 +111,7 @@ class XLite_Model_Layout extends XLite_Base implements XLite_Base_ISingleton
     */
     public function getPath()
     {
-        return sprintf("skins/%s/%s/", $this->get("skin"), $this->get("locale"));
+        return sprintf("skins/%s/%s/", $this->skin, $this->locale);
     }
 	
 	function getSkins($includeAdmin = false)
@@ -146,7 +145,3 @@ class XLite_Model_Layout extends XLite_Base implements XLite_Base_ISingleton
 
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

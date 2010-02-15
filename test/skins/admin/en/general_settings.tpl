@@ -140,12 +140,10 @@
     </select>
     {end:}
     {if:option.name=#smtp_security#}
-    <select name="{option.name}"{if:xlite.isPHPEarlier(#5.1.0#)} disabled="disabled"{end:}>
-        <option value="no" selected="{option.value=#no#|isPHPEarlier(#5.1.0#)}">No</option>
-        <option value="ssl" selected="{option.value=#ssl#&!isPHPEarlier(#5.1.0#)}">SSL</option>
-        <option value="tls" selected="{option.value=#tls#&!isPHPEarlier(#5.1.0#)}">TLS</option>
+    <select name="{option.name}">
+        <option value="ssl" selected="{option.value=#ssl#}">SSL</option>
+        <option value="tls" selected="{option.value=#tls#}">TLS</option>
     </select>
-    {if:xlite.isPHPEarlier(#5.1.0#)}<b>Note:</b> This option is available if PHP version is 5.1.0 or higher{end:}
     {end:}
 
     {if:option.name=#time_zone#}

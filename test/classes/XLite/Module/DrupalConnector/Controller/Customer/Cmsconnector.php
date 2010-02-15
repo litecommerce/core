@@ -49,10 +49,6 @@ class XLite_Module_DrupalConnector_Controller_Customer_Cmsconnector extends XLit
 {	
     public $params = array('target', 'id');
 
-    function fillForm()
-    {
-    }
-
     /**
      * Landing from another system action 
      * 

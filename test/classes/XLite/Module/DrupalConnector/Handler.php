@@ -12,6 +12,15 @@
 class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
 {
 	/**
+	 * Semaphore 
+	 * 
+	 * @var    bool
+	 * @access protected
+	 * @since  3.0.0 EE
+	 */
+	protected static $isRequestRemapped = false;
+
+	/**
      * Method to access the singleton
      *
      * @return XLite_Module_DrupalConnector_Handler
@@ -77,10 +86,9 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
      */
     protected function prepareCall()
 	{
-		if (!self::$isCalled) {
+		if (!self::$isRequestRemapped) {
 			XLite_Core_Request::getInstance()->remapRequest();
-
-			self::$isCalled = true;
+			self::$isRequestRemapped = true;
 		}
 	}
 }

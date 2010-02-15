@@ -45,10 +45,140 @@
 * @access public
 * @version $Id$
 */
-abstract class XLite_Controller_Abstract extends XLite_View
-{	
+abstract class XLite_Controller_Abstract extends XLite_Core_Handler
+{
+	/**
+	 * Current page template 
+	 * 
+	 * @var    string
+	 * @access protected
+	 * @since  3.0.0 EE
+	 */
+	protected $template = 'main.tpl';
+
+	/**
+	 * Check if current page is accessible
+	 * 
+	 * @return bool
+	 * @access protected
+	 * @since  3.0.0 EE
+	 */
+	protected function checkAccess()
+	{
+		return $this->auth->isAuthorized($this);
+	}
+
+	/**
+	 * Perform redirect 
+	 * 
+	 * @param string $url redirect URL
+	 *  
+	 * @return void
+	 * @access protected
+	 * @since  3.0.0 EE
+	 */
+	protected function redirect($url = null)
+    {
+        $location = is_null($returnUrl = $this->getReturnUrl()) ? (is_null($url) ? $this->getUrl() : $url) : $returnUrl;
+
+        // filter xlite_form_id from redirect url
+        $action = $this->get('action');
+        if (empty($action))
+            $location = $this->filterXliteFormID($location);
+
+        XLite_Model_Profiler::getInstance()->enabled = false;
+
+        header('Location: ' . ($this->returnUrlAbsolute ? $this->shopURL($location, $this->get('secure')) : $location));
+    }
+
+
+    /**
+     * Handles the request. Parses the request variables if necessary. Attempts to call the specified action function 
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function handleRequest()
+    {
+		if (empty($this->action) && ($this->get('secure') ^ $this->is('https'))) {
+
+            $this->redirect();
+        }
+
+		if (!$this->checkAccess()) {
+
+			if (!empty($this->action)) {
+				$this->params = array('target', 'mode');
+    	        $this->set('target', XLite::TARGET_DEFAULT);
+        	    $this->set('mode', 'access_denied');
+			}
+
+			$this->redirect();
+		}
+
+		if ($this->isValid() && !empty($this->action)) {
+
+			$action = 'action_' . $this->action;
+            $this->$action();
+
+			if ($this->isValid() && !$this->silent) {
+                $this->redirect();
+            }
+		}
+	}
+
+	/**
+	 * Return Viewer object
+	 * 
+	 * @return XLite_View_Controller
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
+	public function getViewer()
+	{
+		return new XLite_View_Controller($this->get('template'), $this->is('silent'), $this->is('dumpStarted'));
+    }
+
+	/**
+	 * This function called after template output
+	 * FIXME - may be there is a better way to handle this?
+	 * 
+	 * @return void
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
+	public function postprocess()
+	{
+	}
+
+	/**
+	 * getAllParams 
+	 * 
+	 * @param mixed $exeptions ____param_comment____
+	 *  
+	 * @return array
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
+	public function getAllParams($exeptions = null)
+    {
+        $result = array();
+		$exeptions = isset($exeptions) ? explode(",", $exeptions) : null;
+
+        foreach ($this->get('params') as $name) {
+			$value = $this->get($name);
+            if (isset($value) && !(isset($exeptions) && in_array($name, $exeptions))) {
+                $result[$name] = $value;
+            }
+        }
+
+		return $result;
+	}
+
+
+
     public $params = array('target');	
-    public $template = "main.tpl";	
     public $dumpStarted = false; // startDump was called	
     public $locationPath = array(); // path for dialog location
 
@@ -57,7 +187,6 @@ abstract class XLite_Controller_Abstract extends XLite_View
 	protected $pageTemplates = array();
 
 	protected $returnUrlAbsolute = false;
-	protected $returnUrl = null;
 
 	protected $product = null;
 
@@ -80,7 +209,7 @@ abstract class XLite_Controller_Abstract extends XLite_View
 		return $this->returnUrl;
 	}
 
-    function getAllParams($exeptions = null)
+    /*function getAllParams($exeptions = null)
     {
     	$allParams = parent::getAllParams();
     	$params = $allParams;
@@ -96,7 +225,7 @@ abstract class XLite_Controller_Abstract extends XLite_View
     		}
     	}
         return $params;
-    }
+    }*/
 
 	function getTemplate()
     {
@@ -114,138 +243,11 @@ abstract class XLite_Controller_Abstract extends XLite_View
 
     function getCategory()
     {
-        if (is_null($this->category) && !is_null($this->get('category_id'))) {
+        if (is_null($this->category)) {
             $this->category = new XLite_Model_Category($this->get('category_id'));
         }
+
         return $this->category;
-    }
-
-    function init()
-    {
-        $this->mapRequest();
-
-        parent::init();
-    }
-
-    /**
-    * Handles the request. Parses the request variables if necessary.
-    * Attempts to call the specified action function.
-    *
-    * @access public
-    */
-    function handleRequest()
-    {
-        $cart_self = $GLOBALS["XLITE_SELF"];
-
-        $trusted_referer = false;
-        if (!empty($_SERVER["HTTP_REFERER"])) {
-            $referer = $this->_pure_url_path($_SERVER["HTTP_REFERER"]);
-
-            $url = $this->_pure_url_path($this->xlite->shopURL(""));
-            $surl = $this->_pure_url_path($this->xlite->shopURL("", true));
-            if (strpos($referer, $url) == 0 || strpos($referer, $surl) == 0) {
-                $trusted_referer = true;
-            }
-        }
-
-		if (
-			isset($_REQUEST[XLite_Model_Session::SESSION_DEFAULT_NAME])
-			&& (isset($_GET[XLite_Model_Session::SESSION_DEFAULT_NAME]) || isset($_POST[XLite_Model_Session::SESSION_DEFAULT_NAME]))
-			&& (
-				(
-				isset($_COOKIE[XLite_Model_Session::SESSION_DEFAULT_NAME])
-				&& isset($_SERVER["HTTP_REFERER"])
-				&& (
-					(isset($_GET[XLite_Model_Session::SESSION_DEFAULT_NAME]) && $_GET[XLite_Model_Session::SESSION_DEFAULT_NAME] != $_COOKIE[XLite_Model_Session::SESSION_DEFAULT_NAME])
-					|| (isset($_POST[XLite_Model_Session::SESSION_DEFAULT_NAME]) && $_POST[XLite_Model_Session::SESSION_DEFAULT_NAME] != $_COOKIE[XLite_Model_Session::SESSION_DEFAULT_NAME]))
-					&& !$trusted_referer
-				)
-				||
-				(
-				isset($_COOKIE[XLite_Model_Session::SESSION_DEFAULT_NAME])
-				&& !isset($_SERVER["HTTP_REFERER"])
-				&& $this->xlite->get("script") == $cart_self
-				&& (
-					(
-					isset($_GET[XLite_Model_Session::SESSION_DEFAULT_NAME])
-					&& $_GET[XLite_Model_Session::SESSION_DEFAULT_NAME] != $_COOKIE[XLite_Model_Session::SESSION_DEFAULT_NAME]
-					)
-					||
-					(
-					isset($_POST[XLite_Model_Session::SESSION_DEFAULT_NAME])
-					&& $_POST[XLite_Model_Session::SESSION_DEFAULT_NAME] != $_COOKIE[XLite_Model_Session::SESSION_DEFAULT_NAME]
-					)
-				   )
-				)
-				||
-				(
-				!isset($_COOKIE[XLite_Model_Session::SESSION_DEFAULT_NAME])
-				&& (!isset($_SERVER["HTTP_REFERER"]) || (isset($_SERVER["HTTP_REFERER"]) && !$trusted_referer))
-				)
-			)
-		) {
-
-			$this->xlite->logger->log("Dialog::handleRequest() >>>");
-			$this->xlite->logger->log("_COOKIE_XLite_Model_Session::SESSION_DEFAULT_NAME: ".$_COOKIE[XLite_Model_Session::SESSION_DEFAULT_NAME]);
-			$this->xlite->logger->log("_GET_XLite_Model_Session::SESSION_DEFAULT_NAME: ".$_GET[XLite_Model_Session::SESSION_DEFAULT_NAME]);
-			$this->xlite->logger->log("_POST_XLite_Model_Session::SESSION_DEFAULT_NAME: ".$_POST[XLite_Model_Session::SESSION_DEFAULT_NAME]);
-			$this->xlite->logger->log("_REQUEST_XLite_Model_Session::SESSION_DEFAULT_NAME: ".$_REQUEST[XLite_Model_Session::SESSION_DEFAULT_NAME]);
-			$this->xlite->logger->log("_SERVER_HTTP_REFERER: ".$_SERVER["HTTP_REFERER"]);
-			$this->xlite->logger->log("<<<");
-
-			if ( $GLOBALS["XLITE_SELF"] == ADMIN_SELF ) {
-				// Admin area - redirect to login page
-				$this->_clear_xsid_data();
-				header("Location: " . $this->shopURL(ADMIN_SELF."?target=login"));
-				return;
-			}
-
-			$this->_clear_xsid_data();
-			header("Location: " . $this->shopURL($cart_self));
-			return;
-		}
-
-        if (isset($_REQUEST['no_https'])) {
-            $this->session->set("no_https", true);
-        }
-        if (!isset($this->action) && ($this->get("secure") ^ $this->is("https"))) {
-            $this->redirect();
-            return;
-        }
-        if (!$this->auth->isAuthorized($this)) {
-            $this->params = array("target", "mode");
-            $this->set("target", "main");
-            $this->set("mode", "access_denied");
-            $this->redirect();
-            return;
-        }
-        if (!$this->checkXliteForm()) {
-			$this->set("returnUrl", null);
-            $this->params = array("target");
-            $this->set("target", "access_denied");
-            $this->redirect();
-            return;
-        }
-
-        parent::handleRequest();
-        if (!isset($this->action)) {
-            $this->fillForm();
-            $this->output();
-            return;
-        }
-
-        if ($this->isValid() && !empty($this->action)) {
-            // call action method
-            $action = "action_" . $this->action;
-			$this->$action();
-
-            // action can change valid to false
-            if ($this->isValid() && !$this->silent) {
-                return $this->redirect();
-            }    
-        }
-
-        $this->output();
     }
 
 	function _clear_xsid_data()
@@ -283,7 +285,7 @@ abstract class XLite_Controller_Abstract extends XLite_View
         return false;
     }
 
-    function startPage()
+    /*function startPage()
     {
         // send no-cache headers
         $error_reporting = error_reporting(0); // suppress warning messages
@@ -294,7 +296,7 @@ abstract class XLite_Controller_Abstract extends XLite_View
         header("Pragma: no-cache");
         header("Content-Type: text/html");
         error_reporting($error_reporting);
-    }
+    }*/
     
     function startDownload($filename, $contentType = "application/force-download")
     {
@@ -319,7 +321,7 @@ abstract class XLite_Controller_Abstract extends XLite_View
         }
     }
 
-    function output()
+    /*function output()
     {
         $this->xlite->profiler->log("request_time");
         if (!$this->silent) {
@@ -331,7 +333,7 @@ abstract class XLite_Controller_Abstract extends XLite_View
         if ($this->dumpStarted) {
             func_refresh_end();
         }
-    }
+    }*/
     
     /**
     * Provides access to accessdenied function.
@@ -351,7 +353,7 @@ abstract class XLite_Controller_Abstract extends XLite_View
         return $this->getComplex('auth.customerAccessLevel');
     }
 
-    function redirect($url = null)
+    /*function redirect($url = null)
 	{
 		$location = is_null($returnUrl = $this->getReturnUrl()) ? (is_null($url) ? $this->getUrl() : $url) : $returnUrl; 
 
@@ -361,10 +363,9 @@ abstract class XLite_Controller_Abstract extends XLite_View
 		    $location = $this->filterXliteFormID($location);
 
         XLite_Model_Profiler::getInstance()->enabled = false;
-        XLite::getInstance()->done();
 
 		header('Location: ' . ($this->returnUrlAbsolute ? $this->shopURL($location, $this->get('secure')) : $location));
-    }
+    }*/
 
     function getProperties()
     {

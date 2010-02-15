@@ -58,23 +58,30 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
         return self::_getInstance(__CLASS__);
     }
 
-	/**
-	 * Map request data
-	 * 
-	 * @return void
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function mapRequest()
+    /**
+     * Map request data
+     * 
+     * @param array $data custom data (optional)
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+	public function mapRequest(array $data = array())
 	{
-		$this->data = $_REQUEST;
+        // TODO - in PHP 5.3 it's should be replaced by the "array_replace_recursive()" function
+        $this->data = empty($data) ? $_REQUEST : $data + $this->data;
 	}
+
+    public function getData()
+    {
+        return $this->data;
+    }
 
 	/**
 	 * Getter
 	 * 
-	 * @param string $name Request property name
+	 * @param string $name property name
 	 *  
 	 * @return mixed
 	 * @access public
@@ -85,4 +92,33 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
 	{
 		return isset($this->data[$name]) ? $this->data[$name] : null;
 	}
+    
+    /**
+     * Setter 
+     * 
+     * @param string $name  property name
+     * @param string $value property value
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function __set($name, $value)
+    {
+        $this->data[$name] = $value;
+    }
+
+    /**
+     * Check property accessability
+     *
+     * @param string $name property name
+     *
+     * @return bool
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function __isset($name)
+    {
+        return isset($this->data[$name]);
+    }
 }

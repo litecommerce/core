@@ -46,14 +46,8 @@
 */
 class XLite_View extends XLite_View_Abstract
 {
-	protected $widgetParams = null;
+	//protected $widgetParams = null;
 	
-    public $params = array();	
-    public $components = array();	
-    public $valid = true;
-
-	protected $returnUrl = null;
-
 	/**
 	 * Check if a widget requested from certain CMS
 	 * 
@@ -63,14 +57,14 @@ class XLite_View extends XLite_View_Abstract
 	 * @access protected
 	 * @since  1.0.0
 	 */
-	protected function checkCurrentCMS($cmsName)
+	/*protected function checkCurrentCMS($cmsName)
     {
 		$name = XLite_Core_CMSConnector::CURRENT_CMS;
 
         return $cmsName === $this->$name;
-    }
+    }*/
 
-    
+    // FIXME - check this function very carefully
     function init()
     {
 		$originalRequest = $_REQUEST;
@@ -79,7 +73,7 @@ class XLite_View extends XLite_View_Abstract
         // get request params
         foreach ($this->params as $name) {
             if (isset($_REQUEST[$name])) {
-				if ($GLOBALS["XLITE_SELF"] == CART_SELF) {
+				if (XLite::CART_SELF === XLite::getInstance()->getScript()) {
         			$_REQUEST[$name] = $this->_validateRequestData($_REQUEST[$name], $name);
 					if ($this->_requestValueUpdated) {
 						$this->_requestUpdated = true;
@@ -96,25 +90,22 @@ class XLite_View extends XLite_View_Abstract
 		}
     }
 
-    function initView()
-    {
-    }
-
-    function handleRequest()
+    /*function handleRequest()
     {
         $components = $this->get("components");
         for ($i = 0; $i < count($components); $i++) {
             $components[$i]->handleRequest();
         }
-    }
+    }*/
 
-    function display()
+    /*function display()
     {
         $this->initView();
+
         parent::display();
-    }
+    }*/
     
-    function fillForm()
+    /*function fillForm()
     {
         $components = $this->get("components");
         for ($i=0; $i<count($components); $i++) {
@@ -122,9 +113,9 @@ class XLite_View extends XLite_View_Abstract
                 $components[$i]->fillForm();
             }
         }
-    }
+    }*/
  
-    function getAllParams()
+    /*function getAllParams()
     {
         $result = array();
         foreach ($this->get("params") as $name) {
@@ -139,10 +130,11 @@ class XLite_View extends XLite_View_Abstract
                 $result = array_merge($result, $components[$i]->get("allParams"));
             }
         }
-        return $result;
-    }
 
-    function getComponents()
+        return $result;
+    }*/
+
+    /*function getComponents()
     {
         return $this->components;
     }
@@ -155,10 +147,11 @@ class XLite_View extends XLite_View_Abstract
     function getThisVar()
     {
         return $this;
-    }
+    }*/
 
-    function isValid()
+    /*function isValid()
     {
+		return $this->valid;
         if (!$this->valid) {
             return false;
         }
@@ -169,9 +162,9 @@ class XLite_View extends XLite_View_Abstract
             }
         }
         return true;
-    }
+    }*/
 
-    function mapRequest($request = null)
+    /*function mapRequest($request = null)
     {
         if (is_null($request) || (!is_null($request) && !is_array($request))) {
             $request = $_REQUEST;
@@ -206,9 +199,9 @@ class XLite_View extends XLite_View_Abstract
 		if ($this->_requestUpdated) {
 			$this->_logSecurityReport($originalRequest);
 		}
-    }
+    }*/
 
-    function _needConvertToInt($name)
+    /*function _needConvertToInt($name)
     {
 		switch ($name) {
 			case "category_id":
@@ -257,7 +250,7 @@ class XLite_View extends XLite_View_Abstract
 			default:
 	    	return false;
 		}
-    }
+    }**/
 
 	function _stripSQLinjection($value, $name)
 	{
@@ -280,7 +273,7 @@ class XLite_View extends XLite_View_Abstract
     {
 		$value = $this->_stripSQLinjection($value, $name);
     	$value = strip_tags($value);
-		if ($this->_needConvertToInt($name)) {
+		/*if ($this->_needConvertToInt($name)) {
             $value = intval($value);
         }
 		
@@ -291,7 +284,7 @@ class XLite_View extends XLite_View_Abstract
 			if (!($value == $valueInt || substr($value, 0, strlen($valueStr)) == $valueStr)) {
 				$value = $valueInt;
 			}
-		}
+		}*/
 
     	return $value;
     }
@@ -377,6 +370,7 @@ class XLite_View extends XLite_View_Abstract
 	}
 
 
+
 	/**
 	 * Define widget parameters
 	 * 
@@ -384,10 +378,10 @@ class XLite_View extends XLite_View_Abstract
 	 * @access protected
 	 * @since  1.0.0
 	 */
-	protected function defineWidgetParams()
+	/*protected function defineWidgetParams()
 	{
 		$this->widgetParams = array();
-	}
+	}*/
 
 	/**
 	 * Compose URL from target, action and additional params 
@@ -400,10 +394,10 @@ class XLite_View extends XLite_View_Abstract
 	 * @access public
 	 * @since  3.0
 	 */
-	public function buildURL($target, $action = '', array $params = array())
+	/*public function buildURL($target, $action = '', array $params = array())
 	{
 		return XLite_Core_Converter::buildURL($target, $action, $params);
-	}
+	}*/
 
 	/**
 	 * Return widget parameters list
@@ -412,14 +406,14 @@ class XLite_View extends XLite_View_Abstract
 	 * @access public
 	 * @since  1.0.0
 	 */
-	public function getWidgetParams()
+	/*public function getWidgetParams()
 	{
 		if (is_null($this->widgetParams)) {
 			$this->defineWidgetParams();
 		}
 
 		return $this->widgetParams;
-	}
+	}*/
 
 	/**
 	 * Check passed attributes 
@@ -430,9 +424,25 @@ class XLite_View extends XLite_View_Abstract
 	 * @access public
 	 * @since  1.0.0
 	 */
-	public function validateAttributes(array $attributes)
+	/*public function validateAttributes(array $attributes)
 	{
 		return array();
-	}
+	}*/
+
+	/**
+	 * Set custom template
+	 * 
+	 * @param string $template template file name
+	 *  
+	 * @return void
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
+	/*public function __construct($template = null)
+	{
+		if (isset($template)) {
+			$this->template = $template;
+		}
+	}*/
 }
 

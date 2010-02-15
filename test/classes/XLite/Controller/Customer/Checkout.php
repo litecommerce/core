@@ -320,13 +320,6 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
         return $this->order;
     }
     
-    function output()
-    {
-        if (!$this->get("silent")) {
-            parent::output();
-        }
-    }
-
     function action_return()
     {
         if (isset($_REQUEST["order_id_name"])) {

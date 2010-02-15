@@ -165,10 +165,11 @@ class XLite_Module_GiftCertificates_Model_OrderItem extends XLite_Model_OrderIte
         return $this->get("gcid") == "" && parent::isUseStandardTemplate();
     }
 
+	// FIXME
     function getURL()
     {
         if ($this->get("gcid")) {
-        return CART_SELF . "?target=add_gift_certificate&gcid=" . $this->get("gcid");
+        return XLite::CART_SELF . "?target=add_gift_certificate&gcid=" . $this->get("gcid");
         }
         return parent::getURL();
     }

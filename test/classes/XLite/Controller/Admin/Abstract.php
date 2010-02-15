@@ -45,6 +45,78 @@
 */
 abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
 {
+	/**
+     * Check if current page is accessible
+     *
+     * @return bool
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function checkAccess()
+    {
+        return parent::checkAccess() && $this->checkXliteForm();
+    }
+
+	/**
+	 * isXliteFormValid 
+	 * 
+	 * @return bool
+	 * @access protected
+	 * @since  3.0.0 EE
+	 */
+	protected function isXliteFormValid()
+    {
+        if (!$this->xlite->config->Security->form_id_protection) {
+            return true;
+        }
+
+        if ('payment_method' == $this->target && 'callback' == $this->action) {
+            return true;
+        }
+
+		$form = new XLite_Model_XliteForm();
+		$result = $form->find('form_id = \'' . addslashes($this->xlite_form_id) . '\' AND session_id = \'' . XLite_Model_Session::getInstance()->getID() . '\'');
+
+		if (!$result) {
+			$form->collectGarbage();
+		}
+
+		return $result;
+    }
+
+
+	/**
+     * This function called after template output
+     *
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+	public function postprocess()
+    {
+        parent::postprocess();
+
+        if ($this->dumpStarted) {
+            $this->displayPageFooter();
+        }
+    }
+
+	/**
+	 * checkXliteForm 
+	 * 
+	 * @return bool
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
+	public function checkXliteForm()
+    {
+        return isset($this->target) || $this->isIgnoredTarget() || $this->isXliteFormValid();
+    }
+
+
+
+
+
 	protected $recentAdmins = null;
 
     function getCustomerZoneWarning()
@@ -78,6 +150,10 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
             return;
         }
 
+		if (isset($_REQUEST['no_https'])) {
+            $this->session->set("no_https", true);
+        }
+
         parent::handleRequest();
     }
 
@@ -108,14 +184,6 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
 		parent::startDump();
 		if (!isset($_REQUEST["mode"]) || $_REQUEST["mode"]!="cp") {
 			$this->displayPageHeader();
-		}
-	}
-
-	function output()
-	{
-		parent::output();
-		if ($this->dumpStarted) {
-			$this->displayPageFooter();
 		}
 	}
 
@@ -206,5 +274,80 @@ EOT;
 	{
 		return $this->shopUrl($this->getComplex('xlite.script'), $this->getComplex('config.Security.admin_security'));
 	}
+
+	// FIXME - check this function carefully
+	function isIgnoredTarget()
+    {
+		$ignoreTargets = array
+		(
+        	"image" => array("*"),
+            "callback" => array("*"),
+			"upgrade" => array("version", "upgrade")
+		);
+
+		
+                            
+        if (
+			isset($ignoreTargets[$_REQUEST['target']]) 
+			&& (
+				in_array("*", $ignoreTargets[$_REQUEST['target']]) 
+				|| (isset($_REQUEST['action']) && in_array($_REQUEST['action'], $ignoreTargets[$_REQUEST['target']]))
+			)
+		) { 
+            return true;
+        }
+
+        $specialIgnoreTargets = array
+        (
+            "db" => array("backup", "delete"),
+            "files" => array("tar", "tar_skins", "untar_skins"),
+            "wysiwyg" => array("export", "import")
+        );
+
+        if(
+			isset($specialIgnoreTargets[$_REQUEST['target']]) 
+			&& (
+				in_array("*", $specialIgnoreTargets[$_REQUEST['target']]) 
+				|| (isset($_REQUEST['action']) && in_array($_REQUEST['action'], $specialIgnoreTargets[$_REQUEST['target']]))
+			) 
+			&& (
+				isset($_POST['login']) && isset($_POST['password'])
+			)
+		) {
+            $login = $this->xlite->auth->getComplex('profile.login');
+            $post_login = $_POST['login'];
+            $post_password = $_POST['password'];
+
+            if($login != $post_login)
+                return false;
+
+            if(!empty($post_login) && !empty($post_password)){
+                $post_password = $this->xlite->auth->encryptPassword($post_password);
+                $profile = new XLite_Model_Profile();
+                if ($profile->find("login='".addslashes($post_login)."' AND ". "password='".addslashes($post_password)."'")) {
+                    if ($profile->get("enabled") && $profile->is("admin")) {
+                        return true;
+                    }
+                }
+            }
+        }
+        
+        return false;
+    } 
+
+	// FIXME - check if it's needed
+	function getSidebarBoxStatus($boxHead = null)
+    {
+        $dialog = new XLite_Controller_Admin_Sbjs();
+        $dialog->sidebar_box_id = $this->strMD5($boxHead);
+
+        return $dialog->getSidebarBoxStatus();
+    }
+
+	// FIXME - move it to the appropriate class (or remove)
+	function strMD5($string)
+    {
+        return strtoupper(md5(strval($string)));
+    }
 }
 

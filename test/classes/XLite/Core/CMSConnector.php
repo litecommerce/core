@@ -23,20 +23,15 @@
  */
 abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleton
 {
-	/**
-     * This field determines currently used CMS
-     */
-    const CURRENT_CMS = '____CMS____';
-
     /**
-     * Request remaper calling flag
+     * Current CMS name
      * 
-     * @var    boolean
-     * @access public
+     * @var    booln
+     * @access protected
      * @see    ____var_see____
      * @since  3.0.0 EE
      */
-    static public $isCalled = false;
+    protected static $currentCMS = null;
 
 	/**
 	 * Layout path 
@@ -96,6 +91,16 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
     protected $jsFiles = null;
 
+    /**
+     * Initialized instance of the XLite singleton 
+     * 
+     * @var    XLite
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected $initializedApplication = null;
+
+
 	/**
 	 * Constructor
 	 * 
@@ -109,6 +114,27 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 		$this->layoutPath = XLite_Model_Layout::getInstance()->getPath();
 	}
 
+    /**
+     * Return initialized instance of the XLite singleton 
+     * 
+     * @param array $request request data
+     *  
+     * @return XLite
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getApplicationInstance(array $request)
+    {
+        XLite_Core_Request::getInstance()->mapRequest($request);
+
+        if (!isset($this->initializedApplication)) {
+            $this->initializedApplication = XLite::getInstance();
+            $this->initializedApplication->init();
+        }
+
+        return $this->initializedApplication;
+    }
+
 	/**
 	 * Prepare attributes before set them to a widget
 	 * 
@@ -120,31 +146,25 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 */
 	protected function prepareAttributes(array $attributes)
 	{
-        $attributes[self::CURRENT_CMS] = $this->getCMSName();
-
         return $attributes;
 	}
 
 	/**
      * Get widget content
      *
-     * @param XLite_View $object     controller/viewer object to use
-     * @param array      $attributes widget attributes
+     * @param XLite_View_Abstract $object     controller/viewer object to use
+     * @param array               $attributes widget attributes
      *
      * @return string
      * @access protected
      * @since  3.0.0 EE
      */
-    protected function getContent(XLite_View $object, array $attributes = array())
+    protected function getContent(XLite_View_Abstract $object, array $attributes = array())
     {
         $this->prepareCall();
-        $object->setAttributes($this->prepareAttributes($attributes));
-        $object->init();
-
-        $function = ($object instanceof XLite_Controller_Abstract) ? 'handleRequest' : 'display';
 
         ob_start();
-        $object->$function();
+        $this->getApplicationInstance($attributes)->runViewer($object);
         $content = ob_get_contents();
         ob_end_clean();
 
@@ -180,6 +200,31 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      * @since  3.0.0 EE
      */
     abstract protected function prepareCall();
+
+
+    /**
+     * Handler should called this function first to prevent any possible conflicts
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function init()
+    {
+        self::$currentCMS = $this->getCMSName();
+    }
+
+    /**
+     * Check if a widget requested from certain CMS
+     *
+     * @return bool
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function checkCurrentCMS()
+    {
+        return $this->getCMSName() === self::$currentCMS;
+    }
 
 	/**
 	 * Return list of widgets which can be exported 
@@ -220,9 +265,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 */
 	public function validateWidgetArguments($name, array $attributes)
 	{
-		$widget = $this->getWidgetObject($name);
-
-		return $widget ? $widget->validateAttributes($attributes) : array();
+		return ($widget = $this->getWidgetObject($name)) ? $widget->validateAttributes($attributes) : array();
 	}
 
 	/**
@@ -238,9 +281,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
 	public function isWidgetVisible($name, array $attributes)
 	{
-		$widget = $this->getWidgetObject($name);
-
-		return $widget ? $widget->isVisible() : false;
+		return ($widget = $this->getWidgetObject($name)) ? $widget->isVisible() : false;
 	}
 
 	/**
@@ -255,9 +296,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 */
 	public function getWidgetHTML($name, array $attributes = array())
 	{
-		$widget = $this->getWidgetObject($name);
-
-		return $widget ? $this->getContent($widget, $attributes) : null;
+		return ($widget = $this->getWidgetObject($name)) ? $this->getContent($widget, $attributes) : null;
 	}
 
 	/**
@@ -417,7 +456,15 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 */
 	public function runFrontController($target, $action, array $args = array())
 	{
-		$name = XLite_Core_Converter::getControllerClass($target);
+        $args = array(
+            'target'   => $target,
+            'action'   => $action,
+            'template' => 'center_top.tpl',
+        ) + $args;
+
+		return $this->getContent($this->getApplicationInstance($args)->runController());
+
+        /*$name = XLite_Core_Converter::getControllerClass($target);
         $result = array(null, null, null);
 
         if (class_exists($name)) {
@@ -435,7 +482,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
             );
         }
 
-        return $result;
+        return $result;*/
 	}
 
 	/**

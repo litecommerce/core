@@ -45,12 +45,13 @@
 */
 class XLite_Module_DemoMode_Controller_Abstract extends XLite_Controller_Abstract implements XLite_Base_IDecorator
 {
+	// FIXME
     function init()
     {
         $target = isset($_REQUEST["target"]) ? strtolower($_REQUEST["target"]) : "main";
         $action = isset($_REQUEST["action"]) ? strtolower($_REQUEST["action"]) : "default";
         if ($this->isDeniedAction($target, $action) && !$this->session->get("superUser")) {
-            $this->redirect(ADMIN_SELF . "?target=demo_mode");
+            $this->redirect(XLite::ADMIN_SELF . "?target=demo_mode");
             die();
         }
         if (!$this->xlite->is("adminZone")) {

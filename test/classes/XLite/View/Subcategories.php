@@ -55,14 +55,8 @@ class XLite_View_Subcategories extends XLite_View_Dialog
     {
         parent::initView();
 
-        $request = XLite_Core_Request::getInstance();
-
-        $this->category_id = intval($request->category_id);
-
         $this->body = $this->config->General->subcategories_look;
-        $this->visible = in_array($request->target, array(null, 'main', 'category'))
-            && 0 < $this->category_id
-            && $this->getCategory()->getSubcategories();
+        $this->visible = in_array($this->target, array('main', 'category')) && $this->getCategory()->getSubcategories();
 
         $this->showLocationPath = true;
         $this->mode = '';
