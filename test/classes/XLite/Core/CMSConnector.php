@@ -120,7 +120,9 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 */
 	protected function prepareAttributes(array $attributes)
 	{
-		return array(self::CURRENT_CMS => $this->getCMSName()) + $attributes;
+        $attributes[self::CURRENT_CMS] = $this->getCMSName();
+
+        return $attributes;
 	}
 
 	/**
@@ -416,19 +418,24 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	public function runFrontController($target, $action, array $args = array())
 	{
 		$name = XLite_Core_Converter::getControllerClass($target);
-		$object = new $name();
+        $result = array(null, null, null);
 
-        $content = $this->getContent(
-            $object,
-            array('target' => $target, 'action' => $action, 'template' => 'center_top.tpl') + $args
-        );
+        if (class_exists($name)) {
+    		$object = new $name();
 
-        $path = $object->get('locationPath');
+            $content = $this->getContent(
+                $object,
+              array('target' => $target, 'action' => $action, 'template' => 'center_top.tpl') + $args
+            );
 
-		return array(
-            $path,
-            $content,
-        );
+		    $result = array(
+                $object->get('locationPath'),
+                $content,
+                $object->getPageTypeName(),
+            );
+        }
+
+        return $result;
 	}
 
 	/**

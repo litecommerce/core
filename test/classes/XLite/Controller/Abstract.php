@@ -623,7 +623,21 @@ abstract class XLite_Controller_Abstract extends XLite_View
 	 */
 	public function getPageInstanceData()
 	{
-		return array(null, null);
+		return array($this->getPageTypeName(), $this->getUrl());
 	}
+
+    /**
+     * Get page type name
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageTypeName()
+    {
+        return null;
+    }
+
 }
 

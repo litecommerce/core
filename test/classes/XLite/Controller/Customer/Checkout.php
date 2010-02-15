@@ -367,7 +367,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 
     /**
      * Get page instance data (name and URL)
-     *
+     * 
      * @return array
      * @access public
      * @see    ____func_see____
@@ -375,10 +375,22 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
      */
     public function getPageInstanceData()
     {
-        return array(
-            'Checkout',
-            $this->getUrl(),
-        );
+        $this->target = 'checkout';
+
+        return parent::getPageInstanceData();
+    }
+
+    /**
+     * Get page type name
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageTypeName()
+    {
+        return 'Checkout';
     }
 
 }
