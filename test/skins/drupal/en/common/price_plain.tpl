@@ -1,9 +1,10 @@
+{* SVN $Id$ *}
 <span IF="{!SalePriceEnabled}">
-<FONT class="ProductPriceTitle">Price: </FONT><FONT class="ProductPrice">{price_format(product,#listPrice#):h}</FONT><FONT class="ProductPriceTitle"> {product.priceMessage:h}</FONT>
+  <font class="ProductPriceTitle">Price: </font><font class="ProductPrice">{price_format(product,#listPrice#):h}</font><font class="ProductPriceTitle"> {product.priceMessage:h}</font>
 </span>
 
 <span IF="{SalePriceEnabled}">
-<FONT class="ProductPriceTitle">Our price: </FONT><FONT class="ProductPrice">{price_format(product,#listPrice#):h}</FONT><FONT class="ProductPriceTitle"> {product.priceMessage:h}</FONT>
-<br />
-<FONT class="MarketPrice">Market price: <s>{price_format(product,#sale_price#):h}</s></FONT><span IF="{SaveEnabled}"> , <font class="Save">save {SaveValue}</font></span>
+  <font class="ProductPriceTitle">Our price: </font><font class="ProductPrice">{price_format(product,#listPrice#):h}</font><font class="ProductPriceTitle"> {product.priceMessage:h}</font>
+  <br />
+  <font class="MarketPrice">Market price: <em>{price_format(product,#sale_price#):h}</em></font><span IF="{SaveEnabled}"> , <font class="Save">save {SaveValue}</font></span>
 </span>

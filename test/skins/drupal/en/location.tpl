@@ -1,6 +1,6 @@
 <font class="NavigationPath">
 <a IF="!welcomeWidget.visible" href="cart.php" class="NavigationPath">Home</a>
-<span FOREACH="locationPath,cname,curl">&nbsp;::&nbsp;<a href="{curl}" class="NavigationPath">{cname}</a>
+<span FOREACH="getLocationPath(),cname,curl">&nbsp;::&nbsp;<a href="{curl}" class="NavigationPath">{cname}</a>
 </span>
 <span IF="target=#login#">&nbsp;::&nbsp;Authentication</span>
 <span IF="target=#cart#">&nbsp;::&nbsp;Shopping cart</span>

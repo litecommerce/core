@@ -9,7 +9,7 @@
 </TR>
 <TR>
     <TD>
-        <widget template="{widget.body}">
+        <widget template="{body}">
     </TD>
 </TR>
 </TABLE>
