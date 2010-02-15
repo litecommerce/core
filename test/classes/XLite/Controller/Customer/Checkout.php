@@ -364,9 +364,22 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
     {
         return $this->getComplex('xlite.config.General.display_check_number');
     }
+
+    /**
+     * Get page instance data (name and URL)
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageInstanceData()
+    {
+        return array(
+            'Checkout',
+            $this->getUrl(),
+        );
+    }
+
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

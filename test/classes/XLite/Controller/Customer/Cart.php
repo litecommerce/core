@@ -148,5 +148,22 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
 
 		$this->cart->collectGarbage($limit = 5);
 	}
+
+    /**
+     * Get page instance data (name and URL)
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageInstanceData()
+    {
+        return array(
+            'Cart',
+            $this->getUrl(),
+        );
+    }
+
 }
 

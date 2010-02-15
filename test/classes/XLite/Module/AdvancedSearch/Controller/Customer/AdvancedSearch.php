@@ -183,9 +183,22 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
 	{
 		return $val1.$delimeter.$val2;
 	}
+
+    /**
+     * Get page instance data (name and URL)
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageInstanceData()
+    {
+        return array(
+            'Advanced search',
+            $this->getUrl(),
+        );
+    }
+
 }
 
-// WARNING:
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
