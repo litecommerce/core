@@ -1,7 +1,7 @@
 {* SVN $Id$ *}
 
 <!-- [catalog] {{{ -->
-<widget target="category" template="category_description.tpl" visible="{category.description}">
+<widget class="XLite_View_Category">
 <widget target="product" template="common/dialog.tpl" body="product_details.tpl" head="Catalog"  href="cart.php" visible="{product.available}" showLocationPath>
 <!-- [/catalog] }}} -->
 
