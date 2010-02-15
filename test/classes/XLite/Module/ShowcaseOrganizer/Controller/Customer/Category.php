@@ -55,11 +55,6 @@ class XLite_Module_ShowcaseOrganizer_Controller_Customer_Category extends XLite_
         parent::init();
     }
 
-	function getPercents($columns)
-	{
-		return (int) (100 / $columns);
-	}
-
 	function getRowNumber()
 	{
 		if (!isset($this->_rowNumber)) {

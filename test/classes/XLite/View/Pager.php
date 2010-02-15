@@ -48,14 +48,14 @@
 */
 class XLite_View_Pager extends XLite_View
 {	
-    protected $_data = array();	
+    protected $_data = array();
 	protected $_pagesCount = 0;
 
 	protected $_baseObj = null;
 
-    public $template = "common/pager.tpl";	
-    public $pageID = 0;	
-    public $params = array("pageID");	
+    public $template = 'common/pager.tpl';
+    public $pageID = 0;
+    public $params = array('pageID');
     public $itemsPerPage = 10;
 
 	protected $pages = null;
@@ -80,6 +80,7 @@ class XLite_View_Pager extends XLite_View
             if (0 >= $this->get('itemsPerPage')) {
                 $this->_pagesCount = 1;
                 $this->_data = array($value);
+
             } elseif (is_array($value)) {
                 $this->_pagesCount = intval(count($value) / $this->get('itemsPerPage'));
                 $this->_data = array_slice($value, $this->get('pageID') * $this->get('itemsPerPage'), $this->get('itemsPerPage'));
@@ -97,10 +98,11 @@ class XLite_View_Pager extends XLite_View
     {
 		parent::initView();
 
-        if ($this->get("pageID") === "") {
-            $this->set("pageID", 0);
-        } else if ($this->get("pageID") && $this->_pagesCount <= $this->get("pageID")) {
-            $this->set("pageID", $this->_pagesCount - 1);
+        if ($this->get('pageID') === '') {
+            $this->set('pageID', 0);
+
+        } else if ($this->get('pageID') && $this->_pagesCount <= $this->get('pageID')) {
+            $this->set('pageID', $this->_pagesCount - 1);
         }
     }
     
@@ -127,7 +129,7 @@ class XLite_View_Pager extends XLite_View
         $params = $dialog->get('allParams');
 
         for ($i = 0; $i < $this->_pagesCount; $i++) {
-            $params["pageID"] = $i;
+            $params['pageID'] = $i;
             $result[$i+1] = $dialog->getUrl($params);
         }
         return $result;
@@ -140,7 +142,7 @@ class XLite_View_Pager extends XLite_View
 
     function isCurrentPage($num)
     {
-        return $this->get("pageID") + 1 == $num;
+        return $this->get('pageID') + 1 == $num;
     }
 }
 

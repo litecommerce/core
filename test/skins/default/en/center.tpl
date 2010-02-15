@@ -13,9 +13,8 @@
 
 <!-- [catalog] {{{ -->
 <widget class="XLite_View_Subcategories" template="common/dialog.tpl" />
-<widget target="category" template="common/dialog.tpl" body="category_products.tpl" head="Catalog"  href="cart.php" visible="{category.products}" showLocationPath>
+<widget class="XLite_View_CategoryProducts" template="common/dialog.tpl">
 <widget target="category" template="common/dialog.tpl" body="category_empty.tpl" head="Catalog"  href="cart.php" visible="{category.empty}" showLocationPath>
-<widget target="product" template="common/dialog.tpl" body="product_details.tpl" head="Catalog"  href="cart.php" visible="{product.available}" showLocationPath>
 <!-- [/catalog] }}} -->
 
 <!-- [search] {{{ -->

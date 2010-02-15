@@ -2,6 +2,7 @@
 
 <!-- [catalog] {{{ -->
 <widget target="category" template="category_description.tpl" visible="{category.description}">
+<widget target="product" template="common/dialog.tpl" body="product_details.tpl" head="Catalog"  href="cart.php" visible="{product.available}" showLocationPath>
 <!-- [/catalog] }}} -->
 
 <!-- [main] {{{ -->

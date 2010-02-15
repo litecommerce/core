@@ -56,9 +56,10 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 * @since  3.0
 	 */
 	protected $widgetsList = array(
-		'XLite_View_TopCategories' => 'Categories list',
-        'XLite_View_Minicart'      => 'Minicart',
-        'XLite_View_Subcategories' => 'Subcategories',
+		'XLite_View_TopCategories'    => 'Categories list',
+        'XLite_View_Minicart'         => 'Minicart',
+        'XLite_View_Subcategories'    => 'Subcategories',
+        'XLite_View_CategoryProducts' => 'Category products list',
 	);
 
     /**
