@@ -35,6 +35,7 @@ abstract class XLite_Module_Bestsellers_Core_CMSConnector extends XLite_Core_CMS
     {
 		parent::__construct();
 
-		$this->widgetsList['XLite_Module_Bestsellers_View_Bestsellers'] = 'Bestsellers list';
+		$this->widgetsList['XLite_Module_Bestsellers_View_MenuBestsellers'] = 'Bestsellers sidebar list';
+        $this->widgetsList['XLite_Module_Bestsellers_View_Bestsellers'] = 'Bestsellers list';
     }
 }

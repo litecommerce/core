@@ -1,54 +1,175 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* Returns the category for the bestsellers list.
-*
-* @package Module_Bestsellers
-* @access public
-* @version $Id$
-*/
-class XLite_Module_Bestsellers_View_MenuBestsellers extends XLite_Module_Bestsellers_View_Bestsellers
-{
-}
+ * Bestsellers sidebar box
+ *  
+ * @category  Litecommerce
+ * @package   View
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://www.qtmsoft.com/xpayments_eula.html X-Payments license agreement
+ * @version   SVN: $Id$
+ * @link      http://www.qtmsoft.com/
+ * @see       ____file_see____
+ * @since     3.0.0
+ */
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+/**
+ * Bestsellers sidebar box
+ * 
+ * @package    View
+ * @subpackage Widget
+ * @see        ____class_see____
+ * @since      3.0.0
+ */
+class XLite_Module_Bestsellers_View_MenuBestsellers extends XLite_View_SideBarBox
+{
+
+	/**
+	 * Title
+	 * 
+	 * @var    string
+	 * @access protected
+	 * @since  1.0.0
+	 */
+	protected $head = 'Bestsellers';
+
+	/**
+	 * Directory contains sidebar content
+	 * 
+	 * @var    string
+	 * @access protected
+	 * @since  1.0.0
+	 */
+	protected $dir = 'modules/Bestsellers/menu';
+
+    /**
+     * Bestsellers list (cache)
+     * 
+     * @var    array
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $bestsellers = null;	
+
+    /**
+     * Category root id 
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0 EE
+     */
+    protected $rootid = 0;
+
+	/**
+	 * Use current category 
+	 * 
+	 * @var    boolean
+	 * @access protected
+	 * @see    ____var_see____
+	 * @since  3.0.0
+	 */
+	protected $use_node = true;
+
+    /**
+     * Initilization
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    function initView()
+    {
+        parent::initView();
+
+        $this->visible = $this->config->Bestsellers->bestsellers_menu && $this->getBestsellers();
+    }
+
+    /**
+     * Get bestsellers list
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getBestsellers()
+    {
+		if (is_null($this->bestsellers)) {
+			$model = new XLite_Modules_Bestsellers_Model_Bestsellers();
+			$this->bestsellers = $model->getBestsellers($this->getCategoryId());
+		}
+
+		return $this->bestsellers;
+	}
+
+    /**
+     * Get category id
+     * 
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCategoryId()
+    {
+		$category_id = $this->use_node ? XLite_Core_Request::getInstance()->category_id : $this->rootid;
+
+        return  max(intval($category_id), 0);
+    }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            new XLite_Model_WidgetParam_Checkbox('use_node', 1, 'Use current category id'),
+            new XLite_Model_WidgetParam_String('rootid', 0, 'Category root Id'),
+        );
+    }
+
+    /**
+     * Check passed attributes 
+     * 
+     * @param array $attributes attributes to check
+     *  
+     * @return array errors list
+     * @access public
+     * @since  1.0.0
+     */
+    public function validateAttributes(array $attributes)
+    {
+        $errors = parent::validateAttributes($attributes);
+
+		// Category root id
+		if (!isset($attributes['rootid']) || !is_numeric($attributes['rootid'])) {
+			$errors['rootid'] = 'Category Id is not numeric!';
+		} else {
+			$attributes['rootid'] = intval($attributes['rootid']);
+		}
+
+        if (!$errors && 0 > $attributes['rootid']) {
+            $errors['rootid'] = 'Category Id must be positive integer!';
+		}
+
+		if (!$errors && !$attributes['use_node']) {
+			$category = new XLite_Model_Category($attributes['rootid']);
+
+			if (!$category->isPersistent) {
+				$errors['rootid'] = 'Category with category Id #' . $attributes['rootid'] . ' can not found!';
+			}
+		}
+
+		return $errors;
+    }
+
+}
