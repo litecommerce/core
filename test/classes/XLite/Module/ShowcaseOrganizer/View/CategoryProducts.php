@@ -35,7 +35,7 @@ class XLite_Module_ShowcaseOrganizer_View_CategoryProducts extends XLite_View_Ca
      */
     function getPercents($columns)
     {
-        return ceil(100 / $column);
+        return ceil(100 / $columns);
     }
 }
 

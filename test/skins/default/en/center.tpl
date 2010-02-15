@@ -14,7 +14,7 @@
 <!-- [catalog] {{{ -->
 <widget class="XLite_View_Subcategories" template="common/dialog.tpl" />
 <widget class="XLite_View_CategoryProducts" template="common/dialog.tpl">
-<widget target="category" template="common/dialog.tpl" body="category_empty.tpl" head="Catalog"  href="cart.php" visible="{category.empty}" showLocationPath>
+<widget class="XLite_View_CategoryEmpty" template="common/dialog.tpl">
 <!-- [/catalog] }}} -->
 
 <!-- [search] {{{ -->
