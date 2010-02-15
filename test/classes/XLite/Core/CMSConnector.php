@@ -415,9 +415,16 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 		$name = XLite_Core_Converter::getControllerClass($target);
 		$object = new $name();
 
-		return $this->getContent(
+        $content = $this->getContent(
             $object,
             array('target' => $target, 'action' => $action, 'template' => 'center_top.tpl') + $args
+        );
+
+        $path = $object->get('locationPath');
+
+		return array(
+            $path,
+            $content,
         );
 	}
 
