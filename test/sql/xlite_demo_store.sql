@@ -47,10 +47,10 @@ INSERT INTO xlite_order_items (item_id, order_id, orderby, product_id, price, am
 INSERT INTO xlite_order_items (item_id, order_id, orderby, product_id, price, amount, options) VALUES ('174',1,4,174,320,1,'');
 
 -- use images from file system
-update xlite_products set image=concat('pi_',product_id,'.gif'),image_source='F' where image_source='D';
-update xlite_products set thumbnail=concat('pt_',product_id,'.gif'),thumbnail_source='F' where thumbnail_source='D';
-update xlite_categories set image=concat('ci_',category_id,'.gif'),image_source='F' where image_source='D';
-update xlite_images set image=concat('ii_',image_id,'.gif'),image_source='F' where image_source='D';
+update xlite_products set image=concat('pi_',product_id,'.',substring(image_type, 7)),image_source='F' where image_source='D';
+update xlite_products set thumbnail=concat('pt_',product_id,'.', substring(thumbnail_type, 7)),thumbnail_source='F' where thumbnail_source='D';
+update xlite_categories set image=concat('ci_',category_id,'.', substring(image_type, 7)),image_source='F' where image_source='D';
+update xlite_images set image=concat('ii_',image_id,'.', substring(image_type, 7)),image_source='F' where image_source='D';
 
 INSERT INTO xlite_partner_plans VALUES (1, 'TestPlan', 100, 1);
 INSERT INTO xlite_partner_plan_commissions VALUES (1, '2.00', '%', 144, 'P');
