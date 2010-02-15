@@ -81,7 +81,7 @@ class XLite_Module_Bestsellers_View_MenuBestsellers extends XLite_View_SideBarBo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    function initView()
+    public function initView()
     {
         parent::initView();
 

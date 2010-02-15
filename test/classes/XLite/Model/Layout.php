@@ -110,7 +110,7 @@ class XLite_Model_Layout extends XLite_Base implements XLite_Base_ISingleton
     *
     * @access public
     */
-    function getPath()
+    public function getPath()
     {
         return sprintf("skins/%s/%s/", $this->get("skin"), $this->get("locale"));
     }

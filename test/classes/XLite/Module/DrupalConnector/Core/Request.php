@@ -48,7 +48,7 @@ class XLite_Module_DrupalConnector_Core_Request extends XLite_Core_Request imple
         $this->data = array();
 
         if (preg_match('/\?q=store\/(.+)$/Ss', $_SERVER['REQUEST_URI'], $match)) {
-            $match = explode('/', $match[0]);
+            $match = explode('/', $match[1]);
 
             $this->data['target'] = isset($match[0]) ? $match[0] : null;
             $this->data['action'] = isset($match[1]) ? $match[1] : null;

@@ -44,25 +44,26 @@ class XLite_View_Subcategories extends XLite_View_Dialog
     protected $href = 'cart.php';
 
     /**
-     * Constructor
+     * Initilization
      * 
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __construct()
+    public function initView()
     {
-        parent::__construct();
+        parent::initView();
 
         $request = XLite_Core_Request::getInstance();
 
-        $this->category_id = $request->category_id;
+        $this->category_id = intval($request->category_id);
 
         $this->body = $this->config->General->subcategories_look;
         $this->visible = in_array($request->target, array(null, 'main', 'category'))
-            && $this->getCategory()->getSubcategories()
-            && !$this->get('page');
+            && 0 < $this->category_id
+            && $this->getCategory()->getSubcategories();
+
         $this->showLocationPath = true;
         $this->mode = '';
     }
@@ -77,7 +78,7 @@ class XLite_View_Subcategories extends XLite_View_Dialog
      */
     protected function getCategory()
     {
-        return new XLite_Model_Category($this->get('category_id'));
+        return new XLite_Model_Category($this->category_id);
     }
 }
 

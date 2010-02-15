@@ -58,6 +58,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	protected $widgetsList = array(
 		'XLite_View_TopCategories' => 'Categories list',
         'XLite_View_Minicart'      => 'Minicart',
+        'XLite_View_Subcategories' => 'Sibcategories',
 	);
 
     /**
@@ -413,7 +414,10 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 		$name = XLite_Core_Converter::getControllerClass($target);
 		$object = new $name();
 
-		return $this->getContent($object, array('target' => $target, 'action' => $action, 'template' => 'center.tpl') + $args);
+		return $this->getContent(
+            $object,
+            array('target' => $target, 'action' => $action, 'template' => 'center_top.tpl') + $args
+        );
 	}
 
 	/**
