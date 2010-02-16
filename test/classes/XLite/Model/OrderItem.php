@@ -262,12 +262,14 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
     */
     function getURL()
     {
-    	$url = XLite::CART_SELF . "?target=product&product_id=" . $this->get("product_id");
-    	$category_id = $this->getComplex('product.category.category_id');
-    	if ($category_id) {
-    		$url .= "&category_id=" . $category_id;
-    	}
-        return $url;
+		$params = array('product_id' => $this->get('product_id'));
+
+        $category_id = $this->getComplex('product.category.category_id');
+        if ($category_id) {
+            $params['category_id'] = $category_id;
+        }
+
+		return $this->xlite->getController()->buildURL('product', '', $params);
     }
 
 	public function hasOptions()

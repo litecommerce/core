@@ -5,7 +5,7 @@
 | Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
 | All rights reserved.                                                         |
 +------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
+| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  'COPYRIGHT' |
 | FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
 | AT THE FOLLOWING URLs:                                                       |
 |                                                                              |
@@ -17,12 +17,12 @@
 |                                                                              |
 | THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
 | SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
+| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as 'THE |
+| AUTHOR')  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
+| (COLLECTIVELY,  THE 'SOFTWARE'). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
 | THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
 | INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
+| (COLLECTIVELY,  'YOU')  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
 | LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
 | NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
 | PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
@@ -53,7 +53,7 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
     {
         if (is_null($this->currentItem)) {
             $this->currentItem = new XLite_Model_OrderItem();
-            $this->currentItem->set("product", $this->get("product"));
+            $this->currentItem->set('product', $this->get('product'));
         }
         return $this->currentItem;
     }
@@ -64,69 +64,79 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
 			return;
 		}
 		$this->collectCartGarbage();
+
         // add product to the cart
-        $this->cart->addItem($this->get("currentItem"));
+        $this->cart->addItem($this->get('currentItem'));
         $this->updateCart(); // recalculate shopping cart
+
         // switch back to product catalog or to shopping cart
-        global $_SERVER;
-        $this->set("returnUrlAbsolute", false);
-        $productListUrl = $this->config->getComplex('General.add_on_mode') && isset($_SERVER["HTTP_REFERER"]) ? $_SERVER["HTTP_REFERER"] : $this->session->get("productListURL");
-        if ($this->config->getComplex('General.redirect_to_cart')) {
-            $this->session->set("continueURL", $productListUrl);
+        $this->set('returnUrlAbsolute', false);
+        $productListUrl = ($this->config->General->add_on_mode && isset($_SERVER['HTTP_REFERER']))
+			? $_SERVER['HTTP_REFERER']
+			: $this->session->get('productListURL');
+
+        if ($this->config->General->redirect_to_cart) {
+            $this->session->set('continueURL', $productListUrl);
+
         } else {
-            $this->set("returnUrl", $productListUrl);
-            $this->set("returnUrlAbsolute", $this->config->getComplex('General.add_on_mode') && isset($_SERVER["HTTP_REFERER"]));
+            $this->set('returnUrl', $productListUrl);
+            $this->set('returnUrlAbsolute', $this->config->General->add_on_mode && isset($_SERVER['HTTP_REFERER']));
         }
     }
 
     function action_delete()
     {
         // delete an item from the shopping cart
-        $items = $this->cart->get("items");
-        if (array_key_exists($_REQUEST["cart_id"], $items)) {
-            $this->cart->deleteItem($items[$_REQUEST["cart_id"]]);
+        $items = $this->cart->get('items');
+        if (array_key_exists($this->cart_id, $items)) {
+            $this->cart->deleteItem($items[$this->cart_id]);
             $this->updateCart();
         }
-        if ($this->cart->isEmpty())
-            $this->cart->delete();    
+
+        if ($this->cart->isEmpty()) {
+            $this->cart->delete();
+		}
     }
 
     function action_update()
     {
         // update the specified product quantity in cart
-        $items = $this->cart->get("items");
+        $items = $this->cart->get('items');
         foreach ($items as $key => $i) {
-            if (isset($_REQUEST["amount"][$key])) {
-                $items[$key]->updateAmount($_REQUEST["amount"][$key]);
+            if (isset($this->amount[$key])) {
+                $items[$key]->updateAmount($this->amount[$key]);
                 $this->cart->updateItem($items[$key]);
             }
         }
+
         if (isset($this->shipping)) {
-            $this->cart->set("shipping_id", $_REQUEST["shipping"]);
+            $this->cart->set('shipping_id', $this->shipping);
         }
+
         $this->updateCart();
-        if ($this->cart->isEmpty())
+
+        if ($this->cart->isEmpty()) {
             $this->cart->delete();
+		}
     }
     
     function action_checkout()
     {
         $this->action_update();
         // switch to checkout dialog 
-        $this->set("returnUrl", "cart.php?target=checkout");
+        $this->set('returnUrl', 'cart.php?target=checkout');
     }
 
     function action_clear()
     {
     	if (!$this->cart->isEmpty()) {
-            // empty shopping cart
             $this->cart->delete();
         }
     }
 
     function isSecure()
     {
-    	if ($this->is("HTTPS")) {
+    	if ($this->is('HTTPS')) {
     		return true;
     	}
         return parent::isSecure();
@@ -135,7 +145,7 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
 	function canAddProductToCart()
 	{
 		if (!$this->getProduct()->filter()) {
-			$this->set("valid", false);
+			$this->set('valid', false);
 			return false;	
 		}
 		return true;
@@ -144,9 +154,9 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
 	function collectCartGarbage()
 	{
 		// don't collect garbage, if the cart already has products
-		if (!$this->cart->is("empty")) return;
-
-		$this->cart->collectGarbage($limit = 5);
+		if ($this->cart->is('empty')) {
+			$this->cart->collectGarbage(5);
+		}
 	}
 
     /**
