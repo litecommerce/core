@@ -23,6 +23,7 @@
 
 <!-- [search] {{{ -->
 <widget target="search" template="common/dialog.tpl" body="search_result.tpl" head="Search Result">
+<widget module="AdvancedSearch" class="XLite_Module_AdvancedSearch_View_AdvancedSearch" template="common/dialog.tpl">
 <!-- [/search] }}} -->
 
 <!-- [shopping_cart] {{{ -->

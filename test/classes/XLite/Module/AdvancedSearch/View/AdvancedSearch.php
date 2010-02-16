@@ -34,6 +34,16 @@ class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
     protected $head = 'Search for products';
 
     /**
+     * Widget body tempalte
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $body = 'modules/AdvancedSearch/advanced_search.tpl';
+
+    /**
      * Initilization
      * 
      * @return void
@@ -45,11 +55,7 @@ class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
     {
 		parent::initView();
 
-		$this->body = 'modules' . LC_DS . 'AdvancedSearch' . LC_DS . 'advanced_search.tpl';
-
-        $request = XLite_Core_Request::getInstance();
-
-        $this->visible = 'advanced_search' == $request->target;
+        $this->visible = 'advanced_search' == $this->target;
 
         $this->mode = '';
 	}
