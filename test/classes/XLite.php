@@ -343,5 +343,18 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
 
         return $proto . $host . $web_dir . $url . $sid;
     }
+
+    /**
+     * Get controller 
+     * 
+     * @return XLite_Controller_Abstract
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getController()
+    {
+        return self::$controller;
+    }
 }
 

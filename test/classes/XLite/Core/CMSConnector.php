@@ -467,9 +467,9 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         $content = $this->getContent($application->runController());
 
         $result = array(
-            $application::$controller->get('locationPath'),
+            $application->getController()->get('locationPath'),
             $content,
-            $application::$controller->getPageTypeName(),
+            $application->getController()->getPageTypeName(),
         );
 
         return $result;
