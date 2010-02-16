@@ -27,7 +27,7 @@
 <!-- [/search] }}} -->
 
 <!-- [shopping_cart] {{{ -->
-<widget target="cart" template="common/dialog.tpl" body="shopping_cart/body.tpl" head="Shopping cart">
+<widget class="XLite_View_Cart" template="common/dialog.tpl">
 <!-- [/shopping_cart] }}} -->
 
 <!-- [profile] {{{ -->
