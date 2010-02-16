@@ -74,13 +74,14 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_Dialog
     protected $use_node = true;
 
     /**
-     * Initilization 
+     * Initialization
      * 
      * @return void
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    function initView()
+    public function initView()
     {
         parent::initView();
 
