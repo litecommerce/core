@@ -298,12 +298,23 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 */
 	public function getWidgetHTML($name, array $attributes = array())
 	{
-        $result = null;
+        $result = array(null, array());
         $widget = $this->getWidgetObject($name);
 
         if ($widget) {
             $widget->setAttributes($attributes);
-            $result = $this->getContent($widget, $attributes);
+            $result[0] = $this->getContent($widget, $attributes);
+
+            $result[1] = array(
+                'css' => $widget->getCSSFiles(),
+                'js'  => $widget->getJSFiles(),
+            );
+
+            foreach (array('css', 'js') as $res) {
+                foreach ($result[1][$res] as $k => $v) {
+                    $result[1][$res][$k] = XLite::getInstance()->shopURL($this->layoutPath . $v);
+                }
+            }
         }
 
 		return $result;

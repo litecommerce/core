@@ -770,6 +770,33 @@ class XLite_View_Abstract extends XLite_Core_Handler
 
         return (isset($pages[$widget_id]) && $this->getComplex('xlite.config.Security.captcha_protection_system') == "Y");
     }
-    
+
+	/**
+	 * Register CSS files
+	 * 
+	 * @return array
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	public function getCSSFiles()
+	{
+        return array();
+	}
+
+    /**
+     * Register JS files
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {
+        return array();
+    }
+
+
 }
 
