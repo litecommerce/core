@@ -58,7 +58,7 @@ class XLite_Core_Handler extends XLite_Base
      * @param array $attrs params to set
      *
      * @return void
-     * @access protected
+     * @access public
      * @since  3.0.0 EE
      */
     public function setAttributes(array $attrs)

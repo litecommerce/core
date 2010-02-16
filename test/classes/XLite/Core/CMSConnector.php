@@ -297,7 +297,16 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 */
 	public function getWidgetHTML($name, array $attributes = array())
 	{
-		return ($widget = $this->getWidgetObject($name)) ? $this->getContent($widget, $attributes) : null;
+        $widget = $this->getWidgetObject($name);
+
+        $result = null;
+
+        if ($widget) {
+            $widget->setAttributes($attributes);
+            $result = $this->getContent($widget, $attributes);
+        }
+
+		return $result;
 	}
 
 	/**
