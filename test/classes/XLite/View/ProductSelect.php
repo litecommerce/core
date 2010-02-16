@@ -49,7 +49,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_View_ProductSelect extends XLite_View
+class XLite_View_ProductSelect extends XLite_View_Abstract
 {	
 	public $formName = "";	
 	public $formField = "product";	

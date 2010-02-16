@@ -170,7 +170,6 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
 
     function action_modify()
     {
-		$this->stripHTMLtags($_POST, array("name"));
         $valid = (bool) isset($this->name) && strlen(trim($this->name));
 
         if (!$valid) {
@@ -179,8 +178,9 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
         }
         // update category
         $category = new XLite_Model_Category();
-		if (empty($_POST['parent'])) $_POST['parent'] = 0;
-        $category->set("properties", $_POST);
+		$properties = XLite_Core_Request::getInstance()->getData();
+		if (empty($properties['parent'])) $properties['parent'] = 0;
+        $category->setProperties($properties);
         $category->update();
 
         // update category image
@@ -192,7 +192,6 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
 
     function action_add()
     {
-		$this->stripHTMLtags($_POST, array("name"));
         $valid = (bool) isset($this->name) && strlen(trim($this->name));
 
         if (!$valid) {

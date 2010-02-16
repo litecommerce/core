@@ -245,7 +245,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 * 
 	 * @param string $name widget class name
 	 *  
-	 * @return XLite_View
+	 * @return XLite_View_Abstract
 	 * @access public
 	 * @since  3.0.0 EE
 	 */
@@ -298,9 +298,8 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 */
 	public function getWidgetHTML($name, array $attributes = array())
 	{
-        $widget = $this->getWidgetObject($name);
-
         $result = null;
+        $widget = $this->getWidgetObject($name);
 
         if ($widget) {
             $widget->setAttributes($attributes);
@@ -434,7 +433,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 */
 	public function logInUser($email)
 	{
-		$profile = $this->xlite->auth->loginSilent($email);
+		$profile = XLite_Model_Auth::getInstance()->loginSilent($email);
         
 		return !is_int($profile) || ACCESS_DENIED !== $profile;
 	}
@@ -451,7 +450,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 */
 	public function logOutUser($email = null)
 	{
-		$this->xlite->auth->logoff();
+		XLite_Model_Auth::getInstance()->logoff();
 	}
 
 	/**

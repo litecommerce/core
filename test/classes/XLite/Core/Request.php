@@ -33,6 +33,73 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
 	 */
 	protected $data = array();
 
+
+    /**
+     * Strip possible SQL injections
+     * 
+     * @param string $value value to check
+     *  
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function stripSQLinjection($value)
+    {
+        // (UNION SELECT) case
+        if (false !== strpos(strtolower($value), 'union')) {
+            $value = preg_replace('/union([\s\(\)]|((?:\/\*).*(?:\*\/))|(?:union|select|all|distinct))+select/i', ' ', $value);
+        }
+
+        // (BENCHMARK) case
+        if (false !== strpos(strtolower($value), 'benchmark(')) {
+            $value = preg_replace('/benchmark\(/i', ' ', $value);
+        }
+
+        return $value;
+    }
+
+    /**
+     * Sanitize single value
+     * 
+     * @param string $value value to sanitize
+     *  
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function sanitizeSingle($value)
+    {
+        return strip_tags($this->stripSQLinjection($value));
+    }
+
+    /**
+     * Sanitize passed data 
+     * 
+     * @param mixed $data data to sanitize
+     *  
+     * @return mixed
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function sanitize($data)
+    {
+        return is_array($data) ? array_map(array($this, __FUNCTION__), $data) : $this->sanitizeSingle($data);
+    }
+
+    /**
+     * Wrapper for sanitize()
+     *
+     * @param mixed $data data to sanitize
+     *
+     * @return mixed
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function prepare($data)
+    {
+        return XLite::getInstance()->adminZone ? $data : $this->sanitize($data);
+    }
+
     /**
      * Constructor
      * 
@@ -45,6 +112,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
     {
 		$this->mapRequest();
     }
+
 
     /**
      * Method to access the singleton 
@@ -70,7 +138,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
 	public function mapRequest(array $data = array())
 	{
         // TODO - in PHP 5.3 it's should be replaced by the "array_replace_recursive()" function
-        $this->data = empty($data) ? $_REQUEST : $data + $this->data;
+        $this->data = $this->prepare(empty($data) ? $_REQUEST : $data + $this->data);
 	}
 
     public function getData()
@@ -97,7 +165,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
      * Setter 
      * 
      * @param string $name  property name
-     * @param string $value property value
+     * @param mixed  $value property value
      *  
      * @return void
      * @access public
@@ -105,7 +173,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
      */
     public function __set($name, $value)
     {
-        $this->data[$name] = $value;
+        $this->data[$name] = $this->prepare($value);
     }
 
     /**

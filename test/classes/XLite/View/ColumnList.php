@@ -45,7 +45,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_View_ColumnList extends XLite_View
+class XLite_View_ColumnList extends XLite_View_Abstract
 {	
     public $columnCount = 2;	
     public $template = "common/column_list.tpl";	

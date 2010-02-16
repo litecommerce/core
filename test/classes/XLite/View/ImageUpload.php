@@ -45,7 +45,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_View_ImageUpload extends XLite_View
+class XLite_View_ImageUpload extends XLite_View_Abstract
 {	
 	public $showDelete = true;	
     public $template = "common/image_upload.tpl";

@@ -61,8 +61,6 @@ class XLite_Controller_Admin_AddProduct extends XLite_Controller_Admin_Abstract
 
     function action_add()
     {
-		$this->stripHTMLtags($_POST, array("name"));
-
         $product = $this->get("product");
         $product->set("properties", $_POST);
         $product->create();

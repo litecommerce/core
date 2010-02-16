@@ -43,7 +43,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_View_Price extends XLite_View
+class XLite_View_Price extends XLite_View_Abstract
 {	
     public $template = "common/price_plain.tpl";	
     public $product;

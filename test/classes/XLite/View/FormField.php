@@ -44,7 +44,7 @@
 * @package $Package$
 * @version $Id$
 */
-class XLite_View_FormField extends XLite_View
+class XLite_View_FormField extends XLite_View_Abstract
 {	
     protected $field = null;
 

@@ -238,6 +238,30 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     }
 
     /**
+     * Return full URL for the resource 
+     * 
+     * @param string $url    resource relative URL
+     * @param bool   $secure HTTP/HTTPS flag
+     *  
+     * @return string
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function shopUrl($url, $secure = false)
+    {
+        $proto   = 'http' . ($secure ? 's' : '') . '://';
+        $host    = $this->getOptions(array('host_details', 'http' . ($secure ? 's' : '') . '_host'));
+        $web_dir = rtrim($this->getOptions(array('host_details', 'web_dir')), '/') . '/';
+
+        if ($secure) {
+            $session = XLite_Model_Session::getInstance();
+            $url .= (strpos($url, '?') ? '&' : '?') . $session->getName() . '=' . $session->getID();
+        }
+
+        return $proto . $host . $web_dir . $url;
+    }
+
+    /**
      * Return instance of the abstract factory sigleton 
      * 
      * @return XLite_Model_Factory
@@ -249,11 +273,37 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
         return XLite_Model_Factory::getInstance();
     }
 
+    /**
+     * Get controller
+     *
+     * @return XLite_Controller_Abstract
+     * @access public
+     * @since  3.0.0
+     */
+    public function getController()
+    {
+        return self::$controller;
+    }
+
+    /**
+     * Initialize all active modules 
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
     public function initModules()
     {
         XLite_Model_ModulesManager::getInstance()->init();
     }
 
+    /**
+     * Instantiate and initialize a controller
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
     public function initController()
     {
         $controllerClass = XLite_Core_Converter::getControllerClass($this->getTarget());
@@ -262,12 +312,26 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
         self::$controller->init();
     }
 
+    /**
+     * Wrapper 
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
     public function init()
     {
         $this->initModules();
         $this->initController();
     }
 
+    /**
+     * Perform an action and redirect
+     * 
+     * @return XLite_View_Controller
+     * @access public
+     * @since  3.0.0 EE
+     */
     public function runController()
     {
         self::$controller->handleRequest();
@@ -275,6 +339,16 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
         return self::$controller->getViewer();
     }
 
+    /**
+     * Display current page 
+     * 
+     * @param XLite_View_Abstract $viewer   instance of the current viewer
+     * @param string              $template template to use (optional)
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
     public function runViewer(XLite_View_Abstract $viewer = null, $template = null)
     {
         if (!isset($viewer)) {
@@ -284,6 +358,15 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
         $viewer->display();
     }
 
+    /**
+     * Runs the cart 
+     * 
+     * @param bool $adminZone area flag
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
     public function run($adminZone = false)
     {
         // Set current area
@@ -297,64 +380,6 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     
         // Display page
         $this->runViewer($viewer);
-    }
-
-
-    /**
-    * Runs the cart.
-    *
-    * @access public
-    */
-    /*function run()
-    {
-        XLite_Model_ModulesManager::getInstance()->init();
-
-        if (isset($_REQUEST['target'])) {
-            $target = $_REQUEST['target'];
-        } else {
-            $target = $_REQUEST['target'] = 'main';
-        }
-
-        $dialogClass = XLite_Core_Converter::getControllerClass($target);
-        self::$controller = new $dialogClass();
-        self::$controller->init();
-        $this->profiler->log("dialog_init_time");
-        self::$controller->handleRequest();
-        $this->profiler->log("dialog_handleRequest_time");
-        self::$controller = null;
-
-        $this->profiler->log("run_time");
-    }*/
-
-    function shopUrl($url, $secure = false)
-    {
-        // construct requested cart URL 
-        $proto   = $secure ? "https://" : "http://";
-        $host    = $secure ? $this->getOptions(array('host_details', 'https_host')) : $this->getOptions(array('host_details', 'http_host'));
-        $web_dir = $this->getOptions(array('host_details', 'web_dir'));
-        $last    = strlen($web_dir) - 1;
-        $web_dir .= ($web_dir{$last} == "/") ? "" : "/";
-        $sid     = "";
-
-        if ($secure) {
-            $sid  = strpos($url, '?') ? "&" : "?";
-            $sid .= $this->session->getName() . "=" . $this->session->getID();
-        }
-
-        return $proto . $host . $web_dir . $url . $sid;
-    }
-
-    /**
-     * Get controller 
-     * 
-     * @return XLite_Controller_Abstract
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getController()
-    {
-        return self::$controller;
     }
 }
 

@@ -42,7 +42,7 @@
 * @package View
 * @version $Id$
 */
-class XLite_View_ExtraFields extends XLite_View
+class XLite_View_ExtraFields extends XLite_View_Abstract
 {
 	public $ef = null;	
 

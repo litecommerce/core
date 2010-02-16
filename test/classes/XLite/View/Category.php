@@ -22,7 +22,7 @@
  * @subpackage Widget
  * @since      3.0
  */
-class XLite_View_Category extends XLite_View
+class XLite_View_Category extends XLite_View_Abstract
 {
     /**
      * Define template

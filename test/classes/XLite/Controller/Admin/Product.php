@@ -116,8 +116,6 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_Abstract
  
     function action_info()
     {
-		$this->stripHTMLtags($_POST, array("name"));
-
         // update product properties
         $product = new XLite_Model_Product($this->product_id);
         $product->set("properties", $_POST);
