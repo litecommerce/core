@@ -14,6 +14,10 @@ FORM {
 	MARGIN: 0px;
 }
 
+TABLE, IMG {
+	BORDER: 0px none;
+}
+
 /*
 Main template main.tpl wallpaper.
 */

@@ -37,7 +37,7 @@
               <br />
               <table cellpadding="0" cellspacing="0">
                 <tr>    
-                  <td><widget template="buy_now.tpl" product="{product}"></td>
+                  <td><widget template="buy_now.tpl" product="{product}" /></td>
                   <td width="40">&nbsp;</td> 
                   <td><widget module="WishList" template="modules/WishList/add.tpl" href="{buildURL(#wishlist#,#add#,_ARRAY_(#product_id#^product.product_id))}" /></td>
                 </tr>       
