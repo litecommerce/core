@@ -44,6 +44,26 @@ class XLite_View_CategoryEmpty extends XLite_View_Dialog
     protected $href = 'cart.php';
 
     /**
+     * Widget body template
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $body = 'category_empty.tpl';
+
+    /**
+     * Show location path 
+     * 
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $showLocationPath = true;
+
+    /**
      * Initilization
      * 
      * @return void
@@ -55,16 +75,11 @@ class XLite_View_CategoryEmpty extends XLite_View_Dialog
     {
         parent::initView();
 
-        $request = XLite_Core_Request::getInstance();
+        $this->category_id = intval($this->category_id);
 
-        $this->category_id = intval($request->category_id);
-
-        $this->body = 'category_empty.tpl';
-        $this->visible = 'category' == $request->target
+        $this->visible = 'category' == $this->target
             && 0 < $this->category_id
             && $this->getCategory()->get('empty');
-
-        $this->showLocationPath = true;
     }
 
     /**

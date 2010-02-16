@@ -48,11 +48,9 @@ class XLite_View_Category extends XLite_View
     {
         parent::initView();
 
-        $request = XLite_Core_Request::getInstance();
+        $this->category_id = intval($this->category_id);
 
-        $this->category_id = intval($request->category_id);
-
-        $this->visible = 'category' == $request->target
+        $this->visible = 'category' == $this->target
             && 0 < $this->category_id
             && $this->getCategory()->get('description');
     }
