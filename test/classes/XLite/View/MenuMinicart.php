@@ -22,7 +22,7 @@
  * @subpackage Widget
  * @since      3.0
  */
-class XLite_View_Minicart extends XLite_View_Dialog
+class XLite_View_MenuMinicart extends XLite_View_SideBarBox
 {
 	/**
 	 * Title
@@ -34,12 +34,12 @@ class XLite_View_Minicart extends XLite_View_Dialog
 	protected $head = 'Shopping cart';
 
 	/**
-	 * Widget body template
+	 * Directory contains sidebar content
 	 * 
 	 * @var    string
 	 * @access protected
 	 * @since  1.0.0
 	 */
-	protected $body = 'mini_cart/dialog.tpl';
+	protected $dir = 'mini_cart';
 }
 
