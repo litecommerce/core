@@ -2,9 +2,11 @@
 <div IF="!xlite.WishListEnabled">
 
   <table width="100%">
+
     <tr IF="cart.empty">
       <td><img src="images/cart_empty.gif" alt=""> Cart is empty</td>
-    </tr>  
+    </tr>
+
     <tr IF="!cart.empty">
       <td>
 
@@ -13,7 +15,8 @@
           <tr>
             <td><img src="images/cart_full.gif" alt=""></td>
             <td>
-              <strong>Items:</strong> {cart.itemsCount}<br>
+              <strong>Items:</strong> {cart.itemsCount}
+              <br />
               <strong>Total:</strong> {price_format(cart,#total#):h}
             </td>
           </tr>  
@@ -24,9 +27,9 @@
 
           <tr>
             <td colspan="2">
-              <img src="images/dark_arrows.gif" width="6" height="6" border="0" align="middle" alt="">&nbsp;<a href="{buildURL(#cart#)}" class="SidebarItems">View cart</a>
+              <img src="images/dark_arrows.gif" width="6" height="6" align="middle" alt="">&nbsp;<a href="{buildURL(#cart#)}" class="SidebarItems">View cart</a>
               <br>
-              <img src="images/dark_arrows.gif" width="6" height="6" border="0" align="middle" alt="">&nbsp;<a href="{buildURL(#checkout#)}" class="SidebarItems">Checkout</a><br>
+              <img src="images/dark_arrows.gif" width="6" height="6" align="middle" alt="">&nbsp;<a href="{buildURL(#checkout#)}" class="SidebarItems">Checkout</a><br>
             </td>
           </tr>
 
@@ -34,6 +37,7 @@
 
       </td>  
     </tr>
+
   </table>
 
 </div>
