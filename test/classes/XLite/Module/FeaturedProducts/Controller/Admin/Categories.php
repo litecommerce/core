@@ -48,7 +48,6 @@ class XLite_Module_FeaturedProducts_Controller_Admin_Categories extends XLite_Co
 {
     public function __construct()
     {
-        parent::__construct();
         if (!isset($_REQUEST["search_category"])) {
             $_REQUEST["search_category"] = $_REQUEST["category_id"];
         }    
@@ -101,7 +100,4 @@ class XLite_Module_FeaturedProducts_Controller_Admin_Categories extends XLite_Co
 		}
 	}
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+
