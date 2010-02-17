@@ -115,7 +115,7 @@ Specify the amount in currency.<br><br>
 <td>&nbsp;<widget class="XLite_Validator_RangeValidator" field="amount" min="{config.GiftCertificates.minAmount}" max="{config.GiftCertificates.maxAmount}"></td>
 </tr>
 
-<tr valign="middle" IF="GDLibLoaded&!gc.gcid">
+<tr valign="middle">
 <td colspan="3"><br>
 <widget class="XLite_Module_GiftCertificates_View_SpambotArrest" id="on_add_giftcert{gc.gcid}">
 </td>    

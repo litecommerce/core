@@ -5,7 +5,7 @@
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="gcid" value="{gcid}">
 <input type="hidden" name="ecard_id" value="">
-<tr FOREACH="split3(ecards),row">
+<tr FOREACH="split(ecards,3),row">
     <td FOREACH="row,ecard" align="center" width="33%">
         <span IF="ecard">
         <a href="{ecard.image.url}" target="_blank"><img src="{ecard.thumbnail.url}" border="0"></a><br>

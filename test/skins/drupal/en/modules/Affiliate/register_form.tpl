@@ -249,7 +249,7 @@ The form below allows you to create a partner profile. Do not forget that this i
 </table>
 
 <br>
-<div IF="GDLibLoaded">
+<div>
 <widget template="common/spambot_arrest.tpl" id="on_partner_register"></div>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="2">

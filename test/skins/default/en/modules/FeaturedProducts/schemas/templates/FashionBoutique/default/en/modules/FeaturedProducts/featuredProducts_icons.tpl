@@ -1,6 +1,6 @@
 {* Featured products list (icons) *}
 <table cellpadding="3" cellspacing="0" border="0" width="100%">
-<tbody FOREACH="split3(category.featuredProducts),row">
+<tbody FOREACH="split(category.featuredProducts,3),row">
 <tr>
     <td valign="middle" FOREACH="row,featuredProduct" align="center" width="33%">
         <widget visible="{featuredProduct}" template="common/product_thumbnail.tpl" href="cart.php?target=product&sns_mode=featured_product&product_id={featuredProduct.product.product_id}&category_id={featuredProduct.product.category_id}" thumbnail="{featuredProduct.product.thumbnailURL}" noimage="{!featuredProduct.product.hasThumbnail()}" width="100">

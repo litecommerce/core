@@ -36,6 +36,8 @@
 */
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
+// FIXME - class must be removed
+
 /**
 * Widget_ProductAdviser description.
 *
@@ -45,39 +47,6 @@
 */
 class XLite_Module_ProductAdviser_View_Abstract extends XLite_View_Abstract implements XLite_Base_IDecorator
 {
-    function isArrayPointerNth($arrayPointer, $arrayPointerCheck)
-    {
-		if ($this->xlite->get("PAPartialWidget")) {
-			return parent::isArrayPointerNth($arrayPointer, $arrayPointerCheck);
-		}
-
-    	$arrayPointerCheck = intval($arrayPointerCheck);
-
-    	if ($arrayPointerCheck <= 0) {
-    		return false;
-    	}
-
-    	return (($arrayPointer % $arrayPointerCheck) == 0) ? true : false;
-    }
-
-    function isArrayPointerEven($arrayPointer)
-    {
-		if ($this->xlite->get("PAPartialWidget")) {
-			return parent::isArrayPointerEven($arrayPointer);
-		}
-
-    	return ($this->isArrayPointerNth($arrayPointer, 2)) ? true : false;
-    }
-
-    function isArrayPointerOdd($arrayPointer)
-    {
-		if ($this->xlite->get("PAPartialWidget")) {
-			return parent::isArrayPointerOdd($arrayPointer);
-		}
-
-    	return ($this->isArrayPointerNth($arrayPointer, 2)) ? false : true;
-    }
-
 	function getPercents($columns)
 	{
 		return (int) (($columns > 0) ? (round((100 / $columns))) : 0);
@@ -85,7 +54,3 @@ class XLite_Module_ProductAdviser_View_Abstract extends XLite_View_Abstract impl
 
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

@@ -748,8 +748,9 @@ class XLite_Core_FlexyCompiler extends XLite_Base
 	function getXliteFormIDText()
 	{
 		if (!isset($this->xlite->_xlite_form_id_text) || is_null($this->xlite->_xlite_form_id_text)) {
-			$this->xlite->_xlite_form_id_text = $this->flexyEcho("{xliteFormID}");
+			$this->xlite->_xlite_form_id_text = $this->flexyEcho("{session.getXliteFormID()}");
 		}
+
 		return $this->xlite->_xlite_form_id_text;
 	}
 

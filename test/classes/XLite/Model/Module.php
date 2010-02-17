@@ -98,7 +98,7 @@ class XLite_Model_Module extends XLite_Model_Abstract
      * @access public
      * @since  1.0
      */
-    public $defaultOrder = 'name';
+    public $defaultOrder = 'enabled DESC, name';
 
 
     /**

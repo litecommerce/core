@@ -3,7 +3,7 @@
 <table IF="category.subcategories" cellpadding="5" cellspacing="0" border="0" width="100%">
 <tbody FOREACH="split(category.subcategories,4),row">
 <tr>
-   <td valign="middle" FOREACH="row,subcategory" align="center" width="{percent(4)}%">
+   <td valign="middle" FOREACH="row,subcategory" align="center" width="25%">
 
 		<table IF="{subcategory}" border="0" cellspacing="0" cellpadding="0">
 		<tr>
@@ -25,7 +25,7 @@
    </td>
 </tr>
 <tr>
-   <td valign="top" FOREACH="row,subcategory" align="center" width="{percent(4)}%">
+   <td valign="top" FOREACH="row,subcategory" align="center" width="25%">
 		<table IF="{subcategory}" cellspacing="0" cellpadding="0" width="50%">
 		<tr>
 			<td><img src="images/modules/LayoutOrganizer/film_tape/catname_left.gif" width="8" height="17" alt=""></td>

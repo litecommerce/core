@@ -344,7 +344,7 @@ If you are a registered customer, please <a href="cart.php?target=profile&amp;mo
 </table>
 
 <br>
-<div IF="GDLibLoaded">
+<div>
 <widget template="common/spambot_arrest.tpl" id="on_register"></div>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="2">

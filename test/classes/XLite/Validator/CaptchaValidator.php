@@ -58,10 +58,6 @@ class XLite_Validator_CaptchaValidator extends XLite_Validator_Abstract
     {
         $id = $this->get("id");
 
-        if(!$this->isGDLibLoaded()){
-            return true;
-        }
-
         if(!$this->isActiveCaptchaPage($id))
             return true;
 

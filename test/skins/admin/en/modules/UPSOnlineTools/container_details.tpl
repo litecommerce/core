@@ -158,7 +158,7 @@ function openDescription()
 		<td>
 {if:container.levels}
 <table border=0 cellpadding="5" cellspacing="0">
-    <tr FOREACH="split4(container.levels),levels">
+    <tr FOREACH="split(container.levels,4),levels">
         <td FOREACH="levels,level_id,level">
         <table border=0 IF="level">
             <tr>

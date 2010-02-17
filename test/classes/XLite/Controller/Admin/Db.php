@@ -47,7 +47,20 @@
 *
 */
 class XLite_Controller_Admin_Db extends XLite_Controller_Admin_Abstract
-{	
+{
+	/**
+	 * File size limit 
+	 * 
+	 * @return mixed
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
+	public function getUploadMaxFilesize()
+	{
+		return ini_get('upload_max_filesize');
+	}
+
+
 	public $params = array('target', 'page');	
 	public $page = "db_backup";	
 	public $pages = array( "db_backup" 	=> "Backup database",
@@ -198,7 +211,3 @@ class XLite_Controller_Admin_Db extends XLite_Controller_Admin_Abstract
 
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

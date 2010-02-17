@@ -73,11 +73,7 @@ function ProcessDelete()
     		<th width=20>Delete</th>
 		</tr>
 		<tbody bgcolor=#ffffff FOREACH="product.RelatedProducts,RP">
-		{if:isArrayPointerEven(RPArrayPointer)}
-		<tr bgcolor=#eeeeff>
-		{else:}
-		<tr bgcolor=#ffffff>
-		{end:}
+		<tr>
 			<td align=center width=20><input type="text" size="4" name="updates_product_ids[{RP.product.product_id}]" value="{RP.order_by}"></td>
 			<td nowrap>
 				<a href="admin.php?target=product&product_id={RP.product.product_id}">{RP.product.name:h}</a>

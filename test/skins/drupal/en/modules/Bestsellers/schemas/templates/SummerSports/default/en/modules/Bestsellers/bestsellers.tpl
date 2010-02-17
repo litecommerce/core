@@ -1,6 +1,6 @@
 {* Bestsellers list inside a category/central zone *}
 <table cellpadding="3" cellspacing="0" border="0" width="100%">
-<tbody FOREACH="split3(bestsellers),row">
+<tbody FOREACH="split(bestsellers,3),row">
 <tr>
     <td valign="middle" FOREACH="row,bestseller" align="center" width="33%">
         <widget visible="{bestseller}" template="common/product_thumbnail.tpl" href="cart.php?target=product&sns_mode=featured_product&product_id={bestseller.product_id}&category_id={bestseller.category_id}" thumbnail="{bestseller.thumbnailURL}" noimage="{!bestseller.hasThumbnail()}" width="100">

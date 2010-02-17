@@ -47,7 +47,59 @@
 *
 */
 class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
-{	
+{
+	/**
+	 * List of pages with captcha 
+	 * 
+	 * @return array
+	 * @access protected
+	 * @since  3.0.0 EE
+	 */
+	protected static function getCaptchaPages()
+    {
+        return array(
+			'on_contactus'        => '',
+			'on_register'         => '',
+			'on_add_giftcert'     => 'GiftCertificates',
+			'on_partner_register' => 'Affiliate'
+		);
+    }
+
+	/**
+	 * Return list of enabled captcha pages 
+	 * 
+	 * @return array
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
+	public function getEnabledCaptchaPages()
+    {
+		$result = array();
+
+		foreach ($this->getCaptchaPages() as $idx => $module) {
+			if (XLite_Model_ModulesManager::getInstance()->isActiveModule($module)) {
+				$result[] = $module;
+			}
+		}
+
+		return $result;
+    }
+
+	/**
+	 * Check for the GDLib extension 
+	 * 
+	 * @return void
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
+	public function isGDLibLoaded()
+    {
+        return extension_loaded('gd') && function_exists("gd_info");
+    }
+
+
+
+
     public $params = array('target', 'page');	
     public $page = "General";	
     public $_waiting_list = null;
@@ -610,7 +662,4 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
             return "Not supported";
     }
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+

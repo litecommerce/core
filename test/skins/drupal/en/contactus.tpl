@@ -153,7 +153,7 @@ if (goodEmail) {
 </td>
 </tr>
 
-<tr IF="GDLibLoaded" valign="middle">
+<tr valign="middle">
 <td colspan="3">
 <widget template="common/spambot_arrest.tpl" id="on_contactus">
 </td>    

@@ -234,6 +234,18 @@ class XLite_View_Abstract extends XLite_Core_Handler
     {
     }
 
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        $this->widgetParams = array();
+    }
+
 
 	/**
      * FIXME - backward compatibility
@@ -315,18 +327,6 @@ class XLite_View_Abstract extends XLite_Core_Handler
     }
 
 	/**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        $this->widgetParams = array();
-    }
-
-	/**
      * Check passed attributes
      *
      * @param array $attributes attributes to check
@@ -340,453 +340,36 @@ class XLite_View_Abstract extends XLite_Core_Handler
         return array();
     }
 
-
-
-
-    /** 
-    * Compares two values.
-    *
-    * @return boolean True if value are equals /false otherwise
-    */
-    function isSelected($val1, $val2, $val3 = null)
+    /**
+     * Check for current target 
+     * 
+     * @param array $target list of allowed targets
+     *  
+     * @return bool
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function isDisplayRequired(array $target)
     {
-        if (isset($val3)) {
-            return $val1->get($val2)==$val3;
-        }
-        return $val1 == $val2;
+        return in_array($this->target, $target);
     }
 
     /**
-    * Truncates the Base object property value to specified length.
-    * 
-    * @access public
-    * @param Base $baseObject Base instance to get field value from
-    * @param string $field The filed to get value
-    * @param integer $length The filed length to truncate to
-    * @param string $etc The string to add to truncated field value
-    * @return string The truncated string
-    */
-    function truncate($baseObject, $field, $length = 0, $etc = "...", $break_words = false)
+     * Register CSS files
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
     {
-        if (is_scalar($baseObject)) {
-            $string = $baseObject;
-            $length = $field;
-        } else {
-        	if (is_object($baseObject)) {
-            	$string = $baseObject->get($field);
-            }
-        }
-        if ($length == 0) return '';
-        if (strlen($string) > $length) {
-            $length -= strlen($etc);
-            if (!$break_words) {
-                $string = preg_replace('/\s+?(\S+)?$/', '', substr($string, 0, $length + 1));
-            }
-            return substr($string, 0, $length) . $etc;
-        } else {
-            return $string;
-        }
-    }
-
-    /**
-    * Formats date.
-    */
-    function date_format($base, $field = null, $format = null)
-    {
-        if (is_null($format)) {
-            $format = $this->config->getComplex('General.date_format');
-        }
-        if (!is_object($base)) {
-            return strftime($format,$base);
-        }
-        return strftime($format, $base->get($field));
-    }
-
-    /**
-    * Formats timestamp.
-    */
-    function time_format($base, $field = null, $format = null)
-    {
-        if (is_null($format)) {
-            $format = $this->config->getComplex('General.date_format') . ' ' . $this->config->getComplex('General.time_format');
-        }
-        if (!is_object($base)) {
-            return strftime($format,$base);
-        }
-        return strftime($format, $base->get($field));
-    }
-
-    function _price_format($value)
-    {
-        $price = sprintf("%.02f", round(doubleval($value), 2));
-        return $price;
-    }
-
-    function price_format($base, $field = "", $thousand_delim = null, $decimal_delim = null)
-    {
-        if (is_null($thousand_delim)) {
-            $thousand_delim = $this->config->getComplex('General.thousand_delim');
-        }
-        if (is_null($decimal_delim)) {
-            $decimal_delim = $this->config->getComplex('General.decimal_delim');
-        }
-        if (is_Object($base)) {
-            $price = $base->get($field);
-        } else {
-            $price = $base;
-        }    
-
-		if (substr($price, 0, 1) == '-' || substr($price, 0, 1) == '+') {
-            $sign  = substr($price, 0, 1);
-            $price = substr($price, 1);
-        } else {
-            $sign = '';
-        }
-
-        $price = $this->_price_format($price);
-        $pos = false;
-        if ($decimal_delim) {
-            $price = str_replace(".", $decimal_delim, $price);
-            $pos = strpos($price, $decimal_delim);
-        } else {
-            // no fractional part
-            $price = substr($price, 0, strpos($price, "."));
-        }
-        if (!$pos) $pos = strlen($price);
-        for ($i = $pos -3; $i > 1; $i -= 3) {
-            $price = substr($price, 0, $i).$thousand_delim.substr($price, $i);
-        }
-        return sprintf($this->config->getComplex('General.price_format'), $sign.$price);
-    }
-
-    function addSlashes($base, $field = null)
-    {
-        if (is_object($base)) {
-            return addslashes($base->get($field));
-        } else {
-            return addslashes($base);
-        }
-    }
-
-    function isEqual($base1, $base2, $field) {
-        return $base1->get($field) == $base2->get($field);
-    }
-
-    function isEmpty($data)
-    {	
-        return empty($data);
-    }
-
-    function ini_get($name)
-    {
-        return ini_get($name);
-    }
-
-    function split($array, $count)
-    {
-        $result = array_chunk($array, $count);
-        // get last chunk, if any
-        if ($result) {
-            while(count($result[count($result)-1]) < $count) {
-                $result[count($result)-1][] = null;
-            }
-        }
-        return $result;
-    }
-    function split3($array) 
-    {
-        return $this->split($array, 3);
-    }
-    function split4($array) 
-    {
-        return $this->split($array, 4);
-    }
-
-    function isArrayPointerNth($arrayPointer, $arrayPointerCheck)
-    {
-    	$arrayPointerCheck = intval($arrayPointerCheck);
-
-    	if ($arrayPointerCheck <= 0) {
-    		return false;
-    	}
-
-    	return (($arrayPointer % $arrayPointerCheck) == 0) ? true : false;
-    }
-
-    function isArrayPointerEven($arrayPointer)
-    {
-    	return ($this->isArrayPointerNth($arrayPointer, 2)) ? true : false;
-    }
-
-    function isArrayPointerOdd($arrayPointer)
-    {
-    	return ($this->isArrayPointerNth($arrayPointer, 2)) ? false : true;
-    }
-
-    function percent($count)
-    {
-        return round(100/$count);
-    }
-
-    function inc($val, $inc = 1)
-    {
-        return $val + $inc;
-    }
-    
-    function rand()
-    {
-        return rand();
-    }
-
-	function isOddRow($row)
-	{
-		return (($row % 2) == 0) ? true : false;
-	}
-
-	function getRowClass($row, $odd_css_class, $even_css_class = null)
-	{
-		return ($this->isOddRow($row)) ? $odd_css_class : $even_css_class;
-	}
-
-    function wrap(XLite_Base $object, $prop, $width)
-    {
-        if ($prop) {
-            $text = $object->get($prop);
-        } else {
-            $text = $object;
-        }
-        $startPos = 0;
-        $breaks = array(0);
-        for ($i=0; $i<strlen($text); $i++) {
-            $c = $text{$i};
-            if ($c=='-' || $c==' ') {
-                $startPos = $i;
-            } else if ($c=='.' || $c==',' || $c=='@') {
-                $nextWord = strcspn(substr($text, $i+1), '.,@- ');
-                if ($i+$nextWord-$startPos >= $width) {
-                    // break here
-                    $breaks[] = $i+1;
-                    $startPos = $i;
-                }
-            }
-        }
-        $breaks[] = strlen($text);
-        // finally break text with \n
-        $text1 = '';
-        for ($i=0; $i<count($breaks)-1; $i++) {
-            if ($i) {
-                $text1 .= "\n";
-            }
-            $text1 .= substr($text, $breaks[$i], $breaks[$i+1]-$breaks[$i]);
-        }
-        return $text1;
-    }
-
-	public function isDisplayRequired(array $target)
-	{
-		return in_array($this->target, $target);
-	}
-
-
-    /*function addWidget($w) 
-    {
-        $this->widgets[] = $w;
-        $w->parentWidget = $this;
-    }*/
-
-    function getCurrentYear()
-    {
-        return date("Y", time());
-    }
-
-    /*function strMD5($string)
-    {
-    	return strtoupper(md5(strval($string)));
-    }*/
-
-    /*function getSidebarBoxStatus($boxHead = null)
-    {
-		if ($this->xlite->is("adminZone")) 
-		{
-    		$dialog = new XLite_Controller_Admin_Sbjs();
-    	}
-        $dialog->sidebar_box_id = $this->strMD5($boxHead);
-
-        return $dialog->getSidebarBoxStatus();
-    }*/
-
-	function getXliteFormID()
-	{
-		if (is_null($this->xlite->_xlite_form_id)) {
-			$this->xlite->_xlite_form_id = $this->generateXliteFormID();
-		}
-		return $this->xlite->_xlite_form_id;
-	}
-
-	function generateXliteFormID()
-	{
-		$form = new XLite_Model_XliteForm();
-		$form_id = md5(uniqid(rand(0,time())));
-		$session_id = $this->xlite->session->getID();
-		$form->set("form_id", $form_id);
-		$form->set("session_id", $session_id);
-		$form->set("date", time());
-		$form->create();
-		$form->collectGarbage($session_id);
-		return $form_id;
-	}
-
-	/*function isIgnoredTarget()
-    {
-		$ignoreTargets = array
-		(
-        	"image" => array("*"),
-            "callback" => array("*"),
-			"upgrade" => array("version", "upgrade")
-		);
-
-		
-                            
-        if (
-			isset($ignoreTargets[$_REQUEST['target']]) 
-			&& (
-				in_array("*", $ignoreTargets[$_REQUEST['target']]) 
-				|| (isset($_REQUEST['action']) && in_array($_REQUEST['action'], $ignoreTargets[$_REQUEST['target']]))
-			)
-		) { 
-            return true;
-        }
-
-        $specialIgnoreTargets = array
-        (
-            "db" => array("backup", "delete"),
-            "files" => array("tar", "tar_skins", "untar_skins"),
-            "wysiwyg" => array("export", "import")
-        );
-
-        if(
-			isset($specialIgnoreTargets[$_REQUEST['target']]) 
-			&& (
-				in_array("*", $specialIgnoreTargets[$_REQUEST['target']]) 
-				|| (isset($_REQUEST['action']) && in_array($_REQUEST['action'], $specialIgnoreTargets[$_REQUEST['target']]))
-			) 
-			&& (
-				isset($_POST['login']) && isset($_POST['password'])
-			)
-		) {
-            $login = $this->xlite->auth->getComplex('profile.login');
-            $post_login = $_POST['login'];
-            $post_password = $_POST['password'];
-
-            if($login != $post_login)
-                return false;
-
-            if(!empty($post_login) && !empty($post_password)){
-                $post_password = $this->xlite->auth->encryptPassword($post_password);
-                $profile = new XLite_Model_Profile();
-                if ($profile->find("login='".addslashes($post_login)."' AND ". "password='".addslashes($post_password)."'")) {
-                    if ($profile->get("enabled") && $profile->is("admin")) {
-                        return true;
-                    }
-                }
-            }
-        }
-        
-        return false;
-    } 
-					
-	function checkXliteForm()
-	{
-		if (!isset($_REQUEST['action'])) {
-            return true;
-        }    
-			  
-		if ($this->isIgnoredTarget()) {
-            return true;
-        }
-				 
-		if (!$this->xlite->is("adminZone")) {
-            return true;
-        }
-
-		return $this->isXliteFormValid();
-	}
-
-	function isXliteFormValid()
-	{
-		if (!$this->xlite->config->getComplex('Security.form_id_protection')) {
-			return true;
-		}
-
-		if ($_REQUEST['target'] == 'payment_method' && $_REQUEST['action']=='callback') {
-			return true;
-		}
-
-		$form_id = addslashes($_REQUEST['xlite_form_id']);
-		$session_id = $this->xlite->session->getID();
-		$form = new XLite_Model_XliteForm();
-		if (!$form->find("form_id='$form_id' AND session_id='$session_id'")) {
-			return false;
-		}
-		$form->collectGarbage();
-		return true;
-	}*/
-
-    function isGDLibLoaded()
-    {
-    	// PHP 4 >= 4.3.0
-    	// !!!
-        return extension_loaded('gd') && function_exists("gd_info");
-    }
-
-    function getCaptchaPages()
-    {
-        return array(
-                "on_contactus" => "",
-                "on_register" => "",
-                "on_add_giftcert" => "GiftCertificates",
-                "on_partner_register" => "Affiliate"
-                );
-    }
-
-    function getEnabledCaptchaPages()
-    {
-        $pages = (array) $this->get("captchaPages");
-        foreach($pages as $widget_id => $dependency){
-            if($dependency == "") continue;
-
-            $module = $dependency;
-            if(!$this->get("xlite.mm.activeModules." . $module)){
-                unset($pages[$widget_id]);
-            }
-        }
-
-        return $pages;
-    }
-
-    function isActiveCaptchaPage($widget_id)
-    {
-        $pages = $this->getComplex('config.Captcha.active_captcha_pages');
-
-        return (isset($pages[$widget_id]) && $this->getComplex('xlite.config.Security.captcha_protection_system') == "Y");
-    }
-
-	/**
-	 * Register CSS files
-	 * 
-	 * @return array
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function getCSSFiles()
-	{
         return array();
-	}
+    }
 
     /**
      * Register JS files
-     * 
+     *
      * @return array
      * @access public
      * @see    ____func_see____
@@ -798,5 +381,245 @@ class XLite_View_Abstract extends XLite_Core_Handler
     }
 
 
+    // ------------------> Routines for templates
+
+
+    /**
+     * Compares two values 
+     * 
+     * @param mixed $val1 value 1
+     * @param mixed $val2 value 2
+     * @param mixed $val3 value 3
+     *  
+     * @return bool
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function isSelected($val1, $val2, $val3 = null)
+    {
+        return isset($val3) ? $val1->get($val2) == $val3 : $val1 == $val2;
+    }
+
+    /**
+     * Truncates the baseObject property value to specified length 
+     * 
+     * @param mixed  $baseObject string or object instance to get field value from
+     * @param mixed  $field      string length or field to get value
+     * @param int    $length     field length to truncate to
+     * @param string $etc        string to add to truncated field value
+     * @param mixed  $breakWords word wrap flag
+     *  
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function truncate($baseObject, $field, $length = 0, $etc = '...', $breakWords = false)
+    {
+        
+        if (is_scalar($baseObject)) {
+            $string = $baseObject;
+            $length = $field;
+        } else {
+        	$string = $baseObject->get($field);
+        }
+
+        if ($length == 0) {
+
+            $string = '';
+
+        } elseif (strlen($string) > $length) {
+
+            $length -= strlen($etc);
+            if (!$breakWords) {
+                $string = preg_replace('/\s+?(\S+)?$/', '', substr($string, 0, $length + 1));
+            }
+
+            $string = substr($string, 0, $length) . $etc;
+        }
+
+        return $string;
+    }
+
+    /**
+     * Format date
+     * 
+     * @param mixed  $base  string or object instance to get field value from
+     * @param string $field field to get value
+     * @param string $format date format
+     *  
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function date_format($base, $field = null, $format = null)
+    {
+        if (!isset($format)) {
+            $format = $this->config->General->date_format;
+        }
+
+        return strftime($format, is_scalar($base) ? $base : $base->get($field));
+    }
+
+    /**
+     * Format timestamp
+     *
+     * @param mixed  $base   string or object instance to get field value from
+     * @param string $field  field to get value
+     * @param string $format date format
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function time_format($base, $field = null, $format = null)
+    {
+        return $this->date_format($base, $field, $this->config->General->date_format . ' ' . $this->config->General->time_format);
+    }
+
+    /**
+     * Format price 
+     * 
+     * @param mixed  $base          string or object instance to get field value from
+     * @param string $field         field to get value
+     * @param mixed  $thousandDelim thousands separator
+     * @param mixed  $decimalDelim  separator for the decimal point
+     *  
+     * @return void
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function price_format($base, $field = '', $thousandDelim = null, $decimalDelim = null)
+    {
+        if (!isset($thousandDelim)) {
+            $thousandDelim = $this->config->General->thousand_delim;
+        }
+
+        if (!isset($decimalDelim)) {
+            $decimalDelim = $this->config->General->decimal_delim;
+        }
+
+        return sprintf(
+            $this->config->General->price_format,
+            number_format(is_scalar($base) ? $base : $base->get($field), 2, $decimalDelim, $thousandDelim)
+        );
+    }
+
+    /**
+     * Add slashes 
+     * 
+     * @param mixed  $base  string or object instance to get field value from
+     * @param string $field field to get value
+     *  
+     * @return void
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function addSlashes($base, $field = null)
+    {
+        return addslashes(is_scalar($base) ? $base : $base->get($field));
+    }
+
+    /**
+     * Check if data is empty 
+     * 
+     * @param mixed $data data to check
+     *  
+     * @return bool
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function isEmpty($data)
+    {	
+        return empty($data);
+    }
+
+    /**
+     * Split an array into chunks
+     * 
+     * @param array $array array to split
+     * @param int   $count chunks count
+     *  
+     * @return array
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function split(array $array, $count)
+    {
+        $result = array_chunk($array, $count);
+
+        $lastKey   = count($result)-1;
+        $lastValue = $result[$lastKey];
+
+        if (0 < ($count = $count - count($lastValue))) {
+            $result[$lastKey] = array_merge($lastValue, array_fill(0, $count, null));
+        }
+
+        return $result;
+    }
+
+    /**
+     * Increment
+     * 
+     * @param int $value value to increment
+     * @param int $inc increment
+     *  
+     * @return void
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function inc($value, $inc = 1)
+    {
+        return $value + $inc;
+    }
+    
+    /**
+     * Get random number
+     * TODO - rarely used function; probably, should be removed 
+     * 
+     * @return int
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function rand()
+    {
+        return rand();
+    }
+
+    /**
+     * For the "zebra" tables
+     * 
+     * @param int    $row            row index
+     * @param string $odd_css_class  first CSS class
+     * @param string $even_css_class second CSS class
+     *  
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+	protected function getRowClass($row, $odd_css_class, $even_css_class = null)
+	{
+		return (0 == ($row % 2)) ? $odd_css_class : $even_css_class;
+	}
+
+    /**
+     * Check if captcha required on the current page
+     * 
+     * @param string $widgetId page identifier
+     *  
+     * @return bool
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function isActiveCaptchaPage($widgetId)
+    {
+        $result = 'Y' == $this->config->Security->captcha_protection_system;
+
+        if ($result) {
+            $pages = $this->config->Captcha->active_captcha_pages;
+            $result = isset($pages[$widgetId]);
+        }
+
+        return $result;
+    }
 }
 

@@ -40,6 +40,15 @@ class XLite_View_Minicart extends XLite_View_Dialog
 	 * @access protected
 	 * @since  1.0.0
 	 */
-	protected $body = 'mini_cart/dialog.tpl';
+	protected $body = 'mini_cart/body.tpl';
+
+    /**
+     * Widget templates dir 
+     * 
+     * @var    string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected $dir = 'mini_cart';
 }
 

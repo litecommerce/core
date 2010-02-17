@@ -3,7 +3,7 @@
 <tr> 
     <td>&nbsp;&nbsp;&nbsp;</td>
     <td class="VertMenuItems" valign="top">
-        {wrap(auth.profile,#login#,#20#)}<br>
+        {auth.profile.login}<br>
         Logged in!<br>
         <br>
         <a href="cart.php?target=partner_login&action=logoff" class="SidebarItems"><input type="image" src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> Logoff</a>

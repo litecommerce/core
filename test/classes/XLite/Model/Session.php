@@ -26,6 +26,40 @@ define('SESSION_DEFAULT_ID', md5(uniqid(rand(), true)));
  */
 abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISingleton
 {
+    /**
+     * Currently used form ID 
+     * 
+     * @var    string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected static $xliteFormId = null;
+
+
+    /**
+     * Generate new form ID
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function generateXliteFormID()
+    {
+        $form = new XLite_Model_XliteForm();
+
+        $formId = md5(uniqid(rand(0,time())));
+        $sessId = $this->getID();
+
+        $form->set('form_id', $formId);
+        $form->set('session_id', $sessId);
+        $form->set('date', time());
+        $form->create();
+
+        $form->collectGarbage($sessId);
+
+        return $formId;
+    }
+
 	/**
      * It's not possible to instantiate this class using the "new" operator
      *
@@ -80,8 +114,21 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
      */
     abstract public function writeClose();
 
+    /**
+     * Return current form ID 
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function getXliteFormID()
+    {
+        if (!isset(self::$xliteFormId)) {
+            self::$xliteFormId = $this->generateXliteFormID();
+        }
 
-
+        return self::$xliteFormId;
+    }
 
 
 

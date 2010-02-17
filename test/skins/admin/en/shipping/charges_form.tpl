@@ -22,7 +22,7 @@
 			<td width="30%">&nbsp;<br>
 			<select name="rate[{k}][shipping_id]">
 			<option value="-1">All shipping methods</option>
-			<option FOREACH="shippings,shipping" value="{shipping.shipping_id}" selected="{isEqual(rate,shipping,#shipping_id#)}">{shipping.name:h}</option>
+			<option FOREACH="shippings,shipping" value="{shipping.shipping_id}" selected="{rate.shipping_id=shipping.shipping_id}">{shipping.name:h}</option>
 			</select>
 			</td>
 			<td width="30%">Weight<br><input name="rate[{k}][min_weight]" size="9" value="{rate.min_weight}">&nbsp;-&nbsp;<input name="rate[{k}][max_weight]" size="9" value="{rate.max_weight}"></td>
@@ -34,7 +34,7 @@
 			<td>
 				<select name="rate[{k}][shipping_zone]">
 				<option value="-1">All shipping zones</option>
-				<option FOREACH="xlite.factory.XLite_Model_ShippingZone.findAll(),zone" value="{zone.shipping_zone}" selected="{isEqual(rate,zone,#shipping_zone#)}">{zone.name}</option>
+				<option FOREACH="xlite.factory.XLite_Model_ShippingZone.findAll(),zone" value="{zone.shipping_zone}" selected="{rate.shipping_zone=zone.shipping_zone}">{zone.name}</option>
 				</select>
 			</td>
 			<td>Order total<br><input name="rate[{k}][min_total]" size="9" value="{rate.min_total}">&nbsp;-&nbsp;<input name="rate[{k}][max_total]" size="9" value="{rate.max_total}"></td>
