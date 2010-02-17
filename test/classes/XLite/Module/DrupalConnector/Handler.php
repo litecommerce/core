@@ -173,7 +173,7 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
 			}
 		}
 
-        return str_repeat('../', count($base_path) - $i - 1) . join('/', $xlite_path) . '/';
+        return str_repeat('../', count($base_path) - $i) . join('/', $xlite_path) . '/';
     }
 }
 
