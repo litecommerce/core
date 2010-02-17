@@ -48,8 +48,10 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
 
 	function getProfile()
 	{
-		if (is_null($this->profile)) 
+		if (is_null($this->profile)) {
 			$this->profile = new XLite_Model_Profile($this->auth->getComplex('profile.profile_id'));
+		}
+
 		return $this->profile;
 	}
 
@@ -62,7 +64,8 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
 
         parent::init();
 
-        $this->setComplex("pager.itemsPerPage", $this->getComplex('config.General.products_per_page'));
+        $this->setComplex("pager.itemsPerPage", $this->config->General->products_per_page);
+
         if (!isset($this->action)) {
             $this->session->set("productListURL", $this->get("url"));
 		}
@@ -71,9 +74,13 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
 		}
 
 		$this->search = $this->session->get("search");
-		if (is_null($this->search) || !is_array($this->search) || $this->session->get("quick_search")) {
+		if (
+			is_null($this->search)
+			|| !is_array($this->search)
+			|| $this->session->get("quick_search")
+		) {
 			$this->search["substring"] = $this->session->get("quick_search");
-            $this->session->set("quick_search",null);
+            $this->session->set("quick_search", null);
 			$this->search["logic"] = 1;
 			$this->search["title"] = 1;
 			$this->search["brief_description"] = 1;
@@ -88,24 +95,46 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
 	function action_save_filters()
 	{
 		$profile = $this->get("profile");
-		$profile->set("search_settings",serialize($this->session->get("search")));
+		$profile->set("search_settings", serialize($this->session->get("search")));
 		$profile->update();
 	}	
 
     function getProducts()
     {
-        if (!isset($this->mode)) return array();
+        if (!isset($this->mode)) {
+			return array();
+		}
 
-        is_null($this->getComplex('properties.search')) ?  $properties = $this->session->get("search") : $properties = $this->getComplex('properties.search');
+        $properties = $this->getComplex('properties.search');
+		if (is_null($properties)) {
+			$properties = $this->session->get("search");
+		}
 
-        if (!empty($properties["substring"])&&!isset($properties["title"])&&!isset($properties["brief_description"])&&!isset($properties["description"])&&!isset($properties["meta_tags"])&&!isset($properties["extra_fields"])&&!isset($properties["options"])) return array();
+        if (
+			!empty($properties["substring"])
+			&& !isset($properties["title"])
+			&& !isset($properties["brief_description"])
+			&& !isset($properties["description"])
+			&& !isset($properties["meta_tags"])
+			&& !isset($properties["extra_fields"])
+			&& !isset($properties["options"])
+		) {
+			return array();
+		}
+
         if (is_null($this->products)) {
             $p = new XLite_Model_Product();
-            if (is_array($properties))
+
+            if (is_array($properties)) {
                 foreach($properties as $key => $value) {
-                    if (empty($properties[$key])) $properties[$key] = null;
+                    if (empty($properties[$key])) {
+						$properties[$key] = null;
+					}
+
                     $properties[$key] = addslashes($properties[$key]);
                 }
+			}
+
             $properties["title"] = isset($properties["title"]);
             $properties["description"] = isset($properties["description"]);
             $properties["brief_description"] = isset($properties["brief_description"]);
@@ -113,25 +142,27 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
             $properties["meta_tags"] = isset($properties["meta_tags"]);
             $properties["extra_fields"] = isset($properties["extra_fields"]);
             $properties["options"] = isset($properties["options"]);
+			$orderby = null;
 															
             if (isset($properties["price"])) {
-                $price = explode(",",$properties["price"]);
+                $price = explode(",", $properties["price"], 2);
                 $properties["start_price"] = $price[0];
                 $properties["end_price"] = !empty($price[1]) ? $price[1] : null;
                 $orderby = "price";
             }
+
             if (isset($properties["weight"])) {
-                $weight = explode(",",$properties["weight"]);
+                $weight = explode(",", $properties["weight"], 2);
                 $properties["start_weight"] = $weight[0];
                 $properties["end_weight"] = !empty($weight[1]) ? $weight[1] : null;
                 $orderby = "weight";
             }
-            $this->products = $p->_advancedSearch
-            (
+
+            $this->products = $p->_advancedSearch(
             	$properties["substring"],
             	$orderby,
             	$properties["sku"],
-            	$properties["category"],
+            	isset($properties["category"]) ? $properties["category"] : null,
             	$properties["subcategories"],
             	true,
             	$properties["logic"],
@@ -141,10 +172,10 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
 				$properties["meta_tags"],
 				$properties["extra_fields"],
 				$properties["options"],
-            	$properties["start_price"],
-            	$properties["end_price"],
-            	$properties["start_weight"],
-            	$properties["end_weight"]
+            	isset($properties["start_price"]) ? $properties["start_price"] : null,
+            	isset($properties["end_price"]) ? $properties["end_price"] : null,
+            	isset($properties["start_weight"]) ? $properties["start_weight"] : null,
+            	isset($properties["end_weight"]) ? $properties["end_weight"] : null
             );
 
             $searchStat = new XLite_Model_SearchStat();
@@ -154,21 +185,25 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
         return $this->products;
     }
 
-	function getCount()	{
+	function getCount()
+	{
 		return count($this->get("products"));
 	}
  
 	function cmp($val1, $val2)
-	{	if ($val1["start"] == $val2["start"]) { 
-		if ($val1["label"] > $val2["label"]) return -1; else return 1; 
+	{
+		if ($val1["start"] == $val2["start"]) { 
+			return $val1["label"] > $val2["label"] ? -1 : 1; 
 		}
-		if ($val1["start"] < $val2["start"]) return -1; else return 1;
+
+		return $val1["start"] < $val2["start"] ?  -1 :  1;
 	}
 	
 	function getPrices()
 	{
-		$prices = unserialize($this->config->getComplex('AdvancedSearch.prices'));
-		usort($prices, array($this,"cmp"));
+		$prices = unserialize($this->config->AdvancedSearch->prices);
+		usort($prices, array($this, "cmp"));
+
 		return $prices;
 	}
 	
@@ -176,12 +211,13 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
 	{
      	$weights =  unserialize($this->config->getComplex('AdvancedSearch.weights'));
         usort($weights, array($this,"cmp"));
+
         return $weights;
 	}
 
-	function strcat($val1,$val2,$delimeter)
+	function strcat($val1, $val2, $delimeter)
 	{
-		return $val1.$delimeter.$val2;
+		return $val1 . $delimeter . $val2;
 	}
 
     /**

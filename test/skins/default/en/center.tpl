@@ -44,7 +44,6 @@
 <widget module="WholesaleTrading" mode="add_error" template="common/dialog.tpl" body="modules/WholesaleTrading/add_error.tpl" head="Product can not be added">
 <widget module="WholesaleTrading" target="profile" mode="success" template="modules/WholesaleTrading/membership/register.tpl">
 <widget module="Egoods" template="modules/Egoods/main.tpl">
-<widget module="AdvancedSearch" target="advanced_search" mode="found" template="common/dialog.tpl" body="search_result.tpl" head="Search Result">
 <widget module="WishList" target="product" head="Send to a friend" template="common/dialog.tpl" body="modules/WishList/send_to_friend.tpl">
 <widget module="ProductAdviser" template="modules/ProductAdviser/main.tpl">
 <!-- [/modules] }}} -->

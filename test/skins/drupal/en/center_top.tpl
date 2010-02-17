@@ -23,7 +23,6 @@
 
 <!-- [search] {{{ -->
 <widget target="search" template="common/dialog.tpl" body="search_result.tpl" head="Search Result">
-<widget module="AdvancedSearch" class="XLite_Module_AdvancedSearch_View_AdvancedSearch" template="common/dialog.tpl">
 <!-- [/search] }}} -->
 
 <!-- [shopping_cart] {{{ -->
@@ -55,8 +54,9 @@
 <widget module="GiftCertificates" target="check_gift_certificate" template="common/dialog.tpl" body="modules/GiftCertificates/check_gift_certificate.tpl" head="Verify gift certificate">
 <widget module="GiftCertificates" target="gift_certificate_info" template="common/dialog.tpl" body="modules/GiftCertificates/gift_certificate_info.tpl" head="Gift certificate">
 <widget module="Newsletters" template="modules/Newsletters/newsletters.tpl">
-<widget module="AdvancedSearch" class="XLite_Module_AdvancedSearch_View_AdvancedSearch" template="common/dialog.tpl" />
 <widget module="WishList" target="wishlist,product" mode="MessageSent" template="common/dialog.tpl" body="modules/WishList/message.tpl" head="Message has been sent">
 <widget module="WishList" target="wishlist" head="Wish List" template="common/dialog.tpl" body="modules/WishList/wishlist.tpl">
+<widget module="AdvancedSearch" class="XLite_Module_AdvancedSearch_View_AdvancedSearch" template="common/dialog.tpl">
+<widget module="AdvancedSearch" target="advanced_search" mode="found" template="common/dialog.tpl" body="search_result.tpl" head="Search Result">
 <!-- [/modules] }}} -->
 

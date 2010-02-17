@@ -144,7 +144,7 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
     function getLevel()
     {
         $target = isset($_REQUEST["target"]) ? $_REQUEST["target"] : "main";
-        $xself = basename($GLOBALS["XLITE_SELF"], ".php");
+        $xself = isset($GLOBALS["XLITE_SELF"]) ? basename($GLOBALS["XLITE_SELF"], ".php") : 'unknown';
         return $xself . ":" . $target;
     }
 }

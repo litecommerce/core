@@ -50,9 +50,10 @@ class XLite_Module_SnsIntegration_Controller_Customer_AdvancedSearch extends XLi
 			$actions = array();
 			$action = "name=AdvancedSearch";
 			$action .= "&searchPhrase=" . urlencode($this->search["substring"]);
-			if ($this->search["category"] != 0) {
+			if (isset($this->search["category"]) && $this->search["category"] != 0) {
 				$cat = new XLite_Model_Category($this->search["category"]);
 				$categoryName = $cat->get("stringPath");
+
 			} else {
 				$categoryName = "";
 			}
