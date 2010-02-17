@@ -41,7 +41,7 @@
 * @package Module_Affiliate
 * @version $Id$
 */
-class XLite_Module_Affiliate_View_RichBanner extends XLite_View
+class XLite_Module_Affiliate_View_RichBanner extends XLite_View_Abstract
 {	
     public $template = "modules/Affiliate/empty.tpl";
 

@@ -43,7 +43,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_GoogleCheckout_View_GoogleAltCheckout extends XLite_View
+class XLite_Module_GoogleCheckout_View_GoogleAltCheckout extends XLite_View_Abstract
 {	
     public $template = "modules/GoogleCheckout/main_alt_checkout.tpl";	
     public $GCMerchantID = null;	

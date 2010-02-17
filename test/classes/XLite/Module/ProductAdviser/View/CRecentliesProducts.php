@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_ProductAdviser_View_CRecentliesProducts extends XLite_View
+class XLite_Module_ProductAdviser_View_CRecentliesProducts extends XLite_View_Abstract
 {	
 	public $productsNumber = 0;	
 	public $additionalPresent = false;

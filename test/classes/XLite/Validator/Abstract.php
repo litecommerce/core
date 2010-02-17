@@ -46,7 +46,7 @@
 * @version $Id$
 * @see RequiredValidator, PasswordValidator
 */
-class XLite_Validator_Abstract extends XLite_View
+class XLite_Validator_Abstract extends XLite_View_Abstract
 {
     function display()
     {

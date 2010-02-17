@@ -43,7 +43,7 @@
 * @package $Package$
 * @version $Id$
 */
-class XLite_Module_GiftCertificates_View_CEcardSelect extends XLite_View
+class XLite_Module_GiftCertificates_View_CEcardSelect extends XLite_View_Abstract
 {	
     public $params = array("gcid");	
     public $ecards = null;

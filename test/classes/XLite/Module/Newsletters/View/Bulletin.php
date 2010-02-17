@@ -43,7 +43,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_Newsletters_View_Bulletin extends XLite_View
+class XLite_Module_Newsletters_View_Bulletin extends XLite_View_Abstract
 {	
     public $template = "modules/Newsletters/bulletin.tpl";
 

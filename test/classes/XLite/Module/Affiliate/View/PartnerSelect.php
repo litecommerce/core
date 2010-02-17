@@ -41,7 +41,7 @@
 * @package Module_Affiliate
 * @version $Id$
 */
-class XLite_Module_Affiliate_View_PartnerSelect extends XLite_View
+class XLite_Module_Affiliate_View_PartnerSelect extends XLite_View_Abstract
 {	
     public $template = "modules/Affiliate/select_partner.tpl";	
     public $formField = "partner_id";	

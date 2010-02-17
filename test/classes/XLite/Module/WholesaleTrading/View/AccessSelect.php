@@ -42,7 +42,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_WholesaleTrading_View_AccessSelect extends XLite_View
+class XLite_Module_WholesaleTrading_View_AccessSelect extends XLite_View_Abstract
 {	
     public $field;	
     public $formName;	

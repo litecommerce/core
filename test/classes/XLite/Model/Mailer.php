@@ -66,7 +66,7 @@ define('CRLF', "\r\n");
 * @access public
 * @version $Id$
 */
-class XLite_Model_Mailer extends XLite_View
+class XLite_Model_Mailer extends XLite_View_Abstract
 {	
     public $subjectTemplate	  = "subject.tpl";	
     public $bodyTemplate	  = "body.tpl";	

@@ -41,7 +41,7 @@
 * @package Module_Affiliate
 * @version $Id$
 */
-class XLite_Module_Affiliate_View_Banner extends XLite_View
+class XLite_Module_Affiliate_View_Banner extends XLite_View_Abstract
 {	
     public $type = "iframe"; // type ::= iframe | js | ssi	
     public $src = null;	

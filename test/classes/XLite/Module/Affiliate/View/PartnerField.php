@@ -41,7 +41,7 @@
 * @package Module_Affiliate
 * @version $Id$
 */
-class XLite_Module_Affiliate_View_PartnerField extends XLite_View
+class XLite_Module_Affiliate_View_PartnerField extends XLite_View_Abstract
 {	
     public $field = null;	
     public $formField = null;	
