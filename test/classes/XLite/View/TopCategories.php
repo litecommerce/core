@@ -115,6 +115,19 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
     }
 
     /**
+     * Get category 
+     * 
+     * @return XLite_Model_Category
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCategoryRoot()
+    {
+        return new XLite_Model_Category(0 < $this->rootid ? $this->rootid : null);
+    }
+
+    /**
      * Return root categories list 
      * 
      * @return array
@@ -125,8 +138,27 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
     {
         // get root categories
         if (is_null($this->categories)) {
-	        $category = new XLite_Model_Category(0 < $this->rootid ? $this->rootid : null); 
+	        $category = $this->getCategoryRoot();
             $this->categories = $category->getSubcategories();
+
+            if ($this->categories) {
+
+                $this->categories[0]->first = true;
+                $this->categories[count($this->categories) - 1]->last = true;
+
+                $pathIds = array();
+                foreach ($category->getPath() as $c) {
+                    $pathIds[] = $c->get('category_id');
+                }
+
+                if ($pathIds) {
+                    foreach ($this->categories as $i => $c) {
+                        if (in_array($c->get('category_id'), $pathIds)) {
+                            $this->categories[$i]->activeTrail = true;
+                        }
+                    }
+                }
+            }
         }
 
         return $this->categories;
