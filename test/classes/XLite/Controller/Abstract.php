@@ -102,7 +102,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     public function handleRequest()
     {
 		if (empty($this->action) && ($this->get('secure') ^ $this->is('https'))) {
-
+			$this->returnUrlAbsolute = true;
             $this->redirect();
         }
 
