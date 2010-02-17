@@ -61,6 +61,31 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
 	 */
 	protected $rootid = 0;
 
+    /**
+     * Display mode 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $display_mode = 'list';
+
+    protected $display_modes = array(
+        'list' => array(
+            'name' => 'List',
+            'dir'  => 'categories',
+        ),
+        'tree' => array(
+            'name' => 'Tree',
+            'dir'  => 'categories_tree',
+        ),
+        'path' => array(
+            'name' => 'Path',
+            'dir'  => 'categories_path',
+        ),
+    );
+
 	/**
      * Define widget parameters
      *
@@ -72,8 +97,14 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
     {
 		parent::defineWidgetParams();
 
+        $display_mode = new XLite_Model_WidgetParam_List('display_mode', 'list', 'Display mode');
+        foreach ($this->display_modes as $k => $v) {
+            $display_mode->options[$k] = $v['name'];
+        }
+
         $this->widgetParams += array(
 			new XLite_Model_WidgetParam_String('rootid', 0, 'Category root Id'),
+            $display_mode,
 		);
     }
 
@@ -111,6 +142,14 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
 			}
 		}
 
+        // Display mode
+        if (
+            !$errors
+            && (!isset($attributes['display_mode']) || !isset($this->display_modes[$attributes['display_mode']]))
+        ) {
+            $errors['display_mode'] = 'Display mode has wrong value!';
+        }
+
 		return $errors;
     }
 
@@ -140,28 +179,89 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
         if (is_null($this->categories)) {
 	        $category = $this->getCategoryRoot();
             $this->categories = $category->getSubcategories();
+        }
 
-            if ($this->categories) {
+        return $this->categories;
+    }
 
-                $this->categories[0]->first = true;
-                $this->categories[count($this->categories) - 1]->last = true;
+    /**
+     * Assemble list item class name 
+     * 
+     * @param integer              $i        Item number
+     * @param integer              $count    Items count
+     * @param XLite_Model_Category $category Current category
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function assembleItemClassName($i, $count, XLite_Model_Category $category)
+    {
+        static $pathIds = null;
+        static $category_id = null;
+
+        if (is_null($pathIds)) {
+            $pathIds = array();
+
+            $category_id = $this->category_id;
+            if ($category_id) {
+                $currentCategory = new XLite_Model_Category($category_id);
 
                 $pathIds = array();
-                foreach ($category->getPath() as $c) {
+                foreach ($currentCategory->getPath() as $c) {
                     $pathIds[] = $c->get('category_id');
-                }
-
-                if ($pathIds) {
-                    foreach ($this->categories as $i => $c) {
-                        if (in_array($c->get('category_id'), $pathIds)) {
-                            $this->categories[$i]->activeTrail = true;
-                        }
-                    }
                 }
             }
         }
 
-        return $this->categories;
+        $classes = array();
+
+        if (!$category->getSubcategories()) {
+            $classes[] = 'leaf';
+
+        } elseif ($this->display_mode != 'list') {
+            $classes[] = in_array($category->get('category_id'), $pathIds)
+                ? 'expanded'
+                : 'collapsed';
+        }
+
+        if ($i == 1) {
+            $classes[] = 'first';
+        }
+
+        if ($i == $count) {
+            $classes[] = 'last';
+        }
+
+        if (in_array($category->get('category_id'), $pathIds)) {
+            $classes[] = 'active-trail';
+        }
+
+        return implode(' ', $classes);
+    }
+
+    /**
+     * Assemble list item link class name
+     *
+     * @param integer              $i        Item number
+     * @param integer              $count    Items count
+     * @param XLite_Model_Category $category Current category
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function assembleLinkClassName($i, $count, $category)
+    {
+        $classes = array();
+
+        if ($this->category_id && $this->category_id == $category->get('category_id')) {
+            $classes[] = 'active';
+        }
+
+        return implode(' ', $classes);
     }
 }
 
