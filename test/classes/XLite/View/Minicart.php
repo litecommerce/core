@@ -56,6 +56,15 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
     );
 
     /**
+     * Items to be shown in the minicart block
+     *
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     */ 
+    protected $itemsList = NULL;
+
+    /**
      * Initilization
      * 
      * @return void
@@ -103,10 +112,60 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
         $errors = parent::validateAttributes($attributes);
 
         if (!isset($attributes['use_dir']) || !isset($this->dirs[$attributes['use_dir']])) {
-            $errors['product_id'] = 'Display mode has wrong value!';
+            $errors['use_dir'] = 'Display mode has wrong value!';
         }
 
 		return $errors;
     }
+
+    /**
+     * Get a list of CSS files required to display the widget properly
+     *
+     * @return array list of css files required to display the widget
+     * @access public
+     */
+    public function getCSSFiles() {
+        return array('mini_cart/vertical.css');
+    }
+
+    /**
+     * Get a list of JavaScript files required to display the widget properly
+     *
+     * @return array list of js files required to display the widget
+     * @access public
+     */
+    public function getJSFiles() {
+        return array('mini_cart/minicart.js');
+    }
+
+    /**
+     * Check whether in cart there are more than 3 items
+     *
+     * @retun boolean
+     */
+    protected function getIsTruncated() {
+        return $this->getComplex('cart.itemsCount') > 3;
+    }
+
+    /**
+     * Return up to 3 items from cart
+     * 
+     * @return array array of cart items
+     */
+    protected function getItemsList() {
+       if (is_null($this->itemsList)) {
+           $cart = $this->cart;
+           $this->itemsList = array_slice($cart->getItems(), 0, min(3, $cart->getItemsCount()));
+       }
+
+       return $this->itemsList;
+    }
+
+    protected function getSums() {
+        return array(
+                'Total' => $this->getComplex('cart.total'),
+            );
+    }
+
 }
 
