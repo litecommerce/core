@@ -362,12 +362,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	public function getCSSList()
 	{
 		if (!isset($this->cssFiles)) {
-
 			$this->cssFiles = array('style.css');
-
-			foreach ($this->cssFiles as &$cssFile) {
-	            $cssFile = XLite::getInstance()->shopURL($this->layoutPath . $cssFile);
-    	    }
 		}
 
 		return $this->cssFiles;
@@ -383,12 +378,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
     public function getJSList()
     {
         if (!isset($this->jsFiles)) {
-
 			$this->jsFiles = array();
-
-            foreach ($this->jsFiles as &$jsFile) {
-                $cssFile = XLite::getInstance()->shopURL($this->layoutPath . $jsFile);
-            }
         }
 
         return $this->jsFiles;
