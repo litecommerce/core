@@ -51,9 +51,7 @@ abstract class XLite_View_SideBarBox extends XLite_View_Abstract
      */
     public function __construct()
     {
-		if ($this->dir) {
-	        $this->template = $this->dir . LC_DS . $this->bodyFile;
-		}
+	    $this->template = 'common' . LC_DS . 'sidebar_box_container.tpl';
     }
 
 }

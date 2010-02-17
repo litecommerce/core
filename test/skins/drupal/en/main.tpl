@@ -172,7 +172,7 @@
     <TD width="170" valign="top"><BR>
 <!-- [right] -->
 <widget module="SnsIntegration" template="modules/SnsIntegration/tracker.tpl">
-<widget class="XLite_View_MenuMinicart" template="common/sidebar_box.tpl">
+<widget class="XLite_View_Minicart" template="common/sidebar_box.tpl">
 <widget template="common/sidebar_box.tpl" dir="login" name="loginWidget" head="Authentication" IF="{!auth.isLogged()}" />
 <widget template="common/sidebar_box.tpl" dir="profile" name="profileWidget" head="Your profile" IF="{auth.isLogged()}" />
 <widget template="common/sidebar_box.tpl" dir="authentication" name="authenticationWidget" head="Authentication" IF="{auth.isLogged()}" />

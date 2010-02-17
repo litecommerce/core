@@ -4,7 +4,7 @@
   <tr>
     <td colspan="3">
 
-      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="sidebarboxleftbg">
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="SidebarBoxLeftBG">
         <tr>
           <td class="SidebarBoxCenterBG" nowrap width="100%" align="center">&nbsp;{widget.head:h}&nbsp;</td>
           <td><img src="images/spacer.gif" width="1" height="24" alt="" /></td>
