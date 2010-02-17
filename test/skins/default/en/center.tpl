@@ -36,7 +36,7 @@
 
 <!-- [modules] {{{ -->
 <widget module="DetailedImages" target="product" template="common/dialog.tpl" body="modules/DetailedImages/body.tpl" head="Detailed Images" visible="{product.detailedImages}">
-<widget module="Bestsellers" class="XLite_Module_Bestsellers_View_Bestsellers" template="common/dialog.tpl" name="bestsellerswidget">
+<widget module="Bestsellers" class="XLite_Module_Bestsellers_View_Bestsellers" template="common/dialog.tpl" name="bestsellerswidget" visible="{!config.Bestsellers.bestsellers_menu}">
 <widget module="FeaturedProducts" class="XLite_Module_FeaturedProducts_View_FeaturedProducts" template="common/dialog.tpl">
 <widget module="Promotion" target="checkout" mode="bonusList" template="common/dialog.tpl" body="modules/Promotion/bonus_list.tpl" head="You qualify for a special offer">
 <widget module="Promotion" target="checkout" template="common/dialog.tpl" body="modules/Promotion/coupon_failed.tpl" head="The discount coupon cannot be used" mode="couponFailed">
