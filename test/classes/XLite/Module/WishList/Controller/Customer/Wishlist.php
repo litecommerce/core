@@ -103,10 +103,32 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controlle
         return parent::_needConvertToIntStr($name);
     } // }}}
 
+    /**
+     * Get page instance data (name and URL)
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageInstanceData()
+    {
+        $this->target = 'wishlist';
+
+        return parent::getPageInstanceData();
+    }
+
+    /**
+     * Get page type name
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageTypeName()
+    {
+        return 'Wishlist';
+    }
+
 } // }}}
-
-
-// WARNING:
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
