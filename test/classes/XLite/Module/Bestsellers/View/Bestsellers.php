@@ -23,7 +23,7 @@
  * @see        ____class_see____
  * @since      3.0.0
  */
-class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_Dialog
+class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_SideBarBox
 {
     /**
      * Title
@@ -35,13 +35,13 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_Dialog
     protected $head = 'Bestsellers';
 
     /**
-     * Dialog content template
+     * Widget content directory
      *
      * @var    string
      * @access protected
      * @since  3.0.0 EE
      */
-    protected $body = 'modules/Bestsellers/bestsellers.tpl';
+    protected $dir = 'modules/Bestsellers/menu';
 
     /**
      * Bestsellers list (cache)
@@ -74,6 +74,35 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_Dialog
     protected $use_node = true;
 
     /**
+     * Display mode
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $display_mode = 'menu';
+
+    /**
+     * Display modes 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $display_modes = array(
+        'menu'   => array(
+            'name' => 'Vertical',
+            'dir'  => 'modules/Bestsellers/menu',
+        ),
+        'dialog' => array(
+            'name' => 'Horizontal',
+            'dir'  => 'modules/Bestsellers/dialog',
+        ),
+    );
+
+    /**
      * Initialization
      * 
      * @return void
@@ -87,9 +116,32 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_Dialog
 
         $this->mode = '';
 
-        $this->visible = in_array(XLite_Core_Request::getInstance()->target, array(null, 'main', 'category'))
-            && !$this->config->Bestsellers->bestsellers_menu
+        if (is_null($this->display_mode)) {
+            $this->display_mode = 'menu';
+        }
+
+        $this->dir = $this->display_modes[$this->display_mode]['dir'];
+
+        $this->body = $this->dir . '/body.tpl';
+
+        $this->visible = $this->visible
+            && in_array($this->target, array(null, 'main', 'category'))
             && $this->getBestsellers();
+    }
+
+    /**
+     * Initial set widget attributes
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setInitialAttributes()
+    {
+        if (is_null($this->display_mode)) {
+            $this->display_mode = $this->config->Bestsellers->bestsellers_menu ? 'menu' : 'dialog';
+        }
     }
 
     /**
@@ -135,9 +187,17 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_Dialog
     {
         parent::defineWidgetParams();
 
+        $modes = new XLite_Model_WidgetParam_List('display_mode', 'menu', 'Display mode');
+        $modes->options = array();
+
+        foreach ($this->display_modes as $k => $v) {
+            $modes->options[$k] = $v['name'];
+        }
+
         $this->widgetParams += array(
             new XLite_Model_WidgetParam_Checkbox('use_node', 1, 'Use current category id'),
             new XLite_Model_WidgetParam_String('rootid', 0, 'Category root Id'),
+            $modes,
         );
     }
 
@@ -171,6 +231,14 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_Dialog
             if (!$category->isPersistent) {
                 $errors['rootid'] = 'Category with category Id #' . $attributes['rootid'] . ' can not found!';
             }
+        }
+
+        // Check display mode
+        if (
+            !$errors
+            && (!isset($attributes['display_mode']) || !isset($this->display_modes[$attributes['display_mode']]))
+        ) {
+            $errors['display_mode'] = 'Display mode has not correct value!';
         }
 
         return $errors;

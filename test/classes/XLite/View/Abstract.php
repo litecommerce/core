@@ -232,6 +232,7 @@ class XLite_View_Abstract extends XLite_Core_Handler
      */
     protected function initView()
     {
+        $this->setInitialAttributes();
     }
 
     /**
@@ -620,6 +621,18 @@ class XLite_View_Abstract extends XLite_Core_Handler
         }
 
         return $result;
+    }
+
+    /**
+     * Initial set widget attributes
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setInitialAttributes()
+    {
     }
 }
 
