@@ -67,11 +67,11 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      * @since  3.0.0
      */
     protected $pageTypes = array(
-        'XLite_Controller_Customer_Category' => 'Category page',
-        'XLite_Controller_Customer_Product'  => 'Product page',
-        'XLite_Controller_Customer_Cart'     => 'Shopping cart',
-        'XLite_Controller_Customer_Checkout' => 'Checkout',
-
+        'XLite_Controller_Customer_Category'  => 'Category page',
+        'XLite_Controller_Customer_Product'   => 'Product page',
+        'XLite_Controller_Customer_Cart'      => 'Shopping cart',
+        'XLite_Controller_Customer_Checkout'  => 'Checkout',
+        'XLite_Controller_Customer_OrderList' => 'Orders list',
     );
 
 	/**

@@ -45,23 +45,23 @@
 * @version $Id$
 */
 class XLite_Controller_Customer_OrderList extends XLite_Controller_Customer_Abstract
-{	
-    public $params = array('target', 'mode', 'order_id1', 'order_id2', 'status');	
-	public $order_id1 = "";	
-	public $order_id2 = "";	
-	public $status = "";	
+{    
+    public $params = array('target', 'mode', 'order_id1', 'order_id2', 'status');    
+    public $order_id1 = "";    
+    public $order_id2 = "";    
+    public $status = "";    
     public $orders = null;
 
     function set($name, $value)
     {
-    	switch($name) {
-    		case "startDate":
-    		case "endDate":
-    			$value = intval($value);
-    		break;
-    	}
+        switch($name) {
+            case "startDate":
+            case "endDate":
+                $value = intval($value);
+            break;
+        }
 
-    	parent::set($name, $value);
+        parent::set($name, $value);
     }
 
     function fillForm()
@@ -82,27 +82,54 @@ class XLite_Controller_Customer_OrderList extends XLite_Controller_Customer_Abst
             }
             $order = new XLite_Model_Order();
             $this->orders = $order->search(
-                    $this->auth->get("profile"), 
-                    $this->get("order_id1"), 
-                    $this->get("order_id2"), 
-                    $this->get("status"),
-                    $this->get("startDate"), 
-                    $this->get("endDate")+24*3600);
+                $this->auth->get("profile"), 
+                $this->get("order_id1"), 
+                $this->get("order_id2"), 
+                $this->get("status"),
+                $this->get("startDate"), 
+                $this->get("endDate") + 24 * 3600
+            );
         }
         return $this->orders;
     }
 
-	function getCount() {
+    function getCount() {
         // how many orders were found
-        return count($this->get("orders"));
+        return count($this->get('orders'));
     }
 
     function getSecure()
     {
-        return $this->getComplex('config.Security.customer_security');
+        return $this->config->Security->customer_security;
     }
+
+    /**
+     * Get page instance data (name and URL)
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageInstanceData()
+    {
+        $this->target = 'order_list';
+
+        return parent::getPageInstanceData();
+    }
+
+    /**
+     * Get page type name
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageTypeName()
+    {
+        return 'Orders list';
+    }
+
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+
