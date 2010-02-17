@@ -285,36 +285,6 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 		return ($widget = $this->getWidgetObject($name)) ? $widget->isVisible() : false;
 	}
 
-    /**
-     * Return a relative path from a web directory path to the XLite web directory
-     *
-     * @param string $web_dir   the web directory from which a relative path to the XLite web directory is needed
-     *
-     * @return string
-     * @access public
-     */
-    public function getRelativePath($web_dir) {
-        // Remove a trailing slash (if any)
-        if ($web_dir[strlen($str)-1] == '/')
-            $web_dir = substr($web_dir, 0, -1);
-
-        $base_path = explode('/', $web_dir);
-        $xlite_path = explode('/', XLite::getInstance()->getOptions(array('host_details', 'web_dir')));
-
-        $i = 0;
-        $c1 = count($base_path);
-        $c2 = count($xlite_path);
-
-        // Count and skip common parts of the directories
-        for ($i=0; ($i < $c1) && ($i < $c2); $i++)
-            if ($base_path[$i] != $xlite_path[$i])
-                break;
-            else
-                unset($xlite_path[$i]);
-
-        return str_repeat('../', count($base_path)-$i-1) . join('/', $xlite_path) . '/';
-    }
-
 	/**
 	 * Return HTML code of a widget 
 	 * 
@@ -339,15 +309,9 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
                 'js'  => $widget->getJSFiles(),
             );
 
-            // Get a relative path to the Xlite web directory from the Drupal web directory
-            $path = $this->getRelativePath(base_path());
-            
-            foreach (array('css', 'js') as $res) {
-                foreach ($result[1][$res] as $k => $v) {
-                    $result[1][$res][$k] = $path . $this->layoutPath . $v;
-                }
-            }
+            $result[1] = $this->prepareResources($result[1]);
         }
+
 		return $result;
 	}
 
@@ -651,5 +615,20 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	{
 		return array();
 	}
+
+    /**
+     * Prepare widget resources 
+     * 
+     * @param array $resources Resources
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareResources(array $resources)
+    {
+        return $resources;
+    }
 }
 
