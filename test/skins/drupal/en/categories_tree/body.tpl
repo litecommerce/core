@@ -1,9 +1,11 @@
 {* SVN $Id$ *}
-<style>
+<style type="text/css">
+<!--
   .menu li.collapsed ul
   {
     display: none;
   }
+-->
 </style>
 <ul class="menu">
   <li FOREACH="getCategories(),category" class="{assembleItemClassName(categoryArrayPointer,categoryArraySize,category)}">

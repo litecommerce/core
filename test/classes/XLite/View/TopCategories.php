@@ -24,23 +24,15 @@
  */
 class XLite_View_TopCategories extends XLite_View_SideBarBox
 {
-	/**
-	 * Title
-	 * 
-	 * @var    string
-	 * @access protected
-	 * @since  1.0.0
-	 */
-	protected $head = 'Categories';
-
-	/**
-	 * Directory contains sidebar content
-	 * 
-	 * @var    string
-	 * @access protected
-	 * @since  1.0.0
-	 */
-	protected $dir = 'categories';
+    /**
+     * Categoy path ids 
+     * 
+     * @var    array
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public static $pathIds = null;
 
 	/**
 	 * Categories cache
@@ -71,6 +63,14 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
      */
     protected $display_mode = 'list';
 
+    /**
+     * Display modes 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected $display_modes = array(
         'list' => array(
             'name' => 'List',
@@ -172,6 +172,46 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
     }
 
     /**
+     * Get path category id list 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPathIds()
+    {
+        if (is_null(self::$pathIds)) {
+            self::$pathIds = array();
+
+            if ($this->category_id) {
+                $currentCategory = new XLite_Model_Category($this->category_id);
+
+                foreach ($currentCategory->getPath() as $c) {
+                    self::$pathIds[] = $c->get('category_id');
+                }
+            }
+        }
+
+        return self::$pathIds;
+    }
+
+    /**
+     * Check - category included into active trail or not
+     * 
+     * @param XLite_Model_Category $category Category
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isActiveTrail(XLite_Model_Category $category)
+    {
+        return in_array($category->get('category_id'), $this->getPathIds());
+    }
+
+    /**
      * Assemble list item class name 
      * 
      * @param integer              $i        Item number
@@ -185,30 +225,13 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
      */
     public function assembleItemClassName($i, $count, XLite_Model_Category $category)
     {
-        static $pathIds = null;
-        static $category_id = null;
-
-        if (is_null($pathIds)) {
-            $pathIds = array();
-
-            $category_id = $this->category_id;
-            if ($category_id) {
-                $currentCategory = new XLite_Model_Category($category_id);
-
-                $pathIds = array();
-                foreach ($currentCategory->getPath() as $c) {
-                    $pathIds[] = $c->get('category_id');
-                }
-            }
-        }
-
         $classes = array();
 
         if (!$category->getSubcategories()) {
             $classes[] = 'leaf';
 
         } elseif ($this->display_mode != 'list') {
-            $classes[] = in_array($category->get('category_id'), $pathIds)
+            $classes[] = in_array($category->get('category_id'), $this->getPathIds())
                 ? 'expanded'
                 : 'collapsed';
         }
@@ -221,7 +244,7 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
             $classes[] = 'last';
         }
 
-        if (in_array($category->get('category_id'), $pathIds)) {
+        if (in_array($category->get('category_id'), $this->getPathIds())) {
             $classes[] = 'active-trail';
         }
 
