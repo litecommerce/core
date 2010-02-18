@@ -78,19 +78,48 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Abstra
         if (!is_null($path)) {
             foreach ($path as $category) {
                 $name = $category->get("name");
-                while (isset($result[$name])) {
-                	$name .= " ";
-                }
-                $result[$name] = $this->buildURL('category', '', array('category_id' => $category->get('category_id')));
+				if ($name) {
+	                while (isset($result[$name])) {
+    	            	$name .= " ";
+        	        }
+            	    $result[$name] = $this->buildURL('category', '', array('category_id' => $category->get('category_id')));
+				}
             }
         }    
+
         $name = $this->getProduct()->get('name');
         while (isset($result[$name])) {
         	$name .= " ";
         }
+
         $result[$name] = $this->getUrl();
+
         return $result;
     }
+
+	/**
+	 * Get category 
+	 * 
+	 * @return XLIte_Model_Category
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	public function getCategory()
+	{
+		if (is_null($this->category_id)) {
+			$list = $this->getProduct()->getCategories();
+			if ($list) {
+				$category = array_shift($list);
+				$this->category_id = $category->get('category_id');
+
+			} else {
+				$this->category_id = 0;
+			}
+		}
+
+		return parent::getCategory();
+	}
 
     // 'description' meta tag
 	
