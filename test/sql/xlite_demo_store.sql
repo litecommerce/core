@@ -9,7 +9,7 @@ UPDATE xlite_config SET value="http://sns.qualiteam.biz/litecommerce" WHERE name
 UPDATE xlite_config SET value="https://sns.qualiteam.biz/litecommerce" WHERE name="collectorHTTPSURL";
 
 -- Enable demo modules
-UPDATE xlite_modules SET enabled=1 where name='DemoMode';
+--TODO - revert after develop period UPDATE xlite_modules SET enabled=1 where name='DemoMode';
 UPDATE xlite_modules SET enabled=1 where name='Affiliate';
 UPDATE xlite_modules SET enabled=1 where name='Bestsellers';
 UPDATE xlite_modules SET enabled=1 where name='FeaturedProducts';
@@ -17,7 +17,7 @@ UPDATE xlite_modules SET enabled=1 where name='DetailedImages';
 UPDATE xlite_modules SET enabled=1 where name='ProductOptions';
 UPDATE xlite_modules SET enabled=1 where name='InventoryTracking';
 UPDATE xlite_modules SET enabled=1 where name='ShowcaseOrganizer';
-UPDATE xlite_modules SET enabled=1 where name='SnsIntegration';
+UPDATE xlite_modules SET enabled=1 where name='WishList';
 UPDATE xlite_modules SET enabled=1 where name='MultiCategories';
 UPDATE xlite_modules SET enabled=1 where name='DrupalConnector';
 
