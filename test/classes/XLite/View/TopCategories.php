@@ -154,19 +154,6 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
     }
 
     /**
-     * Get category 
-     * 
-     * @return XLite_Model_Category
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCategoryRoot()
-    {
-        return new XLite_Model_Category(0 < $this->rootid ? $this->rootid : null);
-    }
-
-    /**
      * Return root categories list 
      * 
      * @return array
@@ -177,7 +164,7 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
     {
         // get root categories
         if (is_null($this->categories)) {
-	        $category = $this->getCategoryRoot();
+	        $category = new XLite_Model_Category(0 < $this->rootid ? $this->rootid : null);
             $this->categories = $category->getSubcategories();
         }
 
