@@ -258,6 +258,16 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
         return implode(' ', $classes);
     }
 
+    protected function getHead()
+    {
+        return 'Categories';
+    }
+
+    protected function getDir()
+    {
+        return 'categories';
+    }
+
     /**
      * Assemble list item link class name
      *

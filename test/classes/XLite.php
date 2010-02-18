@@ -268,7 +268,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      * @access public
      * @since  3.0.0 EE
      */
-    public function getFactory()
+    public static function getFactory()
     {
         return XLite_Model_Factory::getInstance();
     }

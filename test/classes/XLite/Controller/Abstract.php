@@ -137,7 +137,13 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 	 */
 	public function getViewer()
 	{
-		return new XLite_View_Controller($this->get('template'), $this->is('silent'), $this->is('dumpStarted'));
+		$attrs = array();
+
+		foreach (array('silent', 'dumpStarted') as $attr) {
+			$attrs[$attr] = $this->is($attr);
+		}
+
+		return new XLite_View_Controller($attrs, $this->template);
     }
 
 	/**

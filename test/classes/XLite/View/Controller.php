@@ -23,10 +23,13 @@
  */
 class XLite_View_Controller extends XLite_View_Abstract
 {
-    protected $silent = true;
-
-    protected $dumpStarted = false;
-
+    /**
+     * Send headers 
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0 EE
+     */
     protected function startPage()
     {
         // send no-cache headers
@@ -40,25 +43,52 @@ class XLite_View_Controller extends XLite_View_Abstract
         error_reporting($error_reporting);
     }
 
+    /**
+     * Send headers
+     *
+     * @return void
+     * @access protected
+     * @since  3.0.0 EE
+     */
     protected function initView()
     {
         $this->startPage();
     }
 
-    public function __construct($template = null, $silent = false, $dumpStarted = false)
+    /**
+     * Set template and attributes 
+     * 
+     * @param string $template template to display
+     * @param array  $attrs    widget attributes
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function __construct(array $attributes = array(), $template = null)
     {
+        $this->attributes['silent'] = true;
+        $this->attributes['dumpStarted'] = '';
+
+        parent::__construct($attributes);
+
         $this->template = $template;
-        $this->silent = $silent;
-        $this->dumpStarted = $dumpStarted;
     }
 
+    /**
+     * Show current page and, optionally, footer  
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
     public function display()
     {
-        if (!$this->silent) {
+        if (!$this->attributes['silent']) {
             parent::display();
         }
 
-        if ($this->dumpStarted) {
+        if ($this->attributes['dumpStarted']) {
             func_refresh_end();
         }
 

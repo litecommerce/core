@@ -216,6 +216,18 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
     }
 
     /**
+     * Determines if we export content into a CMS
+     * 
+     * @return bool 
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public static function isCMSStarted()
+    {
+        return isset(self::$currentCMS);
+    }
+
+    /**
      * Check if a widget requested from certain CMS
      *
      * @return bool
@@ -239,18 +251,19 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 		return $this->widgetsList;
 	}
 
-	/**
-	 * Return object by class name 
-	 * 
-	 * @param string $name widget class name
-	 *  
-	 * @return XLite_View_Abstract
-	 * @access public
-	 * @since  3.0.0 EE
-	 */
-	public function getWidgetObject($name)
+    /**
+     * Return object by class name 
+     * 
+     * @param string $name       widget class name
+     * @param array  $attributes widget attributes
+     *  
+     * @return XLite_View_Abstract
+     * @access public
+     * @since  3.0.0 EE
+     */
+	public function getWidgetObject($name, array $attributes = array())
 	{
-		return class_exists($name) ? new $name() : null;
+		return class_exists($name) ? XLite_Model_CachingFactory::getObject($name, $attributes) : null;
 	}
 
 	/**
@@ -266,7 +279,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 */
 	public function validateWidgetArguments($name, array $attributes)
 	{
-		return ($widget = $this->getWidgetObject($name)) ? $widget->validateAttributes($attributes) : array();
+		return ($widget = $this->getWidgetObject($name, $attributes)) ? $widget->validateAttributes($attributes) : array();
 	}
 
 	/**
@@ -282,7 +295,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
 	public function isWidgetVisible($name, array $attributes)
 	{
-		return ($widget = $this->getWidgetObject($name)) ? $widget->isVisible() : false;
+		return ($widget = $this->getWidgetObject($name, $attributes)) ? $widget->isVisible() : false;
 	}
 
 	/**
@@ -298,10 +311,9 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	public function getWidgetHTML($name, array $attributes = array())
 	{
         $result = array(null, array());
-        $widget = $this->getWidgetObject($name);
+        $widget = $this->getWidgetObject($name, $attributes);
 
         if ($widget) {
-            $widget->setAttributes($attributes);
             $result[0] = $this->getContent($widget, $attributes);
 
             $result[1] = array(

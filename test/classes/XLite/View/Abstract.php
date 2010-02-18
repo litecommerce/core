@@ -14,7 +14,6 @@
  * @since      3.0.0 EE
  */
 
-
 /**
  * XLite_View_Abstract 
  * 
@@ -24,7 +23,7 @@
  */
 class XLite_View_Abstract extends XLite_Core_Handler
 {
-	 /**
+    /**
      * Widget template filename
      *
      * @var    string
@@ -60,23 +59,26 @@ class XLite_View_Abstract extends XLite_Core_Handler
 	 */
 	protected $widgetParams = null;
 
-
-	/**
-     * Check if widget is visible
-     *
-     * @return bool
+    /**
+     * Attributes passed to widget
+     * 
+     * @var    array
      * @access protected
      * @since  3.0.0 EE
      */
-    public function isVisible()
+    protected $attributes = array();
+
+
+    /**
+     * Return current template 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getTemplate()
     {
-        $result = $this->visible;
-
-        if ($result && !empty($this->mode) && isset(XLite::$controller)) {
-            $result = in_array(XLite::$controller->mode, explode(',', $this->mode));
-        }
-
-        return ($result && isset($this->parentWidget)) ? $this->parentWidget->isVisible() : $result;
+        return isset($this->attributes['template']) ? $this->attributes['template'] : $this->template;
     }
 
     /**
@@ -88,7 +90,7 @@ class XLite_View_Abstract extends XLite_Core_Handler
      */
     protected function getTemplateFile()
     {
-        return XLite_Model_Layout::getInstance()->getLayout($this->get('template'));
+        return XLite_Model_Layout::getInstance()->getLayout($this->getTemplate());
     }
 
     /**
@@ -248,6 +250,22 @@ class XLite_View_Abstract extends XLite_Core_Handler
     }
 
 
+    /**
+     * Set widget attributes 
+     * 
+     * @param array $attributes widget params
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function __construct(array $attributes = array())
+    {
+        if (!empty($attributes)) {
+            $this->setAttributes($attributes);
+        }
+    }
+
 	/**
      * FIXME - backward compatibility
      *
@@ -293,6 +311,61 @@ class XLite_View_Abstract extends XLite_Core_Handler
 	public function __call($method, array $args = array())
     {
 		return call_user_func_array(array(XLite::$controller, $method), $args);
+    }
+
+    /**
+     * Set properties
+     *
+     * @param array $attributes params to set
+     *
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function setAttributes(array $attributes)
+    {
+        parent::setAttributes($attributes);
+
+        foreach ($attributes as $name => $value) {
+            if (isset($this->attributes[$name])) {
+                $this->attributes[$name] = $value;
+            }
+        }
+    }
+
+    /**
+     * Return certain attribute value (or all attributes)
+     * 
+     * @param string $name attribute name
+     *  
+     * @return mixed
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function getAttributes($name = null)
+    {
+        // FIXME - must return NULL instead of the $this->get('name')
+
+        return isset($name) ? 
+            (isset($this->attributes[$name]) ? $this->attributes[$name] : $this->get('name')) : $this->attributes;
+    }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return bool
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    public function isVisible()
+    {
+        $result = $this->visible;
+
+        if ($result && !empty($this->mode) && isset(XLite::$controller)) {
+            $result = in_array(XLite::$controller->mode, explode(',', $this->mode));
+        }
+
+        return ($result && isset($this->parentWidget)) ? $this->parentWidget->isVisible() : $result;
     }
 
     /**

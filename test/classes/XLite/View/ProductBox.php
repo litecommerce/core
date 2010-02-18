@@ -15,6 +15,7 @@
  * @since     3.0.0 EE
  */
 
+
 /**
  * Product sidebar box widget
  *
@@ -25,49 +26,27 @@
 class XLite_View_ProductBox extends XLite_View_SideBarBox
 {
     /**
-     * Title
-     * 
-     * @var    string
+     * Return title
+     *
+     * @return string
      * @access protected
-     * @since  1.0.0
+     * @since  3.0.0 EE
      */
-    protected $head = 'Product';
-
-    /**
-     * Directory contains sidebar content
-     * 
-     * @var    string
-     * @access protected
-     * @since  1.0.0
-     */
-    protected $dir = 'product_box';
-
-    /**
-     * Product id 
-     * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $product_id = 0;
-
-    /**
-     * Initilization
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function initView()
+    protected function getHead()
     {
-        parent::initView();
+        return 'Product';
+    }
 
-        $this->visible = 0 < $this->product_id
-            && $this->getProduct()->get('available');
-
-        $this->showLocationPath = true;
+    /**
+     * Return templates directory name
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getDir()
+    {
+        return 'product_box';
     }
 
     /**
@@ -78,9 +57,12 @@ class XLite_View_ProductBox extends XLite_View_SideBarBox
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getProduct()
+    protected function getProduct($productId = null)
     {
-        return new XLite_Model_Product($this->product_id);
+        return XLite_Model_CachingFactory::getObject(
+            'XLite_Model_Product',
+            isset($productId) ? $productId : $this->attributes['product_id']
+        );
     }
 
 	/**
@@ -99,38 +81,62 @@ class XLite_View_ProductBox extends XLite_View_SideBarBox
 		);
     }
 
+
+    /**
+     * Set some attributes
+     *
+     * @param array $attributes widget params
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    public function __construct(array $attributes = array())
+    {
+        $this->attributes['product_id'] = 0;
+
+        parent::__construct($attributes);
+    }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return bool
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    public function isVisible()
+    {
+        return parent::isVisible() && $this->getProduct()->is('available');
+    }
+
     /**
      * Check passed attributes 
      * 
-     * @param array $attributes attributes to check
+     * @param array $attrs attributes to check
      *  
      * @return array errors list
      * @access public
      * @since  1.0.0
      */
-    public function validateAttributes(array $attributes)
+    public function validateAttributes(array $attrs)
     {
-        $errors = parent::validateAttributes($attributes);
+        $conditions = array(
+            array(
+                self::ATTR_CONDITION => !isset($attrs['product_id']) || !is_numeric($attrs['product_id']),
+                self::ATTR_MESSAGE   => 'Product Id is not numeric',
+            ),
+            array(
+                self::ATTR_CONDITION => 0 >= ($attrs['product_id'] = intval($attrs['product_id'])),
+                self::ATTR_MESSAGE   => 'Product Id must be a positive integer',
+            ),
+            array(
+                self::ATTR_CONDITION => !$this->getProduct($attrs['product_id'])->isPersistent,
+                self::ATTR_MESSAGE   => 'Product with Id #' . $attrs['product_id'] . ' is not found',
+            ),
+        );
 
-		if (!isset($attributes['product_id']) || !is_numeric($attributes['product_id'])) {
-			$errors['product_id'] = 'Product Id is not numeric!';
-		} else {
-			$attributes['product_id'] = intval($attributes['product_id']);
-		}
-
-        if (!$errors && 0 >= $attributes['product_id']) {
-            $errors['product_id'] = 'Product Id must be positive integer!';
-		}
-
-		if (!$errors) {
-			$product = new XLite_Model_Product($attributes['product_id']);
-
-			if (!$product->isPersistent) {
-				$errors['product_id'] = 'Product with product Id #' . $attributes['product_id'] . ' can not found!';
-			}
-		}
-
-		return $errors;
+        return parent::validateAttributes($attrs) + $this->checkConditions($conditions);
     }
 }
 

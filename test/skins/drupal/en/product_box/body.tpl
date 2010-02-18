@@ -23,9 +23,7 @@
 
   <widget module="ProductAdviser" template="modules/ProductAdviser/PriceNotification/product_button_plain.tpl" visible="{!priceNotificationSaved}">
 
-  <div IF="availableForSale" id="addToCartButton{product.product_id}">
-    <widget class="XLite_View_Button" label="Add to Cart" type="button">
-  </div>
+  <br /><br /><widget template="buy_now.tpl" product="{product}" />
 
 </form>
 

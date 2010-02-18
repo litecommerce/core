@@ -64,10 +64,10 @@ class XLite_Core_Handler extends XLite_Base
     public function setAttributes(array $attrs)
     {
         foreach ($attrs as $name => $value) {
+            // FIXME - mapping
             $this->$name = $value;
         }
     }
-
 
     /**
      * Check if handler is valid 

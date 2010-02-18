@@ -24,6 +24,16 @@
  */
 class XLite_View_Minicart extends XLite_View_SideBarBox
 {
+    protected function getHead()
+    {
+        return 'Your shopping cart';
+    }
+
+    protected function getDir()
+    {
+        return 'mini_cart';
+    }
+
 	/**
 	 * Title
 	 * 

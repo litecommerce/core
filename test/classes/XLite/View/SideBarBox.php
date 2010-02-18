@@ -15,6 +15,7 @@
  * @since     3.0.0
  */
 
+
 /**
  * Abstract side bar box
  *
@@ -22,37 +23,15 @@
  * @subpackage Widget
  * @since      3.0
  */
-abstract class XLite_View_SideBarBox extends XLite_View_Abstract
+abstract class XLite_View_SideBarBox extends XLite_View_Container
 {
     /**
-     * Directory contains sidebar content
+     * Wrapper template 
      * 
      * @var    string
      * @access protected
-     * @since  1.0.0
+     * @since  3.0.0 EE
      */
-	protected $dir = null;
-
-    /**
-     * Body file name
-     * 
-     * @var    string
-     * @access protected
-     * @since  1.0.0
-     */
-    protected $bodyFile = 'body.tpl';
-
-    /**
-     * Define the default template 
-     * 
-     * @return void
-     * @access public
-     * @since  1.0.0
-     */
-    public function __construct()
-    {
-	    $this->template = 'common' . LC_DS . 'sidebar_box_container.tpl';
-    }
-
+    protected $template = 'common/sidebar_box.tpl';
 }
 

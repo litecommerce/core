@@ -1,4 +1,5 @@
 {* SVN $Id$ *}
+
 <table width="100%" cellpadding="0" cellspacing="0">
 
   <tr>
@@ -6,7 +7,8 @@
 
       <table width="100%" border="0" cellpadding="0" cellspacing="0" class="SidebarBoxLeftBG">
         <tr>
-          <td class="SidebarBoxCenterBG" nowrap width="100%" align="center">&nbsp;{widget.head:h}&nbsp;</td>
+		  {* FIXME - must use the getHead() function instead *}
+          <td class="SidebarBoxCenterBG" nowrap width="100%" align="center">&nbsp;{head:h}&nbsp;</td>
           <td><img src="images/spacer.gif" width="1" height="24" alt="" /></td>
         </tr>
       </table>
@@ -20,7 +22,8 @@
 
       <table cellpadding="10" cellspacing="0" width="100%">
         <tr>
-          <td><widget template="{widget.dir}/body.tpl"></td>
+		  {* FIXME - must use the getDir() function instead *}
+          <td><widget template="{dir}/body.tpl"></td>
         </tr>
       </table>
       <table cellpadding="0" cellspacing="0" width="100%">
