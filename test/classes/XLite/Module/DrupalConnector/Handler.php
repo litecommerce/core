@@ -132,10 +132,8 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
         	self::$resourceRelativePath = $this->getRelativePath(base_path());
 		}
 
-        foreach (array('css', 'js') as $res) {
-            foreach ($resources[$res] as $k => $v) {
-                $resources[$res][$k] = self::$resourceRelativePath . $this->layoutPath . $v;
-            }
+        foreach ($resources as $k => $v) {
+            $resources[$k] = self::$resourceRelativePath . $this->layoutPath . $v;
         }
 
         return $resources;

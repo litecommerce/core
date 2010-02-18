@@ -45,8 +45,59 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controlle
 	
 	function action_add() // {{{
 	{
-        require_once LC_MODULES_DIR . 'WishList' . LC_DS . 'encoded.php';
-		Module_WishList_action_add($this);
+		if (!$this->auth->is("logged"))	{
+			 $this->set("returnUrl", $this->buildURL('login', '', array('mode' => 'wishlist')));
+			 $this->session->set("wishlist_url", $this->buildURL('wishlist', 'add', array('product_id' => $this->product_id)));
+
+	  		 return;
+		}
+        
+        $product = new XLite_Model_Product($this->product_id);
+        
+		// alternative way to set product options
+		if ($this->xlite->get("ProductOptionsEnabled") && isset($this->OptionSetIndex[$product->get("product_id")])) {
+			$options_set = $product->get("expandedItems");
+			foreach ($options_set[$this->OptionSetIndex[$product->get("product_id")]] as $_opt) {
+				$this->product_options[$_opt->class] = $_opt->option_id;	
+			}
+		}
+        
+        if (
+			$this->xlite->get("ProductOptionsEnabled")
+			&& $product->hasOptions()
+			&& !isset($this->product_options)
+		) {
+            $this->set("returnUrl", $this->buildURL('product', '', array('product_id' => $this->product_id)));
+            return;
+        }
+
+        $wishlist = $this->get("wishList");
+        $wishlist_product = new XLite_Module_WishList_Model_WishListProduct();
+        
+        $wishlist_product->set("product_id", $this->get("product_id"));
+
+        $wishlist_product->set("wishlist_id", $wishlist->get("wishlist_id"));
+        $orderItem  = $wishlist_product->get("orderItem");
+        if (isset($this->product_options)) {
+            $wishlist_product->setProductOptions($this->product_options);
+            if (version_compare(PHP_VERSION, '5.0.0')===-1) {
+				$orderItem->setProductOptions($this->product_options);
+			}
+        }
+
+		$wishlist_product->set("item_id", $orderItem->get("key"));
+        $found = $wishlist_product->find("item_id = '" . addslashes($wishlist_product->get("item_id")) . "' AND wishlist_id = '" . $wishlist->get("wishlist_id"). "'");
+
+        $amount = $wishlist_product->get("amount");
+        $amount += isset($this->amount) ? $this->amount : 1;
+
+        $wishlist_product->set("amount",$amount);
+
+        if ($found) {
+        	$wishlist_product->update();
+        } else {
+        	$wishlist_product->create();
+        }
 	} // }}} 
 
 	function getItems() // {{{
@@ -54,7 +105,7 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controlle
 		$wishlist = $this->get("wishList");
 		if (!$wishlist) return false; 
 		$wishlist_product = new XLite_Module_WishList_Model_WishListProduct();
-		return $wishlist_product->findAll("wishlist_id ='" . $wishlist->get("wishlist_id") ."'");
+		return $wishlist_product->findAll("wishlist_id = '" . $wishlist->get("wishlist_id") ."'");
 		
 	} // }}}  
 	
@@ -81,8 +132,8 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controlle
 		$Mailer = new XLite_Model_Mailer();
 		$Mailer->wishlist_recipient = $this->wishlist_recipient;
 		$Mailer->items = $this->get("items");
-		$Mailer->customer = $this->auth->getComplex('profile.billing_firstname')." ".$this->auth->getComplex('profile.billing_lastname');
-		$Mailer->compose($this->getComplex('config.Company.site_administrator'),$this->wishlist_recipient,"modules/WishList/send");
+		$Mailer->customer = $this->auth->getComplex('profile.billing_firstname') . ' ' . $this->auth->getComplex('profile.billing_lastname');
+		$Mailer->compose($this->config->Company->site_administrator, $this->wishlist_recipient, 'modules/WishList/send');
 		$Mailer->send();	
 		$this->set("mode","MessageSent");
 		
@@ -90,15 +141,16 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controlle
 
 	function action_clear() // {{{
 	{
-		foreach($this->get("items") as $item) 
-			$item->delete();	
-			
+		foreach ($this->get("items") as $item) {
+			$item->delete();
+		}
 	} // }}}
 
     function _needConvertToIntStr($name) // {{{
     {
-        if ($name == "item_id") 
+        if ($name == "item_id") {
         	return false;
+		}
 
         return parent::_needConvertToIntStr($name);
     } // }}}

@@ -81,7 +81,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 * @access protected
 	 * @since  3.0
 	 */
-	protected $cssFiles = null;
+	protected $cssFiles = array();
 
     /**
      * List of Javascript files to export 
@@ -90,7 +90,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      * @access protected
      * @since  3.0
      */
-    protected $jsFiles = null;
+    protected $jsFiles = array('js/common.js');
 
     /**
      * Initialized instance of the XLite singleton 
@@ -317,11 +317,9 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
             $result[0] = $this->getContent($widget, $attributes);
 
             $result[1] = array(
-                'css' => $widget->getCSSFiles(),
-                'js'  => $widget->getJSFiles(),
+                'css' => $this->prepareResources($widget->getCSSFiles()),
+                'js'  => $this->prepareResources($widget->getJSFiles()),
             );
-
-            $result[1] = $this->prepareResources($result[1]);
         }
 
 		return $result;
@@ -336,11 +334,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 */
 	public function getCSSList()
 	{
-		if (!isset($this->cssFiles)) {
-			$this->cssFiles = array('style.css');
-		}
-
-		return $this->cssFiles;
+		return $this->prepareResources($this->cssFiles);
 	}
 
     /**
@@ -352,11 +346,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
     public function getJSList()
     {
-        if (!isset($this->jsFiles)) {
-			$this->jsFiles = array();
-        }
-
-        return $this->jsFiles;
+        return $this->prepareResources($this->jsFiles);
     }
 
 	/**

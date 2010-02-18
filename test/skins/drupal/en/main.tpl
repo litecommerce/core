@@ -25,6 +25,7 @@
 <META IFF="keywords" name="keywords" content="{keywords:r}">
 <LINK href="skins/default/en/style.css"  rel="stylesheet" type="text/css">
 <LINK IFF="xlite.FlyoutCategoriesEnabled&xlite.config.FlyoutCategories.scheme" href="{xlite.layout.path}modules/FlyoutCategories/catalog{xlite.auth.flyoutCategoriesCacheDirectory}/{xlite.FlyoutCategoriesCssPath}" rel="stylesheet" type="text/css">
+<script src="skins/drupal/en/js/common.js" type="text/javascript"></script>
 </HEAD>
 <!-- [/head] -->
 

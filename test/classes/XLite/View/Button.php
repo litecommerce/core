@@ -98,7 +98,14 @@ class XLite_View_Button extends XLite_View_Abstract
         }
     }
 
-	function initView()
+    /**
+     * Initialization 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+	public function initView()
 	{
 		parent::initView();
 

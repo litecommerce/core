@@ -8,11 +8,8 @@ function isValid()
 -->
 </script>
 
-<form action="{shopURL(#cart.php#)}" method="GET" name="add_to_cart" onsubmit="javascript: return isValid();">
-  <input type="hidden" name="target" value="cart">
-  <input type="hidden" name="action" value="add">
-  <input type="hidden" name="product_id" value="{product.product_id}">
-  <input type="hidden" name="category_id" value="{category_id}">
+<form action="{buildURLPath(#cart#,#add#,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" method="GET" name="add_to_cart" onsubmit="javascript: return isValid();">
+  <input FOREACH="buildURLArguments(#cart#,#add#,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id)),paramName,paramValue" type="hidden" name="{paramName}" value="{paramValue}" />
 
   <table cellpadding="5" cellspacing="0" width="100%">
     <tr>
@@ -87,10 +84,10 @@ function isValid()
 
             <tr IF="availableForSale" id="addToCartButton">
               <td>
-                <widget class="XLite_View_Button" label="Add to Cart" href="javascript: if (isValid()) document.add_to_cart.submit()" img="cart4button.gif" font="FormButton">
+                <widget class="XLite_View_Button" label="Add to Cart" type="button" img="cart4button.gif" font="FormButton">
 			        </td>
         			<td IF="!config.General.add_on_mode">
-        				<widget module="WishList" template="modules/WishList/add.tpl" href="javascript: WishList_Add2Cart();">
+        				<widget module="WishList" template="modules/WishList/add.tpl">
               </td>
             </tr>
 
