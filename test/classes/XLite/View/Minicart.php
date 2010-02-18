@@ -31,26 +31,14 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
 
     protected function getDir()
     {
-        return 'mini_cart';
+        $dir = 'mini_cart';
+
+        if ($this->use_dir) {
+            $dir = $this->use_dir;
+        }
+
+        return $dir;
     }
-
-	/**
-	 * Title
-	 * 
-	 * @var    string
-	 * @access protected
-	 * @since  1.0.0
-	 */
-	protected $head = 'Shopping cart';
-
-	/**
-	 * Widget directory
-	 * 
-	 * @var    string
-	 * @access protected
-	 * @since  1.0.0
-	 */
-	protected $dir = 'mini_cart';
 
     /**
      * Widget directories 
@@ -75,23 +63,6 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
     protected $itemsList = NULL;
 
     /**
-     * Initilization
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function initView()
-    {
-        parent::initView();
-
-        if ($this->use_dir) {
-            $this->dir = $this->use_dir;
-        }
-    }
-
-	/**
      * Define widget parameters
      *
      * @return void
@@ -100,7 +71,7 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
      */
     protected function defineWidgetParams()
     {
-		parent::defineWidgetParams();
+        parent::defineWidgetParams();
 
         $dirs = new XLite_Model_WidgetParam_List('use_dir', 'mini_cart', 'Display mode');
         $dirs->options = $this->dirs;
@@ -125,7 +96,7 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
             $errors['use_dir'] = 'Display mode has wrong value!';
         }
 
-		return $errors;
+        return $errors;
     }
 
     /**
@@ -154,7 +125,7 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
      * @retun boolean
      */
     protected function getIsTruncated() {
-        return $this->getComplex('cart.itemsCount') > 3;
+        return $this->cart->getItemsCount() > 3;
     }
 
     /**
@@ -162,19 +133,28 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
      * 
      * @return array array of cart items
      */
-    protected function getItemsList() {
+    protected function getItemsList()
+    {
        if (is_null($this->itemsList)) {
-           $cart = $this->cart;
-           $this->itemsList = array_slice($cart->getItems(), 0, min(3, $cart->getItemsCount()));
+           $this->itemsList = array_slice($this->cart->getItems(), 0, min(3, $this->cart->getItemsCount()));
        }
 
        return $this->itemsList;
     }
 
-    protected function getSums() {
+    /**
+     * Get cart total 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSums()
+    {
         return array(
-                'Total' => $this->getComplex('cart.total'),
-            );
+            'Total' => $this->cart->get('total'),
+        );
     }
 
 }
