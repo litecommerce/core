@@ -86,23 +86,6 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
         ),
     );
 
-    /**
-     * Initilization
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function initView()
-    {
-        parent::initView();
-
-        if (isset($this->display_modes[$this->display_mode])) {
-            $this->dir = $this->display_modes[$this->display_mode]['dir'];
-        }
-    }
-
 	/**
      * Define widget parameters
      *
@@ -258,14 +241,36 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
         return implode(' ', $classes);
     }
 
+    /**
+     * Get widge title
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function getHead()
     {
         return 'Categories';
     }
 
+    /**
+     * Get widget directory
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function getDir()
     {
-        return 'categories';
+        $dir = 'categories';
+    
+        if (isset($this->display_modes[$this->display_mode])) {
+            $dir = $this->display_modes[$this->display_mode]['dir'];
+        }
+
+        return $dir;
     }
 
     /**

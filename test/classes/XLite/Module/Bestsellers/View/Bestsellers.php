@@ -103,6 +103,37 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_SideBarBox
     );
 
     /**
+     * Get widge title
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getHead()
+    {
+        return 'Bestsellers';
+    }
+
+    /**
+     * Get widget directory
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDir()
+    {
+        $dir = 'modules/Bestsellers/menu';
+
+        if (isset($this->display_modes[$this->display_mode])) {
+            $dir = $this->display_modes[$this->display_mode]['dir'];
+        }
+
+        return $dir;
+    }
+    /**
      * Initialization
      * 
      * @return void
@@ -115,12 +146,6 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_SideBarBox
         parent::initView();
 
         $this->mode = '';
-
-        if (is_null($this->display_mode)) {
-            $this->display_mode = 'menu';
-        }
-
-        $this->dir = $this->display_modes[$this->display_mode]['dir'];
 
         $this->body = $this->dir . '/body.tpl';
 
