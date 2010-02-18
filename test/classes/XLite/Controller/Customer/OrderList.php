@@ -1,103 +1,165 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-*
-* @package Dialog
-* @access public
-* @version $Id$
-*/
+ * Orders list
+ *  
+ * @category  Litecommerce
+ * @package   Controller Customer
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://www.qtmsoft.com/xpayments_eula.html X-Payments license agreement
+ * @version   SVN: $Id$
+ * @link      http://www.qtmsoft.com/
+ * @see       ____file_see____
+ * @since     3.0.0
+ */
+
+/**
+ * Orders list
+ * 
+ * @package Controller Customer
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_Controller_Customer_OrderList extends XLite_Controller_Customer_Abstract
 {    
+    /**
+     * params 
+     * 
+     * @var    array
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     public $params = array('target', 'mode', 'order_id1', 'order_id2', 'status');    
-    public $order_id1 = "";    
-    public $order_id2 = "";    
-    public $status = "";    
+
+    /**
+     * order_id1 
+     * 
+     * @var    string
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $order_id1 = '';    
+
+    /**
+     * order_id2 
+     * 
+     * @var    string
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $order_id2 = '';    
+
+    /**
+     * status 
+     * 
+     * @var    string
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $status = '';    
+
+    /**
+     * orders 
+     * 
+     * @var    mixed
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     public $orders = null;
 
+    /**
+     * Setter
+     * 
+     * @param string $name  Property name
+     * @param mixed  $value Property value
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     function set($name, $value)
     {
         switch($name) {
-            case "startDate":
-            case "endDate":
+            case 'startDate':
+            case 'endDate':
                 $value = intval($value);
-            break;
+                break;
         }
 
         parent::set($name, $value);
     }
 
+    /**
+     * Prefill form 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     function fillForm()
     {
         if (!isset($this->startDate)) {
             $date = getdate(time());
-            $this->set("startDate", mktime(0,0,0,$date['mon'],1,$date['year']));
+            $this->set('startDate', mktime(0, 0, 0, $date['mon'], 1, $date['year']));
         }
 
         parent::fillForm();
     }
     
+    /**
+     * Get orders list
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     function getOrders()
     {
         if (is_null($this->orders)) {
-            if (!$this->auth->is("logged")) {
-                die("Access denied");
+            if (!$this->auth->is('logged')) {
+                die('Access denied');
             }
+
             $order = new XLite_Model_Order();
             $this->orders = $order->search(
-                $this->auth->get("profile"), 
-                $this->get("order_id1"), 
-                $this->get("order_id2"), 
-                $this->get("status"),
-                $this->get("startDate"), 
-                $this->get("endDate") + 24 * 3600
+                $this->auth->get('profile'), 
+                $this->get('order_id1'), 
+                $this->get('order_id2'), 
+                $this->get('status'),
+                $this->get('startDate'), 
+                $this->get('endDate') + 24 * 3600
             );
         }
+
         return $this->orders;
     }
 
-    function getCount() {
-        // how many orders were found
+    /**
+     * Get orders count 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    function getCount()
+    {
         return count($this->get('orders'));
     }
 
+    /**
+     * Get secure mode
+     * 
+     * @return mixed
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     function getSecure()
     {
         return $this->config->Security->customer_security;

@@ -98,6 +98,49 @@ class XLite_Core_Handler extends XLite_Base
     }
 
     /**
+     * Compose URL path from target, action and additional params
+     *
+     * @param string $target page identifier
+     * @param string $action action to perform
+     * @param array  $params additional params
+     *
+     * @return string
+     * @access public
+     * @since  3.0
+     */
+    public function buildURLPath($target, $action = '', array $params = array())
+    {
+        $url = $this->buildURL($target, $action, $params);
+        $parts = parse_url($url);
+
+        return $parts['path'];
+    }
+
+    /**
+     * Compose URL query arguments from target, action and additional params
+     *
+     * @param string $target page identifier
+     * @param string $action action to perform
+     * @param array  $params additional params
+     *
+     * @return array
+     * @access public
+     * @since  3.0
+     */
+    public function buildURLArguments($target, $action = '', array $params = array())
+    {
+        $url = $this->buildURL($target, $action, $params);
+        $parts = parse_url($url);
+
+        $args = array();
+        if (isset($parts['query'])) {
+            parse_str($parts['query'], $args);
+        }
+
+        return $args;
+    }
+
+    /**
      * Initialize widget; FIXME - backward compatibility; to delete
      *
      * @return void

@@ -1,132 +1,188 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* @package View
-* @access public
-* @version $Id$
-*/
+ * Date selector
+ *  
+ * @category  Litecommerce
+ * @package   View
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://www.qtmsoft.com/xpayments_eula.html X-Payments license agreement
+ * @version   SVN: $Id$
+ * @link      http://www.qtmsoft.com/
+ * @see       ____file_see____
+ * @since     3.0.0
+ */
+
+/**
+ * XLite_View_Date 
+ * 
+ * @package View
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_View_Date extends XLite_View_FormField
 {	
+    /**
+     * params 
+     * 
+     * @var    array
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     public $params = array();	
+
+    /**
+     * Lower year 
+     * 
+     * @var    integer
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     public $lowerYear = 2000;	
+
+    /**
+     * Higher year
+     * 
+     * @var    integer
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     public $higherYear = 2035;	
+
+    /**
+     * Widget tempalte
+     * 
+     * @var    string
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     public $template = "common/date.tpl";
 
-    function init()
+    /**
+     * Initialization
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    function initView()
     {
-        $dayField = $this->get("field") . "Day";
-        $monthField = $this->get("field") . "Month";
-        $yearField = $this->get("field") . "Year";
-        $this->params = array_merge(array($dayField, $monthField, $yearField), $this->params);
+        $dayField   = $this->get('field') . 'Day';
+        $monthField = $this->get('field') . 'Month';
+        $yearField  = $this->get('field') . 'Year';
+        $this->params = array_merge(
+			array($dayField, $monthField, $yearField),
+			$this->params
+		);
 
-		parent::init();
+		parent::initView();
 
-        if (!is_null($this->get($dayField)) && !is_null($this->get($monthField)) && !is_null($this->get($yearField))) {
+        if (
+			!is_null($this->get($dayField))
+			&& !is_null($this->get($monthField))
+			&& !is_null($this->get($yearField))
+		) {
             // read form fields
-            $date = mktime(0,0,0,$this->get($monthField), $this->get($dayField), $this->get($yearField));
-            $this->setComplex("component." . $this->get("field"), $date); 
+            $date = mktime(0, 0, 0, $this->get($monthField), $this->get($dayField), $this->get($yearField));
+			$this->xlite->getController()->set($this->get('field'), $date); 
         }
     }
 
+    /**
+     * Get days list
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     function getDays()
     {
-        $days = array();
-        for ($i=1; $i<32; $i++)
-        {
-            $days[] = $i;
-        }
-        return $days;
+        return array_keys(array_fill(1, 31, 1));
     }
 
+    /**
+     * Get years list
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     function getYears()
     {
-        $years = array();
-        $yearsRange = $this->get("yearsRange");
+        $yearsRange = $this->get('yearsRange');
         if (isset($yearsRange) && intval($yearsRange) > 0) {
-        	$this->set("higherYear", $this->get("lowerYear") + intval($yearsRange));
+        	$this->set('higherYear', $this->get('lowerYear') + intval($yearsRange));
         }
-        for ($i=$this->get("lowerYear"); $i<=$this->get("higherYear"); $i++)
-        {
-            $years[] = $i;
-        }
-        return $years;
+
+		return array_keys(array_fill($this->get('lowerYear'), $this->get('higherYear'), 1));
     }
     
+    /**
+     * prefill form 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     function fillForm()
     {
         parent::fillForm();
-        $value = $this->get("value");
+
+        $value = $this->get('value');
         if (is_null($value)) {
-            // current date is the default
             $value = time();
         }
-        $dayField = $this->get("field") . "Day";
-        $monthField = $this->get("field") . "Month";
-        $yearField = $this->get("field") . "Year";
+
+        $dayField   = $this->get("field") . 'Day';
+        $monthField = $this->get("field") . 'Month';
+        $yearField  = $this->get("field") . 'Year';
+
         $date = getdate($value);
-        $this->setComplex($dayField, $date["mday"]);
-        $this->setComplex($monthField, $date["mon"]);
-        $this->setComplex($yearField, $date["year"]);
+
+        $this->setComplex($dayField, $date['mday']);
+        $this->setComplex($monthField, $date['mon']);
+        $this->setComplex($yearField, $date['year']);
     }
 
+    /**
+     * Get month 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     function getMonth()
     {
-        $monthField = $this->get("field") . "Month";
-        return $this->get($monthField);
+        return $this->get($this->get('field') . 'Month');
     }
 
+    /**
+     * Get day 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     function getDay()
     {
-        $field = $this->get("field") . "Day";
-        return $this->get($field);
+        return $this->get($this->get('field') . 'Day');
     }
 
+    /**
+     * Get year 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     function getYear()
     {
-        $field = $this->get("field") . "Year";
-        return $this->get($field);
+        return $this->get($this->get('field') . 'Year');
     }
 }
-
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
