@@ -1,0 +1,4 @@
+/* SVN $Id$ */
+.top-categories .tree li.collapsed ul {
+	display: none;
+}

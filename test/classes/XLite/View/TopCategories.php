@@ -305,5 +305,23 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
 
         return implode(' ', $classes);
     }
+
+    /**
+     * Get a list of CSS files required to display the widget properly
+     *
+     * @return array
+     * @access public
+     */
+    public function getCSSFiles()
+    {
+        $files = array();
+
+        if ($this->display_mode == 'tree') {
+            $files[] = $this->getDir() . '/style.' . $this->display_mode . '.css';
+        }
+
+        return $files;
+    }
+
 }
 
