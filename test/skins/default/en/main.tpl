@@ -152,7 +152,7 @@
 <widget module="FlyoutCategories" template="modules/FlyoutCategories/main_side.tpl">
 </div>
 <div IF="!xlite.FlyoutCategoriesEnabled">
-<widget class="XLite_View_TopCategories" template="common/sidebar_box.tpl" />
+<widget class="XLite_View_TopCategories" />
 </div>
 <widget module="Bestsellers" class="XLite_Module_Bestsellers_View_Bestsellers" template="common/sidebar_box.tpl" visible="{config.Bestsellers.bestsellers_menu}">
 <widget module="GiftCertificates" template="common/sidebar_box.tpl" head="Gift certificates" dir="modules/GiftCertificates/menu">
@@ -172,7 +172,7 @@
     <TD width="170" valign="top"><BR>
 <!-- [right] -->
 <widget module="SnsIntegration" template="modules/SnsIntegration/tracker.tpl">
-<widget class="XLite_View_Minicart" template="common/sidebar_box.tpl">
+<widget class="XLite_View_Minicart" />
 <widget template="common/sidebar_box.tpl" dir="login" name="loginWidget" head="Authentication" IF="{!auth.isLogged()}" />
 <widget template="common/sidebar_box.tpl" dir="profile" name="profileWidget" head="Your profile" IF="{auth.isLogged()}" />
 <widget template="common/sidebar_box.tpl" dir="authentication" name="authenticationWidget" head="Authentication" IF="{auth.isLogged()}" />

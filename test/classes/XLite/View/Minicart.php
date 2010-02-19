@@ -25,6 +25,12 @@
 class XLite_View_Minicart extends XLite_View_SideBarBox
 {
     /**
+     * Number of cart items to display by default 
+     */
+    const ITEMS_TO_DISPLAY = 3;
+
+
+    /**
      * Widget directories 
      * 
      * @var    array
@@ -93,7 +99,7 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
      */
     protected function getItemsList()
     {
-        return array_slice($this->getCart()->getItems(), 0, min(3, $this->getCart()->getItemsCount()));
+        return array_slice($this->getCart()->getItems(), 0, min(self::ITEMS_TO_DISPLAY, $this->getCart()->getItemsCount()));
     }
 
     /**
@@ -105,7 +111,7 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
      */
     protected function isTruncated()
     {
-        return 3 < $this->getCart()->getItemsCount();
+        return self::ITEMS_TO_DISPLAY < $this->getCart()->getItemsCount();
     }
 
     /**
