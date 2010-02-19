@@ -118,12 +118,15 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controlle
 
 	function action_update() // {{{ 
 	{
-		$wishlist_product = new XLite_Module_WishList_Model_WishListProduct();
+		$wishlist_product = new XLite_Module_WishList_Model_WishListProduct($this->get("item_id"), $this->get("wishlist_id"));
+
 		$properties = $this->get("properties");
-        if ($properties['wishlist_amount']<=0) $this->action_delete();
-		$wishlist_product->set("amount",$properties['wishlist_amount']);
-		$wishlist_product->set("item_id", $properties['item_id']);
-		$wishlist_product->set("wishlist_id",$properties['wishlist_id']);
+        if ($properties['wishlist_amount'] <= 0) {
+			$this->action_delete();
+		}
+
+		$wishlist_product->set("amount", $properties['wishlist_amount']);
+
 		$wishlist_product->update();
 	} // }}}	
 

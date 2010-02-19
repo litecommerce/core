@@ -39,9 +39,10 @@
 
 class XLite_Module_DemoMode_Model_Abstract extends XLite_Model_Abstract implements XLite_Base_IDecorator
 {
-	public function __construct($id = null)
+	public function __construct()
 	{
-		parent::__construct($id);
+		$args = func_get_args();
+    	call_user_func_array(array('parent', '__construct'), $args);
 
 		global $safeData;
 		if (!isset($safeData)) {

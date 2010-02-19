@@ -33,11 +33,20 @@ function formModify(obj, url)
 {
 	var form = obj.form;
 	if (form) {
-		url = parseUri(url);
-		for (var key in url.queryKey) {
+		var parsed = parseUri(url);
+
+		for (var key in parsed.queryKey) {
 			if (form[key]) {
 				form[key].value = url.queryKey[key];
 			}
+		}
+
+		if (
+			form.getAttribute('method')
+			&& form.getAttribute('method').toUpperCase() == 'POST'
+			&& (parsed.query || parsed.path || parsed.host)
+		) {
+			form.setAttribute('action', url);
 		}
 	}
 

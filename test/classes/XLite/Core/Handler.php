@@ -113,7 +113,7 @@ class XLite_Core_Handler extends XLite_Base
         $url = $this->buildURL($target, $action, $params);
         $parts = parse_url($url);
 
-        return $parts['path'];
+        return (!isset($parts['path']) || strlen($parts['path'])) ? './' : $parts['path'];
     }
 
     /**

@@ -1,5 +1,5 @@
 {* SVN $Id$ *}
-<form action="{buildURLPath(#wishlist#,#update#,_ARRAY_(#item_id#^item.item_id,#wishlist_id#^item.wishlist_id,#product_id#^item.product_id))}" method=POST name="update{key}_form">
+<form action="{buildURL(#wishlist#,#update#,_ARRAY_(#item_id#^item.item_id,#wishlist_id#^item.wishlist_id,#product_id#^item.product_id))}" method="POST" name="update{key}_form">
   <input FOREACH="buildURLArguments(#wishlist#,#update#,_ARRAY_(#item_id#^item.item_id,#wishlist_id#^item.wishlist_id,#product_id#^item.product_id)),paramName,paramValue" type="hidden" name="{paramName}" value="{paramValue}" />
 
   <table cellpadding="0" cellspacing="0" width="100%">
@@ -73,10 +73,10 @@
 	        		      <font class="ProductPrice">{price_format(item,#total#):h}</font>
 				          </td>
 				          <td nowrap>
-                		<widget class="XLite_View_Button" template="modules/WishList/common/button.tpl" label="Update amount" type="button" font="FormButton">
+                		<widget class="XLite_View_Button" label="Update amount" type="button">
 				          </td>
 				          <td width="100%">
-                		<widget class="XLite_View_Button" template="modules/WishList/common/button.tpl" label="Remove" type="button" href="{buildURLPath(#wishlist#,#delete#,_ARRAY_(#item_id#^item.item_id,#wishlist_id#^item.wishlist_id,#product_id#^item.product_id))}" font="FormButton">
+                		<widget class="XLite_View_Button" label="Remove" type="button" href="{buildURLPath(#wishlist#,#delete#,_ARRAY_(#item_id#^item.item_id,#wishlist_id#^item.wishlist_id,#product_id#^item.product_id))}">
 				          </td>														
 			          </tr>
 			        </table>
