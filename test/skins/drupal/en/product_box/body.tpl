@@ -5,10 +5,12 @@
   <input type="hidden" name="product_id" value="{product.product_id}">
   <input type="hidden" name="category_id" value="{category_id}">
 
-  <div class="name">{product.name}</div>
+  <div class="name">
+    <a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id))}">{product.name}</a>
+  </div>
 
   <div IF="product.hasImage()" class="image">
-    <img src="{product.imageURL}" alt="" />
+    <a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id))}"><img src="{product.imageURL}" alt="" /></a>
   </div>
 
   <div IF="{product.sku}" class="sku">
