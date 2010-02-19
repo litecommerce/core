@@ -81,18 +81,18 @@ abstract class XLite_View_Container extends XLite_View_Abstract
      */
     protected function checkConditions(array $conditions)
     {
-        $errors = array();
+        $messages = array();
 
         foreach ($conditions as $condition) {
             if (true === $condition[self::ATTR_CONDITION]) {
-                $errors[] = $condition[self::ATTR_MESSAGE];
+                $messages[] = $condition[self::ATTR_MESSAGE];
                 if (!isset($condition[self::ATTR_CONTINUE])) {
                      break;
                 }
             }
         }
 
-        return $errors;
+        return $messages;
     }
 
     /**

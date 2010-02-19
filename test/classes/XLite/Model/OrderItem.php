@@ -48,9 +48,27 @@
 class XLite_Model_OrderItem extends XLite_Model_Abstract
 {
     /**
-    * Reference to the order/cart object
-    */	
-    public $order = null;
+     * Reference to the order/cart object 
+     * 
+     * @var    XLite_Model_Order
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected $order = null;
+
+
+	/**
+	 * Return reference to the associated order object
+	 * 
+	 * @return XLite_Model_Order
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
+	public function getOrder()
+	{
+		return XLite_Model_CachingFactory::getObject('XLite_Model_Order', $this->get('order_id'));
+	}
+
 
     /**
     * A reference to the product object or null if there is no product

@@ -34,16 +34,5 @@ class XLite_Module_JoomlaConnector_Handler extends XLite_Core_CMSConnector
 	{
 		return '____JOOMLA____';
 	}
-
-	/**
-     * Prepare call
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function prepareCall()
-    {
-	}
 }
 

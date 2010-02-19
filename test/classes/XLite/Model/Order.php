@@ -50,6 +50,90 @@ define('ORDER_EXPIRATION_TIME', 3600 * 24); // one day
 */
 class XLite_Model_Order extends XLite_Model_Abstract
 {
+	/**
+	 * Cart items cache 
+	 * 
+	 * @var    array
+	 * @access protected
+	 * @since  3.0.0 EE
+	 */
+	protected $_items = null;
+
+	/**
+	 * Cart items number 
+	 * 
+	 * @var    int
+	 * @access protected
+	 * @since  3.0.0 EE
+	 */
+	protected $_itemsCount = null;
+
+
+	/**
+	 * Create new cart item 
+	 * 
+	 * @param XLite_Model_OrderItem $item new item
+	 *  
+	 * @return void
+	 * @access protected
+	 * @since  3.0.0 EE
+	 */
+	protected function _createItem(XLite_Model_OrderItem $item)
+    {
+        if (!$this->isPersistent) {
+            $this->create();
+        }
+
+        $item->set('order_id', $this->get('order_id'));
+		$item->create();
+
+		// update cache
+        if (isset($this->_items)) {
+            $this->_items[] = $item;
+        }
+    }
+
+
+	/**
+	 * Return cart items cache 
+	 * 
+	 * @return array
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
+	public function getItems()
+    {
+        if (!isset($this->_items)) {
+            if ($this->isPersistent) {
+                $item = new XLite_Model_OrderItem();
+                $this->_items = $item->findAll('order_id = \'' . $this->get('order_id') . '\'', 'orderby');
+            } else {
+                $this->_items = array();
+            }
+        }
+
+        return $this->_items;
+    }
+
+    /**
+     * Return cart items number
+     * 
+     * @return int
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function getItemsCount()
+    {
+		if (!isset($this->_itemsCount)) {
+			$this->_itemsCount = count($this->getItems());
+		}
+
+        return $this->_itemsCount;
+    }
+
+
+
+
     // Order properties {{{    
     public $fields = array(
         'order_id' => '',       // primary key
@@ -80,7 +164,6 @@ class XLite_Model_Order extends XLite_Model_Abstract
     public $_profile = null;    
     public $_paymentMethod = null;    
     public $_shippingMethod = null;    
-    public $_items = null;    
     public $_details = null;    
     public $_detailLabels = null;    
     public $_shippingRates = null;    
@@ -650,29 +733,6 @@ class XLite_Model_Order extends XLite_Model_Abstract
         return $taxes;
     } // }}}
 
-    function getItems() // {{{
-    {
-        if (is_null($this->_items)) { // cache result in _items
-            if ($this->isPersistent) {
-                $oi = new XLite_Model_OrderItem();
-                $this->_items = $oi->findAll("order_id = '" . $this->get("order_id") . "'", "orderby");
-				$len = count($this->_items);
-                for ($i = 0; $i < $len; $i++) {
-                    $this->_items[$i]->order = $this;
-                }
-            } else {
-                $this->_items = array();
-            }
-        }
-
-        return $this->_items;
-    } // }}}
-
-    function getItemsCount() // {{{
-    {
-        return count($this->get("items"));
-    } // }}}
-
     function getItemsFingerprint() // {{{
     {
         if ($this->isEmpty()) {
@@ -1072,31 +1132,6 @@ class XLite_Model_Order extends XLite_Model_Abstract
         }
     } // }}}
 
-    function _createItem($item) // {{{
-    {
-        if (!$this->isPersistent) {
-            $this->create();
-        }
-
-        $item->set("order_id", $this->get("order_id"));
-
-        // select maximum orderby from order items
-        $orderBy = $this->db->getOne("SELECT MAX(orderby) FROM " . $this->db->getTableByAlias("order_items") . " WHERE order_id=" . $this->get("order_id"));
-        if (is_null($orderBy)) {
-            $orderBy = 0;
-        } else {
-            $orderBy++;
-        }
-
-        $item->set("orderby", $orderBy);
-        $item->create();
-        $item->order = $this;
-        if (isset($this->_items)) {
-            // are items cached ?
-            $this->_items[] = $item;
-        }
-    } // }}}
-
     function remove()
     {
         $status = $this->get("status");
@@ -1189,7 +1224,4 @@ class XLite_Model_Order extends XLite_Model_Abstract
     }
 
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+

@@ -15,7 +15,7 @@
           <tr>
             <td><img src="images/cart_full.gif" alt=""></td>
             <td>
-              <strong>Items:</strong> {cart.itemsCount}
+              <strong>Items:</strong> {cart.getItemsCount()}
               <br />
               <strong>Total:</strong> {price_format(cart,#total#):h}
             </td>

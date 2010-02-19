@@ -36,6 +36,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
 
     /**
      * Strip possible SQL injections
+     * TODO - improve or remove (if the PDO will be used) this function
      * 
      * @param string $value value to check
      *  
@@ -141,6 +142,13 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
         $this->data = $this->prepare(empty($data) ? $_REQUEST : $data + $this->data);
 	}
 
+    /**
+     * Return all data 
+     * 
+     * @return array
+     * @access public
+     * @since  3.0.0 EE
+     */
     public function getData()
     {
         return $this->data;

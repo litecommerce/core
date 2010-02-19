@@ -24,15 +24,6 @@
  */
 class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
 {
-	/**
-	 * Semaphore 
-	 * 
-	 * @var    bool
-	 * @access protected
-	 * @since  3.0.0 EE
-	 */
-	protected static $isRequestRemapped = false;
-
     /**
      * Relative path
      * 
@@ -98,21 +89,6 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
 
         return $table;
     }
-
-    /**
-     * Prepare call
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function prepareCall()
-	{
-		if (!self::$isRequestRemapped) {
-			XLite_Core_Request::getInstance()->remapRequest();
-			self::$isRequestRemapped = true;
-		}
-	}
 
     /**
      * Prepare widget resources 

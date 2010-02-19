@@ -162,8 +162,6 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
     protected function getContent(XLite_View_Abstract $object, array $attributes = array())
     {
-        $this->prepareCall();
-
         ob_start();
         $this->getApplicationInstance($attributes)->runViewer($object);
         $content = ob_get_contents();
@@ -192,15 +190,6 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      * @since  3.0.0 EE
      */
     abstract public function getCMSName();
-
-    /**
-     * Prepare call
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    abstract protected function prepareCall();
 
 
     /**
@@ -560,7 +549,6 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         $type = $this->getPageTypeObject($type);
 
         if ($type) {
-            $this->prepareCall();
             $type->setAttributes($this->prepareAttributes($settings));
             $result = $type->isPageInstanceVisible();
         }
@@ -586,7 +574,6 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         $type = $this->getPageTypeObject($type);
 
         if ($type) {
-            $this->prepareCall();
             $type->setAttributes($this->prepareAttributes($settings));
             $result = $type->getPageInstanceData();
         }

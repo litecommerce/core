@@ -504,7 +504,3 @@ class XLite_Model_Category extends XLite_Model_Abstract
     } // }}}
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

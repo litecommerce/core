@@ -40,9 +40,7 @@ Cart items can be iterated with FOREACH="cart.items,cart_id,item":
 - item.valid - states whether the product is not out of stock and is not disabled from sale
 *}
 {* Wishlist stub - should be corrected *}
-<div IF="xlite.WishListEnabled">
-  <widget module="WishList" template="modules/WishList/mini_cart/body.tpl">
-</div>
+<widget module="WishList" template="modules/WishList/mini_cart/body.tpl" />
 {*
 
 Empty cart
@@ -71,18 +69,18 @@ Cart with items
   {* Cart items *}
   <div class="lc-minicart-items">
     <ul>
-      <li FOREACH="itemsList,item">
+      <li FOREACH="getItemsList(),item">
         <span class="line-item"><a href="{buildURL(#product#,##,_ARRAY_(#product_id#^item.product_id,#category_id#^item.category_id))}">{item.name}</a></span>
         <span class="currency">{price_format(item,#price#):h}</span> x <span class="qty">{item.amount}</span>
       </li>
     </ul>
-    <p IF="isTruncated"><a href="{buildURL(#cart#)}">Other items</a></p>
+    <p IF="isTruncated()"><a href="{buildURL(#cart#)}">Other items</a></p>
   </div>
   {* Cart totals *}
   <div class="lc-minicart-totals">
-    <p><a href="{buildURL(#cart#)}">{cart.itemsCount} items</a></p>
+    <p><a href="{buildURL(#cart#)}">{cart.getItemsCount()} items</a></p>
     <ul>
-      <li FOREACH="sums,name,value">{name}: <span class="currency">{price_format(value):h}</span></li>
+      <li FOREACH="getTotals(),name,value">{name}: <span class="currency">{price_format(value):h}</span></li>
     </ul>
   </div>
   {* Checkout button *}

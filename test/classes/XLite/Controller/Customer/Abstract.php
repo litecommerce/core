@@ -4,9 +4,10 @@ abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstr
 {
 	public function __construct()
     {
-		$this->cart = XLite_Model_Cart::getInstance();
+		$this->cart = XLite_Model_CachingFactory::getObject('XLite_Model_Cart');
+
 		// cleanup processed cart for non-checkout pages
-		$target = isset($_REQUEST['target']) ? $_REQUEST['target'] : '';
+		$target = isset($this->target) ? $this->target : '';
 		if ($target != 'checkout' && ($this->cart->is('processed') || $this->cart->is('queued'))) {
 			$this->cart->clear();
 		}

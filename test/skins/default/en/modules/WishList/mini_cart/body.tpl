@@ -11,7 +11,7 @@
         <tr>
           <td><img src="images/cart_full.gif" alt=""></td>
           <td>
-            <strong>Items:</strong> {cart.itemsCount}
+            <strong>Items:</strong> {cart.getItemsCount()}
             <br />
             <strong>Total:</strong> {price_format(cart,#total#):h}
           </td>
@@ -25,8 +25,8 @@
 
   <tr>
     <td colspan="2">
-			<a IF="{auth.logged&wishlist.products}" href="{buildURL(#wishlist#)}" class="SidebarItems"><img src="images/modules/WishList/wish_list_icon_sm.gif" width="13" height="15" align="middle" alt=""> Wish list</a>
-	    <a IF="{auth.logged&!wishlist.products}" href="{buildURL(#wishlist#)}" class="SidebarItems"><img src="images/modules/WishList/wish_list_icon_empty_sm.gif" width="13" height="15" align="middle" alt=""> Wish list</a>
+			<a IF="auth.logged&wishlist.products" href="{buildURL(#wishlist#)}" class="SidebarItems"><img src="images/modules/WishList/wish_list_icon_sm.gif" width="13" height="15" align="middle" alt=""> Wish list</a>
+	    <a IF="auth.logged&!wishlist.products" href="{buildURL(#wishlist#)}" class="SidebarItems"><img src="images/modules/WishList/wish_list_icon_empty_sm.gif" width="13" height="15" align="middle" alt=""> Wish list</a>
     </td>
   </tr>
 

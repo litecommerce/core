@@ -72,7 +72,7 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
     }
 
     /**
-     * Get widget directory
+     * Get widget templates directory
      *
      * @return string
      * @access protected
@@ -203,35 +203,6 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
         return parent::validateAttributes($attrs) + $this->checkConditions($conditions);
     }
 
-
-
-
-
-    /**
-     * Get path category id list 
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getPathIds()
-    {
-        if (is_null(self::$pathIds)) {
-            self::$pathIds = array();
-
-            if ($this->category_id) {
-                $currentCategory = new XLite_Model_Category($this->category_id);
-
-                foreach ($currentCategory->getPath() as $c) {
-                    self::$pathIds[] = $c->get('category_id');
-                }
-            }
-        }
-
-        return self::$pathIds;
-    }
-
     /**
      * Check - category included into active trail or not
      * 
@@ -244,70 +215,67 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
      */
     public function isActiveTrail(XLite_Model_Category $category)
     {
-        return in_array($category->get('category_id'), $this->getPathIds());
+        $currentCategory = $this->getCategory(XLite_Core_Request::getInstance()->category_id);
+
+        return in_array(
+            $category->get('category_id'),
+            array($currentCategory->get('parent'), $currentCategory->get('category_id'))
+        );
     }
 
     /**
-     * Assemble list item class name 
+     * Assemble item CSS class name 
      * 
-     * @param integer              $i        Item number
-     * @param integer              $count    Items count
-     * @param XLite_Model_Category $category Current category
+     * @param int                  $index    item number
+     * @param intr                 $count    items count
+     * @param XLite_Model_Category $category current category
      *  
      * @return string
      * @access public
-     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function assembleItemClassName($i, $count, XLite_Model_Category $category)
+    public function assembleItemClassName($index, $count, XLite_Model_Category $category)
     {
-        $classes = array();
+        $conditions = array(
+            array(
+                self::ATTR_CONDITION => !$category->getSubcategories(),
+                self::ATTR_MESSAGE   => 'leaf',
+            ),
+            array(
+                self::ATTR_CONDITION => $category->getSubcategories() && 'list' != $this->attributes['displayMode'],
+                self::ATTR_MESSAGE   => $this->isActiveTrail($category) ? 'expanded' : 'collapsed',
+            ),
+            array(
+                self::ATTR_CONDITION => 1 == $index,
+                self::ATTR_MESSAGE   => 'first',
+            ),
+            array(
+                self::ATTR_CONDITION => $count == $index,
+                self::ATTR_MESSAGE   => 'last',
+            ),
+            array(
+                self::ATTR_CONDITION => $this->isActiveTrail($category),
+                self::ATTR_MESSAGE   => 'active-trail',
+            ),
+        );
 
-        if (!$category->getSubcategories()) {
-            $classes[] = 'leaf';
-
-        } elseif ($this->displayMode != 'list') {
-            $classes[] = in_array($category->get('category_id'), $this->getPathIds())
-                ? 'expanded'
-                : 'collapsed';
-        }
-
-        if ($i == 1) {
-            $classes[] = 'first';
-        }
-
-        if ($i == $count) {
-            $classes[] = 'last';
-        }
-
-        if (in_array($category->get('category_id'), $this->getPathIds())) {
-            $classes[] = 'active-trail';
-        }
-
-        return implode(' ', $classes);
+        return implode(' ', $this->checkConditions($conditions));
     }
 
     /**
      * Assemble list item link class name
      *
-     * @param integer              $i        Item number
-     * @param integer              $count    Items count
-     * @param XLite_Model_Category $category Current category
+     * @param intr                 $index    item number
+     * @param int                  $count    items count
+     * @param XLite_Model_Category $category current category
      *
      * @return string
      * @access public
-     * @see    ____func_see____
      * @since  3.0.0
      */
     public function assembleLinkClassName($i, $count, $category)
     {
-        $classes = array();
-
-        if ($this->category_id && $this->category_id == $category->get('category_id')) {
-            $classes[] = 'active';
-        }
-
-        return implode(' ', $classes);
+        return (XLite_Core_Request::getInstance()->category_id == $category->get('category_id')) ? 'active' : '';
     }
 
     /**
