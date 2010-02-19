@@ -572,10 +572,16 @@ class XLite_View_Abstract extends XLite_Core_Handler
             $decimalDelim = $this->config->General->decimal_delim;
         }
 
-        return sprintf(
-            $this->config->General->price_format,
-            number_format(is_scalar($base) ? $base : $base->get($field), 2, $decimalDelim, $thousandDelim)
-        );
+        $result = null;
+
+        if (!is_null($base)) {
+            $result = sprintf(
+                $this->config->General->price_format,
+                number_format(is_scalar($base) ? $base : $base->get($field), 2, $decimalDelim, $thousandDelim)
+            );
+        }
+
+        return $result;
     }
 
     /**

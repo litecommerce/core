@@ -118,7 +118,10 @@ class XLite_View_ProductBox extends XLite_View_SideBarBox
      */
     public function isVisible()
     {
-        return parent::isVisible() && $this->getProduct()->is('available');
+        return parent::isVisible()
+            && isset($this->attributes['productId'])
+            && 0 < intval($this->attributes['productId'])
+            && $this->getProduct()->is('available');
     }
 
     /**

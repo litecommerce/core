@@ -2,10 +2,10 @@
 // vim: set ts=4 sw=4 sts=4 et:
 
 /**
- * ____file_title____
+ * Template container
  *  
  * @category   Lite Commerce
- * @package    Lite Commerce
+ * @package    View
  * @subpackage ____sub_package____
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -16,9 +16,9 @@
 
 
 /**
- * XLite_View_Container 
+ * Template container 
  * 
- * @package    Lite Commerce
+ * @package    View
  * @subpackage ____sub_package____
  * @since      3.0.0 EE
  */

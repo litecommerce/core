@@ -149,8 +149,8 @@ class XLite_Core_Handler extends XLite_Base
      */
     public function init()
     {
-        $this->fillForm();
         $this->setAttributes(XLite_Core_Request::getInstance()->getData());
+        $this->fillForm();
     }
 
     /**

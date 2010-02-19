@@ -60,3 +60,16 @@ function formModify(obj, url)
 
 	return true;
 }
+
+function eventBind(obj, e, func)
+{
+	if ($) {
+		$(obj).bind(e, func);
+
+	} else if (window.addEventListener) {
+		obj.addEventListener(e, func, false);
+
+	} else if (window.attachEvent) {
+		window.attachEvent('on' + e, func);
+	}
+}

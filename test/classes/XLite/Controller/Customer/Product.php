@@ -51,15 +51,19 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Abstra
 
 	function handleRequest()
 	{
-		if (!$this->isComplex('product.exists')) {
-			if ($this->isComplex('category.exists') && $this->isComplex('category.enabled')) {
-				 return $this->redirect("cart.php?target=category&category_id=".$this->getComplex('category.category_id'));
-			}
+		$result = null;
 
-			return $this->redirect("cart.php");
+		if ($this->isComplex('product.exists')) {
+			$result = parent::handleRequest();
+
+		} elseif ($this->isComplex('category.exists') && $this->isComplex('category.enabled')) {
+			$result = $this->redirect($this->buildURL('category', '', array('category_id' => $this->getCategory()->get('category_id'))));
+
+		} else {
+			$result = $this->redirect($this->buildURL('main'));
 		}
 
-		return parent::handleRequest();
+		return $result;
 	}
 
     function action_buynow()
@@ -69,8 +73,10 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Abstra
 
     function getLocationPath()
     {
-        if($this->getComplex('config.General.add_on_mode')){
-            return array($this->getComplex('product.name') => $this->get("url"));
+        if($this->config->General->add_on_mode){
+            return array(
+				$this->getComplex('product.name') => $this->get("url")
+			);
         }
 
         $result = array();
@@ -130,18 +136,18 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Abstra
 	
     function getDescription()
     {
-        $description = $this->getComplex('product.description');
-        if (empty($description)) {
-            $description = $this->getComplex('product.brief_description');
-        }
-		return $description;
+        $description = $this->getProduct()->get('description');
+
+		return empty($description) ? $this->getProduct()->get('brief_description') : $description;
     }
 
 	function getMetaDescription()
 	{
-		$description = $this->getDescription();	
-		return ($this->getComplex('product.meta_desc') ? $this->getComplex('product.meta_desc') : $description);
+		return $this->getProduct()->get('meta_desc')
+			? $this->getProduct()->get('meta_desc')
+			: $this->getDescription();
 	}
+
     // 'keywords' meta tag
     function getKeywords()
     {

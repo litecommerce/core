@@ -14,7 +14,7 @@ function isValid()
   <table cellpadding="5" cellspacing="0" width="100%">
     <tr>
       <td IF="product.hasImage()" valign="top" align="left" width="100">
-        <img src="{product.imageURL}" border=0 alt="">
+        <img src="{product.imageURL}" alt="" />
       </td>
       <td valign="top">
     
