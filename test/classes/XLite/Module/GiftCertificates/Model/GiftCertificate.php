@@ -113,16 +113,23 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_Ab
 
     function set($name, $value)
     {
-        if ($name == "status" && $value == "A" && $this->get("status") != "A" && $this->get("send_via") == "E") {
+        if (
+			$name == "status"
+			&& $value == "A"
+			&& $this->get("status") != "A"
+			&& $this->get("send_via") == "E"
+		) {
             // send GC by e-mail
             $mail = new XLite_Model_Mailer();
             $mail->gc = $this;
             $mail->compose(
-                $this->config->getComplex('Company.site_administrator'), 
+                $this->config->Company->site_administrator, 
                 $this->get("recipient_email"),
-                "modules/GiftCertificates");
+                "modules/GiftCertificates"
+			);
             $mail->send();
         }
+
         parent::set($name, $value);
     }
 
@@ -133,22 +140,26 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_Ab
 
     function validate()
     {
+		$result = GC_OK;
+
         if (!$this->is("exists")) {
-            return GC_DOESNOTEXIST;
+            $result = GC_DOESNOTEXIST;
+
+        } elseif ($this->get("status") == 'E') {
+			$result = GC_EXPIRED;
+
+		} elseif (time() > $this->get("expirationDate")) {
+   	        $this->set("status", "E");
+      	    $this->update();
+
+  	        $result = GC_EXPIRED;
+
+      	} elseif ($this->get("status") != "A") {
+           	$result = GC_DISABLED;
+
         }
-        
-		$estimated_expiration = $this->get("add_date") + $this->config->getComplex('GiftCertificates.expiration') * 30 * 24 * 3600;
-        if (($this->get("status") == 'E') || (time() > $this->get("expirationDate"))) {
-            if ($this->get("status") != 'E') {
-                $this->set("status", "E");
-                $this->update();
-            }
-            return GC_EXPIRED;
-        }
-        if ($this->get("status") != "A") {
-            return GC_DISABLED;
-        }
-        return GC_OK;
+
+        return $result;
     }
     /**
     * Return true if there are any e-Cards in the dataabase
@@ -156,16 +167,13 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_Ab
     function hasECards()
     {
         $ec = new XLite_Module_GiftCertificates_Model_ECard();
+
         return count($ec->findAll("enabled=1")) > 0;
     }
     function getECard()
     {
-        if (is_null($this->ecard)) {
-            if ($this->get("ecard_id")) {
-                $this->ecard = new XLite_Module_GiftCertificates_Model_ECard($this->get("ecard_id"));
-            } else {
-                $this->ecard = null;
-            }
+        if (is_null($this->ecard) && $this->get("ecard_id")) {
+        	$this->ecard = new XLite_Module_GiftCertificates_Model_ECard($this->get("ecard_id"));
         }
         return $this->ecard;
     }
@@ -185,14 +193,23 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_Ab
     function getBorderHeight($bottom = false)
     {
         $layout = XLite_Model_Layout::getInstance();
-        $borderFile = "skins/mail/" . $layout->get("locale") . "/modules/GiftCertificates/ecards/borders/" . $this->get("border") . ($bottom?"_bottom":"") . ".gif";
+        $borderFile = LC_ROOT_DIR
+			. 'skins/mail/'
+			. $layout->get("locale")
+			. '/modules/GiftCertificates/ecards/borders/'
+			. $this->get("border")
+			. ($bottom ? '_bottom' : '')
+			. '.gif';
+
+		$h = 0;
+
         if (is_readable($borderFile)) {
             list($w, $h) = getimagesize($borderFile);
-        } else {
-            $h = 0;
         }
+
         return $h;
     }
+
     function getBottomBorderHeight()
     {
         return $this->getBorderHeight(true);
@@ -201,18 +218,18 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_Ab
     function getBordersDir()
     {
         $layout = XLite_Model_Layout::getInstance();
-        return $this->xlite->shopURL("skins/mail/" . $layout->get("locale") . "/modules/GiftCertificates/ecards/borders/");
+
+        return $this->xlite->shopURL('skins/mail/' . $layout->get('locale') . '/modules/GiftCertificates/ecards/borders/');
     }
 
     function getImagesDir()
     {
-        return $this->xlite->shopURL("");
+        return $this->xlite->shopURL('');
     }
 
 	function getDefaultExpirationPeriod()
 	{
-		$expiration = $this->xlite->getComplex('config.GiftCertificates.expiration');
-		return $expiration;
+		return $this->config->GiftCertificates->expiration;
 	}
 
 	function getProfile()
@@ -220,6 +237,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_Ab
 		if (is_null($this->_profile)) {
 			$this->_profile = new XLite_Model_Profile($this->get("profile_id"));
 		}
+
 		return $this->_profile;
 	}
 
@@ -230,48 +248,57 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_Ab
 			$estimated_expiration = $this->get("add_date") + $this->get("defaultExpirationPeriod")  * 30 * 24 * 3600;
 			$date = $estimated_expiration;
 		}
+
 		return $date;
 	}
 
 	function isDisplayWarning()
 	{
-		$days = $this->xlite->getComplex('config.GiftCertificates.expiration_warning_days');
-		$warn_time = $days * 24 * 3600;
+		$result = false;
+
+		$warn_time = $this->config->GiftCertificates->expiration_warning_days * 24 * 3600;
 		$exp_date = $this->getExpirationDate();
 		$warn_date = $exp_date - $warn_time;
-		if ((time() >= $warn_date) && (time() <= $exp_date)) {
-			if ($this->xlite->getComplex('config.GiftCertificates.expiration_email') && (!$this->get("exp_email_sent"))) {
-				if (($this->get("debit") > 0) && ($this->get("status") == "A")) {
-					// send warning notification
-					$mailer = new XLite_Model_Mailer();
-					$mailer->cert = $this;
-					$mailer->compose(
-						$this->xlite->getComplex('config.Company.site_administrator'),
-						$this->get("recipient_email"),
-						'modules/GiftCertificates/expiration_notification'
-					);
-					$mailer->send();
+		if (
+			time() >= $warn_date
+			&& time() <= $exp_date
+		) {
+			if (
+				$this->config->GiftCertificates->expiration_email
+				&& !$this->get("exp_email_sent")
+				&& $this->get("debit") > 0
+				&& $this->get("status") == "A"
+			) {
+				// send warning notification
+				$mailer = new XLite_Model_Mailer();
+				$mailer->cert = $this;
+				$mailer->compose(
+					$this->config->Company->site_administrator,
+					$this->get("recipient_email"),
+					'modules/GiftCertificates/expiration_notification'
+				);
+				$mailer->send();
 
-					$this->set("exp_email_sent", 1);
-					$this->update();
-				}
+				$this->set("exp_email_sent", 1);
+				$this->update();
 			}
-			return true;
+			$result = true;
 		}
-		return false;
+
+		return $result;
 	}
 
     function getExpirationConditions()
     {
         $now = time();
-        $warning_days = $this->xlite->getComplex('config.GiftCertificates.expiration_warning_days');
-        $exp_time = $now + ($warning_days * 24 * 3600);
-        $where = array();
-        $where[] = "expiration_date > '$now' AND expiration_date < '$exp_time'";
-        $where[] = "debit > 0";
-        $where[] = "exp_email_sent = 0";
-        $where[] = "status = 'A'";
-        return $where;
+        $exp_time = $now + $this->config->GiftCertificates->expiration_warning_days * 24 * 3600;
+
+        return array(
+        	"expiration_date > '$now' AND expiration_date < '$exp_time'",
+        	"debit > 0",
+        	"exp_email_sent = 0",
+        	"status = 'A'",
+		);
     }
 }
 

@@ -44,22 +44,32 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_GiftCertificates_Controller_Customer_GiftCertificateEcards extends XLite_Controller_Abstract
+class XLite_Module_GiftCertificates_Controller_Customer_GiftCertificateEcards extends XLite_Controller_Customer_Abstract
 {	
-    public $params = array("target", "gcid");
+    public $params = array('target', 'gcid');
+
+    protected $gc = null;
+
+    function getGC()
+    {
+        if (is_null($this->gc)) {
+            $this->gc = new XLite_Module_GiftCertificates_Model_GiftCertificate($this->gcid);
+        }
+
+        return $this->gc;
+    }
 
     function action_update()
     {
-        $this->ecardSelectForm->action_update();
+        $gc = $this->get("gc");
+        $gc->set("ecard_id", $this->ecard_id);
+        $gc->update();
     }
 
     function getReturnURL()
     {
-        return "cart.php?target=add_gift_certificate&gcid=".$this->get("gcid");
+        return $this->buildURL('add_gift_certificate', '', array('gcid' => $this->gcid));
     }
 
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+

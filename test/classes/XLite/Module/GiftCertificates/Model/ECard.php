@@ -51,7 +51,8 @@ class XLite_Module_GiftCertificates_Model_ECard extends XLite_Model_Abstract
         'ecard_id' => '',
         'template' => '', // use this template as e-mail body
         'order_by' => 0,
-        'enabled' => 1);	
+        'enabled' => 1
+	);	
     public $autoIncrement = 'ecard_id';	
     public $defaultOrder = 'order_by';	
     public $thumbnail = null;	
@@ -62,6 +63,7 @@ class XLite_Module_GiftCertificates_Model_ECard extends XLite_Model_Abstract
         if (is_null($this->thumbnail)) {
             $this->thumbnail = new XLite_Model_Image("ecard_thumbnail", $this->get("ecard_id"));
         }
+
         return $this->thumbnail;
     }
 
@@ -70,6 +72,7 @@ class XLite_Module_GiftCertificates_Model_ECard extends XLite_Model_Abstract
         if (is_null($this->image)) {
             $this->image = new XLite_Model_Image('ecard_image', $this->get("ecard_id"));
         }
+
         return $this->image;
     }
 
@@ -77,20 +80,29 @@ class XLite_Module_GiftCertificates_Model_ECard extends XLite_Model_Abstract
     {
         $templates = array();
         $layout = XLite_Model_Layout::getInstance();
+
         // "skins/mail/" . $layout->get("locale") .
         // $layout->set("skin", "mail");
         // $path = $layout->getPath() . DIRECTORY_SEPARATOR . "modules" . DIRECTORY_SEPARATOR . "GiftCertificates" . DIRECTORY_SEPARATOR . "ecards";
-        $path = "skins/mail/" . $layout->get("locale") . "/modules/GiftCertificates/ecards";
-        if ($dh = opendir($path)) { 
+
+        $path = LC_ROOT_DIR . 'skins/mail/' . $layout->get('locale') . '/modules/GiftCertificates/ecards';
+
+		$dh = opendir($path);
+        if ($dh) { 
             while (($file = readdir($dh)) !== false) { 
-                if (is_file($path . DIRECTORY_SEPARATOR . $file) && substr($file,-4) == ".tpl") {
-                    $templates[] = substr($file, 0, strlen($file)-4);
+                if (
+					is_file($path . DIRECTORY_SEPARATOR . $file)
+					&& substr($file, -4) == ".tpl"
+				) {
+                    $templates[] = substr($file, 0, strlen($file) - 4);
                 } 
             } 
             closedir($dh); 
+
         } else {
             $this->_die("Cannot read directory $path");
         }
+
         return $templates;
     }
 
@@ -98,19 +110,29 @@ class XLite_Module_GiftCertificates_Model_ECard extends XLite_Model_Abstract
     {
         $borders = array();
         $layout = XLite_Model_Layout::getInstance();
+
         // $layout->set("skin","mail");
         // $path = $layout->getPath() . DIRECTORY_SEPARATOR . "modules" . DIRECTORY_SEPARATOR . "GiftCertificates" . DIRECTORY_SEPARATOR . "ecards" . DIRECTORY_SEPARATOR . "borders";
-        $path = "skins/mail/" . $layout->get("locale") . "/modules/GiftCertificates/ecards/borders";
-        if ($dh = opendir($path)) {
+
+        $path = LC_ROOT_DIR . 'skins/mail/' . $layout->get('locale') . '/modules/GiftCertificates/ecards/borders';
+
+		$dh = opendir($path);
+        if ($dh) {
             while (($file = readdir($dh)) !== false) {
-                if (is_file($path . DIRECTORY_SEPARATOR . $file) && substr($file,-4) == ".gif" && substr($file,-11) != "_bottom.gif") {
-                    $borders[] = substr($file, 0, strlen($file)-4);
+                if (
+					is_file($path . DIRECTORY_SEPARATOR . $file)
+					&& substr($file, -4) == ".gif"
+					&& substr($file, -11) != "_bottom.gif"
+				) {
+                    $borders[] = substr($file, 0, strlen($file) - 4);
                 }
             }
             closedir($dh);
+
         } else {
             $this->_die("Cannot read directory $path");
         }
+
         return $borders;
     }
 
@@ -118,8 +140,10 @@ class XLite_Module_GiftCertificates_Model_ECard extends XLite_Model_Abstract
     {
         $thumbnail = $this->getThumbnail();
         $thumbnail->delete();
+
         $image = $this->getImage();
         $image->delete();
+
         parent::delete();
     }
 
@@ -129,14 +153,11 @@ class XLite_Module_GiftCertificates_Model_ECard extends XLite_Model_Abstract
     function isNeedBorder()
     {
         $layout = XLite_Model_Layout::getInstance();
-        $template = "skins/mail/" . $layout->get("locale") . "/modules/GiftCertificates/ecards/" . $this->get("template") . ".tpl";
-        $templateCode = file_get_contents($template);
+        $template = LC_ROOT_DIR . 'skins/mail/' . $layout->get('locale') . '/modules/GiftCertificates/ecards/' . $this->get('template') . '.tpl';
+
         // does the e-Card template use the border?
-        return preg_match('/gc\.border/', $templateCode);
+        return preg_match('/gc\.border/', file_get_contents($template));
     }
 
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+

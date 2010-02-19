@@ -1,19 +1,18 @@
-{* e-Card list *}
-<table border="0" width="100%">
-<form action="cart.php" method="POST" name="ecard_form">
-<input type="hidden" name="target" value="gift_certificate_ecards">
-<input type="hidden" name="action" value="update">
-<input type="hidden" name="gcid" value="{gcid}">
-<input type="hidden" name="ecard_id" value="">
-<tr FOREACH="split(ecards,3),row">
+{* SVN $Id$ *}
+<table width="100%">
+  <tr FOREACH="split(ecards,3),row">
     <td FOREACH="row,ecard" align="center" width="33%">
-        <span IF="ecard">
-        <a href="{ecard.image.url}" target="_blank"><img src="{ecard.thumbnail.url}" border="0"></a><br>
-        <widget class="XLite_View_Button" label="Select" href="javascript: document.ecard_form.ecard_id.value='{ecard.ecard_id}';document.ecard_form.submit()">
-        </span>
-        <br>&nbsp;
+
+      <form IF="ecard" action="{buildURL(#gift_certificate_ecards#,#update#,_ARRAY_(#gcid#^gcid,#ecard_id#^ecard.ecard_id))}" method="POST" name="ecard_form">
+        <input FOREACH="buildURLArguments(#gift_certificate_ecards#,#update#,_ARRAY_(#gcid#^gcid,#ecard_id#^ecard.ecard_id)),paramName,paramValue" type="hidden" name="{paramName}" value="{paramValue}" />
+
+        <a href="{ecard.image.url}" target="_blank"><img src="{ecard.thumbnail.url}" alt="" /></a>
+        <br />
+        <widget class="XLite_View_Button" label="Select" type="button">
+        <br />&nbsp;
+      </form>
+
     </td>
-</tr>
-</form>
+  </tr>
 </table>
-<widget class="XLite_View_Submit" href="cart.php?target=add_gift_certificate&gcid={gcid}" label="Cancel">
+<widget class="XLite_View_Button" type="button_link" href="{buildURL(#add_gift_certificate#,##,_ARRAY_(#gcid#^gcid))}" label="Cancel">

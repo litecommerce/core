@@ -45,30 +45,24 @@
 */
 class XLite_Module_GiftCertificates_View_CEcardSelect extends XLite_View_Abstract
 {	
-    public $params = array("gcid");	
+    public $params = array('gcid');
     public $ecards = null;
 
     function getECards()
     {
         if (is_null($this->ecards)) {
 			$eCard = new XLite_Module_GiftCertificates_Model_ECard();
-            $this->ecards = $eCard->findAll("enabled=1");
+            $this->ecards = $eCard->findAll("enabled = 1");
         }
         return $this->ecards;
     }
+
     function getGC()
     {
         if (is_null($this->gc)) {
             $this->gc = new XLite_Module_GiftCertificates_Model_GiftCertificate($this->get("gcid"));
         }
         return $this->gc;
-    }
-
-    function action_update()
-    {
-        $gc = $this->get("gc");
-        $gc->set("ecard_id", $_REQUEST["ecard_id"]);
-        $gc->update();
     }
 
 	function getTemplate()
@@ -85,7 +79,4 @@ class XLite_Module_GiftCertificates_View_CEcardSelect extends XLite_View_Abstrac
 	}
 
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+
