@@ -38,6 +38,14 @@ function formModify(obj, url)
 		for (var key in parsed.queryKey) {
 			if (form[key]) {
 				form[key].value = parsed.queryKey[key];
+
+			} else {
+				var input = document.createElement('INPUT');
+				input.type = 'hidden';
+				input.name = key;
+				input.value = parsed.queryKey[key];
+
+				form.appendChild(input);
 			}
 		}
 

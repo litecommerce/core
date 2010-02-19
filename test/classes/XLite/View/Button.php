@@ -64,39 +64,15 @@ class XLite_View_Button extends XLite_View_Abstract
      */
     public $img = null;
 
-	/**
-	 * Button type 
-	 * 
-	 * @var    string
-	 * @access public
-	 * @see    ____var_see____
-	 * @since  3.0.0
-	 */
-	public $type = 'link';
-
     /**
-     * Initialization
+     * Button type 
      * 
-     * @return void
-     * @see    ____func_see____
+     * @var    string
+     * @access public
+     * @see    ____var_see____
      * @since  3.0.0
      */
-    function init() {
-
-        parent::init();
-
-        $isAdminZone = $this->xlite->is('adminZone');
-        $isLoggedIn = $this->auth->is('logged');
-        $hasProfileString = strpos($this->href, 'target=profile') !== false;
-        $hasDeleteString = strpos($this->href, 'mode=delete') !== false;
-
-        if (!$isAdminZone && $isLoggedIn && $hasProfileString && $hasDeleteString) {
-            $profile = $this->auth->get('profile');  
-            if ($profile->isAdmin()) {
-                $this->set('visible', false);
-            }
-        }
-    }
+    public $type = 'link';
 
     /**
      * Initialization 
@@ -105,13 +81,29 @@ class XLite_View_Button extends XLite_View_Abstract
      * @see    ____func_see____
      * @since  3.0.0
      */
-	public function initView()
-	{
-		parent::initView();
+    public function initView()
+    {
+        parent::initView();
 
-		if ($this->type == 'button') {
-			$this->template = 'common/button_adv.tpl';
-		}
-	}
+        switch ($this->type) {
+            case 'button':
+                $this->template = 'common/button_adv.tpl';
+                break;
+
+            case 'button_link':
+                $this->template = 'common/button_link.tpl';
+                break;
+        }
+
+        if (
+            !$this->xlite->is('adminZone')
+            && $this->auth->is('logged')
+            && strpos($this->href, 'target=profile') !== false
+            && strpos($this->href, 'mode=delete') !== false
+            && $this->auth->get('profile')->isAdmin()
+        ) {
+            $this->set('visible', false);
+        }
+    }
 }
 

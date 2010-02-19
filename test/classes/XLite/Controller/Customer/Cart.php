@@ -88,7 +88,7 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
     {
         // delete an item from the shopping cart
         $items = $this->cart->get('items');
-        if (array_key_exists($this->cart_id, $items)) {
+        if (isset($items[$this->cart_id])) {
             $this->cart->deleteItem($items[$this->cart_id]);
             $this->updateCart();
         }
@@ -103,7 +103,7 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
         // update the specified product quantity in cart
         $items = $this->cart->get('items');
         foreach ($items as $key => $i) {
-            if (isset($this->amount[$key])) {
+            if (isset($this->amount[$key]) && (!isset($this->cart_id) || $this->cart_id == $key)) {
                 $items[$key]->updateAmount($this->amount[$key]);
                 $this->cart->updateItem($items[$key]);
             }

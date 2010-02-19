@@ -3,9 +3,8 @@
 Your shopping cart is empty.
 </p>
 
-<form IF="!cart.empty" name="cart_form" action="{buildURL(#cart#)}" method="POST">
-  <input type="hidden" foreach="dialog.allparams,param,v" name="{param}" value="{v}" />
-  <input type="hidden" name="action" value="update" />
+<form IF="!cart.empty" name="cart_form" action="{buildURL(#cart#,#update#)}" method="POST">
+  <input FOREACH="buildURLArguments(#order_list#),paramName,paramValue" type="hidden" name="{paramName}" value="{paramValue}" />
 
   <p align=justify>The items in your shopping cart are listed below. To remove any item click "Delete Item". To place your order, please click "CHECKOUT".</p>
 

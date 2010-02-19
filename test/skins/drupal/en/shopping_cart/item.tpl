@@ -37,11 +37,11 @@
 		  <table>
         <tr>
           <td>
-            <widget class="XLite_View_Button" label="Delete item" href="{buildURL(#cart#,#delete#,_ARRAY_(#cart_id#^cart_id))}" font="FormButton">
+            <widget class="XLite_View_Button" label="Delete item" type="button" href="{buildURL(#cart#,#delete#,_ARRAY_(#cart_id#^cart_id))}">
  		      </td>
           <td>&nbsp;</td>
           <td>
- 		        <widget class="XLite_View_Button" label="Update item" href="javascript: document.cart_form.action.value='update'; document.cart_form.submit()" font="FormButton">
+ 		        <widget class="XLite_View_Button" label="Update item" type="button" href="{buildURL(#cart#,#update#,_ARRAY_(#cart_id#^cart_id))}">
  		      </td>
         </tr>
       </table>
