@@ -179,7 +179,7 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_SideBarBox
     protected function getBestsellers()
     {
         if (is_null($this->bestsellers)) {
-            $model = new XLite_Modules_Bestsellers_Model_Bestsellers();
+            $model = new XLite_Module_Bestsellers_Model_Bestsellers();
             $this->bestsellers = $model->getBestsellers($this->getCategoryId());
         }
 

@@ -23,7 +23,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Modules_Bestsellers_Model_Bestsellers extends XLite_Base
+class XLite_Module_Bestsellers_Model_Bestsellers extends XLite_Base
 {
     /**
      * Subcategories id

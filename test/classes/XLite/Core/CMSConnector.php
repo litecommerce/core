@@ -314,6 +314,10 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         $widget = $this->getWidgetObject($name, $attributes);
 
         if ($widget) {
+            $attributes['call_as_widget'] = true;
+
+            $widget->setAttributes($attributes);
+
             $result[0] = $this->getContent($widget, $attributes);
 
             $result[1] = array(
