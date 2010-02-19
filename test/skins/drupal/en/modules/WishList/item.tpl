@@ -76,7 +76,7 @@
                 		<widget class="XLite_View_Button" label="Update amount" type="button">
 				          </td>
 				          <td width="100%">
-                		<widget class="XLite_View_Button" label="Remove" type="button" href="{buildURLPath(#wishlist#,#delete#,_ARRAY_(#item_id#^item.item_id,#wishlist_id#^item.wishlist_id,#product_id#^item.product_id))}">
+                		<widget class="XLite_View_Button" label="Remove" type="button" href="{buildURL(#wishlist#,#delete#,_ARRAY_(#item_id#^item.item_id,#wishlist_id#^item.wishlist_id,#product_id#^item.product_id))}">
 				          </td>														
 			          </tr>
 			        </table>
@@ -87,7 +87,7 @@
 				      <table cellpadding="0" cellspacing="0">
 					      <tr>
 				          <td colspan="3">
-							      <widget class="XLite_View_Button" label="Add to cart" type="button" href="{buildURLPath(#cart#,#add#,_ARRAY_(#item_id#^item.item_id,#wishlist_id#^item.wishlist_id,#product_id#^item.product_id))}" img="cart4button.gif" font="FormButton">
+							      <widget class="XLite_View_Button" label="Add to cart" type="button" href="{buildURL(#cart#,#add#,_ARRAY_(#item_id#^item.item_id,#wishlist_id#^item.wishlist_id,#product_id#^item.product_id))}" img="cart4button.gif" font="FormButton">
 					        </td>
 					      </tr>	
 				      </table>	

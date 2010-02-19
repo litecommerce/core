@@ -37,7 +37,7 @@ function formModify(obj, url)
 
 		for (var key in parsed.queryKey) {
 			if (form[key]) {
-				form[key].value = url.queryKey[key];
+				form[key].value = parsed.queryKey[key];
 			}
 		}
 
