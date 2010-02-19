@@ -28,40 +28,11 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
      * Categoy path ids 
      * 
      * @var    array
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public static $pathIds = null;
-
-	/**
-	 * Categories cache
-	 * 
-	 * @var    array
-	 * @access protected
-	 * @since  1.0.0
-	 */
-	protected $categories = null;
-
-	/**
-	 * Category root id 
-	 * 
-	 * @var    integer
-	 * @access protected
-	 * @see    ____var_see____
-	 * @since  3.0.0 EE
-	 */
-	protected $rootid = 0;
-
-    /**
-     * Display mode 
-     * 
-     * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $display_mode = 'list';
+    protected static $pathIds = null;
 
     /**
      * Display modes 
@@ -71,7 +42,7 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $display_modes = array(
+    protected $displayModes = array(
         'list' => array(
             'name' => 'List',
             'dir'  => 'categories',
@@ -86,6 +57,75 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
         ),
     );
 
+
+    /**
+     * Get widge title
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getHead()
+    {
+        return 'Categories';
+    }
+
+    /**
+     * Get widget directory
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDir()
+    {
+        return $this->displayModes[$this->attributes['displayMode']]['dir'];
+    }
+
+    /**
+     * Return root category Id
+     *
+     * @param int $rootId passed Id
+     *
+     * @return int
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getRootId($rootId)
+    {
+        return isset($rootId) ? $rootId : $this->attributes['rootId'];
+    }
+
+    /**
+     * Return current root category
+     *
+     * @param int $rootId root category Id
+     *
+     * @return XLite_Model_Category
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getCategory($rootId = null)
+    {
+        return XLite_Model_CachingFactory::getObject('XLite_Model_Category', $this->getRootId($rootId));
+    }
+
+    /**
+     * Return subcategories lis
+     *
+     * @param int $rootId root category Id
+     *
+     * @return array
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getCategories($rootId = null)
+    {
+        return $this->getCategory($rootId)->getSubcategories();
+    }
+
 	/**
      * Define widget parameters
      *
@@ -97,79 +137,75 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
     {
 		parent::defineWidgetParams();
 
-        $display_mode = new XLite_Model_WidgetParam_List('display_mode', 'list', 'Display mode');
-        foreach ($this->display_modes as $k => $v) {
-            $display_mode->options[$k] = $v['name'];
+        $displayMode = new XLite_Model_WidgetParam_List('displayMode', 'list', 'Display mode');
+        foreach ($this->displayModes as $mode => $data) {
+            $displayMode->options[$mode] = $data['name'];
         }
 
         $this->widgetParams += array(
-			new XLite_Model_WidgetParam_String('rootid', 0, 'Category root Id'),
-            $display_mode,
+			new XLite_Model_WidgetParam_String('rootId', 0, 'Root category Id'),
+            $displayMode,
 		);
+    }
+
+
+    /**
+     * Define some attribute
+     *
+     * @param array $attributes attributes to set
+     *
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function __construct(array $attributes = array())
+    {
+        $this->attributes['rootId'] = 0;
+        $this->attributes['displayMode'] = 'list';
+
+        parent::__construct($attributes);
     }
 
     /**
      * Check passed attributes 
      * 
-     * @param array $attributes attributes to check
+     * @param array $attrs attributes to check
      *  
      * @return array errors list
      * @access public
      * @since  1.0.0
      */
-    public function validateAttributes(array $attributes)
+    public function validateAttributes(array $attrs)
     {
-        $errors = parent::validateAttributes($attributes);
+        $conditions = array(
+            array(
+                self::ATTR_CONDITION => !isset($attrs['rootId']) || !is_numeric($attrs['rootId']),
+                self::ATTR_MESSAGE   => 'Category Id is not numeric',
+            ),
+            array(
+                self::ATTR_CONDITION => 0 > ($attrs['rootId'] = intval($attrs['rootId'])),
+                self::ATTR_MESSAGE   => 'Category Id must be a non-negative integer',
+            ),
+            array(
+                self::ATTR_CONDITION => 0 != $attrs['rootId'] && !$this->getCategory($attrs['rootId'])->isPersistent,
+                self::ATTR_MESSAGE   => 'Category with Id #' . $attrs['rootId'] . ' is not found',
+            ),
+            array(
+                self::ATTR_CONDITION => 0 != $attrs['rootId'] && !$this->getCategories($attrs['rootId']),
+                self::ATTR_MESSAGE   => 'Category with Id #' . $attrs['rootId'] . ' has no subcategories',
+            ),
+            array(
+                self::ATTR_CONDITION => !isset($attrs['displayMode']) || !isset($this->displayModes[$attrs['displayMode']]),
+                self::ATTR_MESSAGE   => 'Display mode has a wrong value',
+            ),
+        );
 
-		if (!isset($attributes['rootid']) || !is_numeric($attributes['rootid'])) {
-			$errors['rootid'] = 'Category Id is not numeric!';
-		} else {
-			$attributes['rootid'] = intval($attributes['rootid']);
-		}
-
-        if (!$errors && 0 > $attributes['rootid']) {
-            $errors['rootid'] = 'Category Id must be positive integer!';
-		}
-
-		if (!$errors && 0 != $attributes['rootid']) {
-			$category = new XLite_Model_Category($attributes['rootid']);
-
-			if (!$category->isPersistent) {
-				$errors['rootid'] = 'Category with category Id #' . $attributes['rootid'] . ' can not found!';
-
-			} elseif (!$category->getSubcategories()) {
-				$errors['rootid'] = 'Category with category Id #' . $attributes['rootid'] . ' has not subcategories!';
-			}
-		}
-
-        // Display mode
-        if (
-            !$errors
-            && (!isset($attributes['display_mode']) || !isset($this->display_modes[$attributes['display_mode']]))
-        ) {
-            $errors['display_mode'] = 'Display mode has wrong value!';
-        }
-
-		return $errors;
+        return parent::validateAttributes($attrs) + $this->checkConditions($conditions);
     }
 
-    /**
-     * Return root categories list 
-     * 
-     * @return array
-     * @access public
-     * @since  1.0.0
-     */
-    public function getCategories()
-    {
-        // get root categories
-        if (is_null($this->categories)) {
-	        $category = new XLite_Model_Category(0 < $this->rootid ? $this->rootid : null);
-            $this->categories = $category->getSubcategories();
-        }
 
-        return $this->categories;
-    }
+
+
 
     /**
      * Get path category id list 
@@ -230,7 +266,7 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
         if (!$category->getSubcategories()) {
             $classes[] = 'leaf';
 
-        } elseif ($this->display_mode != 'list') {
+        } elseif ($this->displayMode != 'list') {
             $classes[] = in_array($category->get('category_id'), $this->getPathIds())
                 ? 'expanded'
                 : 'collapsed';
@@ -249,38 +285,6 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
         }
 
         return implode(' ', $classes);
-    }
-
-    /**
-     * Get widge title
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getHead()
-    {
-        return 'Categories';
-    }
-
-    /**
-     * Get widget directory
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getDir()
-    {
-        $dir = 'categories';
-    
-        if (isset($this->display_modes[$this->display_mode])) {
-            $dir = $this->display_modes[$this->display_mode]['dir'];
-        }
-
-        return $dir;
     }
 
     /**
@@ -307,20 +311,16 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
     }
 
     /**
-     * Get a list of CSS files required to display the widget properly
-     *
+     * Return widget CSS files list
+     * 
      * @return array
      * @access public
+     * @since  3.0.0 EE
      */
     public function getCSSFiles()
     {
-        $files = array();
-
-        if ($this->display_mode == 'tree') {
-            $files[] = $this->getDir() . '/style.' . $this->display_mode . '.css';
-        }
-
-        return $files;
+        // FIXME - check for two modes
+        return ('tree' == $this->attributes['displayMode']) ? array($this->getDir() . '/style.tree.css') : array();
     }
 
 }

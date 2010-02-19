@@ -182,6 +182,11 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 		return $result;
 	}
 
+	public function getCategory()
+    {
+		return XLite_Model_CachingFactory::getObject('XLite_Model_Category', $this->get('category_id'));
+    }
+
 
 
     public $params = array('target');	
@@ -215,24 +220,6 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 		return $this->returnUrl;
 	}
 
-    /*function getAllParams($exeptions = null)
-    {
-    	$allParams = parent::getAllParams();
-    	$params = $allParams;
-    	if (isset($exeptions)) {
-    		$exeptions = explode(",", $exeptions);
-    		if (is_array($allParams) && is_array($exeptions)) {
-    			$params = array();
-    			foreach($allParams as $p => $v) {
-    				if (!in_array($p, $exeptions)) {
-    					$params[$p] = $v;
-    				}
-    			}
-    		}
-    	}
-        return $params;
-    }*/
-
 	function getTemplate()
     {
 		return $this->template;
@@ -245,15 +232,6 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         }
 
         return $this->product;
-    }
-
-    function getCategory()
-    {
-        if (is_null($this->category)) {
-            $this->category = new XLite_Model_Category($this->get('category_id'));
-        }
-
-        return $this->category;
     }
 
 	function _clear_xsid_data()

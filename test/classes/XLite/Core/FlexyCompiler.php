@@ -727,11 +727,12 @@ class XLite_Core_FlexyCompiler extends XLite_Base
 		if (count($list) == 2) {
 			list ($k, $v) = $list;
             $forvar = $v;
-			$key = "\$this->$k => \$this->$v";
+			$key = '$this->' . $k . ' => $this->' . $forvar;
 		} else {
-			$key = "\$this->$list[0]";
-            $forvar = $list[0];
+			$forvar = $list[0];
+			$key = '$this->' . $forvar;
 		}
+
 		return array($expr, $key, $forvar);
 	}
 	function removeBraces($str)

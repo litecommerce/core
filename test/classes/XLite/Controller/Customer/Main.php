@@ -72,15 +72,6 @@ class XLite_Controller_Customer_Main extends XLite_Controller_Customer_Abstract
         }
     }
 
-    function getCategory()
-    {
-        if (is_null($this->category)) {
-            $cat = new XLite_Model_Category();
-            $this->category = $cat->get("topCategory");
-        }    
-        return $this->category;
-    }
-
     function getExtraPage() // {{{
     {
         if (is_null($this->extraPage)) {

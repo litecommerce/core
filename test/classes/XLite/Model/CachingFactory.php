@@ -60,7 +60,7 @@ class XLite_Model_CachingFactory extends XLite_Base implements XLite_Base_ISingl
     }
 
     /**
-     * Check if object is already cached 
+     * Check if object is already objectsCached 
      * 
      * @param string $class class name
      * @param array  $args  constructor arguments
@@ -86,7 +86,6 @@ class XLite_Model_CachingFactory extends XLite_Base implements XLite_Base_ISingl
         return self::_getInstance(__CLASS__);
     }
 
-    
     /**
      * Create object instance or fetch it from the cache
      * 
@@ -117,7 +116,38 @@ class XLite_Model_CachingFactory extends XLite_Base implements XLite_Base_ISingl
     }
 
     /**
-     * Clean up cache
+     * Call cache entry method and (optionally) save result
+     * 
+     * @param string $class  class name
+     * @param string $key    arguments hash
+     * @param string $method method to call
+     * @param array  $args   call arguments
+     *  
+     * @return mixed
+     * @access public
+     * @since  3.0.0 EE
+     */
+    /*public static function callMethod($class, $key, $method, array $args = array())
+    {
+        if (in_array($method, call_user_func(array($class, 'getCachedMethods')))) {
+
+            if (isset(self::$dataCache[$class][$method][$methodKey = self::generateCacheEntryKey($args)])) {
+                $result = self::$dataCache[$class][$method][$methodKey];
+            } else {
+                $result = call_user_func_array(array(self::$objectsCache[$class][$key], $method), $args);
+                self::$dataCache[$class][$method][$methodKey] = $result;
+            }
+
+        } else {
+
+            $result = call_user_func_array(array(self::$objectsCache[$class][$key], $method), $args);
+        }
+
+        return $result;
+    }*/
+
+    /**
+     * Clean up objectsCache
      * 
      * @return void
      * @access public
@@ -125,7 +155,7 @@ class XLite_Model_CachingFactory extends XLite_Base implements XLite_Base_ISingl
      */
     public function __destruct()
     {
-        self::$cache = null;
+        self::$objectsCache = null;
     }
 }
 

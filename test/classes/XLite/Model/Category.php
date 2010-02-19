@@ -46,6 +46,75 @@
 */
 class XLite_Model_Category extends XLite_Model_Abstract
 {
+	/**
+	 * List of subcategories 
+	 * 
+	 * @var    array
+	 * @access protected
+	 * @since  3.0.0 EE
+	 */
+	protected $subcategories = null;
+
+
+    /**
+     * Returns the subcategories list for the current category 
+     * 
+     * @param string $where SQL "where" condition_
+     *  
+     * @return array
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function getSubcategories($where = null)
+    {
+		if (!isset($this->subcategories)) {
+			$this->subcategories = $this->findAll(
+				'parent = \'' . $this->get('category_id') . '\'' . (isset($where) ? ' AND ' . $where : '')
+			);
+		}
+
+		return $this->subcategories;
+    }
+
+    /**
+     * Returns the Image instance for this category image 
+     * 
+     * @return XLite_Model_Image
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function getImage()
+    {
+		return new XLite_Model_Image('category', $this->get('category_id'));
+	}
+
+	/**
+	 * Checks whether image for this category is set 
+	 * 
+	 * @return bool
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
+	public function hasImage()
+    {
+		return (0 == $this->get('category_id')) ? false : !is_null($this->getImage()->get('data'));
+	}
+
+    /**
+     * Return image URL
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function getImageURL()
+    {
+        return $this->getImage()->getURL();
+    } 
+
+
+
+
     /**
     * @var array $fields The category properties
     * @access private
@@ -98,41 +167,6 @@ class XLite_Model_Category extends XLite_Model_Abstract
         return $c;
     }       
     
-    /**
-    * Checks whether image for this category is set
-    * 
-    * @access public
-    * @return boolean
-    */
-    public function hasImage() // {{{
-    {
-        if ($this->get('category_id') == 0) return false;
-
-        $image = $this->get('image');
-        $data  = $image->get('data');
-
-        return !empty($data);
-    } // }}}
-    
-    /**
-    * Returns the Image instance for this category image.
-    * 
-    * @access public
-    * @return Image the Image instance.
-    */
-    function getImage() // {{{
-    {   
-        if (is_null($this->image)) {
-            $this->image = new XLite_Model_Image("category", $this->get("category_id"));
-        }
-        return $this->image;
-    } // }}}
-
-	function getImageURL() // {{{
-	{
-        return $this->getComplex('image.url');
-	} // }}}
-
     /**
     * Returns the path to the current category.
     *
@@ -236,28 +270,6 @@ class XLite_Model_Category extends XLite_Model_Abstract
         }    
         return 0;
     }
-
-    /**
-    * Returns the subcategories list for the current category.
-    *
-    * @access public
-    * @return array The array of Category instances.
-    */
-    function getSubcategories($where = 1) // {{{
-    {
-        global $subcategories;
-        $id = $this->get("category_id");
-        $condition = "parent='".$this->get("category_id")."' AND $where";
-        if ($this->xlite->is("adminZone")) {
-            if (isset($subcategories[$id][$condition])) {
-            	unset($subcategories[$id][$condition]);
-            }
-        }
-        if (!isset($subcategories[$id][$condition])) {
-            $subcategories[$id][$condition] = $this->findAll($condition, "order_by, name");
-        }
-        return $subcategories[$id][$condition];
-    } // }}}
 
     /**
     * Attempts to delete the current category from the database.

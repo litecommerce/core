@@ -50,6 +50,20 @@ class XLite_View_ProductBox extends XLite_View_SideBarBox
     }
 
     /**
+     * Return current product Id 
+     * 
+     * @param int $productId passed Id
+     *  
+     * @return int
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getProductId($productId)
+    {
+        return isset($productId) ? $productId : $this->attributes['productId'];
+    }
+
+    /**
      * Get product 
      * 
      * @return XLite_Model_Product
@@ -59,10 +73,7 @@ class XLite_View_ProductBox extends XLite_View_SideBarBox
      */
     protected function getProduct($productId = null)
     {
-        return XLite_Model_CachingFactory::getObject(
-            'XLite_Model_Product',
-            isset($productId) ? $productId : $this->attributes['product_id']
-        );
+        return XLite_Model_CachingFactory::getObject('XLite_Model_Product', $this->getProductId($productId));
     }
 
 	/**
@@ -77,7 +88,7 @@ class XLite_View_ProductBox extends XLite_View_SideBarBox
 		parent::defineWidgetParams();
 
         $this->widgetParams += array(
-			new XLite_Model_WidgetParam_String('product_id', 0, 'Product Id'),
+			new XLite_Model_WidgetParam_String('productId', 0, 'Product Id'),
 		);
     }
 
@@ -93,7 +104,7 @@ class XLite_View_ProductBox extends XLite_View_SideBarBox
      */
     public function __construct(array $attributes = array())
     {
-        $this->attributes['product_id'] = 0;
+        $this->attributes['productId'] = 0;
 
         parent::__construct($attributes);
     }
@@ -123,16 +134,16 @@ class XLite_View_ProductBox extends XLite_View_SideBarBox
     {
         $conditions = array(
             array(
-                self::ATTR_CONDITION => !isset($attrs['product_id']) || !is_numeric($attrs['product_id']),
+                self::ATTR_CONDITION => !isset($attrs['productId']) || !is_numeric($attrs['productId']),
                 self::ATTR_MESSAGE   => 'Product Id is not numeric',
             ),
             array(
-                self::ATTR_CONDITION => 0 >= ($attrs['product_id'] = intval($attrs['product_id'])),
+                self::ATTR_CONDITION => 0 >= ($attrs['productId'] = intval($attrs['productId'])),
                 self::ATTR_MESSAGE   => 'Product Id must be a positive integer',
             ),
             array(
-                self::ATTR_CONDITION => !$this->getProduct($attrs['product_id'])->isPersistent,
-                self::ATTR_MESSAGE   => 'Product with Id #' . $attrs['product_id'] . ' is not found',
+                self::ATTR_CONDITION => !$this->getProduct($attrs['productId'])->isPersistent,
+                self::ATTR_MESSAGE   => 'Product with Id #' . $attrs['productId'] . ' is not found',
             ),
         );
 
