@@ -79,16 +79,25 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 	 */
 	protected function redirect($url = null)
     {
-        $location = is_null($returnUrl = $this->getReturnUrl()) ? (is_null($url) ? $this->getUrl() : $url) : $returnUrl;
+		$location = $this->getReturnUrl();
+
+		if (is_null($location)) {
+			$location = is_null($url) ? $this->getUrl() : $url;
+		}
 
         // filter xlite_form_id from redirect url
         $action = $this->get('action');
-        if (empty($action))
+        if (empty($action)) {
             $location = $this->filterXliteFormID($location);
+		}
 
         XLite_Model_Profiler::getInstance()->enabled = false;
 
-        header('Location: ' . ($this->returnUrlAbsolute ? $this->shopURL($location, $this->get('secure')) : $location));
+		if ($this->returnUrlAbsolute) {
+			$location = $this->shopURL($location, $this->get('secure'));
+		}
+
+        header('Location: ' . $location);
     }
 
 

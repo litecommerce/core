@@ -31,8 +31,11 @@ abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstr
 
 	public function shopURL($url, $secure = false, $pure_url = false)
     {
-		return ($fc = $this->config->getComplex('Security.full_customer_security')) ? 
-					$this->xlite->shopURL($url, $fc) : parent::shopURL($url, $secure);
+		$fc = $this->config->Security->full_customer_security;
+
+		return $fc
+			? $this->xlite->shopURL($url, $fc)
+			: parent::shopURL($url, $secure);
     }
 
 	public function getLoginURL()

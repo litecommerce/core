@@ -88,7 +88,7 @@ class XLite_Module_DemoMode_Controller_Abstract extends XLite_Controller_Abstrac
     	);
     }
 
-    function redirect($url = null)
+    protected function redirect($url = null)
     {
         if (!$this->xlite->is("adminZone")) {
             $forward = $this->xlite->session->get("forwardUrl");
@@ -104,7 +104,3 @@ class XLite_Module_DemoMode_Controller_Abstract extends XLite_Controller_Abstrac
         parent::redirect($url);
     }
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

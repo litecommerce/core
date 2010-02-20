@@ -65,7 +65,7 @@ class XLite_Module_Affiliate_Controller_Abstract extends XLite_Controller_Abstra
         } 
     }
 
-    function redirect($url = null)
+    protected function redirect($url = null)
     {
         if ($this->get("mode") == "access_denied") {
             $this->set("mode", "accessDenied");
