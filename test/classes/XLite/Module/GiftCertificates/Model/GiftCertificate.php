@@ -180,7 +180,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_Ab
 
     function showECardBody()
     {
-        $c = new XLite_Module_GiftCertificates_View_CECard();
+        $c = new XLite_Module_GiftCertificates_View_CEcard();
         $c->gc = $this;
         $c->init();
         $c->display();
@@ -220,6 +220,11 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_Ab
         $layout = XLite_Model_Layout::getInstance();
 
         return $this->xlite->shopURL('skins/mail/' . $layout->get('locale') . '/modules/GiftCertificates/ecards/borders/');
+    }
+
+    function getBorderUrl()
+    {
+        return $this->getBordersDir() . $this->get('border') . '.gif';
     }
 
     function getImagesDir()

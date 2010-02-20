@@ -15,7 +15,7 @@ abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstr
 
 	public function getTemplate()
     {
-		return $this->getComplex('config.General.add_on_mode') ? '../../../cart.html' : parent::getTemplate();
+		return $this->config->General->add_on_mode ? '../../../cart.html' : parent::getTemplate();
     }
 
 	public function getProduct()

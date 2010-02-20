@@ -48,18 +48,26 @@ class XLite_Module_GiftCertificates_Controller_Customer_PreviewEcard extends XLi
 {	
     public $params = array('target', 'gcid');	
     public $gc = null;	
-    public $template = "modules/GiftCertificates/preview.tpl";
     
     function getGC()
     {
         if (is_null($this->gc)) {
-            $this->gc = new XLite_Module_GiftCertificates_Model_GiftCertificate($this->get("gcid"));
+            $this->gc = new XLite_Module_GiftCertificates_Model_GiftCertificate($this->gcid);
         }
         return $this->gc;
     }
 
+    /**
+     * Return Viewer object
+     * 
+     * @return XLite_View_Controller
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function getViewer()
+    {
+		$this->template = 'modules/GiftCertificates/preview.tpl';
+
+		return parent::getViewer();
+	}
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

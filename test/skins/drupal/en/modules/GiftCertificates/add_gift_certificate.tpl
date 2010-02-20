@@ -5,6 +5,7 @@
 var gcMinAmount = {config.GiftCertificates.minAmount};
 var gcMaxAmount = {config.GiftCertificates.maxAmount};
 var enablePostGC = '{config.GiftCertificates.enablePostGC}';
+var bordersDir = '{gc.bordersDir}';
 </script>
 
 <script type="text/javascript">
@@ -83,11 +84,11 @@ function formSubmit()
   return true;
 }
 
-function borderChanged()
+function borderChanged(s)
 {
   var border_img = document.getElementById('border_img');
   if (border_img) {
-    border_img.src = '{gc.bordersDir}' + document.gccreate.border.options[document.gccreate.border.selectedIndex].text + '.gif';
+    border_img.src = bordersDir + s.options[s.selectedIndex].text + '.gif';
   }
 }
 -->
@@ -256,11 +257,11 @@ function borderChanged()
         <td nowrap align="right">E-Card border</td>
         <td>&nbsp;</td>
         <td align="left" nowrap>
-          <select name="border" onChange="borderChanged()">
-            <option FOREACH="gc.ecard.allBorders,_border" selected="border="_border"">{_border}</option>
+          <select name="border" onchange="javascript: borderChanged(this);">
+            <option FOREACH="gc.ecard.allBorders,_border" value="{_border}" selected="{border=_border}">{_border}</option>
           </select>
           &nbsp;&nbsp;&nbsp;
-          <img id="border_img" src="{gc.bordersDir}{border}.gif" />
+          <img id="border_img" src="{gc.borderUrl}" alt="" />
           <br />&nbsp;
         </td>
       </tr>
