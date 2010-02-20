@@ -36,5 +36,6 @@ abstract class XLite_Module_GiftCertificates_Core_CMSConnector extends XLite_Cor
         parent::__construct();
 
         $this->pageTypes['XLite_Module_GiftCertificates_Controller_Customer_AddGiftCertificate'] = 'Add gift certificate';
+        $this->pageTypes['XLite_Module_GiftCertificates_Controller_Customer_CheckGiftCertificate'] = 'Check gift certificate';
 	}
 }

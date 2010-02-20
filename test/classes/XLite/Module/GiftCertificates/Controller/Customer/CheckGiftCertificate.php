@@ -56,17 +56,43 @@ class XLite_Module_GiftCertificates_Controller_Customer_CheckGiftCertificate ext
 		}
         return $this->foundgc;
 	}
+
 	function getFound()
     {
         return $this->isComplex('foundgc.exists');
     }
+
     function getNotFound()
     {
         return $this->get("gcid") && !$this->get("found");
     }
 
+    /**
+     * Get page instance data (name and URL)
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageInstanceData()
+    {
+        $this->target = 'check_gift_certificate';
+
+        return parent::getPageInstanceData();
+    }
+
+    /**
+     * Get page type name
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageTypeName()
+    {
+        return 'Check gift certificate';
+    }
+
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

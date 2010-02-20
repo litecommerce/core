@@ -51,7 +51,7 @@
 <!-- [modules] {{{ -->
 <widget module="GiftCertificates" class="XLite_Module_GiftCertificates_View_AddGiftCertificate" template="common/dialog.tpl">
 <widget module="GiftCertificates" class="XLite_Module_GiftCertificates_View_Ecards" template="common/dialog.tpl">
-<widget module="GiftCertificates" target="check_gift_certificate" template="common/dialog.tpl" body="modules/GiftCertificates/check_gift_certificate.tpl" head="Verify gift certificate">
+<widget module="GiftCertificates" class="XLite_Module_GiftCertificates_View_CheckGiftCertificate" template="common/dialog.tpl">
 <widget module="GiftCertificates" target="gift_certificate_info" template="common/dialog.tpl" body="modules/GiftCertificates/gift_certificate_info.tpl" head="Gift certificate">
 
 <widget module="Newsletters" template="modules/Newsletters/newsletters.tpl">
