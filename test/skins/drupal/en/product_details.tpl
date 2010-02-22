@@ -8,6 +8,12 @@ function isValid()
 -->
 </script>
 
+<div IF="previousProduct|nextProduct" class="sibliding-links">
+  <a IF="previousProduct" class="previous" href="{buildURL(#product#,##,_ARRAY_(#product_id#^previousProduct.product_id))}" alt="{previousProduct.name}">Previous product</a>
+  <span IF="previousProduct&nextProduct">/</span>
+  <a IF="nextProduct" class="next" href="{buildURL(#product#,##,_ARRAY_(#product_id#^nextProduct.product_id))}" alt="{nextProduct.name}">Next product</a>
+</div>
+
 <form action="{buildURLPath(#cart#,#add#,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" method="GET" name="add_to_cart" onsubmit="javascript: return isValid();">
   <input FOREACH="buildURLArguments(#cart#,#add#,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id)),paramName,paramValue" type="hidden" name="{paramName}" value="{paramValue}" />
 
