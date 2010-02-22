@@ -15,13 +15,13 @@
  */
 
 /**
- * Some string
- *
+ * XLite_Model_WidgetParam_String 
+ * 
  * @package    Lite Commerce
- * @subpackage Model
- * @since      3.0
+ * @subpackage ____sub_package____
+ * @since      3.0.0 EE
  */
-class XLite_Model_WidgetParam_String extends XLite_Model_WidgetParam_Abstract
+class XLite_Model_WidgetParam_Int extends XLite_Model_WidgetParam_Abstract
 {
 	/**
      * Param type
@@ -30,7 +30,7 @@ class XLite_Model_WidgetParam_String extends XLite_Model_WidgetParam_Abstract
      * @access protected
      * @since  3.0
      */
-    protected $type = 'string';
+    protected $type = 'integer';
 
 
     /**
@@ -46,8 +46,8 @@ class XLite_Model_WidgetParam_String extends XLite_Model_WidgetParam_Abstract
     {
         return array(
             array(
-                self::ATTR_CONDITION => !is_string($value),
-                self::ATTR_MESSAGE   => ' is not a string',
+                self::ATTR_CONDITION => !is_numeric($value),
+                self::ATTR_MESSAGE   => ' is not numeric',
             ),
         );
     }

@@ -38,20 +38,10 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $dirs = array(
+    protected $displayModes = array(
         'mini_cart'        => 'Vertical',
         'mini_cart_dialog' => 'Horizontal',
     );
-
-    /**
-     * Items to be shown in the minicart block
-     *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     */ 
-    protected $itemsList = NULL;
-
 
     /**                                                
      * Return title                                    
@@ -75,7 +65,7 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
      */
     protected function getDir()
     {
-        return $this->attributes['use_dir'];
+        return $this->attributes['displayMode'];
     }
 
     /**
@@ -138,49 +128,11 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
     {
         parent::defineWidgetParams();
 
-        // FIXME - use camel case
-        $dirs = new XLite_Model_WidgetParam_List('use_dir', 'mini_cart', 'Display mode');
-        $dirs->options = $this->dirs;
-
-        $this->widgetParams[] = $dirs;
-    }
-
-    /**
-     * Define some attribute
-     *
-     * @param array $attributes attributes to set
-     *
-     * @return void
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function __construct(array $attributes = array())
-    {
-        $this->attributes['use_dir'] = 'mini_cart';
-
-        parent::__construct($attributes);
-    }
-
-    /**
-     * Check passed attributes 
-     * 
-     * @param array $attrs attributes to check
-     *  
-     * @return array errors list
-     * @access public
-     * @since  1.0.0
-     */
-    public function validateAttributes(array $attrs)
-    {
-        $conditions = array(
-            array(
-                self::ATTR_CONDITION => !isset($attrs['use_dir']) || !isset($this->dirs[$attrs['use_dir']]),
-                self::ATTR_MESSAGE   => 'Display mode is not set',
-            ),
+        $this->widgetParams += array(
+            'displayMode' => new XLite_Model_WidgetParam_List('displayMode', 'mini_cart', 'Display mode', $this->displayModes),
         );
-
-        return parent::validateAttributes($attrs) + $this->checkConditions($conditions);
     }
+
 
     /**
      * Get a list of CSS files required to display the widget properly 

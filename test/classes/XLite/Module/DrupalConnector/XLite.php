@@ -16,7 +16,7 @@ class XLite_Module_DrupalConnector_XLite extends XLite implements XLite_Base_IDe
     {
 		$result = null;
 
-		if (XLite_Core_CMSConnector::isCMSStarted(XLite_Module_DrupalConnector_Handler::getInstance()->getCMSName())) {
+		if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
 
 			$parsed = parse_url($url);
 

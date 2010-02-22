@@ -29,14 +29,6 @@ abstract class XLite_View_Container extends XLite_View_Abstract
 	 */
 	const BODY_TEMPLATE = 'body.tpl';
 
-    /**
-     * Indexes in the "conditions" array
-     */
-
-    const ATTR_CONDITION = 'condition';
-    const ATTR_MESSAGE   = 'text';
-    const ATTR_CONTINUE  = 'continue';
-
 
     /**
      * Return title 
@@ -69,30 +61,37 @@ abstract class XLite_View_Container extends XLite_View_Abstract
 		return $this->attributes['showWrapper'] && !XLite_Core_CMSConnector::isCMSStarted();
 	}
 
+
     /**
-     * Check passed conditions 
+     * Check passed attributes
      * TODO - check if we need to move this function into the XLite_View_Abstract
-     * 
-     * @param array $conditions conditions to check
-     *  
-     * @return array
-     * @access protected
-     * @since  3.0.0 EE
+     *
+     * @param array $attrs attributes to check
+     *
+     * @return array errors list
+     * @access public
+     * @since  1.0.0
      */
-    protected function checkConditions(array $conditions)
+    public function validateAttributes(array $attrs)
     {
         $messages = array();
 
-        foreach ($conditions as $condition) {
-            if (true === $condition[self::ATTR_CONDITION]) {
-                $messages[] = $condition[self::ATTR_MESSAGE];
-                if (!isset($condition[self::ATTR_CONTINUE])) {
-                     break;
+        foreach ($this->widgetParams as $name => $param) {
+
+            if (isset($attrs[$name])) {
+                
+                list($result, $widgetErrors) = $param->validate($attrs[$name]);
+
+                if (false === $result) {
+                    $messages[] = $param->label . ': ' . implode('<br />' . $param->label . ': ', $widgetErrors);
                 }
+            } else {
+
+                $messages[] = $param->label . ': is not set';
             }
         }
 
-        return $messages;
+        return parent::validateAttributes($attrs) + $messages;
     }
 
     /**
@@ -107,6 +106,11 @@ abstract class XLite_View_Container extends XLite_View_Abstract
     public function __construct(array $attributes = array())
     {
         $this->attributes['showWrapper'] = true;
+
+        // FIXME - move this into the XLite_View_Abstract class
+        foreach ($this->getWidgetParams() as $name => $param) {
+            $this->attributes[$name] = $param->value;
+        }
 
         parent::__construct($attributes);
 

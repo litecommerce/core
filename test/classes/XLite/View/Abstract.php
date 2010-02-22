@@ -482,11 +482,11 @@ class XLite_View_Abstract extends XLite_Core_Handler
 
         foreach ($local as $k => $v) {
             if ($v) {
-                if (!isset(XLite_View_Abstract::$resources[$k])) {
-                    XLite_View_Abstract::$resources[$k] = array();
+                if (!isset(self::$resources[$k])) {
+                    self::$resources[$k] = array();
                 }
 
-                XLite_View_Abstract::$resources[$k] = array_merge(XLite_View_Abstract::$resources[$k], $v);
+                self::$resources[$k] = array_merge(self::$resources[$k], $v);
             }
         }
     }
@@ -740,6 +740,7 @@ class XLite_View_Abstract extends XLite_Core_Handler
 
     /**
      * Initial set widget attributes
+     * TODO - check if it's really needed
      * 
      * @return void
      * @access protected

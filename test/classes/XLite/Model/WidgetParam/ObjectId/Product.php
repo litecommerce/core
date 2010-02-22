@@ -15,23 +15,25 @@
  */
 
 /**
- * Some string
- *
+ * XLite_Model_WidgetParam 
+ * 
  * @package    Lite Commerce
- * @subpackage Model
- * @since      3.0
+ * @subpackage ____sub_package____
+ * @since      3.0.0 EE
  */
-class XLite_Model_WidgetParam_String extends XLite_Model_WidgetParam_Abstract
+class XLite_Model_WidgetParam_ObjectId_Product extends XLite_Model_WidgetParam_ObjectId
 {
-	/**
-     * Param type
+    /**
+     * Return object class name
      *
      * @var    string
      * @access protected
-     * @since  3.0
+     * @since  3.0.0 EE
      */
-    protected $type = 'string';
-
+    protected function getClassName()
+    {
+        return 'XLite_Model_Product';
+    }
 
     /**
      * Return list of conditions to check
@@ -46,10 +48,14 @@ class XLite_Model_WidgetParam_String extends XLite_Model_WidgetParam_Abstract
     {
         return array(
             array(
-                self::ATTR_CONDITION => !is_string($value),
-                self::ATTR_MESSAGE   => ' is not a string',
+                self::ATTR_CONDITION => 0 >= $value,
+                self::ATTR_MESSAGE   => ' is a non-positive number',
             ),
-        );
+            array(
+                self::ATTR_CONDITION => !$this->getObject($value)->isPersistent,
+                self::ATTR_MESSAGE   => ' record with such ID does not exist',
+            ),
+        ) + parent::getValidaionSchema($value);
     }
 }
 

@@ -22,7 +22,7 @@
  * @subpackage Widget parameter
  * @since      3.0
  */
-class XLite_Model_WidgetParam_List extends XLite_Model_WidgetParam
+class XLite_Model_WidgetParam_List extends XLite_Model_WidgetParam_String
 {
 	/**
      * Param type
@@ -37,10 +37,51 @@ class XLite_Model_WidgetParam_List extends XLite_Model_WidgetParam
      * Options 
      * 
      * @var    array
-     * @access public
+     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $options = array();
+    protected $options = array();
+
+
+    /**
+     * Return list of conditions to check
+     *
+     * @param mixed $value value to validate
+     *
+     * @return void
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getValidaionSchema($value)
+    {
+        return parent::getValidaionSchema($value) + array(
+            array(
+                self::ATTR_CONDITION => isset($this->options[$value]),
+                self::ATTR_MESSAGE   => ' unallowed param value - "' . $value . '"',
+            ),
+        );
+    }
+
+
+    /**
+     * Common constructor
+     * FIXME - "name" must be removed
+     *
+     * @param string $name    param name
+     * @param string $value   param value
+     * @param string $label   param text label
+     * @param array  $options list options
+     *
+     * @return void
+     * @access public
+     * @since  1.0.0
+     */
+    public function __construct($name = null, $value = null, $label = null, array $options = array())
+    {
+        parent::__construct($name, $value, $label);
+
+        $this->options = $options;
+    }
 }
 

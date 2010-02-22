@@ -209,16 +209,13 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
     /**
      * Determines if we export content into a CMS
      *
-     * @param string $cmsCode CMS code
-     * 
      * @return bool 
      * @access public
      * @since  3.0.0 EE
      */
-    public static function isCMSStarted($cmsCode = null)
+    public static function isCMSStarted()
     {
-        return isset(self::$currentCMS)
-            && (is_null($cmsCode) || self::$currentCMS == $cmsCode);
+        return isset(self::$currentCMS);
     }
 
     /**
