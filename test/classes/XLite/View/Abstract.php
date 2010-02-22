@@ -24,6 +24,16 @@
 class XLite_View_Abstract extends XLite_Core_Handler
 {
     /**
+     * Widgets resources collector
+     * 
+     * @var    array
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public static $resources = array();
+
+    /**
      * Widget template filename
      *
      * @var    string
@@ -380,6 +390,7 @@ class XLite_View_Abstract extends XLite_Core_Handler
 		$this->initView();
 
         if ($this->isVisible()) {
+            $this->registerResources();
             $this->includeCompiledFile($this->getDisplayFile());
         }
     }
@@ -454,6 +465,31 @@ class XLite_View_Abstract extends XLite_Core_Handler
         return array();
     }
 
+    /**
+     * Register widget resources 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function registerResources()
+    {
+        $local = array(
+            'js'  => $this->getJSFiles(),
+            'css' => $this->getCSSFiles(),
+        );
+
+        foreach ($local as $k => $v) {
+            if ($v) {
+                if (!isset(XLite_View_Abstract::$resources[$k])) {
+                    XLite_View_Abstract::$resources[$k] = array();
+                }
+
+                XLite_View_Abstract::$resources[$k] = array_merge(XLite_View_Abstract::$resources[$k], $v);
+            }
+        }
+    }
 
     // ------------------> Routines for templates
 

@@ -15,6 +15,9 @@ function isValid()
     <tr>
       <td IF="product.hasImage()" valign="top" align="left" width="100">
         <img src="{product.imageURL}" alt="" />
+
+        <widget module="DetailedImages" class="XLite_Module_DetailedImages_View_Gallery" product="{product}">
+
       </td>
       <td valign="top">
     

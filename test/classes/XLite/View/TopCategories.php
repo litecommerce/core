@@ -287,8 +287,13 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
      */
     public function getCSSFiles()
     {
-        // FIXME - check for two modes
-        return ('tree' == $this->attributes['displayMode']) ? array($this->getDir() . '/style.tree.css') : array();
+        $list = parent::getCSSFiles();
+
+        if ('tree' == $this->attributes['displayMode']) {
+            $list[] = $this->getDir() . '/style.tree.css';
+        }
+
+        return $list;
     }
 
 }

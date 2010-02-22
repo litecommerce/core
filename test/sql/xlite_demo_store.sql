@@ -41,7 +41,10 @@ INSERT INTO xlite_order_items (item_id, order_id, orderby, product_id, price, am
 update xlite_products set image=concat('pi_',product_id,'.',substring(image_type, 7)),image_source='F' where image_source='D';
 update xlite_products set thumbnail=concat('pt_',product_id,'.', substring(thumbnail_type, 7)),thumbnail_source='F' where thumbnail_source='D';
 update xlite_categories set image=concat('ci_',category_id,'.', substring(image_type, 7)),image_source='F' where image_source='D';
-update xlite_images set image=concat('ii_',image_id,'.', substring(image_type, 7)),image_source='F' where image_source='D';
+
+INSERT INTO xlite_images VALUES (1,205,'pi_205.jpeg','F','image/jpeg','Beatles "Vintage Logo" T-shirt', 1, 1);
+INSERT INTO xlite_images VALUES (2,205,'pi_206.jpeg','F','image/jpeg','Beatles "Vintage Logo" T-shirt #2', 1, 2);
+INSERT INTO xlite_images VALUES (3,205,'pi_207.jpeg','F','image/jpeg','Beatles "Vintage Logo" T-shirt #3', 1, 3);
 
 INSERT INTO xlite_partner_plans VALUES (1, 'TestPlan', 100, 1);
 INSERT INTO xlite_partner_plan_commissions VALUES (1, '2.00', '%', 144, 'P');

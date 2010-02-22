@@ -162,6 +162,8 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
     protected function getContent(XLite_View_Abstract $object, array $attributes = array())
     {
+        XLite_View_Abstract::$resources = array();
+
         ob_start();
         $this->getApplicationInstance($attributes)->runViewer($object);
         $content = ob_get_contents();
@@ -311,11 +313,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
             $widget->setAttributes($attributes);
 
             $result[0] = $this->getContent($widget, $attributes);
-
-            $result[1] = array(
-                'css' => $this->prepareResources($widget->getCSSFiles()),
-                'js'  => $this->prepareResources($widget->getJSFiles()),
-            );
+            $result[1] = $this->collectResources();
         }
 
 		return $result;
@@ -473,6 +471,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
             $application->getController()->get('locationPath'),
             $content,
             $application->getController()->getPageTypeName(),
+            $this->collectResources(),
         );
 
         return $result;
@@ -624,6 +623,28 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
     protected function prepareResources(array $resources)
     {
+        return $resources;
+    }
+
+    /**
+     * Collect resources 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function collectResources()
+    {
+        $resources = array();
+
+        foreach (XLite_View_ABstract::$resources as $key => $list) {
+            if (!isset($resources[$key])) {
+                $resources[$key] = array();
+            }
+            $resources[$key] = $this->prepareResources(array_unique($list));
+        }
+
         return $resources;
     }
 }

@@ -85,7 +85,12 @@ class XLite_View_Controller extends XLite_View_Abstract
     public function display()
     {
         if (!$this->attributes['silent']) {
+            ob_start();
             parent::display();
+            $content = ob_get_contents();
+            ob_end_clean();
+
+            echo $this->postprocessResources($content);
         }
 
         if ($this->attributes['dumpStarted']) {
@@ -93,6 +98,48 @@ class XLite_View_Controller extends XLite_View_Abstract
         }
 
         XLite::$controller->postprocess();
+    }
+
+    /**
+     * Postprocess widgets resources 
+     * 
+     * @param string $content Content
+     *  
+     * @return strong
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function postprocessResources($content)
+    {
+        if (preg_match('/<\/head>/Ssi', $content)) {
+            $added = array();
+
+            foreach (XLite_View_Abstract::$resources as $key => $list) {
+                $list = array_unique($list);
+
+                foreach ($list as $path) {
+                    $url = XLite::getInstance()->shopURL(XLite_Model_Layout::getInstance()->getPath() . $path);
+
+                    if ('js' == $key) {
+                        $added[] = '<script type="text/javascript" src="' . $url . '"></script>';
+
+                    } elseif ('css' == $key) {
+                        $added[] = '<link rel="stylesheet" type="text/css" src="' . $url . '" />';
+                    }
+                }
+            }
+
+            if ($added) {
+                $content = preg_replace(
+                    '/<\/head>/iSs',
+                    implode("\n", $added) . "\n" . '</head>',
+                    $content
+                );
+            }
+        }
+
+        return $content;
     }
 }
 
