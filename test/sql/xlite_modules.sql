@@ -8,7 +8,7 @@ INSERT INTO xlite_featured_products VALUES (12,3,0);
 
 
 
-INSERT INTO xlite_product_options (option_id, product_id, optclass, opttext, options, orderby) VALUES (1,67,'Cover','Choose cover','Soft\r\nHard=+5',0);
+INSERT INTO xlite_product_options (option_id, product_id, optclass, opttext, options, orderby) VALUES (1,205,'Cover','Choose cover','Soft\r\nHard=+5',0);
 INSERT INTO xlite_product_options (option_id, product_id, optclass, opttext, options, orderby) VALUES (2,69,'Cover','Choose cover','Soft\r\nHard=+5',0);
 INSERT INTO xlite_product_options (option_id, product_id, optclass, opttext, options, orderby) VALUES (3,68,'Cover','Choose cover','Soft\r\nHard=+5',0);
 INSERT INTO xlite_product_options (option_id, product_id, optclass, opttext, options, orderby) VALUES (4,70,'Cover','Choose cover','Soft\r\nHard=+5',0);

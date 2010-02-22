@@ -10,7 +10,7 @@ UPDATE xlite_config SET value="https://sns.qualiteam.biz/litecommerce" WHERE nam
 
 -- Enable demo modules
 --TODO - revert after develop period UPDATE xlite_modules SET enabled=1 where name='DemoMode';
-UPDATE xlite_modules SET enabled = 1 WHERE name IN ('Affiliate', 'Bestsellers', 'FeaturedProducts', 'DetailedImages', 'ProductOptions', 'InventoryTracking', 'ShowcaseOrganizer', 'WishList', 'MultiCategories', 'DrupalConnector', 'GiftCertificates');
+UPDATE xlite_modules SET enabled = 1 WHERE name IN ('Affiliate', 'Bestsellers', 'FeaturedProducts', 'DetailedImages', 'ProductOptions', 'InventoryTracking', 'ShowcaseOrganizer', 'WishList', 'MultiCategories', 'DrupalConnector', 'GiftCertificates', 'ProductAdviser');
 
 -- Configure look and feel for category products
 UPDATE xlite_config SET value='modules/ShowcaseOrganizer/icons.tpl' WHERE category='ShowcaseOrganizer' AND name='template';

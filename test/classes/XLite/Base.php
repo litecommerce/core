@@ -174,8 +174,21 @@ class XLite_Base
 		$obj = $this;
 
 		foreach (explode('.', $name) as $part) {
-			$obj = is_array($obj) ? (isset($obj[$part]) ? $obj[$part] : null) : $obj->get($part);
-			if (is_null($obj)) return null;
+            if (is_object($obj)) {
+				if ($obj instanceof stdClass) {
+                	$obj = isset($obj->$part) ? $obj->$part : null;
+
+				} else {
+					$obj = $obj->get($part);
+				}
+
+            } elseif (is_array($obj)) {
+                $obj = isset($obj[$part]) ? $obj[$part] : null;
+            }
+
+			if (is_null($obj)) {
+				break;
+			}
 		}
 
 		return $obj;
