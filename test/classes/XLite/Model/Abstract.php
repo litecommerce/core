@@ -225,7 +225,7 @@ class XLite_Model_Abstract extends XLite_Base
     function isExists() // {{{
     {
         if (!$this->isRead) {
-        	$this->isRead = $this->read();
+        	$this->isRead = $this->isPersistent ? $this->read() : false;
             return $this->isRead;
         }
         return true;
