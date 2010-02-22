@@ -3,7 +3,6 @@
 #lc-minicart {
     position: relative;
     padding: 0.5em;
-    color: #393939;
 }
 
 #lc-minicart a,
@@ -12,7 +11,6 @@
 #lc-minicart a:visited
 {
     text-decoration: underline;
-    color: #314d73;
 }
 
 #lc-minicart li {
@@ -22,10 +20,9 @@
 
 /* Minicart title */
 
-#lc-minicart .lc-minicart-title {
+.lc-minicart-title {
     font-size: 12px;
     font-weight: bold;
-    color: gray;
     float: left;
     margin: 0;
     padding: 3px 0 0 0.5em;
@@ -39,17 +36,17 @@
     height: 24px;
     margin: 0;
     padding: 0;
-    background: url(img/minicart-collapsed.gif) no-repeat top left;
+    background: transparent url(img/minicart-collapsed.gif) no-repeat top left;
     float: left;
     cursor: pointer;
 }
 
 #lc-minicart.expanded .toggle-button {
-    background: url(img/minicart-expanded.gif) no-repeat top left;
+    background: transparent url(img/minicart-expanded.gif) no-repeat top left;
 }
 
 #lc-minicart.empty .toggle-button {
-    background: url(img/minicart-empty.gif) no-repeat top right;
+    background: transparent url(img/minicart-empty.gif) no-repeat top right;
     width: 24px;
     height: 24px;
     cursor: auto;
@@ -64,10 +61,9 @@
 
 .lc-minicart-items {
     clear: both;
-    border: 1px solid ##c6c7c6;
+    border: 0;
     margin: 0;
     padding: 0;
-    border-bottom: 1px solid #c6c7c6;
 }
 
 #lc-minicart .line-item a,
@@ -93,7 +89,6 @@
 
 .lc-minicart-items ul {
     padding-top: 1em;
-    background: url(img/minicart-items-right.gif) no-repeat top left;
     list-style: none;
 }
 
@@ -123,14 +118,9 @@
 }
 
 .lc-minicart-totals li {
-    color: #737573;
     margin: 0;
     padding: 0;
 
-}
-
-#lc-minicart .currency, #lc-minicart .qty {
-    color: #101010;
 }
 
 /* Minicart buttons */

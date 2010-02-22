@@ -47,10 +47,12 @@ Empty cart
 
 *}
 <div id="lc-minicart" class="empty" IF="cart.empty">
-  {* Toggle button *}
-  <img src="images/spacer.gif" class="toggle-button" />
-  {* Title *}
-  <h3 class="lc-minicart-title">Shopping cart</h3>
+  <div id="lc-minicart-header">
+    {* Toggle button *}
+    <img src="images/spacer.gif" class="toggle-button" />
+    {* Title *}
+    <h3 class="lc-minicart-title">Shopping cart</h3>
+  </div>
   {* Cart items *}
   <div class="lc-minicart-items">
     <p IF="cart.empty">Cart is empty</p>
@@ -62,10 +64,12 @@ Cart with items
 
 *}
 <div id="lc-minicart" class="collapsed" IF="!cart.empty">
-  {* Toggle button *}
-  <img src="images/spacer.gif" class="toggle-button" onClick="javascript:xlite_minicart_toggle('lc-minicart');" />
-  {* Title *}
-  <h3 class="lc-minicart-title">Shopping cart</h3>
+  <div class="lc-minicart-header">
+    {* Toggle button *}
+    <img src="images/spacer.gif" class="toggle-button" onClick="javascript:xlite_minicart_toggle('lc-minicart');" />
+    {* Title *}
+    <h3 class="lc-minicart-title">Shopping cart</h3>
+  </div>
   {* Cart items *}
   <div class="lc-minicart-items">
     <ul>
