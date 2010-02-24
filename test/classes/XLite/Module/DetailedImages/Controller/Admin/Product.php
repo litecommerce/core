@@ -48,7 +48,6 @@ class XLite_Module_DetailedImages_Controller_Admin_Product extends XLite_Control
 {
     public function __construct()
     {
-        parent::__construct();
         $this->pages["detailed_images"] = "Detailed images";
         $this->pageTemplates["detailed_images"] = "modules/DetailedImages/detailed_images.tpl";
     }
@@ -56,9 +55,15 @@ class XLite_Module_DetailedImages_Controller_Admin_Product extends XLite_Control
     function action_add_detailed_image()
     {
         $d_img = new XLite_Module_DetailedImages_Model_DetailedImage();
-        $d_img->set("properties", $_POST); 
+
+		$data = XLite_Core_Request::getInstance()->getData();
+		$data['is_zoom'] = isset($data['is_zoom']) ? 'Y' : '';
+
+        $d_img->set("properties", $data); 
         $d_img->create();
+
         $img = $d_img->get("image");
+
         $img->handleRequest();
     }
 
@@ -72,14 +77,12 @@ class XLite_Module_DetailedImages_Controller_Admin_Product extends XLite_Control
     {
         foreach ($this->alt as $image_id => $alt) {
             $img = new XLite_Module_DetailedImages_Model_DetailedImage($image_id);
+
             $img->set("alt", $alt);
             $img->set("order_by", $this->order_by[$image_id]);
+            $img->set("is_zoom", (isset($this->is_zoom) && isset($this->is_zoom[$image_id])) ? 'Y' : '');
+
             $img->update();
         }    
     }
 }
-
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

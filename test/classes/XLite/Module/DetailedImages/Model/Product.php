@@ -50,16 +50,16 @@ class XLite_Module_DetailedImages_Model_Product extends XLite_Model_Product impl
     function getDetailedImages()
     {
         $image = new XLite_Module_DetailedImages_Model_DetailedImage();
-        $images = $image->findImages($this->get("product_id"));
-        return $images;
+
+        return $image->findImages($this->get("product_id"));
     }
     
     function delete()
     {
-		$images = $this->get("detailedImages");
-		foreach ($images as $image) {
+		foreach ($this->getDetailedImages() as $image) {
 			$image->delete();
 		}
+
         parent::delete();
     }
 
@@ -67,8 +67,8 @@ class XLite_Module_DetailedImages_Model_Product extends XLite_Model_Product impl
 	{
 		$product = parent::__clone();
 
-		$images = $this->get("detailedImages");
-		foreach ($images as $image) {
+		foreach ($this->getDetailedImages() as $image) {
+
 			$newImage = new XLite_Module_DetailedImages_Model_DetailedImage();
 			$newImage->set("alt", $image->get("alt"));
 			$newImage->set("enabled", $image->get("enabled"));
@@ -78,8 +78,10 @@ class XLite_Module_DetailedImages_Model_Product extends XLite_Model_Product impl
 
 			$obj = $this->get("image");
 			if (!method_exists($obj, " copyImageFile")) {
+
 				// use correct image copy routine for LC version lower than 2.2
 				$image->deepCopyTo($newImage->get("image_id"));
+
 			} else {
 				$obj->copyTo($newImage->get("image_id"));
 			}
@@ -107,8 +109,24 @@ class XLite_Module_DetailedImages_Model_Product extends XLite_Model_Product impl
 			}
 		}
 	}
+
+	protected function getHasZoom()
+	{
+		return !is_null($this->getZoomImage());
+	}
+
+	protected function getZoomImage()
+	{
+		$result = null;
+
+        foreach ($this->getDetailedImages() as $image) {
+            if ($image->get('is_zoom') == 'Y') {
+                $result = $image;
+                break;
+            }
+        }
+
+		return $result;
+	}
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+

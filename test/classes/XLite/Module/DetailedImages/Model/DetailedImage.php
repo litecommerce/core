@@ -47,13 +47,14 @@
 class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstract
 {	
     public $fields = array(
-            "image_id"     => 0,
-            "product_id"   => 0,
-            "image_source" => "D",
-            "image_type"   => "image/jpeg",
-            "alt"          => "",
-            "enabled"      => 1,
-            "order_by"     => 0
+            'image_id'     => 0,
+            'product_id'   => 0,
+            'image_source' => 'D',
+            'image_type'   => 'image/jpeg',
+            'alt'          => '',
+            'enabled'      => 1,
+            'order_by'     => 0,
+			'is_zoom'      => ''
             );	
 
     public $alias = "images";	
@@ -66,17 +67,23 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstra
         if (is_null($this->image)) {
             $this->image = new XLite_Model_Image("detailed_image", $this->get("image_id"));
         }
+
         return $this->image;
     } // }}}
 
 	function getImageURL() // {{{
 	{
-		return $this->getComplex('image.url');
+		return $this->getImage()->get('url');
 	} // }}}
 
-    function findImages($product_id = 0) // {{{
+    public function findImages($product_id = 0) // {{{
     {
-        return $this->findAll("product_id='$product_id'");
+        return $this->findAll('product_id = \'' . $product_id . '\'');
+    } // }}}
+
+    public function findZoom($product_id = 0) // {{{
+    {
+        return $this->findAll('product_id = \'' . $product_id . '\' AND is_zoom = \'Y\'');
     } // }}}
 
     function getImportFields($layout = null) // {{{
@@ -85,21 +92,25 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstra
         if (isset($this->config->ImportExport->detailed_images_layout)) {
             $layout = explode(',', $this->config->ImportExport->detailed_images_layout);
         }
+
         // detailed image import fields
         $fields = array(
-            "NULL"      => true,
-            "sku"       => false,
-            "name"      => false,
-            "image"     => false,
-            "alt"       => false,
-            "enabled"   => false,
-            "order_by"  => false
-            );
+            'NULL'      => true,
+            'sku'       => false,
+            'name'      => false,
+            'image'     => false,
+            'alt'       => false,
+            'enabled'   => false,
+            'order_by'  => false
+        );
+
         $result = array();
+
         // build multiarray
         foreach ($fields as $name) {
             $result[] = $fields;
         }
+
         // fill fields array with the default layout
         foreach ($result as $id => $fields) {
             if (isset($layout[$id])) {
@@ -107,6 +118,7 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstra
                 $result[$id][$selected] = true;
             }
         }
+
         return $result;
     } // }}}
 
@@ -115,19 +127,24 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstra
         $_image = $this->get("image");
 
         $newImg = new XLite_Model_Image($_image->imageClass, $_image->get($_image->autoIncrement));
+
         if (!$_image->isRead) {
             $_image->read();
         }
+
         $newImg->properties = $_image->properties;
         if ($newImg->get("source") == "F") {
             $fnPrevious = $newImg->get("data");
         }
+
         $newImg->setComplex($_image->autoIncrement, $id);
         if ($newImg->get("source") == "F") {
+
 			// createFileName
 	        if (is_null($id)) {
        		    $id = $newImg->get($newImg->autoIncrement);
 	        }
+
     	    $ext = $newImg->get("type");
         	$ext = (empty($ext)) ? ".gif" : ("." . substr($newImg->get("type"), 6));
 	        $fnNew = $newImg->alias{0} . $newImg->fieldPrefix{0} . "_$id$ext";
@@ -140,24 +157,35 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstra
 
             $newImg->set("data", $fnNew);
         }
+
         $newImg->update();
+
         return $newImg;
     }
 
     public function import(array $options) // {{{
     {
         static $line;
-        if (!isset($line)) $line = 1; else $line++;
+
+        if (!isset($line)) {
+			$line = 1;
+
+		} else {
+			$line++;
+		}
 
         $properties = $options["properties"];
         $save_images = $options["save_images"];
         $images_directory = $options["images_directory"];
+
         if (!empty($images_directory)) {
+
             // update images base directory
             $cfg = new XLite_Model_Config();
             if ($cfg->find("name='images_directory'")) {
                 $cfg->set("value", $images_directory);
                 $cfg->update();
+
             } else {
                 $cfg->set("name", "images_directory");
                 $cfg->set("category", "Images");
@@ -167,25 +195,29 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstra
             // re-read config data
             $cfg->readConfig();
         }
+
         $image = $properties["image"];
 
-        $images_directory = isset($this->config->Images->images_directory) ?
-            $this->config->Images->images_directory : "";
-        $image_path = empty($images_directory) ? $image : "$images_directory/$image";
+        $images_directory = isset($this->config->Images->images_directory)
+			? $this->config->Images->images_directory 
+			: "";
+        $image_path = empty($images_directory) 
+			? $image 
+			: "$images_directory/$image";
 
         $product = new XLite_Model_Product();
         $found = false;
-        // try to find product by SKU
+
         if (!empty($properties["sku"]) && $product->find("sku='".addslashes($properties["sku"])."'")) {
+			// try to find product by SKU
             $found = true;
-        }
-        // .. or by NAME
-        elseif (empty($properties["sku"]) &&  !empty($properties["name"]) && $product->find("name='".addslashes($properties["name"])."'"))
-        {
+
+        } elseif (empty($properties["sku"]) &&  !empty($properties["name"]) && $product->find("name='".addslashes($properties["name"])."'")) {
+			// .. or by NAME
             $found = true;    
         }
 
-        if(!$found){
+        if (!$found) {
             
             echo "<b>line# $line:</b> <font color=red>No product found for detailed image $image</font>";
             echo '<br /><br><a href="admin.php?target=import_catalog&page=detailed_images"><u>Click here to return to admin interface</u></a>';
@@ -194,16 +226,21 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstra
 
         $detailed_image = new XLite_Module_DetailedImages_Model_DetailedImage();
         echo "<b>line# $line:</b> Importing detailed image $image for product ".$product->get("name")."<br>\n";
+
         // create detailed image
         $detailed_image->set("product_id", $product->get("product_id"));
         $detailed_image->set("properties", $properties);
         $detailed_image->create();
+
         // fill image content
         $img = $detailed_image->get("image");
         if ($save_images) {
+
             // save image content to database
             $img->import($image_path);
+
         } else {
+
             // update image info
             $img->set("data", $image);
             $img->set("source", "F");
@@ -216,11 +253,7 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstra
 	{
 		$image = $this->get("image");
 		$image->delete();
+
 		parent::delete();
 	} // }}}
 }
-
-// WARNING:
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

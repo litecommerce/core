@@ -8,6 +8,8 @@ CREATE TABLE xlite_images (
         alt varchar(255) NOT NULL default '',
         enabled int(1) NOT NULL default '1',
         order_by int(11) NOT NULL default '0',
-        PRIMARY KEY  (image_id)
+		is_zoom char(1) NOT NULL default '',
+        PRIMARY KEY  (image_id),
+		KEY pz (product_id, is_zoom)
 ) TYPE=MyISAM;
 ALTER TABLE xlite_images MODIFY image mediumblob;

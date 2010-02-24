@@ -20,8 +20,9 @@ function isValid()
   <table cellpadding="5" cellspacing="0" width="100%">
     <tr>
       <td IF="product.hasImage()" valign="top" align="left" width="100">
-        <img src="{product.imageURL}" alt="" />
+        <img IF="!product.hasZoom" src="{product.imageURL}" id="product_image_{product.product_id}" alt="" />
 
+        <widget module="DetailedImages" class="XLite_Module_DetailedImages_View_Zoom" product="{product}" IF="product.hasZoom">
         <widget module="DetailedImages" class="XLite_Module_DetailedImages_View_Gallery" product="{product}">
 
       </td>

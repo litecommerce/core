@@ -2,7 +2,7 @@
 // vim: set ts=4 sw=4 sts=4 et:
 
 /**
- * Product images gallery widget
+ * Product image zoom widget
  *  
  * @category  Litecommerce
  * @package   View
@@ -16,43 +16,33 @@
  */
 
 /**
- * Product images gallery widget
+ * Product image zoom widget
  *
  * @package    View
  * @subpackage Widget
  * @since      3.0
  */
-class XLite_Module_DetailedImages_View_Gallery extends XLite_View_Abstract
+class XLite_Module_DetailedImages_View_Zoom extends XLite_View_Abstract
 {
     /**
-     * Light box library images directory
-     * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public $lightBoxImagesDir = null;
-
-    /**
-     * Light box library path 
+     * JQZoom library path 
      * 
      * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $lightBoxPath = 'modules/DetailedImages/js/jquery.lightbox-0.5.min.js';
+    protected $jqZoomPath = 'modules/DetailedImages/js/jquery.jqzoom1.0.1.js';
 
     /**
-     * Light box CSS file path 
+     * JQZAoom CSS file path 
      * 
      * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $lightBoxCSSPath = 'modules/DetailedImages/css/jquery.lightbox-0.5.css';
+    protected $jqZoomCSSPath = 'modules/DetailedImages/css/jqzoom.css';
 
     /**
      * Widget template 
@@ -62,22 +52,7 @@ class XLite_Module_DetailedImages_View_Gallery extends XLite_View_Abstract
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $template = 'modules/DetailedImages/gallery.tpl';
-
-    /**
-     * Initialization 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function initView()
-    {
-        $this->lightBoxImagesDir = XLite::getInstance()->shopURL(
-            XLite_Model_Layout::getInstance()->getPath() . 'modules/DetailedImages/images'
-        );
-    }
+    protected $template = 'modules/DetailedImages/zoom.tpl';
 
     /**
      * Check visibility
@@ -105,7 +80,7 @@ class XLite_Module_DetailedImages_View_Gallery extends XLite_View_Abstract
     {
         $list = parent::getJSFiles();
 
-        $list[] = $this->lightBoxPath;
+        $list[] = $this->jqZoomPath;
 
         return $list;
     }
@@ -122,7 +97,7 @@ class XLite_Module_DetailedImages_View_Gallery extends XLite_View_Abstract
     {
         $list = parent::getCSSFiles();
 
-        $list[] = $this->lightBoxCSSPath;
+        $list[] = $this->jqZoomCSSPath;
 
         return $list;
     }
