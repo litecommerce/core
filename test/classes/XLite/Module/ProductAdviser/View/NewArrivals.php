@@ -170,7 +170,6 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 	protected function getCategorySpecificArrivals()
 	{
 		$return = (isset($this->use_node) ? 'Y' : $this->config->ProductAdviser->category_new_arrivals);
-		echo $return;
 		return $return;
 	}
 
