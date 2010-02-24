@@ -65,7 +65,8 @@ class XLite_Module_ProductAdviser_Controller_Admin_CustomerNotifications extends
 		if (!isset($_REQUEST["action"]) && !(isset($_REQUEST["email"])||isset($_REQUEST["pinfo"])||isset($_REQUEST["status"])||isset($_REQUEST["type"])||isset($_REQUEST["prodname"])||isset($_REQUEST["period"]))) {
             $config = new XLite_Model_Config();
             if ($config->find("name='filters_preferences' AND category='ProductAdviser'")) {
-    			$preferences = unserialize(stripslashes($config->get("value")));
+				// TODO: check it (is it needs unserialize(stripslashes(value))? )
+				$preferences = $config->get("value");
     			if (is_array($preferences)) {
     				$this->_setParameter("email", $preferences, true);
     			 	$this->_setParameter("pinfo", $preferences, true);
