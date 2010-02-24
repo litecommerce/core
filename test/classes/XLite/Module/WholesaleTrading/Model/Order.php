@@ -61,10 +61,10 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
 
 	function calcGlobalDiscount($subtotal)
 	{
-		require_once LC_MODULES_DIR . 'WholesaleTrading' . LC_DS . 'encoded.php';
-		$global_discount = func_wholesaleTrading_calc_global_discount($this, $subtotal);
-		$global_discount = min(abs($subtotal), abs($global_discount));
-		return $global_discount;
+		return min(
+			abs($subtotal),
+			abs($this->calculateGlobalDiscount($subtotal))
+		);
 	}
 
 	function reduceSubTotal($subtotal)
@@ -180,11 +180,15 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
 	function getAppliedGlobalDiscount()
 	{
 		if (is_null($this->_applied_global_discount)) {
+
 			$subtotal = parent::calcSubTotal();
-			require_once LC_MODULES_DIR . 'WholesaleTrading' . LC_DS . 'encoded.php';
-			func_wholesaleTrading_calc_global_discount($this, $subtotal);
-			if (is_null($this->_applied_global_discount)) $this->_applied_global_discount = new XLite_Module_WholesaleTrading_Model_GlobalDiscount();
+			$this->calculateGlobalDiscount($subtotal);
+
+			if (is_null($this->_applied_global_discount)) {
+				$this->_applied_global_discount = new XLite_Module_WholesaleTrading_Model_GlobalDiscount();
+			}
 		}
+
 		return $this->_applied_global_discount;
 	}
 
@@ -222,15 +226,132 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
 		foreach ($items as $item) {
 			if ($item->isComplex('product.sellingMembership')) {
 				$profile = $this->get('origProfile');
-				require_once LC_MODULES_DIR . 'WholesaleTrading' . LC_DS . 'encoded.php';
-				func_wholesaleTrading_set_membership($this, $profile, $item->get('product'));
+				$product = $item->get('product');
+
+				$membership = $profile->get("membership");
+				$membership_exp_date = $profile->get("membership_exp_date");
+
+				if (
+					!empty($membership)
+					&& $membership != $product->get('selling_membership')
+					&& !$this->config->WholesaleTrading->override_membership
+				) {
+					break; 
+				}
+
+				$period = array(
+					"d" => 0,
+					"m" => 0,
+					"y" => 0
+				);
+				$val_period = $product->get('validaty_period');
+				$p_stamp = substr($val_period, 0);
+				$p_time = substr($val_period, 1);
+
+				// Store membership in history
+				$history = $profile->get("membership_history");
+				foreach ($history as $hn_idx => $hn) {
+					if (isset($hn['current']) && $hn['current']) {
+						unset($history[$hn_idx]);
+						break;
+					}
+				}
+
+				$history_node = array(
+					'membership'          => $membership,
+					'membership_exp_date' => empty($membership) ? 0 : $membership_exp_date,
+					'date'                => time(),
+					'current'             => false,
+				);
+
+				$history[] = $history_node;
+				$profile->set("membership_history", $history);
+
+				if ($membership != $product->get("selling_membership")) {
+					$profile->set("membership", $product->get("selling_membership"));
+					$c_time = time();
+					$period['d'] = date('d', $c_time);
+					$period['m'] = date('m', $c_time);
+					$period['y'] = date('Y', $c_time);
+
+				} else {
+					$temp_exp_date = $membership_exp_date > 0 ? $membership_exp_date : time();
+					$period['d'] = date('d', $temp_exp_date);
+					$period['m'] = date('m', $temp_exp_date);
+					$period['y'] = date('Y', $temp_exp_date);
+				}
+
+				switch ($p_stamp) {
+					case "D":
+						$period['d'] = (int)$period['d'] + (int)$p_time;			
+						break;
+
+					case "W":
+						$period['d'] = (int)$period['d'] + (int)$p_time * 7;
+						break;
+
+					case "M":
+						$period['m'] = (int)$period['m'] + (int)$p_time;
+						break;
+
+					case "Y":
+						$period['y'] = (int)$period['y'] + (int)$p_time;
+						break;
+				}
+
+				$exp_date = mktime(0, 0, 0, $period['m'], $period['d'], $period['y']);
+
+				// unset expiration date, if not defined for the product
+				if (empty($p_time)) {
+					$exp_date = 0;
+				}
+
+				$profile->set("membership_exp_date", $exp_date);
+
+				$history_node = array(
+					'membership'          => $profile->get("membership"),
+					'membership_exp_date' => $exp_date,
+					'date'                => time(),
+					'current'             => true,
+				);
+
+				$history[] = $history_node;
+				$profile->set('membership_history', $history);
+
 				$profile->update();
 				break;
 			}
 		}
 	}
+
+	protected function calculateGlobalDiscount($subtotal)
+	{
+        $global_discount = 0;
+
+        $gd = new XLite_Module_WholesaleTrading_Model_GlobalDiscount();
+        $gd->set('defaultOrder', 'subtotal');
+        $profile = $this->get("profile");
+        $membership = (is_object($profile)) ? $profile->get("membership") : "";
+        $discounts = $gd->findAll('subtotal < ' . $subtotal . ' AND (membership = \'all\' OR membership = \'' . $membership . '\')');
+
+        if (count($discounts) != 0) {
+            $applied_gd = $discounts[count($discounts) - 1];
+
+            if ($applied_gd->get('discount_type') == 'a') {
+                $global_discount = $applied_gd->get('discount');
+
+            } elseif ($applied_gd->get('discount_type') == 'p') {
+                $global_discount = $this->formatCurrency(($subtotal * $applied_gd->get('discount')) / 100);
+            }
+
+            $this->_applied_global_discount = $applied_gd;
+
+        } else {
+            $this->_applied_global_discount = new XLite_Module_WholesaleTrading_Model_GlobalDiscount();
+        }
+
+		return $global_discount;
+	}
+
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+

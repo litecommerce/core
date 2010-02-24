@@ -79,21 +79,20 @@ class XLite_Module_WholesaleTrading_Model_ProductAccess extends XLite_Model_Abst
 	{
 		// $group - membership level
 		// $access - show, show price, sell
-		require_once LC_MODULES_DIR . 'WholesaleTrading' . LC_DS . 'encoded.php';
-		$acc_list = func_wholesaleTrading_get_access_list($this->get($access));
-		if (true === $expand_all) {
-			if (in_array("all", $acc_list)) {
-				return true;
-			}	
-			if ($this->auth->is("logged") && in_array("registered", $acc_list)) {
-				return true;
-			}
+		$acc_list = explode(',', $this->get($access));
+
+		$result = false;
+		if (
+			true === $expand_all
+			&& (in_array("all", $acc_list) || ($this->auth->is("logged") && in_array("registered", $acc_list)))
+		) {
+			$result = true;
+	
+		} elseif($group != '') {
+			$result = in_array($group, $acc_list);
 		}
-		if ($group != "") {
-			return in_array($group, $acc_list);
-		} else {
-			return false;
-		}	
+
+		return $result;
 	}
 
 	function _export($layout, $delimiter) // {{{

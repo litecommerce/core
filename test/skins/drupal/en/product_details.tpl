@@ -93,7 +93,7 @@ function isValid()
 
             <tr IF="availableForSale" id="addToCartButton">
               <td>
-                <widget class="XLite_View_Button" label="Add to Cart" type="button" img="cart4button.gif" font="FormButton">
+                <widget class="XLite_View_Button" label="Add to Cart" type="button">
 			        </td>
         			<td IF="!config.General.add_on_mode">
         				<widget module="WishList" template="modules/WishList/add.tpl">

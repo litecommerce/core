@@ -57,20 +57,20 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Product extends XLite_Contr
 
 	function action_update_access()
 	{
-		require_once LC_MODULES_DIR . 'WholesaleTrading' . LC_DS . 'encoded.php';
-		
 		$pa = new XLite_Module_WholesaleTrading_Model_ProductAccess();
 		$found = false;
 		if ($pa->find("product_id='" . intval($this->product_id) . "'")) {
 			$found = true;
 		}
+
 		$pa->set("product_id", $this->product_id);
-		$pa->set("show_group", func_wholesaleTrading_parse_access($_REQUEST['access_show']));
-		$pa->set("show_price_group", func_wholesaleTrading_parse_access($_REQUEST['access_show_price']));
-		$pa->set("sell_group", func_wholesaleTrading_parse_access($_REQUEST['access_sell']));
+		$pa->set("show_group", $this->parseAccess($_REQUEST['access_show']));
+		$pa->set("show_price_group", $this->parseAccess($_REQUEST['access_show_price']));
+		$pa->set("sell_group", $this->parseAccess($_REQUEST['access_sell']));
 		
 		if (true === $found) {
 			$pa->update();
+
 		} else {
 			$pa->create();
 		}	
@@ -165,6 +165,26 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Product extends XLite_Contr
 	function getValidatyPeriod()
 	{
 		return substr($this->getProduct()->get('validaty_period'), 1);
+	}
+
+	protected function parseAccess($groups)
+	{
+		$result = null;
+
+	    if (empty($groups)) {
+    	    $result = '';
+
+	    } elseif (in_array('all', $groups)) {
+    	    $result = 'all';
+
+	    } elseif (in_array('registered', $groups)) {
+        	$result = 'registered';
+
+	    } else {
+			$result = implode(',', $groups);
+		}
+
+		return $result;
 	}
 }
 

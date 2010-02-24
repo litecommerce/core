@@ -130,9 +130,8 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 			return $found_options;
 		}	
 
-		require_once LC_MODULES_DIR . 'WholesaleTrading' . LC_DS . 'encoded.php';
-		func_wholesaleTrading_selections($dst, $found_options);
-		
+		$this->getSelections($dst, $found_options);
+
 		// remove options marked as exceptions {{{ 
 		$exceptions_list = $this->get("optionExceptions");
 		if (!empty($exceptions_list)) {
@@ -488,9 +487,26 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
         return $p;
 	}
 
+	protected function getSelections($src, &$result, $tmp_val = null)
+	{
+	    if (is_null($tmp_val)) {
+    	    $tmp_val = array();
+	    }
+
+	    if (is_array($src[0])) {
+		    foreach ($src[0] as $el) {
+		        $c = array_slice($src, 1);
+    		    $t2 = $tmp_val;
+	        	$t2[] = $el;
+		        if (count($c) > 0) {
+    		        $this->getSelections($c, $result, $t2);
+
+	        	} else {
+		            $result[] = $t2;
+    		    }
+			}
+	    }
+	}
 
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+

@@ -24,6 +24,14 @@
  */
 class XLite_Module_DetailedImages_View_Gallery extends XLite_View_Abstract
 {
+    /**
+     * Light box library images directory
+     * 
+     * @var    string
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     public $lightBoxImagesDir = null;
 
     /**
