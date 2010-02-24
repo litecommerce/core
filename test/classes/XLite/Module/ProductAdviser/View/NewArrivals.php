@@ -39,32 +39,193 @@
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
 /**
-* CNewArrivalsProducts description.
+* NewArrivals widget
 *
 * @package Module_ProductAdviser
 * @access public
 * @version $Id$
 */
-class XLite_Module_ProductAdviser_View_CNewArrivalsProducts extends XLite_View_Abstract
+class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 {	
-	public $productsNumber = 0;	
+	/**
+	 * Available display modes list
+	 * 
+	 * @var    array
+	 * @access protected
+	 * @see    ____var_see____
+	 * @since  3.0.0
+	 */
+	protected $display_modes = array(
+		'menu'   => 'Sidebar box menu',
+		'dialog' => 'Dialog box',
+	);
+
+	public $productsNumber = 0;
+
 	public $additionalPresent = false;
 
-    function isVisible()
+	/**
+	 * Get widget title
+	 * 
+	 * @return string
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	protected function getHead()
+	{
+		return 'New arrivals';
+	}
+
+	/**
+	 * Get widget directory
+	 * 
+	 * @return string
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	protected function getDir()
+	{
+		return 'modules/ProductAdviser/NewArrivals/' . $this->getDisplayMode();
+	}
+
+	/**
+	 * Initilization
+	 * 
+	 * @return void
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	public function initView()
+	{
+		parent::initView();
+
+		$this->body = $this->getDir() . '/body.tpl';
+	}
+
+	public function isVisible()
+	{
+		$visible = in_array($this->target, array(null, 'main', 'category', 'product', 'cart', 'RecentlyViewed', 'NewArrivals'))
+			&& ($this->config->ProductAdviser->number_new_arrivals > 0)
+			&& $this->isDisplayed();
+
+		if ($visible) {
+			$this->getNewArrivalsProducts();
+
+			$visible = ($this->productsNumber > 0) ? true : false;
+		}
+
+		return $visible;
+	}
+
+	/**
+	 * Define widget parameters
+	 * 
+	 * @return void
+	 * @access protected
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	protected function defineWidgetParams()
+	{
+		parent::defineWidgetParams();
+
+		$this->widgetParams += array(
+			'use_node'     => new XLite_Model_WidgetParam_Checkbox('use_node', 0, 'Show category-specific new arrivals'),
+			'display_mode' => new XLite_Model_WidgetParam_List('display_mode', 'menu', 'Display mode', $this->display_modes)
+		);
+
+	}
+
+	/**
+	 * Get widget display mode parameter (menu | dialog)
+	 * 
+	 * @return string
+	 * @access protected
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	protected function getDisplayMode()
+	{	
+		if (isset($this->display_mode)) {
+			$displayMode = $this->display_mode;
+
+		} else {
+			$displayMode = $this->config->ProductAdviser->new_arrivals_type;
+		}
+
+		return $displayMode;
+	}
+
+	/**
+	 * Get Value of 'Show category-specific new arrivals' option
+	 * 
+	 * @return bool
+	 * @access protected
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	protected function getCategorySpecificArrivals()
+	{
+		$return = (isset($this->use_node) ? 'Y' : $this->config->ProductAdviser->category_new_arrivals);
+		echo $return;
+		return $return;
+	}
+
+    /**
+     * Check if widget could be displayed
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    function isDisplayed()
+	{
+		$displayMode = $this->getDisplayMode();
+
+		// Display on CMS side
+		if (empty($this->display_in)) {
+			$return = true;
+
+		// Display as a dialog on target = 'NewArrivals'
+		} elseif ('center' == $this->display_in && 'dialog' == $displayMode && 'NewArrivals' == $this->target) {
+			$return = true;
+
+		// Display as a menu or dialog except target = 'NewArrivals'
+		} elseif (!empty($this->display_in) && $displayMode == $this->display_in && 'NewArrivals' != $this->target) {
+			$return = true;
+
+		} else {
+			$return = false;
+		}
+
+		return $return;
+	}
+
+    /**
+     * Check if widget should be displayed in dialog box (not in sidebar box)
+     * 
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    function isDisplayedDialog()
     {
-    	if ($this->config->getComplex('ProductAdviser.number_new_arrivals') <= 0) {
-    		return false;
-    	}
-
-    	$this->getNewArrivalsProducts();
-
-        return ($this->productsNumber > 0) ? true : false;
+        if ("dialog" == $this->getDisplayMode() && isset($this->dialog)) {
+        	return true;
+        } else {
+        	return isset($this->target) ? true : false;
+        }
     }
 
     function getDialogCategory()
     {
-        if (isset($_REQUEST["target"]) && ($_REQUEST["target"] == "category" || $_REQUEST["target"] == "product") && isset($_REQUEST["category_id"]) && intval($_REQUEST["category_id"]) > 0) {
-        	$category = new XLite_Model_Category(intval($_REQUEST["category_id"]));
+        if (isset($this->target) && ($this->target == "category" || $this->target == "product") && isset($this->category_id) && intval($this->category_id) > 0) {
+        	$category = new XLite_Model_Category(intval($this->category_id));
         	return $category;
         }
         return null;
@@ -72,36 +233,10 @@ class XLite_Module_ProductAdviser_View_CNewArrivalsProducts extends XLite_View_A
 
     function getDialogProductId()
     {
-        if (isset($_REQUEST["target"]) && $_REQUEST["target"] == "product" && isset($_REQUEST["product_id"]) && intval($_REQUEST["product_id"]) > 0) {
-        	return intval($_REQUEST["product_id"]);
+        if (isset($this->target) && $this->target == "product" && isset($this->product_id) && intval($this->product_id) > 0) {
+        	return intval($this->product_id);
         }
         return null;
-    }
-
-    function isDisplayedDialog()
-    {
-        if ($this->config->getComplex('ProductAdviser.new_arrivals_type') == "dialog" && isset($this->dialog)) {
-        	return true;
-        } else {
-        	return isset($this->target) ? true : false;
-        }
-    }
-
-    function isDisplayed()
-    {
-        if 
-        (
-        	($this->config->getComplex('ProductAdviser.new_arrivals_type') == "dialog" && !isset($this->dialog)) 
-        	||
-        	($this->config->getComplex('ProductAdviser.new_arrivals_type') != "dialog" && isset($this->dialog)) 
-        )
-        {
-        	return (isset($this->target) && ($this->target == "NewArrivals") && isset($this->dialog)) ? true : false;
-        }
-        else
-        {
-        	return (isset($this->target) && ($this->target != "NewArrivals")) ? false : true;
-        }
     }
 
     function inCategory(&$product, $category)
@@ -123,12 +258,12 @@ class XLite_Module_ProductAdviser_View_CNewArrivalsProducts extends XLite_View_A
 
 	function recursiveArrivalsSearch($_category)
 	{
-		if (!$this->isDisplayedDialog() && $this->additionalPresent && count($this->_new_arrival_products) >= $this->config->getComplex('ProductAdviser.number_new_arrivals')) {
+		if (!$this->isDisplayedDialog() && $this->additionalPresent && count($this->_new_arrival_products) >= $this->config->ProductAdviser->number_new_arrivals) {
 			return true;
 		}
 
 		$timeLimit = time();
-		$timeCondition = $this->config->getComplex('ProductAdviser.period_new_arrivals') * 3600;
+		$timeCondition = $this->config->ProductAdviser->period_new_arrivals * 3600;
 		$category_id = $_category->get("category_id");
 
 		$obj = new XLite_Module_ProductAdviser_Model_ProductNewArrivals();
@@ -152,7 +287,7 @@ class XLite_Module_ProductAdviser_View_CNewArrivalsProducts extends XLite_View_A
 
 			$obj = new XLite_Module_ProductAdviser_Model_ProductNewArrivals($product_id);
 			if ($this->checkArrivalCondition($_category, $obj)) {
-				if (!$this->isDisplayedDialog() && count($this->_new_arrival_products) >= $this->config->getComplex('ProductAdviser.number_new_arrivals')) {
+				if (!$this->isDisplayedDialog() && count($this->_new_arrival_products) >= $this->config->ProductAdviser->number_new_arrivals) {
 					$this->additionalPresent = true;
 					return true;
 				}
@@ -199,12 +334,8 @@ class XLite_Module_ProductAdviser_View_CNewArrivalsProducts extends XLite_View_A
 
     function getNewArrivalsProducts()
     {
-        if (!$this->isDisplayed()) {
-        	$this->productsNumber = 0;
-        	return array();
-        }
+		$products = $this->xlite->NewArrivalsProducts;
 
-    	$products = $this->xlite->get("NewArrivalsProducts");
         if (isset($products)) {
         	$this->productsNumber = count($products);
             return $products;
@@ -215,7 +346,7 @@ class XLite_Module_ProductAdviser_View_CNewArrivalsProducts extends XLite_View_A
 
 
 		// recursive search
-		if ($this->config->getComplex('ProductAdviser.category_new_arrivals')) {
+		if ($this->getCategorySpecificArrivals()) {
 			$this->_new_arrival_products = array();
 			$this->additionalPresent = false;
 
@@ -247,12 +378,12 @@ class XLite_Module_ProductAdviser_View_CNewArrivalsProducts extends XLite_View_A
 			return $products;
 		}
 
-        $maxViewed = $this->config->getComplex('ProductAdviser.number_new_arrivals');
+        $maxViewed = $this->config->ProductAdviser->number_new_arrivals;
         $products = array();
         $productsStats = array();
         $statsOffset = 0;
         $stats = new XLite_Module_ProductAdviser_Model_ProductNewArrivals();
-        $timeCondition = $this->config->getComplex('ProductAdviser.period_new_arrivals') * 3600;
+        $timeCondition = $this->config->ProductAdviser->period_new_arrivals * 3600;
 		$timeLimit = time();
         $maxSteps = ($this->isDisplayedDialog()) ? 1 : ceil($stats->count("new='Y' OR ((updated + '$timeCondition') > '$timeLimit')") / $maxViewed);
 

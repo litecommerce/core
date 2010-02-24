@@ -50,7 +50,7 @@
 {end:}
 {if:option.isName(#new_arrivals_type#)}
 <select name="{option.name}">
-    <option value="box" selected="{option.isSelected(#box#)}">a side box</option>
+    <option value="menu" selected="{option.isSelected(#box#)}">a side box</option>
     <option value="dialog" selected="{option.isSelected(#dialog#)}">the main section</option>
 </select>
 {end:}

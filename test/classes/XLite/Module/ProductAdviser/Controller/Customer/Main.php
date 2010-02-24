@@ -59,7 +59,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Main extends XLite_Control
         parent::init();
     }
 
-	function getPriceNotificationSaved($product_id)
+	function getPriceNotificationSaved($product_id = 0)
 	{
 		if (!$this->config->getComplex('ProductAdviser.customer_notifications_enabled')) {
 			return true;

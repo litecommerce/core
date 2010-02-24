@@ -1,10 +1,10 @@
-{* Recently viewed menu body *}
+{* New Arrivals menu body *}
 <ol>
-  <li FOREACH="recentliesProducts,id,product">
+  <li FOREACH="newArrivalsProducts,id,product">
     <a href="cart.php?target=product&amp;product_id={product.product_id}&amp;category_id={product.category.category_id}" class="SidebarItems">{product.name:h}</a>
   </li>
 </ol>
-
 <div IF="additionalPresent">
-  <a href="cart.php?target=RecentlyViewed" onClick="this.blur()">All viewed...</a>
+    <a href="cart.php?target=NewArrivals" onClick="this.blur()">All new arrivals...</a>
 </div>
+
