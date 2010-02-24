@@ -55,11 +55,20 @@ class XLite_View_Subcategories extends XLite_View_Dialog
     {
         parent::initView();
 
+        // Template files are:
+        // - "category_subcategories.tpl" - Icons
+        // - "category_subcategories_list.tpl" - List
         $this->body = $this->config->General->subcategories_look;
         $this->visible = in_array($this->target, array('main', 'category')) && $this->getCategory()->getSubcategories();
 
         $this->showLocationPath = true;
         $this->mode = '';
     }
+
+    public function getCSSFiles()
+    {
+        return array('category_subcategories.css');
+    }
+
 }
 

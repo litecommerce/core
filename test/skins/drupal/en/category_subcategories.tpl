@@ -1,17 +1,18 @@
 {* SVN $Id$ *}
-<table IF="category.getSubcategories()" cellpadding="5" cellspacing="0" border="0" width="100%">
-  <tbody FOREACH="split(category.getSubcategories(),4),row">
-    <tr>
-      <td valign="middle" FOREACH="row,subcategory" align="center" width="25%">
-        <a href="{buildURL(#category#,##,_ARRAY_(#category_id#^subcategory.category_id))}" IF="subcategory"><span IF="subcategory.hasImage()"><img src="{subcategory.getImageURL()}" border="0" alt=""></span><span IF="!subcategory.hasImage()"><img src="images/no_image.gif" border="0" alt=""></span></a>&nbsp;
-      </td>
-    </tr>
-    <tr>
-      <td valign="top" FOREACH="row,subcategory" align="center" width="25%">
-        <a href="{buildURL(#category#,##,_ARRAY_(#category_id#^subcategory.category_id))}" IF="subcategory"><FONT class="ItemsList">{subcategory.name}</FONT></a>
-        <br>
-        <br>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="lc-subcategory-icons" IF="category.getSubcategories()">
+  <ul>
+    <li FOREACH="category.getSubcategories(),subcategory">
+      <div class="lc-subcategory">
+        <div class="lc-subcategory-image">
+          <a href="{buildURL(#category#,##,_ARRAY_(#category_id#^subcategory.category_id))}">
+            <img src="{subcategory.getImageURL()}" border="0" alt="{subcategory.name}" IF="subcategory.hasImage()" />
+            <img src="images/no_image.gif" border="0" alt="{subcategory.name}" IF="!subcategory.hasImage()" />
+          </a>
+        </div>
+        <div class="lc-subcategory-name">
+          <a href="{buildURL(#category#,##,_ARRAY_(#category_id#^subcategory.category_id))}">{subcategory.name}</a>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
