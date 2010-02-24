@@ -216,8 +216,10 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
     		$categories = $this->getCategories(null, null, false);
     		if ($this->_checkSafetyMode()) {
     			$this->xlite->set("adminZone", $adminZone);
-    		}
-    		$this->_ProductMainCategory = $categories[0];
+			}
+			if (isset($categories[0])) {
+				$this->_ProductMainCategory = $categories[0];
+			}
     	}
     	return $this->_ProductMainCategory;
     }

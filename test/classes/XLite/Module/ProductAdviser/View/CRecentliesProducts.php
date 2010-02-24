@@ -44,26 +44,79 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_ProductAdviser_View_CRecentliesProducts extends XLite_View_Abstract
+class XLite_Module_ProductAdviser_View_CRecentliesProducts extends XLite_View_SideBarBox
 {	
-	public $productsNumber = 0;	
+	/**
+	 * The number of products displayed by widget 
+	 * 
+	 * @var    integer
+	 * @access public
+	 * @see    ____var_see____
+	 * @since  3.0.0
+	 */
+	public $productsNumber = 0;
+
+	/**
+	 * Flag that means if it is need to display link 'See more...'
+	 * 
+	 * @var    mixed
+	 * @access public
+	 * @see    ____var_see____
+	 * @since  3.0.0
+	 */
 	public $additionalPresent = false;
 
-    function isVisible()
-    {
-    	if ($this->config->getComplex('ProductAdviser.number_recently_viewed') <= 0) {
-    		return false;
-    	}
+    /**
+     * Check if widget is visible 
+     * 
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isVisible()
+	{
+		$return = false;
 
-    	$this->getRecentliesProducts();
+		if ( in_array($this->target, array(null, 'main', 'category', 'product', 'cart'))
+			&& ($this->config->ProductAdviser->number_recently_viewed > 0) ) {
+			$this->getRecentliesProducts();
+			$return = ($this->productsNumber > 0) ? true : false;
+		}
 
-        return ($this->productsNumber > 0) ? true : false;
-    }
+        return $return;
+	}
+
+	/**
+	 * Get widget title 
+	 * 
+	 * @return string
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	public function getHead()
+	{
+		return 'Recently viewed';
+	}
+
+	/**
+	 * Get widget's template directory 
+	 * 
+	 * @return string
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	public function getDir()
+	{
+		return 'modules/ProductAdviser/RecentlyViewed';
+	}
 
     function getDialogProductId()
     {
-        if (isset($_REQUEST["target"]) && $_REQUEST["target"] == "product" && isset($_REQUEST["product_id"]) && intval($_REQUEST["product_id"]) > 0) {
-        	return intval($_REQUEST["product_id"]);
+        if (isset($this->target) && $this->target == "product" && isset($this->product_id) && intval($this->product_id) > 0) {
+        	return intval($this->product_id);
         }
         return null;
     }
@@ -78,7 +131,7 @@ class XLite_Module_ProductAdviser_View_CRecentliesProducts extends XLite_View_Ab
 
 		$product_id = $this->getDialogProductId();
 
-        $maxViewed = $this->config->getComplex('ProductAdviser.number_recently_viewed');
+        $maxViewed = $this->config->ProductAdviser->number_recently_viewed;
         $products = array();
         $productsStats = array();
         $statsOffset = 0;

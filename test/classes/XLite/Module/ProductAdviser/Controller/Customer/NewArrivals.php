@@ -38,7 +38,7 @@
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
 /**
-* Dialog_NewArrivals description.
+* New arrivals page controller
 *
 * @package Module_ProductAdviser
 * @access public
@@ -46,9 +46,32 @@
 */
 class XLite_Module_ProductAdviser_Controller_Customer_NewArrivals extends XLite_Controller_Abstract
 {
-}
+    /**
+     * Get page instance data (name and URL)
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageInstanceData()
+    {
+        $this->target = 'NewArrivals';
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+        return parent::getPageInstanceData();
+    }
+
+    /**
+     * Get page type name
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageTypeName()
+    {
+        return 'New Arrivals';
+	}
+
+}

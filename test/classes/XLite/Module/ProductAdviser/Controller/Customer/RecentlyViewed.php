@@ -38,7 +38,7 @@
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
 /**
-* Dialog_RecentlyViewed description.
+* Recently viewed page controller
 *
 * @package Module_ProductAdviser
 * @access public
@@ -46,8 +46,52 @@
 */
 class XLite_Module_ProductAdviser_Controller_Customer_RecentlyViewed extends XLite_Controller_Abstract
 {	
+	/**
+	 * The number of products displayed on widget page
+	 * 
+	 * @var    integer
+	 * @access public
+	 * @see    ____var_see____
+	 * @since  3.0.0
+	 */
 	public $productsNumber = 0;
 
+    /**
+     * Get page instance data (name and URL)
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageInstanceData()
+    {
+        $this->target = 'RecentlyViewed';
+
+        return parent::getPageInstanceData();
+    }
+
+    /**
+     * Get page type name
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageTypeName()
+    {
+        return 'Recently viewed products';
+    }
+
+    /**
+     * Get the list of recently visited products
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     function getRecentliesProducts()
     {
     	$products = $this->xlite->get("RecentliesProducts");
@@ -67,8 +111,3 @@ class XLite_Module_ProductAdviser_Controller_Customer_RecentlyViewed extends XLi
         return $products;
 	}
 }
-
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
