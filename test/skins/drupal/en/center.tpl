@@ -12,9 +12,9 @@
 <!-- [/page top] }}} -->
 
 <!-- [catalog] {{{ -->
-<widget class="XLite_View_Subcategories" template="common/dialog.tpl" />
-<widget class="XLite_View_CategoryProducts" template="common/dialog.tpl">
-<widget class="XLite_View_CategoryEmpty" template="common/dialog.tpl">
+<widget class="XLite_View_Subcategories" />
+<widget class="XLite_View_CategoryProducts" />
+<widget class="XLite_View_CategoryEmpty" />
 <!-- [/catalog] }}} -->
 
 <!-- [profile] {{{ -->

@@ -29,5 +29,5 @@
 
 </form>
 
-<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_NotifyForm">
-<widget module="ProductAdviser" template="modules/ProductAdviser/PriceNotification/notify_form.tpl" visible="{!priceNotificationSaved}">
+<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_NotifyForm" />
+<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_PriceNotifyForm" />

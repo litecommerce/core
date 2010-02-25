@@ -1,5 +1,5 @@
 {* SVN $Id$ *}
-<tr IF="priceNotificationEnabled&product.priceNotificationAllowed">
+<tr>
   <td>&nbsp;</td>
-  <td>(<a href="javascript: PriceNotifyMe()"><u>Notify me</u></a> when the price drops)</td>
+  <td>(<a href="javascript:void(PriceNotifyMe({product.product_id}));">Notify me</a> when the price drops)</td>
 </tr>

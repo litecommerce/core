@@ -83,7 +83,7 @@ function isValid()
             </tr>
 
             <widget class="XLite_View_Price" product="{product}" template="common/price_table.tpl">
-            <widget module="ProductAdviser" template="modules/ProductAdviser/PriceNotification/product_button.tpl" visible="{!priceNotificationSaved}">
+            <widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_PriceNotifyLink" visible="{!priceNotificationSaved}" />
             <widget module="ProductOptions" template="modules/ProductOptions/product_options.tpl" IF="product.hasOptions()&!product.showExpandedOptions"/>
             <widget module="WholesaleTrading" template="modules/WholesaleTrading/expanded_options.tpl" IF="product.hasOptions()&product.showExpandedOptions"/>
         		<widget module="WholesaleTrading" template="modules/WholesaleTrading/extra.tpl">
@@ -108,5 +108,5 @@ function isValid()
   </table>
 </form>
 
-<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_NotifyForm">
-<widget module="ProductAdviser" template="modules/ProductAdviser/PriceNotification/notify_form.tpl" visible="{!priceNotificationSaved}">
+<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_NotifyForm" />
+<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_PriceNotifyForm" visible="{!priceNotificationSaved}" />
