@@ -3,19 +3,50 @@ function LC_SmartySettings()
 	set sw=2
 	set sts=2
 	set et
+
+	nnoremap <C-a> :call SmartyDocFile()<CR>
+endfunction
+
+function LC_CSSSettings()
+    set ts=2
+    set sw=2
+    set sts=2
+    set et
+
+    nnoremap <C-a> :call CSSDocFile()<CR>
+endfunction
+
+function LC_JSSettings()
+    set ts=4
+    set sw=4
+    set sts=4
+    set et
+
+    nnoremap <C-a> :call JSDocFile()<CR>
+endfunction
+
+function LC_PHPSettings()
+	inoremap <C-a> <C-R>=ClassName()<CR>
 endfunction
 
 au Filetype smarty call LC_SmartySettings()
+au Filetype php call LC_PHPSettings()
+au Filetype css call LC_CSSSettings()
+au Filetype javascript call LC_JSSettings()
+
+
+let g:pdv_cfg_CommentHead_Smarty = "{**"
+let g:pdv_cfg_CommentTail_Smarty = " *}"
 
 " PHP documentor tags
 let g:pdv_cfg_Category   = "Litecommerce"
 let g:pdv_cfg_Package    = "Litecommerce"
 let g:pdv_cfg_Author     = "Creative Development LLC <info@cdev.ru>"
-let g:pdv_cfg_Copyright  = "Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved"
-let g:pdv_cfg_License    = "http://www.qtmsoft.com/xpayments_eula.html X-Payments license agreement"
+let g:pdv_cfg_Copyright  = "Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved"
+let g:pdv_cfg_License    = "http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)"
 let g:pdv_cfg_Version    = "SVN: $Id$"
 let g:pdv_cfg_Since      = "3.0.0"
-let g:pdv_cfg_Link       = "http://www.qtmsoft.com/"
+let g:pdv_cfg_Link       = "http://www.litecommerce.com/"
 
 let g:pdv_cfg_FileSee    = "____file_see____"
 let g:pdv_cfg_ClassSee   = "____class_see____"
@@ -34,7 +65,6 @@ let g:pdv_cfg_php4guess  = 0
 func! ClassName()
 	return substitute(substitute(substitute(expand("%:p"), '.\+src/lib/', '', 'g'), '/', '_', 'g'), '.php', '', '')
 endfunc
-inoremap <C-a> <C-R>=ClassName()<CR>
 
 func! CheckCS()
 	let parts = split(getcwd(), '\/')
@@ -48,6 +78,94 @@ func! CheckCS()
 			echo e
 	    endif
 	endfor
+endfunc
+
+func! SmartyDocFile()
+    " Line for the comment to begin
+    let commentline = 1
+
+    let l:indent = matchstr(getline("."), '^\ *')
+
+    exe "norm! " . commentline . "G$"
+
+    " Local indent
+    let l:txtBOL = g:pdv_cfg_BOL . indent
+
+    exe l:txtBOL . g:pdv_cfg_CommentHead_Smarty . g:pdv_cfg_EOL
+
+	exe l:txtBOL . g:pdv_cfg_Commentn . g:pdv_cfg_FileTitle . g:pdv_cfg_EOL
+    exe l:txtBOL . g:pdv_cfg_Commentn . " " . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@author    " . g:pdv_cfg_Author g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@copyright " . g:pdv_cfg_Copyright . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@license   " . g:pdv_cfg_License . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@version   " . g:pdv_cfg_Version . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@link      " . g:pdv_cfg_Link . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@since     " . g:pdv_cfg_Since . g:pdv_cfg_EOL
+
+    " Close the comment block.
+    exe l:txtBOL . g:pdv_cfg_CommentTail_Smarty . g:pdv_cfg_EOL
+
+    exe ":0"
+    exe ":delete"
+
+endfunc
+
+func! CSSDocFile()
+    " Line for the comment to begin
+    let commentline = 1
+
+    let l:indent = matchstr(getline("."), '^\ *')
+
+    exe "norm! " . commentline . "G$"
+
+    " Local indent
+    let l:txtBOL = g:pdv_cfg_BOL . indent
+
+    exe l:txtBOL . g:pdv_cfg_CommentHead . g:pdv_cfg_EOL
+
+	exe l:txtBOL . g:pdv_cfg_Commentn . g:pdv_cfg_FileTitle . g:pdv_cfg_EOL
+    exe l:txtBOL . g:pdv_cfg_Commentn . " " . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@author    " . g:pdv_cfg_Author g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@copyright " . g:pdv_cfg_Copyright . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@license   " . g:pdv_cfg_License . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@version   " . g:pdv_cfg_Version . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@link      " . g:pdv_cfg_Link . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@since     " . g:pdv_cfg_Since . g:pdv_cfg_EOL
+
+    " Close the comment block.
+    exe l:txtBOL . g:pdv_cfg_CommentTail . g:pdv_cfg_EOL
+	exe ":0"
+	exe ":delete"
+
+endfunc
+
+func! JSDocFile()
+    " Line for the comment to begin
+    let commentline = 1
+
+    let l:indent = matchstr(getline("."), '^\ *')
+
+    exe "norm! " . commentline . "G$"
+
+    " Local indent
+    let l:txtBOL = g:pdv_cfg_BOL . indent
+
+    exe l:txtBOL . g:pdv_cfg_CommentHead . g:pdv_cfg_EOL
+
+	exe l:txtBOL . g:pdv_cfg_Commentn . g:pdv_cfg_FileTitle . g:pdv_cfg_EOL
+    exe l:txtBOL . g:pdv_cfg_Commentn . " " . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@author    " . g:pdv_cfg_Author g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@copyright " . g:pdv_cfg_Copyright . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@license   " . g:pdv_cfg_License . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@version   " . g:pdv_cfg_Version . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@link      " . g:pdv_cfg_Link . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@since     " . g:pdv_cfg_Since . g:pdv_cfg_EOL
+
+    " Close the comment block.
+    exe l:txtBOL . g:pdv_cfg_CommentTail . g:pdv_cfg_EOL
+	exe ":0"
+	exe ":delete"
+
 endfunc
 
 :nmap <F10> :call CheckCS()<CR>

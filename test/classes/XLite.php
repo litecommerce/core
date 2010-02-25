@@ -4,21 +4,21 @@
 /**
  * Application singleton
  *  
- * @category   Lite Commerce
- * @package    Lite Commerce
- * @subpackage XLite
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @version    SVN: $Id$
- * @link       http://www.qtmsoft.com/
- * @since      3.0.0 EE
+ * @category  Litecommerce
+ * @package   Litecommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
-
 
 /**
  * Application singleton
  * 
- * @package    Lite Commerce
+ * @package    Litecommerce
  * @subpackage XLite
  * @since      3.0.0 EE
  */

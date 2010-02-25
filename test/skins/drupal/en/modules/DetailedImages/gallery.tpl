@@ -1,4 +1,13 @@
-{* SVN $Id$ *}
+{**
+ * Gallery widget
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
 <ul class="di-gallery">
   <li FOREACH="product.getDetailedImages(),image">
     <a href="{image.imageURL}"><img src="{image.imageURL}" alt="{image.alt:r}" /></a>
