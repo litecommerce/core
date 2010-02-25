@@ -26,6 +26,7 @@ function LC_JSSettings()
 endfunction
 
 function LC_PHPSettings()
+	nnoremap <C-a> :call LC_PhpDocFile()<CR>
 	inoremap <C-a> <C-R>=ClassName()<CR>
 endfunction
 
@@ -39,8 +40,8 @@ let g:pdv_cfg_CommentHead_Smarty = "{**"
 let g:pdv_cfg_CommentTail_Smarty = " *}"
 
 " PHP documentor tags
-let g:pdv_cfg_Category   = "Litecommerce"
-let g:pdv_cfg_Package    = "Litecommerce"
+let g:pdv_cfg_Category   = "LiteCommerce"
+let g:pdv_cfg_Package    = "XLite"
 let g:pdv_cfg_Author     = "Creative Development LLC <info@cdev.ru>"
 let g:pdv_cfg_Copyright  = "Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved"
 let g:pdv_cfg_License    = "http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)"
@@ -63,7 +64,7 @@ let g:pdv_cfg_php4always = 1
 let g:pdv_cfg_php4guess  = 0
 
 func! ClassName()
-	return substitute(substitute(substitute(expand("%:p"), '.\+src/lib/', '', 'g'), '/', '_', 'g'), '.php', '', '')
+	return substitute(substitute(substitute(expand("%:p"), '.\+test/classes/', '', 'g'), '/', '_', 'g'), '.php', '', '')
 endfunc
 
 func! CheckCS()
@@ -90,6 +91,9 @@ func! SmartyDocFile()
 
     " Local indent
     let l:txtBOL = g:pdv_cfg_BOL . indent
+
+    exe l:txtBOL . "{* vim: set ts=2 sw=2 sts=2 et: *}" . g:pdv_cfg_EOL
+    exe l:txtBOL . g:pdv_cfg_EOL
 
     exe l:txtBOL . g:pdv_cfg_CommentHead_Smarty . g:pdv_cfg_EOL
 
@@ -121,6 +125,9 @@ func! CSSDocFile()
     " Local indent
     let l:txtBOL = g:pdv_cfg_BOL . indent
 
+    exe l:txtBOL . "/* vim: set ts=2 sw=2 sts=2 et: */" . g:pdv_cfg_EOL
+    exe l:txtBOL . g:pdv_cfg_EOL
+
     exe l:txtBOL . g:pdv_cfg_CommentHead . g:pdv_cfg_EOL
 
 	exe l:txtBOL . g:pdv_cfg_Commentn . g:pdv_cfg_FileTitle . g:pdv_cfg_EOL
@@ -150,6 +157,9 @@ func! JSDocFile()
     " Local indent
     let l:txtBOL = g:pdv_cfg_BOL . indent
 
+    exe l:txtBOL . "/* vim: set ts=2 sw=2 sts=2 et: */" . g:pdv_cfg_EOL
+    exe l:txtBOL . g:pdv_cfg_EOL
+
     exe l:txtBOL . g:pdv_cfg_CommentHead . g:pdv_cfg_EOL
 
 	exe l:txtBOL . g:pdv_cfg_Commentn . g:pdv_cfg_FileTitle . g:pdv_cfg_EOL
@@ -165,6 +175,52 @@ func! JSDocFile()
     exe l:txtBOL . g:pdv_cfg_CommentTail . g:pdv_cfg_EOL
 	exe ":0"
 	exe ":delete"
+
+endfunc
+
+
+func! LC_PhpDocFile()
+    " Line for the comment to begin
+    let commentline = line (".") - 1
+
+    let l:indent = matchstr(getline("."), '^\ *')
+
+    exe "norm! " . commentline . "G$"
+
+    " Local indent
+    let l:txtBOL = g:pdv_cfg_BOL . indent
+
+	exe l:txtBOL . g:pdv_cfg_vimOpts . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_EOL
+
+
+    exe l:txtBOL . g:pdv_cfg_CommentHead . g:pdv_cfg_EOL
+
+	exe l:txtBOL . g:pdv_cfg_Commentn . "LiteCommerce" . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "NOTICE OF LICENSE" . g:pdv_cfg_EOL
+  	exe l:txtBOL . g:pdv_cfg_Commentn . g:pdv_cfg_EOL
+  	exe l:txtBOL . g:pdv_cfg_Commentn . "This source file is subject to the Open Software License (OSL 3.0)" . g:pdv_cfg_EOL
+  	exe l:txtBOL . g:pdv_cfg_Commentn . "that is bundled with this package in the file LICENSE.txt." . g:pdv_cfg_EOL
+  	exe l:txtBOL . g:pdv_cfg_Commentn . "It is also available through the world-wide-web at this URL:" . g:pdv_cfg_EOL
+  	exe l:txtBOL . g:pdv_cfg_Commentn . "http://opensource.org/licenses/osl-3.0.php" . g:pdv_cfg_EOL
+  	exe l:txtBOL . g:pdv_cfg_Commentn . "If you did not receive a copy of the license and are unable to" . g:pdv_cfg_EOL
+  	exe l:txtBOL . g:pdv_cfg_Commentn . "obtain it through the world-wide-web, please send an email" . g:pdv_cfg_EOL
+  	exe l:txtBOL . g:pdv_cfg_Commentn . "to licensing@litecommerce.com so we can send you a copy immediately." . g:pdv_cfg_EOL
+    exe l:txtBOL . g:pdv_cfg_Commentn . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@category   " . g:pdv_cfg_Category . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@package    " . g:pdv_cfg_Package . g:pdv_cfg_EOL
+    exe l:txtBOL . g:pdv_cfg_Commentn . "@subpackage " . g:pdv_cfg_SubPackage . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@author     " . g:pdv_cfg_Author g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@copyright  " . g:pdv_cfg_Copyright . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@license    " . g:pdv_cfg_License . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@version    " . g:pdv_cfg_Version . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@link       " . g:pdv_cfg_Link . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@see        " . g:pdv_cfg_FileSee . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@since      " . g:pdv_cfg_Since . g:pdv_cfg_EOL
+
+    " Close the comment block.
+    exe l:txtBOL . g:pdv_cfg_CommentTail . g:pdv_cfg_EOL
 
 endfunc
 
