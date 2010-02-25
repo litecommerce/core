@@ -51,7 +51,8 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
 
     function init()
     {
-		$product_id = intval($_REQUEST["product_id"]);
+		$request = $request = XLite_Core_Request::getInstance();
+		$product_id = intval($request->product_id);
 		if (
 			$product_id > 0
 			&& $this->config->ProductAdviser->number_recently_viewed > 0
@@ -202,7 +203,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
 
 	function getPriceNotificationSaved()
 	{
-		if (!$this->config->getComplex('ProductAdviser.customer_notifications_enabled')) {
+		if (!$this->config->ProductAdviser->customer_notifications_enabled) {
 			return true;
 		}
 
@@ -251,14 +252,15 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
 		if (isset($this->rp_bulk) && is_array($this->rp_bulk)) {
 			foreach($this->rp_bulk as $product_id => $pended) {
 				if ($pended) {
-					$_REQUEST["product_id"] = $product_id;
+					$request = XLite_Core_Request::getInstance();
+					$request->product_id = $product_id;
 					$cart = new XLite_Controller_Customer_Cart();
 					$cart->init();
 					$cart->action_add();
 				}
 			}
 
-        	if ($this->config->getComplex('General.redirect_to_cart')) {
+        	if ($this->config->General->redirect_to_cart) {
             	$this->set("returnUrl", "cart.php?target=cart");
 	        }
 		}
@@ -272,7 +274,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
 			$this->config->ProductAdviser->rp_show_buynow
 			& $this->config->ProductAdviser->rp_bulk_shopping
 		) {
-	        $products = (array) $this->getComplex('pager.pageData');
+	        $products = (array) $this->pager->pageData;
     	    foreach ($products as $p) {
         	    if (!$p->get('product')->checkHasOptions()) {
 					$result = true;

@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_ProductAdviser_Controller_Customer_RecentlyViewed extends XLite_Controller_Abstract
+class XLite_Module_ProductAdviser_Controller_Customer_RecentlyViewed extends XLite_Controller_Customer_Abstract
 {	
 	/**
 	 * The number of products displayed on widget page

@@ -15,49 +15,68 @@
  */
 
 /**
- * XLite_Module_ProductAdviser_View_RecentlyViewed 
- * 
- * @package    Lite Commerce
- * @subpackage ____sub_package____
- * @since      3.0.0 EE
- */
+* XLite_Module_ProductAdviser_View_RecentlyViewed
+*
+* @package Module_ProductAdviser
+* @access public
+* @version $Id$
+*/
 class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_SideBarBox
-{
+{	
 	/**
      * Targets this widget is allowed for
      *
      * @var    array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected $allowedTargets = array('main', 'category', 'product', 'cart');
 
+	/**
+	 * The number of products displayed by widget 
+	 * 
+	 * @var    integer
+	 * @access public
+	 * @see    ____var_see____
+	 * @since  3.0.0
+	 */
+	public $productsNumber = 0;
 
 	/**
-     * Get widge title
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getHead()
-    {
-        return 'Recently viewed';
-    }
+	 * Flag that means if it is need to display link 'See more...'
+	 * 
+	 * @var    mixed
+	 * @access public
+	 * @see    ____var_see____
+	 * @since  3.0.0
+	 */
+	public $additionalPresent = false;
 
-    /**
-     * Get widget templates directory
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getDir()
-    {
-        return 'modules/ProductAdviser/RecentlyViewed';
-    }
+	/**
+	 * Get widget title 
+	 * 
+	 * @return string
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	public function getHead()
+	{
+		return 'Recently viewed';
+	}
+
+	/**
+	 * Get widget's template directory 
+	 * 
+	 * @return string
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	public function getDir()
+	{
+		return 'modules/ProductAdviser/RecentlyViewed/menu';
+	}
 
     /**
      * Check if there are product to display
@@ -84,7 +103,6 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_SideBar
 		return ('product' == XLite_Core_Request::getInstance()->target) ? XLite_Core_Request::getInstance()->product_id : null;
     }
 
-
 	/**
      * Check if widget is visible
      *
@@ -98,30 +116,6 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_SideBar
 		return parent::isVisible() && $this->checkProductsToDisplay();
     }
 
-
-     // TODO, FIXME - all of the above routines must be reviewed and refactored
-
-	/**
-	 * The number of products displayed by widget 
-	 * 
-	 * @var    integer
-	 * @access public
-	 * @see    ____var_see____
-	 * @since  3.0.0
-	 */
-	public $productsNumber = 0;
-
-	/**
-	 * Flag that means if it is need to display link 'See more...'
-	 * 
-	 * @var    mixed
-	 * @access public
-	 * @see    ____var_see____
-	 * @since  3.0.0
-	 */
-	public $additionalPresent = false;
-
-	// FIXME - must be refactored
     function getRecentliesProducts()
     {
     	$products = $this->xlite->get("RecentliesProducts");
@@ -188,4 +182,3 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_SideBar
         return $products;
 	}
 }
-
