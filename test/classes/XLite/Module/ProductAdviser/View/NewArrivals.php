@@ -86,7 +86,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
     }
 
     /**
-     * Check passed attributes againest curretn display mode
+     * Check passed attributes againest current display mode
      * 
      * @return bool
      * @access protected
@@ -94,7 +94,10 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
      */
     protected function checkDisplayMode()
     {
-        return $this->attributes[self::IS_EXPORTED] || $this->getDisplayMode() == $this->attributes['displayMode'];
+        return $this->attributes[self::IS_EXPORTED]
+            || $this->isContentDialog()
+            || ( ($this->getDisplayMode() == $this->attributes['displayMode'])
+                && !('menu' == $this->attributes['displayMode'] && 'new_arrivals' == XLite_Core_Request::getInstance()->target) );
     }
 
     /**
@@ -135,9 +138,9 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
      * @access protected
      * @since  3.0.0 EE
      */
-    protected function isDisplayedAsDialog()
+    protected function isContentDialog()
     {
-        return 'dialog' == $this->getDisplayMode() || 'new_arrivals' == XLite_Core_Request::getInstance()->target;
+        return ('dialog' == $this->attributes['displayMode'] && 'new_arrivals' == XLite_Core_Request::getInstance()->target);
     }
 
 
@@ -155,7 +158,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
     {
         parent::__construct($attributes);
 
-        $this->template = 'common/' . ($this->isDisplayedAsDialog() ? 'dialog' : 'sidebar_box') . '.tpl';
+        $this->template = 'common/' . ('dialog' == $this->getDisplayMode() || 'new_arrivals' == XLite_Core_Request::getInstance()->target ? 'dialog' : 'sidebar_box') . '.tpl';
     }
 
     /**
@@ -167,7 +170,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
      */
     public function isVisible()
     {
-        return parent::isVisible() && $this->checkProductsToDisplay() && $this->checkDisplayMode();
+        return parent::isVisible() && $this->checkDisplayMode() && $this->checkProductsToDisplay();
     }
 
 
@@ -192,36 +195,6 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 
     public $additionalPresent = false;
 
-    /**
-     * Check if widget could be displayed
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    /*function isDisplayed()
-	{
-		$displayMode = $this->getDisplayMode();
-
-		// Display on CMS side
-		if (empty($this->display_in)) {
-			$return = true;
-
-		// Display as a dialog on target = 'NewArrivals'
-		} elseif ('center' == $this->display_in && 'dialog' == $displayMode && 'NewArrivals' == $this->target) {
-			$return = true;
-
-		// Display as a menu or dialog except target = 'NewArrivals'
-		} elseif (!empty($this->display_in) && $displayMode == $this->display_in && 'NewArrivals' != $this->target) {
-			$return = true;
-
-		} else {
-			$return = false;
-		}
-
-		return $return;
-	}*/
 
     function getDialogCategory()
     {
@@ -258,8 +231,8 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
     }
 
 	function recursiveArrivalsSearch($_category)
-	{
-		if (!$this->isDisplayedAsDialog() && $this->additionalPresent && count($this->_new_arrival_products) >= $this->config->ProductAdviser->number_new_arrivals) {
+    {
+		if (!$this->isContentDialog() && $this->additionalPresent && count($this->_new_arrival_products) >= $this->config->ProductAdviser->number_new_arrivals) {
 			return true;
 		}
 
@@ -288,7 +261,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 
 			$obj = new XLite_Module_ProductAdviser_Model_ProductNewArrivals($product_id);
 			if ($this->checkArrivalCondition($_category, $obj)) {
-				if (!$this->isDisplayedAsDialog() && count($this->_new_arrival_products) >= $this->config->ProductAdviser->number_new_arrivals) {
+				if (!$this->isContentDialog() && count($this->_new_arrival_products) >= $this->config->ProductAdviser->number_new_arrivals) {
 					$this->additionalPresent = true;
 					return true;
 				}
@@ -345,9 +318,9 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 		$category = $this->getDialogCategory();
 		$product_id = $this->getDialogProductId();
 
+		// Recursive search
+        if ($this->getCategorySpecificArrivals()) {
 
-		// recursive search
-		if ($this->getCategorySpecificArrivals()) {
 			$this->_new_arrival_products = array();
 			$this->additionalPresent = false;
 
@@ -386,33 +359,33 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
         $stats = new XLite_Module_ProductAdviser_Model_ProductNewArrivals();
         $timeCondition = $this->config->ProductAdviser->period_new_arrivals * 3600;
 		$timeLimit = time();
-        $maxSteps = ($this->isDisplayedAsDialog()) ? 1 : ceil($stats->count("new='Y' OR ((updated + '$timeCondition') > '$timeLimit')") / $maxViewed);
+        $maxSteps = ($this->isContentDialog()) ? 1 : ceil($stats->count("new='Y' OR ((updated + '$timeCondition') > '$timeLimit')") / $maxViewed);
 
         for ($i=0; $i<$maxSteps; $i++) {
-        	$limit = ($this->isDisplayedAsDialog()) ? null : "$statsOffset, $maxViewed";
-        	$productsStats = $stats->findAll("new='Y' OR ((updated + '$timeCondition') > '$timeLimit')", null, null, $limit);
+        	$limit = ($this->isContentDialog()) ? null : "$statsOffset, $maxViewed";
+            $productsStats = $stats->findAll("new='Y' OR ((updated + '$timeCondition') > '$timeLimit')", null, null, $limit);
         	foreach ($productsStats as $ps) {
 				$product = new XLite_Model_Product($ps->get("product_id"));
-				$addSign = $this->checkArrivalCondition($category, $ps);
+                $addSign = $this->checkArrivalCondition($category, $ps);
                 if ($addSign) {
                     $product->checkSafetyMode();
-                	$products[] = $product;
+                    $products[] = $product;
                 	if (count($products) > $maxViewed) {
-						if (!$this->isDisplayedAsDialog()) {
+						if (!$this->isContentDialog()) {
     						$this->additionalPresent = true;
     						unset($products[count($products)-1]);
                 			break;
                 		}
                 	}
                 }
-        	}
+            }
 
         	if ($this->additionalPresent) {
 				break;
         	}
 
         	if (count($products) > $maxViewed) {
-				if (!$this->isDisplayedAsDialog()) {
+				if (!$this->isContentDialog()) {
 					$this->additionalPresent = true;
 					unset($products[count($products)-1]);
         			break;

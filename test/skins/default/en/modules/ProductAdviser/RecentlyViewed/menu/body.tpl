@@ -6,6 +6,6 @@
     <td><a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^product.category.category_id))}" class="SidebarItems">{product.name:h}</a></td>
 </tr>
 <tr IF="additionalPresent">
-    <td colspan=3><br><a href="{buildURL(#RecentlyViewed#)}" onClick="this.blur()"><font color=gray><u>All viewed...</u></font></a></td>
+    <td colspan=3><br><a href="{buildURL(#recently_viewed#)}" onClick="this.blur()"><font color=gray><u>All viewed...</u></font></a></td>
 </tr>
 </table>

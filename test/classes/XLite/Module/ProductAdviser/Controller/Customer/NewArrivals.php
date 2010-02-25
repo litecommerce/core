@@ -56,7 +56,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_NewArrivals extends XLite_
      */
     public function getPageInstanceData()
     {
-        $this->target = 'NewArrivals';
+        $this->target = 'new_arrivals';
 
         return parent::getPageInstanceData();
     }

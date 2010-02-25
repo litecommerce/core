@@ -38,4 +38,8 @@
 </tbody>
 </table>
 
+<div IF="additionalPresent">
+    <a href="{buildURL(#new_arrivals#,##)}" onClick="this.blur()">All new arrivals...</a>
+</div>
+
 <widget name="pager">

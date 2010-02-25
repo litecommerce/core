@@ -6,6 +6,6 @@
 </ol>
 {* FIXME - this condition is never evaluates to "true" *}
 <div IF="additionalPresent">
-    <a href="{buildURL(#NewArrivals#,##)}" onClick="this.blur()">All new arrivals...</a>
+    <a href="{buildURL(#new_arrivals#,##)}" onClick="this.blur()">All new arrivals...</a>
 </div>
 

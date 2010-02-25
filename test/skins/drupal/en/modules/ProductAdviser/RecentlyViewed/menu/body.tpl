@@ -6,5 +6,5 @@
 </ol>
 
 <div IF="additionalPresent">
-  <a href="{buildURL(#RecentlyViewed#)}" onClick="this.blur()">All viewed...</a>
+  <a href="{buildURL(#recently_viewed#)}" onClick="this.blur()">All viewed...</a>
 </div>

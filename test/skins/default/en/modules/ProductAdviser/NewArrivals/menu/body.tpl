@@ -7,7 +7,7 @@
 </tr>
 {* FIXME - this condition is never evaluates to "true" *}
 <tr IF="additionalPresent">
-    <td colspan=3><br><a href="{buildURL(#NewArrivals#,##)}" onClick="this.blur()"><font color=gray><u>All new arrivals...</u></font></a></td>
+    <td colspan=3><br><a href="{buildURL(#new_arrivals#,##)}" onClick="this.blur()"><font color=gray><u>All new arrivals...</u></font></a></td>
 </tr>
 </table>
 
