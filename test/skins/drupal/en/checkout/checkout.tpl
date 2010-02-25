@@ -24,4 +24,4 @@
 <widget template="shopping_cart/totals.tpl">
 <widget class="XLite_View_Button" label="Update" href="javascript: document.cart_form.action.value='update';document.cart_form.submit()" font="FormButton">
 </form>
-<widget module="ProductAdviser" template="modules/ProductAdviser/OutOfStock/notify_form.tpl" visible="{xlite.PA_InventorySupport}">
+<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_NotifyForm">

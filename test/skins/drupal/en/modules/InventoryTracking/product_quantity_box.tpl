@@ -5,4 +5,4 @@
   <span IF="{!product.inventory.amount}">- out of stock -</span>
 </div>
 
-<widget module="ProductAdviser" template="modules/ProductAdviser/OutOfStock/product_quantity.tpl" visible="{xlite.PA_InventorySupport}">
+<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_NotifyLink">

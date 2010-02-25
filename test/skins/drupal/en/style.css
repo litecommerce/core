@@ -630,4 +630,6 @@ A.captcha {
 	FONT-SIZE: 11px; TEXT-DECORATION: underline;
 }
 
-
+ul.di-gallery img {
+	width: 64px;
+}

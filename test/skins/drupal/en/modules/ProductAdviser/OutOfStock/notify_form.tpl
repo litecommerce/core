@@ -1,32 +1,16 @@
 {* SVN $Id$ *}
-<div IF="productNotificationEnabled&dialog.rejectedItem">
+<div>
+  <form action="{buildURL(#notify_me#,#notify_product#,_ARRAY_(#mode#^target,#url#^getCurrentURL(),#category_id#^category_id,#product_id#^rejectedItem.product_id))}" method="POST" name="product_notify_{product.product_id}_form" id="product_notify_{product.product_id}_form">
+    <input FOREACH="buildURLArguments(#notify_me#,#notify_product#,_ARRAY_(#mode#^target,#url#^getCurrentURL(),#category_id#^category_id,#product_id#^rejectedItem.product_id)),paramName,paramValue" type="hidden" name="{paramName}" value="{paramValue}" />
 
-<script type="text/javascript">
-<!--
-function NotifyMe()
-{
-	document.product_notify_form.submit();
-}
--->
-</script>
-
-  <form action="{shopURL(#cart.php#)}" method="POST" name="product_notify_form">
-
-    <input type="hidden" name="target" value="notify_me">
-    <input type="hidden" name="action" value="notify_product">
-    <input type="hidden" name="mode" value="{dialog.target}">
-    <input type="hidden" name="url" value="{dialog.url}">
-    <input type="hidden" name="category_id" value="{category_id}">
-    <input type="hidden" name="product_id" value="{dialog.rejectedItem.product_id}">
-
-    <div IF="dialog.rejectedItem.productOptions">
-      <div FOREACH="dialog.rejectedItem.productOptions,option">
+    <div IF="rejectedItem.productOptions">
+      <div FOREACH="rejectedItem.productOptions,option">
         <input type="hidden" name="product_options[{option.class:h}][option_id]" value="{option.option_id}">
         <input type="hidden" name="product_options[{option.class:h}][option]" value="{option.option}">
       </div>
     </div>
 
-    <input type="hidden" name="amount" value="{dialog.rejectedItem.amount}">
+    <input type="hidden" name="amount" value="{rejectedItem.amount}">
   </form>
 
 </div>

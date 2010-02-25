@@ -52,19 +52,25 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
 	{
 		parent::init();
 
-		if ($this->session->isRegistered("NotifyMeReturn") && $this->session->isRegistered("NotifyMeInfo")) {
+		if (
+			$this->session->isRegistered("NotifyMeReturn")
+			&& $this->session->isRegistered("NotifyMeInfo")
+		) {
 			$_REQUEST = $this->session->get("NotifyMeInfo");
 			$this->mapRequest($_REQUEST);
 			$this->session->set("NotifyMeInfo", null);
 			$this->session->set("NotifyMeReturn", null);
 		}
 
-		if (isset($this->product_id) && intval($this->product_id) > 0) {
+		if (
+			isset($this->product_id)
+			&& intval($this->product_id) > 0
+		) {
 			$this->product = new XLite_Model_Product($this->product_id);
 		}
 
 		if (!(is_object($this->product) && ($this->product->is("exists")))) {
-			$this->redirect("cart.php?target=main&mode=accessDenied");
+			$this->redirect($this->buildURL('main', '', array('mode' => 'accessDenied')));
 			return;
 		}
 
@@ -80,9 +86,9 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
 			}
 			$this->set("productOptionsStr", implode(", ", $poStr));
 		}
-		$this->set("prevUrl", $this->url);
+		$this->set("prevUrl", urlencode($this->url));
 
-		$this->session->set("NotifyMeInfo", $_REQUEST);
+		$this->session->set("NotifyMeInfo", XLite_Core_Request::getInstance()->getData());
 
 		if (!$this->auth->is("logged")) {
 			$this->set("email", $this->session->get("customerEmail"));
@@ -94,27 +100,33 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
 		if (!$this->isProductNotificationEnabled()) {
 			return;
 		}
-        if (!isset($_REQUEST["email"]) || (isset($_REQUEST["email"]) && strlen(trim($_REQUEST["email"]))==0)) {
+
+		$request = XLite_Core_Request::getInstance();
+        if (
+			!isset($request->email)
+			|| (isset($request->email) && strlen(trim($request->email)) == 0)
+		) {
 			$this->set("valid", false);
 			return;
 		}
-		$this->email = trim($_REQUEST["email"]);
+		$this->email = trim($request->email);
 
 		$notification = new XLite_Module_ProductAdviser_Model_Notification();
     	$check = array();
 		$notification->set("type", CUSTOMER_NOTIFICATION_PRODUCT);
         $check[] = "type='" . CUSTOMER_NOTIFICATION_PRODUCT . "'";
 
+		$notification->set("email", $this->email);
+
 		if ($this->auth->is("logged")) {
 			$profile = $this->auth->get("profile");
     		$notification->set("profile_id", $profile->get("profile_id"));
-    		$notification->set("email", $profile->get("login"));
     		$notification->set("person_info", $profile->get("billing_title") . " " . $profile->get("billing_firstname") . " " . $profile->get("billing_lastname"));
 		} else {
-    		$notification->set("email", $this->email);
     		$this->session->set("customerEmail", $this->email);
     		$notification->set("person_info", $this->person_info);
 		}
+
         $check[] = "profile_id='" . $notification->get("profile_id") . "'";
         $check[] = "email='" . $notification->get("email") . "'";
 
@@ -135,7 +147,8 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
     	}
 
 		$this->session->set("rejectedItem", null);
-		$this->set("returnUrl", $this->url);
+
+		$this->set("returnUrl", urldecode($this->url));
 	}
 
 	function action_notify_price()
@@ -146,11 +159,16 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
 		if (!$this->isComplex('product.priceNotificationAllowed')) {
 			return;
 		}
-        if (!isset($_REQUEST["email"]) || (isset($_REQUEST["email"]) && strlen(trim($_REQUEST["email"]))==0)) {
+
+		$request = XLite_Core_Request::getInstance();
+        if (
+			!isset($request->email)
+			|| (isset($request->email) && strlen(trim($request->email)) == 0)
+		) {
 			$this->set("valid", false);
 			return;
 		}
-		$this->email = trim($_REQUEST["email"]);
+		$this->email = trim($request->email);
 
 		$notification = new XLite_Module_ProductAdviser_Model_Notification();
     	$check = array();
@@ -162,42 +180,68 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
     		$notification->set("profile_id", $profile->get("profile_id"));
     		$notification->set("email", $profile->get("login"));
     		$notification->set("person_info", $profile->get("billing_title") . " " . $profile->get("billing_firstname") . " " . $profile->get("billing_lastname"));
+
 		} else {
     		$notification->set("email", $this->email);
     		$this->session->set("customerEmail", $this->email);
     		$notification->set("person_info", $this->person_info);
 		}
+
         $check[] = "profile_id='" . $notification->get("profile_id") . "'";
         $check[] = "email='" . $notification->get("email") . "'";
 
     	$notification->set("product_id", $this->product_id);
         $check[] = "notify_key='" . addslashes($notification->get("productKey")) . "'";
 
-        $check = implode(" AND ", $check);
+        $check = implode(' AND ', $check);
     	if (!$notification->find($check)) {
     		$notification->set("notify_key", addslashes($notification->get("productKey")));
     		$notification->set("price", $this->get("product_price"));
     		$notification->set("date", time());
+
     		$notification->create();
     	}
 
-		$this->set("returnUrl", $this->url);
+		$this->set("returnUrl", urldecode($this->url));
 	}
 
 	function isPriceNotificationEnabled()
 	{
-		$mode = $this->config->getComplex('ProductAdviser.customer_notifications_mode');
-		return (($mode & 1) != 0) ? true : false;
+		return ($this->config->ProductAdviser->customer_notifications_mode & 1) != 0;
 	}
 
 	function isProductNotificationEnabled()
 	{
-		$mode = $this->config->getComplex('ProductAdviser.customer_notifications_mode');
-		return (($mode & 2) != 0) ? true : false;
+		return ($this->config->ProductAdviser->customer_notifications_mode & 2) != 0;
 	}
+
+    /**
+     * Get page instance data (name and URL)
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageInstanceData()
+    {
+        $this->target = 'notify_me';
+
+        return parent::getPageInstanceData();
+    }
+
+    /**
+     * Get page type name
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageTypeName()
+    {
+        return 'Notify me when ...';
+    }
+
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

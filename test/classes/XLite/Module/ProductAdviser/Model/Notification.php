@@ -215,7 +215,3 @@ class XLite_Module_ProductAdviser_Model_Notification extends XLite_Model_Abstrac
     	return $result;
     }
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

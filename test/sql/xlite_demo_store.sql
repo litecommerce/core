@@ -27,6 +27,7 @@ UPDATE xlite_categories SET enabled=0 WHERE category_id=4;
 INSERT INTO xlite_inventories (inventory_id, amount, low_avail_limit, enabled) VALUES ('69|Cover:Soft',100,10,1);
 INSERT INTO xlite_inventories (inventory_id, amount, low_avail_limit, enabled) VALUES ('16128|Size:S|Color:White',100,10, 1);
 INSERT INTO xlite_inventories (inventory_id, amount, low_avail_limit, enabled) VALUES ('16128|Size:S|Color:Blue',150,10, 1);
+INSERT INTO xlite_inventories (inventory_id, amount, low_avail_limit, enabled) VALUES ('205',100,10,1);
 
 -- Inser demo order data (also used as the Best selling products products)
 INSERT INTO xlite_orders (profile_id, orig_profile_id, total, subtotal, shipping_cost, tax, tracking, date, status, payment_method, details, notes, order_id, shipping_id, detail_labels, taxes) VALUES (2,1,521.43,521.43,0.00,0.00,'',1063630796,'P','phone_ordering','O:8:\"stdClass\":0:{}','',1,2,'O:8:\"stdClass\":0:{}','a:1:{s:3:\"Tax\";d:0;}');

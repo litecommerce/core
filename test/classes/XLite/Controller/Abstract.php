@@ -97,7 +97,12 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 			$location = $this->shopURL($location, $this->get('secure'));
 		}
 
-        header('Location: ' . $location);
+		$code = 302;
+    	if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+			$code = 278;
+    	}
+
+        header('Location: ' . $location, true, $code);
     }
 
 
@@ -406,7 +411,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     	    foreach ($items as $key => $i) {
         	    if(!$i->isValid()) {
             		$this->set("absence_of_product", true);
-            		$this->redirect("cart.php?target=cart");
+            		$this->redirect($this->buildURL('cart'));
 	        		return;
     	        }
 	        }
@@ -429,7 +434,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
             foreach ($items as $key => $i) {
                 if(!$i->isValid()) {
                 	$this->set("absence_of_product", true);
-                	$this->redirect("cart.php?target=cart");
+                	$this->redirect($this->buildURL('cart'));
                 	return;
                 }
             }

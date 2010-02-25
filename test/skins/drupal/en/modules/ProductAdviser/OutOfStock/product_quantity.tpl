@@ -1,8 +1,8 @@
 {* SVN $Id$ *}
-<tbody IF="productNotificationEnabled&dialog.rejectedItem">
+<tbody>
   <tr>
 	  <td>&nbsp;</td>
-  	<td>(<a href="javascript: NotifyMe()"><u>Notify me</u></a> when the product is in stock)<td>
+  	<td>(<a href="javascript:void(NotifyMe({product.product_id}));">Notify me</a> when the product is in stock)<td>
   </tr>
   <tr>
 	  <td colspan="2">&nbsp;</td>
