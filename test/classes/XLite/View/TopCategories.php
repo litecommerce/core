@@ -199,23 +199,5 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
             : '';
     }
 
-    /**
-     * Return widget CSS files list
-     * 
-     * @return array
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-
-        if ('tree' == $this->attributes['displayMode']) {
-            $list[] = $this->getDir() . '/style.tree.css';
-        }
-
-        return $list;
-    }
-
 }
 
