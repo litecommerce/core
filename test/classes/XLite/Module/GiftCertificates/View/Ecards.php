@@ -25,36 +25,37 @@
 class XLite_Module_GiftCertificates_View_Ecards extends XLite_View_Dialog
 {
     /**
-     * Title
-     * 
-     * @var    string
+     * Targets this widget is allowed for
+     *
+     * @var    array
      * @access protected
-     * @since  1.0.0
+     * @since  3.0.0 EE
      */
-    protected $head = 'Select e-Card';
+    protected $allowedTargets = array('gift_certificate_ecards');
+
 
     /**
-     * Widget body template
-     * 
-     * @var    string
+     * Return title
+     *
+     * @return string
      * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @since  3.0.0 EE
      */
-    protected $body = 'modules/GiftCertificates/select_ecard.tpl';
-
-    /**
-     * Check visibility
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isVisible()
+    protected function getHead()
     {
-        return parent::isVisible()
-            && 'gift_certificate_ecards' == $this->target;
+        return 'Select e-Card';
+    }
+
+    /**
+     * Return templates directory name
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getDir()
+    {
+        return 'modules/GiftCertificates/select_ecard';
     }
 }
 

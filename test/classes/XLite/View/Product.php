@@ -25,56 +25,52 @@
 class XLite_View_Product extends XLite_View_Dialog
 {
     /**
-     * Title
-     * 
-     * @var    string
+     * Targets this widget is allowed for
+     *
+     * @var    array
      * @access protected
-     * @since  1.0.0
+     * @since  3.0.0 EE
      */
-    protected $head = 'Catalog';
+    protected $allowedTargets = array('product');
+
 
     /**
-     * Base href 
-     * 
-     * @var    string
+     * Return title
+     *
+     * @return string
      * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @since  3.0.0 EE
      */
-    protected $href = 'cart.php';
-
-    /**
-     * Initilization
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function initView()
+    protected function getHead()
     {
-        parent::initView();
-
-        $this->body = 'product_details.tpl';
-        $this->visible = 'product' == $this->target
-            && 0 < $this->product_id
-            && $this->getProduct()->get('available');
-
-        $this->showLocationPath = true;
+        return 'Catalog';
     }
 
     /**
-     * Get product 
-     * 
-     * @return XLite_Model_Product
+     * Return templates directory name
+     *
+     * @return string
      * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
+     * @since  3.0.0 EE
      */
-    protected function getProduct()
+    protected function getDir()
     {
-        return new XLite_Model_Product($this->product_id);
+        return 'product_details';
     }
+
+
+    /**
+     * Check if widget is visible
+     *
+     * @return bool
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    public function isVisible()
+    {
+        return parent::isVisible() && $this->getProduct()->is('available');
+    }
+
 
     /**
      * Get previous product 

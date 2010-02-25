@@ -110,6 +110,18 @@ class XLite_Model_Category extends XLite_Model_Abstract
     public function getImageURL()
     {
         return $this->getImage()->getURL();
+    }
+
+	/**
+	 * Check if category has neither products nor subcategories 
+	 * 
+	 * @return bool
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
+	public function isEmpty()
+    {
+        return !$this->getProducts() && !$this->getSubcategories();
     } 
 
 
@@ -225,11 +237,6 @@ class XLite_Model_Category extends XLite_Model_Abstract
     {
         $this->parent = $v;
         $this->set("parent", $v->get("category_id"));
-    } // }}}
-
-    function isEmpty() // {{{
-    {
-        return !$this->get("products") && !$this->get("subcategories");
     } // }}}
 
     /**

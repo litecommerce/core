@@ -147,7 +147,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 */
 	protected function prepareAttributes(array $attributes)
 	{
-        return $attributes;
+        return $attributes + array(XLite_View_Abstract::IS_EXPORTED => true);
 	}
 
 	/**
@@ -254,7 +254,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
 	public function getWidgetObject($name, array $attributes = array())
 	{
-		return class_exists($name) ? XLite_Model_CachingFactory::getObject($name, $attributes) : null;
+		return class_exists($name) ? XLite_Model_CachingFactory::getObject($name, $this->prepareAttributes($attributes)) : null;
 	}
 
 	/**
@@ -305,10 +305,6 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         $widget = $this->getWidgetObject($name, $attributes);
 
         if ($widget) {
-            $attributes['call_as_widget'] = true;
-
-            $widget->setAttributes($attributes);
-
             $result[0] = $this->getContent($widget, $attributes);
             $result[1] = $this->collectResources();
         }
@@ -635,7 +631,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
     {
         $resources = array();
 
-        foreach (XLite_View_ABstract::$resources as $key => $list) {
+        foreach (XLite_View_Abstract::$resources as $key => $list) {
             if (!isset($resources[$key])) {
                 $resources[$key] = array();
             }

@@ -24,6 +24,12 @@
 class XLite_View_Abstract extends XLite_Core_Handler
 {
     /**
+     * Attribute to determines if widget is exported by CMS handler
+     */
+    const IS_EXPORTED = 'is_exported';
+
+
+    /**
      * Widgets resources collector
      * 
      * @var    array
@@ -76,7 +82,7 @@ class XLite_View_Abstract extends XLite_Core_Handler
      * @access protected
      * @since  3.0.0 EE
      */
-    protected $attributes = array();
+    protected $attributes = array(self::IS_EXPORTED => false);
 
 
     /**

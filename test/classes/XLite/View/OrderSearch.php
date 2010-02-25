@@ -24,49 +24,47 @@
  */
 class XLite_View_OrderSearch extends XLite_View_Dialog
 {
-	/**
-	 * Title
-	 * 
-	 * @var    string
-	 * @access protected
-	 * @since  1.0.0
-	 */
-	protected $head = 'Search orders';
-
     /**
      * Widget body template
-     * 
+     *
      * @var    string
      * @access protected
-     * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $body = 'order/search_form.tpl';
+    protected $body = 'search_form.tpl';
 
     /**
-     * Allowed targets 
-     * 
+     * Targets this widget is allowed for
+     *
      * @var    array
      * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @since  3.0.0 EE
      */
-    protected $allowed_targets = array('order_list');
+    protected $allowedTargets = array('order_list');
+
 
     /**
-     * Initilization
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
+     * Return title
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
      */
-    public function initView()
+    protected function getHead()
     {
-        parent::initView();
+        return 'Search orders';
+    }
 
-        $this->visible = $this->visible
-            && in_array($this->target, $this->allowed_targets);
+    /**
+     * Return templates directory name
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getDir()
+    {
+        return 'order';
     }
 }
 

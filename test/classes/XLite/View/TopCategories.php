@@ -33,9 +33,9 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
      * @since  3.0.0
      */
     protected $displayModes = array(
-        'categories'      => 'List',
-        'categories_tree' => 'Tree',
-        'categories_path' => 'Path',
+        'list' => 'List',
+        'tree' => 'Tree',
+        'path' => 'Path',
     );
 
 
@@ -62,7 +62,7 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
      */
     protected function getDir()
     {
-        return $this->attributes['displayMode'];
+        return 'categories/' . $this->attributes['displayMode'];
     }
 
     /**
@@ -95,7 +95,7 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
 		parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            'displayMode' => new XLite_Model_WidgetParam_List('displayMode', 'categories', 'Display mode', $this->displayModes),
+            'displayMode' => new XLite_Model_WidgetParam_List('displayMode', 'list', 'Display mode', $this->displayModes),
             'rootId'      => new XLite_Model_WidgetParam_ObjectId_Category('rootId', 0, 'Root category Id'),
         );
     }

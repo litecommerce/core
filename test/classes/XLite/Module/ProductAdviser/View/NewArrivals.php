@@ -1,52 +1,37 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* NewArrivals widget
-*
-* @package Module_ProductAdviser
-* @access public
-* @version $Id$
-*/
+ * ____file_title____
+ *  
+ * @category   Lite Commerce
+ * @package    Lite Commerce
+ * @subpackage ____sub_package____
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @version    SVN: $Id$
+ * @link       http://www.qtmsoft.com/
+ * @since      3.0.0 EE
+ */
+
+/**
+ * XLite_Module_ProductAdviser_View_NewArrivals 
+ * 
+ * @package    Lite Commerce
+ * @subpackage ____sub_package____
+ * @since      3.0.0 EE
+ */
 class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
-{	
+{
+	/**
+     * Targets this widget is allowed for
+     *
+     * @var    array
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected $allowedTargets = array('main', 'category', 'product', 'cart', 'recently_viewed', 'new_arrivals');
+
 	/**
 	 * Available display modes list
 	 * 
@@ -55,14 +40,11 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 	 * @see    ____var_see____
 	 * @since  3.0.0
 	 */
-	protected $display_modes = array(
+	protected $displayModes = array(
 		'menu'   => 'Sidebar box menu',
 		'dialog' => 'Dialog box',
 	);
 
-	public $productsNumber = 0;
-
-	public $additionalPresent = false;
 
 	/**
 	 * Get widget title
@@ -87,38 +69,45 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 	 */
 	protected function getDir()
 	{
-		return 'modules/ProductAdviser/NewArrivals/' . $this->getDisplayMode();
+		return 'modules/ProductAdviser/NewArrivals/' . $this->attributes['displayMode'];
 	}
 
 	/**
-	 * Initilization
-	 * 
-	 * @return void
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function initView()
-	{
-		parent::initView();
+     * Get widget display mode parameter (menu | dialog)
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDisplayMode()
+    {
+		return $this->config->ProductAdviser->new_arrivals_type;
+    }
 
-		$this->body = $this->getDir() . '/body.tpl';
-	}
+    /**
+     * Check passed attributes againest curretn display mode
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function checkDisplayMode()
+    {
+        return $this->attributes[self::IS_EXPORTED] || $this->getDisplayMode() == $this->attributes['displayMode'];
+    }
 
-	public function isVisible()
-	{
-		$visible = in_array($this->target, array(null, 'main', 'category', 'product', 'cart', 'RecentlyViewed', 'NewArrivals'))
-			&& ($this->config->ProductAdviser->number_new_arrivals > 0)
-			&& $this->isDisplayed();
-
-		if ($visible) {
-			$this->getNewArrivalsProducts();
-
-			$visible = ($this->productsNumber > 0) ? true : false;
-		}
-
-		return $visible;
-	}
+    /**
+     * Check if there are product to display 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function checkProductsToDisplay()
+    {
+        return 0 < $this->config->ProductAdviser->number_new_arrivals && $this->getNewArrivalsProducts();
+    }
 
 	/**
 	 * Define widget parameters
@@ -133,31 +122,56 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 		parent::defineWidgetParams();
 
 		$this->widgetParams += array(
-			'use_node'     => new XLite_Model_WidgetParam_Checkbox('use_node', 0, 'Show category-specific new arrivals'),
-			'display_mode' => new XLite_Model_WidgetParam_List('display_mode', 'menu', 'Display mode', $this->display_modes)
+			'useNode'     => new XLite_Model_WidgetParam_Checkbox('useNode', 0, 'Show category-specific new arrivals'),
+			'displayMode' => new XLite_Model_WidgetParam_List('displayMode', $this->getDisplayMode(), 'Display mode', $this->displayModes),
 		);
 
 	}
 
-	/**
-	 * Get widget display mode parameter (menu | dialog)
-	 * 
-	 * @return string
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function getDisplayMode()
-	{	
-		if (isset($this->display_mode)) {
-			$displayMode = $this->display_mode;
+    /**
+     * Check if widget should be displayed in dialog box (not in sidebar box)
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function isDisplayedAsDialog()
+    {
+        return 'dialog' == $this->getDisplayMode() || 'new_arrivals' == XLite_Core_Request::getInstance()->target;
+    }
 
-		} else {
-			$displayMode = $this->config->ProductAdviser->new_arrivals_type;
-		}
 
-		return $displayMode;
-	}
+    /**
+     * FIXME - must be unified and removed (common task for all widgets which have the "displayMode" attribute)
+     * TODO - check if it's possible to unify this certain function
+     * 
+     * @param array $attributes widget attributes
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function __construct(array $attributes = array())
+    {
+        parent::__construct($attributes);
+
+        $this->template = 'common/' . ($this->isDisplayedAsDialog() ? 'dialog' : 'sidebar_box') . '.tpl';
+    }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return bool
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    public function isVisible()
+    {
+        return parent::isVisible() && $this->checkProductsToDisplay() && $this->checkDisplayMode();
+    }
+
+
+    // TODO, FIXME - all of the above routines must be reviewed and refactored
 
 	/**
 	 * Get Value of 'Show category-specific new arrivals' option
@@ -173,6 +187,11 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 		return $return;
 	}
 
+
+	public $productsNumber = 0;
+
+    public $additionalPresent = false;
+
     /**
      * Check if widget could be displayed
      * 
@@ -181,7 +200,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
      * @see    ____func_see____
      * @since  3.0.0
      */
-    function isDisplayed()
+    /*function isDisplayed()
 	{
 		$displayMode = $this->getDisplayMode();
 
@@ -202,24 +221,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 		}
 
 		return $return;
-	}
-
-    /**
-     * Check if widget should be displayed in dialog box (not in sidebar box)
-     * 
-     * @return bool
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    function isDisplayedDialog()
-    {
-        if ("dialog" == $this->getDisplayMode() && isset($this->dialog)) {
-        	return true;
-        } else {
-        	return isset($this->target) ? true : false;
-        }
-    }
+	}*/
 
     function getDialogCategory()
     {
@@ -257,7 +259,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 
 	function recursiveArrivalsSearch($_category)
 	{
-		if (!$this->isDisplayedDialog() && $this->additionalPresent && count($this->_new_arrival_products) >= $this->config->ProductAdviser->number_new_arrivals) {
+		if (!$this->isDisplayedAsDialog() && $this->additionalPresent && count($this->_new_arrival_products) >= $this->config->ProductAdviser->number_new_arrivals) {
 			return true;
 		}
 
@@ -286,7 +288,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 
 			$obj = new XLite_Module_ProductAdviser_Model_ProductNewArrivals($product_id);
 			if ($this->checkArrivalCondition($_category, $obj)) {
-				if (!$this->isDisplayedDialog() && count($this->_new_arrival_products) >= $this->config->ProductAdviser->number_new_arrivals) {
+				if (!$this->isDisplayedAsDialog() && count($this->_new_arrival_products) >= $this->config->ProductAdviser->number_new_arrivals) {
 					$this->additionalPresent = true;
 					return true;
 				}
@@ -384,10 +386,10 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
         $stats = new XLite_Module_ProductAdviser_Model_ProductNewArrivals();
         $timeCondition = $this->config->ProductAdviser->period_new_arrivals * 3600;
 		$timeLimit = time();
-        $maxSteps = ($this->isDisplayedDialog()) ? 1 : ceil($stats->count("new='Y' OR ((updated + '$timeCondition') > '$timeLimit')") / $maxViewed);
+        $maxSteps = ($this->isDisplayedAsDialog()) ? 1 : ceil($stats->count("new='Y' OR ((updated + '$timeCondition') > '$timeLimit')") / $maxViewed);
 
         for ($i=0; $i<$maxSteps; $i++) {
-        	$limit = ($this->isDisplayedDialog()) ? null : "$statsOffset, $maxViewed";
+        	$limit = ($this->isDisplayedAsDialog()) ? null : "$statsOffset, $maxViewed";
         	$productsStats = $stats->findAll("new='Y' OR ((updated + '$timeCondition') > '$timeLimit')", null, null, $limit);
         	foreach ($productsStats as $ps) {
 				$product = new XLite_Model_Product($ps->get("product_id"));
@@ -396,7 +398,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
                     $product->checkSafetyMode();
                 	$products[] = $product;
                 	if (count($products) > $maxViewed) {
-						if (!$this->isDisplayedDialog()) {
+						if (!$this->isDisplayedAsDialog()) {
     						$this->additionalPresent = true;
     						unset($products[count($products)-1]);
                 			break;
@@ -410,7 +412,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
         	}
 
         	if (count($products) > $maxViewed) {
-				if (!$this->isDisplayedDialog()) {
+				if (!$this->isDisplayedAsDialog()) {
 					$this->additionalPresent = true;
 					unset($products[count($products)-1]);
         			break;
@@ -427,7 +429,3 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 	}
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

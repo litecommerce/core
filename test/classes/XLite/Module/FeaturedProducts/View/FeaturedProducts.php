@@ -24,45 +24,51 @@
  */
 class XLite_Module_FeaturedProducts_View_FeaturedProducts extends XLite_View_Dialog
 {
-
     /**
-     * Title 
-     * 
-     * @var    string
+     * Targets this widget is allowed for
+     *
+     * @var    array
      * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @since  3.0.0 EE
      */
-	protected $head = 'Featured products';
+    protected $allowedTargets = array('main', 'category');
+
 
     /**
-     * Initilization
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
+     * Return title
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
      */
-    public function initView()
+    protected function getHead()
     {
-        $this->body = $this->config->FeaturedProducts->featured_products_look;
-        $this->visible = in_array($this->target , array('main', 'category'))
-            && $this->getCategory()->get('featuredProducts')
-            && !$this->get('page');
-
-        $this->mode = '';
+        return 'Featured products';
     }
-            
+
     /**
-     * Get category id
-     * 
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
+     * Return templates directory name
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
      */
-    public function getCategory()
+    protected function getDir()
     {
-        return new XLite_Model_Category($this->category_id);
+        return 'modules/FeaturedProducts/featured_products/' . $this->config->FeaturedProducts->featured_products_look;
+    }
+
+
+    /**
+     * Check if widget is visible
+     *
+     * @return bool
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    public function isVisible()
+    {
+        return parent::isVisible() && $this->getCategory()->getFeaturedProducts() && !$this->get('page');
     }
 }
+

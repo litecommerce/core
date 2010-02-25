@@ -24,74 +24,53 @@
  */
 class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
 {
-	/**
-     * Dialog title
+    /**
+     * Targets this widget is allowed for
      *
-     * @var    string
+     * @var    array
      * @access protected
      * @since  3.0.0 EE
      */
-    protected $head = 'Search for products';
+    protected $allowedTargets = array('advanced_search');
 
     /**
-     * Widget body tempalte
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $body = 'modules/AdvancedSearch/advanced_search.tpl';
-
-    /**
-     * Display mode 
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $display_mode = 'horizontal';
-
-    /**
-     * Display modes 
-     * 
+     * Widget directories
+     *
      * @var    array
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $display_modes = array(
-        'horizontal' => array(
-            'name' => 'Horizontal',
-            'body' => 'modules/AdvancedSearch/advanced_search.tpl',
-        ),
-        'vertical' => array(
-            'name' => 'Vertical',
-            'body' => 'modules/AdvancedSearch/advanced_search_box.tpl',
-        ),
+    protected $displayModes = array(
+        'vertical'   => 'Vertical',
+        'horizontal' => 'Horizontal',
     );
 
+
     /**
-     * Initilization
-     * 
-     * @return void
-     * @access public
+     * Return title
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getHead()
+    {
+        return 'Search for products';
+    }
+
+    /**
+     * Get widget templates directory
+     *
+     * @return string
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function initView()
+    protected function getDir()
     {
-		parent::initView();
-
-        if ($this->display_mode && $this->call_as_widget && isset($this->display_modes[$this->display_mode])) {
-            $this->body = $this->display_modes[$this->display_mode]['body'];
-        }
-
-        $this->visible = $this->visible && ($this->call_as_widget || 'advanced_search' == $this->target);
-
-        $this->mode = '';
-	}
+        return 'modules/AdvancedSearch/' . $this->attributes['displayMode'];
+    }
 
     /**
      * Define widget parameters
@@ -104,39 +83,27 @@ class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
     {
         parent::defineWidgetParams();
 
-        $display_mode = new XLite_Model_WidgetParam_List('display_mode', $this->display_mode, 'Display mode');
-        foreach ($this->display_modes as $k => $v) {
-            $display_mode->options[$k] = $v['name'];
-        }
-
         $this->widgetParams += array(
-            $display_mode,
+            'displayMode' => new XLite_Model_WidgetParam_List('displayMode', 'horizontal', 'Display mode', $this->displayModes),
         );
     }
 
+
     /**
-     * Check passed attributes 
-     * 
-     * @param array $attributes attributes to check
-     *  
-     * @return array errors list
-     * @access public
-     * @since  1.0.0
+     * Check if widget is visible
+     *
+     * @return bool
+     * @access protected
+     * @since  3.0.0 EE
      */
-    public function validateAttributes(array $attributes)
+    public function isVisible()
     {
-        $errors = parent::validateAttributes($attributes);
-
-        // Display mode
-        if (
-            !$errors
-            && (!isset($attributes['display_mode']) || !isset($this->display_modes[$attributes['display_mode']]))
-        ) {
-            $errors['display_mode'] = 'Display mode has wrong value!';
-        }
-
-		return $errors;
+        return parent::isVisible() || $this->attributes[self::IS_EXPORTED];
     }
+
+
+
+    // TODO - check the following methods
 
     /**
      * Get prices 

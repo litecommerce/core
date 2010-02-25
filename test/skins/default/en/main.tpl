@@ -154,7 +154,7 @@
 <div IF="!xlite.FlyoutCategoriesEnabled">
 <widget class="XLite_View_TopCategories" />
 </div>
-<widget module="Bestsellers" class="XLite_Module_Bestsellers_View_Bestsellers" template="common/sidebar_box.tpl" visible="{config.Bestsellers.bestsellers_menu}">
+<widget module="Bestsellers" class="XLite_Module_Bestsellers_View_Bestsellers" visible="{config.Bestsellers.bestsellers_menu}">
 <widget module="GiftCertificates" template="common/sidebar_box.tpl" head="Gift certificates" dir="modules/GiftCertificates/menu">
 <widget module="Affiliate" template="common/sidebar_box.tpl" head="Affiliate" dir="modules/Affiliate/menu">
 <widget template="common/sidebar_box.tpl" head="Help" dir="help">
@@ -177,8 +177,9 @@
 <widget template="common/sidebar_box.tpl" dir="profile" name="profileWidget" head="Your profile" IF="{auth.isLogged()}" />
 <widget template="common/sidebar_box.tpl" dir="authentication" name="authenticationWidget" head="Authentication" IF="{auth.isLogged()}" />
 <widget module="Newsletters" template="common/sidebar_box.tpl" dir="modules/Newsletters/menu_news" head="News">
-<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_NewArrivals" template="common/sidebar_box.tpl" display_in="menu">
-<widget module="ProductAdviser" target="main,category,product,cart" class="XLite_Module_ProductAdviser_View_CRecentliesProducts" template="common/sidebar_box.tpl" head="Recently viewed" dir="modules/ProductAdviser/RecentlyViewed">
+
+<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_NewArrivals" displayMode="menu" />
+<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_RecentlyViewed" />
 <!-- [/right] -->
     </TD>
     <TD width="4"><IMG src="images/spacer.gif" width="4" height="1" alt=""></TD>

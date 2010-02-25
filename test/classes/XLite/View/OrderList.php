@@ -24,51 +24,60 @@
  */
 class XLite_View_OrderList extends XLite_View_Dialog
 {
-	/**
-	 * Title
-	 * 
-	 * @var    string
-	 * @access protected
-	 * @since  1.0.0
-	 */
-	protected $head = 'Search results';
-
     /**
      * Widget body template
-     * 
+     *
      * @var    string
      * @access protected
-     * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $body = 'order/list.tpl';
+    protected $body = 'list.tpl';
 
     /**
-     * Allowed targets 
-     * 
+     * Targets this widget is allowed for
+     *
      * @var    array
      * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @since  3.0.0 EE
      */
-    protected $allowed_targets = array('order_list');
+    protected $allowedTargets = array('order_list');
+
 
     /**
-     * Initilization
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
+     * Return title
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
      */
-    public function initView()
+    protected function getHead()
     {
-        parent::initView();
+        return 'Search result';
+    }
 
-        $this->visible = $this->visible
-            && in_array($this->target, $this->allowed_targets)
-            && $this->mode == 'search'
-            && $this->get('count');
+    /**
+     * Return templates directory name
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getDir()
+    {
+        return 'order';
+    }
+
+
+    /**
+     * Check if widget is visible
+     *
+     * @return bool
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    public function isVisible()
+    {
+        return parent::isVisible() && 0 < $this->getCount() && 'search' == XLite_Core_Request::getInstance()->mode;
     }
 }
 

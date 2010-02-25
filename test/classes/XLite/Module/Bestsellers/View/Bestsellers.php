@@ -26,6 +26,15 @@
 class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_SideBarBox
 {
     /**
+     * Targets this widget is allowed for
+     *
+     * @var    array
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected $allowedTargets = array('main', 'category');
+
+    /**
      * Display modes
      *
      * @var    array
@@ -34,8 +43,8 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_SideBarBox
      * @since  3.0.0
      */
     protected $displayModes = array(
-        'menu'   => 'Vertical',
-        'dialog' => 'Horizontal',
+        'vertical'   => 'Vertical',
+        'horizontal' => 'Horizontal',
     );
 
 
@@ -61,7 +70,7 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_SideBarBox
      */
     protected function getDir()
     {
-        return 'modules/Bestsellers/' . $this->getDisplayMode();
+        return 'modules/Bestsellers/bestsellers/' . $this->getDisplayMode();
     }
 
     /**
@@ -74,18 +83,6 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_SideBarBox
     protected function getDisplayMode()
     {
         return isset($this->attributes['displayMode']) ?  $this->attributes['displayMode'] : $this->config->Bestsellers->bestsellers_menu;
-    }
-
-    /**
-     * Check visibility according to the current category
-     *
-     * @return bool
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function checkCategory()
-    {
-        return in_array(XLite_Core_Request::getInstance()->target, array('main', 'category'));
     }
 
     /**
@@ -124,7 +121,7 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_SideBarBox
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            'displayMode' => new XLite_Model_WidgetParam_List('displayMode', 'menu', 'Display mode', $this->displayModes),
+            'displayMode' => new XLite_Model_WidgetParam_List('displayMode', 'vertical', 'Display mode', $this->displayModes),
             'useNode'     => new XLite_Model_WidgetParam_Checkbox('useNode', 0, 'Use current category id'),
             'rootId'      => new XLite_Model_WidgetParam_ObjectId_Category('rootId', 0, 'Root category Id'),
         );
@@ -140,7 +137,7 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_SideBarBox
      */
     public function isVisible()
     {
-        return parent::isVisible() && $this->checkCategory() && $this->getBestsellers();
+        return parent::isVisible() && $this->getBestsellers();
     }
 }
 

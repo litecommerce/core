@@ -78,8 +78,8 @@
     {end:}
     {if:option.isName(#subcategories_look#)}
     <select name="{option.name}">
-        <option value="category_subcategories_list.tpl" selected="{option.isSelected(#category_subcategories_list.tpl#)}">List</option>
-        <option value="category_subcategories.tpl" selected="{option.isSelected(#category_subcategories.tpl#)}">Icons</option>
+        <option value="list" selected="{option.isSelected(#list#)}">List</option>
+        <option value="icons" selected="{option.isSelected(#icons#)}">Icons</option>
     </select>
     {end:}
     {if:option.isName(#thousand_delim#)}

@@ -26,6 +26,7 @@ class XLite_Core_Handler extends XLite_Base
 {
 	/**
      * Widget template filename
+     * FIXME - should be moved to Viewers (lowest priority task)
      *
      * @var    string
      * @access protected
@@ -35,6 +36,7 @@ class XLite_Core_Handler extends XLite_Base
 
     /**
      * Validity flag
+     * TODO - check where it's really needed
      * 
      * @var    bool
      * @access protected
@@ -44,6 +46,7 @@ class XLite_Core_Handler extends XLite_Base
 
     /**
      * Handler parameters 
+     * FIXME - backward compatibility
      * 
      * @var    array
      * @access protected
@@ -53,7 +56,8 @@ class XLite_Core_Handler extends XLite_Base
 
 
     /**
-     * Set properties; FIXME - backward compatibility
+     * Set properties
+     * FIXME - backward compatibility
      *
      * @param array $attrs params to set
      *
@@ -71,6 +75,7 @@ class XLite_Core_Handler extends XLite_Base
 
     /**
      * Check if handler is valid 
+     * TODO - check where it's really needed
      * 
      * @return bool
      * @access public
@@ -99,6 +104,7 @@ class XLite_Core_Handler extends XLite_Base
 
     /**
      * Compose URL path from target, action and additional params
+     * FIXME - this method must be removed
      *
      * @param string $target page identifier
      * @param string $action action to perform
@@ -118,6 +124,7 @@ class XLite_Core_Handler extends XLite_Base
 
     /**
      * Compose URL query arguments from target, action and additional params
+     * FIXME - this method must be removed
      *
      * @param string $target page identifier
      * @param string $action action to perform
@@ -141,7 +148,8 @@ class XLite_Core_Handler extends XLite_Base
     }
 
     /**
-     * Initialize widget; FIXME - backward compatibility; to delete
+     * Initialize widget
+     * FIXME - backward compatibility; to delete
      *
      * @return void
      * @access public

@@ -24,75 +24,51 @@
  */
 class XLite_View_CategoryProducts extends XLite_View_Dialog
 {
-	/**
-	 * Title
-	 * 
-	 * @var    string
-	 * @access protected
-	 * @since  1.0.0
-	 */
-	protected $head = 'Catalog';
-
     /**
-     * Base href 
-     * 
-     * @var    string
+     * Targets this widget is allowed for
+     *
+     * @var    array
      * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @since  3.0.0 EE
      */
-    protected $href = 'cart.php';
+    protected $allowedTargets = array('category');
+
 
     /**
-     * Widget body template
-     * 
-     * @var    string
+     * Return title
+     *
+     * @return string
      * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @since  3.0.0 EE
      */
-    protected $body = 'category_products.tpl';
-
-    /**
-     * Show location path 
-     * 
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $showLocationPath = true;
-
-    /**
-     * Initilization
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function initView()
+    protected function getHead()
     {
-        parent::initView();
-
-        $this->category_id = intval($this->category_id);
-
-        $this->visible = 'category' == $this->target
-            && 0 < $this->category_id
-            && $this->getCategory()->getProducts();
+        return 'Catalog';
     }
 
     /**
-     * Get category 
-     * 
-     * @return XLite_Model_Category
+     * Return templates directory name
+     *
+     * @return string
      * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
+     * @since  3.0.0 EE
      */
-    protected function getCategory()
+    protected function getDir()
     {
-        return new XLite_Model_Category($this->category_id);
+        return 'category_products';
+    }
+
+
+    /**
+     * Check if widget is visible
+     *
+     * @return bool
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    public function isVisible()
+    {
+        return parent::isVisible() && $this->getCategory()->getProducts();
     }
 }
 

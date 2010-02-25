@@ -23,6 +23,15 @@
  */
 class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
 {
+    /**
+     * Cureent request method 
+     * 
+     * @var    string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected $requestMethod = null;
+
 	/**
 	 * Request data 
 	 * 
@@ -111,6 +120,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
      */
     protected function __construct()
     {
+        $this->requestMethod = $_SERVER['REQUEST_METHOD'];
 		$this->mapRequest();
     }
 
@@ -152,6 +162,42 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
     public function getData()
     {
         return $this->data;
+    }
+
+    /**
+     * Return current request method
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function getRequestMethod()
+    {
+        return $this->requestMethod;
+    }
+
+    /**
+     * Check if current request method is "GET" 
+     * 
+     * @return bool
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function isGet()
+    {
+        return 'GET' === $this->requestMethod;
+    }
+
+    /**
+     * Check if current request method is "POST"
+     *
+     * @return bool
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function isPost()
+    {
+        return 'POST' === $this->requestMethod;
     }
 
 	/**

@@ -39,8 +39,8 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
      * @since  3.0.0
      */
     protected $displayModes = array(
-        'mini_cart'        => 'Vertical',
-        'mini_cart_dialog' => 'Horizontal',
+        'vertical'   => 'Vertical',
+        'horizontal' => 'Horizontal',
     );
 
     /**                                                
@@ -65,7 +65,7 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
      */
     protected function getDir()
     {
-        return $this->attributes['displayMode'];
+        return 'mini_cart/' . $this->attributes['displayMode'];
     }
 
     /**
@@ -129,7 +129,7 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            'displayMode' => new XLite_Model_WidgetParam_List('displayMode', 'mini_cart', 'Display mode', $this->displayModes),
+            'displayMode' => new XLite_Model_WidgetParam_List('displayMode', 'vertical', 'Display mode', $this->displayModes),
         );
     }
 
@@ -143,7 +143,7 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
      */
     public function getCSSFiles()
     {
-        return array('mini_cart/vertical.css');
+        return array('mini_cart/minicart.css');
     }
 
     /**

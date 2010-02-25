@@ -47,7 +47,7 @@ INSERT INTO xlite_config VALUES ('customer_presentation','Customer Zone settings
 INSERT INTO xlite_config VALUES ('enable_credit_card_validation','Validate credit cards','Y','General',210,'checkbox');
 INSERT INTO xlite_config VALUES ('display_check_number','Display check number for eCheck payment method','Y','General',215,'checkbox');
 -- UPDATE xlite_config SET orderby = 210, comment='Validate credit cards' WHERE category = 'General' AND name = 'enable_credit_card_validation';
-INSERT INTO xlite_config VALUES ('subcategories_look','Category listings format','category_subcategories.tpl','General',220,'select');
+INSERT INTO xlite_config VALUES ('subcategories_look','Category listings format','icons','General',220,'select');
 -- UPDATE xlite_config SET orderby = 220, comment='Category listings format' WHERE category = 'General' AND name = 'subcategories_look';
 INSERT INTO xlite_config VALUES ('show_thumbnails','Show thumbnails in product list','Y','General',230,'checkbox');
 -- UPDATE xlite_config SET orderby = 230 WHERE category = 'General' AND name = 'show_thumbnails';

@@ -24,51 +24,63 @@
  */
 class XLite_View_Subcategories extends XLite_View_Dialog
 {
-	/**
-	 * Title
-	 * 
-	 * @var    string
-	 * @access protected
-	 * @since  1.0.0
-	 */
-	protected $head = 'Catalog';
-
     /**
-     * Base href 
-     * 
-     * @var    string
+     * Targets this widget is allowed for
+     *
+     * @var    array
      * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @since  3.0.0 EE
      */
-    protected $href = 'cart.php';
+    protected $allowedTargets = array('main', 'category');
+
 
     /**
-     * Initilization
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
+     * Return title
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
      */
-    public function initView()
+    protected function getHead()
     {
-        parent::initView();
-
-        // Template files are:
-        // - "category_subcategories.tpl" - Icons
-        // - "category_subcategories_list.tpl" - List
-        $this->body = $this->config->General->subcategories_look;
-        $this->visible = in_array($this->target, array('main', 'category')) && $this->getCategory()->getSubcategories();
-
-        $this->showLocationPath = true;
-        $this->mode = '';
+        return 'Catalog';
     }
 
+    /**
+     * Return templates directory name
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getDir()
+    {
+        return 'subcategories/' . $this->config->General->subcategories_look;
+    }
+
+
+    /**
+     * Check if widget is visible
+     *
+     * @return bool
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    public function isVisible()
+    {
+        return parent::isVisible() && $this->getCategory()->getSubcategories();
+    }
+
+    /**
+     * Return list of required CSS files
+     * 
+     * @return array
+     * @access public
+     * @since  3.0.0 EE
+     */
     public function getCSSFiles()
     {
-        return array('category_subcategories.css');
+        return array('subcategories/subcategories.css');
     }
-
 }
 

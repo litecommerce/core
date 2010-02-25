@@ -24,38 +24,38 @@
  */
 class XLite_View_Cart extends XLite_View_Dialog
 {
-	/**
-	 * Title
-	 * 
-	 * @var    string
-	 * @access protected
-	 * @since  1.0.0
-	 */
-	protected $head = 'Shopping cart';
-
     /**
-     * Widget body template
-     * 
-     * @var    string
+     * Targets this widget is allowed for
+     *
+     * @var    array
      * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @since  3.0.0 EE
      */
-    protected $body = 'shopping_cart/body.tpl';
+    protected $allowedTargets = array('cart');
+
 
     /**
-     * Initilization
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
+     * Return title
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
      */
-    public function initView()
+    protected function getHead()
     {
-        parent::initView();
+        return 'Shopping cart';
+    }
 
-        $this->visible = 'cart' == $this->target;
+    /**
+     * Return templates directory name
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getDir()
+    {
+        return 'shopping_cart';
     }
 }
 

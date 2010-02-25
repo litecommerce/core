@@ -21,37 +21,28 @@
  * @subpackage Widget
  * @since      3.0
  */
-abstract class XLite_View_Dialog extends XLite_View_Abstract
+abstract class XLite_View_Dialog extends XLite_View_Container
 {
     /**
-     * Dialog title 
-     * 
-     * @var    string
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected $head = null;
-
-    /**
-     * Dialog content template 
-     * 
-     * @var    string
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected $body = null;
-
-
-    /**
-     * Define template
+     * Wrapper template
      *
-     * @return void
-     * @access public
+     * @var    string
+     * @access protected
      * @since  3.0.0 EE
      */
-    public function __construct()
+    protected $template = 'common/dialog.tpl';
+
+
+    /**
+     * Return dialog link
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getHref()
     {
-        $this->template = 'common' . LC_DS . 'container.tpl';
+        return null;
     }
 }
 

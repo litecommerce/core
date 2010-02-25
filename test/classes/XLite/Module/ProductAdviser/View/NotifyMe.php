@@ -24,37 +24,38 @@
  */
 class XLite_Module_ProductAdviser_View_NotifyMe extends XLite_View_Dialog
 {
-	/**
-	 * Title
-	 * 
-	 * @var    string
-	 * @access protected
-	 * @since  1.0.0
-	 */
-	protected $head = 'Notify me when ...';
-
     /**
-     * Widget body template
-     * 
-     * @var    string
+     * Targets this widget is allowed for
+     *
+     * @var    array
      * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @since  3.0.0 EE
      */
-    protected $body = 'modules/ProductAdviser/notify_me.tpl';
+    protected $allowedTargets = array('notify_me');
+
 
     /**
-     * Check visibility 
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
+     * Return title
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
      */
-    public function isVisible()
+    protected function getHead()
     {
-        return parent::isVisible()
-            && 'notify_me' == $this->target;
+        return 'Notify me when ...';
+    }
+
+    /**
+     * Return templates directory name
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getDir()
+    {
+        return 'modules/ProductAdviser/NotifyMe';
     }
 }
 

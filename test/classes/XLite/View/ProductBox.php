@@ -56,9 +56,9 @@ class XLite_View_ProductBox extends XLite_View_SideBarBox
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getProduct($productId = null)
+    protected function getProduct()
     {
-        return $this->widgetParams['productId']->getObject($productId);
+        return $this->widgetParams['productId']->getObject($this->attributes['productId']);
     }
 
 	/**

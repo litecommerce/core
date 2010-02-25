@@ -25,37 +25,37 @@
 class XLite_Module_GiftCertificates_View_AddGiftCertificate extends XLite_View_Dialog
 {
     /**
-     * Title
-     * 
-     * @var    string
+     * Targets this widget is allowed for
+     *
+     * @var    array
      * @access protected
-     * @since  1.0.0
+     * @since  3.0.0 EE
      */
-    protected $head = 'Add gift certificate';
+    protected $allowedTargets = array('add_gift_certificate');
+
 
     /**
-     * Widget body template
-     * 
-     * @var    string
+     * Return title
+     *
+     * @return string
      * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @since  3.0.0 EE
      */
-    protected $body = 'modules/GiftCertificates/add_gift_certificate.tpl';
-
-    /**
-     * Initilization
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function initView()
+    protected function getHead()
     {
-        parent::initView();
+        return 'Add gift certificate';
+    }
 
-        $this->visible = $this->visible && 'add_gift_certificate' == $this->target;
+    /**
+     * Return templates directory name
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getDir()
+    {
+        return 'modules/GiftCertificates/add_gift_certificate';
     }
 }
 

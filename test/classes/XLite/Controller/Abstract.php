@@ -115,31 +115,21 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
      */
     public function handleRequest()
     {
-		if (empty($this->action) && ($this->get('secure') ^ $this->is('https'))) {
-			$this->returnUrlAbsolute = true;
-            $this->redirect();
-        }
-
 		if (!$this->checkAccess()) {
 
-			if (!empty($this->action)) {
-				$this->params = array('target', 'mode');
-    	        $this->set('target', XLite::TARGET_DEFAULT);
-        	    $this->set('mode', 'access_denied');
-			}
+            $this->params = array('target', 'mode');
+            $this->set('target', XLite::TARGET_DEFAULT);
+            $this->set('mode', 'access_denied');
 
-			$this->redirect();
-		}
+        } elseif (!empty(XLite_Core_Request::getInstance()->action) && $this->isValid()) {
 
-		if ($this->isValid() && !empty($this->action)) {
-
-			$action = 'action_' . $this->action;
+            $action = 'action_' . XLite_Core_Request::getInstance()->action;
             $this->$action();
+        }
 
-			if ($this->isValid() && !$this->silent) {
-                $this->redirect();
-            }
-		}
+        if (XLite_Core_Request::getInstance()->isPost() && $this->isValid() && !$this->silent) {
+            $this->redirect();
+        }
 	}
 
 	/**
@@ -196,9 +186,28 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 		return $result;
 	}
 
+	/**
+	 * Return current (or default) category object
+	 * 
+	 * @return XLite_Model_Category
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
 	public function getCategory()
     {
 		return XLite_Model_CachingFactory::getObject('XLite_Model_Category', $this->get('category_id'));
+    }
+
+	/**
+	 * Return current (or default) product object
+	 * 
+	 * @return XLite_Model_Product
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
+	public function getProduct()
+    {
+		return XLite_Model_CachingFactory::getObject('XLite_Model_Product', $this->get('product_id'));
     }
 
 
@@ -238,15 +247,6 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     {
 		return $this->template;
 	}
-
-    function getProduct()
-    {
-        if (is_null($this->product) && !is_null($this->get('product_id'))) {
-            $this->product = new XLite_Model_Product($this->get('product_id'));
-        }
-
-        return $this->product;
-    }
 
 	function _clear_xsid_data()
 	{

@@ -97,29 +97,20 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
 
         parent::init();
 
-		if (
-			$this->xlite->get("PA_InventorySupport")
-			&& $this->config->ProductAdviser->customer_notifications_enabled
-			&& is_object($this->getProduct())
-		) {
+		if ($this->xlite->PA_InventorySupport && $this->config->ProductAdviser->customer_notifications_enabled) {
 
-			if (
-				$this->product->getComplex('inventory.amount') == 0
-				&& $this->product->get("tracking") == 0
-			) {
+			if ($this->getProduct()->getComplex('inventory.amount') == 0 && $this->getProduct()->get("tracking") == 0) {
     			$this->rejectedItemInfo = new XLite_Base();
-    			$this->rejectedItemInfo->set("product_id", $this->product->get("product_id"));
-    			$this->rejectedItemInfo->set("product", new XLite_Model_Product($this->product->get("product_id")));
+    			$this->rejectedItemInfo->set("product_id", $this->getProduct()->get("product_id"));
+    			$this->rejectedItemInfo->set("product", new XLite_Model_Product($this->getProduct()->get("product_id")));
 
             	if ($this->isNotificationSaved($this->rejectedItemInfo)) {
         			$this->rejectedItemInfo = null;
             	}
-
-			} elseif ($this->product->get("tracking") != 0) {
+			} else if($this->getProduct()->get("tracking") != 0) {
                 if ($this->session->isRegistered("rejectedItem")) {
                 	$rejectedItemInfo = $this->session->get("rejectedItem");
-
-                	if ($rejectedItemInfo->product_id != $this->product->get("product_id")) {
+                	if ($rejectedItemInfo->product_id != $this->getProduct()->get("product_id")) {
                 		$this->rejectedItemInfo = null;
                 		$this->session->set("rejectedItem", null);
 
