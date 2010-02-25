@@ -67,14 +67,20 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
 
     /**
      * Return subcategories lis
+     * 
+     * @param integer $categoryId Category id
      *
      * @return array
      * @access protected
      * @since  3.0.0 EE
      */
-    protected function getCategories()
+    protected function getCategories($categoryId = null)
     {
-        return $this->widgetParams['rootId']->getObject($this->attributes['rootId'])->getSubcategories();
+        if (is_null($categoryId)) {
+            $categoryId = $this->attributes['rootId'];
+        }
+
+        return $this->widgetParams['rootId']->getObject($categoryId)->getSubcategories();
     }
 
 	/**
@@ -128,37 +134,27 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
      */
     public function assembleItemClassName($index, $count, XLite_Model_Category $category)
     {
-        $conditions = array(
-            array(
-                !$category->getSubcategories(),
-                'leaf'
-            ),
-            array(
-                $category->getSubcategories() && 'list' != $this->attributes['displayMode'],
-                $this->isActiveTrail($category) ? 'expanded' : 'collapsed',
-            ),
-            array(
-                1 == $index,
-                'first',
-            ),
-            array(
-                $count == $index,
-                'last',
-            ),
-            array(
-                $this->isActiveTrail($category),
-                'active-trail',
-            ),
-        );
-
         $classes = array();
 
-        foreach ($conditions as $data) {
+        $active = $this->isActiveTrail($category);
 
-            list($condition, $class) = $data;
-            if ($condition) {
-                $classes[] = $class;
-            }
+        if (!$category->getSubcategories()) {
+            $classes[] = 'leaf';
+
+        } elseif ('list' != $this->attributes['displayMode']) {
+            $classes[] = $active ? 'expanded' : 'collapsed';
+        }
+
+        if (0 == $index) {
+            $classes[] = 'first';
+        }
+
+        if (($count - 1) == $index) {
+            $classes[] = 'last';
+        }
+
+        if ($active) {
+            $classes[] = 'active-trail';
         }
 
         return implode(' ', $classes);
@@ -177,7 +173,9 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
      */
     public function assembleLinkClassName($i, $count, $category)
     {
-        return (XLite_Core_Request::getInstance()->category_id == $category->get('category_id')) ? 'active' : '';
+        return XLite_Core_Request::getInstance()->category_id == $category->get('category_id')
+            ? 'active'
+            : '';
     }
 
     /**
