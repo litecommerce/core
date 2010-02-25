@@ -47,14 +47,33 @@
 */
 class XLite_Module_DetailedImages_Model_Product extends XLite_Model_Product implements XLite_Base_IDecorator
 {
-    function getDetailedImages()
+    /**
+     * Get detailed images list
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDetailedImages()
     {
         $image = new XLite_Module_DetailedImages_Model_DetailedImage();
 
         return $image->findImages($this->get("product_id"));
     }
+
+    /**
+     * Get detailed images list count 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDetailedImagesCount()
+    {
+		return count($this->getDetailedImages());
+    }
     
-    function delete()
+    public function delete()
     {
 		foreach ($this->getDetailedImages() as $image) {
 			$image->delete();
@@ -63,7 +82,7 @@ class XLite_Module_DetailedImages_Model_Product extends XLite_Model_Product impl
         parent::delete();
     }
 
-	function __clone()
+	public function __clone()
 	{
 		$product = parent::__clone();
 
@@ -91,30 +110,54 @@ class XLite_Module_DetailedImages_Model_Product extends XLite_Model_Product impl
 	}
 
 	/**
-	* Remove all unused detailed images
-	*/
+	 * Garbage collector
+	 * 
+	 * @return void
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
 	function collectGarbage()
 	{
 		parent::collectGarbage();
 
-		$products_table = $this->db->getTableByAlias("products");
-		$detailed_images_table = $this->db->getTableByAlias("images");
-		$sql = "SELECT i.image_id FROM $detailed_images_table i LEFT OUTER JOIN $products_table p ON i.product_id=p.product_id WHERE p.product_id IS NULL";
-		$result = $this->db->getAll($sql);
+		$products_table = $this->db->getTableByAlias('products');
+		$detailed_images_table = $this->db->getTableByAlias('images');
 
-		if (is_array($result) && count($result) > 0) {
+		$result = $this->db->getAll(
+			'SELECT i.image_id FROM ' . $detailed_images_table . ' as i '
+			. 'LEFT OUTER JOIN ' . $products_table .' as p ON i.product_id = p.product_id '
+			. 'WHERE p.product_id IS NULL'
+		);
+
+		if (is_array($result)) {
 			foreach ($result as $info) {
-				$di = new XLite_Module_DetailedImages_Model_DetailedImage($info["image_id"]);
+				$di = new XLite_Module_DetailedImages_Model_DetailedImage($info['image_id']);
 				$di->delete();
 			}
 		}
 	}
 
+	/**
+	 * Check - has product zoom image or not
+	 * 
+	 * @return boolean
+	 * @access protected
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
 	protected function getHasZoom()
 	{
 		return !is_null($this->getZoomImage());
 	}
 
+	/**
+	 * Get zoom image 
+	 * 
+	 * @return XLite_Module_DetailedImages_Model_DetailedImage
+	 * @access protected
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
 	protected function getZoomImage()
 	{
 		$result = null;

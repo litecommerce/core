@@ -1,9 +1,10 @@
 {* SVN $Id$ *}
 <ul class="di-gallery">
-  <li FOREACH="product.detailedImages,image">
+  <li FOREACH="product.getDetailedImages(),image">
     <a href="{image.imageURL}"><img src="{image.imageURL}" alt="{image.alt:r}" /></a>
   </li>
 </ul>
+<a href="javascript:void(0);" onclick="javascript: $('.di-gallery a').eq(0).trigger('click')">See all images ({product.getDetailedImagesCount()})</a>
 <script type="text/javascript">
 var lightBoxImagesDir = '{lightBoxImagesDir}';
 $(
