@@ -38,6 +38,15 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
         'path' => 'Path',
     );
 
+    /**
+     * Current category path id list 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $pathIds = null;
 
     /**
      * Get widge title
@@ -62,6 +71,10 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
      */
     protected function getDir()
     {
+        if (!isset($this->displayModes[$this->attributes['displayMode']])) {
+            $this->attributes['displayMode'] = 'list';
+        }
+
         return 'categories/' . $this->attributes['displayMode'];
     }
 
@@ -113,11 +126,19 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
      */
     public function isActiveTrail(XLite_Model_Category $category)
     {
-        $currentCategory = $this->getCategory(XLite_Core_Request::getInstance()->category_id);
+        if (is_null($this->pathIds)) {
+            $currentCategory = $this->getCategory(XLite_Core_Request::getInstance()->category_id);
+
+            $this->pathIds = array();
+
+            foreach ($currentCategory->getPath() as $c) {
+                $this->pathIds[] = $c->get('category_id');
+            }
+        }
 
         return in_array(
             $category->get('category_id'),
-            array($currentCategory->get('parent'), $currentCategory->get('category_id'))
+            $this->pathIds
         );
     }
 

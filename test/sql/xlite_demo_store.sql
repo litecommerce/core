@@ -217,6 +217,7 @@ INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user2
 INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user293@example.com',1100546388);
 INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user299@example.com',1100546388);
 
+truncate xlite_products_new_arrivals;
 INSERT INTO xlite_products_new_arrivals (product_id, added, new, updated) VALUES (241, UNIX_TIMESTAMP(), 'Y', UNIX_TIMESTAMP());
 INSERT INTO xlite_products_new_arrivals (product_id, added, new, updated) VALUES (120, UNIX_TIMESTAMP(), 'Y', UNIX_TIMESTAMP());
 INSERT INTO xlite_products_new_arrivals (product_id, added, new, updated) VALUES (163, UNIX_TIMESTAMP(), 'Y', UNIX_TIMESTAMP());
