@@ -1,21 +1,12 @@
 /* Minicart block */
 
-#lc-minicart {
+.minicart {
     position: relative;
     padding: 0.5em;
 }
 
-#lc-minicart a,
-#lc-minicart a:active,
-#lc-minicart a:hover,
-#lc-minicart a:visited
-{
-    text-decoration: underline;
-}
-
-#lc-minicart li {
+.minicart li {
     background-image: none;
-
 }
 
 /* Minicart title */
@@ -31,7 +22,7 @@
 
 /* Minicart toggle button */
 
-#lc-minicart .toggle-button {
+.minicart .toggle-button {
     width: 35px;
     height: 24px;
     margin: 0;
@@ -41,49 +32,36 @@
     cursor: pointer;
 }
 
-#lc-minicart.expanded .toggle-button {
+.minicart .expanded .toggle-button {
     background: transparent url(img/minicart-expanded.gif) no-repeat top left;
 }
 
-#lc-minicart.empty .toggle-button {
+.minicart .empty .toggle-button {
     background: transparent url(img/minicart-empty.gif) no-repeat top right;
     width: 24px;
     height: 24px;
     cursor: auto;
 }
 
-#lc-minicart.empty p {
+.minicart .empty p {
     margin: 0;
     padding: 1em 0 0 0;
 }
 
 /* Minicart items */
 
-.lc-minicart-items {
+.minicart-items {
     clear: both;
     border: 0;
     margin: 0;
     padding: 0;
 }
 
-#lc-minicart .line-item a,
-#lc-minicart .line-item a:active,
-#lc-minicart .line-item a:visited
-{
-    text-decoration: none;
-}
-
-#lc-minicart .line-item a:hover
-{
-    text-decoration: underline;
-}
-
-
-#lc-minicart.empty .lc-minicart-items {
+.minicart .empty .lc-minicart-items {
     border-bottom: none;
 }
 
-#lc-minicart.collapsed .lc-minicart-items {
+.minicart .collapsed .lc-minicart-items {
     display: none;
 }
 
