@@ -235,4 +235,8 @@ INSERT INTO xlite_related_products (product_id, related_product_id, order_by) VA
 INSERT INTO xlite_related_products (product_id, related_product_id, order_by) VALUES ('174', '173', 10);
 INSERT INTO xlite_related_products (product_id, related_product_id, order_by) VALUES ('174', '177', 10);
 
+TRUNCATE xlite_products_also_buy;
+INSERT INTO xlite_products_also_buy (product_id, product_id_also_buy, counter) VALUES ('174', '171', 3);
+INSERT INTO xlite_products_also_buy (product_id, product_id_also_buy, counter) VALUES ('174', '172', 5);
+INSERT INTO xlite_products_also_buy (product_id, product_id_also_buy, counter) VALUES ('174', '177', 1);
 
