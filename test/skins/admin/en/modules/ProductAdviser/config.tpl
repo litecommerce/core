@@ -80,7 +80,7 @@ visibleBox("option_rp_show_descr", false);
 </script>
 {end:}
 
-{if:!config.ProductAdviser.pab_template=#modules/ProductAdviser/ProductsAlsoBuy/icons.tpl#}
+{if:!config.ProductAdviser.pab_template=#icons#}
 <script language="Javascript">
 <!--
 visibleBox("option_pab_columns", false);
@@ -88,7 +88,7 @@ visibleBox("option_pab_columns", false);
 </script>
 {end:}
 
-{if:!config.ProductAdviser.pab_template=#modules/ProductAdviser/ProductsAlsoBuy/list.tpl#}
+{if:!config.ProductAdviser.pab_template=#list#}
 <script language="Javascript">
 <!--
 visibleBox("option_pab_show_descr", false);

@@ -26,9 +26,9 @@
 {end:}
 {if:option.isName(#pab_template#)}
 <select name="{option.name}" onChange="UpdateSettings()">
-    <option value="modules/ProductAdviser/ProductsAlsoBuy/list.tpl" selected="{option.isSelected(#modules/ProductAdviser/ProductsAlsoBuy/list.tpl#)}">List</option>
-    <option value="modules/ProductAdviser/ProductsAlsoBuy/icons.tpl" selected="{option.isSelected(#modules/ProductAdviser/ProductsAlsoBuy/icons.tpl#)}">Icons</option>
-    <option value="modules/ProductAdviser/ProductsAlsoBuy/table.tpl" selected="{option.isSelected(#modules/ProductAdviser/ProductsAlsoBuy/table.tpl#)}">Table</option>
+    <option value="list" selected="{option.isSelected(#list#)}">List</option>
+    <option value="icons" selected="{option.isSelected(#icons#)}">Icons</option>
+    <option value="table" selected="{option.isSelected(#table#)}">Table</option>
 </select>
 {end:}
 {if:option.isName(#pab_columns#)}

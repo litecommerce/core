@@ -61,7 +61,7 @@ VALUES
 (
 	'rp_template', 
 	'Look&feel of a product list', 
-	'modules/ProductAdviser/RelatedProducts/list.tpl', 
+	'list', 
 	'ProductAdviser', 
 	'10', 
 	'select'
@@ -341,7 +341,7 @@ VALUES
 (
 	'pab_template', 
 	'Look&feel of a product list', 
-	'modules/ProductAdviser/ProductsAlsoBuy/list.tpl', 
+	'list', 
 	'ProductAdviser', 
 	'75', 
 	'select'

@@ -11,24 +11,24 @@
  * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @version    SVN: $Id$
  * @link       http://www.qtmsoft.com/
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 
 /**
- * XLite_Module_ProductAdviser_View_RelatedProducts
- * 
+ * XLite_Module_ProductAdviser_View_ProductAlsoBuy
+ *
  * @package    Lite Commerce
  * @subpackage ____sub_package____
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
-class XLite_Module_ProductAdviser_View_RelatedProducts extends XLite_View_Dialog
-{
+class XLite_Module_ProductAdviser_View_ProductAlsoBuy extends XLite_View_Dialog
+{	
 	/**
      * Targets this widget is allowed for
      *
      * @var    array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected $allowedTargets = array('product');
 
@@ -56,7 +56,7 @@ class XLite_Module_ProductAdviser_View_RelatedProducts extends XLite_View_Dialog
 	 */
 	protected function getHead()
 	{
-		return 'Related products';
+		return 'People who buy this product also buy';
 	}
 
 	/**
@@ -69,7 +69,7 @@ class XLite_Module_ProductAdviser_View_RelatedProducts extends XLite_View_Dialog
 	 */
 	protected function getDir()
 	{
-        return 'modules/ProductAdviser/RelatedProducts/' . $this->getDisplayMode();
+        return 'modules/ProductAdviser/ProductsAlsoBuy/' . $this->getDisplayMode();
 	}
 
 	/**
@@ -82,21 +82,21 @@ class XLite_Module_ProductAdviser_View_RelatedProducts extends XLite_View_Dialog
      */
     protected function getDisplayMode()
     {
-		return $this->config->ProductAdviser->rp_template;
+		return $this->config->ProductAdviser->pab_template;
     }
 
     /**
-     * Check if related products are available
+     * Check if recommended products are available
      * 
-     * @return bool
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function checkRelatedProducts()
+    protected function checkProductsAlsoBuy()
     {
-        $rp = $this->getComplex('product.RelatedProducts');
-        return !empty($rp);
+		$productsAlsoBuy = $this->getComplex("product.ProductsAlsoBuy");
+		return !empty($productsAlsoBuy);
     }
 
     /**
@@ -104,14 +104,14 @@ class XLite_Module_ProductAdviser_View_RelatedProducts extends XLite_View_Dialog
      *
      * @return bool
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function isVisible()
     {
-        return parent::isVisible()
-            && $this->config->ProductAdviser->related_products_enabled
-            && $this->checkRelatedProducts()
-            && empty($this->page);
+		return parent::isVisible()
+			&& $this->config->ProductAdviser->products_also_buy_enabled
+			&& empty($this->page)
+			&& $this->checkProductsAlsoBuy();
     }
 
 }
