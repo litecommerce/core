@@ -64,7 +64,7 @@ function UpdateBuyNow(elm)
 -->
 </script>
 
-{if:!config.ProductAdviser.rp_template=#modules/ProductAdviser/RelatedProducts/icons.tpl#}
+{if:!config.ProductAdviser.rp_template=#icons#}
 <script language="Javascript">
 <!--
 visibleBox("option_rp_columns", false);
@@ -72,7 +72,7 @@ visibleBox("option_rp_columns", false);
 </script>
 {end:}
 
-{if:!config.ProductAdviser.rp_template=#modules/ProductAdviser/RelatedProducts/list.tpl#}
+{if:!config.ProductAdviser.rp_template=#list#}
 <script language="Javascript">
 <!--
 visibleBox("option_rp_show_descr", false);
