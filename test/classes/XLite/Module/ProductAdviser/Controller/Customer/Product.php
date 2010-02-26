@@ -274,7 +274,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
 			$this->config->ProductAdviser->rp_show_buynow
 			& $this->config->ProductAdviser->rp_bulk_shopping
 		) {
-	        $products = (array) $this->pager->pageData;
+	        $products = (array) $this->getComplex('pager.pageData');
     	    foreach ($products as $p) {
         	    if (!$p->get('product')->checkHasOptions()) {
 					$result = true;

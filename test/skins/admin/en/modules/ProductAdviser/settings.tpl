@@ -10,9 +10,9 @@
 {end:}
 {if:option.isName(#rp_template#)}
 <select name="{option.name}" onChange="UpdateSettings()">
-    <option value="modules/ProductAdviser/RelatedProducts/list.tpl" selected="{option.isSelected(#modules/ProductAdviser/RelatedProducts/list.tpl#)}">List</option>
-    <option value="modules/ProductAdviser/RelatedProducts/icons.tpl" selected="{option.isSelected(#modules/ProductAdviser/RelatedProducts/icons.tpl#)}">Icons</option>
-    <option value="modules/ProductAdviser/RelatedProducts/table.tpl" selected="{option.isSelected(#modules/ProductAdviser/RelatedProducts/table.tpl#)}">Table</option>
+    <option value="list" selected="{option.isSelected(#list#)}">List</option>
+    <option value="icons" selected="{option.isSelected(#icons#)}">Icons</option>
+    <option value="table" selected="{option.isSelected(#table#)}">Table</option>
 </select>
 {end:}
 {if:option.isName(#rp_columns#)}

@@ -37,6 +37,7 @@ abstract class XLite_Module_ProductAdviser_Core_CMSConnector extends XLite_Core_
 
         $this->widgetsList['XLite_Module_ProductAdviser_View_NewArrivals'] = 'New arrivals';
         $this->widgetsList['XLite_Module_ProductAdviser_View_RecentlyViewed'] = 'Recently viewed products';
+        $this->widgetsList['XLite_Module_ProductAdviser_View_RelatedProducts'] = 'Related products';
 
         $this->pageTypes['XLite_Module_ProductAdviser_Controller_Customer_RecentlyViewed'] = 'Recently viewed products';
         $this->pageTypes['XLite_Module_ProductAdviser_Controller_Customer_NewArrivals'] = 'New arrivals';
