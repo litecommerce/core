@@ -217,6 +217,7 @@ INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user2
 INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user293@example.com',1100546388);
 INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user299@example.com',1100546388);
 
+-- Dump for ProductAdviser module
 truncate xlite_products_new_arrivals;
 INSERT INTO xlite_products_new_arrivals (product_id, added, new, updated) VALUES (241, UNIX_TIMESTAMP(), 'Y', UNIX_TIMESTAMP());
 INSERT INTO xlite_products_new_arrivals (product_id, added, new, updated) VALUES (120, UNIX_TIMESTAMP(), 'Y', UNIX_TIMESTAMP());
@@ -224,4 +225,14 @@ INSERT INTO xlite_products_new_arrivals (product_id, added, new, updated) VALUES
 INSERT INTO xlite_products_new_arrivals (product_id, added, new, updated) VALUES (174, UNIX_TIMESTAMP(), 'Y', UNIX_TIMESTAMP());
 INSERT INTO xlite_products_new_arrivals (product_id, added, new, updated) VALUES (119, UNIX_TIMESTAMP(), 'Y', UNIX_TIMESTAMP());
 INSERT INTO xlite_products_new_arrivals (product_id, added, new, updated) VALUES (165, UNIX_TIMESTAMP(), 'Y', UNIX_TIMESTAMP());
+
+TRUNCATE xlite_related_products;
+INSERT INTO xlite_related_products (product_id, related_product_id, order_by) VALUES ('174', '119', 10);
+INSERT INTO xlite_related_products (product_id, related_product_id, order_by) VALUES ('174', '165', 10);
+INSERT INTO xlite_related_products (product_id, related_product_id, order_by) VALUES ('174', '241', 10);
+INSERT INTO xlite_related_products (product_id, related_product_id, order_by) VALUES ('174', '171', 10);
+INSERT INTO xlite_related_products (product_id, related_product_id, order_by) VALUES ('174', '172', 10);
+INSERT INTO xlite_related_products (product_id, related_product_id, order_by) VALUES ('174', '173', 10);
+INSERT INTO xlite_related_products (product_id, related_product_id, order_by) VALUES ('174', '177', 10);
+
 
