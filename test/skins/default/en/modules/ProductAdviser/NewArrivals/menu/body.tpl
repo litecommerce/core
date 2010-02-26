@@ -5,7 +5,6 @@
     <td>&nbsp;</td>
     <td><a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^product.category.category_id))}" class="SidebarItems">{product.name:h}</a></td>
 </tr>
-{* FIXME - this condition is never evaluates to "true" *}
 <tr IF="additionalPresent">
     <td colspan=3><br><a href="{buildURL(#new_arrivals#,##)}" onClick="this.blur()"><font color=gray><u>All new arrivals...</u></font></a></td>
 </tr>

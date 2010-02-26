@@ -311,7 +311,8 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 		$products = $this->xlite->NewArrivalsProducts;
 
         if (isset($products)) {
-        	$this->productsNumber = count($products);
+            $this->productsNumber = count($products);
+            $this->additionalPresent = $this->xlite->NewArrivalsAdditionalPresent;
             return $products;
         }    
 
@@ -347,7 +348,8 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 
 			$products = array_values($this->_new_arrival_products);
 			$this->productsNumber = count($products);
-			$this->xlite->set("NewArrivalsProducts", $products);
+            $this->xlite->set("NewArrivalsProducts", $products);
+            $this->xlite->set("NewArrivalsAdditionalPresent", $this->additionalPresent);
 
 			return $products;
 		}
@@ -397,6 +399,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 
     	$this->productsNumber = count($products);
         $this->xlite->set("NewArrivalsProducts", $products);
+        $this->xlite->set("NewArrivalsAdditionalPresent", $this->additionalPresent);
 
         return $products;
 	}
