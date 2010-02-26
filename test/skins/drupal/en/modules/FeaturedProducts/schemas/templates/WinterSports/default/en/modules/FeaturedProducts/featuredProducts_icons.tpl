@@ -27,5 +27,5 @@
 </tbody>
 </table>
 
-<widget module="ProductAdviser" template="modules/ProductAdviser/PriceNotification/notify_form.tpl"><!--Should be: widgets/modules_ProductAdviser_PriceNotification_notify_form.gif-->
+<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_PriceNotifyForm"><!--Should be: widgets/modules_ProductAdviser_PriceNotification_notify_form.gif-->
 

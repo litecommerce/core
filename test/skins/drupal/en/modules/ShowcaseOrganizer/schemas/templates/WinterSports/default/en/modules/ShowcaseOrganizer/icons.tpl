@@ -30,4 +30,4 @@
 
 <widget name="pager">
 
-<widget module="ProductAdviser" template="modules/ProductAdviser/PriceNotification/notify_form.tpl">
+<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_PriceNotifyForm">
