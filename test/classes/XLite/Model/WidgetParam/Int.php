@@ -15,7 +15,7 @@
  */
 
 /**
- * XLite_Model_WidgetParam_String 
+ * Integer 
  * 
  * @package    Lite Commerce
  * @subpackage ____sub_package____
@@ -32,7 +32,6 @@ class XLite_Model_WidgetParam_Int extends XLite_Model_WidgetParam_Abstract
      */
     protected $type = 'integer';
 
-
     /**
      * Return list of conditions to check
      *
@@ -46,8 +45,8 @@ class XLite_Model_WidgetParam_Int extends XLite_Model_WidgetParam_Abstract
     {
         return array(
             array(
-                self::ATTR_CONDITION => !is_numeric($value),
-                self::ATTR_MESSAGE   => ' is not numeric',
+                self::ATTR_CONDITION => !preg_match('/^\s*[-+]?\d+\s*$/Ss', $value),
+                self::ATTR_MESSAGE   => ' is not integer',
             ),
         );
     }

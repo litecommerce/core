@@ -15,7 +15,7 @@
  */
 
 /**
- * XLite_Model_WidgetParam 
+ * Product id
  * 
  * @package    Lite Commerce
  * @subpackage ____sub_package____
@@ -52,7 +52,7 @@ class XLite_Model_WidgetParam_ObjectId_Product extends XLite_Model_WidgetParam_O
                 self::ATTR_MESSAGE   => ' is a non-positive number',
             ),
             array(
-                self::ATTR_CONDITION => !$this->getObject($value)->isPersistent,
+                self::ATTR_CONDITION => !$this->getObject($value)->isExists(),
                 self::ATTR_MESSAGE   => ' record with such ID does not exist',
             ),
         ) + parent::getValidaionSchema($value);

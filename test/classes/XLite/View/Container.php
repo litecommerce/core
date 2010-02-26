@@ -133,9 +133,11 @@ abstract class XLite_View_Container extends XLite_View_Abstract
 
             if (isset($attrs[$name])) {
                 list($result, $widgetErrors) = $param->validate($attrs[$name]);
+
                 if (false === $result) {
                     $messages[] = $param->label . ': ' . implode('<br />' . $param->label . ': ', $widgetErrors);
                 }
+
             } else {
                 $messages[] = $param->label . ': is not set';
             }

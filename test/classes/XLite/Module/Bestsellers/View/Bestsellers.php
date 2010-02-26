@@ -121,9 +121,9 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_SideBarBox
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            'displayMode' => new XLite_Model_WidgetParam_List('displayMode', 'vertical', 'Display mode', $this->displayModes),
-            'useNode'     => new XLite_Model_WidgetParam_Checkbox('useNode', 0, 'Use current category id'),
-            'rootId'      => new XLite_Model_WidgetParam_ObjectId_Category('rootId', 0, 'Root category Id'),
+            'displayMode' => new XLite_Model_WidgetParam_List('Display mode', 'vertical', $this->displayModes),
+            'useNode'     => new XLite_Model_WidgetParam_Checkbox('Use current category id', 0),
+            'rootId'      => new XLite_Model_WidgetParam_ObjectId_Category('Root category Id', 0, true),
         );
     }
 

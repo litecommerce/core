@@ -20,7 +20,6 @@ class XLite_Model_WidgetParam_Checkbox extends XLite_Model_WidgetParam_Abstract
      */
     protected $type = 'checkbox';
 
-
 	/**
      * Return list of conditions to check
      *

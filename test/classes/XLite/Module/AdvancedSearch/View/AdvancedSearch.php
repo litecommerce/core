@@ -84,7 +84,7 @@ class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            'displayMode' => new XLite_Model_WidgetParam_List('displayMode', 'horizontal', 'Display mode', $this->displayModes),
+            'displayMode' => new XLite_Model_WidgetParam_List('Display mode', 'horizontal', $this->displayModes),
         );
     }
 

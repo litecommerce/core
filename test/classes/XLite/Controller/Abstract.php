@@ -594,9 +594,25 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
      * @access public
      * @since  1.0.0
      */
-    public function validatePageTypeAttributes(array $attributes)
+    public function validatePageTypeAttributes(array $attrs)
     {
-        return array();
+        $messages = array();
+
+        foreach ($this->getPageTypeParams() as $name => $param) {
+
+            if (isset($attrs[$name])) {
+                list($result, $widgetErrors) = $param->validate($attrs[$name]);
+
+                if (false === $result) {
+                    $messages[] = $param->label . ': ' . implode('<br />' . $param->label . ': ', $widgetErrors);
+                }
+
+            } else {
+                $messages[] = $param->label . ': is not set';
+            }
+        }
+
+        return $messages;
     }
 
     /**

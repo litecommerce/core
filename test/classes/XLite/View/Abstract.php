@@ -265,7 +265,6 @@ class XLite_View_Abstract extends XLite_Core_Handler
         $this->widgetParams = array();
     }
 
-
     /**
      * Set widget attributes 
      * 

@@ -127,34 +127,41 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Abstra
 		return parent::getCategory();
 	}
 
-    // 'description' meta tag
-	
 	function getTitle()
 	{
-		return ($this->getComplex('product.meta_title') ? $this->getComplex('product.meta_title') : $this->getComplex('product.name'));
+		$metaTitle = $this->getProduct()->get('.meta_title');
+
+		return $metaTitle ? $metaTitle : $this->getProduct()->get('name');
 	}
 	
     function getDescription()
     {
         $description = $this->getProduct()->get('description');
 
-		return empty($description) ? $this->getProduct()->get('brief_description') : $description;
+		return $description ? $description : $this->getProduct()->get('brief_description');
     }
 
 	function getMetaDescription()
 	{
-		return $this->getProduct()->get('meta_desc')
-			? $this->getProduct()->get('meta_desc')
-			: $this->getDescription();
+		$metaDesc = $this->getProduct()->get('meta_desc');
+
+		return $metaDesc ? $metaDesc : $this->getDescription();
 	}
 
-    // 'keywords' meta tag
     function getKeywords()
     {
-		return $this->getComplex('product.meta_tags');
+		return $this->getProduct()->get('meta_tags');
     }
 
-    function isAvailableForSale()
+    /**
+     * Check - available product for sale or not 
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isAvailableForSale()
     {
         return true;
     }
@@ -170,36 +177,7 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Abstra
     {
 		parent::definePageTypeParams();
 
-        $this->pageTypeParams[] = new XLite_Model_WidgetParam_String('product_id', 0, 'Product Id');
-    }
-
-    /**
-     * Check passed attributes
-     *
-     * @param array $attributes attributes to check
-     *
-     * @return array errors list
-     * @access public
-     * @since  1.0.0
-     */
-    public function validatePageTypeAttributes(array $attributes)
-    {
-        $errors = parent::validatePageTypeAttributes($attributes);
-
-		if (!isset($attributes['product_id']) || !is_numeric($attributes['product_id'])) {
-			$errors['product_id'] = 'Product Id is not numeric!';
-
-		} else {
-			$attributes['product_id'] = intval($attributes['product_id']);
-
-			$product = new XLite_Model_Product($attributes['product_id']);
-
-			if (!$product->isPersistent) {
-				$errors['product_id'] = 'Product with product Id #' . $attributes['product_id'] . ' can not found!';
-			}
-		}
-
-		return $errors;
+        $this->pageTypeParams['product_id'] = new XLite_Model_WidgetParam_ObjectId_Product('Product Id', 0);
     }
 
     /**

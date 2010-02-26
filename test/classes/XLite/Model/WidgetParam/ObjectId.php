@@ -32,7 +32,6 @@ abstract class XLite_Model_WidgetParam_ObjectId extends XLite_Model_WidgetParam_
      */
     abstract protected function getClassName();
 
-
     /**
      * Return object ID
      * 
@@ -58,14 +57,15 @@ abstract class XLite_Model_WidgetParam_ObjectId extends XLite_Model_WidgetParam_
      */
     protected function getValidaionSchema($value)
     {
-        return parent::getValidaionSchema($value) + array(
-            array(
-                self::ATTR_CONDITION => 0 > $value,
-                self::ATTR_MESSAGE   => ' is a negative number',
-            ),
-        );
-    }
+        $schema = parent::getValidaionSchema($value);
 
+        $schema[] = array(
+            self::ATTR_CONDITION => 0 > $value,
+            self::ATTR_MESSAGE   => ' is a negative number',
+        );
+
+        return $schema;
+    }
 
     /**
      * Return object with passed/predefined ID

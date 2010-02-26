@@ -125,10 +125,9 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 		parent::defineWidgetParams();
 
 		$this->widgetParams += array(
-			'useNode'     => new XLite_Model_WidgetParam_Checkbox('useNode', 0, 'Show category-specific new arrivals'),
-			'displayMode' => new XLite_Model_WidgetParam_List('displayMode', $this->getDisplayMode(), 'Display mode', $this->displayModes),
+			'useNode'     => new XLite_Model_WidgetParam_Checkbox('Show category-specific new arrivals', 0),
+			'displayMode' => new XLite_Model_WidgetParam_List('Display mode', $this->getDisplayMode(), $this->displayModes),
 		);
-
 	}
 
     /**
@@ -142,7 +141,6 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
     {
         return ('dialog' == $this->attributes['displayMode'] && 'new_arrivals' == XLite_Core_Request::getInstance()->target);
     }
-
 
     /**
      * FIXME - must be unified and removed (common task for all widgets which have the "displayMode" attribute)

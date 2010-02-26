@@ -43,7 +43,6 @@ class XLite_Model_WidgetParam_List extends XLite_Model_WidgetParam_String
      */
     protected $options = array();
 
-
     /**
      * Return list of conditions to check
      *
@@ -63,23 +62,20 @@ class XLite_Model_WidgetParam_List extends XLite_Model_WidgetParam_String
         );
     }
 
-
     /**
-     * Common constructor
-     * FIXME - "name" must be removed
+     * Constructor
      *
-     * @param string $name    param name
-     * @param string $value   param value
      * @param string $label   param text label
+     * @param string $value   param value
      * @param array  $options list options
      *
      * @return void
      * @access public
      * @since  1.0.0
      */
-    public function __construct($name = null, $value = null, $label = null, array $options = array())
+    public function __construct($label, $value = null, array $options = array())
     {
-        parent::__construct($name, $value, $label);
+        parent::__construct($label, $value);
 
         $this->options = $options;
     }

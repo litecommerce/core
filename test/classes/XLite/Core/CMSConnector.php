@@ -254,7 +254,9 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
 	public function getWidgetObject($name, array $attributes = array())
 	{
-		return class_exists($name) ? XLite_Model_CachingFactory::getObject($name, $this->prepareAttributes($attributes)) : null;
+		return class_exists($name)
+            ? XLite_Model_CachingFactory::getObject($name, $this->prepareAttributes($attributes))
+            : null;
 	}
 
 	/**
@@ -270,7 +272,9 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 */
 	public function validateWidgetArguments($name, array $attributes)
 	{
-		return ($widget = $this->getWidgetObject($name, $attributes)) ? $widget->validateAttributes($attributes) : array();
+        $widget = $this->getWidgetObject($name, $attributes);
+
+		return $widget ? $widget->validateAttributes($attributes) : array();
 	}
 
 	/**

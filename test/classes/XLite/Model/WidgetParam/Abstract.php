@@ -42,16 +42,6 @@ abstract class XLite_Model_WidgetParam_Abstract extends XLite_Base
     protected $type = null;
 
 	/**
-	 * Param name 
-     * FIXME - must be removed
-	 * 
-	 * @var    string
-	 * @access protected
-	 * @since  3.0
-	 */
-	protected $name = null;
-
-	/**
 	 * Param value 
 	 * 
 	 * @var    mixed
@@ -69,28 +59,21 @@ abstract class XLite_Model_WidgetParam_Abstract extends XLite_Base
 	 */
 	protected $label = null;
 
-
-	/**
-	 * Save passed data in object properties 
-     * FIXME - "name" must be removed
-     * FIXME - function must be removed
-	 * 
-	 * @param string $name  param name_
-	 * @param string $value param value
-	 * @param string $label param label
-	 *  
-	 * @return void
-	 * @access protected
-	 * @since  1.0.0
-	 */
-	protected function setCommonData($name, $value, $label)
-	{
-        // FIXME - must be removed
-		$this->name  = $name;
-
-		$this->value = $value;
-		$this->label = $label;
-	}
+    /**
+     * Constructor 
+     * 
+     * @param string $label Parameter text label
+     * @param string $value Parameter default value
+     *  
+     * @return void
+     * @access public
+     * @since  1.0.0
+     */
+    public function __construct($label, $value = null)
+    {
+        $this->value = $value;
+        $this->label = $label;
+    }
 
     /**
      * Check passed conditions
@@ -108,6 +91,7 @@ abstract class XLite_Model_WidgetParam_Abstract extends XLite_Base
         foreach ($conditions as $condition) {
             if (true === $condition[self::ATTR_CONDITION]) {
                 $messages[] = $condition[self::ATTR_MESSAGE];
+
                 if (!isset($condition[self::ATTR_CONTINUE])) {
                      break;
                 }
@@ -122,12 +106,11 @@ abstract class XLite_Model_WidgetParam_Abstract extends XLite_Base
      * 
      * @param mixed $value value to validate
      *  
-     * @return void
+     * @return array
      * @access protected
      * @since  3.0.0 EE
      */
     abstract protected function getValidaionSchema($value);
-
 
     /**
      * Validate passed value
@@ -145,27 +128,6 @@ abstract class XLite_Model_WidgetParam_Abstract extends XLite_Base
         return array(empty($result), $result);
     }
     
-    /**
-     * Common constructor
-     * FIXME - "name" must be removed
-     *
-     * @param string $name  param name
-     * @param string $value param value
-     * @param string $label param text label
-     *
-     * @return void
-     * @access public
-     * @since  1.0.0
-     */
-    public function __construct($name = null, $value = null, $label = null)
-    {
-        // FIXME - must be removed
-        $this->name  = $name;
-
-        $this->value = $value;
-        $this->label = $label;
-    }
-
 	/**
 	 * Return protected property 
 	 * 

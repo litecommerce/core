@@ -32,7 +32,6 @@ class XLite_Model_WidgetParam_String extends XLite_Model_WidgetParam_Abstract
      */
     protected $type = 'string';
 
-
     /**
      * Return list of conditions to check
      *
