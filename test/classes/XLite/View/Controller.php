@@ -24,6 +24,37 @@
 class XLite_View_Controller extends XLite_View_Abstract
 {
     /**
+     * isStarted 
+     * 
+     * @var    mixed
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected static $isStarted = false;
+
+    /**
+     * bodyContent 
+     * 
+     * @var    mixed
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public static $bodyContent = null;
+
+
+    /**
+     * Check for current display mode
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function useDefaultDisplayMode()
+    {
+        return self::$isStarted || $this->attributes[self::IS_EXPORTED] || XLite::getInstance()->adminZone;
+    }
+
+    /**
      * Send headers 
      * 
      * @return void
@@ -44,16 +75,34 @@ class XLite_View_Controller extends XLite_View_Abstract
     }
 
     /**
-     * Send headers
-     *
+     * displayPage 
+     * 
      * @return void
      * @access protected
      * @since  3.0.0 EE
      */
-    protected function initView()
+    protected function displayPage()
     {
-        $this->startPage();
+        // Set mutex
+        self::$isStarted = true;
+
+        if (!$this->attributes['silent']) {
+
+            self::$bodyContent = $this->getContent();
+            
+            $this->template = 'body.tpl';
+            $this->startPage();
+
+            parent::display();
+        }
+
+        if ($this->attributes['dumpStarted']) {
+            func_refresh_end();
+        }
+
+        XLite::$controller->postprocess();
     }
+
 
     /**
      * Set template and attributes 
@@ -76,6 +125,18 @@ class XLite_View_Controller extends XLite_View_Abstract
     }
 
     /**
+     * TODO - check if it's really needed
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function __destruct()
+    {
+        self::$bodyContent = null;
+    }
+
+    /**
      * Show current page and, optionally, footer  
      * 
      * @return void
@@ -84,62 +145,7 @@ class XLite_View_Controller extends XLite_View_Abstract
      */
     public function display()
     {
-        if (!$this->attributes['silent']) {
-            ob_start();
-            parent::display();
-            $content = ob_get_contents();
-            ob_end_clean();
-
-            echo $this->postprocessResources($content);
-        }
-
-        if ($this->attributes['dumpStarted']) {
-            func_refresh_end();
-        }
-
-        XLite::$controller->postprocess();
-    }
-
-    /**
-     * Postprocess widgets resources 
-     * 
-     * @param string $content Content
-     *  
-     * @return strong
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function postprocessResources($content)
-    {
-        if (preg_match('/<\/head>/Ssi', $content)) {
-            $added = array();
-
-            foreach (XLite_View_Abstract::$resources as $key => $list) {
-                $list = array_unique($list);
-
-                foreach ($list as $path) {
-                    $url = XLite::getInstance()->shopURL(XLite_Model_Layout::getInstance()->getPath() . $path);
-
-                    if ('js' == $key) {
-                        $added[] = '<script type="text/javascript" src="' . $url . '"></script>';
-
-                    } elseif ('css' == $key) {
-                        $added[] = '<link rel="stylesheet" type="text/css" src="' . $url . '" />';
-                    }
-                }
-            }
-
-            if ($added) {
-                $content = preg_replace(
-                    '/<\/head>/iSs',
-                    implode("\n", $added) . "\n" . '</head>',
-                    $content
-                );
-            }
-        }
-
-        return $content;
+        $this->useDefaultDisplayMode() ? parent::display() : $this->displayPage();
     }
 }
 

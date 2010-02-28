@@ -1,50 +1,26 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* Class Dialog_
-*
-* @package Base
-* @access public
-* @version $Id$
-*/
+ * ____file_title____
+ *  
+ * @category   Lite Commerce
+ * @package    Lite Commerce
+ * @subpackage ____sub_package____
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @version    SVN: $Id$
+ * @link       http://www.qtmsoft.com/
+ * @since      3.0.0 EE
+ */
+
+/**
+ * XLite_Controller_Abstract 
+ * 
+ * @package    Lite Commerce
+ * @subpackage ____sub_package____
+ * @since      3.0.0 EE
+ */
 abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 {
 	/**
@@ -55,6 +31,16 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 	 * @since  3.0.0 EE
 	 */
 	protected $template = 'main.tpl';
+
+    /**
+     * Breadcrumbs 
+     * 
+     * @var    XLite_Model_LocationPath
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected $locationPath = null;
+
 
 	/**
 	 * Check if current page is accessible
@@ -105,6 +91,53 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         header('Location: ' . $location, true, $code);
     }
 
+	/**
+	 * Add the base part of the location path
+	 * 
+	 * @return void
+	 * @access protected
+	 * @since  3.0.0 EE
+	 */
+	protected function addBaseLocation()
+	{
+		$this->locationPath->addNode(new XLite_Model_Location('Home', $this->buildURL()));
+	}
+
+    /**
+     * Common method to determine current location 
+     * 
+     * @return array|null
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getLocation()
+    {
+        return null;
+    }
+
+
+	/**
+	 * Return current location path 
+	 * 
+	 * @return XLite_Model_LocationPath
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
+	public function getLocationPath()
+	{
+        if (!isset($this->locationPath)) {
+
+            $this->locationPath = new XLite_Model_LocationPath();
+            $this->addBaseLocation();
+
+            if ($this->getLocation()) {
+                list($name, $link) = $this->getLocation();
+                $this->locationPath->addNode(new XLite_Model_Location($name, $link));
+            }
+        }
+
+        return $this->locationPath;
+	}
 
     /**
      * Handles the request. Parses the request variables if necessary. Attempts to call the specified action function 
@@ -195,7 +228,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 	 */
 	public function getCategory()
     {
-		return XLite_Model_CachingFactory::getObject('XLite_Model_Category', $this->get('category_id'));
+		return XLite_Model_CachingFactory::getObject('XLite_Model_Category', XLite_Core_Request::getInstance()->category_id);
     }
 
 	/**
@@ -207,14 +240,27 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 	 */
 	public function getProduct()
     {
-		return XLite_Model_CachingFactory::getObject('XLite_Model_Product', $this->get('product_id'));
+		return XLite_Model_CachingFactory::getObject('XLite_Model_Product', XLite_Core_Request::getInstance()->product_id);
     }
 
+	/**
+	 * Return current page title
+	 * 
+	 * @return string
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
+	public function getTitle()
+	{
+		return 'LiteCommerce online store builder';
+	}
+
+
+	// TODO - all of the above should be revised
 
 
     public $params = array('target');	
     public $dumpStarted = false; // startDump was called	
-    public $locationPath = array(); // path for dialog location
 
 	protected $silent = false;
 

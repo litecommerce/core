@@ -40,10 +40,11 @@ class XLite_Module_JoomlaConnector_Core_Handler extends XLite_Core_Handler imple
      * @access public
      * @since  3.0
      */
-    public function buildURL($target, $action = '', array $params = array())
+    public function buildURL($target = '', $action = '', array $params = array())
     {
-        return XLite_Module_JoomlaConnector_Handler::getInstance()->checkCurrentCMS() ?
-            $this->getJoomlaURL($target, $action, $params) : parent::buildURL($target, $action, $params);
+        return XLite_Module_JoomlaConnector_Handler::getInstance()->checkCurrentCMS()
+			? self::getJoomlaURL($target, $action, $params) 
+			: parent::buildURL($target, $action, $params);
     }
 }
 

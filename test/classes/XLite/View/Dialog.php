@@ -31,18 +31,5 @@ abstract class XLite_View_Dialog extends XLite_View_Container
      * @since  3.0.0 EE
      */
     protected $template = 'common/dialog.tpl';
-
-
-    /**
-     * Return dialog link
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function getHref()
-    {
-        return null;
-    }
 }
 

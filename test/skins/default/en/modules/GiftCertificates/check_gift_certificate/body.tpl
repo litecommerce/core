@@ -2,8 +2,7 @@
 If you have an existing Gift certificate you can check its current amount and status using the form below.
 <br><br>
 <font class="ErrorMessage" IF="notFound">The specified Gift certificate is not found.</font>
-<FORM name="gccheckform" action="cart.php" method="GET">
-<input type="hidden" name="target" value="check_gift_certificate">
+<FORM name="gccheckform" action="{buildURL(#check_gift_certificate#)}" method="GET">
 <table border="0"><tr><td>
 Gift certificate:&nbsp;
 </td><td><INPUT type="text" size="25" maxlength="16" name="gcid" value="{foundgc.gcid:r}">

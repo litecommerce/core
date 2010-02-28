@@ -1,35 +1,4 @@
-<!-- [begin] -->
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<HTML>
-
-<!-- [head] -->
-<HEAD>
-	<script type="text/javascript">
-  	  if (document.getElementById("rebuild_cache_block")) document.getElementById("rebuild_cache_block").style.display = "none";
-	</script>
-
-<TITLE>LiteCommerce online store builder
-{if:target=#category#&!title=##} - {end:}
-{if:target=#product#&!title=##} - {end:}
-{if:target=#cart#} - Your Shopping Cart{end:}
-{if:target=#help#} - Help section{end:}
-{if:target=#checkout#} - Checkout{end:}
-{if:target=#checkoutSuccess#} - Thank you for your order{end:}
-{if:target=#main#&!page=##} - {extraPage.title:h}{end:}
-{title:h}
-</TITLE>
-<META http-equiv="Content-Type" content="text/html; charset={charset}">
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-<META IFF="!metaDescription" name="description" content="The powerful shopping cart software for web stores and e-commerce enabled stores is based on PHP / PHP4 with SQL database with highly configurable implementation based on templates.">
-<META IFF="metaDescription" name="description" content="{metaDescription:r}">
-<META IFF="keywords" name="keywords" content="{keywords:r}">
-<LINK href="skins/default/en/style.css"  rel="stylesheet" type="text/css">
-<LINK IFF="xlite.FlyoutCategoriesEnabled&xlite.config.FlyoutCategories.scheme" href="{xlite.layout.path}modules/FlyoutCategories/catalog{xlite.auth.flyoutCategoriesCacheDirectory}/{xlite.FlyoutCategoriesCssPath}" rel="stylesheet" type="text/css">
-</HEAD>
-<!-- [/head] -->
-
-<BODY>
-<!-- [/begin] -->
+{* SVN $Id$ *}
 <TABLE border="0" width="100%" cellpadding="0" cellspacing="0" class="Container">
 <TR>
 <TD valign="top">
@@ -229,12 +198,4 @@ Help |  <A href="cart.php?target=help&amp;mode=contactus"><FONT class="BottomMen
 <div IF="xlite.FlyoutCategoriesEnabled&xlite.config.FlyoutCategories.scheme">
 <widget module="FlyoutCategories" template="modules/FlyoutCategories/main_footer.tpl">
 </div>
-</body>
-</HTML>
-<!-- [/end] -->
-
-
-
-
-
 

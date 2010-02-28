@@ -1,0 +1,35 @@
+{* $Id$ *}
+.lc-subcategory-icons ul
+{
+	list-style: none;
+}
+
+.lc-subcategory-icons li
+{
+	padding: 0;
+	margin: 0 1em 1em 0;
+	vertical-align: top;
+	background-image: none;
+	/*
+     * Information on hacks used below is available at:
+	 * - http://blog.mozilla.com/webdev/2009/02/20/cross-browser-inline-block/
+	 * - http://foohack.com/2007/11/cross-browser-support-for-inline-block-styling/
+	 */
+	display: -moz-inline-stack;		/* Hack for FF2 */
+	display: inline-block;
+	zoom: 1;						/* Hack for IE */
+	*display: inline;				/* Hack for IE */
+}
+
+.lc-subcategory-icons .lc-subcategory-name,
+.lc-subcategory-icons .lc-subcategory-image
+{
+	text-align: center;
+	/*
+	 * Information on the hack used below is available at:
+	 * - http://blog.mozilla.com/webdev/2009/02/20/cross-browser-inline-block/
+	 * - http://foohack.com/2007/11/cross-browser-support-for-inline-block-styling/
+	 */
+	position: relative;				/* Hack for FF2 */
+	*position: static;				/* Hack for IE */
+}

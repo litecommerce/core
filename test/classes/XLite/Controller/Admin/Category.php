@@ -47,7 +47,7 @@
 *
 */
 class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
-{	
+{
     public $page = "category_modify";	
     public $pages = array
     (
@@ -121,6 +121,7 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
         return $this->extraFields;
     }
 
+	// FIXME - check this method
     function getParentCategory()
     {
         if (is_null($this->parentCategory)) {

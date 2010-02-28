@@ -24,6 +24,13 @@
 class XLite_View_Abstract extends XLite_Core_Handler
 {
     /**
+     * Indexes in the "resources" array
+     */
+
+    const RESOURCE_JS  = 'js';
+    const RESOURCE_CSS = 'css';
+
+    /**
      * Attribute to determines if widget is exported by CMS handler
      */
     const IS_EXPORTED = 'is_exported';
@@ -33,11 +40,11 @@ class XLite_View_Abstract extends XLite_Core_Handler
      * Widgets resources collector
      * 
      * @var    array
-     * @access public
+     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public static $resources = array();
+    protected static $resources = array(self::RESOURCE_JS => array(), self::RESOURCE_CSS => array());
 
     /**
      * Widget template filename
@@ -83,6 +90,15 @@ class XLite_View_Abstract extends XLite_Core_Handler
      * @since  3.0.0 EE
      */
     protected $attributes = array(self::IS_EXPORTED => false);
+
+    /**
+     * Targets this widget is allowed for
+     *
+     * @var    array
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected $allowedTargets = array();
 
 
     /**
@@ -137,18 +153,6 @@ class XLite_View_Abstract extends XLite_Core_Handler
 	}
 
 	/**
-	 * Return URL of the skin images folder
-	 * 
-	 * @return string
-	 * @access protected
-	 * @since  3.0.0 EE
-	 */
-	protected function getImagesURL()
-	{
-		return XLite::getInstance()->shopURL(XLite_Model_Layout::getInstance()->getPath() . 'images');
-	}
-
-	/**
      * Compile and display a template
      *
      * @param string $includeFile template to display
@@ -169,7 +173,7 @@ class XLite_View_Abstract extends XLite_Core_Handler
 
             $fc = new XLite_Core_FlexyCompiler();
             $fc->set('source', file_get_contents($templateFile));
-            $fc->set('url_rewrite', array('images' => $this->getImagesURL()));
+            $fc->set('url_rewrite', array('images' => XLite::getInstance()->shopURL(self::getSkinURL('images'))));
             $fc->set('file', $templateFile);
 
             $file = $this->getDisplayFile();
@@ -266,6 +270,64 @@ class XLite_View_Abstract extends XLite_Core_Handler
     }
 
     /**
+     * Check visibility according to the current target
+     *
+     * @return void
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function checkTarget()
+    {
+        return empty($this->allowedTargets) || in_array(XLite_Core_Request::getInstance()->target, $this->allowedTargets);
+    }
+
+    /**
+     * Register widget resources
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function registerResources()
+    {
+        foreach ($this->getResources() as $type => $list) {
+            if (!empty($list)) {
+                self::$resources[$type] = array_merge(self::$resources[$type], array_diff($list, self::$resources[$type]));
+            }
+        }
+    }
+
+    /**
+     * Return full URL by the skindir-related one
+     * 
+     * @param string $url relative URL
+     *  
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected static function getSkinURL($url)
+    {
+        return XLite_Model_Layout::getInstance()->getPath() . $url;
+    }
+
+    /**
+     * Prepare resources list
+     * 
+     * @param mixed $data data to prepare
+     *  
+     * @return array
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected static function prepareResources($data)
+    {
+        return is_array($data) ? array_map(array('self', __FUNCTION__), $data) : self::getSkinURL($data);
+    }
+
+
+    /**
      * Set widget attributes 
      * 
      * @param array $attributes widget params
@@ -298,7 +360,7 @@ class XLite_View_Abstract extends XLite_Core_Handler
     }
 
 	/**
-	 * FIXME - backward compatibility
+	 * Use current controoler context
 	 * 
 	 * @param string $name property name
 	 *  
@@ -314,7 +376,7 @@ class XLite_View_Abstract extends XLite_Core_Handler
 	}
 
 	/**
-	 * FIXME - backward compatibility 
+	 * Use current controoler context
 	 * 
 	 * @param string $method method name
 	 * @param array  $args   call arguments
@@ -367,6 +429,7 @@ class XLite_View_Abstract extends XLite_Core_Handler
 
     /**
      * Check if widget is visible
+     * FIXME - this function must be completely revised
      *
      * @return bool
      * @access protected
@@ -374,7 +437,7 @@ class XLite_View_Abstract extends XLite_Core_Handler
      */
     public function isVisible()
     {
-        $result = $this->visible;
+        $result = $this->visible && $this->checkTarget();
 
         if ($result && !empty($this->mode) && isset(XLite::$controller)) {
             $result = in_array(XLite::$controller->mode, explode(',', $this->mode));
@@ -400,6 +463,23 @@ class XLite_View_Abstract extends XLite_Core_Handler
         }
     }
 
+    /**
+     * Return viewer output
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function getContent()
+    {
+        ob_start();
+        $this->display();
+        $content = ob_get_contents();
+        ob_end_clean();
+
+        return $content;
+    }
+
 	/**
      * Return widget parameters list
      *
@@ -409,7 +489,7 @@ class XLite_View_Abstract extends XLite_Core_Handler
      */
     public function getWidgetParams()
     {
-        if (is_null($this->widgetParams)) {
+        if (!isset($this->widgetParams)) {
             $this->defineWidgetParams();
         }
 
@@ -432,6 +512,7 @@ class XLite_View_Abstract extends XLite_Core_Handler
 
     /**
      * Check for current target 
+     * FIXME - this function must be used instead of the isVisible() one
      * 
      * @param array $target list of allowed targets
      *  
@@ -441,7 +522,7 @@ class XLite_View_Abstract extends XLite_Core_Handler
      */
     public function isDisplayRequired(array $target)
     {
-        return in_array($this->target, $target);
+        return in_array(XLite_Core_Request::getInstance()->target, $target);
     }
 
     /**
@@ -471,30 +552,32 @@ class XLite_View_Abstract extends XLite_Core_Handler
     }
 
     /**
-     * Register widget resources 
+     * getResources 
      * 
      * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
+     * @access public
+     * @since  3.0.0 EE
      */
-    protected function registerResources()
+    public function getResources()
     {
-        $local = array(
-            'js'  => $this->getJSFiles(),
-            'css' => $this->getCSSFiles(),
+        return array(
+            self::RESOURCE_JS  => $this->prepareResources($this->getJSFiles()),
+            self::RESOURCE_CSS => $this->prepareResources($this->getCSSFiles()),
         );
-
-        foreach ($local as $k => $v) {
-            if ($v) {
-                if (!isset(self::$resources[$k])) {
-                    self::$resources[$k] = array();
-                }
-
-                self::$resources[$k] = array_merge(self::$resources[$k], $v);
-            }
-        }
     }
+
+    /**
+     * Return list of all registered resources 
+     * 
+     * @return array
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public static function getRegisteredResources($type = null)
+    {
+        return isset($type) ? self::$resources[$type] : self::$resources;
+    }
+
 
     // ------------------> Routines for templates
 

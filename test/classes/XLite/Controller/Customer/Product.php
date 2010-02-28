@@ -1,52 +1,87 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* Class description.
-*
-* @package Dialog
-* @access public
-* @version $Id$
-*/
-class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Abstract
-{	
+ * ____file_title____
+ *  
+ * @category   Lite Commerce
+ * @package    Lite Commerce
+ * @subpackage ____sub_package____
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @version    SVN: $Id$
+ * @link       http://www.qtmsoft.com/
+ * @since      3.0.0 EE
+ */
+
+/**
+ * XLite_Controller_Customer_Product 
+ * 
+ * @package    Lite Commerce
+ * @subpackage ____sub_package____
+ * @since      3.0.0 EE
+ */
+class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Catalog
+{
+    /**
+     * Return random product category 
+     * 
+     * @return XLite_Model_Category
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getProductCategory()
+    {
+        return array_shift($list = $this->getProduct()->getCategories());
+    }
+
+    /**
+     * Return link to product page 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getProductURL()
+    {
+        return $this->buildURL('product', '', array('product_id' => $this->getProduct()->get('product_id')));
+    }
+
+
+    /**
+     * Return current (or default) category object
+     * 
+     * @return XLite_Model_Category
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function getCategory()
+    {
+        // Cache category ID in the request
+        if (!isset(XLite_Core_Request::getInstance()->category_id)) {
+            XLite_Core_Request::getInstance()->category_id = $this->getProductCategory()->get('category_id');
+        }
+
+        return parent::getCategory();
+    }
+
+    /**
+     * Common method to determine current location 
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getLocation()
+    {
+        return array($this->getProduct()->get('name'), $this->getProductURL());
+    }
+
+
+
+    // TODO - all of the above should be revised
+
+
     public $params = array("target", "product_id", "category_id");
 
 	function handleRequest()
@@ -71,61 +106,6 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Abstra
 		$this->set('returnUrl', $this->buildURL('cart', 'add', array('product_id' => $this->product_id, 'category_id' => $this->category_id)));
     }
 
-    function getLocationPath()
-    {
-        if($this->config->General->add_on_mode){
-            return array(
-				$this->getComplex('product.name') => $this->get("url")
-			);
-        }
-
-        $result = array();
-        $path = $this->getCategory()->getPath();
-        if (!is_null($path)) {
-            foreach ($path as $category) {
-                $name = $category->get("name");
-				if ($name) {
-	                while (isset($result[$name])) {
-    	            	$name .= " ";
-        	        }
-            	    $result[$name] = $this->buildURL('category', '', array('category_id' => $category->get('category_id')));
-				}
-            }
-        }    
-
-        $name = $this->getProduct()->get('name');
-        while (isset($result[$name])) {
-        	$name .= " ";
-        }
-
-        $result[$name] = $this->getUrl();
-
-        return $result;
-    }
-
-	/**
-	 * Get category 
-	 * 
-	 * @return XLIte_Model_Category
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function getCategory()
-	{
-		if (is_null($this->category_id)) {
-			$list = $this->getProduct()->getCategories();
-			if ($list) {
-				$category = array_shift($list);
-				$this->category_id = $category->get('category_id');
-
-			} else {
-				$this->category_id = 0;
-			}
-		}
-
-		return parent::getCategory();
-	}
 
 	function getTitle()
 	{
@@ -217,7 +197,3 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Abstra
 
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

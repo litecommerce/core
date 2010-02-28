@@ -7,8 +7,12 @@
 <widget module="WishList" mode="wishlist" template="common/dialog.tpl" body="modules/WishList/wishlist_note.tpl" head="Wishlist Notification">
 <!-- [/main] }}} -->
 
+<!-- [breadcrumbs] {{{ -->
+<widget class="XLite_View_Location" />
+<!-- [/breadcrumbs] }}} -->
+
 <!-- [page top] {{{ -->
-<widget template="center_top.tpl">
+<widget template="center_top.tpl" />
 <!-- [/page top] }}} -->
 
 <!-- [catalog] {{{ -->

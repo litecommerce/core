@@ -25,47 +25,25 @@
 class XLite_View_Category extends XLite_View_Abstract
 {
     /**
-     * Define template
-     *
-     * @return void
+     * Widget template 
+     * 
+     * @var    string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected $template = 'category_description.tpl';
+
+
+    /**
+     * Check widget visibility 
+     * 
+     * @return bool
      * @access public
      * @since  3.0.0 EE
      */
-    public function __construct()
+    public function isVisible()
     {
-        $this->template = 'category_description.tpl';
-    }
-
-    /**
-     * Initilization
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function initView()
-    {
-        parent::initView();
-
-        $this->category_id = intval($this->category_id);
-
-        $this->visible = 'category' == $this->target
-            && 0 < $this->category_id
-            && $this->getCategory()->get('description');
-    }
-
-    /**
-     * Get category 
-     * 
-     * @return XLite_Model_Category
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getCategory()
-    {
-        return new XLite_Model_Category($this->category_id);
+        return parent::isVisible() && $this->getCategory()->get('description');
     }
 }
 

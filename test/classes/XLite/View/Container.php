@@ -33,16 +33,6 @@ abstract class XLite_View_Container extends XLite_View_Abstract
      */
     protected $body = 'body.tpl';
 
-    /**
-     * Targets this widget is allowed for 
-     * TODO - we need to move this into the XLite_View_Abstract
-     * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected $allowedTargets = array();
-
 
     /**
      * Return title 
@@ -86,33 +76,6 @@ abstract class XLite_View_Container extends XLite_View_Abstract
 	{
 		return $this->attributes['showWrapper'] && !XLite_Core_CMSConnector::isCMSStarted();
 	}
-
-    /**
-     * Check visibility according to the current target
-     * TODO - we need to move this function into the XLite_View_Abstract 
-     * 
-     * @return void
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function checkTarget()
-    {
-        return empty($this->allowedTargets) || in_array(XLite_Core_Request::getInstance()->target, $this->allowedTargets);
-    }
-
-
-    /**
-     * Check if widget is visible
-     * TODO - we need to move this function into the XLite_View_Abstract (instead of the isDisplayRequired())
-     *
-     * @return bool
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    public function isVisible()
-    {
-        return parent::isVisible() && $this->checkTarget();
-    }
 
 
     /**

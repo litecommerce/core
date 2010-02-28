@@ -34,16 +34,6 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
     protected static $currentCMS = null;
 
 	/**
-	 * Layout path 
-	 * 
-	 * @var    string
-	 * @access protected
-	 * @see    ____var_see____
-	 * @since  3.0.0 EE
-	 */
-	protected $layoutPath = null;
-
-	/**
 	 * List of widgets which can be exported
 	 * 
 	 * @var    array
@@ -103,7 +93,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 
 
 	/**
-	 * Constructor
+	 * It's not possible to instantiate this class using the "new" operator
 	 * 
 	 * @return void
 	 * @access protected
@@ -112,7 +102,6 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 */
 	protected function __construct()
 	{
-		$this->layoutPath = XLite_Model_Layout::getInstance()->getPath();
 	}
 
     /**
@@ -124,9 +113,11 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      * @access protected
      * @since  3.0.0 EE
      */
-    protected function getApplicationInstance(array $request)
+    protected function runApplication(array $request = array())
     {
-        XLite_Core_Request::getInstance()->mapRequest($request);
+        if (!empty($request)) {
+            XLite_Core_Request::getInstance()->mapRequest($request);
+        }
 
         if (!isset($this->initializedApplication)) {
             $this->initializedApplication = XLite::getInstance();
@@ -134,6 +125,18 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         }
 
         return $this->initializedApplication;
+    }
+
+    /**
+     * getFlags 
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getFlags()
+    {
+        return array(XLite_View_Abstract::IS_EXPORTED => true);
     }
 
 	/**
@@ -147,30 +150,9 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 */
 	protected function prepareAttributes(array $attributes)
 	{
-        return $attributes + array(XLite_View_Abstract::IS_EXPORTED => true);
+        return $attributes + $this->getFlags();
 	}
 
-	/**
-     * Get widget content
-     *
-     * @param XLite_View_Abstract $object     controller/viewer object to use
-     * @param array               $attributes widget attributes
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function getContent(XLite_View_Abstract $object, array $attributes = array())
-    {
-        XLite_View_Abstract::$resources = array();
-
-        ob_start();
-        $this->getApplicationInstance($attributes)->runViewer($object);
-        $content = ob_get_contents();
-        ob_end_clean();
-
-        return $content;
-    }
 
 	/**
 	 * Method to access the singleton 
@@ -305,15 +287,10 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 */
 	public function getWidgetHTML($name, array $attributes = array())
 	{
-        $result = array(null, array());
-        $widget = $this->getWidgetObject($name, $attributes);
+        // Run the XLite singleton if it hasn't beed run yet
+        $this->runApplication();
 
-        if ($widget) {
-            $result[0] = $this->getContent($widget, $attributes);
-            $result[1] = $this->collectResources();
-        }
-
-		return $result;
+        return new XLite_Core_WidgetDataTransport($this->getWidgetObject($name, $attributes));
 	}
 
 	/**
@@ -455,23 +432,10 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 */
 	public function runFrontController($target, $action, array $args = array())
 	{
-        $args = array(
-            'target'   => $target,
-            'action'   => $action,
-            'template' => 'center_top.tpl',
-        ) + $args;
+        $viewer = $this->runApplication(array('target' => $target, 'action' => $action))->runController();
+        $viewer->setAttributes($this->prepareAttributes($args) + array('template' => 'center_top.tpl'));
 
-        $application = $this->getApplicationInstance($args);
-        $content = $this->getContent($application->runController());
-
-        $result = array(
-            $application->getController()->get('locationPath'),
-            $content,
-            $application->getController()->getPageTypeName(),
-            $this->collectResources(),
-        );
-
-        return $result;
+        return new XLite_Core_WidgetDataTransport($viewer);
 	}
 
 	/**
@@ -620,28 +584,6 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
     protected function prepareResources(array $resources)
     {
-        return $resources;
-    }
-
-    /**
-     * Collect resources 
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function collectResources()
-    {
-        $resources = array();
-
-        foreach (XLite_View_Abstract::$resources as $key => $list) {
-            if (!isset($resources[$key])) {
-                $resources[$key] = array();
-            }
-            $resources[$key] = $this->prepareResources(array_unique($list));
-        }
-
         return $resources;
     }
 }

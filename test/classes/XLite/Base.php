@@ -71,6 +71,7 @@ class XLite_Base
 
 	/**
 	 * "Magic" getter. It's called when object property is not found
+	 * FIXME - backward compatibility
 	 * 
 	 * @param string $name property name
 	 *  
@@ -93,10 +94,10 @@ class XLite_Base
 	 * @access public
 	 * @since  3.0
 	 */
-	/*public function __call($method, array $args = array())
+	public function __call($method, array $args = array())
     {
         $this->_die('Trying to call undefined class method; class - "' . get_class($this) . '", function - "' . $method . '"');
-    }*/
+    }
 
     /**
      * Returns property value named $name. If no property found, returns null 

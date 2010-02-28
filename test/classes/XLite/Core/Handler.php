@@ -97,7 +97,7 @@ class XLite_Core_Handler extends XLite_Base
      * @access public
      * @since  3.0
      */
-    public function buildURL($target, $action = '', array $params = array())
+    public function buildURL($target = '', $action = '', array $params = array())
     {
         return XLite_Core_Converter::buildURL($target, $action, $params);
     }

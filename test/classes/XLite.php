@@ -353,19 +353,14 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Display current page 
      * 
-     * @param XLite_View_Abstract $viewer   instance of the current viewer
-     * @param string              $template template to use (optional)
+     * @param XLite_View_Abstract $viewer instance of the current viewer
      *  
      * @return void
      * @access public
      * @since  3.0.0 EE
      */
-    public function runViewer(XLite_View_Abstract $viewer = null, $template = null)
+    public function runViewer(XLite_View_Abstract $viewer)
     {
-        if (!isset($viewer)) {
-            $viewer = new XLite_View($template);
-        }
-
         $viewer->display();
     }
 

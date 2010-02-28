@@ -86,12 +86,13 @@ class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
      * @access public
      * @since  3.0
      */
-    public static function buildURL($target, $action = '', array $params = array())
+    public static function buildURL($target = '', $action = '', array $params = array())
     {
         return XLite::getInstance()->getScript() 
-			   . (empty($target) ? '' : '?target=' . $target)
-               . (empty($action) ? '' : '&action=' . $action)
-               . (empty($params) ? '' : '&' . http_build_query($params));
+			   . (empty($target) ? '' : '?target=' . $target
+                     . (empty($action) ? '' : '&action=' . $action)
+                     . (empty($params) ? '' : '&' . http_build_query($params))
+			   );
     }
 
 	/**
@@ -105,7 +106,7 @@ class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
      * @access public
      * @since  3.0
      */
-    public static function buildFullURL($target, $action = '', array $params = array())
+    public static function buildFullURL($target = '', $action = '', array $params = array())
     {
 		return XLite::getInstance()->shopURL(self::buildURL($target, $action, $params));
 	}

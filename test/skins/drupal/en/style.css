@@ -168,10 +168,20 @@ Border color of dialog boxes
 }
 
 /*
-Titles of dialog boxes
-*/
+ * Titles of dialog boxes
+ */
 .DialogTitle {
-	FONT-WEIGHT: normal; FONT-SIZE: 12px; COLOR: #FFFFFF; FONT-FAMILY: Tahoma; 	BACKGROUND-COLOR: #2B7AA0;
+	color: #ffffff;
+	background-color: #2B7aa0;
+	padding: 3px;
+}
+
+/*
+ * Titles of dialog boxes (text)
+ */
+.DialogTitle a {
+	font-size: 12px;
+	color: #ffffff;
 }
 
 /*
@@ -279,39 +289,25 @@ Subcategories list
 	FONT-WEIGHT: normal; FONT-SIZE: 12px; FONT-FAMILY: Tahoma; COLOR: #4F5964;
 }
 
-/*
-Navigation path bar
-*/
 .NavigationPath {
-	COLOR: #294f6c; TEXT-DECORATION: none
+	padding: 3px;
+	background-color: #eeeeee;
+	color: #294f6c;
+    font-size: 12px;
 }
 
-/*
-Navigation path bar: link
-*/
-.NavigationPath:link {
-	COLOR: #294f6c; TEXT-DECORATION: none
+/**
+ * Navigation path bar
+ */
+a.NavigationPath {
+	text-decoration: underline;
 }
 
-/*
-Navigation path bar: visited
-*/
-.NavigationPath:visited {
-	COLOR: #294f6c; TEXT-DECORATION: none
-}
-
-/*
-Navigation path bar: hover
-*/
-.NavigationPath:hover {
-	COLOR: #082032; TEXT-DECORATION: underline
-}
-
-/*
-Navigation path bar: active
-*/
-.NavigationPath:active {
-	COLOR: #294f6c; TEXT-DECORATION: none
+/**
+ * Navigation path bar : hover
+ */
+a.NavigationPath:hover {
+	text-decoration: none;
 }
 
 /*

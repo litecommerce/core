@@ -5,8 +5,7 @@ If you have an existing Gift certificate you can check its current amount and st
 
 <font class="ErrorMessage" IF="notFound">The specified Gift certificate is not found.</font>
 
-<form name="gccheckform" action="{buildURLPath(#check_gift_certificate#)}" method="GET">
-  <input FOREACH="buildURLArguments(#check_gift_certificate#),paramName,paramValue" type="hidden" name="{paramName}" value="{paramValue}" />
+<form name="gccheckform" action="{buildURL(#check_gift_certificate#)}" method="GET">
 
   <table>
     <tr>
