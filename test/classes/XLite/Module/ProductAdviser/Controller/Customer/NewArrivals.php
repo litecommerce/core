@@ -44,7 +44,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_ProductAdviser_Controller_Customer_NewArrivals extends XLite_Controller_Abstract
+class XLite_Module_ProductAdviser_Controller_Customer_NewArrivals extends XLite_Controller_Customer_Abstract
 {
     /**
      * Get page instance data (name and URL)

@@ -131,7 +131,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 	}
 
     /**
-     * Check if widget should be displayed in dialog box (not in sidebar box)
+     * Check if widget must be displayed on 'new_arrivals' target page
      * 
      * @return void
      * @access protected
@@ -139,24 +139,8 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
      */
     protected function isContentDialog()
     {
-        return ('dialog' == $this->attributes['displayMode'] && 'new_arrivals' == XLite_Core_Request::getInstance()->target);
-    }
-
-    /**
-     * FIXME - must be unified and removed (common task for all widgets which have the "displayMode" attribute)
-     * TODO - check if it's possible to unify this certain function
-     * 
-     * @param array $attributes widget attributes
-     *  
-     * @return void
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function __construct(array $attributes = array())
-    {
-        parent::__construct($attributes);
-
-        $this->template = 'common/' . ('dialog' == $this->getDisplayMode() || 'new_arrivals' == XLite_Core_Request::getInstance()->target ? 'dialog' : 'sidebar_box') . '.tpl';
+        return ( 'new_arrivals' == XLite_Core_Request::getInstance()->target
+            && ('dialog' == $this->attributes['displayMode'] || $this->attributes[self::IS_EXPORTED]) );
     }
 
     /**

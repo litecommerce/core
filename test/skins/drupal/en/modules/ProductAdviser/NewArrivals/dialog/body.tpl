@@ -1,4 +1,4 @@
-{* Recently viewed body *}
+{* New arrivals body *}
 
 <widget class="XLite_Module_ProductAdviser_View_Pager" data="{newArrivalsProducts}" name="pager" itemsPerPage="{config.ProductAdviser.number_new_arrivals}" pageIDX="naPageID" extraParameter="pageID">
 
