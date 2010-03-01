@@ -30,7 +30,7 @@ INSERT INTO xlite_inventories (inventory_id, amount, low_avail_limit, enabled) V
 INSERT INTO xlite_inventories (inventory_id, amount, low_avail_limit, enabled) VALUES ('205',100,10,1);
 
 -- Inser demo order data (also used as the Best selling products products)
-INSERT INTO xlite_orders (profile_id, orig_profile_id, total, subtotal, shipping_cost, tax, tracking, date, status, payment_method, details, notes, order_id, shipping_id, detail_labels, taxes) VALUES (2,1,521.43,521.43,0.00,0.00,'',1063630796,'P','phone_ordering','O:8:\"stdClass\":0:{}','',1,2,'O:8:\"stdClass\":0:{}','a:1:{s:3:\"Tax\";d:0;}');
+INSERT INTO xlite_orders (profile_id, orig_profile_id, total, subtotal, shipping_cost, tax, tracking, date, status, payment_method, details, notes, order_id, shipping_id, detail_labels, taxes) VALUES (2,1,521.43,521.43,0.00,0.00,'',1063630796,'P','PhoneOrdering','O:8:\"stdClass\":0:{}','',1,2,'O:8:\"stdClass\":0:{}','a:1:{s:3:\"Tax\";d:0;}');
 
 INSERT INTO xlite_order_items (item_id, order_id, orderby, product_id, price, amount, options) VALUES ('69|Cover:Soft',1,0,69,59.99,1,'a:1:{i:0;O:8:\"stdClass\":6:{s:5:\"class\";s:5:\"Cover\";s:9:\"option_id\";i:0;s:6:\"option\";s:4:\"Soft\";s:9:\"surcharge\";s:1:\"0\";s:6:\"isZero\";b:1;s:8:\"absolute\";b:1;}}');
 INSERT INTO xlite_order_items (item_id, order_id, orderby, product_id, price, amount, options) VALUES ('65|Cover:Soft',1,1,65,59.99,1,'a:1:{i:0;O:8:\"stdClass\":6:{s:5:\"class\";s:5:\"Cover\";s:9:\"option_id\";i:0;s:6:\"option\";s:4:\"Soft\";s:9:\"surcharge\";s:1:\"0\";s:6:\"isZero\";b:1;s:8:\"absolute\";b:1;}}');

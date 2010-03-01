@@ -20,10 +20,11 @@
 <META IFF="!metaDescription" name="description" content="The powerful shopping cart software for web stores and e-commerce enabled stores is based on PHP / PHP4 with SQL database with highly configurable implementation based on templates.">
 <META IFF="metaDescription" name="description" content="{metaDescription:r}">
 <META IFF="keywords" name="keywords" content="{keywords:r}">
-<LINK href="{getSkinURL(#style.css#)}"  rel="stylesheet" type="text/css">
 
+<link href="{getSkinURL(#style.css#)}"  rel="stylesheet" type="text/css">
 <link FOREACH="getCSSResources(),file" href="{file}" rel="stylesheet" type="text/css" />
 
+<script type="text/javascript" src="{getSkinURL(#js/common.js#)}"></script>
 <script FOREACH="getJSResources(),file" type="text/javascript" src="{file}"></script>
 
 </HEAD>
