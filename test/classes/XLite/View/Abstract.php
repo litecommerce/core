@@ -183,7 +183,7 @@ class XLite_View_Abstract extends XLite_Core_Handler
                 mkdirRecursive($dir, 0755);
             }
 
-            file_put_contents($file, $fc->parse());
+            file_put_contents($file, trim($fc->parse()));
             touch($file, filemtime($templateFile));
         }
 
