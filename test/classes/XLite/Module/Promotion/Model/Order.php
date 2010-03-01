@@ -217,13 +217,12 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
 
 	function processed()
 	{
-        $this->logger->log("->Order::processed(), ".$this->_parentList());
 		if ($this->config->getComplex('Promotion.earnBonusPointsRate')) {
 			$this->addBonusPoints((int)($this->get("subtotal") * $this->config->getComplex('Promotion.earnBonusPointsRate')));
 		}
 		$this->addBonusPointsSpecialOffer(1);
+
         parent::processed();
-        $this->logger->log("<-Order::processed()");
 	}
 
 	function declined()
