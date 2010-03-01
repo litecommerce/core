@@ -131,6 +131,27 @@ class XLite_Model_Order extends XLite_Model_Abstract
         return $this->_itemsCount;
     }
 
+	public function addItem(XLite_Model_OrderItem $newItem)
+    {
+		if ($newItem->isValid()) {
+
+			$found = false;
+			$key   = $newItem->getKey();
+
+			foreach ($this->getItems() as $item) {
+				if ($item->getKey() == $key) {
+					$item->updateAmount($item->get('amount') + $newItem->get('amount'));
+					$found = true;
+					break;
+				}
+			}
+
+			if (!$found) {
+				$this->_createItem($newItem);
+			}
+		}
+    }
+
 
 
 
@@ -762,29 +783,6 @@ class XLite_Model_Order extends XLite_Model_Abstract
     function isEmpty() // {{{
     {
         return count($this->get("items")) == 0;
-    } // }}}
-
-    function addItem($item) // {{{
-    {
-        if (!$item->is("valid")) {
-            return;
-        }
-
-        $key = $item->get("key");
-        $items = $this->get("items");
-
-        // if the item already exists
-		$len = count($items);
-        for ($i = 0; $i < $len; $i++) {
-            if ($items[$i]->get("key") == $key) {
-                // add quantity
-                $items[$i]->updateAmount($items[$i]->get("amount") + $item->get("amount"));
-                return;
-            }
-        }
-
-        // otherwise create an item
-        $this->_createItem($item);
     } // }}}
 
     function deleteItem($item) // {{{

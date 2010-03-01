@@ -676,7 +676,7 @@ class XLite_Model_Abstract extends XLite_Base
     protected function _allKeysSet()
     {
         foreach ($this->primaryKey as $field) {
-			if (empty($this->properties[$field])) return false;
+			if (!isset($this->properties[$field]) || '' == $this->properties[$field]) return false;
         }
 
         return true;
@@ -857,8 +857,9 @@ class XLite_Model_Abstract extends XLite_Base
 		if (isset($this->fields[$property])) {
 
 			// set isRead to FALSE if object has not been read yet
-			// FIXME - is it needed???
-			// in_array($property, $this->primaryKey) && ($this->isRead = false);
+			if (in_array($property, $this->primaryKey)) {
+				$this->isRead = false;
+			}
 
 			$this->properties[$property] = $value;
 			$this->isPersistent = $this->_allKeysSet();

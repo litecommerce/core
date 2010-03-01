@@ -118,10 +118,6 @@ class XLite_Module_InventoryTracking_Model_Order extends XLite_Model_Order imple
             */
             if ($inventory->find("inventory_id='".$item->get("product_id")."' AND enabled=1")) {
                 $items = $item->findAll("product_id='" . $item->get("product_id") . "' AND order_id='" . $item->get("order_id") . "'");
-                for ($i = 0; $i < count($items); $i++) {
-                    // ручное выставление поля order, т.к. простое получение массива через findAll() этого не делает
-                    $items[$i]->order = $this;
-                } 
                 func_update_inventory($this, $inventory, $items);
             }
         }

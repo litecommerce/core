@@ -138,7 +138,7 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
     {
         $amount = (int)$amount;
         if ($amount <= 0) {
-            $this->order->deleteItem($this);
+            $this->getOrder()->deleteItem($this);
         } else {
             $this->set("amount", $amount);
             $this->update();

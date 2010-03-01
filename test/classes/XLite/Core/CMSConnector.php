@@ -432,8 +432,13 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 */
 	public function runFrontController($target, $action, array $args = array())
 	{
-        $viewer = $this->runApplication(array('target' => $target, 'action' => $action))->runController();
-        $viewer->setAttributes($this->prepareAttributes($args) + array('template' => 'center_top.tpl'));
+        $args = array(
+            'target' => $target,
+            'action' => $action,
+        ) + $this->prepareAttributes($args);
+
+        $viewer = $this->runApplication($args)->runController();
+        $viewer->setAttributes($args + array('template' => 'center_top.tpl'));
 
         return new XLite_Core_WidgetDataTransport($viewer);
 	}
