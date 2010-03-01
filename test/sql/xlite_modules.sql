@@ -1,9 +1,6 @@
 INSERT INTO xlite_featured_products VALUES (231,0,45);
 INSERT INTO xlite_featured_products VALUES (130,0,25);
-INSERT INTO xlite_featured_products VALUES (66,3,0);
-INSERT INTO xlite_featured_products VALUES (64,3,0);
 INSERT INTO xlite_featured_products VALUES (174,0,40);
-INSERT INTO xlite_featured_products VALUES (12,3,0);
 
 
 
