@@ -48,7 +48,7 @@
 <!-- [center] -->
 
 
-<widget template="modules/Affiliate/location.tpl" name="locationWidget">
+<widget class="XLite_View_Location" />
 <widget target="partner" template="modules/Affiliate/dialog.tpl" body="modules/Affiliate/partner_menu.tpl" head="Partner menu">
 
 <!-- [help] {{{ -->

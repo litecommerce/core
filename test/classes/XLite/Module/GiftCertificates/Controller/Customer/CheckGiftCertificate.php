@@ -49,6 +49,21 @@ class XLite_Module_GiftCertificates_Controller_Customer_CheckGiftCertificate ext
     public $params = array('target', 'gcid');	
 	public $foundgc = null;
 
+
+	/**
+     * Common method to determine current location 
+     * 
+     * @return array 
+     * @access protected 
+     * @since  3.0.0 EE
+     */
+    protected function getLocation()
+    {
+        return 'Verify gift certificate';
+    }
+
+
+
 	function getFoundGC()
 	{
 		if ($this->get("gcid")) {

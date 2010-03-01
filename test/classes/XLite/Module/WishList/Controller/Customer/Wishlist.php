@@ -42,6 +42,21 @@
 class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controller_Customer_Abstract
 {	
 	public $params = array("target", "mode");
+
+
+	/**
+     * Common method to determine current location 
+     * 
+     * @return array 
+     * @access protected 
+     * @since  3.0.0 EE
+     */
+    protected function getLocation()
+    {
+        return 'Wish list';
+    }
+
+
 	
 	function action_add() // {{{
 	{

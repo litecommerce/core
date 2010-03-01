@@ -52,7 +52,7 @@ class XLite_Model_Location extends XLite_Base
      * @access public
      * @since  3.0.0 EE
      */
-	public function __construct($name, $link)
+	public function __construct($name, $link = null)
 	{
 		$this->name = $name;
 		$this->link = $link;

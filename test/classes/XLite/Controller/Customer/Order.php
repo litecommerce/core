@@ -51,6 +51,34 @@ class XLite_Controller_Customer_Order extends XLite_Controller_Customer_Abstract
     public $order = null;	
     public $isAccessDenied = false;
 
+
+	/**
+     * Add the base part of the location path
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function addBaseLocation()
+    {
+        parent::addBaseLocation();
+
+		$this->locationPath->addNode(new XLite_Model_Location('Search orders', $this->buldURL('order_list')));
+    }
+
+	/**
+     * Common method to determine current location 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getLocation()
+    {   
+        return 'Order details';
+    }
+
+
     function getTemplate()
     {
         if ($this->get("mode") == "invoice") {

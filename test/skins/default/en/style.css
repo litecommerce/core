@@ -168,17 +168,20 @@ Border color of dialog boxes
 }
 
 /*
-Titles of dialog boxes
-*/
+ * Titles of dialog boxes
+ */
 .DialogTitle {
-	FONT-WEIGHT: normal; FONT-SIZE: 12px; COLOR: #FFFFFF; FONT-FAMILY: Tahoma; 	BACKGROUND-COLOR: #2B7AA0;
+    color: #ffffff;
+    background-color: #2B7aa0;
+    padding: 3px;
 }
 
 /*
-Comments appearing in dialog titles
-*/
-.DialogTitleComment {
-	FONT-WEIGHT: normal; FONT-SIZE: 11px; COLOR: #082032
+ * Titles of dialog boxes (text)
+ */
+.DialogTitle a {
+    font-size: 12px;
+    color: #ffffff;
 }
 
 /*

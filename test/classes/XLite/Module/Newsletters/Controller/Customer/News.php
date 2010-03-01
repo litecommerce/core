@@ -47,6 +47,45 @@ class XLite_Module_Newsletters_Controller_Customer_News extends XLite_Controller
 {	
     public $params = array("target", "mode", "news_id");
 
+
+	/**
+     * Common method to determine current location 
+     * 
+     * @return array
+     * @access protected 
+     * @since  3.0.0 EE
+     */
+    protected function getLocation()
+    {
+        $location = parent::getLocation();
+
+        switch ($this->get('mode')) {
+            case 'view':
+                $location = 'News message';
+                break;
+            case 'view_all':
+                $location = 'News and announcements';
+                break;
+            case 'confirm_message':
+                $location = 'Subscription request received';
+                break;
+            case 'subscribe_confirmed':
+				$location = 'Subscription confirmed';
+				break;
+            case 'subscription_failed':
+                $location = 'Subscription failed';
+                break;
+        }
+
+		if (!isset($location) && 'subscribe' === XLite_Core_Request::getInstance()->action) {
+			$location = 'Newsletter subscription';
+		}
+
+        return $location;
+    }
+
+
+
     function init()
     {
     	parent::init();

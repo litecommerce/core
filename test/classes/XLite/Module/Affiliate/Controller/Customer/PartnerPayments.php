@@ -46,6 +46,20 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerPayments extends XLite_M
 {	
     public $totalPaid = 0.00;
 
+
+	/**
+     * Common method to determine current location 
+     * 
+     * @return array
+     * @access protected 
+     * @since  3.0.0 EE 
+     */ 
+    protected function getLocation()
+    {
+        return 'Payments history';
+    }
+
+
     function getPayments()
     {
         if (!$this->auth->isAuthorized($this)) {

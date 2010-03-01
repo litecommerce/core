@@ -15,24 +15,34 @@
  */
 
 /**
- * XLite_View_Location 
+ * XLite_View_Welcome 
  * 
  * @package    Lite Commerce
  * @subpackage ____sub_package____
  * @since      3.0.0 EE
  */
-class XLite_View_Location extends XLite_View_Abstract
+class XLite_View_Welcome extends XLite_View_Abstract
 {
 	/**
-	 * Widget template 
-	 * 
-	 * @var    string
-	 * @access protected
-	 * @since  3.0.0 EE
-	 */
-	protected $template = 'location.tpl';
+     * Widget template 
+     * 
+     * @var    string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected $template = 'welcome.tpl';
 
-    /**
+	/**
+     * Targets this widget is allowed for
+     *
+     * @var    array
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected $allowedTargets = array('main');
+
+
+	/**
      * Check widget visibility 
      * 
      * @return bool
@@ -41,7 +51,7 @@ class XLite_View_Location extends XLite_View_Abstract
      */
     public function isVisible()
     {
-        return parent::isVisible() && !$this->_getWidget(array(), 'XLite_View_Welcome', 'welcome')->isVisible();
+        return parent::isVisible() && !XLite_Core_Request::getInstance()->page;
     }
 }
 

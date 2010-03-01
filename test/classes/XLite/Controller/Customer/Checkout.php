@@ -51,6 +51,21 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
     public $params = array("target");	
     public $mode = null;
 
+
+	/**
+     * Common method to determine current location 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getLocation()
+    {
+        return 'Checkout';
+    }
+
+
+
     function handleRequest()
     {
         // go to cart view if cart is empty

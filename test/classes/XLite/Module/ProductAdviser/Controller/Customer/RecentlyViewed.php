@@ -56,6 +56,20 @@ class XLite_Module_ProductAdviser_Controller_Customer_RecentlyViewed extends XLi
 	 */
 	public $productsNumber = 0;
 
+
+	/**
+     * Common method to determine current location 
+     * 
+     * @return array 
+     * @access protected 
+     * @since  3.0.0 EE
+     */      
+    protected function getLocation()
+    {
+        return 'Recently viewed products';
+    }
+
+
     /**
      * Get page instance data (name and URL)
      * 

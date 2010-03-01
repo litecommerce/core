@@ -47,6 +47,34 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerProducts extends XLite_M
     public $params = array('target', 'mode', 'search_productsku', 'substring', 'search_category', 'subcategory_search', 'pageID', 'status');	
     public $productsFound = 0;
 
+
+	/**
+     * Add the base part of the location path
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function addBaseLocation()
+    {
+        parent::addBaseLocation();
+
+        $this->locationPath->addNode(new XLite_Model_Location('Banners', $this->buildURL('partner_banners')));
+    }
+
+	/**
+     * Common method to determine current location 
+     * 
+     * @return array
+     * @access protected 
+     * @since  3.0.0 EE
+     */
+    protected function getLocation()
+    {
+		return 'Product banners';
+	}
+	
+
     function getProducts()
     {
         if (is_null($this->products)) {

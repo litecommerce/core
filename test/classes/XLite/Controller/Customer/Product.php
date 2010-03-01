@@ -66,15 +66,27 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Catalo
     }
 
     /**
+     * Add the base part of the location path
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function addBaseLocation($includeCurrent = false)
+    {
+        parent::addBaseLocation(true);
+    }
+
+    /**
      * Common method to determine current location 
      * 
-     * @return array
+     * @return string
      * @access protected
      * @since  3.0.0 EE
      */
     protected function getLocation()
     {
-        return array($this->getProduct()->get('name'), $this->getProductURL());
+        return $this->getProduct()->get('name');
     }
 
 

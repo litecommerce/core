@@ -32,28 +32,6 @@ class XLite_Model_LocationPath extends XLite_Base
      */
 	protected $nodes = array();
 
-    /**
-     * Index of the last node
-     * 
-     * @var    mixed
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected $last = null;
-
-
-    /**
-     * Return index of the last node
-     * 
-     * @return int
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function getLastNodeIndex()
-    {
-        return isset($this->last) ? $this->last : ($this->last = count($this->nodes) - 1);
-    }
-
 
     /**
      * Set the params 
@@ -96,19 +74,5 @@ class XLite_Model_LocationPath extends XLite_Base
 	{
 		return $this->nodes;
 	}
-
-    /**
-     * Check if node is a last one in the nodes list 
-     * 
-     * @param int $index index used for check
-     *  
-     * @return bool
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function isLast($index)
-    {
-        return $this->getLastNodeIndex() <= $index;
-    }
 }
 

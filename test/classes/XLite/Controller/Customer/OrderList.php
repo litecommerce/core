@@ -74,6 +74,22 @@ class XLite_Controller_Customer_OrderList extends XLite_Controller_Customer_Abst
      */
     public $orders = null;
 
+
+
+    /**
+     * Common method to determine current location 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getLocation()
+    {   
+        return 'Search orders';
+    }
+
+
+
     /**
      * Setter
      * 

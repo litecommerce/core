@@ -50,6 +50,21 @@ class XLite_Module_GiftCertificates_Controller_Customer_GiftCertificateEcards ex
 
     protected $gc = null;
 
+
+	/**
+     * Common method to determine current location 
+     * 
+     * @return array 
+     * @access protected 
+     * @since  3.0.0 EE
+     */
+    protected function getLocation()
+    {
+        return 'Add gift certificate to cart';
+    }
+
+
+
     function getGC()
     {
         if (is_null($this->gc)) {

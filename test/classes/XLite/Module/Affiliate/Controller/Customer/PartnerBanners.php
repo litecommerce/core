@@ -45,6 +45,50 @@
 class XLite_Module_Affiliate_Controller_Customer_PartnerBanners extends XLite_Module_Affiliate_Controller_Partner
 {	
     public $params = array('target', 'mode', 'category_id');
+
+
+	/**
+     * Add the base part of the location path
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function addBaseLocation()
+    {
+        parent::addBaseLocation();
+
+		$this->locationPath->addNode(
+			new XLite_Model_Location('Banners', $this->get('mode') ? $this->buildURL('partner_banners') : null)
+		);
+    }
+
+	/**
+     * Common method to determine current location 
+     * 
+     * @return array
+     * @access protected 
+     * @since  3.0.0 EE
+     */
+    protected function getLocation()
+    {
+        $location = parent::getLocation();
+
+        switch ($this->get('mode')) {
+            case 'home':
+                $location = 'Main page banners';
+                break;
+            case 'affiliate':
+                $location = 'Affiliate register link';
+                break;
+            case 'categories':
+                $location = 'Category banners';
+                break;
+        }
+
+        return $location;
+    }
+
     
     function getBanners()
     {

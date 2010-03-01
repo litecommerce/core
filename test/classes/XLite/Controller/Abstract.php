@@ -106,7 +106,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     /**
      * Common method to determine current location 
      * 
-     * @return array|null
+     * @return string
      * @access protected
      * @since  3.0.0 EE
      */
@@ -131,8 +131,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
             $this->addBaseLocation();
 
             if ($this->getLocation()) {
-                list($name, $link) = $this->getLocation();
-                $this->locationPath->addNode(new XLite_Model_Location($name, $link));
+                $this->locationPath->addNode(new XLite_Model_Location($this->getLocation()));
             }
         }
 

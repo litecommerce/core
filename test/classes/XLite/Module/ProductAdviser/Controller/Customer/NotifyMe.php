@@ -48,6 +48,20 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
 {	
     public $product = null;
 
+
+	/**
+     * Common method to determine current location 
+     * 
+     * @return array 
+     * @access protected 
+     * @since  3.0.0 EE
+     */      
+    protected function getLocation()
+    {
+        return 'Notify me';
+    }
+
+
 	function init()
 	{
 		parent::init();

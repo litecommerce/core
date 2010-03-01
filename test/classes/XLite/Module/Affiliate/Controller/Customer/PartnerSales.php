@@ -50,6 +50,18 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerSales extends XLite_Modu
     public $affiliatePending = 0;	
     public $affiliatePaid    = 0;
 
+	/**
+     * Common method to determine current location 
+     * 
+     * @return array
+     * @access protected 
+     * @since  3.0.0 EE 
+     */
+    protected function getLocation()
+    {
+        return 'Referred sales';
+    }
+
     function getSalesStats()
     {
         if (!$this->auth->isAuthorized($this)) {

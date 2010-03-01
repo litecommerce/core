@@ -49,6 +49,21 @@ class XLite_Controller_Customer_Search extends XLite_Controller_Customer_Abstrac
 {	
     public $params = array("target", "substring");	
     public $products = null;
+
+
+	/**
+     * Common method to determine current location 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */ 
+    protected function getLocation()
+    {       
+        return 'Search Results';
+    }
+
+
     
     function init()
     {

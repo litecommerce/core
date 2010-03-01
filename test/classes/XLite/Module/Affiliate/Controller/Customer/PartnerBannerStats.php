@@ -46,6 +46,18 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerBannerStats extends XLit
 {	
     public $statsTotal = array("views" => 0, "click" => 0, "rate" => 0);
 
+	/**
+     * Common method to determine current location 
+     * 
+     * @return array
+     * @access protected 
+     * @since  3.0.0 EE 
+     */
+    protected function getLocation()
+    {
+        return 'Banner statistics';
+    }
+
     function fillForm()
     {
         parent::fillForm();

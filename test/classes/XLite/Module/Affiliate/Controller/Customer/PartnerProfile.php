@@ -49,6 +49,34 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerProfile extends XLite_Mo
     public $submode = "warning"; // delete profile status: warning | confirmed | cancelled
 
 
+	/**
+     * Common method to determine current location 
+     * 
+     * @return array
+     * @access protected 
+     * @since  3.0.0 EE
+     */
+    protected function getLocation()
+    {
+        $location = parent::getLocation();
+
+        switch ($this->get('mode')) {
+            case 'modify':
+                $location = 'Modify profile';
+                break;
+            case 'delete':
+                $location = 'Delete profile';
+                break;
+            case 'register':
+            case 'success':
+                $location = 'New member';
+                break;
+        }
+
+        return $location;
+    }
+
+
     function getTemplate() // {{{
     {
         if ($this->get("mode") == "sent") {

@@ -44,6 +44,19 @@
 */
 class XLite_Module_Affiliate_Controller_Customer_PartnerSummary extends XLite_Module_Affiliate_Controller_Partner
 {
+	/**
+     * Common method to determine current location 
+     * 
+     * @return array
+     * @access protected 
+     * @since  3.0.0 EE 
+     */ 
+    protected function getLocation()
+    {   
+        return 'Summary statistics';
+    }
+
+
     function getSales()
     {
         if (!$this->auth->isAuthorized($this)) {

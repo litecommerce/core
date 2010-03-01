@@ -184,12 +184,6 @@ Border color of dialog boxes
 	color: #ffffff;
 }
 
-/*
-Comments appearing in dialog titles
-*/
-.DialogTitleComment {
-	FONT-WEIGHT: normal; FONT-SIZE: 11px; COLOR: #082032
-}
 
 /*
 Number of articles

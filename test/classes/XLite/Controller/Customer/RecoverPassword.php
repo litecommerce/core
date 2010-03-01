@@ -48,6 +48,33 @@ class XLite_Controller_Customer_RecoverPassword extends XLite_Controller_Custome
 {	
     public $params = array("target", "mode", "email", "link_mailed");
 
+
+	/**
+     * Add the base part of the location path
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function addBaseLocation()
+    {
+        parent::addBaseLocation();
+
+        $this->locationPath->addNode(new XLite_Model_Location('Help zone'));
+    }
+
+	/**
+     * Common method to determine current location 
+     * 
+     * @return array
+     * @access protected 
+     * @since  3.0.0 EE
+     */
+    protected function getLocation()
+    {
+		return 'Recover password';
+	}
+
     function action_recover_password()
     {
         // show recover message if email is valid

@@ -49,6 +49,20 @@ class XLite_Controller_Customer_CheckoutSuccess extends XLite_Controller_Custome
     public $params = array("target", "order_id");	
     public $order = null;
 
+
+	/**
+     * Common method to determine current location 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */     
+    protected function getLocation()
+    {   
+        return 'Checkout';
+    }
+
+
     function handleRequest()
     {
         // security check on return page

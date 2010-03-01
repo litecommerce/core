@@ -46,6 +46,21 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
 	public $search = null;	
 	public $profile = null;
 
+
+	/**
+     * Common method to determine current location 
+     * 
+     * @return array
+     * @access protected 
+     * @since  3.0.0 EE
+     */
+    protected function getLocation()
+    {
+		return 'Advanced search' . (('found' === $this->get('mode')) ? ' results' : '');
+	}
+
+
+
 	function getProfile()
 	{
 		if (is_null($this->profile)) {

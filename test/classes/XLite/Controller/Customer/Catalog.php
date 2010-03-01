@@ -24,31 +24,50 @@
 abstract class XLite_Controller_Customer_Catalog extends XLite_Controller_Customer_Abstract
 {
     /**
-     * Return link to category page 
+     * Determines if we need to return categoty link or not 
      * 
      * @param XLite_Model_Category $category category model object to use
+     * @param bool                 $includeCurrent flag
      *  
      * @return string
      * @access protected
      * @since  3.0.0 EE
      */
-    protected function getCategoryURL(XLite_Model_Category $category)
+    protected function checkCategoryLink(XLite_Model_Category $category, $includeCurrent)
     {
-        return $this->buildURL('category', '', array('category_id' => $category->get('category_id')));
+        return $includeCurrent || $this->get('category_id') !== $category->get('category_id');
     }
 
     /**
-     * Return category name and link
-     *
+     * Return link to category page 
+     * 
      * @param XLite_Model_Category $category category model object to use
-     *
-     * @return array
+     * @param bool                 $includeCurrent flag
+     *  
+     * @return string
      * @access protected
      * @since  3.0.0 EE
      */
-    protected function getCategoryLocation(XLite_Model_Category $category)
+    protected function getCategoryURL(XLite_Model_Category $category, $includeCurrent)
     {
-        return new XLite_Model_Location($category->get('name'), $this->getCategoryURL($category));
+        return $this->checkCategoryLink($category, $includeCurrent) 
+            ? $this->buildURL('category', '', array('category_id' => $category->get('category_id')))
+            : null;
+    }
+
+    /**
+     * Return category name and link 
+     * 
+     * @param XLite_Model_Category $category       category model object to use_
+     * @param bool                 $includeCurrent flag
+     *  
+     * @return XLite_Model_Location
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getCategoryLocation(XLite_Model_Category $category, $includeCurrent)
+    {
+        return new XLite_Model_Location($category->get('name'), $this->getCategoryURL($category, $includeCurrent));
     }
 
     /**
@@ -58,13 +77,13 @@ abstract class XLite_Controller_Customer_Catalog extends XLite_Controller_Custom
      * @access protected
      * @since  3.0.0 EE
      */
-    protected function addBaseLocation()
+    protected function addBaseLocation($includeCurrent = false)
     {
         parent::addBaseLocation();
 
         foreach ($this->getCategory()->getPath() as $category) {
             if (0 < $category->get('category_id')) {
-                $this->locationPath->addNode($this->getCategoryLocation($category));
+                $this->locationPath->addNode($this->getCategoryLocation($category, $includeCurrent));
             }
         }
     }

@@ -43,7 +43,7 @@ class XLite_View_Product extends XLite_View_Dialog
      */
     protected function getHead()
     {
-        return 'Catalog';
+        return $this->getProduct()->get('name');
     }
 
     /**

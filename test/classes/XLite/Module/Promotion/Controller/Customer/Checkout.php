@@ -46,6 +46,30 @@
 */
 class XLite_Module_Promotion_Controller_Customer_Checkout extends XLite_Controller_Customer_Checkout implements XLite_Base_IDecorator
 {
+	/**
+     * Common method to determine current location 
+     * 
+     * @return array
+     * @access protected 
+     * @since  3.0.0 EE
+     */
+    protected function getLocation()
+    {
+        $location = parent::getLocation();
+
+        switch ($this->get('mode')) {
+            case 'bonusList':
+                $location = 'Bonus list';
+                break;
+            case 'couponFailed':
+                $location = 'Discount coupon failure';
+                break;
+        }
+        
+        return $location;
+    }
+
+
 	function _handleCouponFailed()
     {
         if ($this->session->isRegistered("couponFailed")) {

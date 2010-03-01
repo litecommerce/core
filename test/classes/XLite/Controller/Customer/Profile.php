@@ -51,6 +51,38 @@ class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_Abstra
     public $mode = "register"; // default mode	
     public $submode = "warning"; // delete profile status: warning | confirmed | cancelled
 
+
+	/**
+     * Common method to determine current location 
+     * 
+     * @return array
+     * @access protected 
+     * @since  3.0.0 EE
+     */
+    protected function getLocation()
+    {
+		$location = parent::getLocation();
+
+		switch ($this->get('mode')) {
+			case 'login':
+				$location = 'Authentication';
+				break;
+			case 'modify':
+				$location = 'Modify profile';
+                break;
+			case 'delete':
+				$location = 'Delete profile';
+                break;
+			case 'register':
+			case 'success':
+				$location = 'New member';
+                break;
+		}
+
+		return $location;
+    }
+
+
 	function fillForm()
 	{
 		parent::fillForm();
@@ -182,7 +214,3 @@ class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_Abstra
     }
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

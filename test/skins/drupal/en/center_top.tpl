@@ -8,7 +8,7 @@
 <!-- [main] {{{ -->
 <widget target="main" mode="accessDenied" template="access_denied.tpl">
 <widget module="GreetVisitor" target="main" mode="" template="modules/GreetVisitor/greet_visitor.tpl" visible="{greetVisitor&!page}">
-<widget target="main" mode="" template="welcome.tpl" name="welcomeWidget" visible="{!page}">
+<widget class="XLite_View_Welcome" name="welcome" />
 <widget target="main" template="pages.tpl">
 <!-- [/main] }}} -->
 

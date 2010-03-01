@@ -155,7 +155,7 @@ Use this section to define additional {if:target=#extra_fields#}global {end:}pro
     <td>&nbsp;</td>
     <td>
         <select name="add_categories[]" multiple size=7>
-            <option FOREACH="categories,cat" value="{cat.category_id}" selected="{isCategorySelected(#add_categories#,cat.category_id)}">{cat.stringPath:h}</option>
+            <option FOREACH="getCategories(),cat" value="{cat.category_id}" selected="{isCategorySelected(#add_categories#,cat.category_id)}">{cat.stringPath:h}</option>
         </select>
     </td>
 </tr>
