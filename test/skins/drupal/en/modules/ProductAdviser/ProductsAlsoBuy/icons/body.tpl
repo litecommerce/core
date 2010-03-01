@@ -32,7 +32,7 @@ function Add2Cart(product_id)
 <tr>
 	<td FOREACH="row,PAB" align="center" width="{getPercents(config.ProductAdviser.pab_columns)}%" valign="top">
     	<div IF="PAB.product&config.ProductAdviser.pab_show_buynow">
-        <widget class="XLite_View_Button" label="Add to Cart" href="javascript: Add2Cart('{PAB.product.product_id}')" img="cart4button.gif" font="FormButton">
+        <widget class="XLite_View_Button" label="Add to Cart" href="javascript: Add2Cart('{PAB.product.product_id}')" type="button" />
     	</div>
     </td>
 </tr>    

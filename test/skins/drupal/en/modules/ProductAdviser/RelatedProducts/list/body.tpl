@@ -26,7 +26,7 @@
     	</td>
     	<td IF="config.ProductAdviser.rp_show_buynow">
 		<div IF="!config.ProductAdviser.rp_bulk_shopping">
-		<widget class="XLite_View_Button" label="Add to Cart" href="javascript: Add2Cart('{RP.product.product_id}')" img="cart4button.gif" font="FormButton">
+		<widget class="XLite_View_Button" label="Add to Cart" href="javascript: Add2Cart('{RP.product.product_id}')" type="button" />
 		</div>
 		<div IF="config.ProductAdviser.rp_bulk_shopping">
     	<table cellpadding="0" cellspacing="0" border="0">
@@ -40,7 +40,7 @@
         </tr>
         <tr IF="RP.product.checkHasOptions()">
         	<td>
-			<widget class="XLite_View_Button" label="Add to Cart" href="javascript: Add2Cart('{RP.product.product_id}',true)" img="cart4button.gif" font="FormButton">
+			<widget class="XLite_View_Button" label="Add to Cart" href="javascript: Add2Cart('{RP.product.product_id}',true)" type="button" />
         	</td>
         </tr>
     	</table>
@@ -74,7 +74,7 @@
     	<table cellpadding="0" cellspacing="0" border="0" IF="showBulkAddForm">
         <tr>
         	<td>
-			<widget class="XLite_View_Button" label="Add to Cart" href="javascript: BulkAdd2Cart()" img="cart4button.gif" font="FormButton">
+			<widget class="XLite_View_Button" label="Add to Cart" href="javascript: BulkAdd2Cart()" type="button" />
         	<td nowrap>
         	&nbsp;selected product(s)
         	</td>

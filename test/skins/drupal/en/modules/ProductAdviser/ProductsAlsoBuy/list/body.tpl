@@ -35,7 +35,7 @@ function Add2Cart(product_id)
     	&nbsp;&nbsp;
     	</td>
     	<td IF="config.ProductAdviser.pab_show_buynow">
-		<widget class="XLite_View_Button" label="Add to Cart" href="javascript: Add2Cart('{PAB.product.product_id}')" img="cart4button.gif" font="FormButton">
+		<widget class="XLite_View_Button" label="Add to Cart" href="javascript: Add2Cart('{PAB.product.product_id}')" type="button" />
     	</td>
         <td></td>
     </tr>

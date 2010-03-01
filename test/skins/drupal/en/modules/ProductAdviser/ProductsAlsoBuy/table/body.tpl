@@ -17,7 +17,7 @@ function Add2Cart(product_id)
 	<td width=30><FONT class="ProductTitle">&nbsp;#{inc(pabIdx)}&nbsp;</FONT></td>
 	<td width="100%"><a href="cart.php?target=product&amp;product_id={PAB.product.product_id}&amp;category_id={PAB.product.category.category_id}"><FONT class="ProductTitle">{PAB.product.name:h}</FONT></a></td>
 	<td nowrap IF="config.ProductAdviser.pab_show_price"><FONT class="ProductPriceTitle">Price: </FONT><FONT class="ProductPrice">{price_format(PAB.product,#listPrice#):h}</FONT><FONT class="ProductPriceTitle"> {PAB.product.priceMessage:h}</FONT></td>
-	<td nowrap IF="config.ProductAdviser.pab_show_buynow"><widget class="XLite_View_Button" label="Add to Cart" href="javascript: Add2Cart('{PAB.product.product_id}')" img="cart4button.gif" font="FormButton"></td>
+	<td nowrap IF="config.ProductAdviser.pab_show_buynow"><widget class="XLite_View_Button" label="Add to Cart" href="javascript: Add2Cart('{PAB.product.product_id}')" type="button" /></td>
 </tr>
 </table>
 
