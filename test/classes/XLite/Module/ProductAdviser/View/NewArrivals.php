@@ -133,7 +133,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
     /**
      * Check if widget must be displayed on 'new_arrivals' target page
      * 
-     * @return void
+     * @return bool
      * @access protected
      * @since  3.0.0 EE
      */
@@ -155,9 +155,6 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
         return parent::isVisible() && $this->checkDisplayMode() && $this->checkProductsToDisplay();
     }
 
-
-    // TODO, FIXME - all of the above routines must be reviewed and refactored
-
 	/**
 	 * Get Value of 'Show category-specific new arrivals' option
 	 * 
@@ -168,32 +165,59 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 	 */
 	protected function getCategorySpecificArrivals()
 	{
-		$return = (isset($this->use_node) ? 'Y' : $this->config->ProductAdviser->category_new_arrivals);
+        if ($this->attributes[self::IS_EXPORTED]) {
+            $return = (isset($this->attributes['useNode']) && true == $this->attributes['useNode']);
+
+        } else {
+            $return = ('Y' == $this->config->ProductAdviser->category_new_arrivals);
+        }
+
 		return $return;
 	}
+
+    /**
+     * Get current category
+     * 
+     * @return XLite_Model_Category
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    function getDialogCategory()
+    {
+        $category = null;
+
+        if (('category' == $this->target || 'product' == $this->target) && intval($this->category_id) > 0) {
+            $category = new XLite_Model_Category(intval($this->category_id));
+        }
+
+        return $category;
+    }
+
+    /**
+     * Get current product Id
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    function getDialogProductId()
+    {
+        if ('product' == $this->target && intval($this->product_id) > 0) {
+        	return intval($this->product_id);
+        }
+        return null;
+    }
+
+
+    // TODO, FIXME - all of the above routines must be reviewed and refactored
 
 
 	public $productsNumber = 0;
 
     public $additionalPresent = false;
 
-
-    function getDialogCategory()
-    {
-        if (isset($this->target) && ($this->target == "category" || $this->target == "product") && isset($this->category_id) && intval($this->category_id) > 0) {
-        	$category = new XLite_Model_Category(intval($this->category_id));
-        	return $category;
-        }
-        return null;
-    }
-
-    function getDialogProductId()
-    {
-        if (isset($this->target) && $this->target == "product" && isset($this->product_id) && intval($this->product_id) > 0) {
-        	return intval($this->product_id);
-        }
-        return null;
-    }
 
     function inCategory(&$product, $category)
     {
@@ -214,7 +238,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 
 	function recursiveArrivalsSearch($_category)
     {
-		if (!$this->isContentDialog() && $this->additionalPresent && count($this->_new_arrival_products) >= $this->config->ProductAdviser->number_new_arrivals) {
+		if ($this->isContentDialog() && $this->additionalPresent && count($this->_new_arrival_products) >= $this->config->ProductAdviser->number_new_arrivals) {
 			return true;
 		}
 
@@ -238,7 +262,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 		$querySQL = "SELECT arrivals.product_id, arrivals.updated FROM ".implode(", ", $fromSQL)." WHERE ".implode(" AND ", $whereSQL)." ORDER BY arrivals.updated DESC";
 		$rows = $this->db->getAll($querySQL);
 
-		foreach ((array)$rows as $row) {
+		foreach ($rows as $row) {
 			$product_id = $row["product_id"];
 
 			$obj = new XLite_Module_ProductAdviser_Model_ProductNewArrivals($product_id);
@@ -304,7 +328,8 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 		// Recursive search
         if ($this->getCategorySpecificArrivals()) {
 
-			$this->_new_arrival_products = array();
+            $this->_new_arrival_products = array();
+            $this->_new_arrival_products_updated = array();
 			$this->additionalPresent = false;
 
 			$categories = array();
@@ -354,10 +379,9 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
                 if ($addSign) {
                     $product->checkSafetyMode();
                     $products[] = $product;
-                	if (count($products) > $maxViewed) {
+                	if (count($products) == $maxViewed) {
 						if (!$this->isContentDialog()) {
     						$this->additionalPresent = true;
-    						unset($products[count($products)-1]);
                 			break;
                 		}
                 	}
@@ -368,10 +392,9 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 				break;
         	}
 
-        	if (count($products) > $maxViewed) {
+        	if (count($products) == $maxViewed) {
 				if (!$this->isContentDialog()) {
 					$this->additionalPresent = true;
-					unset($products[count($products)-1]);
         			break;
         		}
         	}
