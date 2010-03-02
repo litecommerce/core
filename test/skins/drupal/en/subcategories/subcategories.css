@@ -12,8 +12,8 @@
 
 .lc-subcategory-icons li
 {
-  adding: 0;
-  argin: 0 1em 1em 0;
+  padding: 0;
+  margin: 0 1em 1em 0;
 	vertical-align: top;
 	background-image: none;
 	display: -moz-inline-stack;		/* FF2 supports this instead of "inline-block" */
@@ -22,6 +22,12 @@
 
 /* IE6 requires this in order to correctly display li as "inline-blocks */
 * html .lc-subcategory-icons li
+{
+  display: inline;
+}
+
+/* IE7 requires this in order to correctly display li as "inline-blocks */
+*:first-child+html .lc-subcategory-icons li
 {
   display: inline;
 }
