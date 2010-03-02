@@ -33,6 +33,18 @@ class XLite_View_Subcategories extends XLite_View_Dialog
      */
     protected $allowedTargets = array('main', 'category');
 
+    /**
+     *  Display modes
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $displayModes = array(
+        'list'  => 'List',
+        'icons' => 'Icons',
+    );
 
     /**
      * Return title
@@ -55,9 +67,30 @@ class XLite_View_Subcategories extends XLite_View_Dialog
      */
     protected function getDir()
     {
-        return 'subcategories/' . $this->config->General->subcategories_look;
+        if (!isset($this->displayModes[$this->attributes['displayMode']])) {
+            $this->attributes['displayMode'] = 'icons';
+        }
+
+        return 'subcategories/' . $this->attributes['displayMode'];
     }
 
+    /**
+     * Get widget display mode 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDisplayMode()
+    {
+        if ($this->attributes[self::IS_EXPORTED]) {
+            return $this->attributes['displayMode'];
+
+        } else {
+            return $this->config->General->subcategories_look;
+        }
+    }
 
     /**
      * Check if widget is visible
@@ -82,5 +115,23 @@ class XLite_View_Subcategories extends XLite_View_Dialog
     {
         return array('subcategories/subcategories.css');
     }
+
+    /**
+     * Widget parameters
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            'displayMode' => new XLite_Model_WidgetParam_List('Display mode', 'list', $this->displayModes),
+        );
+    }
+
 }
 

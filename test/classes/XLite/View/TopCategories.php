@@ -109,7 +109,7 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
 
         $this->widgetParams += array(
             'displayMode' => new XLite_Model_WidgetParam_List('Display mode', 'list', $this->displayModes),
-            'rootId'      => new XLite_Model_WidgetParam_ObjectId_Category('Root category Id', 0, true),
+            'rootId'      => new XLite_Model_WidgetParam_ObjectId_Category('Parent category ID (leave 0 for root categories list)', 0, true),
         );
     }
 
