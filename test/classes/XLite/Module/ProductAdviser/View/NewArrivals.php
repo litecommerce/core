@@ -86,7 +86,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
     }
 
     /**
-     * Check passed attributes againest current display mode
+     * Check passed attributes against current display mode
      * 
      * @return bool
      * @access protected

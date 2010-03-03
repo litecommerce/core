@@ -21,20 +21,20 @@ function Add2Cart(product_id)
 	</td>
 	<td valign=top>
 	<a href="{buildURL(#product#,##,_ARRAY_(#product_id#^PAB.product.product_id,#category_id#^PAB.product.category.category_id))}"><FONT class="ProductTitle">{PAB.product.name:h}</FONT></a>
-	<span IF="config.ProductAdviser.pab_show_descr&PAB.product.brief_description">
+	<span IF="getShowDescription()&PAB.product.brief_description">
 	<br>
 	{truncate(PAB.product,#brief_description#,#300#):h}<br>
 	</span>    
-	<br IF="config.ProductAdviser.pab_show_price|config.ProductAdviser.pab_show_buynow" />
+	<br IF="getShowPrice()|getShowAddToCart()" />
 	<table cellpadding="0" cellspacing="0" border="0">
     <tr>
-    	<td IF="config.ProductAdviser.pab_show_price">
+    	<td IF="getShowPrice()">
     	<FONT class="ProductPriceTitle">Price: </FONT><FONT class="ProductPrice">{price_format(PAB.product,#listPrice#):h}</FONT><FONT class="ProductPriceTitle"> {PAB.product.priceMessage:h}</FONT>
     	</td>
-    	<td IF="config.ProductAdviser.pab_show_buynow">
+    	<td IF="getShowAddToCart()">
     	&nbsp;&nbsp;
     	</td>
-    	<td IF="config.ProductAdviser.pab_show_buynow">
+    	<td IF="getShowAddToCart()">
 		<widget class="XLite_View_Button" label="Add to Cart" href="javascript: Add2Cart('{PAB.product.product_id}')" img="cart4button.gif" font="FormButton">
     	</td>
         <td></td>
