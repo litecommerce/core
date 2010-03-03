@@ -6,12 +6,12 @@
 <tbody FOREACH="split(pager.pageData,config.ProductAdviser.rp_columns),row">
 <tr>
 	<td FOREACH="row,RP" align="center" width="{getPercents(config.ProductAdviser.rp_columns)}%" valign="top">
-        <a href="cart.php?target=product&amp;product_id={RP.product.product_id}&amp;category_id={RP.product.category.category_id}" IF="RP.product&config.General.show_thumbnails&RP.product.hasThumbnail()"><img src="{RP.product.thumbnailURL}" border=0 width=70 alt=""></a>
+        <a href="{buildURL(#product#,##,_ARRAY_(#product_id#^RP.product.product_id,#category_id#^RP.product.category.category_id))}" IF="RP.product&config.General.show_thumbnails&RP.product.hasThumbnail()"><img src="{RP.product.thumbnailURL}" border=0 width=70 alt=""></a>
     </td>
 </tr>    
 <tr>
 	<td FOREACH="row,RP" align="center" width="{getPercents(config.ProductAdviser.rp_columns)}%" valign="top">
-    	<a IF="RP.product" href="cart.php?target=product&amp;product_id={RP.product.product_id}&amp;category_id={RP.product.category.category_id}"><FONT class="ProductTitle">{RP.product.name:h}</FONT></a>
+    	<a IF="RP.product" href="{buildURL(#product#,##,_ARRAY_(#product_id#^RP.product.product_id,#category_id#^RP.product.category.category_id))}"><FONT class="ProductTitle">{RP.product.name:h}</FONT></a>
 	</td>
 </tr>        
 <tr>

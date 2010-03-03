@@ -3,12 +3,12 @@
 <tbody FOREACH="split(category.getFeaturedProducts(),3),row">
 <tr>
     <td valign="middle" FOREACH="row,featuredProduct" align="center" width="33%">
-        <a IF="featuredProduct" href="cart.php?target=product&amp;sns_mode=featured_product&amp;product_id={featuredProduct.product.product_id}&amp;category_id={featuredProduct.product.category_id}"><span IF="featuredProduct.product.hasThumbnail()"><img src="{featuredProduct.product.thumbnailURL}" border="0" width="100" alt=""></span><span IF="!featuredProduct.product.hasThumbnail()"><img src="images/no_image.gif" border="0" alt=""></span></a>&nbsp;
+        <a IF="featuredProduct" href="{buildURL(#product#,##,_ARRAY_(#product_id#^featuredProduct.product.product_id,#category_id#^featuredProduct.product.category.category_id))}"><span IF="featuredProduct.product.hasThumbnail()"><img src="{featuredProduct.product.thumbnailURL}" border="0" width="100" alt=""></span><span IF="!featuredProduct.product.hasThumbnail()"><img src="images/no_image.gif" border="0" alt=""></span></a>&nbsp;
     </td>
 </tr>
 <tr>
     <td valign="top" FOREACH="row,featuredProduct" align="center" width="33%">
-      <a IF="featuredProduct" href="cart.php?target=product&amp;sns_mode=featured_product&amp;product_id={featuredProduct.product.product_id}&amp;category_id={featuredProduct.product.category_id}"><FONT class="ItemsList">{featuredProduct.product.name}</FONT></a>
+      <a IF="featuredProduct" href="{buildURL(#product#,##,_ARRAY_(#product_id#^featuredProduct.product.product_id,#category_id#^featuredProduct.product.category.category_id))}"><FONT class="ItemsList">{featuredProduct.product.name}</FONT></a>
     </td>
 </tr>    
 <tr>

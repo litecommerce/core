@@ -16,12 +16,12 @@ function Add2Cart(product_id)
 <tbody FOREACH="split(pabpager.pageData,config.ProductAdviser.pab_columns),row">
 <tr>
 	<td FOREACH="row,PAB" align="center" width="{getPercents(config.ProductAdviser.pab_columns)}%" valign="top">
-        <a href="cart.php?target=product&amp;product_id={PAB.product.product_id}&amp;category_id={PAB.product.category.category_id}" IF="PAB.product&config.General.show_thumbnails&PAB.product.hasThumbnail()"><img src="{PAB.product.thumbnailURL}" border=0 width=70 alt=""></a>
+        <a href="{buildURL(#product#,##,_ARRAY_(#product_id#^PAB.product.product_id,#category_id#^PAB.product.category.category_id))}" IF="PAB.product&config.General.show_thumbnails&PAB.product.hasThumbnail()"><img src="{PAB.product.thumbnailURL}" border=0 width=70 alt=""></a>
     </td>
 </tr>    
 <tr>
 	<td FOREACH="row,PAB" align="center" width="{getPercents(config.ProductAdviser.pab_columns)}%" valign="top">
-    	<a IF="PAB.product" href="cart.php?target=product&amp;product_id={PAB.product.product_id}&amp;category_id={PAB.product.category.category_id}"><FONT class="ProductTitle">{PAB.product.name:h}</FONT></a>
+    	<a IF="PAB.product" href="{buildURL(#product#,##,_ARRAY_(#product_id#^PAB.product.product_id,#category_id#^PAB.product.category.category_id))}"><FONT class="ProductTitle">{PAB.product.name:h}</FONT></a>
 	</td>
 </tr>        
 <tr>

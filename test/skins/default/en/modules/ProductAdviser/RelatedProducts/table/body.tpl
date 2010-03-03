@@ -5,7 +5,7 @@
 <table cellpadding="3" cellspacing="1" border="0" bgcolor="#cccccc" width="100%">
 <tr FOREACH="pager.pageData,rpIdx,RP" class="DialogBox">
 	<td width=30><FONT class="ProductTitle">&nbsp;#{inc(rpIdx)}&nbsp;</FONT></td>
-	<td width="100%"><a href="cart.php?target=product&amp;product_id={RP.product.product_id}&amp;category_id={RP.product.category.category_id}"><FONT class="ProductTitle">{RP.product.name:h}</FONT></a></td>
+	<td width="100%"><a href="{buildURL(#product#,##,_ARRAY_(#product_id#^RP.product.product_id,#category_id#^RP.product.category.category_id))}"><FONT class="ProductTitle">{RP.product.name:h}</FONT></a></td>
 	<td nowrap IF="config.ProductAdviser.rp_show_price"><FONT class="ProductPriceTitle">Price: </FONT><FONT class="ProductPrice">{price_format(RP.product,#listPrice#):h}</FONT><FONT class="ProductPriceTitle"> {RP.product.priceMessage:h}</FONT></td>
 	<td nowrap IF="config.ProductAdviser.rp_show_buynow">
 	<div IF="!config.ProductAdviser.rp_bulk_shopping">

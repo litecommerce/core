@@ -17,10 +17,10 @@ function Add2Cart(product_id)
 <tr>
 	<td IF="config.General.show_thumbnails" valign="top" align="center" width="80">
 		<!-- Product thumbnail -->
-		<a href="cart.php?target=product&amp;product_id={PAB.product.product_id}&amp;category_id={PAB.product.category.category_id}" IF="PAB.product.hasThumbnail()"><img src="{PAB.product.thumbnailURL}" border=0 width=70 alt=""></a>
+		<a href="{buildURL(#product#,##,_ARRAY_(#product_id#^PAB.product.product_id,#category_id#^PAB.product.category.category_id))}" IF="PAB.product.hasThumbnail()"><img src="{PAB.product.thumbnailURL}" border=0 width=70 alt=""></a>
 	</td>
 	<td valign=top>
-	<a href="cart.php?target=product&amp;product_id={PAB.product.product_id}&amp;category_id={PAB.product.category.category_id}"><FONT class="ProductTitle">{PAB.product.name:h}</FONT></a>
+	<a href="{buildURL(#product#,##,_ARRAY_(#product_id#^PAB.product.product_id,#category_id#^PAB.product.category.category_id))}"><FONT class="ProductTitle">{PAB.product.name:h}</FONT></a>
 	<span IF="config.ProductAdviser.pab_show_descr&PAB.product.brief_description">
 	<br>
 	{truncate(PAB.product,#brief_description#,#300#):h}<br>
