@@ -97,7 +97,32 @@ class XLite_View_ProductBox extends XLite_View_SideBarBox
      */
     public function isVisible()
     {
-        return parent::isVisible() && $this->getProduct()->is('available');
+        $return = false;
+
+        if (parent::isVisible() && $this->getProduct()->is('available')) {
+            $dialogProductId = $this->getDialogProductId();
+            $boxProductId = $this->getProduct()->get('product_id');
+            $return = ($dialogProductId != $boxProductId);
+        }
+
+        return $return;
     }
+
+    /**
+     * Get current product Id
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    function getDialogProductId()
+    {
+        if ('product' == $this->target && intval($this->product_id) > 0) {
+        	return intval($this->product_id);
+        }
+        return null;
+    }
+
 }
 
