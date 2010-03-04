@@ -22,7 +22,7 @@ var productsListConfig = {
   pagerItemsCount: {pager.getPagesCount()},
   displayModes: {getDisplayModesForJS()},
   itemsPerPageRange: {pager.getItemsPerPageRange()},
-  urlTranslationTable: {getURLTranslationTable()},
+  urlTranslationTable: {getURLTranslationTable()}
 };
 </script>
 

@@ -45,6 +45,12 @@ class XLite_View_ProductsList extends XLite_View_Abstract
 
 
     /**
+     * UR Lpattern border symbol
+     */
+    const PATTERN_BORDER_SYMBOL = '___';
+
+
+    /**
      * Widget template 
      * 
      * @var    string
@@ -445,11 +451,11 @@ class XLite_View_ProductsList extends XLite_View_Abstract
     public function getPageURLPattern()
     {
         $params = $this->assembleURLParams(
-            '%pageId%',
-            '%' . self::SORT_CRITERION_ARG . '%',
-            '%' . self::SORT_ORDER_ARG . '%',
-            '%' . self::DISPLAY_MODE_ARG . '%',
-            '%' . self::ITEMS_PER_PAGE_ARG . '%'
+            self::PATTERN_BORDER_SYMBOL . XLite_View_Pager::PAGE_ID_ARG . self::PATTERN_BORDER_SYMBOL,
+            self::PATTERN_BORDER_SYMBOL . self::SORT_CRITERION_ARG . self::PATTERN_BORDER_SYMBOL,
+            self::PATTERN_BORDER_SYMBOL . self::SORT_ORDER_ARG . self::PATTERN_BORDER_SYMBOL,
+            self::PATTERN_BORDER_SYMBOL . self::DISPLAY_MODE_ARG . self::PATTERN_BORDER_SYMBOL,
+            self::PATTERN_BORDER_SYMBOL . self::ITEMS_PER_PAGE_ARG . self::PATTERN_BORDER_SYMBOL
         );
 
         $target = $params['target'];
@@ -471,15 +477,17 @@ class XLite_View_ProductsList extends XLite_View_Abstract
     public function getPageURLPatternAJAX()
     {
         $params = $this->assembleURLParams(
-            '%' . XLite_View_Pager::PAGE_ID_ARG . '%',
-            '%' . self::SORT_CRITERION_ARG . '%',
-            '%' . self::SORT_ORDER_ARG . '%',
-            '%' . self::DISPLAY_MODE_ARG . '%',
-            '%' . self::ITEMS_PER_PAGE_ARG . '%'
+            self::PATTERN_BORDER_SYMBOL . XLite_View_Pager::PAGE_ID_ARG . self::PATTERN_BORDER_SYMBOL,
+            self::PATTERN_BORDER_SYMBOL . self::SORT_CRITERION_ARG . self::PATTERN_BORDER_SYMBOL,
+            self::PATTERN_BORDER_SYMBOL . self::SORT_ORDER_ARG . self::PATTERN_BORDER_SYMBOL,
+            self::PATTERN_BORDER_SYMBOL . self::DISPLAY_MODE_ARG . self::PATTERN_BORDER_SYMBOL,
+            self::PATTERN_BORDER_SYMBOL . self::ITEMS_PER_PAGE_ARG . self::PATTERN_BORDER_SYMBOL
         );
 
         $params['widget_target'] = $params['target'];
         $params['widget_action'] = isset($params['action']) ? $params['action'] : '';
+
+        $params['class'] = get_class($this->attributes['listFactory'][0]);
 
         unset($params['target'], $params['action']);
 
@@ -510,11 +518,11 @@ class XLite_View_ProductsList extends XLite_View_Abstract
     public function getURLTranslationTable()
     {
         return '{ '
-            . 'pageId: \'%'        . XLite_View_Pager::PAGE_ID_ARG . '%\','
-            . 'sortCriterion: \'%' . self::SORT_CRITERION_ARG . '%\','
-            . 'sortOrder: \'%'     . self::SORT_ORDER_ARG . '%\','
-            . 'displayMode: \'%'  . self::DISPLAY_MODE_ARG . '%\','
-            . 'itemsPerPage: \'%'   . self::ITEMS_PER_PAGE_ARG . '%\''
+            . 'pageId: \'' . self::PATTERN_BORDER_SYMBOL        . XLite_View_Pager::PAGE_ID_ARG . self::PATTERN_BORDER_SYMBOL . '\','
+            . 'sortCriterion: \'' . self::PATTERN_BORDER_SYMBOL . self::SORT_CRITERION_ARG . self::PATTERN_BORDER_SYMBOL . '\','
+            . 'sortOrder: \'' . self::PATTERN_BORDER_SYMBOL     . self::SORT_ORDER_ARG . self::PATTERN_BORDER_SYMBOL . '\','
+            . 'displayMode: \'' . self::PATTERN_BORDER_SYMBOL   . self::DISPLAY_MODE_ARG . self::PATTERN_BORDER_SYMBOL . '\','
+            . 'itemsPerPage: \'' . self::PATTERN_BORDER_SYMBOL  . self::ITEMS_PER_PAGE_ARG . self::PATTERN_BORDER_SYMBOL . '\''
             . ' }';
     }
 }

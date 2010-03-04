@@ -2,24 +2,36 @@
 // vim: set ts=4 sw=4 sts=4 et:
 
 /**
- * ____file_title____
- *  
- * @category   Lite Commerce
- * @package    Lite Commerce
- * @subpackage ____sub_package____
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage Controller
  * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version    SVN: $Id$
- * @link       http://www.qtmsoft.com/
- * @since      3.0.0 EE
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
  */
 
 /**
- * XLite_Controller_Abstract 
+ * Abstract controller
  * 
- * @package    Lite Commerce
- * @subpackage ____sub_package____
- * @since      3.0.0 EE
+ * @package    XLite
+ * @subpackage Controller
+ * @since      3.0.0
  */
 abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 {
@@ -40,7 +52,6 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
      * @since  3.0.0 EE
      */
     protected $locationPath = null;
-
 
 	/**
 	 * Check if current page is accessible
@@ -195,9 +206,9 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 	}
 
 	/**
-	 * getAllParams 
+	 * Get controlelr parameters
 	 * 
-	 * @param mixed $exeptions ____param_comment____
+	 * @param string $exeptions Parameter keys string
 	 *  
 	 * @return array
 	 * @access public
@@ -206,11 +217,11 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 	public function getAllParams($exeptions = null)
     {
         $result = array();
-		$exeptions = isset($exeptions) ? explode(",", $exeptions) : null;
+		$exeptions = isset($exeptions) ? explode(",", $exeptions) : false;
 
         foreach ($this->get('params') as $name) {
 			$value = $this->get($name);
-            if (isset($value) && !(isset($exeptions) && in_array($name, $exeptions))) {
+            if (isset($value) && (!$exeptions || in_array($name, $exeptions))) {
                 $result[$name] = $value;
             }
         }

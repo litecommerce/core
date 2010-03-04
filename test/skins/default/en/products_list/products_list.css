@@ -1,0 +1,271 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Products list styles
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ */
+/* List pager row */
+.list-pager,
+.list-pager-low
+{
+  height: 32px;
+}
+
+.list-pager ul,
+.list-pager-low ul
+{
+  float: left;
+  white-space: nowrap;
+}
+
+.list-pager div,
+.list-pager-low div
+{
+  float: right;
+  white-space: nowrap;
+  padding-top: 3px;
+}
+
+.list-pager input,
+.list-pager-low input
+{
+  width: 2em;
+  text-align: right;
+}
+
+/* Second pager */
+.list-pager-low {
+  border-top: 1px solid black;
+  padding-top: 10px;
+}
+
+/* List head */
+.list-head {
+  border: 1px solid #bbc7d2;
+  padding: 5px 15px;
+  height: 21px;
+}
+
+.list-head .display-modes {
+  float: left;
+  padding-top: 3px;
+}
+
+.list-head ul {
+  display: inline;
+  padding: 0;
+  margin: 0;
+}
+
+.list-head ul li {
+  display: inline;
+  margin: 0;
+  padding: 0 0 0 6px;
+}
+
+.list-head li a {
+  text-decoration: underline;
+}
+
+.list-head li.selected a {
+  color: #111;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: text;
+}
+
+.list-head ul li.first {
+  padding-left: 3px;
+}
+
+.list-head select {
+  margin: 0px 4px;
+}
+
+.list-head .sort-box {
+  float: right;
+  white-space: nowrap;
+}
+
+.list-head .sort-box a {
+  font-size: 1.2em;
+}
+
+.list-head .sort-box * {
+  vertical-align: middle;
+}
+
+/* List body and common styles */
+.list-body {
+  padding: 0px;
+}
+
+.list-body .added-to-cart {
+  display: block;
+  position: absolute;
+  left: 5px;
+  top: 0px;
+  z-index: 20;
+  width: 19px;
+  height: 14px;
+  background: transparent url(../images/added2cart.gif) no-repeat left top;
+}
+
+.list-body a.product-name {
+  text-decoration: underline;
+}
+
+.list-body .product-price {
+  font-weight: bold;
+}
+
+/* List type : Grid */
+.list-body-grid
+{
+	list-style: none;
+  margin-top: 15px;
+}
+
+/*
+ * Information on hacks used below is available at:
+ * - http://blog.mozilla.com/webdev/2009/02/20/cross-browser-inline-block/
+ * - http://foohack.com/2007/11/cross-browser-support-for-inline-block-styling/
+ */
+.list-body-grid li
+{
+  adding: 0;
+  argin: 0 1em 1em 0;
+	vertical-align: top;
+	background-image: none;
+	display: -moz-inline-stack;		/* FF2 supports this instead of "inline-block" */
+	display: inline-block;
+}
+
+/* IE6 requires this in order to correctly display li as "inline-blocks */
+* html .list-body-grid li
+{
+  display: inline;
+}
+
+.list-body-grid a.product-thumbnail
+{
+  display: block;
+}
+
+.list-body-grid a.product-thumbnail,
+.list-body-grid a.product-thumbnail img
+{
+  position: relative;       /* Hack for FF2: in FF2 static "inner-blocks" are non-clickable */
+}
+
+.list-body-grid li {
+	margin-right: 5%;
+  margin-bottom: 1.5em;
+  width: 30%;
+}
+
+.list-body-grid li div {
+  position: relative;
+}
+
+.list-body-grid a.product-thumbnail,
+.list-body-grid a.product-thumbnail img
+{
+	width: 70px;
+}
+
+.list-body-grid a.product-thumbnail img
+{
+	height: 90px;
+}
+
+.list-body-grid .product-name {
+  display: block;
+  height: 40px;
+  overflow: hidden;
+}
+
+.list-body-grid .product-price {
+  padding-right: 18px;
+}
+
+.list-body-grid .buy-now {
+}
+
+/* List type : List */
+.list-body-list {
+  list-style: none;
+  padding-top: 1.5em;
+}
+
+.list-body-list li.item {
+  list-style: none;
+  width: 100%;
+  padding-bottom: 20px;
+  position: relative;
+}
+
+.list-body-list a.product-thumbnail {
+  float: left;
+  position: relative;
+  display: block;
+}
+
+.list-body-list .body {
+  margin-left: 100px;
+}
+
+.list-body-list a.product-thumbnail,
+.list-body-list a.product-thumbnail img
+{
+  width: 70px;
+}
+
+.list-body-list a.product-thumbnail img
+{
+  height: 90px;
+}
+
+.list-body-list .product-price {
+  padding-right: 18px;
+}
+
+/* List type : Table */
+.list-body-table {
+  margin-top: 0px;
+  border-top: 0px none;
+  border-collapse: separate;
+}
+
+.list-body-table tr td {
+  border-width: 1px;
+  border-color: black;
+}
+
+.list-body-table tr td.product-price-column {
+  text-align: right;
+}
+
+/* Modal wait screen */
+.wait-block {
+  border: 1px solid #929292;
+  background: #fff none;
+  padding: 9px;
+}
+
+.wait-block div {
+  height: 11px;
+  background: transparent url(../images/progress.gif) repeat-x left top;
+}
+
+.wait-block-overlay {
+  background: #000 none;
+  opacity: 0.1;
+}
+
