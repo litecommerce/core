@@ -64,7 +64,7 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
 		$this->collectCartGarbage();
 
         // add product to the cart
-        $this->cart->addItem($this->get('currentItem'));
+        $this->cart->addItem($this->getCurrentItem());
         $this->updateCart(); // recalculate shopping cart
 
         // switch back to product catalog or to shopping cart

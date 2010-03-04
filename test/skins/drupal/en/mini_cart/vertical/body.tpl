@@ -63,7 +63,7 @@ Empty cart
 Cart with items
 
 *}
-<div id="lc-minicart" class="collapsed" IF="!cart.empty">
+<div id="lc-minicart" class="collapsed" IF="!cart.isEmpty()">
   <div class="lc-minicart-header">
     {* Toggle button *}
     <img src="images/spacer.gif" class="toggle-button" onClick="javascript:xlite_minicart_toggle('lc-minicart');" />

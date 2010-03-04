@@ -152,6 +152,18 @@ class XLite_Model_Order extends XLite_Model_Abstract
 		}
     }
 
+    /**
+     * Checks whether the shopping cart/order is empty
+     * 
+     * @return bool
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function isEmpty()
+    {
+		return 0 >= $this->getItemsCount();
+    }
+
 
 
 
@@ -772,17 +784,6 @@ class XLite_Model_Order extends XLite_Model_Abstract
         }
 
         return serialize($result);
-    } // }}}
-
-    /**
-    * Checks whether the shopping cart/order is empty.
-    *
-    * @access public
-    * @return bool True if cart is empty/False otherwise.
-    */
-    function isEmpty() // {{{
-    {
-        return count($this->get("items")) == 0;
     } // }}}
 
     function deleteItem($item) // {{{

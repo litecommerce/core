@@ -52,11 +52,11 @@ class XLite_View_AddedToCartMark extends XLite_View_Abstract
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __construct(array $attributes = array())
+    public function init(array $attributes = array())
     {
         $this->attributes['product'] = false;
 
-        parent::__construct($attributes);
+        parent::init($attributes);
     }
 
     /**

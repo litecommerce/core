@@ -67,10 +67,6 @@ class XLite_View_Subcategories extends XLite_View_Dialog
      */
     protected function getDir()
     {
-        if (!isset($this->displayModes[$this->attributes['displayMode']])) {
-            $this->attributes['displayMode'] = 'icons';
-        }
-
         return 'subcategories/' . $this->attributes['displayMode'];
     }
 
@@ -84,12 +80,7 @@ class XLite_View_Subcategories extends XLite_View_Dialog
      */
     protected function getDisplayMode()
     {
-        if ($this->attributes[self::IS_EXPORTED]) {
-            return $this->attributes['displayMode'];
-
-        } else {
-            return $this->config->General->subcategories_look;
-        }
+        return $this->attributes[self::IS_EXPORTED] ? $this->attributes['displayMode'] : $this->config->General->subcategories_look;
     }
 
     /**
@@ -129,7 +120,7 @@ class XLite_View_Subcategories extends XLite_View_Dialog
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            'displayMode' => new XLite_Model_WidgetParam_List('Display mode', 'list', $this->displayModes),
+            'displayMode' => new XLite_Model_WidgetParam_List('Display mode', 'icons', $this->displayModes),
         );
     }
 

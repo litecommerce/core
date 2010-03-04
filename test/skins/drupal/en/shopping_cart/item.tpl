@@ -36,13 +36,9 @@
 
 		  <table>
         <tr>
-          <td>
-            <widget class="XLite_View_Button" label="Delete item" type="button" href="{buildURL(#cart#,#delete#,_ARRAY_(#cart_id#^cart_id))}">
- 		      </td>
+		  <td><widget class="XLite_View_Button_Regular" label="Delete item" action="delete" formParams="{_ARRAY_(#cart_id#^cart_id)}" /></td>
           <td>&nbsp;</td>
-          <td>
- 		        <widget class="XLite_View_Button" label="Update item" type="button" href="{buildURL(#cart#,#update#,_ARRAY_(#cart_id#^cart_id))}">
- 		      </td>
+		  <td><widget class="XLite_View_Button_Submit" label="Update item" /></td>
         </tr>
       </table>
 

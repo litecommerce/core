@@ -236,9 +236,14 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
 	public function getWidgetObject($name, array $attributes = array())
 	{
-		return class_exists($name)
-            ? XLite_Model_CachingFactory::getObject($name, $this->prepareAttributes($attributes))
-            : null;
+        $result = null;
+
+        if (class_exists($name)) {
+            $result = XLite_Model_CachingFactory::getObject($name);
+            $result->init($this->prepareAttributes($attributes));
+        }
+
+        return $result;
 	}
 
 	/**
@@ -440,8 +445,10 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
             'action' => $action,
         ) + $this->prepareAttributes($args);
 
-        $viewer = $this->runApplication($args)->runController();
-        $viewer->setAttributes($args + array('template' => 'center_top.tpl'));
+        $application = $this->runApplication($args);
+        $application->runController();
+        $viewer = $application->getViewer();
+        $viewer->init(array('template' => 'center_top.tpl') + $args);
 
         return new XLite_Core_WidgetDataTransport($viewer);
 	}

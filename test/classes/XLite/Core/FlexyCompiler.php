@@ -450,7 +450,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base
 			}
 		}
 
-		return trim($result);
+		return $result;
     }
 
     function substitute()

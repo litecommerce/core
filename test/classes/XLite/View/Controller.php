@@ -107,21 +107,18 @@ class XLite_View_Controller extends XLite_View_Abstract
     /**
      * Set template and attributes 
      * 
-     * @param string $template template to display
-     * @param array  $attrs    widget attributes
+     * @param array  $attrs  widget attributes
      *  
      * @return void
      * @access public
      * @since  3.0.0 EE
      */
-    public function __construct(array $attributes = array(), $template = null)
+    public function init(array $attributes = array())
     {
         $this->attributes['silent'] = true;
         $this->attributes['dumpStarted'] = '';
 
-        parent::__construct($attributes);
-
-        $this->template = $template;
+        parent::init($attributes);
     }
 
     /**

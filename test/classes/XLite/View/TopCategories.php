@@ -71,10 +71,6 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
      */
     protected function getDir()
     {
-        if (!isset($this->displayModes[$this->attributes['displayMode']])) {
-            $this->attributes['displayMode'] = 'list';
-        }
-
         return 'categories/' . $this->attributes['displayMode'];
     }
 

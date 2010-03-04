@@ -49,9 +49,17 @@ class XLite_View_ExtraFields extends XLite_View_Abstract
     public $template = "extra_fields.tpl";	
     public $product;
 
-    function init()
+	/**
+     * Initialize widget
+	 * FIXME - to delete
+     *
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function init(array $attributes = array())
     {
-        parent::init();
+        parent::init($attributes);
         $this->mapRequest();
     }
  

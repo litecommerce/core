@@ -94,14 +94,14 @@ class XLite_View_ProductsList extends XLite_View_Abstract
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __construct(array $attributes = array())
+    public function init(array $attributes = array())
     {
         $this->attributes['listFactory'] = false;
 
         $this->defaultURLParams[self::SORT_CRITERION_ARG] = XLite_Model_Product::getDefaultSortCriterion();
         $this->defaultURLParams[self::SORT_ORDER_ARG] = XLite_Model_Product::getDefaultSortOrder();
 
-        parent::__construct($attributes);
+        parent::init($attributes);
     }
 
     /**
@@ -188,8 +188,9 @@ class XLite_View_ProductsList extends XLite_View_Abstract
     {
         $params = $this->assembleURLParams($pageId, $sortCriterion, $sortOrder, $displayMode);
 
+        // FIXME
         $target = $params['target'];
-        $action = $params['action'];
+        $action = isset($params['action']) ? $params['action'] : '';
 
         unset($params['target'], $params['action']);
 

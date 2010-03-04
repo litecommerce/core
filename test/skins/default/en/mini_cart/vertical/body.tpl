@@ -3,7 +3,7 @@
 
   <table width="100%">
 
-    <tr IF="cart.empty">
+    <tr IF="cart.isEmpty()">
       <td><img src="images/cart_empty.gif" alt=""> Cart is empty</td>
     </tr>
 

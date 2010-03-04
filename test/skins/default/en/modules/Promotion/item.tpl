@@ -24,9 +24,9 @@
         <br>
         <br>
 		<table><tr><td>
-        <widget class="XLite_View_Button" label="Delete item" href="cart.php?target=cart&action=delete&cart_id={cart_id}" font="FormButton">
+		<widget class="XLite_View_Button_Regular" label="Delete item" action="delete" formParams="{_ARRAY_(#cart_id#^cart_id)}" />
 		</td><td>&nbsp;</td><td>
-		<widget class="XLite_View_Button" label="Update item" href="javascript: document.cart_form.action.value='update'; document.cart_form.submit()" font="FormButton">
+		<widget class="XLite_View_Button_Submit" label="Update item" />
 		</td></tr></table>
         <widget module="GoogleCheckout" template="modules/GoogleCheckout/shopping_cart/item.tpl">
     </td>

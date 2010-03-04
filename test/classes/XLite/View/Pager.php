@@ -159,7 +159,7 @@ class XLite_View_Pager extends XLite_View_Abstract
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __construct(array $attributes = array())
+    public function init(array $attributes = array())
     {
         $fieldName = self::PAGE_ID_ARG;
         $this->pageID = XLite_Core_Request::getInstance()->$fieldName;
@@ -168,7 +168,7 @@ class XLite_View_Pager extends XLite_View_Abstract
         $this->attributes['data'] = array();
         $this->attributes['itemsPerPage'] = $this->itemsPerPage;
 
-        parent::__construct($attributes);
+        parent::init($attributes);
     }
 
     /**

@@ -62,10 +62,10 @@ class XLite_Core_Handler extends XLite_Base
      * @param array $attrs params to set
      *
      * @return void
-     * @access public
+     * @access protected
      * @since  3.0.0 EE
      */
-    public function setAttributes(array $attrs)
+    protected function setAttributes(array $attrs)
     {
         foreach ($attrs as $name => $value) {
             // FIXME - mapping
@@ -148,8 +148,7 @@ class XLite_Core_Handler extends XLite_Base
     }
 
     /**
-     * Initialize widget
-     * FIXME - backward compatibility; to delete
+     * Initialize handler
      *
      * @return void
      * @access public
@@ -157,6 +156,7 @@ class XLite_Core_Handler extends XLite_Base
      */
     public function init()
     {
+        // FIXME - backward compatibility; to delete
         $this->setAttributes(XLite_Core_Request::getInstance()->getData());
         $this->fillForm();
     }

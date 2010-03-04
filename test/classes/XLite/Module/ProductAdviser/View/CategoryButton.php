@@ -53,11 +53,11 @@ class XLite_Module_ProductAdviser_View_CategoryButton extends XLite_View_Abstrac
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __construct(array $attributes = array())
+    public function init(array $attributes = array())
     {
-        $this->attributes['product'] = null;
+        $this->attributes['product'] = '';
 
-        parent::__construct($attributes);
+        parent::init($attributes);
     }
 
     /**

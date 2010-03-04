@@ -57,5 +57,23 @@ class XLite_View_Cart extends XLite_View_Dialog
     {
         return 'shopping_cart';
     }
+
+    /**
+     * Set template body
+     * 
+     * @param array $attributes widget attributes
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function init(array $attributes = array())
+    {
+        if ($this->getCart()->isEmpty()) {
+            $this->body = 'empty.tpl';
+        }
+
+        parent::init($attributes);
+    }
 }
 

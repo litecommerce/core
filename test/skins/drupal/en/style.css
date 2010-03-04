@@ -18,6 +18,10 @@ TABLE, IMG {
 	BORDER: 0px none;
 }
 
+fieldset {
+  display: none;
+}
+
 /*
 Main template main.tpl wallpaper.
 */

@@ -190,7 +190,10 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 			$attrs[$attr] = $this->is($attr);
 		}
 
-		return new XLite_View_Controller($attrs, $this->template);
+        $viewer = new XLite_View_Controller();
+        $viewer->init($attrs + array('template' => $this->template));
+
+		return $viewer;
     }
 
 	/**

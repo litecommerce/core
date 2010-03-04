@@ -69,18 +69,6 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
     }
 
     /**
-     * Return cart instance 
-     * 
-     * @return XLite_Model_Order
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function getCart()
-    {
-        return XLite_Model_CachingFactory::getObject('XLite_Model_Cart');
-    }
-
-    /**
      * Return up to 3 items from cart
      * 
      * @return array

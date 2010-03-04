@@ -45,9 +45,9 @@ class XLite_Module_AdvancedSearch_View_SearchResult extends XLite_View_SearchRes
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __construct()
+    public function init(array $attributes = array())
     {
-        parent::__construct();
+        parent::init($attributes);
 
         $this->allowedTargets[] = 'advanced_search';
     }

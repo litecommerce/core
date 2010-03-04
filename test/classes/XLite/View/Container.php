@@ -77,60 +77,21 @@ abstract class XLite_View_Container extends XLite_View_Abstract
 		return $this->attributes['showWrapper'] && !XLite_Core_CMSConnector::isCMSStarted();
 	}
 
-
-    /**
-     * Check passed attributes
-     * TODO - check if we need to move this function into the XLite_View_Abstract
+     /**
+     * Initialize widget
      *
-     * @param array $attrs attributes to check
-     *
-     * @return array errors list
-     * @access public
-     * @since  1.0.0
-     */
-    public function validateAttributes(array $attrs)
-    {
-        $messages = array();
-
-        foreach ($this->widgetParams as $name => $param) {
-
-            if (isset($attrs[$name])) {
-                list($result, $widgetErrors) = $param->validate($attrs[$name]);
-
-                if (false === $result) {
-                    $messages[] = $param->label . ': ' . implode('<br />' . $param->label . ': ', $widgetErrors);
-                }
-
-            } else {
-                $messages[] = $param->label . ': is not set';
-            }
-        }
-
-        return parent::validateAttributes($attrs) + $messages;
-    }
-
-    /**
-     * Set attributes and template (is needed)
-     * 
-     * @param array $attributes widget attributes
-     *  
      * @return void
      * @access public
      * @since  3.0.0 EE
      */
-    public function __construct(array $attributes = array())
+    public function init(array $attributes = array())
     {
         $this->attributes['showWrapper'] = true;
 
-        // FIXME - move this into the XLite_View_Abstract class
-        foreach ($this->getWidgetParams() as $name => $param) {
-            $this->attributes[$name] = $param->value;
-        }
+        parent::init($attributes);
 
-        parent::__construct($attributes);
-
-        if (!$this->isWrapped()) {
-            $this->template = $this->getDir() . LC_DS . $this->body;
+        if (!$this->isWrapped() && !isset($attributes['template'])) {
+            $this->template = $this->getBody();
         }
     }
 }

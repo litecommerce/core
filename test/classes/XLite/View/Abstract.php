@@ -33,7 +33,12 @@ class XLite_View_Abstract extends XLite_Core_Handler
     /**
      * Attribute to determines if widget is exported by CMS handler
      */
-    const IS_EXPORTED = 'is_exported';
+    const IS_EXPORTED = '____is_exported____';
+
+    /**
+     * Internal widget name (sometimes used in templates)
+     */
+    const WIDGET_NAME = '____widget_name____';
 
 
     /**
@@ -89,7 +94,10 @@ class XLite_View_Abstract extends XLite_Core_Handler
      * @access protected
      * @since  3.0.0 EE
      */
-    protected $attributes = array(self::IS_EXPORTED => false);
+    protected $attributes = array(
+        self::IS_EXPORTED => false,
+        self::WIDGET_NAME => '',
+    );
 
     /**
      * Targets this widget is allowed for
@@ -163,7 +171,7 @@ class XLite_View_Abstract extends XLite_Core_Handler
      */
     protected function includeCompiledFile($includeFile)
     {
-        if (is_null($this->get('template'))) {
+        if (is_null($this->getTemplate())) {
             $this->_die("template is not set");
         }
 
@@ -183,7 +191,7 @@ class XLite_View_Abstract extends XLite_Core_Handler
                 mkdirRecursive($dir, 0755);
             }
 
-            file_put_contents($file, trim($fc->parse()));
+            file_put_contents($file, trim($fc->parse()) . "\n");
             touch($file, filemtime($templateFile));
         }
 
@@ -203,20 +211,26 @@ class XLite_View_Abstract extends XLite_Core_Handler
      */
     protected function _getWidget(array $attrs = array(), $class = null, $name = null)
     {
+        // Name is the primary for widget selection
         if (isset($name)) {
+
+            // Widget not exists - create and save it in cache
             if (!isset($this->widgets[$name])) {
                 $this->$name = $this->widgets[$name] = isset($class) ? new $class() : clone $this;
             }
+
+            // Fetch widget object from cache and set its name
             $widget = $this->widgets[$name];
+            $attrs[self::WIDGET_NAME] = $name;
+
         } else {
+
+            // Do not cache unnamed widgets
             $widget = isset($class) ? new $class() : clone $this;
         }
 
-        if (!empty($attrs)) {
-            $widget->setAttributes($attrs);
-        }
-
-		$this->init();
+        // Initialization
+		$widget->init($attrs);
 
         return $widget;
     }
@@ -267,6 +281,26 @@ class XLite_View_Abstract extends XLite_Core_Handler
     protected function defineWidgetParams()
     {
         $this->widgetParams = array();
+    }
+
+    /**
+     * Set properties
+     *
+     * @param array $attributes params to set
+     *  
+     * @return void
+     * @access protected
+     * @since  3.0.0 EE
+     */     
+    protected function setAttributes(array $attributes)
+    {       
+        parent::setAttributes($attributes);
+    
+        foreach ($attributes as $name => $value) {
+            if (isset($this->attributes[$name])) {
+                $this->attributes[$name] = $value;
+            }
+        }
     }
 
     /**
@@ -327,22 +361,6 @@ class XLite_View_Abstract extends XLite_Core_Handler
     }
 
 
-    /**
-     * Set widget attributes 
-     * 
-     * @param array $attributes widget params
-     *  
-     * @return void
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function __construct(array $attributes = array())
-    {
-        if (!empty($attributes)) {
-            $this->setAttributes($attributes);
-        }
-    }
-
 	/**
      * FIXME - backward compatibility
      *
@@ -391,22 +409,27 @@ class XLite_View_Abstract extends XLite_Core_Handler
     }
 
     /**
-     * Set properties
-     *
-     * @param array $attributes params to set
+     * Initialize widget
      *
      * @return void
      * @access public
      * @since  3.0.0 EE
      */
-    public function setAttributes(array $attributes)
+    public function init(array $attributes = array())
     {
-        parent::setAttributes($attributes);
+        parent::init();
 
-        foreach ($attributes as $name => $value) {
-            if (isset($this->attributes[$name])) {
-                $this->attributes[$name] = $value;
-            }
+        foreach ($this->getWidgetParams() as $name => $param) {
+            $this->attributes[$name] = $param->value;
+        }
+        
+        if (!empty($attributes)) {
+            $this->setAttributes($attributes);
+        }
+
+        // FIXME - must be removed
+        if (isset($attributes['template'])) {
+            $this->template = $attributes['template'];
         }
     }
 
@@ -422,9 +445,7 @@ class XLite_View_Abstract extends XLite_Core_Handler
     public function getAttributes($name = null)
     {
         // FIXME - must return NULL instead of the $this->get('name')
-
-        return isset($name) ? 
-            (isset($this->attributes[$name]) ? $this->attributes[$name] : $this->get('name')) : $this->attributes;
+        return isset($name) ? (isset($this->attributes[$name]) ? $this->attributes[$name] : $this->get('name')) : $this->attributes;
     }
 
     /**
@@ -496,18 +517,34 @@ class XLite_View_Abstract extends XLite_Core_Handler
         return $this->widgetParams;
     }
 
-	/**
+    /**
      * Check passed attributes
      *
-     * @param array $attributes attributes to check
+     * @param array $attrs attributes to check
      *
      * @return array errors list
      * @access public
      * @since  1.0.0
      */
-    public function validateAttributes(array $attributes)
+    public function validateAttributes(array $attrs)
     {
-        return array();
+        $messages = array();
+
+        foreach ($this->getWidgetParams() as $name => $param) {
+
+            if (isset($attrs[$name])) {
+                list($result, $widgetErrors) = $param->validate($attrs[$name]);
+
+                if (false === $result) {
+                    $messages[] = $param->label . ': ' . implode('<br />' . $param->label . ': ', $widgetErrors);
+                }
+
+            } else {
+                $messages[] = $param->label . ': is not set';
+            }
+        }
+
+        return parent::validateAttributes($attrs) + $messages;
     }
 
     /**

@@ -8,11 +8,7 @@ function isValid()
 -->
 </script>
 
-<form action="{shopURL(#cart.php#)}" method="GET" name="add_to_cart" onsubmit="javascript: return isValid();">
-  <input type="hidden" name="target" value="cart">
-  <input type="hidden" name="action" value="add">
-  <input type="hidden" name="product_id" value="{product.product_id}">
-  <input type="hidden" name="category_id" value="{category_id}">
+<widget class="XLite_View_Form_Product_AddToCart" name="add_to_cart" />
 
   <table cellpadding="5" cellspacing="0" width="100%">
     <tr>
@@ -86,9 +82,7 @@ function isValid()
             </tr>
 
             <tr IF="availableForSale" id="addToCartButton">
-              <td>
-                <widget class="XLite_View_Button" label="Add to Cart" href="javascript: if (isValid()) document.add_to_cart.submit()" img="cart4button.gif" font="FormButton">
-			        </td>
+              <td><widget class="XLite_View_Button_Submit" label="Add to Cart" /></td>
         			<td IF="!config.General.add_on_mode">
         				<widget module="WishList" template="modules/WishList/add.tpl" href="javascript: WishList_Add2Cart();">
               </td>
@@ -99,7 +93,8 @@ function isValid()
       </td>
     </tr>    
   </table>
-</form>
+
+<widget name="add_to_cart" />
 
 <widget module="ProductAdviser" template="modules/ProductAdviser/OutOfStock/notify_form.tpl" visible="{xlite.PA_InventorySupport}">
 <widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_PriceNotifyForm" visible="{!priceNotificationSaved}">

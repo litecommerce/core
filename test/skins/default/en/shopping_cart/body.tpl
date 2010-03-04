@@ -1,11 +1,6 @@
 {* SVN $Id$ *}
-<p IF="cart.empty">
-Your shopping cart is empty.
-</p>
 
-<form IF="!cart.empty" name="cart_form" action="{buildURL(#cart#)}" method="POST">
-  <input type="hidden" foreach="dialog.allparams,param,v" name="{param}" value="{v}" />
-  <input type="hidden" name="action" value="update" />
+<widget class="XLite_View_Form_Cart_Main" name="cart_form" />
 
   <p align=justify>The items in your shopping cart are listed below. To remove any item click "Delete Item". To place your order, please click "CHECKOUT".</p>
 
@@ -33,6 +28,6 @@ Your shopping cart is empty.
   <widget template="shopping_cart/buttons.tpl">
   <widget module="GoogleCheckout" template="modules/GoogleCheckout/shopping_cart/gcheckout_notes.tpl">
 
-</form>
+<widget name="cart_form" end />
 
 <widget module="ProductAdviser" template="modules/ProductAdviser/OutOfStock/notify_form.tpl" visible="{xlite.PA_InventorySupport}">

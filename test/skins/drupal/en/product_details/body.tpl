@@ -14,8 +14,7 @@ function isValid()
   <a IF="nextProduct" class="next" href="{buildURL(#product#,##,_ARRAY_(#product_id#^nextProduct.product_id))}" alt="{nextProduct.name}">Next product</a>
 </div>
 
-<form action="{buildURLPath(#cart#,#add#,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" method="GET" name="add_to_cart" onsubmit="javascript: return isValid();">
-  <input FOREACH="buildURLArguments(#cart#,#add#,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id)),paramName,paramValue" type="hidden" name="{paramName}" value="{paramValue}" />
+<widget class="XLite_View_Form_Product_AddToCart" name="add_to_cart" />
 
   <table cellpadding="5" cellspacing="0" width="100%">
     <tr>
@@ -93,9 +92,7 @@ function isValid()
             </tr>
 
             <tr IF="availableForSale" id="addToCartButton">
-              <td>
-                <widget class="XLite_View_Button" label="Add to Cart" type="button">
-			        </td>
+				<td><widget class="XLite_View_Button_Submit" label="Add to Cart" /></td>
         			<td IF="!config.General.add_on_mode">
         				<widget module="WishList" template="modules/WishList/add.tpl">
               </td>
@@ -106,7 +103,8 @@ function isValid()
       </td>
     </tr>    
   </table>
-</form>
+
+<widget name="add_to_cart" end />
 
 <widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_NotifyForm" />
 <widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_PriceNotifyForm" visible="{!priceNotificationSaved}" />

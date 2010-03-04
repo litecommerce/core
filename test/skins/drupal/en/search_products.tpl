@@ -1,6 +1,6 @@
 {* SVN $Id$ *}
-<form action="{buildURLPath(#search#)}" method="get" name="search_form">
-  <input FOREACH="buildURLArguments(#search#),paramName,paramValue" type="hidden" name="{paramName}" value="{paramValue}" />
+
+  <widget class="XLite_View_Form_Search_Product_Simple" name="search_form" />
 
   <table cellpadding="0" cellspacing="0">
     <tr>
@@ -18,7 +18,7 @@
               <span IF="!substring:r"><input type="text" name="substring" style="width: 75pt; color: #888888;" value="Find product" onfocus="javascript: this.value = ''; this.style.color = '#000000';"></span>
 			        <span IF="substring:r"><input type="text" name="substring" style="width: 75pt;" value="{substring:r}"></span>
 			      </td>
-		        <td><widget template="common/button2.tpl" href="javascript: document.search_form.submit()" label="GO" img="btn2_arrows.gif"></td>
+				<td><widget class="XLite_View_Button_Submit" label="Go" /></td>
 		      </tr>
 
 		      <tr IF="xlite.AdvancedSearchEnabled">
@@ -35,5 +35,6 @@
 
   </table>
 
-</form>
-<BR>
+  <widget name="search_form" end />
+
+<br />

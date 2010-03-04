@@ -37,11 +37,23 @@ abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstr
         return $product->get('enabled') ? $product : null; 
     }
 
+    /**
+     * Return cart instance 
+     * 
+     * @return XLite_Model_Order
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function getCart()
+    {
+        return XLite_Model_CachingFactory::getObject('XLite_Model_Cart');
+    }
+
 
 
 	public function __construct()
     {
-		$this->cart = XLite_Model_CachingFactory::getObject('XLite_Model_Cart');
+		$this->cart = $this->getCart();
 
 		// cleanup processed cart for non-checkout pages
 		$target = isset($this->target) ? $this->target : '';
