@@ -11,5 +11,5 @@ function WishList_Add2Cart()
 }
 -->
 </script>
-<widget class="XLite_View_Button" label="Add to Wish List" href="{widget.href}" img="modules/WishList/wish_list_icon_empty.gif" font="FormButton">
+<widget class="XLite_View_Button" label="Add to Wish List" href="{href}" img="modules/WishList/wish_list_icon_empty.gif" font="FormButton">
 

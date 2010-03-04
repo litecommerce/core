@@ -9,7 +9,7 @@ else
 }
 </script>
 {end:}
-<select name="{field}" style="{widget.style}" {if:xlite.GoogleCheckoutEnabled&googleCheckoutOrder}disabled{end:} {if:pm=#credit_card#}onChange="javascript: status_change(this)"{end:}>
+<select name="{field}" style="{style}" {if:xlite.GoogleCheckoutEnabled&googleCheckoutOrder}disabled{end:} {if:pm=#credit_card#}onChange="javascript: status_change(this)"{end:}>
 <option value="" IF="allOption">All</option>
 <option FOREACH="statuses,orderStatus" value="{orderStatus.status}" selected="{value=orderStatus.status}">{orderStatus.name}</option>
 </select>

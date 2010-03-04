@@ -1,1 +1,1 @@
-<widget template="{widget.body}" />
+<widget template="{body}" />

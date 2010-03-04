@@ -1,5 +1,5 @@
 <span IF="opt.modifyParams">(
-<span IF="!widget.hidePrice">
+<span IF="!hidePrice">
 <span IF="config.ProductOptions.absolute_price_format"> 
 Price: {price_format(option.modifiedPrice(opt)):h}
 </span>

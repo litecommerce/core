@@ -1,15 +1,15 @@
 {* SVN $Id$ *}
-<a href="{widget.href:r}" target="{widget.hrefTarget:r}">
-  {if:widget.img}
-    <img src="images/{widget.img}" align="absmiddle" />
+<a href="{href:r}" target="{hrefTarget:r}">
+  {if:img}
+    <img src="images/{img}" align="absmiddle" />
   {else:}
     <img src="images/go.gif" width="13" height="13" align="absmiddle" />
   {end:}
-  {if:widget.font}
-    <font class="{widget.font}">
+  {if:font}
+    <font class="{font}">
   {end:}
-  {widget.label:h}
-  {if:widget.font}
+  {label:h}
+  {if:font}
     </font>
   {end:}
 </a>

@@ -1,4 +1,4 @@
-{if:widget.layout=#flat#}
+{if:layout=#flat#}
 <widget template="modules/FlyoutCategories/catalog{xlite.auth.flyoutCategoriesCacheDirectory}/body.tpl">
 
 <script language="JavaScript1.2" type="text/javascript">

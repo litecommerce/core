@@ -1,4 +1,4 @@
-{if:widget.clone}
+{if:clone}
     <tr IF="!isSelected(cloneOrder,#payedByGC#,#0#)">
         <td nowrap colspan="4" align="right" class="ProductDetailsTitle">Paid with GC:</td>
         <td align="right">{price_format(cloneOrder,#payedByGC#):h}</td>

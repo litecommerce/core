@@ -3,7 +3,7 @@
 		<td colspan=2>&nbsp;</td>
 	</tr>
 	<tr>
-		<td class="SidebarTitle" align=center nowrap>&nbsp;&nbsp;&nbsp;{widget.caption:h}&nbsp;&nbsp;&nbsp;</td>
+		<td class="SidebarTitle" align=center nowrap>&nbsp;&nbsp;&nbsp;{caption:h}&nbsp;&nbsp;&nbsp;</td>
 		<td width=100%>&nbsp;</td>
 	</tr>
 	<tr>

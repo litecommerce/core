@@ -1,9 +1,9 @@
 <table border=0 width="100%" cellpadding=0 cellspacing=0 valign=top>
 <tr><td height=15>
 <table border=0 cellspacing=0 cellpadding=0 height=100%>
-	<tbody FOREACH="widget.getSplittedPages(#90#),row_idx,row">
+	<tbody FOREACH="getSplittedPages(#90#),row_idx,row">
 	<tr><td>
-		<table border="0" cellpadding="0" cellspacing="0" {if:widget.isHeaderWider(row_idx,#45#)} width="100%"{end:}>
+		<table border="0" cellpadding="0" cellspacing="0" {if:isHeaderWider(row_idx,#45#)} width="100%"{end:}>
             <tr height=17>
             {foreach:row,tabPage}
             {if:tabPage}
@@ -35,7 +35,7 @@
 <table border=0 cellspacing=1 cellpadding=20 width="100%" class=Center>
 <tr>
 <td class=Center>
-<widget template="{widget.body}">
+<widget template="{body}">
 </td>
 </tr>
 </table>

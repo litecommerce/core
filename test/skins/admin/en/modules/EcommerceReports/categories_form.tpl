@@ -1,6 +1,6 @@
 <tr>
 	<td valign=top>
-        {if:widget.label}{widget.label:h}{else:}Categories:{end:}<br><br>
+        {if:label}{label:h}{else:}Categories:{end:}<br><br>
         <i>To (un)select more than one category,<br>Ctrl-click it</i>
     </td>
 	<td valign=top>

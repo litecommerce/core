@@ -4,13 +4,13 @@
 <td class="SidebarBorder">
  <table border="0" cellpadding="0" cellspacing="1" width="100%">
  <tr>
-    <td class="SidebarTitle" background="images/sidebartitle_back.gif">&nbsp;<widget template="{widget.dir}/image.tpl"/>&nbsp;&nbsp;<widget template="{widget.dir}/head.tpl"/></td>
+    <td class="SidebarTitle" background="images/sidebartitle_back.gif">&nbsp;<widget template="{dir}/image.tpl"/>&nbsp;&nbsp;<widget template="{dir}/head.tpl"/></td>
  </tr>
  <tr class="SidebarBox">
     <td>
     <table border="0" cellpadding="5" cellspacing="0" width="100%">
     <tr><td>
-    <widget template="{widget.dir}/body.tpl"/>
+    <widget template="{dir}/body.tpl"/>
     <img src="images/spacer.gif" width=150 height=5>
     </td>
     </tr>
@@ -25,7 +25,7 @@
 {else:}
 <SCRIPT language="JavaScript">
 
-{getSidebarBoxStatus(widget.dir)}
+{getSidebarBoxStatus(dir)}
 
 </SCRIPT>
 
@@ -78,8 +78,8 @@ function SetBoxBody(bodyId)
     <td class="SidebarTitle" background="images/sidebartitle_back.gif">
     	<table border="0" cellpadding="0" cellspacing="0" width="100%">
 		<tr>
-    		<td width="100%">&nbsp;<widget template="{widget.dir}/image.tpl"/>&nbsp;&nbsp;<widget template="{widget.dir}/head.tpl"/></td>
-    		<td><A href="javascript: ChangeBoxBody('{strMD5(widget.dir)}')" onClick="this.blur()"><IMG src="images/close_sidebar_box.gif" width=14 height=14 border="0" id="sidebar_box_button_{strMD5(widget.dir)}" title="Click to hide this box"></A>&nbsp;</td>
+    		<td width="100%">&nbsp;<widget template="{dir}/image.tpl"/>&nbsp;&nbsp;<widget template="{dir}/head.tpl"/></td>
+    		<td><A href="javascript: ChangeBoxBody('{strMD5(dir)}')" onClick="this.blur()"><IMG src="images/close_sidebar_box.gif" width=14 height=14 border="0" id="sidebar_box_button_{strMD5(dir)}" title="Click to hide this box"></A>&nbsp;</td>
 		</tr>
 		</table>
 	</td>
@@ -87,11 +87,11 @@ function SetBoxBody(bodyId)
  <tr class="SidebarBox">
     <td width="100%">
     <table border="0" cellpadding="5" cellspacing="0" width="100%">
-    <tr><td style="display:;" id="sidebar_box_body_{strMD5(widget.dir)}">
-    <widget template="{widget.dir}/body.tpl"/>
+    <tr><td style="display:;" id="sidebar_box_body_{strMD5(dir)}">
+    <widget template="{dir}/body.tpl"/>
     <img src="images/spacer.gif" width=150 height=5>
     </td>
-	<SCRIPT language="JavaScript">SetBoxBody("{strMD5(widget.dir)}")</SCRIPT>
+	<SCRIPT language="JavaScript">SetBoxBody("{strMD5(dir)}")</SCRIPT>
     </tr>
     </table>
     </td>
@@ -99,7 +99,7 @@ function SetBoxBody(bodyId)
  </table>
 </td>
 </tr>
-<tr><td><img src="images/spacer.gif" width=167 height=1><IMG src="" width=0 height=0 border="0" id="sidebar_box_action_{strMD5(widget.dir)}"></td></tr>
+<tr><td><img src="images/spacer.gif" width=167 height=1><IMG src="" width=0 height=0 border="0" id="sidebar_box_action_{strMD5(dir)}"></td></tr>
 </table>
 <br>
 {end:}

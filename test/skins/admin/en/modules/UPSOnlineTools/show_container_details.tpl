@@ -1,5 +1,5 @@
 {if:hasUPSValidContainers()}
-{if:widget.style=#button#}
+{if:style=#button#}
 <input class="ProductDetailsTitle" type="button" value="Container details" onClick="window.open('admin.php?target=order&mode=container_details&order_id={order.order_id}')">
 {else:}
 <br>

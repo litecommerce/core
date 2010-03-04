@@ -1,4 +1,4 @@
-{if:widget.clone}
+{if:clone}
 <tr>
     <td colspan="4" align="right" class="ProductDetailsTitle">Global discount:</td>
     <td align="right">{price_format(invertSign(cloneOrder.global_discount)):h}</td>

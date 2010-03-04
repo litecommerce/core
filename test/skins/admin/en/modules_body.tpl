@@ -1,11 +1,11 @@
 
-<form IF="xlite.mm.modules" action="admin.php" method="post" name="modules_form_{widget.key}">
-<input type="hidden" name="module_type" value="{widget.key}" />
+<form IF="xlite.mm.modules" action="admin.php" method="post" name="modules_form_{key}">
+<input type="hidden" name="module_type" value="{key}" />
 <tr>
 	<td>
 		<table cellspacing=0 cellpadding=0 border=0 width="100%">
 		<tr>
-			<td class="SidebarTitle" height="18" align=center nowrap>&nbsp;&nbsp;&nbsp;{widget.caption:h}&nbsp;&nbsp;&nbsp;</td>
+			<td class="SidebarTitle" height="18" align=center nowrap>&nbsp;&nbsp;&nbsp;{caption:h}&nbsp;&nbsp;&nbsp;</td>
 			<td width=100%>&nbsp;</td>
 		</tr>
 		</table>
@@ -17,15 +17,15 @@
 		<table cellspacing="1" cellpadding="2" border="0" width="100%">	
 			<tr>
 			    <th class="TableHead" nowrap><img src="images/spacer.gif" width="62" height="5" border="0">Title<img src="images/spacer.gif" width="62" height="5" border="0"></th>
-			    <th nowrap class="TableHead">Active<br><input id="activate_modules_{widget.key}" type="checkbox" onClick="this.blur();setChecked('modules_form_{widget.key}','active_module_{widget.key}',this.checked,'{widget.key}');"></th>
+			    <th nowrap class="TableHead">Active<br><input id="activate_modules_{key}" type="checkbox" onClick="this.blur();setChecked('modules_form_{key}','active_module_{key}',this.checked,'{key}');"></th>
 			    <th class="TableHead" width="100%">Description</th>
 			    <th class="TableHead">Version</th>
 			</tr>
-			<tbody FOREACH="getModules(widget.key),module_idx,module">
+			<tbody FOREACH="getModules(key),module_idx,module">
 			<tr valign=middle nowrap class="{getRowClass(module_idx,#DialogBox#,#TableRow#)}">
 				<td>
 					<table border=0 cellspacing="0" cellpadding="0">
-					<script language="Javascript" IF="module.enabled">setHeaderChecked('{widget.key}');</script>
+					<script language="Javascript" IF="module.enabled">setHeaderChecked('{key}');</script>
                     <tr valign=top nowrap>
 					{if:module.enabled&module.showSettingsForm()}
 						<td width=13><a href="{module.getSettingsFormLink()}" title="Click to configure module {module.name}" onClick="this.blur()"><img src="images/go.gif" border=0 width=13 align=absmiddle alt="Click to configure module {module.name}"></a></td>
@@ -47,7 +47,7 @@
 					</table>
 				</td>
 
-				<td align=center><input id="active_module_{widget.key}" type="checkbox" name="active_modules[]" value="{module.module_id}" checked="{module.enabled}" onClick="javascript:this.blur();checkUpdated('{widget.key}')"></td>
+				<td align=center><input id="active_module_{key}" type="checkbox" name="active_modules[]" value="{module.module_id}" checked="{module.enabled}" onClick="javascript:this.blur();checkUpdated('{key}')"></td>
 				<td>{module.getDescription()}</td>
 				<td align=center>{module.getVersion()}</td>
 			</tr>    
@@ -64,7 +64,7 @@
     <td colspan=5 height="5"></td>
 </tr>    
 <tr>
-    <td colspan=5><input type="submit" name="Update" value="Update" id="update_button_{widget.key}"></td>
+    <td colspan=5><input type="submit" name="Update" value="Update" id="update_button_{key}"></td>
 </tr>
 <input type="hidden" name="target" value="modules">
 <input type="hidden" name="action" value="update">

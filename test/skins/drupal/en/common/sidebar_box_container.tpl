@@ -1,1 +1,1 @@
-<widget template="{widget.dir}/body.tpl">
+<widget template="{dir}/body.tpl">

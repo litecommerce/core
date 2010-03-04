@@ -1,4 +1,4 @@
-{if:widget.layout=#side#}
+{if:layout=#side#}
 
 <widget template="common/sidebar_box.tpl" dir="modules/FlyoutCategories/catalog{xlite.auth.flyoutCategoriesCacheDirectory}" head="Categories">
 <script language="JavaScript1.2" type="text/javascript">

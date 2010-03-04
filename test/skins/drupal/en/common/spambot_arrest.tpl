@@ -1,4 +1,4 @@
-{if:isActiveCaptchaPage(widget.id)}
+{if:isActiveCaptchaPage(id)}
 <table border="0" cellpadding="0" cellspacing="5" width="100%">
 <tr>
     <td height="20" colspan="2"><b>Image verification</b><hr noshade="noshade" size="1"></td>
@@ -15,15 +15,15 @@
 </tr>
 <tr>
 	<td align="left" width="10%">
-        <img src="cart.php?target=captcha&id={widget.id}&tmp={rand()}" id="{widget.id}" alt="" /><br />
-        <a href="javascript: void(changeCaptcha('{widget.id}'));" class="captcha">Get a different code</a>
+        <img src="cart.php?target=captcha&id={id}&tmp={rand()}" id="{id}" alt="" /><br />
+        <a href="javascript: void(changeCaptcha('{id}'));" class="captcha">Get a different code</a>
     <script type="text/javascript">
-        //changeCaptcha('{widget.id}');
+        //changeCaptcha('{id}');
     </script>
 	</td>
 	<td align="left">
         <input type="text" name="captcha_str" />
-        <widget class="XLite_Validator_CaptchaValidator" id="{widget.id}" field="captcha_str">
+        <widget class="XLite_Validator_CaptchaValidator" id="{id}" field="captcha_str">
 	</td>
 </tr>
 </table>

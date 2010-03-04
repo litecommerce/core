@@ -1,4 +1,4 @@
 {* SVN $Id$ *}
 <button type="button" class="button-link" onclick="javascript: self.location = '{href}';">
-  {widget.label:h}
+  {label:h}
 </button>

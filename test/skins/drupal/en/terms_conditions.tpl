@@ -1,2 +1,2 @@
 {* Terms & Conditions page (Help menu) *}
-Please edit the template file {widget.template} to modify Terms &amp; Conditions text.
+Please edit the template file {template} to modify Terms &amp; Conditions text.

@@ -2,7 +2,7 @@
 <tr><td height=15>
 <table  border=0 cellspacing=0 cellpadding=0 class="Container">
 <tr height=17>
-{foreach:widget.pages,tabPage}
+{foreach:pages,tabPage}
 {if:tabPage.selected}
 <td width="3" class="TabberPageSelectedLeftBG"></td>
 <td nowrap align=center valign=middle class="TabberPageSelectedCenterBG">&nbsp;&nbsp;&nbsp;<a class=PageLink href="{tabPage.url:h}"><FONT class="tabSelected">{tabPage.header}</FONT></a>&nbsp;&nbsp;&nbsp;</td>
@@ -28,7 +28,7 @@
 <table border=0 cellspacing=1 cellpadding=20 width="100%" class=Center>
 <tr>
 <td class=Center>
-<widget template="{widget.body}">
+<widget template="{body}">
 </td>
 </tr>
 </table>
