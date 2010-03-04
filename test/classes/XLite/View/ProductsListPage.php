@@ -36,6 +36,13 @@
 class XLite_View_ProductsListPage extends XLite_View_Abstract
 {
     /**
+     * Gris columns range 
+     */
+    const GRID_COLUMNS_MIN = 1;
+    const GRID_COLUMNS_MAX = 5;
+
+
+    /**
      * Display modes 
      * 
      * @var    array
@@ -138,19 +145,7 @@ class XLite_View_ProductsListPage extends XLite_View_Abstract
         }
 
         // Define widget template
-        $displayModes = self::getDisplayModes();
-        $displayMode = $this->attributes['displayMode'];
-        if (
-            isset($this->attributes['widgetArguments']['displayMode'])
-            && isset($this->attributes['widgetArguments']['displayModeChangable'])
-            && !$this->attributes['widgetArguments']['displayModeChangable']
-            && $this->attributes['widgetArguments']['displayMode']
-            && isset($displayModes[$this->attributes['widgetArguments']['displayMode']])
-        ) {
-            $displayMode = $this->attributes['widgetArguments']['displayMode'];
-        }
-
-        $this->template = 'products_list/' . $displayMode . '/body.tpl';
+        $this->template = 'products_list/' . $this->attributes['displayMode'] . '/body.tpl';
     }
 
     /**
@@ -192,7 +187,7 @@ class XLite_View_ProductsListPage extends XLite_View_Abstract
     {
         $gridColumns = $this->gridColumns;
         if (isset($this->attributes['widgetArguments']['gridColumns'])) {
-            $gridColumns = min(5, max(1, intval($this->attributes['widgetArguments']['gridColumns'])));
+            $gridColumns = min(self::GRID_COLUMNS_MAX, max(self::GRID_COLUMNS_MIN, intval($this->attributes['widgetArguments']['gridColumns'])));
         }
 
         return floor(100 / $gridColumns) - 6;
@@ -281,4 +276,26 @@ class XLite_View_ProductsListPage extends XLite_View_Abstract
             && $this->attributes['widgetArguments']['multipleAdd2Cart'];
     }
 
+    /**
+     * Get widget params 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    static public function getWidgetParamsList()
+    {
+        $gridColumns = range(self::GRID_COLUMNS_MIN, self::GRID_COLUMNS_MAX);
+        $gridColumns = array_combine($gridColumns, $gridColumns);
+
+        return array(
+            'displayMode'          => new XLite_Model_WidgetParam_List('Look and feel of a product list', self::getDefaultDisplayMode(), self::getDisplayModes()),
+            'gridColumns'          => new XLite_Model_WidgetParam_List('Number of columns (for Grid mode only)', 3, $gridColumns),
+            'showDescription'      => new XLite_Model_WidgetParam_Checkbox('Show product description (for List mode only)', 1),
+            'showPrice'            => new XLite_Model_WidgetParam_Checkbox('Show product price', 1),
+            'showAdd2Cart'         => new XLite_Model_WidgetParam_Checkbox('Show \'Add to Cart\' button', 1),
+            'multipleAdd2Cart'     => new XLite_Model_WidgetParam_Checkbox('Enable multiple additions at once', 0),
+        );
+    }
 }

@@ -123,7 +123,7 @@ class XLite_View_ProductsList extends XLite_View_Abstract
             $sessionCell = array();
         }
 
-        $modes = $this->getDisplayModes;
+        $modes = $this->getDisplayModes();
 
         // Get default display mode from wudget attrubites
         if (
@@ -603,17 +603,11 @@ class XLite_View_ProductsList extends XLite_View_Abstract
      */
     static public function getWidgetParamsList()
     {
-        $gridColumns = array(1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5);
+        $list = XLite_View_ProductsListPage::getWidgetParamsList();
 
-        return array(
-            'displayMode'          => new XLite_Model_WidgetParam_List('Look and feel of a product list', XLite_View_ProductsListPage::getDefaultDisplayMode(), XLite_View_ProductsListPage::getDisplayModes()),
-            'gridColumns'          => new XLite_Model_WidgetParam_List('Number of columns (for Grid mode only)', 3, $gridColumns),
-            'showDescription'      => new XLite_Model_WidgetParam_Checkbox('Show product description (for List mode only)', 1),
-            'showPrice'            => new XLite_Model_WidgetParam_Checkbox('Show product price', 1),
-            'showAdd2Cart'         => new XLite_Model_WidgetParam_Checkbox('Show \'Add to Cart\' button', 1),
-            'multipleAdd2Cart'     => new XLite_Model_WidgetParam_Checkbox('Enable multiple additions at once', 0),
-            'displayModeChangable' => new XLite_Model_WidgetParam_Checkbox('Allow visitor to switch Look and feel of a product list', 1),
-        );
+        $list['displayModeChangable'] = new XLite_Model_WidgetParam_Checkbox('Allow visitor to switch Look and feel of a product list', 1);
+
+        return $list;
     }
 
     /**
