@@ -236,18 +236,6 @@ class XLite_View_Abstract extends XLite_Core_Handler
     }
 
 	/**
-	 * FIXME - backward compatibility 
-	 * 
-	 * @return XLite_View_Abstract
-	 * @access protected
-	 * @since  3.0.0 EE
-	 */
-	protected function getWidget()
-    {
-        return $this;
-    }
-
-	/**
 	 * FIXME - backward compatibility
 	 * 
 	 * @return XLite_View_Abstract
