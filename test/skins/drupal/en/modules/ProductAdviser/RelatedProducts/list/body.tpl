@@ -11,24 +11,24 @@
 	</td>
 	<td valign=top>
 	<a href="{buildURL(#product#,##,_ARRAY_(#product_id#^RP.product.product_id,#category_id#^RP.product.category.category_id))}"><FONT class="ProductTitle">{RP.product.name:h}</FONT></a>
-	<span IF="config.ProductAdviser.rp_show_descr&RP.product.brief_description">
+	<span IF="getShowDescription()&RP.product.brief_description">
 	<br>
 	{truncate(RP.product,#brief_description#,#300#):h}<br>
 	</span>    
-	<br IF="config.ProductAdviser.rp_show_price|config.ProductAdviser.rp_show_buynow" />
+	<br IF="getShowPrice()|getShowAddToCart()" />
 	<table cellpadding="0" cellspacing="0" border="0">
     <tr>
-    	<td IF="config.ProductAdviser.rp_show_price">
+    	<td IF="getShowPrice()">
     	<FONT class="ProductPriceTitle">Price: </FONT><FONT class="ProductPrice">{price_format(RP.product,#listPrice#):h}</FONT><FONT class="ProductPriceTitle"> {RP.product.priceMessage:h}</FONT>
     	</td>
-    	<td IF="config.ProductAdviser.rp_show_buynow">
+    	<td IF="getShowAddToCart()">
     	&nbsp;&nbsp;
     	</td>
-    	<td IF="config.ProductAdviser.rp_show_buynow">
-		<div IF="!config.ProductAdviser.rp_bulk_shopping">
+    	<td IF="getShowAddToCart()">
+		<div IF="!getBulkShopping()">
 		<widget class="XLite_View_Button" label="Add to Cart" href="javascript: Add2Cart('{RP.product.product_id}')" type="button" />
 		</div>
-		<div IF="config.ProductAdviser.rp_bulk_shopping">
+		<div IF="getBulkShopping()">
     	<table cellpadding="0" cellspacing="0" border="0">
         <tr IF="!RP.product.checkHasOptions()">
         	<td>
@@ -58,7 +58,7 @@
 	<td colspan=2>&nbsp;</td>
 </tr>
 </tbody>
-<tbody IF="config.ProductAdviser.rp_show_buynow&config.ProductAdviser.rp_bulk_shopping">
+<tbody IF="getShowAddToCart()&getBulkShopping()">
 <tr>
 	<td colspan=2>&nbsp;</td>
 </tr>

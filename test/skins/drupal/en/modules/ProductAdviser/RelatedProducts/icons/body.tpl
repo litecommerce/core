@@ -3,29 +3,29 @@
 <widget class="XLite_Module_ProductAdviser_View_Pager" data="{product.RelatedProducts}" name="pager" itemsPerPage="{config.General.products_per_page}" extraParameter="pabPageID">
 
 <table cellpadding="1" cellspacing="0" border="0" width="100%">
-<tbody FOREACH="split(pager.pageData,config.ProductAdviser.rp_columns),row">
+<tbody FOREACH="split(pager.pageData,getNumberOfColumns()),row">
 <tr>
-	<td FOREACH="row,RP" align="center" width="{getPercents(config.ProductAdviser.rp_columns)}%" valign="top">
+	<td FOREACH="row,RP" align="center" width="{getPercents(getNumberOfColumns())}%" valign="top">
         <a href="{buildURL(#product#,##,_ARRAY_(#product_id#^RP.product.product_id,#category_id#^RP.product.category.category_id))}" IF="RP.product&config.General.show_thumbnails&RP.product.hasThumbnail()"><img src="{RP.product.thumbnailURL}" border=0 width=70 alt=""></a>
     </td>
 </tr>    
 <tr>
-	<td FOREACH="row,RP" align="center" width="{getPercents(config.ProductAdviser.rp_columns)}%" valign="top">
+	<td FOREACH="row,RP" align="center" width="{getPercents(getNumberOfColumns())}%" valign="top">
     	<a IF="RP.product" href="{buildURL(#product#,##,_ARRAY_(#product_id#^RP.product.product_id,#category_id#^RP.product.category.category_id))}"><FONT class="ProductTitle">{RP.product.name:h}</FONT></a>
 	</td>
 </tr>        
 <tr>
-	<td FOREACH="row,RP" align="center" width="{getPercents(config.ProductAdviser.rp_columns)}%" valign="top">
-    	<span IF="RP.product&config.ProductAdviser.rp_show_price"><FONT class="ProductPriceTitle">Price: </FONT><FONT class="ProductPrice">{price_format(RP.product,#listPrice#):h}</FONT><FONT class="ProductPriceTitle"> {RP.product.priceMessage:h}</FONT><br></span>
+	<td FOREACH="row,RP" align="center" width="{getPercents(getNumberOfColumns())}%" valign="top">
+    	<span IF="RP.product&getShowPrice()"><FONT class="ProductPriceTitle">Price: </FONT><FONT class="ProductPrice">{price_format(RP.product,#listPrice#):h}</FONT><FONT class="ProductPriceTitle"> {RP.product.priceMessage:h}</FONT><br></span>
 	</td>
 </tr>
 <tr>
-	<td FOREACH="row,RP" align="center" width="{getPercents(config.ProductAdviser.rp_columns)}%" valign="top">
-    	<div IF="RP.product&config.ProductAdviser.rp_show_buynow">
-		<div IF="!config.ProductAdviser.rp_bulk_shopping">
+	<td FOREACH="row,RP" align="center" width="{getPercents(getNumberOfColumns())}%" valign="top">
+    	<div IF="RP.product&getShowAddToCart()">
+		<div IF="!getBulkShopping()">
 		<widget class="XLite_View_Button" label="Add to Cart" href="javascript: Add2Cart('{RP.product.product_id}')" type="button" />
     	</div>
-		<div IF="config.ProductAdviser.rp_bulk_shopping">
+		<div IF="getBulkShopping()">
     	<table cellpadding="0" cellspacing="0" border="0">
         <tr IF="!RP.product.checkHasOptions()">
         	<td>
@@ -46,22 +46,22 @@
     </td>
 </tr>    
 <tr>
-	<td FOREACH="row,RP" align="center" width="{getPercents(config.ProductAdviser.rp_columns)}%" valign="top">
+	<td FOREACH="row,RP" align="center" width="{getPercents(getNumberOfColumns())}%" valign="top">
     	<span IF="RP.product">
         <br><br>
     	</span>
     </td>
 </tr>    
 </tbody>
-<tbody IF="config.ProductAdviser.rp_show_buynow&config.ProductAdviser.rp_bulk_shopping">
+<tbody IF="getShowAddToCart()&getBulkShopping()">
 <tr>
-	<td colspan="{config.ProductAdviser.rp_columns}" height=1 class="TableHead"></td>
+	<td colspan="{getNumberOfColumns()}" height=1 class="TableHead"></td>
 </tr>
 <tr>
 	<td colspan=2>&nbsp;</td>
 </tr>
 <tr IF="showBulkAddForm">
-	<td colspan="{config.ProductAdviser.rp_columns}">
+	<td colspan="{getNumberOfColumns()}">
     	<table cellpadding="0" cellspacing="0" border="0">
         <tr>
 			<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>

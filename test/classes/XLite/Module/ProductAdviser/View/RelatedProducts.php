@@ -73,7 +73,29 @@ class XLite_Module_ProductAdviser_View_RelatedProducts extends XLite_View_Dialog
 	}
 
 	/**
-     * Get widget display mode parameter (menu | dialog)
+	 * Define widget parameters
+	 * 
+	 * @return void
+	 * @access protected
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	protected function defineWidgetParams()
+	{
+        parent::defineWidgetParams();
+
+		$this->widgetParams += array(
+            'displayMode'        => new XLite_Model_WidgetParam_List('Display mode', $this->getDisplayMode(), $this->displayModes),
+            'numberOfColumns'    => new XLite_Model_WidgetParam_List('Number of columns (for Icons mode only)', 2, range(1,5)),
+            'showDescription'    => new XLite_Model_WidgetParam_Checkbox('Show product description (for List mode only)', 1),
+            'showPrice'          => new XLite_Model_WidgetParam_Checkbox('Show product price', 1),
+            'showAddToCart'      => new XLite_Model_WidgetParam_Checkbox('Show \'Add to Cart\' button', 1),
+            'enableBulkShopping' => new XLite_Model_WidgetParam_Checkbox('Enable multiple additions at once', 0),
+		);
+	}
+
+	/**
+     * Get widget display mode parameter (icons | list | table)
      *
      * @return string
      * @access protected
@@ -82,7 +104,101 @@ class XLite_Module_ProductAdviser_View_RelatedProducts extends XLite_View_Dialog
      */
     protected function getDisplayMode()
     {
-		return $this->config->ProductAdviser->rp_template;
+        return ($this->attributes[self::IS_EXPORTED] ? $this->attributes['displayMode'] : $this->config->ProductAdviser->rp_template);
+
+    }
+
+    /**
+     * Get 'number of columns' parameter
+     * 
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getNumberOfColumns()
+    {
+        return ($this->attributes[self::IS_EXPORTED] ? $this->attributes['numberOfColumns'] + 1 : $this->config->ProductAdviser->rp_columns);
+    }
+
+    /**
+     * Get 'show description' parameter
+     * 
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getShowDescription()
+    {
+        if ($this->attributes[self::IS_EXPORTED]) {
+            $return = (isset($this->attributes['showDescription']) && true == $this->attributes['showDescription']);
+
+        } else {
+            $return = $this->config->ProductAdviser->rp_show_descr;
+        }
+
+        return $return;
+    }
+
+    /**
+     *  Get 'show price' parameter
+     * 
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getShowPrice()
+    {
+        if ($this->attributes[self::IS_EXPORTED]) {
+            $return = (isset($this->attributes['showPrice']) && true == $this->attributes['showPrice']);
+
+        } else {
+            $return = $this->config->ProductAdviser->rp_show_price;
+        }
+
+        return $return;
+    }
+
+    /**
+     * Get 'show add to cart button' parameter 
+     * 
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getShowAddToCart()
+    {
+        if ($this->attributes[self::IS_EXPORTED]) {
+            $return = (isset($this->attributes['showAddToCart']) && true == $this->attributes['showAddToCart']);
+
+        } else {
+            $return = $this->config->ProductAdviser->rp_show_buynow;
+        }
+
+        return $return;
+    }
+
+    /**
+     * Get 'Enable multiple additions at once' parameter 
+     * 
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getBulkShopping()
+    {
+        if ($this->attributes[self::IS_EXPORTED]) {
+            $return = (isset($this->attributes['enableBulkShopping']) && true == $this->attributes['enableBulkShopping']);
+
+        } else {
+            $return = $this->config->ProductAdviser->rp_bulk_shopping;
+        }
+
+        return $return;
     }
 
     /**

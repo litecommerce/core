@@ -94,7 +94,7 @@ class XLite_Module_ProductAdviser_View_ProductAlsoBuy extends XLite_View_Dialog
 	}
 
 	/**
-     * Get widget display mode parameter (menu | dialog)
+     * Get widget display mode parameter (icons | list | table)
      *
      * @return string
      * @access protected
@@ -142,7 +142,7 @@ class XLite_Module_ProductAdviser_View_ProductAlsoBuy extends XLite_View_Dialog
     /**
      *  Get 'show price' parameter
      * 
-     * @return void
+     * @return bool
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -162,7 +162,7 @@ class XLite_Module_ProductAdviser_View_ProductAlsoBuy extends XLite_View_Dialog
     /**
      * Get 'show add to cart button' parameter 
      * 
-     * @return void
+     * @return bool
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -182,7 +182,7 @@ class XLite_Module_ProductAdviser_View_ProductAlsoBuy extends XLite_View_Dialog
     /**
      * Check if recommended products are available
      * 
-     * @return void
+     * @return bool
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
