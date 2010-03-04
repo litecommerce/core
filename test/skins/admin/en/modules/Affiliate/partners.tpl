@@ -79,7 +79,7 @@
 </form>
 
 <form IF="search&partners" action="admin.php" method=POST>
-<input FOREACH="dialog.allparams,_name,_val" type="hidden" name="{_name}" value="{_val}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val}"/>
 <input type=hidden name=action value=update_partners>
 
 <tr class=TableHead>

@@ -1,7 +1,7 @@
 <font class="AdminHead">Free download privileges</font>
 <table border=0 cellspacing="1" celpadding="3">
 <form action="admin.php" name="free_for_memberships" method="POST"> 
-<input FOREACH="dialog.allparams,_name,_val" type="hidden" name="{_name}" value="{_val}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val}"/>
 <input type="hidden" name="action" value="update_free_charge">
 <tbody IF="config.Memberships.memberships">
 <tr>
@@ -39,7 +39,7 @@
 <td>
 
 <form action="admin.php" name="form_egood_{egood.file_id}" method="POST" enctype="multipart/form-data"> 
-<input FOREACH="dialog.allparams,_name,_val" type="hidden" name="{_name}" value="{_val}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val}"/>
 <input type="hidden" name="action" value="update_egood">
 <input type="hidden" name="file_id" value="{egood.file_id}">
 <table border=0 cellspacing="1" celpadding="3">
@@ -188,7 +188,7 @@
 </p>
 
 <form action="admin.php" name="add_egood_form" enctype="multipart/form-data" method="POST">
-<input FOREACH="dialog.allparams,_name,_val" type="hidden" name="{_name}" value="{_val}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val}"/>
 <input type="hidden" name="action" value="add_egood">
 <table border="0" cellspacing="1" cellpadding="3">
 <tr>

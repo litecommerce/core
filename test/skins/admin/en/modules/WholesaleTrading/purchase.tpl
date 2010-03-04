@@ -1,5 +1,5 @@
 <form action="admin.php" method="POST">
-<input FOREACH="dialog.allparams,name,val" type="hidden" name="{name}" value="{val}"/>
+<input FOREACH="allparams,name,val" type="hidden" name="{name}" value="{val}"/>
 <input type="hidden" name="target" value="product">
 <input type="hidden" name="action" value="add_purchase_limit">
 <table border="0">

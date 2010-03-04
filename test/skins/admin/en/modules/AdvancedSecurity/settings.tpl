@@ -37,7 +37,7 @@
 <table border=0 cellpadding=3 cellspacing=3>
 <tr> <td colspan=2 class=AdminHead>GnuPG keyring settings</td> </tr>
 <tr> <td colspan=2>&nbsp;</td> </tr>
-<tr> <td colspan=2 align=justify>You should set up GnuPG settings before uploading GnuPG keypair. After you successfully upload public/secret keypair, you can encrypt all existing order details already stored in your database with <a href="#order_management"><u>Secure order management</u></a> dialog.</td> </tr>
+<tr> <td colspan=2 align=justify>You should set up GnuPG settings before uploading GnuPG keypair. After you successfully upload public/secret keypair, you can encrypt all existing order details already stored in your database with <a href="#order_management"><u>Secure order management</u></a> </td> </tr>
 <tr> <td colspan=2>&nbsp;</td> </tr>
 
 {if:gpg.publicKey&gpg.secretKey}

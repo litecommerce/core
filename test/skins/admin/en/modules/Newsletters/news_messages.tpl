@@ -40,7 +40,7 @@ See also: <br>
 </tr>
 
 <form name="messages_form" action="admin.php" method=POST>
-<input FOREACH="dialog.allparams,_param,_val" type="hidden" name="{_param}" value="{_val:r}"/>
+<input FOREACH="allparams,_param,_val" type="hidden" name="{_param}" value="{_val:r}"/>
 <input type=hidden name=action value=messages>
 
 <tr FOREACH="pager.pageData,msgid,msg" valign=top>
@@ -66,7 +66,7 @@ See also: <br>
 <a name="send_message">&nbsp;</a>
 
 <form action="admin.php#send_message" method=POST>
-<input FOREACH="dialog.allparams,_param,_val" type="hidden" name="{_param}" value="{_val:r}"/>
+<input FOREACH="allparams,_param,_val" type="hidden" name="{_param}" value="{_val:r}"/>
 <input type=hidden name=action value=send_message>
 
 <table border=0 cellpadding=3 cellspacing=0>

@@ -1,11 +1,11 @@
 Use this page to configure your store to communicate with your Payment Processing Gateway. Complete the required fields below and press the "Update" button.<hr>
 
 <p>
-<span class="SuccessMessage" IF="dialog.updated">Netbilling parameters were successfully changed.<br>Please make sure that the Netbilling payment method is enabled on the <a href="admin.php?target=payment_methods"><u>Payment methods</u></a> page before you can start using it.</span>
+<span class="SuccessMessage" IF="updated">Netbilling parameters were successfully changed.<br>Please make sure that the Netbilling payment method is enabled on the <a href="admin.php?target=payment_methods"><u>Payment methods</u></a> page before you can start using it.</span>
 <form action="admin.php" method="POST">
 <input type="hidden" name="target" value="payment_method">
 <input type="hidden" name="action" value="update">
-<input type="hidden" name="payment_method" value="{dialog.pm.get(#payment_method#)}">
+<input type="hidden" name="payment_method" value="{pm.get(#payment_method#)}">
 
 <table border=0 cellspacing=2 cellpadding=1 width="100%">
 	<tr>
@@ -16,20 +16,20 @@ Use this page to configure your store to communicate with your Payment Processin
 <table border=0 cellspacing=5 cellpadding=2>
 <tr>
 	<td>Account:</td>
-	<td><input type="text" name="params[account]" size="24" value="{dialog.pm.params.account:r}"></td>
+	<td><input type="text" name="params[account]" size="24" value="{pm.params.account:r}"></td>
 </tr>
 
 <tr>
 	<td>Site tag:</td>
-	<td><input type=text name="params[site_tag]" size=24 value="{dialog.pm.params.site_tag:r}"></td>
+	<td><input type=text name="params[site_tag]" size=24 value="{pm.params.site_tag:r}"></td>
 </tr>
 
 <tr>
 	<td>Transaction type:</td>
 	<td>
 		<select name="params[tran_type]">
-			<option value="A" selected="dialog.pm.params.tran_type=#A#">Auth</option>
-			<option value="S" selected="dialog.pm.params.tran_type=#S#">Sale</option>
+			<option value="A" selected="pm.params.tran_type=#A#">Auth</option>
+			<option value="S" selected="pm.params.tran_type=#S#">Sale</option>
 		</select>
 	</td>
 </tr>

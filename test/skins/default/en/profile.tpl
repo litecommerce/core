@@ -351,7 +351,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
     <td >
         By clicking "SUBMIT" you agree with our <a href="cart.php?target=help&amp;mode=terms_conditions" style="TEXT-DECORATION: underline" target="_blank">Terms &amp; Conditions.</a><br>
         <br>
-        <input type="hidden" foreach="dialog.allparams,param,v" name="{param}" value="{v}"/>
+        <input type="hidden" foreach="allparams,param,v" name="{param}" value="{v}"/>
         <input type="hidden" name="action" value="{mode}">
         <widget class="XLite_View_Submit" href="javascript: document.profile_form.submit()" font="FormButton">
     </td>

@@ -4,7 +4,7 @@
 <font class="AdminHead">PIN codes datasource</font>
 <br><br>
 <form name="pin_dsn" action="admin.php" method="POST">
-<input FOREACH="dialog.allparams,_name,_val" type="hidden" name="{_name}" value="{_val}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val}"/>
 <input type="hidden" name="target" value="product">
 <input type="hidden" name="action" value="update_pin_src">
 <table border="0" cellpadding="1" cellspacing="3">
@@ -41,7 +41,7 @@
 <br>
 <table border="0" cellpadding="1" cellspacing="3">
 <form name="add_new_pin_code" action="admin.php" method="POST">
-<input FOREACH="dialog.allparams,_name,_val" type="hidden" name="{_name}" value="{_val}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val}"/>
 <input type="hidden" name="target" value="product">
 <input type="hidden" name="action" value="add_pincode">
 	<td colspan=2>
@@ -74,7 +74,7 @@
 <font class="AdminHead">Available PIN codes</font><br><br>
 <table border="0">
 <form action="admin.php" method="get">
-<input FOREACH="dialog.allparams,_name,_val" type="hidden" name="{_name}" value="{_val}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val}"/>
 <tr>
 	<td>Status:</td>
 	<td><select name="pin_enabled">
@@ -89,7 +89,7 @@
 <widget class="XLite_View_Pager" data="{pinCodes}" name="pager" itemsPerPage="{config.Egoods.pincodes_per_page}">
 <table border="0" cellpadding="1" cellspacing="3">
 <form name="edit_pins" action="admin.php" method="POST">
-<input FOREACH="dialog.allparams,_name,_val" type="hidden" name="{_name}" value="{_val}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val}"/>
 <input type="hidden" name="target" value="product">
 <input type="hidden" name="action" value="delete_pin_codes">
 <tr class="TableHead">
@@ -172,7 +172,7 @@
 </table>
 
 <form name="pin_gen_cmd_line" action="admin.php" method="POST">
-<input FOREACH="dialog.allparams,_name,_val" type="hidden" name="{_name}" value="{_val}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val}"/>
 <input type="hidden" name="target" value="product">
 <input type="hidden" name="action" value="update_pin_cmd_line">
 <br><br>

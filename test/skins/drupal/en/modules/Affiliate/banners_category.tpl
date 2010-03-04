@@ -1,6 +1,6 @@
 <br>
 <form action="cart.php" method=GET>
-<input type="hidden" foreach="dialog.allparams,param,v" name="{param}" value="{v}"/>
+<input type="hidden" foreach="allparams,param,v" name="{param}" value="{v}"/>
 <font class=TextTitle>Select category:</font>
 <br><br>
 <widget class="XLite_View_CategorySelect" template="modules/Affiliate/select_category.tpl" fieldName="category_id">

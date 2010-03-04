@@ -1,6 +1,6 @@
 <table cellpadding=0 cellspacing=0 width=100%>
 <form action="admin.php" method="POST" name="inventory_tracking_select">
-<input FOREACH="dialog.allparams,name,val" type="hidden" name="{name}" value="{val}"/>
+<input FOREACH="allparams,name,val" type="hidden" name="{name}" value="{val}"/>
 <input type="hidden" name="action" value="tracking_selection"/>
 <tr>
     <td colspan=2>

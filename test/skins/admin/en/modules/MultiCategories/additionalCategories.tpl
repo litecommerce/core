@@ -8,12 +8,12 @@
 	</table>
 	</td>
 	<td>
-        <select IF="dialog.target=#add_product#" name="product_categories[]" multiple size="10">
-    		<option FOREACH="categories,v" value="{v.category_id:r}" selected="{dialog.isSelectedCategory(v.category_id)}">{v.stringPath:h}</option>
+        <select IF="target=#add_product#" name="product_categories[]" multiple size="10">
+    		<option FOREACH="categories,v" value="{v.category_id:r}" selected="{isSelectedCategory(v.category_id)}">{v.stringPath:h}</option>
     		<option IF="isEmpty(categories)" value="0" selected>-- No categories --</option>
         </select>
         
-        <select IF="dialog.target=#product#" name="categories[]" multiple size="10">
+        <select IF="target=#product#" name="categories[]" multiple size="10">
         	{if:isEmpty(categories)}
     		<option value="0" selected>-- No categories --</option>
     		{else:}
@@ -30,7 +30,7 @@
     		{end:}
 		</select>
 
-		<span IF="dialog.target=#add_product#"><widget class="XLite_Module_MultiCategories_Validator_MultiCategoriesValidator" field="product_categories"></span>
-        <span IF="dialog.target=#product#"><widget class="XLite_Module_MultiCategories_Validator_MultiCategoriesValidator" field="categories"></span>
+		<span IF="target=#add_product#"><widget class="XLite_Module_MultiCategories_Validator_MultiCategoriesValidator" field="product_categories"></span>
+        <span IF="target=#product#"><widget class="XLite_Module_MultiCategories_Validator_MultiCategoriesValidator" field="categories"></span>
 	</td>
 </tr>

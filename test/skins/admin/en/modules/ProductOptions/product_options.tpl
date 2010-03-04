@@ -1,6 +1,6 @@
 <span IF="product.hasOptions()&xlite.mm.activeModules.WholesaleTrading">
 <form action="admin.php" method="POST" name="expansion_form">
-<input FOREACH="dialog.allparams,name,val" type="hidden" name="{name}" value="{val}"/>
+<input FOREACH="allparams,name,val" type="hidden" name="{name}" value="{val}"/>
 <input type="hidden" name="action" value="update_limit">
 <table>
 	<tr>
@@ -23,7 +23,7 @@
 <tr> <td colspan=4>&nbsp;</td> </tr>
 <tbody FOREACH="product.productOptions,idx,option">
 <form action="admin.php" method="POST" name="product_option_{option.option_id}">
-<input FOREACH="dialog.allparams,name,val" type="hidden" name="{name}" value="{val}"/>
+<input FOREACH="allparams,name,val" type="hidden" name="{name}" value="{val}"/>
 <input type="hidden" name="action" value="update_product_option">
 <input type="hidden" name="option_id" value="{option.option_id}">
 <tr>
@@ -132,7 +132,7 @@
 <!-- add product option form -->
 <tbody>
 <form action="admin.php" method="POST" name=add_option_form>
-<input FOREACH="dialog.allparams,name,val" type="hidden" name="{name}" value="{val}"/>
+<input FOREACH="allparams,name,val" type="hidden" name="{name}" value="{val}"/>
 <input type="hidden" name="action" value="add_product_option">
 <input type=hidden name="opttype" value="">
 
@@ -162,7 +162,7 @@
 <tr> <td colspan=4 class=AdminHead>Excluded option combinations</td> </tr>
 <tbody FOREACH="product.optionExceptions,k,exception">
 <form action="admin.php" method="get" name="change_exception_{exception.option_id}">
-<input FOREACH="dialog.allparams,name,val" type="hidden" name="{name}" value="{val}"/>
+<input FOREACH="allparams,name,val" type="hidden" name="{name}" value="{val}"/>
 <!--input type="hidden" name="target" value="product_exception"-->
 <input type="hidden" name="action" value="update_option_exception">
 <!--input type="hidden" name="product_id" value="{product.product_id}"-->
@@ -189,7 +189,7 @@
 <tbody>
 <!-- add exception form -->
 <form action="admin.php" method="POST" name="exception_form">
-<input FOREACH="dialog.allparams,name,val" type="hidden" name="{name}" value="{val}"/>
+<input FOREACH="allparams,name,val" type="hidden" name="{name}" value="{val}"/>
 <input type="hidden" name="action" value="add_option_exception">
 <input type="hidden" name="exception" id="option_exlude">
 
@@ -231,7 +231,7 @@
 <tbody>
 
 <form action="admin.php" method="POST" name="option_validator_form">
-<input FOREACH="dialog.allparams,name,val" type="hidden" name="{name}" value="{val}"/>
+<input FOREACH="allparams,name,val" type="hidden" name="{name}" value="{val}"/>
 <input type="hidden" name="action" value="product_option_validator">
 
 <tr> <td colspan=4><font class=AdminTitle><br>JavaScript enhancements</font></td> </tr>

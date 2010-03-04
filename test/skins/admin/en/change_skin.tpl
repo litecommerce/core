@@ -78,7 +78,7 @@
 </form>
 
 <SCRIPT language="JavaScript">
-var currentSkin = "{dialog.currentSkinName}";
+var currentSkin = "{currentSkinName}";
 var previewImages = new Array();
 
 {foreach:skins,skin_name,skin_info}

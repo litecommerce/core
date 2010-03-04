@@ -25,19 +25,19 @@ function setVisible(element_id)
 <tr>
     <td align=right>LibCurl:</td>
 	<td>&nbsp;&nbsp;&nbsp;</td>
-    <td>{if:check_https(#libcurl#)=#1#}<font class="ErrorMessage">Not detected</font>{else:}<font class="SuccessMessage">Detected</font> ({dialog.libcurl:h}) {end:}</td>
+    <td>{if:check_https(#libcurl#)=#1#}<font class="ErrorMessage">Not detected</font>{else:}<font class="SuccessMessage">Detected</font> ({libcurl:h}) {end:}</td>
 	<td>&nbsp;&nbsp;&nbsp;</td>
 </tr>
 <tr>
     <td align=right>CURL:</td>
 	<td>&nbsp;&nbsp;&nbsp;</td>
-    <td>{if:check_https(#curl#)=#1#}<font class="ErrorMessage">Not detected</font>{else:}<font class="SuccessMessage">Detected</font> ({dialog.curl:h}) {end:}</td>
+    <td>{if:check_https(#curl#)=#1#}<font class="ErrorMessage">Not detected</font>{else:}<font class="SuccessMessage">Detected</font> ({curl:h}) {end:}</td>
 	<td>&nbsp;&nbsp;&nbsp;</td>
 </tr>
 <tr>
     <td align=right>OpenSSL:</td>
 	<td>&nbsp;&nbsp;&nbsp;</td>
-    <td>{if:check_https(#openssl#)=#1#}<font class="ErrorMessage">Not detected</font>{else:}<font class="SuccessMessage">Detected</font> ({dialog.openssl:h}) {end:}</td>
+    <td>{if:check_https(#openssl#)=#1#}<font class="ErrorMessage">Not detected</font>{else:}<font class="SuccessMessage">Detected</font> ({openssl:h}) {end:}</td>
 	<td>&nbsp;&nbsp;&nbsp;</td>
 </tr>
 <tr>
@@ -57,61 +57,61 @@ function setVisible(element_id)
 <tr>
     <td align=right>LiteCommerce version:</td>
     <td>&nbsp;&nbsp;&nbsp;</td>
-    <td>{dialog.lite_version:h}{if:dialog.answeredVersion}&nbsp;&nbsp;(verified version: {if:dialog.answeredVersionError}<font color=red><b>unknown</b></font>{else:}{dialog.answeredVersion}{end:}){end:}</td>
+    <td>{lite_version:h}{if:answeredVersion}&nbsp;&nbsp;(verified version: {if:answeredVersionError}<font color=red><b>unknown</b></font>{else:}{answeredVersion}{end:}){end:}</td>
 	<td>&nbsp;&nbsp;&nbsp;</td>
 </tr>
-<tr IF="dialog.answeredVersionError">
+<tr IF="answeredVersionError">
     <td align=right>Loopback test:</td>
     <td>&nbsp;&nbsp;&nbsp;</td>
-    <td><textarea name="answered_version" cols=80 rows=5 style="FONT-SIZE: 10px;" readonly>{dialog.answeredVersion}</textarea></td>
+    <td><textarea name="answered_version" cols=80 rows=5 style="FONT-SIZE: 10px;" readonly>{answeredVersion}</textarea></td>
 	<td>&nbsp;&nbsp;&nbsp;</td>
 </tr>
 <tr>
     <td align=right>Installation directory:</td>
 	<td>&nbsp;&nbsp;&nbsp;</td>
-    <td>{dialog.root_folder:h}</td>
+    <td>{root_folder:h}</td>
 	<td>&nbsp;&nbsp;&nbsp;</td>
 </tr>
 <tr>
     <td align=right>PHP:</td>
     <td>&nbsp;&nbsp;&nbsp;</td>
-    <td>{dialog.phpversion:h}<a href='{shopURL(#admin.php#)}?target=settings&action=phpinfo' target='blank_' class="NavigationPath"> <b>details</b></a> &gt;&gt;</td>
+    <td>{phpversion:h}<a href='{shopURL(#admin.php#)}?target=settings&action=phpinfo' target='blank_' class="NavigationPath"> <b>details</b></a> &gt;&gt;</td>
 	<td>&nbsp;&nbsp;&nbsp;</td>
 </tr>
 <tr>
     <td align=right>MySQL server:</td>
 	<td>&nbsp;&nbsp;&nbsp;</td>
-    <td>{dialog.mysql_server:h}</td>
+    <td>{mysql_server:h}</td>
 	<td>&nbsp;&nbsp;&nbsp;</td>
 </tr>
 <tr>
     <td align=right>MySQL client:</td>
 	<td>&nbsp;&nbsp;&nbsp;</td>
-    <td>{dialog.mysql_client:h}</td>
+    <td>{mysql_client:h}</td>
 	<td>&nbsp;&nbsp;&nbsp;</td>
 </tr>
 <tr>
     <td align=right>Web server:</td>
 	<td>&nbsp;&nbsp;&nbsp;</td>
-    <td>{dialog.web_server:h}</td>
+    <td>{web_server:h}</td>
 	<td>&nbsp;&nbsp;&nbsp;</td>
 </tr>
 <tr>
     <td align=right>Operating system:</td>
 	<td>&nbsp;&nbsp;&nbsp;</td>
-    <td>{dialog.os_type:h}</td>
+    <td>{os_type:h}</td>
 	<td>&nbsp;&nbsp;&nbsp;</td>
 </tr>
 <tr>
     <td align=right>XML parser:</td>
 	<td>&nbsp;&nbsp;&nbsp;</td>
-    <td>{dialog.xml_parser:h}</td>
+    <td>{xml_parser:h}</td>
 	<td>&nbsp;&nbsp;&nbsp;</td>
 </tr>
 <tr>
     <td align=right>GDLib:</td>
 	<td>&nbsp;&nbsp;&nbsp;</td>
-    <td>{if:dialog.gdlib}{dialog.gdlib}{else:}<font class="ErrorMessage">Not detected</font><br><b>Warning:</b> PHP 'gd' extension is not installed. Captchas in customer zone will not work{end:}</td>
+    <td>{if:gdlib}{gdlib}{else:}<font class="ErrorMessage">Not detected</font><br><b>Warning:</b> PHP 'gd' extension is not installed. Captchas in customer zone will not work{end:}</td>
 	<td>&nbsp;&nbsp;&nbsp;</td>
 </tr>
 
@@ -126,7 +126,7 @@ function setVisible(element_id)
 	<tr class="TableHead">
 	<td colspan="4" height=2></td>
 </tr>
-{foreach:dialog.check_dirs,k,v}
+{foreach:check_dirs,k,v}
 <tr class="{getRowClass(k,#DialogBox#,#TableRow#)}">
 	<td align=left>
         {v.dir}
@@ -150,7 +150,7 @@ function setVisible(element_id)
     </td>
 </tr>
 {end:}
-{foreach:dialog.check_files,k,v}
+{foreach:check_files,k,v}
 <tr class="{getRowClass(k,#DialogBox#,#TableRow#)}">
     <td align=left>
         {v.file}
@@ -178,9 +178,9 @@ function setVisible(element_id)
     <td colspan="4" height=2></td>
 </tr>
 <form action="admin.php" name="update_htaccess_form">
-<input FOREACH="dialog.allparams,param,val" type="hidden" name="{param}" value="{val:r}" />
+<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}" />
 <input type="hidden" name="action" value="update_htaccess" />
-<tr FOREACH="dialog.checkFiles,k,v" class="{getRowClass(k,#DialogBox#,#TableRow#)}">
+<tr FOREACH="checkFiles,k,v" class="{getRowClass(k,#DialogBox#,#TableRow#)}">
     <td align=left><input type="checkbox" name="ind[{v.id}]"{if:v.status=#ok#}disabled="1" {end:} />&nbsp;{v.filename}</td>
     <td>&nbsp;&nbsp;&nbsp;</td>
     <td align=left>

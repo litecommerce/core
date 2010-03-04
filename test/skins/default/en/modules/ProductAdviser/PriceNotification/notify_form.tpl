@@ -14,8 +14,8 @@ function PriceNotifyMe(product_id,price)
 <form action="{shopURL(#cart.php#)}" method="POST" name="product_price_notify_form">
 <input type="hidden" name="target" value="notify_me">
 <input type="hidden" name="action" value="notify_price">
-<input type="hidden" name="mode" value="{dialog.target}">
-<input type="hidden" name="url" value="{dialog.url}">
+<input type="hidden" name="mode" value="{target}">
+<input type="hidden" name="url" value="{url}">
 <input type="hidden" name="product_id" value="{product.product_id}">
 <input type="hidden" name="category_id" value="{category_id}">
 <input type="hidden" name="product_price" value="{product.price}">

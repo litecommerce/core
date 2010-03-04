@@ -397,7 +397,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 <tr valign="middle">
     <td width="160">&nbsp;</td>
     <td >
-        <input type="hidden" foreach="dialog.allparams,param,v" name="{param}" value="{v}"/>
+        <input type="hidden" foreach="allparams,param,v" name="{param}" value="{v}"/>
         <input type="hidden" name="action" value="{mode}">
         <input IF="mode=#register#" type=submit name=modify value="Add profile" />
         <input IF="mode=#modify#" type=button name=modify value="Update profile" onClick="javascript: document.profile_form.submit()"/>

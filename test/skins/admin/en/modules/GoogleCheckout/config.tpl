@@ -154,8 +154,8 @@ Visit <a href="http://code.google.com/apis/checkout/"><u>this page</u></a> to le
     <td>&nbsp;</td>
 	<td>
 		<select name=params[testmode] onChange="HandleTestLiveMode(this.value)">
-			<option value="Y" selected="{IsSelected(dialog.pm.params.testmode,#Y#)}">test</option>
-			<option value="N" selected="{IsSelected(dialog.pm.params.testmode,#N#)}">live</option>
+			<option value="Y" selected="{IsSelected(pm.params.testmode,#Y#)}">test</option>
+			<option value="N" selected="{IsSelected(pm.params.testmode,#N#)}">live</option>
 		</select>
 		<span id="test_mode_status" style="display:none;">
 		<br><input type="checkbox" name="params[secure_testmode]" checked="pm.params.secure_testmode" onClick="this.blur()"> Use non-secure HTTP protocol.
@@ -164,7 +164,7 @@ Visit <a href="http://code.google.com/apis/checkout/"><u>this page</u></a> to le
 		<br><b>Note:</b> Please make sure LIVE mode is set up in your merchant account settings.
 		</span>
         <script language="Javascript">
-        HandleTestLiveMode('{dialog.pm.params.testmode}');
+        HandleTestLiveMode('{pm.params.testmode}');
         </script>
 	</td>
 </tr>
@@ -173,8 +173,8 @@ Visit <a href="http://code.google.com/apis/checkout/"><u>this page</u></a> to le
     <td>&nbsp;</td>
 	<td>
 		<select name=params[currency]>
-			<option value="USD" selected="{IsSelected(dialog.pm.params.currency,#USD#)}">USD</option>
-			<option value="GBP" selected="{IsSelected(dialog.pm.params.currency,#GBP#)}">GBP</option>
+			<option value="USD" selected="{IsSelected(pm.params.currency,#USD#)}">USD</option>
+			<option value="GBP" selected="{IsSelected(pm.params.currency,#GBP#)}">GBP</option>
 		</select>
 	</td>
 </tr>
@@ -289,8 +289,8 @@ Visit <a href="http://code.google.com/apis/checkout/"><u>this page</u></a> to le
     <td>&nbsp;</td>
 	<td>
 		<select name=params[disable_customer_notif]>
-			<option value="1" selected="{dialog.checkDisableCustomerNotif(dialog.pm.params.disable_customer_notif)}">Google Checkout only</option>
-			<option value="0" selected="{!dialog.checkDisableCustomerNotif(dialog.pm.params.disable_customer_notif)}">Google Checkout and LC store</option>
+			<option value="1" selected="{checkDisableCustomerNotif(pm.params.disable_customer_notif)}">Google Checkout only</option>
+			<option value="0" selected="{!checkDisableCustomerNotif(pm.params.disable_customer_notif)}">Google Checkout and LC store</option>
 		</select>
 	</td>
 </tr>

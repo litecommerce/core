@@ -20,7 +20,7 @@ function selectProduct(p_id)
 </script>
 
 <form name="bulk_shopping_form" action="{shopUrl(#cart.php#)}" method="POST">
-<input FOREACH="dialog.allparams,_name,_val" type="hidden" name="{_name}" value="{_val}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val}"/>
 <input type="hidden" name="action" value="bulk">
 
 <!-- error messages -->
@@ -48,7 +48,7 @@ function selectProduct(p_id)
 	<td><b>Qty.</b></td>
 	<td><b>Product</b></td>
 	<td><b>Price</b></td>
-	<td IF="{dialog.calculate}" nowrap><b>Sum. Price</b></td>
+	<td IF="{calculate}" nowrap><b>Sum. Price</b></td>
 </tr>
 
 <tbody FOREACH="category.products,p_key,product">
@@ -56,7 +56,7 @@ function selectProduct(p_id)
 <!-- product has options -->
 <tr IF="product.hasOptions()" bgcolor="#ffffff">
 	<td>&nbsp;</td>
-	<td colspan="{selectString(#3#,#2#,dialog.calculate)}">
+	<td colspan="{selectString(#3#,#2#,calculate)}">
        <span IF="isProductError(product.product_id,key)"><FONT color="red" size="2"><b>&gt;&gt;</b></FONT></span><a href="cart.php?target=product&amp;product_id={product.product_id}&amp;category_id={category_id}"><FONT class="ProductTitle"><u>{product.name:h}</u></FONT></a><span IF="isProductError(product.product_id,key)"><FONT color="red" size="2"><b>&lt;&lt;</b></FONT></span>
 	</td>
 </tr>
@@ -79,7 +79,7 @@ function selectProduct(p_id)
 		<span IF="!wholesale_prices(product.product_id,key)">{price_format(product.getFullPrice(quantity(product.product_id,key),key,0)):h}&nbsp;</span>
 		<span IF="wholesale_prices(product.product_id,key)">{price_format(wholesale_prices(product.product_id,key)):h}&nbsp;</span>
 	</td>
-	<td IF="dialog.calculate=#true#" nowrap align="right">
+	<td IF="calculate=#true#" nowrap align="right">
 		{price_format(total_price(product.product_id,key)):h}
 	</td>
 </tr>
@@ -104,13 +104,13 @@ function selectProduct(p_id)
 		<span IF="!wholesale_prices(product.product_id)">{price_format(product.listPrice):h}</span>
 		<span IF="wholesale_prices(product.product_id)">{price_format(wholesale_prices(product.product_id)):h}</span>
 	</td>
-	<td IF="dialog.calculate=#true#" nowrap align="right">{price_format(total_price(product.product_id)):r}</td>
+	<td IF="calculate=#true#" nowrap align="right">{price_format(total_price(product.product_id)):r}</td>
 </tr>
 <!-- end line -->
 </tbody>
 
 <!-- subtotal -->
-<tbody IF="dialog.calculate=#true#">
+<tbody IF="calculate=#true#">
 <tr bgcolor="#ffffff">
 	<td colspan="4" align="right"><font class="ProductPriceTitle">Subtotal:</font>&nbsp;<font class="ProductPrice">{price_format(subtotal):r}</font></td>
 </tr>

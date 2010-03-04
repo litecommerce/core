@@ -293,7 +293,7 @@ function showStar(name)
 <script language="Javascript" type="text/javascript">
 	showSoloOrSwitch();	
 </script>
-<widget module="CardinalCommerce" template="modules/CardinalCommerce/credit_card.tpl" visible="{dialog.SupportedByCardinalCommerce}">
+<widget module="CardinalCommerce" template="modules/CardinalCommerce/credit_card.tpl" visible="{SupportedByCardinalCommerce}">
 </table>
 
 <p>

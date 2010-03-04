@@ -1,5 +1,5 @@
 <form name="under_order_form" action="admin.php" method="POST">
-<input FOREACH="dialog.allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
 <input type="hidden" name="action" value="undo_changes">
 <table width="90%" border="0" cellpadding="0" cellspacing="0" align="center">
 	<tr valign="top">
@@ -203,7 +203,7 @@
         <td><hr style="background-color: #516176; height: 2px; border: 0"></td>
     </tr>
 </table>
-<table width="90%" border="0" cellpadding="3" cellspacing="0" align="center" IF="xlite.WholesaleTradingEnabled&dialog.isShowWholesalerFields()">
+<table width="90%" border="0" cellpadding="3" cellspacing="0" align="center" IF="xlite.WholesaleTradingEnabled&isShowWholesalerFields()">
     <tr>
         <td colspan="2"><b>Wholesaler details</b></td>
     </tr>

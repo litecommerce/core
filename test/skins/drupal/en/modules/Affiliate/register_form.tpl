@@ -5,7 +5,7 @@ The form below allows you to create a partner profile. Do not forget that this i
 <p IF="!valid" class=ErrorMessage>&gt;&gt;&nbsp;There are errors in the form. Please fill all required fields!&nbsp;&lt;&lt;</p>
 
 <form action="cart.php" method=POST name="registration_form">
-<input type="hidden" foreach="dialog.allparams,param,v" name="{param}" value="{v}"/>
+<input type="hidden" foreach="allparams,param,v" name="{param}" value="{v}"/>
 <input type="hidden" name="action" value="{mode}">
 <input type="hidden" name="parent" value="{parent}">
 

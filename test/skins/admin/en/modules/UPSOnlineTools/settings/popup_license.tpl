@@ -8,7 +8,7 @@
     <meta name="ROBOTS" content="NOFOLLOW">
     <LINK href="skins/admin/en/style.css"  rel=stylesheet type=text/css>
 </HEAD>
-<BODY leftmargin="0" topmargin="0" rightmargin="0" bottommargin="0" marginwidth="0" marginheight="0" {if:dialog.mode=#print#}OnLoad="window.print();"{end:}>
+<BODY leftmargin="0" topmargin="0" rightmargin="0" bottommargin="0" marginwidth="0" marginheight="0" {if:mode=#print#}OnLoad="window.print();"{end:}>
 <TABLE border="0" width="100%" cellpadding="0" cellspacing="0" align="center">
 <TR>
 <TD valign=top>

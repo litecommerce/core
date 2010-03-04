@@ -5,7 +5,7 @@ Use this section to define additional product detail fields for the entire categ
 <p align=justify><b>Note: </b>It is strongly recommended that you do not use duplicate names for category extra fields.</p> 
 
 <form IF="extraFields" action="admin.php" method=POST>
-<input type="hidden" foreach="dialog.allparams,param,v" name="{param}" value="{v}" />
+<input type="hidden" foreach="allparams,param,v" name="{param}" value="{v}" />
 <input type=hidden name=action value=update_fields>
 
 <table border=0 cellpadding=0 cellspacing=0>
@@ -48,7 +48,7 @@ Use this section to define additional product detail fields for the entire categ
 </form>
 
 <form action="admin.php" method=POST>
-<input type="hidden" foreach="dialog.allparams,param,v" name="{param}" value="{v}" />
+<input type="hidden" foreach="allparams,param,v" name="{param}" value="{v}" />
 <input type=hidden name=action value=add_field>
 <input type=hidden name="add_categories[0]" value={category_id}>
 

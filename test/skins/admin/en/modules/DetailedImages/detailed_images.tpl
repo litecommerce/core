@@ -3,7 +3,7 @@
 
 <br />
 <form IF="product.detailedImages" action="admin.php" name="images_form" method="POST">
-  <input FOREACH="dialog.allparams,name,val" type="hidden" name="{name}" value="{val}" />
+  <input FOREACH="allparams,name,val" type="hidden" name="{name}" value="{val}" />
   <input type="hidden" name="action" value="update_detailed_images" />
   <input type="hidden" name="image_id" value="" />
 
@@ -53,7 +53,7 @@
 <br />
 <br />
 <form action="admin.php" method="POST" name="imageForm" enctype="multipart/form-data">
-  <input FOREACH="dialog.allparams,name,val" type="hidden" name="{name}" value="{val}"/>
+  <input FOREACH="allparams,name,val" type="hidden" name="{name}" value="{val}"/>
   <input type="hidden" name="action" value="add_detailed_image">
 
   <table cellspacing="3" cellpadding="0">

@@ -9,7 +9,7 @@
 <input type="radio" name="conditionType" value="productSet" checked="{isSelected(conditionType,#productSet#)}" onclick="eachNthChange(0)"> Customer buys a specified set of products <br>
 <input type="radio" name="conditionType" value="bonusPoints" checked="{isSelected(conditionType,#bonusPoints#)}" onclick="eachNthChange(0)"> Customer earns a certain number of bonus points <br>
 <input id="eachNth" type="radio" name="conditionType" value="eachNth" checked="{isSelected(conditionType,#eachNth#)}" onclick="eachNthChange(1)"> Every Nth product purchased <br>
-<span IF="dialog.hasMemberships()">
+<span IF="hasMemberships()">
 <input type="radio" name="conditionType" value="hasMembership" checked="{isSelected(conditionType,#hasMembership#)}" onclick="eachNthChange(0)"> Customer has a certain membership
 </span>
 </blockquote>

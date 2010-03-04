@@ -6,14 +6,14 @@
 <p align=justify>
 To create a customer account complete the form below and click on the 'Submit' button.
 <br>
-If you are a registered customer, you can <a href="cart.php?target=profile&amp;mode=login&amp;returnUrl={dialog.backUrl:u}"><u>login here</u></a>.
+If you are a registered customer, you can <a href="cart.php?target=profile&amp;mode=login&amp;returnUrl={backUrl:u}"><u>login here</u></a>.
 </p>
 </div>
 <div IF="target=#checkout#">
 <p align=justify>
 In order to perform the checkout we need to know your e-mail address and billing and shipping information. Complete the form below and click on the 'Submit' button to proceed. <span  IF="allowAnonymous">If you would like to create a customer account at our store, do not omit the password fields.</span>
 <br>
-If you are a registered customer, please <a href="cart.php?target=profile&amp;mode=login&amp;returnUrl={dialog.backUrl:u}"><u>log into your account</u></a> before you proceed with the checkout process.
+If you are a registered customer, please <a href="cart.php?target=profile&amp;mode=login&amp;returnUrl={backUrl:u}"><u>log into your account</u></a> before you proceed with the checkout process.
 </p>
 </div>
 
@@ -353,7 +353,7 @@ If you are a registered customer, please <a href="cart.php?target=profile&amp;mo
     <td >
         By clicking "SUBMIT" you agree with our <a href="cart.php?target=help&amp;mode=terms_conditions" style="TEXT-DECORATION: underline" target="_blank">Terms &amp; Conditions.</a><br>
         <br>
-        <input type="hidden" foreach="dialog.allparams,param,v" name="{param}" value="{v}"/>
+        <input type="hidden" foreach="allparams,param,v" name="{param}" value="{v}"/>
         <input type="hidden" name="action" value="{mode}">
         <widget class="XLite_View_Submit" href="javascript: document.registration_form.submit()">
         <br>

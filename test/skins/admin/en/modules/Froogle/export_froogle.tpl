@@ -3,7 +3,7 @@
 <br>
 
 <form action="admin.php" method=POST name=data_form>
-<input FOREACH="dialog.allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
 <input type="hidden" name="action" value="export_froogle">
 
 <table border=0 cellpadding=3 cellspacing=0>

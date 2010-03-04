@@ -15,7 +15,7 @@
 </tbody>
 <tbody FOREACH="wholesalePricing,idx,wholesale_price">
 	<form name="wholesale_price_{wholesale_price.price_id}" action="admin.php" method="POST">
-	<input FOREACH="dialog.allparams,name,val" type="hidden" name="{name}" value="{val}"/>
+	<input FOREACH="allparams,name,val" type="hidden" name="{name}" value="{val}"/>
 	<input type="hidden" name="target" value="product">
 	<input type="hidden" name="action" value="update_wholesale_pricing">
 	<input type="hidden" name="wprice_id" value="{wholesale_price.price_id}">
@@ -54,7 +54,7 @@
 		<td>Membership</td>
 	</tr>
 	<form name="add_wholesale_pricing" action="admin.php" method="POST">
-	<input FOREACH="dialog.allparams,name,val" type="hidden" name="{name}" value="{val}"/>
+	<input FOREACH="allparams,name,val" type="hidden" name="{name}" value="{val}"/>
 	<input type="hidden" name="target" value="product">
 	<input type="hidden" name="action" value="add_wholesale_pricing">
 	<tr>

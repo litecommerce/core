@@ -156,7 +156,7 @@ function Cancel()
 File: <b>{file.path}</b><br>
 <textarea name="content" cols="120" rows="40">{file.content}</textarea>
 <p>
-<input type="submit" value=" Save "> <input type="button" value=" Cancel " onclick="document.location='{dialog.url}&node={file.node:u}'">
+<input type="submit" value=" Save "> <input type="button" value=" Cancel " onclick="document.location='{url}&node={file.node:u}'">
 </form>
 </span>
 

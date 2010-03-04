@@ -1,5 +1,5 @@
 <form action="admin.php" method="POST" name="wholesale_config">
-<input FOREACH="dialog.allparams,_name,_val" type="hidden" name="{_name}" value="{_val}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val}"/>
 <input type="hidden" name="action" value="options"/>
 
 <table border=0 cellpadding=3 cellspacing=1>

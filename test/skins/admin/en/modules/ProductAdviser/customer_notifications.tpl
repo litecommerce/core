@@ -174,7 +174,7 @@ function SaveFilters()
 
 <table width="100%" border=0>
 <form action="admin.php" method="GET" name="subscriber_search_form">
-<span FOREACH="dialog.getAllParams(#email,pinfo,type,status,period,startDateRaw,endDateRaw,startDateDay,startDateMonth,startDateYear,endDateDay,endDateMonth,endDateYear#),name,val">
+<span FOREACH="getAllParams(#email,pinfo,type,status,period,startDateRaw,endDateRaw,startDateDay,startDateMonth,startDateYear,endDateDay,endDateMonth,endDateYear#),name,val">
 <input type="hidden" name="{name}" value="{val}">
 </span>
 <input type="hidden" name="action" value="">
@@ -519,7 +519,7 @@ function Delete()
 </script>
 
 <form action="admin.php" method="GET" name="notifications_sort_form">
-<span FOREACH="dialog.getAllParams(#sortby#),name,val">
+<span FOREACH="getAllParams(#sortby#),name,val">
 <input type="hidden" name="{name}" value="{val}">
 </span>
 <input type=hidden name=sortby value="{sortby}">
@@ -535,7 +535,7 @@ function Delete()
 </form>
 
 <form action="admin.php" method=POST name="notifications_list_form">
-<span FOREACH="dialog.getAllParams(#action#),name,val">
+<span FOREACH="getAllParams(#action#),name,val">
 <input type="hidden" name="{name}" value="{val}">
 </span>
 <input type="hidden" name="action" value="">
@@ -690,7 +690,7 @@ function SwitchEditMode(preview, ntf_id)
 
 <table border=0 cellpadding=1 cellspacing=3>
 <form action="admin.php" method=POST name="notifications_list_form">
-<span FOREACH="dialog.getAllParams(#action#),name,val">
+<span FOREACH="getAllParams(#action#),name,val">
 <input type="hidden" name="{name}" value="{val}">
 </span>
 <input type="hidden" name="action" value="send_notifications">

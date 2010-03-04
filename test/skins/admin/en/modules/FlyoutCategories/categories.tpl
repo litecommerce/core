@@ -17,7 +17,7 @@ function fc_actions_update()
 </script>
 
 <form name="flyout_actions_form" method="POST" action="admin.php">
-<input FOREACH="dialog.allparams,name,val" type="hidden" name="{name}" value="{val}"/>
+<input FOREACH="allparams,name,val" type="hidden" name="{name}" value="{val}"/>
 <input type="hidden" name="action" value="fc_categories_actions">
 
 <br>

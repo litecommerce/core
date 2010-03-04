@@ -10,7 +10,7 @@
 
     <select IF="option.name=#catalog_category#" class="FixedSelect" name="{option.name}" size="1" style="width:200pt">
        <option value="" selected="option.value=##">All</option>
-    	{foreach:dialog.categories,k,v}
+    	{foreach:categories,k,v}
 		<option value="{v.category_id:r}" selected="{v.category_id=option.value}">{v.stringPath:h}</option>
     	{end:}
     </select>

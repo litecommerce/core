@@ -1,7 +1,7 @@
 <p align=justify>From this section you can grant access to the selected memberships. <a href="admin.php?target=memberships"><u>Click on this link</u></a> to add/delete memberships.</p>
 
 <form action="admin.php" method="POST" name=add_option_form>
-<input FOREACH="dialog.allparams,name,val" type="hidden" name="{name}" value="{val}"/>
+<input FOREACH="allparams,name,val" type="hidden" name="{name}" value="{val}"/>
 <input type="hidden" name="action" value="update_access">
 
 <table width="100%" border=0>

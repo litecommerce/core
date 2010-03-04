@@ -6,7 +6,7 @@ This page allows you to import purchase limit from CSV file.<hr>
 
 <p>
 <form action="admin.php" method=POST name=data_form enctype="multipart/form-data" >
-<input FOREACH="dialog.allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
 <input type="hidden" name="action" value="import_purchase_limit">
 
 <table border=0>

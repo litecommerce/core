@@ -12,8 +12,8 @@ Use this page to configure your store to communicate with your Nochex payment ga
 <tr>
     <td align="right" width="250">Mode:</td>
     <td><select name=params[param03]>
-			<option value=T selected="{IsSelected(dialog.pm.params.param03,#T#)}">test</option>
-			<option value=L selected="{IsSelected(dialog.pm.params.param03,#L#)}">live</option>
+			<option value=T selected="{IsSelected(pm.params.param03,#T#)}">test</option>
+			<option value=L selected="{IsSelected(pm.params.param03,#L#)}">live</option>
 		</select>
 	</td>
 </tr>

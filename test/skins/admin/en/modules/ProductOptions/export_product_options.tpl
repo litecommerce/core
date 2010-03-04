@@ -2,7 +2,7 @@ This page allows to export product options into CSV file.<hr>
 
 <p>
 <form action="admin.php" method=post name=data_form>
-<input FOREACH="dialog.allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
 <input type="hidden" name="action" value="export_product_options">
 
 <table border=0>

@@ -19,7 +19,7 @@ function BulkAdd2Cart()
 
 <div IF="showBulkAddForm">
 <form name="bulk_rp_shopping_form" action="{shopUrl(#cart.php#)}" method="POST">
-<input FOREACH="dialog.allparams,_name,_val" type="hidden" name="{_name}" value="{_val}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val}"/>
 <input type="hidden" name="action" value="rp_bulk">
 <span FOREACH="pager.pageData,RP">
 <input type="hidden" name="rp_bulk[{RP.product.product_id}]" id="rp_bulk_{RP.product.product_id}" value="0" IF="!RP.product.checkHasOptions()" />

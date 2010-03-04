@@ -74,9 +74,7 @@ class XLite_View_FileExplorer extends XLite_View_ColumnList
 
         // if dialog DSN is specified, use it to get the list of files to edit
         if (!is_null($this->get("dsn"))) {
-            $dialog = $this->get("dialog");
-            $ch = $dialog->get($this->get("dsn"));
-            return $ch;
+            return $this->get($this->get("dsn"));
         }
 
         // check for zone otherwise

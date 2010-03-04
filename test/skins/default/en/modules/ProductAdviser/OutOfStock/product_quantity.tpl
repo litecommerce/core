@@ -1,4 +1,4 @@
-<tbody IF="productNotificationEnabled&dialog.rejectedItem">
+<tbody IF="productNotificationEnabled&rejectedItem">
 <tr>
 	<td>&nbsp;</td>
 	<td>(<a href="javascript: NotifyMe()"><u>Notify me</u></a> when the product is in stock)<td>

@@ -3,7 +3,7 @@
 <br>
 
 <form name=search_sales_form action="admin.php" method=GET><!-- {{{ -->
-<input type="hidden" foreach="dialog.allparams,param,v" name="{param}" value="{v}"/>
+<input type="hidden" foreach="allparams,param,v" name="{param}" value="{v}"/>
 
 <table border=0 cellpadding=3>
 <tr>

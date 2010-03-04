@@ -1,4 +1,4 @@
-<tbody IF="dialog.isShowWholesalerFields()">
+<tbody IF="isShowWholesalerFields()">
 <tr>
     <td colspan="4">&nbsp;</td>
 </tr>

@@ -147,7 +147,7 @@
     {end:}
 
     {if:option.name=#time_zone#}
-    {if:!dialog.timezone_changable}
+    {if:!timezone_changable}
         This option is not available in your PHP version.
     {else:}
         <select name="{option.name}">

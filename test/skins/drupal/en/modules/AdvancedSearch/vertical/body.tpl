@@ -55,7 +55,7 @@
     <label for="search_price">Price:</label>
     <select id="search_price" name="search[price]">
       <option value="">Select range</option>
-      <option FOREACH="prices,v" value="{v.start:h},{v.end:h}" selected="{isSelected(search.price,dialog.strcat(v.start,v.end,#,#))}">
+      <option FOREACH="prices,v" value="{v.start:h},{v.end:h}" selected="{isSelected(search.price,strcat(v.start,v.end,#,#))}">
         {preparePriceOption(v)}
       </option>
     </select>
@@ -65,7 +65,7 @@
     <label for="search_weight">Weight:</label>
     <select id="search_weight" name="search[weight]">
       <option value="">Select range</option>
-      <option FOREACH="weights,v" value="{v.start:h},{v.end:h}" selected="{isSelected(search.weight,dialog.strcat(v.start,v.end,#,#))}">
+      <option FOREACH="weights,v" value="{v.start:h},{v.end:h}" selected="{isSelected(search.weight,strcat(v.start,v.end,#,#))}">
         {prepareWeightOption(v)}
       </option>
     </select>

@@ -6,7 +6,7 @@ This page allows to export product access into CSV file.<hr>
 
 <p>
 <form action="admin.php" method=post name=data_form>
-<input FOREACH="dialog.allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
 <input type="hidden" name="action" value="export_product_access">
 
 <table border=0>

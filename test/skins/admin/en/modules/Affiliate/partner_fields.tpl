@@ -55,7 +55,7 @@
 <script language="JavaScript">
 var partnerAccessLevel = {auth.partnerAccessLevel};
 var declinedAccessLevel = {auth.declinedPartnerAccessLevel};
-var declineUrl = "admin.php?target=decline_partner&profile_id={profile_id}&returnUrl={dialog.url:u}";
+var declineUrl = "admin.php?target=decline_partner&profile_id={profile_id}&returnUrl={url:u}";
 <!--
 accessLevel = document.getElementById('access_level');
 // define a new handler for access level changer

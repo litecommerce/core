@@ -19,11 +19,11 @@ function pfCheckoutSubmit()
 -->
 </script>
 
-<form action="{dialog.cart.PaymentMethod.formPostUrl:h}" method="POST" name="ProtxForm">
+<form action="{cart.PaymentMethod.formPostUrl:h}" method="POST" name="ProtxForm">
 <INPUT type="hidden" name="VPSProtocol" value="2.22">
 <INPUT type="hidden" name="TxType" value="{cart.paymentMethod.paymentType:h}">
 <input type="hidden" name="Vendor" value="{cart.paymentMethod.vendorName:h}">
-<input type="hidden" name="Crypt" value="{dialog.cart.PaymentMethod.getCryptedInfo(dialog.cart):h}">
+<input type="hidden" name="Crypt" value="{cart.PaymentMethod.getCryptedInfo(cart):h}">
 <p>By clicking "SUBMIT" you are agree with our "Terms &amp; Conditions" and "Privacy statement".<br>
 <br>
 <span id="submit_order_button">

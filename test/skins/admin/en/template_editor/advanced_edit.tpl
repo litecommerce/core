@@ -15,8 +15,8 @@
     	<td width=50% align=right>
         	<table border="0" cellpadding=0 cellspacing=0 align=right>
             <tr>
-            	<td><a href="{dialog.url:h}&node={file.node}"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> Go back to&nbsp;</a></td>
-            	<td><a href="{dialog.url:h}&node={file.node}"><img src="images/folder.gif" border="0" align="top">&nbsp;<u>{file.node}</u></a></td>
+            	<td><a href="{url:h}&node={file.node}"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> Go back to&nbsp;</a></td>
+            	<td><a href="{url:h}&node={file.node}"><img src="images/folder.gif" border="0" align="top">&nbsp;<u>{file.node}</u></a></td>
         	</tr>
         	</table>
     	</td>
@@ -41,7 +41,7 @@
 <input type="submit" value=" Save " class="DialogMainButton">
 </td>
 <td align=right>
-{if:file.node}<input type="button" value=" Cancel " onclick="document.location='{dialog.url}&node={file.node:u}'">{else:}<input type="button" value=" Cancel " onclick="document.location='{dialog.url}'">{end:}
+{if:file.node}<input type="button" value=" Cancel " onclick="document.location='{url}&node={file.node:u}'">{else:}<input type="button" value=" Cancel " onclick="document.location='{url}'">{end:}
 </td>
 </tr>
 

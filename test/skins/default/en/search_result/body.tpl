@@ -4,7 +4,7 @@
 </div>
 
 <div IF="products">
-  {if:xlite.AdvancedSearchEnabled&count}{dialog.count} {if:count=#1#}product{else:} products {end:} found. <a class="FormButton" href="{buildURL(#advanced_search#)}"><u>Refine your search</u></a>{end:}
+  {if:xlite.AdvancedSearchEnabled&count}{count} {if:count=#1#}product{else:} products {end:} found. <a class="FormButton" href="{buildURL(#advanced_search#)}"><u>Refine your search</u></a>{end:}
 
   <widget class="XLite_View_Pager" data="{products}" name="pager">
 

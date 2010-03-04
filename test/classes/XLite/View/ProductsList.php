@@ -137,7 +137,7 @@ class XLite_View_ProductsList extends XLite_View_Abstract
 
         $this->session->set('productsListData', $sessionCell);
 
-        $this->urlParams = $this->getDialog()->getAllParams() + $this->urlParams;
+        $this->urlParams = $this->getAllParams() + $this->urlParams;
     }
 
     /**

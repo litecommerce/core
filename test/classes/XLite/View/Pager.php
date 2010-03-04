@@ -305,16 +305,14 @@ class XLite_View_Pager extends XLite_View_Abstract
      */
     protected function buildUrlByPageId($pageId)
     {
-        $dialog = $this->getDialog();
-
         if (!isset($this->attributes['urlParams'])) {
-            $this->attributes['urlParams'] = $dialog->get('allParams');
+            $this->attributes['urlParams'] = $this->get('allParams');
         }
 
         $params = $this->attributes['urlParams'];
         $params[self::PAGE_ID_ARG] = $pageId;
 
-        return $dialog->getUrl($params);
+        return $this->getUrl($params);
     }
 
     /**

@@ -1,6 +1,6 @@
 <FORM name="search_form" action="admin.php" method="GET">
-<span IF="dialog.extraParams=##"><input FOREACH="dialog.allParams,param,val" type="hidden" name="{param}" value="{val:r}"/></span>
-<span IF="!dialog.extraParams=##"><input FOREACH="dialog.extraParams,param,val" type="hidden" name="{param}" value="{val:r}"/></span>
+<span IF="extraParams=##"><input FOREACH="allParams,param,val" type="hidden" name="{param}" value="{val:r}"/></span>
+<span IF="!extraParams=##"><input FOREACH="extraParams,param,val" type="hidden" name="{param}" value="{val:r}"/></span>
 <input type="hidden" name="mode" value="search">
 
 {extra_parameters:h}

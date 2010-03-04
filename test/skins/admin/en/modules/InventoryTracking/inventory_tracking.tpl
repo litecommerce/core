@@ -1,5 +1,5 @@
 <form action="admin.php" method="POST" name="inventory_tracking">
-<input FOREACH="dialog.allparams,name,val" type="hidden" name="{name}" value="{val}"/>
+<input FOREACH="allparams,name,val" type="hidden" name="{name}" value="{val}"/>
 <input type="hidden" name="action" value="update_product_inventory">
 <input type="hidden" name="inventory_data[inventory_id]" value="{product.product_id}">
 <table>

@@ -99,7 +99,7 @@ function SaveFilters()
 		<td colspan="4">
 			<select id="search_price" name="search[price]" size="1">
 		   	<option value="">Select range</option>
-			<option FOREACH="prices,v" value="{v.start:h},{v.end:h}" selected="{isSelected(search.price,dialog.strcat(v.start,v.end,#,#))}">{if:v.label}{v.label:h}{else:}&nbsp;&nbsp;&nbsp;{price_format(v.start:h)}{if:v.end:h}-{price_format(v.end:h)}{else:} ++{end:}{end:}</option>
+			<option FOREACH="prices,v" value="{v.start:h},{v.end:h}" selected="{isSelected(search.price,strcat(v.start,v.end,#,#))}">{if:v.label}{v.label:h}{else:}&nbsp;&nbsp;&nbsp;{price_format(v.start:h)}{if:v.end:h}-{price_format(v.end:h)}{else:} ++{end:}{end:}</option>
 			</select>
 		</td>
     </tr> 
@@ -108,7 +108,7 @@ function SaveFilters()
         <td colspan="4">
 		   	<select id="search_weight" name="search[weight]" size="1">
 		   	<option value="">Select range</option>
-			<option FOREACH="weights,v" value="{v.start:h},{v.end:h}" selected="{isSelected(search.weight,dialog.strcat(v.start,v.end,#,#))}">{if:v.label}{v.label:h}{else:}{v.start:h}({config.General.weight_symbol:h}){if:v.end:h}-{v.end:h}({config.General.weight_symbol:h}){else:} ++{end:}{end:}</option>
+			<option FOREACH="weights,v" value="{v.start:h},{v.end:h}" selected="{isSelected(search.weight,strcat(v.start,v.end,#,#))}">{if:v.label}{v.label:h}{else:}{v.start:h}({config.General.weight_symbol:h}){if:v.end:h}-{v.end:h}({config.General.weight_symbol:h}){else:} ++{end:}{end:}</option>
 			</select>
 		</td>
     </tr>

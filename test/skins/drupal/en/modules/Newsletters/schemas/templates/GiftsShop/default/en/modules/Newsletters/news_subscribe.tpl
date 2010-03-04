@@ -4,7 +4,7 @@
 <br>
 
 <form name="subscribe_form" action="{shopURL(#cart.php#)}" method=POST>
-<input FOREACH="dialog.allparams,_p,_v" type=hidden name="{_p}" value="{_v}"/>
+<input FOREACH="allparams,_p,_v" type=hidden name="{_p}" value="{_v}"/>
 <input type=hidden name=action value=subscribe>
 
 <table border="0" cellspacing="0" cellpadding="2">

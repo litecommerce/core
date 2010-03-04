@@ -4,7 +4,7 @@
 <tr valign="top">
     <td>
         <form action="admin.php" method="post" name="reg_frm">
-        <input FOREACH="dialog.allParams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+        <input FOREACH="allParams,param,val" type="hidden" name="{param}" value="{val:r}"/>
         <input type="hidden" name="action" value="next"/>
         <widget template="modules/UPSOnlineTools/settings/register.tpl">
         </form>

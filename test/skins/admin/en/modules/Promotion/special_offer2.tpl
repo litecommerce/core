@@ -66,7 +66,7 @@ Number of points granted: <input type="text" name="amount" value="{amount}" size
 <tr>
 	<td align="center" valign="top">Membership:<br><i>To (un)select more than one<br> membership, Ctrl-click it</i></td> 
 	<td>&nbsp;<select multiple size="10" name=customer_memberships[]>
-	<option FOREACH="config.Memberships.memberships,membership" selected="{dialog.isSelectedMembership(membership)}">{membership}</option>
+	<option FOREACH="config.Memberships.memberships,membership" selected="{isSelectedMembership(membership)}">{membership}</option>
     </select>
 	<td>
 		<widget class="XLite_Module_Promotion_Validator_PromotionMembershipValidator" field="customer_memberships"> 

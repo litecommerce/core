@@ -2,7 +2,7 @@
 
 <br><br>
 <form FOREACH="inventories,idx,ivt" name="inventory_form_{idx}" action="admin.php" method="POST">
-<input FOREACH="dialog.allparams,name,val" type="hidden" name="{name}" value="{val}"/>
+<input FOREACH="allparams,name,val" type="hidden" name="{name}" value="{val}"/>
 <input type="hidden" name="action" value="update_tracking_option">
 <input type="hidden" name="inventory_id" value="{ivt.inventory_id}">
 
@@ -52,7 +52,7 @@
 </p>
 
 <form action="admin.php" method="POST">
-<input FOREACH="dialog.allparams,name,val" type="hidden" name="{name}" value="{val}"/>
+<input FOREACH="allparams,name,val" type="hidden" name="{name}" value="{val}"/>
 <input type="hidden" name="action" value="add_tracking_option">
 <input type="hidden" name="order_by" value="{inc(maxOrderBy)}">
 

@@ -1,5 +1,5 @@
 <form action="admin.php" method="POST" IF="category.featuredProducts">
-<input FOREACH="dialog.allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
 <input type="hidden" name="action" value="update_featured_products">
 
 <table border=0 cellpadding=0 cellspacing=0 width="80%">
@@ -33,7 +33,7 @@
 <br><br>
 
 <form action="admin.php" method="POST" IF="products">
-<input FOREACH="dialog.allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
 <input type="hidden" name="action" value="add_featured_products">
 
 <table border=0 cellpadding=0 cellspacing=0 width=400>

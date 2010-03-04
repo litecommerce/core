@@ -43,7 +43,7 @@ function PackagingChanged(index)
 <br>
 <table border="0" cellpadding="2" cellspacing="2" width="100%">
 <form action="admin.php" method="POST" name="upsconfigureform">
-<input FOREACH="dialog.allParams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allParams,param,val" type="hidden" name="{param}" value="{val:r}"/>
 <input type="hidden" name="action" value="update">
 
 <tr>

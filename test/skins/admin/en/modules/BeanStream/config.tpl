@@ -43,17 +43,17 @@ Use this page to configure your store to communicate with your Payment Processin
 
 <tr>
 	<td align="right">Success order status:</td>
-	<td><widget class="XLite_View_StatusSelect" field="params[status_success]" value="{dialog.pm.orderSuccessStatus}"></td>
+	<td><widget class="XLite_View_StatusSelect" field="params[status_success]" value="{pm.orderSuccessStatus}"></td>
 </tr>
 
 <tr>
 	<td align="right">Failed order status:</td>
-	<td><widget class="XLite_View_StatusSelect" field="params[status_fail]" value="{dialog.pm.orderFailStatus}"></td>
+	<td><widget class="XLite_View_StatusSelect" field="params[status_fail]" value="{pm.orderFailStatus}"></td>
 </tr>
 
 <tr>
 	<td align="right">Order prefix:</td>
-	<td><input type=text name="params[order_prefix]" size=16 value="{dialog.pm.params.order_prefix}"></td>
+	<td><input type=text name="params[order_prefix]" size=16 value="{pm.params.order_prefix}"></td>
 </tr>
 
 <tr>

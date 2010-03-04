@@ -20,7 +20,7 @@ function showSettings(solution)
 <form action="admin.php" method="POST">
 <input type="hidden" name="target" value="payment_method">
 <input type="hidden" name="action" value="update">
-<input type="hidden" name="payment_method" value="{dialog.pm.get(#payment_method#)}">
+<input type="hidden" name="payment_method" value="{pm.get(#payment_method#)}">
 
 <table width="100%" border="0" cellpadding="4" cellspacing="0">
     <tr>
@@ -57,7 +57,7 @@ function showSettings(solution)
 <tr>
 	<td align="right">Vendor name:</td>
 	<td>&nbsp;</td>
-	<td><input type=text name=params[vendor_name] size=32 value="{dialog.pm.params.vendor_name}"></td>
+	<td><input type=text name=params[vendor_name] size=32 value="{pm.params.vendor_name}"></td>
 </tr>
 
 <tr id="xor_password">
@@ -69,37 +69,37 @@ function showSettings(solution)
 <tr>
 	<td align="right">Order prefix:</td>
 	<td>&nbsp;</td>
-	<td><input type=text name=params[order_prefix] size=32 value="{dialog.pm.params.order_prefix}"><br><i>it mustn't be empty in test mode</i></td>
+	<td><input type=text name=params[order_prefix] size=32 value="{pm.params.order_prefix}"><br><i>it mustn't be empty in test mode</i></td>
 </tr>
 
 <tr>
 	<td align="right">'AUTHENTICATED'/'REGISTERED' order status:</td>
 	<td>&nbsp;</td>
-	<td><widget class="XLite_View_StatusSelect" field="params[status_auth]" value="{dialog.pm.orderAuthStatus}"></td>
+	<td><widget class="XLite_View_StatusSelect" field="params[status_auth]" value="{pm.orderAuthStatus}"></td>
 </tr>
 
 <tr>
 	<td align="right">'NOTAUTHED'/'REJECTED' order status:</td>
 	<td>&nbsp;</td>
-	<td><widget class="XLite_View_StatusSelect" field="params[status_reject]" value="{dialog.pm.orderRejectStatus}"></td>
+	<td><widget class="XLite_View_StatusSelect" field="params[status_reject]" value="{pm.orderRejectStatus}"></td>
 </tr>
 
 <tr>
 	<td align="right">'SUCCESS' order status (no 3D-secure check):</td>
 	<td>&nbsp;</td>
-	<td><widget class="XLite_View_StatusSelect" field="params[status_success_no3d]" value="{dialog.pm.orderSuccessNo3dStatus}"></td>
+	<td><widget class="XLite_View_StatusSelect" field="params[status_success_no3d]" value="{pm.orderSuccessNo3dStatus}"></td>
 </tr>
 
 <tr>
 	<td align="right">'SUCCESS' order status (3D-secure passed):</td>
 	<td>&nbsp;</td>
-	<td><widget class="XLite_View_StatusSelect" field="params[status_success_3dok]" value="{dialog.pm.orderSuccess3dOkStatus}"></td>
+	<td><widget class="XLite_View_StatusSelect" field="params[status_success_3dok]" value="{pm.orderSuccess3dOkStatus}"></td>
 </tr>
 
 <tr>
 	<td align="right">'SUCCESS' order status (3D-secure failed):</td>
 	<td>&nbsp;</td>
-	<td><widget class="XLite_View_StatusSelect" field="params[status_success_3dfail]" value="{dialog.pm.orderSuccess3dFailStatus}"></td>
+	<td><widget class="XLite_View_StatusSelect" field="params[status_success_3dfail]" value="{pm.orderSuccess3dFailStatus}"></td>
 </tr>
 
 <tr>
@@ -107,11 +107,11 @@ function showSettings(solution)
 	<td>&nbsp;</td>
 	<td>
 		<select name=params[currency]>
-			<option value="USD" selected="{IsSelected(dialog.pm.params.currency,#USD#)}">US Dollar</option>
-			<option value="GBP" selected="{IsSelected(dialog.pm.params.currency,#GBP#)}">Britain Pound</option>
-			<option value="EUR" selected="{IsSelected(dialog.pm.params.currency,#EUR#)}">Euro</option>
-			<option value="CAD" selected="{IsSelected(dialog.pm.params.currency,#CAD#)}">Canadian Dollar</option>
-			<option value="AUD" selected="{IsSelected(dialog.pm.params.currency,#AUD#)}">Australian Dollar</option>
+			<option value="USD" selected="{IsSelected(pm.params.currency,#USD#)}">US Dollar</option>
+			<option value="GBP" selected="{IsSelected(pm.params.currency,#GBP#)}">Britain Pound</option>
+			<option value="EUR" selected="{IsSelected(pm.params.currency,#EUR#)}">Euro</option>
+			<option value="CAD" selected="{IsSelected(pm.params.currency,#CAD#)}">Canadian Dollar</option>
+			<option value="AUD" selected="{IsSelected(pm.params.currency,#AUD#)}">Australian Dollar</option>
 		</select>
 	</td>
 </tr>
@@ -121,8 +121,8 @@ function showSettings(solution)
 	<td>&nbsp;</td>
 	<td>
 		<select name=params[testmode]>
-			<option value="Y" selected="{IsSelected(dialog.pm.params.testmode,#Y#)}">test
-			<option value="N" selected="{IsSelected(dialog.pm.params.testmode,#N#)}">live
+			<option value="Y" selected="{IsSelected(pm.params.testmode,#Y#)}">test
+			<option value="N" selected="{IsSelected(pm.params.testmode,#N#)}">live
 		</select>
 	</td>
 </tr>
@@ -138,10 +138,10 @@ function showSettings(solution)
 	<td>&nbsp;</td>
 	<td>
 		<select name=params[ApplyAVSCV2]>
-			<option value="0" selected="{IsSelected(dialog.pm.params.ApplyAVSCV2,0)}">Allow AVS/CV2 checks, use rules</option>
-			<option value="1" selected="{IsSelected(dialog.pm.params.ApplyAVSCV2,1)}">Force AVS/CV2 checks, use rules</option>
-			<option value="2" selected="{IsSelected(dialog.pm.params.ApplyAVSCV2,2)}">Do not allow AVS/CV2 checks</option>
-			<option value="3" selected="{IsSelected(dialog.pm.params.ApplyAVSCV2,3)}">Force AVS/CV2 checks, do not use rules</option>
+			<option value="0" selected="{IsSelected(pm.params.ApplyAVSCV2,0)}">Allow AVS/CV2 checks, use rules</option>
+			<option value="1" selected="{IsSelected(pm.params.ApplyAVSCV2,1)}">Force AVS/CV2 checks, use rules</option>
+			<option value="2" selected="{IsSelected(pm.params.ApplyAVSCV2,2)}">Do not allow AVS/CV2 checks</option>
+			<option value="3" selected="{IsSelected(pm.params.ApplyAVSCV2,3)}">Force AVS/CV2 checks, do not use rules</option>
 		</select>
 	</td>
 </tr>
@@ -151,10 +151,10 @@ function showSettings(solution)
 	<td>&nbsp;</td>
 	<td>
 		<select name=params[Apply3DSecure]>
-			<option value="0" selected="{IsSelected(dialog.pm.params.Apply3DSecure,0)}">Allow 3D-Secure checks, use rules</option>
-			<option value="1" selected="{IsSelected(dialog.pm.params.Apply3DSecure,1)}">Force 3D-Secure checks, use rules</option>
-			<option value="2" selected="{IsSelected(dialog.pm.params.Apply3DSecure,2)}">Do not allow 3D-Secure checks</option>
-			<option value="3" selected="{IsSelected(dialog.pm.params.Apply3DSecure,3)}">Force 3D-Secure checks, do not use rules</option>
+			<option value="0" selected="{IsSelected(pm.params.Apply3DSecure,0)}">Allow 3D-Secure checks, use rules</option>
+			<option value="1" selected="{IsSelected(pm.params.Apply3DSecure,1)}">Force 3D-Secure checks, use rules</option>
+			<option value="2" selected="{IsSelected(pm.params.Apply3DSecure,2)}">Do not allow 3D-Secure checks</option>
+			<option value="3" selected="{IsSelected(pm.params.Apply3DSecure,3)}">Force 3D-Secure checks, do not use rules</option>
 		</select>
 	</td>
 </tr>
@@ -164,9 +164,9 @@ function showSettings(solution)
 	<td>&nbsp;</td>
 	<td>
 		<select name="params[trans_type]">
-			<option value="AUTHENTICATE" selected="{dialog.pm.params.trans_type=#AUTHENTICATE#}">Authenticate</option>
-			<option value="DEFERRED" selected="{dialog.pm.params.trans_type=#DEFERRED#}">Deferred</option>
-			<option value="PAYMENT" selected="{dialog.pm.params.trans_type=#PAYMENT#}">Payment</option>
+			<option value="AUTHENTICATE" selected="{pm.params.trans_type=#AUTHENTICATE#}">Authenticate</option>
+			<option value="DEFERRED" selected="{pm.params.trans_type=#DEFERRED#}">Deferred</option>
+			<option value="PAYMENT" selected="{pm.params.trans_type=#PAYMENT#}">Payment</option>
 		</select>
 	</td>
 </tr>

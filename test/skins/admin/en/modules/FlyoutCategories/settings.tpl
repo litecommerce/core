@@ -10,7 +10,7 @@
 <select class="FixedSelect" name="{option.name}" size="1" OnChange="if (this.value >= 0) document.options_form.submit();">
    <option value=0>None</option>
    <option value=-1>---------------------</option>
-   <option FOREACH="dialog.schemes,k,v" value="{v.scheme_id}" selected="{v.scheme_id=option.value}">{v.name}</option>
+   <option FOREACH="schemes,k,v" value="{v.scheme_id}" selected="{v.scheme_id=option.value}">{v.name}</option>
 </select>
 {end:}
 

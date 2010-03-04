@@ -39,7 +39,7 @@
 	</tr>
 </table>
 <form action="admin.php" method="POST" name="update_profile_form">
-<input FOREACH="dialog.allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
 <input type="hidden" name="action" value="update_profile">
 <input type="hidden" name="mode" value="profile">
 <table {if:target=#order#}width="100%"{else:}width="465"{end:} cellpadding="3" cellspacing="2">
@@ -205,7 +205,7 @@
 </tr>
 </table>
 
-<span IF="xlite.WholesaleTradingEnabled&dialog.isShowWholesalerFields()">
+<span IF="xlite.WholesaleTradingEnabled&isShowWholesalerFields()">
 <table {if:target=#order#}width="100%"{else:}width="465"{end:} cellpadding="0" cellspacing="0">
 <tr>
     <td colspan="3">&nbsp;</td>

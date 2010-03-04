@@ -16,7 +16,7 @@ See also: <br>
 
 <table cellpadding=3 cellspacing=1 width=90%>
 <form action="admin.php" method="GET" name="subscriber_search_form">
-<span FOREACH="dialog.allparams,name,val">
+<span FOREACH="allparams,name,val">
 <span IF="!name=#subscriber#">
 <input type="hidden" name="{name}" value="{val}">
 </span>
@@ -62,7 +62,7 @@ function SortBy(field)
 </script>
 
 <form action="admin.php" method="GET" name="subscribers_sort_form">
-<span FOREACH="dialog.allparams,name,val">
+<span FOREACH="allparams,name,val">
 <span IF="!name=#sortby#">
 <input type="hidden" name="{name}" value="{val}">
 </span>

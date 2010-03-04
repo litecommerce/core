@@ -133,7 +133,7 @@
 <tr><td colspan=4>&nbsp;</td></tr>
 <tr>
     <td colspan=4>
-    {dialog.testEncrypt()}
+    {testEncrypt()}
     Testing data encryption ... <span IF="encryptResult" class=SuccessMessage>[PASSED]</span><span IF="!encryptResult" class=ErrorMessage>[FAILED]</span>
     </td>
 </tr>
@@ -143,7 +143,7 @@
 
 <tr>
     <td colspan=4>
-    {dialog.testDecrypt()}
+    {testDecrypt()}
     Testing data decryption ... <span IF="decryptResult" class=SuccessMessage>[PASSED]</span><span IF="!decryptResult" class=ErrorMessage>[FAILED]</span>
 </tr>
 <tr IF="!decryptResult">

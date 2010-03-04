@@ -1,7 +1,7 @@
 <p>Mandatory fields are marked with an asterisk (<font class="Star">*</font>).<br><br>
 
 <form name="modify_form" action="admin.php" method="POST" enctype="multipart/form-data">
-<input FOREACH="dialog.allparams,name,val" type="hidden" name="{name}" value="{val}"/>
+<input FOREACH="allparams,name,val" type="hidden" name="{name}" value="{val}"/>
 <input type="hidden" name="action" value="info">
 
 <table border=0 cellpadding="0">

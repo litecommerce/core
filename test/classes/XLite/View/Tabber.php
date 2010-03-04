@@ -56,9 +56,8 @@ class XLite_View_Tabber extends XLite_View_Abstract
     function getPages()
     {
         $pages = array();
-        $dialog = $this->get("dialog");
-        $url = $dialog->get("url");
-        $dialogPages = $dialog->get($this->get("tabPages"));
+        $url = $this->get("url");
+        $dialogPages = $this->get($this->get("tabPages"));
         if (is_array($dialogPages)) {
             foreach ($dialogPages as $page => $header) {
                 $p = new XLite_Base();

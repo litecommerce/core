@@ -66,7 +66,7 @@ class XLite_View_ProductSelect extends XLite_View_Abstract
 	function getProduct()
 	{
         if (is_null($this->product)) {
-			$this->product = ($productId = $this->getDialog()->get($this->formField . '_id')) ? new XLite_Model_Product($productId) : null;
+			$this->product = ($productId = $this->get($this->formField . '_id')) ? new XLite_Model_Product($productId) : null;
         }
 
         return $this->product;

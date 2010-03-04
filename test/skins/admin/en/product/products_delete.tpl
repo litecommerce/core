@@ -1,5 +1,5 @@
 <form name="deleteForm" action="admin.php" method="POST">
-<input FOREACH="dialog.getAllparams(#mode#),param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="getAllparams(#mode#),param,val" type="hidden" name="{param}" value="{val:r}"/>
 <input type="hidden" name="action" value="delete">
 <input type="hidden" name="confirmed" value="0">
 

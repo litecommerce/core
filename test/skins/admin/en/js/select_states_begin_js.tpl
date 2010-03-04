@@ -1,6 +1,6 @@
 <script language="Javascript" type="text/javascript">
 var CountriesStates = new Array();
-{foreach:dialog.countriesStates,country_code,country}
+{foreach:countriesStates,country_code,country}
 CountriesStates["{country_code}"] = new Array();
 {if:country.number}
 {foreach:country.data,state_code,state}
