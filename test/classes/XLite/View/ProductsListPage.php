@@ -92,9 +92,33 @@ class XLite_View_ProductsListPage extends XLite_View_Abstract
     public function init(array $attributes = array())
     {
         $this->attributes['data'] = array();
-        $this->attributes['displayMode'] = self::$defaultDisplayMode;
+        $this->attributes['displayMode'] = self::getDefaultDisplayMode();
+        $this->attributes['widgetArguments'] = array();
 
         parent::init($attributes);
+    }
+
+    /**
+     * Set properties
+     *
+     * @param array $attributes params to set
+     *
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function setAttributes(array $attributes)
+    {
+        if (isset($attributes['widgetArguments']) && !is_array($attributes['widgetArguments'])) {
+            unset($attributes['widgetArguments']);
+        }
+
+        $displayModes = self::getDisplayModes();
+        if (isset($attributes['displayMode']) && !isset($displayModes[$attributes['displayMode']])) {
+            unset($attributes['displayMode']);
+        }
+
+        parent::setAttributes($attributes);
     }
 
     /**
@@ -108,15 +132,25 @@ class XLite_View_ProductsListPage extends XLite_View_Abstract
     {
         parent::initView();
 
+        // Normalize widgetArguments cell
+        if (!is_array($this->attributes['widgetArguments'])) {
+            $this->attributes['widgetArguments'] = array();
+        }
+
         // Define widget template
-        $this->template = 'products_list/';
-
         $displayModes = self::getDisplayModes();
-        $this->template .= isset($displayModes[$this->attributes['displayMode']])
-            ? $this->attributes['displayMode']
-            : self::$defaultDisplayMode;
+        $displayMode = $this->attributes['displayMode'];
+        if (
+            isset($this->attributes['widgetArguments']['displayMode'])
+            && isset($this->attributes['widgetArguments']['displayModeChangable'])
+            && !$this->attributes['widgetArguments']['displayModeChangable']
+            && $this->attributes['widgetArguments']['displayMode']
+            && isset($displayModes[$this->attributes['widgetArguments']['displayMode']])
+        ) {
+            $displayMode = $this->attributes['widgetArguments']['displayMode'];
+        }
 
-        $this->template .= '/body.tpl';
+        $this->template = 'products_list/' . $displayMode . '/body.tpl';
     }
 
     /**
@@ -156,7 +190,12 @@ class XLite_View_ProductsListPage extends XLite_View_Abstract
      */
     public function getGridItemWidth()
     {
-        return floor(100 / $this->gridColumns) - 6;
+        $gridColumns = $this->gridColumns;
+        if (isset($this->attributes['widgetArguments']['gridColumns'])) {
+            $gridColumns = min(5, max(1, intval($this->attributes['widgetArguments']['gridColumns'])));
+        }
+
+        return floor(100 / $gridColumns) - 6;
     }
 
     /**
@@ -171,4 +210,75 @@ class XLite_View_ProductsListPage extends XLite_View_Abstract
     {
         return self::$displayModes;
     }
+
+    /**
+     * Get default display mode
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    static public function getDefaultDisplayMode()
+    {
+        return self::$defaultDisplayMode;
+    }
+
+    /**
+     * Check - show product description or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isShowDescription()
+    {
+        return !isset($this->attributes['widgetArguments']['showDescription'])
+            || $this->attributes['widgetArguments']['showDescription'];
+    }
+
+    /**
+     * Check - show product price or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isShowPrice()
+    {
+        return !isset($this->attributes['widgetArguments']['showPrice'])
+            || $this->attributes['widgetArguments']['showPrice'];
+    }
+
+    /**
+     * Check - show Add to cart button or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isShowAdd2Cart()
+    {
+        return !isset($this->attributes['widgetArguments']['showAdd2Cart'])
+            || $this->attributes['widgetArguments']['showAdd2Cart'];
+    }
+
+    /**
+     * Check - allow multiple additions at once or not 
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isMultipleAdd2Cart()
+    {
+        return $this->isShowAdd2Cart()
+            && isset($this->attributes['widgetArguments']['multipleAdd2Cart'])
+            && $this->attributes['widgetArguments']['multipleAdd2Cart'];
+    }
+
 }

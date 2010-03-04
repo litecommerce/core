@@ -94,5 +94,42 @@ class XLite_View_CategoryProducts extends XLite_View_Dialog
     {
         return array($this, 'getProducts');
     }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += XLite_View_ProductsList::getWidgetParamsList();
+    }
+
+    /**
+     * Export widget arguments 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function exportWidgetArguments()
+    {
+        $data = array();
+
+        foreach ($this->getWidgetParams() as $key => $param) {
+            if (isset($this->attributes[$key])) {
+                $data[$key] = $this->attributes[$key];
+            } else {
+                $data[$key] = $param->value;
+            }
+        }
+
+        return $data;
+    }
 }
 

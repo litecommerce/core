@@ -22,7 +22,7 @@ var productsListConfig = {
   pagerItemsCount: {pager.getPagesCount()},
   displayModes: {getDisplayModesForJS()},
   itemsPerPageRange: {pager.getItemsPerPageRange()},
-  urlTranslationTable: {getURLTranslationTable()},
+  urlTranslationTable: {getURLTranslationTableForJS()},
 };
 </script>
 
@@ -35,7 +35,7 @@ var productsListConfig = {
 
   <div class="list-head">
 
-    <div class="display-modes">
+    <div IF="isDisplayModeChangable()" class="display-modes">
       View as:
       <ul>
         <li FOREACH="getDisplayModes(),key,name" class="{getDisplayModeLinkClassName(key)}"><a href="{buildPageURL(##,##,##,key)}">{name}</a></li>
@@ -55,7 +55,7 @@ var productsListConfig = {
 
   </div>
 
-  <widget class="XLite_View_ProductsListPage" data="{pager.getPageData()}" displayMode="{getDisplayMode()}" />
+  <widget class="XLite_View_ProductsListPage" data="{pager.getPageData()}" displayMode="{getDisplayMode()}" widgetArguments="{getInheritedWidgetArguments()}" />
 
   <div class="list-pager-low">
     <widget name="pager" />

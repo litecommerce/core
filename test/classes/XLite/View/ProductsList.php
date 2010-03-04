@@ -97,6 +97,7 @@ class XLite_View_ProductsList extends XLite_View_Abstract
     public function init(array $attributes = array())
     {
         $this->attributes['listFactory'] = false;
+        $this->attributes['widgetArguments'] = array();
 
         $this->defaultURLParams[self::SORT_CRITERION_ARG] = XLite_Model_Product::getDefaultSortCriterion();
         $this->defaultURLParams[self::SORT_ORDER_ARG] = XLite_Model_Product::getDefaultSortOrder();
@@ -122,6 +123,17 @@ class XLite_View_ProductsList extends XLite_View_Abstract
             $sessionCell = array();
         }
 
+        $modes = $this->getDisplayModes;
+
+        // Get default display mode from wudget attrubites
+        if (
+            is_array($this->attributes['widgetArguments'])
+            && isset($this->attributes['widgetArguments']['displayMode'])
+            && isset($modes[$this->attributes['widgetArguments']['displayMode']])
+        ) {
+            $this->defaultURLParams['displayMode'] = $this->attributes['widgetArguments']['displayMode'];
+        }
+
         $this->urlParams = $this->defaultURLParams;
 
         foreach (array_keys($this->urlParams) as $name) {
@@ -133,6 +145,18 @@ class XLite_View_ProductsList extends XLite_View_Abstract
             }
 
             $sessionCell[$name] = $this->urlParams[$name];
+        }
+
+        // Override display mode if not allow visitor swicth look and feel
+        if (
+            is_array($this->attributes['widgetArguments'])
+            && isset($this->attributes['widgetArguments']['displayModeChangable'])
+            && isset($this->attributes['widgetArguments']['displayMode'])
+            && !$this->attributes['widgetArguments']['displayModeChangable']
+            && isset($modes[$this->attributes['widgetArguments']['displayMode']])
+        ) {
+            $this->urlParams['displayMode'] = $this->attributes['widgetArguments']['displayMode'];
+            $sessionCell['displayMode'] = $this->urlParams['displayMode'];
         }
 
         $this->session->set('productsListData', $sessionCell);
@@ -451,13 +475,7 @@ class XLite_View_ProductsList extends XLite_View_Abstract
      */
     public function getPageURLPattern()
     {
-        $params = $this->assembleURLParams(
-            self::PATTERN_BORDER_SYMBOL . XLite_View_Pager::PAGE_ID_ARG . self::PATTERN_BORDER_SYMBOL,
-            self::PATTERN_BORDER_SYMBOL . self::SORT_CRITERION_ARG . self::PATTERN_BORDER_SYMBOL,
-            self::PATTERN_BORDER_SYMBOL . self::SORT_ORDER_ARG . self::PATTERN_BORDER_SYMBOL,
-            self::PATTERN_BORDER_SYMBOL . self::DISPLAY_MODE_ARG . self::PATTERN_BORDER_SYMBOL,
-            self::PATTERN_BORDER_SYMBOL . self::ITEMS_PER_PAGE_ARG . self::PATTERN_BORDER_SYMBOL
-        );
+        $params = $this->getCommonPatternParams();
 
         $target = $params['target'];
         $action = isset($params['action']) ? $params['action'] : '';
@@ -477,22 +495,51 @@ class XLite_View_ProductsList extends XLite_View_Abstract
      */
     public function getPageURLPatternAJAX()
     {
-        $params = $this->assembleURLParams(
+        $params = $this->getCommonPatternParams();
+
+        $params = array_merge($params, $this->getAJAXSpecificPArams($params));
+
+        unset($params['target'], $params['action']);
+
+        return $this->buildURL('get_widget', '', $params);
+    }
+
+    /**
+     * Get common pattern parameters
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCommonPatternParams()
+    {
+        return $this->assembleURLParams(
             self::PATTERN_BORDER_SYMBOL . XLite_View_Pager::PAGE_ID_ARG . self::PATTERN_BORDER_SYMBOL,
             self::PATTERN_BORDER_SYMBOL . self::SORT_CRITERION_ARG . self::PATTERN_BORDER_SYMBOL,
             self::PATTERN_BORDER_SYMBOL . self::SORT_ORDER_ARG . self::PATTERN_BORDER_SYMBOL,
             self::PATTERN_BORDER_SYMBOL . self::DISPLAY_MODE_ARG . self::PATTERN_BORDER_SYMBOL,
             self::PATTERN_BORDER_SYMBOL . self::ITEMS_PER_PAGE_ARG . self::PATTERN_BORDER_SYMBOL
         );
+    }
 
-        $params['widget_target'] = $params['target'];
-        $params['widget_action'] = isset($params['action']) ? $params['action'] : '';
-
-        $params['class'] = get_class($this->attributes['listFactory'][0]);
-
-        unset($params['target'], $params['action']);
-
-        return $this->buildURL('get_widget', '', $params);
+    /**
+     * Get AJAX specific parameters 
+     * 
+     * @param array $params Parameters
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getAJAXSpecificParams(array $params)
+    {
+        return array(
+            'widget_target' => $params['target'],
+            'widget_action' => isset($params['action']) ? $params['action'] : '',
+            'class'         => get_class($this->attributes['listFactory'][0])
+        );
     }
 
     /**
@@ -509,6 +556,25 @@ class XLite_View_ProductsList extends XLite_View_Abstract
     }
 
     /**
+     * Get URL translation table 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getURLTranslationTable()
+    {
+        return array(
+            'pageId'        => XLite_View_Pager::PAGE_ID_ARG,
+            'sortCriterion' => self::SORT_CRITERION_ARG,
+            'sortOrder'     => self::SORT_ORDER_ARG,
+            'displayMode'   => self::DISPLAY_MODE_ARG,
+            'itemsPerPage'  => self::ITEMS_PER_PAGE_ARG,
+        );
+    }
+
+    /**
      * Get URL translation table as javascript object definition
      * 
      * @return string
@@ -516,14 +582,64 @@ class XLite_View_ProductsList extends XLite_View_Abstract
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getURLTranslationTable()
+    public function getURLTranslationTableForJS()
     {
-        return '{ '
-            . 'pageId: \'' . self::PATTERN_BORDER_SYMBOL        . XLite_View_Pager::PAGE_ID_ARG . self::PATTERN_BORDER_SYMBOL . '\','
-            . 'sortCriterion: \'' . self::PATTERN_BORDER_SYMBOL . self::SORT_CRITERION_ARG . self::PATTERN_BORDER_SYMBOL . '\','
-            . 'sortOrder: \'' . self::PATTERN_BORDER_SYMBOL     . self::SORT_ORDER_ARG . self::PATTERN_BORDER_SYMBOL . '\','
-            . 'displayMode: \'' . self::PATTERN_BORDER_SYMBOL   . self::DISPLAY_MODE_ARG . self::PATTERN_BORDER_SYMBOL . '\','
-            . 'itemsPerPage: \'' . self::PATTERN_BORDER_SYMBOL  . self::ITEMS_PER_PAGE_ARG . self::PATTERN_BORDER_SYMBOL . '\''
-            . ' }';
+        $list = array();
+
+        foreach ($this->getURLTranslationTable() as $key => $value) {
+            $list[] = $key . ': \'' . self::PATTERN_BORDER_SYMBOL . $value . self::PATTERN_BORDER_SYMBOL . '\'';
+        }
+
+        return '{ ' . implode(', ', $list) . ' }';
+    }
+
+    /**
+     * Get widget params 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    static public function getWidgetParamsList()
+    {
+        $gridColumns = array(1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5);
+
+        return array(
+            'displayMode'          => new XLite_Model_WidgetParam_List('Look and feel of a product list', XLite_View_ProductsListPage::getDefaultDisplayMode(), XLite_View_ProductsListPage::getDisplayModes()),
+            'gridColumns'          => new XLite_Model_WidgetParam_List('Number of columns (for Grid mode only)', 3, $gridColumns),
+            'showDescription'      => new XLite_Model_WidgetParam_Checkbox('Show product description (for List mode only)', 1),
+            'showPrice'            => new XLite_Model_WidgetParam_Checkbox('Show product price', 1),
+            'showAdd2Cart'         => new XLite_Model_WidgetParam_Checkbox('Show \'Add to Cart\' button', 1),
+            'multipleAdd2Cart'     => new XLite_Model_WidgetParam_Checkbox('Enable multiple additions at once', 0),
+            'displayModeChangable' => new XLite_Model_WidgetParam_Checkbox('Allow visitor to switch Look and feel of a product list', 1),
+        );
+    }
+
+    /**
+     * Get inherited widget arguments
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getInheritedWidgetArguments()
+    {
+        return $this->attributes['widgetArguments'];
+    }
+
+    /**
+     * Check - show Add to cart button or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isDisplayModeChangable()
+    {
+        return !isset($this->attributes['widgetArguments']['displayModeChangable'])
+            || $this->attributes['widgetArguments']['displayModeChangable'];
     }
 }
