@@ -33,7 +33,6 @@ class XLite_View_CategoryProducts extends XLite_View_Dialog
      */
     protected $allowedTargets = array('category');
 
-
     /**
      * Return title
      *
@@ -58,7 +57,6 @@ class XLite_View_CategoryProducts extends XLite_View_Dialog
         return 'category_products';
     }
 
-
     /**
      * Check if widget is visible
      *
@@ -68,7 +66,33 @@ class XLite_View_CategoryProducts extends XLite_View_Dialog
      */
     public function isVisible()
     {
-        return parent::isVisible() && $this->getCategory()->getProducts();
+        return parent::isVisible();
+    }
+
+    /**
+     * Get products 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProducts($sortCriterion = 'name', $sortOrder = 'asc')
+    {
+        return $this->getCategory()->getProducts(null, $sortCriterion . ' ' . strtoupper($sortOrder));
+    }
+
+    /**
+     * Get list factory
+     * 
+     * @return array (callback - object + method name)
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getListFactory()
+    {
+        return array($this, 'getProducts');
     }
 }
 

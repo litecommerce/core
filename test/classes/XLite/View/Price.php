@@ -1,91 +1,172 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* @package View
-* @access public
-* @version $Id$
-*/
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
+
 class XLite_View_Price extends XLite_View_Abstract
 {	
-    public $template = "common/price_plain.tpl";	
-    public $product;
+    /**
+     * Widget template 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $template = 'common/price_plain.tpl';
 
-    function isSalePriceEnabled()
+    /**
+     * Constructor
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct(array $attributes = array())
     {
-        return $this->getComplex('config.General.enable_sale_price') && $this->CalcSaveValue(false) > 0;
+        $this->attributes['product'] = false;
+        $this->attributes['displayOnlyPrice'] = false;
+
+        parent::__construct($attributes);
     }
 
-    function isSaveEnabled()
+    /**
+     * Check widget visibility 
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isVisible()
     {
-        return $this->getComplex('config.General.you_save') != "N";
+        return parent::isVisible()
+            && $this->attributes['product'];
     }
 
-    function CalcSaveValue($full = true)
+    /**
+     * Check - sale price is enabled or not 
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isSalePriceEnabled()
     {
-         switch ($this->getComplex('config.General.you_save')) {
-            case "YP":
-                $value = round(($this->product->get("sale_price") - $this->product->get("listPrice")) / $this->product->get("sale_price") * 100) . ($full ? " %" : "");
+        return $this->config->General->enable_sale_price && $this->calcSaveValue(false) > 0;
+    }
+
+    /**
+     * Check - is save block is enabeld or not 
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isSaveEnabled()
+    {
+        return $this->config->General->you_save != 'N';
+    }
+
+    /**
+     * Calculate save value 
+     * 
+     * @param boolean $full Calculate save value as formatted string or float
+     *  
+     * @return mixed
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function calcSaveValue($full = true)
+    {
+         switch ($this->config->General->you_save) {
+            case 'YP':
+                $value = round(($this->getProduct()->get('sale_price') - $this->getProduct()->get('listPrice')) / $this->getProduct()->get('sale_price') * 100)
+					. ($full ? ' %' : '');
+
                 break;
-            case "YD":
+
+            case 'YD':
                 if ($full) {
                     $wg = new XLite_View_Abstract();
-                    $value = $wg->price_format($this->product->get("sale_price") - $this->product->get("listPrice"));
+                    $value = $wg->price_format($this->getProduct()->get('sale_price') - $this->getProduct()->get('listPrice'));
+
                 } else {
-                    $value = $this->product->get("sale_price") - $this->product->get("listPrice");
+                    $value = $this->getProduct()->get('sale_price') - $this->getProduct()->get('listPrice');
                 }
+
                 break;
-            default :
-                $value = $this->product->get("listPrice");
-                break;
+
+            default:
+                $value = $this->getProduct()->get('listPrice');
         }
+
         return $value;
     }
 
-    function getSaveValue()
+    /**
+     * Get save value 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSaveValue()
     {
-        return $this->CalcSaveValue();
+        return $this->calcSaveValue();
     }
-}
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+	/**
+	 * Get product 
+	 * 
+	 * @return XLite_Model_Product
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	public function getProduct()
+	{
+		return $this->attributes['product'];
+	}
+
+	/**
+	 * Check - display only price or not
+	 * 
+	 * @return boolean
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	public function isDisplayOnlyPrice()
+	{
+		return $this->attributes['displayOnlyPrice'];
+	}
+}

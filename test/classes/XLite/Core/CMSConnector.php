@@ -278,17 +278,20 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	/**
 	 * Return HTML code of a widget 
 	 * 
-	 * @param string $name       widget name
-	 * @param array  $attributes array of params defined in CMS
-	 *  
+	 * @param string $name           Widget name
+	 * @param array  $attributes     Parameters list defined in CMS
+     * @param array  $inputArguments Input arguments (request data) defined in CMS
+	 * 
 	 * @return string
 	 * @access public
 	 * @since  3.0
 	 */
-	public function getWidgetHTML($name, array $attributes = array())
+	public function getWidgetHTML($name, array $attributes = array(), array $inputArguments = array())
 	{
         // Run the XLite singleton if it hasn't beed run yet
-        $this->runApplication();
+        $this->runApplication($inputArguments);
+
+        XLite_View_Abstract::cleanupResources();
 
         return new XLite_Core_WidgetDataTransport($this->getWidgetObject($name, $attributes));
 	}

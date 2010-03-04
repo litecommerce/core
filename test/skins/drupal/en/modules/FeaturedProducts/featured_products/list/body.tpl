@@ -21,7 +21,7 @@
         <tr>
             <td>
 <FONT class="ProductPriceTitle">Price: </FONT><FONT class="ProductPrice">{price_format(featuredProduct.product,#listPrice#):h}</FONT><FONT class="ProductPriceTitle"> {featuredProduct.product.priceMessage:h}</FONT>
-<widget module="ProductAdviser" template="modules/ProductAdviser/PriceNotification/category_button.tpl" product="{featuredProduct.product}" visible="{!getPriceNotificationSaved(featuredProduct.product.product_id)}">
+<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_CategoryButton" product="{featuredProduct.product}" />
 <!--AFTER PRICE-->
                 <br><br>
                 <widget template="buy_now.tpl" product="{featuredProduct.product}">

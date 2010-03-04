@@ -578,6 +578,18 @@ class XLite_View_Abstract extends XLite_Core_Handler
         return isset($type) ? self::$resources[$type] : self::$resources;
     }
 
+    /**
+     * Cleanup resources 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function cleanupResources()
+    {
+        self::$resources = array(self::RESOURCE_JS => array(), self::RESOURCE_CSS => array());
+    }
 
     // ------------------> Routines for templates
 

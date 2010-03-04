@@ -302,9 +302,9 @@ class XLite_Core_FlexyCompiler extends XLite_Base
                         list($expr,$k,$forvar) = $this->flexyForeach($this->getTokenText($pos+1));
                         $exprNumber = "$forvar"."ArraySize";
                         $exprCounter = "$forvar"."ArrayPointer";
-                        $this->subst($token["start"], 0, "<?php \$$forvar = isset(\$this->$forvar) ? \$this->$forvar : null; \$_foreach_var = $expr; if (!is_null(\$_foreach_var)) { \$this->$exprNumber=count(\$_foreach_var); \$this->$exprCounter=0; } if (!is_null(\$_foreach_var)) foreach(\$_foreach_var as $k){ \$this->$exprCounter++; ?>\n");
+                        $this->subst($token["start"], 0, "<?php \$$forvar = isset(\$this->$forvar) ? \$this->$forvar : null; \$_foreach_var = $expr; if (!is_null(\$_foreach_var)) { \$this->$exprNumber=count(\$_foreach_var); \$this->$exprCounter=0; } if (!is_null(\$_foreach_var)) foreach(\$_foreach_var as $k){ \$this->$exprCounter++; ?>");
                         $this->subst($this->tokens[$pos]["start"], $this->tokens[$pos]["end"], '');
-                        $this->subst($this->tokens[$pos1]["end"]-1, $this->tokens[$pos1]["end"], ">\n<?php } \$this->$forvar = \$$forvar; ?>");
+                        $this->subst($this->tokens[$pos1]["end"]-1, $this->tokens[$pos1]["end"], "><?php } \$this->$forvar = \$$forvar; ?>");
                     } else {
                         $this->error("No closing tag for foreach");
                     }

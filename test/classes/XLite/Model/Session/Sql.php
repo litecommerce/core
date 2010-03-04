@@ -76,8 +76,10 @@ class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_
         $sid = null;
         if (isset($_POST[$sname])) {
         	$sid = $_POST[$sname];
+
         } elseif (isset($_GET[$sname])) {
         	$sid = $_GET[$sname];
+
         } elseif (isset($_REQUEST[$sname])) {
         	$sid = $_REQUEST[$sname];
         }
@@ -85,6 +87,7 @@ class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_
         if (isset($sid)) {
             $this->setID($sid);
             $this->_fetchData();
+
         } else {
             $this->_initialize();
         }
@@ -96,14 +99,18 @@ class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_
     function _restore()
     {
         $sid = null;
+
         $sname = $this->getName();
         if (isset($_POST[$sname])) {
         	$sid = $_POST[$sname];
+
         } elseif (isset($_GET[$sname])) {
         	$sid = $_GET[$sname];
+
         } elseif (isset($_REQUEST[$sname])) {
         	$sid = $_REQUEST[$sname];
         }
+
         if (isset($sid)) {
         	$this->setID($sid);
         	$this->_fetchData();
@@ -116,6 +123,7 @@ class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_
     function _initialize()
     {
         $this->_sendHeaders(); 
+
         return $this->create();
     }
 
@@ -127,6 +135,7 @@ class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_
         if ($this->isExists()) {
             $this->_sendHeaders();
             return $this->retrieve();
+
         } else {
         	$sname = $this->getName();
             if (!isset($_POST[$sname]) && !isset($_GET[$sname]) && isset($_REQUEST[$sname])) {
@@ -148,15 +157,17 @@ class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_
     * @param string $name The session variable name.
     * @param mixed $value The session variable to save.
     */
-    function set($name, $value)
+    public function set($name, $value)
     {
         if (is_null($value)) {
         	if (isset($this->_data[$name])) {
             	unset($this->_data[$name]);
             }
+
         } else {
             $this->_data[$name] = serialize($value);
         }    
+
         return true;
     }
 
@@ -166,15 +177,18 @@ class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_
     * @param string $name The session variable name to return value.
     * @return mixed The session variable or null.
     */
-    function get($name)
+    public function get($name)
     {
+		$result = null;
+
         if (is_array($this->_data) && array_key_exists($name, $this->_data)) {
-            return unserialize($this->_data[$name]);
+            $result = unserialize($this->_data[$name]);
         }
-        return null;
+
+        return $result;
     }
 
-    function isRegistered($name)
+    public function isRegistered($name)
     {
 	    return is_array($this->_data) && array_key_exists($name, $this->_data);
     }
@@ -205,18 +219,20 @@ class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_
         $url = parse_url($this->getShopURL());
         $this->setPath($url['path']);
 
-        if ($url['host'] == "localhost" || $url['host'] == "127.0.0.1" || !strpos($url['host'], "."))
+        if ($url['host'] == "localhost" || $url['host'] == "127.0.0.1" || !strpos($url['host'], ".")) {
             setcookie($this->getName(), $this->getID(), 0, $this->getPath());
-        else
+        } else {
             setcookie($this->getName(), $this->getID(), 0, $this->getPath(), $url['host'], 0);
+		}
 
         $url = parse_url($this->getShopURL(true));
         $this->setPath($url['path']);
 
-        if ($url['host'] == "localhost" || $url['host'] == "127.0.0.1" || !strpos($url['host'], "."))
+        if ($url['host'] == "localhost" || $url['host'] == "127.0.0.1" || !strpos($url['host'], ".")) {
             setcookie($this->getName(), $this->getID(), 0, $this->getPath());
-        else
+        } else {
             setcookie($this->getName(), $this->getID(), 0, $this->getPath(), $url['host'], 0);
+		}
 
         error_reporting($error_reporting);
     }

@@ -136,21 +136,23 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
 	function getNewArrival()
 	{
         $stats = new XLite_Module_ProductAdviser_Model_ProductNewArrivals();
-        $timeCondition = $this->config->getComplex('ProductAdviser.period_new_arrivals') * 3600;
-		$timeLimit = time();
-        if (!$stats->find("product_id='".$this->get("product_id")."'")) {
-        	return 0;
-        }
 
-        if ($stats->get("new") == "Y") {
-        	return 2;
-        }
+		$result = 0;
 
-        if (($stats->get("updated") + $timeCondition) > $timeLimit) {
-        	return 1;
-        }
+        if ($stats->find("product_id = '" . $this->get("product_id") . "'")) {
 
-		return 0;
+	        $timeCondition = $this->config->ProductAdviser->period_new_arrivals * 3600;
+    	    $timeLimit = time();
+
+	        if ($stats->get("new") == "Y") {
+    	    	$result = 2;
+
+        	} elseif (($stats->get("updated") + $timeCondition) > $timeLimit) {
+        		$result =  1;
+	        }
+		}
+
+		return $result;
 	}
 
     function set($property, $value)
@@ -185,18 +187,12 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
 
     function checkHasOptions()
     {
-    	if (!$this->xlite->get("ProductOptionsEnabled")) {
-    		return false;
-    	}
-    	return $this->hasOptions();
+    	return $this->xlite->get("ProductOptionsEnabled") ? $this->hasOptions() : false;
     }
 
     function _checkSafetyMode()
     {
-    	if ($this->xlite->get("HTMLCatalogWorking")) {
-    		return true;
-    	}
-    	return false;
+    	return $this->xlite->get("HTMLCatalogWorking");
     }
 
     function checkSafetyMode()
@@ -249,16 +245,14 @@ There <?php echo ($pricingCAI == 1) ? "is" : "are"; ?> <b><font color=blue><?php
 
 	function isPriceNotificationAllowed()
 	{
-		if (intval($this->get("price")) <= 0) {
-			return false;
+		$result = false;
+
+		if (intval($this->get("price")) > 0) {
+			$mode = $this->config->ProductAdviser->customer_notifications_mode;
+			$result = ($mode & 1) != 0;
 		}
-		$mode = $this->config->getComplex('ProductAdviser.customer_notifications_mode');
-		return (($mode & 1) != 0) ? true : false;
+
+		return $result;
 	}
 
 }
-
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

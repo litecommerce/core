@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Price drops notification link
+ * Added-to-cart mark
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,6 +10,4 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<span>
-  &nbsp;(<a href="javascript: PriceNotifyMe('{getProductId()}','{getProductPrice()}')">Notify me</a> when the price drops)
-</span>
+<img src="images/spacer.gif" alt="Added to cart" class="added-to-cart" />

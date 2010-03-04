@@ -810,6 +810,35 @@ class XLite_Model_Order extends XLite_Model_Abstract
     } // }}}
 
     /**
+     * Check - item exist in order or not 
+     * 
+     * @param XLite_Model_OrderItem $item Item
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isExistsItem(XLite_Model_OrderItem $item)
+    {
+		$result = false;
+
+        if ($item->is('valid')) {
+	        $key = $item->get('key');
+    	    $items = $this->get('items');
+
+    	    foreach ($items as $i) {
+        	    if ($i->get('key') == $key) {
+					$result = true;
+					break;
+    	        }
+        	}
+		}
+
+		return $result;
+	}
+
+    /**
     * Calculates order totals and store them in the order properties:
     * total, subtotal, tax, shipping, etc
     */

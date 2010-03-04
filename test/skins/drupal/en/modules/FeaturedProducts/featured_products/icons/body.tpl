@@ -13,7 +13,7 @@
 </tr>    
 <tr>
     <td valign="top" FOREACH="row,featuredProduct" align="center" width="33%">
-        <span IF="featuredProduct"><FONT class="ProductPriceTitle">Price: </FONT><FONT class="ProductPrice">{price_format(featuredProduct.product,#listPrice#):h}</FONT><FONT class="ProductPriceTitle"> {featuredProduct.product.priceMessage:h}</FONT><br><widget module="ProductAdviser" template="modules/ProductAdviser/PriceNotification/category_button.tpl" product="{featuredProduct.product}" visible="{!getPriceNotificationSaved(featuredProduct.product.product_id)}"></span>
+        <span IF="featuredProduct"><FONT class="ProductPriceTitle">Price: </FONT><FONT class="ProductPrice">{price_format(featuredProduct.product,#listPrice#):h}</FONT><FONT class="ProductPriceTitle"> {featuredProduct.product.priceMessage:h}</FONT><br><widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_CategoryButton" product="{featuredProduct.product}" /></span>
     </td>
 </tr>
 <!--AFTER PRICE-->

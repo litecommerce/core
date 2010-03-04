@@ -976,5 +976,49 @@ class XLite_Model_Product extends XLite_Model_Abstract
 
         return $result;
     }
+
+	/**
+	 * Get products list sort criterions list
+	 * 
+	 * @return array
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	static public function getSortCriterions()
+	{
+		return array(
+            'price' => 'Price',
+            'name'  => 'Product name',
+            'sku'   => 'SKU',
+        );
+	}
+
+	/**
+	 * Get default sort criterion 
+	 * 
+	 * @return string
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	static public function getDefaultSortCriterion()
+	{
+		return 'name';
+	}
+
+    /**
+     * Get default sort order
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    static public function getDefaultSortOrder()
+    {
+        return 'asc';
+    }
+
 } 
 
