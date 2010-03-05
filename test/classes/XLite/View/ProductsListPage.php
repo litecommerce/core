@@ -262,21 +262,6 @@ class XLite_View_ProductsListPage extends XLite_View_Abstract
     }
 
     /**
-     * Check - allow multiple additions at once or not 
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isMultipleAdd2Cart()
-    {
-        return $this->isShowAdd2Cart()
-            && isset($this->attributes['widgetArguments']['multipleAdd2Cart'])
-            && $this->attributes['widgetArguments']['multipleAdd2Cart'];
-    }
-
-    /**
      * Get widget params 
      * 
      * @return array
@@ -290,12 +275,11 @@ class XLite_View_ProductsListPage extends XLite_View_Abstract
         $gridColumns = array_combine($gridColumns, $gridColumns);
 
         return array(
-            'displayMode'          => new XLite_Model_WidgetParam_List('Look and feel of a product list', self::getDefaultDisplayMode(), self::getDisplayModes()),
-            'gridColumns'          => new XLite_Model_WidgetParam_List('Number of columns (for Grid mode only)', 3, $gridColumns),
-            'showDescription'      => new XLite_Model_WidgetParam_Checkbox('Show product description (for List mode only)', 1),
-            'showPrice'            => new XLite_Model_WidgetParam_Checkbox('Show product price', 1),
-            'showAdd2Cart'         => new XLite_Model_WidgetParam_Checkbox('Show \'Add to Cart\' button', 1),
-            'multipleAdd2Cart'     => new XLite_Model_WidgetParam_Checkbox('Enable multiple additions at once', 0),
+            'displayMode'     => new XLite_Model_WidgetParam_List('Look and feel of a product list', self::getDefaultDisplayMode(), self::getDisplayModes()),
+            'gridColumns'     => new XLite_Model_WidgetParam_List('Number of columns (for Grid mode only)', 3, $gridColumns),
+            'showDescription' => new XLite_Model_WidgetParam_Checkbox('Show product description (for List mode only)', 1),
+            'showPrice'       => new XLite_Model_WidgetParam_Checkbox('Show product price', 1),
+            'showAdd2Cart'    => new XLite_Model_WidgetParam_Checkbox('Show \'Add to Cart\' button', 1),
         );
     }
 }

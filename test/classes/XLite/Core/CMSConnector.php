@@ -277,7 +277,9 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
 	public function isWidgetVisible($name, array $attributes)
 	{
-		return ($widget = $this->getWidgetObject($name, $attributes)) ? $widget->isVisible() : false;
+        $widget = $this->getWidgetObject($name, $attributes);
+
+		return $widget ? $widget->isVisible() : false;
 	}
 
 	/**

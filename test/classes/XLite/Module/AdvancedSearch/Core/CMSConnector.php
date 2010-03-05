@@ -35,7 +35,7 @@ abstract class XLite_Module_AdvancedSearch_Core_CMSConnector extends XLite_Core_
 	{
         parent::__construct();
 
-        $this->widgetsList['XLite_Module_AdvancedSearch_View_AdvancedSearch'] = 'Advanced search';
+        $this->widgetsList['XLite_Module_AdvancedSearch_View_AdvancedSearchBlock'] = 'Advanced search';
         $this->pageTypes['XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch'] = 'Advanced search';
 	}
 }

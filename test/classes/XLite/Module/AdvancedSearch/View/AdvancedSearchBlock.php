@@ -27,53 +27,23 @@
  */
 
 /**
- * Advanced search widget (controller)
+ * Advanced search widget (block)
  * 
  * @package    XLite
  * @subpackage View
  * @since      3.0.0 EE
  */
-class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_Module_AdvancedSearch_View_AdvancedSearchAbstract
+class XLite_Module_AdvancedSearch_View_AdvancedSearchBlock extends XLite_Module_AdvancedSearch_View_AdvancedSearchAbstract
 {
     /**
-     * Targets this widget is allowed for
+     * Check if widget is visible
      *
-     * @var    array
+     * @return bool
      * @access protected
      * @since  3.0.0 EE
      */
-    protected $allowedTargets = array('advanced_search');
-
-    /**
-     * Initialize widget
-     *
-     * @return void
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function init(array $attributes = array())
+    public function isVisible()
     {
-        parent::init($attributes);
-
-        $this->attributes['displayMode'] = 'horizontal';
-    }
-
-    /**
-     * Set properties
-     *
-     * @param array $attributes params to set
-     *  
-     * @return void
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function setAttributes(array $attributes)
-    {
-        if (isset($attributes['displayMode'])) {
-            unset($attributes['displayMode']);
-        }
-
-        parent::setAttributes($attributes);
+        return parent::isVisible() || $this->attributes[self::IS_EXPORTED];
     }
 }
-
