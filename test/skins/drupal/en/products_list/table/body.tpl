@@ -16,7 +16,7 @@
     <td>{product.sku}</td>
     <td><a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" class="product-name">{product.name:h}</a></td>
     <td IF="isShowPrice()" class="product-price-column"><widget class="XLite_View_Price" product="{product}" displayOnlyPrice="true" /></td>
-    <td IF="isShowAdd2Cart()" class="last"><widget class="XLite_View_BuyNow" product="{product}" /></td>
+    <td IF="isShowAdd2Cart()" class="product-button-column"><widget class="XLite_View_BuyNow" product="{product}" /></td>
   </tr>
 
 </table>

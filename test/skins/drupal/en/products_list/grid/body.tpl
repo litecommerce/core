@@ -12,10 +12,11 @@
  *}
 <ul class="list-body list-body-grid">
 
-  <li FOREACH="getData(),product" class="item" style="width: {getGridItemWidth()}%;">
+  <li FOREACH="getData(),product" class="item draggable" style="width: {getGridItemWidth()}%;">
 
     <div>
       <widget class="XLite_View_AddedToCartMark" product="{product}" />
+      <span class="draggable-mark">Drag me to the cart</span>
       <a IF="config.General.show_thumbnails&product.hasThumbnail()" class="product-thumbnail" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}"><img src="{product.thumbnailURL}" alt="" /></a>
       <a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" class="product-name">{product.name:h}</a>
       <widget class="XLite_View_Price" product="{product}" displayOnlyPrice="true" IF="isShowPrice()" />

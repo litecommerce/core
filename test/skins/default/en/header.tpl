@@ -25,6 +25,7 @@
 <link FOREACH="getCSSResources(),file" href="{file}" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript" src="{getSkinURL(#js/jquery-1.3.2.js#)}"></script>
+<script type="text/javascript" src="{getSkinURL(#js/jquery-ui.1.7.2.js#)}"></script>
 <script type="text/javascript" src="{getSkinURL(#js/common.js#)}"></script>
 <script FOREACH="getJSResources(),file" type="text/javascript" src="{file}"></script>
 

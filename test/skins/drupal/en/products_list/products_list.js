@@ -334,6 +334,29 @@ var productsList = {
 // onready event handler
 $(document).ready(
   function() {
-    return productsList.initialization();
+    productsList.initialization();
+
+    /* TODO - do it later
+    $('.draggable', productsList.container)
+      .hover(
+        function() {
+          $(this).addClass('ui-draggable-hover');
+        },
+        function() {
+          $(this).removeClass('ui-draggable-hover');
+        }
+      )
+      .draggable(
+        {
+          helper: function() {
+            var e = $(this);
+            return e.clone().width(e.width());
+          },
+          opacity: 0.5,
+          revert: 'invalid',
+          zIndex: 2000
+        }
+      );
+    */
   }
 );
