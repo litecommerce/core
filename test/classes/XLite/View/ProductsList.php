@@ -87,6 +87,16 @@ class XLite_View_ProductsList extends XLite_View_Abstract
     );
 
     /**
+     * List cache 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $listCache = null;
+
+    /**
      * Constructor
      * 
      * @return void
@@ -175,7 +185,8 @@ class XLite_View_ProductsList extends XLite_View_Abstract
     {
         return parent::isVisible()
             && is_array($this->attributes['listFactory'])
-            && is_callable($this->attributes['listFactory']);
+            && is_callable($this->attributes['listFactory'])
+            && $this->getList();
     }
 
     /**
@@ -188,11 +199,15 @@ class XLite_View_ProductsList extends XLite_View_Abstract
      */
     public function getList()
     {
-        return call_user_func(
-            $this->attributes['listFactory'],
-            $this->urlParams[self::SORT_CRITERION_ARG],
-            $this->urlParams[self::SORT_ORDER_ARG]
-        );
+        if (is_null($this->listCache)) {
+            $this->listCache = call_user_func(
+                $this->attributes['listFactory'],
+                $this->urlParams[self::SORT_CRITERION_ARG],
+                $this->urlParams[self::SORT_ORDER_ARG]
+            );
+        }
+
+        return $this->listCache;
     }
 
     /**
