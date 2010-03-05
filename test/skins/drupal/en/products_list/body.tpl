@@ -35,7 +35,7 @@ var productsListConfig = {
 
   <div class="list-head">
 
-    <div IF="isDisplayModeChangable()" class="display-modes">
+    <div IF="isDisplayModeAdjustable()" class="display-modes">
       View as:
       <ul>
         <li FOREACH="getDisplayModes(),key,name" class="{getDisplayModeLinkClassName(key)}"><a href="{buildPageURL(##,##,##,key)}">{name}</a></li>

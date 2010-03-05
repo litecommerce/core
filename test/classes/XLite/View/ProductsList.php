@@ -160,9 +160,9 @@ class XLite_View_ProductsList extends XLite_View_Abstract
         // Override display mode if not allow visitor swicth look and feel
         if (
             is_array($this->attributes['widgetArguments'])
-            && isset($this->attributes['widgetArguments']['displayModeChangable'])
+            && isset($this->attributes['widgetArguments']['displayModeAdjustable'])
             && isset($this->attributes['widgetArguments']['displayMode'])
-            && !$this->attributes['widgetArguments']['displayModeChangable']
+            && !$this->attributes['widgetArguments']['displayModeAdjustable']
             && isset($modes[$this->attributes['widgetArguments']['displayMode']])
         ) {
             $this->urlParams['displayMode'] = $this->attributes['widgetArguments']['displayMode'];
@@ -620,7 +620,7 @@ class XLite_View_ProductsList extends XLite_View_Abstract
     {
         $list = XLite_View_ProductsListPage::getWidgetParamsList();
 
-        $list['displayModeChangable'] = new XLite_Model_WidgetParam_Checkbox('Allow visitor to switch Look and feel of a product list', 1);
+        $list['displayModeAdjustable'] = new XLite_Model_WidgetParam_Checkbox('Allow visitor to switch Look and feel of a product list', 1);
 
         return $list;
     }
@@ -646,9 +646,9 @@ class XLite_View_ProductsList extends XLite_View_Abstract
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isDisplayModeChangable()
+    public function isDisplayModeAdjustable()
     {
-        return !isset($this->attributes['widgetArguments']['displayModeChangable'])
-            || $this->attributes['widgetArguments']['displayModeChangable'];
+        return !isset($this->attributes['widgetArguments']['displayModeAdjustable'])
+            || $this->attributes['widgetArguments']['displayModeAdjustable'];
     }
 }
