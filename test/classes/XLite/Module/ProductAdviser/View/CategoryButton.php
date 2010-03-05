@@ -60,6 +60,7 @@ class XLite_Module_ProductAdviser_View_CategoryButton extends XLite_View_Abstrac
         parent::init($attributes);
     }
 
+    /* FIXME: getDialog() is not accessible anymore
     /**
      * Check visibility 
      * 
@@ -72,8 +73,8 @@ class XLite_Module_ProductAdviser_View_CategoryButton extends XLite_View_Abstrac
     {
         return parent::isVisible()
             && $this->attributes['product']
-            && !$this->getDialog()->getPriceNotificationSaved($this->attributes['product']->get('product_id'))
-            && $this->getDialog()->isPriceNotificationEnabled()
+//            && !$this->getDialog()->getPriceNotificationSaved($this->attributes['product']->get('product_id'))
+//            && $this->getDialog()->isPriceNotificationEnabled()
             && $this->attributes['product']->isPriceNotificationAllowed();
     }
 

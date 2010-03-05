@@ -50,11 +50,23 @@ class XLite_Module_FeaturedProducts_Model_FeaturedProduct extends XLite_Model_Ab
 		"product_id" => 0,
 		"category_id" => 0,
 		"order_by" => 0);	
+	
 	public $primaryKey = array("category_id","product_id");	
+	
 	public $defaultOrder = "order_by";	
+	
 	public $alias = "featured_products";	
+	
 	public $product = null;
 
+    /**
+     * Filter 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     function filter()
     {
         $this->product = new XLite_Model_Product($this->get("product_id"));
@@ -62,9 +74,6 @@ class XLite_Module_FeaturedProducts_Model_FeaturedProduct extends XLite_Model_Ab
         	return false;
         }
         return $this->product->filter();
-    }
+	}
+
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

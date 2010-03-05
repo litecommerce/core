@@ -55,9 +55,13 @@ class XLite_Module_FeaturedProducts_View_FeaturedProducts extends XLite_View_Dia
      */
     protected function getDir()
     {
-        return 'modules/FeaturedProducts/featured_products/' . $this->config->FeaturedProducts->featured_products_look;
+        return 'modules/FeaturedProducts/featured_products/' . $this->getDisplayMode();
     }
 
+    protected function getDisplayMode()
+    {
+        return ($this->attributes[self::IS_EXPORTED] ? $this->attributes['displayMode'] : $this->config->FeaturedProducts->featured_products_look);
+    }
 
     /**
      * Check if widget is visible
@@ -70,5 +74,54 @@ class XLite_Module_FeaturedProducts_View_FeaturedProducts extends XLite_View_Dia
     {
         return parent::isVisible() && $this->getCategory()->getFeaturedProducts() && !$this->get('page');
     }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+        
+        $this->widgetParams += XLite_View_ProductsList::getWidgetParamsList();
+    }
+
+    /**
+     * Get products array
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProducts()
+    {
+        $products = array();
+        $featuredProducts = $this->getCategory()->getFeaturedProducts();
+
+        if (is_array($featuredProducts)) {
+            foreach ($featuredProducts as $fp) {
+                $products[] = $fp->product;
+            }
+        }
+        return $products;
+    }
+
+    /**
+     * Get widget arguments (used by the common products list template)
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getWidgetArguments()
+    {
+        return (isset($this->attributes['widgetArguments']) ? $this->attributes['widgetArguments'] : array());
+    }
+
 }
 

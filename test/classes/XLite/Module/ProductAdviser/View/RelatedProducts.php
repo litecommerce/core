@@ -85,7 +85,7 @@ class XLite_Module_ProductAdviser_View_RelatedProducts extends XLite_View_Dialog
         parent::defineWidgetParams();
 
 		$this->widgetParams += array(
-            'displayMode'        => new XLite_Model_WidgetParam_List('Display mode', $this->getDisplayMode(), $this->displayModes),
+            'displayMode'        => new XLite_Model_WidgetParam_List('Display mode', 'list', $this->displayModes),
             'numberOfColumns'    => new XLite_Model_WidgetParam_List('Number of columns (for Icons mode only)', 2, range(1,5)),
             'showDescription'    => new XLite_Model_WidgetParam_Checkbox('Show product description (for List mode only)', 1),
             'showPrice'          => new XLite_Model_WidgetParam_Checkbox('Show product price', 1),

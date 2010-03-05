@@ -4,4 +4,4 @@ CREATE TABLE xlite_featured_products (
   order_by int(11) NOT NULL default '0',
   PRIMARY KEY  (category_id,product_id)
 ) TYPE=MyISAM;
-INSERT INTO xlite_config VALUES ('featured_products_look','Featured products look&feel','icons','FeaturedProducts',10,'select');
+INSERT INTO xlite_config VALUES ('featured_products_look','Featured products look&feel','grid','FeaturedProducts',10,'select');
