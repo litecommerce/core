@@ -139,5 +139,37 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_SideBarBox
     {
         return parent::isVisible() && $this->getBestsellers();
     }
+
+    /**
+     * Return whether thumbnails are to be shown in the product list
+     */
+    public function thumbnailsEnabled()
+    {
+        return $this->getComplex('config.Bestsellers.bestsellers_thumbnails');
+    }
+
+    /**
+     * Return CSS classes depending on the widget settings
+     */ 
+    public function widgetCSSClasses()
+    {
+        $class = 'promoted-products';
+
+        $css = array($class);
+
+        if ($this->thumbnailsEnabled())
+            $css[] = "$class-with-thumbnails";
+
+        $modeClasses = array(
+            'vertical' => 'shortened',
+            'horizontal' => 'full',
+        );
+        $css[] = "$class-" . (isset($modeClasses[$this->displayMode]) ? $modeClasses[$this->displayMode] : $modeClasses[0]);
+
+        return join(' ', $css);
+    }
+
+
+
 }
 

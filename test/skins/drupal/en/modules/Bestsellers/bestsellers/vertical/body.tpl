@@ -1,9 +1,10 @@
 {* SVN $Id$ *}
-<table border="0" cellpadding="0" cellspacing="0">
-  <tr FOREACH="getBestsellers(),id,bestseller">
-    <td>
-      <strong>{inc(id)}.</strong>&nbsp;<a href="{buildURL(#product#,##,_ARRAY_(#product_id#^bestseller.product_id,#category_id#^bestseller.category_id,#sns_mode#^#bestseller#))}" class="SidebarItems">{bestseller.name}</a>
-    </td>
-  </tr>
-</table>
-
+<ul class="{widgetCSSClasses()}">
+  <li FOREACH="getBestsellers(),id,product">
+    <a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id))}" class="product-thumbnail" IF="thumbnailsEnabled()&product.hasThumbnail()"><img src="{product.thumbnailURL}" width="25" alt="" /></a>
+    <a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id))}" class="product-title">{product.name}</a>
+    <form class="add-to-cart-form" action="{buildURL(#product#,#buynow#,_ARRAY_(#product_id#^product.product_id))}" method="post">
+      <button class="add-to-cart aux-button" type="submit"><span class="aux-button">{price_format(product,#price#):h}</span></button>
+    </form>
+  </li>
+</ul>
