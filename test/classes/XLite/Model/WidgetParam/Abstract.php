@@ -60,19 +60,32 @@ abstract class XLite_Model_WidgetParam_Abstract extends XLite_Base
 	protected $label = null;
 
     /**
-     * Constructor 
+     * Determines if the param will be diaplayed in CMS as widget setting
      * 
-     * @param string $label Parameter text label
-     * @param string $value Parameter default value
+     * @var    mixed
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected $isSetting = false;
+
+
+    /**
+     * Constructor
+     * 
+     * @param mixed $label     param label (text)
+     * @param mixed $value     default value
+     * @param mixed $isSetting display this setting in CMS or not
      *  
      * @return void
      * @access public
-     * @since  1.0.0
+     * @since  3.0.0 EE
      */
-    public function __construct($label, $value = null)
+    public function __construct($label, $value = null, $isSetting = false)
     {
-        $this->value = $value;
-        $this->label = $label;
+        $this->label     = $label;
+        $this->isSetting = $isSetting;
+
+        $this->setValue($value);
     }
 
     /**
@@ -91,7 +104,6 @@ abstract class XLite_Model_WidgetParam_Abstract extends XLite_Base
         foreach ($conditions as $condition) {
             if (true === $condition[self::ATTR_CONDITION]) {
                 $messages[] = $condition[self::ATTR_MESSAGE];
-
                 if (!isset($condition[self::ATTR_CONTINUE])) {
                      break;
                 }
@@ -141,5 +153,47 @@ abstract class XLite_Model_WidgetParam_Abstract extends XLite_Base
 	{
 		return isset($this->$name) ? $this->$name : null;
 	}
+
+    /**
+     * Set param value
+     * 
+     * @param mixed $value value to set
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+    }
+
+    /**
+     * Append data to param value
+     * 
+     * @param mixed $value value to append
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function appendValue($value)
+    {
+        $this->value += $value;
+    }
+
+    /**
+     * setVisibility 
+     * 
+     * @param bool $isSetting visibility flag
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function setVisibility($isSetting)
+    {
+        $this->isSetting = $isSetting;
+    }
 }
 

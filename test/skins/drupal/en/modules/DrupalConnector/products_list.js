@@ -11,25 +11,3 @@
  * @since     3.0.0
  */
 
-$(document).ready(
-  function() {
-    var f = productsList.prototype.buildURL;
-
-    productsList.prototype.buildURL = function(forAJAX) {
-
-      var url = f.call(this, forAJAX);
-
-      if (forAJAX) {
-        var block = this.container.parents('.block').get(0);
-        if (block && block.id) {
-          var m = block.id.match(/block-lc-connector-([0-9]+)/);
-          if (m && this.config.urlTranslationTable.blockDelta) {
-            url = url.replace(new RegExp(this.config.urlTranslationTable.blockDelta), m[1]);
-          }
-        }
-      }
-
-      return url;
-    }
-  }
-);

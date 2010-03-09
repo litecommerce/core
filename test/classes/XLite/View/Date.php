@@ -90,7 +90,7 @@ class XLite_View_Date extends XLite_View_FormField
 		) {
             // read form fields
             $date = mktime(0, 0, 0, $this->get($monthField), $this->get($dayField), $this->get($yearField));
-			$this->xlite->getController()->set($this->get('field'), $date); 
+			XLite::getController()->set($this->get('field'), $date); 
         }
     }
 

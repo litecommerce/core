@@ -1,77 +1,121 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* Base class for Featured Products module.
-*
-* @package Module_FeaturedProducts
-* @access public
-* @version $Id$
-*/
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
+
+/**
+ * XLite_Module_FeaturedProducts_Model_FeaturedProduct 
+ * 
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @since      3.0.0
+ */
 class XLite_Module_FeaturedProducts_Model_FeaturedProduct extends XLite_Model_Abstract
-{	
-	public $fields = array(
-		"product_id" => 0,
-		"category_id" => 0,
-		"order_by" => 0);	
-	
-	public $primaryKey = array("category_id","product_id");	
-	
-	public $defaultOrder = "order_by";	
-	
-	public $alias = "featured_products";	
-	
-	public $product = null;
+{    
+    /**
+     * fields 
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $fields = array(
+        'product_id'  => 0,
+        'category_id' => 0,
+        'order_by'    => 0,
+    );    
+    
+    /**
+     * primaryKey 
+     * 
+     * @var    string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $primaryKey = array('category_id','product_id');    
+    
+    /**
+     * alias 
+     * 
+     * @var    string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $alias = 'featured_products';    
+    
+    /**
+     * product 
+     * 
+     * @var    XLite_Model_Product
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $product = null;
+
+
+    /**
+     * defaultOrder
+     *
+     * @var    string
+     * @access public
+     * @since  3.0.0
+     */
+    public $defaultOrder = 'order_by';
+
+
+    /**
+     * getProduct 
+     * FIXME - must be protected; see Module/FeaturedProducts/Model/Category.php
+     * 
+     * @return XLite_Model_Product
+     * @access public
+     * @since  3.0.0
+     */
+    public function getProduct()
+    {
+        if (!isset($this->product)) {
+            $this->product = new XLite_Model_Product($this->get('product_id'));
+        }
+
+        return $this->product;
+    }
 
     /**
      * Filter 
+     * FIXME - must be protected;
+     * but current approach does not allow this;
+     * see Module/FeaturedProducts/ModelCategory.php
      * 
-     * @return void
+     * @return bool
      * @access public
-     * @see    ____func_see____
      * @since  3.0.0
      */
-    function filter()
+    public function filter()
     {
-        $this->product = new XLite_Model_Product($this->get("product_id"));
-
-        return $this->product->isExists() ? $this->product->filter() : false;
-	}
-
+        return $this->getProduct()->isExists() ? $this->getProduct()->filter() : false;
+    }
 }
+

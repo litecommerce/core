@@ -36,27 +36,28 @@
 class XLite_View_BuyNow extends XLite_View_Abstract
 {
     /**
-     * Widget template filename
-     *
-     * @var    string
-     * @access protected
-     * @since  3.0.0 EE
+     * Widget parameter names
      */
-    protected $template = 'buy_now.tpl';
+
+    const PARAM_PRODUCT = 'product';
+
 
     /**
-     * Constructor
-     * 
+     * Define widget parameters
+     *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
+     * @access protected
+     * @since  1.0.0
      */
-    public function init(array $attributes = array())
+    protected function defineWidgetParams()
     {
-        $this->attributes['product'] = false;
+        parent::defineWidgetParams();
 
-        parent::init($attributes);
+        $this->widgetParams += array(
+            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
+        );
+
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('buy_now.tpl');
     }
 
     /**
@@ -69,8 +70,19 @@ class XLite_View_BuyNow extends XLite_View_Abstract
      */
     public function isVisible()
     {
-        return parent::isVisible()
-            && $this->attributes['product']
-            && $this->config->General->buynow_button_enabled;
+        return parent::isVisible() && $this->config->General->buynow_button_enabled;
+    }
+
+    /**
+     * Get product
+     * 
+     * @return XLite_Model_Product
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProduct()
+    {
+        return $this->getParam(self::PARAM_PRODUCT);
     }
 }

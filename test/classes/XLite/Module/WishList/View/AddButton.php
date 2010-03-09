@@ -36,53 +36,27 @@
 class XLite_Module_WishList_View_AddButton extends XLite_View_Abstract
 {
     /**
-     * Widget template filename
+     * Widget parameter names
+     */
+
+    const PARAM_PRODUCT = 'product';
+
+
+    /**
+     * Define widget parameters
      *
-     * @var    string
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected $template = 'modules/WishList/add.tpl';
-
-    /**
-     * Constructor
-     * 
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
+     * @access protected
+     * @since  1.0.0
      */
-    public function __construct(array $attributes = array())
+    protected function defineWidgetParams()
     {
-        $this->attributes['product'] = null;
+        parent::defineWidgetParams();
 
-        parent::__construct($attributes);
-    }
+        $this->widgetParams += array(
+            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
+        );
 
-    /**
-     * Check visibility 
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isVisible()
-    {
-        return parent::isVisible()
-            && $this->attributes['product'];
-    }
-
-    /**
-     * Get product
-     * 
-     * @return XLite_Model_Product
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getProduct()
-    {
-        return $this->attributes['product'];
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/WishList/add.tpl');
     }
 }

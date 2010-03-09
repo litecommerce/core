@@ -59,21 +59,19 @@ class XLite_View_Cart extends XLite_View_Dialog
     }
 
     /**
-     * Set template body
-     * 
-     * @param array $attributes widget attributes
-     *  
+     * Define widget parameters
+     *
      * @return void
-     * @access public
-     * @since  3.0.0 EE
+     * @access protected
+     * @since  1.0.0
      */
-    public function init(array $attributes = array())
+    protected function defineWidgetParams()
     {
-        if ($this->getCart()->isEmpty()) {
-            $this->body = 'empty.tpl';
-        }
+        parent::defineWidgetParams();
 
-        parent::init($attributes);
+        if ($this->getCart()->isEmpty()) {
+            $this->widgetParams[self::PARAM_TEMPLATE]->setValue($this->getDir() . '/empty.tpl');
+        }
     }
 }
 

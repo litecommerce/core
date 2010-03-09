@@ -33,7 +33,7 @@
  * @subpackage View
  * @since      3.0.0
  */
-class XLite_View_Form_Product_AddToCart extends XLite_View_Form_Abstract
+class XLite_View_Form_Product_AddToCart extends XLite_View_Form_Product_Abstract
 {
     /**
      * Current form name
@@ -48,59 +48,47 @@ class XLite_View_Form_Product_AddToCart extends XLite_View_Form_Abstract
     }
 
     /**
-     * Set predefined attributes
-     *
+     * initView 
+     * 
      * @return void
      * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function defineDefaultFormAttributes()
-    {
-        $this->defaultFormAttributes['form_target'] = 'cart';
-        $this->defaultFormAttributes['form_action'] = 'add';
-    }
-
-    /**
-     * Called before the display()
-     *
-     * @return void
-     * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function initView()
     {
-        $this->attributes['form_params']['product_id'] = $this->getProduct()->get('product_id');
-
         parent::initView();
+
+        $this->widgetParams[self::PARAM_FORM_PARAMS]->appendValue($this->getFormDefaultParams());
     }
 
     /**
-     * Define some common attributes
+     * getFormDefaultParams 
      * 
-     * @param array $attributes widget attributes
-     *  
-     * @return void
-     * @access public
+     * @return array
+     * @access protected
      * @since  3.0.0 EE
      */
-    public function init(array $attributes = array())
+    protected function getFormDefaultParams()
     {
-        $this->attributes['product'] = false;
-
-        parent::init($attributes);
+        return array(
+            'product_id'  => $this->getProduct()->get('product_id'),
+            'category_id' => $this->getProduct()->get('category_id'),
+        );
     }
 
-    /**
-     * Get product 
-     * 
-     * @return XLite_Model_Product
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
+    /** 
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
      */
-    public function getProduct()
+    protected function defineWidgetParams()
     {
-        return $this->attributes['product'] ? $this->attributes['product'] : parent::getProduct();
+        parent::defineWidgetParams();
+
+        $this->widgetParams[self::PARAM_FORM_TARGET]->setValue('cart');
+        $this->widgetParams[self::PARAM_FORM_ACTION]->setValue('add');
     }
 }
 

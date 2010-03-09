@@ -24,109 +24,96 @@
 class XLite_View_Button_Regular extends XLite_View_Button_Abstract
 {
     /**
-     * Widget template 
-     * 
-     * @var    string
-     * @access protected
-     * @since  3.0.0 EE
+     * Widget parameter names
      */
-    protected $template = 'button/regular.tpl';
+
+    const PARAM_ACTION      = 'action';
+    const PARAM_JS_EVENT    = 'jsEvent';
+    const PARAM_JS_CODE     = 'jsCode';
+    const PARAM_FORM_PARAMS = 'formParams';
+
 
     /**
-     * Return list of current form params to modify
-     * 
-     * @return array
+     * Define widget parameters
+     *
+     * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  1.0.0
      */
-    protected function getFormParams()
+    protected function defineWidgetParams()
     {
-        $result = array();
+        parent::defineWidgetParams();
 
-        // It's possible to define separate attribute "action",
-        // and it will be automatically used to modify current form params
-        if (!empty($this->attributes['action'])) {
-            $result += array('action' => $this->attributes['action']);
-        }
+        $this->widgetParams += array(
+            self::PARAM_ACTION      => new XLite_Model_WidgetParam_String('LC action', '', true),
+            self::PARAM_JS_EVENT    => new XLite_Model_WidgetParam_List('JS event', 'onclick', true, $this->allowedJSEvents),
+            self::PARAM_JS_CODE     => new XLite_Model_WidgetParam_String('JS code', '', true),
+            self::PARAM_FORM_PARAMS => new XLite_Model_WidgetParam_Array('Form params to modify', array(), true),
+        );
 
-        return $this->attributes['formParams'] + $result;
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('button/regular.tpl');
     }
 
     /**
      * JavaScript: compose the associative array definition by PHP array
-     * 
+     *
+     * @param array $params values to compose
+     *
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
-    protected function getJSFormParams()
+    protected function getJSFormParams(array $params)
     {
         $result = array();
 
-        foreach ($this->getFormParams() as $name => $value) {
-            $result[] = '\'' . $name . '\': \'' . $value . '\'';
+        foreach ($params as $name => $value) {
+            $result[] = $name . ': \'' . $value . '\'';
         }
 
         return implode(',', $result);
     }
 
     /**
-     * JavaScript: default JS code to execute 
-     * 
+     * JavaScript: default JS code to execute
+     *
      * @return string
      * @access protected
      * @since  3.0.0 EE
      */
     protected function getDefaultJSCode()
     {
-        return empty($this->attributes['formParams'])
-            ? 'submitFormDefault(this.form, \'' . $this->attributes['action'] . '\');'
-            : 'submitForm(this.form, {' . $this->getJSFormParams() . '})';
+        $formParams = $this->getParam(self::PARAM_FORM_PARAMS);
+
+        return $formParams
+            ? 'submitForm(this.form, {' . $this->getJSFormParams($formParams) . '})'
+            : 'submitFormDefault(this.form, \'' . $this->getParam(self::PARAM_ACTION) . '\');';
     }
 
     /**
-     * JS code will be executed on this event 
-     * 
+     * JS code will be executed on this event
+     *
      * @return string
      * @access protected
      * @since  3.0.0 EE
      */
     protected function getJSEvent()
     {
-        return $this->attributes['jsEvent'];
+        return $this->getParam(self::PARAM_JS_EVENT);
     }
 
     /**
      * Return specified (or default) JS code
-     * 
+     *
      * @return string
      * @access protected
      * @since  3.0.0 EE
      */
     protected function getJSCode()
     {
-        return empty($this->attributes['jsCode']) ? $this->getDefaultJSCode() : $this->attributes['jsCode'];
-    }
+        $jsCode = $this->getParam(self::PARAM_JS_CODE);
 
-    /**
-     * Define some widget attributes
-     * 
-     * @param array $attributes widget attributes
-     *  
-     * @return void
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function init(array $attributes = array())
-    {
-        $this->attributes += array(
-            'action'     => '',
-            'jsEvent'    => 'onclick',
-            'jsCode'     => '',
-            'formParams' => array(),
-        );
-
-        parent::init($attributes);
+        return empty($jsCode) ? $this->getDefaultJSCode() : $jsCode;
     }
 }
 

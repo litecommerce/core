@@ -36,17 +36,19 @@ class XLite_View_Form_Cart_Main extends XLite_View_Form_Abstract
     }
 
     /**
-     * Set predefined attributes 
-     * 
+     * Define widget parameters
+     *
      * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  1.0.0
      */
-    protected function defineDefaultFormAttributes()
+    protected function defineWidgetParams()
     {
-        $this->defaultFormAttributes['form_target']  = 'cart';
-        $this->defaultFormAttributes['form_action']  = 'update';
-        $this->defaultFormAttributes['form_params'] += array('cart_id' => 0);
+        parent::defineWidgetParams();
+
+        $this->widgetParams[self::PARAM_FORM_TARGET]->setValue('cart');
+        $this->widgetParams[self::PARAM_FORM_ACTION]->setValue('update');
+        $this->widgetParams[self::PARAM_FORM_PARAMS]->appendValue(array('cart_id' => 0));
     }
 }
 

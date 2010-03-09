@@ -10,14 +10,8 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<ul class="pager" {if:!isPagerVisible()} style="display: none;"{end:}>
-
-  <li class="{getBorderLinkClassName(#first#)}"><a href="{getFirstPageUrl()}"><img src="images/spacer.gif" alt="" /></a></li>
-  <li class="{getBorderLinkClassName(#previous#)}"><a href="{getPreviousPageUrl()}"><img src="images/spacer.gif" alt="" /></a></li>
-
-  <li FOREACH="getPageUrls(),num,pageUrl" class="{getPageClassName(num)}"><a href="{pageUrl}">{num}</a></li>
-
-  <li class="{getBorderLinkClassName(#next#)}"><a href="{getNextPageUrl()}"><img src="images/spacer.gif" alt="" /></a></li>
-  <li class="{getBorderLinkClassName(#last#)}"><a href="{getLastPageUrl()}"><img src="images/spacer.gif" alt="" /></a></li>
-
+Result pages:
+<ul class="pager">
+  <li FOREACH="getPageUrls(),num,pageUrl" class="{getPageClassName(num)}"><a href="{pageUrl}">{inc(num)}</a></li>
 </ul>
+

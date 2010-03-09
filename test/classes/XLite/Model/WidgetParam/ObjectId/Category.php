@@ -24,32 +24,14 @@
 class XLite_Model_WidgetParam_ObjectId_Category extends XLite_Model_WidgetParam_ObjectId
 {
     /**
-     * Allow use root category id (0) 
+     * Allowed or not to  use root category id (0) 
      * 
      * @var    boolean
      * @access protected
-     * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $rootIsAllow = false;
+    protected $rootIsAllowed = false;
 
-    /**
-     * Constructor
-     *
-     * @param string  $label       param text label
-     * @param string  $value       param value
-     * @param boolean $rootIsAllow Root category id (0) is allow or not
-     *
-     * @return void
-     * @access public
-     * @since  1.0.0
-     */
-    public function __construct($label, $value = null, $rootIsAllow = false)
-    {
-        parent::__construct($label, $value);
-
-        $this->rootIsAllow = $rootIsAllow;
-    }
 
     /**
      * Return object class name
@@ -76,10 +58,10 @@ class XLite_Model_WidgetParam_ObjectId_Category extends XLite_Model_WidgetParam_
     {
         $schema = parent::getValidaionSchema($value);
 
-        if (!$this->rootIsAllow) {
+        if (!$this->rootIsAllowed) {
             $schema[] = array(
                 self::ATTR_CONDITION => 0 == $value,
-                self::ATTR_MESSAGE   => ' is a zero',
+                self::ATTR_MESSAGE   => ' is zero',
             );
         }
 
@@ -91,5 +73,24 @@ class XLite_Model_WidgetParam_ObjectId_Category extends XLite_Model_WidgetParam_
         return $schema;
     }
 
+
+    /**
+     * Constructor
+     * 
+     * @param string $label         param label (text)
+     * @param mixed  $value         default value
+     * @param bool   $isSetting     display this setting in CMS or not
+     * @param bool   $rootIsAllowed root category id (0) is allowed or not
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function __construct($label, $value = null, $isSetting = false, $rootIsAllowed = false)
+    {   
+        parent::__construct($label, $value, $isSetting);
+        
+        $this->rootIsAllowed = $rootIsAllowed;
+    }
 }
 

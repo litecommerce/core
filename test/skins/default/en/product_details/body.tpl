@@ -8,7 +8,7 @@ function isValid()
 -->
 </script>
 
-<widget class="XLite_View_Form_Product_AddToCart" name="add_to_cart" />
+<widget class="XLite_View_Form_Product_AddToCart" name="add_to_cart" product="{product}" />
 
   <table cellpadding="5" cellspacing="0" width="100%">
     <tr>

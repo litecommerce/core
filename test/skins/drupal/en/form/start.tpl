@@ -10,5 +10,5 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<form action="{getFormAction()}" method="{getAttributes(#form_method#)}" name="{getFormName()}" onsubmit="javascript: {getJSOnSubmitCode()}">
+<form action="{getFormAction()}" method="{getParam(#form_method#)}" name="{getFormName()}" onsubmit="javascript: {getJSOnSubmitCode()}">
 <input FOREACH="getFormParams(),paramName,paramValue" type="hidden" name="{paramName}" value="{paramValue}" />

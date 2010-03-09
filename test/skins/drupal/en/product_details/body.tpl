@@ -14,7 +14,7 @@ function isValid()
   <a IF="nextProduct" class="next" href="{buildURL(#product#,##,_ARRAY_(#product_id#^nextProduct.product_id))}" alt="{nextProduct.name}">Next product</a>
 </div>
 
-<widget class="XLite_View_Form_Product_AddToCart" name="add_to_cart" />
+<widget class="XLite_View_Form_Product_AddToCart" name="add_to_cart" product="{product}" />
 
   <table cellpadding="5" cellspacing="0" width="100%">
     <tr>

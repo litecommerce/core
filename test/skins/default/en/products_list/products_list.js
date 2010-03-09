@@ -17,19 +17,9 @@ var productsList = {
    * Properties
    */
 
-  pageId: null,
-
-  sortCriterion: null,
-
-  sortOrder: null,
-
-  displayMode: null,
-
-  itemsPerPage: null,
-
   container: null,
-
   ajaxSupport: false,
+
 
   /**
    * Public methods
@@ -38,47 +28,7 @@ var productsList = {
   // Initialization
   initialization: function()
   {
-    var o = this;
-
     this.container = $('.products-list');
-
-    // Detect page
-    var l = $('.pager li.selected', this.container).get(0);
-    if (l) {
-      var m = l.className.match(/page-([0-9]+)/);
-      this.pageId = parseInt(m[1]) - 1;
-    }
-
-    // Detect display mode
-    $('.list-head .display-modes li', this.container).each(
-      function() {
-        if ($(this).hasClass('selected')) {
-          var m = this.className.match(/list-type-([^ ]+)/);
-          o.displayMode = m[1];
-        }
-      }
-    );
-
-    // Detect sort criterion
-    var s = $('.list-head .sort-crit', this.container).get(0);
-    if (s) {
-      this.sortCriterion = s.options[s.selectedIndex].value
-    }
-
-    // Detect sort order
-    var l = $('.list-head .sort-order', this.container).get(0);
-    if (l) {
-      this.sortOrder = $(l).hasClass('sort-order-asc') ? 'asc' : 'desc';
-    }
-
-    // Detect items-per-page
-    var l = $('.list-pager input', this.container).get(0);
-    if (l) {
-      this.itemsPerPage = parseInt(l.value);
-    }
-
-    // Add listeners
-    this.addListeners();
 
     // Detect AJAX support
     try {
@@ -87,127 +37,73 @@ var productsList = {
         this.ajaxSupport = true;
       }
     } catch(e) { }
-    
   },
 
-  // Change list current page 
-  changePage: function(link)
+  // Set new display mode
+  changeDisplayMode: function(mode)
   {
-    var li = $(link).parents('li').eq(0);
-    if (!li.length) {
-      return false;
-
-    } else if (li.hasClass('disabled')) {
-      return true;
-    }
-
-    var pageId = this.pageId;
-
-    if (li.hasClass('first')) {
-      pageId = 0;
-
-    } else if (li.hasClass('previous')) {
-      pageId--;
-
-    } else if (li.hasClass('next')) {
-      pageId++;
-
-    } else if (li.hasClass('last')) {
-      pageId = productsListConfig.pagerItemsCount - 1;
-
-    } else if (li.hasClass('page-item')) {
-      var m = li.get(0).className.match(/page-([0-9]+)/);
-      pageId = parseInt(m[1]) - 1;
-    }
-
-    pageId = Math.min(productsListConfig.pagerItemsCount - 1, Math.max(0, pageId));
-
-    if (pageId != this.pageId) {
-      this.pageId = pageId;
-      this.loadWidget();
-    }
-
-    return true;
+    this.process('displayMode', mode);
   },
 
-  // Change list display mode
-  changeType: function (link)
+  // Change current page
+  showPage: function(pageId)
   {
-    var li = $(link).parents('li').get(0);
-    if (!li) {
-      return false;
-    }
-
-    var m = li.className.match(/list-type-([^ ]+)/);
-    if (!m[1]) {
-      return false;
-    }
-
-    var found = false;
-    for (var i = 0; i < productsListConfig.displayModes.length && !found; i++) {
-      if (productsListConfig.displayModes[i] == m[1]) {
-        found = true;
-      }
-    }
-
-    if (!found) {
-      return false;
-    }
-
-    if (m[1] != this.displayMode) {
-      this.displayMode = m[1];
-      this.loadWidget();
-    }
-
-    return true;
+    this.process('pageId', pageId);
   },
 
   // Change sort criterion
-  changeSortCriterion: function(list)
+  changeSortByMode: function(mode)
   {
-    var sortCriterion = list.options[list.selectedIndex].value;
-    if (sortCriterion != this.sortCriterion) {
-      this.sortCriterion = sortCriterion;
-      this.loadWidget();
-    }
-
-    return true;
+    this.process('sortBy', mode);
   },
 
   // Change sort order
-  changeSortOrder: function(link)
+  changeSortOrder: function()
   {
-    var sortOrder = $(link).hasClass('sort-order-asc') ? 'desc' : 'asc';
-    if (sortOrder != this.sortOrder) {
-      this.sortOrder = sortOrder;
-      this.loadWidget();
-    }
-
-    return true;
+    this.process('sortOrder', ('asc' == this.URLParams.sortOrder) ? 'desc' : 'asc');
   },
 
-  // Change items-per-page
-  changePageLength: function(input)
+  // Change items per page number
+  changePageLength: function(inputBox)
   {
-    var itemsPerPage = parseInt(input.value);
-    if (isNaN(itemsPerPage)) {
-      input.value = this.itemsPerPage;
-      return false;
+    count = parseInt(inputBox.value);
+
+    if (isNaN(count)) {
+      count = 0;
     }
 
-    itemsPerPage = Math.min(productsListConfig.itemsPerPageRange.max, Math.max(productsListConfig.itemsPerPageRange.min, itemsPerPage));
-
-    if (itemsPerPage != this.itemsPerPage) {
-      this.itemsPerPage = itemsPerPage;
-      this.loadWidget();
+    if (count != inputBox.value) {
+      inputBox.value = count;
     }
 
-    return true;
+    this.process('itemsPerPage', count);
   },
+
 
   /**
    * Protected methods
    */
+
+  // Change URL param
+  setURLParam: function(paramName, paramValue)
+  {
+    result = (paramValue != this.URLParams[paramName]) || (paramValue != this.URLAJAXParams[paramName]);
+
+    if (result) {
+      this.URLParams[paramName] = paramValue;
+      this.URLAJAXParams[paramName] = paramValue;
+    }
+
+    return result;
+  },
+
+  // Set a param and send the request
+  process: function(paramName, paramValue)
+  {
+    if (this.setURLParam(paramName, paramValue)) {
+      this.loadWidget();
+    }
+  }, 
 
   // Load (reload) widget
   loadWidget: function()
@@ -237,18 +133,18 @@ var productsList = {
     $('.products-list').block(
       {
         message: '<div></div>',
-        css: { 
+        css: {
           margin:         0,
-          width:          '30%', 
-          top:            '35%', 
-          left:           '35%', 
-          textAlign:      'center', 
-          cursor:         'wait' 
+          width:          '30%',
+          top:            '35%',
+          left:           '35%',
+          textAlign:      'center',
+          cursor:         'wait'
         },
-        overlayCSS: { 
-          backgroundColor: '#000', 
+        overlayCSS: {
+          backgroundColor: '#000',
           opacity:         0.1
-        }, 
+        },
       }
     );
 
@@ -265,14 +161,7 @@ var productsList = {
   // Build URL
   buildURL: function(forAJAX)
   {
-    var url = forAJAX ? productsListConfig.ajaxURL : productsListConfig.URL;
-
-    var fields = ['pageId', 'sortCriterion', 'sortOrder', 'itemsPerPage', 'displayMode'];
-    for (var i = 0; i < fields.length; i++) {
-      url = url.replace(new RegExp(productsListConfig.urlTranslationTable[fields[i]]), this[fields[i]]);
-    }
-
-    return url;
+    return URLHandler.buildURL(forAJAX ? this.URLAJAXParams : this.URLParams);
   },
 
   // AJAX onload event handler
@@ -287,11 +176,6 @@ var productsList = {
       this.container.replaceWith($('.products-list', div));
       this.container = $('.products-list');
 
-      this.addListeners();
-
-      productsListConfig.pagerItemsCount = Math.ceil(productsListConfig.itemsCount / this.itemsPerPage);
-      this.pageId = Math.min(this.pageId, productsListConfig.pagerItemsCount - 1);
-
       processed = true;
     }
 
@@ -301,39 +185,12 @@ var productsList = {
       self.location = this.buildURL();
     }
   },
-
-  // Add event listeners
-  addListeners: function()
-  {
-    var o = this;
-
-    // Add page links listeners
-    $('.pager a', this.container).click(
-      function() {
-        return !o.changePage(this);
-      }
-    );
-
-    // Add display modes links listeners
-    $('.display-modes a', this.container).click(
-      function() {
-        return !o.changeType(this);
-      }
-    );
-
-    // Add sort order link listener
-    $('a.sort-order', this.container).click(
-      function() {
-        return !o.changeSortOrder(this);
-      }
-    );
-
-  }
 }
 
 // onready event handler
-$(document).ready(
+$('.products-list').ready(
   function() {
     return productsList.initialization();
   }
 );
+

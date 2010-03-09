@@ -41,7 +41,7 @@ class XLite_View_Location extends XLite_View_Abstract
      */
     public function isVisible()
     {
-        return parent::isVisible() && !$this->_getWidget(array(), 'XLite_View_Welcome', 'welcome')->isVisible();
+        return parent::isVisible() && !$this->getWidget(array(), 'XLite_View_Welcome', 'welcome')->isVisible();
     }
 }
 

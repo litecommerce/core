@@ -1,28 +1,101 @@
 <?php
-
-/* $Id$ */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
- * Modified version of the "Flexy" template compiler 
- * 
+ * ____file_title____
+ *  
+ * @category   Lite Commerce
  * @package    Lite Commerce
- * @subpackage Core
+ * @subpackage ____sub_package____
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @version    SVN: $Id$
+ * @link       http://www.qtmsoft.com/
  * @since      3.0.0 EE
  */
-class XLite_Core_FlexyCompiler extends XLite_Base
+
+/**
+ * XLite_Core_FlexyCompiler 
+ * 
+ * @package    Lite Commerce
+ * @subpackage ____sub_package____
+ * @since      3.0.0 EE
+ */
+class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISingleton
 {
+	/**
+	 * Tag to define arrays in templates
+	 */
 	const TAG_ARRAY = '_ARRAY_';
 
-	public $source; // Flexy template source code	
-	public $phpcode;	
-	public $file = ''; // file name	
-    public $widgetCounter = 0;	
+
+	/**
+	 * Template source code 
+	 * 
+	 * @var    string
+	 * @access protected
+	 * @since  3.0.0 EE
+	 */
+	protected $source = null;
+
+	/**
+	 * Template file name 
+	 * 
+	 * @var    string
+	 * @access protected
+	 * @since  3.0.0 EE
+	 */
+	protected $file = null;
+
+	/**
+	 * List of URLs to rewrite 
+	 * 
+	 * @var    array
+	 * @access protected
+	 * @since  3.0.0 EE
+	 */
+	protected $urlRewrite = array();
+
+
+	/**
+	 * Set new file for compile 
+	 * 
+	 * @param string $file template to compile
+	 *  
+	 * @return void
+	 * @access protected
+	 * @since  3.0.0 EE
+	 */
+	protected function init($file)
+	{
+		$this->file   = $file;
+        $this->source = file_get_contents($file);
+        
+        $this->urlRewrite = array('images' => XLite::getInstance()->shopURL(XLite_Model_Layout::getInstance()->getSkinURL('images')));
+	}
+
+
+    /**
+     * Singleton access method
+     * 
+     * @return XLite_Core_Converter
+     * @access public
+     * @since  3.0
+     */
+    public static function getInstance()
+    {
+        return self::_getInstance(__CLASS__);
+    }
+
+
     public $substitutionStart = array();	
 	public $substitutionEnd = array();	
 	public $substitutionValue = array();
 
-	public function parse()
+	public function parse($file)
 	{
+		$this->init($file);
+
 		$this->offset = 0;
 		$this->stack = array();
 		$this->tokens = array();
@@ -32,9 +105,8 @@ class XLite_Core_FlexyCompiler extends XLite_Base
 		$this->substitutionStart = array();
 		$this->substitutionEnd = array();
 		$this->substitutionValue = array();
-		$this->postprocess();
 
-		return $this->phpcode;
+		return trim($this->postprocess()) . "\n";
 	}
 
 	function savePosition($offs = 0)
@@ -376,7 +448,8 @@ class XLite_Core_FlexyCompiler extends XLite_Base
 				}
 			}
 		}
-		$this->phpcode = $this->substitute();
+
+		return $this->substitute();
 	}
 
 	protected function unsetAttributes(array &$attrs, array $keys)
@@ -389,6 +462,11 @@ class XLite_Core_FlexyCompiler extends XLite_Base
 	protected function getAttributesList(array $attrs)
 	{
 		$result = array();
+
+        if (isset($attrs['mode'])) {
+            $result[] = '\'mode\' => array(\'' . implode('\', \'', explode(',', $attrs['mode'])) . '\')';
+            unset($attrs['mode']);
+        }
 
 		foreach ($attrs as $key => $value) {
 			$result[] = '\'' . $key . '\' => ' . $this->flexyAttribute($value);
@@ -420,7 +498,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base
 		if (is_null($module) || XLite_Model_ModulesManager::getInstance()->isActiveModule($module)) {
 
 			$arguments  = isset($attrs['class']) ? $this->flexyAttribute($attrs['class']) : (isset($name) ? 'null' : '');
-			$arguments .= isset($name) ? ', \'' . $name . '\'' : '';
+			$arguments .= isset($name) ? ', ' . $this->flexyAttribute($name) : '';
 
         	$conditions = array();
 
@@ -440,7 +518,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base
 
 			$this->unsetAttributes($attrs, array('IF', 'class'));
 
-			$result .= '$this->_getWidget(' 
+			$result .= '$this->getWidget(' 
 					   . (empty($attrs) ? (empty($arguments) ? '' : 'array()') : $this->getAttributesList($attrs)) 
 					   . (empty($arguments) ? '' : ', ' . $arguments) . ')->display();';
 
@@ -472,7 +550,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base
 
 	function urlRewrite($url)
 	{
-		foreach ($this->url_rewrite as $find => $replace) {
+		foreach ($this->urlRewrite as $find => $replace) {
 			if (substr($url, 0, strlen($find)) == $find) {
                 return array(0, strlen($find), $replace);
             }

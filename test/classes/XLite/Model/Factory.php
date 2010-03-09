@@ -61,5 +61,22 @@ class XLite_Model_Factory extends XLite_Base implements XLite_Base_ISingleton
     {
         return new $name();
     }
+
+    /**
+     * Create object instance and pass arguments to it contructor (if needed)
+     * 
+     * @param mixed $class class name
+     * @param array $args  constructor arguments
+     *  
+     * @return XLite_Base
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public static function createObjectInstance($class, array $args = array())
+    {
+        $handler = new ReflectionClass($class);
+
+        return $handler->hasMethod('__construct') ? $handler->newInstanceArgs($args) : $handler->newInstance();
+    }
 }
 

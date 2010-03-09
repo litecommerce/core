@@ -35,17 +35,19 @@ class XLite_View_Form_Search_Product_Simple extends XLite_View_Form_Abstract
         return 'search_form';
     }
 
-    /**
-     * Set predefined attributes
-     * 
+    /** 
+     * Define widget parameters
+     *
      * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  1.0.0
      */
-    protected function defineDefaultFormAttributes()
+    protected function defineWidgetParams()
     {
-        $this->defaultFormAttributes['form_target'] = 'search';
-        $this->defaultFormAttributes['form_method'] = 'GET';
+        parent::defineWidgetParams();
+
+        $this->widgetParams[self::PARAM_FORM_TARGET]->setValue('search');
+        $this->widgetParams[self::PARAM_FORM_METHOD]->setValue('GET');
     }
 }
 

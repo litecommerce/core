@@ -24,12 +24,17 @@
 class XLite_View_Button_Submit extends XLite_View_Button_Abstract
 {
     /**
-     * Widget template 
-     * 
-     * @var    string
+     * Define widget parameters
+     *
+     * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  1.0.0
      */
-    protected $template = 'button/submit.tpl';
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('button/submit.tpl');
+    }
 }
 

@@ -12,11 +12,10 @@
  *}
 <ul class="list-body list-body-list">
 
-  <li FOREACH="getData(),product" class="item draggable">
-
+  <li FOREACH="getPageData(),product" class="item">
     <widget class="XLite_View_AddedToCartMark" product="{product}" />
     <span class="draggable-mark">Drag me to the cart</span>
-    <a IF="isShowThumbnail(product)" class="product-thumbnail" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}"><img src="{product.thumbnailURL}" alt="" /></a>
+    <a IF="isShowThumbnails()&product.hasThumbnail()" class="product-thumbnail" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}"><img src="{product.getThumbnailURL()}" alt="" /></a>
     <div class="body">
       <a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" class="product-name">{product.name:h}</a>
       <br />

@@ -33,200 +33,417 @@
  * @subpackage Widget
  * @since      3.0
  */
-class XLite_View_ProductsList extends XLite_View_Abstract
+abstract class XLite_View_ProductsList extends XLite_View_Dialog
 {
     /**
-     * Input arguments names
+     * Widget param names
      */
-    const SORT_CRITERION_ARG   = 'sortCrit';
-    const SORT_ORDER_ARG       = 'sortOrder';
-    const DISPLAY_MODE_ARG     = 'displayMode';
-    const ITEMS_PER_PAGE_ARG   = 'itemsPerPage';
-    const CELL_NAME_ARG        = 'cellName';
+
+    const PARAM_DISPLAY_MODE   = 'displayMode';
+    const PARAM_GRID_COLUMNS   = 'gridColumns';
+    const PARAM_SORT_BY        = 'sortBy';
+    const PARAM_SORT_ORDER     = 'sortOrder';
+
+    const PARAM_SHOW_DESCR     = 'showDescription';
+    const PARAM_SHOW_PRICE     = 'showPrice';
+    const PARAM_SHOW_THUMBNAIL = 'showThumbnail';
+    const PARAM_SHOW_ADD2CART  = 'showAdd2Cart';
+
+    const PARAM_SHOW_ALL_ITEMS_PER_PAGE    = 'showAllItemsPerPage';
+    const PARAM_SHOW_DISPLAY_MODE_SELECTOR = 'showDisplayModeSelector';
+    const PARAM_SHOW_SORT_BY_SELECTOR      = 'showSortBySelector';
+
+    /**
+     * Allowed display modes
+     */
+
+    const DISPLAY_MODE_LIST  = 'list';
+    const DISPLAY_MODE_GRID  = 'grid';
+    const DISPLAY_MODE_TABLE = 'table';
+
+    /**
+     * Cloumns number range
+     */
+
+    const GRID_COLUMNS_MIN = 1;
+    const GRID_COLUMNS_MAX = 5;
+
+    /**
+     * Top-level directory with widget templates
+     */
+
+    const TEMPLATES_DIR = 'products_list';
 
 
     /**
-     * URL pattern border symbol
-     */
-    const PATTERN_BORDER_SYMBOL = '___';
-
-
-    /**
-     * Default search data cell name
-     */
-    const DEFAULT_CELL_NAME = 'default';
-
-
-    /**
-     * Default page widget class name
-     */
-    const DEFAULT_PAGE_WIDGET_CLASS = 'XLite_View_ProductsListPage';
-
-
-    /**
-     * Widget template 
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $template = 'products_list/body.tpl';
-
-    /**
-     * Current page arguments
-     * 
+     * Display modes
+     *
      * @var    array
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $urlParams = array();
+    protected $displayModes = array(
+        self::DISPLAY_MODE_GRID  => 'Grid',
+        self::DISPLAY_MODE_LIST  => 'List',
+        self::DISPLAY_MODE_TABLE => 'Table',
+    );
+
 
     /**
-     * Default URL parameters
+     * Return products list 
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    abstract protected function getData();
+
+
+    /**
+     * sortByModes 
      * 
      * @var    array
      * @access protected
-     * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $defaultURLParams = array(
-        self::SORT_CRITERION_ARG      => 'price',
-        self::SORT_ORDER_ARG          => 'asc',
-        self::DISPLAY_MODE_ARG        => 'grid',
-        self::ITEMS_PER_PAGE_ARG      => 4,
-        XLite_View_Pager::PAGE_ID_ARG => 0,
+    protected $sortByModes = array(
+        'price' => 'Price',
+        'name'  => 'Name',
     );
 
     /**
-     * List cache 
+     * sortOrderModes 
      * 
      * @var    array
      * @access protected
-     * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $listCache = null;
+    protected $sortOrderModes = array(
+        'asc'  => 'Ascending',
+        'desc' => 'Descending',
+    );
 
     /**
-     * Constructor
+     * getDisplayMode 
      * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
+     * @return string
+     * @access protected
      * @since  3.0.0
      */
-    public function init(array $attributes = array())
+    protected function getDisplayMode()
     {
-        $this->attributes['listFactory'] = false;
-        $this->attributes['widgetArguments'] = array();
-        $this->attributes['cellName'] = self::DEFAULT_CELL_NAME;
-        $this->attributes['pageWidgetClass'] = self::DEFAULT_PAGE_WIDGET_CLASS;
-
-        $this->defaultURLParams[self::SORT_CRITERION_ARG] = XLite_Model_Product::getDefaultSortCriterion();
-        $this->defaultURLParams[self::SORT_ORDER_ARG] = XLite_Model_Product::getDefaultSortOrder();
-
-        parent::init($attributes);
+        return $this->getParam(self::PARAM_DISPLAY_MODE);
     }
 
     /**
-     * Set properties
-     *
-     * @param array $attributes params to set
-     *
-     * @return void
-     * @access public
-     * @since  3.0.0 EE
+     * getPageBodyTemplate 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
      */
-    public function setAttributes(array $attributes)
+    protected function getPageBodyTemplate()
     {
-        if (isset($attributes['widgetArguments']) && !is_array($attributes['widgetArguments'])) {
-            unset($attributes['widgetArguments']);
-        }
-
-        if (isset($attributes['cellName']) && (!is_string($attributes['cellName']) || !$attributes['cellName'])) {
-            unset($attributes['cellName']);
-        }
-
-        if (isset($attributes['pageWidgetClass']) && (!is_string($attributes['pageWidgetClass']) || !class_exists($attributes['pageWidgetClass']))) {
-            unset($attributes['pageWidgetClass']);
-        }
-
-        parent::setAttributes($attributes);
+        return $this->getDir() . '/' . $this->getParam(self::PARAM_DISPLAY_MODE) . '/body.tpl';
     }
 
     /**
-     * Initialization
+     * getPagerClass 
      * 
-     * @return void
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getPagerClass()
+    {
+        return 'XLite_View_Pager_ProductsList';
+    }
+
+    /**
+     * getPagerName 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getPagerName()
+    {
+        return 'pager';
+    }
+
+    /**
+     * getPager 
+     * 
+     * @return XLite_View_Pager
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getPager()
+    {
+        return $this->isPagerVisible() ? $this->getWidget(array(), null, $this->getPagerName()) : null;
+    }
+
+    /**
+     * getPageData 
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getPageData()
+    {
+        return $this->isPagerVisible() ? $this->getPager()->getPageData() : $this->getData();
+    }
+
+    /**
+     * Get widget templates directory
+     *
+     * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function initView()
+    protected function getDir()
     {
-        parent::initView();
-
-        $request = XLite_Core_Request::getInstance();
-        $sessionCell = $this->session->get('productsListData');
-        if (!is_array($sessionCell)) {
-            $sessionCell = array($this->attributes['cellName'] => array());
-
-        } elseif (
-            !isset($sessionCell[$this->attributes['cellName']])
-            || !is_array($sessionCell[$this->attributes['cellName']])
-        ) {
-            $sessionCell[$this->attributes['cellName']] = array();
-        }
-
-        $sessionSubCell = $sessionCell[$this->attributes['cellName']];
-
-        $modes = $this->getDisplayModes();
-
-        // Get default display mode from wudget attrubites
-        if (
-            isset($this->attributes['widgetArguments']['displayMode'])
-            && isset($modes[$this->attributes['widgetArguments']['displayMode']])
-        ) {
-            $this->defaultURLParams['displayMode'] = $this->attributes['widgetArguments']['displayMode'];
-        }
-
-        $this->urlParams = $this->defaultURLParams;
-
-        $cellNameField = self::CELL_NAME_ARG;
-        $getFromRequest = (isset($request->$cellNameField) && $request->$cellNameField == $this->attributes['cellName'])
-            || $this->attributes['cellName'] == self::DEFAULT_CELL_NAME;
-
-        foreach (array_keys($this->urlParams) as $name) {
-            if ($getFromRequest && !is_null($request->$name)) {
-                $this->urlParams[$name] = $request->$name;
-
-            } elseif (isset($sessionSubCell[$name])) {
-                $this->urlParams[$name] = $sessionSubCell[$name];
-            }
-
-            $sessionSubCell[$name] = $this->urlParams[$name];
-        }
-
-        // Override display mode if not allow visitor swicth look and feel
-        if (
-            isset($this->attributes['widgetArguments']['displayModeAdjustable'])
-            && isset($this->attributes['widgetArguments']['displayMode'])
-            && !$this->attributes['widgetArguments']['displayModeAdjustable']
-            && isset($modes[$this->attributes['widgetArguments']['displayMode']])
-        ) {
-            $this->urlParams['displayMode'] = $this->attributes['widgetArguments']['displayMode'];
-            $sessionSubCell['displayMode'] = $this->urlParams['displayMode'];
-        }
-
-        $sessionCell[$this->attributes['cellName']] = $sessionSubCell;
-        $this->session->set('productsListData', $sessionCell);
-
-        $this->urlParams = $this->getAllParams() + $this->urlParams;
-
-        $this->urlParams[$cellNameField] = $this->attributes['cellName'];
+        return self::TEMPLATES_DIR;
     }
+
+    /**
+     * getGridColumnsRange 
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getGridColumnsRange()
+    {
+        $range = range(self::GRID_COLUMNS_MIN, self::GRID_COLUMNS_MAX);
+
+        return array_combine($range, $range);
+    }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->requestParams += array(
+            self::PARAM_DISPLAY_MODE => self::DISPLAY_MODE_GRID,
+            self::PARAM_SORT_BY      => 'price',
+            self::PARAM_SORT_ORDER   => 'asc',
+        );
+
+        $this->widgetParams += array(
+            self::PARAM_DISPLAY_MODE => new XLite_Model_WidgetParam_List(
+                'Display mode', $this->getRequestParamValue(self::PARAM_DISPLAY_MODE), true, $this->displayModes
+            ),
+            self::PARAM_GRID_COLUMNS => new XLite_Model_WidgetParam_List(
+                'Number of columns (for Grid mode only)', 3, true, $this->getGridColumnsRange()
+            ),
+            self::PARAM_SHOW_DESCR => new XLite_Model_WidgetParam_Checkbox(
+                'Show product description (for List mode only)', true, true
+            ),
+            self::PARAM_SHOW_PRICE => new XLite_Model_WidgetParam_Checkbox(
+                'Show product price', true, true
+            ),
+            self::PARAM_SHOW_THUMBNAIL => new XLite_Model_WidgetParam_Checkbox(
+                'Show product thumbnail', true, true
+            ),
+            self::PARAM_SHOW_ADD2CART => new XLite_Model_WidgetParam_Checkbox(
+                'Show \'Add to Cart\' button', true, true
+            ),
+            self::PARAM_SORT_BY => new XLite_Model_WidgetParam_List(
+                'Sort by', $this->getRequestParamValue(self::PARAM_SORT_BY), false, $this->sortByModes
+            ),
+            self::PARAM_SORT_ORDER => new XLite_Model_WidgetParam_List(
+                'Sort order', $this->getRequestParamValue(self::PARAM_SORT_ORDER), false, $this->sortOrderModes
+            ),
+            self::PARAM_SHOW_ALL_ITEMS_PER_PAGE => new XLite_Model_WidgetParam_Checkbox(
+                'Display all items on one page', false, true
+            ),
+            self::PARAM_SHOW_DISPLAY_MODE_SELECTOR => new XLite_Model_WidgetParam_Checkbox(
+                'Show "Display mode" selector', true, true
+            ),
+            self::PARAM_SHOW_SORT_BY_SELECTOR => new XLite_Model_WidgetParam_Checkbox(
+                'Show "Sort by" selector', true, true
+            ),
+        );
+    }
+
+    /**
+     * getJSArray 
+     * 
+     * @param array $params params to use
+     *  
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getJSArray(array $params)
+    {
+        $result = array();
+
+        foreach ($params as $name => $value) {
+            $result[] = $name . ': \'' . $value . '\'';
+        }
+
+        return '{' . implode(', ', $result) . '}';
+    }
+
+    /**
+     * getCommonParams 
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getCommonParams()
+    {
+        $result = array('action' => '') + $this->getRequestParams();
+
+        if ($this->isPagerVisible()) {
+            $result += $this->getPager()->getRequestParams();
+        }
+
+        return $result; 
+    }
+
+    /**
+     * getAJAXSpecificParams 
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getAJAXSpecificParams()
+    {
+        return array(
+            self::PARAM_AJAX_TARGET => XLite_Core_Request::getInstance()->target,
+            self::PARAM_AJAX_ACTION => '',
+            self::PARAM_AJAX_CLASS  => get_class($this),
+        );
+    }
+
+    /**
+     * getURLParams 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getURLParams()
+    {
+        return $this->getJSArray(array('target' => XLite_Core_Request::getInstance()->target) + $this->getCommonParams());
+    }
+
+    /**
+     * getURLAJAXParams 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getURLAJAXParams()
+    {
+        return $this->getJSArray(array('target' => 'get_widget') + $this->getCommonParams() + $this->getAJAXSpecificParams());
+    }
+
+    /**
+     * isDisplayModeSelected 
+     * 
+     * @param string $displayMode value to check
+     *  
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isDisplayModeSelected($displayMode)
+    {
+        return $this->getParam(self::PARAM_DISPLAY_MODE) == $displayMode;
+    }
+
+    /**
+     * isSortByModeSelected 
+     * 
+     * @param string $sortByMode value to check
+     *  
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isSortByModeSelected($sortByMode)
+    {
+        return $this->getParam(self::PARAM_SORT_BY) == $sortByMode;
+    }
+
+    /**
+     * isSortOrderAsc 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isSortOrderAsc()
+    {
+        return $this->getParam(self::PARAM_SORT_ORDER) == 'asc';
+    }
+
+    /**
+     * isShowThumbnail 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isShowThumbnails()
+    {
+       return $this->config->General->show_thumbnails && $this->getParam(self::PARAM_SHOW_THUMBNAIL);
+    }
+
+    /**
+     * isDisplayModeAdjustable 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isDisplayModeAdjustable()
+    {
+        return $this->getParam(self::PARAM_SHOW_DISPLAY_MODE_SELECTOR);
+    }
+
+    /**
+     * isSortBySelectorVisible 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isSortBySelectorVisible()
+    {
+        return $this->getParam(self::PARAM_SHOW_SORT_BY_SELECTOR);
+    }
+
+    /**
+     * isPagerVisible 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isPagerVisible()
+    {
+        return !$this->getParam(self::PARAM_SHOW_ALL_ITEMS_PER_PAGE);
+    }
+
+
 
     /**
      * Check if widget is visible
@@ -237,231 +454,46 @@ class XLite_View_ProductsList extends XLite_View_Abstract
      */
     public function isVisible()
     {
-        return parent::isVisible()
-            && is_array($this->attributes['listFactory'])
-            && is_callable($this->attributes['listFactory'])
-            && $this->getList();
+        return parent::isVisible() && $this->getData();
     }
 
     /**
-     * Get list 
-     * 
+     * Get a list of CSS files required to display the widget properly
+     *
      * @return array
      * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
+     * @since  3.0.0 EE
      */
-    public function getList()
+    public function getCSSFiles()
     {
-        if (is_null($this->listCache)) {
-            $this->listCache = call_user_func(
-                $this->attributes['listFactory'],
-                $this->urlParams[self::SORT_CRITERION_ARG],
-                $this->urlParams[self::SORT_ORDER_ARG]
-            );
-        }
-
-        return $this->listCache;
+        return array_merge(parent::getCSSFiles(), array(self::TEMPLATES_DIR . '/products_list.css'));
     }
 
     /**
-     * Get page list 
-     * 
+     * Get a list of JavaScript files required to display the widget properly
+     *
      * @return array
      * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
+     * @since  3.0.0 EE
      */
-    public function getPageList()
+    public function getJSFiles()
     {
-        return isset($this->widgets['pager']) ? $this->widgets['pager']->getPageData() : $this->getList();
+        return array_merge(parent::getJSFiles(), array(self::TEMPLATES_DIR . '/products_list.js', 'popup/jquery.blockUI.js'));
     }
 
-    /**
-     * Get items count
-     * 
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getItemsCount()
-    {
-        return count($this->getList());
-    }
+    // ----------------------------
 
     /**
-     * Get pages count 
-     * 
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPagesCount()
-    {
-        return isset($this->widgets['pager']) ? $this->widgets['pager']->getPagesCount() : 1;
-    }
-
-    /**
-     * Get items-per-page range as javascript object definition 
-     * 
+     * Get display mode link class name
+     *
+     * @param string $displayMode Display mode
+     *
      * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getItemsPerPageRange()
-    {
-        return '{ min: ' . XLite_View_Pager::ITEMS_PER_PAGE_MIN . ', max: ' . XLite_View_Pager::ITEMS_PER_PAGE_MAX . ' }';
-    }
-
-    /**
-     * Build page URL 
-     * 
-     * @param integer $pageId        Page number
-     * @param string  $sortCriterion Sort criterion
-     * @param string  $sortOrder     Sort order
-     * @param string  $displayMode   Display mode
-     *  
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function buildPageURL($pageId = null, $sortCriterion = null, $sortOrder = null, $displayMode = null)
-    {
-        $params = $this->assembleURLParams($pageId, $sortCriterion, $sortOrder, $displayMode);
-
-        $target = 'main';
-        $action = '';
-        
-        if (isset($params['target'])) {
-            $target = $params['target'];
-            unset($params['target']);
-        }
-
-        if (isset($params['action'])) {
-            $action = $params['action'];
-            unset($params['action']);
-        }
-
-        return $this->buildURL($target, $action, $params);
-    }
-
-    /**
-     * Get current URL parameters
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getURLParams()
-    {
-        return $this->assembleURLParams();
-    }
-
-    /**
-     * Assemble URL parameters
-     * 
-     * @param integer $pageId        Page number
-     * @param string  $sortCriterion Sort criterion
-     * @param string  $sortOrder     Sort order
-     * @param string  $displayMode   Display mode
-     *  
-     * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function assembleURLParams($pageId = null, $sortCriterion = null, $sortOrder = null, $displayMode = null, $itemsPerPage = null)
-    {
-        $params = $this->urlParams;
-
-        // Set page id
-        if (!is_null($pageId) && 0 < strlen($pageId)) {
-            $params['pageID'] = $pageId;
-
-        } elseif (isset($this->widgets['pager'])) {
-            $params['pageID'] = $this->widgets['pager']->get('pageID');
-        }
-
-        // Set sort criterion
-        if (!is_null($sortCriterion) && 0 < strlen($sortCriterion)) {
-            $params[self::SORT_CRITERION_ARG] = $sortCriterion;
-        }
-
-        // Set sort order
-        if (!is_null($sortOrder) && 0 < strlen($sortOrder)) {
-            $params[self::SORT_ORDER_ARG] = $sortOrder;
-        }
-
-        // Set display mode
-        if (!is_null($displayMode) && 0 < strlen($displayMode)) {
-            $params[self::DISPLAY_MODE_ARG] = $displayMode;
-        }
-
-        // Set items per page count
-        if (!is_null($itemsPerPage) && $itemsPerPage) {
-            $params[self::ITEMS_PER_PAGE_ARG] = $itemsPerPage;
-        }
-
-        return $params;
-    }
-
-    /**
-     * Get display modes list
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getDisplayModes()
-    {
-        return XLite_View_ProductsListPage::getDisplayModes();
-    }
-
-    /**
-     * Get current display mode
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getDisplayMode()
-    {
-        return $this->urlParams[self::DISPLAY_MODE_ARG];
-    }
-
-    /**
-     * Check - specified display mode is selected or not 
-     * 
-     * @param string $displayMode Display mode
-     *  
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isDisplayModeSelected($displayMode)
-    {
-        return $displayMode == $this->getDisplayMode();
-    }
-
-    /**
-     * Get display mode link class name 
-     * 
-     * @param string $displayMode Display mode
-     *  
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getDisplayModeLinkClassName($displayMode)
+    protected function getDisplayModeLinkClassName($displayMode)
     {
         $classes = array(
             'list-type-' . $displayMode
@@ -483,49 +515,8 @@ class XLite_View_ProductsList extends XLite_View_Abstract
     }
 
     /**
-     * Get sort criterions 
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getSortCriterions()
-    {
-        return XLite_Model_Product::getSortCriterions();
-    }
-
-    /**
-     * Check - specified sort criterion is selected or not
-     * 
-     * @param string $criterion Sort criterion
-     *  
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isSortCriterionSelected($criterion)
-    {
-        return $criterion == $this->urlParams[self::SORT_CRITERION_ARG];
-    }
-
-    /**
-     * Check - sort order is ascending or not
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isSortOrderAsc()
-    {
-        return 'asc' == $this->urlParams[self::SORT_ORDER_ARG];
-    }
-
-    /**
-     * Get sort order link class name 
-     * 
+     * Get sort order link class name
+     *
      * @return string
      * @access public
      * @see    ____func_see____
@@ -543,325 +534,53 @@ class XLite_View_ProductsList extends XLite_View_Abstract
     }
 
     /**
-     * Get inverted sort order link 
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getSortOrderInvLink()
-    {
-        return $this->buildPageURL(
-            null,   
-            null,
-            $this->isSortOrderAsc() ? 'desc' : 'asc'
-        );
-    }
-
-    /**
-     * Register JS files
+     * Get grid item width (percent)
      *
-     * @return array
+     * @return integer
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getJSFiles()
+    public function getGridItemWidth()
     {
-        $list = parent::getJSFiles();
-
-        $list[] = 'products_list/products_list.js';
-
-        return $list;
+        return floor(100 / $this->getParam(self::PARAM_GRID_COLUMNS)) - 6;
     }
 
     /**
-     * Register CSS files
+     * Check - show product price or not
      *
-     * @return array
+     * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCSSFiles()
+    public function isShowPrice()
     {
-        $list = parent::getCSSFiles();
-
-        $list[] = 'products_list/products_list.css';
-
-        return $list;
-    }
-
-    /**
-     * Get page URL pattern 
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPageURLPattern()
-    {
-        $params = $this->getCommonPatternParams();
-
-        $target = $params['target'];
-        $action = isset($params['action']) ? $params['action'] : '';
-
-        unset($params['target'], $params['action']);
-
-        return $this->buildURL($target, $action, $params);
-    }
-
-    /**
-     * Get page URL pattern (for AJAX request)
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPageURLPatternAJAX()
-    {
-        $params = $this->getCommonPatternParams();
-
-        $params = array_merge($params, $this->getAJAXSpecificPArams($params));
-
-        unset($params['target'], $params['action']);
-
-        return $this->buildURL('get_widget', '', $params);
-    }
-
-    /**
-     * Get common pattern parameters
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getCommonPatternParams()
-    {
-        return $this->assembleURLParams(
-            self::PATTERN_BORDER_SYMBOL . XLite_View_Pager::PAGE_ID_ARG . self::PATTERN_BORDER_SYMBOL,
-            self::PATTERN_BORDER_SYMBOL . self::SORT_CRITERION_ARG . self::PATTERN_BORDER_SYMBOL,
-            self::PATTERN_BORDER_SYMBOL . self::SORT_ORDER_ARG . self::PATTERN_BORDER_SYMBOL,
-            self::PATTERN_BORDER_SYMBOL . self::DISPLAY_MODE_ARG . self::PATTERN_BORDER_SYMBOL,
-            self::PATTERN_BORDER_SYMBOL . self::ITEMS_PER_PAGE_ARG . self::PATTERN_BORDER_SYMBOL
-        );
-    }
-
-    /**
-     * Get AJAX specific parameters 
-     * 
-     * @param array $params Parameters
-     *  
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getAJAXSpecificParams(array $params)
-    {
-        return array(
-            'widget_target' => $params['target'],
-            'widget_action' => isset($params['action']) ? $params['action'] : '',
-            'class'         => get_class($this->attributes['listFactory'][0])
-        );
-    }
-
-    /**
-     * Get display modes as javascript array defination 
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getDisplayModesForJS()
-    {
-        return '[\'' . implode('\', \'', array_keys($this->getDisplayModes())) . '\']';
-    }
-
-    /**
-     * Get URL translation table 
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getURLTranslationTable()
-    {
-        return array(
-            'pageId'        => XLite_View_Pager::PAGE_ID_ARG,
-            'sortCriterion' => self::SORT_CRITERION_ARG,
-            'sortOrder'     => self::SORT_ORDER_ARG,
-            'displayMode'   => self::DISPLAY_MODE_ARG,
-            'itemsPerPage'  => self::ITEMS_PER_PAGE_ARG,
-        );
-    }
-
-    /**
-     * Get URL translation table as javascript object definition
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getURLTranslationTableForJS()
-    {
-        $list = array();
-
-        foreach ($this->getURLTranslationTable() as $key => $value) {
-            $list[] = $key . ': \'' . self::PATTERN_BORDER_SYMBOL . $value . self::PATTERN_BORDER_SYMBOL . '\'';
-        }
-
-        return '{ ' . implode(', ', $list) . ' }';
-    }
-
-    /**
-     * Get widget params 
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    static public function getWidgetParamsList()
-    {
-        $list = XLite_View_ProductsListPage::getWidgetParamsList();
-
-        $list['displayModeAdjustable'] = new XLite_Model_WidgetParam_Checkbox('Allow visitor to switch Look and feel of a product list', 1);
-
-        $list['sortCriterionAdjustable'] = new XLite_Model_WidgetParam_Checkbox('Allow visitor to sort a product list', 1);
-        $list['sortCriterion'] = new XLite_Model_WidgetParam_List(
-            'Default sort criterion',
-            XLite_Model_Product::getDefaultSortCriterion(),
-            XLite_Model_Product::getSortCriterions()
-        );
-        $list['sortOrder'] = new XLite_Model_WidgetParam_List(
-            'Default sort order',
-            XLite_Model_Product::getDefaultSortOrder(),
-            array('asc' => 'Ascending', 'desc' => 'Descending')
-        );
-        
-        $itemsPerPageList = range(XLite_View_Pager::ITEMS_PER_PAGE_MIN, XLite_View_Pager::ITEMS_PER_PAGE_MAX);
-        $itemsPerPageList = array_combine($itemsPerPageList, $itemsPerPageList);
-        $list['itemsPerPageAdjustable'] = new XLite_Model_WidgetParam_Checkbox('Allow visitor to change items-per-page', 1);
-        $list['itemsPerPage'] = new XLite_Model_WidgetParam_List('Default items per page', XLite_View_Pager::DEFAULT_ITEMS_PER_PAGE, $itemsPerPageList);
-
-        $list['allItemsPerPage'] = new XLite_Model_WidgetParam_Checkbox('Show all items into one page', 0);
-
-        return $list;
-    }
-
-    /**
-     * Get inherited widget arguments
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getInheritedWidgetArguments()
-    {
-        return $this->attributes['widgetArguments'];
+        return $this->getParam(self::PARAM_SHOW_PRICE);
     }
 
     /**
      * Check - show Add to cart button or not
-     * 
+     *
      * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isDisplayModeAdjustable()
+    public function isShowAdd2Cart()
     {
-        return !isset($this->attributes['widgetArguments']['displayModeAdjustable'])
-            || $this->attributes['widgetArguments']['displayModeAdjustable'];
+        return $this->getParam(self::PARAM_SHOW_ADD2CART);
     }
 
     /**
-     * Get cell name 
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCellName()
-    {
-        return $this->attributes['cellName'];
-    }
-
-    /**
-     * Get container id 
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getContainerId()
-    {
-        return $this->attributes['cellName'] . 'Container';
-    }
-
-    /**
-     * Check sort criterion block visibility 
-     * 
+     * Check - show product description or not
+     *
      * @return boolean
      * @access public
-     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isSortCriterionVisible()
+    public function isShowDescription()
     {
-        return !isset($this->attributes['widgetArguments']['sortCriterionAdjustable'])
-            || $this->attributes['widgetArguments']['sortCriterionAdjustable'];
-    }
-
-
-    /**
-     * Check - items-per-page selector visible or not 
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isItemsPerPageSelectorVisible()
-    {
-        return !isset($this->attributes['widgetArguments']['itemsPerPageAdjustable'])
-            || $this->attributes['widgetArguments']['itemsPerPageAdjustable'];
-    }
-
-    /**
-     * Check - pager row is visible or not 
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isPagerVisible()
-    {
-        return !isset($this->attributes['widgetArguments']['allItemsPerPage']) || !$this->attributes['widgetArguments']['allItemsPerPage'];
-    }
-
-    /**
-     * Get page widget class name
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPageWidgetClass()
-    {
-        return $this->attributes['pageWidgetClass'];
+        return $this->getParam(self::PARAM_SHOW_DESCR);
     }
 }

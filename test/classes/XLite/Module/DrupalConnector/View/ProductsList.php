@@ -33,12 +33,41 @@
  * @subpackage View
  * @since      3.0.0 EE
  */
-class XLite_Module_DrupalConnector_View_ProductsList extends XLite_View_ProductsList implements XLite_Base_IDecorator
+abstract class XLite_Module_DrupalConnector_View_ProductsList extends XLite_View_ProductsList implements XLite_Base_IDecorator
 {
     /**
      * Input arguments (AJAX) 
      */
-    const BLOCK_DELTA_ARG = 'blockDelta';
+    const PARAM_BLOCK_DELTA = 'blockDelta';
+
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
+
+            // FIXME - define actual param value
+            $this->requestParams += array(
+                self::PARAM_BLOCK_DELTA => '',
+            );
+
+            // FIXME - define actual param type
+            $this->widgetParams += array(
+                self::PARAM_BLOCK_DELTA => new XLite_Model_WidgetParam_String(
+                    'Block delta', $this->getRequestParamValue(self::PARAM_BLOCK_DELTA)
+                ),
+            );
+        }
+    }
+
 
     /**
      * Register JS files
@@ -54,46 +83,6 @@ class XLite_Module_DrupalConnector_View_ProductsList extends XLite_View_Products
 
         if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
             $list[] = 'modules/DrupalConnector/products_list.js';
-        }
-
-        return $list;
-    }
-
-    /**
-     * Get AJAX specific parameters 
-     * 
-     * @param array $params Parameters
-     *  
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getAJAXSpecificParams(array $params)
-    {
-        $data = parent::getAJAXSpecificParams($params);
-
-        if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
-            $data[self::BLOCK_DELTA_ARG] = self::PATTERN_BORDER_SYMBOL . self::BLOCK_DELTA_ARG . self::PATTERN_BORDER_SYMBOL;   
-        }
-
-        return $data;
-    }
-
-    /**
-     * Get URL translation table
-     *
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getURLTranslationTable()
-    {
-        $list = parent::getURLTranslationTable();
-
-        if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
-            $list['blockDelta'] = self::BLOCK_DELTA_ARG;
         }
 
         return $list;

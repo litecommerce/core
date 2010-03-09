@@ -36,45 +36,46 @@
 class XLite_View_AddedToCartMark extends XLite_View_Abstract
 {
     /**
-     * Widget template filename
-     *
-     * @var    string
-     * @access protected
-     * @since  3.0.0 EE
+     * Widget parameter names
      */
-    protected $template = 'added_mark/body.tpl';
+
+    const PARAM_PRODUCT = 'product';
+
 
     /**
-     * Constructor
-     * 
+     * Define widget parameters
+     *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
+     * @access protected
+     * @since  1.0.0
      */
-    public function init(array $attributes = array())
+    protected function defineWidgetParams()
     {
-        $this->attributes['product'] = false;
+        parent::defineWidgetParams();
 
-        parent::init($attributes);
+        $this->widgetParams += array(
+            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
+        );
+
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('added_mark/body.tpl');
     }
+
 
     /**
      * Check widget visibility 
      * 
      * @return boolean
      * @access public
-     * @see    ____func_see____
      * @since  3.0.0
      */
     public function isVisible()
     {
-        $result = parent::isVisible()
-            && $this->attributes['product'];
+        $result = parent::isVisible();
 
+        // FIXME
         if ($result) {
             $item = new XLite_Model_OrderItem();
-            $item->set('product', $this->attributes['product']);
+            $item->set('product', $this->getParam(self::PARAM_PRODUCT));
             $result = $this->cart->isExistsItem($item);
         }
 

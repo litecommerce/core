@@ -24,39 +24,17 @@
 abstract class XLite_View_Form_Abstract extends XLite_View_Abstract
 {
     /**
-     * Determines currently drawing form 
-     * NOTE - currently not used
-     * 
-     * @var    XLite_View_Form_Abstract
-     * @access protected
-     * @since  3.0.0 EE
+     * Widget parameter names
      */
-    protected static $currentForm = null;
 
-    /**
-     * Saved value - parent form
-     * NOTE - currently not used 
-     * 
-     * @var    XLite_View_Form_Abstract
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected $parentForm = null;
+    const PARAM_FORM_TARGET = 'form_target';
+    const PARAM_FORM_ACTION = 'form_action';
+    const PARAM_FORM_NAME   = 'form_name';
+    const PARAM_FORM_PARAMS = 'form_params';
+    const PARAM_FORM_METHOD = 'form_method';
 
-    /**
-     * Attributes common for all the forms 
-     * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected $defaultFormAttributes = array(
-        'form_target' => '',
-        'form_action' => '',
-        'form_name'   => '',
-        'form_params' => array(),
-        'form_method' => 'POST',
-    );
+    const PARAM_START = 'start';
+    const PARAM_END   = 'end';
 
 
     /**
@@ -68,7 +46,7 @@ abstract class XLite_View_Form_Abstract extends XLite_View_Abstract
      */
     protected function getTemplate()
     {
-        return 'form/' . ($this->attributes['end'] ? 'end' : 'start') . '.tpl';
+        return 'form/' . ($this->getParam(self::PARAM_END) ? 'end' : 'start') . '.tpl';
     }
 
     /**
@@ -81,8 +59,8 @@ abstract class XLite_View_Form_Abstract extends XLite_View_Abstract
     protected function getCommonFormParams()
     {
         return array(
-            'target' => $this->attributes['form_target'],
-            'action' => $this->attributes['form_action'],
+            'target' => $this->getParam(self::PARAM_FORM_TARGET),
+            'action' => $this->getParam(self::PARAM_FORM_ACTION),
         );
     }
 
@@ -95,7 +73,7 @@ abstract class XLite_View_Form_Abstract extends XLite_View_Abstract
      */
     protected function getFormAction()
     {
-        return $this->buildURL($this->attributes['form_target']);
+        return $this->buildURL($this->getParam(self::PARAM_FORM_TARGET));
     }
 
     /**
@@ -107,39 +85,7 @@ abstract class XLite_View_Form_Abstract extends XLite_View_Abstract
      */
     protected function getFormParams()
     {
-        return $this->getCommonFormParams() + $this->attributes['form_params'];
-    }
-
-    /**
-     * Ability to use Flexy attribute "name" as form name
-     * 
-     * @return void
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function assignFormName()
-    {
-        if (isset($this->attributes[self::WIDGET_NAME])) {
-            $this->attributes['form_name'] = $this->attributes[self::WIDGET_NAME];
-        }
-    }
-
-    /**
-     * Save current and parent form handlers 
-     * NOTE - currently not used
-     * 
-     * @return void
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function setCurrentForm()
-    {
-        if ($this->attributes['end']) {
-            self::$currentForm = $this->parentForm;
-        } else {
-            $this->parentForm = self::$currentForm;
-            self::$currentForm = $this;
-        }
+        return $this->getCommonFormParams() + $this->getParam(self::PARAM_FORM_PARAMS);
     }
 
     /**
@@ -168,19 +114,26 @@ abstract class XLite_View_Form_Abstract extends XLite_View_Abstract
     }
 
     /**
-     * Called before the display()
-     * NOTE - currently not used
+     * Define widget parameters
      *
      * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  1.0.0
      */
-    protected function initView()
+    protected function defineWidgetParams()
     {
-        parent::initView();
+        parent::defineWidgetParams();
 
-        $this->assignFormName();
-        $this->setCurrentForm();
+        $this->widgetParams += array(
+            self::PARAM_START => new XLite_Model_WidgetParam_Bool('Is start', true),
+            self::PARAM_END   => new XLite_Model_WidgetParam_Bool('Is end', false),
+
+            self::PARAM_FORM_TARGET => new XLite_Model_WidgetParam_String('Target', ''),
+            self::PARAM_FORM_ACTION => new XLite_Model_WidgetParam_String('Action', ''),
+            self::PARAM_FORM_NAME   => new XLite_Model_WidgetParam_String('Name', ''),
+            self::PARAM_FORM_PARAMS => new XLite_Model_WidgetParam_Array('Params', array()),
+            self::PARAM_FORM_METHOD => new XLite_Model_WidgetParam_LIst('Request method', 'POST', array('POST', 'GET')),
+        );
     }
 
 
@@ -192,35 +145,5 @@ abstract class XLite_View_Form_Abstract extends XLite_View_Abstract
      * @since  3.0.0 EE
      */
     abstract protected function getFormName();
-
-    /**
-     * Each form must define its parameters 
-     * 
-     * @return void
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    abstract protected function defineDefaultFormAttributes();
-
-
-    /**
-     * Define some common attributes
-     * 
-     * @param array $attributes widget attributes
-     *  
-     * @return void
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function init(array $attributes = array())
-    {
-        $this->attributes['start'] = true;
-        $this->attributes['end']   = false;
-
-        $this->defineDefaultFormAttributes();
-        $this->attributes += $this->defaultFormAttributes;
-
-        parent::init($attributes);
-    }
 }
 

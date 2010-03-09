@@ -26,12 +26,17 @@
 abstract class XLite_View_SideBarBox extends XLite_View_Container
 {
     /**
-     * Wrapper template 
-     * 
-     * @var    string
+     * Define widget parameters
+     *
+     * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  1.0.0
      */
-    protected $template = 'common/sidebar_box.tpl';
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/sidebar_box.tpl');
+    }
 }
 

@@ -1,4 +1,27 @@
-/* SVN $Id$ */
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * ____file_title____
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id: products_list.js 2161 2010-03-04 10:04:46Z max $
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ */
+
+
+// Drupal-specific URLs
+URLHandler.baseURLPart = '?q=store/';
+URLHandler.argSeparator = '/';
+URLHandler.nameValueSeparator = '-';
+
+URLHandler.getMainParamValue = function(name, params)
+{
+  return params[name];
+}
+
 
 /**
  * List of all "get"-forms 
@@ -10,33 +33,6 @@ var xliteForms = [];
  */
 var submitStarted = false;
 
-
-/**
- * Compose Drupal URL 
- * 
- * @param array $params list of URL params
- *  
- * @return string
- * @since  3.0.0 EE
- */
-function drupalBuldURL(params)
-{
-	// TODO - add the AJAX request here
-
-	result = 'store';
-	mainParams = ['target','action'];
-
-	for (i = 0; i < mainParams.length; i++) {
-		result += '/' + params[mainParams[i]];
-		delete params[mainParams[i]];
-	}
-
-	for (name in params) {
-		result += '/' + name + '-' + params[name];
-	}
-
-	return result;
-}
 
 /**
  * Prepare submit params for the forms having "GET" method
@@ -63,7 +59,7 @@ function drupalOnSubmitGetForm(form)
 			element.parentNode.removeChild(element);
 		}
 
-		form.q.value = drupalBuldURL(result);
+		form.q.value = URLHandler.buildURL(result);
 	}
 }
 

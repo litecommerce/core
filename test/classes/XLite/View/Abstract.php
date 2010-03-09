@@ -21,24 +21,31 @@
  * @subpackage ____sub_package____
  * @since      3.0.0 EE
  */
-class XLite_View_Abstract extends XLite_Core_Handler
+abstract class XLite_View_Abstract extends XLite_Core_Handler
 {
     /**
-     * Indexes in the "resources" array
+     * Resource types
      */
 
     const RESOURCE_JS  = 'js';
     const RESOURCE_CSS = 'css';
 
     /**
-     * Attribute to determines if widget is exported by CMS handler
+     * Common widget parameter names
      */
-    const IS_EXPORTED = '____is_exported____';
+
+    const PARAM_TEMPLATE    = 'template';
+    const PARAM_VISIBLE     = 'visible';
+    const PARAM_IS_EXPORTED = 'isExported';
+    const PARAM_MODE        = 'mode';
 
     /**
-     * Internal widget name (sometimes used in templates)
+     * AJAX-specific parameters 
      */
-    const WIDGET_NAME = '____widget_name____';
+    
+    const PARAM_AJAX_TARGET = 'ajaxTarget';
+    const PARAM_AJAX_ACTION = 'ajaxAction';
+    const PARAM_AJAX_CLASS  = 'ajaxClass';
 
 
     /**
@@ -46,58 +53,30 @@ class XLite_View_Abstract extends XLite_Core_Handler
      * 
      * @var    array
      * @access protected
-     * @see    ____var_see____
      * @since  3.0.0
      */
-    protected static $resources = array(self::RESOURCE_JS => array(), self::RESOURCE_CSS => array());
+    protected static $resources = array(
+        self::RESOURCE_JS  => array(),
+        self::RESOURCE_CSS => array(),
+    );
 
     /**
-     * Widget template filename
-     *
-     * @var    string
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected $template = null;
-
-	/**
-	 * By default, widget is visible
-	 * 
-	 * @var    bool
-	 * @access protected
-	 * @since  3.0.0 EE
-	 */
-	protected $visible = true;
-
-	/**
-	 * List of named widgets; FIXME - backward compatibility
-	 * 
-	 * @var    array
-	 * @access protected
-	 * @since  3.0.0 EE
-	 */
-	protected $widgets = array();
-
-	/**
-	 * Widget params (for exported widgets)
-	 * 
-	 * @var    array
-	 * @access protected
-	 * @since  3.0.0 EE
-	 */
-	protected $widgetParams = null;
-
-    /**
-     * Attributes passed to widget
+     * Widget params
      * 
      * @var    array
      * @access protected
      * @since  3.0.0 EE
      */
-    protected $attributes = array(
-        self::IS_EXPORTED => false,
-        self::WIDGET_NAME => '',
-    );
+    protected $widgetParams = null;
+
+    /**
+     * "Named" widgets cache
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected $namedWidgets = array();
 
     /**
      * Targets this widget is allowed for
@@ -108,205 +87,15 @@ class XLite_View_Abstract extends XLite_Core_Handler
      */
     protected $allowedTargets = array();
 
-
     /**
-     * Return current template 
+     * requestParams 
      * 
-     * @return string
+     * @var    array
      * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function getTemplate()
-    {
-        return isset($this->attributes['template']) ? $this->attributes['template'] : $this->template;
-    }
-
-    /**
-     * Return template file base name
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function getTemplateFile()
-    {
-        return XLite_Model_Layout::getInstance()->getLayout($this->getTemplate());
-    }
-
-    /**
-     * Return template file full name
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function getDisplayFile()
-    {
-        return LC_COMPILE_DIR . $this->getTemplateFile() . '.php';
-    }
-
-	/**
-	 * Check if template is up-to-date
-	 * 
-	 * @param string $original original template
-	 * @param string $compiled compiled one
-	 *  
-	 * @return bool
-	 * @access protected
-	 * @since  3.0.0 EE
-	 */
-	protected function checkTemplateStatus($original, $compiled)
-	{
-		return file_exists($compiled) && (filemtime($compiled) == filemtime($original));
-	}
-
-	/**
-     * Compile and display a template
-     *
-     * @param string $includeFile template to display
-     *
-     * @return void
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function includeCompiledFile($includeFile)
-    {
-        if (is_null($this->getTemplate())) {
-            $this->_die("template is not set");
-        }
-
-        $templateFile = LC_ROOT_DIR . $this->getTemplateFile();
-
-        if (!$this->checkTemplateStatus($templateFile, $includeFile)) {
-
-            $fc = new XLite_Core_FlexyCompiler();
-            $fc->set('source', file_get_contents($templateFile));
-            $fc->set('url_rewrite', array('images' => XLite::getInstance()->shopURL(self::getSkinURL('images'))));
-            $fc->set('file', $templateFile);
-
-            $file = $this->getDisplayFile();
-            $dir  = dirname($file);
-
-            if (!file_exists($dir)) {
-                mkdirRecursive($dir, 0755);
-            }
-
-            file_put_contents($file, trim($fc->parse()) . "\n");
-            touch($file, filemtime($templateFile));
-        }
-
-        include $includeFile;
-    }
-
-	/**
-     * Return widget object; FIXME - backward compatibility
-     *
-     * @param array  $attrs widget attributes
-     * @param string $class widget class
-     * @param string $name  widget class
-     *
-     * @return XLite_View_Abstract
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function _getWidget(array $attrs = array(), $class = null, $name = null)
-    {
-        // Name is the primary for widget selection
-        if (isset($name)) {
-
-            // Widget not exists - create and save it in cache
-            if (!isset($this->widgets[$name])) {
-                $this->$name = $this->widgets[$name] = isset($class) ? new $class() : clone $this;
-            }
-
-            // Fetch widget object from cache and set its name
-            $widget = $this->widgets[$name];
-            $attrs[self::WIDGET_NAME] = $name;
-
-        } else {
-
-            // Do not cache unnamed widgets
-            $widget = isset($class) ? new $class() : clone $this;
-        }
-
-        // Initialization
-		$widget->init($attrs);
-
-        return $widget;
-    }
-
-	/**
-     * Called before the display()
-     *
-     * @return void
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function initView()
-    {
-        $this->setInitialAttributes();
-    }
-
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        $this->widgetParams = array();
-    }
-
-    /**
-     * Set properties
-     *
-     * @param array $attributes params to set
-     *  
-     * @return void
-     * @access protected
-     * @since  3.0.0 EE
-     */     
-    protected function setAttributes(array $attributes)
-    {       
-        parent::setAttributes($attributes);
-    
-        foreach ($attributes as $name => $value) {
-            if (isset($this->attributes[$name])) {
-                $this->attributes[$name] = $value;
-            }
-        }
-    }
-
-    /**
-     * Check visibility according to the current target
-     *
-     * @return void
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function checkTarget()
-    {
-        return empty($this->allowedTargets) || in_array(XLite_Core_Request::getInstance()->target, $this->allowedTargets);
-    }
-
-    /**
-     * Register widget resources
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function registerResources()
-    {
-        foreach ($this->getResources() as $type => $list) {
-            if (!empty($list)) {
-                self::$resources[$type] = array_merge(self::$resources[$type], array_diff($list, self::$resources[$type]));
-            }
-        }
-    }
+    protected $requestParams = array();
+
 
     /**
      * Return full URL by the skindir-related one
@@ -319,7 +108,7 @@ class XLite_View_Abstract extends XLite_Core_Handler
      */
     protected static function getSkinURL($url)
     {
-        return XLite_Model_Layout::getInstance()->getPath() . $url;
+        return XLite_Model_Layout::getInstance()->getSkinURL($url);
     }
 
     /**
@@ -337,96 +126,371 @@ class XLite_View_Abstract extends XLite_Core_Handler
     }
 
 
-	/**
+    /**
+     * Return current template 
      * FIXME - backward compatibility
-     *
-     * @param string $name property name
-     *
-     * @return mixed
-     * @access public
+     * 
+     * @return string
+     * @access protected
      * @since  3.0.0 EE
      */
-	public function get($name)
+    protected function getTemplate()
     {
-		$value = parent::get($name);
+        $template = $this->getParam(self::PARAM_TEMPLATE);
 
-        return isset($value) ? $value : XLite::$controller->get($name);
-    }
-
-	/**
-	 * Use current controoler context
-	 * 
-	 * @param string $name property name
-	 *  
-	 * @return mixed
-	 * @access public
-	 * @since  3.0.0 EE
-	 */
-	public function __get($name)
-	{
-		$value = parent::__get($name);
-
-		return isset($value) ? $value : XLite::$controller->$name;
-	}
-
-	/**
-	 * Use current controoler context
-	 * 
-	 * @param string $method method name
-	 * @param array  $args   call arguments
-	 *  
-	 * @return mixed
-	 * @access public
-	 * @since  3.0.0 EE
-	 */
-	public function __call($method, array $args = array())
-    {
-		return call_user_func_array(array(XLite::$controller, $method), $args);
+        return isset($template) ? $template : $this->template;
     }
 
     /**
-     * Initialize widget
+     * Return full template file name
      *
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getTemplateFile()
+    {
+        return XLite_Model_Layout::getInstance()->getLayout($this->getTemplate());
+    }
+
+    /**
+     * Return compiled template file name
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getDisplayFile()
+    {
+        return LC_COMPILE_DIR . $this->getTemplateFile() . '.php';
+    }
+
+    /**
+     * Check if template is up-to-date
+     * 
+     * @param string $original original template
+     * @param string $compiled compiled one
+     *  
+     * @return bool
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function checkTemplateStatus($original, $compiled)
+    {
+        return file_exists($compiled) && (filemtime($compiled) === filemtime($original));
+    }
+
+    /**
+     * Return instance of the child widget 
+     * 
+     * @param string $class child widget class
+     *  
+     * @return XLite_View_Abstract
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getChildWidget($class = null)
+    {
+        return isset($class) ? new $class() : clone $this;
+    }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        $this->widgetParams = array(
+            self::PARAM_TEMPLATE    => new XLite_Model_WidgetParam_File('Template', null),
+            self::PARAM_VISIBLE     => new XLite_Model_WidgetParam_Bool('Visible', true),
+            self::PARAM_IS_EXPORTED => new XLite_Model_WidgetParam_Bool('Is exported', false),
+            self::PARAM_MODE        => new XLite_Model_WidgetParam_Array('Modes', array()),
+        );
+    }
+
+    /**
+     * Return widget param value 
+     * 
+     * @param string $param param to fetch
+     *  
+     * @return mixed
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getParam($param)
+    {
+        return $this->getWidgetParams($param)->value;
+    }
+
+    /**
+     * getRequestParamValue 
+     * 
+     * @param mixed $param ____param_comment____
+     *  
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getRequestParamValue($param)
+    {
+        $value = XLite_Core_Request::getInstance()->$param;
+
+        return isset($value) ? $value : (isset($this->requestParams[$param]) ? $this->requestParams[$param] : null);
+    }
+
+    /**
+     * Common layout for the widget resources 
+     * 
+     * @param array $jsResources  list of JS resources
+     * @param array $cssResources list of CSS resources
+     *  
+     * @return array
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected static function getResourcesSchema(array $jsResources = array(), array $cssResources = array())
+    {
+        return XLite_Core_Converter::getArraySchema(array_keys(self::$resources), array($jsResources, $cssResources));
+    }
+
+    /**
+     * Register resources of certain type 
+     * 
+     * @param string $type      resources type
+     * @param array  $resources resources to register
+     *  
+     * @return void
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function registerResourcesType($type, array $resources)
+    {
+        self::$resources[$type] = array_merge(
+            self::$resources[$type],
+            array_diff($resources, self::$resources[$type])
+        );
+    }
+
+    /**
+     * Register widget resources
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function registerResources()
+    {
+        foreach ($this->getResources() as $type => $list) {
+            $this->registerResourcesType($type, $list);
+        }
+    }
+
+    /**
+     * Check visibility according to the current target
+     *
+     * @return void
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function checkTarget()
+    {
+        return empty($this->allowedTargets) || in_array(XLite_Core_Request::getInstance()->target, $this->allowedTargets);
+    }
+
+    /**
+     * Check if current mode is allowable 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function checkMode()
+    {
+        $allowedModes = $this->getParam(self::PARAM_MODE);
+
+        return empty($allowedModes) || in_array(XLite_Core_Request::getInstance()->mode, $allowedModes);
+    }
+
+    /**
+     * Called before the includeCompiledFile()
+     *
+     * @return void
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function initView()
+    {
+        $this->registerResources();
+    }
+
+    /**
+     * Compile and display a template
+     *
+     * @return void
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function includeCompiledFile()
+    {
+        // Template files: source and compiled
+        $original = LC_ROOT_DIR . $this->getTemplateFile();
+        $compiled = $this->getDisplayFile();
+
+        // Only compile if some criteria is match
+        if (!$this->checkTemplateStatus($original, $compiled)) {
+
+            // Create directory for compiled template (if not exists)
+            if (!file_exists($dir = dirname($compiled))) {
+                mkdirRecursive($dir, 0755);
+            }
+
+            // Save compiled data and checng file access time to prevent repeated compiling
+            file_put_contents($compiled, XLite_Core_FlexyCompiler::getInstance()->parse($original));
+            touch($compiled, filemtime($original));
+        }
+
+        // Execute PHP code from compiled template
+        include $compiled;
+    }
+
+
+    /**
+     * Return widget parameters list (or a single object)
+     * 
+     * @param string $param param name
+     *  
+     * @return array
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function getWidgetParams($param = null)
+    {
+        if (!isset($this->widgetParams)) {
+            $this->defineWidgetParams();
+        }
+
+        if (isset($param)) {    
+            $result = isset($this->widgetParams[$param]) ? $this->widgetParams[$param] : null;
+        } else {
+            $result = $this->widgetParams;
+        }
+
+        return $result;
+    }
+
+    /**
+     * getWidgetSettings 
+     * 
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getWidgetSettings()
+    {
+        $result = array();
+
+        foreach ($this->getWidgetParams() as $name => $param) {
+            if ($param->isSetting) {
+                $result[$name] = $param;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * getRequestParams 
+     * 
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getRequestParams()
+    {
+        $result = array();
+
+        foreach ($this->requestParams as $name => $defValue) {
+            $result[$name] = $this->getParam($name);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Return list of widget resources 
+     * 
      * @return void
      * @access public
      * @since  3.0.0 EE
      */
-    public function init(array $attributes = array())
+    public function getResources()
     {
-        parent::init();
+        return self::getResourcesSchema($this->prepareResources($this->getJSFiles()), $this->prepareResources($this->getCSSFiles()));
+    }
 
-        foreach ($this->getWidgetParams() as $name => $param) {
-            $this->attributes[$name] = $param->value;
-        }
-        
-        if (!empty($attributes)) {
-            $this->setAttributes($attributes);
+    /**
+     * Initialize widget (set attributes)
+     * 
+     * @param array $params widget params
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function init(array $params = array())
+    {
+        foreach ($this->getWidgetParams() as $name => $paramObject) {
+            if (isset($params[$name])) {
+                $paramObject->setValue($params[$name]);
+            }
+            // TODO - for mapping only; to remove
+            unset($params[$name]);
         }
 
-        // FIXME - must be removed
-        if (isset($attributes['template'])) {
-            $this->template = $attributes['template'];
+        // FIXME - mapping
+        foreach ($params as $name => $value) {
+            // TODO - add logger here
+            $this->widgetParams[$name] = new XLite_Model_WidgetParam_Container(null, $value);
         }
     }
 
     /**
-     * Return certain attribute value (or all attributes)
-     * 
-     * @param string $name attribute name
-     *  
-     * @return mixed
+     * Return widget object
+     *
+     * @param array  $params widget params
+     * @param string $class  widget class
+     * @param string $name   widget class
+     *
+     * @return XLite_View_Abstract
      * @access public
      * @since  3.0.0 EE
      */
-    public function getAttributes($name = null)
+    public function getWidget(array $params = array(), $class = null, $name = null)
     {
-        // FIXME - must return NULL instead of the $this->get('name')
-        return isset($name) ? (isset($this->attributes[$name]) ? $this->attributes[$name] : $this->get('name')) : $this->attributes;
+        if (isset($name)) {
+            // Save object reference in cache if it's not already saved
+            if (!isset($this->namedWidgets[$name])) {
+                $this->namedWidgets[$name] = $this->getChildWidget($class);
+            }
+            // Get cached object
+            $widget = $this->namedWidgets[$name];
+        } else {
+            // Create/clone current widget
+            $widget = $this->getChildWidget($class);
+        }
+
+        // Set param values
+        $widget->init($params);
+
+        return $widget;
     }
 
     /**
      * Check if widget is visible
-     * FIXME - this function must be completely revised
      *
      * @return bool
      * @access protected
@@ -434,13 +498,7 @@ class XLite_View_Abstract extends XLite_Core_Handler
      */
     public function isVisible()
     {
-        $result = $this->visible && $this->checkTarget();
-
-        if ($result && !empty($this->mode) && isset(XLite::$controller)) {
-            $result = in_array(XLite::$controller->mode, explode(',', $this->mode));
-        }
-
-        return ($result && isset($this->parentWidget)) ? $this->parentWidget->isVisible() : $result;
+        return $this->getParam(self::PARAM_VISIBLE) && $this->checkTarget() && $this->checkMode(); 
     }
 
     /**
@@ -452,11 +510,9 @@ class XLite_View_Abstract extends XLite_Core_Handler
      */
     public function display()
     {
-		$this->initView();
-
         if ($this->isVisible()) {
-            $this->registerResources();
-            $this->includeCompiledFile($this->getDisplayFile());
+            $this->initView();
+            $this->includeCompiledFile();
         }
     }
 
@@ -475,67 +531,6 @@ class XLite_View_Abstract extends XLite_Core_Handler
         ob_end_clean();
 
         return $content;
-    }
-
-	/**
-     * Return widget parameters list
-     *
-     * @return array
-     * @access public
-     * @since  1.0.0
-     */
-    public function getWidgetParams()
-    {
-        if (!isset($this->widgetParams)) {
-            $this->defineWidgetParams();
-        }
-
-        return $this->widgetParams;
-    }
-
-    /**
-     * Check passed attributes
-     *
-     * @param array $attrs attributes to check
-     *
-     * @return array errors list
-     * @access public
-     * @since  1.0.0
-     */
-    public function validateAttributes(array $attrs)
-    {
-        $messages = array();
-
-        foreach ($this->getWidgetParams() as $name => $param) {
-
-            if (isset($attrs[$name])) {
-                list($result, $widgetErrors) = $param->validate($attrs[$name]);
-
-                if (false === $result) {
-                    $messages[] = $param->label . ': ' . implode('<br />' . $param->label . ': ', $widgetErrors);
-                }
-
-            } else {
-                $messages[] = $param->label . ': is not set';
-            }
-        }
-
-        return $messages;
-    }
-
-    /**
-     * Check for current target 
-     * FIXME - this function must be used instead of the isVisible() one
-     * 
-     * @param array $target list of allowed targets
-     *  
-     * @return bool
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function isDisplayRequired(array $target)
-    {
-        return in_array(XLite_Core_Request::getInstance()->target, $target);
     }
 
     /**
@@ -561,22 +556,7 @@ class XLite_View_Abstract extends XLite_Core_Handler
      */
     public function getJSFiles()
     {
-        return array();
-    }
-
-    /**
-     * getResources 
-     * 
-     * @return void
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function getResources()
-    {
-        return array(
-            self::RESOURCE_JS  => $this->prepareResources($this->getJSFiles()),
-            self::RESOURCE_CSS => $this->prepareResources($this->getCSSFiles()),
-        );
+        return array('js/common.js');
     }
 
     /**
@@ -601,10 +581,125 @@ class XLite_View_Abstract extends XLite_Core_Handler
      */
     public static function cleanupResources()
     {
-        self::$resources = array(self::RESOURCE_JS => array(), self::RESOURCE_CSS => array());
+        self::$resources = self::getResourcesSchema();
     }
 
+
+    /**
+     * Check for current target 
+     * FIXME - backward compatibility; use the isVisible() instead
+     * 
+     * @param array $target list of allowed targets
+     *  
+     * @return bool
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function isDisplayRequired(array $target)
+    {
+        return in_array(XLite_Core_Request::getInstance()->target, $target);
+    }
+
+    /**
+     * FIXME - backward compatibility
+     *
+     * @param string $name property name
+     *
+     * @return mixed
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function get($name)
+    {
+        $value = parent::get($name);
+
+        return isset($value) ? $value : XLite::getController()->get($name);
+    }
+
+    /**
+     * Use current controller context
+     * 
+     * @param string $name property name
+     *  
+     * @return mixed
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function __get($name)
+    {
+        $value = parent::__get($name);
+
+        // FIXME - backward compatibility; mapping emulation
+        if (!isset($value) && !is_null($this->getWidgetParams($name))) {
+            // TODO - add logger here
+            $value = $this->getParam($name);
+        }
+
+        return isset($value) ? $value : XLite::getController()->$name;
+    }
+
+    /**
+     * Use current controller context
+     * 
+     * @param string $method method name
+     * @param array  $args   call arguments
+     *  
+     * @return mixed
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function __call($method, array $args = array())
+    {
+        return call_user_func_array(array(XLite::getController(), $method), $args);
+    }
+
+    /**
+     * Copy widget params 
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function __clone()
+    {
+        foreach ($this->getWidgetParams() as $name => $param) {
+            $this->widgetParams[$name] = clone $param;
+        }
+    }
+
+   
+
     // ------------------> Routines for templates
+
+    /**
+      * Check passed attributes
+      *
+      * @param array $attrs attributes to check
+      *
+      * @return array errors list
+      * @access public
+      * @since  1.0.0
+      */
+     public function validateAttributes(array $attrs)
+     {
+         $messages = array();
+ 
+         foreach ($this->getWidgetSettings() as $name => $param) {
+ 
+             if (isset($attrs[$name])) {
+                 list($result, $widgetErrors) = $param->validate($attrs[$name]);
+ 
+                 if (false === $result) {
+                     $messages[] = $param->label . ': ' . implode('<br />' . $param->label . ': ', $widgetErrors);
+                 }
+ 
+             } else {
+                 $messages[] = $param->label . ': is not set';
+             }
+         }
+ 
+         return $messages;
+     }
 
 
     /**
@@ -638,12 +733,12 @@ class XLite_View_Abstract extends XLite_Core_Handler
      */
     protected function truncate($baseObject, $field, $length = 0, $etc = '...', $breakWords = false)
     {
-        
+
         if (is_scalar($baseObject)) {
             $string = $baseObject;
             $length = $field;
         } else {
-        	$string = $baseObject->get($field);
+            $string = $baseObject->get($field);
         }
 
         if ($length == 0) {
@@ -758,7 +853,7 @@ class XLite_View_Abstract extends XLite_Core_Handler
      * @since  3.0.0 EE
      */
     protected function isEmpty($data)
-    {	
+    {
         return empty($data);
     }
 
@@ -800,7 +895,7 @@ class XLite_View_Abstract extends XLite_Core_Handler
     {
         return $value + $inc;
     }
-    
+
     /**
      * Get random number
      * TODO - rarely used function; probably, should be removed 
@@ -825,10 +920,10 @@ class XLite_View_Abstract extends XLite_Core_Handler
      * @access protected
      * @since  3.0.0 EE
      */
-	protected function getRowClass($row, $odd_css_class, $even_css_class = null)
-	{
-		return (0 == ($row % 2)) ? $odd_css_class : $even_css_class;
-	}
+    protected function getRowClass($row, $odd_css_class, $even_css_class = null)
+    {
+        return (0 == ($row % 2)) ? $odd_css_class : $even_css_class;
+    }
 
     /**
      * Check if captcha required on the current page
@@ -849,19 +944,6 @@ class XLite_View_Abstract extends XLite_Core_Handler
         }
 
         return $result;
-    }
-
-    /**
-     * Initial set widget attributes
-     * TODO - check if it's really needed
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function setInitialAttributes()
-    {
     }
 }
 

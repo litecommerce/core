@@ -33,7 +33,7 @@
  * @subpackage View
  * @since      3.0.0
  */
-class XLite_Module_FeaturedProducts_View_FeaturedProducts extends XLite_View_ProductsListContainer
+class XLite_Module_FeaturedProducts_View_FeaturedProducts extends XLite_View_ProductsList
 {
     /**
      * Targets this widget is allowed for
@@ -57,15 +57,19 @@ class XLite_Module_FeaturedProducts_View_FeaturedProducts extends XLite_View_Pro
     }
 
     /**
-     * Return templates directory name
-     *
-     * @return string
+     * getHiddenParamsList 
+     * 
+     * @return array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
-    protected function getDir()
+    protected function getHiddenParamsList()
     {
-        return 'modules/FeaturedProducts/featured_products';
+        return array(
+            self::PARAM_SHOW_SORT_BY_SELECTOR,
+            self::PARAM_SORT_BY,
+            self::PARAM_SORT_ORDER,
+        );
     }
 
     /**
@@ -79,49 +83,40 @@ class XLite_Module_FeaturedProducts_View_FeaturedProducts extends XLite_View_Pro
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams['displayModeAdjustable']->set('value', 0);
-        $this->widgetParams['allItemsPerPage']->set('value', 1);
+        // FIXME - correct the FeaturedProducts module SQL dump and uncomment this line
+        // $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue($this->config->FeaturedProducts->featured_products_look);
 
-        unset($this->widgetParams['sortCriterionAdjustable'], $this->widgetParams['sortCriterion'], $this->widgetParams['sortOrder']);
-    }
+        $this->widgetParams[self::PARAM_SHOW_DISPLAY_MODE_SELECTOR]->setValue(false);
+        $this->widgetParams[self::PARAM_SHOW_ALL_ITEMS_PER_PAGE]->setValue(true);
 
-    /**
-     * Get products array
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getProducts($sortCriterion = 'name', $sortOrder = 'asc')
-    {
-        $featuredProducts = $this->getCategory()->getFeaturedProducts();
-
-        $products = array();
-        if (is_array($featuredProducts)) {
-            foreach ($featuredProducts as $fp) {
-                $products[] = $fp->product;
-            }
+        foreach ($this->getHiddenParamsList() as $param) {
+            $this->widgetParams[$param]->setVisibility(false);
         }
-
-        return $products;
     }
 
     /**
-     * Export widget arguments 
-     * 
+     * Return products list
+     *
      * @return array
-     * @access public
-     * @see    ____func_see____
+     * @access protected
      * @since  3.0.0
      */
-    public function exportWidgetArguments()
+    protected function getData()
     {
-        $data = parent::exportWidgetArguments();
-
-        $data['sortCriterionAdjustable'] = 0;
-
-        return $data;
+        return $this->getCategory()->getFeaturedProducts();
     }
 
+
+    /**
+     * Check if widget is visible
+     * FIXME - to remove; check if it's really needed check current page
+     *
+     * @return bool
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    public function isVisible()
+    {
+        return parent::isVisible() && !$this->get('page');
+    }
 }

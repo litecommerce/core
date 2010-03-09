@@ -24,13 +24,33 @@
 class XLite_View_Button_Link extends XLite_View_Button_Abstract
 {
     /**
-     * Widget template 
-     * 
-     * @var    string
-     * @access protected
-     * @since  3.0.0 EE
+     * Widget parameter names
      */
-    protected $template = 'button/regular.tpl';
+
+    const PARAM_LOCATION = 'location';
+    const PARAM_JS_EVENT = 'jsEvent';
+    const PARAM_JS_CODE  = 'jsCode';
+
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_LOCATION => new XLite_Model_WidgetParam_String('Redirect to', null, true),
+            self::PARAM_JS_EVENT => new XLite_Model_WidgetParam_List('JS event', 'onclick', true, $this->allowedJSEvents),
+            self::PARAM_JS_CODE  => new XLite_Model_WidgetParam_String('JS code', null, true),
+        );
+
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('button/regular.tpl');
+    }
 
 
     /**
@@ -42,7 +62,7 @@ class XLite_View_Button_Link extends XLite_View_Button_Abstract
      */
     protected function getJSEvent()
     {
-        return $this->attributes['jsEvent'];
+        return $this->getParam(self::PARAM_JS_EVENT);
     }
 
     /**
@@ -54,7 +74,7 @@ class XLite_View_Button_Link extends XLite_View_Button_Abstract
      */
     protected function getDefaultJSCode($action = null)
     {
-        return 'self.location = \'' . $this->attributes['location'] . '\';';
+        return 'self.location = \'' . $this->getParam(self::PARAM_LOCATION) . '\';';
     }
 
     /**
@@ -66,27 +86,7 @@ class XLite_View_Button_Link extends XLite_View_Button_Abstract
      */
     protected function getJSCode()
     {
-        return empty($this->attributes['jsCode']) ? $this->getDefaultJSCode() : $this->attributes['jsCode'];
-    }
-
-    /**
-     * Define some widget attributes
-     * 
-     * @param array $attributes widget attributes
-     *  
-     * @return void
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function init(array $attributes = array())
-    {
-        $this->attributes += array(
-            'location' => '',
-            'jsEvent'  => 'onclick',
-            'jsCode'   => '',
-        );
-
-        parent::init($attributes);
+        return $this->getParam(self::PARAM_JS_CODE) ? $this->getParam(self::PARAM_JS_CODE) : $this->getDefaultJSCode();
     }
 }
 

@@ -24,6 +24,23 @@
 abstract class XLite_View_Button_Abstract extends XLite_View_Abstract
 {
     /**
+     * Widget parameter names
+     */
+
+    const PARAM_LABEL = 'label';
+
+
+    /**
+     * allowedJSEvents 
+     * 
+     * @var    string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected $allowedJSEvents = array('onclick' => 'One click');
+
+
+    /**
      * Return button text 
      * 
      * @return string
@@ -32,24 +49,25 @@ abstract class XLite_View_Button_Abstract extends XLite_View_Abstract
      */
     protected function getButtonLabel()
     {
-        return $this->attributes['label'];
+        return $this->getParam(self::PARAM_LABEL);
     }
 
-    /**
-     * Define some common attributes
-     * 
-     * @param array $attributes widget attributes
-     *  
+    /** 
+     * Define widget parameters
+     *
      * @return void
-     * @access public
-     * @since  3.0.0 EE
-     */    
-    public function init(array $attributes = array())
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
     {
-        $this->attributes['label'] = '';
+        parent::defineWidgetParams();
 
-        parent::init($attributes);
+        $this->widgetParams += array(
+            self::PARAM_LABEL => new XLite_Model_WidgetParam_String('Label', '', true),
+        );
     }
+
 
     /**
      * Get a list of CSS files required to display the widget properly 
@@ -60,7 +78,7 @@ abstract class XLite_View_Button_Abstract extends XLite_View_Abstract
      */
     public function getCSSFiles()
     {
-        return array('button/button.css');
+        return array_merge(parent::getCSSFiles(), array('button/button.css'));
     }
 
     /**
@@ -72,7 +90,7 @@ abstract class XLite_View_Button_Abstract extends XLite_View_Abstract
      */
     public function getJSFiles()
     {
-        return array('button/button.js');
+        return array_merge(parent::getJSFiles(), array('button/button.js'));
     }
 }
 

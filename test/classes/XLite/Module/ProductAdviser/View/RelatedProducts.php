@@ -14,6 +14,9 @@
  * @since      3.0.0 EE
  */
 
+// FIXME - must be completely revised; see ProductsAlsoBuy.php; recommended to derive from one class
+// FIXME - related templates must be deleted
+
 /**
  * XLite_Module_ProductAdviser_View_RelatedProducts
  * 
@@ -21,7 +24,7 @@
  * @subpackage ____sub_package____
  * @since      3.0.0 EE
  */
-class XLite_Module_ProductAdviser_View_RelatedProducts extends XLite_View_Dialog
+class XLite_Module_ProductAdviser_View_RelatedProducts extends XLite_View_ProductsList
 {
 	/**
      * Targets this widget is allowed for
@@ -31,20 +34,6 @@ class XLite_Module_ProductAdviser_View_RelatedProducts extends XLite_View_Dialog
      * @since  3.0.0 EE
      */
     protected $allowedTargets = array('product');
-
-	/**
-	 * Available display modes list
-	 * 
-	 * @var    array
-	 * @access protected
-	 * @see    ____var_see____
-	 * @since  3.0.0
-	 */
-	protected $displayModes = array(
-		'list'  => 'List',
-        'icons' => 'Icons',
-        'table' => 'Table'
-	);
 
 	/**
 	 * Get widget title
@@ -59,161 +48,44 @@ class XLite_Module_ProductAdviser_View_RelatedProducts extends XLite_View_Dialog
 		return 'Related products';
 	}
 
-	/**
-	 * Get widget directory
-	 * 
-	 * @return string
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function getDir()
-	{
-        return 'modules/ProductAdviser/RelatedProducts/' . $this->getDisplayMode();
-	}
 
-	/**
-	 * Define widget parameters
-	 * 
-	 * @return void
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function defineWidgetParams()
-	{
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
         parent::defineWidgetParams();
 
-		$this->widgetParams += array(
-            'displayMode'        => new XLite_Model_WidgetParam_List('Display mode', 'list', $this->displayModes),
-            'numberOfColumns'    => new XLite_Model_WidgetParam_List('Number of columns (for Icons mode only)', 2, range(1,5)),
-            'showDescription'    => new XLite_Model_WidgetParam_Checkbox('Show product description (for List mode only)', 1),
-            'showPrice'          => new XLite_Model_WidgetParam_Checkbox('Show product price', 1),
-            'showAddToCart'      => new XLite_Model_WidgetParam_Checkbox('Show \'Add to Cart\' button', 1),
-            'enableBulkShopping' => new XLite_Model_WidgetParam_Checkbox('Enable multiple additions at once', 0),
-		);
-	}
+        // FIXME - correct the ProductAdviser module SQL dump and uncomment this line
+        // $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue($this->config->ProductAdviser->rp_template);
 
-	/**
-     * Get widget display mode parameter (icons | list | table)
+        // TODO - check if these LC opions is really needed (or at least exist :) )
+        $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue($this->config->ProductAdviser->rp_columns);
+        $this->widgetParams[self::PARAM_SHOW_DESCR]->setValue($this->config->ProductAdviser->rp_show_descr);
+        $this->widgetParams[self::PARAM_SHOW_PRICE]->setValue($this->config->ProductAdviser->rp_show_price);
+        $this->widgetParams[self::PARAM_SHOW_ADD2CART]->setValue($this->config->ProductAdviser->rp_show_buynow);
+    
+        // TODO - check if there is the "bulk shopping" param is needed
+        // ...
+    }
+
+    /**
+     * Return products list
      *
-     * @return string
+     * @return array
      * @access protected
-     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDisplayMode()
+    protected function getData()
     {
-        return ($this->attributes[self::IS_EXPORTED] ? $this->attributes['displayMode'] : $this->config->ProductAdviser->rp_template);
-
+        // FIXME - unable to find a function which returns a products list here!!!! 
+        return array();
     }
 
-    /**
-     * Get 'number of columns' parameter
-     * 
-     * @return integer
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getNumberOfColumns()
-    {
-        return ($this->attributes[self::IS_EXPORTED] ? $this->attributes['numberOfColumns'] + 1 : $this->config->ProductAdviser->rp_columns);
-    }
-
-    /**
-     * Get 'show description' parameter
-     * 
-     * @return bool
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getShowDescription()
-    {
-        if ($this->attributes[self::IS_EXPORTED]) {
-            $return = (isset($this->attributes['showDescription']) && true == $this->attributes['showDescription']);
-
-        } else {
-            $return = $this->config->ProductAdviser->rp_show_descr;
-        }
-
-        return $return;
-    }
-
-    /**
-     *  Get 'show price' parameter
-     * 
-     * @return bool
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getShowPrice()
-    {
-        if ($this->attributes[self::IS_EXPORTED]) {
-            $return = (isset($this->attributes['showPrice']) && true == $this->attributes['showPrice']);
-
-        } else {
-            $return = $this->config->ProductAdviser->rp_show_price;
-        }
-
-        return $return;
-    }
-
-    /**
-     * Get 'show add to cart button' parameter 
-     * 
-     * @return bool
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getShowAddToCart()
-    {
-        if ($this->attributes[self::IS_EXPORTED]) {
-            $return = (isset($this->attributes['showAddToCart']) && true == $this->attributes['showAddToCart']);
-
-        } else {
-            $return = $this->config->ProductAdviser->rp_show_buynow;
-        }
-
-        return $return;
-    }
-
-    /**
-     * Get 'Enable multiple additions at once' parameter 
-     * 
-     * @return bool
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getBulkShopping()
-    {
-        if ($this->attributes[self::IS_EXPORTED]) {
-            $return = (isset($this->attributes['enableBulkShopping']) && true == $this->attributes['enableBulkShopping']);
-
-        } else {
-            $return = $this->config->ProductAdviser->rp_bulk_shopping;
-        }
-
-        return $return;
-    }
-
-    /**
-     * Check if related products are available
-     * 
-     * @return bool
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function checkRelatedProducts()
-    {
-        $rp = $this->getComplex('product.RelatedProducts');
-        return !empty($rp);
-    }
 
     /**
      * Check if widget is visible
@@ -224,10 +96,6 @@ class XLite_Module_ProductAdviser_View_RelatedProducts extends XLite_View_Dialog
      */
     public function isVisible()
     {
-        return parent::isVisible()
-            && $this->config->ProductAdviser->related_products_enabled
-            && $this->checkRelatedProducts()
-            && empty($this->page);
+        return parent::isVisible() && $this->config->ProductAdviser->related_products_enabled;
     }
-
 }

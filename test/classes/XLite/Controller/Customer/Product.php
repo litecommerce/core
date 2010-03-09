@@ -32,7 +32,9 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Catalo
      */
     protected function getProductCategory()
     {
-        return array_shift($list = $this->getProduct()->getCategories());
+        $list = $this->getProduct()->getCategories();
+
+        return array_shift($list);
     }
 
     /**

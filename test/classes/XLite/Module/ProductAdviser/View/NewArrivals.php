@@ -23,6 +23,21 @@
  */
 class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 {
+    /**
+     * Widget parameter names
+     */
+
+    const PARAM_DISPLAY_MODE = 'displayMode';
+    const PARAM_USE_NODE     = 'useNode';
+
+    /**
+     * Allowed display modes
+     */
+
+    const DISPLAY_MODE_MENU   = 'menu';
+    const DISPLAY_MODE_DIALOG = 'dialog';
+
+
 	/**
      * Targets this widget is allowed for
      *
@@ -37,12 +52,11 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 	 * 
 	 * @var    array
 	 * @access protected
-	 * @see    ____var_see____
 	 * @since  3.0.0
 	 */
 	protected $displayModes = array(
-		'menu'   => 'Sidebar box menu',
-		'dialog' => 'Dialog box',
+		self::DISPLAY_MODE_MENU   => 'Sidebar box menu',
+		self::DISPLAY_MODE_DIALOG => 'Dialog box',
 	);
 
 
@@ -51,7 +65,6 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 	 * 
 	 * @return string
 	 * @access public
-	 * @see    ____func_see____
 	 * @since  3.0.0
 	 */
 	protected function getHead()
@@ -64,12 +77,11 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 	 * 
 	 * @return string
 	 * @access public
-	 * @see    ____func_see____
 	 * @since  3.0.0
 	 */
 	protected function getDir()
 	{
-		return 'modules/ProductAdviser/NewArrivals/' . $this->attributes['displayMode'];
+		return 'modules/ProductAdviser/NewArrivals/' . $this->getParam(self::PARAM_DISPLAY_MODE);
 	}
 
 	/**
@@ -77,7 +89,6 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
      *
      * @return string
      * @access protected
-     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDisplayMode()
@@ -94,10 +105,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
      */
     protected function checkDisplayMode()
     {
-        return $this->attributes[self::IS_EXPORTED]
-            || $this->isContentDialog()
-            || ( ($this->getDisplayMode() == $this->attributes['displayMode'])
-                && !('menu' == $this->attributes['displayMode'] && 'new_arrivals' == XLite_Core_Request::getInstance()->target) );
+        return $this->getParam(self::PARAM_IS_EXPORTED) || $this->getDisplayMode() == $this->getParam(self::PARAM_DISPLAY_MODE);
     }
 
     /**
@@ -117,7 +125,6 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 	 * 
 	 * @return void
 	 * @access protected
-	 * @see    ____func_see____
 	 * @since  3.0.0
 	 */
 	protected function defineWidgetParams()
@@ -125,8 +132,12 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 		parent::defineWidgetParams();
 
 		$this->widgetParams += array(
-			'useNode'     => new XLite_Model_WidgetParam_Checkbox('Show category-specific new arrivals', 0),
-			'displayMode' => new XLite_Model_WidgetParam_List('Display mode', $this->getDisplayMode(), $this->displayModes),
+            self::PARAM_DISPLAY_MODE => new XLite_Model_WidgetParam_List(
+                'Display mode', $this->getDisplayMode(), true, $this->displayModes
+            ),
+            self::PARAM_USE_NODE     => new XLite_Model_WidgetParam_Checkbox(
+                'Show category-specific new arrivals', 0, true
+            ),
 		);
 	}
 
@@ -139,8 +150,12 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
      */
     protected function isContentDialog()
     {
-        return ( 'new_arrivals' == XLite_Core_Request::getInstance()->target
-            && ('dialog' == $this->attributes['displayMode'] || $this->attributes[self::IS_EXPORTED]) );
+        return 'new_arrivals' == XLite_Core_Request::getInstance()->target
+            && (
+                self::DISPLAY_MODE_DIALOG == $this->getParam(self::PARAM_DISPLAY_MODE) 
+                || $this->getParam(self::PARAM_IS_EXPORTED)
+            );
+        
     }
 
     /**
@@ -165,15 +180,14 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 	 */
 	protected function getCategorySpecificArrivals()
 	{
-        if ($this->attributes[self::IS_EXPORTED]) {
-            $return = (isset($this->attributes['useNode']) && true == $this->attributes['useNode']);
-
-        } else {
-            $return = ('Y' == $this->config->ProductAdviser->category_new_arrivals);
-        }
-
-		return $return;
+		return $this->getParam(self::PARAM_IS_EXPORTED) 
+            ? $this->getParam(self::PARAM_USE_NODE) 
+            : ('Y' == $this->config->ProductAdviser->category_new_arrivals);
 	}
+
+
+
+    // TODO, FIXME - all of the above routines must be reviewed and refactored
 
     /**
      * Get current category
@@ -209,9 +223,6 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
         }
         return null;
     }
-
-
-    // TODO, FIXME - all of the above routines must be reviewed and refactored
 
 
 	public $productsNumber = 0;

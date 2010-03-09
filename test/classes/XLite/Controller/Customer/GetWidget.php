@@ -36,16 +36,6 @@
 class XLite_Controller_Customer_GetWidget extends XLite_Controller_Customer_Abstract
 {	
     /**
-     * Controller parameters 
-     * 
-     * @var    array
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public $params = array('target');
-
-    /**
      * Current page template 
      * 
      * @var    string
@@ -54,38 +44,20 @@ class XLite_Controller_Customer_GetWidget extends XLite_Controller_Customer_Abst
      */
     protected $template = 'get_widget.tpl';
 
-	/**
-	 * Class name
-	 * 
-	 * @var    string
-	 * @access protected
-	 * @see    ____var_see____
-	 * @since  3.0.0
-	 */
-	protected $class = null;
 
     /**
-     * Widget parameters
+     * These params from AJAX request will be translated into the corresponding ones  
      * 
-     * @var    array
+     * @return array
      * @access protected
-     * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $widgetParams = array();
-
-	/**
-     * Add the base part of the location path
-     * 
-     * @return void
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function addBaseLocation()
+    protected function getAJAXParamsTranslationTable()
     {
-        parent::addBaseLocation();
-
-        $this->locationPath->addNode(new XLite_Model_Location('AJAX getter'));
+        return array(
+            XLite_View_Abstract::PARAM_AJAX_TARGET => 'target',
+            XLite_View_Abstract::PARAM_AJAX_ACTION => 'action',
+        );
     }
 
     /**
@@ -97,71 +69,29 @@ class XLite_Controller_Customer_GetWidget extends XLite_Controller_Customer_Abst
      */
     public function handleRequest()
 	{
-		$request = XLite_Core_Request::getInstance();
+        $request = XLite_Core_Request::getInstance();
 
-		if (isset($request->widget_target) && $request->widget_target) {
-			$request->target = $request->widget_target;
-		}
-
-        if (isset($request->widget_action) && $request->widget_action) {
-            $request->action = $request->widget_action;
-        }
-
-        if (
-			isset($request->class)
-			&& $request->class
-			&& is_string($request->class)
-			&& preg_match('/^[a-z0-9_]+$/Ssi', $request->class)
-		) {
-            $this->class = $request->class;
-        }
-
-        $data = $request->getData();
-        $keys = array(
-            'widget_target',
-            'widget_action',
-            'class',
-            XLite_View_ProductsList::SORT_CRITERION_ARG,
-            XLite_View_ProductsList::SORT_ORDER_ARG,
-            XLite_View_ProductsList::DISPLAY_MODE_ARG,
-            XLite_View_ProductsList::ITEMS_PER_PAGE_ARG,
-            XLite_View_Pager::PAGE_ID_ARG,
-        );
-        
-        foreach ($keys as $key) {
-            if (isset($data[$key])) {
-                unset($data[$key]);
+        foreach ($this->getAJAXParamsTranslationTable() as $ajaxParam => $requestParam) {
+            if (!empty($request->$ajaxParam)) {
+                $request->$requestParam = $request->$ajaxParam;
             }
         }
 
-        $this->widgetParams = $data;
-
-		parent::handleRequest();
-	}
+        parent::handleRequest();
+    }
 
     /**
-     * Get controlelr parameters
+     * checkRequest 
      * 
-     * @param string $exeptions Parameter keys string
-     *  
-     * @return array
-     * @access public
+     * @return bool
+     * @access protected
      * @since  3.0.0
      */
-    public function getAllParams($exeptions = null)
+    protected function checkRequest()
     {
-        $exeptions = isset($exeptions) ? explode(",", $exeptions) : array();
-
-        $result = $this->widgetParams;
-
-        foreach ($exeptions as $key) {
-            if (isset($result[$key])) {
-                unset($result[$key]);
-            }
-        }
-
-        return $result;
+        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 'XMLHttpRequest' == $_SERVER['HTTP_X_REQUESTED_WITH'];
     }
+    
     /**
      * Check if current page is accessible
      * 
@@ -171,39 +101,36 @@ class XLite_Controller_Customer_GetWidget extends XLite_Controller_Customer_Abst
      */
     protected function checkAccess()
     {
-        return parent::checkAccess()
-			&& isset($_SERVER['HTTP_X_REQUESTED_WITH'])
-			&& $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'
-			&& $this->class
-			&& class_exists($this->class);
+        return parent::checkAccess() && $this->checkRequest() && class_exists($this->getClass());
     }
+
 
 	/**
 	 * Get class name
 	 * 
 	 * @return string
 	 * @access public
-	 * @see    ____func_see____
 	 * @since  3.0.0
 	 */
 	public function getClass()
 	{
-		return $this->class;
+        $param = XLite_View_Abstract::PARAM_AJAX_CLASS;
+
+		return XLite_Core_Request::getInstance()->$param;
 	}
 
     /**
-     * Return Viewer object
+     * Return viewer
+     * FIXME - "display" and "exit" must be removed
      * 
      * @return XLite_View_Controller
      * @access public
      * @since  3.0.0 EE
      */
-    public function getViewer()
+    public function getViewer($isExported = false)
     {
-		$widget = parent::getViewer();
+		parent::getViewer(true)->display();
 
-		$widget->setAttributes(array(XLite_View_Abstract::IS_EXPORTED => true));
-
-        return $widget;
+        exit(0);
     }
 }

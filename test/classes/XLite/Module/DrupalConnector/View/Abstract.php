@@ -93,7 +93,30 @@ class XLite_Module_DrupalConnector_View_Abstract extends XLite_View_Abstract imp
     {
         $data = parent::prepareResources($data);
 
-        return XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS() ? self::modifyResourcePaths($data) : $data;
+        if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
+            $data = self::modifyResourcePaths($data);
+        }
+
+        return $data;
+    }
+
+
+    /**
+     * Get a list of JavaScript files required to display the widget properly
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function getJSFiles()
+    {
+        $result = parent::getJSFiles();
+
+        if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
+            $result[] = 'modules/DrupalConnector/drupal.js';
+        }
+
+        return $result;
     }
 }
 

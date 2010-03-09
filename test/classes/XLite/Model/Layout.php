@@ -72,6 +72,20 @@ class XLite_Model_Layout extends XLite_Base implements XLite_Base_ISingleton
         }
 	}
 
+	/**
+     * Return full URL by the skindir-related one
+     *
+     * @param string $url relative URL
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function getSkinURL($url)
+    {
+        return $this->getPath() . $url;
+    }
+
     /**
     * Adds layout template file for the specified widget
     *

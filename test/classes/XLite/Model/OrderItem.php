@@ -287,7 +287,7 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
             $params['category_id'] = $category_id;
         }
 
-		return $this->xlite->getController()->buildURL('product', '', $params);
+		return XLite_Core_Converter::getInstance()->buildURL('product', '', $params);
     }
 
 	public function hasOptions()

@@ -22,7 +22,7 @@
  * @subpackage Model
  * @since      3.0.0 EE
  */
-class XLite_Model_CachingFactory extends XLite_Base implements XLite_Base_ISingleton
+class XLite_Model_CachingFactory extends XLite_Model_Factory implements XLite_Base_ISingleton
 {
     /**
      * Objects cache 
@@ -33,17 +33,6 @@ class XLite_Model_CachingFactory extends XLite_Base implements XLite_Base_ISingl
      */
     protected static $cache = array();
 
-
-	/**
-     * It's not possible to instantiate this class using the "new" operator
-     *
-     * @return void
-     * @access protected
-     * @since  3.0.0 EE
-     */
-	protected function __construct()
-	{
-	}
 
     /**
      * Return unique key for the <class,primary_keys> pair
@@ -108,9 +97,7 @@ class XLite_Model_CachingFactory extends XLite_Base implements XLite_Base_ISingl
                 self::$cache[$class] = array();
             }
 
-            $reflection = new ReflectionClass($class);
-            self::$cache[$class][$key] = $reflection->hasMethod('__construct') ?
-                    $reflection->newInstanceArgs($args) : $reflection->newInstance();
+            self::$cache[$class][$key] = self::createObjectInstance($class, $args);
         }
 
         return self::$cache[$class][$key];

@@ -36,222 +36,252 @@
 class XLite_View_Pager extends XLite_View_Abstract
 {
     /**
-     * Input arguments names
+     * Widget parameter names
      */
-    const PAGE_ID_ARG = 'pageID';
 
+    const PARAM_PAGE_ID        = 'pageId';
+    const PARAM_ITEMS_PER_PAGE = 'itemsPerPage';
+    const PARAM_DATA           = 'data';
+
+    const PARAM_SHOW_ITEMS_PER_PAGE_SELECTOR = 'showItemsPerPageSelector';
 
     /**
      * Items-per-page range
      */
-    const ITEMS_PER_PAGE_MIN = 1;
-    const ITEMS_PER_PAGE_MAX = 100; 
 
+    const ITEMS_PER_PAGE_MIN = 1;
+    const ITEMS_PER_PAGE_MAX = 100;
 
     /**
      * Items per page (default value) 
      */
+
     const DEFAULT_ITEMS_PER_PAGE = 4;
+
 
     /**
      * Data 
      * 
+     * @var    int
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $itemsTotal = null;
+
+    /**
+     * itemsPerPage 
+     * 
+     * @var    int
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $itemsPerPage = null;
+
+    /**
+     * pagesCount 
+     * 
+     * @var    int
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $pagesCount = null;
+
+    /**
+     * pageURLs 
+     * 
      * @var    array
      * @access protected
-     * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $_data = array();
+    protected $pageURLs = null;
+
 
     /**
-     * Items count 
+     * getItemsTotal 
      * 
-     * @var    integer
+     * @return int
      * @access protected
-     * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $itemsTotal = 0;
-
-    /**
-     * Pages count 
-     * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $_pagesCount = 0;
-
-    /**
-     * First pages frame page id
-     * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $firstFramePage = 0;
-
-    /**
-     * Base object 
-     * FIXME - WTF!!!?
-     * 
-     * @var    XLite_Model_Abstract
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $_baseObj = null;
-
-    /**
-     * Widget template 
-     * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public $template = 'common/pager.tpl';
-
-    /**
-     * Page id (start with 0)
-     * 
-     * @var    integer
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public $pageID = 0;
-
-    /**
-     * Widget parameters list 
-     * 
-     * @var    array
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public $params = array(self::PAGE_ID_ARG);
-
-    /**
-     * Items-per-page count 
-     * 
-     * @var    integer
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public $itemsPerPage = self::DEFAULT_ITEMS_PER_PAGE;
-
-    /**
-     * Pages per pages frame 
-     * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $pagesPerFrame = 5;
-
-    /**
-     * Constructor
-     * 
-     * @param array $attributes widget params
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function init(array $attributes = array())
+    protected function getItemsTotal()
     {
-        $fieldName = self::PAGE_ID_ARG;
-        $this->pageID = XLite_Core_Request::getInstance()->$fieldName;
-
-        $this->attributes['urlParams'] = array();
-        $this->attributes['data'] = array();
-        $this->attributes['itemsPerPage'] = self::DEFAULT_ITEMS_PER_PAGE;
-
-        parent::init($attributes);
-    }
-
-    /**
-     * Set properties
-     *
-     * @param array $attributes params to set
-     *
-     * @return void
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function setAttributes(array $attributes)
-    {
-        if (isset($attributes['urlParams'])) {
-
-            if (isset($attributes['urlParams'][XLite_View_ProductsList::ITEMS_PER_PAGE_ARG])) {
-                $this->itemsPerPage = min(
-                    self::ITEMS_PER_PAGE_MAX,
-                    max(
-                        self::ITEMS_PER_PAGE_MIN,
-                        intval($attributes['urlParams'][XLite_View_ProductsList::ITEMS_PER_PAGE_ARG])
-                    )
-                );
-            }
-
-            if (isset($attributes['urlParams'][self::PAGE_ID_ARG])) {
-                $this->pageID = $attributes['urlParams'][self::PAGE_ID_ARG];
-            }
+        if (!isset($this->itemsTotal)) {
+            $this->itemsTotal = count($this->getParam(self::PARAM_DATA));
         }
 
-        if (isset($attributes['data'])) {
-            $this->setData($attributes['data']);
-            unset($attributes['data']);
-        }
-
-        parent::setAttributes($attributes);
+        return $this->itemsTotal;
     }
 
     /**
-     * Check widget visibility 
+     * getItemsPerPage 
      * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
+     * @return int
+     * @access protected
      * @since  3.0.0
      */
-    public function isVisible()
+    protected function getItemsPerPage()
     {
-        return parent::isVisible()
-            && $this->_data;
+        if (!isset($this->itemsPerPage)) {
+            $current = $this->getParam(self::PARAM_ITEMS_PER_PAGE);
+            $this->itemsPerPage = max(min(self::ITEMS_PER_PAGE_MAX, $current), max(self::ITEMS_PER_PAGE_MIN, $current));
+        }
+
+        return $this->itemsPerPage;
     }
 
     /**
-     * Initialization 
+     * getPagesCount 
      * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
+     * @return int
+     * @access protected
      * @since  3.0.0
      */
-    public function initView()
+    protected function getPagesCount()
     {
-        parent::initView();
-
-        $frameCenterPage = ceil($this->pagesPerFrame / 2);
-
-        // Calculate pages frame start
-        if ($this->get('pageID') + 1 > $frameCenterPage && $this->_pagesCount > $this->pagesPerFrame) {
-            $this->firstFramePage = min(
-                $this->get('pageID') + 1 - $frameCenterPage,
-                $this->_pagesCount - $this->pagesPerFrame
-            );
+        if (!isset($this->pagesCount)) {
+            $this->pagesCount = ceil($this->getItemsTotal () / $this->getItemsPerPage());
         }
-    }
     
+        return $this->pagesCount;
+    }
+
     /**
-     * Get currenct page data 
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->requestParams += array(
+            self::PARAM_PAGE_ID        => 0,
+            self::PARAM_ITEMS_PER_PAGE => 10,
+        );
+
+        $this->widgetParams += array(
+            self::PARAM_PAGE_ID => new XLite_Model_WidgetParam_Int(
+                'Page ID', $this->getRequestParamValue(self::PARAM_PAGE_ID), true
+            ),
+            self::PARAM_ITEMS_PER_PAGE => new XLite_Model_WidgetParam_Int(
+                'Items per page', $this->getRequestParamValue(self::PARAM_ITEMS_PER_PAGE), true
+            ),
+            self::PARAM_DATA => new XLite_Model_WidgetParam_Array(
+                'Data', array()
+            ),
+            self::PARAM_SHOW_ITEMS_PER_PAGE_SELECTOR => new XLite_Model_WidgetParam_Checkbox(
+                'Show "Items per page" selector', true, true
+            ),
+        );
+
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/pager.tpl'); 
+
+    }
+
+    /**
+     * isItemsPerPageSelectorVisible 
      * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isItemsPerPageSelectorVisible()
+    {
+        return $this->getParam(self::PARAM_SHOW_ITEMS_PER_PAGE_SELECTOR);
+    }
+
+    /**
+     * Return list of page URL params 
+     * 
+     * @param int $pageId page ID
+     *  
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getPageURLparams($pageId)
+    {
+        return array(self::PARAM_PAGE_ID => $pageId);
+    }
+
+    /**
+     * Build page URL by page ID
+     *
+     * @param int $pageId page ID
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function buildUrlByPageId($pageId)
+    {
+        return $this->getUrl($this->getPageURLparams($pageId));
+    }
+
+    /**
+     * definePageURLs 
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function definePageURLs()
+    {
+        for ($i = 0; $i < $this->getPagesCount(); $i++) {
+            $this->pageURLs[$i] = $this->buildUrlByPageId($i);
+        }
+    }
+
+    /**
+     * getPageUrls 
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getPageUrls()
+    {
+        if (!isset($this->pageURLs)) {
+            $this->pageURLs = array();
+            $this->definePageURLs();
+        }
+
+        return $this->pageURLs;
+    }
+
+    /**
+     * isCurrentPage 
+     * 
+     * @param int $pageId current page ID
+     *  
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isCurrentPage($pageId)
+    {
+        return $this->getParam(self::PARAM_PAGE_ID) == $pageId;
+    }
+
+    /**
+     * getPageClassName 
+     * 
+     * @param int $pageId current page ID
+     *  
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getPageClassName($pageId)
+    {
+        return 'page-item page-' . $pageId . ' ' . ($this->isCurrentPage($pageId) ? 'selected' : '');
+    }
+
+    /**
+     * Get currenct page data
+     *
      * @return array
      * @access public
      * @see    ____func_see____
@@ -259,267 +289,23 @@ class XLite_View_Pager extends XLite_View_Abstract
      */
     public function getPageData()
     {
-        /* TODO - WTF?
-        if (!isset($this->_baseObj)) {
-            $this->_baseObj = new XLite_Model_Abstract();
-        }
-
-        if ($this->_baseObj->isObjectDescriptor(current($this->_data))) {
-            foreach ($this->_data as &$object) {
-                $object = $this->_baseObj->descriptorToObject($object);
-            }
-        }
-        */
-
-        return $this->_data;
-    }
-
-    /**
-     * Get page URL list 
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPageUrls()
-    {
-        $result = array();
-
-        $end = min(
-            $this->firstFramePage + $this->pagesPerFrame,
-            $this->_pagesCount
-        );
-
-        for ($i = $this->firstFramePage; $i < $end; $i++) {
-            $result[$i + 1] = $this->buildUrlByPageId($i);
-        }
-
-        return $result;
-    }
-
-    /**
-     * Build page URL by page id 
-     * 
-     * @param integer $pageId Page id
-     *  
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function buildUrlByPageId($pageId)
-    {
-        if (!isset($this->attributes['urlParams'])) {
-            $this->attributes['urlParams'] = $this->get('allParams');
-        }
-
-        $params = $this->attributes['urlParams'];
-        $params[self::PAGE_ID_ARG] = $pageId;
-
-        return $this->getUrl($params);
-    }
-
-    /**
-     * Check - specified page is current or not 
-     * 
-     * @param integer $num Page id
-     *  
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isCurrentPage($num)
-    {
-        return $this->get('pageID') + 1 == $num;
-    }
-
-    /**
-     * Get class name for page item 
-     * 
-     * @param integer $i Page id
-     *  
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPageClassName($i)
-    {
-        $classes = array(
-            'page-item',
-            'page-' . $i
-        );
-
-        if ($this->isCurrentPage($i)) {
-            $classes[] = 'selected';
-        }
-
-        return implode(' ', $classes);
-    }
-
-    /**
-     * Get border link class name 
-     * 
-     * @param string $type Link type (first / previous / next / last)
-     *  
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getBorderLinkClassName($type)
-    {
-        $classes = array(
-            $type
-        );
-
-        if (
-            (0 >= $this->get('pageID') && in_array($type, array('first', 'previous')))
-            || ($this->_pagesCount - 1 <= $this->get('pageID') && in_array($type, array('last', 'next')))
-        ) {
-            $classes[] = $type . '-disabled';
-            $classes[] = 'disabled';
-        }
-
-        return implode(' ', $classes);
-    }
-
-    /**
-     * Get first page URL 
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getFirstPageUrl()
-    {
-        return $this->buildUrlByPageId(0);
-    }
-
-    /**
-     * Get previous page URL
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPreviousPageUrl()
-    {
-        return $this->buildUrlByPageId(max(0, $this->get('pageID') - 1));
-    }
-
-    /**
-     * Get next page URL
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getNextPageUrl()
-    {
-        return $this->buildUrlByPageId(min($this->_pagesCount - 1, $this->get('pageID') + 1));
-    }
-
-    /**
-     * Get last page URL
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getLastPageUrl()
-    {
-        return $this->buildUrlByPageId($this->_pagesCount - 1);
-    }
-
-    /**
-     * Set pager data 
-     * 
-     * @param array $value Data
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function setData(array $value)
-    {
-        $this->itemsTotal = count($value);
-        $this->_pagesCount = ceil($this->itemsTotal / $this->getItemsPerPage());
-
-        if ($this->get('pageID') === '') {
-            $this->set('pageID', 0);
-
-        } elseif ($this->get('pageID') && $this->_pagesCount <= $this->get('pageID')) {
-            $this->set('pageID', $this->_pagesCount - 1);
-        }
-
-        $this->_data = array_slice(
-            $value,
-            $this->get('pageID') * $this->getItemsPerPage(),
+        return array_slice(
+            $this->getParam(self::PARAM_DATA),
+            $this->getParam(self::PARAM_PAGE_ID) * $this->getItemsPerPage(),
             $this->getItemsPerPage()
         );
     }
 
     /**
-     * Get page begin record number 
-     * 
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
+     * Check if widget is visible
+     *
+     * @return bool
+     * @access protected
+     * @since  3.0.0 EE
      */
-    public function getBeginRecordNumber()
+    public function isVisible()
     {
-        return $this->get('pageID') * $this->getItemsPerPage() + 1;
-    }
-
-    /**
-     * Get page end record number 
-     * 
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getEndRecordNumber()
-    {
-        return min(
-            $this->getBeginRecordNumber() + $this->getItemsPerPage() - 1,
-            $this->itemsTotal
-        );
-    }
-
-    /**
-     * Get items count
-     * 
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getItemsTotal()
-    {
-        return $this->itemsTotal;
-    }
-
-    /**
-     * Get items count per page 
-     * 
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getItemsPerPage()
-    {
-        return $this->itemsPerPage;
+        return parent::isVisible() && $this->getPageData();
     }
 
     /**
@@ -527,41 +313,10 @@ class XLite_View_Pager extends XLite_View_Abstract
      *
      * @return array
      * @access public
-     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getCSSFiles()
     {
-        $list = parent::getCSSFiles();
-
-        $list[] = 'common/pager.css';
-
-        return $list;
-    }
-
-    /**
-     * Get pages count 
-     * 
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPagesCount()
-    {
-        return $this->_pagesCount;
-    }
-
-    /**
-     * Get pager class name 
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isPagerVisible()
-    {
-        return 1 < $this->_pagesCount;
+        return array_merge(parent::getCSSFiles(), array('common/pager.css'));
     }
 }

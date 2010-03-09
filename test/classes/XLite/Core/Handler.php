@@ -24,68 +24,6 @@
  */
 class XLite_Core_Handler extends XLite_Base
 {
-	/**
-     * Widget template filename
-     * FIXME - should be moved to Viewers (lowest priority task)
-     *
-     * @var    string
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected $template = null;
-
-    /**
-     * Validity flag
-     * TODO - check where it's really needed
-     * 
-     * @var    bool
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected $valid = true;
-
-    /**
-     * Handler parameters 
-     * FIXME - backward compatibility
-     * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected $params = array();
-
-
-    /**
-     * Set properties
-     * FIXME - backward compatibility
-     *
-     * @param array $attrs params to set
-     *
-     * @return void
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function setAttributes(array $attrs)
-    {
-        foreach ($attrs as $name => $value) {
-            // FIXME - mapping
-            $this->$name = $value;
-        }
-    }
-
-    /**
-     * Check if handler is valid 
-     * TODO - check where it's really needed
-     * 
-     * @return bool
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function isValid()
-    {
-        return $this->valid;
-    }
-
     /**
      * Compose URL from target, action and additional params
      *
@@ -145,44 +83,6 @@ class XLite_Core_Handler extends XLite_Base
         }
 
         return $args;
-    }
-
-    /**
-     * Initialize handler
-     *
-     * @return void
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function init()
-    {
-        // FIXME - backward compatibility; to delete
-        $this->setAttributes(XLite_Core_Request::getInstance()->getData());
-        $this->fillForm();
-    }
-
-    /**
-     * FIXME - backward compatibility; to delete
-     * 
-     * @param mixed $request ____param_comment____
-     *  
-     * @return void
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function mapRequest($request = null)
-    {
-    }
-
-    /**
-     * FIXME - backward compatibility; to delete 
-     * 
-     * @return void
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function fillForm()
-    {
     }
 }
 

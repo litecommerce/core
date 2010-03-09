@@ -25,13 +25,11 @@
 abstract class XLite_View_Container extends XLite_View_Abstract
 {
     /**
-     * Widget body default template 
-     * 
-     * @var    string
-     * @access protected
-     * @since  3.0.0 EE
+     * Widget parameter names
      */
-    protected $body = 'body.tpl';
+
+    const PARAM_SHOW_WRAPPER = 'showWrapper';
+    const PARAM_BODY         = 'body';
 
 
     /**
@@ -54,6 +52,18 @@ abstract class XLite_View_Container extends XLite_View_Abstract
 
 
     /**
+     * Return current template 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getTemplate()
+    {
+        return $this->useBodyTemplate() ? $this->getBody() : parent::getTemplate();
+    }
+
+    /**
      * Return file name for the center part template 
      * 
      * @return string
@@ -62,7 +72,7 @@ abstract class XLite_View_Container extends XLite_View_Abstract
      */
     protected function getBody()
     {
-        return $this->getDir() . LC_DS . $this->body;
+        return $this->getDir() . LC_DS . $this->getParam(self::PARAM_BODY);
     }
 
 	/**
@@ -72,27 +82,27 @@ abstract class XLite_View_Container extends XLite_View_Abstract
 	 * @access protected
 	 * @since  3.0.0 EE
 	 */
-	protected function isWrapped()
+	protected function useBodyTemplate()
 	{
-		return $this->attributes['showWrapper'] && !XLite_Core_CMSConnector::isCMSStarted();
+		return !$this->getParam(self::PARAM_TEMPLATE)
+            && (!$this->getParam(self::PARAM_SHOW_WRAPPER) || XLite_Core_CMSConnector::isCMSStarted());
 	}
 
-     /**
-     * Initialize widget
+    /**
+     * Define widget parameters
      *
      * @return void
-     * @access public
-     * @since  3.0.0 EE
+     * @access protected
+     * @since  1.0.0
      */
-    public function init(array $attributes = array())
+    protected function defineWidgetParams()
     {
-        $this->attributes['showWrapper'] = true;
+        parent::defineWidgetParams();
 
-        parent::init($attributes);
-
-        if (!$this->isWrapped() && !isset($attributes['template'])) {
-            $this->template = $this->getBody();
-        }
+        $this->widgetParams += array(
+            self::PARAM_SHOW_WRAPPER => new XLite_Model_WidgetParam_Bool('Display wrapped', true),
+            self::PARAM_BODY         => new XLite_Model_WidgetParam_File('Body', 'body.tpl'),
+        );
     }
 }
 

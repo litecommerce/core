@@ -32,7 +32,7 @@ abstract class XLite_Module_DrupalConnector_View_Form_Abstract extends XLite_Vie
      */
     protected function getTemplate()
     {
-        return ($this->isDrupalGetForm() && !$this->attributes['end']) 
+        return ($this->isDrupalGetForm() && !$this->getParam(self::PARAM_END))
             ? 'modules/DrupalConnector/form.start.tpl' 
             : parent::getTemplate();
     }
@@ -47,7 +47,7 @@ abstract class XLite_Module_DrupalConnector_View_Form_Abstract extends XLite_Vie
     protected function isDrupalGetForm()
     {
         return XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS() 
-               && 'GET' == $this->attributes['form_method'];
+               && 'GET' == $this->getParam(self::PARAM_FORM_METHOD);
     }
 
     /**
@@ -75,39 +75,18 @@ abstract class XLite_Module_DrupalConnector_View_Form_Abstract extends XLite_Vie
     }
 
     /**
-     * Define new form parametr - drupal node URL 
-     * 
-     * @param array $attributes widget attributes
-     *  
+     * Define widget parameters
+     *
      * @return void
-     * @access public
-     * @since  3.0.0 EE
+     * @access protected
+     * @since  1.0.0
      */
-    public function init(array $attributes = array())
+    protected function defineWidgetParams()
     {
-        parent::init($attributes);
+        parent::defineWidgetParams();
 
-        if ($this->isDrupalGetForm()) {
-            $this->attributes['form_params']['q'] = '';
-        }
-    }
+        $this->widgetParams[self::PARAM_FORM_PARAMS]->appendValue(array('q' => ''));
 
-    /**
-     * Get a list of JavaScript files required to display the widget properly
-     * 
-     * @return void
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function getJSFiles()
-    {
-        $result = parent::getJSFiles();
-
-        if ($this->isDrupalGetForm()) {
-            $result[] = 'modules/DrupalConnector/drupal.js';
-        }
-
-        return $result;
     }
 }
 

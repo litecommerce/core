@@ -14,6 +14,9 @@
  * @since      3.0.0
  */
 
+// FIXME - to revise
+// FIXME - related templates must be deleted
+
 /**
  * XLite_Module_ProductAdviser_View_ProductAlsoBuy
  *
@@ -21,7 +24,7 @@
  * @subpackage ____sub_package____
  * @since      3.0.0
  */
-class XLite_Module_ProductAdviser_View_ProductAlsoBuy extends XLite_View_Dialog
+class XLite_Module_ProductAdviser_View_ProductAlsoBuy extends XLite_View_ProductsList
 {	
 	/**
      * Targets this widget is allowed for
@@ -32,26 +35,12 @@ class XLite_Module_ProductAdviser_View_ProductAlsoBuy extends XLite_View_Dialog
      */
     protected $allowedTargets = array('product');
 
-	/**
-	 * Available display modes list
-	 * 
-	 * @var    array
-	 * @access protected
-	 * @see    ____var_see____
-	 * @since  3.0.0
-	 */
-	protected $displayModes = array(
-		'list'  => 'List',
-        'icons' => 'Icons',
-        'table' => 'Table'
-	);
 
 	/**
 	 * Get widget title
 	 * 
 	 * @return string
 	 * @access public
-	 * @see    ____func_see____
 	 * @since  3.0.0
 	 */
 	protected function getHead()
@@ -59,142 +48,22 @@ class XLite_Module_ProductAdviser_View_ProductAlsoBuy extends XLite_View_Dialog
 		return 'People who buy this product also buy';
 	}
 
-	/**
-	 * Get widget directory
-	 * 
-	 * @return string
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function getDir()
-	{
-        return 'modules/ProductAdviser/ProductsAlsoBuy/' . $this->getDisplayMode();
-	}
-
-	/**
-	 * Define widget parameters
-	 * 
-	 * @return void
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function defineWidgetParams()
-	{
-        parent::defineWidgetParams();
-
-		$this->widgetParams += array(
-            'displayMode'     => new XLite_Model_WidgetParam_List('Display mode', 'list', $this->displayModes),
-            'numberOfColumns' => new XLite_Model_WidgetParam_List('Number of columns (for Icons mode only)', 2, range(1,5)),
-            'showDescription' => new XLite_Model_WidgetParam_Checkbox('Show product description (for List mode only)', 1),
-            'showPrice'       => new XLite_Model_WidgetParam_Checkbox('Show product price', 1),
-            'showAddToCart'   => new XLite_Model_WidgetParam_Checkbox('Show \'Add to Cart\' button', 1)
-		);
-	}
-
-	/**
-     * Get widget display mode parameter (icons | list | table)
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getDisplayMode()
-    {
-        return ($this->attributes[self::IS_EXPORTED] ? $this->attributes['displayMode'] : $this->config->ProductAdviser->pab_template);
-    }
-
     /**
-     * Get 'number of columns' parameter
+     * getData 
+     * FIXME - must return the result from the XLite_Module_ProductAdviser_Model_ProductAlsoBuy class
      * 
-     * @return integer
+     * @return array
      * @access protected
-     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getNumberOfColumns()
+    protected function getData()
     {
-        return ($this->attributes[self::IS_EXPORTED] ? $this->attributes['numberOfColumns'] + 1 : $this->config->ProductAdviser->pab_columns);
-    }
-
-    /**
-     * Get 'show description' parameter
-     * 
-     * @return bool
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getShowDescription()
-    {
-        if ($this->attributes[self::IS_EXPORTED]) {
-            $return = (isset($this->attributes['showDescription']) && true == $this->attributes['showDescription']);
-
-        } else {
-            $return = $this->config->ProductAdviser->pab_show_descr;
-        }
-
-        return $return;
-    }
-
-    /**
-     *  Get 'show price' parameter
-     * 
-     * @return bool
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getShowPrice()
-    {
-        if ($this->attributes[self::IS_EXPORTED]) {
-            $return = (isset($this->attributes['showPrice']) && true == $this->attributes['showPrice']);
-
-        } else {
-            $return = $this->config->ProductAdviser->pab_show_price;
-        }
-
-        return $return;
-    }
-
-    /**
-     * Get 'show add to cart button' parameter 
-     * 
-     * @return bool
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getShowAddToCart()
-    {
-        if ($this->attributes[self::IS_EXPORTED]) {
-            $return = (isset($this->attributes['showAddToCart']) && true == $this->attributes['showAddToCart']);
-
-        } else {
-            $return = $this->config->ProductAdviser->pab_show_buynow;
-        }
-
-        return $return;
-    }
-
-    /**
-     * Check if recommended products are available
-     * 
-     * @return bool
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function checkProductsAlsoBuy()
-    {
-		$productsAlsoBuy = $this->getComplex("product.ProductsAlsoBuy");
-		return !empty($productsAlsoBuy);
+        return array();
     }
 
     /**
      * Check if widget is visible
+     * TODO - check if this setting is really exists
      *
      * @return bool
      * @access protected
@@ -202,10 +71,6 @@ class XLite_Module_ProductAdviser_View_ProductAlsoBuy extends XLite_View_Dialog
      */
     public function isVisible()
     {
-		return parent::isVisible()
-			&& $this->config->ProductAdviser->products_also_buy_enabled
-			&& empty($this->page)
-			&& $this->checkProductsAlsoBuy();
+		return parent::isVisible() && $this->config->ProductAdviser->products_also_buy_enabled;
     }
-
 }

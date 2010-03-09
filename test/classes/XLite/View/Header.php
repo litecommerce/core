@@ -16,15 +16,19 @@
 
 class XLite_View_Header extends XLite_View_Abstract
 {
-	/**
-	 * template 
-	 * 
-	 * @var    string
-	 * @access protected
-	 * @since  3.0.0 EE
-	 */
-	protected $template = 'header.tpl';
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
 
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('header.tpl');
+    }
 
 	/**
 	 * getJSResources 

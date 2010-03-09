@@ -182,18 +182,19 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 	 * @access public
 	 * @since  3.0.0 EE
 	 */
-	public function getViewer()
+	public function getViewer($isExported = false)
 	{
-		$attrs = array();
+        $params = array();
 
-		foreach (array('silent', 'dumpStarted') as $attr) {
-			$attrs[$attr] = $this->is($attr);
-		}
+        foreach (array('silent', 'dumpStarted') as $name) {
+            $params[$name] = $this->get($name);
+        }
 
-        $viewer = new XLite_View_Controller();
-        $viewer->init($attrs + array('template' => $this->template));
+        if ($isExported) {
+            $params[XLite_View_Abstract::PARAM_IS_EXPORTED] = true;
+        }
 
-		return $viewer;
+		return new XLite_View_Controller($this->template, $params);
     }
 
 	/**
@@ -287,6 +288,16 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 
 	public $cart = null;
 
+    /**
+     * Validity flag
+     * TODO - check where it's really needed
+     * 
+     * @var    bool
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected $valid = true;
+
 	/**
 	 * Page type parameters
 	 * 
@@ -296,6 +307,75 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 	 * @since  3.0.0
 	 */
 	protected $pageTypeParams = null;
+
+    /**
+     * Set properties
+     * FIXME - backward compatibility
+     *
+     * @param array $attrs params to set
+     *
+     * @return void
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function setAttributes(array $attrs)
+    {
+        foreach ($attrs as $name => $value) {
+            // FIXME - mapping
+            $this->$name = $value;
+        }   
+    }   
+    
+    /**
+     * Check if handler is valid 
+     * TODO - check where it's really needed
+     * 
+     * @return bool
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function isValid()
+    {
+        return $this->valid;
+    } 
+
+    /**
+     * Initialize handler
+     *
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */ 
+    public function init()
+    {
+        // FIXME - backward compatibility; to delete
+        $this->setAttributes(XLite_Core_Request::getInstance()->getData());
+        $this->fillForm();
+    }
+
+    /**
+     * FIXME - backward compatibility; to delete
+     * 
+     * @param mixed $request ____param_comment____
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function mapRequest($request = null)
+    {   
+    }   
+        
+    /** 
+     * FIXME - backward compatibility; to delete 
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function fillForm()
+    {
+    }
 
 	protected function getReturnUrl()
 	{
@@ -436,9 +516,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 
     function getUrl(array $params = array())
     {
-		if (empty($params)) {
-            $params = $this->getAllParams();
-        }
+        $params = array_merge($this->getAllParams(), $params);
 
 		$target = isset($params['target']) ? $params['target'] : '';
 		unset($params['target']);

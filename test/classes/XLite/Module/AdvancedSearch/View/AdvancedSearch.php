@@ -33,8 +33,22 @@
  * @subpackage View
  * @since      3.0.0 EE
  */
-class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_Module_AdvancedSearch_View_AdvancedSearchAbstract
+class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
 {
+    /**
+     * Widget parameter names
+     */
+
+    const PARAM_DISPLAY_MODE = 'displayMode';
+
+    /**
+     * Allowed display modes
+     */
+
+    const DISPLAY_MODE_VERTICAL   = 'vertical';
+    const DISPLAY_MODE_HORIZONTAL = 'horizontal';
+
+
     /**
      * Targets this widget is allowed for
      *
@@ -45,35 +59,180 @@ class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_Module_Advan
     protected $allowedTargets = array('advanced_search');
 
     /**
-     * Initialize widget
+     *  Display modes
      *
-     * @return void
-     * @access public
-     * @since  3.0.0 EE
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
      */
-    public function init(array $attributes = array())
-    {
-        parent::init($attributes);
+    protected $displayModes = array(
+        self::DISPLAY_MODE_VERTICAL   => 'Vertical',
+        self::DISPLAY_MODE_HORIZONTAL => 'Horiontal',
+    );
 
-        $this->attributes['displayMode'] = 'horizontal';
-    }
 
     /**
-     * Set properties
+     * Return title
      *
-     * @param array $attributes params to set
-     *  
-     * @return void
+     * @return string
      * @access protected
      * @since  3.0.0 EE
      */
-    protected function setAttributes(array $attributes)
+    protected function getHead()
     {
-        if (isset($attributes['displayMode'])) {
-            unset($attributes['displayMode']);
+        return 'Search for products';
+    }
+
+    /**
+     * Get widget templates directory
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDir()
+    {
+        return 'modules/AdvancedSearch/' . $this->getParam(self::PARAM_DISPLAY_MODE);
+    }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_DISPLAY_MODE => new XLite_Model_WidgetParam_List(
+                'Display mode', self::DISPLAY_MODE_HORIZONTAL, true, $this->displayModes
+            ),
+        );
+    }
+
+
+    /**
+     * Check if widget is visible
+     *
+     * @return bool
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    public function isVisible()
+    {
+        return parent::isVisible() || $this->getParam(self::PARAM_IS_EXPORTED);
+    }
+
+
+    // FIXME, TODO - check the following methods
+
+    /**
+     * Get prices
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    function getPrices()
+    {
+        $prices = unserialize($this->config->AdvancedSearch->prices);
+        usort($prices, array($this, 'cmp'));
+
+        return $prices;
+    }
+
+    /**
+     * Get weights
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    function getWeights()
+    {
+        $weights =  unserialize($this->config->AdvancedSearch->weights);
+        usort($weights, array($this, 'cmp'));
+
+        return $weights;
+    }
+
+    /**
+     * String special concationation
+     *
+     * @param srting $val1      String 1
+     * @param string $val2      String 2
+     * @param string $delimeter Delimiter
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    function strcat($val1, $val2, $delimeter)
+    {
+        return $val1 . $delimeter . $val2;
+    }
+
+    /**
+     * Prepare price option
+     *
+     * @param array $option Price range data
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function preparePriceOption($option)
+    {
+        if ($option['label']) {
+            $string = $option['label'];
+
+        } else {
+            $string = '&nbsp;&nbsp;&nbsp;' . $this->price_format($option['start']);
+
+            if ($option['end']) {
+                $string .= '-' . $this->price_format($option['end']);
+
+            } else {
+                $string .= ' ++';
+            }
         }
 
-        parent::setAttributes($attributes);
+        return $string;
+    }
+
+    /**
+     * Prepare weight option
+     *
+     * @param array $option Weight range data
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function prepareWeightOption($option)
+    {
+        if ($option['label']) {
+            $string = $option['label'];
+
+        } else {
+            $string = $option['start'] . '(' . $this->config->General->weight_symbol . ')';
+
+            if ($option['end']) {
+                $string .= '-' . $option['end'] . '(' . $this->config->General->weight_symbol . ')';
+
+            } else {
+                $string .= ' ++';
+            }
+        }
+
+        return $string;
     }
 }
 

@@ -24,18 +24,27 @@
 class XLite_View_Controller extends XLite_View_Abstract
 {
     /**
-     * isStarted 
+     * Widget parameter names
+     */
+
+    const PARAM_SILENT       = 'silent';
+    const PARAM_DUMP_STARTED = 'dumpStarted';
+
+
+    /**
+     * Semaphore
      * 
-     * @var    mixed
+     * @var    bool
      * @access protected
      * @since  3.0.0 EE
      */
     protected static $isStarted = false;
 
     /**
-     * bodyContent 
+     * Content of the currnt page
+     * NOTE: this is a text, so it's not passed by reference; do not wrap it into a getter
      * 
-     * @var    mixed
+     * @var    string
      * @access public
      * @since  3.0.0 EE
      */
@@ -51,7 +60,7 @@ class XLite_View_Controller extends XLite_View_Abstract
      */
     protected function useDefaultDisplayMode()
     {
-        return self::$isStarted || $this->attributes[self::IS_EXPORTED] || XLite::getInstance()->adminZone;
+        return self::$isStarted || $this->getParam(self::PARAM_IS_EXPORTED) || XLite::getInstance()->adminZone;
     }
 
     /**
@@ -61,17 +70,15 @@ class XLite_View_Controller extends XLite_View_Abstract
      * @access protected
      * @since  3.0.0 EE
      */
-    protected function startPage()
+    protected static function startPage()
     {
         // send no-cache headers
-        $error_reporting = error_reporting(0); // suppress warning messages
-        header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-        header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-        header("Cache-Control: no-store, no-cache, must-revalidate");
-        header("Cache-Control: post-check=0, pre-check=0", false);
-        header("Pragma: no-cache");
-        header("Content-Type: text/html");
-        error_reporting($error_reporting);
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+        header('Cache-Control: no-store, no-cache, must-revalidate');
+        header('Cache-Control: post-check=0, pre-check=0', false);
+        header('Pragma: no-cache');
+        header('Content-Type: text/html');
     }
 
     /**
@@ -86,39 +93,54 @@ class XLite_View_Controller extends XLite_View_Abstract
         // Set mutex
         self::$isStarted = true;
 
-        if (!$this->attributes['silent']) {
+        if (!$this->getParam(self::PARAM_SILENT)) {
 
             self::$bodyContent = $this->getContent();
             
-            $this->template = 'body.tpl';
-            $this->startPage();
+            $this->getWidgetParams(self::PARAM_TEMPLATE)->setValue('body.tpl');
 
-            parent::display();
+            self::startPage();
+            $this->display();
         }
 
-        if ($this->attributes['dumpStarted']) {
+        if ($this->getParam(self::PARAM_DUMP_STARTED)) {
             func_refresh_end();
         }
 
-        XLite::$controller->postprocess();
+        XLite::getController()->postprocess();
+    }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_SILENT       => new XLite_Model_WidgetParam_Bool('Silent', false),
+            self::PARAM_DUMP_STARTED => new XLite_Model_WidgetParam_Bool('Dump started', false)
+        );
     }
 
 
     /**
-     * Set template and attributes 
+     * This viewer is only instantiated using the "new" operator (nor the "getWidget()" method)
      * 
-     * @param array  $attrs  widget attributes
+     * @param string $template template to use
+     * @param array  $params   widget params
      *  
      * @return void
      * @access public
      * @since  3.0.0 EE
      */
-    public function init(array $attributes = array())
+    public function __construct($template = 'main.tpl', array $params = array())
     {
-        $this->attributes['silent'] = true;
-        $this->attributes['dumpStarted'] = '';
-
-        parent::init($attributes);
+        $this->init(array(self::PARAM_TEMPLATE => $template) + $params);
     }
 
     /**

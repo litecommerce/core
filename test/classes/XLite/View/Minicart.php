@@ -25,6 +25,19 @@
 class XLite_View_Minicart extends XLite_View_SideBarBox
 {
     /**
+     * Widget parameter names
+     */
+
+    const PARAM_DISPLAY_MODE = 'displayMode';
+
+    /**
+     * Allowed display modes
+     */
+
+    const DISPLAY_MODE_VERTICAL   = 'vertical';
+    const DISPLAY_MODE_HORIZONTAL = 'horizontal';
+
+    /**
      * Number of cart items to display by default 
      */
     const ITEMS_TO_DISPLAY = 3;
@@ -39,8 +52,8 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
      * @since  3.0.0
      */
     protected $displayModes = array(
-        'vertical'   => 'Vertical',
-        'horizontal' => 'Horizontal',
+        self::DISPLAY_MODE_VERTICAL   => 'Vertical',
+        self::DISPLAY_MODE_HORIZONTAL => 'Horizontal',
     );
 
     /**                                                
@@ -65,7 +78,7 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
      */
     protected function getDir()
     {
-        return 'mini_cart/' . $this->attributes['displayMode'];
+        return 'mini_cart/' . $this->getParam(self::PARAM_DISPLAY_MODE);
     }
 
     /**
@@ -117,7 +130,9 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            'displayMode' => new XLite_Model_WidgetParam_List('Display mode', 'vertical', $this->displayModes),
+            self::PARAM_DISPLAY_MODE => new XLite_Model_WidgetParam_List(
+                'Display mode', self::DISPLAY_MODE_VERTICAL, true, $this->displayModes
+            ),
         );
     }
 
@@ -130,7 +145,7 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
      */
     public function getCSSFiles()
     {
-        return array('mini_cart/minicart.css');
+        return array_merge(parent::getCSSFiles(), array('mini_cart/minicart.css'));
     }
 
     /**
@@ -142,7 +157,7 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
      */
     public function getJSFiles()
     {
-        return array('mini_cart/minicart.js');
+        return array_merge(parent::getJSFiles(), array('mini_cart/minicart.js'));
     }
 }
 

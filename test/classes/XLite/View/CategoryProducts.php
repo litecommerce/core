@@ -33,8 +33,15 @@
  * @subpackage View
  * @since      3.0
  */
-class XLite_View_CategoryProducts extends XLite_View_ProductsListContainer
+class XLite_View_CategoryProducts extends XLite_View_ProductsList
 {
+    /**
+     * Widget parameter names
+     */
+
+    const PARAM_CATEGORY_ID = 'category_id';
+
+
     /**
      * Targets this widget is allowed for
      *
@@ -56,28 +63,42 @@ class XLite_View_CategoryProducts extends XLite_View_ProductsListContainer
         return 'Catalog';
     }
 
-    /**
-     * Return templates directory name
+     /**
+     * Define widget parameters
      *
-     * @return string
+     * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  1.0.0
      */
-    protected function getDir()
+    protected function defineWidgetParams()
     {
-        return 'category_products';
+        parent::defineWidgetParams();
+
+        $this->requestParams += array(
+            self::PARAM_CATEGORY_ID => 0,
+        );
+
+        $this->widgetParams += array(
+            self::PARAM_CATEGORY_ID => new XLite_Model_WidgetParam_ObjectId_Category(
+                'Category ID', $this->getRequestParamValue(self::PARAM_CATEGORY_ID)
+            ),
+        );
     }
+
 
     /**
      * Get products 
      * 
      * @return array
-     * @access public
-     * @see    ____func_see____
+     * @access protected
      * @since  3.0.0
      */
-    public function getProducts($sortCriterion = 'name', $sortOrder = 'asc')
+    protected function getData()
     {
-        return $this->getCategory()->getProducts(null, $sortCriterion . ' ' . strtoupper($sortOrder));
+        return $this->getCategory()->getProducts(
+            null,
+            $this->getParam(self::PARAM_SORT_BY) . ' ' . strtoupper($this->getParam(self::PARAM_SORT_ORDER))
+        );
     }
 }
+

@@ -110,4 +110,19 @@ class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
     {
 		return XLite::getInstance()->shopURL(self::buildURL($target, $action, $params));
 	}
+
+	/**
+	 * Return array schema 
+	 * 
+	 * @param array $keys   keys list
+	 * @param array $values values list
+	 *  
+	 * @return array
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
+	public static function getArraySchema(array $keys = array(), array $values = array())
+	{
+		return array_combine($keys, $values);
+	}
 }

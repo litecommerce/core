@@ -32,19 +32,7 @@ class XLite_View_Form extends XLite_View_Form_Abstract
      */
     protected function getFormName()
     {
-        return $this->attributes['form_name'];
-    }
-
-    /**
-     * Define some default attributes 
-     * 
-     * @return void
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function defineDefaultFormAttributes()
-    {
-        $this->attributes['form_name'] = '';
+        return $this->getParam(self::PARAM_FORM_NAME);
     }
 }
 

@@ -26,46 +26,40 @@
  * @since      3.0.0
  */
 
+/**
+ * XLite_View_Price 
+ * 
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @since      3.0.0
+ */
 class XLite_View_Price extends XLite_View_Abstract
-{	
+{
     /**
-     * Widget template 
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * Widget parameter names
      */
-    protected $template = 'common/price_plain.tpl';
+
+    const PARAM_PRODUCT            = 'product';
+    const PARAM_DISPLAY_ONLY_PRICE = 'displayOnlyPrice';
+
 
     /**
-     * Constructor
-     * 
+     * Define widget parameters
+     *
      * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
+     * @access protected
+     * @since  1.0.0
      */
-    public function init(array $attributes = array())
+    protected function defineWidgetParams()
     {
-        $this->attributes['product'] = false;
-        $this->attributes['displayOnlyPrice'] = false;
+        parent::defineWidgetParams();
 
-        parent::init($attributes);
-    }
+        $this->widgetParams += array(
+            self::PARAM_PRODUCT            => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
+            self::PARAM_DISPLAY_ONLY_PRICE => new XLite_Model_WidgetParam_Bool('Only price', false),
+        );
 
-    /**
-     * Check widget visibility 
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isVisible()
-    {
-        return parent::isVisible()
-            && $this->attributes['product'];
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/price_plain.tpl');
     }
 
     /**
@@ -154,7 +148,7 @@ class XLite_View_Price extends XLite_View_Abstract
 	 */
 	public function getProduct()
 	{
-		return $this->attributes['product'];
+		return $this->getParam(self::PARAM_PRODUCT);
 	}
 
 	/**
@@ -167,6 +161,6 @@ class XLite_View_Price extends XLite_View_Abstract
 	 */
 	public function isDisplayOnlyPrice()
 	{
-		return $this->attributes['displayOnlyPrice'];
+		return $this->getParam(self::PARAM_DISPLAY_ONLY_PRICE);
 	}
 }

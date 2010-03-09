@@ -19,7 +19,7 @@ if (goodEmail) {
 </script>
 
 <form action="cart.php" method=post name=contactus>
-<input type="hidden" foreach="params,param" name="{param}" value="{get(param):r}"/>
+<input type="hidden" foreach="params,_param" name="{_param}" value="{get(_param):r}"/>
 <input type="hidden" name="action" value="contactus">
 
 <table width="100%" border=0 cellspacing=0 cellpadding=2>

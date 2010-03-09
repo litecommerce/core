@@ -58,21 +58,6 @@ class XLite_View_RegisterForm extends XLite_View_Abstract
     public $userExists = false;	
     public $allowAnonymous = false;
 
-	/**
-     * Initialize widget
-     * FIXME - to delete
-     *
-     * @return void
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function init(array $attributes = array())
-    {
-        parent::init($attributes);
-
-        $this->mapRequest();
-    }
-    
     function isShowMembership()
     {
         return count($this->config->getComplex('Memberships.memberships')) > 0;

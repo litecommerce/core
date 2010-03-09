@@ -26,6 +26,22 @@
 class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_SideBarBox
 {
     /**
+     * Widget parameter names
+     */
+
+    const PARAM_DISPLAY_MODE = 'displayMode';
+    const PARAM_ROOT_ID      = 'rootId';
+    const PARAM_USE_NODE     = 'useNode';
+
+    /**
+     * Allowed display modes
+     */
+
+    const DISPLAY_MODE_VERTICAL   = 'vertical';
+    const DISPLAY_MODE_HORIZONTAL = 'horizontal';
+
+
+    /**
      * Targets this widget is allowed for
      *
      * @var    array
@@ -43,8 +59,8 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_SideBarBox
      * @since  3.0.0
      */
     protected $displayModes = array(
-        'vertical'   => 'Vertical',
-        'horizontal' => 'Horizontal',
+        self::DISPLAY_MODE_VERTICAL   => 'Vertical',
+        self::DISPLAY_MODE_HORIZONTAL => 'Horizontal',
     );
 
 
@@ -70,19 +86,7 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_SideBarBox
      */
     protected function getDir()
     {
-        return 'modules/Bestsellers/bestsellers/' . $this->getDisplayMode();
-    }
-
-    /**
-     * Return current display mode 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function getDisplayMode()
-    {
-        return isset($this->attributes['displayMode']) ?  $this->attributes['displayMode'] : $this->config->Bestsellers->bestsellers_menu;
+        return 'modules/Bestsellers/bestsellers/' . $this->getParam(self::PARAM_DISPLAY_MODE);
     }
 
     /**
@@ -94,7 +98,9 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_SideBarBox
      */
     protected function getRootId()
     {
-        return $this->attributes['useNode'] ? XLite_Core_Request::getInstance()->category_id : $this->attributes['rootId'];
+        return $this->getParam(self::PARAM_USE_NODE) 
+            ? XLite_Core_Request::getInstance()->category_id 
+            : $this->getParam(self::PARAM_ROOT_ID);
     }
 
     /**
@@ -106,7 +112,9 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_SideBarBox
      */
     protected function getBestsellers()
     {
-        return XLite_Model_CachingFactory::getObject('XLite_Module_Bestsellers_Model_Bestsellers')->getBestsellers($this->getRootId());
+        return XLite_Model_CachingFactory::getObject(
+            'XLite_Module_Bestsellers_Model_Bestsellers'
+        )->getBestsellers($this->getRootId());
     }
 
     /**
@@ -121,10 +129,29 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_SideBarBox
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            'displayMode' => new XLite_Model_WidgetParam_List('Display mode', 'vertical', $this->displayModes),
-            'useNode'     => new XLite_Model_WidgetParam_Checkbox('Use current category id', 0),
-            'rootId'      => new XLite_Model_WidgetParam_ObjectId_Category('Root category Id', 0, true),
+            self::PARAM_DISPLAY_MODE => new XLite_Model_WidgetParam_List(
+                'Display mode', self::DISPLAY_MODE_VERTICAL, true, $this->displayModes
+            ),
+            self::PARAM_USE_NODE     => new XLite_Model_WidgetParam_Checkbox(
+                'Use current category id', 0, true
+            ),
+            self::PARAM_ROOT_ID      => new XLite_Model_WidgetParam_ObjectId_Category(
+                'Root category Id', 0, true, true
+            ),
         );
+    }
+
+    /**
+     * In standalone LC this widget will be dispalyed only 
+     * if the corresponding setting is turned on
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function chechWidgetVisibility()
+    {
+        return $this->getParam(self::PARAM_IS_EXPORTED) || $this->config->Bestsellers->bestsellers_menu;
     }
 
 
@@ -137,7 +164,7 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_SideBarBox
      */
     public function isVisible()
     {
-        return parent::isVisible() && $this->getBestsellers();
+        return parent::isVisible() && $this->getBestsellers() && $this->chechWidgetVisibility();
     }
 
     /**

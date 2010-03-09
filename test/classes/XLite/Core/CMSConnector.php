@@ -136,7 +136,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
     protected function getFlags()
     {
-        return array(XLite_View_Abstract::IS_EXPORTED => true);
+        return array(XLite_View_Abstract::PARAM_IS_EXPORTED => true);
     }
 
 	/**

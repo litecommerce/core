@@ -121,7 +121,7 @@ class XLite_View_Product extends XLite_View_Dialog
         $currentProduct = $this->getProduct();
         $found = false;
         $prev = false;
-        foreach (XLite::$controller->getCategory()->getProducts() as $p) {
+        foreach ($this->getCategory()->getProducts() as $p) {
             if ($found) {
                 $this->nextProduct = $p;
                 break;

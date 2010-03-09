@@ -105,14 +105,16 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
 	{
 		parent::init();
 
-		$w = new XLite_View_Abstract();
+		// FIXME - trying to instantiate abstract class
+		// TODO - check if this code is really needed
+		/*$w = new XLite_View_Abstract();
 		$widgetMethods = array_map("strtolower", get_class_methods($w));
 		if (!in_array("isarraypointernth", $widgetMethods)) {
 		} else {
 			$this->xlite->set("PAPartialWidget", true);
 		}
         if ($this->xlite->is("adminZone")) {
-		}
+		}*/
 
 		/////////////////////////////////////
 		// "RelatedProducts" section

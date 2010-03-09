@@ -25,17 +25,32 @@
 class XLite_View_TopCategories extends XLite_View_SideBarBox
 {
     /**
+     * Widget parameter names
+     */
+
+    const PARAM_DISPLAY_MODE = 'displayMode';
+    const PARAM_ROOT_ID      = 'rootId';
+
+    /**
+     * Allowed display modes
+     */
+
+    const DISPLAY_MODE_LIST = 'list';
+    const DISPLAY_MODE_TREE = 'tree';
+    const DISPLAY_MODE_PATH = 'path';
+
+
+    /**
      * Display modes (template directories)
      * 
      * @var    array
      * @access protected
-     * @see    ____var_see____
      * @since  3.0.0
      */
     protected $displayModes = array(
-        'list' => 'List',
-        'tree' => 'Tree',
-        'path' => 'Path',
+        self::DISPLAY_MODE_LIST => 'List',
+        self::DISPLAY_MODE_TREE => 'Tree',
+        self::DISPLAY_MODE_PATH => 'Path',
     );
 
     /**
@@ -47,6 +62,7 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
      * @since  3.0.0
      */
     protected $pathIds = null;
+
 
     /**
      * Get widge title
@@ -71,25 +87,19 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
      */
     protected function getDir()
     {
-        return 'categories/' . $this->attributes['displayMode'];
+        return 'categories/' . $this->getParam(self::PARAM_DISPLAY_MODE);
     }
 
     /**
-     * Return subcategories lis
+     * Return subcategories list
      * 
-     * @param integer $categoryId Category id
-     *
      * @return array
      * @access protected
      * @since  3.0.0 EE
      */
-    protected function getCategories($categoryId = null)
+    protected function getCategories()
     {
-        if (is_null($categoryId)) {
-            $categoryId = $this->attributes['rootId'];
-        }
-
-        return $this->widgetParams['rootId']->getObject($categoryId)->getSubcategories();
+        return $this->getWidgetParams(self::PARAM_ROOT_ID)->getObject()->getSubcategories();
     }
 
 	/**
@@ -104,8 +114,12 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
 		parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            'displayMode' => new XLite_Model_WidgetParam_List('Display mode', 'list', $this->displayModes),
-            'rootId'      => new XLite_Model_WidgetParam_ObjectId_Category('Parent category ID (leave 0 for root categories list)', 0, true),
+            self::PARAM_DISPLAY_MODE => new XLite_Model_WidgetParam_List(
+                'Display mode', 'list', true, $this->displayModes
+            ),
+            self::PARAM_ROOT_ID => new XLite_Model_WidgetParam_ObjectId_Category(
+                'Parent category ID (leave 0 for root categories list)', 0, true, true
+            ),
         );
     }
 
@@ -131,10 +145,7 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
             }
         }
 
-        return in_array(
-            $category->get('category_id'),
-            $this->pathIds
-        );
+        return in_array($category->get('category_id'), $this->pathIds);
     }
 
     /**
@@ -157,7 +168,7 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
         if (!$category->getSubcategories()) {
             $classes[] = 'leaf';
 
-        } elseif ('list' != $this->attributes['displayMode']) {
+        } elseif (self::DISPLAY_MODE_LIST != $this->getParam(self::PARAM_DISPLAY_MODE)) {
             $classes[] = $active ? 'expanded' : 'collapsed';
         }
 

@@ -26,6 +26,7 @@
  * @since      3.0.0
  */
 
+// FIXME - must be completely revised
 
 /**
  * Category button widget

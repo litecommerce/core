@@ -50,6 +50,16 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
 
 
     /**
+     * Called controller 
+     * 
+     * @var    XLite_Controller_Abstract
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected static $controller = null;
+
+
+    /**
      * Flag; determines if we need to cleanup (and, as a result, to rebuild) classes and templates cache
      *
      * @var    bool
@@ -84,15 +94,6 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      * @since  3.0.0 EE
      */
     public $_xlite_form_id = null;
-
-    /**
-     * Called controller 
-     * 
-     * @var    XLite_Controller_Abstract
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public static $controller = null;
 
 
     /**
@@ -138,7 +139,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      * @access protected
      * @since  3.0.0 EE
      */
-    protected function getTarget()
+    protected static function getTarget()
     {
         $target = XLite_Core_Request::getInstance()->target;
 
@@ -148,6 +149,18 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
         }
 
         return $target;
+    }
+
+    /**
+     * getControllerClass 
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected static function getControllerClass()
+    {
+        return XLite_Core_Converter::getControllerClass(self::getTarget());
     }
 
     /**
@@ -291,8 +304,12 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      * @access public
      * @since  3.0.0
      */
-    public function getController()
+    public static function getController()
     {
+        if (!isset(self::$controller)) {
+            self::$controller = XLite_Model_Factory::createObjectInstance(self::getControllerClass());
+        }
+
         return self::$controller;
     }
 
@@ -317,10 +334,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      */
     public function initController()
     {
-        $controllerClass = XLite_Core_Converter::getControllerClass($this->getTarget());
-
-        self::$controller = new $controllerClass();
-        self::$controller->init();
+        self::getController()->init();
     }
 
     /**
@@ -345,7 +359,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      */
     public function runController()
     {
-        self::$controller->handleRequest();
+        self::getController()->handleRequest();
     }
 
     /**
@@ -357,7 +371,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      */
     public function getViewer()
     {
-        return self::$controller->getViewer();
+        return self::getController()->getViewer();
     }
 
     /**

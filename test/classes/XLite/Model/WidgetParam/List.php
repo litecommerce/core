@@ -41,7 +41,8 @@ class XLite_Model_WidgetParam_List extends XLite_Model_WidgetParam_String
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $options = array();
+    protected $options = null;
+
 
     /**
      * Return list of conditions to check
@@ -62,22 +63,27 @@ class XLite_Model_WidgetParam_List extends XLite_Model_WidgetParam_String
         );
     }
 
+
     /**
      * Constructor
-     *
-     * @param string $label   param text label
-     * @param string $value   param value
-     * @param array  $options list options
-     *
+     * 
+     * @param mixed $label     param label (text)
+     * @param mixed $value     default value
+     * @param mixed $isSetting display this setting in CMS or not
+     * @param array $options   options list
+     *  
      * @return void
      * @access public
-     * @since  1.0.0
+     * @since  3.0.0 EE
      */
-    public function __construct($label, $value = null, array $options = array())
+    public function __construct($label, $value = null, $isSetting = false, array $options = array())
     {
-        parent::__construct($label, $value);
+        parent::__construct($label, $value, $isSetting);
 
-        $this->options = $options;
+        // TODO - check if there are more convinient way to extend this class
+        if (!isset($this->options)) {
+            $this->options = $options;
+        }
     }
 }
 

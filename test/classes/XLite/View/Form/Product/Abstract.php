@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage View
+ * @subpackage ____sub_package____
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,23 +27,48 @@
  */
 
 /**
- * Advanced search widget (block)
+ * XLite_View_Form_Product_Abstract 
  * 
  * @package    XLite
- * @subpackage View
- * @since      3.0.0 EE
+ * @subpackage ____sub_package____
+ * @since      3.0.0
  */
-class XLite_Module_AdvancedSearch_View_AdvancedSearchBlock extends XLite_Module_AdvancedSearch_View_AdvancedSearchAbstract
+abstract class XLite_View_Form_Product_Abstract extends XLite_View_Form_Abstract
 {
     /**
-     * Check if widget is visible
-     *
-     * @return bool
-     * @access protected
-     * @since  3.0.0 EE
+     * Widget parameter names
      */
-    public function isVisible()
+
+    const PARAM_PRODUCT = 'product';
+
+
+    /** 
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
     {
-        return parent::isVisible() || $this->attributes[self::IS_EXPORTED];
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object(
+                'Product', null, false, 'XLite_Model_Product'
+            ),
+        );
+    }
+
+    /**
+     * getProduct 
+     * 
+     * @return XLite_Model_Product
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getProduct()
+    {
+        return $this->getParam(self::PARAM_PRODUCT);
     }
 }
