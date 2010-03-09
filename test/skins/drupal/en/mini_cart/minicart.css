@@ -1,11 +1,11 @@
 /* Minicart block */
 
-.minicart {
+.lc-minicart {
     position: relative;
     padding: 0.5em;
 }
 
-.minicart li {
+.lc-minicart li {
     background-image: none;
 }
 
@@ -22,7 +22,7 @@
 
 /* Minicart toggle button */
 
-.minicart .toggle-button {
+.lc-minicart .toggle-button {
     width: 35px;
     height: 24px;
     margin: 0;
@@ -32,36 +32,36 @@
     cursor: pointer;
 }
 
-.minicart .expanded .toggle-button {
+.lc-minicart .expanded .toggle-button {
     background: transparent url(img/minicart-expanded.gif) no-repeat top left;
 }
 
-.minicart .empty .toggle-button {
+.lc-minicart .empty .toggle-button {
     background: transparent url(img/minicart-empty.gif) no-repeat top right;
     width: 24px;
     height: 24px;
     cursor: auto;
 }
 
-.minicart .empty p {
+.lc-minicart .empty p {
     margin: 0;
     padding: 1em 0 0 0;
 }
 
 /* Minicart items */
 
-.minicart-items {
+.lc-minicart-items {
     clear: both;
     border: 0;
     margin: 0;
     padding: 0;
 }
 
-.minicart .empty .lc-minicart-items {
+.lc-minicart .empty .lc-minicart-items {
     border-bottom: none;
 }
 
-.minicart .collapsed .lc-minicart-items {
+.lc-minicart .collapsed .lc-minicart-items {
     display: none;
 }
 
