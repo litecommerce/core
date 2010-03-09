@@ -2,24 +2,36 @@
 // vim: set ts=4 sw=4 sts=4 et:
 
 /**
- * ____file_title____
- *  
- * @category   Lite Commerce
- * @package    Lite Commerce
- * @subpackage ____sub_package____
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version    SVN: $Id$
- * @link       http://www.qtmsoft.com/
- * @since      3.0.0 EE
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
  */
 
 /**
- * XLite_View_Form_Product_AddToCart 
+ * Add product to cart form
  * 
- * @package    Lite Commerce
- * @subpackage ____sub_package____
- * @since      3.0.0 EE
+ * @package    XLite
+ * @subpackage View
+ * @since      3.0.0
  */
 class XLite_View_Form_Product_AddToCart extends XLite_View_Form_Abstract
 {
@@ -46,14 +58,49 @@ class XLite_View_Form_Product_AddToCart extends XLite_View_Form_Abstract
     {
         $this->defaultFormAttributes['form_target'] = 'cart';
         $this->defaultFormAttributes['form_action'] = 'add';
+    }
 
-        $this->defaultFormAttributes['form_params'] += array(
-            'product_id'  => $this->getProduct()->get('product_id'),
-            'category_id' => $this->getCategory()->get('category_id'),
-        );
+    /**
+     * Called before the display()
+     *
+     * @return void
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function initView()
+    {
+        $this->attributes['form_params']['product_id'] = $this->getProduct()->get('product_id');
 
-        // FIXME - do NOT uncomment
-        // $this->defaultFormAttributes['form_method'] = 'GET';
+        parent::initView();
+    }
+
+    /**
+     * Define some common attributes
+     * 
+     * @param array $attributes widget attributes
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function init(array $attributes = array())
+    {
+        $this->attributes['product'] = false;
+
+        parent::init($attributes);
+    }
+
+    /**
+     * Get product 
+     * 
+     * @return XLite_Model_Product
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProduct()
+    {
+        return $this->attributes['product'] ? $this->attributes['product'] : parent::getProduct();
     }
 }
 

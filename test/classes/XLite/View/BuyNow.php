@@ -73,18 +73,4 @@ class XLite_View_BuyNow extends XLite_View_Abstract
             && $this->attributes['product']
             && $this->config->General->buynow_button_enabled;
     }
-
-    /**
-     * Get product
-     * 
-     * @return XLite_Model_Product
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getProduct()
-    {
-        return $this->attributes['product'];
-    }
 }
-

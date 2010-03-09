@@ -113,17 +113,9 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Catalo
 		return $result;
 	}
 
-    // FIXME: is set() is not obsolete, it should be removed  
-    function action_buynow()
-    {
-        $this->set('returnUrl', $this->buildURL('cart', 'add', array('product_id' => $this->product_id, 'category_id' => $this->category_id)));
-        $this->redirect($this->getReturnUrl());
-    }
-
-
 	function getTitle()
 	{
-		$metaTitle = $this->getProduct()->get('.meta_title');
+		$metaTitle = $this->getProduct()->get('meta_title');
 
 		return $metaTitle ? $metaTitle : $this->getProduct()->get('name');
 	}
