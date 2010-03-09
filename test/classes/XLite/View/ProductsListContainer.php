@@ -27,45 +27,25 @@
  */
 
 /**
- * Category products list widget
+ * Products list abstract container
  *
  * @package    XLite
  * @subpackage View
  * @since      3.0
  */
-class XLite_View_CategoryProducts extends XLite_View_ProductsListContainer
+abstract class XLite_View_ProductsListContainer extends XLite_View_Dialog
 {
     /**
-     * Targets this widget is allowed for
+     * Check if widget is visible
      *
-     * @var    array
+     * @return bool
      * @access protected
      * @since  3.0.0 EE
      */
-    protected $allowedTargets = array('category');
-
-    /**
-     * Return title
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function getHead()
+    public function isVisible()
     {
-        return 'Catalog';
-    }
-
-    /**
-     * Return templates directory name
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function getDir()
-    {
-        return 'category_products';
+        return parent::isVisible()
+            && $this->getProducts();
     }
 
     /**
@@ -76,8 +56,52 @@ class XLite_View_CategoryProducts extends XLite_View_ProductsListContainer
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getProducts($sortCriterion = 'name', $sortOrder = 'asc')
+    abstract public function getProducts($sortCriterion = 'name', $sortOrder = 'asc');
+
+    /**
+     * Get list factory
+     * 
+     * @return array (callback - object + method name)
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getListFactory()
     {
-        return $this->getCategory()->getProducts(null, $sortCriterion . ' ' . strtoupper($sortOrder));
+        return array($this, 'getProducts');
+    }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += XLite_View_ProductsList::getWidgetParamsList();
+    }
+
+    /**
+     * Export widget arguments 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function exportWidgetArguments()
+    {
+        $data = array();
+
+        foreach ($this->getWidgetParams() as $key => $param) {
+            $data[$key] = isset($this->attributes[$key]) ? $this->attributes[$key] : $param->value;
+        }
+
+        return $data;
     }
 }
+

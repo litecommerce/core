@@ -70,10 +70,8 @@ class XLite_Module_FeaturedProducts_Model_FeaturedProduct extends XLite_Model_Ab
     function filter()
     {
         $this->product = new XLite_Model_Product($this->get("product_id"));
-        if (!$this->product->isExists()) {
-        	return false;
-        }
-        return $this->product->filter();
+
+        return $this->product->isExists() ? $this->product->filter() : false;
 	}
 
 }

@@ -51,9 +51,9 @@ class XLite_View_ProductsListPage extends XLite_View_Abstract
      * @since  3.0.0
      */
     protected static $displayModes = array(
-        'grid'  => 'Grid',
-        'list'  => 'List',
-        'table' => 'Table',
+        'grid'    => 'Grid',
+        'list'    => 'List',
+        'table'   => 'Table',
     );
 
     /**
@@ -220,6 +220,22 @@ class XLite_View_ProductsListPage extends XLite_View_Abstract
     }
 
     /**
+     * Check - show product thumbnail or not
+     *
+     * @param XLite_Model_Product $product Product
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isShowThumbnail(XLite_Model_Product $product)
+    {
+        return (!isset($this->attributes['widgetArguments']['showThumbnail']) || $this->attributes['widgetArguments']['showThumbnail'])
+            && $product->hasThumbnail();
+    }
+
+    /**
      * Check - show product description or not
      * 
      * @return boolean
@@ -277,6 +293,7 @@ class XLite_View_ProductsListPage extends XLite_View_Abstract
         return array(
             'displayMode'     => new XLite_Model_WidgetParam_List('Look and feel of a product list', self::getDefaultDisplayMode(), self::getDisplayModes()),
             'gridColumns'     => new XLite_Model_WidgetParam_List('Number of columns (for Grid mode only)', 3, $gridColumns),
+            'showThumbnail'   => new XLite_Model_WidgetParam_Checkbox('Show product thumbnail', 1),
             'showDescription' => new XLite_Model_WidgetParam_Checkbox('Show product description (for List mode only)', 1),
             'showPrice'       => new XLite_Model_WidgetParam_Checkbox('Show product price', 1),
             'showAdd2Cart'    => new XLite_Model_WidgetParam_Checkbox('Show \'Add to Cart\' button', 1),

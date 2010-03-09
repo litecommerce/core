@@ -12,18 +12,17 @@
  *}
 <ul class="list-body list-body-list">
 
-  <li FOREACH="getData(),product" class="item">
+  <li FOREACH="getData(),product" class="item draggable">
 
     <widget class="XLite_View_AddedToCartMark" product="{product}" />
-    <a IF="config.General.show_thumbnails&product.hasThumbnail()" class="product-thumbnail" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}"><img src="{product.thumbnailURL}" alt="" /></a>
+    <span class="draggable-mark">Drag me to the cart</span>
+    <a IF="isShowThumbnail(product)" class="product-thumbnail" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}"><img src="{product.thumbnailURL}" alt="" /></a>
     <div class="body">
       <a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" class="product-name">{product.name:h}</a>
       <br />
-      <span class="product-description">{truncate(product,#brief_description#,#300#):h}</span>
-      <br />
-      <br />
-      <widget class="XLite_View_Price" product="{product}" displayOnlyPrice="true" />
-      <widget class="XLite_View_BuyNow" product="{product}" />
+      <div IF="isShowDescription()" class="product-description">{truncate(product,#brief_description#,#300#):h}</div>
+      <widget class="XLite_View_Price" product="{product}" displayOnlyPrice="true" IF="isShowPrice()" />
+      <widget class="XLite_View_BuyNow" product="{product}" IF="isShowAdd2Cart()" />
     </div>
 
   </li>

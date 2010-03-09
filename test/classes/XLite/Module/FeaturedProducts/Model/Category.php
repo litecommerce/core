@@ -44,22 +44,39 @@
 */
 class XLite_Module_FeaturedProducts_Model_Category extends XLite_Model_Category implements XLite_Base_IDecorator
 {
+	/**
+	 * Cached featured products list
+	 * 
+	 * @var    array
+	 * @access protected
+	 * @see    ____var_see____
+	 * @since  3.0.0
+	 */
 	protected $featuredProducts = null;
 
-    function getFeaturedProducts()
+    /**
+     * Get featured products list
+     * 
+     * @param string $orderby Order by string
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    function getFeaturedProducts($orderby = null)
     {
         if (is_null($this->featuredProducts)) {
             $fp = new XLite_Module_FeaturedProducts_Model_FeaturedProduct();
-            $id = $this->get("category_id");
-            $products = $fp->findAll("category_id='$id'");
-            for ($i = 0; $i < count($products); $i++) {
-                $categories = $products[$i]->product->get("categories");
+            $this->featuredProducts = $fp->findAll('category_id = \'' . $this->get('category_id') . '\'', $orderby);
+
+			foreach ($this->featuredProducts as $i => $product) {
+                $categories = $product->product->get('categories');
                 if (!empty($categories)) {
-                    $products[$i]->product->category_id = $categories[0]->get("category_id");
+                	$this->featuredProducts[$i]->product->category_id = $categories[0]->get('category_id');
                 }    
             }
-            $this->featuredProducts = $products;
         }
+
         return $this->featuredProducts;
     }
 

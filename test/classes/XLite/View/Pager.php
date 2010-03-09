@@ -49,6 +49,11 @@ class XLite_View_Pager extends XLite_View_Abstract
 
 
     /**
+     * Items per page (default value) 
+     */
+    const DEFAULT_ITEMS_PER_PAGE = 4;
+
+    /**
      * Data 
      * 
      * @var    array
@@ -137,7 +142,7 @@ class XLite_View_Pager extends XLite_View_Abstract
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $itemsPerPage = 4;
+    public $itemsPerPage = self::DEFAULT_ITEMS_PER_PAGE;
 
     /**
      * Pages per pages frame 
@@ -166,7 +171,7 @@ class XLite_View_Pager extends XLite_View_Abstract
 
         $this->attributes['urlParams'] = array();
         $this->attributes['data'] = array();
-        $this->attributes['itemsPerPage'] = $this->itemsPerPage;
+        $this->attributes['itemsPerPage'] = self::DEFAULT_ITEMS_PER_PAGE;
 
         parent::init($attributes);
     }
@@ -545,19 +550,6 @@ class XLite_View_Pager extends XLite_View_Abstract
     public function getPagesCount()
     {
         return $this->_pagesCount;
-    }
-
-    /**
-     * Get items-per-page range as javascript object definition 
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getItemsPerPageRange()
-    {
-        return '{ min: ' . self::ITEMS_PER_PAGE_MIN . ', max: ' . self::ITEMS_PER_PAGE_MAX . ' }';
     }
 
     /**

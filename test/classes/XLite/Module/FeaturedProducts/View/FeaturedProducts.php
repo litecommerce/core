@@ -2,37 +2,47 @@
 // vim: set ts=4 sw=4 sts=4 et:
 
 /**
- * Featured Products widget
- *  
- * @category  Litecommerce
- * @package   View
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license   http://www.qtmsoft.com/xpayments_eula.html X-Payments license agreement
- * @version   SVN: $Id$
- * @link      http://www.qtmsoft.com/
- * @see       ____file_see____
- * @since     3.0.0
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage View
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
  */
 
 /**
  * Featured products widget 
  * 
- * @package   View
- * @subpackage Widget
- * @since      3.0.0 EE
+ * @package    XLite
+ * @subpackage View
+ * @since      3.0.0
  */
-class XLite_Module_FeaturedProducts_View_FeaturedProducts extends XLite_View_Dialog
+class XLite_Module_FeaturedProducts_View_FeaturedProducts extends XLite_View_ProductsListContainer
 {
     /**
      * Targets this widget is allowed for
      *
      * @var    array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected $allowedTargets = array('main', 'category');
-
 
     /**
      * Return title
@@ -55,24 +65,7 @@ class XLite_Module_FeaturedProducts_View_FeaturedProducts extends XLite_View_Dia
      */
     protected function getDir()
     {
-        return 'modules/FeaturedProducts/featured_products/' . $this->getDisplayMode();
-    }
-
-    protected function getDisplayMode()
-    {
-        return ($this->attributes[self::IS_EXPORTED] ? $this->attributes['displayMode'] : $this->config->FeaturedProducts->featured_products_look);
-    }
-
-    /**
-     * Check if widget is visible
-     *
-     * @return bool
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    public function isVisible()
-    {
-        return parent::isVisible() && $this->getCategory()->getFeaturedProducts() && !$this->get('page');
+        return 'modules/FeaturedProducts/featured_products';
     }
 
     /**
@@ -85,8 +78,11 @@ class XLite_Module_FeaturedProducts_View_FeaturedProducts extends XLite_View_Dia
     protected function defineWidgetParams()
     {
         parent::defineWidgetParams();
-        
-        $this->widgetParams += XLite_View_ProductsList::getWidgetParamsList();
+
+        $this->widgetParams['displayModeAdjustable']->set('value', 0);
+        $this->widgetParams['allItemsPerPage']->set('value', 1);
+
+        unset($this->widgetParams['sortCriterionAdjustable'], $this->widgetParams['sortCriterion'], $this->widgetParams['sortOrder']);
     }
 
     /**
@@ -97,31 +93,35 @@ class XLite_Module_FeaturedProducts_View_FeaturedProducts extends XLite_View_Dia
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getProducts()
+    public function getProducts($sortCriterion = 'name', $sortOrder = 'asc')
     {
-        $products = array();
         $featuredProducts = $this->getCategory()->getFeaturedProducts();
 
+        $products = array();
         if (is_array($featuredProducts)) {
             foreach ($featuredProducts as $fp) {
                 $products[] = $fp->product;
             }
         }
+
         return $products;
     }
 
     /**
-     * Get widget arguments (used by the common products list template)
+     * Export widget arguments 
      * 
-     * @return void
+     * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getWidgetArguments()
+    public function exportWidgetArguments()
     {
-        return (isset($this->attributes['widgetArguments']) ? $this->attributes['widgetArguments'] : array());
+        $data = parent::exportWidgetArguments();
+
+        $data['sortCriterionAdjustable'] = 0;
+
+        return $data;
     }
 
 }
-

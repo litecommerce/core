@@ -42,12 +42,25 @@ class XLite_View_ProductsList extends XLite_View_Abstract
     const SORT_ORDER_ARG       = 'sortOrder';
     const DISPLAY_MODE_ARG     = 'displayMode';
     const ITEMS_PER_PAGE_ARG   = 'itemsPerPage';
+    const CELL_NAME_ARG        = 'cellName';
 
 
     /**
-     * UR Lpattern border symbol
+     * URL pattern border symbol
      */
     const PATTERN_BORDER_SYMBOL = '___';
+
+
+    /**
+     * Default search data cell name
+     */
+    const DEFAULT_CELL_NAME = 'default';
+
+
+    /**
+     * Default page widget class name
+     */
+    const DEFAULT_PAGE_WIDGET_CLASS = 'XLite_View_ProductsListPage';
 
 
     /**
@@ -108,11 +121,39 @@ class XLite_View_ProductsList extends XLite_View_Abstract
     {
         $this->attributes['listFactory'] = false;
         $this->attributes['widgetArguments'] = array();
+        $this->attributes['cellName'] = self::DEFAULT_CELL_NAME;
+        $this->attributes['pageWidgetClass'] = self::DEFAULT_PAGE_WIDGET_CLASS;
 
         $this->defaultURLParams[self::SORT_CRITERION_ARG] = XLite_Model_Product::getDefaultSortCriterion();
         $this->defaultURLParams[self::SORT_ORDER_ARG] = XLite_Model_Product::getDefaultSortOrder();
 
         parent::init($attributes);
+    }
+
+    /**
+     * Set properties
+     *
+     * @param array $attributes params to set
+     *
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function setAttributes(array $attributes)
+    {
+        if (isset($attributes['widgetArguments']) && !is_array($attributes['widgetArguments'])) {
+            unset($attributes['widgetArguments']);
+        }
+
+        if (isset($attributes['cellName']) && (!is_string($attributes['cellName']) || !$attributes['cellName'])) {
+            unset($attributes['cellName']);
+        }
+
+        if (isset($attributes['pageWidgetClass']) && (!is_string($attributes['pageWidgetClass']) || !class_exists($attributes['pageWidgetClass']))) {
+            unset($attributes['pageWidgetClass']);
+        }
+
+        parent::setAttributes($attributes);
     }
 
     /**
@@ -130,15 +171,22 @@ class XLite_View_ProductsList extends XLite_View_Abstract
         $request = XLite_Core_Request::getInstance();
         $sessionCell = $this->session->get('productsListData');
         if (!is_array($sessionCell)) {
-            $sessionCell = array();
+            $sessionCell = array($this->attributes['cellName'] => array());
+
+        } elseif (
+            !isset($sessionCell[$this->attributes['cellName']])
+            || !is_array($sessionCell[$this->attributes['cellName']])
+        ) {
+            $sessionCell[$this->attributes['cellName']] = array();
         }
+
+        $sessionSubCell = $sessionCell[$this->attributes['cellName']];
 
         $modes = $this->getDisplayModes();
 
         // Get default display mode from wudget attrubites
         if (
-            is_array($this->attributes['widgetArguments'])
-            && isset($this->attributes['widgetArguments']['displayMode'])
+            isset($this->attributes['widgetArguments']['displayMode'])
             && isset($modes[$this->attributes['widgetArguments']['displayMode']])
         ) {
             $this->defaultURLParams['displayMode'] = $this->attributes['widgetArguments']['displayMode'];
@@ -146,32 +194,38 @@ class XLite_View_ProductsList extends XLite_View_Abstract
 
         $this->urlParams = $this->defaultURLParams;
 
+        $cellNameField = self::CELL_NAME_ARG;
+        $getFromRequest = (isset($request->$cellNameField) && $request->$cellNameField == $this->attributes['cellName'])
+            || $this->attributes['cellName'] == self::DEFAULT_CELL_NAME;
+
         foreach (array_keys($this->urlParams) as $name) {
-            if (!is_null($request->$name)) {
+            if ($getFromRequest && !is_null($request->$name)) {
                 $this->urlParams[$name] = $request->$name;
 
-            } elseif (isset($sessionCell[$name])) {
-                $this->urlParams[$name] = $sessionCell[$name];
+            } elseif (isset($sessionSubCell[$name])) {
+                $this->urlParams[$name] = $sessionSubCell[$name];
             }
 
-            $sessionCell[$name] = $this->urlParams[$name];
+            $sessionSubCell[$name] = $this->urlParams[$name];
         }
 
         // Override display mode if not allow visitor swicth look and feel
         if (
-            is_array($this->attributes['widgetArguments'])
-            && isset($this->attributes['widgetArguments']['displayModeAdjustable'])
+            isset($this->attributes['widgetArguments']['displayModeAdjustable'])
             && isset($this->attributes['widgetArguments']['displayMode'])
             && !$this->attributes['widgetArguments']['displayModeAdjustable']
             && isset($modes[$this->attributes['widgetArguments']['displayMode']])
         ) {
             $this->urlParams['displayMode'] = $this->attributes['widgetArguments']['displayMode'];
-            $sessionCell['displayMode'] = $this->urlParams['displayMode'];
+            $sessionSubCell['displayMode'] = $this->urlParams['displayMode'];
         }
 
+        $sessionCell[$this->attributes['cellName']] = $sessionSubCell;
         $this->session->set('productsListData', $sessionCell);
 
         $this->urlParams = $this->getAllParams() + $this->urlParams;
+
+        $this->urlParams[$cellNameField] = $this->attributes['cellName'];
     }
 
     /**
@@ -211,6 +265,58 @@ class XLite_View_ProductsList extends XLite_View_Abstract
     }
 
     /**
+     * Get page list 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageList()
+    {
+        return isset($this->widgets['pager']) ? $this->widgets['pager']->getPageData() : $this->getList();
+    }
+
+    /**
+     * Get items count
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getItemsCount()
+    {
+        return count($this->getList());
+    }
+
+    /**
+     * Get pages count 
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPagesCount()
+    {
+        return isset($this->widgets['pager']) ? $this->widgets['pager']->getPagesCount() : 1;
+    }
+
+    /**
+     * Get items-per-page range as javascript object definition 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getItemsPerPageRange()
+    {
+        return '{ min: ' . XLite_View_Pager::ITEMS_PER_PAGE_MIN . ', max: ' . XLite_View_Pager::ITEMS_PER_PAGE_MAX . ' }';
+    }
+
+    /**
      * Build page URL 
      * 
      * @param integer $pageId        Page number
@@ -227,11 +333,18 @@ class XLite_View_ProductsList extends XLite_View_Abstract
     {
         $params = $this->assembleURLParams($pageId, $sortCriterion, $sortOrder, $displayMode);
 
-        // FIXME
-        $target = $params['target'];
-        $action = isset($params['action']) ? $params['action'] : '';
+        $target = 'main';
+        $action = '';
+        
+        if (isset($params['target'])) {
+            $target = $params['target'];
+            unset($params['target']);
+        }
 
-        unset($params['target'], $params['action']);
+        if (isset($params['action'])) {
+            $action = $params['action'];
+            unset($params['action']);
+        }
 
         return $this->buildURL($target, $action, $params);
     }
@@ -622,6 +735,25 @@ class XLite_View_ProductsList extends XLite_View_Abstract
 
         $list['displayModeAdjustable'] = new XLite_Model_WidgetParam_Checkbox('Allow visitor to switch Look and feel of a product list', 1);
 
+        $list['sortCriterionAdjustable'] = new XLite_Model_WidgetParam_Checkbox('Allow visitor to sort a product list', 1);
+        $list['sortCriterion'] = new XLite_Model_WidgetParam_List(
+            'Default sort criterion',
+            XLite_Model_Product::getDefaultSortCriterion(),
+            XLite_Model_Product::getSortCriterions()
+        );
+        $list['sortOrder'] = new XLite_Model_WidgetParam_List(
+            'Default sort order',
+            XLite_Model_Product::getDefaultSortOrder(),
+            array('asc' => 'Ascending', 'desc' => 'Descending')
+        );
+        
+        $itemsPerPageList = range(XLite_View_Pager::ITEMS_PER_PAGE_MIN, XLite_View_Pager::ITEMS_PER_PAGE_MAX);
+        $itemsPerPageList = array_combine($itemsPerPageList, $itemsPerPageList);
+        $list['itemsPerPageAdjustable'] = new XLite_Model_WidgetParam_Checkbox('Allow visitor to change items-per-page', 1);
+        $list['itemsPerPage'] = new XLite_Model_WidgetParam_List('Default items per page', XLite_View_Pager::DEFAULT_ITEMS_PER_PAGE, $itemsPerPageList);
+
+        $list['allItemsPerPage'] = new XLite_Model_WidgetParam_Checkbox('Show all items into one page', 0);
+
         return $list;
     }
 
@@ -650,5 +782,86 @@ class XLite_View_ProductsList extends XLite_View_Abstract
     {
         return !isset($this->attributes['widgetArguments']['displayModeAdjustable'])
             || $this->attributes['widgetArguments']['displayModeAdjustable'];
+    }
+
+    /**
+     * Get cell name 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCellName()
+    {
+        return $this->attributes['cellName'];
+    }
+
+    /**
+     * Get container id 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getContainerId()
+    {
+        return $this->attributes['cellName'] . 'Container';
+    }
+
+    /**
+     * Check sort criterion block visibility 
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isSortCriterionVisible()
+    {
+        return !isset($this->attributes['widgetArguments']['sortCriterionAdjustable'])
+            || $this->attributes['widgetArguments']['sortCriterionAdjustable'];
+    }
+
+
+    /**
+     * Check - items-per-page selector visible or not 
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isItemsPerPageSelectorVisible()
+    {
+        return !isset($this->attributes['widgetArguments']['itemsPerPageAdjustable'])
+            || $this->attributes['widgetArguments']['itemsPerPageAdjustable'];
+    }
+
+    /**
+     * Check - pager row is visible or not 
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isPagerVisible()
+    {
+        return !isset($this->attributes['widgetArguments']['allItemsPerPage']) || !$this->attributes['widgetArguments']['allItemsPerPage'];
+    }
+
+    /**
+     * Get page widget class name
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageWidgetClass()
+    {
+        return $this->attributes['pageWidgetClass'];
     }
 }

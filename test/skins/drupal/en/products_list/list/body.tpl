@@ -16,7 +16,7 @@
 
     <widget class="XLite_View_AddedToCartMark" product="{product}" />
     <span class="draggable-mark">Drag me to the cart</span>
-    <a IF="config.General.show_thumbnails&product.hasThumbnail()" class="product-thumbnail" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}"><img src="{product.thumbnailURL}" alt="" /></a>
+    <a IF="isShowThumbnail(product)" class="product-thumbnail" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}"><img src="{product.thumbnailURL}" alt="" /></a>
     <div class="body">
       <a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" class="product-name">{product.name:h}</a>
       <br />

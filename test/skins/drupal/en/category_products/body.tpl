@@ -10,4 +10,4 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget class="XLite_View_ProductsList" listFactory="{getListFactory()}" widgetArguments="{exportWidgetArguments()}" />
+<widget class="XLite_View_ProductsList" listFactory="{getListFactory()}" widgetArguments="{exportWidgetArguments()}" cellName="categoryProducts" />
