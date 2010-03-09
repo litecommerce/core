@@ -164,7 +164,7 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_SideBarBox
             'vertical' => 'shortened',
             'horizontal' => 'full',
         );
-        $css[] = "$class-" . (isset($modeClasses[$this->displayMode]) ? $modeClasses[$this->displayMode] : $modeClasses[0]);
+        $css[] = "$class-" . (isset($modeClasses[$this->displayMode]) ? $modeClasses[$this->displayMode] : array_pop($modeClasses));
 
         return join(' ', $css);
     }
