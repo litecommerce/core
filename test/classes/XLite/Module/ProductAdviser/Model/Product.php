@@ -46,7 +46,7 @@
 class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product implements XLite_Base_IDecorator
 {	
 	public $relatedProducts = null;	
-	public $_ProductsAlsoBuy = null;	
+	public $productsAlsoBuy = null;	
 	public $_ProductMainCategory = null;
 
     /**
@@ -82,7 +82,8 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
 						if (intval($rp->get("product_id")) > 0) {
 							$rp->delete();
 						}
-						$addSign &= false;
+
+						$addSign = false;
 					}
 
 		            if ($addSign) {
@@ -100,12 +101,55 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
         return $this->relatedProducts; 
     }
 
+    /**
+     * Get the list of recommended products (products that are also buy with current product)
+     * 
+     * @return array of XLite_Model_Product objects
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     function getProductsAlsoBuy()
     {
-        require_once LC_MODULES_DIR . 'ProductAdviser' . LC_DS . 'encoded.php';
-		ProductAdviser_getProductsAlsoBuy($this);
+		if (!isset($this->productsAlsoBuy)) {
 
-        return $this->_ProductsAlsoBuy; 
+			$productId = $this->get("product_id");
+		    $pabObj = new XLite_Module_ProductAdviser_Model_ProductAlsoBuy();
+			$pabAll = $pabObj->findAll("product_id='$productId'");
+			$products = array();
+
+			if (is_array($pabAll)) {
+
+				foreach($pabAll as $p_key => $product) {
+
+		            $pab = new XLite_Model_Product($product->get("product_id_also_buy"));
+					$addSign = true;
+					$addSign &= $pab->filter();
+					$addSign &= $pab->is("available");
+
+					// additional check
+					if (!$pab->is("available") || (isset($pab->properties) && is_array($pab->properties) && !isset($pab->properties["enabled"]))) {
+						// removing link to non-existing product
+						if (intval($pab->get("product_id")) > 0) {
+							$pab->delete();
+						}
+
+						$addSign = false;
+					}
+
+		            if ($addSign) {
+						$pab->checkSafetyMode();
+		            	$products[$p_key] = $pab;
+		            }
+				}
+
+				if (!empty($products)) {
+					$this->productsAlsoBuy = $products;
+				}
+			}
+		}
+		
+        return $this->productsAlsoBuy; 
     }
 
 	function addRelatedProducts($products)

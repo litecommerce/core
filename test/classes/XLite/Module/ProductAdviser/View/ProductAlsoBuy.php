@@ -14,7 +14,6 @@
  * @since      3.0.0
  */
 
-// FIXME - to revise
 // FIXME - related templates must be deleted
 
 /**
@@ -49,8 +48,53 @@ class XLite_Module_ProductAdviser_View_ProductAlsoBuy extends XLite_View_Product
 	}
 
     /**
-     * getData 
-     * FIXME - must return the result from the XLite_Module_ProductAdviser_Model_ProductAlsoBuy class
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue($this->config->ProductAdviser->pab_template);
+        $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue($this->config->ProductAdviser->pab_columns);
+        $this->widgetParams[self::PARAM_SHOW_DESCR]->setValue($this->config->ProductAdviser->pab_show_descr);
+        $this->widgetParams[self::PARAM_SHOW_PRICE]->setValue($this->config->ProductAdviser->pab_show_price);
+        $this->widgetParams[self::PARAM_SHOW_ADD2CART]->setValue($this->config->ProductAdviser->pab_show_buynow);
+
+        $this->widgetParams[self::PARAM_SHOW_DISPLAY_MODE_SELECTOR]->setValue(false);
+        $this->widgetParams[self::PARAM_SHOW_ALL_ITEMS_PER_PAGE]->setValue(false);
+        $this->widgetParams[self::PARAM_SHOW_SORT_BY_SELECTOR]->setValue(false);
+        $this->widgetParams[self::PARAM_SORT_BY]->setValue('Name');
+        $this->widgetParams[self::PARAM_SORT_ORDER]->setValue('asc');
+
+        foreach ($this->getHiddenParamsList() as $param) {
+            $this->widgetParams[$param]->setVisibility(false);
+        }
+    }
+
+    /**
+     * Get the list of parameters that are hidden on the settings page 
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getHiddenParamsList()
+    {
+        return array(
+            self::PARAM_SHOW_DISPLAY_MODE_SELECTOR,
+            self::PARAM_SHOW_SORT_BY_SELECTOR,
+            self::PARAM_SORT_BY,
+            self::PARAM_SORT_ORDER,
+            self::PARAM_SHOW_ALL_ITEMS_PER_PAGE,
+        );
+    }
+
+    /**
+     * Get products list 
      * 
      * @return array
      * @access protected
@@ -58,12 +102,11 @@ class XLite_Module_ProductAdviser_View_ProductAlsoBuy extends XLite_View_Product
      */
     protected function getData()
     {
-        return array();
+        return $this->getProduct()->getProductsAlsoBuy();
     }
 
     /**
      * Check if widget is visible
-     * TODO - check if this setting is really exists
      *
      * @return bool
      * @access protected

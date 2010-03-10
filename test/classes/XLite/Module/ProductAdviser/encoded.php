@@ -62,43 +62,6 @@ function ProductAdviser_checkedOut(&$products)
     }
 }
 
-function ProductAdviser_getProductsAlsoBuy($_this)
-{
-	if (isset($_this->_ProductsAlsoBuy)) {
-		return $_this->_ProductsAlsoBuy; 
-	}
-
-	$productId = $_this->get("product_id");
-    $statistic = new XLite_Module_ProductAdviser_Model_ProductAlsoBuy();
-    $_this->_ProductsAlsoBuy = $statistic->findAll("product_id='$productId'");
-	if (is_array($_this->_ProductsAlsoBuy)) {
-		foreach($_this->_ProductsAlsoBuy as $p_key => $product) {
-            $rp = new XLite_Model_Product($product->get("product_id_also_buy"));
-			$addSign = true;
-			$addSign &= $rp->filter();
-			$addSign &= $rp->is("available");
-			$productCategory = $rp->getComplex('category.category_id');
-			// additional check
-			if (!$rp->is("available") || (isset($rp->properties) && is_array($rp->properties) && !isset($rp->properties["enabled"]))) {
-				// removing link to non-existing product
-				if (intval($rp->get("product_id")) > 0) {
-					$rp->delete();
-				}
-				$addSign &= false;
-			}
-            if ($addSign) {
-				$rp->checkSafetyMode();
-            	$_this->_ProductsAlsoBuy[$p_key]->set("product", $rp);
-            } else {
-            	if (isset($_this->_ProductsAlsoBuy[$p_key])) {
-            		unset($_this->_ProductsAlsoBuy[$p_key]);
-            	}
-            }
-		}
-	}
-    return $_this->_ProductsAlsoBuy; 
-}
-
 function ProductAdviser_updateProduct($_this)
 {
     if (!$_this->config->getComplex('ProductAdviser.customer_notifications_enabled')) {
