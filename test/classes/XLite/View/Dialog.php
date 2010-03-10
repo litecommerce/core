@@ -24,17 +24,15 @@
 abstract class XLite_View_Dialog extends XLite_View_Container
 {
     /**
-     * Define widget parameters
-     *
-     * @return void
+     * Return default template
+     * 
+     * @return string
      * @access protected
-     * @since  1.0.0
+     * @since  3.0.0
      */
-    protected function defineWidgetParams()
+    protected function getDefaultTemplate()
     {
-        parent::defineWidgetParams();
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/dialog.tpl');
+        return 'common/dialog.tpl';
     }
 }
 

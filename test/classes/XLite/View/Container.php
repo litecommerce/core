@@ -28,8 +28,7 @@ abstract class XLite_View_Container extends XLite_View_Abstract
      * Widget parameter names
      */
 
-    const PARAM_SHOW_WRAPPER = 'showWrapper';
-    const PARAM_BODY         = 'body';
+    const PARAM_BODY = 'body';
 
 
     /**
@@ -49,6 +48,15 @@ abstract class XLite_View_Container extends XLite_View_Abstract
      * @since  3.0.0 EE
      */
     abstract protected function getDir();
+
+    /**
+     * Return default template
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    abstract protected function getDefaultTemplate();
 
 
     /**
@@ -84,8 +92,8 @@ abstract class XLite_View_Container extends XLite_View_Abstract
 	 */
 	protected function useBodyTemplate()
 	{
-		return !$this->getParam(self::PARAM_TEMPLATE)
-            && (!$this->getParam(self::PARAM_SHOW_WRAPPER) || XLite_Core_CMSConnector::isCMSStarted());
+		return XLite_Core_CMSConnector::isCMSStarted()
+            && $this->getParam(self::PARAM_TEMPLATE) == $this->getDefaultTemplate();
 	}
 
     /**
@@ -100,9 +108,10 @@ abstract class XLite_View_Container extends XLite_View_Abstract
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_SHOW_WRAPPER => new XLite_Model_WidgetParam_Bool('Display wrapped', true),
-            self::PARAM_BODY         => new XLite_Model_WidgetParam_File('Body', 'body.tpl'),
+            self::PARAM_BODY => new XLite_Model_WidgetParam_File('Body', 'body.tpl'),
         );
+
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue($this->getDefaultTemplate());
     }
 }
 
