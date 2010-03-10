@@ -1,92 +1,55 @@
 {* SVN $Id$ *}
-{*
+<div id="lc-minicart-{displayMode}" class="lc-minicart-{displayMode} {collapsed}">
 
-Populated variables:
-
-- itemsList - list of cart items to be displayed in the mini cart
-- isTruncated - says whether itemsList is no the full list of cart items
-
-- cart.empty - says whether the cart is emtpy, or not
-- cart.itemsCount - the number of items in cart
-- cart.total - the total sum
-- cart.items - collection of items in cart, can be iterated with FOREACH (see below)
-
-- cart.order_id - ?
-- cart.profile_id - ?
-- cart.orig_profile_id - ?
-- cart.subtotal - ? sum of product prices
-- cart.shipping_cost - ? shipping cost
-- cart.tax - ? applied tax
-- cart.shipping_id - ?
-- cart.tracking - ?
-- cart.date - ?
-- cart.status - ?
-- cart.payment_method - ?
-- cart.details - ?
-- cart.detail_lables - ?
-- cart.notes - ?
-- cart.taxes - ? sum of applied taxes
-
-Cart items can be iterated with FOREACH="cart.items,cart_id,item":
-
-- item.url - url of the product page
-- item.thumbnailURL - url of the product thumbnail
-- item.name - product name
-- item.brief_description - brief product descrioption
-- item.weight - item weight (the weight symbol is set in config.General.weight_symbol)
-- item.price - unit price
-- item.amount - product quantity
-- item.total - the total item price
-- item.valid - states whether the product is not out of stock and is not disabled from sale
-*}
-{* Wishlist stub - should be corrected *}
-<widget module="WishList" template="modules/WishList/mini_cart/body.tpl" />
-{*
-
-Empty cart
-
-*}
-<div id="lc-minicart" class="empty" IF="cart.empty">
-  <div id="lc-minicart-header">
-    {* Toggle button *}
-    <img src="images/spacer.gif" class="toggle-button" />
-    {* Title *}
-    <h3 class="lc-minicart-title">Shopping cart</h3>
+  <div class="cart-link">
+    <h3><a href="{buildURL(#cart#)}">Your cart</a></h3>
   </div>
-  {* Cart items *}
-  <div class="lc-minicart-items">
-    <p IF="cart.empty">Cart is empty</p>
+
+  <div class="cart-items" IF="cart.empty">
+    <span>Cart is empty</span>
   </div>
+
+  <div class="cart-items" IF="!cart.empty">
+    <span class="toggle-button"><a href="{buildURL(#cart#)}" onClick="javascript:xlite_minicart_toggle('lc-minicart-{displayMode}'); return false;">{cart.getItemsCount()} item(s)</a> </span>
+    <div class="items-list">
+      <ul>
+        <li FOREACH="getItemsList(),item">
+          <span class="item-name"><a href="{buildURL(#product#,##,_ARRAY_(#product_id#^item.product_id,#category_id#^item.category_id))}">{item.name}</a></span>
+          <span class="item-price">{price_format(item,#price#):h}</span><span class="delimiter">x</span><span class="item-qty">{item.amount}</span>
+        </li>
+      </ul>
+      <div IF="isTruncated()" class="other-items"><a href="{buildURL(#cart#)}">Other items</a></div>
+    </div>
+  </div>
+
+  <div class="cart-totals" IF="!cart.empty">
+    <span class="cart-total"><span>Total: </span>{price_format(cart,#total#):h}</span>
+  </div>
+
+  <div class="cart-checkout" IF="!cart.empty">
+    <widget class="XLite_View_Button_Link" label="Checkout" location="{buildURL(#checkout#)}" style="bright">
+  </div>
+
 </div>
-{*
 
-Cart with items
+<div id="lc-minilist-{displayMode}" class="lc-minilist lc-minilist-{displayMode} collapsed" IF="countWishlistProducts()">
 
-*}
-<div id="lc-minicart" class="collapsed" IF="!cart.isEmpty()">
-  <div class="lc-minicart-header">
-    {* Toggle button *}
-    <img src="images/spacer.gif" class="toggle-button" onClick="javascript:xlite_minicart_toggle('lc-minicart');" />
-    {* Title *}
-    <h3 class="lc-minicart-title">Shopping cart</h3>
+  <div class="list-link">
+    <h3><a href="{buildURL(#cart#)}">Wishlist</a></h3>
   </div>
-  {* Cart items *}
-  <div class="lc-minicart-items">
-    <ul>
-      <li FOREACH="getItemsList(),item">
-        <span class="line-item"><a href="{buildURL(#product#,##,_ARRAY_(#product_id#^item.product_id,#category_id#^item.category_id))}">{item.name}</a></span>
-        <span class="currency">{price_format(item,#price#):h}</span> x <span class="qty">{item.amount}</span>
-      </li>
-    </ul>
-    <p IF="isTruncated()"><a href="{buildURL(#cart#)}">Other items</a></p>
+
+  <div class="list-items">
+    <span class="toggle-button"><a href="{buildURL(#wishlist#)}" onClick="javascript:xlite_minicart_toggle('lc-minilist-{displayMode}'); return false;">{countWishlistProducts()} item(s)</a> </span>
+    <div class="items-list">
+      <ul>
+        <li FOREACH="getWishlistItems(),item">
+          <span class="item-name"><a href="{buildURL(#product#,##,_ARRAY_(#product_id#^item.product_id,#category_id#^item.category_id))}">{item.name}</a></span>
+          <span class="item-price">{price_format(item,#price#):h}</span><span class="delimiter">x</span><span class="item-qty">{item.amount}</span>
+        </li>
+      </ul>
+      <div IF="isWishlistTruncated()" class="other-items"><a href="{buildURL(#wishlist#)}">Other items</a></div>
+    </div>
   </div>
-  {* Cart totals *}
-  <div class="lc-minicart-totals">
-    <p><a href="{buildURL(#cart#)}">{cart.getItemsCount()} items</a></p>
-    <ul>
-      <li FOREACH="getTotals(),name,value">{name}: <span class="currency">{price_format(value):h}</span></li>
-    </ul>
-  </div>
-  {* Checkout button *}
-  <div class="lc-minicart-links"><form action="{buildURL(#checkout#)}" method="post"><button type="submit" class="lc-minicart-checkout">Checkout</button></form></div>
+
 </div>
+

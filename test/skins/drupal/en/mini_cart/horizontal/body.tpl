@@ -1,47 +1,37 @@
 {* SVN $Id$ *}
-<div IF="!xlite.WishListEnabled">
+<div id="lc-minicart-{displayMode}" class="lc-minicart-{displayMode} {collapsed}">
 
-  <table width="100%">
+  <div class="cart-link">
+    <a href="{buildURL(#cart#)}"><img src="images/spacer.gif" width="16" height="16" /></a>
+  </div>
 
-    <tr IF="cart.empty">
-      <td><img src="images/cart_empty.gif" alt=""> Cart is empty</td>
-    </tr>
+  <div class="cart-items" IF="cart.empty">
+    <span>Cart is empty</span>
+  </div>
 
-    <tr IF="!cart.empty">
-      <td>
+  <div class="cart-items" IF="!cart.empty">
+    <div class="toggle-button"><a href="{buildURL(#cart#)}" onClick="javascript:xlite_minicart_toggle('lc-minicart-{displayMode}'); return false;">{cart.getItemsCount()} item(s)</a> </div>
+    <div class="items-list">
+      <ul>
+        <li FOREACH="getItemsList(),item">
+          <span class="item-name"><a href="{buildURL(#product#,##,_ARRAY_(#product_id#^item.product_id,#category_id#^item.category_id))}">{item.name}</a></span>
+          <span class="item-price">{price_format(item,#price#):h}</span><span class="delimiter">x</span><span class="item-qty">{item.amount}</span>
+        </li>
+      </ul>
+      <div IF="isTruncated()" class="other-items"><a href="{buildURL(#cart#)}">Other items</a></div>
+    </div>
+  </div>
 
-        <table width="100%">
+  <div class="cart-totals" IF="!cart.empty">
+    <span class="delimiter">/</span><span class="cart-total">{price_format(cart,#total#):h}</span>
+  </div>
 
-          <tr>
-            <td><img src="images/cart_full.gif" alt=""></td>
-            <td>
-              <strong>Items:</strong> {cart.itemsCount}
-              <br />
-              <strong>Total:</strong> {price_format(cart,#total#):h}
-            </td>
-          </tr>  
+  <div id="lc-minilist-{displayMode}" class="lc-minilist lc-minilist-{displayMode}" IF="countWishlistProducts()">
+    <a href="{buildURL(#wishlist#)}">Wish list: {countWishlistProducts()} item(s)</a>
+  </div>
 
-          <tr>
-            <td colspan="2"><hr class="SidebarHr"></td>
-          </tr>
+  <div class="cart-checkout" IF="!cart.empty">
+    <widget class="XLite_View_Button_Link" label="Checkout" location="{buildURL(#checkout#)}">
+  </div>
 
-          <tr>
-            <td colspan="2">
-              <img src="images/dark_arrows.gif" width="6" height="6" align="middle" alt="">&nbsp;<a href="{buildURL(#cart#)}" class="SidebarItems">View cart</a>
-              <br>
-              <img src="images/dark_arrows.gif" width="6" height="6" align="middle" alt="">&nbsp;<a href="{buildURL(#checkout#)}" class="SidebarItems">Checkout</a><br>
-            </td>
-          </tr>
-
-        </table>  
-
-      </td>  
-    </tr>
-
-  </table>
-
-</div>
-
-<div IF="xlite.WishListEnabled">
-  <widget module="WishList" template="modules/WishList/mini_cart/body.tpl">
 </div>

@@ -94,15 +94,57 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
     }
 
     /**
+     * Return up to 3 items from Wishlist
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getWishlistItems()
+    {
+        $wishlist = $this->getWishlist();
+        return $wishlist ? array_slice($wishlist->getProducts(), 0, min(self::ITEMS_TO_DISPLAY, $this->countWishlistProducts())) : array();
+    }
+
+    /**
      * Check whether in cart there are more than 3 items
      *
      * @return bool
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0 EE
      */
     protected function isTruncated()
     {
         return self::ITEMS_TO_DISPLAY < $this->getCart()->getItemsCount();
+    }
+
+    /**
+     * Check whether in Wislist there are more than 3 items
+     *
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0 EE
+     */
+    protected function isWishlistTruncated()
+    {
+        return self::ITEMS_TO_DISPLAY < $this->countWishlistProducts();
+    }
+
+
+
+    /**
+     * Return a CSS class depending on whether the minicart is empty or collapsed
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCollapsed()
+    {
+        return ($this->getCart()->isEmpty()) ? 'empty' : 'collapsed';
     }
 
     /**
@@ -116,6 +158,19 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
     protected function getTotals()
     {
         return array('Total' => $this->getCart()->get('total'));
+    }
+
+    /**
+     * Count products in the wish list
+     *
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function countWishlistProducts()
+    {
+        return ($wishlist = $this->getWishlist()) ? count($wishlist->getProducts()) : 0;
     }
 
     /**
