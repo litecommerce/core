@@ -2,27 +2,39 @@
 // vim: set ts=4 sw=4 sts=4 et:
 
 /**
- * ____file_title____
- *  
- * @category   Lite Commerce
- * @package    Lite Commerce
- * @subpackage ____sub_package____
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version    SVN: $Id$
- * @link       http://www.qtmsoft.com/
- * @since      3.0.0 EE
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
  */
 
-// FIXME - must be completely revised; see ProductsAlsoBuy.php; recommended to derive from one class
+
 // FIXME - related templates must be deleted
 
 /**
- * XLite_Module_ProductAdviser_View_RelatedProducts
+ * RelatedProducts widget
  * 
- * @package    Lite Commerce
- * @subpackage ____sub_package____
- * @since      3.0.0 EE
+ * @package    XLite
+ * @subpackage View
+ * @since      3.0.0
  */
 class XLite_Module_ProductAdviser_View_RelatedProducts extends XLite_View_ProductsList
 {
@@ -48,7 +60,6 @@ class XLite_Module_ProductAdviser_View_RelatedProducts extends XLite_View_Produc
 		return 'Related products';
 	}
 
-
     /**
      * Define widget parameters
      *
@@ -60,17 +71,39 @@ class XLite_Module_ProductAdviser_View_RelatedProducts extends XLite_View_Produc
     {
         parent::defineWidgetParams();
 
-        // FIXME - correct the ProductAdviser module SQL dump and uncomment this line
-        // $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue($this->config->ProductAdviser->rp_template);
-
-        // TODO - check if these LC opions is really needed (or at least exist :) )
+        $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue($this->config->ProductAdviser->rp_template);
         $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue($this->config->ProductAdviser->rp_columns);
         $this->widgetParams[self::PARAM_SHOW_DESCR]->setValue($this->config->ProductAdviser->rp_show_descr);
         $this->widgetParams[self::PARAM_SHOW_PRICE]->setValue($this->config->ProductAdviser->rp_show_price);
         $this->widgetParams[self::PARAM_SHOW_ADD2CART]->setValue($this->config->ProductAdviser->rp_show_buynow);
-    
-        // TODO - check if there is the "bulk shopping" param is needed
-        // ...
+
+        $this->widgetParams[self::PARAM_SHOW_DISPLAY_MODE_SELECTOR]->setValue(false);
+        $this->widgetParams[self::PARAM_SHOW_ALL_ITEMS_PER_PAGE]->setValue(false);
+        $this->widgetParams[self::PARAM_SHOW_SORT_BY_SELECTOR]->setValue(false);
+        $this->widgetParams[self::PARAM_SORT_BY]->setValue('Name');
+        $this->widgetParams[self::PARAM_SORT_ORDER]->setValue('asc');
+
+        foreach ($this->getHiddenParamsList() as $param) {
+            $this->widgetParams[$param]->setVisibility(false);
+        }
+    }
+
+    /**
+     * Get the list of parameters that are hidden on the settings page 
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getHiddenParamsList()
+    {
+        return array(
+            self::PARAM_SHOW_DISPLAY_MODE_SELECTOR,
+            self::PARAM_SHOW_SORT_BY_SELECTOR,
+            self::PARAM_SORT_BY,
+            self::PARAM_SORT_ORDER,
+            self::PARAM_SHOW_ALL_ITEMS_PER_PAGE,
+        );
     }
 
     /**
@@ -82,10 +115,8 @@ class XLite_Module_ProductAdviser_View_RelatedProducts extends XLite_View_Produc
      */
     protected function getData()
     {
-        // FIXME - unable to find a function which returns a products list here!!!! 
-        return array();
+        return $this->getProduct()->getRelatedProducts();
     }
-
 
     /**
      * Check if widget is visible
@@ -98,4 +129,5 @@ class XLite_Module_ProductAdviser_View_RelatedProducts extends XLite_View_Produc
     {
         return parent::isVisible() && $this->config->ProductAdviser->related_products_enabled;
     }
+
 }

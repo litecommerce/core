@@ -11,7 +11,7 @@
 {if:option.isName(#rp_template#)}
 <select name="{option.name}" onChange="UpdateSettings()">
     <option value="list" selected="{option.isSelected(#list#)}">List</option>
-    <option value="icons" selected="{option.isSelected(#icons#)}">Icons</option>
+    <option value="grid" selected="{option.isSelected(#grid#)}">Grid</option>
     <option value="table" selected="{option.isSelected(#table#)}">Table</option>
 </select>
 {end:}
@@ -27,7 +27,7 @@
 {if:option.isName(#pab_template#)}
 <select name="{option.name}" onChange="UpdateSettings()">
     <option value="list" selected="{option.isSelected(#list#)}">List</option>
-    <option value="icons" selected="{option.isSelected(#icons#)}">Icons</option>
+    <option value="grid" selected="{option.isSelected(#grid#)}">Grid</option>
     <option value="table" selected="{option.isSelected(#table#)}">Table</option>
 </select>
 {end:}

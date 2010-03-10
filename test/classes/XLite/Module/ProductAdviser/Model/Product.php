@@ -45,16 +45,59 @@
 */
 class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product implements XLite_Base_IDecorator
 {	
-	public $_RelatedProducts = null;	
+	public $relatedProducts = null;	
 	public $_ProductsAlsoBuy = null;	
 	public $_ProductMainCategory = null;
 
+    /**
+     * Get the list of related products
+     * 
+     * @return array of XLite_Model_Product objects
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     function getRelatedProducts()
     {
-        require_once LC_MODULES_DIR . 'ProductAdviser' . LC_DS . 'encoded.php';
-		ProductAdviser_getRelatedProducts($this);
+		if (!isset($this->relatedProducts)) {
 
-        return $this->_RelatedProducts; 
+			$productId = $this->get("product_id");
+
+			$relatedProduct = new XLite_Module_ProductAdviser_Model_RelatedProduct();
+			$relatedProducts = $relatedProduct->findAll("product_id='$productId'");
+			$products = array();
+
+			if (is_array($relatedProducts)) {
+
+				foreach($relatedProducts as $p_key => $product) {
+
+		            $rp = new XLite_Model_Product($product->get("related_product_id"));
+					$addSign = true;
+					$addSign &= $rp->filter();
+					$addSign &= $rp->is("available");
+
+					// additional check
+					if (!$rp->is("available") || (isset($rp->properties) && is_array($rp->properties) && !isset($rp->properties["enabled"]))) {
+						// removing link to non-existing product
+						if (intval($rp->get("product_id")) > 0) {
+							$rp->delete();
+						}
+						$addSign &= false;
+					}
+
+		            if ($addSign) {
+						$rp->checkSafetyMode();
+						$products[$p_key] = $rp;
+					}
+				}
+
+				if (!empty($products)) {
+					$this->relatedProducts = $products;
+				}
+			}
+		}
+
+        return $this->relatedProducts; 
     }
 
     function getProductsAlsoBuy()

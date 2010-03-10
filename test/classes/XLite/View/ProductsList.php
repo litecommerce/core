@@ -62,7 +62,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
     const DISPLAY_MODE_TABLE = 'table';
 
     /**
-     * Cloumns number range
+     * Columns number range
      */
 
     const GRID_COLUMNS_MIN = 1;

@@ -64,7 +64,7 @@ function UpdateBuyNow(elm)
 -->
 </script>
 
-{if:!config.ProductAdviser.rp_template=#icons#}
+{if:!config.ProductAdviser.rp_template=#grid#}
 <script language="Javascript">
 <!--
 visibleBox("option_rp_columns", false);
@@ -80,7 +80,7 @@ visibleBox("option_rp_show_descr", false);
 </script>
 {end:}
 
-{if:!config.ProductAdviser.pab_template=#icons#}
+{if:!config.ProductAdviser.pab_template=#grid#}
 <script language="Javascript">
 <!--
 visibleBox("option_pab_columns", false);

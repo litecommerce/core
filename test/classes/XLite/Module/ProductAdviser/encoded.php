@@ -62,43 +62,6 @@ function ProductAdviser_checkedOut(&$products)
     }
 }
 
-function ProductAdviser_getRelatedProducts($_this)
-{
-	if (isset($_this->_RelatedProducts)) {
-		return $_this->_RelatedProducts; 
-	}
-
-	$relatedProduct = new XLite_Module_ProductAdviser_Model_RelatedProduct();
-	$productId = $_this->get("product_id");
-	$_this->_RelatedProducts = $relatedProduct->findAll("product_id='$productId'");
-	if (is_array($_this->_RelatedProducts)) {
-		foreach($_this->_RelatedProducts as $p_key => $product) {
-            $rp = new XLite_Model_Product($product->get("related_product_id"));
-			$addSign = true;
-			$addSign &= $rp->filter();
-			$addSign &= $rp->is("available");
-			$productCategory = $rp->getComplex('category.category_id');
-			// additional check
-			if (!$rp->is("available") || (isset($rp->properties) && is_array($rp->properties) && !isset($rp->properties["enabled"]))) {
-				// removing link to non-existing product
-				if (intval($rp->get("product_id")) > 0) {
-					$rp->delete();
-				}
-				$addSign &= false;
-			}
-            if ($addSign) {
-				$rp->checkSafetyMode();
-            	$_this->_RelatedProducts[$p_key]->set("product", $rp);
-            } else {
-            	if (isset($_this->_RelatedProducts[$p_key])) {
-            		unset($_this->_RelatedProducts[$p_key]);
-            	}
-            }
-		}
-	}
-    return $_this->_RelatedProducts; 
-}
-
 function ProductAdviser_getProductsAlsoBuy($_this)
 {
 	if (isset($_this->_ProductsAlsoBuy)) {
