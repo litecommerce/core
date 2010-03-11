@@ -6,11 +6,11 @@
   </div>
 
   <div class="cart-items" IF="cart.empty">
-    <span>Cart is empty</span>
+    <p class="cart-empty">Cart is empty</p>
   </div>
 
   <div class="cart-items" IF="!cart.empty">
-    <div class="toggle-button"><a href="{buildURL(#cart#)}" onClick="javascript:xlite_minicart_toggle('lc-minicart-{displayMode}'); return false;">{cart.getItemsCount()} item(s)</a> </div>
+    <p><span class="toggle-button"><a href="{buildURL(#cart#)}" onClick="javascript:xlite_minicart_toggle('lc-minicart-{displayMode}'); return false;">{cart.getItemsCount()} item(s)</a> </span></p>
     <div class="items-list">
       <ul>
         <li FOREACH="getItemsList(),item">
@@ -18,16 +18,16 @@
           <span class="item-price">{price_format(item,#price#):h}</span><span class="delimiter">x</span><span class="item-qty">{item.amount}</span>
         </li>
       </ul>
-      <div IF="isTruncated()" class="other-items"><a href="{buildURL(#cart#)}">Other items</a></div>
+      <p IF="isTruncated()" class="other-items"><a href="{buildURL(#cart#)}">Other items</a></p>
     </div>
   </div>
 
   <div class="cart-totals" IF="!cart.empty">
-    <span class="delimiter">/</span><span class="cart-total">{price_format(cart,#total#):h}</span>
+    <p><span class="delimiter">/</span><span class="cart-total">{price_format(cart,#total#):h}</span></p>
   </div>
 
   <div id="lc-minilist-{displayMode}" class="lc-minilist lc-minilist-{displayMode}" IF="countWishlistProducts()">
-    <a href="{buildURL(#wishlist#)}">Wish list: {countWishlistProducts()} item(s)</a>
+    <p><a href="{buildURL(#wishlist#)}">Wish list: {countWishlistProducts()} item(s)</a></p>
   </div>
 
   <div class="cart-checkout" IF="!cart.empty">
