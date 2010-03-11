@@ -69,7 +69,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_NewArrivals extends XLite_
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getPageTypeName()
+    public function getTitle()
     {
         return 'New Arrivals';
 	}

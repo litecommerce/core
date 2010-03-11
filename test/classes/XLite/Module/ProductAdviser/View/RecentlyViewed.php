@@ -42,7 +42,7 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_Product
      * @access protected
      * @since  3.0.0
      */
-    protected $allowedTargets = array('main', 'category', 'product', 'cart');
+    protected $allowedTargets = array('main', 'category', 'product', 'cart', 'recently_viewed');
 
 	/**
 	 * The number of products displayed by widget 
@@ -57,12 +57,22 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_Product
 	/**
 	 * Flag that means if it is need to display link 'See more...'
 	 * 
-	 * @var    mixed
+	 * @var    bool
 	 * @access public
 	 * @see    ____var_see____
 	 * @since  3.0.0
 	 */
 	public $additionalPresent = false;
+
+    /**
+     * Recently viewed products array
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $recentlyViewedProducts = null;
 
 	/**
 	 * Get widget title 
@@ -159,7 +169,9 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_Product
      */
     public function isVisible()
     {
-		return parent::isVisible() && $this->checkProductsToDisplay();
+        return parent::isVisible()
+            && $this->checkProductsToDisplay()
+            && !(self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE) && 'recently_viewed' == XLite_Core_Request::getInstance()->target);
     }
 
     /**
@@ -214,69 +226,76 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_Product
         return 'All viewed...';
     }
 
-    function getRecentliesProducts()
+    /**
+     * Get recently viewed products list
+     * 
+     * @return array of XLite_Model_Product objects
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getRecentliesProducts()
     {
-    	$products = $this->xlite->get("RecentliesProducts");
-        if (isset($products)) {
-        	$this->productsNumber = count($products);
-            return $products;
-        }    
+        if (!isset($this->recentlyViewedProducts)) {
 
-		$product_id = $this->getDialogProductId();
+    		$product_id = (int)$this->getDialogProductId();
 
-        $maxViewed = $this->getParam(self::PARAM_SIDEBAR_MAX_ITEMS);
-        $products = array();
-        $productsStats = array();
-        $statsOffset = 0;
-        $stats = new XLite_Module_ProductAdviser_Model_ProductRecentlyViewed();
-        $total = $stats->count("sid='".$this->session->getID()."'");
-        $maxSteps = ceil($total / $maxViewed);
+            $rvObj = new XLite_Module_ProductAdviser_Model_ProductRecentlyViewed();
+            $rvProducts = $rvObj->findAll("sid='".$this->session->getID()."' AND product_id != '$product_id'", 'last_viewed DESC');
+            $products = array();
 
-        for ($i=0; $i<$maxSteps; $i++) {
-        	$limit = "$statsOffset, $maxViewed";
-        	$productsStats = $stats->findAll("sid='".$this->session->getID()."'", null, null, $limit);
-        	foreach ($productsStats as $ps) {
-        		$product = new XLite_Model_Product($ps->get("product_id"));
-        		$addSign = (isset($product_id) && $product->get("product_id") == $product_id) ? false : true;
-				if ($addSign) {
-        			$addSign &= $product->filter();
-        			$addSign &= $product->is("available");
-        			// additional check
-        			if (!$product->is("available") || (isset($product->properties) && is_array($product->properties) && !isset($product->properties["enabled"]))) {
-        				// removing link to non-existing product
-        				if (intval($ps->get("product_id")) > 0) {
-        					$ps->delete();
-        				}
-        				$addSign &= false;
-        			}
-				}
-                if ($addSign) {
-                    $product->checkSafetyMode();
-                	$products[] = $product;
-                	if (count($products) > $maxViewed) {
-    					$this->additionalPresent = true;
-						unset($products[count($products)-1]);
-                		break;
-                	}
+            if (is_array($rvProducts)) {
+
+                foreach ($rvProducts as $rvProduct) {
+
+                    $product = new XLite_Model_Product($rvProduct->get("product_id"));
+
+                    $addSign = (isset($product_id) && $product->get("product_id") == $product_id) ? false : true;
+
+                    if ($addSign) {
+                        $addSign &= $product->filter();
+                        $addSign &= $product->is("available");
+
+                        // additional check
+                        if (!$product->is("available") || (isset($product->properties) && is_array($product->properties) && !isset($product->properties["enabled"]))) {
+                            // removing link to non-existing product
+                            if (intval($rvProduct->get("product_id")) > 0) {
+                                $rvProduct->delete();
+                            }
+                            $addSign = false;
+                        }
+
+                        if ($addSign) {
+                            $product->checkSafetyMode();
+                        	$products[] = $product;
+                        }
+                    }
                 }
-        	}
+            }
 
-        	if ($this->additionalPresent) {
-				break;
-        	}
-
-        	if (count($products) > $maxViewed) {
-    			$this->additionalPresent = true;
-				unset($products[count($products)-1]);
-        		break;
-        	}
-
-            $statsOffset += $maxViewed;
+            if (!empty($products)) {
+                $this->recentlyViewedProducts = $products;
+            }
         }
 
-    	$this->productsNumber = count($products);
-        $this->xlite->set("RecentliesProducts", $products);
+        if ('recently_viewed' != XLite_Core_Request::getInstance()->target && is_array($this->recentlyViewedProducts) && count($this->recentlyViewedProducts) > $this->getParam(self::PARAM_SIDEBAR_MAX_ITEMS)) {
 
-        return $products;
+            $return = array();
+            $index = $this->getParam(self::PARAM_SIDEBAR_MAX_ITEMS);
+
+            foreach ($this->recentlyViewedProducts as $product) {
+                if ($index-- <= 0) {
+                    break;
+                }
+                $return[] = $product;
+            }
+
+            $this->additionalPresent = true;
+
+        } else {
+            $return = $this->recentlyViewedProducts;
+        }
+
+        return $return;
 	}
 }
