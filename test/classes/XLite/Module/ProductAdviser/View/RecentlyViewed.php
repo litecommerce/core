@@ -33,7 +33,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_SideBarBox
+class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_ProductsList
 {	
 	/**
      * Targets this widget is allowed for
@@ -77,18 +77,52 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_SideBar
 		return 'Recently viewed';
 	}
 
-	/**
-	 * Get widget's template directory 
-	 * 
-	 * @return string
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function getDir()
-	{
-		return 'modules/ProductAdviser/RecentlyViewed/menu';
-	}
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue(self::DISPLAY_MODE_LIST);
+        $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue(3);
+        $this->widgetParams[self::PARAM_SHOW_DESCR]->setValue(true);
+        $this->widgetParams[self::PARAM_SHOW_PRICE]->setValue(true);
+        $this->widgetParams[self::PARAM_SHOW_ADD2CART]->setValue(true);
+        $this->widgetParams[self::PARAM_SIDEBAR_MAX_ITEMS]->setValue($this->config->ProductAdviser->number_recently_viewed);
+
+        $this->widgetParams[self::PARAM_SHOW_DISPLAY_MODE_SELECTOR]->setValue(false);
+        $this->widgetParams[self::PARAM_SHOW_ALL_ITEMS_PER_PAGE]->setValue(false);
+        $this->widgetParams[self::PARAM_SHOW_SORT_BY_SELECTOR]->setValue(false);
+        $this->widgetParams[self::PARAM_SORT_BY]->setValue('Name');
+        $this->widgetParams[self::PARAM_SORT_ORDER]->setValue('asc');
+
+        foreach ($this->getHiddenParamsList() as $param) {
+            $this->widgetParams[$param]->setVisibility(false);
+        }
+    }
+
+    /**
+     * Get the list of parameters that are hidden on the settings page 
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getHiddenParamsList()
+    {
+        return array(
+            self::PARAM_SHOW_DISPLAY_MODE_SELECTOR,
+            self::PARAM_SHOW_SORT_BY_SELECTOR,
+            self::PARAM_SORT_BY,
+            self::PARAM_SORT_ORDER,
+            self::PARAM_SHOW_ALL_ITEMS_PER_PAGE,
+        );
+    }
 
     /**
      * Check if there are product to display
@@ -99,7 +133,7 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_SideBar
      */
     protected function checkProductsToDisplay()
     {
-        return 0 < $this->config->ProductAdviser->number_recently_viewed && $this->getRecentliesProducts();
+        return 0 < $this->getParam(self::PARAM_SIDEBAR_MAX_ITEMS) && $this->getRecentliesProducts();
     }
 
 	/**
@@ -128,6 +162,58 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_SideBar
 		return parent::isVisible() && $this->checkProductsToDisplay();
     }
 
+    /**
+     * Return products list
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getData()
+    {
+        return $this->getRecentliesProducts();
+    }
+
+    /**
+     * Check status of 'More...' link for sidebar list
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isShowMoreLink()
+    {
+        return $this->additionalPresent;
+    }
+
+    /**
+     * Get 'More...' link URL for sidebar list
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getMoreLinkURL()
+    {
+        return $this->buildURL('recently_viewed');
+    }
+
+    /**
+     * Get 'More...' link text for sidebar list
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getMoreLinkText()
+    {
+        return 'All viewed...';
+    }
+
     function getRecentliesProducts()
     {
     	$products = $this->xlite->get("RecentliesProducts");
@@ -138,7 +224,7 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_SideBar
 
 		$product_id = $this->getDialogProductId();
 
-        $maxViewed = $this->config->ProductAdviser->number_recently_viewed;
+        $maxViewed = $this->getParam(self::PARAM_SIDEBAR_MAX_ITEMS);
         $products = array();
         $productsStats = array();
         $statsOffset = 0;

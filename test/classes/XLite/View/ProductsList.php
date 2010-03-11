@@ -265,16 +265,29 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
     }
 
     /**
-     * Get 'More...' link for sidebar list
+     * Get 'More...' link URL for sidebar list
      * 
      * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function GetMoreLink()
+    protected function getMoreLinkURL()
     {
         return null;
+    }
+
+    /**
+     * Get 'More...' link text for sidebar list
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getMoreLinkText()
+    {
+        return 'More...';
     }
 
     /**

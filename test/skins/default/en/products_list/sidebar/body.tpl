@@ -18,7 +18,7 @@
   </li>
 
   <li IF="isShowMoreLink()">
-    <a class="link" href="{getMoreLink()}" onClick="this.blur()">More...</a>
+    <a class="link" href="{getMoreLinkURL()}" onClick="this.blur()">{getMoreLinkText()}</a>
   </li>
 
 </ul>
