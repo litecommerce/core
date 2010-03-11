@@ -102,7 +102,7 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
      */
     protected function getWishlistItems()
     {
-        $wishlist = $this->getWishlist();
+        $wishlist = $this->get('wishlist');
         return $wishlist ? array_slice($wishlist->getProducts(), 0, min(self::ITEMS_TO_DISPLAY, $this->countWishlistProducts())) : array();
     }
 
@@ -170,7 +170,7 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
      */
     protected function countWishlistProducts()
     {
-        return ($wishlist = $this->getWishlist()) ? count($wishlist->getProducts()) : 0;
+        return ($wishlist = $this->get('wishlist')) ? count($wishlist->getProducts()) : 0;
     }
 
     /**
