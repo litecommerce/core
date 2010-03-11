@@ -27,7 +27,7 @@
   </div>
 
   <div class="cart-checkout" IF="!cart.empty">
-    <widget class="XLite_View_Button_Link" label="Checkout" location="{buildURL(#checkout#)}" style="bright">
+    <widget class="XLite_View_Button_Link" label="Checkout" location="{buildURL(#checkout#)}" style="bright-button checkout-button">
   </div>
 
 </div>

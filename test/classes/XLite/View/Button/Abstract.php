@@ -28,7 +28,7 @@ abstract class XLite_View_Button_Abstract extends XLite_View_Abstract
      */
 
     const PARAM_LABEL = 'label';
-
+    const PARAM_BUTTON_STYLE = 'style';
 
     /**
      * allowedJSEvents 
@@ -65,9 +65,9 @@ abstract class XLite_View_Button_Abstract extends XLite_View_Abstract
 
         $this->widgetParams += array(
             self::PARAM_LABEL => new XLite_Model_WidgetParam_String('Label', '', true),
+            self::PARAM_BUTTON_STYLE => new XLite_Model_WidgetParam_String('Button style', '', false),
         );
     }
-
 
     /**
      * Get a list of CSS files required to display the widget properly 

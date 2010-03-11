@@ -1,3 +1,2 @@
 {* SVN $Id$ *}
-
-<button type="submit">{getButtonLabel()}</button>
+<button type="submit" class="{style}"><span>{getButtonLabel()}</span></button>
