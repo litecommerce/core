@@ -39,6 +39,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
      * Widget param names
      */
 
+    const PARAM_WIDGET_TYPE    = 'widgetType';
     const PARAM_DISPLAY_MODE   = 'displayMode';
     const PARAM_GRID_COLUMNS   = 'gridColumns';
     const PARAM_SORT_BY        = 'sortBy';
@@ -49,9 +50,22 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
     const PARAM_SHOW_THUMBNAIL = 'showThumbnail';
     const PARAM_SHOW_ADD2CART  = 'showAdd2Cart';
 
+    /*
+     * The maximum number of items (products) displayed in the sidebar widget
+     */
+
+    const PARAM_SIDEBAR_MAX_ITEMS = 'sidebarMaxItems';
+
     const PARAM_SHOW_ALL_ITEMS_PER_PAGE    = 'showAllItemsPerPage';
     const PARAM_SHOW_DISPLAY_MODE_SELECTOR = 'showDisplayModeSelector';
     const PARAM_SHOW_SORT_BY_SELECTOR      = 'showSortBySelector';
+
+    /*
+     * Allowed widget types
+     */
+
+    const WIDGET_TYPE_SIDEBAR = 'sidebar';
+    const WIDGET_TYPE_CENTER  = 'center';
 
     /**
      * Allowed display modes
@@ -73,6 +87,19 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
      */
 
     const TEMPLATES_DIR = 'products_list';
+
+    /**
+     * Widget types 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $widgetTypes = array(
+        self::WIDGET_TYPE_SIDEBAR  => 'Sidebar',
+        self::WIDGET_TYPE_CENTER   => 'Center',
+    );
 
 
     /**
@@ -145,7 +172,8 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
      */
     protected function getPageBodyTemplate()
     {
-        return $this->getDir() . '/' . $this->getParam(self::PARAM_DISPLAY_MODE) . '/body.tpl';
+        $dirName = (self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE) ? $this->getParam(self::PARAM_WIDGET_TYPE) : $this->getParam(self::PARAM_DISPLAY_MODE));
+        return $this->getDir() . '/' . $dirName . '/body.tpl';
     }
 
     /**
@@ -197,6 +225,59 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
     }
 
     /**
+     * Get products list for sidebar widget 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSideBarData()
+    {
+        $allProducts = $this->getData();
+        $products = array();
+        $index = $this->getParam(self::PARAM_SIDEBAR_MAX_ITEMS);
+
+        if (!empty($allProducts)) {
+
+            foreach ($allProducts as $key => $product) {
+                if ($index-- <= 0) {
+                    break;
+                }
+                $products[$key] = $product;
+            }
+        }
+
+        return $products;
+    }
+
+    /**
+     * Check status of 'More...' link for sidebar list
+     * 
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isShowMoreLink()
+    {
+        return false;
+    }
+
+    /**
+     * Get 'More...' link for sidebar list
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function GetMoreLink()
+    {
+        return null;
+    }
+
+    /**
      * Get widget templates directory
      *
      * @return string
@@ -241,6 +322,9 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
         );
 
         $this->widgetParams += array(
+            self::PARAM_WIDGET_TYPE => new XLite_Model_WidgetParam_List(
+                'Widget type', $this->getRequestParamValue(self::PARAM_WIDGET_TYPE), true, $this->widgetTypes
+            ),
             self::PARAM_DISPLAY_MODE => new XLite_Model_WidgetParam_List(
                 'Display mode', $this->getRequestParamValue(self::PARAM_DISPLAY_MODE), true, $this->displayModes
             ),
@@ -258,6 +342,9 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
             ),
             self::PARAM_SHOW_ADD2CART => new XLite_Model_WidgetParam_Checkbox(
                 'Show \'Add to Cart\' button', true, true
+            ),
+            self::PARAM_SIDEBAR_MAX_ITEMS => new XLite_Model_WidgetParam_Int(
+                'The maximum number of products displayed in sidebar', 5, true
             ),
             self::PARAM_SORT_BY => new XLite_Model_WidgetParam_List(
                 'Sort by', $this->getRequestParamValue(self::PARAM_SORT_BY), false, $this->sortByModes
@@ -416,7 +503,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
      */
     protected function isDisplayModeAdjustable()
     {
-        return $this->getParam(self::PARAM_SHOW_DISPLAY_MODE_SELECTOR);
+        return $this->getParam(self::PARAM_SHOW_DISPLAY_MODE_SELECTOR) && self::WIDGET_TYPE_CENTER == $this->getParam(self::PARAM_WIDGET_TYPE);
     }
 
     /**
@@ -428,7 +515,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
      */
     protected function isSortBySelectorVisible()
     {
-        return $this->getParam(self::PARAM_SHOW_SORT_BY_SELECTOR);
+        return $this->getParam(self::PARAM_SHOW_SORT_BY_SELECTOR) && self::WIDGET_TYPE_CENTER == $this->getParam(self::PARAM_WIDGET_TYPE);
     }
 
     /**
@@ -440,7 +527,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
      */
     protected function isPagerVisible()
     {
-        return !$this->getParam(self::PARAM_SHOW_ALL_ITEMS_PER_PAGE);
+        return !$this->getParam(self::PARAM_SHOW_ALL_ITEMS_PER_PAGE) && self::WIDGET_TYPE_SIDEBAR != $this->getParam(self::PARAM_WIDGET_TYPE);
     }
 
 
