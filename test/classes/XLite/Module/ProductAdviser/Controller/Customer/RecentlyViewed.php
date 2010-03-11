@@ -36,22 +36,11 @@
 class XLite_Module_ProductAdviser_Controller_Customer_RecentlyViewed extends XLite_Controller_Customer_Abstract
 {	
 	/**
-	 * The number of products displayed on widget page
-	 * 
-	 * @var    integer
-	 * @access public
-	 * @see    ____var_see____
-	 * @since  3.0.0
-	 */
-	public $productsNumber = 0;
-
-
-	/**
-     * Common method to determine current location 
+     * Get current location 
      * 
-     * @return array 
+     * @return string 
      * @access protected 
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */      
     protected function getLocation()
     {

@@ -19,4 +19,8 @@
     <td IF="isShowAdd2Cart()" class="product-button-column"><widget class="XLite_View_BuyNow" product="{product}" /></td>
   </tr>
 
+  <tr IF="isShowMoreLink()">
+    <td colspan="4"><a class="link" href="{getMoreLinkURL()}" onClick="this.blur()">{getMoreLinkText()}</a></td>
+  </tr>
+
 </table>

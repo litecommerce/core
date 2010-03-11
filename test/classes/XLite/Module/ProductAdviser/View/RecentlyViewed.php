@@ -35,6 +35,11 @@
 */
 class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_ProductsList
 {	
+    /*
+     * Parameter specifies that widget is displayed as a page content
+     */
+    const PARAM_PAGE_CONTENT = 'pageContent';
+
 	/**
      * Targets this widget is allowed for
      *
@@ -98,6 +103,13 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_Product
     {
         parent::defineWidgetParams();
 
+        // pageContent - is a service parameter for displaying widget as a page content
+        $this->widgetParams += array(
+            self::PARAM_PAGE_CONTENT => new XLite_Model_WidgetParam_Checkbox(
+                'Widget is displayed as page content', false, false
+            )
+        );
+
         $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue(self::DISPLAY_MODE_LIST);
         $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue(3);
         $this->widgetParams[self::PARAM_SHOW_DESCR]->setValue(true);
@@ -106,10 +118,12 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_Product
         $this->widgetParams[self::PARAM_SIDEBAR_MAX_ITEMS]->setValue($this->config->ProductAdviser->number_recently_viewed);
 
         $this->widgetParams[self::PARAM_SHOW_DISPLAY_MODE_SELECTOR]->setValue(false);
-        $this->widgetParams[self::PARAM_SHOW_ALL_ITEMS_PER_PAGE]->setValue(false);
+        $this->widgetParams[self::PARAM_SHOW_ALL_ITEMS_PER_PAGE]->setValue(true);
         $this->widgetParams[self::PARAM_SHOW_SORT_BY_SELECTOR]->setValue(false);
         $this->widgetParams[self::PARAM_SORT_BY]->setValue('Name');
         $this->widgetParams[self::PARAM_SORT_ORDER]->setValue('asc');
+
+        $this->widgetParams[self::PARAM_PAGE_CONTENT]->setValue(false);
 
         foreach ($this->getHiddenParamsList() as $param) {
             $this->widgetParams[$param]->setVisibility(false);
@@ -131,6 +145,7 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_Product
             self::PARAM_SORT_BY,
             self::PARAM_SORT_ORDER,
             self::PARAM_SHOW_ALL_ITEMS_PER_PAGE,
+            self::PARAM_PAGE_CONTENT
         );
     }
 
@@ -148,7 +163,6 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_Product
 
 	/**
 	 * Return current product Id (if presented)
-     * TODO - check if it's really needed
 	 * 
 	 * @return mixed
 	 * @access protected
@@ -169,9 +183,13 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_Product
      */
     public function isVisible()
     {
+        if (self::WIDGET_TYPE_CENTER == $this->getParam(self::PARAM_WIDGET_TYPE) && 'recently_viewed' == XLite_Core_Request::getInstance()->target) {
+            $this->widgetParams[self::PARAM_SHOW_ALL_ITEMS_PER_PAGE]->setValue(false);
+        }
+
         return parent::isVisible()
             && $this->checkProductsToDisplay()
-            && !(self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE) && 'recently_viewed' == XLite_Core_Request::getInstance()->target);
+            && !(!$this->getParam(self::PARAM_PAGE_CONTENT) && 'recently_viewed' == XLite_Core_Request::getInstance()->target);
     }
 
     /**
@@ -236,14 +254,17 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_Product
      */
     protected function getRecentliesProducts()
     {
+        // Check if products list has been prepared before
         if (!isset($this->recentlyViewedProducts)) {
 
-    		$product_id = (int)$this->getDialogProductId();
+            // Do not include into the products list currently viewed product
+            $product_id = (int)$this->getDialogProductId();
 
             $rvObj = new XLite_Module_ProductAdviser_Model_ProductRecentlyViewed();
             $rvProducts = $rvObj->findAll("sid='".$this->session->getID()."' AND product_id != '$product_id'", 'last_viewed DESC');
             $products = array();
 
+            // Prepare products list
             if (is_array($rvProducts)) {
 
                 foreach ($rvProducts as $rvProduct) {
@@ -274,12 +295,15 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_Product
             }
 
             if (!empty($products)) {
+                // Save prepared products list for further usage (cache)
                 $this->recentlyViewedProducts = $products;
             }
         }
 
+        // Check if widget displayed not as a page content
         if ('recently_viewed' != XLite_Core_Request::getInstance()->target && is_array($this->recentlyViewedProducts) && count($this->recentlyViewedProducts) > $this->getParam(self::PARAM_SIDEBAR_MAX_ITEMS)) {
 
+            // Cut products list
             $return = array();
             $index = $this->getParam(self::PARAM_SIDEBAR_MAX_ITEMS);
 
@@ -290,6 +314,7 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_Product
                 $return[] = $product;
             }
 
+            // Set up flag that products list is longer than it could be displayed
             $this->additionalPresent = true;
 
         } else {

@@ -61,6 +61,19 @@ class XLite_Module_ProductAdviser_Controller_Customer_NewArrivals extends XLite_
         return parent::getPageInstanceData();
     }
 
+	/**
+	 * Get current location (for breadcrumbs)
+	 * 
+	 * @return string
+	 * @access protected
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	protected function getLocation()
+	{
+		return 'New Arrivals';
+	}
+
     /**
      * Get page type name
      * 
