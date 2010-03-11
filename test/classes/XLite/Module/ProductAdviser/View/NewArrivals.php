@@ -2,63 +2,69 @@
 // vim: set ts=4 sw=4 sts=4 et:
 
 /**
- * ____file_title____
- *  
- * @category   Lite Commerce
- * @package    Lite Commerce
- * @subpackage ____sub_package____
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version    SVN: $Id$
- * @link       http://www.qtmsoft.com/
- * @since      3.0.0 EE
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
  */
 
 /**
- * XLite_Module_ProductAdviser_View_NewArrivals 
+ * New arrivals widget
  * 
- * @package    Lite Commerce
- * @subpackage ____sub_package____
- * @since      3.0.0 EE
+ * @package    XLite
+ * @subpackage View
+ * @since      3.0.0
  */
-class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
+class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsList
 {
+     /*
+     * Parameter specifies that widget is displayed as a page content
+     */
+   
+    const PARAM_PAGE_CONTENT = 'pageContent';
+
     /**
-     * Widget parameter names
+     * Parameter specifies if new arrivals must be prepared for current category or for all catalog
      */
 
-    const PARAM_DISPLAY_MODE = 'displayMode';
     const PARAM_USE_NODE     = 'useNode';
-
-    /**
-     * Allowed display modes
-     */
-
-    const DISPLAY_MODE_MENU   = 'menu';
-    const DISPLAY_MODE_DIALOG = 'dialog';
-
 
 	/**
      * Targets this widget is allowed for
      *
      * @var    array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected $allowedTargets = array('main', 'category', 'product', 'cart', 'recently_viewed', 'new_arrivals');
 
 	/**
-	 * Available display modes list
+	 * Flag that means if it is need to display link 'See more...'
 	 * 
-	 * @var    array
-	 * @access protected
+	 * @var    bool
+	 * @access public
+	 * @see    ____var_see____
 	 * @since  3.0.0
 	 */
-	protected $displayModes = array(
-		self::DISPLAY_MODE_MENU   => 'Sidebar box menu',
-		self::DISPLAY_MODE_DIALOG => 'Dialog box',
-	);
-
+    public $additionalPresent = false;
 
 	/**
 	 * Get widget title
@@ -72,40 +78,64 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 		return 'New arrivals';
 	}
 
-	/**
-	 * Get widget directory
-	 * 
-	 * @return string
-	 * @access public
-	 * @since  3.0.0
-	 */
-	protected function getDir()
-	{
-		return 'modules/ProductAdviser/NewArrivals/' . $this->getParam(self::PARAM_DISPLAY_MODE);
-	}
-
-	/**
-     * Get widget display mode parameter (menu | dialog)
+    /**
+     * Define widget parameters
      *
-     * @return string
+     * @return void
      * @access protected
      * @since  3.0.0
      */
-    protected function getDisplayMode()
+    protected function defineWidgetParams()
     {
-		return $this->config->ProductAdviser->new_arrivals_type;
+        parent::defineWidgetParams();
+
+        // pageContent - is a service parameter for displaying widget as a page content
+        $this->widgetParams += array(
+            self::PARAM_PAGE_CONTENT => new XLite_Model_WidgetParam_Checkbox(
+                'Widget is displayed as page content', false, false
+            ),
+            self::PARAM_USE_NODE     => new XLite_Model_WidgetParam_Checkbox(
+                'Show category-specific new arrivals', ('Y' == $this->config->ProductAdviser->category_new_arrivals), true
+            ),
+        );
+
+        $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue(self::DISPLAY_MODE_LIST);
+        $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue(3);
+        $this->widgetParams[self::PARAM_SHOW_DESCR]->setValue(true);
+        $this->widgetParams[self::PARAM_SHOW_PRICE]->setValue(true);
+        $this->widgetParams[self::PARAM_SHOW_ADD2CART]->setValue(true);
+        $this->widgetParams[self::PARAM_SIDEBAR_MAX_ITEMS]->setValue($this->config->ProductAdviser->number_new_arrivals);
+
+        $this->widgetParams[self::PARAM_SHOW_DISPLAY_MODE_SELECTOR]->setValue(false);
+        $this->widgetParams[self::PARAM_SHOW_ALL_ITEMS_PER_PAGE]->setValue(true);
+        $this->widgetParams[self::PARAM_SHOW_SORT_BY_SELECTOR]->setValue(false);
+        $this->widgetParams[self::PARAM_SORT_BY]->setValue('Name');
+        $this->widgetParams[self::PARAM_SORT_ORDER]->setValue('asc');
+
+        $this->widgetParams[self::PARAM_PAGE_CONTENT]->setValue(false);
+
+        foreach ($this->getHiddenParamsList() as $param) {
+            $this->widgetParams[$param]->setVisibility(false);
+        }
     }
 
     /**
-     * Check passed attributes against current display mode
+     * Get the list of parameters that are hidden on the settings page 
      * 
-     * @return bool
+     * @return array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
-    protected function checkDisplayMode()
+    protected function getHiddenParamsList()
     {
-        return $this->getParam(self::PARAM_IS_EXPORTED) || $this->getDisplayMode() == $this->getParam(self::PARAM_DISPLAY_MODE);
+        return array(
+            self::PARAM_SHOW_DISPLAY_MODE_SELECTOR,
+            self::PARAM_SHOW_SORT_BY_SELECTOR,
+            self::PARAM_SORT_BY,
+            self::PARAM_SORT_ORDER,
+            self::PARAM_SHOW_ALL_ITEMS_PER_PAGE,
+            self::PARAM_PAGE_CONTENT
+        );
     }
 
     /**
@@ -113,49 +143,11 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
      * 
      * @return bool
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function checkProductsToDisplay()
     {
-        return 0 < $this->config->ProductAdviser->number_new_arrivals && $this->getNewArrivalsProducts();
-    }
-
-	/**
-	 * Define widget parameters
-	 * 
-	 * @return void
-	 * @access protected
-	 * @since  3.0.0
-	 */
-	protected function defineWidgetParams()
-	{
-		parent::defineWidgetParams();
-
-		$this->widgetParams += array(
-            self::PARAM_DISPLAY_MODE => new XLite_Model_WidgetParam_List(
-                'Display mode', $this->getDisplayMode(), true, $this->displayModes
-            ),
-            self::PARAM_USE_NODE     => new XLite_Model_WidgetParam_Checkbox(
-                'Show category-specific new arrivals', 0, true
-            ),
-		);
-	}
-
-    /**
-     * Check if widget must be displayed on 'new_arrivals' target page
-     * 
-     * @return bool
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function isContentDialog()
-    {
-        return 'new_arrivals' == XLite_Core_Request::getInstance()->target
-            && (
-                self::DISPLAY_MODE_DIALOG == $this->getParam(self::PARAM_DISPLAY_MODE) 
-                || $this->getParam(self::PARAM_IS_EXPORTED)
-            );
-        
+        return 0 < $this->getParam(self::PARAM_SIDEBAR_MAX_ITEMS) && $this->getNewArrivalsProducts();
     }
 
     /**
@@ -163,11 +155,17 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
      *
      * @return bool
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function isVisible()
     {
-        return parent::isVisible() && $this->checkDisplayMode() && $this->checkProductsToDisplay();
+        if (self::WIDGET_TYPE_CENTER == $this->getParam(self::PARAM_WIDGET_TYPE) && 'new_arrivals' == XLite_Core_Request::getInstance()->target) {
+            $this->widgetParams[self::PARAM_SHOW_ALL_ITEMS_PER_PAGE]->setValue(false);
+        }
+
+        return parent::isVisible()
+            && $this->checkProductsToDisplay()
+            && !(!$this->getParam(self::PARAM_PAGE_CONTENT) && 'new_arrivals' == XLite_Core_Request::getInstance()->target);
     }
 
 	/**
@@ -180,24 +178,70 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 	 */
 	protected function getCategorySpecificArrivals()
 	{
-		return $this->getParam(self::PARAM_IS_EXPORTED) 
-            ? $this->getParam(self::PARAM_USE_NODE) 
-            : ('Y' == $this->config->ProductAdviser->category_new_arrivals);
+		return $this->getParam(self::PARAM_USE_NODE);
 	}
 
+    /**
+     * Return products list
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getData()
+    {
+        return $this->getNewArrivalsProducts();
+    }
 
+    /**
+     * Check status of 'More...' link for sidebar list
+     * 
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isShowMoreLink()
+    {
+        return $this->additionalPresent;
+    }
 
-    // TODO, FIXME - all of the above routines must be reviewed and refactored
+    /**
+     * Get 'More...' link URL for sidebar list
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getMoreLinkURL()
+    {
+        return $this->buildURL('new_arrivals');
+    }
+
+    /**
+     * Get 'More...' link text for sidebar list
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getMoreLinkText()
+    {
+        return 'All new arrivals...';
+    }
 
     /**
      * Get current category
      * 
      * @return XLite_Model_Category
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    function getDialogCategory()
+    protected function getDialogCategory()
     {
         $category = null;
 
@@ -212,11 +256,11 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
      * Get current product Id
      * 
      * @return integer
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    function getDialogProductId()
+    protected function getDialogProductId()
     {
         if ('product' == $this->target && intval($this->product_id) > 0) {
         	return intval($this->product_id);
@@ -224,32 +268,65 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
         return null;
     }
 
-
-	public $productsNumber = 0;
-
-    public $additionalPresent = false;
-
-
-    function inCategory(&$product, $category)
+    /**
+     * Check if widget displayed as a page content 
+     * 
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isContentDialog()
     {
-		$signCategory = $product->inCategory($category);
+        return ($this->getParam(self::PARAM_PAGE_CONTENT) && 'new_arrivals' == XLite_Core_Request::getInstance()->target);
+    }
+
+    /**
+     * Check if product is in the category or its subcategories
+     * 
+     * @param mixed $product  XLite_Model_Product object
+     * @param mixed $category XLite_Model_Category object
+     *  
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function inCategory(&$product, $category)
+    {
+        $return = false;
+
+        $signCategory = $product->inCategory($category);
+
 		if ($signCategory) {
-			return $signCategory;
+            $return = true;
+
 		} else {
 			$subcategories = $category->getSubcategories();
 			foreach($subcategories as $cat_idx => $cat) {
 				$signCategory |= $this->inCategory($product, $subcategories[$cat_idx]);
 				if ($signCategory) {
-					return $signCategory;
+                    $return = true;
+                    break;
 				}
 			}
 		}
-		return false;
+		return $return;
     }
 
-	function recursiveArrivalsSearch($_category)
+    /**
+     * Recursive search of products in current category and its subcategories
+     * 
+     * @param mixed $_category XLite_Model_Category object
+     *  
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+	protected function recursiveArrivalsSearch($_category)
     {
-		if ($this->isContentDialog() && $this->additionalPresent && count($this->_new_arrival_products) >= $this->config->ProductAdviser->number_new_arrivals) {
+		if ($this->isContentDialog() && $this->additionalPresent && count($this->_new_arrival_products) >= $this->getParam(self::PARAM_SHOW_ALL_ITEMS_PER_PAGE)) {
 			return true;
 		}
 
@@ -301,7 +378,18 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 		return false;
 	}
 
-	function checkArrivalCondition($category, $ps)
+    /**
+     * Check if product is available
+     * 
+     * @param mixed $category XLite_Model_Category object
+     * @param mixed $ps       XLite_Model_Product object
+     *  
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+	protected function checkArrivalCondition($category, $ps)
 	{
 		$product_id = $this->getDialogProductId();
 		$product = new XLite_Model_Product($ps->get("product_id"));
@@ -323,12 +411,19 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_SideBarBox
 		return $addSign;
 	}
 
-    function getNewArrivalsProducts()
+    /**
+     * Get the list of new arrival products
+     * 
+     * @return array of XLite_Model_Product objects
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getNewArrivalsProducts()
     {
 		$products = $this->xlite->NewArrivalsProducts;
 
         if (isset($products)) {
-            $this->productsNumber = count($products);
             $this->additionalPresent = $this->xlite->NewArrivalsAdditionalPresent;
             return $products;
         }    
