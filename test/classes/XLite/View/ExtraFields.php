@@ -1,128 +1,162 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* @package View
-* @version $Id$
-*/
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage View
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
+
+/**
+ * Extra fields list 
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_View_ExtraFields extends XLite_View_Abstract
 {
-	public $ef = null;	
+    /**
+     * Widget parameter names
+     */
 
-    public $template = "extra_fields.tpl";	
-    public $product;
+    const PARAM_PRODUCT      = 'product';
 
+	/**
+	 * Cached extra fields list
+	 * 
+	 * @var    array
+	 * @access protected
+	 * @see    ____var_see____
+	 * @since  3.0.0
+	 */
+	protected $extraFields = null;
+
+    /**
+     * Widget template 
+     * 
+     * @var    string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $template = 'extra_fields.tpl';
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_PRODUCT      => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
+        );
+    }
+
+    /**
+     * Check widget visibility 
+     * 
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function isVisible()
+    {
+        return parent::isVisible()
+            && $this->getParam(self::PARAM_PRODUCT)
+            && $this->getExtraFields();
+    }
+
+    /**
+     * Get extra fields 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     function getExtraFields()
     {
-		$this->extraFields = $this->getComplex('product.extraFields');
+		if (is_null($this->extraFields)) {
 
-		if (isset($this->product_id)) 
-		{
-			$product = new XLite_Model_Product($this->product_id);
-			if (is_object($product))
-			{
-    			if ($this->config->getComplex('General.enable_extra_fields_inherit') == "Y") {
-    				$isAdminZone = $this->xlite->get("adminZone");
-    				$this->xlite->set("adminZone", true);
-    			}
-				$product_categories = $product->getCategories();
-    			if ($this->config->getComplex('General.enable_extra_fields_inherit') == "Y") {
-    				$this->xlite->set("adminZone", $isAdminZone);
-    			}
-                $extraFields_root = array();
-        		foreach ($this->extraFields as $idx => $extraField) 
-        		{
-                	$extraFields_categories = $extraField->getCategories();
-                	if (count($extraFields_categories) > 0)
-                	{
-                    	$found = false;
-                    	foreach($product_categories as $cat)
-                    	{
-                    		if (in_array($cat->get("category_id"), $extraFields_categories))
-                    		{
-                    			$found = true;
-                    			break;
-                    		}
-                    	}
-                    	if (!$found)
-                    	{
-                    		unset($this->extraFields[$idx]);
-                    	}
-                    	else
-                    	{
-                    		if ($extraField->get("product_id") == 0)
-                    		{
-                    			$extraFields_root[$extraField->get("field_id")] = $idx;
-                    		}
-                    	}
+	        $this->extraFields = $this->getParam(self::PARAM_PRODUCT)->getExtraFields();
+
+    	    /* TODO - rework
+	        if ($this->config->General->enable_extra_fields_inherit == "Y") {
+    	        $isAdminZone = $this->xlite->get("adminZone");
+        	    $this->xlite->set("adminZone", true);
+	        }
+    	    */
+
+	        $product_categories = $this->getParam(self::PARAM_PRODUCT)->getCategories();
+
+    	    /* TODO - rework
+	        if ($this->config->getComplex('General.enable_extra_fields_inherit') == "Y") {
+    	        $this->xlite->set("adminZone", $isAdminZone);
+        	}
+	        */
+
+        	$extraFields_root = array();
+            $ids = array();
+            foreach ($product_categories as $cat) {
+                $ids[] = $cat->get('category_id');
+            }
+
+	        foreach ($this->extraFields as $idx => $extraField) {
+            	$extraFields_categories = $extraField->getCategories();
+                if (count($extraFields_categories) > 0) {
+                    if (count(array_intersect($ids, $extraFields_categories)) == 0) {
+                    	unset($this->extraFields[$idx]);
+
+                    } elseif ($extraField->get('product_id') == 0) {
+                    	$extraFields_root[$extraField->get('field_id')] = $idx;
                     }
-        		}
-        		foreach ($this->extraFields as $idx => $extraField) 
-        		{
-        			if (isset($extraFields_root[$extraField->get("parent_field_id")]))
-        			{
-        				if (isset($this->extraFields[$extraFields_root[$extraField->get("parent_field_id")]]))
-        				{
-        					unset($this->extraFields[$extraFields_root[$extraField->get("parent_field_id")]]);
-        				}
-        			}
-        		}
-        		foreach ($this->extraFields as $idx => $extraField) 
-        		{
-        			if ($extraField->get("parent_field_id") == 0)
-        			{
-                		$ef_child = new XLite_Model_ExtraField();
-                        $ef_child->set("ignoreFilter", true);
-                		if ($ef_child->find("parent_field_id='".$extraField->get("field_id")."' AND enabled='0'".((isset($this->product_id)&&!empty($this->product_id))?" AND product_id='".$this->product_id."'":"")))
-                		{
-        					unset($this->extraFields[$idx]);
-                		}
-        			}
-        		}
-			}
-		}
+                }
+            }
+
+            foreach ($this->extraFields as $idx => $extraField) {
+                if (
+					isset($extraFields_root[$extraField->get('parent_field_id')])
+					&& isset($this->extraFields[$extraFields_root[$extraField->get('parent_field_id')]])
+				) {
+                    unset($this->extraFields[$extraFields_root[$extraField->get('parent_field_id')]]);
+                }
+            }
+
+            foreach ($this->extraFields as $idx => $extraField) {
+                if ($extraField->get('parent_field_id') == 0) {
+                    $ef_child = new XLite_Model_ExtraField();
+                    $ef_child->set('ignoreFilter', true);
+
+                    if ($ef_child->find('parent_field_id = \'' . $extraField->get('field_id') . '\' AND enabled = 0 AND product_id = \'' . $this->getParam(self::PARAM_PRODUCT)->get('product_id') . '\'')) {
+                        unset($this->extraFields[$idx]);
+                    }
+                }
+            }
+        }
 
         return $this->extraFields;
     }
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

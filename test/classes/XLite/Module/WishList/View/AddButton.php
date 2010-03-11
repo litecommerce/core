@@ -33,7 +33,7 @@
  * @subpackage View
  * @since      3.0.0
  */
-class XLite_Module_WishList_View_AddButton extends XLite_View_Abstract
+class XLite_Module_WishList_View_AddButton extends XLite_View_Button_Regular
 {
     /**
      * Widget parameter names
@@ -57,6 +57,39 @@ class XLite_Module_WishList_View_AddButton extends XLite_View_Abstract
             self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
         );
 
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/WishList/add.tpl');
+        $this->widgetParams[self::PARAM_LABEL]->setValue('Add to Wish List');
+    }
+
+    /**
+     * Called before the includeCompiledFile()
+     *
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function initView()
+    {
+        parent::initView();
+
+        $params = $this->getParam(self::PARAM_FORM_PARAMS);
+        $params['target'] = 'wishlist';
+        $params['action'] = 'add';
+        $params['product_id'] = $this->getParam(self::PARAM_PRODUCT)->get('product_id');
+
+        $this->widgetParams[self::PARAM_FORM_PARAMS]->setValue($params);
+    }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    public function isVisible()
+    {
+        return parent::isVisible()
+            && !$this->config->General->add_on_mode
+            && $this->getParam(self::PARAM_PRODUCT);
     }
 }

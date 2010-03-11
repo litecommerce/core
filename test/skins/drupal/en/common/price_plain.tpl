@@ -15,15 +15,11 @@
   <span class="product-price">{price_format(getProduct(),#listPrice#):h}</span>
 
 {else:}
-<span IF="{!isSalePriceEnabled()}">
-  <font class="ProductPriceTitle">Price:</font>
-  <font class="ProductPrice">{price_format(getProduct(),#listPrice#):h}</font><font class="ProductPriceTitle"> {product.priceMessage:h}</font>
-</span>
 
-<span IF="{isSalePriceEnabled()}">
-  <font class="ProductPriceTitle">Our price:</font>
-  <font class="ProductPrice">{price_format(getProduct(),#listPrice#):h}</font><font class="ProductPriceTitle"> {product.priceMessage:h}</font>
-  <br />
-  <font class="MarketPrice">Market price: <em>{price_format(getProduct(),#sale_price#):h}</em></font><span IF="{isSaveEnabled()}"> , <font class="Save">save {getSaveValue()}</font></span>
-</span>
+  <div class="product-price">{price_format(getProduct(),#listPrice#):h}</div>
+
+  <div IF="{isSalePriceEnabled()}" class="product-market-price">
+    List price: <span class="price">{price_format(getProduct(),#sale_price#):h}</span><span IF="{isSaveEnabled()}">, you save: <span class="save">{getSaveValueAbsolute()} ({getSaveValuePercent()}%)</span></span>
+  </div>
+
 {end:}

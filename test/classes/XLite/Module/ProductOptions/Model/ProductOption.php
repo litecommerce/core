@@ -253,47 +253,12 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
 
     function modifiedPrice($opt, $ignoreProductPrice=false) // {{{
     {
-        if (!$this->config->getComplex('ProductOptions.absolute_price_format') && !$this->config->getComplex('Taxes.prices_include_tax')) {
-			return abs($opt->surcharge);
-        }
-
-		$full_price = null;
-		if ($this->xlite->get("WholesaleTradingEnabled")) {
-			$p = new XLite_Model_Product($this->get("product_id"));
-			$full_price = $p->getFullPrice($amount=1);
-			if (doubleval($full_price) != $full_price) $full_price = null;
-			if ($this->config->getComplex('Taxes.prices_include_tax') && !is_null($full_price)) {
-				$full_price = $p->get("price"); // restore product full price without taxes
-			}
-		}
-
-		return $this->_modifiedPrice($opt, $ignoreProductPrice, $full_price);
+		return abs($opt->surcharge);
     } // }}}
 
     function modifiedWeight($opt) // {{{
     {
-        if (!$this->config->getComplex('ProductOptions.absolute_weight_format')) {
-        	return $opt->weight_modifier;
-        }
-
-        $product = new XLite_Model_Product($this->get("product_id"));
-        $productWeight = $product->get("weight");
-
-    	$weight = $opt->weight_modifier;
-		if ($opt->weight_percent) {
-			$weight = ($productWeight * $weight) / 100;
-		}
-
-        $weight = sprintf("%0.2f", ($productWeight + $weight));
-
-		while (strlen($weight)>1 && substr($weight,strlen($weight)-1,1) == "0") {
-			$weight = substr($weight, 0, strlen($weight)-1);
-		}
-		while (strlen($weight)>1 && substr($weight,strlen($weight)-1,1) == ".") {
-			$weight = substr($weight, 0, strlen($weight)-1);
-		}
-
-		return $weight;
+      	return $opt->weight_modifier;
     } // }}} 
 
     function formatCurrency($price)

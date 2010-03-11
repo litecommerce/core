@@ -1,5 +1,13 @@
-{* SVN $Id$ *}
-<tr>
-  <td>&nbsp;</td>
-  <td>(<a href="javascript:void(PriceNotifyMe({product.product_id}));">Notify me</a> when the price drops)</td>
-</tr>
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * Product price notify link
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
+<span class="notify-me"><a href="javascript:void(0);" onclick="javascript: PriceNotifyMe({product.product_id})); return false;">Notify me</a> when the price drops</span>

@@ -27,29 +27,20 @@
  */
 
 /**
- * Product amount widget
- *
+ * Save mark
+ * 
  * @package    XLite
  * @subpackage View
- * @since      3.0
+ * @since      3.0.0
  */
-class XLite_Module_WholesaleTrading_View_Amount extends XLite_View_Abstract
+class XLite_View_SaveMark extends XLite_View_Abstract
 {
     /**
      * Widget parameter names
      */
 
-    const PARAM_PRODUCT = 'product';
+    const PARAM_PRODUCT            = 'product';
 
-
-    /**
-     * Widget template filename
-     *
-     * @var    string
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected $template = 'modules/WholesaleTrading/amount.tpl';
 
     /**
      * Define widget parameters
@@ -63,46 +54,24 @@ class XLite_Module_WholesaleTrading_View_Amount extends XLite_View_Abstract
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
+            self::PARAM_PRODUCT            => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
         );
+
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/save_mark.tpl');
     }
 
     /**
-     * Check visibility 
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
+     * Check if widget is visible
+     *
+     * @return bool
+     * @access protected
+     * @since  3.0.0 EE
      */
     public function isVisible()
     {
-        $controller = XLite::getController();
-
         return parent::isVisible()
             && $this->getParam(self::PARAM_PRODUCT)
-            && $this->getParam(self::PARAM_PRODUCT)->isPriceAvailable()
-            && method_exists($controller, 'isAvailableForSale')
-            && $controller->isAvailableForSale();
+            && $this->config->General->enable_sale_price
+            && $this->getParam(self::PARAM_PRODUCT)->get('sale_price') > $this->getParam(self::PARAM_PRODUCT)->get('listPrice');
     }
-
-    /**
-     * Register JS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-
-        $list[] = 'modules/WholesaleTrading/amount.js';
-        $list[] = 'modules/WholesaleTrading/jquery.mousewheel.js';
-
-        return $list;
-    }
-
 }
-

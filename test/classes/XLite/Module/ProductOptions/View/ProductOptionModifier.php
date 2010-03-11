@@ -27,40 +27,31 @@
  */
 
 /**
- * Product images gallery widget
+ * Product option modifier widget
  *
  * @package    XLite
  * @subpackage View
  * @since      3.0
  */
-class XLite_Module_DetailedImages_View_Gallery extends XLite_View_Abstract
+class XLite_Module_ProductOptions_View_ProductOptionModifier extends XLite_View_Abstract
 {
     /**
      * Widget parameter names
      */
 
-    const PARAM_PRODUCT = 'product';
+    const PARAM_OPTION       = 'option';
+    const PARAM_OPTION_GROUP = 'optionGroup';
+    const PARAM_PRODUCT      = 'product';
 
-
-    /**
-     * Light box library images directory
-     * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public $lightBoxImagesDir = null;
 
     /**
      * Widget template 
      * 
      * @var    string
      * @access protected
-     * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $template = 'modules/DetailedImages/gallery.tpl';
+    protected $template = 'modules/ProductOptions/product_option_modifier.tpl';
 
     /**
      * Define widget parameters
@@ -74,75 +65,40 @@ class XLite_Module_DetailedImages_View_Gallery extends XLite_View_Abstract
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
+            self::PARAM_PRODUCT      => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
+            self::PARAM_OPTION       => new XLite_Model_WidgetParam_Object('Option', null, false, 'stdClass'),
+            self::PARAM_OPTION_GROUP => new XLite_Model_WidgetParam_Object('Option group', null, false, 'XLite_Module_ProductOptions_Model_ProductOption'),
         );
     }
 
     /**
-     * Initialization 
+     * Check widget visibility 
      * 
-     * @return void
+     * @return bool
      * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function initView()
-    {
-        parent::initView();
-
-        $this->lightBoxImagesDir = XLite::getInstance()->shopURL(
-            XLite_Model_Layout::getInstance()->getPath() . 'modules/DetailedImages/images'
-        );
-    }
-
-    /**
-     * Check visibility
-     * 
-     * @return bolean
-     * @access public
-     * @see    ____func_see____
      * @since  3.0.0
      */
     public function isVisible()
     {
         return parent::isVisible()
+            && $this->getParam(self::PARAM_OPTION)
+            && $this->getParam(self::PARAM_OPTION_GROUP)
             && $this->getParam(self::PARAM_PRODUCT)
-            && $this->getParam(self::PARAM_PRODUCT)->getDetailedImages();
+            && $this->getParam(self::PARAM_OPTION)->modifyParams;
     }
 
     /**
-     * Register JS files
-     *
-     * @return array
+     * Check - show price or not 
+     * 
+     * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getJSFiles()
+    public function isShowPrice()
     {
-        $list = parent::getJSFiles();
-
-        $list[] = 'modules/DetailedImages/js/jquery.lightbox-0.5.min.js';
-        $list[] = 'modules/DetailedImages/gallery.js';
-
-        return $list;
-    }
-
-    /**
-     * Register CSS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-
-        $list[] = 'modules/DetailedImages/css/jquery.lightbox-0.5.css';
-
-        return $list;
+        return $this->getParam(self::PARAM_PRODUCT)->isDisplayPriceModifier()
+            && !$this->getParam(self::PARAM_OPTION)->isZero;
     }
 }
 

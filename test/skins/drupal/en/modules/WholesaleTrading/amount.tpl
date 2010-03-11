@@ -1,22 +1,27 @@
-{* SVN $Id$ *}
-<tr>
-  <td>Quantity</td>
-  <td>
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * Product quantity input widget
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
 <script type="text/javascript">
-if (typeof(window.productQuantityData) == 'undefined') {
-  var productQuantityData = {};
-}
-
-if (typeof(productQuantityData[{product.product_id}]) == 'undefined') {
-  productQuantityData[{product.product_id}] = {};
-}
-
-productQuantityData[{product.product_id}].minAmount = 1;
-productQuantityData[{product.product_id}].maxAmount = {product.inventory.amount}; 
+$(document).ready(
+  function() {
+    new productQuantityController($('.product-quantity.product-{product.product_id}'), 1, {product.inventory.amount})
+  }
+);
 </script>
-    <a href="javascript:void(0);" id="product_quantity_{product.product_id}_lower" class="disabled" onclick="javascript: updateProductQuantity({product.product_id}, -1); return false;">[-]</a>
-    <input id="product_quantity_{product.product_id}" size="3" name="amount" value="1" onchange="javascript: updateProductQuantity({product.product_id});" />
-    <a href="javascript:void(0);" id="product_quantity_{product.product_id}_upper" onclick="javascript: updateProductQuantity({product.product_id}, 1); return false;">[+]</a>
-    <span>{product.inventory.amount} item(s) available</span>
-  </td>
-</tr>
+
+<div class="product-quantity product-{product.product_id}">
+  <label for="product_quantity_{product.product_id}">Quantity:</label>
+  <a href="javascript:void(0);" class="quantity-lower"><img src="images/spacer.gif" alt="-" /></a>
+  <input id="product_quantity_{product.product_id}" name="amount" value="1" />
+  <a href="javascript:void(0);" class="quantity-upper"><img src="images/spacer.gif" alt="+" /></a>
+  <span>({product.inventory.amount} available)</span>
+</div>

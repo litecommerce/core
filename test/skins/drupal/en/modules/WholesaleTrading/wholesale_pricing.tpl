@@ -1,44 +1,22 @@
-{* SVN $Id$ *}
-<tr class="descriptionTitle">
-  <td colspan="2" class="ProductDetailsTitle">Wholesale pricing</td>
-</tr>
+{* vim: set ts=2 sw=2 sts=2 et: *}
 
-<tr>
-  <td class="Line" height="1" colspan="2"><img src="images/spacer.gif" width="1" height="1" alt="" /></td>
-</tr>
+{**
+ * Product wholesale prices list
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
+<strong class="subtitle">Buy more for less:</strong>
+<table class="wholesale-prices">
 
-<tr>
-  <td colspan=2>&nbsp;</td>
-</tr>
+  <tr FOREACH="product.getWholesalePricing(),wholesale_price">
+    <td class="quantity">{wholesale_price.amount} items</td>
+    <td>&mdash;</td>
+	  <td class="price">{price_format(wholesale_price.price):r}</td>
+  </tr>
 
-<tr>
-  <td colspan="2">
-
-    <table cellpadding="0" cellspacing="0">
-
-      <tr>
-      	<td><strong>Quantity</strong></td>
-	      <td><strong>Price per product</strong></td>
-      </tr>
-
-      <tbody FOREACH="wholesalePricing,idx,wholesale_price">
-
-        <tr>
-        	<td class="Line" height="1" colspan="2"><img src="images/spacer.gif" width="1" height="1" alt="" /></td>
-        </tr>
-
-        <tr style="height: 18px;"> 
-        	<td nowrap>{wholesale_price.amount} or more</td>
-	        <td align="right">{price_format(wholesale_price.price):r}</td>
-        </tr>
-
-      </tbody>
-
-    </table>
-
-  </td>
-</tr>
-
-<tr>
-  <td colspan="2">&nbsp;</td>
-</tr>
+</table>

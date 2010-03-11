@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Form start
+ * Product quantity label
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,5 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<form action="{getFormAction()}" method="{getParam(#form_method#)}" name="{getFormName()}" onsubmit="javascript: {getJSOnSubmitCode()}"{if:getParam(#className#)} class="{getParam(#className#)}"{end:}>
-<input FOREACH="getFormParams(),paramName,paramValue" type="hidden" name="{paramName}" value="{paramValue}" />
+<div IF="{product.inventory.amount}" class="product-in-stock">In stock</div>
+<div IF="{!product.inventory.amount}" class="product-out-stock" nowrap>Out of stock</div>
+<widget module="ProductAdviser"  class="XLite_Module_ProductAdviser_View_NotifyLink" />

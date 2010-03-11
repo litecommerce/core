@@ -5,7 +5,7 @@ INSERT INTO xlite_featured_products VALUES (174,0,40);
 
 
 
-INSERT INTO xlite_product_options (option_id, product_id, optclass, opttext, options, orderby) VALUES (1,205,'Cover','Choose cover','Soft\r\nHard=+5',0);
+INSERT INTO xlite_product_options (option_id, product_id, optclass, opttext, options, orderby, opttype) VALUES (1,205,'Bracelet','Bracelet','Dark lether\r\nBeige lether=+2;w=+0.5\r\nSilicone\r\nFabric=+2',0,'Radio button');
 INSERT INTO xlite_product_options (option_id, product_id, optclass, opttext, options, orderby) VALUES (2,69,'Cover','Choose cover','Soft\r\nHard=+5',0);
 INSERT INTO xlite_product_options (option_id, product_id, optclass, opttext, options, orderby) VALUES (3,68,'Cover','Choose cover','Soft\r\nHard=+5',0);
 INSERT INTO xlite_product_options (option_id, product_id, optclass, opttext, options, orderby) VALUES (4,70,'Cover','Choose cover','Soft\r\nHard=+5',0);

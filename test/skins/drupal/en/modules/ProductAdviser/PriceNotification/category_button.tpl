@@ -10,6 +10,4 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<span>
-  &nbsp;(<a href="javascript: PriceNotifyMe('{getProductId()}','{getProductPrice()}')">Notify me</a> when the price drops)
-</span>
+(<a href="javascript:void(0);" onclick="javascript: PriceNotifyMe('{getProductId()}','{getProductPrice()}'); return false;">Notify me</a> when the price drops)

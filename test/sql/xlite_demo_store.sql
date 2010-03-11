@@ -7,10 +7,12 @@ UPDATE xlite_config SET comment='Check this to temporary close the shop (not ava
 UPDATE xlite_config SET value='Y' WHERE name='customer_security';
 UPDATE xlite_config SET value="http://sns.qualiteam.biz/litecommerce" WHERE name="collectorURL";
 UPDATE xlite_config SET value="https://sns.qualiteam.biz/litecommerce" WHERE name="collectorHTTPSURL";
+UPDATE xlite_config SET value = 'Y' WHERE name = 'enable_sale_price';
+UPDATE xlite_config SET value = 'Y' WHERE name = 'you_save';
 
 -- Enable demo modules
 --TODO - revert after develop period UPDATE xlite_modules SET enabled=1 where name='DemoMode';
-UPDATE xlite_modules SET enabled = '1' WHERE name IN ('Affiliate', 'Bestsellers', 'FeaturedProducts', 'DetailedImages', 'ProductOptions', 'InventoryTracking', 'WishList', 'MultiCategories', 'DrupalConnector', 'JoomlaConnector', 'GiftCertificates', 'ProductAdviser', 'AdvancedSearch');
+UPDATE xlite_modules SET enabled = '1' WHERE name IN ('Affiliate', 'Bestsellers', 'FeaturedProducts', 'DetailedImages', 'ProductOptions', 'InventoryTracking', 'WishList', 'MultiCategories', 'DrupalConnector', 'JoomlaConnector', 'GiftCertificates', 'ProductAdviser', 'AdvancedSearch', 'WholesaleTrading');
 
 -- Configure look and feel for category products
 UPDATE xlite_config SET value='modules/ShowcaseOrganizer/icons.tpl' WHERE category='ShowcaseOrganizer' AND name='template';
@@ -239,4 +241,17 @@ TRUNCATE xlite_products_also_buy;
 INSERT INTO xlite_products_also_buy (product_id, product_id_also_buy, counter) VALUES ('174', '171', 3);
 INSERT INTO xlite_products_also_buy (product_id, product_id_also_buy, counter) VALUES ('174', '172', 5);
 INSERT INTO xlite_products_also_buy (product_id, product_id_also_buy, counter) VALUES ('174', '177', 1);
+
+TRUNCATE xlite_extra_fields;
+INSERT INTO xlite_extra_fields (field_id, product_id, name) VALUES (1, 205, 'Country');
+INSERT INTO xlite_extra_fields (field_id, product_id, name) VALUES (2, 205, 'ASIN');
+
+TRUNCATE xlite_extra_field_values;
+INSERT INTO xlite_extra_field_values (field_id, product_id, value) VALUES (1, 205, 'Switzerland');
+INSERT INTO xlite_extra_field_values (field_id, product_id, value) VALUES (2, 205, 'B001OBX76S');
+
+TRUNCATE xlite_wholesale_pricing;
+INSERT INTO xlite_wholesale_pricing (product_id, amount, price, membership) VALUES (205, 4, 89.99, 'all');
+INSERT INTO xlite_wholesale_pricing (product_id, amount, price, membership) VALUES (205, 9, 85.99, 'all');
+
 

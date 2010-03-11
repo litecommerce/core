@@ -210,6 +210,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 
 			$price = $originalPrice + $surcharge;
 		}
+
 		return $price;
 	}
 
@@ -218,13 +219,17 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 		if (!isset($optionsIndex)) {
 			return -1; // -1 means infinity
 		}
+
 		$options_arr = $this->get("expandedItems");
+
 		if (!(isset($options_arr[$optionsIndex]) && is_array($options_arr[$optionsIndex]))) {
 			return -1; // -1 means infinity
 		}
+
 		foreach ($options_arr[$optionsIndex] as $_opt) {
 			$option_keys[] = sprintf("%s:%s", $_opt->class, $_opt->option);
 		}
+
 		$key = $this->get('key')."|".implode("|", $option_keys);
 		$inventory = new XLite_Module_InventoryTracking_Model_Inventory();
 		$inventories = $inventory->findAll("inventory_id LIKE '".$this->get("product_id")."|%' AND enabled=1", "order_by");
@@ -233,6 +238,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 				return $i->get('amount');
 			}    
 		}
+
 		return -1; // -1 means infinity
 	}
 
@@ -242,16 +248,13 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 			$this->product_access = new XLite_Module_WholesaleTrading_Model_ProductAccess();
 			$this->product_access->set("product_id", $this->get("product_id"));
 		}
+
 		return $this->product_access->groupInAccessList($this->auth->getComplex('profile.membership'), $action . "_group");
 	}
 	
 	function isShowAvailable()
 	{
-		if ($this->checkDirectSaleAvailable()) {
-			return true;
-		}
-
-		return $this->_available_action("show");
+		return $this->checkDirectSaleAvailable() ? true : $this->_available_action("show");
 	}
 	
 	function isPriceAvailable()
@@ -260,10 +263,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 			return true;
 		}
 
-		if (!$this->is("showAvailable")) {
-			return false;
-		}
-		return $this->_available_action("show_price");
+		return $this->is("showAvailable") ? $this->_available_action("show_price") : false;
 	}
 
 	function isSaleAvailable()
@@ -272,10 +272,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 			return true;
 		}
 
-		if (!$this->is("priceAvailable")) {
-			return false;
-		}
-		return $this->_available_action("sell");
+		return $this->is("priceAvailable") ? $this->_available_action("sell") : false;
 	}
 
 	function assignDirectSaleAvailable($assign=true)
@@ -294,17 +291,20 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 		if (!is_array($access)) {
 			$access = array();
 		}
+
 		return (isset($access[$this->get("product_id")]) ? $access[$this->get("product_id")] : false);
 	}
 
 	function isDirectSaleAvailable()
 	{
-	    if ($this->config->getComplex('WholesaleTrading.direct_addition')) {
+	    if ($this->config->WholesaleTrading->direct_addition) {
 			$this->assignDirectSaleAvailable($this->_available_action("sell"));
+
 			return $this->_available_action("sell");
-		} else {
-			return $this->isSaleAvailable();
+
 		}
+
+		return $this->isSaleAvailable();
 	}
 
 	function filter()
@@ -312,21 +312,20 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 		if ($this->xlite->is("adminZone")) {
 			return parent::filter();
 		}
+
 		if (parent::filter()) {
 			return $this->is("showAvailable");
-		} else {
-    		if ($this->checkDirectSaleAvailable()) {
-    			return true;
-    		}
-			return false;
-		}	
+
+		}
+
+   		return $this->checkDirectSaleAvailable();
 	}
 
 	function isExists()
 	{
 		$exists = parent::isExists();
-		if ((!$exists) && $this->_checkExistanceRequired && $this->_available_action("sell")) return true;
-		return $exists;
+
+		return ((!$exists) && $this->_checkExistanceRequired && $this->_available_action("sell")) ?  true : $exists;
 	}
 
 	function get($name)
@@ -339,36 +338,38 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 
 	function getListPrice()
 	{
-		if (!$this->is("priceAvailable") && !$this->xlite->is("adminZone")) {
-			return $this->getComplex('config.WholesaleTrading.price_denied_message');
-		}
-		return parent::getListPrice();
+		return (!$this->is("priceAvailable") && !$this->xlite->is("adminZone"))
+			? $this->config->WholesaleTrading->price_denied_message
+			: parent::getListPrice();
 	}
 
 	function hasWholesalePricing()
 	{
 		$this->_avail_wholesale_pricing = $this->get("wholesalePricing");
-		if (count($this->_avail_wholesale_pricing) > 0) {
-			return true;
-		}	
-		return false;
+
+		return count($this->_avail_wholesale_pricing) > 0;
 	}
 
 	function getWholesalePricing()
 	{
 		if (is_null($this->wholesale_pricing)) {
 			$wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
-			$sqlStr = "product_id=" . $this->get('product_id');
+
+			$sqlStr = "product_id = " . $this->get('product_id');
 			$sqlStr .= ( $this->auth->is("logged") ) ? " AND (membership='all' OR membership='" . $this->auth->getComplex('profile.membership') . "')" : " AND membership='all'";
 			$wholesale_pricing = $wp->findAll($sqlStr);
+
 			$wholesale_pricing_hash = array();
 			foreach ($wholesale_pricing as $wpIdx => $wp) {
 				if (!isset($wholesale_pricing_hash[$wp->get("amount")])) {
 					$wholesale_pricing_hash[$wp->get("amount")] = $wpIdx;
-				} else {
-					if ($this->auth->is("logged") && $this->auth->getComplex('profile.membership') == $wp->get("membership") && $wholesale_pricing[$wholesale_pricing_hash[$wp->get("amount")]]->get("membership") == "all") {
-						$wholesale_pricing_hash[$wp->get("amount")] = $wpIdx;
-					}
+
+				} elseif (
+					$this->auth->is("logged")
+					&& $this->auth->getComplex('profile.membership') == $wp->get("membership")
+					&& $wholesale_pricing[$wholesale_pricing_hash[$wp->get("amount")]]->get("membership") == "all"
+				) {
+					$wholesale_pricing_hash[$wp->get("amount")] = $wpIdx;
 				}
 			}
 
@@ -378,16 +379,17 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 			}
 		}
 
-		if ($this->config->getComplex('Taxes.prices_include_tax')) {
+		if ($this->config->Taxes->prices_include_tax) {
 			$oldPrice = $this->get("price");
 
-			foreach($this->wholesale_pricing as $wp_idx => $wp) {
+			foreach ($this->wholesale_pricing as $wp_idx => $wp) {
 				$this->set("price", $wp->get("price"));
 				$this->wholesale_pricing[$wp_idx]->set("price", $this->get("listPrice"));
 			}
 
 			$this->set("price", $oldPrice);
 		}
+
 		return $this->wholesale_pricing;
 	}
 

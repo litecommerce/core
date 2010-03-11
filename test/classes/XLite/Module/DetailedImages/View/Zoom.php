@@ -25,24 +25,11 @@
 class XLite_Module_DetailedImages_View_Zoom extends XLite_View_Abstract
 {
     /**
-     * JQZoom library path 
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * Widget parameter names
      */
-    protected $jqZoomPath = 'modules/DetailedImages/js/jquery.jqzoom1.0.1.js';
 
-    /**
-     * JQZAoom CSS file path 
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $jqZoomCSSPath = 'modules/DetailedImages/css/jqzoom.css';
+    const PARAM_PRODUCT = 'product';
+
 
     /**
      * Widget template 
@@ -55,6 +42,22 @@ class XLite_Module_DetailedImages_View_Zoom extends XLite_View_Abstract
     protected $template = 'modules/DetailedImages/zoom.tpl';
 
     /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
+        );
+    }
+
+    /**
      * Check visibility
      * 
      * @return bolean
@@ -65,7 +68,9 @@ class XLite_Module_DetailedImages_View_Zoom extends XLite_View_Abstract
     public function isVisible()
     {
         return parent::isVisible()
-            && $this->product->get('detailedImages');
+            && $this->getParam(self::PARAM_PRODUCT)
+            && $this->getParam(self::PARAM_PRODUCT)->get('detailedImages')
+            && $this->getParam(self::PARAM_PRODUCT)->getHasZoom();
     }
 
     /**
@@ -80,7 +85,7 @@ class XLite_Module_DetailedImages_View_Zoom extends XLite_View_Abstract
     {
         $list = parent::getJSFiles();
 
-        $list[] = $this->jqZoomPath;
+        $list[] = 'modules/DetailedImages/js/jquery.jqzoom1.0.1.js';
 
         return $list;
     }
@@ -97,7 +102,7 @@ class XLite_Module_DetailedImages_View_Zoom extends XLite_View_Abstract
     {
         $list = parent::getCSSFiles();
 
-        $list[] = $this->jqZoomCSSPath;
+        $list[] = 'modules/DetailedImages/css/jqzoom.css';
 
         return $list;
     }

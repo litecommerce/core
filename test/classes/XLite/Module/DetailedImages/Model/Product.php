@@ -141,11 +141,11 @@ class XLite_Module_DetailedImages_Model_Product extends XLite_Model_Product impl
 	 * Check - has product zoom image or not
 	 * 
 	 * @return boolean
-	 * @access protected
+	 * @access public
 	 * @see    ____func_see____
 	 * @since  3.0.0
 	 */
-	protected function getHasZoom()
+	public function getHasZoom()
 	{
 		return !is_null($this->getZoomImage());
 	}

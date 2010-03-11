@@ -27,13 +27,13 @@
  */
 
 /**
- * Product images gallery widget
+ * Product wholesale prices list widget
  *
  * @package    XLite
  * @subpackage View
  * @since      3.0
  */
-class XLite_Module_DetailedImages_View_Gallery extends XLite_View_Abstract
+class XLite_Module_WholesaleTrading_View_Prices extends XLite_View_Abstract
 {
     /**
      * Widget parameter names
@@ -43,24 +43,13 @@ class XLite_Module_DetailedImages_View_Gallery extends XLite_View_Abstract
 
 
     /**
-     * Light box library images directory
-     * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public $lightBoxImagesDir = null;
-
-    /**
-     * Widget template 
-     * 
+     * Widget template filename
+     *
      * @var    string
      * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @since  3.0.0 EE
      */
-    protected $template = 'modules/DetailedImages/gallery.tpl';
+    protected $template = 'modules/WholesaleTrading/wholesale_pricing.tpl';
 
     /**
      * Define widget parameters
@@ -79,26 +68,9 @@ class XLite_Module_DetailedImages_View_Gallery extends XLite_View_Abstract
     }
 
     /**
-     * Initialization 
+     * Check visibility 
      * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function initView()
-    {
-        parent::initView();
-
-        $this->lightBoxImagesDir = XLite::getInstance()->shopURL(
-            XLite_Model_Layout::getInstance()->getPath() . 'modules/DetailedImages/images'
-        );
-    }
-
-    /**
-     * Check visibility
-     * 
-     * @return bolean
+     * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -107,42 +79,8 @@ class XLite_Module_DetailedImages_View_Gallery extends XLite_View_Abstract
     {
         return parent::isVisible()
             && $this->getParam(self::PARAM_PRODUCT)
-            && $this->getParam(self::PARAM_PRODUCT)->getDetailedImages();
-    }
-
-    /**
-     * Register JS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-
-        $list[] = 'modules/DetailedImages/js/jquery.lightbox-0.5.min.js';
-        $list[] = 'modules/DetailedImages/gallery.js';
-
-        return $list;
-    }
-
-    /**
-     * Register CSS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-
-        $list[] = 'modules/DetailedImages/css/jquery.lightbox-0.5.css';
-
-        return $list;
+            && $this->getParam(self::PARAM_PRODUCT)->isPriceAvailable()
+            && $this->getParam(self::PARAM_PRODUCT)->hasWholesalePricing();
     }
 }
 

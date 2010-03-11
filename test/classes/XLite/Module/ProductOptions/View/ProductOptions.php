@@ -27,63 +27,62 @@
  */
 
 /**
- * Product amount widget
+ * Product options lsit
  *
  * @package    XLite
  * @subpackage View
  * @since      3.0
  */
-class XLite_Module_WholesaleTrading_View_Amount extends XLite_View_Abstract
+class XLite_Module_ProductOptions_View_ProductOptions extends XLite_View_Abstract
 {
     /**
-     * Widget parameter names
-     */
-
-    const PARAM_PRODUCT = 'product';
-
-
-    /**
-     * Widget template filename
-     *
+     * Widget template 
+     * 
      * @var    string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
-    protected $template = 'modules/WholesaleTrading/amount.tpl';
+    protected $template = 'modules/ProductOptions/product_options.tpl';
 
     /**
-     * Define widget parameters
+     * Initialize widget
      *
      * @return void
-     * @access protected
-     * @since  1.0.0
+     * @access public
+     * @since  3.0.0
      */
-    protected function defineWidgetParams()
+    public function init(array $attributes = array())
     {
-        parent::defineWidgetParams();
+        $this->attributes['product'] = false;
 
-        $this->widgetParams += array(
-            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
-        );
+        parent::init($attributes);
     }
 
     /**
-     * Check visibility 
+     * Check widget visibility 
      * 
-     * @return boolean
+     * @return bool
      * @access public
-     * @see    ____func_see____
      * @since  3.0.0
      */
     public function isVisible()
     {
-        $controller = XLite::getController();
-
         return parent::isVisible()
-            && $this->getParam(self::PARAM_PRODUCT)
-            && $this->getParam(self::PARAM_PRODUCT)->isPriceAvailable()
-            && method_exists($controller, 'isAvailableForSale')
-            && $controller->isAvailableForSale();
+            && $this->getProduct()->hasOptions()
+            && !$this->getProduct()->get('showExpandedOptions');
+    }
+
+    /**
+     * Get product 
+     * 
+     * @return XLite_Model_Product
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProduct()
+    {
+        return $this->attributes['product'] ? $this->attributes['product'] : parent::getProduct();
     }
 
     /**
@@ -98,8 +97,7 @@ class XLite_Module_WholesaleTrading_View_Amount extends XLite_View_Abstract
     {
         $list = parent::getJSFiles();
 
-        $list[] = 'modules/WholesaleTrading/amount.js';
-        $list[] = 'modules/WholesaleTrading/jquery.mousewheel.js';
+        $list[] = 'modules/ProductOptions/options_validation.js';
 
         return $list;
     }

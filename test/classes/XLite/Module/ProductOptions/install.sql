@@ -32,8 +32,6 @@ CREATE TABLE xlite_product_options_js (
 ) TYPE=MyISAM;
 ALTER TABLE xlite_order_items ADD options TEXT NOT NULL;
 
-INSERT INTO xlite_config VALUES ('absolute_price_format','Show actual price instead of a price modifier','Y','ProductOptions',10,'checkbox');
-INSERT INTO xlite_config VALUES ('absolute_weight_format','Show actual weight instead of a weight modifier','Y','ProductOptions',20,'checkbox');
 INSERT INTO xlite_config VALUES ('clone_product_options','Clone product options when product is cloned','Y','ProductOptions',30,'checkbox');
 ALTER TABLE xlite_products ADD expansion_limit int NOT NULL default 0;
 ALTER TABLE xlite_product_options ADD parent_option_id INT(11) DEFAULT '0' NOT NULL;

@@ -52,7 +52,6 @@ class XLite_View_Button_Link extends XLite_View_Button_Abstract
         $this->widgetParams[self::PARAM_TEMPLATE]->setValue('button/regular.tpl');
     }
 
-
     /**
      * JS code will be executed when this event occurs
      * 

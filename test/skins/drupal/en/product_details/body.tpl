@@ -1,108 +1,88 @@
-{* SVN $Id$ *}
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * Product details
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
+<widget class="XLite_View_Form_Product_AddToCart" name="add_to_cart" product="{product}" className="product-details" />
+
+  <div IF="previousProduct|nextProduct" class="sibliding-links">
+    <a IF="previousProduct" class="previous" href="{buildURL(#product#,##,_ARRAY_(#product_id#^previousProduct.product_id))}" alt="{previousProduct.name}">Previous product</a>
+    <span IF="previousProduct&nextProduct">|</span>
+    <a IF="nextProduct" class="next" href="{buildURL(#product#,##,_ARRAY_(#product_id#^nextProduct.product_id))}" alt="{nextProduct.name}">Next product</a>
+  </div>
+
+  <div IF="product.hasImage()" class="product-thumbnail">
+    <div IF="!product.getHasZoom()" class="product-thumbnail-box">
+      <img class="product-thumbnail" src="{product.imageURL}" id="product_image_{product.product_id}" alt="" />
+      <widget class="XLite_View_SaveMark" product="{product}" />
 <script type="text/javascript">
-<!--
-function isValid()
-{   
-    return true;
-}
--->
+$(document).ready(
+  function() {
+    var e = $('.product-thumbnail-box');
+    var i = $('.product-thumbnail-box img');
+    e.width(i.width()).height(i.height());
+  }
+);
 </script>
+    </div>
 
-<div IF="previousProduct|nextProduct" class="sibliding-links">
-  <a IF="previousProduct" class="previous" href="{buildURL(#product#,##,_ARRAY_(#product_id#^previousProduct.product_id))}" alt="{previousProduct.name}">Previous product</a>
-  <span IF="previousProduct&nextProduct">/</span>
-  <a IF="nextProduct" class="next" href="{buildURL(#product#,##,_ARRAY_(#product_id#^nextProduct.product_id))}" alt="{nextProduct.name}">Next product</a>
-</div>
+    <widget module="DetailedImages" class="XLite_Module_DetailedImages_View_Zoom" product="{product}" />
+    <widget module="DetailedImages" class="XLite_Module_DetailedImages_View_Gallery" product="{product}" />
+  </div>
 
-<widget class="XLite_View_Form_Product_AddToCart" name="add_to_cart" product="{product}" />
+  <div class="product-body">
 
-  <table cellpadding="5" cellspacing="0" width="100%">
-    <tr>
-      <td IF="product.hasImage()" valign="top" align="left" width="100">
-        <img IF="!product.hasZoom" src="{product.imageURL}" id="product_image_{product.product_id}" alt="" />
+    <div IF="{product.sku}" class="product-sku">
+      <span>SKU:</span>
+      <span>{product.sku}</span>
+    </div>
 
-        <widget module="DetailedImages" class="XLite_Module_DetailedImages_View_Zoom" product="{product}" IF="product.hasZoom">
-        <widget module="DetailedImages" class="XLite_Module_DetailedImages_View_Gallery" product="{product}">
+    <widget module="InventoryTracking" template="modules/InventoryTracking/stock_label.tpl" visible="{product.inventory.found}" />
 
-      </td>
-      <td valign="top">
-    
-        <widget module="InventoryTracking" mode="out_of_stock" template="modules/InventoryTracking/out_of_stock.tpl" IF="product.productOptions"/>
+    <widget class="XLite_View_Price" product="{product}" />
 
-        <!-- product details -->
-        <table id="productDetailsTable" cellpadding="0" cellspacing="0" width="100%">
+    <widget module="WholesaleTrading" class="XLite_Module_WholesaleTrading_View_Prices" product="{product}" />
 
-          <tr id="descriptionTitle">
-            <td colspan="2" class="ProductDetailsTitle">Description</td>
-          </tr>
+    <widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_PriceNotifyLink" visible="{!priceNotificationSaved}" />
 
-          <tr>
-            <td class="Line" height="1" colspan="2"><img src="images/spacer.gif" width="1" height="1" alt=""></td>
-          </tr>
+    <widget module="ProductOptions" class="XLite_Module_ProductOptions_View_ProductOptions" product="{product}" />
 
-          <tr>
-            <td colspan="2">&nbsp;</td>
-          </tr>
+    <widget module="WholesaleTrading" class="XLite_Module_WholesaleTrading_View_Amount" product="{product}" />
 
-          <tr id="description">
-            <td colspan="2">{description:h}</td>
-          </tr>
+    <div IF="availableForSale" class="buttons-row">
+      <widget class="XLite_View_Button_Submit" label="Add to Cart" />
+      <widget module="WishList" class="XLite_Module_WishList_View_AddButton" product="{product}" />
+    </div>
 
-          <tr>
-            <td colspan="2">&nbsp;</td>
-          </tr>
-        
-          <tr id="detailsTitle">
-            <td colspan="2" class="ProductDetailsTitle">Details</td>
-          </tr>
+  </div>
 
-          <tr>
-            <td class="Line" height="1" colspan="2"><img src="images/spacer.gif" width="1" height="1" alt=""></td>
-          </tr>
+  <h3>Description</h3>
 
-          <tr>
-            <td colspan="2">&nbsp;</td>
-          </tr>
+  <table IF="{product.getExtraFields(true)|product.weight}" class="product-extra-fields">
 
-          <tr IF="{product.sku}">
-            <td width="30%" class="ProductDetails">SKU:</td>
-            <td class="ProductDetails" nowrap>{product.sku}</td>
-          </tr>
-        
-          <widget module="InventoryTracking" template="modules/InventoryTracking/product_quantity.tpl" IF="!product.productOptions" visible="{product.inventory.found}"/>
-          <widget module="ProductOptions" template="modules/ProductOptions/product_quantity.tpl">
+    <tr IF="{!product.weight=0}">
+      <th>Weight:</th>
+      <td>{product.weight} {config.General.weight_symbol}</td>
+    </tr>
 
-          <widget class="XLite_View_ExtraFields" product="{product}">
+    <widget class="XLite_View_ExtraFields" product="{product}" />
 
-          <tbody>
-
-            <tr IF="{!product.weight=0}">
-              <td width="30%" class="ProductDetails">Weight:</td>
-              <td class="ProductDetails" nowrap>{product.weight} {config.General.weight_symbol}</td>
-            </tr>
-
-            <widget class="XLite_View_Price" product="{product}" template="common/price_table.tpl">
-            <widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_PriceNotifyLink" visible="{!priceNotificationSaved}" />
-            <widget module="ProductOptions" template="modules/ProductOptions/product_options.tpl" IF="product.hasOptions()&!product.showExpandedOptions"/>
-            <widget module="WholesaleTrading" template="modules/WholesaleTrading/expanded_options.tpl" IF="product.hasOptions()&product.showExpandedOptions"/>
-        		<widget module="WholesaleTrading" template="modules/WholesaleTrading/extra.tpl">
-
-            <tr>
-              <td colspan="2">&nbsp;</td>
-            </tr>
-
-            <tr IF="availableForSale" id="addToCartButton">
-				      <td><widget class="XLite_View_Button_Submit" label="Add to Cart" /></td>
-        			<td IF="!config.General.add_on_mode">
-        				<widget module="WishList" template="modules/WishList/add.tpl">
-              </td>
-            </tr>
-
-          </tbody>
-        </table>
-      </td>
-    </tr>    
   </table>
+
+  <div class="product-description">{description:h}</div>
+
+{*        
+    <widget module="WholesaleTrading" template="modules/WholesaleTrading/expanded_options.tpl" IF="product.hasOptions()&product.showExpandedOptions"/>
+    <widget module="WholesaleTrading" template="modules/WholesaleTrading/purchase_limit.tpl" visible="{product.purchaseLimit.min|product.purchaseLimit.max}" IF="product.purchaseLimit" />
+
+*}
 
 <widget name="add_to_cart" end />
 

@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,10 +27,10 @@
  */
 
 /**
- * XLite_View_Price 
+ * Product price
  * 
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage View
  * @since      3.0.0
  */
 class XLite_View_Price extends XLite_View_Abstract
@@ -63,6 +63,19 @@ class XLite_View_Price extends XLite_View_Abstract
     }
 
     /**
+     * Check if widget is visible
+     *
+     * @return bool
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    public function isVisible()
+    {
+        return parent::isVisible()
+            && $this->getProduct();
+    }
+
+    /**
      * Check - sale price is enabled or not 
      * 
      * @return boolean
@@ -72,7 +85,8 @@ class XLite_View_Price extends XLite_View_Abstract
      */
     public function isSalePriceEnabled()
     {
-        return $this->config->General->enable_sale_price && $this->calcSaveValue(false) > 0;
+        return $this->config->General->enable_sale_price
+            && $this->getProduct()->get('sale_price') > $this->getProduct()->get('listPrice');
     }
 
     /**
@@ -85,57 +99,38 @@ class XLite_View_Price extends XLite_View_Abstract
      */
     public function isSaveEnabled()
     {
-        return $this->config->General->you_save != 'N';
+        return $this->config->General->you_save != 'N'
+            && $this->getSaveValuePercent() > 0;
     }
 
     /**
-     * Calculate save value 
-     * 
-     * @param boolean $full Calculate save value as formatted string or float
-     *  
-     * @return mixed
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function calcSaveValue($full = true)
-    {
-         switch ($this->config->General->you_save) {
-            case 'YP':
-                $value = round(($this->getProduct()->get('sale_price') - $this->getProduct()->get('listPrice')) / $this->getProduct()->get('sale_price') * 100)
-					. ($full ? ' %' : '');
-
-                break;
-
-            case 'YD':
-                if ($full) {
-                    $wg = new XLite_View_Abstract();
-                    $value = $wg->price_format($this->getProduct()->get('sale_price') - $this->getProduct()->get('listPrice'));
-
-                } else {
-                    $value = $this->getProduct()->get('sale_price') - $this->getProduct()->get('listPrice');
-                }
-
-                break;
-
-            default:
-                $value = $this->getProduct()->get('listPrice');
-        }
-
-        return $value;
-    }
-
-    /**
-     * Get save value 
+     * Get save value (absolute)
      * 
      * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getSaveValue()
+    public function getSaveValueAbsolute()
     {
-        return $this->calcSaveValue();
+        $product = $this->getProduct();
+
+        return $this->price_format($product->get('sale_price') - $product->get('listPrice'));
+    }
+
+    /**
+     * Get save value (absolute)
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSaveValuePercent()
+    {
+        $product = $this->getProduct();
+
+        return round(($product->get('sale_price') - $product->get('listPrice')) / $product->get('sale_price') * 100, 0);
     }
 
 	/**

@@ -105,16 +105,13 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product impl
     {
         $pv = new XLite_Module_ProductOptions_Model_OptionValidator();
         $pv->set("product_id", $this->get("product_id"));
+
         return $pv->get("javascript_code");
     }
 
 	function isDisplayPriceModifier()
 	{
-		if ($this->xlite->get("WholesaleTradingEnabled")) {
-			return $this->is("priceAvailable");
-		}
-
-		return true;
+		return $this->xlite->get("WholesaleTradingEnabled") ? $this->is("priceAvailable") : true;
 	}
 
     function delete()

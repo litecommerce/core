@@ -10,4 +10,4 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget class="XLite_View_Button" label="Add to Wish List" type="button" href="{buildURL(#wishlist#,#add#,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" />
+{*<widget class="XLite_View_Button_regular" label="Add to Wish List" target="wishlist" action="add" />*}
