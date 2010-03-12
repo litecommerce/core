@@ -16,6 +16,6 @@
 
   <br />
 
-  <widget template="buy_now.tpl" product="{product}" />
+  <widget class="XLite_View_BuyNow" product="{product}" />
 
 </div>

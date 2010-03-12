@@ -2,26 +2,37 @@
 // vim: set ts=4 sw=4 sts=4 et:
 
 /**
- * Bestsellers
- *  
- * @category  Litecommerce
- * @package   Model
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license   http://www.qtmsoft.com/xpayments_eula.html X-Payments license agreement
- * @version   SVN: $Id$
- * @link      http://www.qtmsoft.com/
- * @see       ____file_see____
- * @since     3.0.0
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage View
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
  */
-
 
 /**
  * Bestsellers model 
  * 
- * @package Litecommerce
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @subpackage Model
+ * @see        ____class_see____
+ * @since      3.0.0
  */
 class XLite_Module_Bestsellers_Model_Bestsellers extends XLite_Base
 {
@@ -40,12 +51,12 @@ class XLite_Module_Bestsellers_Model_Bestsellers extends XLite_Base
      * 
      * @param integer $category_id ____param_comment____
      *  
-     * @return void
+     * @return array of XLite_Model_Product objects
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getBestsellers($category_id = 0)
+    public function getBestsellers($numberOfBestsellers = 0, $category_id = 0)
     {
         $bestsellers = array();
 
@@ -60,7 +71,7 @@ class XLite_Module_Bestsellers_Model_Bestsellers extends XLite_Base
             $bestsellers = $bestsellersCategories[$category_id];
 
         } else {
-            $bestsellers = $this->calculateBestsellers($category_id);
+            $bestsellers = $this->calculateBestsellers($numberOfBestsellers, $category_id);
 
             $bestsellersCategories[$category_id] = $bestsellers;
             $this->xlite->set('BestsellersCategories', $bestsellersCategories);
@@ -74,12 +85,12 @@ class XLite_Module_Bestsellers_Model_Bestsellers extends XLite_Base
      * 
      * @param integer $cat_id Category id
      *  
-     * @return void
+     * @return array of XLite_Model_Product objects
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function calculateBestsellers($cat_id)
+    protected function calculateBestsellers($numberOfBestsellers, $cat_id)
     {
         $category = new XLite_Model_Category($cat_id);
 
@@ -118,7 +129,7 @@ class XLite_Module_Bestsellers_Model_Bestsellers extends XLite_Base
             $orders_table = $this->db->getTableByAlias('orders');
             $products_table = $this->db->getTableByAlias('products');
         
-            $limit = intval($this->config->getComplex('Bestsellers.number_of_bestsellers'));
+            $limit = intval($numberOfBestsellers);
             $limit = 0 >= $limit ? $limit : 5;
 
             $limitGrace = $limit * 10;

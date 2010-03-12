@@ -169,6 +169,19 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_ProductsList
     }
 
     /**
+     * Get the number of bestsellers to display
+     * 
+     * @return int
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getNumberOfBestsellers()
+    {
+        return (int)(self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE) ? $this->getParam(self::PARAM_SIDEBAR_MAX_ITEMS) : $this->config->Bestsellers->number_of_bestsellers);
+    }
+
+    /**
      * Return subcategories list
      *
      * @return array
@@ -178,7 +191,7 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_ProductsList
      */
     protected function getBestsellers()
     {
-        return XLite_Model_CachingFactory::getObject('XLite_Module_Bestsellers_Model_Bestsellers')->getBestsellers($this->getRootId());
+        return XLite_Model_CachingFactory::getObject('XLite_Module_Bestsellers_Model_Bestsellers')->getBestsellers($this->getNumberOfBestsellers(), $this->getRootId());
     }
 
 }
