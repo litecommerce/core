@@ -99,6 +99,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsLi
             ),
         );
 
+        $this->widgetParams[self::PARAM_WIDGET_TYPE]->setValue($this->config->ProductAdviser->new_arrivals_type);
         $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue(self::DISPLAY_MODE_LIST);
         $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue(3);
         $this->widgetParams[self::PARAM_SHOW_DESCR]->setValue(true);

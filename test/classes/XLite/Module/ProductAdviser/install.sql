@@ -274,7 +274,7 @@ VALUES
 (
 	'new_arrivals_type', 
 	'New arrivals displayed in', 
-	'menu', 
+	'sidebar', 
 	'ProductAdviser', 
 	'49', 
 	'select'

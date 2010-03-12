@@ -149,7 +149,7 @@
 <widget template="common/sidebar_box.tpl" dir="profile" name="profileWidget" head="Your profile" IF="{auth.isLogged()}" />
 <widget template="common/sidebar_box.tpl" dir="authentication" name="authenticationWidget" head="Authentication" IF="{auth.isLogged()}" />
 <widget module="Newsletters" template="common/sidebar_box.tpl" dir="modules/Newsletters/menu_news" head="News">
-<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_NewArrivals" displayMode="menu" />
+<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_NewArrivals" widgetType="sidebar" />
 <widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_RecentlyViewed" />
 <!-- [/right] -->
     </TD>
