@@ -2,74 +2,63 @@
 // vim: set ts=4 sw=4 sts=4 et:
 
 /**
- * Bestsellers dialog
- *  
- * @category  Litecommerce
- * @package   View
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license   http://www.qtmsoft.com/xpayments_eula.html X-Payments license agreement
- * @version   SVN: $Id$
- * @link      http://www.qtmsoft.com/
- * @see       ____file_see____
- * @since     3.0.0
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage View
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
  */
 
 /**
- * Bestsellers dialog 
+ * Bestsellers widget 
  * 
- * @package    View
- * @subpackage Widget
+ * @package    XLite
+ * @subpackage View
  * @see        ____class_see____
  * @since      3.0.0
  */
-class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_SideBarBox
+class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_ProductsList
 {
     /**
      * Widget parameter names
      */
 
-    const PARAM_DISPLAY_MODE = 'displayMode';
     const PARAM_ROOT_ID      = 'rootId';
     const PARAM_USE_NODE     = 'useNode';
-
-    /**
-     * Allowed display modes
-     */
-
-    const DISPLAY_MODE_VERTICAL   = 'vertical';
-    const DISPLAY_MODE_HORIZONTAL = 'horizontal';
-
 
     /**
      * Targets this widget is allowed for
      *
      * @var    array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected $allowedTargets = array('main', 'category');
 
     /**
-     * Display modes
-     *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $displayModes = array(
-        self::DISPLAY_MODE_VERTICAL   => 'Vertical',
-        self::DISPLAY_MODE_HORIZONTAL => 'Horizontal',
-    );
-
-
-    /**
-     * Return title
+     * Get title
      *
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     protected function getHead()
     {
@@ -77,16 +66,91 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_SideBarBox
     }
 
     /**
-     * Get widget templates directory
+     * Define widget parameters
      *
-     * @return string
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_USE_NODE     => new XLite_Model_WidgetParam_Checkbox(
+                'Use current category id', 0, true
+            ),
+            self::PARAM_ROOT_ID      => new XLite_Model_WidgetParam_ObjectId_Category(
+                'Root category Id', 0, true, true
+            ),
+        );
+
+        $this->widgetParams[self::PARAM_WIDGET_TYPE]->setValue($this->config->Bestsellers->bestsellers_menu ? self::WIDGET_TYPE_SIDEBAR : self::WIDGET_TYPE_CENTER);
+
+        $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue(self::DISPLAY_MODE_LIST);
+        $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue(3);
+        $this->widgetParams[self::PARAM_SHOW_THUMBNAIL]->setValue('Y' == $this->config->Bestsellers->bestsellers_thumbnails);
+        $this->widgetParams[self::PARAM_SHOW_DESCR]->setValue(true);
+        $this->widgetParams[self::PARAM_SHOW_PRICE]->setValue(true);
+        $this->widgetParams[self::PARAM_SHOW_ADD2CART]->setValue(true);
+        $this->widgetParams[self::PARAM_SIDEBAR_MAX_ITEMS]->setValue($this->config->Bestsellers->number_of_bestsellers);
+
+        $this->widgetParams[self::PARAM_SHOW_DISPLAY_MODE_SELECTOR]->setValue(false);
+        $this->widgetParams[self::PARAM_SHOW_ALL_ITEMS_PER_PAGE]->setValue(true);
+        $this->widgetParams[self::PARAM_SHOW_SORT_BY_SELECTOR]->setValue(false);
+        $this->widgetParams[self::PARAM_SORT_BY]->setValue('Name');
+        $this->widgetParams[self::PARAM_SORT_ORDER]->setValue('asc');
+
+        foreach ($this->getHiddenParamsList() as $param) {
+            $this->widgetParams[$param]->setVisibility(false);
+        }
+
+    }
+
+    /**
+     * Get the list of parameters that are hidden on the settings page 
+     * 
+     * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDir()
+    protected function getHiddenParamsList()
     {
-        return 'modules/Bestsellers/bestsellers/' . $this->getParam(self::PARAM_DISPLAY_MODE);
+        return array(
+            self::PARAM_SHOW_DISPLAY_MODE_SELECTOR,
+            self::PARAM_SHOW_SORT_BY_SELECTOR,
+            self::PARAM_SORT_BY,
+            self::PARAM_SORT_ORDER,
+            self::PARAM_SHOW_ALL_ITEMS_PER_PAGE
+        );
+    }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isVisible()
+    {
+        return parent::isVisible() && $this->getBestsellers();
+    }
+
+    /**
+     * Return products list
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getData()
+    {
+        return $this->getBestsellers();
     }
 
     /**
@@ -94,7 +158,8 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_SideBarBox
      * 
      * @return int
      * @access protected
-     * @since  3.0.0 EE
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     protected function getRootId()
     {
@@ -104,99 +169,16 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_SideBarBox
     }
 
     /**
-     * Return subcategories lis
+     * Return subcategories list
      *
      * @return array
      * @access protected
-     * @since  3.0.0 EE
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     protected function getBestsellers()
     {
-        return XLite_Model_CachingFactory::getObject(
-            'XLite_Module_Bestsellers_Model_Bestsellers'
-        )->getBestsellers($this->getRootId());
+        return XLite_Model_CachingFactory::getObject('XLite_Module_Bestsellers_Model_Bestsellers')->getBestsellers($this->getRootId());
     }
-
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_DISPLAY_MODE => new XLite_Model_WidgetParam_List(
-                'Display mode', self::DISPLAY_MODE_VERTICAL, true, $this->displayModes
-            ),
-            self::PARAM_USE_NODE     => new XLite_Model_WidgetParam_Checkbox(
-                'Use current category id', 0, true
-            ),
-            self::PARAM_ROOT_ID      => new XLite_Model_WidgetParam_ObjectId_Category(
-                'Root category Id', 0, true, true
-            ),
-        );
-    }
-
-    /**
-     * In standalone LC this widget will be dispalyed only 
-     * if the corresponding setting is turned on
-     * 
-     * @return bool
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function chechWidgetVisibility()
-    {
-        return $this->getParam(self::PARAM_IS_EXPORTED) || $this->config->Bestsellers->bestsellers_menu;
-    }
-
-
-    /**
-     * Check if widget is visible
-     *
-     * @return bool
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    public function isVisible()
-    {
-        return parent::isVisible() && $this->getBestsellers() && $this->chechWidgetVisibility();
-    }
-
-    /**
-     * Return whether thumbnails are to be shown in the product list
-     */
-    public function thumbnailsEnabled()
-    {
-        return $this->getComplex('config.Bestsellers.bestsellers_thumbnails');
-    }
-
-    /**
-     * Return CSS classes depending on the widget settings
-     */ 
-    public function widgetCSSClasses()
-    {
-        $class = 'promoted-products';
-
-        $css = array($class);
-
-        if ($this->thumbnailsEnabled())
-            $css[] = "$class-with-thumbnails";
-
-        $modeClasses = array(
-            'vertical' => 'shortened',
-            'horizontal' => 'full',
-        );
-        $css[] = "$class-" . (isset($modeClasses[$this->displayMode]) ? $modeClasses[$this->displayMode] : array_pop($modeClasses));
-
-        return join(' ', $css);
-    }
-
-
 
 }
-
