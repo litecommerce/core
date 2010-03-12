@@ -68,7 +68,7 @@ class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
      */
     protected $displayModes = array(
         self::DISPLAY_MODE_VERTICAL   => 'Vertical',
-        self::DISPLAY_MODE_HORIZONTAL => 'Horiontal',
+        self::DISPLAY_MODE_HORIZONTAL => 'Horizontal',
     );
 
 
