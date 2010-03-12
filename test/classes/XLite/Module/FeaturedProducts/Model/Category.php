@@ -26,8 +26,6 @@
  * @since      3.0.0
  */
 
-// FIXME - to revise
-
 /**
  * XLite_Module_FeaturedProducts_Model_Category 
  * 
@@ -49,30 +47,44 @@ class XLite_Module_FeaturedProducts_Model_Category extends XLite_Model_Category 
 
 
     /**
-     * Get featured products list; FIXME
+     * Get featured products list
      * 
      * @param string $orderby orderby string
      *  
-     * @return array
+     * @return array of XLite_Module_FeaturedProducts_Model_FeaturedProduct objects
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getFeaturedProducts($orderby = null)
     {
         if (!isset($this->featuredProducts)) {
+
             $featuredProduct = new XLite_Module_FeaturedProducts_Model_FeaturedProduct();
+
             foreach ($featuredProduct->findAll('category_id = \'' . $this->get('category_id') . '\'', $orderby) as $handler) {
-                $this->featuredProducts[] = $handler->getProduct();
+                $_featuredProducts = array();
+                $_featuredProducts = $handler;
+                $_featuredProducts->set('product', $handler->getProduct());
+
+                $this->featuredProducts[] = $_featuredProducts;
             }
         }
 
         return $this->featuredProducts;
     }
 
-
-    // ---------------
-
-	function addFeaturedProducts($products)
+    /**
+     * Add specified products to the featured products list
+     * 
+     * @param mixed $products ____param_comment____
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+	public function addFeaturedProducts($products)
 	{
 		for ($i=0; $i<count($products); $i++) {
 			$fp = new XLite_Module_FeaturedProducts_Model_FeaturedProduct();
@@ -84,7 +96,17 @@ class XLite_Module_FeaturedProducts_Model_Category extends XLite_Model_Category 
 		}
 	}
 
-	function deleteFeaturedProducts($products)
+    /**
+     * Delete specified products from the featured products list
+     * 
+     * @param mixed $products ____param_comment____
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+	public function deleteFeaturedProducts($products)
 	{
 		for ($i=0; $i<count($products); $i++) {
 			$fp = new XLite_Module_FeaturedProducts_Model_FeaturedProduct();
@@ -94,10 +116,17 @@ class XLite_Module_FeaturedProducts_Model_Category extends XLite_Model_Category 
 		}	
 	}
 
-	function delete()
+    /**
+     * Delete product
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+	public function delete()
 	{
 		$this->deleteFeaturedProducts($this->getFeaturedProducts());
 		parent::delete();
 	}
 }
-

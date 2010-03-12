@@ -92,6 +92,7 @@ class XLite_Module_FeaturedProducts_Model_FeaturedProduct extends XLite_Model_Ab
      * 
      * @return XLite_Model_Product
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getProduct()
@@ -111,6 +112,7 @@ class XLite_Module_FeaturedProducts_Model_FeaturedProduct extends XLite_Model_Ab
      * 
      * @return bool
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function filter()

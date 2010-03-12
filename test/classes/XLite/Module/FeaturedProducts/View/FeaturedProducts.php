@@ -49,7 +49,8 @@ class XLite_Module_FeaturedProducts_View_FeaturedProducts extends XLite_View_Pro
      *
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     protected function getHead()
     {
@@ -57,37 +58,29 @@ class XLite_Module_FeaturedProducts_View_FeaturedProducts extends XLite_View_Pro
     }
 
     /**
-     * getHiddenParamsList 
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getHiddenParamsList()
-    {
-        return array(
-            self::PARAM_SHOW_SORT_BY_SELECTOR,
-            self::PARAM_SORT_BY,
-            self::PARAM_SORT_ORDER,
-        );
-    }
-
-    /**
      * Define widget parameters
      *
      * @return void
      * @access protected
-     * @since  1.0.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     protected function defineWidgetParams()
     {
         parent::defineWidgetParams();
 
-        // FIXME - correct the FeaturedProducts module SQL dump and uncomment this line
-        // $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue($this->config->FeaturedProducts->featured_products_look);
+        $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue($this->config->FeaturedProducts->featured_products_look);
+
+        $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue(3);
+        $this->widgetParams[self::PARAM_SHOW_THUMBNAIL]->setValue(true);
+        $this->widgetParams[self::PARAM_SHOW_DESCR]->setValue(true);
+        $this->widgetParams[self::PARAM_SHOW_PRICE]->setValue(true);
+        $this->widgetParams[self::PARAM_SHOW_ADD2CART]->setValue(true);
+        $this->widgetParams[self::PARAM_SIDEBAR_MAX_ITEMS]->setValue(5);
 
         $this->widgetParams[self::PARAM_SHOW_DISPLAY_MODE_SELECTOR]->setValue(false);
         $this->widgetParams[self::PARAM_SHOW_ALL_ITEMS_PER_PAGE]->setValue(true);
+        $this->widgetParams[self::PARAM_SHOW_SORT_BY_SELECTOR]->setValue(false);
 
         foreach ($this->getHiddenParamsList() as $param) {
             $this->widgetParams[$param]->setVisibility(false);
@@ -95,24 +88,52 @@ class XLite_Module_FeaturedProducts_View_FeaturedProducts extends XLite_View_Pro
     }
 
     /**
+     * Get the list of parameters that are hidden on the settings page
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getHiddenParamsList()
+    {
+        return array(
+            self::PARAM_SHOW_DISPLAY_MODE_SELECTOR,
+            self::PARAM_SHOW_SORT_BY_SELECTOR,
+            self::PARAM_SORT_BY,
+            self::PARAM_SORT_ORDER,
+            self::PARAM_SHOW_ALL_ITEMS_PER_PAGE
+        );
+    }
+
+    /**
      * Return products list
      *
      * @return array
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getData()
     {
-        return $this->getCategory()->getFeaturedProducts();
-    }
+        $featuredProducts = $this->getCategory()->getFeaturedProducts();
+        $products = array();
 
+        if (is_array($featuredProducts)) {
+            foreach ($featuredProducts as $fp) {
+                $products[] = $fp->get('product');
+            }
+        }
+
+        return $products;
+    }
 
     /**
      * Check if widget is visible
-     * FIXME - to remove; check if it's really needed check current page
      *
      * @return bool
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0 EE
      */
     public function isVisible()
