@@ -29,5 +29,3 @@
   <widget module="GoogleCheckout" template="modules/GoogleCheckout/shopping_cart/gcheckout_notes.tpl">
 
 <widget name="cart_form" end />
-
-<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_NotifyForm">

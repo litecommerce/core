@@ -10,6 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<div IF="{product.inventory.amount}" class="product-in-stock">In stock</div>
-<div IF="{!product.inventory.amount}" class="product-out-stock" nowrap>Out of stock</div>
+<div IF="{product.isInStock()}" class="product-stock-label product-in-stock">In stock</div>
+<div IF="{product.isOutOfStock()}" class="product-stock-label product-out-stock">Out of stock</div>
 <widget module="ProductAdviser"  class="XLite_Module_ProductAdviser_View_NotifyLink" />

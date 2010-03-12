@@ -1,50 +1,39 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* Dialog_notify_me description.
-*
-* @package Module_ProductAdviser
-* @access public
-* @version $Id$
-*/
-class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Controller_Abstract
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage Controller
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
+
+/**
+ * Notify me page controller
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
+class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Controller_Customer_Abstract
 {	
     public $product = null;
 
@@ -61,8 +50,15 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
         return 'Notify me';
     }
 
-
-	function init()
+	/**
+	 * Initialization 
+	 * 
+	 * @return void
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	public function init()
 	{
 		parent::init();
 
@@ -76,26 +72,21 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
 			$this->session->set("NotifyMeReturn", null);
 		}
 
-		if (
-			isset($this->product_id)
-			&& intval($this->product_id) > 0
-		) {
-			$this->product = new XLite_Model_Product($this->product_id);
-		}
+		$this->product = $this->getProduct();
 
-		if (!(is_object($this->product) && ($this->product->is("exists")))) {
+		if (!$this->product->isExists()) {
 			$this->redirect($this->buildURL('main', '', array('mode' => 'accessDenied')));
 			return;
 		}
 
 		if ($this->xlite->get("ProductOptionsEnabled") && isset($this->product_options)) {
 			$poArr = array();
-			foreach($this->product_options as $class => $po) {
+			foreach ($this->product_options as $class => $po) {
 				$poArr[] = array("class" => $class, "option" => $po["option"], "option_id" => $po["option_id"]);
 			}
 			$this->set("productOptions", $poArr);
 			$poStr = array();
-			foreach($this->product_options as $class => $po) {
+			foreach ($this->product_options as $class => $po) {
 				$poStr[] = $class . ": " . $po["option"];
 			}
 			$this->set("productOptionsStr", implode(", ", $poStr));
@@ -109,13 +100,22 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
 		}
 	}
 
-	function action_notify_product()
+	/**
+	 * notify_product action
+	 * 
+	 * @return void
+	 * @access protected
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	protected function action_notify_product()
 	{
 		if (!$this->isProductNotificationEnabled()) {
 			return;
 		}
 
 		$request = XLite_Core_Request::getInstance();
+
         if (
 			!isset($request->email)
 			|| (isset($request->email) && strlen(trim($request->email)) == 0)
@@ -123,21 +123,22 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
 			$this->set("valid", false);
 			return;
 		}
-		$this->email = trim($request->email);
+		$email = trim($request->email);
 
 		$notification = new XLite_Module_ProductAdviser_Model_Notification();
     	$check = array();
 		$notification->set("type", CUSTOMER_NOTIFICATION_PRODUCT);
         $check[] = "type='" . CUSTOMER_NOTIFICATION_PRODUCT . "'";
 
-		$notification->set("email", $this->email);
-
 		if ($this->auth->is("logged")) {
 			$profile = $this->auth->get("profile");
     		$notification->set("profile_id", $profile->get("profile_id"));
     		$notification->set("person_info", $profile->get("billing_title") . " " . $profile->get("billing_firstname") . " " . $profile->get("billing_lastname"));
+			$notification->set("email", $profile->get("login"));
+
 		} else {
-    		$this->session->set("customerEmail", $this->email);
+			$notification->set("email", $email);
+    		$this->session->set("customerEmail", $email);
     		$notification->set("person_info", $this->person_info);
 		}
 
@@ -145,16 +146,21 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
         $check[] = "email='" . $notification->get("email") . "'";
 
     	$notification->set("product_id", $this->product_id);
-    	if (isset($this->product_options)) {
-    		$notification->set("product_options", $this->product_options);
+        /* TODO - it must affected with xlite_inventories.inventory_id and rejectedItemInfo 
+            from XLite_Module_ProductAdviser_Controller_Customer_Product but ... it's not work correctly
+
+    	if (isset($request->product_options)) {
+    		$notification->set("product_options", $request->product_options);
     	}
-    	if (isset($this->amount)) {
-    		$notification->set("quantity", $this->amount);
+        */
+
+    	if (isset($request->amount)) {
+    		$notification->set("quantity", $request->amount);
     	}
+
         $check[] = "notify_key='" . addslashes($notification->get("productKey")) . "'";
 
-        $check = implode(" AND ", $check);
-    	if (!$notification->find($check)) {
+    	if (!$notification->find(implode(' AND ', $check))) {
     		$notification->set("notify_key", addslashes($notification->get("productKey")));
     		$notification->set("date", time());
     		$notification->create();
@@ -165,16 +171,22 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
 		$this->set("returnUrl", urldecode($this->url));
 	}
 
-	function action_notify_price()
+	/**
+	 * notify_price action
+	 * 
+	 * @return void
+	 * @access protected
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	protected function action_notify_price()
 	{
-		if (!$this->isPriceNotificationEnabled()) {
-			return;
-		}
-		if (!$this->isComplex('product.priceNotificationAllowed')) {
+		if (!$this->isPriceNotificationEnabled() || !$this->isComplex('product.priceNotificationAllowed')) {
 			return;
 		}
 
 		$request = XLite_Core_Request::getInstance();
+
         if (
 			!isset($request->email)
 			|| (isset($request->email) && strlen(trim($request->email)) == 0)
@@ -182,7 +194,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
 			$this->set("valid", false);
 			return;
 		}
-		$this->email = trim($request->email);
+		$email = trim($request->email);
 
 		$notification = new XLite_Module_ProductAdviser_Model_Notification();
     	$check = array();
@@ -196,8 +208,8 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
     		$notification->set("person_info", $profile->get("billing_title") . " " . $profile->get("billing_firstname") . " " . $profile->get("billing_lastname"));
 
 		} else {
-    		$notification->set("email", $this->email);
-    		$this->session->set("customerEmail", $this->email);
+    		$notification->set("email", $email);
+    		$this->session->set("customerEmail", $email);
     		$notification->set("person_info", $this->person_info);
 		}
 
@@ -210,7 +222,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
         $check = implode(' AND ', $check);
     	if (!$notification->find($check)) {
     		$notification->set("notify_key", addslashes($notification->get("productKey")));
-    		$notification->set("price", $this->get("product_price"));
+    		$notification->set("price", $request->product_price);
     		$notification->set("date", time());
 
     		$notification->create();
@@ -219,11 +231,25 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
 		$this->set("returnUrl", urldecode($this->url));
 	}
 
+	/**
+	 * Check - price notification enabled or not 
+	 * 
+	 * @return boolean
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
 	function isPriceNotificationEnabled()
 	{
 		return ($this->config->ProductAdviser->customer_notifications_mode & 1) != 0;
 	}
 
+	/**
+	 * Check - product notification enabled or not
+	 * 
+	 * @return boolean
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
 	function isProductNotificationEnabled()
 	{
 		return ($this->config->ProductAdviser->customer_notifications_mode & 2) != 0;
@@ -256,6 +282,4 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
     {
         return 'Notify me when ...';
     }
-
 }
-

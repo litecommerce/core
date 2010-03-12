@@ -393,7 +393,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
 
 	function getTaxedPrice() // {{{
     {
-        if (!$this->config->getComplex('Taxes.prices_include_tax')) {
+        if (!$this->config->Taxes->prices_include_tax) {
             return parent::get("price");
         }
 
@@ -436,7 +436,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
 
     function getPriceMessage() // {{{
     {
-        if ($this->config->getComplex('Taxes.prices_include_tax')) {
+        if ($this->config->Taxes->prices_include_tax) {
             if (!isset($this->_taxes)) {
                 $this->get("listPrice");
             }

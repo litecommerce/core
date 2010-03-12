@@ -1,7 +1,7 @@
-{* vim: set ts=2 sw=2 sts=2 et: *}
+/* vim: set ts=2 sw=2 sts=2 et: */
 
-{**
- * Product quantity notification link
+/**
+ * Price notification link
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,5 +9,13 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- *}
-<span class="notify-me product-notify"><a href="javascript:void(0);" class="product-{product.product_id}">Notify me</a> when the quantity rises</span>
+ */
+$(document).ready(
+    function() {
+        $('.notify-me.price-notify a').click(
+            function() {
+                return notifyMe(this, 'notify_price', $('form.product-details'));
+            }
+        );
+    }
+);

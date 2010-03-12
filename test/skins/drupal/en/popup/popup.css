@@ -16,17 +16,16 @@
 	background: #000000 none;
 	opacity: 0.6;
 }
+
 .blockMsg {
 	background: transparent none;
 	margin: 0px;
 	padding: 0px;
 	z-index: 1001;
 	position: fixed;
-	width: 60%;
 	top: 30%;
-	left: 20%;
-	right: 20%;
 }
+
 .blockMsg .close-link {
 	display: block;
 	position: absolute;
@@ -37,16 +36,19 @@
 	height: 13px;
 	outline-style: none;
 }
+
 .blockMsg .block-container {
 	background: #ffffff none;
 	margin-right: 20px;
 	border: 1px solid #ffffff;
 	padding: 0px;
 }
+
 .blockMsg .block-subcontainer {
     border: 5px solid #e8e8e8;
 	padding: 10px;
 }
+
 .blockMsg .block-wait {
 	text-align: center;
 	vertical-align: middle;

@@ -49,5 +49,4 @@
     <widget name="pager" />
   </div>
 
-  <widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_PriceNotifyForm" />
 </div>

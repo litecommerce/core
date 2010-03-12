@@ -50,7 +50,7 @@ $(document).ready(
 
     <widget module="WholesaleTrading" class="XLite_Module_WholesaleTrading_View_Prices" product="{product}" />
 
-    <widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_PriceNotifyLink" visible="{!priceNotificationSaved}" />
+    <widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_PriceNotifyLink" product="{product}" />
 
     <widget module="ProductOptions" class="XLite_Module_ProductOptions_View_ProductOptions" product="{product}" />
 
@@ -85,6 +85,3 @@ $(document).ready(
 *}
 
 <widget name="add_to_cart" end />
-
-<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_NotifyForm" />
-<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_PriceNotifyForm" visible="{!priceNotificationSaved}" />

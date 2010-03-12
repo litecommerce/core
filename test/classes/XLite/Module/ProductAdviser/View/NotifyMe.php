@@ -2,24 +2,35 @@
 // vim: set ts=4 sw=4 sts=4 et:
 
 /**
- * 'Notify me' page
- *  
- * @category  Litecommerce
- * @package   View
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license   http://www.qtmsoft.com/xpayments_eula.html X-Payments license agreement
- * @version   SVN: $Id$
- * @link      http://www.qtmsoft.com/
- * @see       ____file_see____
- * @since     3.0.0 EE
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage View
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
  */
 
 /**
  * 'Notify me' page
  *
- * @package    View
- * @subpackage Widget
+ * @package    XLite
+ * @subpackage View
  * @since      3.0
  */
 class XLite_Module_ProductAdviser_View_NotifyMe extends XLite_View_Dialog
@@ -32,7 +43,6 @@ class XLite_Module_ProductAdviser_View_NotifyMe extends XLite_View_Dialog
      * @since  3.0.0 EE
      */
     protected $allowedTargets = array('notify_me');
-
 
     /**
      * Return title
@@ -56,6 +66,47 @@ class XLite_Module_ProductAdviser_View_NotifyMe extends XLite_View_Dialog
     protected function getDir()
     {
         return 'modules/ProductAdviser/NotifyMe';
+    }
+
+    /**
+     * Check - product is out-of-stock or not 
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isOutOfStock()
+    {
+        return 'notify_product' == XLite_Core_Request::getInstance()->action
+            && $this->getProduct()->isOutOfStock();
+    }
+
+    /**
+     * Check - product has small quantity or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isSmallQuantity()
+    {
+        return 'notify_product' == XLite_Core_Request::getInstance()->action
+            && $this->getProduct()->isInStock();
+    }
+
+    /**
+     * Check - product has big price or not 
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isBigPrice()
+    {
+        return 'notify_price' == XLite_Core_Request::getInstance()->action;
     }
 }
 

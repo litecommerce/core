@@ -112,6 +112,7 @@ class XLite_Module_ProductAdviser_Model_Notification extends XLite_Model_Abstrac
     function getProductKey()
     {
     	$keyValue = array();
+
     	switch ($this->get("type")) {
     		case CUSTOMER_NOTIFICATION_PRODUCT:
     			$keyValue[] = $this->get("product_id");
@@ -123,11 +124,13 @@ class XLite_Module_ProductAdviser_Model_Notification extends XLite_Model_Abstrac
         			}
         			$keyValue[] = implode("|", $poStr);
     			}
-    		break;
+	    		break;
+
     		case CUSTOMER_NOTIFICATION_PRICE:
     			$keyValue[] = $this->get("product_id");
-    		break;
+	    		break;
     	}
+
 		$keyValue = implode("|", $keyValue);
 		return $keyValue;
     }

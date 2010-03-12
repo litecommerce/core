@@ -77,35 +77,59 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
         return $result;
     }
 
-	function isInStock()
+	/**
+	 * Check - product is in-stock or not 
+	 * 
+	 * @return boolean
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	public function isInStock()
 	{
+		$result = true;
+
 		$options = (array) $this->get("productOptions");
+
 		$max_options = 0;
-		if ($this->get("tracking") && $options) {
+		if ($this->get('tracking') && $options) {
+
 			// calculate the amount of options cominations for tracking with product options
 			foreach ($options as $opt) {
-				$type = strtolower($opt->get("opttype"));
-				if ($type == "radio button" || $type == "selectbox") {
-					if ($max_options == 0) $max_options = 1; 
+				if (in_array(strtolower($opt->get('opttype')), array('radio button', 'selectbox'))) {
+					if ($max_options == 0) {
+						$max_options = 1;
+					}
+
 					$cnt = count(explode("\n", $opt->get("options")));
-					if ($cnt > 0) $max_options *= $cnt;
+
+					if ($cnt > 0) {
+						$max_options *= $cnt;
+					}
 				}
 			}
 		}
 
 		if ($max_options && $this->get("tracking")) {
 			$inv = new XLite_Module_InventoryTracking_Model_Inventory();
-			$product_id = $this->get("product_id");
-			$out_of_stock = $inv->count("inventory_id LIKE '$product_id|%' AND amount <= 0");
-			return ($out_of_stock < $max_options);
+			$result = $inv->count('inventory_id LIKE \'' . $this->get("product_id") . '|%\' AND amount <= 0') < $max_options;
+
 		} else {
-			$out_of_stock = ($this->getComplex('inventory.found') && ($this->getComplex('inventory.amount') <= 0));
-			return !$out_of_stock;
+			$result = !$this->getInventory()->get('found') || $this->getInventory()->get('amount') > 0;
 		}
+
 		return true;
 	}
 
-	function isOutOfStock()
+	/**
+	 * Check - product is out-of-stock or not 
+	 * 
+	 * @return boolean
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	public function isOutOfStock()
 	{
 		return !$this->isInStock();
 	}

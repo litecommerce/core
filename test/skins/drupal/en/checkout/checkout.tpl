@@ -24,4 +24,3 @@
 <widget template="shopping_cart/totals.tpl">
 <widget class="XLite_View_Button" label="Update" href="javascript: document.cart_form.action.value='update';document.cart_form.submit()" font="FormButton">
 </form>
-<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_NotifyForm">

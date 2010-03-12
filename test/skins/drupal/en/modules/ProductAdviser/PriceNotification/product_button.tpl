@@ -10,4 +10,4 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<span class="notify-me"><a href="javascript:void(0);" onclick="javascript: PriceNotifyMe({product.product_id})); return false;">Notify me</a> when the price drops</span>
+<span class="notify-me price-notify"><a href="javascript:void(0);" class="product-{product.product_id}">Notify me</a> when the price drops</span>

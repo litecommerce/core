@@ -50,6 +50,8 @@ abstract class XLite_View_Form_Abstract extends XLite_View_Abstract
 
     const PARAM_CLASS_NAME = 'className';
 
+    protected $plainList = null;
+
     /**
      * Open and close form tags
      * 
@@ -99,6 +101,53 @@ abstract class XLite_View_Form_Abstract extends XLite_View_Abstract
     protected function getFormParams()
     {
         return $this->getCommonFormParams() + $this->getParam(self::PARAM_FORM_PARAMS);
+    }
+
+    /**
+     * Return list of additional params 
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getFormParamsAsPlainList()
+    {
+        if (is_null($this->plainList)) {
+            foreach ($this->getFormParams() as $key => $value) {
+                if (is_array($value)) {
+                    $this->addChain2PlainList($key, $value);
+
+                } else {
+                    $this->plainList[$key] = $value;
+                }
+            }
+        }
+
+        return $this->plainList;
+    }
+
+    /**
+     * Add array branch to plain parameters list 
+     * 
+     * @param string $prefix Branch prefix
+     * @param array  $list   Branch
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addChain2PlainList($prefix, array $list)
+    {
+        foreach ($list as $key => $value) {
+            $key = $prefix . '[' . $key . ']';
+            if (is_array($value)) { 
+                $this->addChain2PlainList($key, $value);
+
+            } else {
+                $this->plainList[$key] = $value;
+            }
+        }
     }
 
     /**

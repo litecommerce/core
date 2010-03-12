@@ -330,16 +330,18 @@ There <?php echo ($pricingCAI == 1) ? "is" : "are"; ?> <b><font color=blue><?php
 
 	}
 
-	function isPriceNotificationAllowed()
+	/**
+	 * Check - price notification is allowed for product or not 
+	 * 
+	 * @return boolean
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	public function isPriceNotificationAllowed()
 	{
-		$result = false;
-
-		if (intval($this->get("price")) > 0) {
-			$mode = $this->config->ProductAdviser->customer_notifications_mode;
-			$result = ($mode & 1) != 0;
-		}
-
-		return $result;
+		return 0 < intval($this->get('price'))
+			&& ($this->config->ProductAdviser->customer_notifications_mode & 1) != 0;
 	}
 
 }
