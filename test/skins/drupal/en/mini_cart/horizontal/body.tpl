@@ -10,7 +10,7 @@
   </div>
 
   <div class="cart-items" IF="!cart.empty">
-    <p><span class="toggle-button"><a href="{buildURL(#cart#)}" onClick="javascript:xlite_minicart_toggle('lc-minicart-{displayMode}'); return false;">{cart.getItemsCount()} item(s)</a> </span></p>
+    <p class="toggle-button"><a href="{buildURL(#cart#)}" onClick="javascript:xlite_minicart_toggle('lc-minicart-{displayMode}'); return false;">{cart.getItemsCount()} item(s)</a> </p>
     <div class="items-list">
       <ul>
         <li FOREACH="getItemsList(),item">
