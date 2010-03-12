@@ -11,5 +11,5 @@
  * @since     3.0.0
  *}
 <widget class="XLite_View_Form_Product_AddToCart" name="add_to_cart" product="{getProduct()}" />
-  <widget class="XLite_View_Button_Submit" label="Buy Now" />
+  <widget class="XLite_View_Button_Submit" label="Buy Now" style="{style}" />
 <widget name="add_to_cart" end />

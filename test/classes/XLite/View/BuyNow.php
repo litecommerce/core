@@ -40,7 +40,7 @@ class XLite_View_BuyNow extends XLite_View_Abstract
      */
 
     const PARAM_PRODUCT = 'product';
-
+    const PARAM_BUTTON_STYLE = 'style';
 
     /**
      * Define widget parameters
@@ -55,6 +55,7 @@ class XLite_View_BuyNow extends XLite_View_Abstract
 
         $this->widgetParams += array(
             self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
+            self::PARAM_BUTTON_STYLE => new XLite_Model_WidgetParam_String('Button style', '', false),
         );
 
         $this->widgetParams[self::PARAM_TEMPLATE]->setValue('buy_now.tpl');
