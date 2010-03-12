@@ -1,7 +1,13 @@
-INSERT INTO xlite_featured_products VALUES (231,0,45);
-INSERT INTO xlite_featured_products VALUES (130,0,25);
+-- Root category
+INSERT INTO xlite_featured_products VALUES (231,0,10);
+INSERT INTO xlite_featured_products VALUES (130,0,20);
+INSERT INTO xlite_featured_products VALUES (205,0,30);
 INSERT INTO xlite_featured_products VALUES (174,0,40);
-
+INSERT INTO xlite_featured_products VALUES (189,0,50);
+-- Category Gifts & Presents
+INSERT INTO xlite_featured_products VALUES (145,58,10);
+INSERT INTO xlite_featured_products VALUES (160,58,20);
+INSERT INTO xlite_featured_products VALUES (199,58,30);
 
 
 

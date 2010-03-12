@@ -45,7 +45,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsLi
      * Parameter specifies if new arrivals must be prepared for current category or for all catalog
      */
 
-    const PARAM_USE_NODE     = 'useNode';
+    const PARAM_USE_NODE = 'useNode';
 
 	/**
      * Targets this widget is allowed for
@@ -160,13 +160,28 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsLi
      */
     public function isVisible()
     {
-        if (self::WIDGET_TYPE_CENTER == $this->getParam(self::PARAM_WIDGET_TYPE) && 'new_arrivals' == XLite_Core_Request::getInstance()->target) {
-            $this->widgetParams[self::PARAM_SHOW_ALL_ITEMS_PER_PAGE]->setValue(false);
+        $visibility = parent::isVisible() && $this->checkProductsToDisplay();
+
+        if ($visibility && !$this->getParam(self::PARAM_PAGE_CONTENT)) {
+
+            // Do not display widget on page with target='new_arrivals' if it's not page content widget
+            if ('new_arrivals' == XLite_Core_Request::getInstance()->target) {
+                $visibility = false;
+
+            // Do not display widget in standalone mode if it is passed widgetType argument different from setting in the config
+            } elseif (!$this->getParam(self::PARAM_IS_EXPORTED) && $this->getParam(self::PARAM_WIDGET_TYPE) != $this->config->ProductAdviser->new_arrivals_type) {
+                $visibility = false;
+            }
         }
 
-        return parent::isVisible()
-            && $this->checkProductsToDisplay()
-            && !(!$this->getParam(self::PARAM_PAGE_CONTENT) && 'new_arrivals' == XLite_Core_Request::getInstance()->target);
+        if ($visibility) {
+            if (self::WIDGET_TYPE_CENTER == $this->getParam(self::PARAM_WIDGET_TYPE) && 'new_arrivals' == XLite_Core_Request::getInstance()->target) {
+                // Display pager if widget is a page content widget
+                $this->widgetParams[self::PARAM_SHOW_ALL_ITEMS_PER_PAGE]->setValue(false);
+            }
+        }
+
+        return $visibility;
     }
 
 	/**
