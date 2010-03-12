@@ -554,7 +554,8 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         $type = $this->getPageTypeObject($type);
 
         if ($type) {
-            $type->setAttributes($this->prepareAttributes($settings));
+            $application = $this->runApplication($this->prepareAttributes($settings));
+            $type->init();
             $result = $type->getPageInstanceData();
         }
 

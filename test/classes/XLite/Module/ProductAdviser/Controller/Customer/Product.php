@@ -217,6 +217,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
     			$profile = $this->auth->get("profile");
         		$profile_id = $profile->get("profile_id");
         		$email = $profile->get("login");
+
     		} else {
         		$profile_id = 0;
         		if ($this->session->isRegistered("customerEmail")) {
@@ -234,6 +235,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
             $check = implode(" AND ", $check);
             $this->priceNotified = $notification->find($check);
 		}
+
     	return $this->priceNotified;
 	}
 
