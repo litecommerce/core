@@ -73,5 +73,19 @@ class XLite_View_Cart extends XLite_View_Dialog
             $this->widgetParams[self::PARAM_TEMPLATE]->setValue($this->getDir() . '/empty.tpl');
         }
     }
+
+    /**
+     * Get a list of CSS files required to display the widget properly
+     *
+     * @return array
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function getCSSFiles()
+    {
+        return array_merge(parent::getCSSFiles(), array('shopping_cart/cart.css'));
+    }
+
+
 }
 

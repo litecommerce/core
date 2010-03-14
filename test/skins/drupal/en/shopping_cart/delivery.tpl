@@ -1,5 +1,5 @@
 {* SVN $Id$ *}
-<p IF="cart.shippingAvailable&cart.shipped&cart.getShippingRates()" align="right">
+<p IF="cart.shippingAvailable&cart.shipped&cart.getShippingRates()">
 
   <widget module="UPSOnlineTools" template="modules/UPSOnlineTools/delivery.tpl">
 

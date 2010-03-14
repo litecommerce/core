@@ -1,39 +1,34 @@
 {* SVN $Id$ *}
-<table align="right">
+<ul class="cart-sums">
 
   <widget module="WholesaleTrading" template="modules/WholesaleTrading/totals.tpl">
 
-  <tr>
-    <td><strong>Subtotal:</strong></td>
-    <td align="right">{price_format(cart,#subtotal#):h}</td>
-  </tr>
+  <li><em>Subtotal:</em>
+    {price_format(cart,#subtotal#):h}
+  </li>
 
-  <tr>
-    <td><strong>Shipping:</strong></td>
-	  <td align="right">
-		  <span IF="!cart.shippingAvailable">n/a</span>
-  		<span IF="cart.shippingAvailable">
-		  	<span IF="!cart.shipped" class="ProductPriceSmall">Free</span>
-			  <span IF="cart.shipped">{price_format(cart,#shipping_cost#):h}</span>
-  		</span>
-	  </td>
-  </tr>
+  <li><em>Shipping cost:</em>
+    <span IF="!cart.shippingAvailable">n/a</span>
+    <span IF="cart.shippingAvailable">
+      <span IF="!cart.shipped">Free</span>
+      <span IF="cart.shipped">{price_format(cart,#shipping_cost#):h}</span>
+    </span>
+  </li>
 
-  <tr IF="!cart.getDisplayTaxes()">
-    <td><strong>Tax:</strong></td>
-	  <td align="right">n/a</td>
-  </tr>
+  <li IF="!cart.getDisplayTaxes()"><em>Tax:</em>
+    n/a
+  </li>
+  <li FOREACH="cart.getDisplayTaxes(),tax_name,tax"><em>{cart.getTaxLabel(tax_name)}:</em>
+    {price_format(tax):h}
+  </li>
 
-  <tr FOREACH="cart.getDisplayTaxes(),tax_name,tax">
-	  <td><strong>{cart.getTaxLabel(tax_name)}:</strong></td>
-  	<td align="right">{price_format(tax):h}</td>
-  </tr>
+  <widget module="GiftCertificates" template="modules/GiftCertificates/totals.tpl" />
 
-  <widget module="GiftCertificates" template="modules/GiftCertificates/totals.tpl">
+  <li class="grand-total"><em>Grand total:</em>
+    {price_format(cart,#total#):h}
+  </li>
 
-  <tr>
-    <td><strong>Order total:</strong></td>
-    <td align="right"><font class="ProductPriceSmall">{price_format(cart,#total#):h}</font></td>
-  </tr>
+</ul>
 
-</table>
+<widget class="XLite_View_Button_Regular" label="Checkout" action="checkout" style="bright-button big-button checkout-button" />
+<widget module="GoogleCheckout" template="modules/GoogleCheckout/shopping_cart/gcheckout_notes.tpl" />

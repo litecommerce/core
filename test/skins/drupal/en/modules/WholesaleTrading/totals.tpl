@@ -1,1 +1,3 @@
-<tr IF="!cart.global_discount=#0#"><td><b>Global discount:</b></td><td align="right">{price_format(invertSign(cart.global_discount)):h}</td></tr>
+<li IF="!cart.global_discount=#0#">Global discount:
+  <em>{price_format(invertSign(cart.global_discount)):h}</em>
+</li>

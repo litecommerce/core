@@ -1,0 +1,35 @@
+#shopping-cart .cart-items,
+#shopping-cart .cart-sums
+{
+  list-style: none;
+}
+
+#shopping-cart .cart-items li
+{
+  clear: both;
+}
+
+#shopping-cart .delete-from-cart,
+#shopping-cart .item-thumbnail,
+#shopping-cart .item-info
+{
+  float: left;
+}
+
+#shopping-cart .item-actions,
+#shopping-cart .cart-totals
+{
+  float: right;
+}
+
+#shopping-cart .item-actions
+{
+  text-align: right;
+}
+
+#shopping-cart .delete-from-cart input
+{
+  background: transparent url(img/cart-item-delete.gif) no-repeat top left;
+  width: 13px;
+  height: 13px;
+}
