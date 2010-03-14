@@ -95,28 +95,32 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
 		parent::__construct();
 	}
 
-    function setProduct($product)
+    public function setProduct($product)
     {
         $this->product = $product;
+
         if (is_null($product)) {
             $this->set("product_id", 0);
+
         } else {
-        	if ($this->config->getComplex('Taxes.prices_include_tax')) {
+        	if ($this->config->Taxes->prices_include_tax) {
         		$this->set("price", $this->formatCurrency($product->get("taxedPrice")));
         	} else {
             	$this->set("price", $product->get("price"));
         	}
+
             $this->set("product_id", $product->get("product_id"));
             $this->set("product_name", $product->get("name"));
             $this->set("product_sku", $product->get("sku"));
         }
     }
 
-    function getProduct()
+    public function getProduct()
     {
         if (is_null($this->product) && $this->get("product_id")) {
             $this->product = new XLite_Model_Product($this->get("product_id"));
         }
+
         return $this->product;
     }
 
@@ -282,7 +286,7 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
     {
 		$params = array('product_id' => $this->get('product_id'));
 
-        $category_id = $this->getComplex('product.category.category_id');
+        $category_id = $this->getProduct()->getCategory()->get('category_id');
         if ($category_id) {
             $params['category_id'] = $category_id;
         }

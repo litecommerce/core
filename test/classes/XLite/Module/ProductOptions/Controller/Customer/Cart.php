@@ -35,15 +35,29 @@
  */
 class XLite_Module_ProductOptions_Controller_Customer_Cart extends XLite_Controller_Customer_Cart implements XLite_Base_IDecorator
 {
-    function getCurrentItem()
+    /**
+     * Get (and create) current cart item
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCurrentItem()
     {
         if (is_null($this->currentItem)) {
-            parent::getCurrentItem(); // $this->currentItem
+            parent::getCurrentItem();
+
             // set item options if present
-            if (!is_null($this->product) && $this->product->hasOptions() && isset($this->product_options)) {
-                $this->currentItem->set("productOptions", $this->product_options);
+            if (
+                !is_null($this->getProduct())
+                && $this->getProduct()->hasOptions()
+                && isset(XLite_Core_Request::getInstance()->product_options)
+            ) {
+                $this->currentItem->setProductOptions(XLite_Core_Request::getInstance()->product_options);
             }
         }
+
         return $this->currentItem;
     }
 
@@ -63,17 +77,17 @@ class XLite_Module_ProductOptions_Controller_Customer_Cart extends XLite_Control
         if (!is_null($this->getCurrentItem()->get('invalidOptions'))) {
             // got exception (invalid options combination)
             // build invalid options URL
-            $io = $this->getComplex('currentItem.invalidOptions');
+            $io = $this->getCurrentItem()->get('invalidOptions');
             $invalid_options = "";
             foreach ($io as $i => $o) {
                 $invalid_options .= "&" . urlencode("invalid_options[$i]") . "=" . urlencode($o);
             }
             // delete item from cart and switch back to product details
             $key = $this->getCurrentItem()->get('key');
-            $cart_items = $this->getComplex('cart.items');
-            for ($i = 0; $i < count($cart_items); $i++) {
-                if ($cart_items[$i]->get("key") == $key) {
-                    $this->cart->deleteItem($cart_items[$i]);
+            $cart_items = $this->getCart()->get('items');
+            foreach ($this->getCart()->get('items') as $i) {
+                if ($i->get("key") == $key) {
+                    $this->cart->deleteItem($i);
                     break;
                 }
             }

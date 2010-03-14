@@ -315,6 +315,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
         if (empty($orderby)) {
             $orderby = $this->defaultOrder;
         }    
+
         global $categories;
         $id = $this->get("product_id");
         // reset cached result for admin zone
