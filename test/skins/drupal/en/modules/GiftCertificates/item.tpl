@@ -5,8 +5,7 @@
 </div>
 
 <div class="item-thumbnail">
-  <a href="{buildURL(#add_gift_certificate#,##,_ARRAY_(#gcid#^item.gcid))}"><img src="images/modules/GiftCertificates/gift_certificate
-.gif" alt="" /></a>
+  <a href="{buildURL(#add_gift_certificate#,##,_ARRAY_(#gcid#^item.gcid))}"><img src="images/modules/GiftCertificates/gift_certificate.gif" alt="Gift certificate" /></a>
 </div>
 
 <div class="item-info">

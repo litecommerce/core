@@ -27,10 +27,10 @@
     <span class="item-subtotal">{price_format(item,#total#):h}</span>
   </div>
 
-  {*<span IF="!item.valid">(!) This product is out of stock or it has been disabled for sale.</span>*}
-  {*<widget module="ProductAdviser" template="modules/ProductAdviser/OutOfStock/cart_item.tpl" visible="{xlite.PA_InventorySupport}">*}
+  <p class="cart-error-message" IF="!item.valid">(!) This product is out of stock or it has been disabled for sale.</p>
+  <widget module="GoogleCheckout" template="modules/GoogleCheckout/shopping_cart/item.tpl">
+  <widget module="ProductAdviser" template="modules/ProductAdviser/OutOfStock/cart_item.tpl" visible="{xlite.PA_InventorySupport}">
   {*<widget class="XLite_View_Button_Submit" label="Update item" />*}
-  {*<widget module="GoogleCheckout" template="modules/GoogleCheckout/shopping_cart/item.tpl">*}
 
   <div class="item-buttons">
     <span class="move-to-wishlist"><a href="#">Move to wishlist</a></span>
