@@ -23,17 +23,17 @@
  */
 class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
 {
-	/**
-	 * Cart item to operate 
-	 * 
-	 * @var    XLite_Model_OrderItem
-	 * @access protected
-	 * @since  3.0.0 EE
-	 */
-	protected $currentItem = null;
+    /**
+     * Cart item to operate 
+     * 
+     * @var    XLite_Model_OrderItem
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected $currentItem = null;
 
 
-	/**
+    /**
      * Common method to determine current location 
      * 
      * @return string
@@ -56,12 +56,21 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
         return $this->currentItem;
     }
 
-    function action_add()
+    /**
+     * 'Add' action 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function action_add()
     {
-		if (!$this->canAddProductToCart()) {
-			return;
-		}
-		$this->collectCartGarbage();
+        if (!$this->canAddProductToCart()) {
+            return;
+        }
+
+        $this->collectCartGarbage();
 
         // add product to the cart
         $this->cart->addItem($this->getCurrentItem());
@@ -70,8 +79,8 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
         // switch back to product catalog or to shopping cart
         $this->set('returnUrlAbsolute', false);
         $productListUrl = ($this->config->General->add_on_mode && isset($_SERVER['HTTP_REFERER']))
-			? $_SERVER['HTTP_REFERER']
-			: $this->session->get('productListURL');
+            ? $_SERVER['HTTP_REFERER']
+            : $this->session->get('productListURL');
 
         if ($this->config->General->redirect_to_cart) {
             $this->session->set('continueURL', $productListUrl);
@@ -93,7 +102,7 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
 
         if ($this->cart->isEmpty()) {
             $this->cart->delete();
-		}
+        }
     }
 
     function action_update()
@@ -115,7 +124,7 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
 
         if ($this->cart->isEmpty()) {
             $this->cart->delete();
-		}
+        }
     }
     
     function action_checkout()
@@ -127,35 +136,35 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
 
     function action_clear()
     {
-    	if (!$this->cart->isEmpty()) {
+        if (!$this->cart->isEmpty()) {
             $this->cart->delete();
         }
     }
 
     function isSecure()
     {
-    	if ($this->is('HTTPS')) {
-    		return true;
-    	}
+        if ($this->is('HTTPS')) {
+            return true;
+        }
         return parent::isSecure();
     }
 
-	function canAddProductToCart()
-	{
-		if (!$this->getProduct()->filter()) {
-			$this->set('valid', false);
-			return false;	
-		}
-		return true;
-	}
+    function canAddProductToCart()
+    {
+        if (!$this->getProduct()->filter()) {
+            $this->set('valid', false);
+            return false;    
+        }
+        return true;
+    }
 
-	function collectCartGarbage()
-	{
-		// don't collect garbage, if the cart already has products
-		if ($this->cart->is('empty')) {
-			$this->cart->collectGarbage(5);
-		}
-	}
+    function collectCartGarbage()
+    {
+        // don't collect garbage, if the cart already has products
+        if ($this->cart->is('empty')) {
+            $this->cart->collectGarbage(5);
+        }
+    }
 
     /**
      * Get page instance data (name and URL)
@@ -167,7 +176,7 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
      */
     public function getPageInstanceData()
     {
-		$this->target = 'cart';
+        $this->target = 'cart';
 
         return parent::getPageInstanceData();
     }

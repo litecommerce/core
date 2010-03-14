@@ -1,156 +1,149 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* Dialog_cart_ProductAdviser description.
-*
-* @package Module_ProductAdviser
-* @access public
-* @version $Id$
-*/
-class XLite_Module_ProductAdviser_Controller_Customer_Cart extends XLite_Controller_Customer_Cart implements XLite_Base_IDecorator
-{	
-	public $rejectedItemInfo = null;
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage Controller
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
 
-    function action_add()
+/**
+ * Cart controller
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
+class XLite_Module_ProductAdviser_Controller_Customer_Cart extends XLite_Controller_Customer_Cart implements XLite_Base_IDecorator
+{    
+    public $rejectedItemInfo = null;
+
+    /**
+     * 'add' action
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function action_add()
     {
         parent::action_add();
 
         require_once LC_MODULES_DIR . 'ProductAdviser' . LC_DS . 'encoded.php';
-		ProductAdviser_action_add($this);
+        ProductAdviser_action_add($this);
     }
 
     function getRejectedItem()
     {
-		if (!($this->xlite->get("PA_InventorySupport") && $this->config->getComplex('ProductAdviser.customer_notifications_enabled'))) {
-			return null;
-		}
+        if (!($this->xlite->get("PA_InventorySupport") && $this->config->getComplex('ProductAdviser.customer_notifications_enabled'))) {
+            return null;
+        }
 
-		if (!$this->session->isRegistered("rejectedItem")) {
-			if (!is_null($this->rejectedItemInfo)) {
-				return ($this->rejectedItemInfo);
-			}
-			$this->rejectedItemInfo = null;
-			return null;
-		}
+        if (!$this->session->isRegistered("rejectedItem")) {
+            if (!is_null($this->rejectedItemInfo)) {
+                return ($this->rejectedItemInfo);
+            }
+            $this->rejectedItemInfo = null;
+            return null;
+        }
 
-		if (is_null($this->rejectedItemInfo)) {
-			$rejectedItemInfo = $this->session->get("rejectedItem");
-			$this->session->set("rejectedItem", null);
-			$this->rejectedItemInfo = new XLite_Base();
-			$this->rejectedItemInfo->set("product_id", $rejectedItemInfo->product_id);
-			$this->rejectedItemInfo->set("product", new XLite_Model_Product($this->rejectedItemInfo->product_id));
-			$this->rejectedItemInfo->set("amount", $rejectedItemInfo->availableAmount);
-			$this->rejectedItemInfo->set("key", $rejectedItemInfo->itemKey);
-			if (isset($rejectedItemInfo->productOptions)) {
-    			$this->rejectedItemInfo->set("productOptions", $rejectedItemInfo->productOptions);
-    			$poStr = array();
-    			foreach($rejectedItemInfo->productOptions as $po) {
-    				$poStr[] = $po->class . ": " . $po->option;
-    			}
-    			$this->rejectedItemInfo->set("productOptionsStr", implode(", ", $poStr));
-    		}
+        if (is_null($this->rejectedItemInfo)) {
+            $rejectedItemInfo = $this->session->get("rejectedItem");
+            $this->session->set("rejectedItem", null);
+            $this->rejectedItemInfo = new XLite_Base();
+            $this->rejectedItemInfo->set("product_id", $rejectedItemInfo->product_id);
+            $this->rejectedItemInfo->set("product", new XLite_Model_Product($this->rejectedItemInfo->product_id));
+            $this->rejectedItemInfo->set("amount", $rejectedItemInfo->availableAmount);
+            $this->rejectedItemInfo->set("key", $rejectedItemInfo->itemKey);
+            if (isset($rejectedItemInfo->productOptions)) {
+                $this->rejectedItemInfo->set("productOptions", $rejectedItemInfo->productOptions);
+                $poStr = array();
+                foreach($rejectedItemInfo->productOptions as $po) {
+                    $poStr[] = $po->class . ": " . $po->option;
+                }
+                $this->rejectedItemInfo->set("productOptionsStr", implode(", ", $poStr));
+            }
 
-        	if ($this->isNotificationSaved($rejectedItemInfo)) {
-    			$this->rejectedItemInfo = null;
-        	}
-		}
+            if ($this->isNotificationSaved($rejectedItemInfo)) {
+                $this->rejectedItemInfo = null;
+            }
+        }
 
-		return ($this->rejectedItemInfo);
-	}
+        return ($this->rejectedItemInfo);
+    }
 
-	function isNotificationSaved($rejectedItemInfo)
-	{
-    	$check = array();
+    function isNotificationSaved($rejectedItemInfo)
+    {
+        $check = array();
         $check[] = "type='" . CUSTOMER_NOTIFICATION_PRODUCT . "'";
 
-		if ($this->auth->is("logged")) {
-			$profile = $this->auth->get("profile");
-    		$profile_id = $profile->get("profile_id");
-    		$email = $profile->get("login");
-		} else {
-    		$profile_id = 0;
-    		if ($this->session->isRegistered("customerEmail")) {
-    			$email = $this->session->get("customerEmail");
-    		}
-		}
+        if ($this->auth->is("logged")) {
+            $profile = $this->auth->get("profile");
+            $profile_id = $profile->get("profile_id");
+            $email = $profile->get("login");
+        } else {
+            $profile_id = 0;
+            if ($this->session->isRegistered("customerEmail")) {
+                $email = $this->session->get("customerEmail");
+            }
+        }
         $check[] = "profile_id='$profile_id'";
         $check[] = "email='$email'";
 
-		$notification = new XLite_Module_ProductAdviser_Model_Notification();
-		$notification->set("type", CUSTOMER_NOTIFICATION_PRODUCT);
-    	$notification->set("product_id", $rejectedItemInfo->product_id);
-		if (isset($rejectedItemInfo->productOptions)) {
-			if (isset($rejectedItemInfo->productOptions[0]) && is_object($rejectedItemInfo->productOptions[0])) {
-    			$poArray = array();
-    			foreach($rejectedItemInfo->productOptions as $po) {
-    				$poArray[$po->class] = array("option_id" => $po->option_id, "option" => $po->option);
-    			}
-        		$notification->set("product_options", $poArray);
-			} else {
-    			$notification->set("product_options", $rejectedItemInfo->productOptions);
-    		}
-    	}
-    	if (isset($rejectedItemInfo->amount)) {
-    		$notification->set("quantity", $rejectedItemInfo->amount);
-    	}
+        $notification = new XLite_Module_ProductAdviser_Model_Notification();
+        $notification->set("type", CUSTOMER_NOTIFICATION_PRODUCT);
+        $notification->set("product_id", $rejectedItemInfo->product_id);
+        if (isset($rejectedItemInfo->productOptions)) {
+            if (isset($rejectedItemInfo->productOptions[0]) && is_object($rejectedItemInfo->productOptions[0])) {
+                $poArray = array();
+                foreach($rejectedItemInfo->productOptions as $po) {
+                    $poArray[$po->class] = array("option_id" => $po->option_id, "option" => $po->option);
+                }
+                $notification->set("product_options", $poArray);
+            } else {
+                $notification->set("product_options", $rejectedItemInfo->productOptions);
+            }
+        }
+        if (isset($rejectedItemInfo->amount)) {
+            $notification->set("quantity", $rejectedItemInfo->amount);
+        }
         $check[] = "notify_key='" . addslashes($notification->get("productKey")) . "'";
 
         $check = implode(" AND ", $check);
 
-    	return $notification->find($check);
-	}
+        return $notification->find($check);
+    }
 
-	function isPriceNotificationEnabled()
-	{
-		$mode = $this->config->getComplex('ProductAdviser.customer_notifications_mode');
-		return (($mode & 1) != 0) ? true : false;
-	}
+    function isPriceNotificationEnabled()
+    {
+        $mode = $this->config->getComplex('ProductAdviser.customer_notifications_mode');
+        return (($mode & 1) != 0) ? true : false;
+    }
 
-	function isProductNotificationEnabled()
-	{
-		$mode = $this->config->getComplex('ProductAdviser.customer_notifications_mode');
-		return (($mode & 2) != 0) ? true : false;
-	}
+    function isProductNotificationEnabled()
+    {
+        $mode = $this->config->getComplex('ProductAdviser.customer_notifications_mode');
+        return (($mode & 2) != 0) ? true : false;
+    }
 }
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
