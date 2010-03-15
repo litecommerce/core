@@ -43,26 +43,6 @@ class XLite_Module_DetailedImages_View_Gallery extends XLite_View_Abstract
 
 
     /**
-     * Light box library images directory
-     * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public $lightBoxImagesDir = null;
-
-    /**
-     * Widget template 
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $template = 'modules/DetailedImages/gallery.tpl';
-
-    /**
      * Define widget parameters
      *
      * @return void
@@ -73,24 +53,21 @@ class XLite_Module_DetailedImages_View_Gallery extends XLite_View_Abstract
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams += array(
-            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
-        );
+        $this->widgetParams[self::PARAM_PRODUCT] = new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product');
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/DetailedImages/gallery.tpl');
     }
 
     /**
-     * Initialization 
+     * Get LightBox library images directory 
      * 
-     * @return void
+     * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function initView()
+    public function getLightBoxImagesDir()
     {
-        parent::initView();
-
-        $this->lightBoxImagesDir = XLite::getInstance()->shopURL(
+        return XLite::getInstance()->shopURL(
             XLite_Model_Layout::getInstance()->getPath() . 'modules/DetailedImages/images'
         );
     }

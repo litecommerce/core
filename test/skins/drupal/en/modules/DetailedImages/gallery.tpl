@@ -17,5 +17,5 @@
 </ul>
 <a href="javascript:void(0);" onclick="javascript: $('.di-gallery a').eq(0).trigger('click')">See all images ({product.getDetailedImagesCount()})</a>
 <script type="text/javascript">
-var lightBoxImagesDir = '{lightBoxImagesDir}';
+var lightBoxImagesDir = '{getLightBoxImagesDir()}';
 </script>

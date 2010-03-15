@@ -1,85 +1,112 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* Class description.
-*
-* @package Module_ProductOptions
-* @access public
-* @version $Id$
-*/
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage Model
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
+
+/**
+ * Product
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product implements XLite_Base_IDecorator
-{	
-	public $productOptions = null;
+{    
+    /**
+     * Product options list (cache)
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $productOptions = null;
 
-	public function __construct($id = null)
-	{
-		parent::__construct($id);
-		$this->fields['expansion_limit'] = 0;	
-	}
-	
-    function getProductOptions()
+    /**
+     * Constructor
+     * 
+     * @param mixed $id Object id
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct($id = null)
     {
-    	if (!is_null($this->productOptions)) {
-    		return $this->productOptions;
-    	}
+        parent::__construct($id);
 
-        $po = new XLite_Module_ProductOptions_Model_ProductOption();
-        $this->productOptions = $po->findAll("product_id='".$this->get("product_id")."'");
-		return $this->productOptions;
+        $this->fields['expansion_limit'] = 0;    
+    }
+    
+    /**
+     * Get product options list
+     * 
+     * @return array of XLite_Module_ProductOptions_Model_ProductOption
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProductOptions()
+    {
+        if (is_null($this->productOptions)) {
+            $po = new XLite_Module_ProductOptions_Model_ProductOption();
+            $this->productOptions = $po->findAll('product_id = \'' . $this->get('product_id') . '\'');
+        }
+
+        return $this->productOptions;
     }
 
-    function getProductOptionsNumber()
+    /**
+     * Get product options list length 
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProductOptionsNumber()
     {
-		$this->getProductOptions();
+        $list = $this->getProductOptions();
 
-		if (is_array($this->productOptions)) {
-			return count($this->productOptions);
-		} else {
-			return 0;
-		}
+        return is_array($list) ? count($list) : 0;
     }
 
-    function hasOptions()
+    /**
+     * Check - has product options list or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function hasOptions()
     {
         $po = new XLite_Module_ProductOptions_Model_ProductOption();
-        return $po->hasOptions($this->get("product_id"));
+        return $po->hasOptions($this->get('product_id'));
     }
 
     function getOptionExceptions()
@@ -109,10 +136,10 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product impl
         return $pv->get("javascript_code");
     }
 
-	function isDisplayPriceModifier()
-	{
-		return $this->xlite->get("WholesaleTradingEnabled") ? $this->is("priceAvailable") : true;
-	}
+    function isDisplayPriceModifier()
+    {
+        return $this->xlite->get("WholesaleTradingEnabled") ? $this->is("priceAvailable") : true;
+    }
 
     function delete()
     {
@@ -123,9 +150,9 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product impl
             $product_id = $this->get("product_id");
             $inventories = $inventory->findAll("inventory_id='$product_id' OR inventory_id LIKE '$product_id" . "|%'");
             if (is_array($inventories)) {
-    			foreach($inventories as $inventory_) {
-    				$inventory_->delete();
-    			}
+                foreach($inventories as $inventory_) {
+                    $inventory_->delete();
+                }
             }
         }
         // delete product options, exceptions and javascript validator
@@ -139,219 +166,214 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product impl
         // delete product
         parent::delete();
     }
-	
-	function __clone()
-	{
-		$p = parent::__clone();
+    
+    function __clone()
+    {
+        $p = parent::__clone();
 
-		if ($this->config->getComplex('ProductOptions.clone_product_options')) {
+        if ($this->config->ProductOptions->clone_product_options) {
 
-			$id = $p->get("product_id");
+            $id = $p->get("product_id");
 
-			$clone_option = new XLite_Module_ProductOptions_Model_ProductOption();
-			$options = $clone_option->findAll("product_id='".$this->get("product_id")."'");
-		
-			if(empty($options))	return $p;
-			foreach($options as $option) {
-				$clone_option = new XLite_Module_ProductOptions_Model_ProductOption();
-				$clone_option->set("properties",$option->get("properties"));
-				$clone_option->set("option_id","");
-				$clone_option->set("product_id",$id);
-				$clone_option->create();
-			}
+            $clone_option = new XLite_Module_ProductOptions_Model_ProductOption();
+            $options = $clone_option->findAll("product_id='".$this->get("product_id")."'");
+        
+            if(empty($options))    return $p;
+            foreach($options as $option) {
+                $clone_option = new XLite_Module_ProductOptions_Model_ProductOption();
+                $clone_option->set("properties",$option->get("properties"));
+                $clone_option->set("option_id","");
+                $clone_option->set("product_id",$id);
+                $clone_option->create();
+            }
  
-			// Clone validator JS code
-			$validator = new XLite_Module_ProductOptions_Model_OptionValidator($this->get("product_id"));
-			$js_code = $validator->get("javascript_code");
-			if ( strlen(trim($js_code)) > 0 ) {
-				$validator->set("product_id", $id);
-				$validator->set("javascript_code", $js_code);
-				$validator->create();
-			}
-			
-			// Clone options exceptions
-			$foo = new XLite_Module_ProductOptions_Model_OptionException();
-			$exceptions = $foo->findAll("product_id = '" . $this->get("product_id") . "'");
-			foreach ($exceptions as $exception) {			
-				$optionException = new XLite_Module_ProductOptions_Model_OptionException();
-				$optionException->set("product_id", $id);
-				$optionException->set("exception", $exception->get("exception"));
-				$optionException->create();
-			}
-			
-		    if ($this->xlite->get("InventoryTrackingEnabled")&& $this->config->getComplex('InventoryTracking.clone_inventory'))
-    	        $this->cloneInventory($p, true);
-		}	
-			return $p;
-	}
+            // Clone validator JS code
+            $validator = new XLite_Module_ProductOptions_Model_OptionValidator($this->get("product_id"));
+            $js_code = $validator->get("javascript_code");
+            if ( strlen(trim($js_code)) > 0 ) {
+                $validator->set("product_id", $id);
+                $validator->set("javascript_code", $js_code);
+                $validator->create();
+            }
+            
+            // Clone options exceptions
+            $foo = new XLite_Module_ProductOptions_Model_OptionException();
+            $exceptions = $foo->findAll("product_id = '" . $this->get("product_id") . "'");
+            foreach ($exceptions as $exception) {            
+                $optionException = new XLite_Module_ProductOptions_Model_OptionException();
+                $optionException->set("product_id", $id);
+                $optionException->set("exception", $exception->get("exception"));
+                $optionException->create();
+            }
+            
+            if ($this->xlite->get("InventoryTrackingEnabled")&& $this->config->InventoryTracking->clone_inventory) {
+                $this->cloneInventory($p, true);
+            }
+        }    
+        return $p;
+    }
 
-	/**
-	* Remove unused ProductOptions records
-	*/
-	function collectGarbage()
-	{
-		parent::collectGarbage();
+    /**
+    * Remove unused ProductOptions records
+    */
+    function collectGarbage()
+    {
+        parent::collectGarbage();
 
-		$classes = array(
-			"ProductOption" => array(
-				"key" => "option_id",
-				"table" => "product_options",
-			),
-			"OptionException" => array(
-				"key" => "option_id",
-				"table" => "product_options_ex",
-			),
-			"OptionValidator" => array(
-				"key" => "product_id",
-				"table" => "product_options_js",
-			),
-		);
+        $classes = array(
+            "ProductOption" => array(
+                "key" => "option_id",
+                "table" => "product_options",
+            ),
+            "OptionException" => array(
+                "key" => "option_id",
+                "table" => "product_options_ex",
+            ),
+            "OptionValidator" => array(
+                "key" => "product_id",
+                "table" => "product_options_js",
+            ),
+        );
 
-		$products_table = $this->db->getTableByAlias("products");
-		foreach ($classes as $class_name => $desc) {
-	        $check_table = $this->db->getTableByAlias($desc["table"]);
-	        $sql = "SELECT o.product_id AS object_product_id, o.".$desc["key"]." AS object_key FROM $check_table o LEFT OUTER JOIN $products_table p ON o.product_id=p.product_id WHERE p.product_id IS NULL";
-    	    $result = $this->db->getAll($sql);
+        $products_table = $this->db->getTableByAlias("products");
+        foreach ($classes as $class_name => $desc) {
+            $check_table = $this->db->getTableByAlias($desc["table"]);
+            $sql = "SELECT o.product_id AS object_product_id, o.".$desc["key"]." AS object_key FROM $check_table o LEFT OUTER JOIN $products_table p ON o.product_id=p.product_id WHERE p.product_id IS NULL";
+            $result = $this->db->getAll($sql);
 
-	        if (is_array($result) && count($result) > 0) {
+            if (is_array($result) && count($result) > 0) {
 
-				$class = 'XLite_Module_ProductOptions_Model_' . $class_name;
+                $class = 'XLite_Module_ProductOptions_Model_' . $class_name;
 
-    	        foreach ($result as $info) {
-    	        	if ($class_name == "ProductOption" && $info["object_product_id"] == 0) {
-    	        		continue;	// global product option
-    	        	}
-					$obj = new $class($info["object_key"]);
-            	    $obj->delete();
-	            }
-    	    }			
-		}
-	}
+                foreach ($result as $info) {
+                    if ($class_name == "ProductOption" && $info["object_product_id"] == 0) {
+                        continue;    // global product option
+                    }
+                    $obj = new $class($info["object_key"]);
+                    $obj->delete();
+                }
+            }            
+        }
+    }
 
-	function isInStock()
-	{
-		// check whether the method is already defined in InventoryTracking...
-		if (method_exists(parent, "isInStock")) {
-			return parent::isInStock();
-		}
+    function isInStock()
+    {
+        // check whether the method is already defined in InventoryTracking...
+        if (method_exists(parent, "isInStock")) {
+            return parent::isInStock();
+        }
 
-		if (!$this->xlite->getComplex('mm.activeModules.InventoryTracking')) return true;
+        if (!$this->xlite->getComplex('mm.activeModules.InventoryTracking')) return true;
 
-		// dublicate code of the method Module_InventoryTracking_Product::isInStock(): {{{
-		$options = (array) $this->get("productOptions");
-		$max_options = 0;
-		if ($this->get("tracking") && $options) {
-			// calculate the amount of options cominations for tracking with product options
-			foreach ($options as $opt) {
-				$type = strtolower($opt->get("opttype"));
-				if ($type == "radio button" || $type == "selectbox") {
-					if ($max_options == 0) $max_options = 1; 
-					$cnt = count(explode("\n", $opt->get("options")));
-					if ($cnt > 0) $max_options *= $cnt;
-				}
-			}
-		}
+        // dublicate code of the method Module_InventoryTracking_Product::isInStock(): {{{
+        $options = (array) $this->get("productOptions");
+        $max_options = 0;
+        if ($this->get("tracking") && $options) {
+            // calculate the amount of options cominations for tracking with product options
+            foreach ($options as $opt) {
+                $type = strtolower($opt->get("opttype"));
+                if ($type == "radio button" || $type == "selectbox") {
+                    if ($max_options == 0) $max_options = 1; 
+                    $cnt = count(explode("\n", $opt->get("options")));
+                    if ($cnt > 0) $max_options *= $cnt;
+                }
+            }
+        }
 
-		if ($max_options && $this->get("tracking")) {
-			$inv = new XLite_Module_InventoryTracking_Model_Inventory();
-			$product_id = $this->get("product_id");
-			$out_of_stock = $inv->count("inventory_id LIKE '$product_id|%' AND amount <= 0");
-			return ($out_of_stock < $max_options);
-		} else {
-			$out_of_stock = ($this->getComplex('inventory.found') && ($this->getComplex('inventory.amount') <= 0));
-			return !$out_of_stock;
-		}
-		return true;
-		// }}} dublicate code of the method Module_InventoryTracking_Product::isInStock()
-	}
+        if ($max_options && $this->get("tracking")) {
+            $inv = new XLite_Module_InventoryTracking_Model_Inventory();
+            $product_id = $this->get("product_id");
+            $out_of_stock = $inv->count("inventory_id LIKE '$product_id|%' AND amount <= 0");
+            return ($out_of_stock < $max_options);
+
+        } else {
+            $out_of_stock = ($this->getComplex('inventory.found') && ($this->getComplex('inventory.amount') <= 0));
+            return !$out_of_stock;
+        }
+
+        return true;
+        // }}} dublicate code of the method Module_InventoryTracking_Product::isInStock()
+    }
 
     function isOutOfStock()
     {
-		// check whether the method is already defined in InventoryTracking...
-		if (method_exists(parent, "isOutOfStock")) {
-			return parent::isOutOfStock();
-		}
-		return !$this->isInStock();
+        // check whether the method is already defined in InventoryTracking...
+        return method_exists(parent, "isOutOfStock") ? parent::isOutOfStock() : !$this->isInStock();
     }
 
-	function _importCategory($product, $properties, $default_category)
-	{
-		$oldCategories = array();
-		$categories = $product->get("categories");
-		if (is_array($categories)) {
-			foreach($categories as $cat) {
-				$oldCategories[] = $cat->get("category_id");
-			}
-		}
+    function _importCategory($product, $properties, $default_category)
+    {
+        $oldCategories = array();
+        $categories = $product->get("categories");
+        if (is_array($categories)) {
+            foreach($categories as $cat) {
+                $oldCategories[] = $cat->get("category_id");
+            }
+        }
 
-		parent::_importCategory($product, $properties, $default_category);
+        parent::_importCategory($product, $properties, $default_category);
 
-		$product->updateGlobalProductOptions($oldCategories);
-	}
+        $product->updateGlobalProductOptions($oldCategories);
+    }
 
-	function updateGlobalProductOptions($oldCategories = array())
-	{
-		$product = $this;
+    function updateGlobalProductOptions($oldCategories = array())
+    {
+        $product = $this;
 
-		$newCategories = array();
-		$categories = $product->get("categories");
+        $newCategories = array();
+        $categories = $product->get("categories");
 
-		if (is_array($categories)) {
-			foreach($categories as $cat) {
-				$newCategories[] = $cat->get("category_id");
-			}
-		}
+        if (is_array($categories)) {
+            foreach($categories as $cat) {
+                $newCategories[] = $cat->get("category_id");
+            }
+        }
 
-		$deleteOnly = array_diff($oldCategories, $newCategories);
-		$addOnly = array_diff($newCategories, $oldCategories);
+        $deleteOnly = array_diff($oldCategories, $newCategories);
+        $addOnly = array_diff($newCategories, $oldCategories);
 
-		if (count($deleteOnly) > 0) {
-			$productOptions = $product->getProductOptions();
-			$globalProductOptions = array();
-			foreach($productOptions as $po) {
-				if ($po->get("parent_option_id") > 0) {
-					$gpo = new XLite_Module_ProductOptions_Model_ProductOption($po->get("parent_option_id"));
-					$categories = $gpo->getCategories();
-					$result = array_intersect($categories, $deleteOnly);
-					if (count($result) > 0 && count(array_intersect($categories, $newCategories)) == 0) {
-						$po->delete();
-					}
-				}
-			}
-		}
+        if (count($deleteOnly) > 0) {
+            $productOptions = $product->getProductOptions();
+            $globalProductOptions = array();
+            foreach($productOptions as $po) {
+                if ($po->get("parent_option_id") > 0) {
+                    $gpo = new XLite_Module_ProductOptions_Model_ProductOption($po->get("parent_option_id"));
+                    $categories = $gpo->getCategories();
+                    $result = array_intersect($categories, $deleteOnly);
+                    if (count($result) > 0 && count(array_intersect($categories, $newCategories)) == 0) {
+                        $po->delete();
+                    }
+                }
+            }
+        }
 
-		if (count($addOnly) > 0) {
-			$gpo = new XLite_Module_ProductOptions_Model_ProductOption();
-			$gpos = $gpo->findAll("product_id='0' AND parent_option_id='0'");
-			if (is_array($gpos)) {
-				foreach($gpos as $gp) {
-					$categories = $gp->getCategories();
-					$result = array_intersect($categories, $addOnly);
+        if (count($addOnly) > 0) {
+            $gpo = new XLite_Module_ProductOptions_Model_ProductOption();
+            $gpos = $gpo->findAll("product_id='0' AND parent_option_id='0'");
+            if (is_array($gpos)) {
+                foreach($gpos as $gp) {
+                    $categories = $gp->getCategories();
+                    $result = array_intersect($categories, $addOnly);
 
-					if (count($result) > 0 || (is_array($categories) && count($categories) == 0)) {
-						$productOptions = $product->getProductOptions();
-						$need_update = true;
-						foreach($productOptions as $po) {
-							if ($po->get("parent_option_id") == $gp->get("option_id")) {
-							$need_update = false;
-							}
-						}
-						if ($need_update) {
-							$po = new XLite_Module_ProductOptions_Model_ProductOption();
-							$po->set("properties", $gp->get("properties"));
-							$po->set("option_id", null);
-							$po->set("product_id", $this->get("product_id"));
-							$po->set("parent_option_id", $gp->get("option_id"));
-							$po->create();
-						}
-					}
-				}
-			}
-		}
-	}
+                    if (count($result) > 0 || (is_array($categories) && count($categories) == 0)) {
+                        $productOptions = $product->getProductOptions();
+                        $need_update = true;
+                        foreach($productOptions as $po) {
+                            if ($po->get("parent_option_id") == $gp->get("option_id")) {
+                            $need_update = false;
+                            }
+                        }
+                        if ($need_update) {
+                            $po = new XLite_Module_ProductOptions_Model_ProductOption();
+                            $po->set("properties", $gp->get("properties"));
+                            $po->set("option_id", null);
+                            $po->set("product_id", $this->get("product_id"));
+                            $po->set("parent_option_id", $gp->get("option_id"));
+                            $po->create();
+                        }
+                    }
+                }
+            }
+        }
+    }
 } 
-
-// WARNING:
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

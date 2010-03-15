@@ -43,15 +43,6 @@ class XLite_Module_WholesaleTrading_View_Prices extends XLite_View_Abstract
 
 
     /**
-     * Widget template filename
-     *
-     * @var    string
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected $template = 'modules/WholesaleTrading/wholesale_pricing.tpl';
-
-    /**
      * Define widget parameters
      *
      * @return void
@@ -62,9 +53,8 @@ class XLite_Module_WholesaleTrading_View_Prices extends XLite_View_Abstract
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams += array(
-            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
-        );
+        $this->widgetParams[self::PARAM_PRODUCT] = new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product');
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/WholesaleTrading/wholesale_pricing.tpl');
     }
 
     /**

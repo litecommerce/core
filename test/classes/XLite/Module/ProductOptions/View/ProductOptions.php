@@ -36,26 +36,25 @@
 class XLite_Module_ProductOptions_View_ProductOptions extends XLite_View_Abstract
 {
     /**
-     * Widget template 
-     * 
-     * @var    string
-     * @access protected
-     * @since  3.0.0
+     * Widget parameter names
      */
-    protected $template = 'modules/ProductOptions/product_options.tpl';
+
+    const PARAM_PRODUCT = 'product';
+
 
     /**
-     * Initialize widget
+     * Define widget parameters
      *
      * @return void
-     * @access public
-     * @since  3.0.0
+     * @access protected
+     * @since  1.0.0
      */
-    public function init(array $attributes = array())
+    protected function defineWidgetParams()
     {
-        $this->attributes['product'] = false;
+        parent::defineWidgetParams();
 
-        parent::init($attributes);
+        $this->widgetParams[self::PARAM_PRODUCT] = new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product');
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/ProductOptions/product_options.tpl');
     }
 
     /**
@@ -68,21 +67,9 @@ class XLite_Module_ProductOptions_View_ProductOptions extends XLite_View_Abstrac
     public function isVisible()
     {
         return parent::isVisible()
-            && $this->getProduct()->hasOptions()
-            && !$this->getProduct()->get('showExpandedOptions');
-    }
-
-    /**
-     * Get product 
-     * 
-     * @return XLite_Model_Product
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getProduct()
-    {
-        return $this->attributes['product'] ? $this->attributes['product'] : parent::getProduct();
+            && $this->getParam(self::PARAM_PRODUCT)
+            && $this->getParam(self::PARAM_PRODUCT)->hasOptions()
+            && !$this->getParam(self::PARAM_PRODUCT)->get('showExpandedOptions');
     }
 
     /**

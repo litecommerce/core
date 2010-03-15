@@ -23,7 +23,7 @@ $(document).ready(
 </script>
 
 <ul class="product-options">
-  <li FOREACH="product.productOptions,option" class="product-option">
+  <li FOREACH="product.getProductOptions(),option" class="product-option">
     <strong class="subtitle">{option.opttext:h}</strong>
 
     {if:!option.empty}

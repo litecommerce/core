@@ -45,15 +45,6 @@ class XLite_Module_ProductOptions_View_ProductOptionModifier extends XLite_View_
 
 
     /**
-     * Widget template 
-     * 
-     * @var    string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $template = 'modules/ProductOptions/product_option_modifier.tpl';
-
-    /**
      * Define widget parameters
      *
      * @return void
@@ -69,6 +60,8 @@ class XLite_Module_ProductOptions_View_ProductOptionModifier extends XLite_View_
             self::PARAM_OPTION       => new XLite_Model_WidgetParam_Object('Option', null, false, 'stdClass'),
             self::PARAM_OPTION_GROUP => new XLite_Model_WidgetParam_Object('Option group', null, false, 'XLite_Module_ProductOptions_Model_ProductOption'),
         );
+
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/ProductOptions/product_option_modifier.tpl');
     }
 
     /**
