@@ -62,7 +62,7 @@ function isValid()
           <widget module="InventoryTracking" template="modules/InventoryTracking/product_quantity.tpl" IF="!product.productOptions" visible="{product.inventory.found}"/>
           <widget module="ProductOptions" template="modules/ProductOptions/product_quantity.tpl">
 
-          <widget class="XLite_View_ExtraFields" product="{product}">
+          <widget class="XLite_View_ExtraFields" product="{product}" />
 
           <tbody>
 
@@ -73,7 +73,7 @@ function isValid()
 
             <widget class="XLite_View_Price" product="{product}" template="common/price_table.tpl">
             <widget module="ProductAdviser" template="modules/ProductAdviser/PriceNotification/product_button.tpl" visible="{!priceNotificationSaved}">
-            <widget module="ProductOptions" template="modules/ProductOptions/product_options.tpl" IF="product.hasOptions()&!product.showExpandedOptions"/>
+            <widget module="ProductOptions" class="XLite_Module_ProductOptions_View_ProductOptions" product="{product}" />
             <widget module="WholesaleTrading" template="modules/WholesaleTrading/expanded_options.tpl" IF="product.hasOptions()&product.showExpandedOptions"/>
         		<widget module="WholesaleTrading" template="modules/WholesaleTrading/extra.tpl">
 
@@ -84,7 +84,7 @@ function isValid()
             <tr IF="availableForSale" id="addToCartButton">
               <td><widget class="XLite_View_Button_Submit" label="Add to Cart" /></td>
         			<td IF="!config.General.add_on_mode">
-        				<widget module="WishList" template="modules/WishList/add.tpl" href="javascript: WishList_Add2Cart();">
+        				<widget module="WishList" class="XLite_Module_WishList_View_Button_AddToWishlist" product="{product}" />
               </td>
             </tr>
 
@@ -94,7 +94,7 @@ function isValid()
     </tr>    
   </table>
 
-<widget name="add_to_cart" />
+<widget name="add_to_cart" end />
 
-<widget module="ProductAdviser" template="modules/ProductAdviser/OutOfStock/notify_form.tpl" visible="{xlite.PA_InventorySupport}">
-<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_PriceNotifyForm" visible="{!priceNotificationSaved}">
+<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_NotifyForm" product="{product}" />
+<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_PriceNotifyForm" product="{product}" />

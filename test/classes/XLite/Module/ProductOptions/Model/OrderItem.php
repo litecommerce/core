@@ -64,23 +64,26 @@ class XLite_Module_ProductOptions_Model_OrderItem extends XLite_Model_OrderItem 
         }
     }
     
-    function setProductOptions(&$options)
+    public function setProductOptions(array $options)
     {
+		$result = false;
+
 		$resolved_options = array();
-		foreach($options as $key => $option)
+		foreach ($options as $key => $option) {
 			$resolved_options[stripslashes($key)] = stripslashes($option);
+		}
 		
         $options = $resolved_options;
         // remove empty options
         foreach ($options as $k => $v) {
-            if (!strlen(trim($options[$k]))) {
-                if (isset($options[$k])) {
-                	unset($options[$k]);
-                }
-            } else {
-                $options[$k] = nl2br($options[$k]); // \n -> <br>
+            if (strlen(trim($options[$k]))) {
+				$options[$k] = nl2br($options[$k]);
+
+			} elseif (isset($options[$k])) {
+              	unset($options[$k]);
             }
         }
+
         // get product options, change option indexes to option values
         $product_options = $this->getComplex('product.productOptions');
         foreach ($product_options as $product_option) {
@@ -132,6 +135,7 @@ class XLite_Module_ProductOptions_Model_OrderItem extends XLite_Model_OrderItem 
             }
         }
         $this->set("options", serialize($this->options));
+
         return $result;
     }
 

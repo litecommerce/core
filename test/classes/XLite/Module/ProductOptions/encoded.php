@@ -48,6 +48,7 @@ function func_get_product_options($_this)
 					$weight_modifier = substr($line, 1);
         			$weight_modifier_type = (strstr($weight_modifier, "%") ? "weight_percent" : "weight_absolute");
         			$weight_modifier = str_replace("%", "", $weight_modifier);
+
 				} else { // change price
 					$surcharge = $line;
         			$surcharge_type = (strstr($surcharge, "%") ? "percent" : "absolute");
@@ -71,7 +72,7 @@ function func_get_product_options($_this)
         $opt->surcharge_sign = substr($surcharge, 0, 1);
         $opt->surcharge_sign = ($opt->surcharge_sign == "+" || $opt->surcharge_sign == "-") ? $opt->surcharge_sign : "";
         $opt->surcharge_abs = sprintf("%.2f",abs($surcharge));
-        $opt->isZero    = ($surcharge == 0) ? true : false;
+        $opt->isZero = $surcharge == 0;
 		if (isset($surcharge_type)) $opt->$surcharge_type = true;
 
 // BEGIN
@@ -79,8 +80,10 @@ function func_get_product_options($_this)
         $opt->weight_modifier_sign = substr($weight_modifier, 0, 1);
         $opt->weight_modifier_sign = ($opt->weight_modifier_sign == "+" || $opt->weight_modifier_sign == "-") ? $opt->weight_modifier_sign : "";
         $opt->weight_modifier_abs = abs($weight_modifier);
-		if ($weight_modifier_type) $opt->$weight_modifier_type = true;
-		$opt->isWeightZero = ($weight_modifier == "" || $weight_modifier == "0") ? true : false; // XXX ivf???
+		if (isset($weight_modifier_type) && $weight_modifier_type) {
+            $opt->$weight_modifier_type = true;
+        }
+		$opt->isWeightZero = $weight_modifier == "" || $weight_modifier == "0";
 		$opt->modifyParams = (!$opt->isWeightZero || !$opt->isZero);
 // END
 

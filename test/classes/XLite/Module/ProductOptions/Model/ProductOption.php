@@ -233,13 +233,13 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
 
     	$price = $opt->surcharge;
 
-		if ($opt->percent) {
+		if (isset($opt->percent) && $opt->percent) {
 			$price = ($productPrice * $price) / 100;
 		}
 
 		$price = $productPrice + $price;
 
-        if ($this->config->getComplex('Taxes.prices_include_tax')) {
+        if ($this->config->Taxes->prices_include_tax) {
         	$product->set("price", $this->formatCurrency($price));
         	$price = $product->get("listPrice");
         }

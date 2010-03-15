@@ -2,17 +2,28 @@
 // vim: set ts=4 sw=4 sts=4 et:
 
 /**
- * Notify form widget
- *  
- * @category  Litecommerce
- * @package   View
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license   http://www.qtmsoft.com/xpayments_eula.html X-Payments license agreement
- * @version   SVN: $Id$
- * @link      http://www.qtmsoft.com/
- * @see       ____file_see____
- * @since     3.0.0 EE
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage View
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
  */
 
 /**
@@ -25,53 +36,26 @@
 class XLite_Module_ProductAdviser_View_PriceNotifyForm extends XLite_View_Abstract
 {
     /**
-     * Javascript library path 
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * Widget parameter names
      */
-    protected $jsLibraryPath = 'modules/ProductAdviser/PriceNotification/notify_form.js';
+
+    const PARAM_PRODUCT = 'product';
+
 
     /**
-     * BlockUI library path 
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $blockUILibraryPath = 'popup/jquery.blockUI.js';
-
-    /**
-     * BlockUI-based popup library path 
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $blockUIExtLibraryPath = 'popup/popup.js';
-
-    /**
-     * BlockUI-based popup CSS path 
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $blockUIExtCSSPath = 'popup/popup.css';
-
-    /**
-     * Widget template filename
+     * Define widget parameters
      *
-     * @var    string
+     * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  1.0.0
      */
-    protected $template = 'modules/ProductAdviser/PriceNotification/notify_form.tpl';
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams[self::PARAM_PRODUCT] = new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product');
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/ProductAdviser/PriceNotification/notify_form.tpl');
+    }
 
     /**
      * Check visibility 
@@ -84,6 +68,7 @@ class XLite_Module_ProductAdviser_View_PriceNotifyForm extends XLite_View_Abstra
     public function isVisible()
     {
         return parent::isVisible()
+            && $this->getParam(self::PARAM_PRODUCT)
             && $this->get('priceNotificationEnabled');
     }
 
@@ -99,9 +84,9 @@ class XLite_Module_ProductAdviser_View_PriceNotifyForm extends XLite_View_Abstra
     {
         $list = parent::getJSFiles();
 
-        $list[] = $this->jsLibraryPath;
-        $list[] = $this->blockUILibraryPath;
-        $list[] = $this->blockUIExtLibraryPath;
+        $list[] = 'modules/ProductAdviser/PriceNotification/notify_form.js';
+        $list[] = 'popup/jquery.blockUI.js';
+        $list[] = 'popup/popup.js';
 
         return $list;
     }
@@ -118,7 +103,7 @@ class XLite_Module_ProductAdviser_View_PriceNotifyForm extends XLite_View_Abstra
     {
         $list = parent::getCSSFiles();
 
-        $list[] = $this->blockUIExtCSSPath;
+        $list[] = 'popup/popup.css';
 
         return $list;
     }

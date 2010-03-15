@@ -42,18 +42,22 @@ class XLite_Controller_Customer_Login extends XLite_Controller_Customer_Abstract
 
     function action_login()
     {
-        $this->profile = $this->auth->login($_POST["login"], $_POST["password"]);
+        $this->profile = $this->auth->login(XLite_Core_Request::getInstance()->login, XLite_Core_Request::getInstance()->password);
 
         if ($this->profile === ACCESS_DENIED) {
             $this->set("valid", false);
             return;
-        }   
-        if (is_null($this->get("returnUrl"))) {
+        }
+
+        $this->set("returnUrl", XLite_Core_Request::getInstance()->returnUrl);
+
+        if (!$this->get("returnUrl")) {
             $cart = XLite_Model_Cart::getInstance();
             $url = $this->getComplex('xlite.script');
             if (!$cart->get("empty")) {
                 $url .= "?target=cart";
             }
+
             $this->set("returnUrl", $url);
         }
 

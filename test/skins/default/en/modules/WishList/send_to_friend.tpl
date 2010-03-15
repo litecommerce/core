@@ -23,7 +23,7 @@
 	</tr>	
 	<tr>
 		<td>&nbsp;</td>
-        <td colspan="2"><br><widget class="XLite_View_Button" label="Send to friend" href="javascript: document.send{product_id}_form.submit();" img="modules/WishList/letter_icon.gif" font="FormButton"></td>
+        <td colspan="2"><br><widget class="XLite_View_Button_Submit" label="Send to friend" /></td>
 		<td>&nbsp;</td>
 	</tr>
 </table>

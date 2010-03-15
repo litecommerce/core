@@ -1,7 +1,8 @@
 <div IF="priceNotificationEnabled">
-<script language="JavaScript" type="text/javascript">
+<script type="text/javascript">
 function PriceNotifyMe(product_id,price)
 {
+  var form = document.product_price_notify_form;
 	if (product_id) {
 		document.product_price_notify_form.product_id.value = product_id;
 	}

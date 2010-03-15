@@ -115,7 +115,7 @@
         	</tr>
         	<tr>
                 <td colspan=2>&nbsp;</td>
-        		<td><widget class="XLite_View_Button" label="Notify me" href="javascript: document.notify_me_form.submit()" img="modules/ProductAdviser/mail_icon.gif" font="FormButton"></td>
+        		<td><widget class="XLite_View_Button_Submit" label="Notify me" /></td>
         	</tr>
             </table>
 		</td>
