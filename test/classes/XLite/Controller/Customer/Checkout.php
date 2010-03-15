@@ -389,14 +389,14 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
     }
 
     /**
-     * Get page type name
+     * Get page title
      * 
      * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getPageTypeName()
+    public function getPageTitle()
     {
         return 'Checkout';
     }
