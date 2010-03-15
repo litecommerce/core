@@ -51,7 +51,20 @@ class XLite_View_CategorySelect extends XLite_View_Abstract
     public $selectedCategory = null;	
     public $allOption = false;	
     public $noneOption = false;	
-    public $template = "common/select_category.tpl";
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/select_category.tpl');
+    }
 
     function getCategoriesCondition()
     {
