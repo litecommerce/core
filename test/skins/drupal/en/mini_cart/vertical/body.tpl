@@ -35,7 +35,7 @@
 <div id="lc-minilist-{displayMode}" class="lc-minilist lc-minilist-{displayMode} collapsed" IF="countWishlistProducts()">
 
   <div class="list-link">
-    <h3><a href="{buildURL(#cart#)}">Wishlist</a></h3>
+    <h3><a href="{buildURL(#wishlist#)}">Wishlist</a></h3>
   </div>
 
   <div class="list-items">
