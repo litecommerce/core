@@ -2,12 +2,14 @@
 <div id="shopping-cart">
   <widget class="XLite_View_Form_Cart_Main" name="cart_form" />
 
-    <ul class="cart-items clearfix">
-      <li class="cart-item" FOREACH="cart.items,cart_id,item">
-        <widget template="shopping_cart/item.tpl" IF="item.isUseStandardTemplate()" />
-        <widget module="GiftCertificates" template="modules/GiftCertificates/item.tpl" IF="item.gcid" />
-      </li>
-    </ul>
+    <table class="cart-items clearfix">
+      <tbody>
+        <tr class="cart-item" FOREACH="cart.items,cart_id,item">
+          <widget template="shopping_cart/item.tpl" IF="item.isUseStandardTemplate()" />
+          <widget module="GiftCertificates" template="modules/GiftCertificates/item.tpl" IF="item.gcid" />
+        </tr>
+      </tbody>
+    </table>
 
     <div class="cart-totals">
       <widget template="shopping_cart/totals.tpl">

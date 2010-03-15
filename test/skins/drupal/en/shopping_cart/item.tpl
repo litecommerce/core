@@ -1,23 +1,23 @@
 {* SVN $Id$ *}
-<div class="delete-from-cart">
+<td class="delete-from-cart">
   <input type="image" src="images/spacer.gif" />
   {* <widget class="XLite_View_Button_Regular" label="X" action="delete" formParams="{_ARRAY_(#cart_id#^cart_id)}" /> *}
-</div>
+</td>
 
-<div class="item-thumbnail" IF="item.hasThumbnail()">
+<td class="item-thumbnail" IF="item.hasThumbnail()">
   <a href="{item.url}"><img src="{item.thumbnailURL}" alt="{item.name}"></a>
-</div>
+</td>
 
-<div class="item-info">
-  <div class="item-title"><a href="{item.url}">{item.name}</a></div>
-  <div class="item-sku" IF="{item.sku}">SKU: {item.sku}</div>
-  <div class="item-weight" IF="{item.weight}">Weight: {item.weight} {config.General.weight_symbol}</div>
-  <div class="item-options">
-  <widget module="ProductOptions" template="modules/ProductOptions/selected_options.tpl" visible="{item.hasOptions()}" item="{item}">
-  </div>
-</div>
+<td class="item-info">
+  <p class="item-title"><a href="{item.url}">{item.name}</a></p>
+  <p class="item-sku" IF="{item.sku}">SKU: {item.sku}</p>
+  <p class="item-weight" IF="{item.weight}">Weight: {item.weight} {config.General.weight_symbol}</p>
+  <p class="item-options">
+    <widget module="ProductOptions" template="modules/ProductOptions/selected_options.tpl" visible="{item.hasOptions()}" item="{item}">
+  </p>
+</td>
 
-<div class="item-actions">
+<td class="item-actions">
 
   <div class="item-sums">
     <span class="item-price">{price_format(item,#price#):h}</span>
@@ -36,4 +36,4 @@
     <span class="move-to-wishlist"><a href="#">Move to wishlist</a></span>
   </div>
 
-</div>
+</td>

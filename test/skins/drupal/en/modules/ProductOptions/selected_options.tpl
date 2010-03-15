@@ -1,11 +1,5 @@
-<div>
-<table border="0">
-<tr>
-    <td colspan="2"><b>Selected options:</b></td>
-</tr>
-<tr FOREACH="item.productOptions,option" valign=top>
-    <td>{option.class:h}:</td>
-    <td>{option.option:h}</td>
-</tr>
-</table>
-</div>
+<span class="item-option" FOREACH="item.productOptions,option">
+  {option.class:h}: {option.option:h}<span IF="optionArrayPointer<optionArraySize">, </span>
+</span>
+
+<div class="item-change-options" IF="item.productOptions"><a href="#">Change options</a></div>
