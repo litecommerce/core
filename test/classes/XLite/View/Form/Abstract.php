@@ -194,7 +194,7 @@ abstract class XLite_View_Form_Abstract extends XLite_View_Abstract
             self::PARAM_FORM_ACTION => new XLite_Model_WidgetParam_String('Action', ''),
             self::PARAM_FORM_NAME   => new XLite_Model_WidgetParam_String('Name', ''),
             self::PARAM_FORM_PARAMS => new XLite_Model_WidgetParam_Array('Params', array()),
-            self::PARAM_FORM_METHOD => new XLite_Model_WidgetParam_LIst('Request method', 'POST', array('POST', 'GET')),
+            self::PARAM_FORM_METHOD => new XLite_Model_WidgetParam_LIst('Request method', 'post', array('post', 'get')),
 
             self::PARAM_CLASS_NAME  => new XLite_Model_WidgetParam_String('Class name', ''),
         );

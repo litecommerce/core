@@ -13,9 +13,9 @@
 <widget class="XLite_View_Form_Product_AddToCart" name="add_to_cart" product="{product}" className="product-details" />
 
   <div IF="previousProduct|nextProduct" class="sibliding-links">
-    <a IF="previousProduct" class="previous" href="{buildURL(#product#,##,_ARRAY_(#product_id#^previousProduct.product_id))}" alt="{previousProduct.name}">Previous product</a>
+    <a IF="previousProduct" class="previous" href="{buildURL(#product#,##,_ARRAY_(#product_id#^previousProduct.product_id))}" title="{previousProduct.name}">Previous product</a>
     <span IF="previousProduct&nextProduct">|</span>
-    <a IF="nextProduct" class="next" href="{buildURL(#product#,##,_ARRAY_(#product_id#^nextProduct.product_id))}" alt="{nextProduct.name}">Next product</a>
+    <a IF="nextProduct" class="next" href="{buildURL(#product#,##,_ARRAY_(#product_id#^nextProduct.product_id))}" title="{nextProduct.name}">Next product</a>
   </div>
 
   <div IF="product.hasImage()" class="product-thumbnail">
