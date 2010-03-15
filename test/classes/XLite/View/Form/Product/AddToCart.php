@@ -44,7 +44,7 @@ class XLite_View_Form_Product_AddToCart extends XLite_View_Form_Product_Abstract
      */
     protected function getFormName()
     {
-        return 'add_to_cart';
+        return 'add_to_cart_' . $this->getProduct()->get('product_id');
     }
 
     /**

@@ -3,7 +3,7 @@
 
   <li class="item" FOREACH="getSideBarData(),product">
 
-    <a IF="isShowThumbnails()&product.hasThumbnail()" class="product-thumbnail" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^product.category.category_id))}" IF="product.hasImage()"><img src="{product.getThumbnailURL()}" width="50" alt="" /></a>
+    <a IF="isShowThumbnails()&product.hasThumbnail()" class="product-thumbnail" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^product.category.category_id))}"><img src="{product.getThumbnailURL()}" width="50" alt="" /></a>
 
     <div class="body">
 
