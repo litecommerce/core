@@ -92,14 +92,20 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
 
     /**
      * Return subcategories list
+     *
+     * @param integer $categoryId Category id
      * 
      * @return array
      * @access protected
      * @since  3.0.0 EE
      */
-    protected function getCategories()
+    protected function getCategories($categoryId = null)
     {
-        return $this->getWidgetParams(self::PARAM_ROOT_ID)->getObject()->getSubcategories();
+        $category = is_null($categoryId)
+            ? $this->getWidgetParams(self::PARAM_ROOT_ID)->getObject()
+            : new XLite_Model_Category($categoryId);
+
+        return $category->getSubcategories();
     }
 
 	/**
