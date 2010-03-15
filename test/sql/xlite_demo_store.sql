@@ -254,4 +254,5 @@ TRUNCATE xlite_wholesale_pricing;
 INSERT INTO xlite_wholesale_pricing (product_id, amount, price, membership) VALUES (205, 4, 89.99, 'all');
 INSERT INTO xlite_wholesale_pricing (product_id, amount, price, membership) VALUES (205, 9, 85.99, 'all');
 
-
+update xlite_products set expansion_limit = 1 where product_id = 205;
+insert into xlite_purchase_limit values (205, 10, 100);
