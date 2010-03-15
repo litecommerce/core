@@ -49,13 +49,40 @@ class XLite_Module_ProductAdviser_Controller_Customer_Cart extends XLite_Control
     {
         parent::action_add();
 
-        require_once LC_MODULES_DIR . 'ProductAdviser' . LC_DS . 'encoded.php';
-        ProductAdviser_action_add($this);
+        if ($this->xlite->get("PA_InventorySupport") && $this->config->ProductAdviser->customer_notifications_enabled) {
+
+            if (!is_null($this->cart->get("outOfStock"))) {
+
+    			$rejectedItemInfo = new StdClass();
+            	$rejectedItem = new XLite_Model_OrderItem();
+            	$product = $this->get("product");
+            	$rejectedItemInfo->product_id = $product->get("product_id");
+                $rejectedItem->set("product", $product);
+
+            	if ($this->xlite->get("ProductOptionsEnabled") && $product->hasOptions() && isset($this->product_options)) {
+                	$rejectedItem->set("productOptions", $this->product_options);
+            		$rejectedItemInfo->productOptions = $rejectedItem->get("productOptions");
+                }
+
+                $this->session->set("rejectedItem", $rejectedItemInfo);
+
+    		} elseif (!$this->xlite->get("rejectedItemPresented")) {
+            		$this->session->set("rejectedItem", null);
+    		}
+    	}
     }
 
-    function getRejectedItem()
+    /**
+     * getRejectedItem 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRejectedItem()
     {
-        if (!($this->xlite->get("PA_InventorySupport") && $this->config->getComplex('ProductAdviser.customer_notifications_enabled'))) {
+        if (!($this->xlite->get("PA_InventorySupport") && $this->config->ProductAdviser->customer_notifications_enabled)) {
             return null;
         }
 
@@ -68,6 +95,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Cart extends XLite_Control
         }
 
         if (is_null($this->rejectedItemInfo)) {
+
             $rejectedItemInfo = $this->session->get("rejectedItem");
             $this->session->set("rejectedItem", null);
             $this->rejectedItemInfo = new XLite_Base();
@@ -75,13 +103,18 @@ class XLite_Module_ProductAdviser_Controller_Customer_Cart extends XLite_Control
             $this->rejectedItemInfo->set("product", new XLite_Model_Product($this->rejectedItemInfo->product_id));
             $this->rejectedItemInfo->set("amount", $rejectedItemInfo->availableAmount);
             $this->rejectedItemInfo->set("key", $rejectedItemInfo->itemKey);
+
             if (isset($rejectedItemInfo->productOptions)) {
+
                 $this->rejectedItemInfo->set("productOptions", $rejectedItemInfo->productOptions);
                 $poStr = array();
+
                 foreach($rejectedItemInfo->productOptions as $po) {
                     $poStr[] = $po->class . ": " . $po->option;
                 }
+
                 $this->rejectedItemInfo->set("productOptionsStr", implode(", ", $poStr));
+
             }
 
             if ($this->isNotificationSaved($rejectedItemInfo)) {
@@ -92,7 +125,17 @@ class XLite_Module_ProductAdviser_Controller_Customer_Cart extends XLite_Control
         return ($this->rejectedItemInfo);
     }
 
-    function isNotificationSaved($rejectedItemInfo)
+    /**
+     * isNotificationSaved 
+     * 
+     * @param mixed $rejectedItemInfo ____param_comment____
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isNotificationSaved($rejectedItemInfo)
     {
         $check = array();
         $check[] = "type='" . CUSTOMER_NOTIFICATION_PRODUCT . "'";
@@ -134,15 +177,31 @@ class XLite_Module_ProductAdviser_Controller_Customer_Cart extends XLite_Control
         return $notification->find($check);
     }
 
-    function isPriceNotificationEnabled()
+    /**
+     * isPriceNotificationEnabled 
+     * 
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isPriceNotificationEnabled()
     {
-        $mode = $this->config->getComplex('ProductAdviser.customer_notifications_mode');
+        $mode = $this->config->ProductAdviser->customer_notifications_mode;
         return (($mode & 1) != 0) ? true : false;
     }
 
-    function isProductNotificationEnabled()
+    /**
+     * isProductNotificationEnabled 
+     * 
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isProductNotificationEnabled()
     {
-        $mode = $this->config->getComplex('ProductAdviser.customer_notifications_mode');
+        $mode = $this->config->ProductAdviser->customer_notifications_mode;
         return (($mode & 2) != 0) ? true : false;
     }
 }

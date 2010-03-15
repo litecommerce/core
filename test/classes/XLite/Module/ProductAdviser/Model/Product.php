@@ -1,48 +1,38 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* Product_ProductAdviser description.
-*
-* @package Module_ProductAdviser
-* @access public
-* @version $Id$
-*/
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage View
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
+
+/**
+ * XLite_Module_ProductAdviser_Model_Product
+ * 
+ * @package    XLite
+ * @subpackage View
+ * @since      3.0.0
+ */
 class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product implements XLite_Base_IDecorator
 {	
 	public $relatedProducts = null;	
@@ -57,7 +47,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
      * @see    ____func_see____
      * @since  3.0.0
      */
-    function getRelatedProducts()
+    public function getRelatedProducts()
     {
 		if (!isset($this->relatedProducts)) {
 
@@ -109,7 +99,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
      * @see    ____func_see____
      * @since  3.0.0
      */
-    function getProductsAlsoBuy()
+    public function getProductsAlsoBuy()
     {
 		if (!isset($this->productsAlsoBuy)) {
 
@@ -152,7 +142,17 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
         return $this->productsAlsoBuy; 
     }
 
-	function addRelatedProducts($products)
+	/**
+	 * addRelatedProducts 
+	 * 
+	 * @param mixed $products ____param_comment____
+	 *  
+	 * @return void
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	public function addRelatedProducts($products)
 	{
 		if (is_array($products)) {
     		foreach($products as $p_key => $product) {
@@ -166,7 +166,17 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
     	}
 	}
 
-	function deleteRelatedProducts($products)
+	/**
+	 * deleteRelatedProducts 
+	 * 
+	 * @param mixed $products ____param_comment____
+	 *  
+	 * @return void
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	public function deleteRelatedProducts($products)
 	{
 		if (is_array($products)) {
     		foreach($products as $p_key => $product) {
@@ -180,10 +190,19 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
     	}
 	}
 
-    function create()
+    /**
+     * create 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function create()
     {
-    	parent::create();
-    	if ($this->config->getComplex('ProductAdviser.period_new_arrivals') > 0) {
+		parent::create();
+
+    	if ($this->config->ProductAdviser->period_new_arrivals > 0) {
     		$added = time();
             //$added = mktime(date("H", $added), 0, 0, date("m", $added), date("d", $added), date("Y", $added));
             $product_id = $this->get("product_id");
@@ -201,7 +220,15 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
     	}
     }
 
-    function delete()
+    /**
+     * delete 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function delete()
     {
 		$product_id = $this->get("product_id");
 		$linked = array
@@ -220,7 +247,15 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
 		}
     }
 
-	function getNewArrival()
+	/**
+	 * getNewArrival 
+	 * 
+	 * @return void
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	public function getNewArrival()
 	{
         $stats = new XLite_Module_ProductAdviser_Model_ProductNewArrivals();
 
@@ -242,7 +277,18 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
 		return $result;
 	}
 
-    function set($property, $value)
+    /**
+     * set 
+     * 
+     * @param mixed $property ____param_comment____
+     * @param mixed $value    ____param_comment____
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function set($property, $value)
     {
     	if ($property == "price") {
 			$oldPrice = $this->get("price");
@@ -250,7 +296,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
 
         parent::set($property, $value);
 
-        if (!$this->config->getComplex('ProductAdviser.customer_notifications_enabled')) {
+        if (!$this->config->ProductAdviser->customer_notifications_enabled) {
         	return;
         }
     	if ($property == "price") {
@@ -264,32 +310,97 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
     	}
     }
 
-    function update()
+    /**
+     * update 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function update()
     {
         parent::update();
 
-        require_once LC_MODULES_DIR . 'ProductAdviser' . LC_DS . 'encoded.php';
-		ProductAdviser_updateProduct($this);
+		if ($this->config->ProductAdviser->customer_notifications_enabled) {
+
+			$price = $this->xlite->get("productChangedPrice");
+
+			if (isset($price) && is_array($price)) {
+
+		    	$check = array();
+		        $check[] = "type='" . CUSTOMER_NOTIFICATION_PRICE . "'";
+				$check[] = "notify_key='" . $price["product_id"] . "'";
+				$check = implode(" AND ", $check);
+
+				$notification = new XLite_Module_ProductAdviser_Model_Notification();
+				$notifications = $notification->findAll($check);
+
+				if (is_array($notifications) && count($notifications) > 0) {
+
+					foreach($notifications as $notification) {
+						$notification->set("status", CUSTOMER_REQUEST_UPDATED);
+		                $notification->update();
+					}
+				}
+			}
+		}
     }
 
-    function checkHasOptions()
+    /**
+     * checkHasOptions 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function checkHasOptions()
     {
     	return $this->xlite->get("ProductOptionsEnabled") ? $this->hasOptions() : false;
     }
 
-    function _checkSafetyMode()
+    /**
+     * _checkSafetyMode 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function _checkSafetyMode()
     {
     	return $this->xlite->get("HTMLCatalogWorking");
     }
 
-    function checkSafetyMode()
+    /**
+     * checkSafetyMode 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function checkSafetyMode()
     {
     	if ($this->_checkSafetyMode()) {
     		$category_id = $this->getComplex('category.category_id');
     	}
     }
 
-    function getCategory($where = null, $orderby = null, $useCache = true)
+    /**
+     * getCategory 
+     * 
+     * @param string $where    ____param_comment____
+     * @param string $orderby  ____param_comment____
+     * @param bool   $useCache ____param_comment____
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCategory($where = null, $orderby = null, $useCache = true)
     {
     	if (is_null($this->_ProductMainCategory) || $this->_checkSafetyMode()) {
     		if ($this->_checkSafetyMode()) {
@@ -307,6 +418,16 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
     	return $this->_ProductMainCategory;
     }
 
+	/**
+	 * import 
+	 * 
+	 * @param array $options ____param_comment____
+	 *  
+	 * @return void
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
 	public function import(array $options)
 	{
 		parent::import($options);
