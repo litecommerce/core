@@ -144,10 +144,12 @@ class XLite_Model_Mailer extends XLite_View_Abstract
         $this->set("body", $this->compile($dir.$this->get("bodyTemplate"), false));
 
         // find all images and fetch them; replace with cid:...
+		$fname = tempnam(LC_COMPILE_DIR, 'mail');
+		file_put_contents($fname, $this->get("body"));
+
         $imageParser = new XLite_Model_MailImageParser();
-        $imageParser->source = $this->get("body");
         $imageParser->webdir = $this->xlite->shopUrl("");
-        $imageParser->parse();
+        $imageParser->parse($fname);
 
         $this->set("body", $imageParser->result);
         $this->set("images", $imageParser->images);
@@ -206,6 +208,11 @@ class XLite_Model_Mailer extends XLite_View_Abstract
                 $this->mail->attachment[$cur][7] = $img["name"]."@mail.lc"; // CID
             }
         }
+
+		if (file_exists($fname)) {
+			unlink($fname);
+		}
+
     } // }}}
 
     /**

@@ -256,49 +256,16 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product impl
         }
     }
 
-    function isInStock()
+    public function isInStock()
     {
-        // check whether the method is already defined in InventoryTracking...
-        if (method_exists(parent, "isInStock")) {
-            return parent::isInStock();
-        }
-
-        if (!$this->xlite->getComplex('mm.activeModules.InventoryTracking')) return true;
-
-        // dublicate code of the method Module_InventoryTracking_Product::isInStock(): {{{
-        $options = (array) $this->get("productOptions");
-        $max_options = 0;
-        if ($this->get("tracking") && $options) {
-            // calculate the amount of options cominations for tracking with product options
-            foreach ($options as $opt) {
-                $type = strtolower($opt->get("opttype"));
-                if ($type == "radio button" || $type == "selectbox") {
-                    if ($max_options == 0) $max_options = 1; 
-                    $cnt = count(explode("\n", $opt->get("options")));
-                    if ($cnt > 0) $max_options *= $cnt;
-                }
-            }
-        }
-
-        if ($max_options && $this->get("tracking")) {
-            $inv = new XLite_Module_InventoryTracking_Model_Inventory();
-            $product_id = $this->get("product_id");
-            $out_of_stock = $inv->count("inventory_id LIKE '$product_id|%' AND amount <= 0");
-            return ($out_of_stock < $max_options);
-
-        } else {
-            $out_of_stock = ($this->getComplex('inventory.found') && ($this->getComplex('inventory.amount') <= 0));
-            return !$out_of_stock;
-        }
-
-        return true;
-        // }}} dublicate code of the method Module_InventoryTracking_Product::isInStock()
+        return $this->xlite->getComplex('mm.activeModules.InventoryTracking')
+            ? parent::isInStock()
+            : true;
     }
 
-    function isOutOfStock()
+    public function isOutOfStock()
     {
-        // check whether the method is already defined in InventoryTracking...
-        return method_exists(parent, "isOutOfStock") ? parent::isOutOfStock() : !$this->isInStock();
+        return !$this->isInStock();
     }
 
     function _importCategory($product, $properties, $default_category)

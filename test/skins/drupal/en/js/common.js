@@ -40,6 +40,26 @@ parseUri.options = {
 	}
 };
 
+// Get product id from object class name
+function getProductIdFromClassName(obj)
+{
+  var result = false;
+
+  var c = $(obj).attr('class');
+
+  if (c) {
+    var m = c.match(/product-([0-9]+)/);
+    if (m) {
+      result = parseInt(m[1]);
+      if (isNaN(result) || result < 1) {
+        result = false;
+      }
+    }
+  }
+
+  return result;
+}
+
 function formModify(obj, url)
 {
 	var form = obj.form;
@@ -196,8 +216,14 @@ var ajaxSupport = null;
 function hasAJAXSupport()
 {
   if (null == ajaxSupport) {
-    var xhr = window.ActiveXObject ? new ActiveXObject("Microsoft.XMLHTTP") : new XMLHttpRequest();
-    ajaxSupport = xhr ? true : false;
+    ajaxSupport = false;
+    var xhr = false;
+    try {
+
+      xhr = window.ActiveXObject ? new ActiveXObject('Microsoft.XMLHTTP') : new XMLHttpRequest();
+      ajaxSupport = xhr ? true : false;
+
+    } catch(e) { }
   }
 
   return ajaxSupport;

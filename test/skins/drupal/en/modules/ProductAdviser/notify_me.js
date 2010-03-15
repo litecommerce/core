@@ -17,13 +17,8 @@ function notifyMe(link, type, box)
         return false;
     }
 
-    var m = link.className.match(/product-([0-9]+)/);
-    if (!m) {
-        return false;
-    }
-
-    var productId = parseInt(m[1]);
-    if (isNaN(productId) || 0 > productId) {
+    var productId = getProductIdFromClassName(link);
+    if (!productId) {
         return false;
     }
 

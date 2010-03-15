@@ -27,65 +27,58 @@
  */
 
 /**
- * Product options lsit
+ * Send to friend page
  *
  * @package    XLite
  * @subpackage View
  * @since      3.0
  */
-class XLite_Module_ProductOptions_View_ProductOptions extends XLite_View_Abstract
+class XLite_Module_WishList_View_SendToFriend extends XLite_View_Dialog
 {
     /**
-     * Widget parameter names
+     * Targets this widget is allowed for
+     *
+     * @var    array
+     * @access protected
+     * @since  3.0.0 EE
      */
-
-    const PARAM_PRODUCT = 'product';
-
+    protected $allowedTargets = array('send_friend');
 
     /**
-     * Define widget parameters
+     * Return title
      *
-     * @return void
+     * @return string
      * @access protected
-     * @since  1.0.0
+     * @since  3.0.0 EE
      */
-    protected function defineWidgetParams()
+    protected function getHead()
     {
-        parent::defineWidgetParams();
-
-        $this->widgetParams[self::PARAM_PRODUCT] = new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product');
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/ProductOptions/product_options.tpl');
+        return 'Send to friend';
     }
 
     /**
-     * Check widget visibility 
-     * 
+     * Return templates directory name
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getDir()
+    {
+        return 'modules/WishList/send_to_friend';
+    }
+
+    /**
+     * Check if widget is visible
+     *
      * @return bool
-     * @access public
-     * @since  3.0.0
+     * @access protected
+     * @since  3.0.0 EE
      */
     public function isVisible()
     {
         return parent::isVisible()
-            && $this->getParam(self::PARAM_PRODUCT)
-            && $this->getParam(self::PARAM_PRODUCT)->hasOptions();
-    }
-
-    /**
-     * Register JS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-
-        $list[] = 'modules/ProductOptions/options_validation.js';
-
-        return $list;
+            && $this->getProduct()->is('available');
     }
 
 }

@@ -41,36 +41,69 @@ function blockUIPopupWait()
   blockUIPopup('<div class="block-wait">Please wait ...</div>');
 }
 
+// Open target / action / params based popup
+function openBlockUIPopup(target, action, params)
+{
+  if (!hasAJAXSupport()) {
+    return false;
+  }
+
+  if (!params) {
+    params = {};
+  }
+
+  params.target = target;
+  params.action = action ? action : '';
+
+  return $.ajax(
+    {
+      type:     'get',
+      url:      URLHandler.buildURL(params), 
+      success:  function(data, s) {
+        data = blockUIPopupPreprocess(data, s);
+        blockUIPopup(data);
+        blockUIPopupPostprocess();
+      },
+      complete: function(xhr, s) {
+        blockUIPopupXHRPreprocess(xhr, s);
+      }
+    }
+  );
+}
+
 // Open form-based popup
 function blockUIPopupFormTarget(form)
 {
-  if (form) {
-    blockUIPopupWait();
-
-    form = $(form).eq(0);
-
-    $.ajax(
-      {
-        type: form.attr('method'),
-        url:  form.attr('action'),
-        data: form.serialize(),
-        success: function(data, s) {
-          data = blockUIPopupPreprocess(data, s);
-          blockUIPopup(data);
-          blockUIPopupPostprocess();
-        },
-        complete: function(xhr, s) {
-          blockUIPopupXHRPreprocess(xhr, s);
-        }
-      }
-    );
+  if (!form || !hasAJAXSupport()) {
+    return false;
   }
+
+  blockUIPopupWait();
+
+  form = $(form).eq(0);
+
+  return $.ajax(
+    {
+      type:     form.attr('method'),
+      url:      form.attr('action'),
+      data:     form.serialize(),
+      success:  function(data, s) {
+        data = blockUIPopupPreprocess(data, s);
+        blockUIPopup(data);
+        blockUIPopupPostprocess();
+      },
+      complete: function(xhr, s) {
+        blockUIPopupXHRPreprocess(xhr, s);
+      }
+    }
+  );
 }
 
 function blockUIPopupXHRPreprocess(xhr, s)
 {
-  // Redirect
   if (xhr.status == 278) {
+
+    // Redirect
 
     blockUIPopupClose();
     var url = xhr.getResponseHeader('Location');
@@ -80,6 +113,12 @@ function blockUIPopupXHRPreprocess(xhr, s)
     } else {
       self.location.reload(true);
     }
+
+  } else if (xhr.status == 279) {
+
+    // Close (without redirect)
+
+    blockUIPopupClose();
   }
 }
 

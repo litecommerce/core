@@ -35,6 +35,7 @@ $(document).ready(
 
     <widget module="DetailedImages" class="XLite_Module_DetailedImages_View_Zoom" product="{product}" />
     <widget module="DetailedImages" class="XLite_Module_DetailedImages_View_Gallery" product="{product}" />
+    <widget module="WishList" class="XLite_Module_WishList_View_SendToFriendLink" product="{product}" />
   </div>
 
   <div class="product-body">

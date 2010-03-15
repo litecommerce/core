@@ -27,22 +27,55 @@
  */
 
 /**
- * Product options lsit
- *
+ * Send to friend product to cart form
+ * 
  * @package    XLite
  * @subpackage View
- * @since      3.0
+ * @since      3.0.0
  */
-class XLite_Module_ProductOptions_View_ProductOptions extends XLite_View_Abstract
+class XLite_Module_WishList_View_Form_Product_SendToFriend extends XLite_View_Form_Product_Abstract
 {
     /**
-     * Widget parameter names
+     * Current form name
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
      */
-
-    const PARAM_PRODUCT = 'product';
-
+    protected function getFormName()
+    {
+        return 'send_to_friend';
+    }
 
     /**
+     * initView 
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function initView()
+    {
+        parent::initView();
+
+        $this->widgetParams[self::PARAM_FORM_PARAMS]->appendValue($this->getFormDefaultParams());
+    }
+
+    /**
+     * getFormDefaultParams 
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getFormDefaultParams()
+    {
+        return array(
+            'product_id'  => $this->getProduct()->get('product_id'),
+        );
+    }
+
+    /** 
      * Define widget parameters
      *
      * @return void
@@ -53,40 +86,8 @@ class XLite_Module_ProductOptions_View_ProductOptions extends XLite_View_Abstrac
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams[self::PARAM_PRODUCT] = new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product');
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/ProductOptions/product_options.tpl');
+        $this->widgetParams[self::PARAM_FORM_TARGET]->setValue('send_friend');
+        $this->widgetParams[self::PARAM_FORM_ACTION]->setValue('send_friend');
     }
-
-    /**
-     * Check widget visibility 
-     * 
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-    public function isVisible()
-    {
-        return parent::isVisible()
-            && $this->getParam(self::PARAM_PRODUCT)
-            && $this->getParam(self::PARAM_PRODUCT)->hasOptions();
-    }
-
-    /**
-     * Register JS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-
-        $list[] = 'modules/ProductOptions/options_validation.js';
-
-        return $list;
-    }
-
 }
 

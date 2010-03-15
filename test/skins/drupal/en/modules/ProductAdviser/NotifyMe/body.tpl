@@ -16,7 +16,7 @@
   <h1 IF="isSmallQuantity()">Notify me when the stock quantity of a product increases</h1>
   <h1 IF="isBigPrice()">Notify me when the price drops</h1>
 
-  <table cellspacing="0">
+  <table cellspacing="0" class="form-table">
 
     <tr>
       <td>Your e-mail:</td>

@@ -27,13 +27,13 @@
  */
 
 /**
- * Product options lsit
+ * Send-to-friend popup link
  *
  * @package    XLite
  * @subpackage View
  * @since      3.0
  */
-class XLite_Module_ProductOptions_View_ProductOptions extends XLite_View_Abstract
+class XLite_Module_WishList_View_SendToFriendLink extends XLite_View_Abstract
 {
     /**
      * Widget parameter names
@@ -53,22 +53,25 @@ class XLite_Module_ProductOptions_View_ProductOptions extends XLite_View_Abstrac
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams[self::PARAM_PRODUCT] = new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product');
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/ProductOptions/product_options.tpl');
+        $this->widgetParams += array(
+            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
+        );
+
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/WishList/send_to_friend_link.tpl');
     }
 
     /**
-     * Check widget visibility 
+     * Check visibility 
      * 
-     * @return bool
+     * @return boolean
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function isVisible()
     {
         return parent::isVisible()
-            && $this->getParam(self::PARAM_PRODUCT)
-            && $this->getParam(self::PARAM_PRODUCT)->hasOptions();
+            && $this->getParam(self::PARAM_PRODUCT);
     }
 
     /**
@@ -83,10 +86,28 @@ class XLite_Module_ProductOptions_View_ProductOptions extends XLite_View_Abstrac
     {
         $list = parent::getJSFiles();
 
-        $list[] = 'modules/ProductOptions/options_validation.js';
+        $list[] = 'modules/WishList/send_to_friend_link.js';
+        $list[] = 'popup/jquery.blockUI.js';
+        $list[] = 'popup/popup.js';
 
         return $list;
     }
 
+    /**
+     * Register CSS files
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'popup/popup.css';
+
+        return $list;
+    }
 }
 

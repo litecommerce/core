@@ -52,6 +52,7 @@
 <widget module="Newsletters" template="modules/Newsletters/newsletters.tpl">
 <widget module="WishList" target="wishlist,product" mode="MessageSent" template="common/dialog.tpl" body="modules/WishList/message.tpl" head="Message has been sent">
 <widget module="WishList" target="wishlist" template="common/dialog.tpl" body="modules/WishList/wishlist.tpl">
+<widget module="WishList" class="XLite_Module_WishList_View_SendToFriend" />
 <widget module="AdvancedSearch" class="XLite_Module_AdvancedSearch_View_AdvancedSearch" />
 <widget module="ProductAdviser" template="modules/ProductAdviser/center_top.tpl">
 <!-- [/modules] }}} -->

@@ -102,10 +102,10 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Catalo
 	{
 		$result = null;
 
-		if ($this->isComplex('product.exists')) {
+		if ($this->getProduct()->is('exists')) {
 			$result = parent::handleRequest();
 
-		} elseif ($this->isComplex('category.exists') && $this->isComplex('category.enabled')) {
+		} elseif ($this->getCategory()->is('exists') && $this->getCategory()->is('enabled')) {
 			$result = $this->redirect($this->buildURL('category', '', array('category_id' => $this->getCategory()->get('category_id'))));
 
 		} else {
