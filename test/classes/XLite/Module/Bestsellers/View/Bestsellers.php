@@ -78,10 +78,10 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_ProductsList
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_USE_NODE     => new XLite_Model_WidgetParam_Checkbox(
-                'Use current category id', 0, true
+            self::PARAM_USE_NODE => new XLite_Model_WidgetParam_Checkbox(
+                'Use current category id', false, true
             ),
-            self::PARAM_ROOT_ID      => new XLite_Model_WidgetParam_ObjectId_Category(
+            self::PARAM_ROOT_ID => new XLite_Model_WidgetParam_ObjectId_Category(
                 'Root category Id', 0, true, true
             ),
         );

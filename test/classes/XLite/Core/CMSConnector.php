@@ -64,32 +64,14 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         'XLite_Controller_Customer_OrderList' => 'Orders list',
     );
 
-	/**
-	 * List of CSS files to export 
-	 * 
-	 * @var    array
-	 * @access protected
-	 * @since  3.0
-	 */
-	protected $cssFiles = array();
-
     /**
-     * List of Javascript files to export 
+     * Top-level viewer 
      * 
-     * @var    array
+     * @var    XLite_View_Controller
      * @access protected
-     * @since  3.0
+     * @since  3.0.0
      */
-    protected $jsFiles = array('js/common.js');
-
-    /**
-     * Initialized instance of the XLite singleton 
-     * 
-     * @var    XLite
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected $initializedApplication = null;
+    protected $viewer = null;
 
 
 	/**
@@ -105,26 +87,21 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	}
 
     /**
-     * Return initialized instance of the XLite singleton 
+     * Return initialized instance of the XLite_View_Conroller viewer 
      * 
-     * @param array $request request data
+     * @param bool $runController execute or not "handleRequest()" function
      *  
-     * @return XLite
+     * @return XLite_View_Conroller
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
-    protected function runApplication(array $request = array())
+    protected function getViewer($runController = false)
     {
-        if (!empty($request)) {
-            XLite_Core_Request::getInstance()->mapRequest($request);
+        if (!isset($this->viewer)) {
+            $this->viewer = XLite::getInstance()->run(false, $runController, true);
         }
 
-        if (!isset($this->initializedApplication)) {
-            $this->initializedApplication = XLite::getInstance();
-            $this->initializedApplication->init();
-        }
-
-        return $this->initializedApplication;
+        return $this->viewer;
     }
 
     /**
@@ -177,6 +154,20 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 
 
     /**
+     * Save passed params in the requester 
+     * 
+     * @param array $request params to map
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function mapRequest(array $request)
+    {
+        XLite_Core_Request::getInstance()->mapRequest($request);
+    }
+
+    /**
      * Handler should called this function first to prevent any possible conflicts
      * 
      * @return void
@@ -227,20 +218,21 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
     /**
      * Return object by class name 
      * 
-     * @param string $name       widget class name
+     * @param string $class      widget class name
      * @param array  $attributes widget attributes
      *  
      * @return XLite_View_Abstract
      * @access public
      * @since  3.0.0 EE
      */
-	public function getWidgetObject($name, array $attributes = array())
+	public function getWidgetObject($class, array $attributes = array())
 	{
         $result = null;
 
-        if (class_exists($name)) {
-            $result = XLite_Model_CachingFactory::getObject($name);
-            $result->init($this->prepareAttributes($attributes));
+        if (class_exists($class)) {
+            $result = XLite_Model_CachingFactory::getObjectFromCallback(
+                $class, $this->getViewer(), 'getWidget', $this->prepareAttributes($attributes), $class
+            );
         }
 
         return $result;
@@ -254,7 +246,6 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 *  
 	 * @return array
 	 * @access public
-	 * @see    ____func_see____
 	 * @since  3.0.0 EE
 	 */
 	public function validateWidgetArguments($name, array $attributes)
@@ -272,7 +263,6 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      *
      * @return bool
      * @access public
-     * @see    ____func_see____
      * @since  3.0.0 EE
      */
 	public function isWidgetVisible($name, array $attributes)
@@ -283,49 +273,37 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	}
 
 	/**
-	 * Return HTML code of a widget 
+	 * Return widget object 
 	 * 
-	 * @param string $name           Widget name
-	 * @param array  $attributes     Parameters list defined in CMS
-     * @param array  $inputArguments Input arguments (request data) defined in CMS
+	 * @param string $name       widget name
+	 * @param array  $attributes parameters list defined in CMS
 	 * 
-	 * @return string
+	 * @return 
 	 * @access public
 	 * @since  3.0
 	 */
-	public function getWidgetHTML($name, array $attributes = array(), array $inputArguments = array())
+	public function getBlock($name, array $attributes = array())
 	{
-        // Run the XLite singleton if it hasn't beed run yet
-        $this->runApplication($inputArguments);
-
         XLite_View_Abstract::cleanupResources();
 
         return new XLite_Core_WidgetDataTransport($this->getWidgetObject($name, $attributes));
 	}
 
-	/**
-	 * Prepare and return list of CSS files to export 
-	 * 
-	 * @return array
-	 * @access public
-	 * @since  3.0
-	 */
-	public function getCSSList()
-	{
-		return $this->prepareResources($this->cssFiles);
-	}
-
     /**
-     * Prepare and return list of Javascript files to export 
-     * 
-     * @return array
+     * Run a controller
+     *
+     * @return XLite_Core_WidgetDataTransport
      * @access public
-     * @since  3.0
+     * @since  3.0.0
      */
-    public function getJSList()
+    public function runController()
     {
-        return $this->prepareResources($this->jsFiles);
+        return new XLite_Core_WidgetDataTransport($this->getViewer(true));
     }
+
+
+    // -----> FIXME - to revise
+
 
 	/**
 	 * Set user data 
@@ -427,32 +405,6 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	public function logOutUser($email = null)
 	{
 		XLite_Model_Auth::getInstance()->logoff();
-	}
-
-	/**
-	 * Run a controller
-	 *
-	 * @param string $target controller target
-	 * @param string $action controller action
-	 * @param array  $args   controller arguments
-	 *
-	 * @return string
-	 * @see    ____func_see____
-	 * @since  3.0.0 EE
-	 */
-	public function runFrontController($target, $action, array $args = array())
-	{
-        $args = array(
-            'target' => $target,
-            'action' => $action,
-        ) + $this->prepareAttributes($args);
-
-        $application = $this->runApplication($args);
-        $application->runController();
-        $viewer = $application->getViewer();
-        $viewer->init(array('template' => 'center_top.tpl') + $args);
-
-        return new XLite_Core_WidgetDataTransport($viewer);
 	}
 
 	/**
@@ -589,20 +541,5 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	{
 		return array();
 	}
-
-    /**
-     * Prepare widget resources 
-     * 
-     * @param array $resources Resources
-     *  
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function prepareResources(array $resources)
-    {
-        return $resources;
-    }
 }
 

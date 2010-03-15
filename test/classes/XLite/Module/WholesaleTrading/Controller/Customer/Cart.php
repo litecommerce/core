@@ -69,7 +69,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Cart extends XLite_Contr
             $amount = XLite_Core_Request::getInstance()->amount;
         }
         if (isset(XLite_Core_Request::getInstance()->wishlist_amount) && XLite_Core_Request::getInstance()->wishlist_amount > 0) {
-            $amount = $XLite_Core_Request::getInstance()->wishlist_amount;
+            $amount = XLite_Core_Request::getInstance()->wishlist_amount;
         }
         if (!isset(XLite_Core_Request::getInstance()->opt_product_qty)) {
             // min/max purchase amount check

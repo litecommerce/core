@@ -32,15 +32,6 @@ class XLite_Module_ProductAdviser_View_PriceNotifyLink extends XLite_View_Abstra
 
 
     /**
-     * Widget template filename
-     *
-     * @var    string
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected $template = 'modules/ProductAdviser/PriceNotification/product_button.tpl';
-
-    /**
      * Price notified flag (cache)
      * 
      * @var    boolean
@@ -64,6 +55,8 @@ class XLite_Module_ProductAdviser_View_PriceNotifyLink extends XLite_View_Abstra
         $this->widgetParams += array(
             self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
         );
+
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/ProductAdviser/PriceNotification/product_button.tpl');
     }
 
     /**
@@ -77,7 +70,6 @@ class XLite_Module_ProductAdviser_View_PriceNotifyLink extends XLite_View_Abstra
     public function isVisible()
     {
         return parent::isVisible()
-            && $this->getParam(self::PARAM_PRODUCT)
             && $this->getParam(self::PARAM_PRODUCT)->isPriceNotificationAllowed()
             && !$this->isPriceNotificationSaved();
     }

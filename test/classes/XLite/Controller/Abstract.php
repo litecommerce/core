@@ -126,6 +126,18 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         return null;
     }
 
+    /**
+     * getCMSTemplate 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getCMSTemplate()
+    {
+        return 'center_top.tpl';
+    }
+
 
 	/**
 	 * Return current location path 
@@ -184,7 +196,8 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 	 */
 	public function getViewer($isExported = false)
 	{
-        $params = array();
+        $template = $this->template;
+        $params   = array();
 
         foreach (array('silent', 'dumpStarted') as $name) {
             $params[$name] = $this->get($name);
@@ -192,9 +205,10 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 
         if ($isExported) {
             $params[XLite_View_Abstract::PARAM_IS_EXPORTED] = true;
+            $template = $this->getCMSTemplate();
         }
 
-		return new XLite_View_Controller($this->template, $params);
+		return new XLite_View_Controller($template, $params);
     }
 
 	/**

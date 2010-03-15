@@ -11,6 +11,7 @@
  * @since     3.0.0
  */
 
+// FIXME - must be improved and synchronized with the "default" skin
 
 // Drupal-specific URLs
 URLHandler.baseURLPart = '?q=store/';

@@ -44,6 +44,7 @@ class XLite_View_Product extends XLite_View_Dialog
      */
     protected $allowedTargets = array('product');
 
+
     /**
      * Return title
      *
@@ -77,8 +78,7 @@ class XLite_View_Product extends XLite_View_Dialog
      */
     public function isVisible()
     {
-        return parent::isVisible()
-            && $this->getProduct()->is('available');
+        return parent::isVisible() && $this->getProduct()->is('available');
     }
 
     /**

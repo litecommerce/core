@@ -18,5 +18,5 @@
 include_once './includes/prepend.php';
 
 XLite_Model_Layout::getInstance()->skin = 'admin';
-XLite::getInstance()->run(true);
+XLite::getInstance()->run(true)->display();
 

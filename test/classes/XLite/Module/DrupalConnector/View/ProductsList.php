@@ -54,17 +54,14 @@ abstract class XLite_Module_DrupalConnector_View_ProductsList extends XLite_View
 
         if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
 
-            // FIXME - define actual param value
-            $this->requestParams += array(
-                self::PARAM_BLOCK_DELTA => '',
-            );
-
-            // FIXME - define actual param type
+            // FIXME - define actual param type and value here
             $this->widgetParams += array(
                 self::PARAM_BLOCK_DELTA => new XLite_Model_WidgetParam_String(
-                    'Block delta', $this->getRequestParamValue(self::PARAM_BLOCK_DELTA)
+                    'Block delta', ''
                 ),
             );
+
+            $this->requestParams[] = self::PARAM_BLOCK_DELTA;
         }
     }
 

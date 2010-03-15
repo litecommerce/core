@@ -123,7 +123,7 @@
 <div IF="!xlite.FlyoutCategoriesEnabled">
 <widget class="XLite_View_TopCategories" />
 </div>
-<widget module="Bestsellers" class="XLite_Module_Bestsellers_View_Bestsellers" visible="{config.Bestsellers.bestsellers_menu}">
+<widget module="Bestsellers" class="XLite_Module_Bestsellers_View_Bestsellers" widgetType="sidebar" />
 <widget module="GiftCertificates" template="common/sidebar_box.tpl" head="Gift certificates" dir="modules/GiftCertificates/menu">
 <widget module="Affiliate" template="common/sidebar_box.tpl" head="Affiliate" dir="modules/Affiliate/menu">
 <widget template="common/sidebar_box.tpl" head="Help" dir="help">

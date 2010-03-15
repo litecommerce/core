@@ -25,16 +25,6 @@
 class XLite_View_OrderListEmpty extends XLite_View_Abstract
 {
     /**
-     * Widget template
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $template = 'order/list_empty.tpl';
-
-    /**
      * Allowed targets 
      * 
      * @var    array
@@ -44,8 +34,25 @@ class XLite_View_OrderListEmpty extends XLite_View_Abstract
      */
     protected $allowed_targets = array('order_list');
 
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+        
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('order/list_empty.tpl');
+    }
+
+
     /**
      * Initilization
+     * FIXME
      * 
      * @return void
      * @access public

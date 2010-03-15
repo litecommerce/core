@@ -25,13 +25,18 @@
 class XLite_View_Category extends XLite_View_Abstract
 {
     /**
-     * Widget template 
-     * 
-     * @var    string
+     * Define widget parameters
+     *
+     * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  1.0.0
      */
-    protected $template = 'category_description.tpl';
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('category_description.tpl');
+    }
 
 
     /**

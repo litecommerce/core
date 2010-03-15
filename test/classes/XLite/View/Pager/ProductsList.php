@@ -36,6 +36,15 @@
 class XLite_View_Pager_ProductsList extends XLite_View_Pager
 {
     /**
+     * Page short names
+     */
+
+    const PAGE_FIRST    = 'first';
+    const PAGE_PREVIOUS = 'previous';
+    const PAGE_NEXT     = 'next';
+    const PAGE_LAST     = 'last';
+
+    /**
      * pagesPerFrame 
      * 
      * @var    int
@@ -44,20 +53,6 @@ class XLite_View_Pager_ProductsList extends XLite_View_Pager
      */
     protected $pagesPerFrame = 5;
 
-
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('products_list/pager.tpl');
-    }
 
     /**
      * Build page URL by page ID
@@ -70,55 +65,7 @@ class XLite_View_Pager_ProductsList extends XLite_View_Pager
      */
     protected function buildUrlByPageId($pageId)
     {
-        return 'javascript: productsList.showPage(' . $pageId . ');';
-    }
-
-    /**
-     * Get first page URL
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getFirstPageUrl()
-    {
-        return $this->buildUrlByPageId(0);
-    }
-
-    /**
-     * Get previous page URL
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getPreviousPageUrl()
-    {
-        return $this->buildUrlByPageId(max(0, $this->getParam(self::PARAM_PAGE_ID) - 1));
-    }
-
-    /**
-     * Get next page URL
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getNextPageUrl()
-    {
-        return $this->buildUrlByPageId(min($this->getPagesCount() - 1, $this->getParam(self::PARAM_PAGE_ID) + 1));
-    }
-
-    /**
-     * Get last page URL
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getLastPageUrl()
-    {
-        return $this->buildUrlByPageId($this->getPagesCount() - 1);
+        return parent::buildUrlByPageId($this->getPageIdByNotation($pageId));
     }
 
     /**
@@ -130,10 +77,9 @@ class XLite_View_Pager_ProductsList extends XLite_View_Pager
      */
     protected function getFrameStartPage()
     {
-        $pageId = $this->getParam(self::PARAM_PAGE_ID) - ceil($this->pagesPerFrame / 2);
-        $minFramePageId = $this->getPagesCount() - $this->pagesPerFrame;
+        $pageId = $this->getPageId() - ceil($this->pagesPerFrame / 2);
 
-        return (0 > $pageId) ? 0 : (($minFramePageId < $pageId) ? $minFramePageId : $pageId);
+        return (0 > $pageId) ? 0 : $pageId;
     }
 
     /**
@@ -147,18 +93,13 @@ class XLite_View_Pager_ProductsList extends XLite_View_Pager
     {
         parent::definePageURLs();
 
-        $this->pageURLs = array_slice(
-            $this->pageURLs,
-            $this->getFrameStartPage(),
-            $this->pagesPerFrame,
-            true
-        );
+        $this->pageURLs = array_slice($this->pageURLs, $this->getFrameStartPage(), $this->pagesPerFrame, true);
     }
 
     /**
      * isFurthermostPage 
      * 
-     * @param string $type link type (first / previous / next / last)_
+     * @param string $type link type (first / previous / next / last)
      *  
      * @return bool
      * @access protected
@@ -166,10 +107,45 @@ class XLite_View_Pager_ProductsList extends XLite_View_Pager
      */
     protected function isFurthermostPage($type)
     {
-        $pageId = $this->getParam(self::PARAM_PAGE_ID);
+        $pageId = $this->getPageId();
 
-        return (0 >= $pageId && in_array($type, array('first', 'previous')))
-            || ($this->getPagesCount() - 1 <= $pageId && in_array($type, array('last', 'next')));
+        return (0 >= $pageId && in_array($type, array(self::PAGE_FIRST, self::PAGE_PREVIOUS)))
+            || ($this->getPagesCount() - 1 <= $pageId && in_array($type, array(self::PAGE_LAST, self::PAGE_NEXT)));
+    }
+
+    /**
+     * getPageIndexNotations 
+     * 
+     * @param mixed $index page notation
+     *  
+     * @return int
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getPageIdByNotation($index)
+    {
+        $result = array(
+            self::PAGE_FIRST    => 0,
+            self::PAGE_PREVIOUS => max(0, $this->getPageId() - 1),
+            self::PAGE_LAST     => $this->getPagesCount() - 1,
+            self::PAGE_NEXT     => min($this->getPagesCount() - 1, $this->getPageId() + 1),
+        );
+
+        return isset($result[$index]) ? $result[$index] : $index;
+    }
+
+    /**
+     * getLinkClassName 
+     * 
+     * @param mixed $index page notation
+     *  
+     * @return int
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getLinkClassName($index)
+    {
+        return $this->getPageIdByNotation($index);
     }
 
     /**
@@ -187,6 +163,20 @@ class XLite_View_Pager_ProductsList extends XLite_View_Pager
     }
 
     /**
+     * getPageClassName 
+     * 
+     * @param int $pageId current page ID
+     *  
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getPageClassName($pageId)
+    {
+        return 'page-item page-' . $pageId . ' ' . ($this->isCurrentPage($pageId) ? 'selected' : '');
+    }
+
+    /**
      * Get page begin record number
      *
      * @return int
@@ -195,7 +185,7 @@ class XLite_View_Pager_ProductsList extends XLite_View_Pager
      */
     protected function getBeginRecordNumber()
     {
-        return $this->getParam(self::PARAM_PAGE_ID) * $this->getItemsPerPage() + 1;
+        return $this->getPageId() * $this->getItemsPerPage() + 1;
     }
 
     /**
@@ -212,6 +202,7 @@ class XLite_View_Pager_ProductsList extends XLite_View_Pager
 
     /**
      * Get items-per-page range as javascript object definition
+     * TODO - currently this function is not used
      *
      * @return string
      * @access protected

@@ -33,32 +33,32 @@
  * @subpackage Widget
  * @since      3.0
  */
-abstract class XLite_View_ProductsList extends XLite_View_Dialog
+abstract class XLite_View_ProductsList extends XLite_View_Container
 {
     /**
      * Widget param names
      */
 
-    const PARAM_WIDGET_TYPE    = 'widgetType';
-    const PARAM_DISPLAY_MODE   = 'displayMode';
-    const PARAM_GRID_COLUMNS   = 'gridColumns';
-    const PARAM_SORT_BY        = 'sortBy';
-    const PARAM_SORT_ORDER     = 'sortOrder';
+    const PARAM_WIDGET_TYPE  = 'widgetType';
+    const PARAM_DISPLAY_MODE = 'displayMode';
+    const PARAM_GRID_COLUMNS = 'gridColumns';
+    const PARAM_SORT_BY      = 'sortBy';
+    const PARAM_SORT_ORDER   = 'sortOrder';
 
     const PARAM_SHOW_DESCR     = 'showDescription';
     const PARAM_SHOW_PRICE     = 'showPrice';
     const PARAM_SHOW_THUMBNAIL = 'showThumbnail';
     const PARAM_SHOW_ADD2CART  = 'showAdd2Cart';
 
+    const PARAM_SHOW_ALL_ITEMS_PER_PAGE    = 'showAllItemsPerPage';
+    const PARAM_SHOW_DISPLAY_MODE_SELECTOR = 'showDisplayModeSelector';
+    const PARAM_SHOW_SORT_BY_SELECTOR      = 'showSortBySelector';
+
     /*
      * The maximum number of items (products) displayed in the sidebar widget
      */
 
     const PARAM_SIDEBAR_MAX_ITEMS = 'sidebarMaxItems';
-
-    const PARAM_SHOW_ALL_ITEMS_PER_PAGE    = 'showAllItemsPerPage';
-    const PARAM_SHOW_DISPLAY_MODE_SELECTOR = 'showDisplayModeSelector';
-    const PARAM_SHOW_SORT_BY_SELECTOR      = 'showSortBySelector';
 
     /*
      * Allowed widget types
@@ -76,6 +76,21 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
     const DISPLAY_MODE_TABLE = 'table';
 
     /**
+     * Allowed sort criterions
+     */
+
+    const SORT_BY_MODE_PRICE = 'price';
+    const SORT_BY_MODE_NAME  = 'name';
+    const SORT_BY_MODE_SKU   = 'sku';
+
+    /**
+     * SQL orederby directions
+     */
+
+    const SORT_ORDER_ASC  = 'asc';
+    const SORT_ORDER_DESC = 'desc';
+
+    /**
      * Columns number range
      */
 
@@ -88,12 +103,12 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
 
     const TEMPLATES_DIR = 'products_list';
 
+
     /**
      * Widget types 
      * 
      * @var    array
      * @access protected
-     * @see    ____var_see____
      * @since  3.0.0
      */
     protected $widgetTypes = array(
@@ -101,13 +116,11 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
         self::WIDGET_TYPE_CENTER   => 'Center',
     );
 
-
     /**
      * Display modes
      *
      * @var    array
      * @access protected
-     * @see    ____var_see____
      * @since  3.0.0
      */
     protected $displayModes = array(
@@ -115,17 +128,6 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
         self::DISPLAY_MODE_LIST  => 'List',
         self::DISPLAY_MODE_TABLE => 'Table',
     );
-
-
-    /**
-     * Return products list 
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    abstract protected function getData();
-
 
     /**
      * sortByModes 
@@ -135,8 +137,9 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
      * @since  3.0.0
      */
     protected $sortByModes = array(
-        'price' => 'Price',
-        'name'  => 'Name',
+        self::SORT_BY_MODE_PRICE => 'Price',
+        self::SORT_BY_MODE_NAME  => 'Name',
+        self::SORT_BY_MODE_SKU   => 'SKU',
     );
 
     /**
@@ -147,9 +150,48 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
      * @since  3.0.0
      */
     protected $sortOrderModes = array(
-        'asc'  => 'Ascending',
-        'desc' => 'Descending',
+        self::SORT_ORDER_ASC  => 'Ascending',
+        self::SORT_ORDER_DESC => 'Descending',
     );
+
+
+    /**
+     * defaultTemplate
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $defaultTemplate = 'common/dialog.tpl';
+
+    /**
+     * commonParams
+     *
+     * @var    array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $commonParams = null;
+
+    /**
+     * pager
+     *
+     * @var    XLite_View_Pager
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $pager = null;
+
+
+    /**
+     * Return products list
+     *
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    abstract protected function getData();
+
 
     /**
      * getDisplayMode 
@@ -164,6 +206,18 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
     }
 
     /**
+     * Return default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return $this->defaultTemplate;
+    }
+
+    /**
      * getPageBodyTemplate 
      * 
      * @return string
@@ -172,8 +226,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
      */
     protected function getPageBodyTemplate()
     {
-        $dirName = (self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE) ? $this->getParam(self::PARAM_WIDGET_TYPE) : $this->getParam(self::PARAM_DISPLAY_MODE));
-        return $this->getDir() . '/' . $dirName . '/body.tpl';
+        return $this->getDir() . '/' . ($this->isSideBarBox() ? 'sidebar' : $this->getDisplayMode()) . '/body.tpl';
     }
 
     /**
@@ -201,6 +254,18 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
     }
 
     /**
+     * getPagerParams 
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getPagerParams()
+    {
+        return array(self::PARAM_SESSION_CELL => $this->getSessionCell(), XLite_View_Pager::PARAM_DATA => $this->getData());
+    }
+
+    /**
      * getPager 
      * 
      * @return XLite_View_Pager
@@ -209,7 +274,23 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
      */
     protected function getPager()
     {
-        return $this->isPagerVisible() ? $this->getWidget(array(), null, $this->getPagerName()) : null;
+        if (!isset($this->pager)) {
+            $this->pager = $this->getWidget($this->getPagerParams(), $this->getPagerClass());
+        }
+
+        return $this->pager;
+    }
+
+    /**
+     * isPagerVisible
+     *
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isPagerVisible()
+    {
+        return !$this->getParam(self::PARAM_SHOW_ALL_ITEMS_PER_PAGE) && !$this->isSideBarBox();
     }
 
     /**
@@ -234,21 +315,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
      */
     protected function getSideBarData()
     {
-        $allProducts = $this->getData();
-        $products = array();
-        $index = $this->getParam(self::PARAM_SIDEBAR_MAX_ITEMS);
-
-        if (!empty($allProducts)) {
-
-            foreach ($allProducts as $key => $product) {
-                if ($index-- <= 0) {
-                    break;
-                }
-                $products[$key] = $product;
-            }
-        }
-
-        return $products;
+        return array_slice($this->getData(), 0, $this->getParam(self::PARAM_SIDEBAR_MAX_ITEMS));
     }
 
     /**
@@ -312,9 +379,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
      */
     protected function getGridColumnsRange()
     {
-        $range = range(self::GRID_COLUMNS_MIN, self::GRID_COLUMNS_MAX);
-
-        return array_combine($range, $range);
+        return array_combine($range = range(self::GRID_COLUMNS_MIN, self::GRID_COLUMNS_MAX), $range);
     }
 
     /**
@@ -328,18 +393,12 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
     {
         parent::defineWidgetParams();
 
-        $this->requestParams += array(
-            self::PARAM_DISPLAY_MODE => self::DISPLAY_MODE_GRID,
-            self::PARAM_SORT_BY      => 'price',
-            self::PARAM_SORT_ORDER   => 'asc',
-        );
-
         $this->widgetParams += array(
             self::PARAM_WIDGET_TYPE => new XLite_Model_WidgetParam_List(
-                'Widget type', $this->getRequestParamValue(self::PARAM_WIDGET_TYPE), true, $this->widgetTypes
+                'Widget type', self::WIDGET_TYPE_CENTER, true, $this->widgetTypes
             ),
             self::PARAM_DISPLAY_MODE => new XLite_Model_WidgetParam_List(
-                'Display mode', $this->getRequestParamValue(self::PARAM_DISPLAY_MODE), true, $this->displayModes
+                'Display mode', self::DISPLAY_MODE_GRID, true, $this->displayModes
             ),
             self::PARAM_GRID_COLUMNS => new XLite_Model_WidgetParam_List(
                 'Number of columns (for Grid mode only)', 3, true, $this->getGridColumnsRange()
@@ -360,10 +419,10 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
                 'The maximum number of products displayed in sidebar', 5, true
             ),
             self::PARAM_SORT_BY => new XLite_Model_WidgetParam_List(
-                'Sort by', $this->getRequestParamValue(self::PARAM_SORT_BY), false, $this->sortByModes
+                'Sort by', 'price', false, $this->sortByModes
             ),
             self::PARAM_SORT_ORDER => new XLite_Model_WidgetParam_List(
-                'Sort order', $this->getRequestParamValue(self::PARAM_SORT_ORDER), false, $this->sortOrderModes
+                'Sort order', 'asc', false, $this->sortOrderModes
             ),
             self::PARAM_SHOW_ALL_ITEMS_PER_PAGE => new XLite_Model_WidgetParam_Checkbox(
                 'Display all items on one page', false, true
@@ -375,6 +434,22 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
                 'Show "Sort by" selector', true, true
             ),
         );
+
+        $this->requestParams[] = self::PARAM_DISPLAY_MODE;
+        $this->requestParams[] = self::PARAM_SORT_BY;
+        $this->requestParams[] = self::PARAM_SORT_ORDER;
+    }
+
+    /**
+     * isSideBarBox 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isSideBarBox()
+    {
+        return self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE);
     }
 
     /**
@@ -406,13 +481,11 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
      */
     protected function getCommonParams()
     {
-        $result = array('action' => '') + $this->getRequestParams();
-
-        if ($this->isPagerVisible()) {
-            $result += $this->getPager()->getRequestParams();
+        if (!isset($this->commonParams)) {
+            $this->commonParams = array('action' => '') + $this->getRequestParams();
         }
 
-        return $result; 
+        return $this->commonParams; 
     }
 
     /**
@@ -434,13 +507,37 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
     /**
      * getURLParams 
      * 
-     * @return string
+     * @return array
      * @access protected
      * @since  3.0.0
      */
     protected function getURLParams()
     {
-        return $this->getJSArray(array('target' => XLite_Core_Request::getInstance()->target) + $this->getCommonParams());
+        return array('target' => XLite_Core_Request::getInstance()->target) + $this->getCommonParams();
+    }
+
+    /**
+     * getURLAJAXParams 
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getURLAJAXParams()
+    {
+        return array('target' => 'get_widget') + $this->getCommonParams() + $this->getAJAXSpecificParams();
+    }
+
+    /**
+     * getURLParams 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getURLParamsJS()
+    {
+        return $this->getJSArray($this->getURLParams());
     }
 
     /**
@@ -450,9 +547,23 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
      * @access protected
      * @since  3.0.0
      */
-    protected function getURLAJAXParams()
+    protected function getURLAJAXParamsJS()
     {
-        return $this->getJSArray(array('target' => 'get_widget') + $this->getCommonParams() + $this->getAJAXSpecificParams());
+        return $this->getJSArray($this->getURLAJAXParams());
+    }
+
+    /**
+     * getActionURL 
+     * 
+     * @param array $params params to modify
+     *  
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getActionURL(array $params = array())
+    {
+        return $this->getUrl($params + $this->getURLParams());
     }
 
     /**
@@ -492,7 +603,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
      */
     protected function isSortOrderAsc()
     {
-        return $this->getParam(self::PARAM_SORT_ORDER) == 'asc';
+        return self::SORT_ORDER_ASC == $this->getParam(self::PARAM_SORT_ORDER);
     }
 
     /**
@@ -516,7 +627,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
      */
     protected function isDisplayModeAdjustable()
     {
-        return $this->getParam(self::PARAM_SHOW_DISPLAY_MODE_SELECTOR) && self::WIDGET_TYPE_CENTER == $this->getParam(self::PARAM_WIDGET_TYPE);
+        return $this->getParam(self::PARAM_SHOW_DISPLAY_MODE_SELECTOR) && !$this->isSideBarBox();
     }
 
     /**
@@ -528,69 +639,65 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
      */
     protected function isSortBySelectorVisible()
     {
-        return $this->getParam(self::PARAM_SHOW_SORT_BY_SELECTOR) && self::WIDGET_TYPE_CENTER == $this->getParam(self::PARAM_WIDGET_TYPE);
+        return $this->getParam(self::PARAM_SHOW_SORT_BY_SELECTOR) && !$this->isSideBarBox();
     }
 
     /**
-     * isPagerVisible 
-     * 
-     * @return bool
+     * Check - show product price or not
+     *
+     * @return boolean
      * @access protected
      * @since  3.0.0
      */
-    protected function isPagerVisible()
+    protected function isShowPrice()
     {
-        return !$this->getParam(self::PARAM_SHOW_ALL_ITEMS_PER_PAGE) && self::WIDGET_TYPE_SIDEBAR != $this->getParam(self::PARAM_WIDGET_TYPE);
+        return $this->getParam(self::PARAM_SHOW_PRICE);
     }
 
-
-
     /**
-     * Check if widget is visible
+     * Check - show Add to cart button or not
      *
-     * @return bool
+     * @return boolean
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
-    public function isVisible()
+    protected function isShowAdd2Cart()
     {
-        return parent::isVisible() && $this->getData();
+        return $this->getParam(self::PARAM_SHOW_ADD2CART);
     }
 
     /**
-     * Get a list of CSS files required to display the widget properly
+     * Check - show product description or not
      *
-     * @return array
-     * @access public
-     * @since  3.0.0 EE
+     * @return boolean
+     * @access protected
+     * @since  3.0.0
      */
-    public function getCSSFiles()
+    protected function isShowDescription()
     {
-        return array_merge(parent::getCSSFiles(), array(self::TEMPLATES_DIR . '/products_list.css'));
+        return $this->getParam(self::PARAM_SHOW_DESCR);
     }
 
     /**
-     * Get a list of JavaScript files required to display the widget properly
+     * getSortOrderToChange
      *
-     * @return array
-     * @access public
-     * @since  3.0.0 EE
+     * @return string
+     * @access protected
+     * @since  3.0.0
      */
-    public function getJSFiles()
+    protected function getSortOrderToChange()
     {
-        return array_merge(parent::getJSFiles(), array(self::TEMPLATES_DIR . '/products_list.js', 'popup/jquery.blockUI.js'));
+        return $this->isSortOrderAsc() ? self::SORT_ORDER_DESC : self::SORT_ORDER_ASC;
     }
-
-    // ----------------------------
 
     /**
      * Get display mode link class name
+     * TODO - simplify
      *
      * @param string $displayMode Display mode
      *
      * @return string
      * @access protected
-     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDisplayModeLinkClassName($displayMode)
@@ -615,72 +722,83 @@ abstract class XLite_View_ProductsList extends XLite_View_Dialog
     }
 
     /**
-     * Get sort order link class name
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getSortOrderLinkClassName()
-    {
-        $classes = array(
-            'sort-order'
-        );
-
-        $classes[] = $this->isSortOrderAsc() ? 'sort-order-asc' : 'sort-order-desc';
-
-        return implode(' ', $classes);
-    }
-
-    /**
      * Get grid item width (percent)
      *
      * @return integer
-     * @access public
-     * @see    ____func_see____
+     * @access protected
      * @since  3.0.0
      */
-    public function getGridItemWidth()
+    protected function getGridItemWidth()
     {
         return floor(100 / $this->getParam(self::PARAM_GRID_COLUMNS)) - 6;
     }
 
+
+
     /**
-     * Check - show product price or not
+     * Check if widget is visible
      *
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
+     * @return bool
+     * @access protected
+     * @since  3.0.0 EE
      */
-    public function isShowPrice()
+    public function isVisible()
     {
-        return $this->getParam(self::PARAM_SHOW_PRICE);
+        return parent::isVisible() && $this->getPageData();
     }
 
     /**
-     * Check - show Add to cart button or not
+     * Get a list of CSS files required to display the widget properly
      *
-     * @return boolean
+     * @return array
      * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
+     * @since  3.0.0 EE
      */
-    public function isShowAdd2Cart()
+    public function getCSSFiles()
     {
-        return $this->getParam(self::PARAM_SHOW_ADD2CART);
+        return array_merge(
+            parent::getCSSFiles(), 
+            array(self::TEMPLATES_DIR . '/products_list.css'),
+            $this->getPager()->getCSSFiles()
+        );
     }
 
     /**
-     * Check - show product description or not
+     * Get a list of JavaScript files required to display the widget properly
      *
-     * @return boolean
+     * @return array
      * @access public
-     * @since  3.0.0
+     * @since  3.0.0 EE
      */
-    public function isShowDescription()
+    public function getJSFiles()
     {
-        return $this->getParam(self::PARAM_SHOW_DESCR);
+        return array_merge(
+            parent::getJSFiles(),
+            array(self::TEMPLATES_DIR . '/products_list.js', 'popup/jquery.blockUI.js'),
+            $this->getPager()->getJSFiles()
+        );
+    }
+
+    /**
+     * Initialize widget (set attributes)
+     *
+     * @param array $params widget params
+     *
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function init(array $params = array())
+    {
+        // FIXME - not a good idea, but I don't see a better way
+        if (isset($params[self::PARAM_WIDGET_TYPE]) && self::WIDGET_TYPE_SIDEBAR == $params[self::PARAM_WIDGET_TYPE]) {
+            $this->defaultTemplate = 'common/sidebar_box.tpl';
+        }
+
+        parent::init($params);
+
+        // Do not change call order
+        $this->widgetParams += $this->getPager()->getWidgetParams();
+        $this->requestParams = array_merge($this->requestParams, array_keys($this->getPager()->getRequestParams()));
     }
 }

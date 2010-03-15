@@ -51,6 +51,7 @@ class XLite_View_CategoryProducts extends XLite_View_ProductsList
      */
     protected $allowedTargets = array('category');
 
+
     /**
      * Return title
      *
@@ -74,17 +75,24 @@ class XLite_View_CategoryProducts extends XLite_View_ProductsList
     {
         parent::defineWidgetParams();
 
-        $this->requestParams += array(
-            self::PARAM_CATEGORY_ID => 0,
+        $this->widgetParams += array(
+            self::PARAM_CATEGORY_ID => new XLite_Model_WidgetParam_ObjectId_Category('Category ID', 0),
         );
 
-        $this->widgetParams += array(
-            self::PARAM_CATEGORY_ID => new XLite_Model_WidgetParam_ObjectId_Category(
-                'Category ID', $this->getRequestParamValue(self::PARAM_CATEGORY_ID)
-            ),
-        );
+        $this->requestParams[] = self::PARAM_CATEGORY_ID;
     }
 
+    /**
+     * getOrderByCondition 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getOrderByCondition()
+    {
+        return $this->getParam(self::PARAM_SORT_BY) . ' ' . strtoupper($this->getParam(self::PARAM_SORT_ORDER));
+    }
 
     /**
      * Get products 
@@ -95,10 +103,22 @@ class XLite_View_CategoryProducts extends XLite_View_ProductsList
      */
     protected function getData()
     {
-        return $this->getCategory()->getProducts(
-            null,
-            $this->getParam(self::PARAM_SORT_BY) . ' ' . strtoupper($this->getParam(self::PARAM_SORT_ORDER))
-        );
+        return $this->getCategory()->getProducts(null, $this->getOrderByCondition());
+    }
+
+    /**
+     * Fetch param value from current session
+     * FIXME - need a common approach to manage such situations
+     *
+     * @param string $param parameter name
+     *
+     * @return mixed
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getSavedRequestParam($param)
+    {
+        return (self::PARAM_CATEGORY_ID == $param) ? XLite_Core_Request::getInstance()->$param : parent::getSavedRequestParam($param);
     }
 }
 

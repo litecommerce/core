@@ -21,7 +21,7 @@
 
       <table cellpadding="10" cellspacing="0" width="100%">
         <tr>
-		  {* FIXME - must use the getDir() function instead *}
+		      {* FIXME - must use the getDir() function instead *}
           <td><widget template="{dir}/body.tpl"></td>
         </tr>
       </table>

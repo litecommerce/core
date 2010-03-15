@@ -93,7 +93,9 @@ class XLite_View_Subcategories extends XLite_View_Dialog
      */
     protected function getDisplayMode()
     {
-        return $this->getParam(self::PARAM_IS_EXPORTED) ? $this->getParam(self::PARAM_DISPLAY_MODE) : $this->config->General->subcategories_look;
+        return $this->getParam(self::PARAM_IS_EXPORTED) 
+            ? $this->getParam(self::PARAM_DISPLAY_MODE) 
+            : $this->config->General->subcategories_look;
     }
 
     /**

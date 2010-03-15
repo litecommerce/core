@@ -34,10 +34,11 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      * Common widget parameter names
      */
 
-    const PARAM_TEMPLATE    = 'template';
-    const PARAM_VISIBLE     = 'visible';
-    const PARAM_IS_EXPORTED = 'isExported';
-    const PARAM_MODE        = 'mode';
+    const PARAM_TEMPLATE     = 'template';
+    const PARAM_VISIBLE      = 'visible';
+    const PARAM_IS_EXPORTED  = 'isExported';
+    const PARAM_MODE         = 'mode';
+    const PARAM_SESSION_CELL = 'sessionCell';
 
     /**
      * AJAX-specific parameters 
@@ -59,6 +60,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
         self::RESOURCE_JS  => array(),
         self::RESOURCE_CSS => array(),
     );
+
 
     /**
      * Widget params
@@ -88,13 +90,31 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
     protected $allowedTargets = array();
 
     /**
-     * requestParams 
+     * List of so called "request" params - which take values from request (if passed)
      * 
      * @var    array
      * @access protected
      * @since  3.0.0
      */
-    protected $requestParams = array();
+    protected $requestParams = array(self::PARAM_SESSION_CELL);
+
+    /**
+     * Request param values saved in session
+     *
+     * @var    array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $savedRequestParams = null;
+
+    /**
+     * Flag; determines if passed name of session cell is match for the current widget
+     * 
+     * @var    bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $sessionCellStatus = null;
 
 
     /**
@@ -128,7 +148,6 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
 
     /**
      * Return current template 
-     * FIXME - backward compatibility
      * 
      * @return string
      * @access protected
@@ -136,9 +155,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      */
     protected function getTemplate()
     {
-        $template = $this->getParam(self::PARAM_TEMPLATE);
-
-        return isset($template) ? $template : $this->template;
+        return $this->getParam(self::PARAM_TEMPLATE);
     }
 
     /**
@@ -195,6 +212,38 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
     }
 
     /**
+     * getSessionCell
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getSessionCell()
+    {
+        return get_class($this);
+    }
+
+    /**
+     * checkSessionCell 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function checkSessionCell()
+    {
+        if (!isset($this->sessionCellStatus)) {
+
+            $paramName  = self::PARAM_SESSION_CELL;
+            $paramValue = $this->getWidgetParams(self::PARAM_SESSION_CELL)->value;
+
+            $this->sessionCellStatus = ($paramValue == XLite_Core_Request::getInstance()->$paramName);
+        }
+
+        return $this->sessionCellStatus;
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -204,11 +253,26 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
     protected function defineWidgetParams()
     {
         $this->widgetParams = array(
-            self::PARAM_TEMPLATE    => new XLite_Model_WidgetParam_File('Template', null),
-            self::PARAM_VISIBLE     => new XLite_Model_WidgetParam_Bool('Visible', true),
-            self::PARAM_IS_EXPORTED => new XLite_Model_WidgetParam_Bool('Is exported', false),
-            self::PARAM_MODE        => new XLite_Model_WidgetParam_Array('Modes', array()),
+            self::PARAM_TEMPLATE     => new XLite_Model_WidgetParam_File('Template', null),
+            self::PARAM_VISIBLE      => new XLite_Model_WidgetParam_Bool('Visible', true),
+            self::PARAM_IS_EXPORTED  => new XLite_Model_WidgetParam_Bool('Is exported', false),
+            self::PARAM_MODE         => new XLite_Model_WidgetParam_Array('Modes', array()),
+            self::PARAM_SESSION_CELL => new XLite_Model_WidgetParam_String('Session cell', $this->getSessionCell()),
         );
+    }
+
+    /**
+     * Check if we should try to take widget param value from request
+     * 
+     * @param string $param param name
+     *  
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isRequestParam($param)
+    {
+        return in_array($param, $this->requestParams);
     }
 
     /**
@@ -222,23 +286,55 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      */
     protected function getParam($param)
     {
-        return $this->getWidgetParams($param)->value;
+        // Trying to get param value from request (if it's the so called "request"-param)
+        $value = $this->isRequestParam($param) ? $this->getRequestParamValue($param) : null;
+
+        return isset($value) ? $value : $this->getWidgetParams($param)->value;
     }
 
     /**
-     * getRequestParamValue 
+     * Fetch param value from current session
+     *
+     * @param string $param parameter name
+     *
+     * @return mixed
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getSavedRequestParam($param)
+    {
+        if (!isset($this->savedRequestParams)) {
+
+            // Cache the session cell (variable) associatd with the current widget
+            $this->savedRequestParams = XLite_Model_Session::getInstance()->get(
+                $this->getWidgetParams(self::PARAM_SESSION_CELL)->value
+            );
+
+            // ... To avoid repeated initializations
+            if (!$this->savedRequestParams) {
+                $this->savedRequestParams = array();
+            }
+        }
+
+        return isset($this->savedRequestParams[$param]) ? $this->savedRequestParams[$param] : null;
+    }
+
+    /**
+     * Get the value of the so called "request" params
      * 
-     * @param mixed $param ____param_comment____
+     * @param string $param parameter name
      *  
-     * @return void
+     * @return mixed
      * @access protected
      * @since  3.0.0
      */
     protected function getRequestParamValue($param)
     {
-        $value = XLite_Core_Request::getInstance()->$param;
+        // Get value from session only if it's not passed in the request, or f it's associated for another widget.
+        // For this, we check if "session cell" param is not passed or is not equal to the current one
+        $value = $this->checkSessionCell() ? null : $this->getSavedRequestParam($param);
 
-        return isset($value) ? $value : (isset($this->requestParams[$param]) ? $this->requestParams[$param] : null);
+        return isset($value) ? $value : XLite_Core_Request::getInstance()->$param;
     }
 
     /**
@@ -268,10 +364,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      */
     protected function registerResourcesType($type, array $resources)
     {
-        self::$resources[$type] = array_merge(
-            self::$resources[$type],
-            array_diff($resources, self::$resources[$type])
-        );
+        self::$resources[$type] = array_merge(self::$resources[$type], array_diff($resources, self::$resources[$type]));
     }
 
     /**
@@ -279,7 +372,6 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *
      * @return void
      * @access protected
-     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function registerResources()
@@ -324,7 +416,13 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      */
     protected function initView()
     {
+        // Add widget resources to the static array
         $this->registerResources();
+
+        // Save all "request" parameters in session
+        if ($this->checkSessionCell()) {
+            XLite_Model_Session::getInstance()->set($this->getParam(self::PARAM_SESSION_CELL), $this->getRequestParams());
+        }
     }
 
     /**
@@ -413,8 +511,8 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
     {
         $result = array();
 
-        foreach ($this->requestParams as $name => $defValue) {
-            $result[$name] = $this->getParam($name);
+        foreach ($this->requestParams as $param) {
+            $result[$param] = $this->getParam($param);
         }
 
         return $result;
@@ -532,6 +630,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
 
         return $content;
     }
+
 
     /**
      * Register CSS files

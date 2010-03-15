@@ -88,7 +88,7 @@ function eventBind(obj, e, func)
 
 var URLHandler = {
 
-  mainParams: ['target', 'action'],
+  mainParams: {target: true, action: true},
 
   baseURLPart: 'cart.php?',
   argSeparator: '&',
@@ -150,7 +150,7 @@ var URLHandler = {
     result = [];
 
     for (x in toReturn) {
-      result[toReturn[x]] = params[toReturn[x]];
+      result[x] = params[x];
     }
 
     return result;
@@ -159,11 +159,15 @@ var URLHandler = {
   // Unset some params
   clearParams: function(params, toClear)
   {
-    for (x in toClear) {
-      delete params[toClear[x]];
-    }
+    result = [];
 
-    return params;
+    for (x in params) {
+      if (!(x in toClear)) {
+        result[x] = params[x];
+      }
+    }
+    
+    return result;
   },
 
   // Compose target and action
@@ -183,5 +187,19 @@ var URLHandler = {
   {
     return this.baseURLPart + this.buildMainPart(params) + this.buildQueryPart(params);
   },
+}
+
+
+// Check for the AJAX support
+var ajaxSupport = null;
+
+function hasAJAXSupport()
+{
+  if (null == ajaxSupport) {
+    var xhr = window.ActiveXObject ? new ActiveXObject("Microsoft.XMLHTTP") : new XMLHttpRequest();
+    ajaxSupport = xhr ? true : false;
+  }
+
+  return ajaxSupport;
 }
 

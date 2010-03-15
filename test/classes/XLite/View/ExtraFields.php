@@ -39,7 +39,8 @@ class XLite_View_ExtraFields extends XLite_View_Abstract
      * Widget parameter names
      */
 
-    const PARAM_PRODUCT      = 'product';
+    const PARAM_PRODUCT = 'product';
+
 
 	/**
 	 * Cached extra fields list
@@ -51,14 +52,6 @@ class XLite_View_ExtraFields extends XLite_View_Abstract
 	 */
 	protected $extraFields = null;
 
-    /**
-     * Widget template 
-     * 
-     * @var    string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $template = 'extra_fields.tpl';
 
     /**
      * Define widget parameters
@@ -72,9 +65,12 @@ class XLite_View_ExtraFields extends XLite_View_Abstract
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT      => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
+            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
         );
+
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('extra_fields.tpl');
     }
+
 
     /**
      * Check widget visibility 

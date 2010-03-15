@@ -104,6 +104,18 @@ class XLite_Controller_Customer_GetWidget extends XLite_Controller_Customer_Abst
         return parent::checkAccess() && $this->checkRequest() && class_exists($this->getClass());
     }
 
+    /**
+     * getCMSTemplate
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getCMSTemplate()
+    {
+        return $this->template;
+    }
+
 
 	/**
 	 * Get class name
@@ -118,19 +130,4 @@ class XLite_Controller_Customer_GetWidget extends XLite_Controller_Customer_Abst
 
 		return XLite_Core_Request::getInstance()->$param;
 	}
-
-    /**
-     * Return viewer
-     * FIXME - "display" and "exit" must be removed
-     * 
-     * @return XLite_View_Controller
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function getViewer($isExported = false)
-    {
-		parent::getViewer(true)->display();
-
-        exit(0);
-    }
 }

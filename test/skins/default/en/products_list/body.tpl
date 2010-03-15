@@ -10,44 +10,48 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<div class="products-list">
+<div class="products-list {getSessionCell()}">
 
   <div IF="isPagerVisible()" class="list-pager">
-    <widget class="{getPagerClass()}" data="{getData()}" name="{getPagerName()}" />
+    <widget name="{getPagerName()}" template="products_list/pager.tpl" />
   </div>
-  
-  <script type="text/javascript">
-    productsList.URLParams = {getURLParams()};
-    productsList.URLAJAXParams = {getURLAJAXParams()};
-  </script>
 
   <div IF="isDisplayModeAdjustable()&isSortBySelectorVisible()" class="list-head">
 
     <div IF="isDisplayModeAdjustable()" class="display-modes">
       View as:
       <ul>
-        <li FOREACH="displayModes,key,name" class="{getDisplayModeLinkClassName(key)}"><a href="javascript: productsList.changeDisplayMode('{key}');">{name}</a></li>
+        <li FOREACH="displayModes,key,name" class="{getDisplayModeLinkClassName(key)}">
+          <a href="{getActionUrl(_ARRAY_(#displayMode#^key))}" class="{key}">{name}</a>
+        </li>
       </ul>
     </div>
 
     <div IF="isSortBySelectorVisible()" class="sort-box">
 
       <span>Sort by</span>
-      <select class="sort-crit" onchange="javascript: productsList.changeSortByMode(this.value);">
+      <select class="sort-crit">
         <option FOREACH="sortByModes,key,name" value="{key}" selected="{isSortByModeSelected(key)}">{name}</option>
       </select>
 
-      <a href="javascript: productsList.changeSortOrder();" class="{getSortOrderLinkClassName()}">{if:isSortOrderAsc()}&darr;{else:}&uarr;{end:}</a>
+      <a href="{getActionUrl(_ARRAY_(#sortOrder#^getSortOrderToChange()))}" class="sort-order">{if:isSortOrderAsc()}&darr;{else:}&uarr;{end:}</a>
 
     </div>
 
   </div>
 
-  <widget template="{getPageBodyTemplate()}"  />
+  <widget template="{getPageBodyTemplate()}" />
 
-  <div IF="isPagerVisible()" class="list-pager-low">
-    <widget name="pager" />
+  <div IF="isPagerVisible()" class="list-pager low">
+    <widget name="{getPagerName()}" />
   </div>
 
-  <widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_PriceNotifyForm" />
 </div>
+
+<script type="text/javascript">
+  sessionCell = '{getSessionCell()}';
+  productsListHandlers[sessionCell] = new ProductsList(sessionCell);
+  productsListHandlers[sessionCell].URLParams = {getURLParamsJS()};
+  productsListHandlers[sessionCell].URLAJAXParams = {getURLAJAXParamsJS()};
+</script>
+

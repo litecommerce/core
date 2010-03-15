@@ -17,5 +17,5 @@
 
 include_once './includes/prepend.php';
 
-XLite::getInstance()->run();
+XLite::getInstance()->run()->display();
 

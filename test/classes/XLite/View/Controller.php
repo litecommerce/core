@@ -138,7 +138,7 @@ class XLite_View_Controller extends XLite_View_Abstract
      * @access public
      * @since  3.0.0 EE
      */
-    public function __construct($template = 'main.tpl', array $params = array())
+    public function __construct($template, array $params = array())
     {
         $this->init(array(self::PARAM_TEMPLATE => $template) + $params);
     }

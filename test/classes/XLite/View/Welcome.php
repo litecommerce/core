@@ -23,16 +23,7 @@
  */
 class XLite_View_Welcome extends XLite_View_Abstract
 {
-	/**
-     * Widget template 
-     * 
-     * @var    string
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected $template = 'welcome.tpl';
-
-	/**
+    /**
      * Targets this widget is allowed for
      *
      * @var    array
@@ -40,6 +31,21 @@ class XLite_View_Welcome extends XLite_View_Abstract
      * @since  3.0.0 EE
      */
     protected $allowedTargets = array('main');
+
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('welcome.tpl');
+    }
 
 
 	/**

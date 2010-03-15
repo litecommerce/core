@@ -94,6 +94,7 @@
 }
 
 .list-head .sort-box a {
+  text-decoration: none;
   font-size: 1.2em;
 }
 
@@ -250,6 +251,10 @@
 
 .list-body-table tr td.product-price-column {
   text-align: right;
+}
+
+.list-body-table tr td.product-name-column {
+  width: 100%;
 }
 
 /* Modal wait screen */

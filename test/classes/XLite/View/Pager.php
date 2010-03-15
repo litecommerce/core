@@ -60,6 +60,15 @@ class XLite_View_Pager extends XLite_View_Abstract
 
 
     /**
+     * pageId 
+     * 
+     * @var    int
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $pageId = null;
+
+    /**
      * Data 
      * 
      * @var    int
@@ -156,17 +165,12 @@ class XLite_View_Pager extends XLite_View_Abstract
     {
         parent::defineWidgetParams();
 
-        $this->requestParams += array(
-            self::PARAM_PAGE_ID        => 0,
-            self::PARAM_ITEMS_PER_PAGE => 10,
-        );
-
         $this->widgetParams += array(
             self::PARAM_PAGE_ID => new XLite_Model_WidgetParam_Int(
-                'Page ID', $this->getRequestParamValue(self::PARAM_PAGE_ID), true
+                'Page ID', 0
             ),
             self::PARAM_ITEMS_PER_PAGE => new XLite_Model_WidgetParam_Int(
-                'Items per page', $this->getRequestParamValue(self::PARAM_ITEMS_PER_PAGE), true
+                'Items per page', 10, true
             ),
             self::PARAM_DATA => new XLite_Model_WidgetParam_Array(
                 'Data', array()
@@ -175,6 +179,9 @@ class XLite_View_Pager extends XLite_View_Abstract
                 'Show "Items per page" selector', true, true
             ),
         );
+
+        $this->requestParams[] = self::PARAM_PAGE_ID;
+        $this->requestParams[] = self::PARAM_ITEMS_PER_PAGE;
 
         $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/pager.tpl'); 
 
@@ -201,9 +208,9 @@ class XLite_View_Pager extends XLite_View_Abstract
      * @access protected
      * @since  3.0.0
      */
-    protected function getPageURLparams($pageId)
+    protected function getPageURLParams($pageId)
     {
-        return array(self::PARAM_PAGE_ID => $pageId);
+        return array(self::PARAM_PAGE_ID => $pageId) + $this->getRequestParams();
     }
 
     /**
@@ -217,7 +224,7 @@ class XLite_View_Pager extends XLite_View_Abstract
      */
     protected function buildUrlByPageId($pageId)
     {
-        return $this->getUrl($this->getPageURLparams($pageId));
+        return $this->getUrl($this->getPageURLParams($pageId));
     }
 
     /**
@@ -262,7 +269,7 @@ class XLite_View_Pager extends XLite_View_Abstract
      */
     protected function isCurrentPage($pageId)
     {
-        return $this->getParam(self::PARAM_PAGE_ID) == $pageId;
+        return $this->getPageId() == $pageId;
     }
 
     /**
@@ -280,6 +287,22 @@ class XLite_View_Pager extends XLite_View_Abstract
     }
 
     /**
+     * Return current page Id 
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getPageId()
+    {
+        if (!isset($this->pageId)) {
+            $this->pageId = min($this->getParam(self::PARAM_PAGE_ID), $this->getPagesCount() - 1);
+        }
+
+        return $this->pageId;
+    }
+
+    /**
      * Get currenct page data
      *
      * @return array
@@ -291,7 +314,7 @@ class XLite_View_Pager extends XLite_View_Abstract
     {
         return array_slice(
             $this->getParam(self::PARAM_DATA),
-            $this->getParam(self::PARAM_PAGE_ID) * $this->getItemsPerPage(),
+            $this->getPageId() * $this->getItemsPerPage(),
             $this->getItemsPerPage()
         );
     }

@@ -11,81 +11,100 @@
  * @since     3.0.0
  */
 
-var productsList = {
+var productsListHandlers = [];
+var sessionCell = '';
+
+function ProductsList(cell) {
 
   /**
    * Properties
    */
 
-  container: null,
-  ajaxSupport: false,
-
+  var container = $('.products-list.' + cell);
 
   /**
-   * Public methods
+   * Methods
    */
 
-  // Initialization
-  initialization: function()
-  {
-    this.container = $('.products-list');
-
-    // Detect AJAX support
-    try {
-      var xhr = window.ActiveXObject ? new ActiveXObject("Microsoft.XMLHTTP") : new XMLHttpRequest();
-      if (xhr) {
-        this.ajaxSupport = true;
-      }
-    } catch(e) { }
-  },
-
   // Set new display mode
-  changeDisplayMode: function(mode)
+  this.changeDisplayMode = function(handler)
   {
-    this.process('displayMode', mode);
-  },
+    return this.process('displayMode', handler.getAttribute('class'));
+  };
 
   // Change current page
-  showPage: function(pageId)
+  this.showPage = function(handler)
   {
-    this.process('pageId', pageId);
-  },
+    return this.process('pageId', handler.getAttribute('class'));
+  };
 
   // Change sort criterion
-  changeSortByMode: function(mode)
+  this.changeSortByMode = function(handler)
   {
-    this.process('sortBy', mode);
-  },
+    return this.process('sortBy', handler.value);
+  };
 
   // Change sort order
-  changeSortOrder: function()
+  this.changeSortOrder = function()
   {
-    this.process('sortOrder', ('asc' == this.URLParams.sortOrder) ? 'desc' : 'asc');
-  },
+    return this.process('sortOrder', ('asc' == this.URLParams.sortOrder) ? 'desc' : 'asc');
+  };
 
   // Change items per page number
-  changePageLength: function(inputBox)
+  this.changePageLength = function(handler)
   {
-    count = parseInt(inputBox.value);
+    count = parseInt(handler.value);
 
     if (isNaN(count)) {
       count = 0;
     }
 
-    if (count != inputBox.value) {
-      inputBox.value = count;
+    if (count != handler.value) {
+      handler.value = count;
     }
 
-    this.process('itemsPerPage', count);
-  },
+    return this.process('itemsPerPage', count);
+  };
 
 
-  /**
-   * Protected methods
-   */
+  // Add event listeners
+  this.addListeners = function()
+  {
+    var o = this;
+
+    $('.pager a', container).click(
+      function() {
+        return !o.showPage(this);
+      }
+    );
+
+    $('input.page-length', container).change(
+      function() {
+        return !o.changePageLength(this);
+      }
+    );
+
+    $('.display-modes a', container).click(
+      function() {
+        return !o.changeDisplayMode(this);
+      }
+    );
+
+    $('select.sort-crit', container).change(
+      function() {
+        return !o.changeSortByMode(this);
+      }
+    );
+
+    $('a.sort-order', container).click(
+      function() {
+        return !o.changeSortOrder();
+      }
+    );
+  };
 
   // Change URL param
-  setURLParam: function(paramName, paramValue)
+  this.setURLParam = function(paramName, paramValue)
   {
     result = (paramValue != this.URLParams[paramName]) || (paramValue != this.URLAJAXParams[paramName]);
 
@@ -95,20 +114,22 @@ var productsList = {
     }
 
     return result;
-  },
+  };
 
   // Set a param and send the request
-  process: function(paramName, paramValue)
+  this.process = function(paramName, paramValue)
   {
     if (this.setURLParam(paramName, paramValue)) {
       this.loadWidget();
     }
-  }, 
+
+    return true;
+  }; 
 
   // Load (reload) widget
-  loadWidget: function()
+  this.loadWidget = function()
   {
-    if (this.ajaxSupport) {
+    if (hasAJAXSupport()) {
 
       this.showModalScreen();
       var o = this;
@@ -125,12 +146,12 @@ var productsList = {
     } else {
       self.location = this.buildURL();
     }
-  },
+  };
 
   // Show modal screen
-  showModalScreen: function()
+  this.showModalScreen = function()
   {
-    $('.products-list').block(
+    container.block(
       {
         message: '<div></div>',
         css: {
@@ -150,22 +171,22 @@ var productsList = {
 
     $('.blockElement').addClass('wait-block');
     $('.blockOverlay').addClass('wait-block-overlay');
-  },
+  };
 
   // Hide modal screen
-  hideModalScreen: function()
+  this.hideModalScreen = function()
   {
-    $('.products-list').unblock();
-  },
+    container.unblock();
+  };
 
   // Build URL
-  buildURL: function(forAJAX)
+  this.buildURL = function(forAJAX)
   {
     return URLHandler.buildURL(forAJAX ? this.URLAJAXParams : this.URLParams);
-  },
+  };
 
   // AJAX onload event handler
-  loadHandler: function(xhr, s)
+  this.loadHandler = function(xhr, s)
   {
     var processed = false;
 
@@ -173,8 +194,10 @@ var productsList = {
       var div = document.createElement('DIV');
       $(div).html(xhr.responseText);
 
-      this.container.replaceWith($('.products-list', div));
-      this.container = $('.products-list');
+      container.replaceWith($('.products-list.' + cell, div));
+      container = $('.products-list.' + cell);
+
+      this.addListeners();
 
       processed = true;
     }
@@ -184,13 +207,8 @@ var productsList = {
     if (!processed) {
       self.location = this.buildURL();
     }
-  },
-}
+  };
 
-// onready event handler
-$('.products-list').ready(
-  function() {
-    return productsList.initialization();
-  }
-);
+  this.addListeners();
+}
 

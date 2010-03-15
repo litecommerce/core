@@ -363,29 +363,17 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     }
 
     /**
-     * Return Viewer object 
+     * Return viewer object
      * 
+     * @param bool $isExported flag to determine if current viewer is exported into a CMS
+     *  
      * @return XLite_View_Controller
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
-    public function getViewer()
+    public function getViewer($isExported = false)
     {
-        return self::getController()->getViewer();
-    }
-
-    /**
-     * Display current page 
-     * 
-     * @param XLite_View_Abstract $viewer instance of the current viewer
-     *  
-     * @return void
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function runViewer(XLite_View_Abstract $viewer)
-    {
-        $viewer->display();
+        return self::getController()->getViewer($isExported);
     }
 
     /**
@@ -397,7 +385,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      * @access public
      * @since  3.0.0 EE
      */
-    public function run($adminZone = false)
+    public function run($adminZone = false, $runController = true, $fromCMS = false)
     {
         // Set current area
         $this->adminZone = $adminZone;
@@ -406,13 +394,11 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
         $this->init();
 
         // Handle action (if needed)
-        $this->runController();
+        if ($runController) {
+            $this->runController();
+        }
 
-        // Obtain the Viewer object
-        $viewer = $this->getViewer();
-    
-        // Display page
-        $this->runViewer($viewer);
+        return $this->getViewer($fromCMS);
     }
 }
 

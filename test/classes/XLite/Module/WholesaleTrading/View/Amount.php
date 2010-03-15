@@ -43,15 +43,6 @@ class XLite_Module_WholesaleTrading_View_Amount extends XLite_View_Abstract
 
 
     /**
-     * Widget template filename
-     *
-     * @var    string
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected $template = 'modules/WholesaleTrading/amount.tpl';
-
-    /**
      * Define widget parameters
      *
      * @return void
@@ -65,6 +56,8 @@ class XLite_Module_WholesaleTrading_View_Amount extends XLite_View_Abstract
         $this->widgetParams += array(
             self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
         );
+
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/WholesaleTrading/amount.tpl');
     }
 
     /**
@@ -77,13 +70,9 @@ class XLite_Module_WholesaleTrading_View_Amount extends XLite_View_Abstract
      */
     public function isVisible()
     {
-        $controller = XLite::getController();
-
         return parent::isVisible()
-            && $this->getParam(self::PARAM_PRODUCT)
             && $this->getParam(self::PARAM_PRODUCT)->isPriceAvailable()
-            && method_exists($controller, 'isAvailableForSale')
-            && $controller->isAvailableForSale();
+            && $this->isAvailableForSale();
     }
 
     /**
