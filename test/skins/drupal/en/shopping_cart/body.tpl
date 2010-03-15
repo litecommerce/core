@@ -2,7 +2,7 @@
 <div id="shopping-cart">
   <widget class="XLite_View_Form_Cart_Main" name="cart_form" />
 
-    <table class="cart-items clearfix">
+    <table class="cart-items">
       <tbody>
         <tr class="cart-item" FOREACH="cart.items,cart_id,item">
           <widget template="shopping_cart/item.tpl" IF="item.isUseStandardTemplate()" />
