@@ -58,7 +58,7 @@ $(document).ready(
 
     <div IF="availableForSale" class="buttons-row">
       <widget class="XLite_View_Button_Submit" label="Add to Cart" />
-      <widget module="WishList" class="XLite_Module_WishList_View_AddButton" product="{product}" />
+      <widget module="WishList" class="XLite_Module_WishList_View_Button_AddToWishlist" product="{product}" />
     </div>
 
   </div>

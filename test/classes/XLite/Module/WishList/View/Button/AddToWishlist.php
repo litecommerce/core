@@ -33,7 +33,7 @@
  * @subpackage View
  * @since      3.0.0
  */
-class XLite_Module_WishList_View_AddButton extends XLite_View_Button_Regular
+class XLite_Module_WishList_View_Button_AddToWishlist extends XLite_View_Button_Regular
 {
     /**
      * Widget parameter names
@@ -57,6 +57,7 @@ class XLite_Module_WishList_View_AddButton extends XLite_View_Button_Regular
             self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
         );
 
+        $this->widgetParams[self::PARAM_ACTION]->setValue('add');
         $this->widgetParams[self::PARAM_LABEL]->setValue('Add to Wish List');
     }
 
@@ -73,7 +74,6 @@ class XLite_Module_WishList_View_AddButton extends XLite_View_Button_Regular
 
         $params = $this->getParam(self::PARAM_FORM_PARAMS);
         $params['target'] = 'wishlist';
-        $params['action'] = 'add';
         $params['product_id'] = $this->getParam(self::PARAM_PRODUCT)->get('product_id');
 
         $this->widgetParams[self::PARAM_FORM_PARAMS]->setValue($params);

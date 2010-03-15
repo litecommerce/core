@@ -73,10 +73,10 @@
 	        		      <font class="ProductPrice">{price_format(item,#total#):h}</font>
 				          </td>
 				          <td nowrap>
-                		<widget class="XLite_View_Button" label="Update amount" type="button">
+                		<widget class="XLite_View_Button_Submit" label="Update amount" />
 				          </td>
 				          <td width="100%">
-                		<widget class="XLite_View_Button" label="Remove" type="button" href="{buildURL(#wishlist#,#delete#,_ARRAY_(#item_id#^item.item_id,#wishlist_id#^item.wishlist_id,#product_id#^item.product_id))}">
+                		<widget class="XLite_View_Button_Regular" label="Remove" action="delete" formParams="{_ARRAY_(#item_id#^item.item_id,#wishlist_id#^item.wishlist_id,#product_id#^item.product_id)}" />
 				          </td>														
 			          </tr>
 			        </table>
@@ -87,7 +87,7 @@
 				      <table cellpadding="0" cellspacing="0">
 					      <tr>
 				          <td colspan="3">
-							      <widget class="XLite_View_Button" label="Add to cart" type="button" href="{buildURL(#cart#,#add#,_ARRAY_(#item_id#^item.item_id,#wishlist_id#^item.wishlist_id,#product_id#^item.product_id))}" img="cart4button.gif" font="FormButton">
+							      <widget class="XLite_View_Button_Regular" label="Add to cart" action="add" formParams="{_ARRAY_(#target#^#cart#,#item_id#^item.item_id,#wishlist_id#^item.wishlist_id,#product_id#^item.product_id)}" />
 					        </td>
 					      </tr>	
 				      </table>	
