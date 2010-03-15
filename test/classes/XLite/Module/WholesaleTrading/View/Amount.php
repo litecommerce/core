@@ -106,10 +106,13 @@ class XLite_Module_WholesaleTrading_View_Amount extends XLite_View_Abstract
         $purchaseLimit = $this->getParam(self::PARAM_PRODUCT)->get('purchaseLimit');
         $inventory = $this->getParam(self::PARAM_PRODUCT)->get('inventory');
 
-        $max1 = ($purchaseLimit && $purchaseLimit->get('max') > 0) ? $purchaseLimit->get('max') : 0;
-        $max2 = ($inventory && $inventory->get('amount') > 0) ? $inventory->get('amount') : 0;
+        $purchaseLimit = ($purchaseLimit && $purchaseLimit->get('max') > 0) ? $purchaseLimit->get('max') : 0;
+        $amount = ($inventory && $inventory->get('amount') > 0) ? $inventory->get('amount') : 0;
+        if ($amount > $purchaseLimit && $purchaseLimit > 0) {
+            $amount = $purchaseLimit;
+        }
 
-        return max($max1, $max2);
+        return $amount;
     }
 
     /**

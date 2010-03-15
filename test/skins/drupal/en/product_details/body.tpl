@@ -79,8 +79,6 @@ $(document).ready(
 
   <div class="product-description">{description:h}</div>
 
-  {* TODO - rework as dynamic price changer
-  <widget module="WholesaleTrading" template="modules/WholesaleTrading/expanded_options.tpl" IF="product.hasOptions()&product.showExpandedOptions" />
-  *}
+  <widget module="WholesaleTrading" class="XLite_Module_WholesaleTrading_View_ExtendedOptions" product="{product}" />
 
 <widget name="add_to_cart" end />
