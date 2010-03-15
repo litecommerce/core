@@ -396,7 +396,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getPageTitle()
+    public function getTitle()
     {
         return 'Checkout';
     }

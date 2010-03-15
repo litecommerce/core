@@ -56,7 +56,7 @@ function SaveFilters()
     <tr>
       <td width="100px">Search for:</td>
       <td colspan="3"><input type="text" size="48" id="search_substring" name="search[substring]" value="{search.substring}"></td>
-      <td width="100px"> <widget class="XLite_View_Button" label="Search" type="button" img="" font="FormButton"></td>
+      <td width="100px"> <widget class="XLite_View_Button_Submit" label="Search" /></td>
     </tr>  
 
     <tr>
@@ -134,7 +134,7 @@ function SaveFilters()
 
     <tr>
       <td>&nbsp;</td>
-      <td><widget class="XLite_View_Button" label="Search" type="button" img="" font="FormButton"></td>
+      <td><widget class="XLite_View_Button_Submit" label="Search" /></td>
       <td valign="middle" nowrap>
         <a href="javascript: ClearAllFilters();" onclick="javascript: this.blur();"><img src="images/go.gif" width="13" height="13" alt=""><strong>&nbsp;Clear settings</strong></a>
       </td>

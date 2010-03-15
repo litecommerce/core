@@ -190,9 +190,9 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controlle
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getPageTitle()
+    public function getTitle()
     {
-        return 'Wishlist';
+        return 'Wish list';
     }
 
     /**

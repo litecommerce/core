@@ -71,6 +71,6 @@
     </select>
   </div>
 
-  <widget class="XLite_View_Button" label="Search" type="button">
+  <widget class="XLite_View_Button_Submit" label="Search" />
 
 </form>
