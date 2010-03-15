@@ -12,6 +12,7 @@ INSERT INTO xlite_featured_products VALUES (199,58,30);
 
 
 INSERT INTO xlite_product_options (option_id, product_id, optclass, opttext, options, orderby, opttype) VALUES (1,205,'Bracelet','Bracelet','Dark lether\r\nBeige lether=+2;w=+0.5\r\nSilicone\r\nFabric=+2',0,'Radio button');
+INSERT INTO xlite_product_options (option_id, product_id, optclass, opttext, options, orderby, opttype) VALUES (23,205,'Size','Size','S\r\nM=+2;w=+0.5\r\nL\r\nXL=+2',0,'Radio button');
 INSERT INTO xlite_product_options (option_id, product_id, optclass, opttext, options, orderby) VALUES (2,69,'Cover','Choose cover','Soft\r\nHard=+5',0);
 INSERT INTO xlite_product_options (option_id, product_id, optclass, opttext, options, orderby) VALUES (3,68,'Cover','Choose cover','Soft\r\nHard=+5',0);
 INSERT INTO xlite_product_options (option_id, product_id, optclass, opttext, options, orderby) VALUES (4,70,'Cover','Choose cover','Soft\r\nHard=+5',0);

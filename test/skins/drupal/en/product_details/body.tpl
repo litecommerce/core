@@ -78,7 +78,8 @@ $(document).ready(
 
   <div class="product-description">{description:h}</div>
 
+  {* TODO - rework as dynamic price changer
   <widget module="WholesaleTrading" template="modules/WholesaleTrading/expanded_options.tpl" IF="product.hasOptions()&product.showExpandedOptions" />
-  <widget module="WholesaleTrading" template="modules/WholesaleTrading/purchase_limit.tpl" visible="{product.purchaseLimit.min|product.purchaseLimit.max}" IF="product.purchaseLimit" />
+  *}
 
 <widget name="add_to_cart" end />

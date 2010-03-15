@@ -93,5 +93,39 @@ class XLite_Module_WholesaleTrading_View_Amount extends XLite_View_Abstract
         return $list;
     }
 
+    /**
+     * Get maximum quantity 
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getMaxAmount()
+    {
+        $purchaseLimit = $this->getParam(self::PARAM_PRODUCT)->get('purchaseLimit');
+        $inventory = $this->getParam(self::PARAM_PRODUCT)->get('inventory');
+
+        $max1 = ($purchaseLimit && $purchaseLimit->get('max') > 0) ? $purchaseLimit->get('max') : 0;
+        $max2 = ($inventory && $inventory->get('amount') > 0) ? $inventory->get('amount') : 0;
+
+        return max($max1, $max2);
+    }
+
+    /**
+     * Get minimum quantity 
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getMinAmount()
+    {
+        $purchaseLimit = $this->getParam(self::PARAM_PRODUCT)->get('purchaseLimit');
+
+        return ($purchaseLimit && $purchaseLimit->get('min') > 1) ? $purchaseLimit->get('min') : 1;
+    }
+
 }
 

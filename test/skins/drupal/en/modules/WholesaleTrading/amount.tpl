@@ -13,7 +13,7 @@
 <script type="text/javascript">
 $(document).ready(
   function() {
-    new productQuantityController($('.product-quantity.product-{product.product_id}'), 1, {product.inventory.amount})
+    new productQuantityController($('.product-quantity.product-{product.product_id}'), {getMinAmount()}, {getMaxAmount()})
   }
 );
 </script>
@@ -21,7 +21,7 @@ $(document).ready(
 <div class="product-quantity product-{product.product_id}">
   <label for="product_quantity_{product.product_id}">Quantity:</label>
   <a href="javascript:void(0);" class="quantity-lower"><img src="images/spacer.gif" alt="-" /></a>
-  <input id="product_quantity_{product.product_id}" name="amount" value="1" />
+  <input id="product_quantity_{product.product_id}" name="amount" value="{getMinAmount()}" />
   <a href="javascript:void(0);" class="quantity-upper"><img src="images/spacer.gif" alt="+" /></a>
-  <span>({product.inventory.amount} available)</span>
+  <span>({getMinAmount()}&ndash;{getMaxAmount()})</span>
 </div>

@@ -166,7 +166,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
     function getFullPrice($amount, $optionIndex = null, $use_wholesale_price = true)
     {
         if (!$this->is("priceAvailable") && !$this->xlite->is("adminZone")) {
-            return $this->getComplex('config.WholesaleTrading.price_denied_message');
+            return $this->config->WholesaleTrading->price_denied_message;
         }
 
         $wholesale_price = false;
