@@ -2,24 +2,36 @@
 // vim: set ts=4 sw=4 sts=4 et:
 
 /**
- * ____file_title____
- *  
- * @category   Lite Commerce
- * @package    Lite Commerce
- * @subpackage ____sub_package____
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage Core
  * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version    SVN: $Id$
- * @link       http://www.qtmsoft.com/
- * @since      3.0.0 EE
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
  */
 
 /**
- * XLite_Core_FlexyCompiler 
+ * Flexy compiler
  * 
- * @package    Lite Commerce
- * @subpackage ____sub_package____
- * @since      3.0.0 EE
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISingleton
 {
@@ -28,6 +40,8 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
 	 */
 	const TAG_ARRAY = '_ARRAY_';
 
+    const PHP_OPEN = '<?php';
+    const PHP_CLOSE = '?>';
 
 	/**
 	 * Template source code 
@@ -350,51 +364,54 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
 	// Flexy substitutions
 	function postprocess()
 	{
-		for ($i=0; $i<count($this->tokens); $i++) {
+		for ($i = 0; $i < count($this->tokens); $i++) {
 			$token = $this->tokens[$i];
 
 			$this->attachFormID($i);
 
 			if ($token["type"] == "tag" || $token["type"] == "open-close-tag") {
 
-				if ($this->findAttr($i+1, 'if', $pos) && (0 !== strcasecmp($token['name'], 'widget'))) {
+				if ($this->findAttr($i + 1, 'if', $pos) && (0 !== strcasecmp($token['name'], 'widget'))) {
                     if ($this->findClosingTag($i, $pos1)) {
-                        $expr = $this->flexyCondition($this->getTokenText($pos+1));
-                        $this->subst($token['start'], 0, '<?php if (' . $expr . '): ?>');
+                        $expr = $this->flexyCondition($this->getTokenText($pos + 1));
+                        $this->subst($token['start'], 0, self::PHP_OPEN . ' if (' . $expr . '): ' . self::PHP_CLOSE);
                         $this->subst($this->tokens[$pos]['start'], $this->tokens[$pos]['end'], '');
-                        $this->subst($this->tokens[$pos1]['end']-1, $this->tokens[$pos1]['end'], '><?php endif; ?>');
+                        $this->subst($this->tokens[$pos1]['end']-1, $this->tokens[$pos1]['end'], '>' . self::PHP_OPEN . ' endif; ' . self::PHP_CLOSE);
                     }
+
                 } elseif ($this->findAttr($i+1, "iff", $pos)) {
-                    $expr = $this->flexyCondition($this->getTokenText($pos+1));
-                    $this->subst($token["start"], 0, "<?php if($expr){?>");
+                    $expr = $this->flexyCondition($this->getTokenText($pos + 1));
+                    $this->subst($token["start"], 0, self::PHP_OPEN . " if($expr){" . self::PHP_CLOSE);
                     $this->subst($this->tokens[$pos]["start"], $this->tokens[$pos]["end"], '');
-                    $this->subst($this->tokens[$i]["end"]-1, $this->tokens[$i]["end"], "><?php }?>");
-                } else if ($this->findAttr($i+1, "foreach", $pos)) {
+                    $this->subst($this->tokens[$i]["end"]-1, $this->tokens[$i]["end"], '>' . self::PHP_OPEN . ' }' . self::PHP_CLOSE);
+
+                } elseif ($this->findAttr($i + 1, "foreach", $pos)) {
                     if ($this->findClosingTag($i, $pos1)) {
                         list($expr,$k,$forvar) = $this->flexyForeach($this->getTokenText($pos+1));
-                        $exprNumber = "$forvar"."ArraySize";
-                        $exprCounter = "$forvar"."ArrayPointer";
-                        $this->subst($token["start"], 0, "<?php \$$forvar = isset(\$this->$forvar) ? \$this->$forvar : null; \$_foreach_var = $expr; if (!is_null(\$_foreach_var)) { \$this->$exprNumber=count(\$_foreach_var); \$this->$exprCounter=0; } if (!is_null(\$_foreach_var)) foreach(\$_foreach_var as $k){ \$this->$exprCounter++; ?>");
+                        $exprNumber = $forvar . 'ArraySize';
+                        $exprCounter = $forvar . 'ArrayPointer';
+                        $this->subst($token["start"], 0, self::PHP_OPEN . " \$$forvar = isset(\$this->$forvar) ? \$this->$forvar : null; \$_foreach_var = $expr; if (!is_null(\$_foreach_var)) { \$this->$exprNumber=count(\$_foreach_var); \$this->$exprCounter=0; } if (!is_null(\$_foreach_var)) foreach(\$_foreach_var as $k){ \$this->$exprCounter++; " . self::PHP_CLOSE);
                         $this->subst($this->tokens[$pos]["start"], $this->tokens[$pos]["end"], '');
-                        $this->subst($this->tokens[$pos1]["end"]-1, $this->tokens[$pos1]["end"], "><?php } \$this->$forvar = \$$forvar; ?>");
+                        $this->subst($this->tokens[$pos1]["end"]-1, $this->tokens[$pos1]["end"], ">" . self::PHP_OPEN . " } \$this->$forvar = \$$forvar; " . self::PHP_CLOSE);
+
                     } else {
                         $this->error("No closing tag for foreach");
                     }
                 }
 
-				if ($this->findAttr($i+1, "selected", $pos)) {
+				if ($this->findAttr($i + 1, "selected", $pos)) {
 					if (isset($this->tokens[$pos+1]["type"]) && $this->tokens[$pos+1]["type"] == "attribute-value") {
 						$expr = $this->flexyCondition($this->getTokenText($pos+1));
 						$this->subst(
                             $this->tokens[$pos]["start"], 
                             $this->tokens[$pos]["end"], 
-                            "<?php if($expr) echo 'selected';?>");
+                            self::PHP_OPEN . " if($expr) echo 'selected';" . self::PHP_CLOSE);
 					}
 				}
 				if ($this->findAttr($i+1, "checked", $pos)) {
 					if (isset($this->tokens[$pos+1]["type"]) && $this->tokens[$pos+1]["type"] == "attribute-value") {
 						$expr = $this->flexyCondition($this->getTokenText($pos+1));
-						$this->subst($this->tokens[$pos]["start"], $this->tokens[$pos]["end"], "<?php if($expr) echo 'checked';?>");
+						$this->subst($this->tokens[$pos]["start"], $this->tokens[$pos]["end"], self::PHP_OPEN . " if($expr) echo 'checked';" . self::PHP_CLOSE);
 					}
 				}
 
@@ -419,20 +436,30 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
 					if (empty($code)) {
 						$this->subst($token['start'], $token['end'], '');
 					} else {
-						$this->subst($token['start'], $token['end'] - 1, '<?php ' . $code . ' ?');
+						$this->subst($token['start'], $token['end'] - 1, self::PHP_OPEN . ' ' . $code . ' ?');
 					}
                 }
 			}
+
             if ($token["type"] == "flexy") {
 				$expr = $this->flexyEcho($this->getTokenText($i));
 				$this->subst($token["start"], $token["end"], $expr);
-			} else if ($token["type"] == "attribute") {
-				if (!strcasecmp($token["name"], "src") || !strcasecmp($token["name"], "background")) {
-					if (list ($start, $end, $replacement) = $this->urlRewrite($this->getTokenText($i+1))) {
-						$this->subst($this->tokens[$i+1]["start"]+$start, $this->tokens[$i+1]["start"]+$end, $replacement);
+
+			} elseif ($token["type"] == "attribute") {
+
+				if (!strcasecmp($token['name'], 'src') || !strcasecmp($token['name'], 'background')) {
+                    $rewriteData = $this->urlRewrite($this->getTokenText($i + 1));
+
+					if ($rewriteData) {
+						$this->subst(
+                            $this->tokens[$i + 1]['start'] + $rewriteData[0],
+                            $this->tokens[$i + 1]['start'] + $rewriteData[1],
+                            $rewriteData[2]
+                        );
 					}
 				}
-			} else if ($token["type"] == "attribute-value") {
+
+			} elseif ($token["type"] == "attribute-value") {
 				$str = $this->getTokenText($i);
 				// find all {...}
 				$pos = 0;
@@ -632,18 +659,18 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
 			list($expr,$k,$forvar) = $this->flexyForeach(substr($str, 9));
 			$exprNumber = "$forvar"."ArraySize";
 			$exprCounter = "$forvar"."ArrayPointer";
-			return "<?php \$_foreach_var = $expr; if (!is_null(\$_foreach_var)) { \$this->$exprNumber=count(\$_foreach_var); \$this->$exprCounter=0; } if (!is_null(\$_foreach_var)) foreach(\$_foreach_var as $k){ \$this->$exprCounter++; ?>";
+			return self::PHP_OPEN . " \$_foreach_var = $expr; if (!is_null(\$_foreach_var)) { \$this->$exprNumber=count(\$_foreach_var); \$this->$exprCounter=0; } if (!is_null(\$_foreach_var)) foreach(\$_foreach_var as $k){ \$this->$exprCounter++; " . self::PHP_CLOSE;
 		}
 		if (substr($str, 0, 4) == '{if:') {
 			$expr = $this->flexyCondition(substr($str, 4));
-			return "<?php if($expr){?>";
+			return self::PHP_OPEN . " if($expr){" . self::PHP_CLOSE;
 		}
 		if ($str == '{end:}') {
-			return "<?php }?>";
+			return self::PHP_OPEN . " }" . self::PHP_CLOSE;
 		}
 		if ($str == '{else:}') {
-			return "<?php }else{ ?>";
-		}
+			return self::PHP_OPEN . " }else{ " . self::PHP_CLOSE;
+	    }
 		if (substr($str, 0, 2) == "{*") {
 			$str = '';
 			return "";
@@ -670,8 +697,8 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
 			break;
 		}
 
-		if ($this->condition) return "<?php if($this->condition) echo $expr;?>";
-		return "<?php echo $expr;?>";
+		if ($this->condition) return self::PHP_OPEN . " if($this->condition) echo $expr;" . self::PHP_CLOSE;
+		return self::PHP_OPEN . " echo $expr;" . self::PHP_CLOSE;
 	}
 	function flexyExpression(&$str)
 	{

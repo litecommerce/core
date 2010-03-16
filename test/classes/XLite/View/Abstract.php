@@ -473,6 +473,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
 
         if (isset($param)) {    
             $result = isset($this->widgetParams[$param]) ? $this->widgetParams[$param] : null;
+
         } else {
             $result = $this->widgetParams;
         }
@@ -527,7 +528,10 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      */
     public function getResources()
     {
-        return self::getResourcesSchema($this->prepareResources($this->getJSFiles()), $this->prepareResources($this->getCSSFiles()));
+        return self::getResourcesSchema(
+            $this->prepareResources($this->getJSFiles()),
+            $this->prepareResources($this->getCSSFiles())
+        );
     }
 
     /**
@@ -576,6 +580,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
             }
             // Get cached object
             $widget = $this->namedWidgets[$name];
+
         } else {
             // Create/clone current widget
             $widget = $this->getChildWidget($class);
@@ -682,7 +687,6 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
     {
         self::$resources = self::getResourcesSchema();
     }
-
 
     /**
      * Check for current target 
@@ -832,10 +836,10 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      */
     protected function truncate($baseObject, $field, $length = 0, $etc = '...', $breakWords = false)
     {
-
         if (is_scalar($baseObject)) {
             $string = $baseObject;
             $length = $field;
+
         } else {
             $string = $baseObject->get($field);
         }
@@ -970,10 +974,12 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
     {
         $result = array_chunk($array, $count);
 
-        $lastKey   = count($result)-1;
+        $lastKey   = count($result) - 1;
         $lastValue = $result[$lastKey];
 
-        if (0 < ($count = $count - count($lastValue))) {
+        $count -= count($lastValue);
+
+        if (0 < $count) {
             $result[$lastKey] = array_merge($lastValue, array_fill(0, $count, null));
         }
 
@@ -1021,7 +1027,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      */
     protected function getRowClass($row, $odd_css_class, $even_css_class = null)
     {
-        return (0 == ($row % 2)) ? $odd_css_class : $even_css_class;
+        return 0 == ($row % 2) ? $odd_css_class : $even_css_class;
     }
 
     /**
@@ -1031,7 +1037,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *  
      * @return bool
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function isActiveCaptchaPage($widgetId)
     {
@@ -1044,5 +1050,23 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
 
         return $result;
     }
+
+    /**
+     * Get image full URL 
+     * 
+     * @param string $relativePath Image relative path
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getImageURL($relativePath)
+    {
+        return XLite::getInstance()->shopURL(
+            XLite_Model_Layout::getInstance()->getSkinURL($relativePath)
+        );
+    }
+
 }
 

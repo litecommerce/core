@@ -1,7 +1,6 @@
 {* SVN $Id$ *}
 <td class="delete-from-wishlist">
-  <input type="image" src="images/spacer.gif" />
-  {* <widget class="XLite_View_Button_Regular" label="Remove" action="delete" formParams="{_ARRAY_(#item_id#^item.item_id,#wishlist_id#^item.wishlist_id,#product_id#^item.product_id)}" /> *}
+  <widget class="XLite_View_Button_Image" label="Remove" action="delete" formParams="{_ARRAY_(#item_id#^item.item_id,#wishlist_id#^item.wishlist_id,#product_id#^item.product_id)}" />
 </td>
 
 <td class="item-thumbnail" IF="item.hasImage()">
@@ -13,7 +12,7 @@
   <p class="item-sku" IF="{item.sku}">SKU: {item.sku}</p>
   <p class="item-weight" IF="{item.weight}">Weight: {item.weight} {config.General.weight_symbol}</p>
   <p class="item-options">
-    <widget module="ProductOptions" template="modules/ProductOptions/selected_options.tpl" visible="{item.hasOptions()}" item="{item}">
+    <widget module="ProductOptions" template="modules/ProductOptions/selected_options.tpl" visible="{item.hasOptions()}" item="{item}" />
   </p>
 </td>
 
