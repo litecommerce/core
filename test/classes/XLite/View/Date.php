@@ -2,187 +2,250 @@
 // vim: set ts=4 sw=4 sts=4 et:
 
 /**
- * Date selector
- *  
- * @category  Litecommerce
- * @package   View
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license   http://www.qtmsoft.com/xpayments_eula.html X-Payments license agreement
- * @version   SVN: $Id$
- * @link      http://www.qtmsoft.com/
- * @see       ____file_see____
- * @since     3.0.0
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage View
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
  */
 
 /**
- * XLite_View_Date 
+ * Date selector widget
  * 
- * @package View
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @subpackage View
+ * @see        ____class_see____
+ * @since      3.0.0
  */
 class XLite_View_Date extends XLite_View_FormField
 {	
+    /*
+     * Constants: names of a widget parameters
+     */
+    const PARAM_FIELD       = 'field';
+    const PARAM_VALUE       = 'value';
+    const PARAM_YEARS_RANGE = 'yearsRange';
+
     /**
-     * params 
+     * Parameters for prefilling the form
      * 
      * @var    array
-     * @access public
+     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $params = array();	
+    protected $params = array();	
 
     /**
      * Lower year 
      * 
      * @var    integer
-     * @access public
+     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $lowerYear = 2000;	
+    protected $lowerYear = 2000;	
 
     /**
      * Higher year
      * 
      * @var    integer
-     * @access public
+     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $higherYear = 2035;	
+    protected $higherYear = 2035;	
 
     /**
-     * Widget tempalte
-     * 
-     * @var    string
-     * @access public
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
-    public $template = "common/date.tpl";
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_FIELD => new XLite_Model_WidgetParam_String(
+                'Name of date field prefix', '', false
+            ),
+            self::PARAM_VALUE => new XLite_Model_WidgetParam_Int(
+                'Value of date field (timestamp)', time(), false
+            ),
+            self::PARAM_YEARS_RANGE => new XLite_Model_WidgetParam_Int(
+                'The range of years', null, false
+            )
+        );
+
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/date.tpl');
+    }
 
     /**
-     * Initialization
+     * Prefill form
      * 
      * @return void
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    function initView()
+    protected function initView()
     {
-        $dayField   = $this->get('field') . 'Day';
-        $monthField = $this->get('field') . 'Month';
-        $yearField  = $this->get('field') . 'Year';
-        $this->params = array_merge(
-			array($dayField, $monthField, $yearField),
-			$this->params
-		);
+        parent::initView();
 
-		parent::initView();
+        $value = $this->getParam(self::PARAM_VALUE);
 
-        if (
-			!is_null($this->get($dayField))
-			&& !is_null($this->get($monthField))
-			&& !is_null($this->get($yearField))
-		) {
-            // read form fields
-            $date = mktime(0, 0, 0, $this->get($monthField), $this->get($dayField), $this->get($yearField));
-			XLite::getController()->set($this->get('field'), $date); 
+        if (is_null($value)) {
+            $value = time();
         }
+
+        $date = getdate($value);
+
+        $this->params[$this->getParam(self::PARAM_FIELD) . 'Day']   = $date['mday'];
+        $this->params[$this->getParam(self::PARAM_FIELD) . 'Month'] = $date['mon'];
+        $this->params[$this->getParam(self::PARAM_FIELD) . 'Year']  = $date['year'];
+    }
+
+
+    /**
+     * Get field prefix value
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getField()
+    {
+        return $this->getParam(self::PARAM_FIELD);
     }
 
     /**
      * Get days list
      * 
      * @return array
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    function getDays()
+    protected function getDays()
     {
-        return array_keys(array_fill(1, 31, 1));
+        $daysArray = array();
+        for ($i = 1; $i <= 31; $i++) {
+            $daysArray[$i] = ($i == $this->getDay() ? 'selected' : '');
+        }
+        return $daysArray;
+
+    }
+
+    /**
+     * Get months list
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getMonths()
+    {
+        $monthsArray = array();
+        for ($i = 1; $i <= 12; $i++) {
+            $monthsArray[$i] = ($i == $this->getMonth() ? 'selected' : '');
+        }
+        return $monthsArray;
     }
 
     /**
      * Get years list
      * 
      * @return array
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    function getYears()
+    protected function getYears()
     {
-        $yearsRange = $this->get('yearsRange');
-        if (isset($yearsRange) && intval($yearsRange) > 0) {
-        	$this->set('higherYear', $this->get('lowerYear') + intval($yearsRange));
+        $yearsArray = array();
+        $yearsRange = $this->getParam(self::PARAM_YEARS_RANGE);
+
+        $higherYear = (!is_null($yearsRange) && intval($yearsRange) > 0 ? $this->lowerYear + intval($yearsRange) : $this->higherYear);
+        for ($i = $this->lowerYear; $i <= $higherYear; $i++) {
+            $yearsArray[$i] = ($i == $this->getYear() ? 'selected' : '');
         }
 
-		return array_keys(array_fill($this->get('lowerYear'), $this->get('higherYear'), 1));
+        return $yearsArray;
     }
     
-    /**
-     * prefill form 
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    function fillForm()
-    {
-        parent::fillForm();
-
-        $value = $this->get('value');
-        if (is_null($value)) {
-            $value = time();
-        }
-
-        $dayField   = $this->get("field") . 'Day';
-        $monthField = $this->get("field") . 'Month';
-        $yearField  = $this->get("field") . 'Year';
-
-        $date = getdate($value);
-
-        $this->setComplex($dayField, $date['mday']);
-        $this->setComplex($monthField, $date['mon']);
-        $this->setComplex($yearField, $date['year']);
-    }
-
     /**
      * Get month 
      * 
      * @return integer
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    function getMonth()
+    protected function getMonth()
     {
-        return $this->get($this->get('field') . 'Month');
+        return $this->params[$this->getParam(self::PARAM_FIELD) . 'Month'];
+    }
+
+    /**
+     * Get name of a month
+     * 
+     * @param int $monthIndex Number of month (1..12)
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getMonthString($monthIndex = 0)
+    {
+        return date("F", mktime(0, 0, 0, intval($monthIndex)));
     }
 
     /**
      * Get day 
      * 
      * @return integer
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    function getDay()
+    protected function getDay()
     {
-        return $this->get($this->get('field') . 'Day');
+        return @$this->params[$this->getParam(self::PARAM_FIELD) . 'Day'];
     }
 
     /**
      * Get year 
      * 
      * @return integer
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    function getYear()
+    protected function getYear()
     {
-        return $this->get($this->get('field') . 'Year');
+        return @$this->params[$this->getParam(self::PARAM_FIELD) . 'Year'];
     }
 }

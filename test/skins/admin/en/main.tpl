@@ -80,7 +80,7 @@
 <widget module="HTMLCatalog" target="catalog" template="common/dialog.tpl" head="HTML catalog" body="modules/HTMLCatalog/catalog.tpl">
 <widget module="AutoUpdateCatalog" mode="confirm" target="autoupdate_catalog" template="common/dialog.tpl" head="Confirm HTML catalog update" body="modules/AutoUpdateCatalog/body.tpl">
 
-<widget name="categoriesWidget" target="categories" template="common/dialog.tpl" head="Manage categories" body="categories/body.tpl" visible="{!mode=#delete_all#}">
+<widget name="categoriesWidget" target="categories" template="common/dialog.tpl" head="Manage categories" body="categories/body.tpl" visible="{!getRequestParamValue(#mode#)=#delete_all#}">
 <widget module="FeaturedProducts" template="common/dialog.tpl" head="Featured products" body="modules/FeaturedProducts/featuredProducts.tpl" IF="{namedWidgets.categoriesWidget.visible}">
 <span IF="!xlite.LayoutOrganizerEnabled">
 <widget target="category" class="XLite_View_Tabber" body="{pageTemplate}" switch="page" visible="{!mode=#delete#}">

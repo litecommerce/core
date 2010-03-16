@@ -66,7 +66,7 @@
 
 </form>
 
-<span IF="mode=#search#">
+<span IF="getRequestParamValue(#mode#)=#search#">
   <br><br>
   {productsFound} product(s) found
 </span>

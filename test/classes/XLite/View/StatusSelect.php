@@ -46,7 +46,19 @@
 */
 class XLite_View_StatusSelect extends XLite_View_FormField
 {	
-    public $template = "common/select_status.tpl";	
-    public $allOption = false; 
-}
+	public $allOption = false; 
 
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/select_status.tpl');
+    }
+}
