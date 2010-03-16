@@ -14,7 +14,7 @@
     <div class="items-list">
       <ul>
         <li FOREACH="getItemsList(),item">
-          <span class="item-name"><a href="{buildURL(#product#,##,_ARRAY_(#product_id#^item.product_id,#category_id#^item.category_id))}">{item.name}</a></span>
+          <span class="item-name"><a href="{buildURL(#product#,##,_ARRAY_(#product_id#^item.product_id))}">{item.name}</a></span>
           <span class="item-price">{price_format(item,#price#):h}</span><span class="delimiter">x</span><span class="item-qty">{item.amount}</span>
         </li>
       </ul>

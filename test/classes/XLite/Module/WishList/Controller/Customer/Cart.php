@@ -34,54 +34,57 @@
  * @since   3.0.0
  */
 class XLite_Module_WishList_Controller_Customer_Cart extends XLite_Controller_Customer_Cart implements XLite_Base_IDecorator
-{	
-	public $currentItem = null;
-	
+{    
     /**
-     * 'add' action
+     * Add item to cart (from wishlist)
      *
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-	protected function action_add() // {{{
-	{
-		if (isset($this->wishlist_id)&&isset($this->item_id)) {
-			// process this wishlist
-			$this->currentItem = parent::get("currentItem");
-			$wishlist_product = new XLite_Module_WishList_Model_WishListProduct($this->item_id,$this->wishlist_id);
-			$product = $wishlist_product->getProduct();
-			
-			if (!$wishlist_product->isOptionsExist()) {
-				$this->set("returnUrl", "cart.php?target=wishlist&absentOptions=1&invalidProductName=" . $product->get("name"));
-				return;				
-			} elseif ($wishlist_product->isOptionsInvalid()) {				
-				$this->set("returnUrl", "cart.php?target=wishlist&invalidOptions=1&invalidProductName=" . $product->get("name"));
-				return;
-			} else {
-				$this->currentItem->set("options",$wishlist_product->get("options"));
-				$this->currentItem->set("amount",$this->get("wishlist_amount"));
-				$this->session->set("wishlist_products",$wishlist_products);
-				parent::action_add();
-			}
-		} else {
-			// no wishlists
-			parent::action_add();
-		}
-	} // }}}
-
-    function _needConvertToIntStr($name) // {{{
+    protected function action_add()
     {
-        if ($name == "item_id") 
-        	return false;
+        $wishlistId = XLite_Core_Request::getInstance()->wishlist_id;
+        $itemId = XLite_Core_Request::getInstance()->item_id;
 
-        return parent::_needConvertToIntStr($name);
-    } // }}}
+        if (!is_null($wishlistId) && !is_null($itemId)) {
 
-} // }}} 
+            // process this wishlist
+            parent::getCurrentItem();
 
-// WARNING:
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+            $wishlist_product = new XLite_Module_WishList_Model_WishListProduct($itemId, $wishlistId);
+            
+            if (!$wishlist_product->isOptionsExist()) {
+                $this->set(
+                    'returnUrl',
+                    $this->buildUrl('wishlist', '', array('absentOptions' => 1, 'invalidProductName' => $wishlist_product->getProduct()->get('name')))
+                );
+
+                return;                
+
+            } elseif ($wishlist_product->isOptionsInvalid()) {                
+                $this->set(
+                    'returnUrl',
+                    $this->buildUrl('wishlist', '', array('invalidOptions' => 1, 'invalidProductName' => $wishlist_product->getProduct()->get('name')))
+                );
+
+                return;
+
+            }
+
+            $this->currentItem->set('options', $wishlist_product->get('options'));
+            $this->currentItem->set('amount', XLite_Core_Request::getInstance()->wishlist_amount);
+
+            $this->session->set('wishlist_products', $wishlist_products);
+        }
+
+        parent::action_add();
+    }
+
+    function _needConvertToIntStr($name)
+    {
+        return $name == 'item_id' ? false : parent::_needConvertToIntStr($name);
+    }
+
+}

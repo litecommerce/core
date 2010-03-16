@@ -1,6 +1,19 @@
-{* SVN $Id$ *}
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * Wishlist item
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
 <td class="delete-from-wishlist">
-  <widget class="XLite_View_Button_Image" label="Remove" action="delete" formParams="{_ARRAY_(#item_id#^item.item_id,#wishlist_id#^item.wishlist_id,#product_id#^item.product_id)}" />
+  <widget class="XLite_Module_WishList_View_Form_Item_Delete" name="wl_remove" item="{item}" />
+    <widget class="XLite_View_Button_Image" label="Remove" action="delete" />
+  <widget name="wl_remove" end />
 </td>
 
 <td class="item-thumbnail" IF="item.hasImage()">
@@ -18,8 +31,7 @@
 
 <td class="item-actions">
 
-  <form action="{buildURL(#wishlist#,#update#,_ARRAY_(#item_id#^item.item_id,#wishlist_id#^item.wishlist_id,#product_id#^item.product_id))}" method="POST" name="update{key}_form">
-    <input FOREACH="buildURLArguments(#wishlist#,#update#,_ARRAY_(#item_id#^item.item_id,#wishlist_id#^item.wishlist_id,#product_id#^item.product_id)),paramName,paramValue" type="hidden" name="{paramName}" value="{paramValue}" />
+  <widget class="XLite_Module_WishList_View_Form_Item_Update" name="wl_item" item="{item}" />
 
     <div class="item-sums">
       <span class="item-price">{price_format(item,#price#):h}</span>
@@ -29,12 +41,10 @@
       <span class="item-subtotal">{price_format(item,#total#):h}</span>
     </div>
 
-    {* <widget class="XLite_View_Button_Submit" label="Update amount" /> *}
-  
     <div class="item-buttons">
       <widget class="XLite_View_Button_Regular" style="aux-button add-to-cart" label="Add to cart" action="add" formParams="{_ARRAY_(#target#^#cart#,#item_id#^item.item_id,#wishlist_id#^item.wishlist_id,#product_id#^item.product_id)}" />
     </div>
 
-  </form>
+  <widget name="wl_item" end />
 
 </td>

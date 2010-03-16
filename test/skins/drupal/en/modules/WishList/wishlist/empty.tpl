@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Selected options 
+ * Empty wishlist
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,8 +10,4 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<span class="item-option" FOREACH="item.productOptions,option">
-  {option.class:h}: {option.option:h}<span IF="optionArrayPointer<optionArraySize">, </span>
-</span>
-
-{* TODO - do it! <div class="item-change-options" IF="item.productOptions"><a href="#">Change options</a></div> *}
+<p>Your Wish List is empty.</p>
