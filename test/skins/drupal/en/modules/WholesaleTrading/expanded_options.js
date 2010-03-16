@@ -10,13 +10,20 @@
  * @link    http://www.litecommerce.com/
  * @since   3.0.0
  */
+
 function extendedOptionsController(container, names, options)
 {
+  // Check widget structure
   if (!container) {
     return false;
   }
 
   this.container = $(container).eq(0);
+  if (!this.container.length) {
+    return false;
+  }
+
+  // Set internal properties
   this.names = names;
   this.options = options;
 
@@ -27,32 +34,33 @@ function extendedOptionsController(container, names, options)
 
   $('.product-options input[type="radio"]', this.container).click(
     function() {
-      o.changeOption(this);
+      o.changeOption();
     }
   );
 
   $('.product-options select', this.container).change(
     function() {
-      o.changeOption(this);
+      o.changeOption();
     }
   );
 }
 
 extendedOptionsController.prototype.currentState = [];
 
-extendedOptionsController.prototype.changeOption = function(elm)
+// Change option
+extendedOptionsController.prototype.changeOption = function()
 {
   var state = this.getCurrentState();
 
-  var id = -1;
-  for (var i = 0; i < this.options.length && 0 > id; i++) {
-    if (this.options[i].key == state) {
-      id = i;
+  // Find data cell
+  var cell = false;
+  for (var i = 0; i < this.options.length && !cell; i++) {
+    if (this.options[i] && this.options[i].key == state) {
+      cell = this.options[i];
     }
   }
 
-  if (0 <= id) {
-    var cell = this.options[id];
+  if (cell) {
 
     // Update quantity
     var elm = $('.product-quantity span', this.container);
@@ -70,6 +78,7 @@ extendedOptionsController.prototype.changeOption = function(elm)
   }
 }
 
+// Get current state code
 extendedOptionsController.prototype.getCurrentState = function()
 {
   this.currentState = [];
@@ -98,6 +107,7 @@ extendedOptionsController.prototype.getCurrentState = function()
   return this.currentState.join('|');
 }
 
+// Get class id by class name
 extendedOptionsController.prototype.getClassIdByName = function(name)
 {
   var id = -1;

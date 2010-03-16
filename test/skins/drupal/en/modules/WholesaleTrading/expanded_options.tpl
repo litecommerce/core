@@ -15,9 +15,7 @@ var extendedOptionsNames = [{getOptionNamesAsJavascript()}];
 
 var extendedOptionsData = [
 {foreach:product.expandedItems,key,opts}
-  {
-    key: '{getOptionsAsJavascript(opts)}', quantity: {getOptionQuantityRange(key)} {if:product.is(#priceAvailable#)}, price: '{price_format(product.getFullPrice(#1#,key)):h}' {end:}
-  },
+  { key: '{getOptionsAsJavascript(opts)}', quantity: {getOptionQuantityRange(key)} },
 {end:}
   false
 ];
