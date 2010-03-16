@@ -29,7 +29,7 @@
       </table>
 
       <div class="wishlist-send">
-        <widget template="modules/WishList/send_wishlist.tpl">
+        <widget template="modules/WishList/send_wishlist.tpl" />
       </div>
 
       <div class="wishlist-buttons">

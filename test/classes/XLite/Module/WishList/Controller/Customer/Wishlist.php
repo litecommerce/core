@@ -195,67 +195,113 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controlle
         }
 	}
 
-	function getItems() // {{{
+    /**
+     * Get wishlist items 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+	protected function getItems()
 	{
-		$wishlist = $this->get("wishList");
-		if (!$wishlist) {
-            return false; 
+        $result = array();
+
+		$wishlist = $this->getWishList();
+		if ($wishlist) {
+    		$wishlist_product = new XLite_Module_WishList_Model_WishListProduct();
+
+	    	$result = $wishlist_product->findAll("wishlist_id = '" . $wishlist->get("wishlist_id") ."'");
         }
 
-		$wishlist_product = new XLite_Module_WishList_Model_WishListProduct();
-
-		return $wishlist_product->findAll("wishlist_id = '" . $wishlist->get("wishlist_id") ."'");
-		
-	} // }}}  
+        return $result;
+	} 
 	
-	function action_delete() // {{{
+    /**
+     * Delete wishlist item
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+	protected function action_delete()
 	{
-        $wishlist_product = new XLite_Module_WishList_Model_WishListProduct($this->get("item_id"),$this->get("wishlist_id"));
+        $wishlist_product = new XLite_Module_WishList_Model_WishListProduct(
+            XLite_Core_Request::getInsatnce()->item_id,
+            XLite_Core_Request::getInsatnce()->wishlist_id
+        );
         $wishlist_product->delete();
+	}
 
-	} // }}} 
-
-	function action_update() // {{{ 
+    /**
+     * Update wishlist item 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+	protected function action_update() 
 	{
-		$wishlist_product = new XLite_Module_WishList_Model_WishListProduct($this->get("item_id"), $this->get("wishlist_id"));
+		$wishlist_product = new XLite_Module_WishList_Model_WishListProduct(
+            XLite_Core_Request::getInsatnce()->item_id,
+            XLite_Core_Request::getInsatnce()->wishlist_id
+        );
 
-		$properties = $this->get("properties");
-        if ($properties['wishlist_amount'] <= 0) {
+        $amount = XLite_Core_Request::getInsatnce()->wishlist_amount;
+        if ($amount<= 0) {
 			$this->action_delete();
-		}
 
-		$wishlist_product->set("amount", $properties['wishlist_amount']);
+		} else {
+		    $wishlist_product->set('amount', $amount);
+		    $wishlist_product->update();
+        }
+	}
 
-		$wishlist_product->update();
-	} // }}}	
-
-	function action_send() // {{{
+    /**
+     * Send wishlist to friend 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+	protected function action_send()
 	{
 		$Mailer = new XLite_Model_Mailer();
-		$Mailer->wishlist_recipient = $this->wishlist_recipient;
-		$Mailer->items = $this->get("items");
-		$Mailer->customer = $this->auth->getComplex('profile.billing_firstname') . ' ' . $this->auth->getComplex('profile.billing_lastname');
-		$Mailer->compose($this->config->Company->site_administrator, $this->wishlist_recipient, 'modules/WishList/send');
-		$Mailer->send();	
-		$this->set("mode","MessageSent");
-		
-	} // }}}
 
-	function action_clear() // {{{
+		$Mailer->wishlist_recipient = XLite_Core_Request::getInstance()->wishlist_recipient;
+		$Mailer->items = $this->getItems();
+		$Mailer->customer = $this->auth->getComplex('profile.billing_firstname') . ' ' . $this->auth->getComplex('profile.billing_lastname');
+		$Mailer->compose(
+            $this->config->Company->site_administrator,
+            XLite_Core_Request::getInstance()->wishlist_recipient,
+            'modules/WishList/send'
+        );
+
+		$Mailer->send();	
+	}
+
+    /**
+     * Clear wishlist
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+	protected function action_clear()
 	{
-		foreach ($this->get("items") as $item) {
+		foreach ($this->getIitems() as $item) {
 			$item->delete();
 		}
-	} // }}}
+	}
 
-    function _needConvertToIntStr($name) // {{{
+    function _needConvertToIntStr($name)
     {
-        if ($name == "item_id") {
-        	return false;
-		}
-
-        return parent::_needConvertToIntStr($name);
-    } // }}}
+        return $name == 'item_id' ? false : parent::_needConvertToIntStr($name);
+    }
 
     /**
      * Get page instance data (name and URL)
@@ -284,17 +330,4 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controlle
     {
         return 'Wish list';
     }
-
-    /**
-     * Get a list of CSS files required to display the widget properly
-     *
-     * @return array
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function getCSSFiles()
-    {
-        return array_merge(parent::getCSSFiles(), array('modules/WishList/wishlist.css'));
-    }
-
-} // }}}
+}

@@ -17,7 +17,7 @@
 </td>
 
 <td class="item-thumbnail" IF="item.hasImage()">
-  <a href="{buildURL(item.url.target,item.url.action,item.url.arguments)}"><img src="{item.imageURL}"alt="{item.name}"></a>
+  <a href="{buildURL(item.url.target,item.url.action,item.url.arguments)}"><img src="{item.imageURL}" alt="{item.name}" /></a>
 </td>
 
 <td class="item-info">

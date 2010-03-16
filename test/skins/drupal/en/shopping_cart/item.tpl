@@ -15,7 +15,7 @@
 </td>
 
 <td class="item-thumbnail" IF="item.hasThumbnail()">
-  <a href="{item.url}"><img src="{item.thumbnailURL}" alt="{item.name}"></a>
+  <a href="{item.url}"><img src="{item.thumbnailURL}" alt="{item.name}" /></a>
 </td>
 
 <td class="item-info">
