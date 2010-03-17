@@ -24,7 +24,7 @@
 	top: 0;
 	left: 0;
 	width: 100%;
-	z-index: 100;
+	z-index: 2000;
 	text-align: center;
 	line-height: 0;
 }
