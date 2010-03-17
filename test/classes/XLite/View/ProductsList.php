@@ -379,7 +379,9 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
      */
     protected function getGridColumnsRange()
     {
-        return array_combine($range = range(self::GRID_COLUMNS_MIN, self::GRID_COLUMNS_MAX), $range);
+        $range = range(self::GRID_COLUMNS_MIN, self::GRID_COLUMNS_MAX);
+
+        return array_combine($range, $range);
     }
 
     /**
@@ -800,5 +802,18 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
         // Do not change call order
         $this->widgetParams += $this->getPager()->getWidgetParams();
         $this->requestParams = array_merge($this->requestParams, array_keys($this->getPager()->getRequestParams()));
+    }
+
+    /**
+     * Get table columns count 
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTableColumnsCount()
+    {
+        return 2 + ($this->isShowPrice() ? 1 : 0) + ($this->isShowAdd2Cart() ? 1 : 0);
     }
 }

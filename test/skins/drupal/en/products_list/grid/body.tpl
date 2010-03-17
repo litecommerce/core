@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Products grid template
+ * Products list (grid variant)
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -28,5 +28,5 @@
 </ul>
 
 <div IF="isShowMoreLink()">
-  <a class="link" href="{getMoreLinkURL()}" onClick="this.blur()">{getMoreLinkText()}</a>
+  <a class="link" href="{getMoreLinkURL()}">{getMoreLinkText()}</a>
 </div>

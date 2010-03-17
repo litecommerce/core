@@ -27,40 +27,53 @@
  */
 
 /**
- * Search result
+ * Search result list
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AdvancedSearch_View_SearchResult extends XLite_View_SearchResult implements XLite_Base_IDecorator
+class XLite_View_SearchList extends XLite_View_ProductsList
 {
-    /**
-     * Initialize
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function init(array $attributes = array())
-    {
-        parent::init($attributes);
+    const PARAM_DATA = 'data';
 
-        $this->allowedTargets[] = 'advanced_search';
+    /**
+     * Return title 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getHead()
+    {
+        return 'Search result';
     }
 
     /**
-     * Check widget visibility
+     * Define widget parameters
      *
-     * @return bool
-     * @access public
-     * @since  3.0.0 EE
+     * @return void
+     * @access protected
+     * @since  1.0.0
      */
-    public function isVisible()
+    protected function defineWidgetParams()
     {
-        return parent::isVisible()
-            && ('advanced_search' != XLite_Core_Request::getInstance()->target || 'found' == XLite_Core_Request::getInstance()->mode);
+        parent::defineWidgetParams();
+
+        $this->widgetParams[self::PARAM_DATA] = new XLite_Model_WidgetParam_Array('Widget type', array());
+    }
+
+    /**
+     * Return products list
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getData()
+    {
+        return $this->getParam(self::PARAM_DATA);
     }
 }
 

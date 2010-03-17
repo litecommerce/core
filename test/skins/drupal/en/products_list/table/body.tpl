@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Products table template
+ * Products list (table variant)
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -20,7 +20,7 @@
   </tr>
 
   <tr IF="isShowMoreLink()">
-    <td colspan="4"><a class="link" href="{getMoreLinkURL()}" onClick="this.blur()">{getMoreLinkText()}</a></td>
+    <td colspan="{getTableColumnsCount()}"><a class="link" href="{getMoreLinkURL()}">{getMoreLinkText()}</a></td>
   </tr>
 
 </table>
