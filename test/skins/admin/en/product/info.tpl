@@ -38,12 +38,12 @@
 	</table>
 	</td>
 	<td> 
-        <widget class="XLite_View_CategorySelect" formField="category_id" selectedCategory="{product.categories.0.category_id}">
+        <widget class="XLite_View_CategorySelect" fieldName="category_id" selectedCategoryId="{product.categories.0.category_id}">
 		<widget class="XLite_Validator_RequiredValidator" field="category_id">
     </td>
 </tr>
 
-<widget module="MultiCategories" class="XLite_View_CategorySelect" template="modules/MultiCategories/additionalCategories.tpl" product="{product}" allOption formField="category_id">
+<widget module="MultiCategories" class="XLite_View_CategorySelect" template="modules/MultiCategories/additionalCategories.tpl" product="{product}" allOption fieldName="category_id">
 
 <tr>
   <td>

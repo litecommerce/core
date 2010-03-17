@@ -86,7 +86,7 @@ function TypeChanged(type)
     </tr>
     <tr>
         <td valign="top"><input type="radio" name="applyTo" value="category" checked="{dc.applyTo=#category#}"></td>
-        <td>one category <br><widget class="XLite_View_CategorySelect" fieldName="category_id" selectedCategory="{dc.category_id}"></td>
+        <td>one category <br><widget class="XLite_View_CategorySelect" fieldName="category_id" selectedCategoryId="{dc.category_id}"></td>
     </tr>
     </table>
     </td>

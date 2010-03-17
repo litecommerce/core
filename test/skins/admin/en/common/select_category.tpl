@@ -1,10 +1,23 @@
-<select name="{formField}" size="1" {if:nonFixed} style="width:200pt" {else:}  class="FixedSelect" {end:}  >
-   <option value="" IF="allOption">All</option>
-   <option value="" IF="noneOption">None</option>
-   <option value="" IF="rootOption" class="CenterBorder">[Root Level]</option>
-	{foreach:categories,k,v}
-	{if:!v.category_id=currentCategory}
-		<option value="{v.category_id:r}" selected="{v.category_id=selectedCategory}">{v.stringPath:h}</option>{end:}
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * Category selection dropdown box template 
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
+
+<select name="{getParam(#fieldName#)}" size="1" {if:nonFixed} style="width:200pt" {else:}  class="FixedSelect" {end:}  >
+   <option value="" IF="getParam(#allOption#)">All</option>
+   <option value="" IF="getParam(#noneOption#)">None</option>
+   <option value="" IF="getParam(#rootOption#)" class="CenterBorder">[Root Level]</option>
+	{foreach:getCategories(),k,v}
+	{if:!v.category_id=getParam(#currentCategory#)}
+		<option value="{v.category_id:r}" selected="{isCategorySelected(v)}">{v.stringPath:h}</option>{end:}
 	{end:}
-   <span IF="!allOption"><option value="" IF="isEmpty(categories)">-- No categories --</option></span>
+  <option value="" IF="isDisplayNoCategories()">-- No categories --</option>
 </select>

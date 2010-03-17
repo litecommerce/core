@@ -35,7 +35,7 @@
 	</table>
 	</td>
     <td>
-        <widget class="XLite_View_CategorySelect" fieldName="category_id" selectedCategory="{product.categories.0.category_id}">
+        <widget class="XLite_View_CategorySelect" fieldName="category_id" selectedCategoryId="{product.categories.0.category_id}">
 		<widget class="XLite_Validator_RequiredValidator" field="category_id">
     </td>
 </tr>

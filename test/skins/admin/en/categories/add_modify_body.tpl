@@ -27,7 +27,7 @@
     <tr>
         <td class="FormButton" nowrap>Parent category</td>
         <td class=Star>*</td>
-        <td>{if:mode=#add#}<widget class="XLite_View_CategorySelect" formField="parent" selectedCategory="{category_id}" rootOption>{else:}<widget class="XLite_View_CategorySelect" selectedCategory="{parent}" formField="parent" rootOption currentCategory="{category_id}">{end:}
+        <td>{if:mode=#add#}<widget class="XLite_View_CategorySelect" fieldName="parent" selectedCategoryId="{category_id}" rootOption>{else:}<widget class="XLite_View_CategorySelect" selectedCategoryId="{parent}" fieldName="parent" rootOption currentCategoryId="{category_id}">{end:}
         </td>
     </tr>
 	<tr>

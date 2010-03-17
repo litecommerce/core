@@ -38,8 +38,10 @@ class XLite_View_CategorySelect extends XLite_View_Abstract
 {
     const PARAM_ALL_OPTION           = 'allOption';
     const PARAM_NONE_OPTION          = 'noneOption';
+    const PARAM_ROOT_OPTION          = 'rootOption';
     const PARAM_FIELD_NAME           = 'fieldName';
     const PARAM_SELECTED_CATEGORY_ID = 'selectedCategoryId';
+    const PARAM_CURRENT_CATEGORY_ID  = 'currentCategoryId';
 
     protected $categories = null;
 
@@ -61,8 +63,11 @@ class XLite_View_CategorySelect extends XLite_View_Abstract
         $this->widgetParams += array(
             self::PARAM_ALL_OPTION  => new XLite_Model_WidgetParam_Bool('Display All option', false),
             self::PARAM_NONE_OPTION => new XLite_Model_WidgetParam_Bool('Display None option', false),
+            self::PARAM_ROOT_OPTION => new XLite_Model_WidgetParam_Bool('Display [Root level] option', false),
             self::PARAM_FIELD_NAME  => new XLite_Model_WidgetParam_String('Field name', ''),
             self::PARAM_SELECTED_CATEGORY_ID => new XLite_Model_WidgetParam_Int('Selected category id', 0),
+            self::PARAM_CURRENT_CATEGORY_ID => new XLite_Model_WidgetParam_Int('Current category id', 0),
+
         );
 
         $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/select_category.tpl');
