@@ -1,12 +1,22 @@
-{* SVN $Id$ *}
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * Advanced search form (horizontal)
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
 <script type="text/javascript">
 <!--
 function ClearAllFilters()
 {
   var filters = ["search_substring", "search_sku", "search_price", "search_weight", "search_logic", "search_subcategories", "search_title", "search_description", "search_brief_description","search_category", "search_meta_tags", "search_extra_fields", "search_options"];
-  var Element;
   for (var i = 0; i < filters.length; i++) {
-    Element = document.getElementById(filters[i]);
+    var Element = document.getElementById(filters[i]);
     if (Element) {
       switch (filters[i]) {
         case "search_sku":
@@ -56,7 +66,7 @@ function SaveFilters()
     <tr>
       <td width="100px">Search for:</td>
       <td colspan="3"><input type="text" size="48" id="search_substring" name="search[substring]" value="{search.substring}"></td>
-      <td width="100px"> <widget class="XLite_View_Button" label="Search" type="button" img="" font="FormButton"></td>
+      <td width="100px"><widget class="XLite_View_Button_Submit" label="Search" /></td>
     </tr>  
 
     <tr>
@@ -134,7 +144,7 @@ function SaveFilters()
 
     <tr>
       <td>&nbsp;</td>
-      <td><widget class="XLite_View_Button" label="Search" type="button" img="" font="FormButton"></td>
+      <td><widget class="XLite_View_Button_Submit" label="Search" /></td>
       <td valign="middle" nowrap>
         <a href="javascript: ClearAllFilters();" onclick="javascript: this.blur();"><img src="images/go.gif" width="13" height="13" alt=""><strong>&nbsp;Clear settings</strong></a>
       </td>
