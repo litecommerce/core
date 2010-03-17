@@ -27,11 +27,11 @@
  */
 
 /**
- * Advanced search widget (controller)
+ * Advanced search widget
  * 
  * @package    XLite
  * @subpackage View
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
 {
@@ -71,7 +71,6 @@ class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
         self::DISPLAY_MODE_HORIZONTAL => 'Horizontal',
     );
 
-
     /**
      * Return title
      *
@@ -102,7 +101,7 @@ class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
      *
      * @return void
      * @access protected
-     * @since  1.0.0
+     * @since  3.0.0
      */
     protected function defineWidgetParams()
     {
@@ -128,17 +127,31 @@ class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
         return parent::isVisible() || $this->getParam(self::PARAM_IS_EXPORTED);
     }
 
+    /**
+     * Get a list of JavaScript files required to display the widget properly
+     *
+     * @return array
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
 
-    // FIXME, TODO - check the following methods
+        $list[] = 'modules/AdvancedSearch/advanced_search.js';
+
+        return $list;
+    }
 
     /**
      * Get prices
      *
      * @return array
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    function getPrices()
+    public function getPrices()
     {
         $prices = unserialize($this->config->AdvancedSearch->prices);
         usort($prices, array($this, 'cmp'));
@@ -147,15 +160,32 @@ class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
     }
 
     /**
-     * Get weights
-     *
-     * @return array
+     * Check - price / weight range is selected or not
+     * 
+     * @param string $range        Saved price / weight range
+     * @param object $currentValue Current price range 
+     *  
+     * @return boolean
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    function getWeights()
+    public function isRangeSelected($range, $currentValue)
     {
-        $weights =  unserialize($this->config->AdvancedSearch->weights);
+        return $range = $currentValue->start . ',' . $currentValue->end;
+    }
+
+    /**
+     * Get weights
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getWeights()
+    {
+        $weights = unserialize($this->config->AdvancedSearch->weights);
         usort($weights, array($this, 'cmp'));
 
         return $weights;

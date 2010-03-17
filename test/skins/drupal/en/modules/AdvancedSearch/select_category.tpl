@@ -1,6 +1,18 @@
-<select style="width : 335px;" id="search_category" name="{formField}" size="1">
-   <option value="" IF="allOption">All</option>
-   <option value="" IF="noneOption">None</option>
-   <option FOREACH="categories,k,v" value="{v.category_id:r}" selected="{v.category_id=search.category}">{v.stringPath:h}</option>
-   <span IF="!allOption"><option value="" IF="isEmpty(categories)">-- No categories --</option></span>
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * Category selector
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
+<select name="{getParam(#fieldName#)}">
+  <option value="" IF="getParam(#allOption#)">All</option>
+  <option value="" IF="getParam(#noneOption#)">None</option>
+  <option FOREACH="getCategories(),v" value="{v.category_id:r}" selected="{isCategorySelected(v)}">{v.stringPath}</option>
+  {if:isDisplayNoCategories()}<option value="">-- No categories --</option>{end:}
 </select>

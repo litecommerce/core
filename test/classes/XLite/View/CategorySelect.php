@@ -1,56 +1,51 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* @package View
-* @access public
-* @version $Id$
-*/
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage View
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
+
+
+/**
+ * Category selector
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_View_CategorySelect extends XLite_View_Abstract
-{	
-    public $categories;	
-    public $field;	
-    public $formName;	
-    public $selectedCategory = null;	
-    public $allOption = false;	
-    public $noneOption = false;	
+{
+    const PARAM_ALL_OPTION           = 'allOption';
+    const PARAM_NONE_OPTION          = 'noneOption';
+    const PARAM_FIELD_NAME           = 'fieldName';
+    const PARAM_SELECTED_CATEGORY_ID = 'selectedCategoryId';
+
+    protected $categories = null;
+
+    public $field;    
+    public $formName;    
+    public $selectedCategory = null;    
 
     /**
      * Define widget parameters
@@ -63,49 +58,107 @@ class XLite_View_CategorySelect extends XLite_View_Abstract
     {
         parent::defineWidgetParams();
 
+        $this->widgetParams += array(
+            self::PARAM_ALL_OPTION  => new XLite_Model_WidgetParam_Bool('Display All option', false),
+            self::PARAM_NONE_OPTION => new XLite_Model_WidgetParam_Bool('Display None option', false),
+            self::PARAM_FIELD_NAME  => new XLite_Model_WidgetParam_String('Field name', ''),
+            self::PARAM_SELECTED_CATEGORY_ID => new XLite_Model_WidgetParam_Int('Selected category id', 0),
+        );
+
         $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/select_category.tpl');
     }
 
-    function getCategoriesCondition()
+    /**
+     * Get categories condition 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCategoriesCondition()
     {
-    	return array(null, null, null, null);
+        return array(null, null, null, null);
     }
 
-    function getCategories()
+    /**
+     * Get categories list
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCategories()
     {
-       if (is_null($this->categories)) {
+        if (is_null($this->categories)) {
+            $this->categories = array();
+
             $c = new XLite_Model_Category();
-            $names = array();
             $names_hash = array();
 
             list($where, $orderby, $groupby, $limit) = $this->getCategoriesCondition();
-        	if ($this->rootOption && $this->currentCategory > 0) {
-            	$categories = $c->findAll($where, $orderby, $groupby, $limit);
-            	$this->categories = array();
-            	$currentCategory = new XLite_Model_Category($this->currentCategory);
-            	$currentCategoryPath = $currentCategory->getStringPath() . "/";
-            	for ($i=0; $i<count($categories); $i++) {
-            		$name = $categories[$i]->getStringPath();
-            		if (!(strpos($name, $currentCategoryPath) === false) && strpos($name, $currentCategoryPath) == 0) {
-            			continue;
-            		}
-            		$this->categories[] = $categories[$i];
-            	}
-        	} else {
-            	$this->categories = $c->findAll($where, $orderby, $groupby, $limit);
-        	}
 
-            for ($i=0; $i<count($this->categories); $i++) {
-            	$name = $this->categories[$i]->getStringPath();
-            	while (isset($names_hash[$name])) {
-            		$name .= " ";
-            	}
-            	$names_hash[$name] = true;
-                $names[] = $name;
+            $this->categories = $c->findAll($where, $orderby, $groupby, $limit);
+
+            if ($this->rootOption && $this->currentCategory > 0) {
+                $currentCategory = new XLite_Model_Category($this->currentCategory);
+                $currentCategoryPath = $currentCategory->getStringPath() . '/';
+                foreach ($this->categories as $i => $c) {
+                    $name = $c->getStringPath();
+                    if (!(strpos($name, $currentCategoryPath) === false) && strpos($name, $currentCategoryPath) == 0) {
+                        unset($this->categories[$i]);
+                    }
+                }
             }
-            array_multisort($names, $this->categories);
+
+            foreach ($this->categories as $c) {
+                $name = $c->getStringPath();
+
+                while (isset($names_hash[$name])) {
+                    $name .= ' ';
+                }
+
+                $names_hash[$name] = true;
+            }
+
+            array_multisort(array_keys($names_hash), $this->categories);
         }
+
         return $this->categories;
+    }
+
+    /**
+     * Check - display 'No categories' option or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isDisplayNoCategories()
+    {
+        return !$this->getParam(self::PARAM_ALL_OPTION) && !$this->getCategories();
+    }
+
+    /**
+     * Check - specified category selected or not
+     * 
+     * @param XLite_Model_Category $category Category
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isCategorySelected(XLite_Model_Category $category)
+    {
+        $categoryId = $this->getParam(self::PARAM_SELECTED_CATEGORY_ID);
+        if (!is_numeric($categoryId) || 1 > $categoryId) {
+            $categoryId = 0;
+        }
+
+        return $category->get('category_id') == $categoryId;
     }
 
     function getSelectedCategory()
@@ -127,8 +180,3 @@ class XLite_View_CategorySelect extends XLite_View_Abstract
         }
     }
 }
-
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
