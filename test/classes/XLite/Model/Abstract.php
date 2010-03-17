@@ -676,7 +676,7 @@ class XLite_Model_Abstract extends XLite_Base
     protected function _allKeysSet()
     {
         foreach ($this->primaryKey as $field) {
-			if (!isset($this->properties[$field]) || '' == $this->properties[$field]) return false;
+			if (!isset($this->properties[$field]) || '' === $this->properties[$field]) return false;
         }
 
         return true;
