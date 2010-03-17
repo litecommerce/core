@@ -52,9 +52,20 @@ class XLite_Module_ProductOptions_Controller_Customer_Cart extends XLite_Control
             if (
                 !is_null($this->getProduct())
                 && $this->getProduct()->hasOptions()
-                && isset(XLite_Core_Request::getInstance()->product_options)
             ) {
-                $this->currentItem->setProductOptions(XLite_Core_Request::getInstance()->product_options);
+
+                $options = array();
+
+                if (isset(XLite_Core_Request::getInstance()->product_options)) {
+                    $options = XLite_Core_Request::getInstance()->product_options;
+
+                } else {
+                    foreach ($this->getProduct()->getDefaultProductOptions() as $class => $oid) {
+                        $options[addslashes($class)] = addslashes($oid);
+                    }
+                }
+
+                $this->currentItem->setProductOptions($options);
             }
         }
 

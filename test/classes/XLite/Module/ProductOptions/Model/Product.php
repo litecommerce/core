@@ -81,6 +81,37 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product impl
     }
 
     /**
+     * Get default product options 
+     * 
+     * @return array (pairs optclass => option_id)
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDefaultProductOptions()
+    {
+        $options = array();
+
+        foreach ($this->getProductOptions() as $option) {
+            if (
+                $option->get('opttype') == 'SelectBox'
+                || $option->get('opttype') == 'Radio button'
+            ) {
+                foreach ($option->getProductOptions() as $opt) {
+                    $options[$option->get('optclass')] = $opt->option_id;
+                    break;
+                }
+            }
+        }
+
+        if ($this->hasExceptions()) {
+            // TODO - add exception checking
+        }
+
+        return $options;
+    }
+
+    /**
      * Get product options list length 
      * 
      * @return integer

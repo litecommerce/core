@@ -50,7 +50,6 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Cart extends XLite_Contr
      */
     protected function action_add()
     {
-        $amount = 1;
         $items = $this->cart->get('items');
 
         // alternative way to set product options
@@ -64,39 +63,63 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Cart extends XLite_Contr
                 $this->product_options[$_opt->class] = $_opt->option_id;
             }
         }
-        
-        if (isset(XLite_Core_Request::getInstance()->amount) && XLite_Core_Request::getInstance()->amount > 0) {
+
+        // Detect amount
+        if (
+            isset(XLite_Core_Request::getInstance()->amount)
+            && XLite_Core_Request::getInstance()->amount > 0
+        ) {
             $amount = XLite_Core_Request::getInstance()->amount;
         }
-        if (isset(XLite_Core_Request::getInstance()->wishlist_amount) && XLite_Core_Request::getInstance()->wishlist_amount > 0) {
+
+        if (
+            isset(XLite_Core_Request::getInstance()->wishlist_amount)
+            && XLite_Core_Request::getInstance()->wishlist_amount > 0
+        ) {
             $amount = XLite_Core_Request::getInstance()->wishlist_amount;
         }
+
         if (!isset(XLite_Core_Request::getInstance()->opt_product_qty)) {
+
             // min/max purchase amount check
             $pl = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
-            if ($pl->find("product_id=" . $this->getComplex('currentItem.product.product_id'))) {
+            if ($pl->find("product_id=" . $this->getCurrentItem()->getProduct()->get('product_id'))) {
                 $exists_amount = 0;
-                for ($i = 0; $i < count($items); $i++) {
-                    if ($items[$i]->getComplex('product.product_id') == $this->getComplex('currentItem.product.product_id')) {
-                        $exists_amount += $items[$i]->get('amount');
+                foreach ($items as $i) {
+                    if ($i->getProduct()->get('product_id') ==  $this->getCurrentItem()->getProduct()->get('product_id')) {
+                        $exists_amount += $i->get('amount');
                     }
                 }
-                if ($amount + $exists_amount < $pl->get('min') || 
-                    ($pl->get('max') > 0 && $pl->get('max') < $amount + $exists_amount)) {
-                    $this->set("returnUrl", "cart.php?mode=add_error&error=range&max=" . $pl->get('max') . "&min=" . $pl->get('min') . "&added=" . $exists_amount);
+
+                if (!isset($amount)) {
+                    $amount = $pl->get('min');
+
+                } elseif (
+                    $amount + $exists_amount < $pl->get('min') || 
+                    ($pl->get('max') > 0 && $pl->get('max') < $amount + $exists_amount)
+                ) {
+
+                    // TODO - add top message
+                    $this->set("returnUrl", $this->buildUrl('product', '', array('product_id' => $this->getCurrentItem()->getProduct()->get('product_id'))));
                     return;
                 }
             }
         }
+
+        if (!isset($amount)) {
+            $amount = 1;
+        }
+
         // check if product sale available
         $this->getProduct()->set("product_id", $this->product_id);
         if (!$this->getProduct()->is("saleAvailable")) {
-            $this->set("returnUrl", "cart.php?mode=add_error");
+
+            // TODO - add top message
+            $this->set("returnUrl", $this->buildUrl('product', '', array('product_id' => $this->getCurrentItem()->getProduct()->get('product_id'))));
             return;
         }
 
-        $this->currentItem = parent::get("currentItem");
-        $this->currentItem->set("amount", $amount);
+        $this->getCurrentItem()->set("amount", $amount);
  
         parent::action_add();
 
