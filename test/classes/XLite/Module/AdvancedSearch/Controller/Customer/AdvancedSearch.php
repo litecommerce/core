@@ -1,53 +1,63 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URL: http://www.litecommerce.com/license.php                |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-|                                                                              |
-| The Initial Developer of the Original Code is Ruslan R. Fazliev              |
-| Portions created by Ruslan R. Fazliev are Copyright (C) 2003 Creative        |
-| Development. All Rights Reserved.                                            |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* 
-*
-* @package AdvancedSearch 
-* @access public
-* @version $Id$
-*/
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage Controller
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
 
+/**
+ * Advanced product search
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLite_Controller_Customer_Abstract
-{	
-    public $params = array("target", "mode", "substring");	
-    public $products = null;	
-	public $search = null;	
-	public $profile = null;
+{    
+    /**
+     * Controller parameters
+     * 
+     * @var    array
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $params = array('target', 'mode', 'substring');    
 
+    /**
+     * Products list (cache)
+     * 
+     * @var    mixed
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $products = null;    
 
-	/**
+    public $search = null;    
+
+    /**
      * Common method to determine current location 
      * 
      * @return array
@@ -56,179 +66,151 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
      */
     protected function getLocation()
     {
-		return 'Advanced search' . (('found' === $this->get('mode')) ? ' results' : '');
-	}
-
-
-
-	function getProfile()
-	{
-		if (is_null($this->profile)) {
-			$this->profile = new XLite_Model_Profile($this->auth->getComplex('profile.profile_id'));
-		}
-
-		return $this->profile;
-	}
+        return 'Advanced search';
+    }
 
     function init()
     {
-		if (is_null($this->session->get("search")) && $this->auth->is("logged")) {
-			$profile = $this->get("profile");
-			$this->session->set("search",unserialize($profile->get("search_settings")));
-		}
+        if (is_null($this->session->get('search')) && $this->auth->is('logged')) {
+            $this->session->set('search', unserialize($thus->profile->get('search_settings')));
+        }
 
         parent::init();
 
-		if ($this->getComplex('properties.search')) {
-		    $this->session->set("search", $this->getComplex('properties.search'));
-		}
+        if ($this->getComplex('properties.search')) {
+            $this->session->set('search', $this->getComplex('properties.search'));
+        }
 
-		$this->search = $this->session->get("search");
-		if (
-			is_null($this->search)
-			|| !is_array($this->search)
-			|| $this->session->get("quick_search")
-		) {
-			$this->search["substring"] = $this->session->get("quick_search");
-            $this->session->set("quick_search", null);
-			$this->search["logic"] = 1;
-			$this->search["title"] = 1;
-			$this->search["brief_description"] = 1;
-			$this->search["description"] = 1;
-            $this->search["meta_tags"] = 1;
-	        $this->search["extra_fields"] = 1;
-	        $this->search["options"] = 1;
-			$this->search["subcategories"] = 1;
-		};
-    }
-	
-	function action_save_filters()
-	{
-		$profile = $this->get("profile");
-		$profile->set("search_settings", serialize($this->session->get("search")));
-		$profile->update();
-	}	
-
-    function getProducts()
-    {
-        if (!isset($this->mode)) {
-			return array();
-		}
-
-        $properties = $this->getComplex('properties.search');
-		if (is_null($properties)) {
-			$properties = $this->session->get("search");
-		}
-
+        $this->search = $this->session->get('search');
         if (
-			!empty($properties["substring"])
-			&& !isset($properties["title"])
-			&& !isset($properties["brief_description"])
-			&& !isset($properties["description"])
-			&& !isset($properties["meta_tags"])
-			&& !isset($properties["extra_fields"])
-			&& !isset($properties["options"])
-		) {
-			return array();
-		}
+            is_null($this->search)
+            || !is_array($this->search)
+            || $this->session->get('quick_search')
+        ) {
+            $this->search['substring'] = $this->session->get('quick_search');
+            $this->session->set('quick_search', null);
+            $this->search['logic'] = 1;
+            $this->search['title'] = 1;
+            $this->search['brief_description'] = 1;
+            $this->search['description'] = 1;
+            $this->search['meta_tags'] = 1;
+            $this->search['extra_fields'] = 1;
+            $this->search['options'] = 1;
+            $this->search['subcategories'] = 1;
+        };
+    }
+    
+    /**
+     * Save search conditions 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function action_save_filters()
+    {
+        $this->auth->getProfile()->set('search_settings', serialize($this->session->get('search')));
+        $this->auth->getProfile()->update();
+    }
 
+    /**
+     * Get products list
+     * 
+     * @return array of XLite_Model_Product
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProducts()
+    {
         if (is_null($this->products)) {
-            $p = new XLite_Model_Product();
+			$this->products = array(); 
 
-            if (is_array($properties)) {
-                foreach($properties as $key => $value) {
-                    if (empty($properties[$key])) {
-						$properties[$key] = null;
-					}
+	        $properties = $this->getComplex('properties.search');
+    	    if (is_null($properties)) {
+        	    $properties = $this->session->get('search');
+	        }
 
-                    $properties[$key] = addslashes($properties[$key]);
-                }
+			if (!is_array($properties)) {
+				$properties = array();
 			}
 
-            $properties["title"] = isset($properties["title"]);
-            $properties["description"] = isset($properties["description"]);
-            $properties["brief_description"] = isset($properties["brief_description"]);
-   			$properties["subcategories"] = isset($properties["subcategories"]);
-            $properties["meta_tags"] = isset($properties["meta_tags"]);
-            $properties["extra_fields"] = isset($properties["extra_fields"]);
-            $properties["options"] = isset($properties["options"]);
-			$orderby = null;
-															
-            if (isset($properties["price"])) {
-                $price = explode(",", $properties["price"], 2);
-                $properties["start_price"] = $price[0];
-                $properties["end_price"] = !empty($price[1]) ? $price[1] : null;
-                $orderby = "price";
-            }
+        	$isDumpSearch = !empty($properties['substring'])
+    	        && !isset($properties['title'])
+        	    && !isset($properties['brief_description'])
+            	&& !isset($properties['description'])
+	            && !isset($properties['meta_tags'])
+    	        && !isset($properties['extra_fields'])
+        	    && !isset($properties['options']);
 
-            if (isset($properties["weight"])) {
-                $weight = explode(",", $properties["weight"], 2);
-                $properties["start_weight"] = $weight[0];
-                $properties["end_weight"] = !empty($weight[1]) ? $weight[1] : null;
-                $orderby = "weight";
-            }
+       		if (
+				isset(XLite_Core_Request::getInstance()->mode)
+				&& !$isDumpSearch
+			) {
+	            $p = new XLite_Model_Product();
 
-            $this->products = $p->_advancedSearch(
-            	$properties["substring"],
-            	$orderby,
-            	$properties["sku"],
-            	isset($properties["category"]) ? $properties["category"] : null,
-            	$properties["subcategories"],
-            	true,
-            	$properties["logic"],
-            	$properties["title"],
-            	$properties["description"],
-            	$properties["brief_description"],
-				$properties["meta_tags"],
-				$properties["extra_fields"],
-				$properties["options"],
-            	isset($properties["start_price"]) ? $properties["start_price"] : null,
-            	isset($properties["end_price"]) ? $properties["end_price"] : null,
-            	isset($properties["start_weight"]) ? $properties["start_weight"] : null,
-            	isset($properties["end_weight"]) ? $properties["end_weight"] : null
-            );
+                foreach($properties as $key => $value) {
+                    if (empty($properties[$key])) {
+                        $properties[$key] = null;
 
-            $searchStat = new XLite_Model_SearchStat();
-            $searchStat->add($properties["substring"], count($this->products));
+                    } else {
+                    	$properties[$key] = addslashes($properties[$key]);
+					}
+                }
+
+				$booleanProperties = array(
+					'title', 'description', 'brief_description', 'subcategories', 'meta_tags',
+					'extra_fields', 'options'
+				);
+
+				foreach ($booleanProperties as $key) {
+					$properties[$key] = isset($properties[$key]);
+				}
+
+            	$orderby = null;
+                                                            
+	            if (isset($properties["price"])) {
+    	            $price = explode(',', $properties['price'], 2);
+            	    $properties['start_price'] = $price[0];
+        	        $properties['end_price'] = (isset($price[0]) && !empty($price[1])) ? $price[1] : null;
+                	$orderby = 'price';
+	            }
+
+    	        if (isset($properties['weight'])) {
+        	        $weight = explode(',', $properties['weight'], 2);
+            	    $properties['start_weight'] = $weight[0];
+                	$properties['end_weight'] = (isset($weight[1]) && !empty($weight[1])) ? $weight[1] : null;
+	                $orderby = 'weight';
+    	        }
+
+	            $this->products = $p->_advancedSearch(
+    	            $properties['substring'],
+        	        $orderby,
+            	    $properties['sku'],
+	                isset($properties['category']) ? $properties['category'] : null,
+    	            $properties['subcategories'],
+        	        true,
+            	    $properties['logic'],
+                	$properties['title'],
+	                $properties['description'],
+    	            $properties['brief_description'],
+        	        $properties['meta_tags'],
+            	    $properties['extra_fields'],
+                	$properties['options'],
+	                isset($properties['start_price'])  ? $properties['start_price'] : null,
+    	            isset($properties['end_price'])    ? $properties['end_price'] : null,
+        	        isset($properties['start_weight']) ? $properties['start_weight'] : null,
+            	    isset($properties['end_weight'])   ? $properties['end_weight'] : null
+	            );
+
+	            $searchStat = new XLite_Model_SearchStat();
+    	        $searchStat->add($properties['substring'], count($this->products));
+			}
         }
 
         return $this->products;
     }
-
-	function getCount()
-	{
-		return count($this->get("products"));
-	}
- 
-	function cmp($val1, $val2)
-	{
-		if ($val1["start"] == $val2["start"]) { 
-			return $val1["label"] > $val2["label"] ? -1 : 1; 
-		}
-
-		return $val1["start"] < $val2["start"] ?  -1 :  1;
-	}
-	
-	function getPrices()
-	{
-		$prices = unserialize($this->config->AdvancedSearch->prices);
-		usort($prices, array($this, "cmp"));
-
-		return $prices;
-	}
-	
-	function getWeights()
-	{
-     	$weights =  unserialize($this->config->getComplex('AdvancedSearch.weights'));
-        usort($weights, array($this,"cmp"));
-
-        return $weights;
-	}
-
-	function strcat($val1, $val2, $delimeter)
-	{
-		return $val1 . $delimeter . $val2;
-	}
 
     /**
      * Get page instance data (name and URL)

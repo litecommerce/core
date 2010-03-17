@@ -1,76 +1,46 @@
-{* SVN $Id$ *}
-<form action="{buildUrl(#advanced_search#)}" method="POST" name="adsearch_form" id="adsearch_form">
-  <input type="hidden" name="mode" value="found">
+{* vim: set ts=2 sw=2 sts=2 et: *}
 
-  <div>
-    <input type="text" size="48" id="search_substring" name="search[substring]" value="{search.substring}">
+{**
+ * Advanced search form (vertical)
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
+<widget class="XLite_Module_AdvancedSearch_View_Form_QuickSearch" name="adsearch_form" className="advanced-search-sidebar" />
+
+  <div class="substring">
+    <label for="search_substring">Search for:</label>
+    <input type="text" class="substring" id="search_substring" name="search[substring]" value="{search.substring}" />
   </div>
 
-  <div>
-    <label for="search_logic">Containing:</label>
-    <select id="search_logic" name="search[logic]">
-      <option value="1" selected="{isSelected(search.logic,#1#)}">Any of these words (OR)</option>
-      <option value="2" selected="{isSelected(search.logic,#2#)}">All of these words (AND)</option>
-      <option value="3" selected="{isSelected(search.logic,#3#)}">The exact phrase</option>
-    </select>
+  <div class="price">
+    <label>Price, $ (range):</label>
+    <input type="text" class="start" name="search[start_price]" value="{search.start_price}" />&ndash;<input type="text" class="end" name="search[end_price]" value="{search.end_price}" />
   </div>
 
-  <div>
-    <strong>Search in:</strong>
-
-    <input type="checkbox" id="search_title" name="search[title]" checked="{search.title}" /><label for="search_title">Title</label>
-    <br />
-
-    <input type="checkbox" id="search_brief_description" name="search[brief_description]" checked="{search.brief_description}" /><label for="search_brief_description">Description</label>
-    <br />
-    
-    <input type="checkbox" id="search_description" name="search[description]" checked="{search.description}" /><label for="search_description">Full description</label>
-    <br />
-
-    <input type="checkbox" id="search_meta_tags" name="search[meta_tags]" checked="{search.meta_tags}" /><label for="search_meta_tags">Meta tags</label>
-    <br />
-
-    <input type="checkbox" id="search_extra_fields" name="search[extra_fields]" checked="{search.extra_fields}" /><label for="search_extra_fields">Extra fields</label>
-    <br />
-
-    {if:xlite.ProductOptionsEnabled}
-      <input type="checkbox" id="search_options" name="search[options]" checked="{search.options}" /><label for="search_options">Product options</label>
-    {end:}
+  <div class="weight">
+    <label>Wight, {config.General.weight_symbol} (range):</label>
+    <input type="text" class="start" name="search[start_weight]" value="{search.start_weight}" />&ndash;<input type="text" class="end" name="search[end_weight]" value="{search.end_weight}" />
   </div>
 
-  <div>
+  <div class="category">
     <label>Category:</label>
-    <widget template="modules/AdvancedSearch/select_category.tpl" class="XLite_View_CategorySelect" fieldName="search[category]" allOption search="{search}">
-    <br />
-
-    <input type="checkbox" id="search_subcategories" name="search[subcategories]" checked="{search.subcategories}" /><label for="search_subcategories">search in subcategories</label>
+    <widget template="modules/AdvancedSearch/select_category.tpl" class="XLite_View_CategorySelect" fieldName="search[category]" allOption selectedCategoryId="{search.category}" />
   </div>
 
-  <div>
-    <label for="search_sku">SKU:</label>
-    <input type="text" size="12" id="search_sku" name="search[sku]" value="{search.sku}" />
+  <div class="buttons-row">
+    <widget class="XLite_View_Button_Submit" label="Search" />
   </div>
 
-  <div IF="prices">
-    <label for="search_price">Price:</label>
-    <select id="search_price" name="search[price]">
-      <option value="">Select range</option>
-      <option FOREACH="prices,v" value="{v.start:h},{v.end:h}" selected="{isSelected(search.price,strcat(v.start,v.end,#,#))}">
-        {preparePriceOption(v)}
-      </option>
-    </select>
-  </div>
+<widget name="adsearch_form" end />
 
-  <div If="weights">
-    <label for="search_weight">Weight:</label>
-    <select id="search_weight" name="search[weight]">
-      <option value="">Select range</option>
-      <option FOREACH="weights,v" value="{v.start:h},{v.end:h}" selected="{isSelected(search.weight,strcat(v.start,v.end,#,#))}">
-        {prepareWeightOption(v)}
-      </option>
-    </select>
-  </div>
+<script type="text/javascript">
+<!--
+new advancedSearchController($('.advanced-search-sidebar'));
+-->
+</script>
 
-  <widget class="XLite_View_Button_Submit" label="Search" />
-
-</form>
