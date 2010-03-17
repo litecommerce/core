@@ -2,18 +2,29 @@
 // vim: set ts=4 sw=4 sts=4 et:
 
 /**
- * Abstract caching factory 
- *  
- * @category   Lite Commerce
- * @package    Lite Commerce
- * @subpackage Model
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage ____sub_package____
  * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version    SVN: $Id$
- * @link       http://www.qtmsoft.com/
- * @since      3.0.0 EE
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
  */
-
 
 /**
  * Abstract caching factory 
@@ -33,62 +44,19 @@ class XLite_Model_CachingFactory extends XLite_Model_Factory implements XLite_Ba
      */
     protected static $cache = array();
 
-
+    
     /**
-     * Return unique key for the <class,primary_keys> pair
+     * Get handler object (or pseudo-constant)
      * 
-     * @param array $args class constructor arguments
+     * @param mixed $handler variable to prepare
      *  
-     * @return string
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected static function generateCacheEntryKey(array $args)
-    {
-        return md5(serialize($args));
-    }
-
-    /**
-     * Check if object is already objectsCached 
-     * 
-     * @param string $class class name
-     * @param array  $args  constructor arguments
-     *  
-     * @return bool
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected static function checkIfObjectCached($class, array $args)
-    {
-        return array(isset(self::$cache[$class][$key = self::generateCacheEntryKey($args)]), $key);
-    }
-
-    /**
-     * Create object or fetch if from the cache
-     * 
-     * @param string $class   object clas name
-     * @param mixed  $handler class name or object to use in callback
-     * @param string $method  callback method
-     * @param array  $args    callback params
-     *  
-     * @return XLite_Base
+     * @return mixed
      * @access protected
      * @since  3.0.0
      */
-    protected static function handleObject($class, $handler, $method, array $args = array())
+    protected static function prepareHandler($handler)
     {
-        list($isCached, $key) = self::checkIfObjectCached($class, array($method, $args));
-
-        if (!$isCached) {
-
-            if (!isset(self::$cache[$class])) {
-                self::$cache[$class] = array();
-            }
-
-            self::$cache[$class][$key] = call_user_func_array(array($handler, $method), $args);
-        }
-
-        return self::$cache[$class][$key];
+       return  is_object($handler) ? $handler : (in_array($handler, array('self', 'parent')) ? $handler : new $handler());
     }
 
     /**
@@ -104,44 +72,46 @@ class XLite_Model_CachingFactory extends XLite_Model_Factory implements XLite_Ba
     }
 
     /**
-     * Create object instance or fetch it from the cache
+     * Cache and return a result of object method call 
      * 
-     * @param string $class class name
+     * @param string $signature result key in cache
+     * @param mixed  $handler   callback object
+     * @param string $method    method to call
+     * @param array  $args      callback arguments
      *  
-     * @return XLite_Base
+     * @return mixed
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
-    public static function getObject($class)
+    public static function getObjectFromCallback($signature, $handler, $method, array $args = array())
     {
-        $args = func_get_args();
-        array_shift($args);
+        if (!isset(self::$cache[$signature])) {
+            self::$cache[$signature] = call_user_func_array(array(self::prepareHandler($handler), $method), $args);
+        }
 
-        return self::handleObject($class, 'self', 'createObjectInstance', array($class, $args));
+        return self::$cache[$signature];
     }
 
+
     /**
-     * Get object instance using the callback and save the result in the cache 
+     * cache and return object instance 
      * 
-     * @param string     $class  class name
-     * @param XLite_Base $object object to use in callback
-     * @param string     $method callback method
+     * @param string $signature result key in cache
+     * @param string $class     object class name
+     * @param array  $args      constructor arguments
      *  
      * @return XLite_Base
      * @access public
      * @since  3.0.0
      */
-    public static function getObjectFromCallback($class, $object, $method)
+    public static function getObject($signature, $class, array $args = array())
     {
-        $args = func_get_args();
-        $args = array_slice($args, 3);
-
-        return self::handleObject($class, $object, $method, $args);
+        return self::getObjectFromCallback($signature, 'self', 'createObjectInstance', array($class, $args));
     }
 
     /**
      * Clean up cache
-     * 
+     *
      * @return void
      * @access public
      * @since  3.0.0 EE

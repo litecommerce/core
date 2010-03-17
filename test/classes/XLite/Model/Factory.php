@@ -59,6 +59,20 @@ class XLite_Model_Factory extends XLite_Base implements XLite_Base_ISingleton
      */
     public function __get($name)
     {
+        return self::create($name);
+    }
+
+    /**
+     * Create object instance 
+     * 
+     * @param string $name class name
+     *  
+     * @return XLite_Base
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public static function create($name)
+    {
         return new $name();
     }
 

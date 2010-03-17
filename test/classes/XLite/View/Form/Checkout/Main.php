@@ -27,66 +27,48 @@
  */
 
 /**
- * XLite_View_CountrySelect 
+ * XLite_View_Form_Checkout_Main 
  * 
  * @package    XLite
  * @subpackage ____sub_package____
  * @since      3.0.0
  */
-class XLite_View_CountrySelect extends XLite_View_FormField
+class XLite_View_Form_Checkout_Main extends XLite_View_Form_Abstract
 {
-	/**
-	 * Widget param names
-	 */
-
-	const PARAM_ALL = 'all';
-
-
-	/**
-     * Define widget parameters
-     *
-     * @return void
+    /**
+     * Current form name 
+     * 
+     * @return string
      * @access protected
-     * @since  1.0.0
+     * @since  3.0.0 EE
      */
-    protected function defineWidgetParams()
+    protected function getFormName()
     {
-        parent::defineWidgetParams();
-
-		$this->widgetParams += array(
-			self::PARAM_ALL => new XLite_Model_WidgetParam_Bool('All', false),
-		);
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/select_country.tpl');
+        return 'checkout_form';
     }
 
-	/**
-	 * getSearchCondition 
-	 * 
-	 * @return string
-	 * @access protected
-	 * @since  3.0.0
-	 */
-	protected function getSearchCondition()
-	{
-		return $this->getParam(self::PARAM_ALL) ? 'enabled = \'1\'' : null;
-	}
-
     /**
-     * Return countries list
+     * getDefaultTarget 
      * 
-     * @return array
+     * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected function getCountries()
+    protected function getDefaultTarget()
     {
-        return XLite_Model_CachingFactory::getObjectFromCallback(
-			__METHOD__,
-			'XLite_Model_Country',
-			'findAll',
-			array($this->getSearchCondition())
-		);
+        return 'checkout';
+    }
+
+    /**
+     * getDefaultAction 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultAction()
+    {
+        return 'update';
     }
 }
 

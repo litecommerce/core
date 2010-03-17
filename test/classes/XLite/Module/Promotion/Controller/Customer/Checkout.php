@@ -69,6 +69,22 @@ class XLite_Module_Promotion_Controller_Customer_Checkout extends XLite_Controll
         return $location;
     }
 
+	/**
+     * Initialize controller 
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function init()
+    {
+        parent::init();
+
+		// TODO - check if there is a more convenient way to do this 
+		if (self::CHECKOUT_MODE_ZERO_TOTAL == XLite_Core_Request::getInstance()->mode) {
+			$this->set('skipValidateDiscountCoupon', true);
+		}
+	}
 
 	function _handleCouponFailed()
     {
@@ -85,16 +101,6 @@ class XLite_Module_Promotion_Controller_Customer_Checkout extends XLite_Controll
         }
     }
     
-    function _initSetMode($mode)
-    {
-    	$ststus = parent::_initSetMode($mode);
-    	switch($mode) {
-    		case "zeroTotal":
-				$this->set("skipValidateDiscountCoupon", true);
-    		break;
-    	}
-    }
-
 	function handleRequest()
     {
         if ($this->cart->validateDiscountCoupon() == 'used' && !$this->get("skipValidateDiscountCoupon") && (!isset($_REQUEST["action"]) || $_REQUEST["action"] != "return")) {

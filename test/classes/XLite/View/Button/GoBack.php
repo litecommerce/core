@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,47 +26,26 @@
  * @since      3.0.0
  */
 
+
 /**
- * XLite_View_FormField 
+ * "Go back" button
  * 
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage View
  * @since      3.0.0
  */
-class XLite_View_FormField extends XLite_View_Abstract
+class XLite_View_Button_GoBack extends XLite_View_Button_Regular
 {
-	/**
-	 * Widget param names 
-	 */
-	const PARAM_FIELD = 'field';
-
-	/**
-     * Define widget parameters
+    /**
+     * JavaScript: default JS code to execute
      *
-     * @return void
+     * @return string
      * @access protected
-     * @since  1.0.0
+     * @since  3.0.0 EE
      */
-    protected function defineWidgetParams()
+    protected function getDefaultJSCode()
     {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_FIELD => new XLite_Model_WidgetParam_String('Field', null),
-		);
-	}
-
-	/**
-     * Used in form field components to display a form field according to the 'field' property
-	 * FIXME - to check
-     * 
-     * @return mixed
-     * @access public
-     * @since  3.0
-     */
-    public function getValue()
-	{
-		return $this->getParam(self::PARAM_FIELD);
-	}
+        return 'history.go(-1)';
+    }
 }
 

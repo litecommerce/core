@@ -26,47 +26,25 @@
  * @since      3.0.0
  */
 
-/**
- * XLite_View_FormField 
- * 
- * @package    XLite
- * @subpackage ____sub_package____
- * @since      3.0.0
- */
-class XLite_View_FormField extends XLite_View_Abstract
+class XLite_Model_CheckoutStep extends XLite_Model_ListNode
 {
-	/**
-	 * Widget param names 
-	 */
-	const PARAM_FIELD = 'field';
+    protected $isPassed = false;
 
-	/**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_FIELD => new XLite_Model_WidgetParam_String('Field', null),
-		);
-	}
-
-	/**
-     * Used in form field components to display a form field according to the 'field' property
-	 * FIXME - to check
-     * 
-     * @return mixed
-     * @access public
-     * @since  3.0
-     */
-    public function getValue()
+	public function __construct($key, $passCondition = false)
 	{
-		return $this->getParam(self::PARAM_FIELD);
+        parent::__construct($key);
+
+        $this->isPassed = !$passCondition;
 	}
+
+    public function isPassed()
+    {
+        return $this->isPassed;
+    }
+
+    public function checkMode($mode)
+    {
+        return $this->checkKey($mode) && $this->isPassed();
+    }
 }
 

@@ -76,7 +76,7 @@ class XLite_View_AddedToCartMark extends XLite_View_Abstract
         if ($result) {
             $item = new XLite_Model_OrderItem();
             $item->set('product', $this->getParam(self::PARAM_PRODUCT));
-            $result = $this->cart->isExistsItem($item);
+            $result = $this->getCart()->isExistsItem($item);
         }
 
         return $result;

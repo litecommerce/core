@@ -51,6 +51,30 @@ class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_Abstra
     public $mode = "register"; // default mode	
     public $submode = "warning"; // delete profile status: warning | confirmed | cancelled
 
+	/**
+	 * getCountriesStates 
+	 * 
+	 * @return array
+	 * @access public
+	 * @since  3.0.0
+	 */
+	public function getCountriesStates()
+    {
+		$statesInfo = XLite_Model_Factory::create('XLite_Model_Country')->getCountryStatesListSchema('enabled = \'1\'');
+
+		foreach (XLite_Model_Factory::create('XLite_Model_State')->findAll() as $state) {
+
+			$countryCode = $state->get('country_code');
+
+			if (isset($statesInfo[$countryCode])) {
+				$statesInfo[$countryCode]['number']++;
+				$statesInfo[$countryCode]['data'][$state->get('state_id')] = $state->get('state');
+			}
+		}
+
+		return $statesInfo;
+    }
+
 
 	/**
      * Common method to determine current location 
@@ -145,29 +169,6 @@ class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_Abstra
                     return false;
             }
         }
-    }
-
-    function getCountriesStates()
-    {
-        $countriesArray = array();
-
-        $country = new XLite_Model_Country();
-        $countries = $country->findAll("enabled='1'");
-        foreach($countries as $country) {
-            $countriesArray[$country->get("code")]["number"] = 0;
-            $countriesArray[$country->get("code")]["data"] = array();
-
-            $state = new XLite_Model_State();
-            $states = $state->findAll("country_code='".$country->get("code")."'");
-            if (is_array($states) && count($states) > 0) {
-                $countriesArray[$country->get("code")]["number"] = count($states);
-                foreach($states as $state) {
-                    $countriesArray[$country->get("code")]["data"][$state->get("state_id")] = $state->get("state");
-                }
-            }
-        }
-
-        return $countriesArray;
     }
 
     function action_register()

@@ -44,6 +44,7 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
      */
     protected $currentItem = null;
 
+
     /**
      * Common method to determine current location 
      * 
@@ -66,7 +67,7 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
      */
     protected function getCurrentItem()
     {
-        if (is_null($this->currentItem)) {
+        if (!isset($this->currentItem)) {
             $this->currentItem = new XLite_Model_OrderItem();
             $this->currentItem->setProduct($this->getProduct());
         }
@@ -91,7 +92,7 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
         $this->collectCartGarbage();
 
         // add product to the cart
-        $this->cart->addItem($this->getCurrentItem());
+        $this->getCart()->addItem($this->getCurrentItem());
         $this->updateCart(); // recalculate shopping cart
 
         // switch back to product catalog or to shopping cart
@@ -120,15 +121,15 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
     protected function action_delete()
     {
         // delete an item from the shopping cart
-        $items = $this->cart->get('items');
+        $items = $this->getCart()->get('items');
 
         if (isset($items[XLite_Core_Request::getInstance()->cart_id])) {
-            $this->cart->deleteItem($items[XLite_Core_Request::getInstance()->cart_id]);
+            $this->getCart()->deleteItem($items[XLite_Core_Request::getInstance()->cart_id]);
             $this->updateCart();
         }
 
-        if ($this->cart->isEmpty()) {
-            $this->cart->delete();
+        if ($this->getCart()->isEmpty()) {
+            $this->getCart()->delete();
         }
     }
 
@@ -142,7 +143,7 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
      */
     protected function action_update()
     {
-        $items = $this->cart->get('items');
+        $items = $this->getCart()->get('items');
         $cartId = XLite_Core_Request::getInstance()->cart_id;
         foreach ($items as $key => $i) {
             if (
@@ -150,18 +151,18 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
                 && (is_null($cartId) || $cartId == $key)
             ) {
                 $items[$key]->updateAmount(XLite_Core_Request::getInstance()->amount[$key]);
-                $this->cart->updateItem($items[$key]);
+                $this->getCart()->updateItem($items[$key]);
             }
         }
 
         if (isset($this->shipping)) {
-            $this->cart->set('shipping_id', $this->shipping);
+            $this->getCart()->set('shipping_id', $this->shipping);
         }
 
         $this->updateCart();
 
-        if ($this->cart->isEmpty()) {
-            $this->cart->delete();
+        if ($this->getCart()->isEmpty()) {
+            $this->getCart()->delete();
         }
     }
     
@@ -190,8 +191,8 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
      */
     protected function action_clear()
     {
-        if (!$this->cart->isEmpty()) {
-            $this->cart->delete();
+        if (!$this->getCart()->isEmpty()) {
+            $this->getCart()->delete();
         }
     }
 
@@ -215,8 +216,8 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
     function collectCartGarbage()
     {
         // don't collect garbage, if the cart already has products
-        if ($this->cart->is('empty')) {
-            $this->cart->collectGarbage(5);
+        if ($this->getCart()->is('empty')) {
+            $this->getCart()->collectGarbage(5);
         }
     }
 

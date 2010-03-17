@@ -256,7 +256,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 	 */
 	public function getCategory()
     {
-		return XLite_Model_CachingFactory::getObject('XLite_Model_Category', XLite_Core_Request::getInstance()->category_id);
+		return XLite_Model_CachingFactory::getObject(__METHOD__, 'XLite_Model_Category', array(XLite_Core_Request::getInstance()->category_id));
     }
 
 	/**
@@ -268,7 +268,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 	 */
 	public function getProduct()
     {
-		return XLite_Model_CachingFactory::getObject('XLite_Model_Product', XLite_Core_Request::getInstance()->product_id);
+		return XLite_Model_CachingFactory::getObject(__METHOD__, 'XLite_Model_Product', array(XLite_Core_Request::getInstance()->product_id));
     }
 
 	/**
@@ -299,8 +299,6 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 	protected $product = null;
 
 	protected $category = null;
-
-	public $cart = null;
 
     /**
      * Validity flag
@@ -551,47 +549,6 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         return null;
     }
     
-    /**
-    * Recalculates the shopping cart.
-    */
-    function updateCart()
-    {
-		if (!is_null($this->cart)) {
-	        $items = $this->cart->get("items");
-			$this->set("absence_of_product", null);
-    	    foreach ($items as $key => $i) {
-        	    if(!$i->isValid()) {
-            		$this->set("absence_of_product", true);
-            		$this->redirect($this->buildURL('cart'));
-	        		return;
-    	        }
-	        }
-        	if ($this->cart->isPersistent) {
-    	        $this->cart->calcTotals();
-        	    $this->cart->update();
-	        }
-		}
-    }
-
-    function recalcCart()
-    {
-        if (!$this->cart->get("empty")) {
-        	$this->cart->recalcItems();
-            $this->cart->calcTotal();
-            $this->cart->update();
-
-    		$this->set("absence_of_product", null);
-        	$items = $this->cart->get("items");
-            foreach ($items as $key => $i) {
-                if(!$i->isValid()) {
-                	$this->set("absence_of_product", true);
-                	$this->redirect($this->buildURL('cart'));
-                	return;
-                }
-            }
-        }
-    }
-
     function getUploadedFile()
     {
         $file = null;

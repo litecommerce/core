@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Added-to-cart mark
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,8 +10,4 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-
-<select class="FixedSelect" name="{field}" size="1" onChange="{onChange}" id="{fieldId}">
-   <option value="">Select one..</option>
-   <option FOREACH="getCountries(),k,v" value="{v.code:r}" selected="{v.code=value}">{v.country:h}</option>
-</select>
+<img src="images/spacer.gif" alt="Added to cart" class="added-to-cart" />

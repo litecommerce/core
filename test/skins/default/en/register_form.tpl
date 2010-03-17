@@ -21,7 +21,9 @@ If you are a registered customer, please <a href="cart.php?target=profile&amp;mo
 
 <br>
 <span IF="userExists" class="ErrorMessage">&gt;&gt;&nbsp;The user is already registered! Please select another e-mail.&nbsp;&lt;&lt;</span>
-<form action="cart.php" method="post" name="registration_form">
+
+<widget class="XLite_View_Form_Profile_Register" name="registration_form" />
+
 <table width="100%" border="0" cellspacing="0" cellpadding="2">
 
 <tr valign="middle">
@@ -204,7 +206,11 @@ If you are a registered customer, please <a href="cart.php?target=profile&amp;mo
 <!-- ********************************* SHIPPING ADDRESS ********************************* -->
 
 <tr valign="middle">
-    <td colspan="4"><b>Shipping Address (leave empty if same as billing address)</b><br><hr size="1" noshade><widget class="XLite_View_Button" label="Copy Billing Info" href="javascript: copyBillingInfo(document.registration_form);"></td>
+    <td colspan="4">
+    <b>Shipping Address (leave empty if same as billing address)</b>
+    <br />
+    <hr size="1" noshade>
+    <widget class="XLite_View_Button_Regular" label="Copy Billing Info" jsCode="copyBillingInfo(document.registration_form);" /></td>
 </tr>
 <tr valign="middle">
     <td align="right">Title</td>
@@ -356,11 +362,12 @@ If you are a registered customer, please <a href="cart.php?target=profile&amp;mo
         <input type="hidden" foreach="allparams,_param,v" name="{_param}" value="{v}" />
         {* FIXME *}
         {*<input type="hidden" name="action" value="{getParam(#mode#)}" />*}
-        <widget class="XLite_View_Submit" href="javascript: document.registration_form.submit()">
+        <widget class="XLite_View_Button_Submit" label="Submit" />
         <br>
     </td>
 </tr>
 </table>
-</form>
+
+<widget name="registration_form" end />
 
 <widget template="js/select_states_end_js.tpl">

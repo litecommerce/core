@@ -98,7 +98,7 @@ class XLite_View_Button_Regular extends XLite_View_Button_Abstract
     {
         $formParams = $this->getParam(self::PARAM_FORM_PARAMS);
 
-        if ($formParams && !isset($formParams['action']) && $this->getParam(self::PARAM_ACTION)) {
+        if (!isset($formParams['action']) && $this->getParam(self::PARAM_ACTION)) {
             $formParams['action'] = $this->getParam(self::PARAM_ACTION);
         }
 

@@ -48,6 +48,30 @@ class XLite_View_Form_Product_AddToCart extends XLite_View_Form_Product_Abstract
     }
 
     /**
+     * getDefaultTarget 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTarget()
+    {
+        return 'cart';
+    }
+
+    /**
+     * getDefaultAction 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultAction()
+    {
+        return 'add';
+    }
+
+    /**
      * initView 
      * 
      * @return void
@@ -74,21 +98,6 @@ class XLite_View_Form_Product_AddToCart extends XLite_View_Form_Product_Abstract
             'product_id'  => $this->getProduct()->get('product_id'),
             'category_id' => $this->getProduct()->get('category_id'),
         );
-    }
-
-    /** 
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams[self::PARAM_FORM_TARGET]->setValue('cart');
-        $this->widgetParams[self::PARAM_FORM_ACTION]->setValue('add');
     }
 }
 

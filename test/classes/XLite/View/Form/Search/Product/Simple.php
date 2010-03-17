@@ -35,6 +35,18 @@ class XLite_View_Form_Search_Product_Simple extends XLite_View_Form_Abstract
         return 'search_form';
     }
 
+    /**
+     * getDefaultTarget 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTarget()
+    {
+        return 'search';
+    }
+
     /** 
      * Define widget parameters
      *
@@ -46,7 +58,6 @@ class XLite_View_Form_Search_Product_Simple extends XLite_View_Form_Abstract
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams[self::PARAM_FORM_TARGET]->setValue('search');
         $this->widgetParams[self::PARAM_FORM_METHOD]->setValue('GET');
     }
 }

@@ -1,80 +1,312 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* Dialog_checkout description.
-*
-* @package Dialog
-* @access public
-* @version $Id$
-*/
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
+
+/**
+ * XLite_Controller_Customer_Checkout 
+ * 
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @since      3.0.0
+ */
 class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 {
-    // mode ::= null | register | notAllowed | noShipping | paymentMethod | details | success | error	
-    public $params = array("target");	
-    public $mode = null;
+    /**
+     * Avaliable checkout steps (modes)
+     */
+    
+    const CHECKOUT_MODE_NOT_ALLOWED    = 'notAllowed';
+    const CHECKOUT_MODE_REGISTER       = 'register';
+    const CHECKOUT_MODE_ZERO_TOTAL     = 'zeroTotal';
+    const CHECKOUT_MODE_NO_SHIPPING    = 'noShipping';
+    const CHECKOUT_MODE_NO_PAYMENT     = 'noPayment';
+    const CHECKOUT_MODE_PAYMENT_METHOD = 'paymentMethod';
+    const CHECKOUT_MODE_DETAILS        = 'details';
 
+
+    /**
+     * checkoutSteps 
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $checkoutSteps = null;
+
+    protected function isCheckoutNotAllowed()
+    {
+        return $this->getCart()->isMinOrderAmountError() || $this->getCart()->isMaxOrderAmountError();
+    }
+
+    protected function isRegistrationNeeded()
+    {
+        return !XLite_Model_Auth::getInstance()->isLogged();
+    }
+
+    protected function isZeroOrderTotal()
+    {
+        return 0 == $this->getCart()->get('total') && $this->config->Payments->default_offline_payment;
+    }
+
+    protected function isNoShipping()
+    {
+        return !$this->getCart()->isShippingAvailable() && $this->getCart()->isShipped();
+    }
+
+    protected function isNoPayment()
+    {
+        return $this->getPaymentMethods();
+    }
+
+    protected function isPaymentNeeded()
+    {
+        return !$this->getCart()->getPaymentMethod();
+    }
+
+    protected function getCheckoutStepDescriptions()
+    {
+        return array(
+            self::CHECKOUT_MODE_NOT_ALLOWED    => $this->isCheckoutNotAllowed(),
+            self::CHECKOUT_MODE_REGISTER       => $this->isRegistrationNeeded(),
+            self::CHECKOUT_MODE_ZERO_TOTAL     => $this->isZeroOrderTotal(),
+            self::CHECKOUT_MODE_NO_SHIPPING    => $this->isNoShipping(),
+            self::CHECKOUT_MODE_NO_PAYMENT     => $this->isNoPayment(),
+            self::CHECKOUT_MODE_PAYMENT_METHOD => $this->isPaymentNeeded(),
+            self::CHECKOUT_MODE_DETAILS        => false,
+        );
+    }
+
+    protected function defineCheckoutSteps()
+    {
+        foreach ($this->getCheckoutStepDescriptions() as $mode => $isPassed) {
+            $this->checkoutSteps->add(new XLite_Model_CheckoutStep($mode, $isPassed));
+        }
+
+        // Use the "$this->checkoutSteps->insert(Before|After)" methods
+        // to add new checkout step
+    }
+
+    protected function getCheckoutSteps()
+    {
+        if (!isset($this->checkoutSteps)) {
+            $this->checkoutSteps = new XLite_Model_List();
+            $this->defineCheckoutSteps();
+        }
+
+        return $this->checkoutSteps;
+    }
+
+    protected function getCurrentStep()
+    {
+        return $this->getCheckoutSteps()->findByCallbackResult('checkMode', XLite_Core_Request::getInstance()->mode);
+    }
 
 	/**
      * Common method to determine current location 
-     * 
+     *  
      * @return string
      * @access protected
      * @since  3.0.0 EE
      */
     protected function getLocation()
+    {               
+        return 'Checkout';
+    }
+
+    protected function getPaymentMethods()
+    {
+        return XLite_Model_CachingFactory::getObjectFromCallback(__METHOD__, 'XLite_Model_PaymentMethod', 'getActiveMethods');
+    }
+
+
+
+    /*protected function initCheckMode()
+    {
+        $mode = "";
+        if ($this->_initCheckNotAllowed()) {
+            $mode = "notAllowed";
+        } elseif ($this->_initNeedRegister()) {
+            $mode = "register";
+        } elseif ($this->_initCheckZeroTotal()) {
+            $mode = "zeroTotal";
+        } elseif ($this->_initNeedShipping()) {
+            $mode = "noShipping";
+        } elseif ($this->_initCheckNotPayment()) {
+            $mode = "noPayment";
+        } elseif ($this->_initNeedPayment()) {
+            $mode = "paymentMethod";
+        } else {
+            $mode = "details";
+        }
+
+        return $mode;
+    }*/
+
+    /**
+     * Set new value for the reqest param "mode" 
+     * 
+     * @param string $mode mode to set
+     *  
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    /*protected function initSetMode($mode)
+    {
+        XLite_Core_Request::getInstance()->mode = $this->getCurrentStep()->getKey();
+
+        /*switch($mode) {
+            case "notAllowed":
+                $this->set("mode", "notAllowed");
+            break;
+            case "register":
+                $this->set("mode", "register");
+            break;
+            case "noShipping":
+                $this->set("mode", "noShipping");
+            break;
+            case "noPayment":
+                $this->set("mode", "noPayment");
+            break;
+            case "paymentMethod":
+                $activeMethods = $this->getPaymentMethods();
+                if (is_array($activeMethods) && count($activeMethods) == 1) {
+                    $activeMethods = array_values($activeMethods);
+                    $_POST["payment_id"] = $activeMethods[0]->get("payment_method");
+                    $this->action_payment();
+                    $this->set("returnUrl", "cart.php?target=checkout");
+                    $this->redirect();
+                    return true;
+                } else {
+                    $this->set("mode", "paymentMethod");
+                }
+            break;
+            case "zeroTotal":
+                $_POST["payment_id"] = $this->config->getComplex('Payments.default_offline_payment');
+                $this->action_payment();
+                $this->getCart()->checkout();
+                $this->action_checkout();
+                return true;
+            break;
+            case "details":
+                $this->set("mode", "details");
+                // in checkout details template: <widget template="{cart.paymentMethod.templateWidget}"/>
+                $this->getCart()->checkout();
+            break;
+        }
+
+        return false;*/
+    //}
+
+
+    /**
+     * Initialize controller 
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function init()
+    {
+        parent::init();
+
+        XLite_Core_Request::getInstance()->mode = $this->getCurrentStep()->getKey();
+
+        /*var_dump($this->getCurrentStep());die;
+
+        if (isset(XLite_Core_Request::getInstance()->mode)) {
+
+            parent::init();
+
+        } else {
+
+            // We've got sign for return
+            $this->initSetMode($this->initCheckMode());
+        }*/
+
+
+
+        // TODO -check if it can be moved
+        // $this->_initCCInfo();
+        // $this->_initCHInfo();
+
+/*        if (isset($_REQUEST["mode"])) {
+            $this->set("mode", $_REQUEST["mode"]);
+        }
+
+        if (is_null($this->get("mode"))) {
+            if ($this->initSetMode($this->initCheckMode())) {
+                return; // we've got sign for return
+            }
+        }
+
+        parent::init();
+
+        if (!empty($this->registerForm)) {
+            $this->registerForm->set("mode", "register");
+        }*/
+    }
+
+    /**
+     * handleRequest 
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+	public function handleRequest()
+    {
+        // Go to cart view if cart is empty
+        if ($this->getCart()->isEmpty()) {
+		    $this->returnUrl = $this->buildURL('cart');
+        } else {
+            parent::handleRequest();
+        }
+    }
+
+    /**
+     * Get page title
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
     {
         return 'Checkout';
     }
 
 
 
-    function handleRequest()
-    {
-        // go to cart view if cart is empty
-        if ($this->cart->is("empty")) {
-            $this->redirect("cart.php?target=cart");
-            return;
-        }
-        parent::handleRequest();
-    }
+    // mode ::= null | register | notAllowed | noShipping | paymentMethod | details | success | error	
+    /*public $params = array("target");	
+    public $mode = null;*/
+
+
 
     function _initCCInfo()
     {
@@ -104,14 +336,14 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
     function _initCHInfo()
     {
 		if (isset($_REQUEST['ch_info']))
-			$this->cart->set("details", $_REQUEST['ch_info']);
+			$this->getCart()->set("details", $_REQUEST['ch_info']);
 	}
 
-    function _initCheckNotAllowed()
+    /*function _initCheckNotAllowed()
     {
-        if ($this->cart->get("minOrderAmountError")) {
+        if ($this->getCart()->get("minOrderAmountError")) {
         	return true;
-        } else if ($this->cart->get("maxOrderAmountError")) {
+        } else if ($this->getCart()->get("maxOrderAmountError")) {
         	return true;
         } else {
         	return false;
@@ -120,7 +352,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 
     function _initCheckZeroTotal()
     {
-    	return (($this->cart->get("total") == 0) && (strlen($this->config->getComplex('Payments.default_offline_payment')) > 0)) ? true : false;
+    	return (($this->getCart()->get("total") == 0) && (strlen($this->config->getComplex('Payments.default_offline_payment')) > 0)) ? true : false;
 	}
 
 	function _initCheckNotPayment()
@@ -135,103 +367,13 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 
     function _initNeedShipping()
     {
-    	return ($this->cart->is("shipped") && !$this->cart->is("shippingAvailable")) ? true : false;
+    	return ($this->getCart()->is("shipped") && !$this->getCart()->is("shippingAvailable")) ? true : false;
 	}
 
     function _initNeedPayment()
     {
-    	return (!$this->cart->get("payment_method")) ? true : false;
-	}
-
-    function _initCheckMode()
-    {
-    	$mode = "";
-        if ($this->_initCheckNotAllowed()) {
-            $mode = "notAllowed";
-        } elseif ($this->_initNeedRegister()) {
-            $mode = "register";
-        } elseif ($this->_initCheckZeroTotal()) {
-            $mode = "zeroTotal";
-        } elseif ($this->_initNeedShipping()) {
-            $mode = "noShipping";
-		} elseif ($this->_initCheckNotPayment()) {
-			$mode = "noPayment";
-        } elseif ($this->_initNeedPayment()) {
-			$mode = "paymentMethod";
-        } else {
-            $mode = "details";
-        }
-
-        return $mode;
-    }
-
-    function _initSetMode($mode)
-    {
-    	switch($mode) {
-    		case "notAllowed":
-                $this->set("mode", "notAllowed");
-    		break;
-    		case "register":
-                $this->set("mode", "register");
-    		break;
-    		case "noShipping":
-                $this->set("mode", "noShipping");
-    		break;
-			case "noPayment":
-				$this->set("mode", "noPayment");
-			break;
-    		case "paymentMethod":
-            	$activeMethods = $this->getPaymentMethods();
-            	if (is_array($activeMethods) && count($activeMethods) == 1) {
-                    $activeMethods = array_values($activeMethods);
-            		$_POST["payment_id"] = $activeMethods[0]->get("payment_method");
-            		$this->action_payment();
-            		$this->set("returnUrl", "cart.php?target=checkout");
-            		$this->redirect();
-            		return true;
-            	} else {
-                	$this->set("mode", "paymentMethod");
-                }
-    		break;
-    		case "zeroTotal":
-				$_POST["payment_id"] = $this->config->getComplex('Payments.default_offline_payment');
-				$this->action_payment();
-                $this->cart->checkout();
-				$this->action_checkout();
-				return true;
-    		break;
-    		case "details":
-                $this->set("mode", "details");
-                // in checkout details template: <widget template="{cart.paymentMethod.templateWidget}"/>
-                $this->cart->checkout();
-    		break;
-    	}
-		
-		return false;
-    }
-
-    function init()
-    {
-    	$this->_initCCInfo();
-    	$this->_initCHInfo();
-
-        if (isset($_REQUEST["mode"])) {
-            $this->set("mode", $_REQUEST["mode"]);
-        }
-
-        if (is_null($this->get("mode"))) {
-        	if ($this->_initSetMode($this->_initCheckMode())) {
-        		return; // we've got sign for return
-        	}
-        }
-
-        parent::init();
-       
-		if (!empty($this->registerForm)) { 
-	        $this->registerForm->set("mode", "register");
-		}
-    }
-
+    	return (!$this->getCart()->get("payment_method")) ? true : false;
+	}*/
 
     /**
     * Returns return URL for checkout/login
@@ -241,21 +383,21 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
         return $this->get("url");
     }
     
-    function getPaymentMethods()
+    /*function getPaymentMethods()
     {
         $paymentMethod = new XLite_Model_PaymentMethod();
         return $paymentMethod->get("activeMethods");
-    }
+    }*/
 
     function action_payment()
     {
         $this->checkHtaccess();
 
 		$pm = new XLite_Model_PaymentMethod($_POST["payment_id"]);
-        $this->cart->set("paymentMethod", $pm);
+        $this->getCart()->set("paymentMethod", $pm);
         $this->updateCart();
 
-		if ($this->_initNeedPayment()) {
+		if ($this->isPaymentNeeded()) {
 			$this->params[] = "error";
 			$this->set("error", "pmSelect");
 		}
@@ -269,7 +411,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
             $this->auth->loginProfile($this->registerForm->get("profile"));
             if (!strlen($this->get("password"))) {
                 // is anonymous?
-                $this->auth->setComplex("profile.order_id", $this->cart->get("order_id"));
+                $this->auth->setComplex("profile.order_id", $this->getCart()->get("order_id"));
                 $this->auth->getProfile()->update();
             }
     		$cart = XLite_Model_Cart::getInstance();
@@ -283,16 +425,16 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 
     function action_checkout()
     {
-    	$itemsBeforeUpdate = $this->cart->getItemsFingerprint();
+    	$itemsBeforeUpdate = $this->getCart()->getItemsFingerprint();
         $this->updateCart();
-    	$itemsAfterUpdate = $this->cart->getItemsFingerprint();
-		if ($this->get("absence_of_product") || $this->cart->isEmpty() || $itemsAfterUpdate != $itemsBeforeUpdate) {
+    	$itemsAfterUpdate = $this->getCart()->getItemsFingerprint();
+		if ($this->get("absence_of_product") || $this->getCart()->isEmpty() || $itemsAfterUpdate != $itemsBeforeUpdate) {
 			$this->set("absence_of_product", true);
 			$this->redirect("cart.php?target=cart");
 			return;
 		}
 
-        $pm = $this->cart->get("paymentMethod");
+        $pm = $this->getCart()->get("paymentMethod");
         if (!is_null($pm)) {
             $notes = isset($_POST["notes"]) ? $_POST["notes"] : '';
             $this->setComplex("cart.notes", $notes);
@@ -306,11 +448,11 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 
             	case XLite_Model_PaymentMethod::PAYMENT_SUCCESS:
                 	$this->success();
-	                $this->set("returnUrl", "cart.php?target=checkoutSuccess&order_id=".$this->cart->get("order_id"));
+	                $this->set("returnUrl", "cart.php?target=checkoutSuccess&order_id=".$this->getCart()->get("order_id"));
     	            break;
 
         	    case XLite_Model_PaymentMethod::PAYMENT_FAILURE:
-            	    $this->set("returnUrl", "cart.php?target=checkout&mode=error&order_id=".$this->cart->get("order_id"));
+            	    $this->set("returnUrl", "cart.php?target=checkout&mode=error&order_id=".$this->getCart()->get("order_id"));
                 	break;
             }
         }
@@ -318,9 +460,9 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 
     function success()
     {
-        $this->cart->succeed();
-        $this->session->set("last_order_id", $this->cart->get("order_id"));
-        $this->cart->clear();
+        $this->getCart()->succeed();
+        $this->session->set("last_order_id", $this->getCart()->get("order_id"));
+        $this->getCart()->clear();
         // anonymous checkout: logoff
         if ($this->auth->getComplex('profile.order_id')) {
             $this->auth->logoff();
@@ -387,19 +529,5 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 
         return parent::getPageInstanceData();
     }
-
-    /**
-     * Get page title
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getTitle()
-    {
-        return 'Checkout';
-    }
-
 }
 

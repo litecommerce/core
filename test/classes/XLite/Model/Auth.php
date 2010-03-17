@@ -57,10 +57,57 @@ $_reReadProfiles = false;
 */
 class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
 {
+	/**
+	 * getInstance 
+	 * 
+	 * @return XLite_Model_Auth
+	 * @access public
+	 * @since  3.0.0
+	 */
 	public static function getInstance()
     {
         return self::_getInstance(__CLASS__);
     }
+
+    /**
+     * Checks whether user is logged 
+     * 
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function isLogged()
+    {
+		return !is_null($this->getProfile());
+    }
+
+	/**
+	 * Get profile 
+	 * 
+	 * @param int $profileId internal profile ID
+	 *  
+	 * @return mixed
+	 * @access public
+	 * @since  3.0.0
+	 */
+	public function getProfile($profileId = null)
+    {
+		$result = null;
+
+		if (!isset($profileId)) {
+			$profileId = XLite_Model_Session::getInstance()->get('profile_id');
+		}
+
+		if (isset($profileId)) {
+			$profile = XLite_Model_CachingFactory::getObject(__METHOD__ . $profileId, 'XLite_Model_Profile', array($profileId));
+			if ($profile->isValid()) {
+				$result = $profile;
+			}
+		}
+
+		return $result;
+    }
+
 
     function _reReadProfiles($newValue = null)  // {{{
     {
@@ -490,48 +537,6 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         $this->setComplex("session.anonymous", null);
     } // }}}
    
-    /**
-    * Checks whether user is logged
-    *
-    * @access public
-    * @return boolean
-    * @static
-    */
-    function isLogged() // {{{
-    {
-        if (is_null($this->session->get("profile_id"))) {
-        	return false;
-        } else {
-        	$profile = $this->getProfile($this->session->get("profile_id"));
-        	return (is_object($profile)) ? true : false;
-        }
-    } // }}}
-
-    function getProfile($profile_id = null) // {{{
-    {
-        static $profiles;
-        if (!isset($profiles) || $this->_reReadProfiles()) {
-            $profiles = array();
-            $this->_reReadProfiles(false);
-        }
-
-        if (is_null($profile_id)) {
-            $profile_id = intval($this->getComplex('session.profile_id'));
-        }
-        if (is_null($profile_id) || $profile_id <= 0) {
-            return null; // not logged
-        }
-        if (!isset($profiles[$profile_id])) {
-        	$profile = new XLite_Model_Profile($profile_id);
-        	if (!$profile->isValid()) {
-        		$this->session->set("profile_id", 0);
-            	return null; // not logged
-        	}
-            $profiles[$profile_id] = $profile;
-        }    
-        return $profiles[$profile_id];
-    } // }}}
-
     /**
     * Checks whether the currently logged user is an administrator
     *

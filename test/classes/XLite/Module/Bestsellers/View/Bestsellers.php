@@ -186,12 +186,13 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_ProductsList
      *
      * @return array
      * @access protected
-     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getBestsellers()
     {
-        return XLite_Model_CachingFactory::getObject('XLite_Module_Bestsellers_Model_Bestsellers')->getBestsellers($this->getNumberOfBestsellers(), $this->getRootId());
-    }
+        $args = array($this->getNumberOfBestsellers(), $this->getRootId());
+        $sign = __METHOD__ . implode('', $args);
 
+        return XLite_Model_CachingFactory::getObjectFromCallback($sign, 'XLite_Module_Bestsellers_Model_Bestsellers', 'getBestsellers', $args);
+    }
 }

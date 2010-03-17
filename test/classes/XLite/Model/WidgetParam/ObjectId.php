@@ -78,7 +78,7 @@ abstract class XLite_Model_WidgetParam_ObjectId extends XLite_Model_WidgetParam_
      */
     public function getObject($id = null)
     {
-        return XLite_Model_CachingFactory::getObject($this->getClassName(), $this->getId($id));
+        return XLite_Model_CachingFactory::getObject(__METHOD__ . $this->getClassName() . $id, $this->getClassName(), array($this->getId($id)));
     }
 }
 

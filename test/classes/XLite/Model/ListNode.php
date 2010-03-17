@@ -27,66 +27,52 @@
  */
 
 /**
- * XLite_View_CountrySelect 
+ * Double-linked list 
  * 
  * @package    XLite
  * @subpackage ____sub_package____
  * @since      3.0.0
  */
-class XLite_View_CountrySelect extends XLite_View_FormField
+class XLite_Model_ListNode extends XLite_Base
 {
-	/**
-	 * Widget param names
-	 */
+    protected $prev = null;
 
-	const PARAM_ALL = 'all';
+    protected $next = null;
 
+    protected $key = null;
 
-	/**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
+    public function __construct($key)
     {
-        parent::defineWidgetParams();
-
-		$this->widgetParams += array(
-			self::PARAM_ALL => new XLite_Model_WidgetParam_Bool('All', false),
-		);
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/select_country.tpl');
+        $this->key = $key;
     }
 
-	/**
-	 * getSearchCondition 
-	 * 
-	 * @return string
-	 * @access protected
-	 * @since  3.0.0
-	 */
-	protected function getSearchCondition()
-	{
-		return $this->getParam(self::PARAM_ALL) ? 'enabled = \'1\'' : null;
-	}
-
-    /**
-     * Return countries list
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getCountries()
+    public function getPrev()
     {
-        return XLite_Model_CachingFactory::getObjectFromCallback(
-			__METHOD__,
-			'XLite_Model_Country',
-			'findAll',
-			array($this->getSearchCondition())
-		);
+        return $this->prev;
+    }
+
+    public function getNext()
+    {
+        return $this->next;
+    }
+
+    public function setPrev(Xlite_Model_ListNode $node = null)
+    {
+        $this->prev = $node;
+    }
+
+    public function setNext(Xlite_Model_ListNode $node = null)
+    {
+        $this->next = $node;
+    }
+
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    public function checkKey($key)
+    {
+        return $key != $this->getKey();
     }
 }
-

@@ -147,7 +147,7 @@
 <widget template="common/sidebar_box.tpl" dir="authentication" name="authenticationWidget" head="Authentication" IF="{auth.isLogged()}" />
 <widget module="Newsletters" template="common/sidebar_box.tpl" dir="modules/Newsletters/menu_news" head="News">
 <widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_NewArrivals" widgetType="sidebar" />
-<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_RecentlyViewed" />
+<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_RecentlyViewed" widgetType="sidebar" />
 <!-- [/right] -->
     </TD>
     <TD width="4"><IMG src="images/spacer.gif" width="4" height="1" alt=""></TD>

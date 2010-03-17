@@ -1,53 +1,40 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
+// vim: set ts=4 sw=4 sts=4 et:
 
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
+/**
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
 
 define('ORDER_EXPIRATION_TIME', 3600 * 24); // one day
 
 /**
-* Class represens an order.
-*
-* @package kernel
-* @access public
-* @version $Id$
-* @see Cart
-*/
+ * Class represens an order
+ * 
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @since      3.0.0
+ */
 class XLite_Model_Order extends XLite_Model_Abstract
 {
 	/**
@@ -59,14 +46,14 @@ class XLite_Model_Order extends XLite_Model_Abstract
 	 */
 	protected $_items = null;
 
-	/**
-	 * Cart items number 
-	 * 
-	 * @var    int
-	 * @access protected
-	 * @since  3.0.0 EE
-	 */
-	protected $_itemsCount = null;
+    /**
+     * _shippingRates 
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $_shippingRates = null;
 
 
 	/**
@@ -93,6 +80,19 @@ class XLite_Model_Order extends XLite_Model_Abstract
         }
     }
 
+
+    /**
+     * getShippingRates 
+     * FIXME - see the "calcShippingRates()" method
+     * 
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getShippingRates()
+    {
+        return XLite_Model_CachingFactory::getObjectFromCallback(__METHOD__, $this, 'calcShippingRates');
+    }
 
 	/**
 	 * Return cart items cache 
@@ -124,13 +124,18 @@ class XLite_Model_Order extends XLite_Model_Abstract
      */
     public function getItemsCount()
     {
-		if (!isset($this->_itemsCount)) {
-			$this->_itemsCount = count($this->getItems());
-		}
-
-        return $this->_itemsCount;
+        return count($this->getItems());
     }
 
+    /**
+     * addItem 
+     * 
+     * @param XLite_Model_OrderItem $newItem item to add
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
 	public function addItem(XLite_Model_OrderItem $newItem)
     {
 		if ($newItem->isValid()) {
@@ -162,6 +167,58 @@ class XLite_Model_Order extends XLite_Model_Abstract
     public function isEmpty()
     {
 		return 0 >= $this->getItemsCount();
+    }
+
+	/**
+	 * Check order subtotal 
+	 * 
+	 * @return bool
+	 * @access public
+	 * @since  3.0.0
+	 */
+	public function isMinOrderAmountError()
+    {
+        return $this->get('subtotal') < doubleval($this->config->General->minimal_order_amount);
+    }
+
+	/**
+     * Check order subtotal 
+     * 
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function isMaxOrderAmountError()
+    {
+        return $this->get('subtotal') > doubleval($this->config->General->maximal_order_amount);
+    }
+
+    /**
+     * isShippingAvailable 
+     * 
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function isShippingAvailable()
+    {
+        return 0 < count($this->getShippingRates());
+    }
+
+    /**
+     * Returns true if any of order items are shipped 
+     * 
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function isShipped()
+    {
+        foreach ($this->getItems() as $item) {
+            if ($item->isShipped()) return true;
+        }
+
+        return false;
     }
 
 
@@ -199,7 +256,6 @@ class XLite_Model_Order extends XLite_Model_Abstract
     public $_shippingMethod = null;    
     public $_details = null;    
     public $_detailLabels = null;    
-    public $_shippingRates = null;    
     public $_taxes = null;    
 
     public $_statusChanged = false;    
@@ -305,7 +361,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
     /**
     * Returns the Order SubTotal (as the order items Total sum).
     */
-    function calcSubTotal($shippedOnly=false) // {{{
+    function calcSubtotal($shippedOnly=false) // {{{
     {
         $subtotal = 0;
 
@@ -368,17 +424,6 @@ class XLite_Model_Order extends XLite_Model_Abstract
     /** 
     * Returns True if any of order items are shipped.
     */
-
-    function isShipped() // {{{
-    {
-        foreach ($this->get("items") as $item) {
-            if ($item->get("shipped")) {
-                return true;
-			}
-        }
-
-        return false;
-    } // }}}
 
     /**
     * Returns an array of order items to be shipped.
@@ -529,21 +574,6 @@ class XLite_Model_Order extends XLite_Model_Abstract
         return $this->get("shipping_id");
     } // }}}
 
-    function isShippingAvailable() // {{{
-    {
-    	return count($this->get("shippingRates")) > 0;
-    } // }}}
-
-    function isMinOrderAmountError() // {{{
-    {
-        return $this->get("subtotal") < (float)$this->config->General->minimal_order_amount;
-    } // }}}
-
-    function isMaxOrderAmountError() // {{{
-    {
-        return $this->get("subtotal") > (float)$this->config->General->maximal_order_amount;
-    } // }}}
- 
     /////////////// Order data access functions ////////////////
 
     function refresh($name) // {{{
@@ -629,15 +659,6 @@ class XLite_Model_Order extends XLite_Model_Abstract
     {
         $this->_paymentMethod = $paymentMethod;
         $this->set("payment_method", is_null($paymentMethod) ? 0 : $paymentMethod->get("payment_method"));
-    } // }}}
-
-    function getShippingRates() // {{{
-    {
-        if (is_null($this->_shippingRates)) {
-            $this->calcShippingRates();
-        }
-
-        return $this->_shippingRates;
     } // }}}
 
     function getProfile() // {{{

@@ -27,66 +27,72 @@
  */
 
 /**
- * XLite_View_CountrySelect 
+ * XLite_View_Form_Profile_Register 
  * 
  * @package    XLite
  * @subpackage ____sub_package____
  * @since      3.0.0
  */
-class XLite_View_CountrySelect extends XLite_View_FormField
+class XLite_View_Form_Profile_Register extends XLite_View_Form_Abstract
 {
-	/**
-	 * Widget param names
-	 */
-
-	const PARAM_ALL = 'all';
-
-
-	/**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
+    /**
+     * Widget param names
      */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
 
-		$this->widgetParams += array(
-			self::PARAM_ALL => new XLite_Model_WidgetParam_Bool('All', false),
-		);
+    const PARAM_SUBMODE = 'submode';
+    const PARAM_SUCCESS = 'success';
 
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/select_country.tpl');
-    }
-
-	/**
-	 * getSearchCondition 
-	 * 
-	 * @return string
-	 * @access protected
-	 * @since  3.0.0
-	 */
-	protected function getSearchCondition()
-	{
-		return $this->getParam(self::PARAM_ALL) ? 'enabled = \'1\'' : null;
-	}
 
     /**
-     * Return countries list
+     * Current form name 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getFormName()
+    {
+        return 'register_form';
+    }
+
+    /**
+     * getDefaultTarget 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTarget()
+    {
+        return 'profile';
+    }
+
+    /**
+     * getDefaultAction 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultAction()
+    {
+        return 'update';
+    }
+
+    /**
+     * getDefaultParams 
      * 
      * @return array
      * @access protected
      * @since  3.0.0
      */
-    protected function getCountries()
+    protected function getDefaultParams()
     {
-        return XLite_Model_CachingFactory::getObjectFromCallback(
-			__METHOD__,
-			'XLite_Model_Country',
-			'findAll',
-			array($this->getSearchCondition())
-		);
+        return parent::getDefaultParams() + array(
+            self::PARAM_MODE    => 'register',
+            self::PARAM_SUBMODE => 'warning',
+            self::PARAM_SUCCESS => '',
+        );
     }
 }
 

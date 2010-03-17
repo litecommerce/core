@@ -225,13 +225,13 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      * @access public
      * @since  3.0.0 EE
      */
-	public function getWidgetObject($class, array $attributes = array())
+	public function getWidgetObject($class, array $attributes = array(), $delta = '')
 	{
         $result = null;
 
         if (class_exists($class)) {
             $result = XLite_Model_CachingFactory::getObjectFromCallback(
-                $class, $this->getViewer(), 'getWidget', $this->prepareAttributes($attributes), $class
+                __METHOD__ . $class . $delta, $this->getViewer(), 'getWidget', array($this->prepareAttributes($attributes), $class)
             );
         }
 
@@ -248,9 +248,9 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 * @access public
 	 * @since  3.0.0 EE
 	 */
-	public function validateWidgetArguments($name, array $attributes)
+	public function validateWidgetArguments($name, array $attributes, $delta = '')
 	{
-        $widget = $this->getWidgetObject($name, $attributes);
+        $widget = $this->getWidgetObject($name, $attributes, $delta);
 
 		return $widget ? $widget->validateAttributes($attributes) : array();
 	}
@@ -265,9 +265,9 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      * @access public
      * @since  3.0.0 EE
      */
-	public function isWidgetVisible($name, array $attributes)
+	public function isWidgetVisible($name, array $attributes, $delta = '')
 	{
-        $widget = $this->getWidgetObject($name, $attributes);
+        $widget = $this->getWidgetObject($name, $attributes, $delta);
 
 		return $widget ? $widget->isVisible() : false;
 	}
@@ -282,11 +282,11 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 * @access public
 	 * @since  3.0
 	 */
-	public function getBlock($name, array $attributes = array())
+	public function getBlock($name, array $attributes = array(), $delta = '')
 	{
         XLite_View_Abstract::cleanupResources();
 
-        return new XLite_Core_WidgetDataTransport($this->getWidgetObject($name, $attributes));
+        return new XLite_Core_WidgetDataTransport($this->getWidgetObject($name, $attributes, $delta));
 	}
 
     /**
