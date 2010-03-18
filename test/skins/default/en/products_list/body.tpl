@@ -49,9 +49,5 @@
 </div>
 
 <script type="text/javascript">
-  sessionCell = '{getSessionCell()}';
-  productsListHandlers[sessionCell] = new ProductsList(sessionCell);
-  productsListHandlers[sessionCell].URLParams = {getURLParamsJS()};
-  productsListHandlers[sessionCell].URLAJAXParams = {getURLAJAXParamsJS()};
+new ProductsList('{getSessionCell()}', {getURLParamsJS()}, {getURLAJAXParamsJS()});
 </script>
-

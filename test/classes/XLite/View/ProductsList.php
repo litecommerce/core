@@ -282,7 +282,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
     }
 
     /**
-     * isPagerVisible
+     * Check - pager control row is visible or not
      *
      * @return bool
      * @access protected
@@ -291,6 +291,18 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
     protected function isPagerVisible()
     {
         return !$this->getParam(self::PARAM_SHOW_ALL_ITEMS_PER_PAGE) && !$this->isSideBarBox();
+    }
+
+    /**
+     * Check - pages list is visible or not
+     *
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isPagesListVisible()
+    {
+        return 1 < $this->getPager()->getPagesCount();
     }
 
     /**

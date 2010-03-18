@@ -36,6 +36,12 @@
 class XLite_Module_FeaturedProducts_View_FeaturedProducts extends XLite_View_ProductsList
 {
     /**
+     *  Widget parameter names
+     */
+    const PARAM_CATEGORY_ID = 'category_id';
+
+
+    /**
      * Targets this widget is allowed for
      *
      * @var    array
@@ -69,6 +75,12 @@ class XLite_Module_FeaturedProducts_View_FeaturedProducts extends XLite_View_Pro
     {
         parent::defineWidgetParams();
 
+        $this->widgetParams += array(
+            self::PARAM_CATEGORY_ID => new XLite_Model_WidgetParam_ObjectId_Category('Category ID', 0, false),
+        );
+
+        $this->requestParams[] = self::PARAM_CATEGORY_ID;
+
         $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue($this->config->FeaturedProducts->featured_products_look);
 
         $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue(3);
@@ -81,29 +93,6 @@ class XLite_Module_FeaturedProducts_View_FeaturedProducts extends XLite_View_Pro
         $this->widgetParams[self::PARAM_SHOW_DISPLAY_MODE_SELECTOR]->setValue(false);
         $this->widgetParams[self::PARAM_SHOW_ALL_ITEMS_PER_PAGE]->setValue(true);
         $this->widgetParams[self::PARAM_SHOW_SORT_BY_SELECTOR]->setValue(false);
-
-        foreach ($this->getHiddenParamsList() as $param) {
-            $this->widgetParams[$param]->setVisibility(false);
-        }
-    }
-
-    /**
-     * Get the list of parameters that are hidden on the settings page
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getHiddenParamsList()
-    {
-        return array(
-            self::PARAM_SHOW_DISPLAY_MODE_SELECTOR,
-            self::PARAM_SHOW_SORT_BY_SELECTOR,
-            self::PARAM_SORT_BY,
-            self::PARAM_SORT_ORDER,
-            self::PARAM_SHOW_ALL_ITEMS_PER_PAGE
-        );
     }
 
     /**

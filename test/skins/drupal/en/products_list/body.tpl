@@ -43,15 +43,11 @@
   <widget template="{getPageBodyTemplate()}" />
 
   <div IF="isPagerVisible()" class="list-pager low">
-    <widget name="{getPagerName()}" />
+    <widget name="{getPagerName()}" onlyPages />
   </div>
 
 </div>
 
 <script type="text/javascript">
-  sessionCell = '{getSessionCell()}';
-  productsListHandlers[sessionCell] = new ProductsList(sessionCell);
-  productsListHandlers[sessionCell].URLParams = {getURLParamsJS()};
-  productsListHandlers[sessionCell].URLAJAXParams = {getURLAJAXParamsJS()};
+new ProductsList('{getSessionCell()}', {getURLParamsJS()}, {getURLAJAXParamsJS()});
 </script>
-
