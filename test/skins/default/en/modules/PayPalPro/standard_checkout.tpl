@@ -41,9 +41,9 @@ function SubmitHandler(formName)
 <input type=hidden name=amount 		value="{cart.total}">
 <input type=hidden name=currency_code 	value="{cart.paymentMethod.params.standard.currency}">
 <input type=hidden name=bn 		value="x-cart">
-<input type=hidden name=return 		value="{shopURL(#cart.php?target=checkout#,config.Security.customer_security)}&amp;action=return&amp;order_id={cart.order_id:r}">
-<input type=hidden name=cancel_return	value="{shopURL(#cart.php?target=checkout#,config.Security.customer_security)}">
-<input type=hidden name=notify_url	value="{shopURL(#cart.php?target=callback#)}&amp;action=callback&amp;order_id={cart.order_id}">
+<input type=hidden name=return 		value="{getShopUrl(#cart.php?target=checkout#,config.Security.customer_security)}&amp;action=return&amp;order_id={cart.order_id:r}">
+<input type=hidden name=cancel_return	value="{getShopUrl(#cart.php?target=checkout#,config.Security.customer_security)}">
+<input type=hidden name=notify_url	value="{getShopUrl(#cart.php?target=callback#)}&amp;action=callback&amp;order_id={cart.order_id}">
 <input type=hidden name=image_url	value="{cart.paymentMethod.params.standard.logo}">
 
 <p>By clicking "SUBMIT" you agree with our "Terms &amp; Conditions" and "Privacy statement".

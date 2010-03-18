@@ -1,4 +1,4 @@
-<form action="{shopURL(#cart.php#)}" method="POST" name="wishlist{wishlist.wishlist_id}_form">
+<form action="{getShopUrl(#cart.php#)}" method="POST" name="wishlist{wishlist.wishlist_id}_form">
 <input type=hidden name=target value="wishlist">
 <input type=hidden name=action value="send">
 <input type=hidden name=wishlist_id value="{wishlist.wishlist_id}">

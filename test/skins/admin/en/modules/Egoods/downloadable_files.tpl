@@ -107,7 +107,7 @@
 		</tr>
 		<tr FOREACH="egood.manualLinks,link">
 			<td><input type="checkbox" name="selected_links[]" value="{link.access_key}"></td>
-			<td><input type="text" size=50 readonly value="{xlite.shopUrl(#cart.php?target=download&action=download&acc=#)}{link.access_key}"></td>
+			<td><input type="text" size=50 readonly value="{xlite.getShopUrl(#cart.php?target=download&action=download&acc=#)}{link.access_key}"></td>
 			<td IF="link.expire_on=#T#">{link.printDate(#M#,#d#,#Y#,#/#)}</td>
 			<td IF="link.expire_on=#B#">{link.printDate(#M#,#d#,#Y#,#/#)}</td>
 			<td IF="link.expire_on=#D#">n/a</td>

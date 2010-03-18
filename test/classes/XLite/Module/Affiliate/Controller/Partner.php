@@ -114,9 +114,9 @@ class XLite_Module_Affiliate_Controller_Partner extends XLite_Controller_Abstrac
         }
     }
 
-    function shopUrl($url, $secure = false, $pure_url = false)
+    function getShopUrl($url, $secure = false, $pure_url = false)
     {
-        $url = parent::shopUrl($url, $secure, $pure_url);
+        $url = parent::getShopUrl($url, $secure, $pure_url);
         if ($pure_url) {
             $sid = $this->session->getName() . "=" . $this->session->getID();
             if (strpos($url, $sid) !== false) {

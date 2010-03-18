@@ -17,10 +17,10 @@
     </tr>
     <tr>
         <td>
-        <textarea cols=50 rows=4><a href="{shopURL(#cart.php#)}?target=category&category_id={category_id}&partner={auth.profile.profile_id}">{category.name:h}</a></textarea>
+        <textarea cols=50 rows=4><a href="{getShopUrl(#cart.php#)}?target=category&category_id={category_id}&partner={auth.profile.profile_id}">{category.name:h}</a></textarea>
         </td>
         <td align=center>
-        <a href="{shopURL(#cart.php#)}?target=category&category_id={category_id}&partner={auth.profile.profile_id}">{category.name:h}</a>
+        <a href="{getShopUrl(#cart.php#)}?target=category&category_id={category_id}&partner={auth.profile.profile_id}">{category.name:h}</a>
         </td>
     </tr>
     <tr><td colspan=2>&nbsp;</td></tr>
@@ -30,10 +30,10 @@
     </tr>
     <tr>
         <td valign=top>
-        <textarea cols=50 rows=4><a href="{shopURL(#cart.php#)}?target=category&category_id={category_id}&partner={auth.profile.profile_id}">{category.name:h}<img src="{shopURL(#cart.php#,secure,#1#)}?target=image&action=category&id={category_id}" border=0></a></textarea>
+        <textarea cols=50 rows=4><a href="{getShopUrl(#cart.php#)}?target=category&category_id={category_id}&partner={auth.profile.profile_id}">{category.name:h}<img src="{getShopUrl(#cart.php#,secure,#1#)}?target=image&action=category&id={category_id}" border=0></a></textarea>
         </td>
         <td align=center>
-        <a href="{shopURL(#cart.php#)}?target=category&category_id={category_id}&partner={auth.profile.profile_id}"><img src="{shopURL(#cart.php#,secure,#1#)}?target=image&action=category&id={category_id}" border=0></a>
+        <a href="{getShopUrl(#cart.php#)}?target=category&category_id={category_id}&partner={auth.profile.profile_id}"><img src="{getShopUrl(#cart.php#,secure,#1#)}?target=image&action=category&id={category_id}" border=0></a>
         </td>
     </tr>
     </table>

@@ -19,7 +19,7 @@ function selectProduct(p_id)
 }
 </script>
 
-<form name="bulk_shopping_form" action="{shopUrl(#cart.php#)}" method="POST">
+<form name="bulk_shopping_form" action="{getShopUrl(#cart.php#)}" method="POST">
 <input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val}"/>
 <input type="hidden" name="action" value="bulk">
 

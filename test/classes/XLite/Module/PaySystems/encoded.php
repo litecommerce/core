@@ -17,7 +17,7 @@
 			$cart->set("status", $status);
 			$cart->update();
 		}
-		header ("Location: " . $cart->xlite->shopURL("cart.php?target=checkout&action=return&order_id=") . $cart->get("order_id"));
+		header ("Location: " . $cart->xlite->getShopUrl("cart.php?target=checkout&action=return&order_id=") . $cart->get("order_id"));
     	die();
     }
 ?>

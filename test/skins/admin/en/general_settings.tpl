@@ -256,7 +256,7 @@ document.options_form.full_customer_security.onclick = https_checkbox_click;
 document.options_form.admin_security.onclick = https_checkbox_click;
 </script>
 {* Check if https is available *}
-Trying to access the shop at <a href="{shopUrl(#cart.php#,#1#)}">{shopUrl(#cart.php#,#1#)}</a> ...
+Trying to access the shop at <a href="{getShopUrl(#cart.php#,#1#)}">{getShopUrl(#cart.php#,#1#)}</a> ...
 <span id="httpsErrorMessage" style="visibility:hidden">
 	<p class="ErrorMessage"><b>FAILED.</b> Secure connection cannot be established.</p>
 	To fix this problem, do the following:
@@ -266,7 +266,7 @@ Trying to access the shop at <a href="{shopUrl(#cart.php#,#1#)}">{shopUrl(#cart.
 		<li> reload this page.
 	</ul>
 </span>
-<script src="{shopUrl(#https_check.php#,#1#)}"></script>
+<script src="{getShopUrl(#https_check.php#,#1#)}"></script>
 <script>
 if (!httpsEnabled) {
     document.getElementById("httpsErrorMessage").style.cssText = "";

@@ -73,7 +73,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_Abstract extends XLite_Cont
 
 						$return_url = null;
 						if ($this->get("target") == "category" && $this->get("action") == "add" && $this->get("message") == "added") {
-							$return_url = $this->shopURL("admin.php?target=category&category_id=".$this->get("category_id")."&mode=modify&message=added&page=category_modify");
+							$return_url = $this->getShopUrl("admin.php?target=category&category_id=".$this->get("category_id")."&mode=modify&message=added&page=category_modify");
 						}
 
 						if ($this->xlite->get("AutoUpdateCatalogEnabled")) {

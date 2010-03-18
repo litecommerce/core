@@ -1063,7 +1063,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      */
     public function getImageURL($relativePath)
     {
-        return XLite::getInstance()->shopURL(
+        return XLite::getInstance()->getShopUrl(
             XLite_Model_Layout::getInstance()->getSkinURL($relativePath)
         );
     }

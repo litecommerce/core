@@ -9,29 +9,29 @@
 <th></th>
 <th valign="center">
 Creation date
-<a href="{shopUrl(#admin.php?target=SpecialOffers&sort=date_desc#)}"><img border="0" src="images/modules/Promotion/up_arrow.gif"></a>
-<a href="{shopUrl(#admin.php?target=SpecialOffers&sort=date_asc#)}"><img border="0" src="images/modules/Promotion/down_arrow.gif"></a>
+<a href="{getShopUrl(#admin.php?target=SpecialOffers&sort=date_desc#)}"><img border="0" src="images/modules/Promotion/up_arrow.gif"></a>
+<a href="{getShopUrl(#admin.php?target=SpecialOffers&sort=date_asc#)}"><img border="0" src="images/modules/Promotion/down_arrow.gif"></a>
 </th>
 <th valign="center">
 Title
-<a href="{shopUrl(#admin.php?target=SpecialOffers&sort=title_asc#)}"><img border="0" src="images/modules/Promotion/up_arrow.gif"></a>
-<a href="{shopUrl(#admin.php?target=SpecialOffers&sort=title_desc#)}"><img border="0" src="images/modules/Promotion/down_arrow.gif"></a>
+<a href="{getShopUrl(#admin.php?target=SpecialOffers&sort=title_asc#)}"><img border="0" src="images/modules/Promotion/up_arrow.gif"></a>
+<a href="{getShopUrl(#admin.php?target=SpecialOffers&sort=title_desc#)}"><img border="0" src="images/modules/Promotion/down_arrow.gif"></a>
 </th>
 <th valign="center">
 Active
-<a href="{shopUrl(#admin.php?target=SpecialOffers&sort=active_asc#)}"><img border="0" src="images/modules/Promotion/up_arrow.gif"></a>
-<a href="{shopUrl(#admin.php?target=SpecialOffers&sort=active_desc#)}"><img border="0" src="images/modules/Promotion/down_arrow.gif"></a>
+<a href="{getShopUrl(#admin.php?target=SpecialOffers&sort=active_asc#)}"><img border="0" src="images/modules/Promotion/up_arrow.gif"></a>
+<a href="{getShopUrl(#admin.php?target=SpecialOffers&sort=active_desc#)}"><img border="0" src="images/modules/Promotion/down_arrow.gif"></a>
 </th>
 <th valign="center">Status</th>
 <th valign="center">
 Start date
-<a href="{shopUrl(#admin.php?target=SpecialOffers&sort=s_date_asc#)}"><img border="0" src="images/modules/Promotion/up_arrow.gif"></a>
-<a href="{shopUrl(#admin.php?target=SpecialOffers&sort=s_date_desc#)}"><img border="0" src="images/modules/Promotion/down_arrow.gif"></a>
+<a href="{getShopUrl(#admin.php?target=SpecialOffers&sort=s_date_asc#)}"><img border="0" src="images/modules/Promotion/up_arrow.gif"></a>
+<a href="{getShopUrl(#admin.php?target=SpecialOffers&sort=s_date_desc#)}"><img border="0" src="images/modules/Promotion/down_arrow.gif"></a>
 </th>
 <th valign="center">
 End date
-<a href="{shopUrl(#admin.php?target=SpecialOffers&sort=e_date_asc#)}"><img border="0" src="images/modules/Promotion/up_arrow.gif"></a>
-<a href="{shopUrl(#admin.php?target=SpecialOffers&sort=e_date_desc#)}"><img border="0" src="images/modules/Promotion/down_arrow.gif"></a>
+<a href="{getShopUrl(#admin.php?target=SpecialOffers&sort=e_date_asc#)}"><img border="0" src="images/modules/Promotion/up_arrow.gif"></a>
+<a href="{getShopUrl(#admin.php?target=SpecialOffers&sort=e_date_desc#)}"><img border="0" src="images/modules/Promotion/down_arrow.gif"></a>
 </th>
 <th>&nbsp;</th></tr>
 <tr class=Center FOREACH="specialOffers,specialOffer">

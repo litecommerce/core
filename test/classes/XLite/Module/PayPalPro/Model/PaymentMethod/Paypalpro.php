@@ -167,7 +167,7 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_Paypalpro extends XLite_Model_P
 		$cart	 	= $order->get("properties");
 		$payment	= $this->get("params");
 		$payment	= $payment['pro'];	
-		$notifyUrl	= $this->xlite->shopURL("cart.php?target=callback&action=callback");
+		$notifyUrl	= $this->xlite->getShopUrl("cart.php?target=callback&action=callback");
 		$invoiceId	= $payment['prefix'].$cart['order_id'];
 		
 		$paymentAction 		= ($payment['type']) ? 'Sale' : 'Authorization';

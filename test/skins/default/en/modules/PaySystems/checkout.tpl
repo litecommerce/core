@@ -23,8 +23,8 @@
 <input type=hidden name=delivery value="N">
 <input type=hidden name=formget value="N">
 <input type=hidden name=option1 value="{cart.get(#order_id#)}">
-<input type=hidden name=redirect value="{shopURL(#cart.php?target=callback&action=callback#):h}&order_id_name=option1">
-<INput type=hidden name=redirectfail value="{shopURL(#cart.php?target=callback&action=callback#):h}&order_id_name=option1">
+<input type=hidden name=redirect value="{getShopUrl(#cart.php?target=callback&action=callback#):h}&order_id_name=option1">
+<INput type=hidden name=redirectfail value="{getShopUrl(#cart.php?target=callback&action=callback#):h}&order_id_name=option1">
 
 <p>By clicking "SUBMIT" you agree with our "Terms &amp; Conditions" and "Privacy statement".<br>
 <br>

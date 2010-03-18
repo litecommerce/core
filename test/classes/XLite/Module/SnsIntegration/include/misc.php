@@ -104,7 +104,7 @@ function func_sns_request($config, $clientId, $actions, $timestamp = null)
     	$http->addPostData("timestamp", $timestamp);
         $http->addPostData("passphrase", $config->getComplex('SnsIntegration.passphrase'));
     	$http->addPostData("shopDisplayName", $config->getComplex('SnsIntegration.shopDisplayName'));
-    	$http->addPostData("site", $config->xlite->shopUrl(""));
+    	$http->addPostData("site", $config->xlite->getShopUrl(""));
 
     	$n = 0;
     	foreach ($actions as $action) {
@@ -128,7 +128,7 @@ function func_sns_request($config, $clientId, $actions, $timestamp = null)
     	$postData["timestamp"] = $timestamp;
         $postData["passphrase"] = $config->getComplex('SnsIntegration.passphrase');
     	$postData["shopDisplayName"] = $config->getComplex('SnsIntegration.shopDisplayName');
-    	$postData["site"] = $config->xlite->shopUrl("");
+    	$postData["site"] = $config->xlite->getShopUrl("");
     	$n = 0;
     	foreach ($actions as $action) {
     		$postData["actions[".$n."]"] = $action;

@@ -104,9 +104,9 @@ class XLite_Module_PayPal_Controller_Customer_Ppcheckout extends XLite_Controlle
 <INPUT type=hidden name=amount value="<?php echo $this->cart->get("total"); ?>">
 <INPUT type=hidden name=currency_code value="<?php echo $pm->getComplex('params.currency'); ?>">
 <INPUT type="hidden" name="bn" value="x-cart">
-<INPUT type=hidden name=return value="<?php echo $this->shopURL("cart.php?target=ppcheckout"); ?>&action=return&order_id=<?php echo $this->cart->get("order_id"); ?>">
-<INPUT type=hidden name=cancel_return value="<?php echo $this->shopURL("cart.php?target=checkout"); ?>">
-<INPUT type=hidden name=notify_url value="<?php echo $this->shopURL("cart.php?target=callback"); ?>&action=callback&order_id=<?php echo $this->cart->get("order_id"); ?>">
+<INPUT type=hidden name=return value="<?php echo $this->getShopUrl("cart.php?target=ppcheckout"); ?>&action=return&order_id=<?php echo $this->cart->get("order_id"); ?>">
+<INPUT type=hidden name=cancel_return value="<?php echo $this->getShopUrl("cart.php?target=checkout"); ?>">
+<INPUT type=hidden name=notify_url value="<?php echo $this->getShopUrl("cart.php?target=callback"); ?>&action=callback&order_id=<?php echo $this->cart->get("order_id"); ?>">
 <INPUT type=hidden name=image_url value="<?php echo $pm->getComplex('params.image_url'); ?>">
 <CENTER>Please wait while connecting to <b>PayPal</b> payment gateway...</CENTER>
 </FORM>

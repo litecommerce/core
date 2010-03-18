@@ -109,18 +109,18 @@ abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstr
 		}
     }
 
-	public function shopURL($url, $secure = false, $pure_url = false)
+	public function getShopUrl($url, $secure = false, $pure_url = false)
     {
 		$fc = $this->config->Security->full_customer_security;
 
 		return $fc
-			? $this->xlite->shopURL($url, $fc)
-			: parent::shopURL($url, $secure);
+			? $this->xlite->getShopUrl($url, $fc)
+			: parent::getShopUrl($url, $secure);
     }
 
 	public function getLoginURL()
     {
-        return $this->shopUrl($this->getComplex('xlite.script'), $this->getComplex('config.Security.customer_security'));
+        return $this->getShopUrl($this->getComplex('xlite.script'), $this->getComplex('config.Security.customer_security'));
     }
 
 	public function isSecure()

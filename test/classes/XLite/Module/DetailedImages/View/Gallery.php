@@ -67,7 +67,7 @@ class XLite_Module_DetailedImages_View_Gallery extends XLite_View_Abstract
      */
     public function getLightBoxImagesDir()
     {
-        return XLite::getInstance()->shopURL(
+        return XLite::getInstance()->getShopUrl(
             XLite_Model_Layout::getInstance()->getPath() . 'modules/DetailedImages/images'
         );
     }

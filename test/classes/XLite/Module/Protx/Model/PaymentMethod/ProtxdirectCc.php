@@ -64,7 +64,7 @@ class XLite_Module_Protx_Model_PaymentMethod_ProtxdirectCc extends XLite_Model_P
 
 	function getReturnUrl() // {{{ 
 	{
-		$url = $this->xlite->shopURL("cart.php?target=protxdirect_checkout&action=return", $this->getComplex('config.Security.customer_security'));
+		$url = $this->xlite->getShopUrl("cart.php?target=protxdirect_checkout&action=return", $this->getComplex('config.Security.customer_security'));
 		return $this->prepareUrl($url);
 	}   // }}}
 

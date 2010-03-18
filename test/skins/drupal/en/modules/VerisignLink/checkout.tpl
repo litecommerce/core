@@ -21,7 +21,7 @@ function SubmitHandler()
 -->
 </script>
 
-<form action="{xlite.shopURL(#cart.php?target=vlcheckout#,config.Security.customer_security)}" method="POST" name="payflowlink_form" onSubmit="SubmitHandler()">
+<form action="{xlite.getShopUrl(#cart.php?target=vlcheckout#,config.Security.customer_security)}" method="POST" name="payflowlink_form" onSubmit="SubmitHandler()">
 <p>By clicking "SUBMIT" you are agree with our "Terms &amp; Conditions" and "Privacy statement".<br>
 <br>
 <input type="submit" value="Submit order" id="submit_order_button">

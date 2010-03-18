@@ -441,7 +441,7 @@ class XLite_Model_Wysiwyg_Mediator extends XLite_Base
         // put cart.php as a redirect
         mkdirRecursive(HTML_BUILDER_PATH);
         if (($fd = @fopen(HTML_BUILDER_PATH . "/cart.php", "wb"))) {
-            $url = $this->xlite->shopUrl("cart.php");
+            $url = $this->xlite->getShopUrl("cart.php");
             @fwrite($fd, <<<EOT
 <?php
 header("Location: $url?" . \$_SERVER["QUERY_STRING"]);

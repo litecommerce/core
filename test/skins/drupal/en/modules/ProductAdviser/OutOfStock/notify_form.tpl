@@ -10,7 +10,7 @@ function NotifyMe()
 -->
 </script>
 
-  <form action="{shopURL(#cart.php#)}" method="POST" name="product_notify_form">
+  <form action="{getShopUrl(#cart.php#)}" method="POST" name="product_notify_form">
 
     <input type="hidden" name="target" value="notify_me">
     <input type="hidden" name="action" value="notify_product">

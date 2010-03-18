@@ -3,7 +3,7 @@
 
 <br>
 
-<form name="subscribe_form" action="{shopURL(#cart.php#)}" method=POST>
+<form name="subscribe_form" action="{getShopUrl(#cart.php#)}" method=POST>
 <input FOREACH="allparams,_p,_v" type=hidden name="{_p}" value="{_v}"/>
 <input type=hidden name=action value=subscribe>
 

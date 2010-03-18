@@ -1,4 +1,4 @@
-<form action="{shopURL(#cart.php#)}" method=POST name="send{product_id}_form">
+<form action="{getShopUrl(#cart.php#)}" method=POST name="send{product_id}_form">
 	<input type=hidden name=target value="product">
 	<input type=hidden name=action value="send_friend">
 	<input type=hidden name=product_id value="{product_id}">

@@ -164,12 +164,12 @@ class XLite_Module_FlyoutCategories_Controller_Admin_Category extends XLite_Cont
 
 	function category_add_return_url()
 	{
-		return $this->shopURL("admin.php?target=category&category_id=".$this->get("category_id")."&mode=modify&message=added&page=category_modify");
+		return $this->getShopUrl("admin.php?target=category&category_id=".$this->get("category_id")."&mode=modify&message=added&page=category_modify");
 	}
     
     function category_update_return_url()
 	{
-		return $this->shopURL("admin.php?target=category&category_id=".$this->get("category_id")."&mode=modify&message=updated&page=category_modify");
+		return $this->getShopUrl("admin.php?target=category&category_id=".$this->get("category_id")."&mode=modify&message=updated&page=category_modify");
 	}
 
 	function action_delete()
@@ -180,7 +180,7 @@ class XLite_Module_FlyoutCategories_Controller_Admin_Category extends XLite_Cont
 			$c = new XLite_Model_Category($this->get("category_id"));
 			$parent_id = $c->get("parent");
 		}
-		$delete_return_url = $this->shopURL("admin.php?target=categories&category_id=$parent_id");
+		$delete_return_url = $this->getShopUrl("admin.php?target=categories&category_id=$parent_id");
 
 		parent::action_delete();
 

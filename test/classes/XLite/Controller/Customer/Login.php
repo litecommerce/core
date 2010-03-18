@@ -67,10 +67,10 @@ class XLite_Controller_Customer_Login extends XLite_Controller_Customer_Abstract
 		$this->recalcCart();
     }
 
-    function shopURL($url, $secure = false, $pure_url = false)
+    function getShopUrl($url, $secure = false, $pure_url = false)
     {
         $add = (strpos($url, '?') ? '&' : '?') . 'feed='.$this->get("action");
-        return parent::shopURL($url . $add, $secure);
+        return parent::getShopUrl($url . $add, $secure);
     }
 
     function action_logoff()

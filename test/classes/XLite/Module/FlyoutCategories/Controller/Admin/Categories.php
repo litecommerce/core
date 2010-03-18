@@ -738,7 +738,7 @@ function opera_click() {
 
 		// rebuild cache if new category added
 		if ($this->getComplex('config.FlyoutCategories.category_autoupdate')) {
-			$delete_return_url = $this->shopURL("admin.php?target=categories&category_id=0");
+			$delete_return_url = $this->getShopUrl("admin.php?target=categories&category_id=0");
 			$this->action_build_categories($delete_return_url);
 		}
 

@@ -85,7 +85,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
 		$this->file   = $file;
         $this->source = file_get_contents($file);
         
-        $this->urlRewrite = array('images' => XLite::getInstance()->shopURL(XLite_Model_Layout::getInstance()->getSkinURL('images')));
+        $this->urlRewrite = array('images' => XLite::getInstance()->getShopUrl(XLite_Model_Layout::getInstance()->getSkinURL('images')));
 	}
 
 

@@ -272,7 +272,7 @@ EOT;
 
 	public function getLoginURL()
 	{
-		return $this->shopUrl($this->getComplex('xlite.script'), $this->getComplex('config.Security.admin_security'));
+		return $this->getShopUrl($this->getComplex('xlite.script'), $this->getComplex('config.Security.admin_security'));
 	}
 
 	// FIXME - check this function carefully

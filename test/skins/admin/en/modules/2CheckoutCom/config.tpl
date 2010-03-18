@@ -45,7 +45,7 @@ shopping cart software you have to proceed these steps:
 <LI>Set the option '<I>Return to a routine on your site after credit 
 card processed?</I>' to '<I>Yes</I>' 
 <LI>Set the '<I>Return URL</I>' 
-to:<BR>{shopURL(#cart.php?target=callback&action=callback&order_id_name=x_invoice_num#):h}
+to:<BR>{getShopUrl(#cart.php?target=callback&action=callback&order_id_name=x_invoice_num#):h}
 <P>
 
 <table border=0 cellspacing=5>

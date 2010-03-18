@@ -17,8 +17,8 @@
 
 <input type=hidden name="cs1" value="{cart.order_id:r}">
 <input type=hidden name="cs2" value="chronopay">
-<input type=hidden name=cb_url value="{shopURL(#cart.php?target=callback#)}&action=callback&order_id={cart.order_id:r}">
-<input type=hidden name=decline_url value="{shopURL(#cart.php?target=callback#)}&action=callback&order_id={cart.order_id:r}&error=1">
+<input type=hidden name=cb_url value="{getShopUrl(#cart.php?target=callback#)}&action=callback&order_id={cart.order_id:r}">
+<input type=hidden name=decline_url value="{getShopUrl(#cart.php?target=callback#)}&action=callback&order_id={cart.order_id:r}&error=1">
 <input type="hidden" name="cb_type" value="P" />
 
 <p>By clicking "SUBMIT" you agree with our "Terms &amp; Conditions" and "Privacy statement".<br>

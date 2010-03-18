@@ -38,7 +38,7 @@ function ChangeBoxBody(bodyId)
 	var elm = document.getElementById("sidebar_box_action_"+bodyId);
 	if (elm)
 	{
-		elm.src = "{xlite.shopURL(#admin.php#,config.Security.admin_security)}?target=sbjs&mode=change_sidebar_box_status&sidebar_box_id="+bodyId+"&time="+(new Date().getTime());
+		elm.src = "{xlite.getShopUrl(#admin.php#,config.Security.admin_security)}?target=sbjs&mode=change_sidebar_box_status&sidebar_box_id="+bodyId+"&time="+(new Date().getTime());
 	}
 }
 

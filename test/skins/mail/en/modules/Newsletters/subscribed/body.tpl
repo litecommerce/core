@@ -7,7 +7,7 @@
 <p>Your e-mail has been added to the {config.Company.company_name:h} newsletter "{list.name:h}" subscription list.</p>
 
 <p>To unsubscribe from {config.Company.company_name:h} newsletters, click on the link provided below:</p>
-<p><a href="{xlite.shopUrl(#cart.php#)}?target=news&action=confirm&type=unsubscribe&email={email}&code={code}">{xlite.shopUrl(#cart.php#)}?target=news&action=confirm&type=unsubscribe&email={email}&code={code}</a></p>
+<p><a href="{xlite.getShopUrl(#cart.php#)}?target=news&action=confirm&type=unsubscribe&email={email}&code={code}">{xlite.getShopUrl(#cart.php#)}?target=news&action=confirm&type=unsubscribe&email={email}&code={code}</a></p>
 <br>
 <p IF="!profile">If you are a registered {config.Company.company_name:h} customer, you can manage your newsletter subscriptions from the "Modify profile" page of your personal account.</p>
 

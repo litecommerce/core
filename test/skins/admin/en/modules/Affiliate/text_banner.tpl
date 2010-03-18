@@ -17,7 +17,7 @@
         <td valign=top>Image</td>
         <td valign=top class=Star>*</td>
         <td>
-            <span IF="mode=#modify#"><img src="{shopUrl(#cart.php#)}?target=image&action=banner_image&id={banner_id}&rnd={rand()}" border=0><br></span>
+            <span IF="mode=#modify#"><img src="{getShopUrl(#cart.php#)}?target=image&action=banner_image&id={banner_id}&rnd={rand()}" border=0><br></span>
             <input type=file name=banner>
         </td>
     </tr>

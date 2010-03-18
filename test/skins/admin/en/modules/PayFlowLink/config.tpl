@@ -13,7 +13,7 @@
 <li>Log in to your PayFlow Link account</li>
 <li>Go to the '<i>Account Info/Payflow Link Info</i>' menu</li>
 <li>Set the option '<i>Return URL Method</i>' to '<i>POST</i>'</li>
-<li>Set the '<i>Return URL</i>' to:<br> {shopURL(#classes/modules/PayFlowLink/callback.php#):h}</li>
+<li>Set the '<i>Return URL</i>' to:<br> {getShopUrl(#classes/modules/PayFlowLink/callback.php#):h}</li>
 <P>
 </td>
 </tr>

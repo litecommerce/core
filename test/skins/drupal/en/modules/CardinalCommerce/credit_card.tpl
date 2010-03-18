@@ -1,5 +1,5 @@
 <script language="Javascript">
-vbv_url = "{shopURL(#cart.php#)}";
+vbv_url = "{getShopUrl(#cart.php#)}";
 <!--
 
 function OpenMCSC()

@@ -1,4 +1,4 @@
-<form action="{shopURL(#cart.php#)}" method="POST" name="notify_me_form">
+<form action="{getShopUrl(#cart.php#)}" method="POST" name="notify_me_form">
 <input type="hidden" name="target" value="notify_me">
 <input type="hidden" name="action" value="{action}">
 <input type="hidden" name="mode" value="{mode}">

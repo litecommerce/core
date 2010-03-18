@@ -6,7 +6,7 @@ Click the link<span IF="!product.egoodsNumber=#1#">s</span> below to download an
 	<td>&nbsp;&nbsp;</td>
 	<td>&bull;</td>
 	<td>
-		<a href="{xlite.shopUrl(#cart.php?target=download&action=download&file_id=#):r}{egood.file_id}" onClick="this.blur()" class="GoLink"><u>{egood.fileName}</u></a>
+		<a href="{xlite.getShopUrl(#cart.php?target=download&action=download&file_id=#):r}{egood.file_id}" onClick="this.blur()" class="GoLink"><u>{egood.fileName}</u></a>
 	</td>
 </tr>
 </tbody>

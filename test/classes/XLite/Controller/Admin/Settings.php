@@ -466,7 +466,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
 			return $this->_answeredVersion;
 		}
 
-		$checkUrl = $this->xlite->shopUrl("admin.php?target=upgrade&action=version");
+		$checkUrl = $this->xlite->getShopUrl("admin.php?target=upgrade&action=version");
 		$this->_answeredVersionError = false;
 		$response = $this->httpRequest($checkUrl);
 		if ($this->get("lite_version") != $response) {

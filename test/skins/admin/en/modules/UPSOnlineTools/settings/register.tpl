@@ -86,7 +86,7 @@ Please check that you have completed all the required fields correctly.
 <tr valign="middle">
     <td align="left">Web Site URL:</td>
 	<td class="Star">*</td>
-    <td nowrap><input type="text" name="web_url" size="32" maxlength="254" {if:reg.web_url}value="{reg.web_url}"{else:}value="{shopURL(##)}"{end:} style="width:250;"></td>
+    <td nowrap><input type="text" name="web_url" size="32" maxlength="254" {if:reg.web_url}value="{reg.web_url}"{else:}value="{getShopUrl(##)}"{end:} style="width:250;"></td>
     <td><widget class="XLite_Validator_RequiredValidator" field="web_url"></td>
 </tr>
 

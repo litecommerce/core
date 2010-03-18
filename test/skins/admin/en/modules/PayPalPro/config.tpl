@@ -190,7 +190,7 @@
 Log into your PayPal account, go to the "My Account / Profile / Instant Payment Notification Preferences".<br>
 You should have:<br>
 &nbsp;&nbsp;&nbsp;- Instant Payment Notification (IPN) checkbox selected,<br>
-&nbsp;&nbsp;&nbsp;- Instant Payment Notification (IPN) URL field value: <b>{shopUrl(#cart.php#)}</b> .<br>
+&nbsp;&nbsp;&nbsp;- Instant Payment Notification (IPN) URL field value: <b>{getShopUrl(#cart.php#)}</b> .<br>
 </span>
 
 <script>

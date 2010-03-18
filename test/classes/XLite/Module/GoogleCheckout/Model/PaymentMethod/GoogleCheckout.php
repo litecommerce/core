@@ -455,7 +455,7 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
 
 	function getOrderCheckoutRequest($order, $paymentParams)
 	{
-		$shop_url = htmlentities($this->xlite->shopUrl("cart.php"));
+		$shop_url = htmlentities($this->xlite->getShopUrl("cart.php"));
 		$merchantNote = $this->getOrderMerchantNote($order, $paymentParams);
 		
 		$order_total = $order->get("total");

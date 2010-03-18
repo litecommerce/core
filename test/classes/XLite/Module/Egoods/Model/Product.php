@@ -86,7 +86,7 @@ class XLite_Module_Egoods_Model_Product extends XLite_Model_Product implements X
 				$file['name'] = basename($egoods[$i]->get('data'));
 				$links = $egoods[$i]->get('activeLinks');
 				foreach($links as $key=>$link) {
-					$file['links'][] = $this->xlite->shopUrl('cart.php?target=download&action=download&acc=') . $link->get('access_key');
+					$file['links'][] = $this->xlite->getShopUrl('cart.php?target=download&action=download&acc=') . $link->get('access_key');
 				}
 				
 				$files []= $file;

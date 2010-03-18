@@ -2,7 +2,7 @@
 
 <widget class="XLite_Module_Newsletters_View_Bulletin" >
 
-<form action="{shopURL(#cart.php#)}" method=POST name="newsfeed_form">
+<form action="{getShopUrl(#cart.php#)}" method=POST name="newsfeed_form">
 <input type=hidden name=target value=news>
 <input type=hidden name=action value=subscribe>
 

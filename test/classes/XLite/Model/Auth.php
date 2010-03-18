@@ -685,7 +685,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
             return false;
         }
         $mailer = new XLite_Model_Mailer();
-        $mailer->url = $this->xlite->shopURL("cart.php?target=recover_password&action=confirm&email=".urlencode($profile->get("login"))."&request_id=".$profile->get("password"));
+        $mailer->url = $this->xlite->getShopUrl("cart.php?target=recover_password&action=confirm&email=".urlencode($profile->get("login"))."&request_id=".$profile->get("password"));
 		$mailer->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
         $mailer->compose($this->config->getComplex('Company.users_department'),
                          $profile->get("login"),

@@ -75,7 +75,7 @@ function setVisible(element_id)
 <tr>
     <td align=right>PHP:</td>
     <td>&nbsp;&nbsp;&nbsp;</td>
-    <td>{phpversion:h}<a href='{shopURL(#admin.php#)}?target=settings&action=phpinfo' target='blank_' class="NavigationPath"> <b>details</b></a> &gt;&gt;</td>
+    <td>{phpversion:h}<a href='{getShopUrl(#admin.php#)}?target=settings&action=phpinfo' target='blank_' class="NavigationPath"> <b>details</b></a> &gt;&gt;</td>
 	<td>&nbsp;&nbsp;&nbsp;</td>
 </tr>
 <tr>

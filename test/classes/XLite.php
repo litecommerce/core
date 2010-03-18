@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage Core
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -31,7 +31,7 @@
  * 
  * @package    Litecommerce
  * @subpackage XLite
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 class XLite extends XLite_Base implements XLite_Base_ISingleton
 {
@@ -54,7 +54,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      * 
      * @var    XLite_Controller_Abstract
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected static $controller = null;
 
@@ -73,7 +73,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      * 
      * @var    array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected $options = null;
 
@@ -81,19 +81,19 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      * Current area flag
      *
      * @var    bool
-     * @access public
-     * @since  3.0.0 EE
+     * @access protected
+     * @since  3.0.0
      */
-    public $adminZone = false;
+    protected $adminZone = false;
 
     /**
      * TODO - check if it's realy needed 
      * 
      * @var    mixed
-     * @access public
-     * @since  3.0.0 EE
+     * @access protected
+     * @since  3.0.0
      */
-    public $_xlite_form_id = null;
+    protected $_xlite_form_id = null;
 
 
     /**
@@ -101,7 +101,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      * 
      * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function __construct()
     {
@@ -112,7 +112,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      * 
      * @return array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function parseConfigFile()
     {
@@ -137,7 +137,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      * 
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected static function getTarget()
     {
@@ -156,7 +156,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      * 
      * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected static function getControllerClass()
     {
@@ -168,7 +168,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      * 
      * @return mixed
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getAction()
     {
@@ -183,7 +183,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      *  
      * @return mixed
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function getOptions($names = null)
     {
@@ -194,16 +194,19 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
 
         $result = $this->options;
 
-        if (!is_null($names)) {
-            if (is_array($names)) {
-                $names = array_reverse($names);
-                while (!empty($names) && !is_null($result)) {
-                    if (is_null($key = array_pop($names))) break;
-                    $result = isset($result[$key]) ? $result[$key] : null;
+        if (is_array($names)) {
+            $names = array_reverse($names);
+            while (!empty($names) && !is_null($result)) {
+                $key = array_pop($names);
+                if (is_null($key)) {
+                    break;
                 }
-            } else {
-                $result = isset($result[$names]) ? $result[$names] : null;
+
+                $result = isset($result[$key]) ? $result[$key] : null;
             }
+
+        } elseif (!is_null($names)) {
+            $result = isset($result[$names]) ? $result[$names] : null;
         }
 
         return $result;
@@ -214,7 +217,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      * 
      * @return XLite
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public static function getInstance()
     {
@@ -226,7 +229,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      * 
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function __destruct()
     {
@@ -242,7 +245,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      *  
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function setCleanUpCacheFlag($flag)
     {
@@ -254,7 +257,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      * 
      * @return string
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function getScript()
     {
@@ -269,20 +272,20 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      *  
      * @return string
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
-    public function shopUrl($url, $secure = false)
+    public function getShopUrl($url, $secure = false)
     {
-        $proto   = 'http' . ($secure ? 's' : '') . '://';
-        $host    = $this->getOptions(array('host_details', 'http' . ($secure ? 's' : '') . '_host'));
-        $web_dir = rtrim($this->getOptions(array('host_details', 'web_dir')), '/') . '/';
+        $proto  = ($secure ? 'https' : 'http') . '://';
+        $host   = $this->getOptions(array('host_details', ($secure ? 'https' : 'http') . '_host'));
+        $webDir = rtrim($this->getOptions(array('host_details', 'web_dir')), '/') . '/';
 
         if ($secure) {
             $session = XLite_Model_Session::getInstance();
-            $url .= (strpos($url, '?') ? '&' : '?') . $session->getName() . '=' . $session->getID();
+            $url .= (false !== strpos($url, '?') ? '&' : '?') . $session->getName() . '=' . $session->getID();
         }
 
-        return $proto . $host . $web_dir . $url;
+        return $proto . $host . $webDir . $url;
     }
 
     /**
@@ -290,7 +293,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      * 
      * @return XLite_Model_Factory
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public static function getFactory()
     {
@@ -318,7 +321,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      * 
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function initModules()
     {
@@ -330,7 +333,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      * 
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function initController()
     {
@@ -342,7 +345,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      * 
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function init()
     {
@@ -355,7 +358,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      * 
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function runController()
     {
@@ -377,13 +380,16 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     }
 
     /**
-     * Runs the cart 
+     * Run application
      * 
-     * @param bool $adminZone area flag
+     * @param boolean $adminZone     Admin interface flag
+     * @param boolean $runController Run controller or not
+     * @param boolean $fromCMS       Call from CMS flag
      *  
-     * @return void
+     * @return XLite_View_Abstract
      * @access public
-     * @since  3.0.0 EE
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function run($adminZone = false, $runController = true, $fromCMS = false)
     {

@@ -23,7 +23,7 @@
 </tr>
 <tr class="Center">
     <th align="right">URL:</th>
-    <td><a href="{xlite.shopUrl(#cart.php#)}?page={page.page}" target="_blank"><u>{xlite.shopUrl(#cart.php#)}?page={page.page}</u></a></td>
+    <td><a href="{xlite.getShopUrl(#cart.php#)}?page={page.page}" target="_blank"><u>{xlite.getShopUrl(#cart.php#)}?page={page.page}</u></a></td>
 </tr>
 </table>
 

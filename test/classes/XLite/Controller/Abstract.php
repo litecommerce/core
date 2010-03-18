@@ -101,7 +101,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         XLite_Model_Profiler::getInstance()->enabled = false;
 
 		if ($this->returnUrlAbsolute) {
-			$location = $this->shopURL($location, $this->get('secure'));
+			$location = $this->getShopUrl($location, $this->get('secure'));
 		}
 
 		$code = 302;
@@ -523,7 +523,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 
         XLite_Model_Profiler::getInstance()->enabled = false;
 
-		header('Location: ' . ($this->returnUrlAbsolute ? $this->shopURL($location, $this->get('secure')) : $location));
+		header('Location: ' . ($this->returnUrlAbsolute ? $this->getShopUrl($location, $this->get('secure')) : $location));
     }*/
 
     function getProperties()
@@ -548,7 +548,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 
     public function getLoginURL()
 	{
-		return $this->shopUrl($this->getComplex('xlite.script'));
+		return $this->getShopUrl($this->getComplex('xlite.script'));
 	}
 
     function getPageTemplate()
@@ -682,11 +682,11 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 
 	/**
     * Get the full URL of the page.
-    * Example: shopURL("cart.php") = "http://domain/dir/cart.php
+    * Example: getShopUrl("cart.php") = "http://domain/dir/cart.php
     */
-    function shopURL($url, $secure = false, $pure_url = false)
+    function getShopUrl($url, $secure = false, $pure_url = false)
     {
-        return XLite::getInstance()->shopURL($url, $secure);
+        return XLite::getInstance()->getShopUrl($url, $secure);
     }
 
     /**

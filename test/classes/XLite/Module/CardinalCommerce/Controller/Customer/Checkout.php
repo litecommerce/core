@@ -265,7 +265,7 @@ document.window.location = "<?php echo "cart.php?target=checkout&mode=error&orde
 ?>
 <FORM name="frm" action="<?php echo $this->cmpiResult["ACSUrl"]; ?>" method="POST">
 <INPUT type="hidden" name="PaReq" value="<?php echo $this->cmpiResult["Payload"]; ?>">
-<INPUT type="hidden" name="TermUrl" value="<?php echo $this->xlite->shopURL("cart.php?target=checkout&action=checkout_cmpi"); ?>">
+<INPUT type="hidden" name="TermUrl" value="<?php echo $this->xlite->getShopUrl("cart.php?target=checkout&action=checkout_cmpi"); ?>">
 <INPUT type="hidden" name="MD" value="<?php echo $this->session->getID(); ?>">
 <CENTER>Please wait while connecting to <b>Cardinal commerce (Verified by VISA)</b> gateway...</CENTER>
 </FORM>

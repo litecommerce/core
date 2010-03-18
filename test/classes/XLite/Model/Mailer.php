@@ -148,7 +148,7 @@ class XLite_Model_Mailer extends XLite_View_Abstract
 		file_put_contents($fname, $this->get("body"));
 
         $imageParser = new XLite_Model_MailImageParser();
-        $imageParser->webdir = $this->xlite->shopUrl("");
+        $imageParser->webdir = $this->xlite->getShopUrl("");
         $imageParser->parse($fname);
 
         $this->set("body", $imageParser->result);

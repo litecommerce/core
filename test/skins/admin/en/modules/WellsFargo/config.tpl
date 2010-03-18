@@ -7,7 +7,7 @@ Use this page to configure your store to communicate with your Payment Processin
 <LI>Log in to your Wells Fargo backoffice</LI>
 <LI>Go to the '<I>Manage Store/Order Rules/Configure Options</I>' menu</LI>
 <LI>Go to the 'When a Shopper Places an Order' section</LI>
-<LI> In the '<I>Approvals to:</I>'/'<I>Rejections to:</I>' set callback URL's to:<br>{shopURL(#cart.php?target=callback&action=callback&order_id_name=IOC_merchant_order_id
+<LI> In the '<I>Approvals to:</I>'/'<I>Rejections to:</I>' set callback URL's to:<br>{getShopUrl(#cart.php?target=callback&action=callback&order_id_name=IOC_merchant_order_id
 #)}</LI>
 <p>
 <form action="admin.php" method="POST">

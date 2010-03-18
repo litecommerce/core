@@ -184,19 +184,19 @@ EOT;
 
 	function getReturnUrl() // {{{ 
 	{
-		$url = $this->xlite->shopURL("cart.php?target=express_checkout&action=retrieve_profile", $this->getComplex('config.Security.customer_security'));
+		$url = $this->xlite->getShopUrl("cart.php?target=express_checkout&action=retrieve_profile", $this->getComplex('config.Security.customer_security'));
 		return $this->prepareUrl($url);
 	}	// }}} 
 
 	function getCancelUrl() // {{{ 
 	{
-		$url = $this->xlite->shopURL("cart.php?target=checkout", $this->getComplex('config.Security.customer_security'));
+		$url = $this->xlite->getShopUrl("cart.php?target=checkout", $this->getComplex('config.Security.customer_security'));
 		return $this->prepareUrl($url);
 	} // }}} 
 
 	function getNotifyUrl() // {{{ 
 	{
-		$url = $this->xlite->shopURL("cart.php?target=callback&action=callback");
+		$url = $this->xlite->getShopUrl("cart.php?target=callback&action=callback");
 		return $this->prepareUrl($url);
 	}
 	

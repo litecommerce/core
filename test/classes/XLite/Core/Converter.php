@@ -108,7 +108,7 @@ class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
      */
     public static function buildFullURL($target = '', $action = '', array $params = array())
     {
-		return XLite::getInstance()->shopURL(self::buildURL($target, $action, $params));
+		return XLite::getInstance()->getShopUrl(self::buildURL($target, $action, $params));
 	}
 
 	/**

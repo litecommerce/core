@@ -417,7 +417,7 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
 		if ($this->get("source") == "D") { // database, fetch php
 			return XLite_Core_Converter::buildFullURL('image', $this->imageClass, array('id' => $this->get('id')));
 		} else {
-			return XLite::getInstance()->shopURL($this->getFilePath($this->get("data"), true));
+			return XLite::getInstance()->getShopUrl($this->getFilePath($this->get("data"), true));
 		}
 	}
 

@@ -123,7 +123,7 @@ class XLite_Module_Froogle_Model_Product extends XLite_Model_Product implements 
 
 	function getFroogleProductUrl()
 	{
-		return $this->xlite->shopUrl("cart.php") . "?target=product&product_id=" . $this->get("product_id");
+		return $this->xlite->getShopUrl("cart.php") . "?target=product&product_id=" . $this->get("product_id");
 	}
 
 	function getFroogleName()
@@ -152,7 +152,7 @@ class XLite_Module_Froogle_Model_Product extends XLite_Model_Product implements 
 		if ($this->hasImage()) {
 			$img = $this->getImage();
 			if ($img->get("source") == "F") {
-				$image = $this->xlite->shopUrl("images/") . $img->get("data");
+				$image = $this->xlite->getShopUrl("images/") . $img->get("data");
 			}
 		}
 

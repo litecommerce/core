@@ -71,7 +71,7 @@ class XLite_Module_SecureTrading_Model_PaymentMethod_Securetrading extends XLite
 		return $this->config->getComplex('Company.orders_department');
 	}
 	function getReturnURL($cart)	{
-		return $this->xlite->shopURL("cart.php?target=checkout&action=return&order_id=" . $cart->get("order_id"));
+		return $this->xlite->getShopUrl("cart.php?target=checkout&action=return&order_id=" . $cart->get("order_id"));
 	}
 }
 ?>

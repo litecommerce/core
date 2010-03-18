@@ -12,7 +12,7 @@ As a default the payment response feature is set to OFF by default, to enable th
 2. Select <b>Installations</b> from the left hand navigation.<br />
 3. Choose an installation and select the <b>Integration Setup</b> button for either the TEST or PRODUCTION environment.<br />
 4. Check the <b>Payment Response enabled?</b> and <b>Enable the Shopper Response</b> checkboxes.<br />
-5. Enter the <b>Payment Response URL</b> of this value: <b>{shopURL(#cart.php?target=callback&action=callback&order_id_name=cartId#):h}</b><br />
+5. Enter the <b>Payment Response URL</b> of this value: <b>{getShopUrl(#cart.php?target=callback&action=callback&order_id_name=cartId#):h}</b><br />
 6. Select the <b>Save Changes</b> button <br />
 
 <p>

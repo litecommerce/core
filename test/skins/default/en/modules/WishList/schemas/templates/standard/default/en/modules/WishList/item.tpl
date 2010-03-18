@@ -1,5 +1,5 @@
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
-<form action="{shopURL(#cart.php#)}" method=POST name="update{key}_form">
+<form action="{getShopUrl(#cart.php#)}" method=POST name="update{key}_form">
 <tr>
     <input type=hidden name=target value="wishlist">
     <input type=hidden name=action value="update">

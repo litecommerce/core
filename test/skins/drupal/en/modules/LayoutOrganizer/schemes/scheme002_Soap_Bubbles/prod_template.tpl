@@ -7,7 +7,7 @@ function isValid()
 }
 -->
 </script>
-<form action="{shopURL(#cart.php#)}" method=GET name="add_to_cart" onSubmit="isValid()">
+<form action="{getShopUrl(#cart.php#)}" method=GET name="add_to_cart" onSubmit="isValid()">
 <input type="hidden" name="target" value="cart">
 <input type="hidden" name="action" value="add">
 <input type="hidden" name="product_id" value="{product.product_id}">

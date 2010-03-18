@@ -106,7 +106,7 @@ class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Core_FlexyCompiler
 
     function getUrlPrefix() // {{{
     {
-		$prefix = $this->xlite->shopURL("");
+		$prefix = $this->xlite->getShopUrl("");
         return $prefix;
     } // }}}
     
@@ -969,7 +969,7 @@ class XLite_Module_HTMLCatalog_Model_Catalog extends XLite_Core_FlexyCompiler
 
     function isHomeLink($href) // {{{
     {
-        return $href == XLite::CART_SELF || $href == $this->xlite->shopUrl(XLite::CART_SELF);
+        return $href == XLite::CART_SELF || $href == $this->xlite->getShopUrl(XLite::CART_SELF);
     } // }}}
     
     /**

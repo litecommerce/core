@@ -448,13 +448,13 @@ class XLite_Module_HSBC_Model_PaymentMethod_CcHsbc extends XLite_Model_PaymentMe
 
 	function getResultURL()
 	{
-		return $this->shopUrl("cart.php?target=callback&action=callback&order_id_name=OrderId", true, true);
+		return $this->getShopUrl("cart.php?target=callback&action=callback&order_id_name=OrderId", true, true);
 	}
 
 	function getReturnURL($cart)
 	{
         $oid = $cart->get("order_id");
-		return $this->shopUrl("cart.php?target=checkout&action=return&order_id=$oid", true, true);
+		return $this->getShopUrl("cart.php?target=checkout&action=return&order_id=$oid", true, true);
 	}
 
 	function handleConfigRequest()
@@ -496,9 +496,9 @@ class XLite_Module_HSBC_Model_PaymentMethod_CcHsbc extends XLite_Model_PaymentMe
 		return $result;
 	}
 
-	function shopUrl($url, $secure = false, $pure_url = false)
+	function getShopUrl($url, $secure = false, $pure_url = false)
 	{
-		$url = $this->xlite->shopUrl($url, $secure, $pure_url);
+		$url = $this->xlite->getShopUrl($url, $secure, $pure_url);
 		if ($pure_url) {
 			$sid = $this->session->getName() . "=" . $this->session->getID();
 			if (strpos($url, $sid) !== false) {

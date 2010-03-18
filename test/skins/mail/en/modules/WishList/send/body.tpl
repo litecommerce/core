@@ -27,7 +27,7 @@ These are the items {customer:h} is interested in:
 on "{product.name}":</td>
 </tr>
 <tr>
-	<td colspan="2"><a href="{xlite.shopURL(product.url):h}">{xlite.shopURL(product.url):h}</a></td>
+	<td colspan="2"><a href="{xlite.getShopUrl(product.url):h}">{xlite.getShopUrl(product.url):h}</a></td>
 </tr>	
 </table>
 {signature:h}

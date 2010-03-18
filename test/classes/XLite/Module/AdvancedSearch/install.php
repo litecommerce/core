@@ -245,7 +245,7 @@ EOT;
 </form>
 </TABLE>
 <TABLE IF="xlite.AdvancedSearchEnabled" BORDER=0 CELLPADDING=0 CELLSPACING=0>
-<form action="{shopURL(#cart.php#)}" method="GET" name="search_form">
+<form action="{getShopUrl(#cart.php#)}" method="GET" name="search_form">
 <input type="hidden" name="target" value="search">
 
 <tr valign=middle>
@@ -284,7 +284,7 @@ EOT;
 </form>
 </table>
 <TABLE IF="xlite.AdvancedSearchEnabled" BORDER=0 CELLPADDING=0 CELLSPACING=0>
-<form action="{shopURL(#cart.php#)}" method="GET" name="search_form">
+<form action="{getShopUrl(#cart.php#)}" method="GET" name="search_form">
 <input type="hidden" name="target" value="search">
 
 <tr valign=middle>

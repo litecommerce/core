@@ -4,7 +4,7 @@
         $status = $cart->get("status");
 		
 		if ($status != "I" && $status != "F") {
-			Header("Location: " . $cart->xlite->shopURL("cart.php"));
+			Header("Location: " . $cart->xlite->getShopUrl("cart.php"));
 			return;
 		}
 		$errors=array(
@@ -42,6 +42,6 @@
         $cart->set("status", $status);
         $cart->update();
 
-		Header("Location: " . $cart->xlite->shopURL("cart.php?target=checkout&action=return&order_id=") . $cart->get("order_id"));
+		Header("Location: " . $cart->xlite->getShopUrl("cart.php?target=checkout&action=return&order_id=") . $cart->get("order_id"));
     }
 ?>
