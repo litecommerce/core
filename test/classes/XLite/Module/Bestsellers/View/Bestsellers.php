@@ -86,7 +86,11 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_ProductsList
             ),
         );
 
-        $this->widgetParams[self::PARAM_WIDGET_TYPE]->setValue($this->config->Bestsellers->bestsellers_menu ? self::WIDGET_TYPE_SIDEBAR : self::WIDGET_TYPE_CENTER);
+        $this->widgetParams[self::PARAM_WIDGET_TYPE]->setValue(
+            $this->config->Bestsellers->bestsellers_menu
+            ? self::WIDGET_TYPE_SIDEBAR
+            : self::WIDGET_TYPE_CENTER
+        );
 
         $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue(self::DISPLAY_MODE_LIST);
         $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue(3);
@@ -101,43 +105,6 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_ProductsList
         $this->widgetParams[self::PARAM_SHOW_SORT_BY_SELECTOR]->setValue(false);
         $this->widgetParams[self::PARAM_SORT_BY]->setValue('Name');
         $this->widgetParams[self::PARAM_SORT_ORDER]->setValue('asc');
-
-        foreach ($this->getHiddenParamsList() as $param) {
-            $this->widgetParams[$param]->setVisibility(false);
-        }
-
-    }
-
-    /**
-     * Get the list of parameters that are hidden on the settings page 
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getHiddenParamsList()
-    {
-        return array(
-            self::PARAM_SHOW_DISPLAY_MODE_SELECTOR,
-            self::PARAM_SHOW_SORT_BY_SELECTOR,
-            self::PARAM_SORT_BY,
-            self::PARAM_SORT_ORDER,
-            self::PARAM_SHOW_ALL_ITEMS_PER_PAGE
-        );
-    }
-
-    /**
-     * Check if widget is visible
-     *
-     * @return bool
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isVisible()
-    {
-        return parent::isVisible() && $this->getBestsellers();
     }
 
     /**
@@ -150,7 +117,14 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_ProductsList
      */
     protected function getData()
     {
-        return $this->getBestsellers();
+        $args = array($this->getNumberOfBestsellers(), $this->getRootId());
+
+        return XLite_Model_CachingFactory::getObjectFromCallback(
+            'getBestsellers' . implode('', $args),
+            'XLite_Module_Bestsellers_Model_Bestsellers',
+            'getBestsellers',
+            $args
+        );
     }
 
     /**
@@ -178,21 +152,9 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_ProductsList
      */
     protected function getNumberOfBestsellers()
     {
-        return (int)(self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE) ? $this->getParam(self::PARAM_SIDEBAR_MAX_ITEMS) : $this->config->Bestsellers->number_of_bestsellers);
+        return (int)(self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)
+            ? $this->getParam(self::PARAM_SIDEBAR_MAX_ITEMS)
+            : $this->config->Bestsellers->number_of_bestsellers);
     }
 
-    /**
-     * Return subcategories list
-     *
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getBestsellers()
-    {
-        $args = array($this->getNumberOfBestsellers(), $this->getRootId());
-        $sign = __METHOD__ . implode('', $args);
-
-        return XLite_Model_CachingFactory::getObjectFromCallback($sign, 'XLite_Module_Bestsellers_Model_Bestsellers', 'getBestsellers', $args);
-    }
 }

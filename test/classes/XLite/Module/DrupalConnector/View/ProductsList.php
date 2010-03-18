@@ -31,7 +31,7 @@
  * 
  * @package    XLite
  * @subpackage View
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 abstract class XLite_Module_DrupalConnector_View_ProductsList extends XLite_View_ProductsList implements XLite_Base_IDecorator
 {
@@ -63,26 +63,6 @@ abstract class XLite_Module_DrupalConnector_View_ProductsList extends XLite_View
 
             $this->requestParams[] = self::PARAM_BLOCK_DELTA;
         }
-    }
-
-
-    /**
-     * Register JS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-
-        if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
-            $list[] = 'modules/DrupalConnector/products_list.js';
-        }
-
-        return $list;
     }
 }
 

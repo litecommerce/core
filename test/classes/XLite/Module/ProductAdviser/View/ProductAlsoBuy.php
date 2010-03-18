@@ -81,28 +81,6 @@ class XLite_Module_ProductAdviser_View_ProductAlsoBuy extends XLite_View_Product
         $this->widgetParams[self::PARAM_SHOW_SORT_BY_SELECTOR]->setValue(false);
         $this->widgetParams[self::PARAM_SORT_BY]->setValue('Name');
         $this->widgetParams[self::PARAM_SORT_ORDER]->setValue('asc');
-
-        foreach ($this->getHiddenParamsList() as $param) {
-            $this->widgetParams[$param]->setVisibility(false);
-        }
-    }
-
-    /**
-     * Get the list of parameters that are hidden on the settings page 
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getHiddenParamsList()
-    {
-        return array(
-            self::PARAM_SHOW_DISPLAY_MODE_SELECTOR,
-            self::PARAM_SHOW_SORT_BY_SELECTOR,
-            self::PARAM_SORT_BY,
-            self::PARAM_SORT_ORDER,
-            self::PARAM_SHOW_ALL_ITEMS_PER_PAGE,
-        );
     }
 
     /**
