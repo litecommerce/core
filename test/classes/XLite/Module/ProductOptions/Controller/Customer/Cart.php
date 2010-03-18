@@ -86,24 +86,31 @@ class XLite_Module_ProductOptions_Controller_Customer_Cart extends XLite_Control
 
         // check for valid ProductOptions
         if (!is_null($this->getCurrentItem()->get('invalidOptions'))) {
+
             // got exception (invalid options combination)
+
             // build invalid options URL
+            /* TODO - change to top message
             $io = $this->getCurrentItem()->get('invalidOptions');
             $invalid_options = "";
             foreach ($io as $i => $o) {
                 $invalid_options .= "&" . urlencode("invalid_options[$i]") . "=" . urlencode($o);
             }
+            */
+
             // delete item from cart and switch back to product details
             $key = $this->getCurrentItem()->get('key');
-            $cart_items = $this->getCart()->get('items');
-            foreach ($this->getCart()->get('items') as $i) {
-                if ($i->get("key") == $key) {
+            foreach ($this->getCart()->getIitems() as $i) {
+                if ($i->get('key') == $key) {
                     $this->cart->deleteItem($i);
                     break;
                 }
             }
             $this->updateCart();
-            $this->set("returnUrl", "cart.php?target=product&product_id=$this->product_id$invalid_options");
+
+            // TODO - add top message
+
+            $this->set('returnUrl', $this->buildUrl('product', '', array('product_id' => XLite_Core_Request::getInstance()->product_id)));
         }
     }
 }

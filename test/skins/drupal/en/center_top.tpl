@@ -55,6 +55,7 @@
 <widget module="WishList" class="XLite_Module_WishList_View_SendToFriend" />
 <widget module="AdvancedSearch" class="XLite_Module_AdvancedSearch_View_AdvancedSearch" />
 <widget module="ProductAdviser" template="modules/ProductAdviser/center_top.tpl">
+<widget module="ProductOptions" class="XLite_Module_ProductOptions_View_ChangeOptions" />
 <!-- [/modules] }}} -->
 
 <!-- [search] {{{ -->

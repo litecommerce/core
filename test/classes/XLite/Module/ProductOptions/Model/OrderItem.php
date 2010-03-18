@@ -1,95 +1,125 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* Class description.
-*
-* @package Module_ProductOptions
-* @access public
-* @version $Id$
-*/
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage Model
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
+
+/**
+ * Order item
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_Module_ProductOptions_Model_OrderItem extends XLite_Model_OrderItem implements XLite_Base_IDecorator
-{	
+{    
     public $options = array();
 
+    /**
+     * Option subproperty names 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $options_names = array(
+        'price'  => 'calculateSurcharge',
+        'weight' => 'calculateWeight',
+    );
+
+    /**
+     * Constructor
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function __construct()
     {
         parent::__construct();
-        $this->fields["options"] = "";
+
+        $this->fields['options'] = '';
     }
 
-    function hasOptions()
+    /**
+     * Check - has item product options or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function hasOptions()
     {
-        $product = $this->get("product");
-        if (is_object($product)) {
-        	return $product->hasOptions();
-        } else {
-        	return false;
-        }
+        $product = $this->getProduct();
+
+        return is_object($product) ? $product->hasOptions() : false;
     }
     
+    /**
+     * Set item product options 
+     * 
+     * @param array $options Options (from request)
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function setProductOptions(array $options)
     {
-		$result = false;
+        $result = false;
 
-		$resolved_options = array();
-		foreach ($options as $key => $option) {
-			$resolved_options[stripslashes($key)] = stripslashes($option);
-		}
-		
+        $this->options = array();
+
+        $resolved_options = array();
+        foreach ($options as $key => $option) {
+            $resolved_options[stripslashes($key)] = stripslashes($option);
+        }
+        
         $options = $resolved_options;
+
         // remove empty options
         foreach ($options as $k => $v) {
             if (strlen(trim($options[$k]))) {
-				$options[$k] = nl2br($options[$k]);
+                $options[$k] = nl2br($options[$k]);
 
-			} elseif (isset($options[$k])) {
-              	unset($options[$k]);
+            } elseif (isset($options[$k])) {
+                  unset($options[$k]);
             }
         }
 
         // get product options, change option indexes to option values
-        $product_options = $this->getComplex('product.productOptions');
+        $product_options = $this->getProduct()->getProductOptions();
         foreach ($product_options as $product_option) {
-            $class = $product_option->get("optclass");
+            $class = $product_option->get('optclass');
             if (isset($options[$class])) {
-                $option_values = $product_option->get("productOptions");
+                $option_values = $product_option->getProductOptions();
+
                 if (!empty($option_values)) {
                     foreach ($option_values as $opt) {
                         if (strcmp($options[$class], $opt->option_id) == 0) {
@@ -97,180 +127,175 @@ class XLite_Module_ProductOptions_Model_OrderItem extends XLite_Model_OrderItem 
                             $this->options[] = $opt;
                         }
                     }
+
                 } else {
                     $this->options[] = (object) array(
-                            "class" => $class,
-                            "option" => $options[$class],
-                            "surcharge" => "0"
-                            );
+                        'class' => $class,
+                        'option' => $options[$class],
+                        'surcharge' => '0'
+                    );
                 }
             }
         }
+
         // check for option exceptions
-        $exceptions_list = $this->getComplex('product.optionExceptions');
-        foreach ($exceptions_list as $k => $v) {
-            $exceptions = array();
-            $exception = $v->get("exception");
-            $columns = explode(";", $exception);
-            // Trim exceptions
-            foreach ($columns as $subvalue) {
-                $exception = explode ("=", $subvalue);
-                $exception_optclass = trim($exception[0]);
-                $exception_option = trim($exception[1]);
-                $exceptions[$exception_optclass] = $exception_option;
-            }
-            $ex_size = sizeof($exceptions);
+        foreach ($this->getProduct()->get('optionExceptions') as $k => $v) {
+
             $ex_found = 0;
-            foreach ($exceptions as $subkey => $subvalue) {
-                if ($resolved_options[$subkey] == $subvalue) {
+            foreach (explode(';', $v->get("exception")) as $subvalue) {
+                $exception = explode ('=', $subvalue, 2);
+                $subkey = trim($exception[0]);
+
+                if ($resolved_options[$subkey] == trim($exception[1])) {
                     $ex_found++;
                 }
             }
+
             // exception for options found
-			$result = true;
-            if ($ex_found == $ex_size) {
+            $result = true;
+            if (0 < $ex_found && $ex_found == count($exceptions)) {
                 // fill the options array from request with resolved values
-                $this->set("invalidOptions", $resolved_options);
+                $this->set('invalidOptions', $resolved_options);
                 $result = false;
             }
         }
-        $this->set("options", serialize($this->options));
+
+        $this->set('options', serialize($this->options));
 
         return $result;
     }
 
-    function getProductOptions()
+    /**
+     * Get item product options
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProductOptions()
     {
-        $options = $this->get("options");
-        if (empty($options)) {
-            return array();
-        }
-        return unserialize($options);
+        $options = $this->get('options');
+
+        return empty($options) ? array() : unserialize($options);
     }
     
-    function get($name)
+    /**
+     * Getter 
+     * 
+     * @param string $name Propery name
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function get($name)
     {
-		$options_names = array('price', 'weight');
-		if (in_array($name, $options_names)) {
-			if ($name == 'price') {
-				$func_name = 'calculateSurcharge';
-			} else if ($name == 'weight') {
-				$func_name = 'calculateWeight';
-			}	
-			$_opt = parent::get($name);
-			$options = $this->get("options");
-			if (empty($options)) {
-				return $_opt;
-			}
-			$options = unserialize($options);
-			foreach ($options as $option) {
-				$_opt += $this->$func_name($option);
-			}
-			return $_opt;
-		}
-        return parent::get($name);
+        $_opt = parent::get($name);
+
+        if (isset($this->options_names[$name]) && $this->get('options')) {
+            $func_name = $this->options_names[$name];
+            foreach (unserialize($this->get('options')) as $option) {
+                $_opt += $this->$func_name($option);
+            }
+        }
+
+        return $_opt;
     }
 
     function getKey()
     {
         // calculate item key based on options
-        $key = parent::getKey();
-        $option_keys = array();
-        $options = $this->get("options");
-        if (empty($options)) {
-            return $key;
+        $option_keys = array(parent::getKey());
+        $options = $this->get('options');
+        if (!empty($options)) {
+            foreach (unserialize($options) as $option) {
+                $option_keys[] = sprintf('%s:%s', $option->class, $option->option);
+            }
         }
-        $options = unserialize($options);
-        foreach ($options as $option) {
-            $option_keys[] = sprintf("%s:%s", $option->class, $option->option);
-        }
-        return empty($option_keys) ? $key : "$key|".implode("|", $option_keys);
+
+        return implode('|', $option_keys);
     }
 
     function calculateSurcharge($option)
     {
-		global $calcAllTaxesInside;
+        global $calcAllTaxesInside;
 
-        if ($option->surcharge == 0) {
-            return 0;
-        }
+        $surcharge = 0;
 
-        if (!$calcAllTaxesInside) {
+        if ($option->surcharge != 0 && !$calcAllTaxesInside) {
+
             $product = $this->getProduct();
             if (is_object($product)) {
                 $po = new XLite_Module_ProductOptions_Model_ProductOption();
-                $po->set("product_id", $product->get("product_id"));
+                $po->set('product_id', $product->get('product_id'));
 
-                $originalPrice = $product->get("listPrice");
+                $originalPrice = $product->get('listPrice');
 
-				$full_price = null;
-				if ($this->xlite->get("WholesaleTradingEnabled")) {
-					$p = new XLite_Model_Product($this->get("product_id"));
-					$full_price = $p->getFullPrice($this->get("amount"));
-					if (doubleval($full_price) != $full_price) $full_price = null;
-					if (!is_null($full_price)) {
-						$originalPrice = $full_price;
-						if ($this->config->getComplex('Taxes.prices_include_tax')) {
-							$full_price = $p->get("price"); // restore product full price without taxes
-						}
-					}
-				}
+                $full_price = null;
+                if ($this->xlite->get('WholesaleTradingEnabled')) {
+                    $p = new XLite_Model_Product($this->get('product_id'));
+                    $full_price = $p->getFullPrice($this->get('amount'));
+                    if (doubleval($full_price) == $full_price) {
+                        $originalPrice = $full_price;
+                        if ($this->config->Taxes->prices_include_tax) {
+                            $full_price = $p->get('price'); // restore product full price without taxes
+                        }
+                    }
+                }
 
-    			$modifiedPrice = $po->_modifiedPrice($option, false, $full_price);
-                $surcharge = $modifiedPrice - $originalPrice;
-            } else {
-            	$surcharge = 0;
+                $surcharge = $po->_modifiedPrice($option, false, $full_price) - $originalPrice;
             }
-        } else {
-            $price = parent::get("price");
 
-			$full_price = null;
-			if ($this->xlite->get("WholesaleTradingEnabled")) {
-				$p = new XLite_Model_Product($this->get("product_id"));
-				$full_price = $p->getFullPrice($this->get("amount"));
-				if (doubleval($full_price) != $full_price) $full_price = null;
-				if (!is_null($full_price)) {
-					if ($this->config->getComplex('Taxes.prices_include_tax')) {
-						$full_price = $p->get("price"); // restore product full price without taxes
-					}
-					$price = $full_price;
-				}
-			}
+        } elseif ($option->surcharge != 0) {
+            $price = parent::get('price');
 
-            $surcharge = 0;
-            // calculate percent surcharge
+            if ($this->xlite->get('WholesaleTradingEnabled')) {
+                $p = new XLite_Model_Product($this->get('product_id'));
+                $full_price = $p->getFullPrice($this->get('amount'));
+                if (doubleval($full_price) == $full_price) {
+                    if ($this->config->Taxes->prices_include_tax) {
+                        $full_price = $p->get("price"); // restore product full price without taxes
+                    }
+
+                    $price = $full_price;
+                }
+            }
+
             if (isset($option->percent)) {
+
+                // calculate percent surcharge
                 $surcharge = $price / 100 * $option->surcharge;
-            }
-            // calculate absolute surcharge
-            elseif (isset($option->absolute)) {
+
+            } elseif (isset($option->absolute)) {
+
+                // calculate absolute surcharge
                 $surcharge = $option->surcharge;
             }
         }
 
         return $surcharge;
     }
-	
+    
     function calculateWeight($option)
-	{
-		if ($option->weight_modifier == 0) {
-			return 0;
-		}
-		$weight = parent::get("weight");
-		$subweight = 0;
-		// calculate percent surcharge
-		if (isset($option->weight_percent)) {
-			$subweight = $weight / 100 * $option->weight_modifier;
-		}
-		// calculate absolute surcharge
-		elseif (isset($option->weight_absolute)) {
-		    $subweight = $option->weight_modifier * $this->get("amount");
-		}
-		return $subweight;
-	}
-} 
+    {
+        $subweight = 0;
 
-// WARNING:
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+        if ($option->weight_modifier != 0) {
+            if (isset($option->weight_percent)) {
+
+                // calculate percent surcharge
+                $subweight = parent::get('weight') / 100 * $option->weight_modifier;
+
+            } elseif (isset($option->weight_absolute)) {
+
+                // calculate absolute surcharge
+                $subweight = $option->weight_modifier * $this->get('amount');
+
+            }
+        }
+
+        return $subweight;
+    }
+} 

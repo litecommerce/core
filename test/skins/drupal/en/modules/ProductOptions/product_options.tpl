@@ -29,7 +29,7 @@ $(document).ready(
     {if:!option.empty}
 
     <select IF="option.opttype=#SelectBox#" name="product_options[{option.optclass}]">
-      <option FOREACH="option.productOptions,opt" value="{opt.option_id}">
+      <option FOREACH="option.productOptions,opt" value="{opt.option_id}" selected="{isOptionSelected(option,opt.option_id)}" >
         {opt.option:h}
         <widget class="XLite_Module_ProductOptions_View_ProductOptionModifier" option="{opt}" optionGroup="{option}" product="{product}" />
 	  	</option>
@@ -37,7 +37,7 @@ $(document).ready(
 
     <ul IF="option.opttype=#Radio button#">
       <li FOREACH="option.productOptions,oid,opt">
-        <input type="radio" id="product_option_{option.optclass}_{opt.option_id}" name="product_options[{option.optclass}]" value="{opt.option_id}" checked="{!oid}" />
+        <input type="radio" id="product_option_{option.optclass}_{opt.option_id}" name="product_options[{option.optclass}]" value="{opt.option_id}" checked="{isOptionSelected(option,opt.option_id)}" />
         <label for="product_option_{option.optclass}_{opt.option_id}">
           {opt.option:h}
           <widget class="XLite_Module_ProductOptions_View_ProductOptionModifier" option="{opt}" optionGroup="{option}" product="{product}" />
@@ -47,12 +47,12 @@ $(document).ready(
 
     {else:}
 
-      <input IF="option.opttype=#Text#" type="text" name="product_options[{option.optclass}]" value="" size="{option.cols}" />
-      <textarea IF="option.opttype=#Textarea#" cols="{option.cols}" rows="{option.rows}" name="product_options[{option.optclass}]"></textarea>
+      <input IF="option.opttype=#Text#" type="text" name="product_options[{option.optclass}]" value="{getOptionText(option)}" size="{option.cols}" />
+      <textarea IF="option.opttype=#Textarea#" cols="{option.cols}" rows="{option.rows}" name="product_options[{option.optclass}]">{getOptionText(option)}</textarea>
 
     {end:}
 
   </li>
 </ul>
 
-<widget template="modules/ProductOptions/options_exception.tpl">
+<widget template="modules/ProductOptions/options_exception.tpl" />

@@ -22,9 +22,9 @@
   <p class="item-title"><a href="{item.url}">{item.name}</a></p>
   <p class="item-sku" IF="{item.sku}">SKU: {item.sku}</p>
   <p class="item-weight" IF="{item.weight}">Weight: {item.weight} {config.General.weight_symbol}</p>
-  <p class="item-options">
-    <widget module="ProductOptions" template="modules/ProductOptions/selected_options.tpl" visible="{item.hasOptions()}" item="{item}" />
-  </p>
+  <div class="item-options">
+    <widget module="ProductOptions" class="XLite_Module_ProductOptions_View_SelectedOptions" item="{item}" source="cart" item_id="{cart_id}"/>
+  </div>
 </td>
 
 <td class="item-actions">

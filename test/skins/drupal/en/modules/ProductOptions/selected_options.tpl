@@ -10,8 +10,8 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<span class="item-option" FOREACH="item.productOptions,option">
+<span class="item-option" FOREACH="item.getProductOptions(),option">
   {option.class:h}: {option.option:h}<span IF="optionArrayPointer<optionArraySize">, </span>
 </span>
 
-{* TODO - do it! <div class="item-change-options" IF="item.productOptions"><a href="#">Change options</a></div> *}
+<div class="item-change-options"><a href="javascript:void(0);" onclick="javascript: return changeOption('{getParam(#source#)}', '{getParam(#storage_id#)}', '{getParam(#item_id#)}');">Change options</a></div>

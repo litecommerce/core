@@ -95,7 +95,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 		}
 
 		$code = 302;
-    	if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+    	if (XLite_Core_Request::getInstance()->isAJAX()) {
 			$code = 278;
     	}
 

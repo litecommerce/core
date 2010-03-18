@@ -72,7 +72,7 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
     function init()
     {
         if (is_null($this->session->get('search')) && $this->auth->is('logged')) {
-            $this->session->set('search', unserialize($thus->profile->get('search_settings')));
+            $this->session->set('search', unserialize($this->auth->getProfile()->get('search_settings')));
         }
 
         parent::init();

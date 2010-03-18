@@ -27,19 +27,22 @@
  */
 
 /**
- * Product options lsit
+ * Selected product options widget
  *
  * @package    XLite
  * @subpackage View
  * @since      3.0
  */
-class XLite_Module_ProductOptions_View_ProductOptions extends XLite_View_Abstract
+class XLite_Module_ProductOptions_View_SelectedOptions extends XLite_View_Abstract
 {
     /**
      * Widget parameter names
      */
 
-    const PARAM_PRODUCT = 'product';
+    const PARAM_ITEM       = 'item';
+    const PARAM_SOURCE     = 'source';
+    const PARAM_STORAGE_ID = 'storage_id';
+    const PARAM_ITEM_ID    = 'item_id';
 
 
     /**
@@ -53,8 +56,14 @@ class XLite_Module_ProductOptions_View_ProductOptions extends XLite_View_Abstrac
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams[self::PARAM_PRODUCT] = new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product');
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/ProductOptions/product_options.tpl');
+        $this->widgetParams += array(
+            self::PARAM_ITEM       => new XLite_Model_WidgetParam_Object('Item', null, false, 'XLite_Model_OrderItem'),
+            self::PARAM_SOURCE     => new XLite_Model_WidgetParam_String('Source', 'cart'),
+            self::PARAM_STORAGE_ID => new XLite_Model_WidgetParam_Int('Storage id', null),
+            self::PARAM_ITEM_ID    => new XLite_Model_WidgetParam_Int('Item id', null),
+        );
+
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/ProductOptions/selected_options.tpl');
     }
 
     /**
@@ -67,8 +76,10 @@ class XLite_Module_ProductOptions_View_ProductOptions extends XLite_View_Abstrac
     public function isVisible()
     {
         return parent::isVisible()
-            && $this->getParam(self::PARAM_PRODUCT)
-            && $this->getParam(self::PARAM_PRODUCT)->hasOptions();
+            && $this->getParam(self::PARAM_ITEM)
+            && $this->getParam(self::PARAM_SOURCE)
+            && !is_null($this->getParam(self::PARAM_ITEM_ID))
+            && $this->getParam(self::PARAM_ITEM)->hasOptions();
     }
 
     /**
@@ -83,40 +94,29 @@ class XLite_Module_ProductOptions_View_ProductOptions extends XLite_View_Abstrac
     {
         $list = parent::getJSFiles();
 
-        $list[] = 'modules/ProductOptions/options_validation.js';
+        $list[] = 'modules/ProductOptions/change_options.js';
+        $list[] = 'popup/jquery.blockUI.js';
+        $list[] = 'popup/popup.js';
 
         return $list;
     }
 
     /**
-     * Check - option is selected or not
-     * 
-     * @param XLite_Module_ProductOptions_Model_ProductOption $option   Option class
-     * @param integer                                         $optionId Option id
-     *  
-     * @return boolean
+     * Register CSS files
+     *
+     * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isOptionSelected(XLite_Module_ProductOptions_Model_ProductOption $option, $optionId)
+    public function getCSSFiles()
     {
-        return intval($option->get('selectedValue')) == $optionId;
+        $list = parent::getCSSFiles();
+
+        $list[] = 'popup/popup.css';
+
+        return $list;
     }
 
-    /**
-     * Get option text 
-     * 
-     * @param XLite_Module_ProductOptions_Model_ProductOption $option Option class
-     *  
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getOptionText(XLite_Module_ProductOptions_Model_ProductOption $option)
-    {
-        return strval($option->get('selectedValue'));
-    }
 }
 

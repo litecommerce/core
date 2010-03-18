@@ -212,6 +212,18 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
         return 'POST' === $this->requestMethod;
     }
 
+    /**
+     * Check - is AJAX request or not
+     *
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function isAJAX()
+    {
+        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest';
+    }
+
 	/**
 	 * Getter
 	 * 
