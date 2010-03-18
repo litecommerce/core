@@ -23,7 +23,7 @@
   <p class="item-sku" IF="{item.sku}">SKU: {item.sku}</p>
   <p class="item-weight" IF="{item.weight}">Weight: {item.weight} {config.General.weight_symbol}</p>
   <div class="item-options">
-    <widget module="ProductOptions" class="XLite_Module_ProductOptions_View_SelectedOptions" item="{item}" source="cart" item_id="{cart_id}"/>
+    <widget module="ProductOptions" class="XLite_Module_ProductOptions_View_SelectedOptions" item="{item}" source="cart" item_id="{cart_id}" />
   </div>
 </td>
 

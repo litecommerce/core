@@ -228,8 +228,8 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controlle
 	protected function action_delete()
 	{
         $wishlist_product = new XLite_Module_WishList_Model_WishListProduct(
-            XLite_Core_Request::getInsatnce()->item_id,
-            XLite_Core_Request::getInsatnce()->wishlist_id
+            XLite_Core_Request::getInstance()->item_id,
+            XLite_Core_Request::getInstance()->wishlist_id
         );
         $wishlist_product->delete();
 	}
@@ -245,11 +245,11 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controlle
 	protected function action_update() 
 	{
 		$wishlist_product = new XLite_Module_WishList_Model_WishListProduct(
-            XLite_Core_Request::getInsatnce()->item_id,
-            XLite_Core_Request::getInsatnce()->wishlist_id
+            XLite_Core_Request::getInstance()->item_id,
+            XLite_Core_Request::getInstance()->wishlist_id
         );
 
-        $amount = XLite_Core_Request::getInsatnce()->wishlist_amount;
+        $amount = XLite_Core_Request::getInstance()->wishlist_amount;
         if ($amount<= 0) {
 			$this->action_delete();
 
