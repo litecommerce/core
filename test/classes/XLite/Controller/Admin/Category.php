@@ -62,19 +62,6 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
     public $params = array('target', 'category_id', 'mode', 'message', 'page');	
     public $order_by = 0;
 
-	/**
-	 * Return the array of pages for tabber
-	 * 
-	 * @return array
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function getTabPages()
-	{
-		return $this->pages;
-	}
-
     function init()
     {
     	parent::init();

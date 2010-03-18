@@ -53,6 +53,16 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
      */
     protected $locationPath = null;
 
+    /**
+     * Pages array for tabber
+     * 
+     * @var    array
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $pages = array();
+
 	/**
 	 * Check if current page is accessible
 	 * 
@@ -548,7 +558,21 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         }
         return null;
     }
-    
+
+	/**
+	 * Return the array of pages for tabber
+	 * 
+	 * @return array
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	public function getTabPages()
+	{
+		return $this->pages;
+	}
+
+
     function getUploadedFile()
     {
         $file = null;
