@@ -178,7 +178,7 @@ function setVisible(element_id)
     <td colspan="4" height=2></td>
 </tr>
 <form action="admin.php" name="update_htaccess_form">
-<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}" />
+<input FOREACH="allparams,key,val" type="hidden" name="{key}" value="{val:r}" />
 <input type="hidden" name="action" value="update_htaccess" />
 <tr FOREACH="checkFiles,k,v" class="{getRowClass(k,#DialogBox#,#TableRow#)}">
     <td align=left><input type="checkbox" name="ind[{v.id}]"{if:v.status=#ok#}disabled="1" {end:} />&nbsp;{v.filename}</td>

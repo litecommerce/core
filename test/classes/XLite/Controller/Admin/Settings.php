@@ -159,7 +159,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
 		switch($name) {
             case 'phpversion' 	: return phpversion(); break;
             case 'timezone_changable' : return func_is_timezone_changable(); break;
-			case 'os_type'		: list($os_type, $tmp) = split(" ", php_uname());
+			case 'os_type'		: list($os_type, $tmp) = explode(" ", php_uname());
         						  return $os_type;
 								  break;
 			case 'mysql_server'	: return mysql_get_server_info(); break;

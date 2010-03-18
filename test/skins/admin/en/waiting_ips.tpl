@@ -93,7 +93,7 @@ Your current IP: <b id="current_ip">{currentIP}</b>
 </TR>
 </table>
 <form action="admin.php" method="POST" name="waiting_ips_form">
-<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}" />
+<input FOREACH="allparams,key,val" type="hidden" name="{key}" value="{val:r}" />
 <input type="hidden" name="action" value="" />
 <table border="0" cellspacing="1" cellpadding="2" class="CenterBorder">
 <tr class="TableHead">
@@ -143,7 +143,7 @@ Your current IP: <b id="current_ip">{currentIP}</b>
 <div style="width: 320px; text-align: right;">The list is empty</div>
 {else:}
 <form action="admin.php" method="POST" name="allowed_ips_form">
-<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}" />
+<input FOREACH="allparams,key,val" type="hidden" name="{key}" value="{val:r}" />
 <input type="hidden" name="action" value="" />
 <table cellpadding="0" cellspacing="0" border="0">
 <tr>
@@ -198,7 +198,7 @@ Your current IP: <b id="current_ip">{currentIP}</b>
     </TD>                                                                                                           </TR>
 </table>
 <form action="admin.php" method="POST" name="add_ip_form">
-<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}" />
+<input FOREACH="allparams,key,val" type="hidden" name="{key}" value="{val:r}" />
 <input type="hidden" name="action" value="add_new_ip" />
 <table border="0" cellspacing="1" cellpadding="2" class="CenterBorder">
 <tr class="TableHead">
