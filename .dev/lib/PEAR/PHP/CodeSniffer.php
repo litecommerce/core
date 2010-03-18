@@ -1687,7 +1687,8 @@ class PHP_CodeSniffer
             $validName = false;
         } else {
             foreach ($nameBits as $bit) {
-                if ($bit{0} !== strtoupper($bit{0})) {
+				$bit = substr($bit, 0, 1);
+                if (false !== $bit && $bit !== strtoupper($bit)) {
                     $validName = false;
                     break;
                 }

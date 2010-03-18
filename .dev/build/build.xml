@@ -104,13 +104,13 @@
 
 	<target name="php-codesniffer">
 		<exec executable="${sourceDir}/.dev/phpcs" dir="${buildDir}/src" output="${buildDir}/reports/checkstyle.txt">
-			<arg line="--report=full --standard=${sourceDir}/.dev/code-sniffs/PEAR --ignore=.dev,src/etc,src/var ${buildDir}/src" />
+			<arg line="--report=full --standard=${sourceDir}/.dev/code-sniffs/XLite --ignore=.dev,src/etc,src/var ${buildDir}/src/classes" />
 		</exec>
 	</target>
 
     <target name="php-codesniffer-cc">
         <exec executable="${sourceDir}/.dev/phpcs" dir="${buildDir}/src" output="${buildDir}/logs/checkstyle.xml">
-            <arg line="--report=checkstyle --standard=${sourceDir}/.dev/code-sniffs/PEAR --ignore=.dev,src/etc,src/var ${buildDir}/src" />
+            <arg line="--report=checkstyle --standard=${sourceDir}/.dev/code-sniffs/XLite --ignore=.dev,src/etc,src/var ${buildDir}/src/classes" />
         </exec>
     </target>
 

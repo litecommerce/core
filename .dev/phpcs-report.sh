@@ -25,8 +25,8 @@ fi
 
 path=$(realpath ./);
 
-standard=$path/code-sniffs/PEAR
+standard=$path/code-sniffs/XLite
 
 echo Standard: $standard;
 
-$path/phpcs -s --report=full --standard=$standard --ignore=.dev,test/var,test/etc $files_list
+$path/phpcs -s --report=full --standard=$standard --ignore=.dev,src,test/skins/admin,test/skins/default,test/etc,test/var $files_list
