@@ -45,21 +45,14 @@
 class XLite_Module_WholesaleTrading_Controller_Admin_Users extends XLite_Controller_Admin_Users implements XLite_Base_IDecorator
 {
 
-	public function __construct()
-	{
-		parent::__construct();
-
-		$this->params[] = "search";
-	}
-
     function init()
     {
     	if (!(isset($_REQUEST["search"]) && strtolower($_REQUEST["search"]) == "search")) {
     		// List All
     		$_REQUEST["membership"] = "all";
     	}
-
-    	parent::init();
+		parent::init();
+		$this->params[] = "search";
     }
 
     function getUsers()

@@ -156,7 +156,7 @@ class XLite_View_CategorySelect extends XLite_View_Abstract
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isCategorySelected(XLite_Model_Category $category)
+    protected function isCategorySelected(XLite_Model_Category $category)
     {
         $categoryId = $this->getParam(self::PARAM_SELECTED_CATEGORY_ID);
         if (!is_numeric($categoryId) || 1 > $categoryId) {
@@ -166,7 +166,15 @@ class XLite_View_CategorySelect extends XLite_View_Abstract
         return $category->get('category_id') == $categoryId;
     }
 
-    function getSelectedCategory()
+    /**
+     * getSelectedCategory 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSelectedCategory()
     {
         if (is_null($this->selectedCategory) && !is_null($this->field)) {
             $this->selectedCategory = $this->get("component." . $this->field);
@@ -174,7 +182,17 @@ class XLite_View_CategorySelect extends XLite_View_Abstract
         return $this->selectedCategory;
     }
     
-    function setFieldName($name)
+    /**
+     * setFieldName 
+     * 
+     * @param string $name
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setFieldName($name)
     {
         $this->formField = $name;
         $pos = strpos($name, "[");
