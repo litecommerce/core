@@ -1,137 +1,202 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* Tabber is a component allowing to organize your dialog into pages and 
-* switch between the page using Tabs at the top.
-*
-* @package View
-* @access public
-* @version $Id$
-*/
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
+
+/**
+ * Tabber is a component allowing to organize your dialog into pages and 
+ * switch between the page using Tabs at the top.
+ *
+ * @package    XLite
+ * @subpackage View
+ * @since      3.0.0
+ */
 class XLite_View_Tabber extends XLite_View_Abstract
 {	
-    public $tabPages = "pages"; // name of dialog's array with "tab" => "head"	
-    public $switch;	
-    public $template = "common/tabber.tpl";	
-    public $tabPagesInfo = array();
+    /*
+     * Widget parameters names
+     */
+	const PARAM_BODY      = 'body';
+    const PARAM_SWITCH    = 'switch';
+    const PARAM_TAB_PAGES = 'tabPages';
 
-    function getPages()
+    /**
+     * tabPagesInfo 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $tabPagesInfo = array();
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+		$this->widgetParams += array(
+			self::PARAM_BODY       => new XLite_Model_WidgetParam_String('Body template file', '', false),
+            self::PARAM_SWITCH     => new XLite_Model_WidgetParam_String('Switch', 'page', false),
+			self::PARAM_TAB_PAGES  => new XLite_Model_WidgetParam_Array('Tab pages', null, false),
+		);
+
+		$this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/tabber.tpl');
+
+    }
+
+    /**
+     * Get prepared pages array for tabber
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getTabberPages()
     {
         $pages = array();
+
         $url = $this->get("url");
-        $dialogPages = $this->get($this->get("tabPages"));
+        $switch = $this->getParam(self::PARAM_SWITCH);
+        $dialogPages = $this->getParam(self::PARAM_TAB_PAGES);
+
         if (is_array($dialogPages)) {
-            foreach ($dialogPages as $page => $header) {
+            foreach ($dialogPages as $page => $title) {
                 $p = new XLite_Base();
-                $pageURL = preg_replace("/$this->switch=(\w+)/", $this->switch."=".$page, $url);
+                $pageURL = preg_replace("/".$switch."=(\w+)/", $switch."=".$page, $url);
                 $p->set("url", $pageURL);
-                $p->set("header", $header);
-                $page_switch = sprintf("$this->switch=$page"); 
+                $p->set("title", $title);
+                $page_switch = sprintf("$switch=$page"); 
                 $p->set("selected", (preg_match("/" . preg_quote($page_switch) . "(\Z|&)/Ss", $url)));
                 $pages[] = $p;
             }
         }
+
         // if there is only one tab page, set it as a seleted with the default URL
         if (count($pages) == 1) {
             $pages[0]->set("selected", $url);
         }
+
         return $pages;
     }
 
-    function getSplittedPages($splitParameter=null)
+    /**
+     * Get splitted pages 
+     * 
+     * @param integer $splitParameter
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSplittedPages($splitParameter = 0)
     {
-		$pages = $this->getPages();
-		$pagesHeadersTotalLength = 0;
+		$pages = $this->getTabberPages();
+        $pagesTitlesTotalLength = 0;
+
     	foreach($pages as $page) {
-			$pagesHeadersTotalLength += strlen($page->header);
+			$pagesTitlesTotalLength += strlen($page->title);
     	}
 
-    	if (isset($splitParameter) && intval($splitParameter) > 1) {
-    		$splitParameter = intval($splitParameter);
+        // Split pages array into {$splitParameter} arrays
 
-    		$pagesCurrentLength = 0;
-    		$pagesNumber = 0;
-        	foreach($pages as $page) {
-    			$pagesCurrentLength += strlen($page->header);
-    			if ($pagesCurrentLength > $splitParameter) {
-    				break;
+  		$splitParameter = intval($splitParameter);
+
+   		$pagesCurrentLength = 0;
+        $pagesNumber = 0;
+
+        foreach($pages as $page) {
+
+            $pagesCurrentLength += strlen($page->title);
+
+    		if ($pagesCurrentLength > $splitParameter) {
+    			break;
+            }
+
+    		$pagesNumber ++;
+        }
+
+        $splitParameter = $pagesNumber;
+
+        $pages = $this->split($pages, ($splitParameter > 1 ? $splitParameter : 1));
+        krsort($pages);
+
+        $pagesTitlesLengthMax = 0;
+
+        foreach($pages as $page_idx => $pagesArray) {
+
+            $pagesTitlesLength = 0;
+
+            foreach($pagesArray as $page) {
+
+                $pagesTitlesLength += (is_null($page) ? 0 : strlen($page->title));
+
+    			if ($pagesTitlesLength > $pagesTitlesLengthMax) {
+    				$pagesTitlesLengthMax = $pagesTitlesLength;
     			}
-    			$pagesNumber ++;
-        	}
+            }
 
-        	$splitParameter = $pagesNumber;
+    		$this->tabPagesInfo[$page_idx] = array("titlesLength" => $pagesTitlesLength, "titlesLengthMax" => 0, "titlesFullness" => 0);
+        }
 
-    		$pages = $this->split($pages, $splitParameter);
-    		krsort($pages);
-    	}
+        foreach($this->tabPagesInfo as $page_idx => $pagesInfo) {
 
-		$pagesHeadersLengthMax = 0;
-    	foreach($pages as $page_idx => $pagesArray) {
-    		$pagesHeadersLength = 0;
-    		foreach($pagesArray as $page) {
-    			$pagesHeadersLength += (is_null($page) ? 0 : strlen($page->header));
-    			if ($pagesHeadersLength > $pagesHeadersLengthMax) {
-    				$pagesHeadersLengthMax = $pagesHeadersLength;
-    			}
-    		}
-    		$this->tabPagesInfo[$page_idx] = array("headersLength" => $pagesHeadersLength, "headersLengthMax" => 0, "headersFullness" => 0);
-    	}
-    	foreach($this->tabPagesInfo as $page_idx => $pagesInfo) {
-    		$this->tabPagesInfo[$page_idx]["headersLengthMax"] = $pagesHeadersLengthMax; 
-    		$this->tabPagesInfo[$page_idx]["headersFullness"] = ceil($this->tabPagesInfo[$page_idx]["headersLength"]*100/$this->tabPagesInfo[$page_idx]["headersLengthMax"]);
+    		$this->tabPagesInfo[$page_idx]["titlesLengthMax"] = $pagesTitlesLengthMax; 
+            $this->tabPagesInfo[$page_idx]["titlesFullness"] = ceil($this->tabPagesInfo[$page_idx]["titlesLength"] * 100 / $this->tabPagesInfo[$page_idx]["titlesLengthMax"]);
+
     	}
 
     	return $pages;
     }
 
-    function isHeaderWider($page_idx, $widthPercents=100)
+    /**
+     * Check if title is wider than specified percent of total length of all titles
+     * 
+     * @param string $page_idx      Page identificator (key in the $pages array)
+     * @param int    $widthPercents Percent value
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isTitleWider($page_idx, $widthPercents = 100)
     {
     	if (!isset($page_idx) || count($this->tabPagesInfo) == 0 || !isset($this->tabPagesInfo[$page_idx])) {
     		return false;
     	}
 
-    	return ($this->tabPagesInfo[$page_idx]["headersFullness"] > $widthPercents) ? true : false;
+    	return ($this->tabPagesInfo[$page_idx]["titlesFullness"] > $widthPercents) ? true : false;
     }
-}
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+} 

@@ -241,7 +241,8 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
 
     	parent::delete();
 
-		foreach ($linked as $objName) {
+        foreach ($linked as $objName) {
+            $objName = 'XLite_Module_ProductAdviser_Model_' . $objName;
     		$object = new $objName();
     		$objs = $object->cleanRelations($product_id);
 		}
