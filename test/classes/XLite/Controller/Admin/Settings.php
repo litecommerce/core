@@ -118,7 +118,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
         return new XLite_Model_Config();
     }
 
-    function getPages()
+    function getTabPages()
     {
         $categories = $this->getComplex('settings.categories');
         $names = $this->getComplex('settings.categoryNames');
