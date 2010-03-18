@@ -106,8 +106,9 @@ class XLite_Module_ProductOptions_Controller_Customer_ChangeOptions extends XLit
 
             $invalidOptions = $this->getItem()->get('invalidOptions');
             if (is_null($invalidOptions)) {
+                $this->getCart()->updateItem($this->getItem());
+                $this->getItem()->update();
                 $this->updateCart();
-                $this->set('returnUrl', $this->buildUrl('cart'));
 
             } else {
 
