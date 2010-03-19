@@ -39,6 +39,8 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_Product
      * Parameter specifies that widget is displayed as a page content
      */
     const PARAM_PAGE_CONTENT = 'pageContent';
+    const PARAM_PRODUCT_ID   = 'product_id';
+
 
 	/**
      * Targets this widget is allowed for
@@ -107,8 +109,11 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_Product
         $this->widgetParams += array(
             self::PARAM_PAGE_CONTENT => new XLite_Model_WidgetParam_Checkbox(
                 'Widget is displayed as page content', false, false
-            )
+            ),
+            self::PARAM_PRODUCT_ID => new XLite_Model_WidgetParam_ObjectId_Product('Product ID', 0, false),
         );
+
+        $this->requestParams[] = self::PARAM_PRODUCT_ID;
 
         $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue(self::DISPLAY_MODE_LIST);
         $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue(3);

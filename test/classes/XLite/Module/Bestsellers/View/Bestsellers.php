@@ -40,8 +40,9 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_ProductsList
      * Widget parameter names
      */
 
-    const PARAM_ROOT_ID      = 'rootId';
-    const PARAM_USE_NODE     = 'useNode';
+    const PARAM_ROOT_ID     = 'rootId';
+    const PARAM_USE_NODE    = 'useNode';
+    const PARAM_CATEGORY_ID = 'category_id';
 
     /**
      * Targets this widget is allowed for
@@ -84,7 +85,10 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_ProductsList
             self::PARAM_ROOT_ID => new XLite_Model_WidgetParam_ObjectId_Category(
                 'Root category Id', 0, true, true
             ),
+            self::PARAM_CATEGORY_ID => new XLite_Model_WidgetParam_ObjectId_Category('Category ID', 0, false),
         );
+
+        $this->requestParams[] = self::PARAM_CATEGORY_ID;
 
         $this->widgetParams[self::PARAM_WIDGET_TYPE]->setValue(
             $this->config->Bestsellers->bestsellers_menu

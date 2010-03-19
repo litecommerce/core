@@ -37,6 +37,12 @@
  */
 class XLite_Module_ProductAdviser_View_ProductAlsoBuy extends XLite_View_ProductsList
 {	
+    /**
+     *  Widget parameter names
+     */
+    const PARAM_PRODUCT_ID = 'product_id';
+
+
 	/**
      * Targets this widget is allowed for
      *
@@ -69,6 +75,12 @@ class XLite_Module_ProductAdviser_View_ProductAlsoBuy extends XLite_View_Product
     protected function defineWidgetParams()
     {
         parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_PRODUCT_ID => new XLite_Model_WidgetParam_ObjectId_Product('Product ID', 0, false),
+        );
+
+        $this->requestParams[] = self::PARAM_PRODUCT_ID;
 
         $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue($this->config->ProductAdviser->pab_template);
         $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue($this->config->ProductAdviser->pab_columns);
