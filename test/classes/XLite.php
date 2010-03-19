@@ -81,10 +81,10 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      * Current area flag
      *
      * @var    bool
-     * @access protected
+     * @access public
      * @since  3.0.0
      */
-    protected $adminZone = false;
+    public $adminZone = false;
 
     /**
      * TODO - check if it's realy needed 
