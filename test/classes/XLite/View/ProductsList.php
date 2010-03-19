@@ -487,7 +487,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
     }
 
     /**
-     * getCommonParams 
+     * Get URL common parameters
      * 
      * @return array
      * @access protected
@@ -503,7 +503,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
     }
 
     /**
-     * getAJAXSpecificParams 
+     * Get AJAX-specific URL parameters
      * 
      * @return array
      * @access protected

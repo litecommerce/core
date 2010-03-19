@@ -17,5 +17,5 @@
 <div IF="getCount()">
   {if:xlite.AdvancedSearchEnabled&count}{getCount()} {if:getCount()=#1#}product{else:} products {end:} found. <a class="FormButton" href="{buildURL(#advanced_search#)}"><u>Refine your search</u></a>{end:}
 
-  <widget class="XLite_View_SearchList" data="{getData()}" />
+  <widget template="products_list/body.tpl" />
 </div>

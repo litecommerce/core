@@ -33,17 +33,13 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_SearchResult extends XLite_View_Abstract
+class XLite_View_SearchResult extends XLite_View_ProductsList
 {
     /**
-     * Data (cache)
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * Widget parameter names 
      */
-    protected $data = null;
+    const PARAM_SUBMODE = 'submode';
+
 
     /**
      * Targets this widget is allowed for
@@ -55,6 +51,18 @@ class XLite_View_SearchResult extends XLite_View_Abstract
     protected $allowedTargets = array('search');
 
     /**
+     * Return title 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getHead()
+    {
+        return 'Search result';
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -64,6 +72,10 @@ class XLite_View_SearchResult extends XLite_View_Abstract
     protected function defineWidgetParams()
     {
         parent::defineWidgetParams();
+
+        $this->widgetParams[self::PARAM_SUBMODE] = new XLite_Model_WidgetParam_String('Submode', 'found');
+
+        $this->requestParams[] = self::PARAM_SUBMODE;
 
         $this->widgetParams[self::PARAM_TEMPLATE]->setValue('search_result/body.tpl');
     }
@@ -81,10 +93,13 @@ class XLite_View_SearchResult extends XLite_View_Abstract
         if (is_null($this->data)) {
             $this->data = array();
 
-            $controller = XLite::getController();
-            if (method_exists($controller, 'getProducts')) {
-                $this->data = $controller->getProducts();
-            }   
+            $p = new XLite_Model_Product();
+
+            $this->data = $p->advancedSearch(XLite_Core_Request::getInstance()->substring, '', 0, true, false, true);
+            if (!isset(XLite_Core_Request::getInstance()->pageID)) {
+                $searchStat = new XLite_Model_SearchStat();
+                $searchStat->add(XLite_Core_Request::getInstance()->substring, count($this->data));
+            }
         }
 
         return $this->data;

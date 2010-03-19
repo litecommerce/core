@@ -43,7 +43,7 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $params = array('target', 'mode', 'substring');    
+    public $params = array('target', 'submode', 'substring');    
 
     /**
      * Products list (cache)
@@ -125,88 +125,88 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
     public function getProducts()
     {
         if (is_null($this->products)) {
-			$this->products = array(); 
+            $this->products = array(); 
 
-	        $properties = $this->getComplex('properties.search');
-    	    if (is_null($properties)) {
-        	    $properties = $this->session->get('search');
-	        }
+            $properties = $this->getComplex('properties.search');
+            if (is_null($properties)) {
+                $properties = $this->session->get('search');
+            }
 
-			if (!is_array($properties)) {
-				$properties = array();
-			}
+            if (!is_array($properties)) {
+                $properties = array();
+            }
 
-        	$isDumpSearch = !empty($properties['substring'])
-    	        && !isset($properties['title'])
-        	    && !isset($properties['brief_description'])
-            	&& !isset($properties['description'])
-	            && !isset($properties['meta_tags'])
-    	        && !isset($properties['extra_fields'])
-        	    && !isset($properties['options']);
+            $isDumpSearch = !empty($properties['substring'])
+                && !isset($properties['title'])
+                && !isset($properties['brief_description'])
+                && !isset($properties['description'])
+                && !isset($properties['meta_tags'])
+                && !isset($properties['extra_fields'])
+                && !isset($properties['options']);
 
-       		if (
-				isset(XLite_Core_Request::getInstance()->mode)
-				&& !$isDumpSearch
-			) {
-	            $p = new XLite_Model_Product();
+               if (
+                XLite_Core_Request::getInstance()->submode == 'found'
+                && !$isDumpSearch
+            ) {
+                $p = new XLite_Model_Product();
 
                 foreach($properties as $key => $value) {
                     if (empty($properties[$key])) {
                         $properties[$key] = null;
 
                     } else {
-                    	$properties[$key] = addslashes($properties[$key]);
-					}
+                        $properties[$key] = addslashes($properties[$key]);
+                    }
                 }
 
-				$booleanProperties = array(
-					'title', 'description', 'brief_description', 'subcategories', 'meta_tags',
-					'extra_fields', 'options'
-				);
+                $booleanProperties = array(
+                    'title', 'description', 'brief_description', 'subcategories', 'meta_tags',
+                    'extra_fields', 'options'
+                );
 
-				foreach ($booleanProperties as $key) {
-					$properties[$key] = isset($properties[$key]);
-				}
+                foreach ($booleanProperties as $key) {
+                    $properties[$key] = isset($properties[$key]);
+                }
 
-            	$orderby = null;
+                $orderby = null;
                                                             
-	            if (isset($properties["price"])) {
-    	            $price = explode(',', $properties['price'], 2);
-            	    $properties['start_price'] = $price[0];
-        	        $properties['end_price'] = (isset($price[0]) && !empty($price[1])) ? $price[1] : null;
-                	$orderby = 'price';
-	            }
+                if (isset($properties["price"])) {
+                    $price = explode(',', $properties['price'], 2);
+                    $properties['start_price'] = $price[0];
+                    $properties['end_price'] = (isset($price[0]) && !empty($price[1])) ? $price[1] : null;
+                    $orderby = 'price';
+                }
 
-    	        if (isset($properties['weight'])) {
-        	        $weight = explode(',', $properties['weight'], 2);
-            	    $properties['start_weight'] = $weight[0];
-                	$properties['end_weight'] = (isset($weight[1]) && !empty($weight[1])) ? $weight[1] : null;
-	                $orderby = 'weight';
-    	        }
+                if (isset($properties['weight'])) {
+                    $weight = explode(',', $properties['weight'], 2);
+                    $properties['start_weight'] = $weight[0];
+                    $properties['end_weight'] = (isset($weight[1]) && !empty($weight[1])) ? $weight[1] : null;
+                    $orderby = 'weight';
+                }
 
-	            $this->products = $p->_advancedSearch(
-    	            $properties['substring'],
-        	        $orderby,
-            	    $properties['sku'],
-	                isset($properties['category']) ? $properties['category'] : null,
-    	            $properties['subcategories'],
-        	        true,
-            	    $properties['logic'],
-                	$properties['title'],
-	                $properties['description'],
-    	            $properties['brief_description'],
-        	        $properties['meta_tags'],
-            	    $properties['extra_fields'],
-                	$properties['options'],
-	                isset($properties['start_price'])  ? $properties['start_price'] : null,
-    	            isset($properties['end_price'])    ? $properties['end_price'] : null,
-        	        isset($properties['start_weight']) ? $properties['start_weight'] : null,
-            	    isset($properties['end_weight'])   ? $properties['end_weight'] : null
-	            );
+                $this->products = $p->_advancedSearch(
+                    $properties['substring'],
+                    $orderby,
+                    $properties['sku'],
+                    isset($properties['category']) ? $properties['category'] : null,
+                    $properties['subcategories'],
+                    true,
+                    $properties['logic'],
+                    $properties['title'],
+                    $properties['description'],
+                    $properties['brief_description'],
+                    $properties['meta_tags'],
+                    $properties['extra_fields'],
+                    $properties['options'],
+                    isset($properties['start_price'])  ? $properties['start_price'] : null,
+                    isset($properties['end_price'])    ? $properties['end_price'] : null,
+                    isset($properties['start_weight']) ? $properties['start_weight'] : null,
+                    isset($properties['end_weight'])   ? $properties['end_weight'] : null
+                );
 
-	            $searchStat = new XLite_Model_SearchStat();
-    	        $searchStat->add($properties['substring'], count($this->products));
-			}
+                $searchStat = new XLite_Model_SearchStat();
+                $searchStat->add($properties['substring'], count($this->products));
+            }
         }
 
         return $this->products;

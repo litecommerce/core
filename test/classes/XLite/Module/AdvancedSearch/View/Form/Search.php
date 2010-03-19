@@ -60,7 +60,7 @@ class XLite_Module_AdvancedSearch_View_Form_Search extends XLite_View_Form_Abstr
 
         $this->widgetParams[self::PARAM_FORM_TARGET]->setValue('advanced_search');
         $this->widgetParams[self::PARAM_FORM_ACTION]->setValue('');
-        $this->widgetParams[self::PARAM_FORM_PARAMS]->appendValue(array('mode' => 'found'));
+        $this->widgetParams[self::PARAM_FORM_PARAMS]->appendValue(array('submode' => 'found'));
     }
 }
 

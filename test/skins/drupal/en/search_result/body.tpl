@@ -12,4 +12,4 @@
  *}
 <div class="{getListTitleClass()}">{getCount()} results found</div>
 
-<widget class="XLite_View_SearchList" data="{getData()}" />
+<widget template="products_list/body.tpl" />
