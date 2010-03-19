@@ -221,6 +221,24 @@ class XLite_Model_Order extends XLite_Model_Abstract
         return false;
     }
 
+    /**
+     * Get default search donditions 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    static public function getDefaultSearchConditions()
+    {
+        return array(
+            'order_id1' => '',
+            'order_id2' => '',
+            'status'    => '',
+            'startDate' => 0,
+            'endDate'   => ''
+        );
+    }
 
 
 

@@ -34,8 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Controller_Customer_Search extends XLite_Controller_Customer_Abstract
-{    
-
+{
     /**
      * Controller parameters
      * 
@@ -97,10 +96,10 @@ class XLite_Controller_Customer_Search extends XLite_Controller_Customer_Abstrac
         if (is_null($this->products)) {
 
             $p = new XLite_Model_Product();
-            $this->products = $p->advancedSearch($this->get("substring"), '', 0, true, false, true);
-            if ($this->get("pageID") == null) {
+            $this->products = $p->advancedSearch($this->get('substring'), '', 0, true, false, true);
+            if ($this->get('pageID') == null) {
                 $searchStat = new XLite_Model_SearchStat();
-                $searchStat->add($this->get("substring"), count($this->products));
+                $searchStat->add($this->get('substring'), count($this->products));
             }    
         }
 

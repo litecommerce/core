@@ -10,7 +10,9 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
+<div IF="getPagesCount()>1">
 Result pages:
 <ul class="pager">
   <li FOREACH="getPageUrls(),num,pageUrl" class="{getPageClassName(num)}"><a href="{pageUrl}">{inc(num)}</a></li>
 </ul>
+</div>

@@ -297,7 +297,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 	// TODO - all of the above should be revised
 
 
-    public $params = array('target');	
+    protected $params = array('target');	
     public $dumpStarted = false; // startDump was called	
 
 	protected $silent = false;

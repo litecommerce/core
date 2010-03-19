@@ -25,15 +25,6 @@
 class XLite_View_OrderList extends XLite_View_Dialog
 {
     /**
-     * Widget body template
-     *
-     * @var    string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $body = 'list.tpl';
-
-    /**
      * Targets this widget is allowed for
      *
      * @var    array
@@ -42,6 +33,15 @@ class XLite_View_OrderList extends XLite_View_Dialog
      */
     protected $allowedTargets = array('order_list');
 
+    /**
+     * Orders list (cache)
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $orders = null;
 
     /**
      * Return title
@@ -64,9 +64,8 @@ class XLite_View_OrderList extends XLite_View_Dialog
      */
     protected function getDir()
     {
-        return 'order';
+        return $this->getCount() ? 'order/list' : 'order/list_empty';
     }
-
 
     /**
      * Check if widget is visible
@@ -77,7 +76,67 @@ class XLite_View_OrderList extends XLite_View_Dialog
      */
     public function isVisible()
     {
-        return parent::isVisible() && 0 < $this->getCount() && 'search' == XLite_Core_Request::getInstance()->mode;
+        return parent::isVisible()
+            && 'search' == XLite_Core_Request::getInstance()->mode;
+    }
+
+    /**
+     * Get search conditions 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getConditions()
+    {
+        $ordersSearch = $this->session->get('orders_search');
+        if (!is_array($ordersSearch)) {
+            $ordersSearch = XLite_Model_Order::getDefaultSearchConditions();
+            $this->session->set('orders_search', $ordersSearch);
+        }
+
+        return $ordersSearch;
+    }
+
+    /**
+     * Get orders list
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getOrders()
+    {
+        if (is_null($this->orders)) {
+            $conditions = $this->getConditions();
+
+            $order = new XLite_Model_Order();
+            $this->orders = $order->search(
+                $this->auth->getProfile(),
+                $conditions['order_id1'],
+                $conditions['order_id2'],
+                $conditions['status'],
+                $conditions['startDate'],
+                $conditions['endDate']
+            );
+        }
+
+        return $this->orders;
+    }
+
+    /**
+     * Get orders list count 
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCount()
+    {
+        return count($this->getOrders());
     }
 }
 

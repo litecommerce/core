@@ -114,7 +114,7 @@ class XLite_View_Date extends XLite_View_FormField
 
         $value = $this->getParam(self::PARAM_VALUE);
 
-        if (is_null($value)) {
+        if (is_null($value) || !is_numeric($value)) {
             $value = time();
         }
 
@@ -150,9 +150,11 @@ class XLite_View_Date extends XLite_View_FormField
     protected function getDays()
     {
         $daysArray = array();
+
         for ($i = 1; $i <= 31; $i++) {
-            $daysArray[$i] = ($i == $this->getDay() ? 'selected' : '');
+            $daysArray[$i] = $i == $this->getDay() ? 'selected' : '';
         }
+
         return $daysArray;
 
     }
@@ -168,9 +170,11 @@ class XLite_View_Date extends XLite_View_FormField
     protected function getMonths()
     {
         $monthsArray = array();
-        for ($i = 1; $i <= 12; $i++) {
-            $monthsArray[$i] = ($i == $this->getMonth() ? 'selected' : '');
+
+        for ($i = 1; $i < 13; $i++) {
+            $monthsArray[$i] = $i == $this->getMonth() ? 'selected' : '';
         }
+
         return $monthsArray;
     }
 
@@ -185,11 +189,15 @@ class XLite_View_Date extends XLite_View_FormField
     protected function getYears()
     {
         $yearsArray = array();
+
         $yearsRange = $this->getParam(self::PARAM_YEARS_RANGE);
 
-        $higherYear = (!is_null($yearsRange) && intval($yearsRange) > 0 ? $this->lowerYear + intval($yearsRange) : $this->higherYear);
+        $higherYear = (!is_null($yearsRange) && intval($yearsRange) > 0)
+            ? $this->lowerYear + intval($yearsRange)
+            : $this->higherYear;
+
         for ($i = $this->lowerYear; $i <= $higherYear; $i++) {
-            $yearsArray[$i] = ($i == $this->getYear() ? 'selected' : '');
+            $yearsArray[$i] = $i == $this->getYear() ? 'selected' : '';
         }
 
         return $yearsArray;
