@@ -148,6 +148,22 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         return 'center_top.tpl';
     }
 
+    /**
+     * Get the full URL of the page
+     * Example: getShopUrl("cart.php") = "http://domain/dir/cart.php 
+     * 
+     * @param string $url    relative URL  
+     * @param bool   $secure flag to use HTTPS
+     *  
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getShopUrl($url, $secure = false)
+    {
+        return XLite::getInstance()->getShopUrl($url, $secure);
+    }
+
 
 	/**
 	 * Return current location path 
@@ -399,7 +415,14 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     {
     }
 
-	protected function getReturnUrl()
+    /**
+     * getReturnUrl 
+     * 
+     * @return mixed
+     * @access public
+     * @since  3.0.0
+     */
+	public function getReturnUrl()
 	{
 		return $this->returnUrl;
 	}
@@ -546,11 +569,6 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 		return $this->buildURL($target, '', $params);
     }
 
-    public function getLoginURL()
-	{
-		return $this->getShopUrl($this->getComplex('xlite.script'));
-	}
-
     function getPageTemplate()
     {
         if (isset($this->pageTemplates[$this->get("page")])) {
@@ -678,15 +696,6 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
             $htaccess = new XLite_Model_Htaccess();
             $htaccess->checkFiles();
         }
-    }
-
-	/**
-    * Get the full URL of the page.
-    * Example: getShopUrl("cart.php") = "http://domain/dir/cart.php
-    */
-    function getShopUrl($url, $secure = false, $pure_url = false)
-    {
-        return XLite::getInstance()->getShopUrl($url, $secure);
     }
 
     /**

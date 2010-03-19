@@ -77,9 +77,9 @@ class XLite_Controller_Customer_Login extends XLite_Controller_Customer_Abstract
     {
         $this->auth->logoff();
         $this->returnUrl = $this->getComplex('xlite.script');
-        if (!$this->cart->get("empty")) {
+        if (!$this->getCart()->get("empty")) {
         	if ($this->config->getComplex('Security.logoff_clear_cart') == "Y") {
-            	$this->cart->delete();
+            	$this->getCart()->delete();
         	} else {
 				$this->recalcCart();
         	}

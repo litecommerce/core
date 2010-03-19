@@ -45,7 +45,7 @@
 * @version $Id$
 */
 class XLite_View_RegisterForm extends XLite_View_Abstract
-{	
+{
     public $params = array("success");
 
 	protected $success = false;

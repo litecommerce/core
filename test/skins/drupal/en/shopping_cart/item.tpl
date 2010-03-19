@@ -10,6 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
+
 <td class="delete-from-cart">
   <widget class="XLite_View_Button_Image" label="Delete item" action="delete" formParams="{_ARRAY_(#cart_id#^cart_id)}" />
 </td>

@@ -270,11 +270,6 @@ EOT;
         return array();
     }
 
-	public function getLoginURL()
-	{
-		return $this->getShopUrl($this->getComplex('xlite.script'), $this->getComplex('config.Security.admin_security'));
-	}
-
 	// FIXME - check this function carefully
 	function isIgnoredTarget()
     {

@@ -36,13 +36,14 @@
 abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstract
 {
     /**
-     * Backward compatibility
+     * cart 
      * 
-     * @var    XLite_Model_Cart
+     * @var    mixed
      * @access protected
      * @since  3.0.0
      */
     protected $cart = null;
+
 
     /**
      * Recalculates the shopping cart
@@ -79,6 +80,20 @@ abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstr
         }
     }
 
+    /**
+     * isCartProcessed 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isCartProcessed()
+    {
+        return 'checkout' == XLite_Core_Request::getInstance()->target
+            && ($this->getCart()->isProcessed() || $this->getCart()->isQueued());
+    }
+
+
 
 	/**
      * Return current (or default) product object
@@ -106,33 +121,41 @@ abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstr
         return XLite_Model_CachingFactory::getObject(__METHOD__, 'XLite_Model_Cart');
     }
 
+    /**
+     * Get the full URL of the page
+     * Example: getShopUrl("cart.php") = "http://domain/dir/cart.php 
+     * 
+     * @param string $url    relative URL  
+     * @param bool   $secure flag to use HTTPS
+     *  
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getShopUrl($url, $secure = false)
+    {
+        $currentSecurity = $this->config->Security->full_customer_security;
 
+        return parent::getShopUrl($url, $currentSecurity ? $currentSecurity : $secure);
+    }
 
+    /**
+     * Cleanup processed cart for non-checkout pages
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
 	public function __construct()
     {
-        // Backward compatibility
-		$this->cart = $this->getCart();
+        // TODO - to remove; backward compatibility
+        $this->cart = $this->getCart();
 
-		// cleanup processed cart for non-checkout pages
-		$target = isset($this->target) ? $this->target : '';
-		if ($target != 'checkout' && ($this->getCart()->is('processed') || $this->getCart()->is('queued'))) {
-			$this->getCart()->clear();
-		}
+        if ($this->isCartProcessed()) {
+            $this->getCart()->clear();
+        }
     }
 
-	public function getShopUrl($url, $secure = false, $pure_url = false)
-    {
-		$fc = $this->config->Security->full_customer_security;
-
-		return $fc
-			? $this->xlite->getShopUrl($url, $fc)
-			: parent::getShopUrl($url, $secure);
-    }
-
-	public function getLoginURL()
-    {
-        return $this->getShopUrl($this->getComplex('xlite.script'), $this->getComplex('config.Security.customer_security'));
-    }
 
 	public function isSecure()
     {

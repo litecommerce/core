@@ -8,9 +8,9 @@ Do you really want to delete your profile?
 <p>
 <table border=0>
 <tr>
-<td><widget class="XLite_View_Button" label=" Yes " href="cart.php?target=profile&action=delete"></td>
+<td><widget class="XLite_View_Button_Link" label=" Yes " location="{buildURL(#profile#,#delete#)}" /></td>
 <td nowrap>&nbsp;&nbsp;&nbsp;</td>
-<td><widget class="XLite_View_Button" label=" No " href="cart.php?target=profile&mode=delete&submode=cancelled"></td>
+<td><widget class="XLite_View_Button_Link" label=" No " location="{buildURL(#profile#,##,_ARRAY_(#mode#^#delete#,#submode#^#cancelled#))}" /></td>
 </tr>
 </table>
 </td>

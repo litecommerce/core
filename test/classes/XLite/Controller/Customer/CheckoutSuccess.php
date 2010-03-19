@@ -68,7 +68,7 @@ class XLite_Controller_Customer_CheckoutSuccess extends XLite_Controller_Custome
         // security check on return page
         $order_id = $this->get("order_id");
         if ($order_id != $this->session->get("last_order_id") &&
-                $order_id != $this->cart->get("order_id")) {
+                $order_id != $this->getCart()->get("order_id")) {
             $this->redirect("cart.php?mode=accessDenied");
         } else {
             parent::handleRequest();

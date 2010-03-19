@@ -7,7 +7,9 @@ Note that fields marked with an asterisk <font class="Star">*</font> are mandato
 
 <widget module="Promotion" template="modules/Promotion/bonus_points.tpl">
 <p>
-<form action="cart.php" method="POST" name="profile_form">
+
+<widget class="XLite_View_Form_Profile_Register" name="registration_form" />
+
 <table IF="success|!valid">
 <tr IF="success">
     <td colspan="4"><font class="SuccessMessage">&gt;&gt;&nbsp;Your profile has been updated successfully&nbsp;&lt;&lt;</font></td>
@@ -198,9 +200,14 @@ Please leave the password fields empty<br> if you don't want to change the passw
 <!-- ********************************* SHIPPING ADDRESS ********************************* -->
 
 <tr valign="middle">
-    <td colspan="4"><b>Shipping Address (leave empty if same as billing address)</b><br><hr size="1" noshade>
-		<div id="btn_copy_billing"><widget class="XLite_View_Button" label="Copy Billing Info" href="javascript: copyBillingInfo(document.profile_form);"></div>
-		<div id="btn_modify_shipping" style="display: none;"><widget class="XLite_View_Button" label="Modify Shipping address" href="javascript: OnModifyShippingAddress(document.profile_form);"></div>
+    <td colspan="4">
+      <b>Shipping Address (leave empty if same as billing address)</b><br><hr size="1" noshade>
+	  	<div id="btn_copy_billing">
+        <widget class="XLite_View_Button_Regular" label="Copy Billing Info" jsCode="copyBillingInfo(document.register_form);">
+      </div>
+  		<div id="btn_modify_shipping" style="display: none;">
+        <widget class="XLite_View_Button_Regular" label="Modify Shipping address" jsCode="OnModifyShippingAddress(document.register_form);">
+      </div>
 	</td>
 </tr>
 <tbody id="shipping_body">
@@ -351,16 +358,15 @@ Please leave the password fields empty<br> if you don't want to change the passw
     <td >
         By clicking "SUBMIT" you agree with our <a href="cart.php?target=help&amp;mode=terms_conditions" style="TEXT-DECORATION: underline" target="_blank">Terms &amp; Conditions.</a><br>
         <br>
-        <input type="hidden" foreach="allparams,param,v" name="{param}" value="{v}"/>
-        <input type="hidden" name="action" value="{mode}">
-        <widget class="XLite_View_Submit" href="javascript: document.profile_form.submit()" font="FormButton">
+        <widget class="XLite_View_Button_Submit" label="Submit" />
     </td>
 </tr>
 </table>
-</form>
+
+<widget name="registration_form" end />
 
 <widget template="js/select_states_end_js.tpl">
 
 <script type="text/javascript" language="JavaScript 1.2">
-	CheckBillingShipping(document.profile_form);
+	CheckBillingShipping(document.register_form);
 </script>

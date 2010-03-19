@@ -1,9 +1,22 @@
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * ____file_title____
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
+
 {* Login error page *}
 If you already have an account, you can authenticate yourself by filling in the form below. The fields which are marked with <font class="Star">*</font> are mandatory.
 
 <hr size="1" noshade>
 
-<form action="{loginURL}" method=POST name="auth_form">
+<widget class="XLite_View_Form_Login_Customer_Main" name="login_form" />
 
 <table width="100%" border="0" cellspacing="0" cellpadding="2">
 <tr>
@@ -23,16 +36,13 @@ If you already have an account, you can authenticate yourself by filling in the 
 <tr IF="!valid">
     <td colspan="2">&nbsp;</td>
     <td>
-    <span class="ValidateErrorMessage">Invalid login or password</span>&nbsp;&nbsp;&nbsp;<a href="cart.php?target=recover_password"><u>Forgot password?</u></a>
+    <span class="ValidateErrorMessage">Invalid login or password</span>&nbsp;&nbsp;&nbsp;<a href="{buildURL(#recover_password#)}"><u>Forgot password?</u></a>
     </td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>
     <td>
-        <input type="hidden" name="target" value="login">
-        <input type="hidden" name="action" value="login">
-        <input IF="returnUrl" type="hidden" name="returnUrl" value="{returnUrl}"/>
-        <widget class="XLite_View_Submit" href="javascript: document.auth_form.submit()">
+        <widget class="XLite_View_Button_Submit" label="Submit" />
     </td>
 </tr>
 </table>
@@ -40,6 +50,7 @@ If you already have an account, you can authenticate yourself by filling in the 
 <br>
 <br>
 
-If you do not have an account, you can easily <a href="cart.php?target=profile&amp;mode=register" class="SidebarItems"><u>register here</u></a>
+If you do not have an account, you can easily <a href="{buildURL(#profile#,##,_ARRAY_(#mode#^#register#))}" class="SidebarItems"><u>register here</u></a>
 
-</form>
+<widget name="login_form" end />
+

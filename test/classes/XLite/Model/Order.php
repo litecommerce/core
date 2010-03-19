@@ -222,6 +222,30 @@ class XLite_Model_Order extends XLite_Model_Abstract
     }
 
     /**
+     * isProcessed 
+     * 
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function isProcessed()
+    {
+        return 'P' == $this->get('status') || 'C' == $this->get('status');
+    }
+
+    /**
+     * isQueued 
+     * 
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function isQueued()
+    {
+        return 'Q' == $this->get('status');
+    }
+
+    /**
      * Get default search donditions 
      * 
      * @return void
@@ -229,7 +253,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
      * @see    ____func_see____
      * @since  3.0.0
      */
-    static public function getDefaultSearchConditions()
+    public static function getDefaultSearchConditions()
     {
         return array(
             'order_id1' => '',
@@ -1244,16 +1268,6 @@ class XLite_Model_Order extends XLite_Model_Abstract
     function isShowECheckInfo()
     {
         return $this->get("payment_method") == "Echeck" && $this->config->getComplex('Email.show_cc_info');
-    }
-
-    function isProcessed()
-    {
-        return $this->get("status") == "P" || $this->get("status") == "C";
-    }
-
-    function isQueued()
-    {
-        return $this->get("status") == "Q";
     }
 
     function recalcItems()
