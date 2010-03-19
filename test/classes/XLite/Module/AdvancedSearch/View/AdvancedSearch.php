@@ -172,7 +172,7 @@ class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
      */
     public function isRangeSelected($range, $currentValue)
     {
-        return $range = $currentValue->start . ',' . $currentValue->end;
+        return $range = $currentValue['start'] . ',' . $currentValue['end'];
     }
 
     /**
