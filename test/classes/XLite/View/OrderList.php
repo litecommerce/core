@@ -68,19 +68,6 @@ class XLite_View_OrderList extends XLite_View_Dialog
     }
 
     /**
-     * Check if widget is visible
-     *
-     * @return bool
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    public function isVisible()
-    {
-        return parent::isVisible()
-            && 'search' == XLite_Core_Request::getInstance()->mode;
-    }
-
-    /**
      * Get search conditions 
      * 
      * @return array
