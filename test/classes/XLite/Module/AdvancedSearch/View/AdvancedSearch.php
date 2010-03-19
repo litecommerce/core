@@ -154,7 +154,7 @@ class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
     public function getPrices()
     {
         $prices = unserialize($this->config->AdvancedSearch->prices);
-        usort($prices, array($this, 'cmp'));
+        usort($prices, array($this, 'getSortOrderCallback'));
 
         return $prices;
     }
@@ -186,9 +186,34 @@ class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
     public function getWeights()
     {
         $weights = unserialize($this->config->AdvancedSearch->weights);
-        usort($weights, array($this, 'cmp'));
+        usort($weights, array($this, 'getSortOrderCallback'));
 
         return $weights;
+    }
+
+    /**
+     * Get sort order for prices / weights list (Callback)
+     * 
+     * @param array $val1 First record
+     * @param array $val2 Second record
+     *  
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSortOrderCallback($val1, $val2)
+    {
+        $result = 0;
+
+        if ($val1['start'] != $val2['start']) {
+            $result = ($val1['start'] < $val2['start']) ? -1 : 1;
+
+        } elseif ($val1['label'] != $val2['label']) {
+            $result = ($val1['label'] > $val2['label']) ? -1 : 1;
+        }
+
+        return $result;
     }
 
     /**
