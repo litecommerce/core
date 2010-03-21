@@ -91,6 +91,19 @@ class XLite_Controller_Customer_Help extends XLite_Controller_Customer_Abstract
     }
 
 
+	/**
+     * Get page title
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Help section';
+    }
+
+
 
     function fillForm()
     {

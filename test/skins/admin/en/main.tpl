@@ -1,3 +1,16 @@
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * ____file_title____
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
+
 <!-- [begin] -->
 <html>
 <head>
@@ -5,7 +18,7 @@
 	  if (document.getElementById("rebuild_cache_block")) document.getElementById("rebuild_cache_block").style.display = "none";
 	</script>
 
-    <title>{getTitle()}</title>
+    <title>LiteCommerce online store builder{if:getTitle()} - {getTitle()}{end:}</title>
 	<meta http-equiv="Content-Type" content="text/html; charset={charset}">
     <meta name="ROBOTS" content="NOINDEX">
     <meta name="ROBOTS" content="NOFOLLOW">

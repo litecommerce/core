@@ -23,6 +23,21 @@
  */
 class XLite_Controller_Customer_Category extends XLite_Controller_Customer_Catalog
 {
+    /**
+     * getTitle 
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        $metaTitle = $this->getCategory()->get('meta_title');
+
+        return $metaTitle ? $metaTitle : $this->getCategory()->get('name');
+    }
+    
+
     public $params = array("target", "category_id");
 
     function init()
@@ -37,11 +52,6 @@ class XLite_Controller_Customer_Category extends XLite_Controller_Customer_Catal
         }
     }
     
-    function getTitle() 
-    {
-        return ($this->getComplex('category.meta_title') ? $this->getComplex('category.meta_title') : $this->getComplex('category.name'));
-    }
-
     /**
     * 'description' meta-tag value.
     */

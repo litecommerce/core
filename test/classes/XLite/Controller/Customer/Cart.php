@@ -246,7 +246,7 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
      */
     public function getTitle()
     {
-        return 'Shopping cart';
+        return 'Your shopping cart';
     }
 }
 

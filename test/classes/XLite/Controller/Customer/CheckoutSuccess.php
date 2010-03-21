@@ -63,6 +63,20 @@ class XLite_Controller_Customer_CheckoutSuccess extends XLite_Controller_Custome
     }
 
 
+	/**
+     * Get page title
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Thank you for your order';
+    }
+
+
+
     function handleRequest()
     {
         // security check on return page

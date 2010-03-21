@@ -45,19 +45,6 @@ class XLite_Controller_Customer_Main extends XLite_Controller_Customer_Abstract
      */
     public $params = array("target", "page");
 
-	/**
-	 * Get page title
-	 * 
-	 * @return string
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function getTitle()
-	{
-		return '';
-	}
-
     /**
      * handleRequest 
      * 

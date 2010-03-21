@@ -92,6 +92,21 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Catalo
     }
 
 
+    /**
+     * getTitle 
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        $metaTitle = $this->getProduct()->get('meta_title');
+
+        return $metaTitle ? $metaTitle : $this->getProduct()->get('name');
+    }
+
+
 
     // TODO - all of the above should be revised
 
@@ -115,13 +130,6 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Catalo
 		return $result;
 	}
 
-	function getTitle()
-	{
-		$metaTitle = $this->getProduct()->get('meta_title');
-
-		return $metaTitle ? $metaTitle : $this->getProduct()->get('name');
-	}
-	
     function getDescription()
     {
         $description = $this->getProduct()->get('description');

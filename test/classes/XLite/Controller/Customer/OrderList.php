@@ -174,6 +174,5 @@ class XLite_Controller_Customer_OrderList extends XLite_Controller_Customer_Abst
     {
         return 'Orders list';
     }
-
 }
 

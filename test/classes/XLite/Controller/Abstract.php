@@ -55,6 +55,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 
     /**
      * Pages array for tabber
+     * FIXME - must be protected
      * 
      * @var    array
      * @access public
@@ -62,6 +63,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
      * @since  3.0.0
      */
     public $pages = array();
+
 
 	/**
 	 * Check if current page is accessible
@@ -72,7 +74,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 	 */
 	protected function checkAccess()
 	{
-		return $this->auth->isAuthorized($this);
+		return XLite_Model_Auth::getInstance()->isAuthorized($this);
 	}
 
 	/**
@@ -306,7 +308,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 	 */
 	public function getTitle()
 	{
-		return 'LiteCommerce online store builder';
+		return null;
 	}
 
 
@@ -503,20 +505,6 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         }
     }
 
-    /*function output()
-    {
-        $this->xlite->profiler->log("request_time");
-        if (!$this->silent) {
-            ob_start();
-            $this->startPage();
-            $this->display();
-            ob_end_flush();
-        }
-        if ($this->dumpStarted) {
-            func_refresh_end();
-        }
-    }*/
-    
     /**
     * Provides access to accessdenied function.
     */
@@ -534,20 +522,6 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     {
         return $this->getComplex('auth.customerAccessLevel');
     }
-
-    /*function redirect($url = null)
-	{
-		$location = is_null($returnUrl = $this->getReturnUrl()) ? (is_null($url) ? $this->getUrl() : $url) : $returnUrl; 
-
-		// filter xlite_form_id from redirect url
-		$action = $this->get('action');
-		if (empty($action))
-		    $location = $this->filterXliteFormID($location);
-
-        XLite_Model_Profiler::getInstance()->enabled = false;
-
-		header('Location: ' . ($this->returnUrlAbsolute ? $this->getShopUrl($location, $this->get('secure')) : $location));
-    }*/
 
     function getProperties()
     {
@@ -579,6 +553,8 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 
 	/**
 	 * Return the array of pages for tabber
+     * FIXME - move to the Controller/Admin/Abstract.php:
+     *  tabber is not used in customer area
 	 * 
 	 * @return array
 	 * @access public
