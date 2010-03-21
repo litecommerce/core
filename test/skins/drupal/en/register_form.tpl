@@ -359,10 +359,7 @@ If you are a registered customer, please <a href="cart.php?target=profile&amp;mo
     <td >
         By clicking "SUBMIT" you agree with our <a href="cart.php?target=help&amp;mode=terms_conditions" style="TEXT-DECORATION: underline" target="_blank">Terms &amp; Conditions.</a><br>
         <br>
-        <input type="hidden" foreach="allparams,_param,v" name="{_param}" value="{v}" />
-        {* FIXME *}
-        {*<input type="hidden" name="action" value="{getParam(#mode#)}" />*}
-        <widget class="XLite_View_Button_Submit" label="Submit" />
+        <widget class="XLite_View_Button_Submit" />
         <br>
     </td>
 </tr>

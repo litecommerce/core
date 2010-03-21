@@ -30,7 +30,7 @@ function continueCheckout()
 
 <span class="ErrorMessage" IF="error=#pmSelect#">To proceed with checkout, you need to select a payment method.</span>
 
-<form action="cart.php" method="post" name="payment_method">
+<form action="{buildURL(#checkout#)}" method="post" name="payment_method">
 <table border="0" align="center">
 <tr FOREACH="paymentMethods,payment_method">
     <td width="5%"><input type="radio" name="payment_id" value="{payment_method.payment_method}" checked=isSelected(config.Payments.default_select_payment,payment_method.payment_method)></td>
@@ -42,7 +42,7 @@ function continueCheckout()
         <br>
         <input type="hidden" name="target" value="checkout">
         <input type="hidden" name="action" value="payment">
-        <widget class="XLite_View_Submit" label="Continue.." href="javascript: continueCheckout(); void(0);" font="FormButton">
+        <widget class="XLite_View_Button_Regular" label="Continue.." jsCode="continueCheckout();" />
     </td>
 </tr>
 </table>

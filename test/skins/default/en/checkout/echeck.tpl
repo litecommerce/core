@@ -82,7 +82,7 @@ function CheckoutSubmit()
 <p>By clicking "SUBMIT" you agree with our "<a href='cart.php?target=help&amp;mode=terms_conditions'><u>Terms &amp; Conditions</u></a>" and "<a href='cart.php?target=help&amp;mode=privacy_statement'><u>Privacy statement</u></a>".<br>
 <br>
 <span id="submit_order_button">
-<widget class="XLite_View_Button" label="Submit order" href="javascript: CheckoutSubmit();">
+<widget class="XLite_View_Button_Regular" label="Submit order" jsCode="CheckoutSubmit();" />
 </span>
 <span id="submiting_process" style="display:none"></span>
 </form>

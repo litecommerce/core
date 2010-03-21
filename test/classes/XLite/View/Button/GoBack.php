@@ -37,6 +37,18 @@
 class XLite_View_Button_GoBack extends XLite_View_Button_Regular
 {
     /**
+     * getDefaultLabel
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultLabel()
+    {
+        return 'Go back';
+    }
+
+    /**
      * JavaScript: default JS code to execute
      *
      * @return string

@@ -79,12 +79,17 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 
     protected function isNoPayment()
     {
-        return $this->getPaymentMethods();
+        return !$this->getPaymentMethods();
     }
 
     protected function isPaymentNeeded()
     {
         return !$this->getCart()->getPaymentMethod();
+    }
+
+    protected function isFinalStep()
+    {
+        return true;
     }
 
     protected function getCheckoutStepDescriptions()
@@ -96,7 +101,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
             self::CHECKOUT_MODE_NO_SHIPPING    => $this->isNoShipping(),
             self::CHECKOUT_MODE_NO_PAYMENT     => $this->isNoPayment(),
             self::CHECKOUT_MODE_PAYMENT_METHOD => $this->isPaymentNeeded(),
-            self::CHECKOUT_MODE_DETAILS        => false,
+            self::CHECKOUT_MODE_DETAILS        => $this->isFinalStep(),
         );
     }
 
@@ -223,6 +228,11 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
     //}
 
 
+    public function getOrder()
+    {
+        return XLite_Model_CachingFactory::getObject(__METHOD__, 'XLite_Model_Order', XLite_Core_Request::getInstance()->order_id);
+    }
+
     /**
      * Initialize controller 
      * 
@@ -299,6 +309,66 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
     {
         return 'Checkout';
     }
+
+    /**
+     * action_checkout
+     * FIXME - must be completely revised 
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function action_checkout()
+    {
+        $itemsBeforeUpdate = $this->getCart()->getItemsFingerprint();
+        $this->updateCart();
+        $itemsAfterUpdate = $this->getCart()->getItemsFingerprint();
+        if ($this->get("absence_of_product") || $this->getCart()->isEmpty() || $itemsAfterUpdate != $itemsBeforeUpdate) {
+            $this->set("absence_of_product", true);
+            $this->redirect($this->buildURL('cart'));
+            return;
+        }
+
+        $pm = $this->getCart()->get("paymentMethod");
+        if (!is_null($pm)) {
+            $notes = isset($_POST["notes"]) ? $_POST["notes"] : '';
+            $this->setComplex("cart.notes", $notes);
+
+            switch($pm->handleRequest($this->cart)) {
+
+                case XLite_Model_PaymentMethod::PAYMENT_SILENT:
+                    // don't call output()
+                    $this->set("silent", true);
+                    break;
+
+                case XLite_Model_PaymentMethod::PAYMENT_SUCCESS:
+                    $this->success();
+                    $this->set('returnUrl', $this->buildURL('checkoutSuccess', '', array('order_id' => $this->getCart()->get('order_id'))));
+                    break;
+
+                case XLite_Model_PaymentMethod::PAYMENT_FAILURE:
+                    $this->set('returnUrl', $this->buildURL('checkout', '', array('mode' => 'error', 'order_id' => $this->getCart()->get('order_id'))));
+                    break;
+            }
+        }
+    }
+
+    public function action_return()
+    {
+        // some of gateways can't accept return url on run-time and
+        // use the one set in merchant account, so we can't pass
+        // 'order_id' in run-time, instead pass the order id parameter name
+        $request = XLite_Core_Request::getInstance();
+        $orderId = isset($request->order_id_name) ? $request->order_id_name : $request->order_id;
+
+        if ($this->isCartProcessed()) {
+            $this->success();
+            $this->returnUrl = $this->buildURL('checkoutSuccess', '', array('order_id' => $orderId));
+        } else {
+            $this->returnUrl = $this->buildURL('checkout', '', array('mode' => 'error', 'order_id' => $orderId));
+        }
+    }
+
 
 
 
@@ -423,41 +493,6 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
         }
     }
 
-    function action_checkout()
-    {
-    	$itemsBeforeUpdate = $this->getCart()->getItemsFingerprint();
-        $this->updateCart();
-    	$itemsAfterUpdate = $this->getCart()->getItemsFingerprint();
-		if ($this->get("absence_of_product") || $this->getCart()->isEmpty() || $itemsAfterUpdate != $itemsBeforeUpdate) {
-			$this->set("absence_of_product", true);
-			$this->redirect("cart.php?target=cart");
-			return;
-		}
-
-        $pm = $this->getCart()->get("paymentMethod");
-        if (!is_null($pm)) {
-            $notes = isset($_POST["notes"]) ? $_POST["notes"] : '';
-            $this->setComplex("cart.notes", $notes);
-
-            switch($pm->handleRequest($this->cart)) {
-
-	            case XLite_Model_PaymentMethod::PAYMENT_SILENT:
-					// don't call output()
-    	            $this->set("silent", true);
-        	        break;
-
-            	case XLite_Model_PaymentMethod::PAYMENT_SUCCESS:
-                	$this->success();
-	                $this->set("returnUrl", "cart.php?target=checkoutSuccess&order_id=".$this->getCart()->get("order_id"));
-    	            break;
-
-        	    case XLite_Model_PaymentMethod::PAYMENT_FAILURE:
-            	    $this->set("returnUrl", "cart.php?target=checkout&mode=error&order_id=".$this->getCart()->get("order_id"));
-                	break;
-            }
-        }
-    }
-
     function success()
     {
         $this->getCart()->succeed();
@@ -466,34 +501,6 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
         // anonymous checkout: logoff
         if ($this->auth->getComplex('profile.order_id')) {
             $this->auth->logoff();
-        }
-    }
-
-    function getOrder()
-    {
-        if (is_null($this->order)) {
-            $this->order = new XLite_Model_Order($_REQUEST["order_id"]);
-        }
-        return $this->order;
-    }
-    
-    function action_return()
-    {
-        if (isset($_REQUEST["order_id_name"])) {
-            // some of gateways can't accept return url on run-time and
-            // use the one set in merchant account, so we can't pass
-            // 'order_id' in run-time, instead pass the order id parameter name
-            $order_id_name = $_REQUEST["order_id_name"];
-            $_REQUEST["order_id"] = $_REQUEST[$order_id_name];
-        } else {
-            $order_id_name = "order_id";
-        }
-        $status = $this->getComplex('order.status');
-        if ($status == "P" || $status == "C" || $status == "Q") {
-            $this->success();
-            $this->set("returnUrl", "cart.php?target=checkoutSuccess&order_id=" . $_REQUEST["order_id"]);
-        } else {
-            $this->set("returnUrl", "cart.php?target=checkout&mode=error&order_id=" . $_REQUEST["order_id"]);
         }
     }
 

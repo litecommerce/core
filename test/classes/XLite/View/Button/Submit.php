@@ -24,6 +24,18 @@
 class XLite_View_Button_Submit extends XLite_View_Button_Abstract
 {
     /**
+     * getDefaultLabel
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultLabel()
+    {
+        return 'Submit';
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void

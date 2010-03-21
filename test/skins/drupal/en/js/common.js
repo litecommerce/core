@@ -206,7 +206,7 @@ var URLHandler = {
   buildURL: function(params)
   {
     return this.baseURLPart + this.buildMainPart(params) + this.buildQueryPart(params);
-  },
+  }
 }
 
 

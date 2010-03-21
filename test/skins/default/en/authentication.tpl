@@ -42,7 +42,7 @@ If you already have an account, you can authenticate yourself by filling in the 
 <tr>
     <td colspan="2">&nbsp;</td>
     <td>
-        <widget class="XLite_View_Button_Submit" label="Submit" />
+        <widget class="XLite_View_Button_Submit" />
     </td>
 </tr>
 </table>

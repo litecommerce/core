@@ -358,7 +358,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
     <td >
         By clicking "SUBMIT" you agree with our <a href="cart.php?target=help&amp;mode=terms_conditions" style="TEXT-DECORATION: underline" target="_blank">Terms &amp; Conditions.</a><br>
         <br>
-        <widget class="XLite_View_Button_Submit" label="Submit" />
+        <widget class="XLite_View_Button_Submit" />
     </td>
 </tr>
 </table>

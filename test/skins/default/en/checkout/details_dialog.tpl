@@ -36,9 +36,8 @@
 </tr>
 </table>
 
-<p><widget class="XLite_View_Button" label="Modify address information" href="cart.php?target=profile&mode=modify&returnUrl={url:u}" font="FormButton"></p>
-
-<p><widget class="XLite_View_Button" label="Change payment method" href="cart.php?target=checkout&mode=paymentMethod" font="FormButton"></p>
+<p /><widget class="XLite_View_Button_Link" label="Modify address information" location="{buildURL(#profile#,##,_ARRAY_(#mode#^#modify#,#returnUrl#^getURL()))}" />
+<p /><widget class="XLite_View_Button_Link" label="Change payment method" location="{buildURL(#checkout#,##,_ARRAY_(#mode#^#paymentMethod#))}" />
 
 <p>
 <widget template="checkout/credit_card.tpl" visible="{cart.paymentMethod.formTemplate=#checkout/credit_card.tpl#}">

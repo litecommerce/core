@@ -89,8 +89,7 @@ abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstr
      */
     protected function isCartProcessed()
     {
-        return 'checkout' == XLite_Core_Request::getInstance()->target
-            && ($this->getCart()->isProcessed() || $this->getCart()->isQueued());
+        return $this->getCart()->isProcessed() || $this->getCart()->isQueued();
     }
 
 
@@ -151,7 +150,7 @@ abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstr
         // TODO - to remove; backward compatibility
         $this->cart = $this->getCart();
 
-        if ($this->isCartProcessed()) {
+        if ('checkout' == XLite_Core_Request::getInstance()->target && $this->isCartProcessed()) {
             $this->getCart()->clear();
         }
     }
