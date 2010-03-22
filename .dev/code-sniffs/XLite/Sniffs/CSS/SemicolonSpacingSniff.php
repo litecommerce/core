@@ -68,8 +68,6 @@ class XLite_Sniffs_CSS_SemicolonSpacingSniff extends XLite_NameSniff
 
         $semicolon = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
         if ($semicolon === false || $tokens[$semicolon]['line'] !== $tokens[$stackPtr]['line']) {
-var_dump($tokens[$stackPtr]);
-die();
             $error = 'Описание каждого свойства должно завершаться точкой с запятой';
             $phpcsFile->addError($this->getReqPrefix('REQ.CSS.2.0.9') . $error, $stackPtr);
             return;
