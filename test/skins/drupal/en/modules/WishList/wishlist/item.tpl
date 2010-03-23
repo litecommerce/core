@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<td class="delete-from-wishlist">
+<td class="delete-from-list">
   <widget class="XLite_Module_WishList_View_Form_Item_Delete" name="wl_remove" item="{item}" />
     <widget class="XLite_View_Button_Image" label="Remove" action="delete" />
   <widget name="wl_remove" end />

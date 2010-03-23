@@ -10,10 +10,30 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  */
-#wish-list .delete-from-wishlist input
+#wish-list .delete-from-list input
 {
   background: transparent url(../../../shopping_cart/img/cart-item-delete.gif) no-repeat top left;
   width: 13px;
   height: 13px;
 }
 
+#wish-list .item-sums
+{
+  white-space: nowrap;
+}
+
+#wish-list .item-actions
+{
+  text-align: right;
+}
+
+#wish-list .wishlist-send
+{
+  float: right;
+  text-align: right;
+}
+
+#wish-list .wishlist-send input
+{
+  margin: 0 0.5em;
+}

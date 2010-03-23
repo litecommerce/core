@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<td class="delete-from-cart">
+<td class="delete-from-list">
   <widget class="XLite_View_Button_Image" label="Delete item" action="delete" formParams="{_ARRAY_(#cart_id#^cart_id)}" />
 </td>
 
@@ -23,9 +23,9 @@
   <p class="item-title"><a href="{item.url}">{item.name}</a></p>
   <p class="item-sku" IF="{item.sku}">SKU: {item.sku}</p>
   <p class="item-weight" IF="{item.weight}">Weight: {item.weight} {config.General.weight_symbol}</p>
-  <div class="item-options">
+  <p class="item-options">
     <widget module="ProductOptions" class="XLite_Module_ProductOptions_View_SelectedOptions" item="{item}" source="cart" item_id="{cart_id}" />
-  </div>
+  </p>
 </td>
 
 <td class="item-actions">

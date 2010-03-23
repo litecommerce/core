@@ -20,9 +20,9 @@
   {else:}
     <div id="wish-list">
       
-      <table class="wishlist-items">
+      <table class="selected-products">
         <tbody>
-          <tr class="wishlist-item" FOREACH="getItems(),key,item">
+          <tr class="selected-product" FOREACH="getItems(),key,item">
             <widget template="modules/WishList/wishlist/item.tpl" key="{key}" item="{item}">
           </tr>
         </tbody>
