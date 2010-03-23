@@ -84,8 +84,13 @@ class XLite_Sniffs_PHP_Formatting_ArraySniff extends XLite_ReqCodesSniff
 			$prevPos = $pos + 1;
             $pos = $phpcsFile->findNext(T_WHITESPACE, $prevPos, $tokens[$stackPtr]['parenthesis_closer'], false, "\n");
 			$arrPos = $phpcsFile->findNext(T_ARRAY, $prevPos, $pos);
+            $newPos = $phpcsFile->findNext(T_NEW, $prevPos, $pos);
 			if ($arrPos) {
 				$pos = $tokens[$arrPos]['parenthesis_closer'];
+
+			} elseif ($newPos) {
+				$pos = array_keys($tokens[$newPos]['nested_parenthesis']);
+				$pos = $tokens[$pos[0]]['parenthesis_closer'];
 
 			} elseif (
 				$pos !== false
