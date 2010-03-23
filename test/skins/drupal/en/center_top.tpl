@@ -6,7 +6,7 @@
 <!-- [/catalog] }}} -->
 
 <!-- [main] {{{ -->
-<widget target="main" mode="accessDenied" template="access_denied.tpl">
+<widget target="access_denied" template="access_denied.tpl" />
 <widget module="GreetVisitor" target="main" mode="" template="modules/GreetVisitor/greet_visitor.tpl" visible="{greetVisitor&!page}">
 <widget class="XLite_View_Welcome" name="welcome" />
 <widget target="main" template="pages.tpl">

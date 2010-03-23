@@ -200,9 +200,9 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     {
 		if (!$this->checkAccess()) {
 
-            $this->params = array('target', 'mode');
-            $this->set('target', XLite::TARGET_DEFAULT);
-            $this->set('mode', 'access_denied');
+            $this->params = array('target');
+            $this->set('target', 'access_denied');
+            XLite_Core_Request::getInstance()->target = 'access_denied';
 
         } elseif (!empty(XLite_Core_Request::getInstance()->action) && $this->isValid()) {
 
