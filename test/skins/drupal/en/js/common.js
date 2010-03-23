@@ -105,7 +105,7 @@ function eventBind(obj, e, func)
 	}
 }
 
-
+// URL builder singleton
 var URLHandler = {
 
   mainParams: {target: true, action: true},
@@ -209,23 +209,157 @@ var URLHandler = {
   }
 }
 
-
 // Check for the AJAX support
-var ajaxSupport = null;
-
 function hasAJAXSupport()
 {
-  if (null == ajaxSupport) {
-    ajaxSupport = false;
-    var xhr = false;
+  if (typeof(window.ajaxSupport) == 'undefined') {
+    window.ajaxSupport = false;
     try {
 
-      xhr = window.ActiveXObject ? new ActiveXObject('Microsoft.XMLHTTP') : new XMLHttpRequest();
-      ajaxSupport = xhr ? true : false;
+      var xhr = window.ActiveXObject ? new ActiveXObject('Microsoft.XMLHTTP') : new XMLHttpRequest();
+      window.ajaxSupport = xhr ? true : false;
 
     } catch(e) { }
   }
 
-  return ajaxSupport;
+  return window.ajaxSupport;
 }
+
+/**
+ *  Loadable widget (abstract prototype)
+ */
+function LoadableWidgetAbstract() {
+}
+
+LoadableWidgetAbstract.prototype.modalTarget  = null;
+LoadableWidgetAbstract.prototype.widgetTarget = 'main';
+LoadableWidgetAbstract.prototype.widgetAction = '';
+LoadableWidgetAbstract.prototype.widgetClass  = null;
+
+// Load widget
+LoadableWidgetAbstract.prototype.loadWidget = function()
+{
+  if (!hasAJAXSupport()) {
+    return false;
+  }
+
+  this.showModalScreen();
+
+  var o = this;
+  $.ajax(
+    {
+      type: 'get',
+      url: this.buildWidgetRequestURL(),
+      timeout: 15000,
+      complete: function(xhr, s) {
+        return o.loadHandler(xhr, s);
+      }
+    }
+  );
+
+  return true;
+}
+
+// Build request widget URL (AJAX)
+LoadableWidgetAbstract.prototype.buildWidgetRequestURL = function()
+{
+  var params = {
+    target:     'get_widget',
+    action:     '',
+    ajaxTarget: this.widgetTarget,
+    ajaxAction: this.widgetAction,
+    ajaxClass:  this.widgetClass
+  };
+
+  params = this.addWidgetParams(params);
+
+  return URLHandler.buildURL(params);
+}
+
+// Add widget arguments to parameters list
+LoadableWidgetAbstract.prototype.addWidgetParams = function(params)
+{
+  return params;
+}
+
+// onload handler
+LoadableWidgetAbstract.prototype.loadHandler = function(xhr, s)
+{
+  var processed = false;
+
+  if (xhr.status == 200 && xhr.responseText) {
+    var div = document.createElement('DIV');
+    $(div).html(xhr.responseText);
+
+    processed = this.placeRequestData($(div).eq(0).children().eq(0));
+  }
+
+  this.hideModalScreen();
+
+  this.postprocess(processed);
+
+  return processed;
+}
+
+// Place request data
+LoadableWidgetAbstract.prototype.placeRequestData = function(box)
+{
+  var id = 'temporary-ajax-id-' + (new Date()).getTime();
+  box.addClass(id);
+  this.modalTarget.replaceWith(box.eq(0).children().eq(0));
+  this.modalTarget = $('.' + id);
+  this.modalTarget.removeClass(id);
+
+  return true;
+}
+
+// Widget post processing (after new widge data placing)
+LoadableWidgetAbstract.prototype.postprocess = function(isSuccess)
+{
+}
+
+// Show modal screen
+LoadableWidgetAbstract.prototype.showModalScreen = function()
+{
+  if (!this.modalTarget) {
+    return false;
+  }
+
+  this.modalTarget.block(
+    {
+      message: '<div></div>',
+      css: {
+        width: '30%',
+        top: '35%',
+        left: '35%',
+      },
+      overlayCSS: {
+        opacity: 0.1
+      },
+    }
+  );
+
+  $('.blockElement')
+    .css({padding: null, border: null, margin: null, textAlign: null, color: null, backgroundColor: null, cursor: null})
+    .addClass('wait-block');
+
+  $('.blockOverlay')
+    .css({padding: null, border: null, margin: null, textAlign: null, color: null, backgroundColor: null, cursor: null})
+    .addClass('wait-block-overlay');
+
+  return true;
+}
+
+// Hide modal screen
+LoadableWidgetAbstract.prototype.hideModalScreen = function()
+{
+  if (!this.modalTarget) {
+    return false;
+  }
+
+  this.modalTarget.unblock();
+
+  return true;
+}
+
 

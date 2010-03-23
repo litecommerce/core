@@ -95,6 +95,19 @@ class XLite_View_Form_Order_Search extends XLite_View_Form_Abstract
     }
 
     /**
+     * Open and close form tags
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getTemplate()
+    {
+        return 'form/' . ($this->getParam(self::PARAM_END) ? 'end' : 'start_order_search') . '.tpl';
+    }
+
+
+    /**
      * Initialization 
      * 
      * @return void

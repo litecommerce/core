@@ -190,7 +190,7 @@ class XLite_Model_Abstract extends XLite_Base
     function _aggregate($field, $aggregate, $where = null) // {{{
     {
         $sql = "SELECT $aggregate($field) FROM " . $this->getTable();
-        if (isset($where)) {
+        if ($where) {
             $sql .= " WHERE $where";
         }
         return $this->db->getOne($sql);

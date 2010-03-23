@@ -44,6 +44,16 @@ class XLite_View_OrderList extends XLite_View_Dialog
     protected $orders = null;
 
     /**
+     * Orders total count 
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $totalCount = null;
+
+    /**
      * Return title
      *
      * @return string
@@ -64,7 +74,7 @@ class XLite_View_OrderList extends XLite_View_Dialog
      */
     protected function getDir()
     {
-        return $this->getCount() ? 'order/list' : 'order/list_empty';
+        return 'order/list';
     }
 
     /**
@@ -102,8 +112,7 @@ class XLite_View_OrderList extends XLite_View_Dialog
             $order = new XLite_Model_Order();
             $this->orders = $order->search(
                 $this->auth->getProfile(),
-                $conditions['order_id1'],
-                $conditions['order_id2'],
+                $conditions['order_id'],
                 $conditions['status'],
                 $conditions['startDate'],
                 $conditions['endDate']
@@ -124,6 +133,42 @@ class XLite_View_OrderList extends XLite_View_Dialog
     public function getCount()
     {
         return count($this->getOrders());
+    }
+
+    /**
+     * Get total count 
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTotalCount()
+    {
+        if (is_null($this->totalCount)) {
+            $order = new XLite_Model_Order();
+            $this->totalCount = $order->getCountByProfile($this->auth->getProfile());
+        }
+
+        return $this->totalCount;
+    }
+
+    /**
+     * Register JS files
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = 'popup/jquery.blockUI.js';
+        $list[] = 'order/list.js';
+
+        return $list;
     }
 }
 

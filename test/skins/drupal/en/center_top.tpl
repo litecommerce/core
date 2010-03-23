@@ -50,7 +50,7 @@
 <!-- [/checkout] }}} -->
 
 <!-- [order] {{{ -->
-<widget target="order_list" template="order/search.tpl" />
+<widget class="XLite_View_OrderList" />
 <widget target="order" template="common/dialog.tpl" body="order/order.tpl" head="Order # {order.order_id}">
 <!-- [/order] }}} -->
 

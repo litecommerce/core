@@ -12,40 +12,27 @@
  *}
 <widget class="XLite_View_Form_Order_Search" name="order_search_form" />
 
-  <table cellspacing="0">
-    <tr>
-      <td>Order id</td>
-      <td>
-        <input name="order_id1" value="{getCondition(#order_id1#)}" />
-        -
-        <input name="order_id2" value="{getCondition(#order_id2#)}" />
-      </td>
+  <table cellspacing="0" class="form-table search-orders">
+    <tr class="order-id">
+      <td>Order id:</td>
+      <td><input type="text" name="order_id1" value="{getCondition(#order_id1#)}" /></td>
     </tr>
 
-    <tr>
-      <td>Order status:</td>
+    <tr class="status">
+      <td>Status:</td>
       <td height="10">
-        <widget class="XLite_View_StatusSelect" field="status"  value="{getCondition(#status1#)}" allOption />
+        <widget class="XLite_View_StatusSelect" field="status" value="{getCondition(#status1#)}" allOption />
       </td>
     </tr>
 
     <tr>
-      <td>Order date from:</td>
+      <td>Date (range):</td>
       <td>
-        <widget class="XLite_View_Date" field="startDate" value="{getCondition(#startDate#)}" />
+        <widget class="XLite_View_DatePicker" field="startDate" value="{getCondition(#startDate#)}" />
+        &ndash;
+        <widget class="XLite_View_DatePicker" field="endDate" value="{getCondition(#endDate#)}" />
       </td>
-    </tr>
-
-    <tr>
-      <td>Order date through:</td>
-      <td>
-        <widget class="XLite_View_Date" field="endDate" value="{getCondition(#endDate#)}"/>
-      </td>
-    </tr>
-
-    <tr>
-      <td>&nbsp;</td>
-      <td><widget class="XLite_View_Button_Submit" label="Search" /></td>
+      <td class="button-cell"><widget class="XLite_View_Button_Submit" label="Search orders" /></td>
     </tr>
 
   </table>

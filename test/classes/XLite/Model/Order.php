@@ -256,10 +256,9 @@ class XLite_Model_Order extends XLite_Model_Abstract
     public static function getDefaultSearchConditions()
     {
         return array(
-            'order_id1' => '',
-            'order_id2' => '',
+            'order_id' => '',
             'status'    => '',
-            'startDate' => 0,
+            'startDate' => '',
             'endDate'   => ''
         );
     }
@@ -986,20 +985,41 @@ class XLite_Model_Order extends XLite_Model_Abstract
         return $where;
     }
 
-    function search($profile, $id1, $id2, $status, $startDate, $endDate, $orig_profile = true) // {{{
-    {
+    /**
+     * Orders search 
+     * 
+     * @param XLite_Model_Profile $profile       Profile
+     * @param integer             $id            Order id
+     * @param string              $status        Status code
+     * @param integer             $startDate     Date (start range)
+     * @param integer             $endDate       Date (end range)
+     * @param boolean             $orig_profile  User original profile
+     * @param string              $sortCriterion Sort criterion (field name)
+     * @param boolean             $sortOrderAsc  User ascending sort order
+     *  
+     * @return array of XLite_Model_Order
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function search(
+        $profile = null,
+        $id = null,
+        $status = null,
+        $startDate = null,
+        $endDate = null,
+        $orig_profile = true,
+        $sortCriterion = 'date',
+        $sortOrderAsc = false
+    ) {
         $where = array();
 
         if (isset($profile)) {
             $where[] = ($orig_profile ? 'orig_profile_id' : 'profile_id') . " = '" . $profile->get('profile_id') . "'";
         }
 
-        if (!empty($id1)) {
-            $where[] = 'order_id >= ' . intval($id1);
-        }
-
-        if (!empty($id2)) {
-            $where[] = 'order_id <= ' . intval($id2);
+        if (!empty($id)) {
+            $where[] = 'order_id = ' . intval($id);
         }
 
         if (!empty($status)) {
@@ -1016,8 +1036,30 @@ class XLite_Model_Order extends XLite_Model_Abstract
 
         $where = $this->_prepareSearchWhere($where);
 
-        return $this->findAll(implode(' AND ', $where), 'date DESC');
-    } // }}}
+        return $this->findAll(implode(' AND ', $where), $sortCriterion . ' ' . ($sortOrderAsc ? 'ASC' : 'DESC'));
+    }
+
+    /**
+     * Get orders count (by profile)
+     * 
+     * @param XLite_Model_Profile $profile      Profile
+     * @param boolean             $orig_profile User original profile instead basic profile
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCountByProfile(XLite_Model_Profile $profile = null, $orig_profile = true)
+    {
+        $where = array();
+
+        if (isset($profile)) {
+            $where[] = ($orig_profile ? 'orig_profile_id' : 'profile_id') . ' = \'' . $profile->get('profile_id') . '\'';
+        }
+
+        return $this->count(implode(' AND ', $where));
+    }
 
     ////////////////// Order status functions //////////////////
 

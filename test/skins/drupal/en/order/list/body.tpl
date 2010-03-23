@@ -10,26 +10,30 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget class="XLite_View_Pager" data="{getOrders()}" name="pager" />
+<a href="javascript:void(0);" class="dynamic search-orders dynamic-close"><span>Search orders</span><img src="images/spacer.gif" alt="" /></a>
+<div class="orders-total">
+Total: <span>{getTotalCount()}</span> orders{if:getCount()}, found: <span>{getCount()}</span> orders{end:}
+</div>
 
-<ul class="orders-list">
+<widget class="XLite_View_OrderSearch" IF="getTotalCount()" />
 
-  <li FOREACH="namedWidgets.pager.getPageData(),order">
+<widget class="XLite_View_Pager_Common" data="{getOrders()}" name="pager" />
+
+<ul class="orders-list" IF="getTotalCount()">
+
+  <li FOREACH="namedWidgets.pager.getPageData(),order" class="order-{order.order_id}">
 
     <div class="order-title">
-      <a href="{buildURL(#order#,##,_ARRAY_(#order_id#^order.order_id))}">#{order.order_id}</a> <span>from</span> {time_format(order.date)}
-      <div class="status-{order.status}"><widget template="common/order_status.tpl" /></div>
+      <a href="{buildURL(#order#,##,_ARRAY_(#order_id#^order.order_id))}" class="number">#{order.order_id}</a>
+      <span>from</span>
+      {time_format(order.date)}
+      <div class="status-{order.status}">
+        <widget template="common/order_status.tpl" />
+        <a href="{buildURL(#order#,#print#,_ARRAY_(#order_id#^order.order_id))}"><img src="images/spacer.gif" alt="Print" /></a>
+      </div>
     </div>
 
-    <table cellspacing="0" class="form-table">
-      <tr FOREACH="order.getItems(),i,item">
-        <td class="name"><a href="{item.getURL()}">{item.name}</a></td>
-        <td class="price">{price_format(item,#price#):h}</td>
-        <td class="qty">qty:</td>
-        <td class="quantity">{item.amount}</td>
-        <td IF="i=#0#" class="total" rowspan="{order.getItemsCount()}">Grand total: <strong>{price_format(order,#total#):h}</strong></td>
-      </tr>
-    </table>
+    <widget class="XLite_View_OrderItemsShort" order="{order}" />
 
   </li>
 

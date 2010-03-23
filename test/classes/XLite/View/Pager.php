@@ -148,7 +148,7 @@ class XLite_View_Pager extends XLite_View_Abstract
     public function getPagesCount()
     {
         if (!isset($this->pagesCount)) {
-            $this->pagesCount = ceil($this->getItemsTotal () / $this->getItemsPerPage());
+            $this->pagesCount = ceil($this->getItemsTotal() / $this->getItemsPerPage());
         }
     
         return $this->pagesCount;
