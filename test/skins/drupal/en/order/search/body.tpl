@@ -15,13 +15,14 @@
   <table cellspacing="0" class="form-table search-orders">
     <tr class="order-id">
       <td>Order id:</td>
-      <td><input type="text" name="order_id1" value="{getCondition(#order_id1#)}" /></td>
+      <td><input type="text" name="order_id" value="{getCondition(#order_id#)}" /></td>
+      <td IF="!isDefaultConditions()" class="button-cell reset"><a href="{buildUrl(#order_list#,#reset#)}">See all orders</a></td>
     </tr>
 
     <tr class="status">
       <td>Status:</td>
       <td height="10">
-        <widget class="XLite_View_StatusSelect" field="status" value="{getCondition(#status1#)}" allOption />
+        <widget class="XLite_View_StatusSelect" field="status" value="{getCondition(#status#)}" allOption />
       </td>
     </tr>
 

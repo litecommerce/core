@@ -12,18 +12,21 @@
  *}
 <a href="javascript:void(0);" class="dynamic search-orders dynamic-close"><span>Search orders</span><img src="images/spacer.gif" alt="" /></a>
 <div class="orders-total">
-Total: <span>{getTotalCount()}</span> orders{if:getCount()}, found: <span>{getCount()}</span> orders{end:}
+Total: <span>{getTotalCount()}</span> orders{if:getTotalCount()}, found: <span>{getCount()}</span> orders{end:}
 </div>
 
 <widget class="XLite_View_OrderSearch" IF="getTotalCount()" />
 
-<widget class="XLite_View_Pager_Common" data="{getOrders()}" name="pager" />
+<div class="panel orders-panel">
+  <widget class="XLite_View_Pager_Common" data="{getOrders()}" name="pager" itemsPerPage="2" />
+  <widget class="XLite_View_Sort_Order" />
+</div>
 
 <ul class="orders-list" IF="getTotalCount()">
 
   <li FOREACH="namedWidgets.pager.getPageData(),order" class="order-{order.order_id}">
 
-    <div class="order-title">
+    <div class="title">
       <a href="{buildURL(#order#,##,_ARRAY_(#order_id#^order.order_id))}" class="number">#{order.order_id}</a>
       <span>from</span>
       {time_format(order.date)}

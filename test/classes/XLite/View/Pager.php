@@ -132,7 +132,10 @@ class XLite_View_Pager extends XLite_View_Abstract
     {
         if (!isset($this->itemsPerPage)) {
             $current = $this->getParam(self::PARAM_ITEMS_PER_PAGE);
-            $this->itemsPerPage = max(min(self::ITEMS_PER_PAGE_MAX, $current), max(self::ITEMS_PER_PAGE_MIN, $current));
+            $this->itemsPerPage = max(
+                min(self::ITEMS_PER_PAGE_MAX, $current),
+                max(self::ITEMS_PER_PAGE_MIN, $current)
+            );
         }
 
         return $this->itemsPerPage;
@@ -181,7 +184,6 @@ class XLite_View_Pager extends XLite_View_Abstract
         );
 
         $this->requestParams[] = self::PARAM_PAGE_ID;
-        $this->requestParams[] = self::PARAM_ITEMS_PER_PAGE;
 
         $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/pager.tpl'); 
 
@@ -242,7 +244,7 @@ class XLite_View_Pager extends XLite_View_Abstract
     }
 
     /**
-     * getPageUrls 
+     * Get pages URL list 
      * 
      * @return array
      * @access protected

@@ -181,6 +181,19 @@ $(document).ready(
         new OrderItemsShortListController(this);
       }
     );
+
+    if ($.browser.msie && $.browser.version < 8) {
+
+      // Hover emulation
+      $('.orders-list li').hover(
+        function() {
+          $(this).addClass('hover');
+        },
+        function() {
+          $(this).removeClass('hover');
+        }
+      );
+    }
   }
 );
 

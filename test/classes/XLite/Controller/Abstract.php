@@ -35,21 +35,21 @@
  */
 abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 {
-	/**
-	 * Current page template 
-	 * 
-	 * @var    string
-	 * @access protected
-	 * @since  3.0.0 EE
-	 */
-	protected $template = 'main.tpl';
+    /**
+     * Current page template 
+     * 
+     * @var    string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $template = 'main.tpl';
 
     /**
      * Breadcrumbs 
      * 
      * @var    XLite_Model_LocationPath
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected $locationPath = null;
 
@@ -65,73 +65,73 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     public $pages = array();
 
 
-	/**
-	 * Check if current page is accessible
-	 * 
-	 * @return bool
-	 * @access protected
-	 * @since  3.0.0 EE
-	 */
-	protected function checkAccess()
-	{
-		return XLite_Model_Auth::getInstance()->isAuthorized($this);
-	}
-
-	/**
-	 * Perform redirect 
-	 * 
-	 * @param string $url redirect URL
-	 *  
-	 * @return void
-	 * @access protected
-	 * @since  3.0.0 EE
-	 */
-	protected function redirect($url = null)
+    /**
+     * Check if current page is accessible
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function checkAccess()
     {
-		$location = $this->getReturnUrl();
+        return XLite_Model_Auth::getInstance()->isAuthorized($this);
+    }
 
-		if (is_null($location)) {
-			$location = is_null($url) ? $this->getUrl() : $url;
-		}
+    /**
+     * Perform redirect 
+     * 
+     * @param string $url redirect URL
+     *  
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function redirect($url = null)
+    {
+        $location = $this->getReturnUrl();
+
+        if (is_null($location)) {
+            $location = is_null($url) ? $this->getUrl() : $url;
+        }
 
         // filter xlite_form_id from redirect url
         $action = $this->get('action');
         if (empty($action)) {
             $location = $this->filterXliteFormID($location);
-		}
+        }
 
         XLite_Model_Profiler::getInstance()->enabled = false;
 
-		if ($this->returnUrlAbsolute) {
-			$location = $this->getShopUrl($location, $this->get('secure'));
-		}
+        if ($this->returnUrlAbsolute) {
+            $location = $this->getShopUrl($location, $this->get('secure'));
+        }
 
-		$code = 302;
-    	if (XLite_Core_Request::getInstance()->isAJAX()) {
-			$code = 278;
-    	}
+        $code = 302;
+        if (XLite_Core_Request::getInstance()->isAJAX()) {
+            $code = 278;
+        }
 
         header('Location: ' . $location, true, $code);
     }
 
-	/**
-	 * Add the base part of the location path
-	 * 
-	 * @return void
-	 * @access protected
-	 * @since  3.0.0 EE
-	 */
-	protected function addBaseLocation()
-	{
-		$this->locationPath->addNode(new XLite_Model_Location('Home', $this->buildURL()));
-	}
+    /**
+     * Add the base part of the location path
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function addBaseLocation()
+    {
+        $this->locationPath->addNode(new XLite_Model_Location('Home', $this->buildURL()));
+    }
 
     /**
      * Common method to determine current location 
      * 
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getLocation()
     {
@@ -167,15 +167,15 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     }
 
 
-	/**
-	 * Return current location path 
-	 * 
-	 * @return XLite_Model_LocationPath
-	 * @access public
-	 * @since  3.0.0 EE
-	 */
-	public function getLocationPath()
-	{
+    /**
+     * Return current location path 
+     * 
+     * @return XLite_Model_LocationPath
+     * @access public
+     * @since  3.0.0
+     */
+    public function getLocationPath()
+    {
         if (!isset($this->locationPath)) {
 
             $this->locationPath = new XLite_Model_LocationPath();
@@ -187,18 +187,18 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         }
 
         return $this->locationPath;
-	}
+    }
 
     /**
      * Handles the request. Parses the request variables if necessary. Attempts to call the specified action function 
      * 
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function handleRequest()
     {
-		if (!$this->checkAccess()) {
+        if (!$this->checkAccess()) {
 
             $this->params = array('target');
             $this->set('target', 'access_denied');
@@ -206,24 +206,30 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 
         } elseif (!empty(XLite_Core_Request::getInstance()->action) && $this->isValid()) {
 
-            $action = 'action_' . XLite_Core_Request::getInstance()->action;
-            $this->$action();
+            $oldMethodName = 'action_' . XLite_Core_Request::getInstance()->action;
+            $newMethodName = 'doAction' . preg_replace('/_([a-z])/Sse', 'strtoupper("\1")', '_' . XLite_Core_Request::getInstance()->action);
+            if (method_exists($this, $oldMethodName)) {
+                $this->$oldMethodName();
+
+            } elseif (method_exists($this, $newMethodName)) {
+                $this->$newMethodName();
+            }
         }
 
         if (XLite_Core_Request::getInstance()->isPost() && $this->isValid() && !$this->silent) {
             $this->redirect();
         }
-	}
+    }
 
-	/**
-	 * Return Viewer object
-	 * 
-	 * @return XLite_View_Controller
-	 * @access public
-	 * @since  3.0.0 EE
-	 */
-	public function getViewer($isExported = false)
-	{
+    /**
+     * Return Viewer object
+     * 
+     * @return XLite_View_Controller
+     * @access public
+     * @since  3.0.0
+     */
+    public function getViewer($isExported = false)
+    {
         $template = $this->template;
         $params   = array();
 
@@ -236,97 +242,97 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
             $template = $this->getCMSTemplate();
         }
 
-		return new XLite_View_Controller($template, $params);
+        return new XLite_View_Controller($template, $params);
     }
 
-	/**
-	 * This function called after template output
-	 * FIXME - may be there is a better way to handle this?
-	 * 
-	 * @return void
-	 * @access public
-	 * @since  3.0.0 EE
-	 */
-	public function postprocess()
-	{
-	}
+    /**
+     * This function called after template output
+     * FIXME - may be there is a better way to handle this?
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function postprocess()
+    {
+    }
 
-	/**
-	 * Get controlelr parameters
-	 * 
-	 * @param string $exeptions Parameter keys string
-	 *  
-	 * @return array
-	 * @access public
-	 * @since  3.0.0 EE
-	 */
-	public function getAllParams($exeptions = null)
+    /**
+     * Get controlelr parameters
+     * 
+     * @param string $exeptions Parameter keys string
+     *  
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getAllParams($exeptions = null)
     {
         $result = array();
-		$exeptions = isset($exeptions) ? explode(",", $exeptions) : false;
+        $exeptions = isset($exeptions) ? explode(",", $exeptions) : false;
 
         foreach ($this->get('params') as $name) {
-			$value = $this->get($name);
+            $value = $this->get($name);
             if (isset($value) && (!$exeptions || in_array($name, $exeptions))) {
                 $result[$name] = $value;
             }
         }
 
-		return $result;
-	}
-
-	/**
-	 * Return current (or default) category object
-	 * 
-	 * @return XLite_Model_Category
-	 * @access public
-	 * @since  3.0.0 EE
-	 */
-	public function getCategory()
-    {
-		return XLite_Model_CachingFactory::getObject(__METHOD__, 'XLite_Model_Category', array(XLite_Core_Request::getInstance()->category_id));
+        return $result;
     }
 
-	/**
-	 * Return current (or default) product object
-	 * 
-	 * @return XLite_Model_Product
-	 * @access public
-	 * @since  3.0.0 EE
-	 */
-	public function getProduct()
+    /**
+     * Return current (or default) category object
+     * 
+     * @return XLite_Model_Category
+     * @access public
+     * @since  3.0.0
+     */
+    public function getCategory()
     {
-		return XLite_Model_CachingFactory::getObject(__METHOD__, 'XLite_Model_Product', array(XLite_Core_Request::getInstance()->product_id));
+        return XLite_Model_CachingFactory::getObject(__METHOD__, 'XLite_Model_Category', array(XLite_Core_Request::getInstance()->category_id));
     }
 
-	/**
-	 * Return current page title
-	 * 
-	 * @return string
-	 * @access public
-	 * @since  3.0.0 EE
-	 */
-	public function getTitle()
-	{
-		return null;
-	}
+    /**
+     * Return current (or default) product object
+     * 
+     * @return XLite_Model_Product
+     * @access public
+     * @since  3.0.0
+     */
+    public function getProduct()
+    {
+        return XLite_Model_CachingFactory::getObject(__METHOD__, 'XLite_Model_Product', array(XLite_Core_Request::getInstance()->product_id));
+    }
+
+    /**
+     * Return current page title
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return null;
+    }
 
 
-	// TODO - all of the above should be revised
+    // TODO - all of the above should be revised
 
 
-    protected $params = array('target');	
-    public $dumpStarted = false; // startDump was called	
+    protected $params = array('target');    
+    public $dumpStarted = false; // startDump was called    
 
-	protected $silent = false;
+    protected $silent = false;
 
-	protected $pageTemplates = array();
+    protected $pageTemplates = array();
 
-	protected $returnUrlAbsolute = false;
+    protected $returnUrlAbsolute = false;
 
-	protected $product = null;
+    protected $product = null;
 
-	protected $category = null;
+    protected $category = null;
 
     /**
      * Validity flag
@@ -334,19 +340,19 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
      * 
      * @var    bool
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected $valid = true;
 
-	/**
-	 * Page type parameters
-	 * 
-	 * @var    array
-	 * @access protected
-	 * @see    ____var_see____
-	 * @since  3.0.0
-	 */
-	protected $pageTypeParams = null;
+    /**
+     * Page type parameters
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $pageTypeParams = null;
 
     /**
      * Set properties
@@ -356,7 +362,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
      *
      * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function setAttributes(array $attrs)
     {
@@ -372,7 +378,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
      * 
      * @return bool
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function isValid()
     {
@@ -400,7 +406,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
      *  
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function mapRequest($request = null)
     {   
@@ -411,7 +417,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
      * 
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function fillForm()
     {
@@ -424,39 +430,39 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
      * @access public
      * @since  3.0.0
      */
-	public function getReturnUrl()
-	{
-		return $this->returnUrl;
-	}
-
-	function getTemplate()
+    public function getReturnUrl()
     {
-		return $this->template;
-	}
+        return $this->returnUrl;
+    }
 
-	function _clear_xsid_data()
-	{
-		unset($_REQUEST[XLite_Model_Session::SESSION_DEFAULT_NAME]);
-		$this->xlite->session->destroy();
-		$this->xlite->session->setID(SESSION_DEFAULT_ID);
-		$this->xlite->session->_initialize();
-		$this->xlite->session->_data = array();
-	}
+    function getTemplate()
+    {
+        return $this->template;
+    }
 
-	function _pure_url_path($str)
-	{
-		$pos = strpos($str, "?");
-		if ($pos !== false) {
-			$str = substr($str, 0, $pos);
-		}
+    function _clear_xsid_data()
+    {
+        unset($_REQUEST[XLite_Model_Session::SESSION_DEFAULT_NAME]);
+        $this->xlite->session->destroy();
+        $this->xlite->session->setID(SESSION_DEFAULT_ID);
+        $this->xlite->session->_initialize();
+        $this->xlite->session->_data = array();
+    }
 
-		$last = strlen($str) - 1;
-		if ($last > 0 && $str{$last} == "/") {
-			$str = substr($str, 0, $last);
-		}
+    function _pure_url_path($str)
+    {
+        $pos = strpos($str, "?");
+        if ($pos !== false) {
+            $str = substr($str, 0, $pos);
+        }
 
-		return $str;
-	}
+        $last = strlen($str) - 1;
+        if ($last > 0 && $str{$last} == "/") {
+            $str = substr($str, 0, $last);
+        }
+
+        return $str;
+    }
 
     function isHTTPS()
     {
@@ -537,10 +543,10 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     {
         $params = array_merge($this->getAllParams(), $params);
 
-		$target = isset($params['target']) ? $params['target'] : '';
-		unset($params['target']);
+        $target = isset($params['target']) ? $params['target'] : '';
+        unset($params['target']);
 
-		return $this->buildURL($target, '', $params);
+        return $this->buildURL($target, '', $params);
     }
 
     function getPageTemplate()
@@ -551,20 +557,20 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         return null;
     }
 
-	/**
-	 * Return the array of pages for tabber
+    /**
+     * Return the array of pages for tabber
      * FIXME - move to the Controller/Admin/Abstract.php:
      *  tabber is not used in customer area
-	 * 
-	 * @return array
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function getTabPages()
-	{
-		return $this->pages;
-	}
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTabPages()
+    {
+        return $this->pages;
+    }
 
 
     function getUploadedFile()
@@ -606,39 +612,39 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         return $check;
     }
 
-	function getCharset()
-	{
-		$charset = $this->getComplex('cart.profile.billingCountry.charset');
-		if ($charset)
-			return $charset;
+    function getCharset()
+    {
+        $charset = $this->getComplex('cart.profile.billingCountry.charset');
+        if ($charset)
+            return $charset;
 
-		if ($this->auth->isLogged()) {
-			$profile = $this->auth->get("profile");
-			return $profile->getComplex('billingCountry.charset');
-		} else {
-			$country = $this->config->getComplex('General.default_country');
-			$obj = new XLite_Model_Country($country);
-			return ($obj->get("charset")) ? $obj->get("charset") : "iso-8859-1";
-		}
-	}
+        if ($this->auth->isLogged()) {
+            $profile = $this->auth->get("profile");
+            return $profile->getComplex('billingCountry.charset');
+        } else {
+            $country = $this->config->getComplex('General.default_country');
+            $obj = new XLite_Model_Country($country);
+            return ($obj->get("charset")) ? $obj->get("charset") : "iso-8859-1";
+        }
+    }
 
-	function getEmailValidatorRegExp()
-	{
-		$values = array();
-		$domains = split(",| |;|\||\/", $this->config->getComplex('Email.valid_email_domains'));
-		foreach ((array)$domains as $key=>$val) {
-			if (!trim($val))
-				continue;
+    function getEmailValidatorRegExp()
+    {
+        $values = array();
+        $domains = split(",| |;|\||\/", $this->config->getComplex('Email.valid_email_domains'));
+        foreach ((array)$domains as $key=>$val) {
+            if (!trim($val))
+                continue;
 
-			$values[$key] = "(\.".trim($val).")";
-		}
+            $values[$key] = "(\.".trim($val).")";
+        }
 
-		if (count($values) <= 0) {
-			$values[] = "(\..{2,3})";
-		}
+        if (count($values) <= 0) {
+            $values[] = "(\..{2,3})";
+        }
 
-		return "/\b(^(\S+@).+(".implode("|", $values).")$)\b/gi";
-	}
+        return "/\b(^(\S+@).+(".implode("|", $values).")$)\b/gi";
+    }
 
     function isSecure()
     {
@@ -655,16 +661,16 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         return rand();
     }
 
-	function filterXliteFormID($url)
-	{
-		if (preg_match("/(\?|&)(xlite_form_id=[a-zA-Z0-9]+)(&.+)?$/", $url, $matches)) {
-			if ($matches[1] == '&') $param = $matches[1].$matches[2];
-			elseif (empty($matches[3])) $param = $matches[1].$matches[2];
-			else $param = $matches[2]."&";
-			$url = str_replace($param, "", $url);
-		}
-		return $url;
-	}
+    function filterXliteFormID($url)
+    {
+        if (preg_match("/(\?|&)(xlite_form_id=[a-zA-Z0-9]+)(&.+)?$/", $url, $matches)) {
+            if ($matches[1] == '&') $param = $matches[1].$matches[2];
+            elseif (empty($matches[3])) $param = $matches[1].$matches[2];
+            else $param = $matches[2]."&";
+            $url = str_replace($param, "", $url);
+        }
+        return $url;
+    }
 
     function checkHtaccess()
     {
@@ -745,18 +751,18 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         return false;
     }
 
-	/**
-	 * Get page instance data (name and URL)
-	 * 
-	 * @return array
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function getPageInstanceData()
-	{
-		return array($this->getPageTypeName(), $this->getUrl());
-	}
+    /**
+     * Get page instance data (name and URL)
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageInstanceData()
+    {
+        return array($this->getPageTypeName(), $this->getUrl());
+    }
 
     /**
      * Get page type name

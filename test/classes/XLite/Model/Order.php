@@ -256,10 +256,30 @@ class XLite_Model_Order extends XLite_Model_Abstract
     public static function getDefaultSearchConditions()
     {
         return array(
-            'order_id' => '',
-            'status'    => '',
-            'startDate' => '',
-            'endDate'   => ''
+            'order_id'      => '',
+            'status'        => '',
+            'startDate'     => '',
+            'endDate'       => '',
+            'sortCriterion' => 'date',
+            'sortOrder'     => 'desc'
+        );
+    }
+
+    /**
+     * Get sort criterions 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getSortCriterions()
+    {
+        return array(
+            'order_id' => 'Order id',
+            'date'     => 'Date',
+            'status'   => 'Status',
+            'total'    => 'Total',
         );
     }
 
@@ -1023,7 +1043,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
         }
 
         if (!empty($status)) {
-            $where[] = "status = '" . substr($status, 0, 1) . "'";
+            $where[] = 'status = \'' . $status . '\'';
         }
 
         if ($startDate) {
@@ -1035,6 +1055,10 @@ class XLite_Model_Order extends XLite_Model_Abstract
         }
 
         $where = $this->_prepareSearchWhere($where);
+
+        if (!$sortCriterion) {
+            $sortCriterion = 'date';
+        }
 
         return $this->findAll(implode(' AND ', $where), $sortCriterion . ' ' . ($sortOrderAsc ? 'ASC' : 'DESC'));
     }

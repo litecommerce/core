@@ -80,6 +80,27 @@ class XLite_View_OrderSearch extends XLite_View_Dialog
     }
 
     /**
+     * Get conditions 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getConditions()
+    {
+        if (is_null($this->conditions)) {
+            $this->conditions = $this->session->get('orders_search');
+            if (!is_array($this->conditions)) {
+                $this->conditions = XLite_Model_Order::getDefaultSearchConditions();
+                $this->session->set('orders_search', $this->conditions);
+            }
+        }
+
+        return $this->conditions;
+    }
+
+    /**
      * Get condition 
      * 
      * @param string $name Condition name
@@ -91,15 +112,56 @@ class XLite_View_OrderSearch extends XLite_View_Dialog
      */
     public function getCondition($name)
     {
-        if (is_null($this->conditions)) {
-            $this->conditions = $this->session->get('orders_search');
-            if (!is_array($this->conditions)) {
-                $this->conditions = XLite_Model_Order::getDefaultSearchConditions();
-                $this->session->set('orders_search', $this->conditions);
-            }
+        $conditions = $this->getConditions();
+
+        return isset($conditions[$name]) ? $conditions[$name] : null;
+    }
+
+    /**
+     * Check - used conditions is default or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isDefaultConditions()
+    {
+        $current = $this->getConditions();
+        $default = XLite_Model_Order::getDefaultSearchConditions();
+
+        unset($current['sortCriterion'], $current['sortOrder']);
+        unset($default['sortCriterion'], $default['sortOrder']);
+
+        $result = false;
+        if (count($current) == count($default)) {
+            $intersect = array_intersect_assoc(
+                $this->getConditions(),
+                XLite_Model_Order::getDefaultSearchConditions()
+            );
+
+            $result = count($current) == count($intersect);
         }
 
-        return isset($this->conditions[$name]) ? $this->conditions[$name] : null;
+        return $result;
     }
+
+    /**
+     * Register JS files
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = 'order/search/search.js';
+
+        return $list;
+    }
+
 }
 

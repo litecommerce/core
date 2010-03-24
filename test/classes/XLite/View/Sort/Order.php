@@ -27,22 +27,14 @@
  */
 
 /**
- * Order status selector
+ * Order sort widget 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_StatusSelect extends XLite_View_FormField
-{ 
-    /**
-     * Widget parameter names 
-     */
-    const PARAM_ALL_OPTION = 'allOption';
-    const PARAM_VALUE      = 'value';
-    const PARAM_FIELD      = 'field';
-
-
+class XLite_View_Sort_Order extends XLite_View_Sort_Abstract
+{
     /**
      * Define widget parameters
      *
@@ -54,12 +46,8 @@ class XLite_View_StatusSelect extends XLite_View_FormField
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams += array(
-            self::PARAM_ALL_OPTION  => new XLite_Model_WidgetParam_Bool('Display All option', false),
-            self::PARAM_FIELD       => new XLite_Model_WidgetParam_String('Field name', ''),
-            self::PARAM_VALUE       => new XLite_Model_WidgetParam_String('Status code', ''),
-        );
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/select_status.tpl');
+        $this->widgetParams[self::PARAM_PARAMS]->setValue(array('target' => 'order_list', 'mode' => 'search'));
+        $this->widgetParams[self::PARAM_SORT_CRITERIONS]->setValue(XLite_Model_Order::getSortCriterions());
+        $this->widgetParams[self::PARAM_CELL]->setValue($this->session->get('orders_search'));
     }
 }

@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Controller_Customer_OrderList extends XLite_Controller_Customer_Abstract
-{    
+{
     /**
      * Controller parameters 
      * 
@@ -78,19 +78,21 @@ class XLite_Controller_Customer_OrderList extends XLite_Controller_Customer_Abst
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function action_search()
+    protected function doActionSearch()
     {
-        $ordersSearch = XLite_Model_Order::getDefaultSearchConditions();
-
-        if (XLite_Core_Request::getInstance()->order_id1) {
-            $ordersSearch['order_id1'] = intval(XLite_Core_Request::getInstance()->order_id1);
+        $ordersSearch = $this->session->get('orders_search');
+        if (!is_array($ordersSearch)) {
+            $ordersSearch = XLite_Model_Order::getDefaultSearchConditions();
         }
 
-        if (XLite_Core_Request::getInstance()->order_id2) {
-            $ordersSearch['order_id2'] = intval(XLite_Core_Request::getInstance()->order_id2);
+        if (isset(XLite_Core_Request::getInstance()->order_id)) {
+            $ordersSearch['order_id'] = intval(XLite_Core_Request::getInstance()->order_id);
+            if (0 == $ordersSearch['order_id']) {
+                $ordersSearch['order_id'] = '';
+            }
         }
 
-        if (XLite_Core_Request::getInstance()->status) {
+        if (isset(XLite_Core_Request::getInstance()->status)) {
             $ordersSearch['status'] = XLite_Core_Request::getInstance()->status;
         }
 
@@ -105,6 +107,20 @@ class XLite_Controller_Customer_OrderList extends XLite_Controller_Customer_Abst
                 intval(XLite_Core_Request::getInstance()->startDateDay),
                 intval(XLite_Core_Request::getInstance()->startDateYear)
             );
+
+        } elseif (isset(XLite_Core_Request::getInstance()->startDate)) {
+            $time = strtotime(XLite_Core_Request::getInstance()->startDate);
+            if (false !== $time && -1 !== $time) {
+                $ordersSearch['startDate'] = mktime(
+                    0, 0, 0,
+                    date('m', $time),
+                    date('d', $time),
+                    date('Y', $time)
+                );
+
+            } elseif (0 == strlen(XLite_Core_Request::getInstance()->startDate)) {
+                $ordersSearch['startDate'] = '';
+            }
         }
 
         if (
@@ -118,10 +134,46 @@ class XLite_Controller_Customer_OrderList extends XLite_Controller_Customer_Abst
                 intval(XLite_Core_Request::getInstance()->endDateDay),
                 intval(XLite_Core_Request::getInstance()->endDateYear)
             );
+
+        } elseif (isset(XLite_Core_Request::getInstance()->endDate)) {
+            $time = strtotime(XLite_Core_Request::getInstance()->endDate);
+            if (false !== $time && -1 !== $time) {
+                $ordersSearch['endDate'] = mktime(
+                    23, 59, 59,
+                    date('m', $time),
+                    date('d', $time),
+                    date('Y', $time)
+                );
+                
+            } elseif (0 == strlen(XLite_Core_Request::getInstance()->endDate)) {
+                $ordersSearch['endDate'] = '';
+            }
+        }
+
+        if (XLite_Core_Request::getInstance()->sortCriterion) {
+            $ordersSearch['sortCriterion'] = XLite_Core_Request::getInstance()->sortCriterion;
+        }
+
+        if (XLite_Core_Request::getInstance()->sortOrder) {
+            $ordersSearch['sortOrder'] = XLite_Core_Request::getInstance()->sortOrder;
         }
 
         $this->session->set('orders_search', $ordersSearch);
 
+        $this->set('returnUrl', $this->buildUrl('order_list', '', array('mode' => 'search')));
+    }
+
+    /**
+     * Reset search conditions
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionReset()
+    {
+        $this->session->set('orders_search', XLite_Model_Order::getDefaultSearchConditions());
         $this->set('returnUrl', $this->buildUrl('order_list', '', array('mode' => 'search')));
     }
 
@@ -132,32 +184,22 @@ class XLite_Controller_Customer_OrderList extends XLite_Controller_Customer_Abst
      * @param mixed  $value Property value
      *  
      * @return void
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    function set($name, $value)
+    public function set($name, $value)
     {
-        switch($name) {
+        switch ($name) {
             case 'startDate':
             case 'endDate':
                 $value = intval($value);
                 break;
+
+            default:
         }
 
         parent::set($name, $value);
-    }
-
-
-    /**
-     * Get secure mode
-     * 
-     * @return mixed
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    function getSecure()
-    {
-        return $this->config->Security->customer_security;
     }
 
     /**

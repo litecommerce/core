@@ -53,6 +53,19 @@ class XLite_View_Pager_ProductsList extends XLite_View_Pager
      */
     protected $pagesPerFrame = 5;
 
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->requestParams[] = self::PARAM_ITEMS_PER_PAGE;
+    }
 
     /**
      * Build page URL by page ID

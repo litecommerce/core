@@ -96,25 +96,6 @@ class XLite_View_DatePicker extends XLite_View_FormField
     }
 
     /**
-     * Initialize widget
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function initView()
-    {
-        parent::initView();
-
-        $value = $this->getParam(self::PARAM_VALUE);
-
-        $value = (is_null($value) || !is_numeric($value)) ? time() : intval($value);
-
-        $this->widgetParams[self::PARAM_VALUE]->setValue($value);
-    }
-
-    /**
      * Get element class name 
      * 
      * @return string
@@ -174,6 +155,24 @@ class XLite_View_DatePicker extends XLite_View_FormField
         $list = parent::getCSSFiles();
 
         $list[] = 'common/ui.datepicker.css';
+        $list[] = 'common/datepicker.css';
+
+        return $list;
+    }
+
+    /**
+     * Register JS files
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = 'common/datepicker.js';
 
         return $list;
     }

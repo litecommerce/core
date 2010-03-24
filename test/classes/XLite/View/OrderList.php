@@ -115,7 +115,10 @@ class XLite_View_OrderList extends XLite_View_Dialog
                 $conditions['order_id'],
                 $conditions['status'],
                 $conditions['startDate'],
-                $conditions['endDate']
+                $conditions['endDate'],
+                true,
+                $conditions['sortCriterion'],
+                $conditions['sortOrder'] == 'asc'
             );
         }
 
