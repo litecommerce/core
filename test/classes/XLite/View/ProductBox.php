@@ -105,5 +105,19 @@ class XLite_View_ProductBox extends XLite_View_SideBarBox
     {
         return parent::isVisible() && $this->getProduct()->is('available');
     }
+
+
+    /**
+     * Get a list of CSS files required to display the widget properly
+     *
+     * @return array
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function getCSSFiles()
+    {
+        return array_merge(parent::getCSSFiles(), array('products_list/products_list.css'));
+    }
+
 }
 

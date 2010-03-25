@@ -391,8 +391,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
      */
     protected function getGridColumnsRange()
     {
-        $range = range(self::GRID_COLUMNS_MIN, self::GRID_COLUMNS_MAX);
-
+        $range = array_merge(array('css-defined'=>'css-defined'), range(self::GRID_COLUMNS_MIN, self::GRID_COLUMNS_MAX));
         return array_combine($range, $range);
     }
 
@@ -734,20 +733,6 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
 
         return implode(' ', $classes);
     }
-
-    /**
-     * Get grid item width (percent)
-     *
-     * @return integer
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getGridItemWidth()
-    {
-        return floor(100 / $this->getParam(self::PARAM_GRID_COLUMNS)) - 6;
-    }
-
-
 
     /**
      * Check if widget is visible
