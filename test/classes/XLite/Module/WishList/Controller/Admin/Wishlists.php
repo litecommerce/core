@@ -1,95 +1,285 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* Class description.
-*
-* @package
-* @access public
-* @version $Id$
-*/
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage Controller
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
 
+/**
+ * Wishlists admin controller
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_Module_WishList_Controller_Admin_Wishlists extends XLite_Controller_Admin_Abstract
-{ // {{{	
+{
 
-	public $params = array("target","mode","start_id","end_id","email","sku","product");	
-	public $wishlists = null;
+	/**
+	 * Controller params
+	 * 
+	 * @var    array
+	 * @access protected
+	 * @see    ____var_see____
+	 * @since  3.0.0
+	 */
+	protected $params = array('target', 'mode');	
 
-	function getWishlists() // {{{
+	/**
+	 * Wishlists array
+	 * 
+	 * @var    array
+	 * @access protected
+	 * @see    ____var_see____
+	 * @since  3.0.0
+	 */
+	protected $wishlists = null;
+
+	/**
+	 * do action 'search' - save search parameters in the session
+	 * 
+	 * @return void
+	 * @access protected
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	protected function doActionSearch()
+	{
+		$searchParams = $this->session->get('wishlist_search');
+
+		if (!is_array($searchParams)) {
+			$searchParams = XLite_Module_WishList_Model_WishList::getDefaultSearchConditions();
+		}
+
+		if (isset(XLite_Core_Request::getInstance()->startId)) {
+            $searchParams['startId'] = intval(XLite_Core_Request::getInstance()->startId);
+            if (0 === $searchParams['startId']) {
+                $searchParams['startId'] = '';
+            }
+		}
+
+		if (isset(XLite_Core_Request::getInstance()->endId)) {
+            $searchParams['endId'] = intval(XLite_Core_Request::getInstance()->endId);
+            if (0 === $searchParams['endId']) {
+                $searchParams['endId'] = '';
+            }
+		}
+
+		if (isset(XLite_Core_Request::getInstance()->email)) {
+			$searchParams['email'] = XLite_Core_Request::getInstance()->email;
+		}
+
+		if (isset(XLite_Core_Request::getInstance()->sku)) {
+			$searchParams['sku'] = XLite_Core_Request::getInstance()->sku;
+		}
+
+		if (isset(XLite_Core_Request::getInstance()->productTitle)) {
+			$searchParams['productTitle'] = XLite_Core_Request::getInstance()->productTitle;
+		}
+
+        // Validate startDate and endDate
+        // TODO: need to move to the unified place
+        if (
+            isset(XLite_Core_Request::getInstance()->startDateMonth)
+            && isset(XLite_Core_Request::getInstance()->startDateDay)
+            && isset(XLite_Core_Request::getInstance()->startDateYear)
+        ) {
+            $searchParams['startDate'] = mktime(
+                0, 0, 0,
+                intval(XLite_Core_Request::getInstance()->startDateMonth),
+                intval(XLite_Core_Request::getInstance()->startDateDay),
+                intval(XLite_Core_Request::getInstance()->startDateYear)
+            );
+
+        } elseif (isset(XLite_Core_Request::getInstance()->startDate)) {
+            $time = strtotime(XLite_Core_Request::getInstance()->startDate);
+            if (false !== $time && -1 !== $time) {
+                $searchParams['startDate'] = mktime(
+                    0, 0, 0,
+                    date('m', $time),
+                    date('d', $time),
+                    date('Y', $time)
+                );
+
+            } elseif (0 == strlen(XLite_Core_Request::getInstance()->startDate)) {
+                $searchParams['startDate'] = '';
+            }
+        }
+
+        if (
+            isset(XLite_Core_Request::getInstance()->endDateMonth)
+            && isset(XLite_Core_Request::getInstance()->endDateDay)
+            && isset(XLite_Core_Request::getInstance()->endDateYear)
+        ) {
+            $searchParams['endDate'] = mktime(
+                23, 59, 59,
+                intval(XLite_Core_Request::getInstance()->endDateMonth),
+                intval(XLite_Core_Request::getInstance()->endDateDay),
+                intval(XLite_Core_Request::getInstance()->endDateYear)
+            );
+
+        } elseif (isset(XLite_Core_Request::getInstance()->endDate)) {
+            $time = strtotime(XLite_Core_Request::getInstance()->endDate);
+            if (false !== $time && -1 !== $time) {
+                $searchParams['endDate'] = mktime(
+                    23, 59, 59,
+                    date('m', $time),
+                    date('d', $time),
+                    date('Y', $time)
+                );
+                
+            } elseif (0 == strlen(XLite_Core_Request::getInstance()->endDate)) {
+                $searchParams['endDate'] = '';
+            }
+        }
+
+		$this->session->set('wishlist_search', $searchParams);
+
+		$this->set('returnUrl', $this->buildUrl('wishlists', '', array('mode' => 'search')));
+	}
+
+	/**
+	 * Get wishlists
+	 * 
+	 * @return array
+	 * @access protected
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	public function getWishlists()
 	{
 		if (is_null($this->wishlists)) {
+
 			$wishlist = new XLite_Module_WishList_Model_WishList();
 			$wishlist->collectGarbage();
 
-			$profile = false;
-			if (!empty($this->email)) {	
+            $profile = false;
+
+            $searchParams = $this->getConditions();
+
+            if (!empty($searchParams['email'])) {	
 				$profile = new XLite_Model_Profile();
-				$profile->find("login='" . addslashes($this->email) . "'");
+				$profile->find("login='" . addslashes($searchParams['email']) . "'");
 			}
 
-			$this->wishlists = $wishlist->search($this->start_id,$this->end_id, $profile, $this->sku, $this->product,$this->get('startDate'),$this->get('endDate')+24*3600);	
+			$this->wishlists = $wishlist->search(
+				$searchParams['startId'],
+				$searchParams['endId'],
+				$profile, 
+				$searchParams['sku'],
+				$searchParams['productTitle'],
+				$searchParams['startDate'],
+				$searchParams['endDate'] + 24 * 3600
+			);
 		}
 
 		return $this->wishlists;
 
-	} // }}}
+	}
 
-	function getCount() // {{{ 
+	/**
+	 * Get count of wishlists found
+	 * 
+	 * @return int
+	 * @access protected
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	protected function getCount()
 	{
-		return count($this->get("wishlists"));
-	} // }}}
+		return count($this->getWishLists());
+	}
 
-	function action_delete() {
-		if (isset($this->wishlist_id)) {
-			foreach ($this->wishlist_id as $id) {
+	/**
+	 * Do action 'delete'
+	 * 
+	 * @return void
+	 * @access protected
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	protected function doActionDelete()
+	{
+        if (isset(XLite_Core_Request::getInstance()->wishlistIds)) {
+
+            $wishlists = XLite_Core_Request::getInstance()->wishlistIds;
+
+			foreach ($wishlists as $id) {
+
 				$wishlist = new XLite_Module_WishList_Model_WishList($id);
-				$wishlist_products = $wishlist->get("products");
-				foreach($wishlist_products as $product)
+				$wishlistProducts = $wishlist->get("products");
+
+				foreach($wishlistProducts as $product) {
 					$product->delete();
+				}
+
 				$wishlist->delete();
 			}
 		}
 	}
 
-} // }}}
+	/**
+	 * Get search conditions
+	 * 
+	 * @return array
+	 * @access protected
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	protected function getConditions()
+	{
+		$searchParams = $this->session->get('wishlist_search');
 
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+		if (!is_array($searchParams)) {
+			$searchParams = XLite_Module_WishList_Model_WishList::getDefaultSearchConditions();
+			$this->session->set('searchParams', $searchParams);
+		}
+
+		return $searchParams;
+	}
+
+	/**
+	 * Get search condition parameter by name
+	 * 
+	 * @param string $paramName 
+	 *  
+	 * @return void
+	 * @access protected
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	public function getCondition($paramName)
+	{
+		$return = null;
+		$searchParams = $this->getConditions();
+
+		if (isset($searchParams[$paramName])) {
+			$return = $searchParams[$paramName];
+		}
+
+		return $return;
+	}
+
+}
+
