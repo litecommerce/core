@@ -51,7 +51,7 @@
 
 <!-- [order] {{{ -->
 <widget class="XLite_View_OrderSearch" />
-<widget target="order" template="common/dialog.tpl" body="order/order.tpl" head="Order # {order.order_id}">
+<widget class="XLite_View_Order" />
 <!-- [/order] }}} -->
 
 <!-- [modules] {{{ -->
