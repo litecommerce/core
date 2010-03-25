@@ -16,11 +16,12 @@ $(document).ready(
   function() {
     $('.date-picker.{getClassName()}').datepicker(
       {
-        dateFormat:      '{getDateFormat()}',
-        gotoCurrent:     true,
-        yearRange:       '{getParam(#highYear#)}-{getParam(#lowYear#)}',
-        showButtonPanel: false,
-        beforeShow:      datePickerPostprocess
+        dateFormat:        '{getDateFormat()}',
+        gotoCurrent:       true,
+        yearRange:         '{getParam(#highYear#)}-{getParam(#lowYear#)}',
+        showButtonPanel:   false,
+        beforeShow:        datePickerPostprocess,
+        selectOtherMonths: true
       }
     );
   }
