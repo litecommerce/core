@@ -37,6 +37,34 @@
 class XLite_View_OrderSearch extends XLite_View_Dialog
 {
     /**
+     * Targets this widget is allowed for
+     *
+     * @var    array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $allowedTargets = array('order_list');
+
+    /**
+     * Orders list (cache)
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $orders = null;
+    /**
+     * Orders total count 
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $totalCount = null;
+
+    /**
      * Conditions (cache)
      * 
      * @var    array
@@ -45,15 +73,6 @@ class XLite_View_OrderSearch extends XLite_View_Dialog
      * @since  3.0.0
      */
     protected $conditions = null;
-
-    /**
-     * Targets this widget is allowed for
-     *
-     * @var    array
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected $allowedTargets = array('order_list');
 
     /**
      * Return title
@@ -83,11 +102,11 @@ class XLite_View_OrderSearch extends XLite_View_Dialog
      * Get conditions 
      * 
      * @return array
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getConditions()
+    protected function getConditions()
     {
         if (is_null($this->conditions)) {
             $this->conditions = $this->session->get('orders_search');
@@ -127,23 +146,78 @@ class XLite_View_OrderSearch extends XLite_View_Dialog
      */
     public function isDefaultConditions()
     {
-        $current = $this->getConditions();
         $default = XLite_Model_Order::getDefaultSearchConditions();
 
-        unset($current['sortCriterion'], $current['sortOrder']);
         unset($default['sortCriterion'], $default['sortOrder']);
 
-        $result = false;
-        if (count($current) == count($default)) {
-            $intersect = array_intersect_assoc(
+        $intersect = count(
+            array_intersect_assoc(
                 $this->getConditions(),
-                XLite_Model_Order::getDefaultSearchConditions()
-            );
+                $default
+            )
+        );
 
-            $result = count($current) == count($intersect);
+        return count($default) == $intersect;
+    }
+
+    /**
+     * Get orders list
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getOrders()
+    {
+        if (is_null($this->orders)) {
+            $conditions = $this->getConditions();
+
+            $order = new XLite_Model_Order();
+            $this->orders = $order->search(
+                $this->auth->getProfile(),
+                $conditions['order_id'],
+                $conditions['status'],
+                $conditions['startDate'],
+                $conditions['endDate'],
+                true,
+                $conditions['sortCriterion'],
+                $conditions['sortOrder'] == 'asc'
+            );
         }
 
-        return $result;
+        return $this->orders;
+    }
+
+    /**
+     * Get orders list count 
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCount()
+    {
+        return count($this->getOrders());
+    }
+
+    /**
+     * Get total count 
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTotalCount()
+    {
+        if (is_null($this->totalCount)) {
+            $order = new XLite_Model_Order();
+            $this->totalCount = $order->getCountByProfile($this->auth->getProfile());
+        }
+
+        return $this->totalCount;
     }
 
     /**

@@ -14,6 +14,23 @@
 $(document).ready(
   function() {
 
+    // Add search form visibility switcher
+    $('a.search-orders').click(
+      function() {
+        var elm = $('form.search-orders');
+        if (elm.css('display') == 'none') {
+          $(this).addClass('dynamic-open').removeClass('dynamic-close');
+          elm.show();
+
+        } else {
+          $(this).addClass('dynamic-close').removeClass('dynamic-open');
+          elm.hide();
+        }
+
+        return false;
+      }
+    );
+
     // Reset form
     $('form.search-orders .reset a').click(
       function() {

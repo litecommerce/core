@@ -188,5 +188,23 @@ class XLite_View_OrderItemsShort extends XLite_View_Abstract
     {
         return $this->getRequestParamValue(self::PARAM_FULL) ? 'open' : 'close';
     }
+
+    /**
+     * Register JS files
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = 'order/list/items.js';
+
+        return $list;
+    }
+
 }
 

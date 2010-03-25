@@ -20,3 +20,15 @@
     <td IF="i=#1#&isMoreLinkVisible()" class="more"><a href="{buildURL(#order#,##,_ARRAY_(#order_id#^order.order_id))}" class="dynamic dynamic-{getMoreLinkClassName()}"><span>{order.getItemsCount()} items</span><img src="images/spacer.gif" alt="" /></a></td>
   </tr>
 </table>
+<script type="text/javascript">
+$(document).ready(
+  function() {
+    // Assign orders items short list constroller
+    $('.orders-list ul.list li.order-{order.order_id}').each(
+      function() {
+        new OrderItemsShortListController(this);
+      }
+    );
+  }
+);
+</script>

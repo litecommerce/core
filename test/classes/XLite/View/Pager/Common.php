@@ -137,13 +137,13 @@ class XLite_View_Pager_Common extends XLite_View_Pager
      * 
      * @param mixed $index page notation
      *  
-     * @return int
+     * @return string
      * @access protected
      * @since  3.0.0
      */
     protected function getLinkClassName($index)
     {
-        return $this->getPageIdByNotation($index);
+        return 'page-' . $this->getPageIdByNotation($index);
     }
 
     /**

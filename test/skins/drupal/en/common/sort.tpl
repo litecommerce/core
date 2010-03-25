@@ -19,3 +19,14 @@
 <a href="{getSortOrderUrl()}" class="{getSortOrderLinkClassName()}">{if:isSortOrderAsc()}&darr;{else:}&uarr;{end:}</a>
 
 <widget name="sort_form" end />
+<script type="text/javascript">
+$(document).ready(
+  function() {
+    $('.sort-box').each(
+      function() {
+        new SortBoxController(this);
+      }
+    );
+  }
+);
+</script>

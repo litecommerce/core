@@ -10,7 +10,10 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget class="XLite_View_Form_Order_Search" name="order_search_form" />
+<a IF="getTotalCount()" href="javascript:void(0);" class="dynamic search-orders dynamic-close"><span>Search orders</span><img src="images/spacer.gif" alt="" /></a>
+<div class="orders-total">Total: <span>{getTotalCount()}</span> orders{if:getTotalCount()}, found: <span>{getCount()}</span> orders{end:}</div>
+
+<widget class="XLite_View_Form_Order_Search" name="order_search_form" IF="getTotalCount()" />
 
   <table cellspacing="0" class="form-table search-orders">
     <tr class="order-id">
@@ -39,3 +42,5 @@
   </table>
 
 <widget name="order_search_form" end />
+
+<widget class="XLite_View_OrderList_Search" />

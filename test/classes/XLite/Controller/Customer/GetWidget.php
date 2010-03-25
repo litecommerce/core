@@ -74,6 +74,7 @@ class XLite_Controller_Customer_GetWidget extends XLite_Controller_Customer_Abst
         foreach ($this->getAJAXParamsTranslationTable() as $ajaxParam => $requestParam) {
             if (!empty($request->$ajaxParam)) {
                 $request->$requestParam = $request->$ajaxParam;
+                $this->set($requestParam, $request->$ajaxParam);
             }
         }
 

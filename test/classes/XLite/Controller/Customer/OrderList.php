@@ -58,6 +58,29 @@ class XLite_Controller_Customer_OrderList extends XLite_Controller_Customer_Abst
     }
 
     /**
+     * Handles the request
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function handleRequest()
+    {
+        parent::handleRequest();
+
+        if (isset(XLite_Core_Request::getInstance()->pageId)) {
+            $ordersSearch = $this->session->get('orders_search');
+            if (!is_array($ordersSearch)) {
+                $ordersSearch = XLite_Model_Order::getDefaultSearchConditions();
+            }
+
+            $ordersSearch['pageId'] = intval(XLite_Core_Request::getInstance()->pageId);
+
+            $this->session->set('orders_search', $ordersSearch);
+        }
+    }
+
+    /**
      * Check if current page is accessible
      * 
      * @return bool
@@ -156,6 +179,10 @@ class XLite_Controller_Customer_OrderList extends XLite_Controller_Customer_Abst
 
         if (XLite_Core_Request::getInstance()->sortOrder) {
             $ordersSearch['sortOrder'] = XLite_Core_Request::getInstance()->sortOrder;
+        }
+
+        if (isset(XLite_Core_Request::getInstance()->pageId)) {
+            $ordersSearch['pageId'] = intval(XLite_Core_Request::getInstance()->pageId);
         }
 
         $this->session->set('orders_search', $ordersSearch);

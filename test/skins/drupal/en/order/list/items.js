@@ -1,7 +1,7 @@
 /* vim: set ts=2 sw=2 sts=2 et: */
 
 /**
- * Orders list controller
+ * Order items short list controller
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -42,12 +42,6 @@ function OrderItemsShortListController(container)
 
   // Add event listeners
   var o = this;
-
-  this.container.click(
-    function() {
-      o.goToOrder();
-    }
-  );
 
   $('a', this.container).click(
     function (event) {
@@ -153,47 +147,3 @@ OrderItemsShortListController.prototype.goToOrder = function()
     }
   );
 }
-
-// onready handler
-$(document).ready(
-  function() {
-
-    // Add search form visibility switcher
-    $('a.search-orders').click(
-      function() {
-        var elm = $('form.search-orders');
-        if (elm.css('display') == 'none') {
-          $(this).addClass('dynamic-open').removeClass('dynamic-close');
-          elm.show();
-
-        } else {
-          $(this).addClass('dynamic-close').removeClass('dynamic-open');
-          elm.hide();
-        }
-
-        return false;
-      }
-    );
-
-    // Assign orders items short list constroller
-    $('.orders-list li').each(
-      function() {
-        new OrderItemsShortListController(this);
-      }
-    );
-
-    if ($.browser.msie && $.browser.version < 8) {
-
-      // Hover emulation
-      $('.orders-list li').hover(
-        function() {
-          $(this).addClass('hover');
-        },
-        function() {
-          $(this).removeClass('hover');
-        }
-      );
-    }
-  }
-);
-

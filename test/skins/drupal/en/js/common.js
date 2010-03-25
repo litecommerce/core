@@ -229,12 +229,16 @@ function hasAJAXSupport()
  *  Loadable widget (abstract prototype)
  */
 function LoadableWidgetAbstract() {
+  this.widgetParams = {};
 }
 
 LoadableWidgetAbstract.prototype.modalTarget  = null;
 LoadableWidgetAbstract.prototype.widgetTarget = 'main';
 LoadableWidgetAbstract.prototype.widgetAction = '';
 LoadableWidgetAbstract.prototype.widgetClass  = null;
+LoadableWidgetAbstract.prototype.widgetParams = {};
+
+LoadableWidgetAbstract.prototype.isShowModalScreen = false;
 
 // Load widget
 LoadableWidgetAbstract.prototype.loadWidget = function()
@@ -279,6 +283,13 @@ LoadableWidgetAbstract.prototype.buildWidgetRequestURL = function()
 // Add widget arguments to parameters list
 LoadableWidgetAbstract.prototype.addWidgetParams = function(params)
 {
+  $.each(
+    this.widgetParams,
+    function(key, value) {
+      params[key] = value;
+    }
+  );
+
   return params;
 }
 
@@ -289,9 +300,13 @@ LoadableWidgetAbstract.prototype.loadHandler = function(xhr, s)
 
   if (xhr.status == 200 && xhr.responseText) {
     var div = document.createElement('DIV');
+    div.style.display = 'none';
+    $('body').get(0).appendChild(div);
     $(div).html(xhr.responseText);
 
     processed = this.placeRequestData($(div).eq(0).children().eq(0));
+
+    div.parentNode.removeChild(div);
   }
 
   this.hideModalScreen();
@@ -306,7 +321,7 @@ LoadableWidgetAbstract.prototype.placeRequestData = function(box)
 {
   var id = 'temporary-ajax-id-' + (new Date()).getTime();
   box.addClass(id);
-  this.modalTarget.replaceWith(box.eq(0).children().eq(0));
+  this.modalTarget.replaceWith(box);
   this.modalTarget = $('.' + id);
   this.modalTarget.removeClass(id);
 
@@ -323,6 +338,10 @@ LoadableWidgetAbstract.prototype.showModalScreen = function()
 {
   if (!this.modalTarget) {
     return false;
+  }
+
+  if (this.isShowModalScreen) {
+    return true;
   }
 
   this.modalTarget.block(
@@ -347,17 +366,21 @@ LoadableWidgetAbstract.prototype.showModalScreen = function()
     .css({padding: null, border: null, margin: null, textAlign: null, color: null, backgroundColor: null, cursor: null})
     .addClass('wait-block-overlay');
 
+  this.isShowModalScreen = true;
+
   return true;
 }
 
 // Hide modal screen
 LoadableWidgetAbstract.prototype.hideModalScreen = function()
 {
-  if (!this.modalTarget) {
+  if (!this.modalTarget || !this.isShowModalScreen) {
     return false;
   }
 
   this.modalTarget.unblock();
+
+  this.isShowModalScreen = false;
 
   return true;
 }
