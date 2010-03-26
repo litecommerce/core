@@ -44,7 +44,6 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
      */
     protected $currentItem = null;
 
-
     /**
      * Common method to determine current location 
      * 
@@ -134,29 +133,36 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
     }
 
     /**
-     * 'update' action
+     * Update cart
      * 
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function action_update()
+    protected function doActionUpdate()
     {
+        // Update quantity
         $items = $this->getCart()->get('items');
         $cartId = XLite_Core_Request::getInstance()->cart_id;
+        $amount = XLite_Core_Request::getInstance()->amount;
+        if (!is_array($amount)) {
+            $amount = array($cartId => $amount);
+        }
+
         foreach ($items as $key => $i) {
             if (
-                isset(XLite_Core_Request::getInstance()->amount[$key])
+                isset($amount[$key])
                 && (is_null($cartId) || $cartId == $key)
             ) {
-                $items[$key]->updateAmount(XLite_Core_Request::getInstance()->amount[$key]);
+                $items[$key]->updateAmount($amount[$key]);
                 $this->getCart()->updateItem($items[$key]);
             }
         }
 
-        if (isset($this->shipping)) {
-            $this->getCart()->set('shipping_id', $this->shipping);
+        // Update shipping method
+        if (isset(XLite_Core_Request::getInstance()->shipping)) {
+            $this->getCart()->set('shipping_id', XLite_Core_Request::getInstance()->shipping);
         }
 
         $this->updateCart();
@@ -176,7 +182,7 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
      */
     protected function action_checkout()
     {
-        $this->action_update();
+        $this->doActionUpdate();
         // switch to checkout dialog 
         $this->set('returnUrl', $this->buildURL('checkout'));
     }

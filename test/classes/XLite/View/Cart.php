@@ -83,9 +83,30 @@ class XLite_View_Cart extends XLite_View_Dialog
      */
     public function getCSSFiles()
     {
-        return array_merge(parent::getCSSFiles(), array('shopping_cart/cart.css'));
+        return array_merge(
+            parent::getCSSFiles(),
+            array(
+                $this->getDir() . '/cart.css',
+            )
+        );
     }
 
+    /**
+     * Register JS files
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = $this->getDir() . '/cart.js';
+
+        return $list;
+    }
 
 }
 

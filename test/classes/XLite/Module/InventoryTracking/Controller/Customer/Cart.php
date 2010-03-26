@@ -37,7 +37,14 @@ class XLite_Module_InventoryTracking_Controller_Customer_Cart extends XLite_Cont
 {    
     public $addReturnUrl = null;
 
-    function updateCart()
+    /**
+     * Recalculates the shopping cart
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function updateCart()
     {
         parent::updateCart();
         if ($this->get("action") == "add" && !is_null($this->getComplex('cart.outOfStock'))) {

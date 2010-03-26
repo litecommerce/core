@@ -30,13 +30,15 @@
 
 <td class="item-actions">
 
-  <div class="item-sums">
-    <span class="item-price">{price_format(item,#price#):h}</span>
-    <span class="sums-multiply">x</span>
-    <span class="item-quantity"><input type="text" name="amount[{cart_id}]" value="{item.amount}" size="3" maxlength="6" /></span>
-    <span class="sums-equals">=</span>
-    <span class="item-subtotal">{price_format(item,#total#):h}</span>
-  </div>
+  <widget class="XLite_View_Form_Cart_ItemUpdate" name="item" item="{item}" cartId="{cart_id}" />
+    <div class="item-sums">
+      <span class="item-price">{price_format(item,#price#):h}</span>
+      <span class="sums-multiply">x</span>
+      <span class="item-quantity"><input type="text" name="amount" value="{item.amount}" /></span>
+      <span class="sums-equals">=</span>
+      <span class="item-subtotal">{price_format(item,#total#):h}</span>
+    </div>
+  <widget name="item" end />
 
   <p class="cart-error-message" IF="!item.valid">(!) This product is out of stock or it has been disabled for sale.</p>
   <widget module="GoogleCheckout" template="modules/GoogleCheckout/shopping_cart/item.tpl" />

@@ -49,7 +49,7 @@
 
 class XLite_Module_UPSOnlineTools_Controller_Customer_Cart extends XLite_Controller_Customer_Cart implements XLite_Base_IDecorator
 {
-	function action_update()
+	protected function doActionUpdate()
 	{
 		$carrier = $this->cart->getCarrier();
 		if (count($this->cart->getCarriers())>0 && $carrier && $_REQUEST['carrier'] != $carrier) {
@@ -63,7 +63,7 @@ class XLite_Module_UPSOnlineTools_Controller_Customer_Cart extends XLite_Control
 			$_REQUEST["shipping"] = $this->shipping;
 		}
 
-		parent::action_update();
+		parent::doActionUpdate();
 	}
 }
 // WARNING :
