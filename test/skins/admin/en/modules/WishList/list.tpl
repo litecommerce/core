@@ -26,11 +26,11 @@ function delete_warning()
 
 <br />
 
-<form name="wishlists" action="admin.php" method="GET">
+<form name="wishlists" action="admin.php" method="POST">
 
-  <input type="hidden" name="target" value="wishlists">
-  <input type="hidden" name="mode" value="search">
-  <input type="hidden" name="action" value="delete">
+  <input type="hidden" name="target" value="wishlists" />
+  <input type="hidden" name="mode" value="search" />
+  <input type="hidden" name="action" value="delete" />
 
   <table border="0">
 
