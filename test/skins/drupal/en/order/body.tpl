@@ -26,3 +26,8 @@
 <hr class="tiny" />
 
 <widget template="common/invoice.tpl" />
+
+<div IF="order.notes" class="customer-note">
+  <strong>Customer note:</strong>
+  <div>{order.notes}</div>
+</div>
