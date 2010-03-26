@@ -142,6 +142,7 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
     {
         $sql = "SELECT MAX(orderby)+1 FROM %s WHERE order_id=%d";
         $sql = sprintf($sql, $this->get("table"), $this->get("order_id"));
+
         return $this->db->getOne($sql);
     }
 
@@ -157,17 +158,33 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
 
     function getPrice()
     {
-        return $this->formatCurrency($this->get("price"));
+        return $this->formatCurrency($this->get('price'));
     }
 
-    function getTotal()
+    /**
+     * Get item cost
+     * 
+     * @return float
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTotal()
     {
-        return $this->formatCurrency($this->get("price") * $this->get("amount"));
+        return $this->formatCurrency($this->get('price') * $this->get('amount'));
     }
 
-    function getWeight()
+    /**
+     * Get item weight 
+     * 
+     * @return float
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getWeight()
     {
-        return $this->getComplex('product.weight') * $this->get("amount");
+        return $this->getComplex('product.weight') * $this->get('amount');
     }
 
     function getRealProduct()
@@ -182,39 +199,85 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
 		return false;
     }
 
-    function get($name)
+    /**
+     * Getter
+     * 
+     * @param string $name Property name
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function get($name)
     {
-		if ($name == 'name' || $name == 'brief_description' || 
-            $name == 'description' || $name == 'sku') {
-        	    $product = $this->get("product");
-        	    if (is_object($product) && $this->getRealProduct() && (!isset($product->properties["$name"]) || !$this->realProduct->get("enabled"))) {
-					return $this->realProduct->get("$name");
-                } else {
-                    if ($name == "name" || $name == "sku")
-                        return $this->get("product_$name");
-                }
-            return $this->getProduct()->get($name);
+        $result = null;
+
+		if (in_array($name, array('name', 'brief_description', 'description', 'sku'))) {
+            $product = $this->get('product');
+
+        	if (
+                is_object($product)
+                && $this->getRealProduct()
+                && (!isset($product->properties[$name]) || !$this->realProduct->get('enabled'))
+            ) {
+			    $result = $this->realProduct->get($name);
+
+            } elseif ($name == 'name' || $name == 'sku') {
+                $result = $this->get("product_$name");
+
+            } else {
+                $result = $this->getProduct()->get($name);
+            }
+
+        } else {
+            $result = parent::get($name);
         }
-        return parent::get($name);
+
+        return $result;
     }
 	
-	function hasThumbnail()
+    /**
+     * Check - has item thumbnail or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+	public function hasThumbnail()
 	{
-		return (!$this->isValid() && $this->getRealProduct()) ? $this->realProduct->hasThumbnail() : $this->getProduct()->hasThumbnail();
+		return (!$this->isValid() && $this->getRealProduct())
+            ? $this->realProduct->hasThumbnail()
+            : $this->getProduct()->hasThumbnail();
 	}
 
-	function getThumbnailURL()
+    /**
+     * Get item thumbnail URL
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+	public function getThumbnailURL()
 	{
-		return (!$this->isValid() && $this->getRealProduct()) ? $this->realProduct->getThumbnailURL() : $this->getProduct()->getThumbnailURL();
+		return (!$this->isValid() && $this->getRealProduct())
+            ? $this->realProduct->getThumbnailURL()
+            : $this->getProduct()->getThumbnailURL();
 	}
     
-	/**
-	* This method is used in payment methods to briefly describe
-	* the identity of the item.
-	*/
-    function getDescription()
+    /**
+     * Get item description 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDescription()
     {
-        return $this->get("name").' ('.$this->get("amount").')';
+        return $this->get('name') . ' (' . $this->get('amount') . ')';
     }
 
     function getShortDescription($limit = 30)
@@ -270,11 +333,13 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
      */
     public function getURL()
     {
-		$params = array(
-            'product_id' => $this->getProduct()->get('product_id')
+		return XLite_Core_Converter::getInstance()->buildURL(
+            'product',
+            '',
+            array(
+                'product_id' => $this->getProduct()->get('product_id'),
+            )
         );
-
-		return XLite_Core_Converter::getInstance()->buildURL('product', '', $params);
     }
 
 	public function hasOptions()
