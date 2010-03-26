@@ -117,6 +117,17 @@ class XLite_Controller_Customer_GetWidget extends XLite_Controller_Customer_Abst
         return $this->template;
     }
 
+    /**
+     * Return Viewer object
+     * 
+     * @return XLite_View_Controller
+     * @access public
+     * @since  3.0.0
+     */
+    public function getViewer($isExported = false)
+    {
+        return parent::getViewer(true);
+    }
 
 	/**
 	 * Get class name

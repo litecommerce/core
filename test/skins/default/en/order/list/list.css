@@ -1,0 +1,117 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Order list widget styles
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ */
+.orders-list ul.list {
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+
+.orders-list ul.list li {
+  margin: 0px 0px 20px 0px;
+  padding: 0px;
+  list-style: none;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.orders-list ul.list li:hover,
+.orders-list ul.list li.hover
+{
+  background-color: #eff7fe;
+}
+
+.orders-list ul.list div.title {
+  position: relative;
+  border-bottom: 1px solid #e4e4e4;
+  font-size: 1.6em;
+  padding: 6px 13px 4px 13px;
+}
+
+.orders-list ul.list div.title a.number {
+  font-weight: bold;
+}
+.orders-list ul.list div.title span {
+  color: #808080;
+}
+
+.orders-list ul.list div.title div {
+  position: absolute;
+  top: 6px;
+  right: 13px;
+  white-space: nowrap;
+}
+
+.orders-list ul.list div.title .status-P,
+.orders-list ul.list div.title .status-C,
+.order-title .status-P,
+.order-title .status-C
+{
+  color: #11961d;
+}
+
+.orders-list ul.list div.title .status-F,
+.orders-list ul.list div.title .status-D,
+.orders-list ul.list div.title .status-F,
+.order-title .status-F,
+.order-title .status-D,
+.order-title .status-F
+{
+  color: #c60000;
+}
+
+.orders-list ul.list div.title .status-Q,
+.orders-list ul.list div.title .status-I,
+.order-title .status-Q,
+.order-title .status-I
+{
+  color: #474747;
+}
+
+.orders-list ul.list div.title img,
+a.printable img
+{
+  width: 12px;
+  height: 13px;
+  background: transparent url(../../images/printer.gif) no-repeat left top;
+}
+
+.orders-list ul.list table {
+  margin-top: 8px;
+  width: 100%;
+}
+
+.orders-list ul.list td.name {
+  width: 48%;
+}
+
+.orders-list ul.list td.price {
+  padding-right: 0px;
+  text-align: right;
+}
+
+.orders-list ul.list td.qty {
+  padding-left: 2px;
+  padding-right: 0px;
+  color: #777;
+}
+
+.orders-list ul.list td.quantity {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.orders-list ul.list td.total,
+.orders-list ul.list td.more
+{
+  text-align: right;
+}

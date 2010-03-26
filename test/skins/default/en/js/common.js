@@ -203,3 +203,170 @@ function hasAJAXSupport()
   return ajaxSupport;
 }
 
+/**
+ *  Loadable widget (abstract prototype)
+ */
+function LoadableWidgetAbstract() {
+  this.widgetParams = {};
+}
+
+LoadableWidgetAbstract.prototype.modalTarget  = null;
+LoadableWidgetAbstract.prototype.widgetTarget = 'main';
+LoadableWidgetAbstract.prototype.widgetAction = '';
+LoadableWidgetAbstract.prototype.widgetClass  = null;
+LoadableWidgetAbstract.prototype.widgetParams = {};
+
+LoadableWidgetAbstract.prototype.isShowModalScreen = false;
+
+// Load widget
+LoadableWidgetAbstract.prototype.loadWidget = function()
+{
+  if (!hasAJAXSupport()) {
+    return false;
+  }
+
+  this.showModalScreen();
+
+  var o = this;
+  $.ajax(
+    {
+      type: 'get',
+      url: this.buildWidgetRequestURL(),
+      timeout: 15000,
+      complete: function(xhr, s) {
+        return o.loadHandler(xhr, s);
+      }
+    }
+  );
+
+  return true;
+}
+
+// Build request widget URL (AJAX)
+LoadableWidgetAbstract.prototype.buildWidgetRequestURL = function()
+{
+  var params = {
+    target:     'get_widget',
+    action:     '',
+    ajaxTarget: this.widgetTarget,
+    ajaxAction: this.widgetAction,
+    ajaxClass:  this.widgetClass
+  };
+
+  params = this.addWidgetParams(params);
+
+  return URLHandler.buildURL(params);
+}
+
+// Add widget arguments to parameters list
+LoadableWidgetAbstract.prototype.addWidgetParams = function(params)
+{
+  $.each(
+    this.widgetParams,
+    function(key, value) {
+      params[key] = value;
+    }
+  );
+
+  return params;
+}
+
+// onload handler
+LoadableWidgetAbstract.prototype.loadHandler = function(xhr, s)
+{
+  var processed = false;
+
+  if (xhr.status == 200 && xhr.responseText) {
+    var div = document.createElement('DIV');
+    div.style.display = 'none';
+    $('body').get(0).appendChild(div);
+    div = $(div);
+    div.html(xhr.responseText);
+
+    processed = this.placeRequestData(this.extractRequestData(div));
+
+    div.remove();
+  }
+
+  this.hideModalScreen();
+
+  this.postprocess(processed);
+
+  return processed;
+}
+
+// Extract widget data
+LoadableWidgetAbstract.prototype.extractRequestData = function(div)
+{
+  return div.children().eq(0);
+}
+
+// Place request data
+LoadableWidgetAbstract.prototype.placeRequestData = function(box)
+{
+  var id = 'temporary-ajax-id-' + (new Date()).getTime();
+  box.addClass(id);
+  this.modalTarget.replaceWith(box);
+  this.modalTarget = $('.' + id);
+  this.modalTarget.removeClass(id);
+
+  return true;
+}
+
+// Widget post processing (after new widge data placing)
+LoadableWidgetAbstract.prototype.postprocess = function(isSuccess)
+{
+}
+
+// Show modal screen
+LoadableWidgetAbstract.prototype.showModalScreen = function()
+{
+  if (!this.modalTarget) {
+    return false;
+  }
+
+  if (this.isShowModalScreen) {
+    return true;
+  }
+
+  this.modalTarget.block(
+    {
+      message: '<div></div>',
+      css: {
+        width: '30%',
+        top: '35%',
+        left: '35%',
+      },
+      overlayCSS: {
+        opacity: 0.1
+      },
+    }
+  );
+
+  $('.blockElement')
+    .css({padding: null, border: null, margin: null, textAlign: null, color: null, backgroundColor: null, cursor: null})
+    .addClass('wait-block');
+
+  $('.blockOverlay')
+    .css({padding: null, border: null, margin: null, textAlign: null, color: null, backgroundColor: null, cursor: null})
+    .addClass('wait-block-overlay');
+
+  this.isShowModalScreen = true;
+
+  return true;
+}
+
+// Hide modal screen
+LoadableWidgetAbstract.prototype.hideModalScreen = function()
+{
+  if (!this.modalTarget || !this.isShowModalScreen) {
+    return false;
+  }
+
+  this.modalTarget.unblock();
+
+  this.isShowModalScreen = false;
+
+  return true;
+}
+

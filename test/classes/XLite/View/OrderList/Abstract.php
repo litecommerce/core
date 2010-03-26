@@ -179,5 +179,23 @@ abstract class XLite_View_OrderList_Abstract extends XLite_View_Dialog
 
         return $list;
     }
+
+    /**
+     * Register CSS files
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'order/list/list.css';
+
+        return $list;
+    }
+
 }
 

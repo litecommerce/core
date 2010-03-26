@@ -1,0 +1,226 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Order details widget styles
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ */
+.order-title,
+.order-title div
+{
+  color: #1d436c;
+  font-size: 18px;
+  margin-bottom: 7px;
+}
+
+.order-title div {
+  float: right;
+}
+
+.order-title .status-P,
+.order-title .status-C
+{
+  color: #11961d;
+}
+
+.order-title .status-F,
+.order-title .status-D,
+.order-title .status-F
+{
+  color: #c60000;
+}
+
+.order-title .status-Q,
+.order-title .status-I
+{
+  color: #474747;
+}
+
+.order-buttons {
+  margin-bottom: 16px;
+}
+
+.order-buttons a {
+  padding: 0px 10px;
+}
+
+.order-buttons a.first {
+  padding-left: 0px;
+}
+
+.order-buttons a.last {
+  padding-right: 0px;
+}
+
+.order-buttons a,
+.order-buttons a.printable span
+{
+  text-decoration: underline;
+  white-space: nowrap;
+}
+
+.order-buttons a.printable {
+  text-decoration: none;
+}
+
+.order-buttons a.printable span {
+  padding-left: 3px;
+}
+
+.order-buttons a.printable img {
+  vertical-align: middle;
+  width: 12px;
+  height: 13px;
+  background: transparent url(../images/printer.gif) no-repeat left top;
+}
+
+/*
+ *
+ * Invoice
+ *
+ */
+.invoice-header,
+.invoice-address
+{
+  width: 100%;
+  border: 0px none;
+}
+
+.invoice-header td,
+.invoice-address td
+{
+  border: 0px none;
+  width: 50%;
+}
+
+.invoice-header p,
+.invoice-address p
+{
+  padding: 0px 0px 6px 0px;
+  margin: 0px;
+  line-height: 1.5em;
+}
+
+.invoice-header p.last,
+.invoice-address p.last
+{
+  padding-bottom: 0px;
+}
+
+.invoice-header strong,
+.invoice-address td.bill strong,
+.invoice-address td.ship strong
+{
+  display: block;
+  font-size: 1.5em;
+  padding-bottom: 3px;
+  line-height: normal;
+  font-weight: normal;
+}
+
+.invoice-header {
+  margin-bottom: 0px;
+  margin-top: 7px;
+}
+
+h2.invoice {
+  font-size: 3em;
+  margin-bottom: 2px;
+  margin-top: 4px;
+}
+
+.invoice-title {
+  line-height: normal;
+  font-size: 1.4em;
+  font-weight: bold;
+  margin-bottom: 9px;
+}
+
+.invoice-title span {
+  float: right;
+}
+
+.invoice-items,
+.invoice-totals
+{
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 0px;
+  background-color: black;
+}
+
+.invoice-items td, 
+.invoice-totals td,
+.invoice-items th
+{
+  background: white none;
+  padding: 7px 9px;
+  white-space: nowrap;
+  line-height: normal;
+}
+
+.invoice-items th {
+  text-align: center;
+}
+
+.invoice-totals a {
+  line-height: normal;
+}
+
+.invoice-items td.name {
+  white-space: normal;
+  text-align: left;
+}
+
+.invoice-items td.sku,
+.invoice-items th.name
+{
+  text-align: left;
+}
+
+.invoice-items td.qty {
+  text-align: center;
+}
+
+.invoice-items td.total,
+.invoice-totals td.total
+{
+  width: 60px;
+  text-align: right;
+}
+
+.invoice-totals td {
+  text-align: right;
+}
+
+.invoice-totals tr.grand-total td {
+  font-weight: bold;
+}
+
+.invoice-address {
+  margin-top: 20px;
+}
+
+.invoice-address td {
+  padding: 0px;
+}
+
+.invoice-address td.payment strong,
+.invoice-address td.shipping strong
+{
+  margin-top: 11px;
+  display: block;
+}
+
+.invoice-thank {
+  text-align: center;
+  width: 100%;
+  font-size: 1.5em;
+  margin-top: 17px;
+  margin-bottom: 23px;
+}

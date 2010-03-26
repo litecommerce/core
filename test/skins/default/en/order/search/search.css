@@ -1,0 +1,85 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Order serarch widget styles
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ */
+.panel {
+  position: relative;
+}
+
+.orders-total {
+  color: #777;
+  font-size: 1.53em;
+  padding-left: 2px;
+}
+
+.orders-total span {
+  color: #212121;
+}
+
+a.search-orders {
+  float: right;
+}
+
+/* Dynamic link widget */
+a.dynamic {
+  color: #154e9c;
+  text-decoration: none;
+  white-space: nowrap;
+  line-height: normal;
+  padding: 8px 6px 6px 0px;
+}
+
+a.dynamic span {
+  border-bottom: 1px dotted #154e9c;
+  line-height: normal;
+}
+
+a.dynamic img {
+  width: 11px;
+  height: 4px;
+  background: transparent url(../../images/link_arrows.gif) no-repeat right 0px;
+  line-height: normal;
+}
+
+a.dynamic-close img {
+  background-position: right -4px;
+}
+
+form.search-orders {
+  background-color: #f4f4f4;
+  margin-bottom: 28px;
+}
+
+table.search-orders {
+  width: 100%;
+  margin: 13px 12px;
+}
+
+table.search-orders td {
+  white-space: nowrap;
+  padding: 0.61em 0.42em;
+}
+
+table.search-orders .order-id input,
+table.search-orders .status select
+{
+  width: 180px;
+}
+
+table.search-orders .button-cell {
+  width: 100%;
+  text-align: right;
+  padding-right: 33px;
+}
+
+.orders-panel {
+  height: 30px;
+}

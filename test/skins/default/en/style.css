@@ -30,19 +30,19 @@ Main template main.tpl wallpaper.
 }
 
 A:link {
-	COLOR: #4F5964; TEXT-DECORATION: none
+	COLOR: #4F5964; TEXT-DECORATION: none; OUTLINE: 0;
 }
 
 A:visited {
-	COLOR: #4F5964; TEXT-DECORATION: none
+	COLOR: #4F5964; TEXT-DECORATION: none; OUTLINE: 0;
 }
 
 A:hover {
-	COLOR: #4F5964; TEXT-DECORATION: underline
+	COLOR: #4F5964; TEXT-DECORATION: underline; OUTLINE: 0;
 }
 
 A:active {
-	COLOR: #4F5964; TEXT-DECORATION: none
+	COLOR: #4F5964; TEXT-DECORATION: none; OUTLINE: 0;
 }
 
 H1 {

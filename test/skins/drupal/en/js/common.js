@@ -302,11 +302,12 @@ LoadableWidgetAbstract.prototype.loadHandler = function(xhr, s)
     var div = document.createElement('DIV');
     div.style.display = 'none';
     $('body').get(0).appendChild(div);
-    $(div).html(xhr.responseText);
+    div = $(div);
+    div.html(xhr.responseText);
 
-    processed = this.placeRequestData($(div).eq(0).children().eq(0));
+    processed = this.placeRequestData(this.extractRequestData(div));
 
-    div.parentNode.removeChild(div);
+    div.remove();
   }
 
   this.hideModalScreen();
@@ -314,6 +315,12 @@ LoadableWidgetAbstract.prototype.loadHandler = function(xhr, s)
   this.postprocess(processed);
 
   return processed;
+}
+
+// Extract widget data
+LoadableWidgetAbstract.prototype.extractRequestData = function(div)
+{
+  return div.children().eq(0);
 }
 
 // Place request data

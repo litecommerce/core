@@ -19,13 +19,13 @@
     <td>
 		<table cellpadding="0" cellspacing="0" border="0">
 		<tr>
-		    <td><widget template="common/button2.tpl" href="javascript: document.login_form.submit()" label="Log in&nbsp;&nbsp;&nbsp;&nbsp;" img="btn2_arrows.gif"></td>
+		    <td><widget class="XLite_View_Button_Submit" label="Log in" /></td>
 		</tr>
 		<tr>
 			<td><IMG src="images/spacer.gif" width="1" height="5" alt=""></td>
 		</tr>
 		<tr>
-			<td><widget template="common/button2.tpl" href="cart.php?target=profile&mode=register" label="Register" img="btn2_arrows.gif"></td>
+			<td><widget class="XLite_View_Button_Link" location="cart.php?target=profile&mode=register" label="Register" /></td>
 		</tr>
 		</table>
     </td>

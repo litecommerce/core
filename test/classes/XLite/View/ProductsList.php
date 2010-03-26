@@ -813,4 +813,16 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
     {
         return 2 + ($this->isShowPrice() ? 1 : 0) + ($this->isShowAdd2Cart() ? 1 : 0);
     }
+
+    /** 
+     * Get grid item width (percent) 
+     * 
+     * @return integer 
+     * @access protected 
+     * @since  3.0.0 
+     */ 
+    protected function getGridItemWidth() 
+    { 
+        return floor(100 / $this->getParam(self::PARAM_GRID_COLUMNS)) - 6; 
+    } 
 }
