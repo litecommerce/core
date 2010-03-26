@@ -85,8 +85,6 @@ class XLite_Module_WishList_Controller_Customer_ChangeOptions extends XLite_Modu
     public function getItem()
     {
         if (is_null($this->item)) {
-            $this->item = false;
-
             if (
                 XLite_Core_Request::getInstance()->source == 'wishlist'
                 && XLite_Core_Request::getInstance()->item_id
