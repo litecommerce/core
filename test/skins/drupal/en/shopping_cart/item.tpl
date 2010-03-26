@@ -12,7 +12,9 @@
  *}
 
 <td class="delete-from-list">
-  <widget class="XLite_View_Button_Image" label="Delete item" action="delete" formParams="{_ARRAY_(#cart_id#^cart_id)}" />
+  <widget class="XLite_View_Form_Cart_Item_Delete" name="itemRemove" item="{item}" cartId="{cart_id}" />
+    <widget class="XLite_View_Button_Image" label="Delete item" />
+  <widget name="itemRemove" end />
 </td>
 
 <td class="item-thumbnail" IF="item.hasThumbnail()">
@@ -30,7 +32,7 @@
 
 <td class="item-actions">
 
-  <widget class="XLite_View_Form_Cart_ItemUpdate" name="item" item="{item}" cartId="{cart_id}" />
+  <widget class="XLite_View_Form_Cart_Item_Update" name="item" item="{item}" cartId="{cart_id}" />
     <div class="item-sums">
       <span class="item-price">{price_format(item,#price#):h}</span>
       <span class="sums-multiply">x</span>

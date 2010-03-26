@@ -58,7 +58,7 @@ class XLite_View_Button_Regular extends XLite_View_Button_Abstract
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_ACTION      => new XLite_Model_WidgetParam_String('LC action', '', true),
+            self::PARAM_ACTION      => new XLite_Model_WidgetParam_String('LC action', null, true),
             self::PARAM_JS_EVENT    => new XLite_Model_WidgetParam_List('JS event', 'onclick', true, $this->allowedJSEvents),
             self::PARAM_JS_CODE     => new XLite_Model_WidgetParam_String('JS code', '', true),
             self::PARAM_FORM_PARAMS => new XLite_Model_WidgetParam_Array('Form params to modify', array(), true),
@@ -104,7 +104,7 @@ class XLite_View_Button_Regular extends XLite_View_Button_Abstract
 
         return $formParams
             ? 'submitForm(this.form, {' . $this->getJSFormParams($formParams) . '})'
-            : 'submitFormDefault(this.form, \'' . $this->getParam(self::PARAM_ACTION) . '\');';
+            : 'submitFormDefault(this.form, ' . (is_null($this->getParam(self::PARAM_ACTION)) ? 'null' : ('\'' . $this->getParam(self::PARAM_ACTION) . '\'')) . ');';
     }
 
     /**
