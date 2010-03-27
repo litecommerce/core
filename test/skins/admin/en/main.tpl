@@ -121,10 +121,10 @@
 <widget target="add_product" mode="" template="common/dialog.tpl" body="product/add.tpl" head="Add New Product">
 <widget target="add_product" mode="notification" template="common/dialog.tpl" body="product/add_notification.tpl" head="Notification">
 
-<widget target="profile" mode="delete" template="common/dialog.tpl" head="Delete profile - Confirmation" body="profile/confirm_delete.tpl">
-<widget target="wysiwyg" template="common/dialog.tpl" head="HTML design import/export" body="wysiwyg.tpl">
-<widget target="profile" mode="modify" class="XLite_View_RegisterForm" template="common/dialog.tpl" head="Modify profile" body="profile/body.tpl" name="profileForm">
-<widget target="profile" mode="register" class="XLite_View_RegisterForm" template="common/dialog.tpl" head="Add new user" body="profile/body.tpl" name="registerForm">
+<widget target="profile" template="common/dialog.tpl" head="Delete profile - Confirmation" body="profile/confirm_delete.tpl" IF="{getRequestParamValue(#mode#)=#delete#}" />
+<widget target="wysiwyg" template="common/dialog.tpl" head="HTML design import/export" body="wysiwyg.tpl" />
+<widget target="profile" class="XLite_View_RegisterForm" template="common/dialog.tpl" head="Modify profile" name="profileForm" IF="{getRequestParamValue(#mode#)=#modify#|getRequestParamValue(#mode#)=##}" />
+<widget target="profile" class="XLite_View_RegisterForm" template="common/dialog.tpl" head="Add new user" name="registerForm" IF="{getRequestParamValue(#mode#)=#register#}" />
 
 <widget target="order_list,order,advanced_security" module="AdvancedSecurity" template="modules/AdvancedSecurity/advanced_security.tpl">
 <widget module="AntiFraud" target='order'  visible="{mode}" mode="{mode}" template="common/dialog.tpl" body="modules/AntiFraud/tracking/message.tpl" head="AntiFraud Service Notification">

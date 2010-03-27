@@ -4,8 +4,9 @@
 <span IF="target=#categories#">&nbsp;::&nbsp;<a href="admin.php?target=categories&category_id=0" class="NavigationPath">Categories</a></span>
 <span IF="target=#category#">&nbsp;::&nbsp;<a href="admin.php?target=categories&category_id=0" class="NavigationPath">Categories</a></span>
 <span FOREACH="locationPath,cname,curl">&nbsp;::&nbsp;<a href="{curl:r}" class="NavigationPath">{cname}</a></span>
-<span IF="target=#profile#&mode=#modify#">&nbsp;::&nbsp;<a href="admin.php?target=users" class="NavigationPath">Users</a>&nbsp;::&nbsp;Modify profile</span>
-<span IF="target=#profile#&mode=#delete#">&nbsp;::&nbsp;Delete profile</span>
+<span IF="target=#profile#&getRequestParamValue(#mode#)=#modify#">&nbsp;::&nbsp;<a href="admin.php?target=users" class="NavigationPath">Users</a>&nbsp;::&nbsp;Modify profile</span>
+<span IF="target=#profile#&getRequestParamValue(#mode#)=##">&nbsp;::&nbsp;<a href="admin.php?target=users" class="NavigationPath">Users</a>&nbsp;::&nbsp;Modify profile</span>
+<span IF="target=#profile#&getRequestParamValue(#mode#)=#delete#">&nbsp;::&nbsp;Delete profile</span>
 <span IF="target=#modules#">&nbsp;::&nbsp;<a href="admin.php?target=modules" class="NavigationPath">Modules</a></span>
 <span IF="target=#module#">&nbsp;::&nbsp;<a href="admin.php?target=modules" class="NavigationPath">Modules</a>&nbsp;::&nbsp;{page} settings</span>
 <span IF="target=#settings#">&nbsp;::&nbsp;<a href="admin.php?target=settings" class="NavigationPath">General Settings</a></span>
@@ -18,7 +19,7 @@
 <span IF="target=#product_list#">&nbsp;::&nbsp;Products</span>
 <span IF="target=#global_product_options#">&nbsp;::&nbsp;<a href="admin.php?target=global_product_options" class="NavigationPath">Global product options</a></span>
 <span IF="target=#payment_methods#">&nbsp;::&nbsp;<a href="admin.php?target=payment_methods" class="NavigationPath">Payment methods</a></span>
-<span IF="target=#profile#&mode=#register#">&nbsp;::&nbsp;<a href="admin.php?target=profile&mode=register" class="NavigationPath">Add new user</a></span>
+<span IF="target=#profile#&getRequestParamValue(#mode#)=#register#">&nbsp;::&nbsp;<a href="admin.php?target=users" class="NavigationPath">Users</a>&nbsp;::&nbsp;<a href="admin.php?target=profile&mode=register" class="NavigationPath">Add new user</a></span>
 <span IF="target=#order_list#">&nbsp;::&nbsp;<a href="admin.php?target=order_list" class="NavigationPath">Search orders</a></span>
 <span IF="target=#order#">&nbsp;::&nbsp;<a href="admin.php?target=order_list" class="NavigationPath">Search orders</a>&nbsp;::&nbsp;Order details</span>
 <span IF="target=#card_types#">&nbsp;::&nbsp;<a href="admin.php?target=card_types" class="NavigationPath">Edit credit card types</a></span>

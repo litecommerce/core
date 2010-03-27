@@ -394,8 +394,10 @@ class XLite_Model_Abstract extends XLite_Base
         $condition = implode(" AND ", $condition);
         $values = array(); // compile 'set' clause
         if (is_array($properties)) {
-            foreach ($properties as $field => $val) {
-                $values[] = "$field='".addslashes($val)."'";
+			foreach ($properties as $field => $val) {
+				if (is_scalar($val)) {
+					$values[] = "$field='".addslashes($val)."'";
+				}
             }
         }
         if (!$values) {

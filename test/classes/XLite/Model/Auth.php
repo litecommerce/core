@@ -262,7 +262,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         // update current shopping cart/order data
         $cartProfile = XLite_Model_Cart::getInstance()->getProfile();
         if ($cartProfile->get('order_id')) {
-			$cartProfile->modifyProperties($_REQUEST);
+			$cartProfile->modifyProperties(XLite_Core_Request::getInstance()->getData());
 			$this->copyBillingInfo($cartProfile);
 			$cartProfile->update();
         }

@@ -39,8 +39,10 @@ class XLite_View_CountrySelect extends XLite_View_FormField
 	 * Widget param names
 	 */
 
-	const PARAM_ALL = 'all';
-
+	const PARAM_ALL        = 'all';
+	const PARAM_FIELD_NAME = 'field';
+    const PARAM_VALUE      = 'value';
+	const PARAM_FIELD_ID   = 'fieldId';
 
 	/**
      * Define widget parameters
@@ -54,7 +56,10 @@ class XLite_View_CountrySelect extends XLite_View_FormField
         parent::defineWidgetParams();
 
 		$this->widgetParams += array(
-			self::PARAM_ALL => new XLite_Model_WidgetParam_Bool('All', false),
+            self::PARAM_ALL => new XLite_Model_WidgetParam_Bool('All', false),
+			self::PARAM_FIELD_NAME => new XLite_Model_WidgetParam_String('Field name', ''),
+			self::PARAM_FIELD_ID => new XLite_Model_WidgetParam_String('Field ID', ''),
+			self::PARAM_VALUE => new XLite_Model_WidgetParam_String('Value', '')
 		);
 
         $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/select_country.tpl');

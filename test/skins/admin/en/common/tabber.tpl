@@ -69,7 +69,7 @@
               
               <tr>
                 <td class=Center>
-                  <widget template="{getParam(#body#)}">
+                  <widget template="{getParam(#body#)}" />
                 </td>
               </tr>
 
