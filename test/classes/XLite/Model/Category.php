@@ -11,7 +11,7 @@
  * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @version    SVN: $Id$
  * @link       http://www.qtmsoft.com/
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 
 /**
@@ -19,7 +19,7 @@
  * 
  * @package    Lite Commerce
  * @subpackage ____sub_package____
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 class XLite_Model_Category extends XLite_Model_Abstract
 {
@@ -28,7 +28,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
 	 * 
 	 * @var    array
 	 * @access protected
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	protected $subcategories = null;
 
@@ -40,7 +40,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
      *  
      * @return array
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function getSubcategories($where = null)
     {
@@ -58,7 +58,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
      * 
      * @return XLite_Model_Image
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function getImage()
     {
@@ -70,7 +70,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
 	 * 
 	 * @return bool
 	 * @access public
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	public function hasImage()
     {
@@ -82,7 +82,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
      * 
      * @return string
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function getImageURL()
     {
@@ -94,7 +94,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
 	 * 
 	 * @return bool
 	 * @access public
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	public function isEmpty()
     {

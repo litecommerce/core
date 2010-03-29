@@ -12,7 +12,7 @@
  * @version   SVN: $Id$
  * @link      http://www.qtmsoft.com/
  * @see       ____file_see____
- * @since     3.0.0 EE
+ * @since     3.0.0
  */
 
 /**

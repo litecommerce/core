@@ -12,7 +12,7 @@
  * @version   SVN: $Id$
  * @link      http://www.qtmsoft.com/
  * @see       ____file_see____
- * @since     3.0.0 EE
+ * @since     3.0.0
  */
 
 /**
@@ -61,7 +61,7 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
      *                                                 
      * @return string                                  
      * @access protected                               
-     * @since  3.0.0 EE                                
+     * @since  3.0.0                                
      */                                                
     protected function getHead()                       
     {                                                  
@@ -86,7 +86,7 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
      * 
      * @return array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getItemsList()
     {
@@ -98,7 +98,7 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
      * 
      * @return array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getWishlistItems()
     {
@@ -112,7 +112,7 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
      * @return bool
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function isTruncated()
     {
@@ -125,7 +125,7 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
      * @return bool
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function isWishlistTruncated()
     {
@@ -196,7 +196,7 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
      * 
      * @return array
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function getCSSFiles()
     {
@@ -208,7 +208,7 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
      * 
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function getJSFiles()
     {

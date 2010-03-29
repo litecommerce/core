@@ -50,7 +50,7 @@ class XLite_Module_ProductOptions_Controller_Customer_ChangeOptions extends XLit
      * 
      * @return array 
      * @access protected 
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */      
     protected function getLocation()
     {

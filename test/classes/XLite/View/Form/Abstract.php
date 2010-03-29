@@ -69,7 +69,7 @@ abstract class XLite_View_Form_Abstract extends XLite_View_Abstract
      * 
      * @return array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getCommonFormParams()
     {
@@ -84,7 +84,7 @@ abstract class XLite_View_Form_Abstract extends XLite_View_Abstract
      * 
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getFormAction()
     {
@@ -96,7 +96,7 @@ abstract class XLite_View_Form_Abstract extends XLite_View_Abstract
      * 
      * @return array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getFormParams()
     {
@@ -108,7 +108,7 @@ abstract class XLite_View_Form_Abstract extends XLite_View_Abstract
      * 
      * @return array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getFormParamsAsPlainList()
     {
@@ -156,7 +156,7 @@ abstract class XLite_View_Form_Abstract extends XLite_View_Abstract
      * 
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getOnSubmitResult()
     {
@@ -168,7 +168,7 @@ abstract class XLite_View_Form_Abstract extends XLite_View_Abstract
      * 
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getJSOnSubmitCode()
     {
@@ -242,7 +242,7 @@ abstract class XLite_View_Form_Abstract extends XLite_View_Abstract
      * 
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     abstract protected function getFormName();
 }

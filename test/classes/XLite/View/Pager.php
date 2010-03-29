@@ -326,7 +326,7 @@ class XLite_View_Pager extends XLite_View_Abstract
      *
      * @return bool
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function isVisible()
     {

@@ -55,7 +55,7 @@ class XLite_Controller_Customer_Help extends XLite_Controller_Customer_Abstract
      * 
      * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function addBaseLocation()
     {
@@ -69,7 +69,7 @@ class XLite_Controller_Customer_Help extends XLite_Controller_Customer_Abstract
      * 
      * @return array
      * @access protected 
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getLocation()
     {

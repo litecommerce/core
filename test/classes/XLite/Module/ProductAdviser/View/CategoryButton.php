@@ -42,7 +42,7 @@ class XLite_Module_ProductAdviser_View_CategoryButton extends XLite_View_Abstrac
      *
      * @var    string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected $template = 'modules/ProductAdviser/PriceNotification/category_button.tpl';
 

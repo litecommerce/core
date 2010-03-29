@@ -49,7 +49,7 @@ class XLite_Module_ProductOptions_View_Form_Item_ChangeOptions extends XLite_Vie
      *
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getFormName()
     {

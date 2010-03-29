@@ -11,7 +11,7 @@
  * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @version    SVN: $Id$
  * @link       http://www.qtmsoft.com/
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 
 /**
@@ -19,7 +19,7 @@
  * 
  * @package    Lite Commerce
  * @subpackage ____sub_package____
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 class XLite_Model_Location extends XLite_Base
 {
@@ -28,7 +28,7 @@ class XLite_Model_Location extends XLite_Base
      * 
      * @var    string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
 	protected $name = null;
 
@@ -37,7 +37,7 @@ class XLite_Model_Location extends XLite_Base
      * 
      * @var    string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
 	protected $link = null;
 
@@ -50,7 +50,7 @@ class XLite_Model_Location extends XLite_Base
      *  
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
 	public function __construct($name, $link = null)
 	{
@@ -63,7 +63,7 @@ class XLite_Model_Location extends XLite_Base
      * 
      * @return string
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function getName()
     {
@@ -75,7 +75,7 @@ class XLite_Model_Location extends XLite_Base
      * 
      * @return string
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function getLink()
     {

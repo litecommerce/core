@@ -48,7 +48,7 @@ class XLite_Module_DrupalConnector_Model_Auth extends XLite_Model_Auth implement
 	 * @return XLite_Model_Profile or error code
 	 * @access public
 	 * @see    ____func_see____
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	public function loginSilent($login)
 	{

@@ -53,7 +53,7 @@ class XLite_Module_Newsletters_Controller_Customer_News extends XLite_Controller
      * 
      * @return array
      * @access protected 
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getLocation()
     {

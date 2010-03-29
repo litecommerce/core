@@ -54,7 +54,7 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function getLandingLink()
     {
@@ -70,7 +70,7 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getUserTranslationTable()
     {

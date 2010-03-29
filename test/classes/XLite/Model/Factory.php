@@ -11,7 +11,7 @@
  * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @version    SVN: $Id$
  * @link       http://www.qtmsoft.com/
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 
 
@@ -20,7 +20,7 @@
  * 
  * @package    Lite Commerce
  * @subpackage Model
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 class XLite_Model_Factory extends XLite_Base implements XLite_Base_ISingleton
 {
@@ -29,7 +29,7 @@ class XLite_Model_Factory extends XLite_Base implements XLite_Base_ISingleton
      *
      * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
 	protected function __construct()
 	{
@@ -41,7 +41,7 @@ class XLite_Model_Factory extends XLite_Base implements XLite_Base_ISingleton
      *
      * @return XLite_Model_Session
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public static function getInstance()
     {
@@ -55,7 +55,7 @@ class XLite_Model_Factory extends XLite_Base implements XLite_Base_ISingleton
      *  
      * @return XLite_Base
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function __get($name)
     {
@@ -69,7 +69,7 @@ class XLite_Model_Factory extends XLite_Base implements XLite_Base_ISingleton
      *  
      * @return XLite_Base
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public static function create($name)
     {
@@ -84,7 +84,7 @@ class XLite_Model_Factory extends XLite_Base implements XLite_Base_ISingleton
      *  
      * @return XLite_Base
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public static function createObjectInstance($class, array $args = array())
     {

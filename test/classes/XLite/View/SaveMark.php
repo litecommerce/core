@@ -65,7 +65,7 @@ class XLite_View_SaveMark extends XLite_View_Abstract
      *
      * @return bool
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function isVisible()
     {

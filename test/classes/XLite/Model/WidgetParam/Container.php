@@ -44,7 +44,7 @@ class XLite_Model_WidgetParam_Container extends XLite_Model_WidgetParam_Abstract
      *
      * @return array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getValidaionSchema($value)
     {

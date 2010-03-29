@@ -56,7 +56,7 @@ class XLite_Module_DrupalConnector_Controller_Customer_Cmsconnector extends XLit
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     function action_landing()
     {

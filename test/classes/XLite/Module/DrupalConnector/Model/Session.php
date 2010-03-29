@@ -11,7 +11,7 @@
  * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @version    SVN: $Id$
  * @link       http://www.qtmsoft.com/
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 
 
@@ -20,7 +20,7 @@
  * 
  * @package    Lite Commerce
  * @subpackage Module DrupalConnector
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 abstract class XLite_Module_DrupalConnector_Model_Session extends XLite_Model_Session implements XLite_Base_IDecorator
 {
@@ -30,7 +30,7 @@ abstract class XLite_Module_DrupalConnector_Model_Session extends XLite_Model_Se
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function __construct()
     {
@@ -68,7 +68,7 @@ abstract class XLite_Module_DrupalConnector_Model_Session extends XLite_Model_Se
 	 * @return void
 	 * @access public
 	 * @see    ____func_see____
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	public function __destruct()
 	{

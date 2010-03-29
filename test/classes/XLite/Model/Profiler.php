@@ -11,7 +11,7 @@
  * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @version    SVN: $Id$
  * @link       http://www.qtmsoft.com/
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 
 
@@ -20,7 +20,7 @@
  * 
  * @package    Lite Commerce
  * @subpackage Model
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton 
 {
@@ -29,7 +29,7 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
      * 
      * @var    array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected static $queries = array();
 
@@ -39,7 +39,7 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
      * 
      * @var    bool
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public $enabled = false;
 
@@ -49,7 +49,7 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
 	 * 
 	 * @return XLite_Model_Profiler
 	 * @access public
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	public static function getInstance()
     {
@@ -61,7 +61,7 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
      * 
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function __construct()
     {
@@ -73,7 +73,7 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
      *
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function __destruct()
     {

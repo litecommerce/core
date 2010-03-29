@@ -40,7 +40,7 @@ class XLite_Module_ProductAdviser_View_Form_Product_NotifyMe extends XLite_View_
      *
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getFormName()
     {
@@ -67,7 +67,7 @@ class XLite_Module_ProductAdviser_View_Form_Product_NotifyMe extends XLite_View_
      * 
      * @return array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getFormDefaultParams()
     {

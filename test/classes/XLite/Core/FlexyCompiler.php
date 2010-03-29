@@ -48,7 +48,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
 	 * 
 	 * @var    string
 	 * @access protected
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	protected $source = null;
 
@@ -57,7 +57,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
 	 * 
 	 * @var    string
 	 * @access protected
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	protected $file = null;
 
@@ -66,7 +66,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
 	 * 
 	 * @var    array
 	 * @access protected
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	protected $urlRewrite = array();
 
@@ -78,7 +78,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
 	 *  
 	 * @return void
 	 * @access protected
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	protected function init($file)
 	{

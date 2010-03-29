@@ -135,7 +135,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
      *  
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getLocation()
     {               

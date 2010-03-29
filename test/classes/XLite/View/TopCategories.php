@@ -108,7 +108,7 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
      * 
      * @return array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getCategories($categoryId = null)
     {

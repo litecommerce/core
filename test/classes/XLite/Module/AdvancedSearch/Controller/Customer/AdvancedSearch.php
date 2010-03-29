@@ -62,7 +62,7 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
      * 
      * @return array
      * @access protected 
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getLocation()
     {

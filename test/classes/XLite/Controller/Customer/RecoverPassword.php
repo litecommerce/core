@@ -54,7 +54,7 @@ class XLite_Controller_Customer_RecoverPassword extends XLite_Controller_Custome
      * 
      * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function addBaseLocation()
     {
@@ -68,7 +68,7 @@ class XLite_Controller_Customer_RecoverPassword extends XLite_Controller_Custome
      * 
      * @return array
      * @access protected 
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getLocation()
     {

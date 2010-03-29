@@ -74,7 +74,7 @@ class XLite_Module_DrupalConnector_Model_LandingLink extends XLite_Model_Abstrac
 	 * @return void
 	 * @access public
 	 * @see    ____func_see____
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	public function __construct()
 	{
@@ -89,7 +89,7 @@ class XLite_Module_DrupalConnector_Model_LandingLink extends XLite_Model_Abstrac
 	 * @return void
 	 * @access public
 	 * @see    ____func_see____
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	public function create()
 	{
@@ -112,7 +112,7 @@ class XLite_Module_DrupalConnector_Model_LandingLink extends XLite_Model_Abstrac
 	 * @return string
 	 * @access public
 	 * @see    ____func_see____
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	public function getLink()
 	{
@@ -138,7 +138,7 @@ class XLite_Module_DrupalConnector_Model_LandingLink extends XLite_Model_Abstrac
 	 * @return void
 	 * @access protected
 	 * @see    ____func_see____
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	protected function removeExpired()
 	{

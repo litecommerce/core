@@ -55,7 +55,7 @@ class XLite_Module_GiftCertificates_Controller_Customer_AddGiftCertificate exten
      * 
      * @return array
      * @access protected 
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getLocation()
     {

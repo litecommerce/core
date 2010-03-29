@@ -99,7 +99,7 @@ abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstr
      * 
      * @return XLite_Model_Product
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function getProduct()
     {
@@ -113,7 +113,7 @@ abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstr
      * 
      * @return XLite_Model_Order
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function getCart()
     {

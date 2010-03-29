@@ -40,7 +40,7 @@ class XLite_Module_AdvancedSearch_View_Form_Search extends XLite_View_Form_Abstr
      *
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getFormName()
     {

@@ -40,7 +40,7 @@ class XLite_Module_ProductAdviser_View_NotifyLink extends XLite_View_Abstract
      *
      * @var    string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected $template = 'modules/ProductAdviser/OutOfStock/product_quantity.tpl';
 

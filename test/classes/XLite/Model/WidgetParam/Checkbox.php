@@ -27,7 +27,7 @@ class XLite_Model_WidgetParam_Checkbox extends XLite_Model_WidgetParam_Abstract
      *
      * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getValidaionSchema($value)
     {

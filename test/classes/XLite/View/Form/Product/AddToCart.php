@@ -40,7 +40,7 @@ class XLite_View_Form_Product_AddToCart extends XLite_View_Form_Product_Abstract
      *
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getFormName()
     {
@@ -90,7 +90,7 @@ class XLite_View_Form_Product_AddToCart extends XLite_View_Form_Product_Abstract
      * 
      * @return array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getFormDefaultParams()
     {

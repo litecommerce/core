@@ -31,7 +31,7 @@
  * 
  * @package    Lite Commerce
  * @subpackage Model
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 class XLite_Model_CachingFactory extends XLite_Model_Factory implements XLite_Base_ISingleton
 {
@@ -40,7 +40,7 @@ class XLite_Model_CachingFactory extends XLite_Model_Factory implements XLite_Ba
      * 
      * @var    array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected static $cache = array();
 
@@ -64,7 +64,7 @@ class XLite_Model_CachingFactory extends XLite_Model_Factory implements XLite_Ba
      *
      * @return XLite_Model_Session
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public static function getInstance()
     {
@@ -114,7 +114,7 @@ class XLite_Model_CachingFactory extends XLite_Model_Factory implements XLite_Ba
      *
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function __destruct()
     {

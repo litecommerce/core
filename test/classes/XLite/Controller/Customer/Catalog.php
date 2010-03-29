@@ -11,7 +11,7 @@
  * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @version    SVN: $Id$
  * @link       http://www.qtmsoft.com/
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 
 /**
@@ -19,7 +19,7 @@
  * 
  * @package    Lite Commerce
  * @subpackage ____sub_package____
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 abstract class XLite_Controller_Customer_Catalog extends XLite_Controller_Customer_Abstract
 {
@@ -31,7 +31,7 @@ abstract class XLite_Controller_Customer_Catalog extends XLite_Controller_Custom
      *  
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function checkCategoryLink(XLite_Model_Category $category, $includeCurrent)
     {
@@ -46,7 +46,7 @@ abstract class XLite_Controller_Customer_Catalog extends XLite_Controller_Custom
      *  
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getCategoryURL(XLite_Model_Category $category, $includeCurrent)
     {
@@ -63,7 +63,7 @@ abstract class XLite_Controller_Customer_Catalog extends XLite_Controller_Custom
      *  
      * @return XLite_Model_Location
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getCategoryLocation(XLite_Model_Category $category, $includeCurrent)
     {
@@ -75,7 +75,7 @@ abstract class XLite_Controller_Customer_Catalog extends XLite_Controller_Custom
      * 
      * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function addBaseLocation($includeCurrent = false)
     {

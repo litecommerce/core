@@ -36,7 +36,7 @@ class XLite_View_Controller extends XLite_View_Abstract
      * 
      * @var    bool
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected static $isStarted = false;
 
@@ -46,7 +46,7 @@ class XLite_View_Controller extends XLite_View_Abstract
      * 
      * @var    string
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public static $bodyContent = null;
 
@@ -56,7 +56,7 @@ class XLite_View_Controller extends XLite_View_Abstract
      * 
      * @return bool
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function useDefaultDisplayMode()
     {
@@ -68,7 +68,7 @@ class XLite_View_Controller extends XLite_View_Abstract
      * 
      * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected static function startPage()
     {
@@ -86,7 +86,7 @@ class XLite_View_Controller extends XLite_View_Abstract
      * 
      * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function displayPage()
     {
@@ -136,7 +136,7 @@ class XLite_View_Controller extends XLite_View_Abstract
      *  
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function __construct($template, array $params = array())
     {
@@ -148,7 +148,7 @@ class XLite_View_Controller extends XLite_View_Abstract
      * 
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function __destruct()
     {
@@ -160,7 +160,7 @@ class XLite_View_Controller extends XLite_View_Abstract
      * 
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function display()
     {

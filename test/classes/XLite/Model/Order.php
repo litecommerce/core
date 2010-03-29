@@ -42,7 +42,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
 	 * 
 	 * @var    array
 	 * @access protected
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	protected $_items = null;
 
@@ -63,7 +63,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
 	 *  
 	 * @return void
 	 * @access protected
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	protected function _createItem(XLite_Model_OrderItem $item)
     {
@@ -99,7 +99,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
 	 * 
 	 * @return array
 	 * @access public
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	public function getItems()
     {
@@ -120,7 +120,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
      * 
      * @return int
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function getItemsCount()
     {
@@ -162,7 +162,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
      * 
      * @return bool
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function isEmpty()
     {

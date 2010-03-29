@@ -40,7 +40,7 @@ class XLite_Module_ProductAdviser_View_NotifyMe extends XLite_View_Dialog
      *
      * @var    array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected $allowedTargets = array('notify_me');
 
@@ -49,7 +49,7 @@ class XLite_Module_ProductAdviser_View_NotifyMe extends XLite_View_Dialog
      *
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getHead()
     {
@@ -61,7 +61,7 @@ class XLite_Module_ProductAdviser_View_NotifyMe extends XLite_View_Dialog
      *
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getDir()
     {

@@ -62,7 +62,7 @@ class XLite_Module_GiftCertificates_Controller_Customer_PreviewEcard extends XLi
      * 
      * @return XLite_View_Controller
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function getViewer()
     {

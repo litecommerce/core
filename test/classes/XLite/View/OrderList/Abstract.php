@@ -12,7 +12,7 @@
  * @version   SVN: $Id$
  * @link      http://www.qtmsoft.com/
  * @see       ____file_see____
- * @since     3.0.0 EE
+ * @since     3.0.0
  */
 
 /**
@@ -49,7 +49,7 @@ abstract class XLite_View_OrderList_Abstract extends XLite_View_Dialog
      *
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getHead()
     {
@@ -61,7 +61,7 @@ abstract class XLite_View_OrderList_Abstract extends XLite_View_Dialog
      *
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getDir()
     {

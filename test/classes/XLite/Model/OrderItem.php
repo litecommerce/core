@@ -40,7 +40,7 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
 	 * 
 	 * @return XLite_Model_Order
 	 * @access public
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	public function getOrder()
 	{

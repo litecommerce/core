@@ -40,7 +40,7 @@ abstract class XLite_Model_WidgetParam_ObjectId extends XLite_Model_WidgetParam_
      * 
      * @var    string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     abstract protected function getClassName();
 
@@ -51,7 +51,7 @@ abstract class XLite_Model_WidgetParam_ObjectId extends XLite_Model_WidgetParam_
      *  
      * @return int
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getId($id = null)
     {
@@ -65,7 +65,7 @@ abstract class XLite_Model_WidgetParam_ObjectId extends XLite_Model_WidgetParam_
      *
      * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getValidaionSchema($value)
     {

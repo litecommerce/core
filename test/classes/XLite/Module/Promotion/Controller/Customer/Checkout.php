@@ -51,7 +51,7 @@ class XLite_Module_Promotion_Controller_Customer_Checkout extends XLite_Controll
      * 
      * @return array
      * @access protected 
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getLocation()
     {

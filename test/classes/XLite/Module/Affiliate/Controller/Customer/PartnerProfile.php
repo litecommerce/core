@@ -54,7 +54,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerProfile extends XLite_Mo
      * 
      * @return array
      * @access protected 
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getLocation()
     {

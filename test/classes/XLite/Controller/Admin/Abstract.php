@@ -50,7 +50,7 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
      *
      * @return bool
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function checkAccess()
     {
@@ -62,7 +62,7 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
 	 * 
 	 * @return bool
 	 * @access protected
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	protected function isXliteFormValid()
     {
@@ -90,7 +90,7 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
      *
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
 	public function postprocess()
     {
@@ -106,7 +106,7 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
 	 * 
 	 * @return bool
 	 * @access public
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	public function checkXliteForm()
     {

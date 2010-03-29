@@ -11,7 +11,7 @@
  * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @version    SVN: $Id$
  * @link       http://www.qtmsoft.com/
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 
 /**
@@ -19,7 +19,7 @@
  * 
  * @package    Lite Commerce
  * @subpackage ____sub_package____
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 class XLite_Model_WidgetParam_ObjectId_Category extends XLite_Model_WidgetParam_ObjectId
 {
@@ -38,7 +38,7 @@ class XLite_Model_WidgetParam_ObjectId_Category extends XLite_Model_WidgetParam_
      *
      * @var    string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getClassName()
     {
@@ -52,7 +52,7 @@ class XLite_Model_WidgetParam_ObjectId_Category extends XLite_Model_WidgetParam_
      *
      * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getValidaionSchema($value)
     {
@@ -84,7 +84,7 @@ class XLite_Model_WidgetParam_ObjectId_Category extends XLite_Model_WidgetParam_
      *  
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function __construct($label, $value = null, $isSetting = false, $rootIsAllowed = false)
     {   

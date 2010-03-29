@@ -43,7 +43,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
      * 
      * @return array 
      * @access protected 
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */      
     protected function getLocation()
     {

@@ -56,7 +56,7 @@ class XLite_Module_ProductOptions_View_ChangeOptions extends XLite_View_Abstract
      *
      * @var    array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected $allowedTargets = array('change_options');
 

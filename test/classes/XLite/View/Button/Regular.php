@@ -92,7 +92,7 @@ class XLite_View_Button_Regular extends XLite_View_Button_Abstract
      *
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getDefaultJSCode()
     {
@@ -112,7 +112,7 @@ class XLite_View_Button_Regular extends XLite_View_Button_Abstract
      *
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getJSEvent()
     {
@@ -124,7 +124,7 @@ class XLite_View_Button_Regular extends XLite_View_Button_Abstract
      *
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getJSCode()
     {

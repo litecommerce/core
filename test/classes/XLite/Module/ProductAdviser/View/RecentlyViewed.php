@@ -136,7 +136,7 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_Product
      *
      * @return bool
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function checkProductsToDisplay()
     {
@@ -148,7 +148,7 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_Product
 	 * 
 	 * @return mixed
 	 * @access protected
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	protected function getDialogProductId()
     {

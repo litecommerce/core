@@ -12,7 +12,7 @@
  * @version   SVN: $Id$
  * @link      http://www.qtmsoft.com/
  * @see       ____file_see____
- * @since     3.0.0 EE
+ * @since     3.0.0
  */
 
 /**
@@ -44,7 +44,7 @@ class XLite_View_Category extends XLite_View_Abstract
      * 
      * @return bool
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function isVisible()
     {

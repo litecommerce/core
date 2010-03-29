@@ -54,7 +54,7 @@ class XLite_Module_Affiliate_Controller_Partner extends XLite_Controller_Abstrac
      * 
      * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function addBaseLocation()
     {

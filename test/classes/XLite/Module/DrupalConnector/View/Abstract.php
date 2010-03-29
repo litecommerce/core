@@ -11,7 +11,7 @@
  * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @version    SVN: $Id$
  * @link       http://www.qtmsoft.com/
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 
 /**
@@ -19,7 +19,7 @@
  * 
  * @package    Lite Commerce
  * @subpackage ____sub_package____
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 class XLite_Module_DrupalConnector_View_Abstract extends XLite_View_Abstract implements XLite_Base_IDecorator
 {
@@ -28,7 +28,7 @@ class XLite_Module_DrupalConnector_View_Abstract extends XLite_View_Abstract imp
      * 
      * @var    string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected static $drupalRelativePath = null;
 
@@ -39,7 +39,7 @@ class XLite_Module_DrupalConnector_View_Abstract extends XLite_View_Abstract imp
      * 
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected static function getDrupalRelativePath()
     {
@@ -73,7 +73,7 @@ class XLite_Module_DrupalConnector_View_Abstract extends XLite_View_Abstract imp
      *  
      * @return array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected static function modifyResourcePaths($data)
     {
@@ -87,7 +87,7 @@ class XLite_Module_DrupalConnector_View_Abstract extends XLite_View_Abstract imp
      *  
      * @return array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected static function prepareResources($data)
     {
@@ -106,7 +106,7 @@ class XLite_Module_DrupalConnector_View_Abstract extends XLite_View_Abstract imp
      * 
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function getJSFiles()
     {

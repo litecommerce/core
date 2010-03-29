@@ -79,7 +79,7 @@ class XLite_View_OrderSearch extends XLite_View_Dialog
      *
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getHead()
     {
@@ -91,7 +91,7 @@ class XLite_View_OrderSearch extends XLite_View_Dialog
      *
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getDir()
     {

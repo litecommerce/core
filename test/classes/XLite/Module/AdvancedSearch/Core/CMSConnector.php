@@ -12,7 +12,7 @@
  * @version   SVN: $Id$
  * @link      http://www.qtmsoft.com/
  * @see       ____file_see____
- * @since     3.0.0 EE
+ * @since     3.0.0
  */
 
 /**
@@ -29,7 +29,7 @@ abstract class XLite_Module_AdvancedSearch_Core_CMSConnector extends XLite_Core_
 	 * @return void
 	 * @access protected
 	 * @see    ____func_see____
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	protected function __construct()
 	{

@@ -739,7 +739,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
      *
      * @return bool
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function isVisible()
     {
@@ -751,7 +751,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
      *
      * @return array
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function getCSSFiles()
     {
@@ -767,7 +767,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
      *
      * @return array
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function getJSFiles()
     {
@@ -785,7 +785,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
      *
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function init(array $params = array())
     {

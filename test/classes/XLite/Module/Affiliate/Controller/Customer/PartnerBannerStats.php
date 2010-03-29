@@ -51,7 +51,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerBannerStats extends XLit
      * 
      * @return array
      * @access protected 
-     * @since  3.0.0 EE 
+     * @since  3.0.0 
      */
     protected function getLocation()
     {

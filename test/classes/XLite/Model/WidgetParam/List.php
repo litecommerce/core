@@ -51,7 +51,7 @@ class XLite_Model_WidgetParam_List extends XLite_Model_WidgetParam_String
      *
      * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getValidaionSchema($value)
     {
@@ -74,7 +74,7 @@ class XLite_Model_WidgetParam_List extends XLite_Model_WidgetParam_String
      *  
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function __construct($label, $value = null, $isSetting = false, array $options = array())
     {

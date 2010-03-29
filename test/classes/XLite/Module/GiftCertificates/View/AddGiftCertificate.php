@@ -12,7 +12,7 @@
  * @version   SVN: $Id$
  * @link      http://www.qtmsoft.com/
  * @see       ____file_see____
- * @since     3.0.0 EE
+ * @since     3.0.0
  */
 
 /**
@@ -29,7 +29,7 @@ class XLite_Module_GiftCertificates_View_AddGiftCertificate extends XLite_View_D
      *
      * @var    array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected $allowedTargets = array('add_gift_certificate');
 
@@ -39,7 +39,7 @@ class XLite_Module_GiftCertificates_View_AddGiftCertificate extends XLite_View_D
      *
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getHead()
     {
@@ -51,7 +51,7 @@ class XLite_Module_GiftCertificates_View_AddGiftCertificate extends XLite_View_D
      *
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getDir()
     {

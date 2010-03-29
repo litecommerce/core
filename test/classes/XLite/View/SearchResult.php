@@ -55,7 +55,7 @@ class XLite_View_SearchResult extends XLite_View_ProductsList
      * 
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getHead()
     {

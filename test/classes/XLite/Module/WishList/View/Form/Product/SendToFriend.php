@@ -40,7 +40,7 @@ class XLite_Module_WishList_View_Form_Product_SendToFriend extends XLite_View_Fo
      *
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getFormName()
     {
@@ -66,7 +66,7 @@ class XLite_Module_WishList_View_Form_Product_SendToFriend extends XLite_View_Fo
      * 
      * @return array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getFormDefaultParams()
     {

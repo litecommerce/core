@@ -47,7 +47,7 @@ class XLite_View_Form_Sort extends XLite_View_Form_Abstract
      *
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getFormName()
     {

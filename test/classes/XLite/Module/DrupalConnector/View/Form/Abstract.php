@@ -11,7 +11,7 @@
  * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @version    SVN: $Id$
  * @link       http://www.qtmsoft.com/
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 
 /**
@@ -19,7 +19,7 @@
  * 
  * @package    Lite Commerce
  * @subpackage ____sub_package____
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 abstract class XLite_Module_DrupalConnector_View_Form_Abstract extends XLite_View_Form_Abstract implements XLite_Base_IDecorator
 {
@@ -28,7 +28,7 @@ abstract class XLite_Module_DrupalConnector_View_Form_Abstract extends XLite_Vie
      * 
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getTemplate()
     {
@@ -42,7 +42,7 @@ abstract class XLite_Module_DrupalConnector_View_Form_Abstract extends XLite_Vie
      * 
      * @return bool
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function isDrupalGetForm()
     {
@@ -55,7 +55,7 @@ abstract class XLite_Module_DrupalConnector_View_Form_Abstract extends XLite_Vie
      * 
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getJSOnSubmitCode()
     {
@@ -67,7 +67,7 @@ abstract class XLite_Module_DrupalConnector_View_Form_Abstract extends XLite_Vie
      * 
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getFormParamsAsJSArray()
     {

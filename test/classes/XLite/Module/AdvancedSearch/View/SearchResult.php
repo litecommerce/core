@@ -79,7 +79,7 @@ class XLite_Module_AdvancedSearch_View_SearchResult extends XLite_View_SearchRes
      *
      * @return bool
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function isVisible()
     {

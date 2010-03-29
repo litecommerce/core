@@ -11,7 +11,7 @@
  * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @version    SVN: $Id$
  * @link       http://www.qtmsoft.com/
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 
 /**
@@ -64,7 +64,7 @@ abstract class XLite_Model_WidgetParam_Abstract extends XLite_Base
      * 
      * @var    mixed
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected $isSetting = false;
 
@@ -78,7 +78,7 @@ abstract class XLite_Model_WidgetParam_Abstract extends XLite_Base
      *  
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function __construct($label, $value = null, $isSetting = false)
     {
@@ -95,7 +95,7 @@ abstract class XLite_Model_WidgetParam_Abstract extends XLite_Base
      *
      * @return array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function checkConditions(array $conditions)
     {
@@ -120,7 +120,7 @@ abstract class XLite_Model_WidgetParam_Abstract extends XLite_Base
      *  
      * @return array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     abstract protected function getValidaionSchema($value);
 
@@ -131,7 +131,7 @@ abstract class XLite_Model_WidgetParam_Abstract extends XLite_Base
      *  
      * @return mixed
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function validate($value)
     {
@@ -161,7 +161,7 @@ abstract class XLite_Model_WidgetParam_Abstract extends XLite_Base
      *  
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function setValue($value)
     {
@@ -175,7 +175,7 @@ abstract class XLite_Model_WidgetParam_Abstract extends XLite_Base
      *  
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function appendValue($value)
     {

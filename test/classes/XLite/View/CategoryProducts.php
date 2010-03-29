@@ -47,7 +47,7 @@ class XLite_View_CategoryProducts extends XLite_View_ProductsList
      *
      * @var    array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected $allowedTargets = array('category');
 
@@ -57,7 +57,7 @@ class XLite_View_CategoryProducts extends XLite_View_ProductsList
      *
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getHead()
     {

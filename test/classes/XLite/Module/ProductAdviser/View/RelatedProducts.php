@@ -49,7 +49,7 @@ class XLite_Module_ProductAdviser_View_RelatedProducts extends XLite_View_Produc
      *
      * @var    array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected $allowedTargets = array('product');
 
@@ -113,7 +113,7 @@ class XLite_Module_ProductAdviser_View_RelatedProducts extends XLite_View_Produc
      *
      * @return bool
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function isVisible()
     {

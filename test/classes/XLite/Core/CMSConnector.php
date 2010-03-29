@@ -12,7 +12,7 @@
  * @version   SVN: $Id$
  * @link      http://www.qtmsoft.com/
  * @see       ____file_see____
- * @since     3.0.0 EE
+ * @since     3.0.0
  */
 
 /**
@@ -29,7 +29,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      * @var    booln
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected static $currentCMS = null;
 
@@ -80,7 +80,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 * @return void
 	 * @access protected
 	 * @see    ____func_see____
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	protected function __construct()
 	{
@@ -109,7 +109,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      * 
      * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getFlags()
     {
@@ -123,7 +123,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 *  
 	 * @return array
 	 * @access protected
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	protected function prepareAttributes(array $attributes)
 	{
@@ -148,7 +148,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      *
      * @return string
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     abstract public function getCMSName();
 
@@ -172,7 +172,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      * 
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function init()
     {
@@ -184,7 +184,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      *
      * @return bool 
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public static function isCMSStarted()
     {
@@ -196,7 +196,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      *
      * @return bool
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function checkCurrentCMS()
     {
@@ -223,7 +223,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      *  
      * @return XLite_View_Abstract
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
 	public function getWidgetObject($class, array $attributes = array(), $delta = '')
 	{
@@ -246,7 +246,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 *  
 	 * @return array
 	 * @access public
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	public function validateWidgetArguments($name, array $attributes, $delta = '')
 	{
@@ -263,7 +263,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      *
      * @return bool
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
 	public function isWidgetVisible($name, array $attributes, $delta = '')
 	{
@@ -314,7 +314,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 * @return void
 	 * @access public
 	 * @see    ____func_see____
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	public function setUserData($email, array $data)
 	{
@@ -359,7 +359,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      * @return boolean
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function removeUser($email)
     {
@@ -383,7 +383,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 * @return void
 	 * @access public
 	 * @see    ____func_see____
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	public function logInUser($email)
 	{
@@ -400,7 +400,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 * @return void
 	 * @access public
 	 * @see    ____func_see____
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	public function logOutUser($email = null)
 	{
@@ -413,7 +413,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 * @return integer
 	 * @access public
 	 * @see    ____func_see____
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	public function getSessionTtl()
 	{
@@ -426,7 +426,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 * @return string
 	 * @access public
 	 * @see    ____func_see____
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	public function getLandingLink()
 	{
@@ -535,7 +535,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	 * @return array
 	 * @access protected
 	 * @see    ____func_see____
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	protected function getUserTranslationTable()
 	{

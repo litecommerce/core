@@ -81,7 +81,7 @@ class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_Abstra
      * 
      * @return array
      * @access protected 
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getLocation()
     {

@@ -51,7 +51,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerProduct extends XLite_Mo
      * 
      * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function addBaseLocation()
     {
@@ -66,7 +66,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerProduct extends XLite_Mo
      * 
      * @return array
      * @access protected 
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */     
     protected function getLocation()
     {               

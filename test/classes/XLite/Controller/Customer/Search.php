@@ -60,7 +60,7 @@ class XLite_Controller_Customer_Search extends XLite_Controller_Customer_Abstrac
      * 
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */ 
     protected function getLocation()
     {       

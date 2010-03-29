@@ -12,7 +12,7 @@
  * @version   SVN: $Id$
  * @link      http://www.qtmsoft.com/
  * @see       ____file_see____
- * @since     3.0.0 EE
+ * @since     3.0.0
  */
 
 /**
@@ -28,7 +28,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
      * 
      * @var    string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected $requestMethod = null;
 
@@ -51,7 +51,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
      *  
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function stripSQLinjection($value)
     {
@@ -75,7 +75,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
      *  
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function sanitizeSingle($value)
     {
@@ -89,7 +89,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
      *  
      * @return mixed
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function sanitize($data)
     {
@@ -105,7 +105,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
      *
      * @return mixed
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function prepare($data)
     {
@@ -120,7 +120,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function __construct()
     {
@@ -147,7 +147,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
      *  
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
 	public function mapRequest(array $data = array())
 	{
@@ -169,7 +169,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
      * 
      * @return array
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function getData()
     {
@@ -181,7 +181,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
      * 
      * @return string
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function getRequestMethod()
     {
@@ -193,7 +193,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
      * 
      * @return bool
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function isGet()
     {
@@ -205,7 +205,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
      *
      * @return bool
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function isPost()
     {
@@ -247,7 +247,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
      *  
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function __set($name, $value)
     {
@@ -261,7 +261,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
      *
      * @return bool
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function __isset($name)
     {

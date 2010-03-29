@@ -53,7 +53,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
 	 * 
 	 * @return array
 	 * @access protected
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	protected static function getCaptchaPages()
     {
@@ -70,7 +70,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
 	 * 
 	 * @return array
 	 * @access public
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	public function getEnabledCaptchaPages()
     {
@@ -90,7 +90,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
 	 * 
 	 * @return void
 	 * @access public
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	public function isGDLibLoaded()
     {

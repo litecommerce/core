@@ -11,7 +11,7 @@
  * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @version    SVN: $Id$
  * @link       http://www.qtmsoft.com/
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 
 /**
@@ -19,7 +19,7 @@
  * 
  * @package    Lite Commerce
  * @subpackage ____sub_package____
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 abstract class XLite_View_Button_Abstract extends XLite_View_Abstract
 {
@@ -36,7 +36,7 @@ abstract class XLite_View_Button_Abstract extends XLite_View_Abstract
      * 
      * @var    string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected $allowedJSEvents = array('onclick' => 'One click');
 
@@ -58,7 +58,7 @@ abstract class XLite_View_Button_Abstract extends XLite_View_Abstract
      * 
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getButtonLabel()
     {
@@ -87,7 +87,7 @@ abstract class XLite_View_Button_Abstract extends XLite_View_Abstract
      * 
      * @return array
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function getCSSFiles()
     {
@@ -99,7 +99,7 @@ abstract class XLite_View_Button_Abstract extends XLite_View_Abstract
      * 
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function getJSFiles()
     {

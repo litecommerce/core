@@ -55,7 +55,7 @@ class XLite_Controller_Customer_CheckoutSuccess extends XLite_Controller_Custome
      * 
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */     
     protected function getLocation()
     {   

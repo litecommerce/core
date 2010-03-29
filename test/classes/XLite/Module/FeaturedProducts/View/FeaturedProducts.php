@@ -123,7 +123,7 @@ class XLite_Module_FeaturedProducts_View_FeaturedProducts extends XLite_View_Pro
      * @return bool
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function isVisible()
     {

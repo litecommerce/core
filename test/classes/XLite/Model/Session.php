@@ -11,7 +11,7 @@
  * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @version    SVN: $Id$
  * @link       http://www.qtmsoft.com/
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 
 
@@ -22,7 +22,7 @@ define('SESSION_DEFAULT_ID', md5(uniqid(rand(), true)));
  * 
  * @package    Lite Commerce
  * @subpackage Model
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISingleton
 {
@@ -31,7 +31,7 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
      * 
      * @var    string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected static $xliteFormId = null;
 
@@ -41,7 +41,7 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
      * 
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function generateXliteFormID()
     {
@@ -65,7 +65,7 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
      *
      * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function __construct()
     {
@@ -77,7 +77,7 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
 	 * 
 	 * @return XLite_Model_Session
 	 * @access public
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	public static function getInstance()
     {
@@ -89,7 +89,7 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
      * 
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function __destruct()
     {
@@ -101,7 +101,7 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
      *
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     abstract public function destroy();
 
@@ -110,7 +110,7 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
      * 
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     abstract public function writeClose();
 
@@ -119,7 +119,7 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
      * 
      * @return string
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function getXliteFormID()
     {

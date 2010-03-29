@@ -142,7 +142,7 @@ class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
 	 *  
 	 * @return array
 	 * @access public
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	public static function getArraySchema(array $keys = array(), array $values = array())
 	{

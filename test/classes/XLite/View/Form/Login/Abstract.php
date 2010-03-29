@@ -50,7 +50,7 @@ abstract class XLite_View_Form_Login_Abstract extends XLite_View_Form_Abstract
      * 
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getFormName()
     {
@@ -104,7 +104,7 @@ abstract class XLite_View_Form_Login_Abstract extends XLite_View_Form_Abstract
      * 
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getFormAction()
     {

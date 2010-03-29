@@ -53,7 +53,7 @@ class XLite_Controller_Admin_Db extends XLite_Controller_Admin_Abstract
 	 * 
 	 * @return mixed
 	 * @access public
-	 * @since  3.0.0 EE
+	 * @since  3.0.0
 	 */
 	public function getUploadMaxFilesize()
 	{

@@ -11,7 +11,7 @@
  * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @version    SVN: $Id$
  * @link       http://www.qtmsoft.com/
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 
 /**
@@ -19,7 +19,7 @@
  * 
  * @package    Lite Commerce
  * @subpackage ____sub_package____
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 class XLite_Model_LocationPath extends XLite_Base
 {
@@ -28,7 +28,7 @@ class XLite_Model_LocationPath extends XLite_Base
      * 
      * @var    array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
 	protected $nodes = array();
 
@@ -40,7 +40,7 @@ class XLite_Model_LocationPath extends XLite_Base
      *  
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
 	public function __construct(array $nodes = array())
 	{
@@ -56,7 +56,7 @@ class XLite_Model_LocationPath extends XLite_Base
      *  
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
 	public function addNode(XLite_Model_Location $node)
 	{
@@ -68,7 +68,7 @@ class XLite_Model_LocationPath extends XLite_Base
      * 
      * @return array
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
 	public function getNodes()
 	{

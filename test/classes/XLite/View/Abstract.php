@@ -11,7 +11,7 @@
  * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @version    SVN: $Id$
  * @link       http://www.qtmsoft.com/
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 
 /**
@@ -19,7 +19,7 @@
  * 
  * @package    Lite Commerce
  * @subpackage ____sub_package____
- * @since      3.0.0 EE
+ * @since      3.0.0
  */
 abstract class XLite_View_Abstract extends XLite_Core_Handler
 {
@@ -67,7 +67,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      * 
      * @var    array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected $widgetParams = null;
 
@@ -76,7 +76,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      * 
      * @var    array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected $namedWidgets = array();
 
@@ -85,7 +85,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *
      * @var    array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected $allowedTargets = array();
 
@@ -124,7 +124,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *  
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected static function getSkinURL($url)
     {
@@ -138,7 +138,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *  
      * @return array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected static function prepareResources($data)
     {
@@ -151,7 +151,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      * 
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getTemplate()
     {
@@ -163,7 +163,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getTemplateFile()
     {
@@ -175,7 +175,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getDisplayFile()
     {
@@ -190,7 +190,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *  
      * @return bool
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function checkTemplateStatus($original, $compiled)
     {
@@ -204,7 +204,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *  
      * @return XLite_View_Abstract
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getChildWidget($class = null)
     {
@@ -282,7 +282,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *  
      * @return mixed
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getParam($param)
     {
@@ -345,7 +345,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *  
      * @return array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected static function getResourcesSchema(array $jsResources = array(), array $cssResources = array())
     {
@@ -360,7 +360,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *  
      * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function registerResourcesType($type, array $resources)
     {
@@ -386,7 +386,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *
      * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function checkTarget()
     {
@@ -412,7 +412,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *
      * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function initView()
     {
@@ -430,7 +430,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *
      * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function includeCompiledFile()
     {
@@ -463,7 +463,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *  
      * @return array
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function getWidgetParams($param = null)
     {
@@ -524,7 +524,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      * 
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function getResources()
     {
@@ -541,7 +541,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *  
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function init(array $params = array())
     {
@@ -569,7 +569,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *
      * @return XLite_View_Abstract
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function getWidget(array $params = array(), $class = null, $name = null)
     {
@@ -597,7 +597,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *
      * @return bool
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function isVisible()
     {
@@ -609,7 +609,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      * 
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function display()
     {
@@ -624,7 +624,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *
      * @return string
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function getContent()
     {
@@ -668,7 +668,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      * 
      * @return array
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public static function getRegisteredResources($type = null)
     {
@@ -696,7 +696,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *  
      * @return bool
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function isDisplayRequired(array $target)
     {
@@ -710,7 +710,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *
      * @return mixed
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function get($name)
     {
@@ -726,7 +726,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *  
      * @return mixed
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function __get($name)
     {
@@ -749,7 +749,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *  
      * @return mixed
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function __call($method, array $args = array())
     {
@@ -761,7 +761,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      * 
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function __clone()
     {
@@ -814,7 +814,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *  
      * @return bool
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function isSelected($val1, $val2, $val3 = null)
     {
@@ -832,7 +832,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *  
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function truncate($baseObject, $field, $length = 0, $etc = '...', $breakWords = false)
     {
@@ -870,7 +870,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *  
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function date_format($base, $field = null, $format = null)
     {
@@ -890,7 +890,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function time_format($base, $field = null, $format = null)
     {
@@ -907,7 +907,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *  
      * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function price_format($base, $field = '', $thousandDelim = null, $decimalDelim = null)
     {
@@ -939,7 +939,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *  
      * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function addSlashes($base, $field = null)
     {
@@ -953,7 +953,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *  
      * @return bool
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function isEmpty($data)
     {
@@ -968,7 +968,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *  
      * @return array
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function split(array $array, $count)
     {
@@ -994,7 +994,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *  
      * @return void
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function inc($value, $inc = 1)
     {
@@ -1007,7 +1007,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      * 
      * @return int
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function rand()
     {
@@ -1023,7 +1023,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      *  
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getRowClass($row, $odd_css_class, $even_css_class = null)
     {

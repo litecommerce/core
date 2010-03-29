@@ -79,7 +79,7 @@ class XLite_Model_Layout extends XLite_Base implements XLite_Base_ISingleton
      *
      * @return string
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function getSkinURL($url)
     {

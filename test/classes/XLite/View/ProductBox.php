@@ -47,7 +47,7 @@ class XLite_View_ProductBox extends XLite_View_SideBarBox
      *
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getHead()
     {
@@ -59,7 +59,7 @@ class XLite_View_ProductBox extends XLite_View_SideBarBox
      *
      * @return string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function getDir()
     {
@@ -99,7 +99,7 @@ class XLite_View_ProductBox extends XLite_View_SideBarBox
      *
      * @return bool
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function isVisible()
     {
@@ -112,7 +112,7 @@ class XLite_View_ProductBox extends XLite_View_SideBarBox
      *
      * @return array
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function getCSSFiles()
     {

@@ -40,7 +40,7 @@ class XLite_Controller_Customer_GetWidget extends XLite_Controller_Customer_Abst
      * 
      * @var    string
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected $template = 'get_widget.tpl';
 
@@ -65,7 +65,7 @@ class XLite_Controller_Customer_GetWidget extends XLite_Controller_Customer_Abst
      * 
      * @return void
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function handleRequest()
 	{
@@ -98,7 +98,7 @@ class XLite_Controller_Customer_GetWidget extends XLite_Controller_Customer_Abst
      * 
      * @return bool
      * @access protected
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     protected function checkAccess()
     {
