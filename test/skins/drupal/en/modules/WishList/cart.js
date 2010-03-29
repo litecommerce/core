@@ -1,7 +1,7 @@
 /* vim: set ts=2 sw=2 sts=2 et: */
 
 /**
- * Wishlist controller
+ * Cart controller
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -13,31 +13,8 @@
 $(document).ready(
   function() {
 
-    // Add onchange amount-based form submit
-    $('#wish-list .item-actions input[name="wishlist_amount"]').change(
-      function() {
-        var result = true;
-        var amount = parseInt(this.value);
-        result = !isNaN(amount) && 0 < amount;
-
-        if (result) {
-          $(this.form).submit();
-
-        } else {
-          this.value = this.initialValue;
-        }
- 
-        return result; 
-      }
-    )
-    .each(
-      function() {
-        this.initialValue = this.value;
-      }
-    );
-
     // Add hover listener for Move to cart button
-    $('#wish-list .add-to-cart')
+    $('#shopping-cart .move-to-wishlist')
       .each(
         function() {
           this.moveQuantityWidget = $('.move-quantity', $(this).parents('.item-buttons'));
@@ -63,7 +40,7 @@ $(document).ready(
         }
       );
 
-      $('#wish-list .move-quantity').hover(
+      $('#shopping-cart .move-quantity').hover(
         function() {
           if (this.hideTo) {
             clearTimeout(this.hideTo);

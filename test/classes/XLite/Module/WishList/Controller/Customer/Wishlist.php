@@ -137,6 +137,8 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controlle
 
         // Check cart id 
         if (!is_scalar($cartId) || !isset($items[$cartId])) {
+
+            // TODO - add top message
             $this->set('returnUrl', $this->buildURL('cart'));
 
             return;
@@ -144,6 +146,8 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controlle
         
         // Check access
 		if (!$this->auth->is('logged'))	{
+
+            // TODO - add top message
 			 $this->set('returnUrl', $this->buildURL('login', '', array('mode' => 'wishlist')));
 			 $this->session->set('wishlist_url', $this->buildURL('wishlist', 'move', array('cart_id' => $cartId)));
 
@@ -153,13 +157,13 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controlle
         // Add item to wishlist
         $item = $items[$cartId];
 
-        $wishlist = $this->get("wishList");
+        $wishlist = $this->get('wishList');
 
         $wishlist_product = new XLite_Module_WishList_Model_WishListProduct();
-        $wishlist_product->set("product_id", $item->getProduct()->get("product_id"));
-        $wishlist_product->set("wishlist_id", $wishlist->get("wishlist_id"));
+        $wishlist_product->set('product_id', $item->getProduct()->get('product_id'));
+        $wishlist_product->set('wishlist_id', $wishlist->get('wishlist_id'));
 
-        $orderItem  = $wishlist_product->get("orderItem");
+        $orderItem = $wishlist_product->get('orderItem');
 
         if ($item->getProductOptions()) {
             $options = array();
@@ -167,17 +171,17 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controlle
                 $options[addslashes($option->class)] = $option->option_id;
             }
             $wishlist_product->setProductOptions($options);
-            if (version_compare(PHP_VERSION, '5.0.0') === -1) {
-				$orderItem->setProductOptions($options);
-			}
         }
 
-		$wishlist_product->set("item_id", $orderItem->get("key"));
+		$wishlist_product->set('item_id', $orderItem->get('key'));
         $found = $wishlist_product->find("item_id = '" . addslashes($wishlist_product->get("item_id")) . "' AND wishlist_id = '" . $wishlist->get("wishlist_id"). "'");
 
-        $amount = $wishlist_product->get('amount') + $item->get('amount');
+        $amount = intval(XLite_Core_Request::getInstance()->amount);
+        if (0 >= $amount) {
+            $amount = $item->get('amount');
+        }
 
-        $wishlist_product->set('amount', $amount);
+        $wishlist_product->set('amount', $wishlist_product->get('amount') + $amount);
 
         if ($found) {
         	$wishlist_product->update();
@@ -187,12 +191,21 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controlle
         }
 
         // Delete from cart
-        $this->cart->deleteItem($item);
+        if ($amount >= $item->get('amount')) {
+            $this->cart->deleteItem($item);
+
+        } else {
+            $item->updateAmount($item->get('amount') - $amount);
+            $this->getCart()->updateItem($item);
+        }
+
         $this->updateCart();
 
         if ($this->cart->isEmpty()) {
             $this->cart->delete();
         }
+
+        // TODO - add top message
 	}
 
     /**

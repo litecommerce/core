@@ -36,15 +36,22 @@
     <div class="item-sums">
       <span class="item-price">{price_format(item,#price#):h}</span>
       <span class="sums-multiply">x</span>
-      <span class="item-quantity"><input type="text" name="wishlist_amount" value="{item.amount}" size="3" maxlength="6" /></span>
+      <span class="item-quantity"><input type="text" name="wishlist_amount" value="{item.amount}" /></span>
       <span class="sums-equals">=</span>
       <span class="item-subtotal">{price_format(item,#total#):h}</span>
     </div>
 
+  <widget name="wl_item" end />
+
+  <widget class="XLite_Module_WishList_View_Form_Item_MoveToCart" name="wl_item_move" item="{item}" />
+
     <div class="item-buttons">
-      <widget class="XLite_View_Button_Regular" style="aux-button add-to-cart" label="Add to cart" action="add" formParams="{_ARRAY_(#target#^#cart#,#item_id#^item.item_id,#wishlist_id#^item.wishlist_id,#product_id#^item.product_id)}" />
+      <widget class="XLite_View_Button_Regular" style="aux-button add-to-cart" label="Move to cart" />
+      <div class="move-quantity" style="display: none;">
+        Qty: <input type="text" name="amount" value="{item.amount}" />
+      </div>
     </div>
 
-  <widget name="wl_item" end />
+  <widget name="wl_item_move" end />
 
 </td>

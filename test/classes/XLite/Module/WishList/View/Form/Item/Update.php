@@ -33,14 +33,8 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WishList_View_Form_Item_Update extends XLite_View_Form_Abstract
+class XLite_Module_WishList_View_Form_Item_Update extends XLite_Module_WishList_View_Form_Item_Abstract
 {
-    /**
-     * Widget paramater names
-     */
-    const PARAM_ITEM = 'item';
-
-
     /**
      * Current form name 
      * 
@@ -50,7 +44,7 @@ class XLite_Module_WishList_View_Form_Item_Update extends XLite_View_Form_Abstra
      */
     protected function getFormName()
     {
-        return 'wl_item_' . $this->getParam(self::PARAM_ITEM)->get('wishlist_id');
+        return 'update_' . parent::getFormName();
     }
 
     /**
@@ -64,45 +58,7 @@ class XLite_Module_WishList_View_Form_Item_Update extends XLite_View_Form_Abstra
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams[self::PARAM_ITEM] = new XLite_Model_WidgetParam_Object('Wishlist item', null, false, 'XLite_Model_OrderItem');
-
-        $this->widgetParams[self::PARAM_FORM_TARGET]->setValue('wishlist');
         $this->widgetParams[self::PARAM_FORM_ACTION]->setValue('update');
     }
 
-    /**
-     * Check if widget is visible
-     *
-     * @return bool
-     * @access protected
-     * @since  3.0.0
-     */
-    public function isVisible()
-    {
-        return parent::isVisible()
-            && $this->getParam(self::PARAM_ITEM);
-    }
-    
-    /**
-     * Called before the includeCompiledFile()
-     *
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function initView()
-    {
-        parent::initView();
-
-        $item = $this->getParam(self::PARAM_ITEM);
-
-        $this->widgetParams[self::PARAM_FORM_PARAMS]->appendValue(
-            array(
-                'item_id'     => $item->get('item_id'),
-                'wishlist_id' => $item->get('wishlist_id'),
-                'product_id'  => $item->get('product_id'),
-            )
-        );
-    }
 }
-

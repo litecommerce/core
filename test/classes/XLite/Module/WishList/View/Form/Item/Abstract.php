@@ -27,14 +27,20 @@
  */
 
 /**
- * Delete wishlist item form
+ * Abstract wishlist item form
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WishList_View_Form_Item_Delete extends XLite_Module_WishList_View_Form_Item_Abstract
+abstract class XLite_Module_WishList_View_Form_Item_Abstract extends XLite_View_Form_Abstract
 {
+    /**
+     * Widget paramater names
+     */
+    const PARAM_ITEM = 'item';
+
+
     /**
      * Current form name 
      * 
@@ -44,7 +50,7 @@ class XLite_Module_WishList_View_Form_Item_Delete extends XLite_Module_WishList_
      */
     protected function getFormName()
     {
-        return 'remove_' . parent::getFormName();
+        return 'wl_item_' . $this->getParam(self::PARAM_ITEM)->get('wishlist_id');
     }
 
     /**
@@ -58,6 +64,44 @@ class XLite_Module_WishList_View_Form_Item_Delete extends XLite_Module_WishList_
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams[self::PARAM_FORM_ACTION]->setValue('delete');
+        $this->widgetParams[self::PARAM_ITEM] = new XLite_Model_WidgetParam_Object('Wishlist item', null, false, 'XLite_Model_OrderItem');
+
+        $this->widgetParams[self::PARAM_FORM_TARGET]->setValue('wishlist');
+    }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    public function isVisible()
+    {
+        return parent::isVisible()
+            && $this->getParam(self::PARAM_ITEM);
+    }
+    
+    /**
+     * Called before the includeCompiledFile()
+     *
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function initView()
+    {
+        parent::initView();
+
+        $item = $this->getParam(self::PARAM_ITEM);
+
+        $this->widgetParams[self::PARAM_FORM_PARAMS]->appendValue(
+            array(
+                'item_id'     => $item->get('item_id'),
+                'wishlist_id' => $item->get('wishlist_id'),
+                'product_id'  => $item->get('product_id'),
+            )
+        );
     }
 }
+

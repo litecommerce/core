@@ -27,13 +27,13 @@
  */
 
 /**
- * Delete wishlist item form
+ * Update wishlist item form
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WishList_View_Form_Item_Delete extends XLite_Module_WishList_View_Form_Item_Abstract
+class XLite_Module_WishList_View_Form_Item_MoveToCart extends XLite_Module_WishList_View_Form_Item_Abstract
 {
     /**
      * Current form name 
@@ -44,7 +44,7 @@ class XLite_Module_WishList_View_Form_Item_Delete extends XLite_Module_WishList_
      */
     protected function getFormName()
     {
-        return 'remove_' . parent::getFormName();
+        return 'move2cart_' . parent::getFormName();
     }
 
     /**
@@ -52,12 +52,14 @@ class XLite_Module_WishList_View_Form_Item_Delete extends XLite_Module_WishList_
      *
      * @return void
      * @access protected
-     * @since  1.0.0
+     * @since  3.0.0
      */
     protected function defineWidgetParams()
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams[self::PARAM_FORM_ACTION]->setValue('delete');
+        $this->widgetParams[self::PARAM_FORM_TARGET]->setValue('cart');
+        $this->widgetParams[self::PARAM_FORM_ACTION]->setValue('add');
     }
+
 }

@@ -27,37 +27,28 @@
  */
 
 /**
- * Delete wishlist item form
+ * Cart widget
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WishList_View_Form_Item_Delete extends XLite_Module_WishList_View_Form_Item_Abstract
+class XLite_Module_WishList_View_Cart extends XLite_View_Cart implements XLite_Base_IDecorator
 {
     /**
-     * Current form name 
-     * 
-     * @return string
-     * @access protected
+     * Register JS files
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getFormName()
+    public function getJSFiles()
     {
-        return 'remove_' . parent::getFormName();
-    }
+        $list = parent::getJSFiles();
 
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
+        $list[] = 'modules/WishList/cart.js';
 
-        $this->widgetParams[self::PARAM_FORM_ACTION]->setValue('delete');
+        return $list;
     }
 }

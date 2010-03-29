@@ -47,6 +47,7 @@ class XLite_Module_WishList_Controller_Customer_Cart extends XLite_Controller_Cu
     {
         $wishlistId = XLite_Core_Request::getInstance()->wishlist_id;
         $itemId = XLite_Core_Request::getInstance()->item_id;
+        $amount = intval(XLite_Core_Request::getInstance()->amount);
 
         if (!is_null($wishlistId) && !is_null($itemId)) {
 
@@ -56,30 +57,59 @@ class XLite_Module_WishList_Controller_Customer_Cart extends XLite_Controller_Cu
             $wishlist_product = new XLite_Module_WishList_Model_WishListProduct($itemId, $wishlistId);
             
             if (!$wishlist_product->isOptionsExist()) {
+
+                // TODO - add top message
                 $this->set(
                     'returnUrl',
-                    $this->buildUrl('wishlist', '', array('absentOptions' => 1, 'invalidProductName' => $wishlist_product->getProduct()->get('name')))
+                    $this->buildUrl(
+                        'wishlist',
+                        '',
+                        array('absentOptions' => 1, 'invalidProductName' => $wishlist_product->getProduct()->get('name'))
+                    )
                 );
 
                 return;                
 
             } elseif ($wishlist_product->isOptionsInvalid()) {                
+
+                // TODO - add top message
                 $this->set(
                     'returnUrl',
-                    $this->buildUrl('wishlist', '', array('invalidOptions' => 1, 'invalidProductName' => $wishlist_product->getProduct()->get('name')))
+                    $this->buildUrl(
+                        'wishlist',
+                        '',
+                        array('invalidOptions' => 1, 'invalidProductName' => $wishlist_product->getProduct()->get('name'))
+                    )
                 );
 
                 return;
 
             }
 
+            if (0 > $amount) {
+                $amount = $wishlist_product->get('amount');
+            }
+
             $this->currentItem->set('options', $wishlist_product->get('options'));
-            $this->currentItem->set('amount', XLite_Core_Request::getInstance()->wishlist_amount);
+            $this->currentItem->set('amount', XLite_Core_Request::getInstance()->amount);
 
             $this->session->set('wishlist_products', $wishlist_products);
         }
 
         parent::action_add();
+
+        if (isset($wishlist_product)) {
+
+            // TODO - add adding operation status - product must be remove only after SUCCESSFULL adding operation
+
+            if ($wishlist_product->get('amount') <= $amount) {
+                $wishlist_product->delete();
+
+            } else {
+                $wishlist_product->set('amount', $wishlist_product->get('amount') - $amount);
+                $wishlist_product->update();
+            }
+        }
     }
 
     function _needConvertToIntStr($name)
