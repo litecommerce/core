@@ -48,12 +48,12 @@ class XLite_Module_LayoutOrganizer_Controller_Admin_TemplatePopup extends XLite_
 {	
     public $template = "modules/LayoutOrganizer/template_popup.tpl";
 
-    public function __construct()
+    public function __construct(array $params)
     {
     	$this->params[] = "formName";
     	$this->params[] = "formField";
 
-    	parent::__construct();
+    	parent::__construct($params);
     }
 
     function init()

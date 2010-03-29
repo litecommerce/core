@@ -60,8 +60,6 @@ class XLite_Controller_Admin_Sbjs extends XLite_Controller_Admin_Abstract
         		$this->changeSidebarBoxStatus();
         	break;
         }
-
-        die;
     }
 
     function getSidebarBoxStatus($boxHead = null)

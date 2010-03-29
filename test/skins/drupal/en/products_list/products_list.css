@@ -11,23 +11,17 @@
  * @since     3.0.0
  */
 
-.list-pager ul,
-.list-pager-low ul
-{
+.list-pager ul {
   float: left;
   white-space: nowrap;
 }
 
-.list-pager div,
-.list-pager-low div
-{
+.list-pager div {
   float: right;
   white-space: nowrap;
 }
 
-.list-pager input,
-.list-pager-low input
-{
+.list-pager input {
   text-align: right;
 }
 

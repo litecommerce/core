@@ -48,13 +48,11 @@ class XLite_Module_Affiliate_Model_OrderItem extends XLite_Model_OrderItem imple
         $this->fields["commissions"] = 0;
         parent::__construct();
     }
+
+	// FIXME - check it (see old version)
 	function getAffiliateProduct()
 	{
-		$this->xlite->adminZone = true;
-		$product = new XLite_Model_Product($this->get("product_id"));
-		$product->read();
-		$this->xlite->adminZone = false;
-		return $product;
+		return new XLite_Model_Product($this->get("product_id"));
 	}
 }
 // WARNING :

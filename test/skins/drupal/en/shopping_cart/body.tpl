@@ -12,14 +12,7 @@
  *}
 <div id="shopping-cart">
 
-  <table class="selected-products">
-    <tbody>
-      <tr class="selected-product" FOREACH="cart.getItems(),cart_id,item">
-        <widget template="shopping_cart/item.tpl" IF="item.isUseStandardTemplate()" />
-        <widget module="GiftCertificates" template="modules/GiftCertificates/item.tpl" IF="item.gcid" />
-      </tr>
-    </tbody>
-  </table>
+  <widget template="shopping_cart/items.tpl" />
 
   <div class="cart-totals">
     <widget template="shopping_cart/totals.tpl">

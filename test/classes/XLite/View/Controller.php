@@ -15,7 +15,7 @@
  */
 
 /**
- * LC viewer
+ * LC viewer; not a regular widget
  *
  * @package    View
  * @subpackage Widget
@@ -24,25 +24,9 @@
 class XLite_View_Controller extends XLite_View_Abstract
 {
     /**
-     * Widget parameter names
-     */
-
-    const PARAM_SILENT       = 'silent';
-    const PARAM_DUMP_STARTED = 'dumpStarted';
-
-
-    /**
-     * Semaphore
-     * 
-     * @var    bool
-     * @access protected
-     * @since  3.0.0
-     */
-    protected static $isStarted = false;
-
-    /**
      * Content of the currnt page
-     * NOTE: this is a text, so it's not passed by reference; do not wrap it into a getter
+     * NOTE: this is a text, so it's not passed by reference; do not wrap it into a getter (or pass by reference)
+     * NOTE: until it's not accessing via the function, do not change its access modifier
      * 
      * @var    string
      * @access public
@@ -52,25 +36,13 @@ class XLite_View_Controller extends XLite_View_Abstract
 
 
     /**
-     * Check for current display mode
-     * 
-     * @return bool
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function useDefaultDisplayMode()
-    {
-        return self::$isStarted || $this->getParam(self::PARAM_IS_EXPORTED) || XLite::getInstance()->adminZone;
-    }
-
-    /**
      * Send headers 
      * 
      * @return void
      * @access protected
      * @since  3.0.0
      */
-    protected static function startPage()
+    protected function startPage()
     {
         // send no-cache headers
         header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
@@ -82,40 +54,11 @@ class XLite_View_Controller extends XLite_View_Abstract
     }
 
     /**
-     * displayPage 
-     * 
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function displayPage()
-    {
-        // Set mutex
-        self::$isStarted = true;
-
-        if (!$this->getParam(self::PARAM_SILENT)) {
-
-            self::$bodyContent = $this->getContent();
-            
-            $this->getWidgetParams(self::PARAM_TEMPLATE)->setValue('body.tpl');
-
-            self::startPage();
-            $this->display();
-        }
-
-        if ($this->getParam(self::PARAM_DUMP_STARTED)) {
-            func_refresh_end();
-        }
-
-        XLite::getController()->postprocess();
-    }
-
-    /**
      * Define widget parameters
      *
      * @return void
      * @access protected
-     * @since  1.0.0
+     * @since  3.0.0
      */
     protected function defineWidgetParams()
     {
@@ -125,34 +68,128 @@ class XLite_View_Controller extends XLite_View_Abstract
             self::PARAM_SILENT       => new XLite_Model_WidgetParam_Bool('Silent', false),
             self::PARAM_DUMP_STARTED => new XLite_Model_WidgetParam_Bool('Dump started', false)
         );
+
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('body.tpl');
+    }
+
+    /**
+     * isSilent 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isSilent()
+    {
+        return $this->getParam(self::PARAM_SILENT);
+    }
+
+    /**
+     * isDumpStarted 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isDumpStarted()
+    {
+        return $this->getParam(self::PARAM_DUMP_STARTED);
+    }
+
+    /**
+     * getContentWidget 
+     * 
+     * @return XLite_View_Abstract
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getContentWidget()
+    {
+        return $this->getWidget(array(XLite_View_Abstract::PARAM_TEMPLATE => $this->template), 'XLite_View_Content');
+    }
+
+    /**
+     * prepareContent 
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function prepareContent()
+    {
+        self::$bodyContent = $this->getContentWidget()->getContent();
+    }
+
+    /**
+     * useDefaultDisplayMode 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function useDefaultDisplayMode()
+    {
+        return $this->isExported() || XLite::isAdminZone();
+    }
+
+    /**
+     * displayPage 
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function displayPage()
+    {
+        if ($this->useDefaultDisplayMode()) {
+            $this->getContentWidget()->display();
+        } else {
+            $this->prepareContent();
+            $this->startPage();
+            parent::display();
+        }
+    }
+
+    /**
+     * refreshEnd 
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function refreshEnd()
+    {
+        func_refresh_end();
+    }
+
+    /**
+     * postProcess 
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function postProcess()
+    {
+        XLite::getController()->postprocess();
     }
 
 
     /**
-     * This viewer is only instantiated using the "new" operator (nor the "getWidget()" method)
+     * __construct 
      * 
-     * @param string $template template to use
-     * @param array  $params   widget params
+     * @param array  $params          widget params
+     * @param string $contentTemplate central area template
      *  
      * @return void
      * @access public
      * @since  3.0.0
      */
-    public function __construct($template, array $params = array())
+    public function __construct(array $params = array(), $contentTemplate = null)
     {
-        $this->init(array(self::PARAM_TEMPLATE => $template) + $params);
-    }
+        parent::__construct($params);
 
-    /**
-     * TODO - check if it's really needed
-     * 
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function __destruct()
-    {
-        self::$bodyContent = null;
+        $this->template = $contentTemplate;
     }
 
     /**
@@ -164,7 +201,15 @@ class XLite_View_Controller extends XLite_View_Abstract
      */
     public function display()
     {
-        $this->useDefaultDisplayMode() ? parent::display() : $this->displayPage();
+        if (!$this->isSilent()) {
+            $this->displayPage();
+        }
+
+        if ($this->isDumpStarted()) {
+            $this->refreshEnd();
+        }
+
+        $this->postProcess();
     }
 }
 

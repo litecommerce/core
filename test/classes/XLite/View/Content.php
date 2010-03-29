@@ -26,29 +26,58 @@
  * @since      3.0.0
  */
 
-// FIXME - hack for viewer's mapping; should be removed
-
 /**
- * XLite_Model_WidgetParam_Container 
+ * XLite_View_Content 
  * 
  * @package    XLite
  * @subpackage ____sub_package____
  * @since      3.0.0
  */
-class XLite_Model_WidgetParam_Container extends XLite_Model_WidgetParam_Abstract
+class XLite_View_Content extends XLite_View_Abstract
 {
     /**
-     * Return list of conditions to check
+     * Chunk size
+     */
+    const BUFFER_SIZE = 8192;
+
+
+    /**
+     * echoChunk
      *
-     * @param mixed $value value to validate
+     * @param string $chunk text chunk to output
      *
-     * @return array
+     * @return void
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function echoChunk(&$chunk)
+    {
+        echo $chunk;
+    }
+
+    /**
+     * echoContent 
+     * 
+     * @return void
      * @access protected
      * @since  3.0.0
      */
-    protected function getValidaionSchema($value)
+    protected function echoContent()
     {
-        return array();
+        array_map(array($this, 'echoChunk'), str_split(XLite_View_Controller::$bodyContent, self::BUFFER_SIZE));
+    }
+
+
+    /**
+     * display
+     *
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function display()
+    {
+        isset(XLite_View_Controller::$bodyContent) ? $this->echoContent() : parent::display();
     }
 }
 

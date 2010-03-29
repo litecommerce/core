@@ -230,21 +230,6 @@ class XLite_Controller_Customer_OrderList extends XLite_Controller_Customer_Abst
     }
 
     /**
-     * Get page instance data (name and URL)
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPageInstanceData()
-    {
-        $this->target = 'order_list';
-
-        return parent::getPageInstanceData();
-    }
-
-    /**
      * Get page title
      *
      * @return string

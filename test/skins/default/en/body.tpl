@@ -3,6 +3,6 @@
 <html>
   <widget class="XLite_View_Header" />
 <body>
-  <widget class="XLite_View_Body" />
+  <widget class="XLite_View_Content" />
 </body>
 </html>

@@ -49,9 +49,9 @@ class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controll
 {	
     public $fp = null;
 
-    public function __construct()
+    public function __construct(array $params)
     {
-        parent::__construct();
+        parent::__construct($params);
         $this->pages["export_froogle"] = "Froogle";
         $this->pageTemplates["export_froogle"] = "modules/Froogle/export_froogle.tpl";
     }

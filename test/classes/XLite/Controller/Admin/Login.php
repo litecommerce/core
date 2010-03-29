@@ -44,10 +44,27 @@
 * @package $Package$
 * @version $Id$
 */
-class XLite_Controller_Admin_Login extends XLite_Controller_Abstract
+class XLite_Controller_Admin_Login extends XLite_Controller_Admin_Abstract
 {	
-    public $template = "login.tpl";	
     public $returnUrl = "admin.php";
+
+	/**
+     * getRegularTemplate
+     *
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getRegularTemplate()
+    {
+        return 'login.tpl';
+    }
+
+
+	public function getAccessLevel()
+    {
+        return XLite_Model_Auth::getInstance()->getCustomerAccessLevel();
+    }
 
 	function fillForm()
 	{

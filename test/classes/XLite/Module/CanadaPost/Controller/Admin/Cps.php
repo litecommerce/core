@@ -48,9 +48,9 @@ class XLite_Module_CanadaPost_Controller_Admin_Cps extends XLite_Controller_Admi
 	public $settings;		
 	public $rates 		= array();
 
-	public function __construct() // {{{ 
+	public function __construct(array $params) // {{{ 
 	{
-		parent::__construct();
+		parent::__construct($params);
 
 		$cps = new XLite_Module_CanadaPost_Model_Shipping_Cps();
 		$this->settings = $cps->get("options");

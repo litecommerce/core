@@ -44,9 +44,9 @@
 */
 class XLite_Module_WholesaleTrading_Controller_Admin_Product extends XLite_Controller_Admin_Product implements XLite_Base_IDecorator
 {
-    public function __construct()
+    public function __construct(array $params)
     {
-        parent::__construct();
+        parent::__construct($params);
         $this->pages["access_list"] = "Product access";
         $this->pageTemplates["access_list"] = "modules/WholesaleTrading/product_access/access_list.tpl";
         $this->pages["wholesale_pricing"] = "Wholesale pricing";

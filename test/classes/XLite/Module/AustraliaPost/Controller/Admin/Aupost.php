@@ -48,9 +48,9 @@ class XLite_Module_AustraliaPost_Controller_Admin_Aupost extends XLite_Controlle
 	public $settings;		
 	public $rates 		= array();
 
-	public function __construct() // {{{ 
+	public function __construct(array $params) // {{{ 
 	{
-		parent::__construct();
+		parent::__construct($params);
 
 		$aupost = new XLite_Module_AustraliaPost_Model_Shipping_Aupost();
 		$this->settings = $aupost->get("options");

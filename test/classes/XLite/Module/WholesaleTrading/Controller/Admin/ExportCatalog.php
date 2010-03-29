@@ -46,9 +46,9 @@
 */
 class XLite_Module_WholesaleTrading_Controller_Admin_ExportCatalog extends XLite_Controller_Admin_ExportCatalog implements XLite_Base_IDecorator
 {
-    public function __construct()
+    public function __construct(array $params)
     {
-        parent::__construct();
+        parent::__construct($params);
         $this->pages["export_wholesale_pricing"] = "Export wholesale pricing";
         $this->pageTemplates["export_wholesale_pricing"] = "modules/WholesaleTrading/export_wholesale_pricing.tpl";
         $this->pages["export_product_access"] = "Export product access";

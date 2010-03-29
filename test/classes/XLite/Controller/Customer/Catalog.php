@@ -35,7 +35,7 @@ abstract class XLite_Controller_Customer_Catalog extends XLite_Controller_Custom
      */
     protected function checkCategoryLink(XLite_Model_Category $category, $includeCurrent)
     {
-        return $includeCurrent || $this->get('category_id') !== $category->get('category_id');
+        return $includeCurrent || $this->getCategoryId() !== $category->get('category_id');
     }
 
     /**
@@ -86,6 +86,81 @@ abstract class XLite_Controller_Customer_Catalog extends XLite_Controller_Custom
                 $this->locationPath->addNode($this->getCategoryLocation($category, $includeCurrent));
             }
         }
+    }
+
+    /**
+     * isCategoryAvailable 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isCategoryAvailable()
+    {
+        return $this->getCategory()->is('exists') && $this->getCategory()->is('enabled');
+    }
+
+
+    /**
+     * getModelObject 
+     * 
+     * @return XLite_Model_Abstract
+     * @access protected
+     * @since  3.0.0
+     */
+    abstract protected function getModelObject();
+
+
+    /**
+     * getTitle
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        $metaTitle = $this->getModelObject()->get('meta_title');
+
+        return $metaTitle ? $metaTitle : $this->getModelObject()->get('name');
+    }
+
+    /**
+     * getDescription
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getDescription()
+    {
+        return $this->getModelObject()->get('description');
+    }
+
+    /**
+     * getMetaDescription
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getMetaDescription()
+    {
+        $metaDesc = $this->getModelObject()->get('meta_desc');
+
+        return $metaDesc ? $metaDesc : $this->getDescription();
+    }
+
+    /**
+     * getKeywords
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getKeywords()
+    {
+        return $this->getModelObject()->get('meta_tags');
     }
 }
 

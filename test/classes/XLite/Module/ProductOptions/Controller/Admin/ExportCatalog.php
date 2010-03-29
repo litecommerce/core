@@ -46,9 +46,9 @@
 */
 class XLite_Module_ProductOptions_Controller_Admin_ExportCatalog extends XLite_Controller_Admin_ExportCatalog implements XLite_Base_IDecorator
 {
-    public function __construct()
+    public function __construct(array $params)
     {
-        parent::__construct();
+        parent::__construct($params);
         $this->pages["export_product_options"] = "Export product options";
         $this->pageTemplates["export_product_options"] = "modules/ProductOptions/export_product_options.tpl";
     }

@@ -66,6 +66,7 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
 
 	/**
      * Get translation table for prfile data
+     * FIXME - to remove
      *
      * @return array
      * @access protected

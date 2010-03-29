@@ -10,6 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
+
 <ul class="list-body list-body-grid">
 
   <li FOREACH="getPageData(),product" class="item" style="width: {getGridItemWidth()}%;">

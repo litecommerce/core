@@ -78,9 +78,9 @@ class XLite_Module_UPS_Controller_Admin_Ups extends XLite_Controller_Admin_Shipp
         "24" => "UPS 25Kg Box",
         "25" => "UPS 10Kg Box");
 
-    public function __construct()
+    public function __construct(array $params)
     {
-        parent::__construct(); 
+        parent::__construct($params); 
         $ups = new XLite_Module_UPS_Model_Shipping_Ups();
         $this->settings = $ups->get("options");
     }

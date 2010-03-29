@@ -41,9 +41,9 @@
 
 class XLite_Module_CanadaPost_Controller_Admin_ShippingSettings extends XLite_Controller_Admin_ShippingSettings implements XLite_Base_IDecorator
 {
-	public function __construct() 
+	public function __construct(array $params) 
 	{
-		parent::__construct();
+		parent::__construct($params);
 		$this->pages["cps"]	= "Canada Post settings";
 		$this->pageTemplates["cps"] = "modules/CanadaPost/config.tpl";
 	}

@@ -48,9 +48,9 @@ class XLite_Module_ProductAdviser_Controller_Admin_CustomerNotifications extends
 	public $notifications = null;	
 	public $notificationsNumber = 0;
 
-	public function __construct()
+	public function __construct(array $params)
 	{
-		parent::__construct();
+		parent::__construct($params);
 		$this->params[] = "sortby";
 		$this->params[] = "email";
 		$this->params[] = "pinfo";

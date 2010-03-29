@@ -914,9 +914,9 @@ class XLite_Model_Product extends XLite_Model_Abstract
 	 */
 	public function filter()
     {
-		// NOTE - for speedup we do not check if product is assigned for at least one category 
+		// NOTE - due to speedup we do not check if product is assigned for at least one category 
 
-		return $this->xlite->adminZone ? parent::filter() : $this->get('enabled');
+		return XLite::isAdminZone() ? parent::filter() : $this->get('enabled');
     }
 
 	/**

@@ -34,5 +34,18 @@ class XLite_Module_JoomlaConnector_Handler extends XLite_Core_CMSConnector
 	{
 		return '____JOOMLA____';
 	}
+
+	/**
+     * Get landing link
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0 EE
+     */
+    public function getLandingLink()
+    {
+		return null;
+	}
 }
 

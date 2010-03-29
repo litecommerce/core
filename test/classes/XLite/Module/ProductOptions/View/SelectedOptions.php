@@ -67,6 +67,18 @@ class XLite_Module_ProductOptions_View_SelectedOptions extends XLite_View_Abstra
     }
 
     /**
+     * getItem 
+     * 
+     * @return XLite_Model_OrderItem
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getItem()
+    {
+        return $this->getParam(self::PARAM_ITEM);
+    }
+
+    /**
      * Check widget visibility 
      * 
      * @return bool
@@ -75,11 +87,7 @@ class XLite_Module_ProductOptions_View_SelectedOptions extends XLite_View_Abstra
      */
     public function isVisible()
     {
-        return parent::isVisible()
-            && $this->getParam(self::PARAM_ITEM)
-            && $this->getParam(self::PARAM_SOURCE)
-            && !is_null($this->getParam(self::PARAM_ITEM_ID))
-            && $this->getParam(self::PARAM_ITEM)->hasOptions();
+        return parent::isVisible() && $this->getItem()->hasOptions();
     }
 
     /**

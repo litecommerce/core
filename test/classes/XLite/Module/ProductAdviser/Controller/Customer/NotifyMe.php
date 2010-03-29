@@ -254,32 +254,4 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
 	{
 		return ($this->config->ProductAdviser->customer_notifications_mode & 2) != 0;
 	}
-
-    /**
-     * Get page instance data (name and URL)
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPageInstanceData()
-    {
-        $this->target = 'notify_me';
-
-        return parent::getPageInstanceData();
-    }
-
-    /**
-     * Get page type name
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPageTypeName()
-    {
-        return 'Notify me when ...';
-    }
 }

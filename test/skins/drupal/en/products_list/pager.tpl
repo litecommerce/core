@@ -10,6 +10,9 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
+
+<div class="list-pager" IF="isPagerVisible()">
+
 <ul IF="isPagesListVisible()" class="pager">
 
   <li class="{pager.getBorderLinkClassName(#first#)}">
@@ -37,4 +40,6 @@
   <span class="begin-record-number">{pager.getBeginRecordNumber()}</span>
   &ndash;
   <span class="end-record-number">{pager.getEndRecordNumber()}</span> of <span class="records-count">{pager.getItemsTotal()}</span><span IF="pager.isItemsPerPageSelectorVisible()">, <input type="text" value="{pager.getItemsPerPage()}" class="page-length" /> per page</span>
+</div>
+
 </div>

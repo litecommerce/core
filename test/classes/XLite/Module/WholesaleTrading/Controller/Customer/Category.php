@@ -51,7 +51,8 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
 	public $errors = array();	
 	public $calculate = false;
 	
-    function init() // {{{
+	// FIXME - correct the "bulk categories" functionality and this code too
+    /*function init() // {{{
     {
 		if (in_array($_REQUEST["category_id"], explode(";", $this->getComplex('config.WholesaleTrading.bulk_categories')))) {
 			$layout = XLite_Model_Layout::getInstance();
@@ -61,7 +62,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
 			$this->session->set("DirectSaleAvailable", null);
 		}
         parent::init();
-    } // }}}
+    }*/ // }}}
 
 	function action_bulk() // {{{
 	{

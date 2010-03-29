@@ -24,6 +24,32 @@
 class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Catalog
 {
     /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams[self::PARAM_PRODUCT_ID]->setVisibility(true);
+    }
+
+    /**
+     * getCategoryId
+     *
+     * @return int
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getCategoryId()
+    {
+        return ($categoryId = parent::getCategoryId()) ? $categoryId : $this->getProductCategory()->get('category_id');
+    }
+
+    /**
      * Return random product category 
      * 
      * @return XLite_Model_Category
@@ -38,36 +64,6 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Catalo
     }
 
     /**
-     * Return link to product page 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getProductURL()
-    {
-        return $this->buildURL('product', '', array('product_id' => $this->getProduct()->get('product_id')));
-    }
-
-
-    /**
-     * Return current (or default) category object
-     * 
-     * @return XLite_Model_Category
-     * @access public
-     * @since  3.0.0
-     */
-    public function getCategory()
-    {
-        // Cache category ID in the request
-        if (!isset(XLite_Core_Request::getInstance()->category_id)) {
-            XLite_Core_Request::getInstance()->category_id = $this->getProductCategory()->get('category_id');
-        }
-
-        return parent::getCategory();
-    }
-
-    /**
      * Add the base part of the location path
      * 
      * @return void
@@ -77,6 +73,18 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Catalo
     protected function addBaseLocation($includeCurrent = false)
     {
         parent::addBaseLocation(true);
+    }
+
+    /**
+     * getModelObject
+     *
+     * @return XLite_Model_Abstract
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getModelObject()
+    {
+        return $this->getProduct();
     }
 
     /**
@@ -93,123 +101,46 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Catalo
 
 
     /**
-     * getTitle 
+     * getDescription 
      * 
      * @return string
      * @access public
      * @since  3.0.0
      */
-    public function getTitle()
+    public function getDescription()
     {
-        $metaTitle = $this->getProduct()->get('meta_title');
-
-        return $metaTitle ? $metaTitle : $this->getProduct()->get('name');
+        return ($descr = parent::getDescription()) ? $descr : $this->getProduct()->get('brief_description');
     }
 
-
-
-    // TODO - all of the above should be revised
-
-
-    public $params = array("target", "product_id", "category_id");
-
-	function handleRequest()
+    /**
+     * handleRequest 
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+	public function handleRequest()
 	{
-		$result = null;
-
-		if ($this->getProduct()->is('exists')) {
-			$result = parent::handleRequest();
-
-		} elseif ($this->getCategory()->is('exists') && $this->getCategory()->is('enabled')) {
-			$result = $this->redirect($this->buildURL('category', '', array('category_id' => $this->getCategory()->get('category_id'))));
-
-		} else {
-			$result = $this->redirect($this->buildURL('main'));
-		}
-
-		return $result;
-	}
-
-    function getDescription()
-    {
-        $description = $this->getProduct()->get('description');
-
-		return $description ? $description : $this->getProduct()->get('brief_description');
-    }
-
-	function getMetaDescription()
-	{
-		$metaDesc = $this->getProduct()->get('meta_desc');
-
-		return $metaDesc ? $metaDesc : $this->getDescription();
-	}
-
-    function getKeywords()
-    {
-		return $this->getProduct()->get('meta_tags');
+        if ($this->getProduct()->is('exists')) {
+            parent::handleRequest();
+        } elseif ($this->isCategoryAvailable()) {
+            $this->set('returnUrl', $this->buildURL('category', '', array('category_id' => $this->getCategoryId())));
+        } else {
+            $this->set('returnUrl', $this->buildURL());
+        }
     }
 
     /**
      * Check - available product for sale or not 
+     * TODO - check if it's need to be revised
      * 
-     * @return boolean
+     * @return bool
      * @access public
-     * @see    ____func_see____
      * @since  3.0.0
      */
     public function isAvailableForSale()
     {
         return true;
     }
-
-    /**
-     * Define page type parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function definePageTypeParams()
-    {
-		parent::definePageTypeParams();
-
-        $this->pageTypeParams['product_id'] = new XLite_Model_WidgetParam_ObjectId_Product('Product Id', 0);
-    }
-
-    /**
-     * Check - page instance visible or not
-     *
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isPageInstanceVisible()
-    {
-		$product = new XLite_Model_Product($this->product_id);
-
-        return $product->isPersistent;
-    }
-
-    /**
-     * Get page instance data (name and URL)
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPageInstanceData()
-    {
-		$product = new XLite_Model_Product($this->product_id);
-
-		$this->target = 'product';
-
-        return array(
-			$product->get('name'),
-			$this->getUrl(),
-		);
-    }
-
 }
 

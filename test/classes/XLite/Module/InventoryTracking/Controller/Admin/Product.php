@@ -46,9 +46,9 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
 {	
     public $maxOrderBy = 1;
 
-    public function __construct()
+    public function __construct(array $params)
     {
-        parent::__construct();
+        parent::__construct($params);
         $this->pages["inventory_tracking"] = "Inventory tracking";
         $this->pageTemplates["inventory_tracking"] = "modules/InventoryTracking/product.tpl";
     }

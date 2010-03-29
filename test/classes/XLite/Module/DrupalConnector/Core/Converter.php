@@ -66,11 +66,12 @@ class XLite_Module_DrupalConnector_Core_Converter extends XLite_Core_Converter i
     public static function buildURL($target = '', $action = '', array $params = array())
     {
         if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
-	        $result = '?q='
-    	        . implode('/', array(self::DRUPAL_ROOT_NODE, $target, $action))
+
+	        $result = '?q=' . implode('/', array(self::DRUPAL_ROOT_NODE, $target, $action))
         	    . '/' . XLite_Core_Converter::buildQuery($params, '-', '/');
 
 		} else {
+
             $result = parent::buildURL($target, $action, $params);
 		}
 

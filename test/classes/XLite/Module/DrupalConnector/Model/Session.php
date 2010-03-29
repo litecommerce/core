@@ -14,6 +14,7 @@
  * @since      3.0.0
  */
 
+// FIXME - must be revised (or, probably, removed)
 
 /**
  * Drupal-specific session 

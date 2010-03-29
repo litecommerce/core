@@ -46,9 +46,9 @@
 */
 class XLite_Module_DetailedImages_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_ImportCatalog implements XLite_Base_IDecorator
 {
-    public function __construct()
+    public function __construct(array $params)
     {
-        parent::__construct();
+        parent::__construct($params);
         $this->pages["detailed_images"] = "Import images";
         $this->pageTemplates["detailed_images"] = "modules/DetailedImages/import.tpl";
     }

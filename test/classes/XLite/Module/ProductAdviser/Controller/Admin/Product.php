@@ -49,9 +49,9 @@ class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Control
 	public $notifyPresentedHash = array();	
 	public $priceNotifyPresented = null;
 
-	public function __construct()
+	public function __construct(array $params)
 	{
-		parent::__construct();
+		parent::__construct($params);
 		if ($this->is("relatedProductsEnabled")) {
 			$this->pages["related_products"] = "Related products";
 			$this->pageTemplates["related_products"] = "modules/ProductAdviser/RelatedProducts.tpl";

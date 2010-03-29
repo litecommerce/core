@@ -217,10 +217,7 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
      */
     public function assembleLinkClassName($i, $count, $category)
     {
-        return XLite_Core_Request::getInstance()->category_id == $category->get('category_id')
-            ? 'active'
-            : '';
+        return (XLite_Core_Request::getInstance()->category_id == $category->get('category_id')) ? 'active' : '';
     }
-
 }
 

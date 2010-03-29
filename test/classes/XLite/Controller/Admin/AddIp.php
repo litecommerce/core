@@ -44,7 +44,7 @@
 * @package $Package$
 * @version $Id$
 */
-class XLite_Controller_Admin_AddIp extends XLite_Controller_Abstract
+class XLite_Controller_Admin_AddIp extends XLite_Controller_Admin_Abstract
 {	
     public $template = "add_ip.tpl";
 

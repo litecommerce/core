@@ -22,8 +22,240 @@
  * @subpackage ____sub_package____
  * @since      3.0.0
  */
-class XLite_Core_Handler extends XLite_Base
+abstract class XLite_Core_Handler extends XLite_Base
 {
+    /**
+     * Common handler params
+     */
+
+    const PARAM_IS_EXPORTED = 'isExported';
+
+    /**
+     * Controller-specific params 
+     */
+
+    const PARAM_SILENT       = 'silent';
+    const PARAM_DUMP_STARTED = 'dumpStarted';
+
+    /**
+     * AJAX-specific parameters 
+     */
+
+    const PARAM_AJAX_TARGET = 'ajaxTarget';
+    const PARAM_AJAX_ACTION = 'ajaxAction';
+    const PARAM_AJAX_CLASS  = 'ajaxClass';
+
+
+    /**
+     * Widget params
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected $widgetParams = null;
+
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        $this->widgetParams = array(
+            self::PARAM_IS_EXPORTED => new XLite_Model_WidgetParam_Bool('Is exported', XLite_Core_CMSConnector::isCMSStarted()),
+        );
+    }
+
+    /**
+     * Return widget param value 
+     * 
+     * @param string $param param to fetch
+     *  
+     * @return mixed
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function getParam($param)
+    {
+        return $this->getWidgetParams($param)->value;
+    }
+
+    /**
+     * isExported 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isExported()
+    {
+        return $this->getParam(self::PARAM_IS_EXPORTED);
+    }
+
+    /**
+     * getParamsHash 
+     * 
+     * @param array $params list of params to use
+     *  
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getParamsHash(array $params)
+    {
+        $result = array();
+
+        foreach ($params as $param) {
+            $result[$param] = $this->getParam($param);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Initialize handler
+     *
+     * @return void
+     * @access protected
+     * @since  3.0.0 EE
+     */
+    protected function init()
+    {
+    }
+
+
+    /**
+     * __construct 
+     * 
+     * @param array $params handler params
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function __construct(array $params = array())
+    {
+        $this->setWidgetParams($params);
+        $this->init();
+    }
+
+    /**
+     * isVisible 
+     * 
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function isVisible()
+    {
+        return true;
+    }
+
+    /**
+     * setWidgetParams
+     *
+     * @param array $param handler params
+     *
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function setWidgetParams(array $params)
+    {
+        foreach ($this->getWidgetParams() as $name => $paramObject) {
+            if (isset($params[$name])) {
+                $paramObject->setValue($params[$name]);
+            }
+            // FIXME - for mapping only
+            // FIXME - uncomment (at first), remove after check 
+            // unset($params[$name]);
+        }
+
+        // FIXME - backward compatibility - mapping; to remove
+        foreach ($params as $name => $value) {
+            $this->$name = $value;
+        }
+    }
+
+    /**
+     * Return widget parameters list (or a single object)
+     * 
+     * @param string $param param name
+     *  
+     * @return array
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function getWidgetParams($param = null)
+    {
+        if (!isset($this->widgetParams)) {
+            $this->defineWidgetParams();
+        }
+
+        if (isset($param)) {
+            $result = isset($this->widgetParams[$param]) ? $this->widgetParams[$param] : null;
+        } else {
+            $result = $this->widgetParams;
+        }
+
+        return $result;
+    }
+
+    /**
+     * getWidgetSettings 
+     * 
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getWidgetSettings()
+    {
+        $result = array();
+
+        foreach ($this->getWidgetParams() as $name => $param) {
+            if ($param->isSetting) {
+                $result[$name] = $param;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+      * Check passed attributes
+      *
+      * @param array $attrs attributes to check
+      *
+      * @return array errors list
+      * @access public
+      * @since  1.0.0
+      */
+     public function validateAttributes(array $attrs)
+     {
+         $messages = array();
+
+         foreach ($this->getWidgetSettings() as $name => $param) {
+
+             if (isset($attrs[$name])) {
+
+                 list($result, $widgetErrors) = $param->validate($attrs[$name]);
+
+                 if (false === $result) {
+                     $messages[] = $param->label . ': ' . implode('<br />' . $param->label . ': ', $widgetErrors);
+                 }
+             } else {
+
+                 $messages[] = $param->label . ': is not set';
+             }
+         }
+
+         return $messages;
+     }
+
     /**
      * Compose URL from target, action and additional params
      *

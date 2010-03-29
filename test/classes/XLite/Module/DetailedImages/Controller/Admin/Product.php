@@ -46,8 +46,10 @@
 */
 class XLite_Module_DetailedImages_Controller_Admin_Product extends XLite_Controller_Admin_Product implements XLite_Base_IDecorator
 {
-    public function __construct()
+    public function __construct(array $params)
     {
+		parent::__construct($params);
+
         $this->pages["detailed_images"] = "Detailed images";
         $this->pageTemplates["detailed_images"] = "modules/DetailedImages/detailed_images.tpl";
     }

@@ -93,9 +93,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
      */
     protected function sanitize($data)
     {
-        return is_array($data)
-            ? array_map(array($this, __FUNCTION__), $data)
-            : $this->sanitizeSingle($data);
+        return is_array($data) ? array_map(array($this, __FUNCTION__), $data) : $this->sanitizeSingle($data);
     }
 
     /**
@@ -109,9 +107,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
      */
     protected function prepare($data)
     {
-        return XLite::getInstance()->adminZone
-            ? $data
-            : $this->sanitize($data);
+        return XLite::isAdminZone() ? $data : $this->sanitize($data);
     }
 
     /**
@@ -153,15 +149,9 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
 	{
         if (empty($data)) {
             $data = $_REQUEST;
-
-        } elseif (function_exists('array_replace_recursive')) {
-            $data = array_replace_recursive($data, $this->data);
-
-        } else {
-            $data = array_merge($data, $this->data);
         }
 
-        $this->data = $this->prepare($data);
+        $this->data = array_merge($this->data, $this->prepare($data));
 	}
 
     /**

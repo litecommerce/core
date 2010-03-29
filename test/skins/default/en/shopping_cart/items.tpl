@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Image button
+ * ____file_title____
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,4 +10,12 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<input type="image" src="images/spacer.gif" {getJSEvent():h}="javascript: {getJSCode():h}" class="{getClass()}" value="{getButtonLabel()}" />
+
+<table class="selected-products">
+  <tbody>
+    <tr class="selected-product" FOREACH="cart.getItems(),cart_id,item">
+      <widget template="shopping_cart/item.tpl" IF="item.isUseStandardTemplate()" />
+      <widget module="GiftCertificates" template="modules/GiftCertificates/item.tpl" IF="item.gcid" />
+    </tr>
+  </tbody>
+</table>

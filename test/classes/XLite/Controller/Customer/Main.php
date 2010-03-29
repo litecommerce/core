@@ -80,9 +80,9 @@ class XLite_Controller_Customer_Main extends XLite_Controller_Customer_Abstract
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function init()
+    public function init(array $params = array())
     {
-		parent::init();
+		parent::init($params);
 
         if (!isset(XLite_Core_Request::getInstance()->action)) {
             $this->session->set("productListURL", $this->get("url"));

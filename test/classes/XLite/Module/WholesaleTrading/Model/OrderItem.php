@@ -130,15 +130,6 @@ class XLite_Module_WholesaleTrading_Model_OrderItem extends XLite_Model_OrderIte
         }
 	}
 
-    function getProduct()
-    {
-        if (is_null($this->product) && $this->get("product_id")) {
-            $this->product = new XLite_Model_Product($this->get("product_id"));
-        }
-		if ($this->product) $this->product->isDirectSaleAvailable();
-        return $this->product;
-    }
-
 	function set($name, $value)
 	{
 		if (($name != "wholesale_price") && (in_array($name, $this->fields))) {

@@ -6,55 +6,27 @@
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   SVN: $Id: products_list.css 2190 2010-03-09 23:59:26Z vvs $
+ * @version   SVN: $Id: products_list.css 2332 2010-03-25 15:51:07Z xplorer $
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  */
-/* List pager row */
-.list-pager,
-.list-pager-low
-{
-  height: 32px;
-}
 
-.list-pager ul,
-.list-pager-low ul
-{
+.list-pager ul {
   float: left;
   white-space: nowrap;
 }
 
-.list-pager div,
-.list-pager-low div
-{
+.list-pager div {
   float: right;
   white-space: nowrap;
-  padding-top: 3px;
 }
 
-.list-pager input,
-.list-pager-low input
-{
-  width: 2em;
+.list-pager input {
   text-align: right;
-}
-
-/* Second pager */
-.list-pager-low {
-  border-top: 1px solid black;
-  padding-top: 10px;
-}
-
-/* List head */
-.list-head {
-  border: 1px solid #bbc7d2;
-  padding: 5px 15px;
-  height: 21px;
 }
 
 .list-head .display-modes {
   float: left;
-  padding-top: 3px;
 }
 
 .list-head ul {
@@ -69,33 +41,16 @@
   padding: 0 0 0 6px;
 }
 
-.list-head li a {
-  text-decoration: underline;
-}
-
-.list-head li.selected a {
-  color: #111;
-  font-weight: bold;
-  text-decoration: none;
-  cursor: text;
-}
-
-.list-head ul li.first {
-  padding-left: 3px;
-}
-
-.list-head select {
-  margin: 0px 4px;
-}
-
-.list-head .sort-box {
+.sort-box {
   float: right;
   white-space: nowrap;
 }
 
-.list-head .sort-box a {
-  text-decoration: none;
-  font-size: 1.2em;
+.sort-box span,
+.sort-box select,
+.sort-box a
+{
+  vertical-align: middle;
 }
 
 .list-head .sort-box * {
@@ -118,19 +73,10 @@
   background: transparent url(../images/added2cart.gif) no-repeat left top;
 }
 
-.list-body a.product-name {
-  text-decoration: underline;
-}
-
-.list-body .product-price {
-  font-weight: bold;
-}
-
 /* List type : Grid */
 .list-body-grid
 {
 	list-style: none;
-  margin-top: 15px;
 }
 
 /*
@@ -165,39 +111,45 @@
   position: relative;       /* Hack for FF2: in FF2 static "inner-blocks" are non-clickable */
 }
 
-.list-body-grid li {
-	margin-right: 5%;
-  margin-bottom: 1.5em;
-  width: 30%;
-}
-
 .list-body-grid li div {
   position: relative;
 }
 
-.list-body-grid a.product-thumbnail,
-.list-body-grid a.product-thumbnail img
-{
-	width: 70px;
-}
-
-.list-body-grid a.product-thumbnail img
-{
-	height: 90px;
-}
-
 .list-body-grid .product-name {
   display: block;
-  height: 40px;
-  overflow: hidden;
 }
 
-.list-body-grid .product-price {
-  padding-right: 18px;
+
+.list-body-grid-1-columns li.item
+{
+  width: 100%;
+  margin-right: 0;
 }
 
-.list-body-grid .buy-now {
+.list-body-grid-2-columns li.item
+{
+  width: 47%;
+  margin-right: 3%;
 }
+
+.list-body-grid-3-columns li.item
+{
+  width: 30%;
+  margin-right: 3%;
+}
+
+.list-body-grid-4-columns li.item
+{
+  width: 23%;
+  margin-right: 2%;
+}
+
+.list-body-grid-5-columns li.item
+{
+  width: 19%;
+  margin-right: 1%;
+}
+
 
 /* List type : List */
 .list-body-list {
@@ -208,7 +160,6 @@
 .list-body-list li.item {
   list-style: none;
   width: 100%;
-  padding-bottom: 20px;
   position: relative;
 }
 
@@ -218,25 +169,6 @@
   display: block;
 }
 
-.list-body-list .body {
-  margin-left: 100px;
-}
-
-.list-body-list a.product-thumbnail,
-.list-body-list a.product-thumbnail img
-{
-  width: 70px;
-}
-
-.list-body-list a.product-thumbnail img
-{
-  height: 90px;
-}
-
-.list-body-list .product-price {
-  padding-right: 18px;
-}
-
 /* List type : Table */
 .list-body-table {
   margin-top: 0px;
@@ -244,13 +176,13 @@
   border-collapse: separate;
 }
 
-.list-body-table tr td {
-  border-width: 1px;
-  border-color: black;
-}
-
 .list-body-table tr td.product-price-column {
   text-align: right;
+  white-space: nowrap;
+}
+
+.list-body-table tr td.product-button-column {
+  white-space: nowrap;
 }
 
 .list-body-table tr td.product-name-column {
@@ -259,18 +191,12 @@
 
 /* Modal wait screen */
 .wait-block {
-  border: 1px solid #929292;
-  background: #fff none;
-  padding: 9px;
-}
-
-.wait-block div {
-  height: 11px;
-  background: transparent url(../images/progress.gif) repeat-x left top;
+  display: none;
 }
 
 .wait-block-overlay {
   background: #000 none;
   opacity: 0.1;
+  cursor: wait;
 }
 

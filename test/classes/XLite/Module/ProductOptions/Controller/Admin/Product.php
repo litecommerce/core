@@ -46,9 +46,9 @@
 */
 class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Controller_Admin_Product implements XLite_Base_IDecorator
 {
-    public function __construct()
+    public function __construct(array $params)
     {
-        parent::__construct();
+        parent::__construct($params);
         $this->pages["product_options"] = "Product options";
         $this->pageTemplates["product_options"] = "modules/ProductOptions/product_options.tpl";
     }

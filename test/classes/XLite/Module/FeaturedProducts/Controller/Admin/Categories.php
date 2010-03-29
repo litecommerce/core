@@ -35,7 +35,7 @@
  */
 class XLite_Module_FeaturedProducts_Controller_Admin_Categories extends XLite_Controller_Admin_Categories implements XLite_Base_IDecorator
 {
-    public function __construct()
+    public function __construct(array $params)
     {
         if (!isset($_REQUEST["search_category"])) {
             $_REQUEST["search_category"] = $_REQUEST["category_id"];

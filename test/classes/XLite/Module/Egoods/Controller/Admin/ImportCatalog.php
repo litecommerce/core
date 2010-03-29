@@ -46,9 +46,9 @@
 */
 class XLite_Module_Egoods_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_ImportCatalog implements XLite_Base_IDecorator
 {
-    public function __construct()
+    public function __construct(array $params)
     {
-        parent::__construct();
+        parent::__construct($params);
         $this->pages["import_pin_codes"] = "Import PIN codes";
         $this->pageTemplates["import_pin_codes"] = "modules/Egoods/import_pin_codes.tpl";
     }

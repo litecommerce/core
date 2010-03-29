@@ -12,9 +12,7 @@
  *}
 <div class="products-list {getSessionCell()}">
 
-  <div IF="isPagerVisible()" class="list-pager">
-    <widget name="{getPagerName()}" template="products_list/pager.tpl" />
-  </div>
+  <widget name="{getPagerName()}" template="products_list/pager.tpl" />
 
   <div IF="isDisplayModeAdjustable()&isSortBySelectorVisible()" class="list-head">
 
@@ -42,9 +40,7 @@
 
   <widget template="{getPageBodyTemplate()}" />
 
-  <div IF="isPagerVisible()" class="list-pager low">
-    <widget name="{getPagerName()}" />
-  </div>
+  <widget name="{getPagerName()}" onlyPages />
 
 </div>
 

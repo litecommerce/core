@@ -228,21 +228,6 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
     }
 
     /**
-     * Get page instance data (name and URL)
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPageInstanceData()
-    {
-        $this->target = 'cart';
-
-        return parent::getPageInstanceData();
-    }
-
-    /**
      * Get page title
      * 
      * @return string

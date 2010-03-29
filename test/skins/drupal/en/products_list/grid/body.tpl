@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<ul class="list-body list-body-grid list-body-grid-{gridColumns}-columns">
+<ul class="list-body list-body-grid list-body-grid-{getParam(#gridColumns#)}-columns">
   <li FOREACH="getPageData(),product" class="item">
     {* FF2 requires an extra div in order to display "inner-blocks" properly *}
     <div>

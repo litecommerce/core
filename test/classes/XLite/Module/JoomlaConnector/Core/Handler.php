@@ -9,7 +9,7 @@
  * @subpackage Module JoomlaConnector
  * @since      3.0
  */
-class XLite_Module_JoomlaConnector_Core_Handler extends XLite_Core_Handler implements XLite_Base_IDecorator
+abstract class XLite_Module_JoomlaConnector_Core_Handler extends XLite_Core_Handler implements XLite_Base_IDecorator
 {
 	/**
      * Compose URL from target, action and additional params

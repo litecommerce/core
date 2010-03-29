@@ -67,7 +67,7 @@ class XLite_Model_WidgetParam_ObjectId_Category extends XLite_Model_WidgetParam_
 
         $schema[] = array(
             self::ATTR_CONDITION => 0 < $value && !$this->getObject($value)->isExists(),
-            self::ATTR_MESSAGE   => ' is a wrong category id (category can not found)',
+            self::ATTR_MESSAGE   => ' wrong ID (not found)',
         );
 
         return $schema;

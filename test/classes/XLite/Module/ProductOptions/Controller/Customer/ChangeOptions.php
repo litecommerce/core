@@ -45,6 +45,7 @@ class XLite_Module_ProductOptions_Controller_Customer_ChangeOptions extends XLit
      */
     protected $item = null;
 
+
 	/**
      * Common method to determine current location 
      * 
@@ -149,33 +150,5 @@ class XLite_Module_ProductOptions_Controller_Customer_ChangeOptions extends XLit
         }
 
         return $this->item;
-    }
-
-    /**
-     * Get page instance data (name and URL)
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPageInstanceData()
-    {
-        $this->target = 'change_options';
-
-        return parent::getPageInstanceData();
-    }
-
-    /**
-     * Get page type name
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPageTypeName()
-    {
-        return 'Change options';
     }
 }

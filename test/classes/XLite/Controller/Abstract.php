@@ -36,13 +36,20 @@
 abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 {
     /**
-     * Current page template 
-     * 
-     * @var    string
-     * @access protected
-     * @since  3.0.0
+     * Controller main params
      */
-    protected $template = 'main.tpl';
+
+    const PARAM_TARGET = 'target';
+    const PARAM_ACTION = 'action';
+
+    /**
+     * Controller params
+     * FIXME - must be moved to the low-level controllers
+     */
+
+    const PARAM_CATEGORY_ID = 'category_id';
+    const PARAM_PRODUCT_ID  = 'product_id';
+
 
     /**
      * Breadcrumbs 
@@ -139,6 +146,18 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     }
 
     /**
+     * getRegularTemplate 
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getRegularTemplate()
+    {
+        return 'main.tpl';
+    }
+
+    /**
      * getCMSTemplate 
      * 
      * @return string
@@ -149,6 +168,91 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     {
         return 'center_top.tpl';
     }
+
+    /**
+     * getViewerTemplate 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getViewerTemplate()
+    {
+        return $this->getParam(self::PARAM_IS_EXPORTED) ? $this->getCMSTemplate() : $this->getRegularTemplate();
+    }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_TARGET => new XLite_Model_WidgetParam_String('Target', null),
+            self::PARAM_ACTION => new XLite_Model_WidgetParam_String('Action', null),
+        );
+
+        $this->widgetParams += array(
+            self::PARAM_CATEGORY_ID => new XLite_Model_WidgetParam_ObjectId_Category('Category Id', 0),
+            self::PARAM_PRODUCT_ID  => new XLite_Model_WidgetParam_ObjectId_Product('Product Id', 0),
+        );
+    }
+
+    /**
+     * getTarget 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getTarget()
+    {
+        return $this->getParam(self::PARAM_TARGET);
+    }
+
+    /**
+     * getAction 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getAction()
+    {
+        return $this->getParam(self::PARAM_ACTION);
+    }
+
+    /**
+     * getCategoryId
+     * FIXME - must be moved to the low-level controllers
+     *
+     * @return int
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getCategoryId()
+    {
+        return $this->getParam(self::PARAM_CATEGORY_ID);
+    }
+
+    /**
+     * getProductId
+     * FIXME - must be moved to the low-level controllers
+     *
+     * @return int
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getProductId()
+    {
+        return $this->getParam(self::PARAM_PRODUCT_ID);
+    }
+
 
     /**
      * Get the full URL of the page
@@ -165,7 +269,6 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     {
         return XLite::getInstance()->getShopUrl($url, $secure);
     }
-
 
     /**
      * Return current location path 
@@ -228,21 +331,15 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
      * @access public
      * @since  3.0.0
      */
-    public function getViewer($isExported = false)
+    public function getViewer()
     {
-        $template = $this->template;
-        $params   = array();
+        $params = array();
 
-        foreach (array('silent', 'dumpStarted') as $name) {
+        foreach (array(self::PARAM_SILENT, self::PARAM_DUMP_STARTED) as $name) {
             $params[$name] = $this->get($name);
         }
 
-        if ($isExported) {
-            $params[XLite_View_Abstract::PARAM_IS_EXPORTED] = true;
-            $template = $this->getCMSTemplate();
-        }
-
-        return new XLite_View_Controller($template, $params);
+        return new XLite_View_Controller($params, $this->getViewerTemplate());
     }
 
     /**
@@ -257,16 +354,18 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     {
     }
 
-    /**
-     * Get controlelr parameters
-     * 
-     * @param string $exeptions Parameter keys string
-     *  
-     * @return array
-     * @access public
-     * @since  3.0.0
-     */
-    public function getAllParams($exeptions = null)
+	/**
+	 * Get controlelr parameters
+     * TODO - check this method
+     * FIXME - backward compatibility
+	 * 
+	 * @param string $exeptions Parameter keys string
+	 *  
+	 * @return array
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
+	public function getAllParams($exeptions = null)
     {
         $result = array();
         $exeptions = isset($exeptions) ? explode(",", $exeptions) : false;
@@ -281,28 +380,30 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         return $result;
     }
 
-    /**
-     * Return current (or default) category object
-     * 
-     * @return XLite_Model_Category
-     * @access public
-     * @since  3.0.0
-     */
-    public function getCategory()
+	/**
+	 * Return current (or default) category object
+     * FIXME - must be moved to the low-level controllers
+	 * 
+	 * @return XLite_Model_Category
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
+	public function getCategory()
     {
-        return XLite_Model_CachingFactory::getObject(__METHOD__, 'XLite_Model_Category', array(XLite_Core_Request::getInstance()->category_id));
+		return XLite_Model_CachingFactory::getObject(__METHOD__, 'XLite_Model_Category', array($this->getCategoryId()));
     }
 
-    /**
-     * Return current (or default) product object
-     * 
-     * @return XLite_Model_Product
-     * @access public
-     * @since  3.0.0
-     */
-    public function getProduct()
+	/**
+	 * Return current (or default) product object
+     * FIXME - must be moved to the low-level controllers
+	 * 
+	 * @return XLite_Model_Product
+	 * @access public
+	 * @since  3.0.0 EE
+	 */
+	public function getProduct()
     {
-        return XLite_Model_CachingFactory::getObject(__METHOD__, 'XLite_Model_Product', array(XLite_Core_Request::getInstance()->product_id));
+		return XLite_Model_CachingFactory::getObject(__METHOD__, 'XLite_Model_Product', array($this->getProductId()));
     }
 
     /**
@@ -322,17 +423,10 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 
 
     protected $params = array('target');    
-    public $dumpStarted = false; // startDump was called    
-
-    protected $silent = false;
 
     protected $pageTemplates = array();
 
     protected $returnUrlAbsolute = false;
-
-    protected $product = null;
-
-    protected $category = null;
 
     /**
      * Validity flag
@@ -344,34 +438,6 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
      */
     protected $valid = true;
 
-    /**
-     * Page type parameters
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $pageTypeParams = null;
-
-    /**
-     * Set properties
-     * FIXME - backward compatibility
-     *
-     * @param array $attrs params to set
-     *
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function setAttributes(array $attrs)
-    {
-        foreach ($attrs as $name => $value) {
-            // FIXME - mapping
-            $this->$name = $value;
-        }   
-    }   
-    
     /**
      * Check if handler is valid 
      * TODO - check where it's really needed
@@ -387,6 +453,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 
     /**
      * Initialize controller
+     * FIXME - backward compatibility; to delete
      *
      * @return void
      * @access public
@@ -394,8 +461,8 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
      */ 
     public function init()
     {
-        // FIXME - backward compatibility; to delete
-        $this->setAttributes(XLite_Core_Request::getInstance()->getData());
+        parent::init();
+
         $this->fillForm();
     }
 
@@ -435,11 +502,6 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         return $this->returnUrl;
     }
 
-    function getTemplate()
-    {
-        return $this->template;
-    }
-
     function _clear_xsid_data()
     {
         unset($_REQUEST[XLite_Model_Session::SESSION_DEFAULT_NAME]);
@@ -475,19 +537,6 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         return false;
     }
 
-    /*function startPage()
-    {
-        // send no-cache headers
-        $error_reporting = error_reporting(0); // suppress warning messages
-        header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-        header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-        header("Cache-Control: no-store, no-cache, must-revalidate");
-        header("Cache-Control: post-check=0, pre-check=0", false);
-        header("Pragma: no-cache");
-        header("Content-Type: text/html");
-        error_reporting($error_reporting);
-    }*/
-    
     function startDownload($filename, $contentType = "application/force-download")
     {
         @set_time_limit(0);
@@ -560,7 +609,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     /**
      * Return the array of pages for tabber
      * FIXME - move to the Controller/Admin/Abstract.php:
-     *  tabber is not used in customer area
+     * tabber is not used in customer area
      * 
      * @return array
      * @access public
@@ -679,103 +728,5 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
             $htaccess->checkFiles();
         }
     }
-
-    /**
-     * Define page type parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function definePageTypeParams()
-    {
-        $this->pageTypeParams = array();
-    }
-
-    /**
-     * Return page type parameters list
-     *
-     * @return array
-     * @access public
-     * @since  1.0.0
-     */
-    public function getPageTypeParams()
-    {
-        if (is_null($this->pageTypeParams)) {
-            $this->definePageTypeParams();
-        }
-
-        return $this->pageTypeParams;
-    }
-
-    /**
-     * Check passed attributes
-     *
-     * @param array $attributes attributes to check
-     *
-     * @return array errors list
-     * @access public
-     * @since  1.0.0
-     */
-    public function validatePageTypeAttributes(array $attrs)
-    {
-        $messages = array();
-
-        foreach ($this->getPageTypeParams() as $name => $param) {
-
-            if (isset($attrs[$name])) {
-                list($result, $widgetErrors) = $param->validate($attrs[$name]);
-
-                if (false === $result) {
-                    $messages[] = $param->label . ': ' . implode('<br />' . $param->label . ': ', $widgetErrors);
-                }
-
-            } else {
-                $messages[] = $param->label . ': is not set';
-            }
-        }
-
-        return $messages;
-    }
-
-    /**
-     * Check - page instance visible or not
-     *
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isPageInstanceVisible()
-    {
-        return false;
-    }
-
-    /**
-     * Get page instance data (name and URL)
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPageInstanceData()
-    {
-        return array($this->getPageTypeName(), $this->getUrl());
-    }
-
-    /**
-     * Get page type name
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPageTypeName()
-    {
-        return null;
-    }
-
 }
 

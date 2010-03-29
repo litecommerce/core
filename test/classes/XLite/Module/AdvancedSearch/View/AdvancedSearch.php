@@ -71,6 +71,7 @@ class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
         self::DISPLAY_MODE_HORIZONTAL => 'Horizontal',
     );
 
+
     /**
      * Return title
      *
@@ -114,18 +115,23 @@ class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
         );
     }
 
-
     /**
-     * Check if widget is visible
-     *
-     * @return bool
+     * getSortedList 
+     * 
+     * @param string $param config param
+     *  
+     * @return array
      * @access protected
      * @since  3.0.0
      */
-    public function isVisible()
+    protected function getSortedList($param)
     {
-        return parent::isVisible() || $this->getParam(self::PARAM_IS_EXPORTED);
+        $list = unserialize($this->config->AdvancedSearch->$param);
+        usort($list, array($this, 'getSortOrderCallback'));
+
+        return $list;
     }
+
 
     /**
      * Get a list of JavaScript files required to display the widget properly
@@ -153,10 +159,20 @@ class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
      */
     public function getPrices()
     {
-        $prices = unserialize($this->config->AdvancedSearch->prices);
-        usort($prices, array($this, 'getSortOrderCallback'));
+        return $this->getSortedList('prices');
+    }
 
-        return $prices;
+    /**
+     * Get weights
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getWeights()
+    {
+        return $this->getSortedList('weights');
     }
 
     /**
@@ -173,22 +189,6 @@ class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
     public function isRangeSelected($range, $currentValue)
     {
         return $range = $currentValue['start'] . ',' . $currentValue['end'];
-    }
-
-    /**
-     * Get weights
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getWeights()
-    {
-        $weights = unserialize($this->config->AdvancedSearch->weights);
-        usort($weights, array($this, 'getSortOrderCallback'));
-
-        return $weights;
     }
 
     /**

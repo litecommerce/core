@@ -55,8 +55,8 @@ class XLite_Controller_Customer_GetWidget extends XLite_Controller_Customer_Abst
     protected function getAJAXParamsTranslationTable()
     {
         return array(
-            XLite_View_Abstract::PARAM_AJAX_TARGET => 'target',
-            XLite_View_Abstract::PARAM_AJAX_ACTION => 'action',
+            self::PARAM_AJAX_TARGET => 'target',
+            self::PARAM_AJAX_ACTION => 'action',
         );
     }
 
@@ -138,7 +138,7 @@ class XLite_Controller_Customer_GetWidget extends XLite_Controller_Customer_Abst
 	 */
 	public function getClass()
 	{
-        $param = XLite_View_Abstract::PARAM_AJAX_CLASS;
+        $param = self::PARAM_AJAX_CLASS;
 
 		return XLite_Core_Request::getInstance()->$param;
 	}

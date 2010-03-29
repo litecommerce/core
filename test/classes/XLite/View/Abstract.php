@@ -36,17 +36,8 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
 
     const PARAM_TEMPLATE     = 'template';
     const PARAM_VISIBLE      = 'visible';
-    const PARAM_IS_EXPORTED  = 'isExported';
     const PARAM_MODE         = 'mode';
     const PARAM_SESSION_CELL = 'sessionCell';
-
-    /**
-     * AJAX-specific parameters 
-     */
-    
-    const PARAM_AJAX_TARGET = 'ajaxTarget';
-    const PARAM_AJAX_ACTION = 'ajaxAction';
-    const PARAM_AJAX_CLASS  = 'ajaxClass';
 
 
     /**
@@ -61,15 +52,6 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
         self::RESOURCE_CSS => array(),
     );
 
-
-    /**
-     * Widget params
-     * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $widgetParams = null;
 
     /**
      * "Named" widgets cache
@@ -147,8 +129,8 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
 
 
     /**
-     * Return current template 
-     * 
+     * Return current template
+     *
      * @return string
      * @access protected
      * @since  3.0.0
@@ -252,10 +234,11 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      */
     protected function defineWidgetParams()
     {
-        $this->widgetParams = array(
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
             self::PARAM_TEMPLATE     => new XLite_Model_WidgetParam_File('Template', null),
             self::PARAM_VISIBLE      => new XLite_Model_WidgetParam_Bool('Visible', true),
-            self::PARAM_IS_EXPORTED  => new XLite_Model_WidgetParam_Bool('Is exported', false),
             self::PARAM_MODE         => new XLite_Model_WidgetParam_Array('Modes', array()),
             self::PARAM_SESSION_CELL => new XLite_Model_WidgetParam_String('Session cell', $this->getSessionCell()),
         );
@@ -289,7 +272,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
         // Trying to get param value from request (if it's the so called "request"-param)
         $value = $this->isRequestParam($param) ? $this->getRequestParamValue($param) : null;
 
-        return isset($value) ? $value : $this->getWidgetParams($param)->value;
+        return isset($value) ? $value : parent::getParam($param);
     }
 
     /**
@@ -455,52 +438,6 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
         include $compiled;
     }
 
-
-    /**
-     * Return widget parameters list (or a single object)
-     * 
-     * @param string $param param name
-     *  
-     * @return array
-     * @access public
-     * @since  3.0.0
-     */
-    public function getWidgetParams($param = null)
-    {
-        if (!isset($this->widgetParams)) {
-            $this->defineWidgetParams();
-        }
-
-        if (isset($param)) {    
-            $result = isset($this->widgetParams[$param]) ? $this->widgetParams[$param] : null;
-
-        } else {
-            $result = $this->widgetParams;
-        }
-
-        return $result;
-    }
-
-    /**
-     * getWidgetSettings 
-     * 
-     * @return array
-     * @access public
-     * @since  3.0.0
-     */
-    public function getWidgetSettings()
-    {
-        $result = array();
-
-        foreach ($this->getWidgetParams() as $name => $param) {
-            if ($param->isSetting) {
-                $result[$name] = $param;
-            }
-        }
-
-        return $result;
-    }
-
     /**
      * getRequestParams 
      * 
@@ -510,13 +447,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      */
     public function getRequestParams()
     {
-        $result = array();
-
-        foreach ($this->requestParams as $param) {
-            $result[$param] = $this->getParam($param);
-        }
-
-        return $result;
+        return $this->getParamsHash($this->requestParams);
     }
 
     /**
@@ -532,32 +463,6 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
             $this->prepareResources($this->getJSFiles()),
             $this->prepareResources($this->getCSSFiles())
         );
-    }
-
-    /**
-     * Initialize widget (set attributes)
-     * 
-     * @param array $params widget params
-     *  
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function init(array $params = array())
-    {
-        foreach ($this->getWidgetParams() as $name => $paramObject) {
-            if (isset($params[$name])) {
-                $paramObject->setValue($params[$name]);
-            }
-            // TODO - for mapping only; to remove
-            unset($params[$name]);
-        }
-
-        // FIXME - mapping
-        foreach ($params as $name => $value) {
-            // TODO - add logger here
-            $this->widgetParams[$name] = new XLite_Model_WidgetParam_Container(null, $value);
-        }
     }
 
     /**
@@ -587,7 +492,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
         }
 
         // Set param values
-        $widget->init($params);
+        $widget->setWidgetParams($params);
 
         return $widget;
     }
@@ -601,7 +506,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      */
     public function isVisible()
     {
-        return $this->getParam(self::PARAM_VISIBLE) && $this->checkTarget() && $this->checkMode(); 
+        return parent::isVisible() && $this->getParam(self::PARAM_VISIBLE) && $this->checkTarget() && $this->checkMode(); 
     }
 
     /**
@@ -732,12 +637,6 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
     {
         $value = parent::__get($name);
 
-        // FIXME - backward compatibility; mapping emulation
-        if (!isset($value) && !is_null($this->getWidgetParams($name))) {
-            // TODO - add logger here
-            $value = $this->getParam($name);
-        }
-
         return isset($value) ? $value : XLite::getController()->$name;
     }
 
@@ -773,36 +672,6 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
    
 
     // ------------------> Routines for templates
-
-    /**
-      * Check passed attributes
-      *
-      * @param array $attrs attributes to check
-      *
-      * @return array errors list
-      * @access public
-      * @since  1.0.0
-      */
-     public function validateAttributes(array $attrs)
-     {
-         $messages = array();
- 
-         foreach ($this->getWidgetSettings() as $name => $param) {
- 
-             if (isset($attrs[$name])) {
-                 list($result, $widgetErrors) = $param->validate($attrs[$name]);
- 
-                 if (false === $result) {
-                     $messages[] = $param->label . ': ' . implode('<br />' . $param->label . ': ', $widgetErrors);
-                 }
- 
-             } else {
-                 $messages[] = $param->label . ': is not set';
-             }
-         }
- 
-         return $messages;
-     }
 
 
     /**
@@ -1050,23 +919,5 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
 
         return $result;
     }
-
-    /**
-     * Get image full URL 
-     * 
-     * @param string $relativePath Image relative path
-     *  
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getImageURL($relativePath)
-    {
-        return XLite::getInstance()->getShopUrl(
-            XLite_Model_Layout::getInstance()->getSkinURL($relativePath)
-        );
-    }
-
 }
 

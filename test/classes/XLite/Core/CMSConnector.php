@@ -28,10 +28,10 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      * 
      * @var    booln
      * @access protected
-     * @see    ____var_see____
      * @since  3.0.0
      */
     protected static $currentCMS = null;
+
 
 	/**
 	 * List of widgets which can be exported
@@ -53,7 +53,6 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      * 
      * @var    array
      * @access protected
-     * @see    ____var_see____
      * @since  3.0.0
      */
     protected $pageTypes = array(
@@ -64,86 +63,45 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         'XLite_Controller_Customer_OrderList' => 'Orders list',
     );
 
-    /**
-     * Top-level viewer 
-     * 
-     * @var    XLite_View_Controller
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $viewer = null;
-
-
-	/**
-	 * It's not possible to instantiate this class using the "new" operator
-	 * 
-	 * @return void
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function __construct()
-	{
-	}
 
     /**
-     * Return initialized instance of the XLite_View_Conroller viewer 
-     * 
-     * @param bool $runController execute or not "handleRequest()" function
-     *  
-     * @return XLite_View_Conroller
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getViewer($runController = false)
-    {
-        if (!isset($this->viewer)) {
-            $this->viewer = XLite::getInstance()->run(false, $runController, true);
-        }
-
-        return $this->viewer;
-    }
-
-    /**
-     * getFlags 
-     * 
+     * It's not possible to instantiate this class using the "new" operator
+     *
      * @return void
      * @access protected
      * @since  3.0.0
      */
-    protected function getFlags()
+    protected function __construct()
     {
-        return array(XLite_View_Abstract::PARAM_IS_EXPORTED => true);
     }
 
-	/**
-	 * Prepare attributes before set them to a widget
-	 * 
-	 * @param array $attributes attributes to prepare
-	 *  
-	 * @return array
-	 * @access protected
-	 * @since  3.0.0
-	 */
-	protected function prepareAttributes(array $attributes)
-	{
-        return $attributes + $this->getFlags();
-	}
 
-
-	/**
-	 * Method to access the singleton 
-	 * 
-	 * @return XLite_Core_CMSConnector
-	 * @access public
-	 * @since  3.0
-	 */
-	public static function getInstance()
+    /**
+     * Method to access the singleton
+     *
+     * @return XLite_Core_CMSConnector
+     * @access public
+     * @since  3.0
+     */
+    public static function getInstance()
     {
         return self::_getInstance(__CLASS__);
     }
 
-	/**
+    /**
+     * Determines if we export content into a CMS
+     *
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public static function isCMSStarted()
+    {
+        return isset(self::$currentCMS);
+    }
+
+
+    /**
      * Return currently used CMS name
      *
      * @return string
@@ -152,12 +110,21 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
     abstract public function getCMSName();
 
+    /**
+     * Get landing link
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0 EE
+     */
+    abstract public function getLandingLink();
+
 
     /**
-     * Save passed params in the requester 
-     * 
+     * Save passed params in the requester
+     *
      * @param array $request params to map
-     *  
+     *
      * @return void
      * @access public
      * @since  3.0.0
@@ -169,7 +136,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 
     /**
      * Handler should called this function first to prevent any possible conflicts
-     * 
+     *
      * @return void
      * @access public
      * @since  3.0.0
@@ -177,18 +144,6 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
     public function init()
     {
         self::$currentCMS = $this->getCMSName();
-    }
-
-    /**
-     * Determines if we export content into a CMS
-     *
-     * @return bool 
-     * @access public
-     * @since  3.0.0
-     */
-    public static function isCMSStarted()
-    {
-        return isset(self::$currentCMS);
     }
 
     /**
@@ -203,103 +158,93 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         return $this->getCMSName() === self::$currentCMS;
     }
 
-	/**
-	 * Return list of widgets which can be exported 
-	 * 
-	 * @return array
-	 * @access public
-	 * @since  3.0
-	 */
-	public function getWidgetsList()
-	{
-		return $this->widgetsList;
-	}
+    /**
+     * Return list of widgets which can be exported
+     *
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getWidgetsList()
+    {
+        return $this->widgetsList;
+    }
 
     /**
-     * Return object by class name 
+     * Get page types
+     *
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getPageTypes()
+    {
+        return $this->pageTypes;
+    }
+
+    /**
+     * getApplication 
      * 
-     * @param string $class      widget class name
-     * @param array  $attributes widget attributes
+     * @return XLite
+     * @access public
+     * @since  3.0.0
+     */
+    public function getApplication()
+    {
+        return XLite_Model_CachingFactory::getObjectFromCallback(
+            __METHOD__, XLite::getInstance(), 'run'
+        );
+    }
+
+     /**
+     * Return viewer for current page
+     *
+     * @return XLite_View_Controller
+     * @access public
+     * @since  3.0.0
+     */
+    public function getViewer()
+    {
+        return XLite_Model_CachingFactory::getObjectFromCallback(
+            __METHOD__, $this->getApplication(), 'getViewer'
+        );
+    }
+    
+    /**
+     * Return widget
+     * 
+     * @param string $class  widget class name
+     * @param array  $params widget params
+     * @param int    $delta  drupal-specific param - so called "delta"
      *  
      * @return XLite_View_Abstract
      * @access public
      * @since  3.0.0
      */
-	public function getWidgetObject($class, array $attributes = array(), $delta = '')
-	{
-        $result = null;
-
-        if (class_exists($class)) {
-            $result = XLite_Model_CachingFactory::getObjectFromCallback(
-                __METHOD__ . $class . $delta, $this->getViewer(), 'getWidget', array($this->prepareAttributes($attributes), $class)
-            );
-        }
-
-        return $result;
-	}
-
-	/**
-	 * Validate widget arguments 
-	 * 
-	 * @param string $name       widget identifier
-	 * @param array  $attributes widget attributes
-	 *  
-	 * @return array
-	 * @access public
-	 * @since  3.0.0
-	 */
-	public function validateWidgetArguments($name, array $attributes, $delta = '')
-	{
-        $widget = $this->getWidgetObject($name, $attributes, $delta);
-
-		return $widget ? $widget->validateAttributes($attributes) : array();
-	}
-
-	/**
-     * Check if widget is visible or not
-     *
-     * @param string $name       widget identifier
-     * @param array  $attributes widget attributes
-     *
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-	public function isWidgetVisible($name, array $attributes, $delta = '')
-	{
-        $widget = $this->getWidgetObject($name, $attributes, $delta);
-
-		return $widget ? $widget->isVisible() : false;
-	}
-
-	/**
-	 * Return widget object 
-	 * 
-	 * @param string $name       widget name
-	 * @param array  $attributes parameters list defined in CMS
-	 * 
-	 * @return 
-	 * @access public
-	 * @since  3.0
-	 */
-	public function getBlock($name, array $attributes = array(), $delta = '')
-	{
-        XLite_View_Abstract::cleanupResources();
-
-        return new XLite_Core_WidgetDataTransport($this->getWidgetObject($name, $attributes, $delta));
-	}
+    public function getWidget($class, array $params = array(), $delta = 0)
+    {
+        return new XLite_Core_WidgetDataTransport(
+            class_exists($class) ? $this->getViewer()->getWidget($params, $class) : null
+        );
+    }
 
     /**
-     * Run a controller
+     * Return controller for current page
      *
-     * @return XLite_Core_WidgetDataTransport
+     * @param string $class  widget class name
+     * @param array  $params widget params
+     *
+     * @return XLite_Controller_Customer_Abstract
      * @access public
      * @since  3.0.0
      */
-    public function runController()
+    public function getPageInstance($class, array $params = array())
     {
-        return new XLite_Core_WidgetDataTransport($this->getViewer(true));
+        return new XLite_Core_WidgetDataTransport(
+            class_exists($class) ? new $class($params) : null
+        );
     }
+
 
 
     // -----> FIXME - to revise
@@ -418,128 +363,6 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	public function getSessionTtl()
 	{
 		return $this->session->getTtl();
-	}
-
-	/**
-	 * Get landing link 
-	 * 
-	 * @return string
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function getLandingLink()
-	{
-	}
-
-    /**
-     * Get page types 
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPageTypes()
-    {
-        return $this->pageTypes;
-    }
-
-    /**
-     * Check - valid page instance settings or not
-     * 
-     * @param string $type     Page type code
-     * @param array  $settings Page instance settings
-     *  
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function checkPageInstanceSettings($type, array $settings)
-    {
-        $type = $this->getPageTypeObject($type);
-
-        return $type ? $type->validatePageTypeAttributes($settings) : array();
-    }
-
-    /**
-     * Check - visible page instance or not
-     * 
-     * @param string $type     Page type code
-     * @param array  $settings Page instance settings
-     *  
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isPageInstanceVisible($type, array $settings)
-    {
-        $result = false;
-
-        $type = $this->getPageTypeObject($type);
-
-        if ($type) {
-            $type->setAttributes($this->prepareAttributes($settings));
-            $result = $type->isPageInstanceVisible();
-        }
-
-        return $result;
-    }
-
-    /**
-     * Get page instance data 
-     * 
-     * @param string $type     Page type code
-     * @param array  $settings Page instance settings
-     *  
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPageInstanceLink($type, array $settings)
-    {
-        $result = array(null, null);
-
-        $type = $this->getPageTypeObject($type);
-
-        if ($type) {
-            $application = $this->runApplication($this->prepareAttributes($settings));
-            $type->init();
-            $result = $type->getPageInstanceData();
-        }
-
-        return $result;
-    }
-
-    /**
-     * Get page type object 
-     * 
-     * @param string $type Class name
-     *  
-     * @return XLite_Controller_Abstract
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPageTypeObject($type)
-    {
-        return class_exists($type) ? new $type : null;
-    }
-
-	/**
-	 * Get translation table for profile data
-	 * 
-	 * @return array
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function getUserTranslationTable()
-	{
-		return array();
 	}
 }
 

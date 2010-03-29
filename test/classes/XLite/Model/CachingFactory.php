@@ -56,7 +56,7 @@ class XLite_Model_CachingFactory extends XLite_Model_Factory implements XLite_Ba
      */
     protected static function prepareHandler($handler)
     {
-       return  is_object($handler) ? $handler : (in_array($handler, array('self', 'parent')) ? $handler : new $handler());
+       return is_object($handler) ? $handler : (in_array($handler, array('self', 'parent')) ? $handler : new $handler());
     }
 
     /**

@@ -49,21 +49,6 @@ class XLite_Module_ProductAdviser_Controller_Customer_RecentlyViewed extends XLi
 
 
     /**
-     * Get page instance data (name and URL)
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPageInstanceData()
-    {
-        $this->target = 'recently_viewed';
-
-        return parent::getPageInstanceData();
-    }
-
-    /**
      * Get page type name
      * 
      * @return string

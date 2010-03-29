@@ -139,18 +139,23 @@ abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstr
     }
 
     /**
-     * Cleanup processed cart for non-checkout pages
+     * Cleanup processed cart for non-checkout pages 
      * 
+     * @param array $params controller params
+     *  
      * @return void
      * @access public
      * @since  3.0.0
      */
-	public function __construct()
+	public function __construct(array $params = array())
     {
+        parent::__construct($params);
+
         // TODO - to remove; backward compatibility
         $this->cart = $this->getCart();
 
-        if ('checkout' == XLite_Core_Request::getInstance()->target && $this->isCartProcessed()) {
+        // TODO - check if it's really needed
+        if ('checkout' == $this->getTarget() && $this->isCartProcessed()) {
             $this->getCart()->clear();
         }
     }
@@ -167,6 +172,18 @@ abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstr
 		}
 
 		return $result;
+    }
+
+    /**
+     * getExternalLink 
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getExternalLink()
+    {
+        return $this->buildURL($this->getTarget(), '', $this->getParamsHash(array_keys($this->getWidgetSettings())));
     }
 }
 

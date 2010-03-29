@@ -83,6 +83,19 @@ abstract class XLite_View_Button_Abstract extends XLite_View_Abstract
     }
 
     /**
+     * getClass 
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getClass()
+    {
+        return $this->getParam(self::PARAM_STYLE);
+    }
+
+
+    /**
      * Get a list of CSS files required to display the widget properly 
      * 
      * @return array

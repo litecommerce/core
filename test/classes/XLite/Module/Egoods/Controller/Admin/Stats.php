@@ -44,10 +44,10 @@
 */
 class XLite_Module_Egoods_Controller_Admin_Stats extends XLite_Controller_Admin_Stats implements XLite_Base_IDecorator
 {
-    public function __construct() // {{{
+    public function __construct(array $params) // {{{
     {
         $this->pages["download_statistics"] = "Egoods statistics";
-        parent::__construct();
+        parent::__construct($params);
     } // }}}
 }
 

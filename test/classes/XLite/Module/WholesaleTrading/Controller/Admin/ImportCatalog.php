@@ -48,9 +48,9 @@ class XLite_Module_WholesaleTrading_Controller_Admin_ImportCatalog extends XLite
 {	
     public $unique_identifier = null;
 
-    public function __construct()
+    public function __construct(array $params)
     {
-        parent::__construct();
+        parent::__construct($params);
         $this->pages["import_wholesale_pricing"] = "Import wholesale pricing";
         $this->pageTemplates["import_wholesale_pricing"] = "modules/WholesaleTrading/import_wholesale_pricing.tpl";
         $this->pages["import_product_access"] = "Import product access";

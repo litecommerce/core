@@ -787,14 +787,14 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
      * @access public
      * @since  3.0.0
      */
-    public function init(array $params = array())
+    public function setWidgetParams(array $params)
     {
         // FIXME - not a good idea, but I don't see a better way
         if (isset($params[self::PARAM_WIDGET_TYPE]) && self::WIDGET_TYPE_SIDEBAR == $params[self::PARAM_WIDGET_TYPE]) {
             $this->defaultTemplate = 'common/sidebar_box.tpl';
         }
 
-        parent::init($params);
+        parent::setWidgetParams($params);
 
         // Do not change call order
         $this->widgetParams += $this->getPager()->getWidgetParams();

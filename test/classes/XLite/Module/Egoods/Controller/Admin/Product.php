@@ -44,9 +44,9 @@
 */
 class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admin_Product implements XLite_Base_IDecorator
 {
-    public function __construct() // {{{
+    public function __construct(array $params) // {{{
     {
-        parent::__construct();
+        parent::__construct($params);
         $this->pages["downloadable_files"] = "Egoods";
         $this->pageTemplates["downloadable_files"] = "modules/Egoods/downloadable_files.tpl";
         $this->pages["pin_codes"] = "PIN codes";

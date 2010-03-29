@@ -50,6 +50,15 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
 
 
     /**
+     * Current area flag
+     *
+     * @var    bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected static $adminZone = false;
+
+    /**
      * Called controller 
      * 
      * @var    XLite_Controller_Abstract
@@ -76,15 +85,6 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      * @since  3.0.0
      */
     protected $options = null;
-
-    /**
-     * Current area flag
-     *
-     * @var    bool
-     * @access public
-     * @since  3.0.0
-     */
-    public $adminZone = false;
 
     /**
      * TODO - check if it's realy needed 
@@ -144,8 +144,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
         $target = XLite_Core_Request::getInstance()->target;
 
         if (empty($target)) {
-            // FIXME - "_REQUEST" should be removed
-            $_REQUEST['target'] = XLite_Core_Request::getInstance()->target = $target = self::TARGET_DEFAULT;
+            XLite_Core_Request::getInstance()->target = $target = self::TARGET_DEFAULT;
         }
 
         return $target;
@@ -175,6 +174,11 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
         return XLite_Core_Request::getInstance()->action;
     }
     
+
+    public static function isAdminZone()
+    {
+        return self::$adminZone;
+    }
 
     /**
      * Return specified (or the whole list) options 
@@ -261,7 +265,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      */
     public function getScript()
     {
-        return $this->adminZone ? self::ADMIN_SELF : self::CART_SELF;
+        return self::isAdminZone() ? self::ADMIN_SELF : self::CART_SELF;
     }
 
     /**
@@ -295,7 +299,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      * @access public
      * @since  3.0.0
      */
-    public static function getFactory()
+    public function getFactory()
     {
         return XLite_Model_Factory::getInstance();
     }
@@ -310,7 +314,8 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     public static function getController()
     {
         if (!isset(self::$controller)) {
-            self::$controller = XLite_Model_Factory::createObjectInstance(self::getControllerClass());
+            $class = self::getControllerClass();
+            self::$controller = new $class(XLite_Core_Request::getInstance()->getData());
         }
 
         return self::$controller;
@@ -329,31 +334,6 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     }
 
     /**
-     * Instantiate and initialize a controller
-     * 
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function initController()
-    {
-        self::getController()->init();
-    }
-
-    /**
-     * Wrapper 
-     * 
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function init()
-    {
-        $this->initModules();
-        $this->initController();
-    }
-
-    /**
      * Perform an action and redirect
      * 
      * @return void
@@ -362,21 +342,21 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      */
     public function runController()
     {
-        self::getController()->handleRequest();
+        $this->getController()->handleRequest();
     }
 
     /**
      * Return viewer object
      * 
-     * @param bool $isExported flag to determine if current viewer is exported into a CMS
-     *  
      * @return XLite_View_Controller
      * @access public
      * @since  3.0.0
      */
-    public function getViewer($isExported = false)
+    public function getViewer()
     {
-        return self::getController()->getViewer($isExported);
+        $this->runController();
+
+        return $this->getController()->getViewer();
     }
 
     /**
@@ -388,23 +368,17 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      *  
      * @return XLite_View_Abstract
      * @access public
-     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function run($adminZone = false, $runController = true, $fromCMS = false)
+    public function run($adminZone = false)
     {
         // Set current area
-        $this->adminZone = $adminZone;
+        self::$adminZone = $adminZone;
 
-        // Initialize modules amd create controller instance
-        $this->init();
+        // Initialize modules
+        $this->initModules();
 
-        // Handle action (if needed)
-        if ($runController) {
-            $this->runController();
-        }
-
-        return $this->getViewer($fromCMS);
+        return $this;
     }
 }
 

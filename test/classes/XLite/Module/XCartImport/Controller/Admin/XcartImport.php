@@ -159,9 +159,9 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
         return $this->_connection;
     }
     
-    public function __construct()
+    public function __construct(array $params)
     {
-        parent::__construct();
+        parent::__construct($params);
         $this->boolean_map = array(
             "Y" => 1,
             "y" => 1,

@@ -24,27 +24,27 @@
 class XLite_Core_WidgetDataTransport extends XLite_Base
 {
     /**
-     * viewer 
+     * handler 
      * 
      * @var    mixed
      * @access protected
      * @since  3.0.0
      */
-    protected $viewer = null;
+    protected $handler = null;
 
 
     /**
      * __construct 
      * 
-     * @param XLite_View_Abstract $viewer ____param_comment____
+     * @param mixed $handler passed handler
      *  
      * @return void
      * @access public
      * @since  3.0.0
      */
-	public function __construct(XLite_View_Abstract $viewer)
+	public function __construct($handler)
 	{
-        $this->viewer = $viewer;
+        $this->handler = $handler;
 	}
 
     /**
@@ -59,7 +59,7 @@ class XLite_Core_WidgetDataTransport extends XLite_Base
      */
     public function __call($method, array $args = array())
     {
-        return call_user_func_array(array($this->viewer, $method), $args);
+        return isset($this->handler) ? call_user_func_array(array($this->handler, $method), $args) : null;
     }
 }
 

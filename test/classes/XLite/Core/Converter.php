@@ -94,7 +94,7 @@ class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
 	public static function getControllerClass($target)
 	{
 		return 'XLite_Controller_' 
-			   . (XLite::getInstance()->adminZone ? 'Admin' : 'Customer') 
+			   . (XLite::isAdminZone() ? 'Admin' : 'Customer') 
 			   . (empty($target) ? '' : '_' . self::convertToCamelCase($target));
 	}
 

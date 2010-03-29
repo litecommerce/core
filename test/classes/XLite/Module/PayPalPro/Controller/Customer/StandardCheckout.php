@@ -48,9 +48,9 @@ class XLite_Module_PayPalPro_Controller_Customer_StandardCheckout extends XLite_
 {	
 	public $registerForm = null;
 
-	public function __construct()
+	public function __construct(array $params)
 	{
-		parent::__construct();
+		parent::__construct($params);
 		if (($_REQUEST["target"] == "checkout") && (isset($_REQUEST["paypal_result"]) && $_REQUEST["paypal_result"] == "cancel")) {
 			$this->cart = XLite_Model_Cart::getInstance();
 			if ($this->cart->get("status") == "Q") {

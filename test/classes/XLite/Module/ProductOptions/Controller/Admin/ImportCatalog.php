@@ -46,9 +46,9 @@
 */
 class XLite_Module_ProductOptions_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_ImportCatalog implements XLite_Base_IDecorator
 {
-    public function __construct()
+    public function __construct(array $params)
     {
-        parent::__construct();
+        parent::__construct($params);
         $this->pages["import_product_options"] = "Import product options";
         $this->pageTemplates["import_product_options"] = "modules/ProductOptions/import_product_options.tpl";
     }
