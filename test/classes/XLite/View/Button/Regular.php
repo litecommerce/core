@@ -41,7 +41,6 @@ class XLite_View_Button_Regular extends XLite_View_Button_Abstract
      */
 
     const PARAM_ACTION      = 'action';
-    const PARAM_JS_EVENT    = 'jsEvent';
     const PARAM_JS_CODE     = 'jsCode';
     const PARAM_FORM_PARAMS = 'formParams';
 
@@ -59,7 +58,6 @@ class XLite_View_Button_Regular extends XLite_View_Button_Abstract
 
         $this->widgetParams += array(
             self::PARAM_ACTION      => new XLite_Model_WidgetParam_String('LC action', null, true),
-            self::PARAM_JS_EVENT    => new XLite_Model_WidgetParam_List('JS event', 'onclick', true, $this->allowedJSEvents),
             self::PARAM_JS_CODE     => new XLite_Model_WidgetParam_String('JS code', '', true),
             self::PARAM_FORM_PARAMS => new XLite_Model_WidgetParam_Array('Form params to modify', array(), true),
         );
@@ -105,18 +103,6 @@ class XLite_View_Button_Regular extends XLite_View_Button_Abstract
         return $formParams
             ? 'submitForm(this.form, {' . $this->getJSFormParams($formParams) . '})'
             : 'submitFormDefault(this.form, ' . (is_null($this->getParam(self::PARAM_ACTION)) ? 'null' : ('\'' . $this->getParam(self::PARAM_ACTION) . '\'')) . ');';
-    }
-
-    /**
-     * JS code will be executed on this event
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getJSEvent()
-    {
-        return $this->getParam(self::PARAM_JS_EVENT);
     }
 
     /**

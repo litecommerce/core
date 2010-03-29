@@ -10,4 +10,4 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<input type="image" src="images/spacer.gif" {getJSEvent():h}="javascript: {getJSCode():h}" class="{getClass()}" value="{getButtonLabel()}" />
+<input type="image" src="images/spacer.gif" class="{getClass()}" value="{getButtonLabel()}" title="{getButtonLabel()}" onclick="javascript: {getJSCode():h}" />

@@ -40,7 +40,6 @@ class XLite_View_Button_Link extends XLite_View_Button_Abstract
      */
 
     const PARAM_LOCATION = 'location';
-    const PARAM_JS_EVENT = 'jsEvent';
     const PARAM_JS_CODE  = 'jsCode';
 
 
@@ -57,23 +56,10 @@ class XLite_View_Button_Link extends XLite_View_Button_Abstract
 
         $this->widgetParams += array(
             self::PARAM_LOCATION => new XLite_Model_WidgetParam_String('Redirect to', null, true),
-            self::PARAM_JS_EVENT => new XLite_Model_WidgetParam_List('JS event', 'onclick', true, $this->allowedJSEvents),
             self::PARAM_JS_CODE  => new XLite_Model_WidgetParam_String('JS code', null, true),
         );
 
         $this->widgetParams[self::PARAM_TEMPLATE]->setValue('button/regular.tpl');
-    }
-
-    /**
-     * JS code will be executed when this event occurs
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getJSEvent()
-    {
-        return $this->getParam(self::PARAM_JS_EVENT);
     }
 
     /**
