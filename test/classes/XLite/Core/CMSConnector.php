@@ -384,5 +384,10 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 	{
 		return $this->session->getTtl();
 	}
+
+    protected function getUserTranslationTable()
+    {
+        return array();
+    }
 }
 
