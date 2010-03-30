@@ -44,7 +44,14 @@
 * @version $Id$
 */
 class XLite_Module_GoogleCheckout_View_ButtonAltCheckout extends XLite_View_Button implements XLite_Base_IDecorator
-{	
+	{	
+
+	/**
+     * Widget param names
+     */
+    const PARAM_SIZE  = 'size';
+	const PARAM_BACKGROUND = 'background';
+
 	public $buttonUrl = null;	
 	public $gacObject = null;
 
@@ -65,7 +72,7 @@ class XLite_Module_GoogleCheckout_View_ButtonAltCheckout extends XLite_View_Butt
 	function getGoogleCheckoutButtonUrl()
 	{
 		if (!isset($this->buttonUrl)) {
-        	$this->buttonUrl = $this->gacObject->getGoogleCheckoutButtonUrl();
+        	$this->buttonUrl = $this->gacObject->getGoogleCheckoutButtonUrl($this->getParam(self::PARAM_SIZE), $this->getParam(self::PARAM_BACKGROUND));
 		}
 
 		return $this->buttonUrl;
@@ -75,6 +82,27 @@ class XLite_Module_GoogleCheckout_View_ButtonAltCheckout extends XLite_View_Butt
 	{
 		return $this->gacObject->isGoogleAllowPay();
 	}
+
+	/**
+	 * Define widget parameters
+	 *
+	 * @return void
+	 * @access protected
+	 * @since  1.0.0
+	 */
+	protected function defineWidgetParams()
+	{
+		parent::defineWidgetParams();
+		$this->widgetParams += array(
+			self::PARAM_SIZE => new XLite_Model_WidgetParam_String(
+				'Button size', 'medium', false
+			),
+			self::PARAM_BACKGROUND => new XLite_Model_WidgetParam_String(
+				'Background (white/transparent)', 'white', false
+			),
+		);
+	}
+
 }
 
 // WARNING :

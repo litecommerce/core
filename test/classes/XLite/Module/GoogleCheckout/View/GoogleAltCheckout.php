@@ -95,21 +95,30 @@ class XLite_Module_GoogleCheckout_View_GoogleAltCheckout extends XLite_View_Abst
     	}
     }
 
-	function getGoogleCheckoutButtonUrl()
+	function getGoogleCheckoutButtonUrl($variant='medium', $background='white')
 	{
-		$variant = "text";
-		if (!$this->isGoogleAllowPay()) {
-			$variant = "disabled";
-		}
+		// Available button styles
+		$backgrounds = array('white'=>'white', 'transparent'=>'trans');
+		$variants = array(
+				'large' => array('width'=>180, 'height'=>46),
+				'medium' => array('width'=>168, 'height'=>44),
+				'small' => array('width'=>160, 'height'=>43),
+				'mobile-hi' => array('width'=>152, 'height'=>30),
+				'mobile-low' => array('width'=>118, 'height'=>24),
+			);
 
-		$url = array();
-		$url[] = "http";
-		$url[] = ($this->getComplex('dialog.secure')) ? "s" : "";
-		$url[] = "://sandbox.google.com/checkout/buttons/checkout.gif?merchant_id=";
-		$url[] = $this->GCMerchantID;
-		$url[] = "&w=160&h=43&style=trans&variant=$variant&loc=en_US";
+		// Chosen button style	
+		$background = $backgrounds[$background];
+		$variant = $variants[$variant];
+		$width = $variant['width'];
+		$height = $variant['height'];
 
-		return implode("", $url);
+		$enabled = $this->isGoogleAllowPay() ? 'text' : 'disabled';
+		$protocol = ($this->getComplex('dialog.secure')) ? 'https' : 'http';
+		$merchant_id = $this->GCMerchantID;
+
+		return "$protocol://checkout.google.com/buttons/checkout.gif?merchant_id=$merchant_id&w=$width&h=$height&style=$background&variant=$enabled&loc=en_US";
+
 	}
 
 	function getGoogleCheckoutButtonImgNum()

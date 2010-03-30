@@ -42,5 +42,5 @@
 </ul>
 
 <widget class="XLite_View_Button_Regular" label="Checkout" action="checkout" style="bright-button big-button checkout-button" />
-<widget module="GoogleCheckout" template="modules/GoogleCheckout/shopping_cart/button.tpl" />
+<widget class="XLite_Module_GoogleCheckout_View_ButtonAltCheckout" module="GoogleCheckout" template="modules/GoogleCheckout/shopping_cart/button.tpl" size="small" background="transparent" />
 <widget module="GoogleCheckout" template="modules/GoogleCheckout/shopping_cart/gcheckout_notes.tpl" />

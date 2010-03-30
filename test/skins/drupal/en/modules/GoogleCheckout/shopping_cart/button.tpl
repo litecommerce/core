@@ -10,6 +10,8 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<div class="or-use">or use</div>
-<div IF="googleAllowPay" class="gcheckout-button"><a href="{buildUrl(#googlecheckout#,#checkout"#)}"><img src="{googleCheckoutButtonUrl}" width="160" height="43" border="0" alt="" /></a></div>
-<div IF="!googleAllowPay" class="gcheckout-button gcheckout-button-disabled"><img src="{googleCheckoutButtonUrl}" width="160" height="43" border="0" alt="" /></div>
+<div class="alt-checkout-button google-checkout-button">
+  <p>- or use -</p>
+  <div IF="googleAllowPay"><a href="{buildUrl(#googlecheckout#,#checkout"#)}"><img src="{googleCheckoutButtonUrl}" alt="Google Checkout" /></a></div>
+  <div IF="!googleAllowPay"><img src="{googleCheckoutButtonUrl}" width="180" height="46" alt="Google Checkout" class="disabled" IF="!googleAllowPay" /></div>
+</div>
