@@ -103,6 +103,12 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
 
     const TEMPLATES_DIR = 'products_list';
 
+    /**
+     * Template to use for sidebars
+     */
+
+    const TEMPLATE_SIDEBAR = 'common/sidebar_box.tpl';
+
 
     /**
      * Widget types 
@@ -791,7 +797,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
     {
         // FIXME - not a good idea, but I don't see a better way
         if (isset($params[self::PARAM_WIDGET_TYPE]) && self::WIDGET_TYPE_SIDEBAR == $params[self::PARAM_WIDGET_TYPE]) {
-            $this->defaultTemplate = 'common/sidebar_box.tpl';
+            $this->defaultTemplate = self::TEMPLATE_SIDEBAR;
         }
 
         parent::setWidgetParams($params);

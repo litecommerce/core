@@ -245,6 +245,26 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         );
     }
 
+    /**
+     * getProfile
+     * 
+     * @param int $cmsUserId internal user ID in CMS
+     *  
+     * @return XLite_Model_Profile
+     * @access public
+     * @since  3.0.0
+     */
+    public function getProfile($cmsUserId)
+    {
+        $profile = XLite_Model_CachingFactory::getObject(__METHOD__ . $cmsUserId, 'XLite_Model_Profile');
+
+        if (!$profile->isRead) {
+            $profile->find('cms_profile_id = \'' . addslashes($cmsUserId) . '\'');
+        }
+
+        return $profile;
+    }
+
 
 
     // -----> FIXME - to revise

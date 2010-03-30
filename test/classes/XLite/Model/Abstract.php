@@ -1,42 +1,30 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
+// vim: set ts=4 sw=4 sts=4 et:
 
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
+/**
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
 
 /**
 * Delimiters definitions. Used for import / export store data.
@@ -45,12 +33,12 @@ $GLOBALS['DATA_DELIMITERS'] = array("semicolon"=>";","comma"=>",","tab"=>"\t");
 $GLOBALS['TEXT_QUALIFIERS'] = array("double_quote"=>'"',"single_quote"=>"'");
 
 /**
-* Base class is an abstract class for all database-mapped objects.
-*
-* @package Base
-* @access public
-* @version $Id$
-*/
+ * Base class is an abstract class for all database-mapped objects
+ * 
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @since      3.0.0
+ */
 class XLite_Model_Abstract extends XLite_Base
 {
     /**
@@ -86,13 +74,13 @@ class XLite_Model_Abstract extends XLite_Base
     /**
     * Shows whether the object data have been read from DB or not
     * @var boolean $isRead
-    */	
+    */    
     public $isRead = false;
 
     /**
     * Checks whether the object data exists in DB
     * @var boolen $isPersistent
-    */	
+    */    
     public $isPersistent = false;
     
     /**
@@ -105,17 +93,17 @@ class XLite_Model_Abstract extends XLite_Base
     /**
     * Contains SQL WHERE clause used by default by findAll()
     * @var string $_range
-    */	
+    */    
     public $_range;
 
     /**
     * If set to true, findAll will fetch only primary keys (isRead=false)
-    */	
+    */    
     public $fetchKeysOnly = false;
 
     /**
     * If set to true, findAll will fetch only object' indexes
-    */	
+    */    
     public $fetchObjIdxOnly = false;
     
 
@@ -137,18 +125,18 @@ class XLite_Model_Abstract extends XLite_Base
     }
 
     function isObjectDescriptor($descriptor)
-	{
-		return is_array($descriptor) && isset($descriptor['class']) && isset($descriptor['data']);
+    {
+        return is_array($descriptor) && isset($descriptor['class']) && isset($descriptor['data']);
     }
 
     function descriptorToObject(array $descriptor)
-	{
-		$object = new $descriptor['class'];
-		$object->isPersistent = true;
-		$object->isRead = false;
-		$object->properties = $descriptor['data'];
+    {
+        $object = new $descriptor['class'];
+        $object->isPersistent = true;
+        $object->isRead = false;
+        $object->properties = $descriptor['data'];
 
-		return $object;
+        return $object;
     }
 
     function iterate($where = null, $orderby = null, $groupby = null, $limit = null) // {{{
@@ -161,14 +149,14 @@ class XLite_Model_Abstract extends XLite_Base
         $where = $this->_buildWhere($where);
         // build select query
         $this->sql = $this->_buildSelect($where, $orderby, $groupby, $limit); 
-		$result = XLite_Model_Database::getInstance()->getAll($this->sql);
+        $result = XLite_Model_Database::getInstance()->getAll($this->sql);
         if (!is_array($result)) {
             $this->_die ($this->sql.": ".$result->getMessage());
         }
-		return $result;
-	}
+        return $result;
+    }
 
-	function next(&$result)
+    function next(&$result)
     {
         do {
             $row = array_shift($result);
@@ -181,7 +169,7 @@ class XLite_Model_Abstract extends XLite_Base
                 $this->properties = $row;
             } else {
                 $this->properties = array();
-	            $this->_updateProperties($row);
+                $this->_updateProperties($row);
             }
         } while (!$this->filter());
         return true;
@@ -225,7 +213,7 @@ class XLite_Model_Abstract extends XLite_Base
     function isExists() // {{{
     {
         if (!$this->isRead) {
-        	$this->isRead = $this->isPersistent ? $this->read() : false;
+            $this->isRead = $this->isPersistent ? $this->read() : false;
             return $this->isRead;
         }
         return true;
@@ -290,14 +278,14 @@ class XLite_Model_Abstract extends XLite_Base
     {
         if ($this->autoIncrement) {
             $this->isRead = $this->read();
-			// FIXME - check this code
-			$new = clone $this;
-    		/*if (func_is_php5()) {
-            	//$new = clone $this;
-            	eval("\$new = clone \$this;");
+            // FIXME - check this code
+            $new = clone $this;
+            /*if (func_is_php5()) {
+                //$new = clone $this;
+                eval("\$new = clone \$this;");
             } else {
-				$new = new self;
-				$new->set("properties", $this->get("properties"));
+                $new = new self;
+                $new->set("properties", $this->get("properties"));
             }*/
             $new->setComplex($this->autoIncrement, null);
             $new->create();
@@ -345,7 +333,7 @@ class XLite_Model_Abstract extends XLite_Base
         if (!empty($this->autoIncrement)) {
             // remove auto increment field
             if (isset($properties[$this->autoIncrement])) {
-            	unset($properties[$this->autoIncrement]);
+                unset($properties[$this->autoIncrement]);
             }
         }
         $fields = implode(", ", array_keys($properties));
@@ -387,17 +375,17 @@ class XLite_Model_Abstract extends XLite_Base
         $properties = $this->properties;
         $condition = array();
         foreach ($this->primaryKey as $field) {
-			$condition[] = $field . ' = \'' . (isset($properties[$field]) ? addslashes($properties[$field]) : '') . '\'';
-			// remove primary keys
-			unset($properties[$field]);
+            $condition[] = $field . ' = \'' . (isset($properties[$field]) ? addslashes($properties[$field]) : '') . '\'';
+            // remove primary keys
+            unset($properties[$field]);
         }
         $condition = implode(" AND ", $condition);
         $values = array(); // compile 'set' clause
         if (is_array($properties)) {
-			foreach ($properties as $field => $val) {
-				if (is_scalar($val)) {
-					$values[] = "$field='".addslashes($val)."'";
-				}
+            foreach ($properties as $field => $val) {
+                if (is_scalar($val)) {
+                    $values[] = "$field='".addslashes($val)."'";
+                }
             }
         }
         if (!$values) {
@@ -493,19 +481,19 @@ class XLite_Model_Abstract extends XLite_Base
     {
         global $DATA_DELIMITERS, $TEXT_QUALIFIERS;
 
-		$this->importError = "";
-		is_array($options) or $this->importError = "Invalid import options.";
-		if ($this->importError) {
-			if ($options['return_error']) return false;
-			else die($this->importError);
-		}
+        $this->importError = "";
+        is_array($options) or $this->importError = "Invalid import options.";
+        if ($this->importError) {
+            if ($options['return_error']) return false;
+            else die($this->importError);
+        }
 
         $file = $options["file"];
-		$handle = fopen($file, 'r') or $this->importError = "Failed to open import file $file.";
-		if ($this->importError) {
-			if ($options['return_error']) return false;
-			else die($this->importError);
-		}
+        $handle = fopen($file, 'r') or $this->importError = "Failed to open import file $file.";
+        if ($this->importError) {
+            if ($options['return_error']) return false;
+            else die($this->importError);
+        }
 
         if (!empty($options["delimiter"])) {
             $options["delimiter"] = $DATA_DELIMITERS[$options["delimiter"]];
@@ -521,29 +509,29 @@ class XLite_Model_Abstract extends XLite_Base
         while ($line = fgets($handle, 4096)) {
             $error = "";
             if (strlen($line_buffer) > 0) {
-            	$line = $line_buffer . $line;
+                $line = $line_buffer . $line;
             }
             $columns = func_parse_csv($line, $options["delimiter"], $qualifier, $error);
             if (is_null($columns) && $error == "Unexpected end of line; $qualifier expected") {
-            	$line = str_replace("\r\n", " ", $line);
-            	$line = str_replace("\n", " ", $line);
-            	$line_buffer = $line;
-            	continue;
+                $line = str_replace("\r\n", " ", $line);
+                $line = str_replace("\n", " ", $line);
+                $line_buffer = $line;
+                continue;
             } elseif (is_null($columns)) {
-				$this->importError = "CVS syntax error in line ".$this->lineNo.": $error.";
-				if ($options['return_error']) return false;
-				else die($this->importError);
+                $this->importError = "CVS syntax error in line ".$this->lineNo.": $error.";
+                if ($options['return_error']) return false;
+                else die($this->importError);
             }
-        	$line_buffer = "";
+            $line_buffer = "";
             $properties = array();
-			$layout_idx = 0;
+            $layout_idx = 0;
             for ($i = 0; $i < count($layout); $i++) {
                 if ($layout[$i] != "NULL") {
-					array_key_exists($layout_idx, $columns) or $this->importError = "Invalid CSV file: column count does not match.";
-					if ($this->importError) {
-						if ($options['return_error']) return false;
-						else die($this->importError);
-					}
+                    array_key_exists($layout_idx, $columns) or $this->importError = "Invalid CSV file: column count does not match.";
+                    if ($this->importError) {
+                        if ($options['return_error']) return false;
+                        else die($this->importError);
+                    }
                     $properties[$layout[$i]] = $columns[$layout_idx];
                     $layout_idx ++;
                 }    
@@ -599,9 +587,9 @@ class XLite_Model_Abstract extends XLite_Base
             $items = $this->findAll($where, $orderby, $groupby, $limit_sql);
             $items_number = count($items);
             for ($i=0; $i<$items_number; $i++) {
-				print ($export_csv_string = func_construct_csv($items[$i]->_export($layout, $delimiter), $delimiter, '"'));
-            	if (strlen($export_csv_string) > 0) {
-                	print "\n";
+                print ($export_csv_string = func_construct_csv($items[$i]->_export($layout, $delimiter), $delimiter, '"'));
+                if (strlen($export_csv_string) > 0) {
+                    print "\n";
                 }
             }
             $processed += $limit;
@@ -652,18 +640,18 @@ class XLite_Model_Abstract extends XLite_Base
     {
         $result = array();
 
-		foreach ($objects as $object) {
-			if (is_array($object) && isset($object['class']) && isset($object['data'])) {
-				$properties = $object['data'];
-				$object = new $object['class'];
-				$object->isPersistent = true;
+        foreach ($objects as $object) {
+            if (is_array($object) && isset($object['class']) && isset($object['data'])) {
+                $properties = $object['data'];
+                $object = new $object['class'];
+                $object->isPersistent = true;
                 $object->isRead = false;
                 $object->properties = $properties;
-				unset($properties);
-			}
+                unset($properties);
+            }
 
-			$result[$object->get($field)] = $object;
-		}
+            $result[$object->get($field)] = $object;
+        }
 
         return $result;
     }
@@ -678,7 +666,7 @@ class XLite_Model_Abstract extends XLite_Base
     protected function _allKeysSet()
     {
         foreach ($this->primaryKey as $field) {
-			if (!isset($this->properties[$field]) || '' === $this->properties[$field]) return false;
+            if (!isset($this->properties[$field]) || '' === $this->properties[$field]) return false;
         }
 
         return true;
@@ -695,28 +683,28 @@ class XLite_Model_Abstract extends XLite_Base
      */
     protected function _updateProperties(array $properties = array())
     {
-		$this->properties = array_merge(array_intersect_key($properties, $this->fields), $this->properties);
-		$this->isPersistent = $this->isRead = true;
+        $this->properties = array_merge(array_intersect_key($properties, $this->fields), $this->properties);
+        $this->isPersistent = $this->isRead = true;
     }
 
-	/**
-	 * Compose the "WHERE" condition for SQL queries
-	 * 
-	 * @param string $where condition
-	 *  
-	 * @return string
-	 * @access protected
-	 * @since  3.0
-	 */
-	protected function _buildWhere($where)
+    /**
+     * Compose the "WHERE" condition for SQL queries
+     * 
+     * @param string $where condition
+     *  
+     * @return string
+     * @access protected
+     * @since  3.0
+     */
+    protected function _buildWhere($where)
     {
-		return empty($this->_range) ? $where : $this->_range . (empty($where) ? '' : ' AND ' . $where);
+        return empty($this->_range) ? $where : $this->_range . (empty($where) ? '' : ' AND ' . $where);
     }
 
     /**
      * Builds the SQL SELECT statement for this object 
      * 
-	 * @param mixed $where   "where" condition
+     * @param mixed $where   "where" condition
      * @param mixed $orderby "orderby" condition
      * @param mixed $groupby "groupby" condition
      * @param mixed $limit   "limit" condition
@@ -727,20 +715,20 @@ class XLite_Model_Abstract extends XLite_Base
      */
     protected function _buildSelect($where = null, $orderby = null, $groupby = null, $limit = null)
     {
-		$sql = 'SELECT ' 
-			   . implode(',', $this->fetchKeysOnly ? $this->primaryKey : array_keys($this->fields)) 
-			   . ' FROM ' . $this->getTable();
+        $sql = 'SELECT ' 
+               . implode(',', $this->fetchKeysOnly ? $this->primaryKey : array_keys($this->fields)) 
+               . ' FROM ' . $this->getTable();
 
-		foreach (
-			array(
-				'WHERE'    => $where,
-				'GROUP BY' => $groupby,
-				'ORDER BY' => $orderby,
-				'LIMIT'    => $limit,
-			) as $statement => $condition
-		) {
-			empty($condition) || ($sql .= ' ' . $statement . ' ' . $condition);
-		}
+        foreach (
+            array(
+                'WHERE'    => $where,
+                'GROUP BY' => $groupby,
+                'ORDER BY' => $orderby,
+                'LIMIT'    => $limit,
+            ) as $statement => $condition
+        ) {
+            empty($condition) || ($sql .= ' ' . $statement . ' ' . $condition);
+        }
 
         return $sql;
     }
@@ -771,7 +759,7 @@ class XLite_Model_Abstract extends XLite_Base
 
     /**
      * Constructs a new database object. The options argument list is a primary key value.
-	 * If it is specified, the object is created as isPersistent, otherwise - !isPersistent 
+     * If it is specified, the object is created as isPersistent, otherwise - !isPersistent 
      * 
      * @return void
      * @access public
@@ -779,11 +767,15 @@ class XLite_Model_Abstract extends XLite_Base
      */
     public function __construct()
     {
-		// if auto-increment is specified, make it a primary key of this table
-        empty($this->autoIncrement) || ($this->primaryKey = array($this->autoIncrement));
+        // if auto-increment is specified, make it a primary key of this table
+        if (isset($this->autoIncrement)) {
+            $this->primaryKey = array($this->autoIncrement);
+        }
 
-		foreach (func_get_args() as $index => $arg) {
-            empty($arg) || $this->setComplex($this->primaryKey[$index], $arg);
+        foreach (func_get_args() as $index => $arg) {
+            if (!empty($arg)) {
+                $this->set($this->primaryKey[$index], $arg);
+            }
         }
     }
 
@@ -809,13 +801,13 @@ class XLite_Model_Abstract extends XLite_Base
      * @param array $properties the associative array with propertie
      *  
      * @return void
-	 * @access public
+     * @access public
      * @since  3.0
      */
     public function setProperties(array $properties)
     {
         foreach ($properties as $field => $value) {
-			isset($this->fields[$field]) && $this->setComplex($field, $properties[$field]);
+            isset($this->fields[$field]) && $this->setComplex($field, $properties[$field]);
         }
     }
 
@@ -830,18 +822,18 @@ class XLite_Model_Abstract extends XLite_Base
      */
     public function get($property)
     {
-		// check whether the property exists
-		if (isset($this->fields[$property])) {
+        // check whether the property exists
+        if (isset($this->fields[$property])) {
 
-			// read object data if necessary
-			if ($this->isPersistent && !$this->isRead && $property != $this->autoIncrement) {
-				$this->isRead = $this->read();
-			}
+            // read object data if necessary
+            if ($this->isPersistent && !$this->isRead && $property != $this->autoIncrement) {
+                $this->isRead = $this->read();
+            }
 
-			return isset($this->properties[$property]) ? $this->properties[$property] : $this->fields[$property];
-		}
-		
-		return parent::get($property);
+            return isset($this->properties[$property]) ? $this->properties[$property] : $this->fields[$property];
+        }
+        
+        return parent::get($property);
     }
 
     /**
@@ -856,20 +848,20 @@ class XLite_Model_Abstract extends XLite_Base
      */
     public function set($property, $value)
     {
-		if (isset($this->fields[$property])) {
+        if (isset($this->fields[$property])) {
 
-			// set isRead to FALSE if object has not been read yet
-			if (in_array($property, $this->primaryKey)) {
-				$this->isRead = false;
-			}
+            // set isRead to FALSE if object has not been read yet
+            if (in_array($property, $this->primaryKey)) {
+                $this->isRead = false;
+            }
 
-			$this->properties[$property] = $value;
-			$this->isPersistent = $this->_allKeysSet();
+            $this->properties[$property] = $value;
+            $this->isPersistent = $this->_allKeysSet();
 
-		} else {
+        } else {
 
-			parent::set($property, $value);
-		}
+            parent::set($property, $value);
+        }
     }
 
     /**
@@ -890,18 +882,18 @@ class XLite_Model_Abstract extends XLite_Base
                 $this->_updateProperties($result);
 
                 if ($this->filter()) {
-					return true;
-				}
+                    return true;
+                }
 
-				// default properties
-				$this->properties = $this->fields;
+                // default properties
+                $this->properties = $this->fields;
             }
 
             return false;
         }
 
         // die otherwise
-		$this->_die('Unable to read unspecified row for ' . $this->alias);
+        $this->_die('Unable to read unspecified row for ' . $this->alias);
     }
 
     /**
@@ -919,7 +911,7 @@ class XLite_Model_Abstract extends XLite_Base
     /**
      * Attempts to find the database record for this object and fill the object properties with data found
      * 
-	 * @param mixed $where "where" condition
+     * @param mixed $where "where" condition
      * @param mixed $order "orderby" condition
      *  
      * @return bool
@@ -928,13 +920,17 @@ class XLite_Model_Abstract extends XLite_Base
      */
     public function find($where, $order = null)
     {
-        if (is_null($result = $this->db->getRow($this->sql = $this->_buildSelect($this->_buildWhere($where), $order)))) {
+        $this->sql = $this->_buildSelect($this->_buildWhere($where), $order);
+        $result = $this->db->getRow($this->sql);
+
+        if (!isset($result)) {
+            $this->isRead = true;
             return false;
-		}
+        }
 
-		$this->_updateProperties($result);
+        $this->_updateProperties($result);
 
-		return $this->filter();
+        return $this->filter();
     }
 
     /**
@@ -946,14 +942,14 @@ class XLite_Model_Abstract extends XLite_Base
      * @param mixed $limit   "limit" condition
      *  
      * @return array
-	 * @access public
+     * @access public
      * @since  3.0
      */
     public function findAll($where = null, $orderby = null, $groupby = null, $limit = null)
     {
         // apply the default order
         if (empty($orderby) && !empty($this->defaultOrder)) {
-			$orderby = $this->defaultOrder;
+            $orderby = $this->defaultOrder;
         }
 
         $where = $this->_buildWhere($where);
@@ -962,30 +958,30 @@ class XLite_Model_Abstract extends XLite_Base
         $this->sql = $this->_buildSelect($where, $orderby, $groupby, $limit);
         $result = $this->db->getAll($this->sql);
 
-		$class = get_class($this);
+        $class = get_class($this);
         $objects = array();
 
         // create class instance for every row found
-		foreach ($result as $row) {
+        foreach ($result as $row) {
 
-			$object = new $class();
-			$object->isPersistent = true;
+            $object = new $class();
+            $object->isPersistent = true;
 
-			if ($this->fetchKeysOnly) {
-				$object->isPersistent = true;
-				$object->isRead = false;
-				$object->properties = $row;
-				$object_key = array('class' => $class, 'data' => $row);
-			} else {
-				$object->_updateProperties($row);
-			}
+            if ($this->fetchKeysOnly) {
+                $object->isPersistent = true;
+                $object->isRead = false;
+                $object->properties = $row;
+                $object_key = array('class' => $class, 'data' => $row);
+            } else {
+                $object->_updateProperties($row);
+            }
 
-			if ($object->filter()) {
-				$objects[] = ($this->fetchKeysOnly && $this->fetchObjIdxOnly) ? $object_key : $object;
-			}
+            if ($object->filter()) {
+                $objects[] = ($this->fetchKeysOnly && $this->fetchObjIdxOnly) ? $object_key : $object;
+            }
 
-			unset($object);
-		}
+            unset($object);
+        }
 
         return $objects;
     } 
