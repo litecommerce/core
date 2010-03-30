@@ -13,6 +13,13 @@
 $(document).ready(
   function() {
 
+    // Add gift certificate verify popup controller
+    $('.gc-verify').click(
+      function() {
+        return !openBlockUIPopup('check_gift_certificate');  
+      }
+    );
+
     // Assign min/max for amount field
     var e = $('.gift-certificate input[name="amount"]').get(0);
     if (e) {

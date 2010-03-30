@@ -113,12 +113,16 @@ abstract class XLite_View_Form_Abstract extends XLite_View_Abstract
     protected function getFormParamsAsPlainList()
     {
         if (is_null($this->plainList)) {
-            foreach ($this->getFormParams() as $key => $value) {
-                if (is_array($value)) {
-                    $this->addChain2PlainList($key, $value);
+            $this->plainList = array();
 
-                } else {
-                    $this->plainList[$key] = $value;
+            if ('post' == $this->getParam(self::PARAM_FORM_METHOD)) {
+                foreach ($this->getFormParams() as $key => $value) {
+                    if (is_array($value)) {
+                        $this->addChain2PlainList($key, $value);
+
+                    } else {
+                        $this->plainList[$key] = $value;
+                    }
                 }
             }
         }

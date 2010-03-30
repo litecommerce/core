@@ -22,7 +22,7 @@ var bordersDir = '{gc.bordersDir}';
 </script>
 
 <p>Gift certificates are the perfect solution when you just can't  find the right gift or you're short of time. Gift Certificates make the perfect present for friends, family, and business associates.</p>
-<p><a href="{buildUrl(#verify_gift_certificate#)}">Verify</a></p>
+<p>If you already have a gift certificate you can <a href="{buildUrl(#check_gift_certificate#)}" class="gc-verify">verify it</a>.</p>
 
 <widget class="XLite_Module_GiftCertificates_View_Form_GiftCertificate_Add" name="addgc" className="gift-certificate" />
 

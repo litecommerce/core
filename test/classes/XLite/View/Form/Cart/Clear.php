@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Controller
+ * @subpackage ____sub_package____
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,43 +27,47 @@
  */
 
 /**
- * Check gift certificate
+ * Clear cart form
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @since      3.0.0
  */
-class XLite_Module_GiftCertificates_Controller_Customer_CheckGiftCertificate extends XLite_Controller_Customer_Abstract
+class XLite_View_Form_Cart_Clear extends XLite_View_Form_Abstract
 {
     /**
-     * Controller parameters
+     * Current form name 
      * 
-     * @var    array
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public $params = array('target', 'gcid');    
-
-    /**
-     * Found gift certificate
-     * 
-     * @var    XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @return string
      * @access protected
-     * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $foundgc = null;
+    protected function getFormName()
+    {
+        return 'clear_cart_form';
+    }
 
     /**
-     * Common method to determine current location 
+     * getDefaultTarget 
      * 
-     * @return array
-     * @access protected 
+     * @return string
+     * @access protected
      * @since  3.0.0
      */
-    protected function getLocation()
+    protected function getDefaultTarget()
     {
-        return 'Verify gift certificate';
+        return 'cart';
+    }
+
+    /**
+     * getDefaultAction 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultAction()
+    {
+        return 'clear';
     }
 }

@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Controller
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,43 +27,38 @@
  */
 
 /**
- * Check gift certificate
+ * Check gift certificate form
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_Controller_Customer_CheckGiftCertificate extends XLite_Controller_Customer_Abstract
+class XLite_Module_GiftCertificates_View_Form_GiftCertificate_Check extends XLite_View_Form_Abstract
 {
     /**
-     * Controller parameters
+     * Current form name 
      * 
-     * @var    array
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public $params = array('target', 'gcid');    
-
-    /**
-     * Found gift certificate
-     * 
-     * @var    XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @return string
      * @access protected
-     * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $foundgc = null;
+    protected function getFormName()
+    {
+        return 'check_gc';
+    }
 
     /**
-     * Common method to determine current location 
-     * 
-     * @return array
-     * @access protected 
-     * @since  3.0.0
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
      */
-    protected function getLocation()
+    protected function defineWidgetParams()
     {
-        return 'Verify gift certificate';
+        parent::defineWidgetParams();
+
+        $this->widgetParams[self::PARAM_FORM_TARGET]->setValue('check_gift_certificate');
+        $this->widgetParams[self::PARAM_FORM_METHOD]->setValue('get');
     }
 }

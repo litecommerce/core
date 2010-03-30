@@ -160,6 +160,27 @@ class XLite_Module_GiftCertificates_View_AddGiftCertificate extends XLite_View_D
             $list[] = 'js/select_states_end.js';
         }
 
+        $list[] = 'popup/jquery.blockUI.js';
+        $list[] = 'popup/popup.js';
+
         return $list;
     }
+
+    /**
+     * Register CSS files
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'popup/popup.css';
+
+        return $list;
+    }
+
 }
