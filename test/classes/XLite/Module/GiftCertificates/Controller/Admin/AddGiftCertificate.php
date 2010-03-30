@@ -1,55 +1,58 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* Admin_Dialog_add_gift_certificate description.
-*
-* @package Module_GiftCertificates
-* @access public
-* @version $Id$
-*/
+ * Category widget
+ *  
+ * @category  Litecommerce
+ * @package   View
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://www.qtmsoft.com/xpayments_eula.html X-Payments license agreement
+ * @version   SVN: $Id$
+ * @link      http://www.qtmsoft.com/
+ * @see       ____file_see____
+ * @since     3.0.0
+ */
+
+/**
+ * Add/modify Gift Certificate controller
+ *
+ * @package    View
+ * @subpackage Widget
+ * @since      3.0
+ */
 class XLite_Module_GiftCertificates_Controller_Admin_AddGiftCertificate extends XLite_Controller_Admin_Abstract
 {	
+    /**
+     * params 
+     * 
+     * @var    string
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     public $params = array('target', 'gcid');	
-    public $gc = null;
 
-    function getGC()
+    /**
+     * Gift Certificate object 
+     * 
+     * @var    XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+	public $gc = null;
+
+    /**
+     * Get GC object
+     * 
+     * @return XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getGC()
     {
         if (is_null($this->gc)) {
             if ($this->get("gcid")) {
@@ -64,13 +67,21 @@ class XLite_Module_GiftCertificates_Controller_Admin_AddGiftCertificate extends 
                     $profile = $auth->get("profile");
                     $this->gc->set("purchaser", $profile->get("billing_title") . " " . $profile->get("billing_firstname") . " " . $profile->get("billing_lastname"));
                 }
-                $this->gc->set("recipient_country", $this->config->getComplex('General.default_country'));
+                $this->gc->set("recipient_country", $this->config->General->default_country);
             }
         }
         return $this->gc;
     }
 
-	function fillForm()
+    /**
+     * Fill GC form 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+	public function fillForm()
 	{
         $this->set("properties", $this->getComplex('gc.properties'));
 		if (!$this->get("expiration_date")) {
@@ -80,54 +91,111 @@ class XLite_Module_GiftCertificates_Controller_Admin_AddGiftCertificate extends 
 		parent::fillForm();
     }
 
-    function action_add()
+    /**
+     * doActionAdd 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionAdd()
     {
         $this->sendGC();
-        $this->set("returnUrl", "admin.php?target=gift_certificates");
+        $this->set("returnUrl", $this->buildUrl('gift_certificates'));
     }
 
-    function action_select_ecard()
+    /**
+     * doActionSelectEcard 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionSelectEcard()
     {
         $this->saveGC();
-        $this->set("returnUrl", "admin.php?target=gift_certificate_select_ecard&gcid=" . $this->getComplex('gc.gcid'));
+        $this->set("returnUrl", $this->buildUrl('gift_certificate_select_ecard', '', array('gcid' => $this->gc->get('gcid'))));
     }
 
-    function action_delete_ecard()
+    /**
+     * doActionDeleteEcard 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionDeleteEcard()
     {
         $this->saveGC();
 		if (!is_null($this->get("gc"))) {
 			$gc = $this->get("gc");
         	$gc->set("ecard_id", 0);
         	$gc->update();
-        	$this->set("returnUrl", "admin.php?target=add_gift_certificate&gcid=" . $gc->get("gcid"));
+        	$this->set("returnUrl", $this->buildUrl('add_gift_certificate', '', array('gcid' => $gc->get('gcid'))));
         }
     }
 
-    function action_preview_ecard()
+    /**
+     * doActionPreviewEcard 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionPreviewEcard()
     {
         $this->saveGC();
-        $this->set("returnUrl", "admin.php?target=preview_ecard&gcid=" . $this->getComplex('gc.gcid'));
+        $this->set("returnUrl", $this->buildUrl('preview_ecard', '', array('gcid' => $this->gc->get('gcid'))));
     }
 
-    function saveGC()
+    /**
+     * saveGC 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function saveGC()
     {
 		if (!is_null($this->get("gc"))) {
 			$gc = $this->get("gc");
-            $gc->setProperties($_REQUEST);
-            $gc->set("add_date", time());
-			$gc->set("expiration_date", $this->get("expiration_date"));
-            if (empty($_REQUEST["debit"])) {
+            $gc->setProperties(XLite_Core_Request::getInstance()->getData());
+			$gc->set("add_date", time());
+			$expiration_date = mktime(
+				0, 0, 0,
+				XLite_Core_Request::getInstance()->expiration_dateMonth,
+				XLite_Core_Request::getInstance()->expiration_dateDay,
+				XLite_Core_Request::getInstance()->expiration_dateYear
+			);
+			$gc->set("expiration_date", $expiration_date);
+
+            if (empty(XLite_Core_Request::getInstance()->debit)) {
                 $gc->set("debit", $gc->get("amount"));
-            }
+			}
+
             if (!$gc->get("gcid")) {
                 $gc->set("gcid", $gc->generateGC());
                 $gc->create();
-            }
+			}
+
             $gc->update();
         }
     }
 
-	function sendGC()
+    /**
+     * sendGC 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+	protected function sendGC()
 	{
 		$this->saveGC();
 		$gc = $this->get("gc");
@@ -137,7 +205,15 @@ class XLite_Module_GiftCertificates_Controller_Admin_AddGiftCertificate extends 
         }
     }
     
-    function getCountriesStates() {
+    /**
+     * getCountriesStates 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCountriesStates() {
         $countriesArray = array();
 
         $country = new XLite_Model_Country();
@@ -159,12 +235,17 @@ class XLite_Module_GiftCertificates_Controller_Admin_AddGiftCertificate extends 
         return $countriesArray;
     }
     
-    function isVersionUpper2_1()
+    /**
+     * isVersionUpper2_1 
+     * 
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isVersionUpper2_1()
 	{	
-		return ($this->getComplex('config.Version.version') >= "2.2") ? true : false;
+		return ($this->config->Version->version >= "2.2") ? true : false;
 	}
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+
