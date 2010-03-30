@@ -228,7 +228,7 @@ class XLite_View_Date extends XLite_View_FormField
      */
     protected function getMonthString($monthIndex = 0)
     {
-        return date("F", mktime(0, 0, 0, intval($monthIndex)));
+        return date("F", mktime(0, 0, 0, intval($monthIndex), 1, 2000));
     }
 
     /**

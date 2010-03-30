@@ -1,6 +1,19 @@
-<span IF="!mode=#process#">
+{* vim: set ts=2 sw=2 sts=2 et: *}
 
-<span align=justify>This section allows you to manage customer notifications.</span>
+{**
+ * Customer notifications management page template
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
+
+<span IF="!getRequestParamValue(#mode#)=#process#">
+
+  <span align=justify>This section allows you to manage customer notifications.</span>
 
 <script language="Javascript">
 <!--
@@ -33,7 +46,7 @@ function ClearAllFilters()
 					Element.checked = true;
     			break;
     			case "search_period":
-    				Element.selectedIndex = 1;
+    				Element.selectedIndex = 0;
     			break;
     		}
         }
@@ -172,41 +185,55 @@ function SaveFilters()
 -->
 </script>
 
-<table width="100%" border=0>
-<form action="admin.php" method="GET" name="subscriber_search_form">
-<span FOREACH="getAllParams(#email,pinfo,type,status,period,startDateRaw,endDateRaw,startDateDay,startDateMonth,startDateYear,endDateDay,endDateMonth,endDateYear#),name,val">
-<input type="hidden" name="{name}" value="{val}">
-</span>
-<input type="hidden" name="action" value="">
-<tr>
-    <td width="100%">
-    	<table cellspacing=0 cellpadding=0 border=0 width="100%">
-    	<tr IF="!id=#0#">
-    		<td colspan=2>&nbsp;</td>
-    	</tr>
-    	<tr>
-    		<td class="SidebarTitle" align=center width=150 nowrap>Search filters</td>
-    		<td width=100%>&nbsp;</td>
-    	</tr>
-    	<tr>
-    		<td class="SidebarTitle" align=center colspan=2 height=3></td>
-    	</tr>
-    	</table>
-    </td>
-</tr>
-<tr>
-    <td>
-    	<table cellspacing=0 cellpadding=0 border=0>
-    	<tr>
-        	<td rowspan=3>&nbsp;&nbsp;&nbsp;</td>
-        	<td nowrap valign=top>Type:&nbsp;</td>
-        	<td valign=top>
-            	<table cellspacing=0 cellpadding=0 border=0>
-            	<tr>
-            		<td>
+  <form action="admin.php" method="get" name="subscriber_search_form">
+
+    <span FOREACH="getAllParams(#email,pinfo,type,status,period,startDateRaw,endDateRaw,startDateDay,startDateMonth,startDateYear,endDateDay,endDateMonth,endDateYear#),name,val">
+      <input type="hidden" name="{name}" value="{val}">
+    </span>
+    <input type="hidden" name="action" value="">
+
+    <table width="100%" border=0>
+
+      <tr>
+        <td width="100%">
+
+          <table cellspacing=0 cellpadding=0 border=0 width="100%">
+
+          	<tr IF="!id=#0#">
+          		<td colspan=2>&nbsp;</td>
+            </tr>
+
+          	<tr>
+          		<td class="SidebarTitle" align=center width=150 nowrap>Search filters</td>
+          		<td width=100%>&nbsp;</td>
+            </tr>
+
+          	<tr>
+          		<td class="SidebarTitle" align=center colspan=2 height=3></td>
+          	</tr>
+
+          </table>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+
+          <table cellspacing=0 cellpadding=0 border=0>
+
+           	<tr>
+            	<td rowspan=3>&nbsp;&nbsp;&nbsp;</td>
+            	<td nowrap valign=top>Type:&nbsp;</td>
+              <td valign=top>
+
+                <table cellspacing=0 cellpadding=0 border=0>
+
+                  <tr>
+                		<td>
                     	<table cellspacing=0 cellpadding=0 border=0>
                     	<tr>
-                    		<td><input type=radio name="type" id="search_type" checked="type=##|type=#A#" value="A" onClick="this.blur()"></td>
+                    		<td><input type=radio name="type" id="search_type" checked="{getFilterParam(#type#)=##|getFilterParam(#type#)=#A#}" value="A" onClick="this.blur()"></td>
                     		<td>All</td>
                     	</tr>
                     	</table>
@@ -216,7 +243,7 @@ function SaveFilters()
             		<td>
                     	<table cellspacing=0 cellpadding=0 border=0>
                     	<tr>
-                    		<td><input type=radio name="type" checked="type=#product#" value="product" onClick="this.blur()"></td>
+                    		<td><input type=radio name="type" checked="{isSelected(getFilterParam(#type#),#product#)}" value="product" onClick="this.blur()"></td>
                     		<td><img src="images/modules/ProductAdviser/product.gif" width=14 height=14 border=0></td>
 							<td>&nbsp;</td>
                     		<td>Product</td>
@@ -228,7 +255,7 @@ function SaveFilters()
             		<td>
                     	<table cellspacing=0 cellpadding=0 border=0>
                     	<tr>
-                    		<td><input type=radio name="type" checked="type=#price#" value="price" onClick="this.blur()"></td>
+                    		<td><input type=radio name="type" checked="{isSelected(getFilterParam(#type#),#price#)}" value="price" onClick="this.blur()"></td>
                     		<td><img src="images/modules/ProductAdviser/price.gif" width=14 height=18 border=0></td>
 							<td>&nbsp;</td>
                     		<td>Price</td>
@@ -248,7 +275,7 @@ function SaveFilters()
             		<td colspan=3>
                     	<table cellspacing=0 cellpadding=0 border=0>
                     	<tr>
-                    		<td><input type=radio name="status" id="search_status" checked="status=##|status=#A#" value="A" onClick="this.blur()"></td>
+                    		<td><input type=radio name="status" id="search_status" checked="{getFilterParam(#status#)=##|getFilterParam(#status#)=#A#}" value="A" onClick="this.blur()"></td>
                     		<td>All</td>
                     	</tr>
                     	</table>
@@ -258,7 +285,7 @@ function SaveFilters()
             		<td>
                     	<table cellspacing=0 cellpadding=0 border=0>
                     	<tr>
-                    		<td><input type=radio name="status" checked="status=#Q#" value="Q" onClick="this.blur()"></td>
+                    		<td><input type=radio name="status" checked="{isSelected(getFilterParam(#status#),#Q#)}" value="Q" onClick="this.blur()"></td>
                     		<td><img src="images/modules/ProductAdviser/queued.gif" width=12 height=11 border=0></td>
 							<td>&nbsp;</td>
                     		<td>Waiting</td>
@@ -269,7 +296,7 @@ function SaveFilters()
             		<td>
                     	<table cellspacing=0 cellpadding=0 border=0>
                     	<tr>
-                    		<td><input type=radio name="status" checked="status=#S#" value="S" onClick="this.blur()"></td>
+                    		<td><input type=radio name="status" checked="{isSelected(getFilterParam(#status#),#S#)}" value="S" onClick="this.blur()"></td>
                     		<td><img src="images/modules/ProductAdviser/sent.gif" width=12 height=11 border=0></td>
 							<td>&nbsp;</td>
                     		<td>Sent</td>
@@ -281,7 +308,7 @@ function SaveFilters()
             		<td>
                     	<table cellspacing=0 cellpadding=0 border=0>
                     	<tr>
-                    		<td><input type=radio name="status" checked="status=#U#" value="U" onClick="this.blur()"></td>
+                    		<td><input type=radio name="status" checked="{isSelected(getFilterParam(#status#),#U#)}" value="U" onClick="this.blur()"></td>
                     		<td><img src="images/modules/ProductAdviser/updated.gif" width=12 height=11 border=0></td>
 							<td>&nbsp;</td>
                     		<td>Ready</td>
@@ -292,7 +319,7 @@ function SaveFilters()
             		<td>
                     	<table cellspacing=0 cellpadding=0 border=0>
                     	<tr>
-                    		<td><input type=radio name="status" checked="status=#D#" value="D" onClick="this.blur()"></td>
+                    		<td><input type=radio name="status" checked="{isSelected(getFilterParam(#status#),#D#)}" value="D" onClick="this.blur()"></td>
                     		<td><img src="images/modules/ProductAdviser/declined.gif" width=12 height=11 border=0></td>
 							<td>&nbsp;</td>
                     		<td>Declined</td>
@@ -310,17 +337,17 @@ function SaveFilters()
             	<tr>
                 	<td nowrap>E-mail:</td>
                 	<td>&nbsp;</td>
-                	<td><input type="text" name="email" id="search_email" value="{email:r}"></td>
+                	<td><input type="text" name="email" id="search_email" value="{getFilterParam(#email#):r}"></td>
             	</tr>
             	<tr>
                 	<td nowrap>Person info:</td>
                 	<td>&nbsp;</td>
-        			<td><input type="text" name="pinfo" id="search_pinfo" value="{pinfo:r}"></td>
+        			<td><input type="text" name="pinfo" id="search_pinfo" value="{getFilterParam(#pinfo#):r}"></td>
             	</tr>
             	<tr>
                 	<td nowrap>Product name:</td>
                 	<td>&nbsp;</td>
-        			<td><input type="text" name="prodname" id="search_prodname" value="{prodname:r}"></td>
+        			<td><input type="text" name="prodname" id="search_prodname" value="{getFilterParam(#prodname#):r}"></td>
             	</tr>
             	</table>
         	</td>
@@ -336,14 +363,14 @@ function SaveFilters()
                 	<td>&nbsp;</td>
                 	<td>
                 	<select name="period" id="search_period" onChange="SetPeriod()">
-                	<option value="-1" selected="period=#-1#">Whole period</option>
-                	<option value="0" selected="period=#0#">Today</option>
-                	<option value="1" selected="period=#1#">Yesterday</option>
-                	<option value="2" selected="period=#2#">Current week</option>
-                	<option value="3" selected="period=#3#">Previous week</option>
-                	<option value="4" selected="period=#4#">Current month</option>
-                	<option value="5" selected="period=#5#">Previous month</option>
-                	<option value="6" selected="period=#6#">Custom period</option>
+                	<option value="-1" selected="{isSelected(getFilterParam(#period#),#-1#)}">Whole period</option>
+                	<option value="0" selected="{isSelected(getFilterParam(#period#),#0#)}">Today</option>
+                	<option value="1" selected="{isSelected(getFilterParam(#period#),#1#)}">Yesterday</option>
+                	<option value="2" selected="{isSelected(getFilterParam(#period#),#2#)}">Current week</option>
+                	<option value="3" selected="{isSelected(getFilterParam(#period#),#3#)}">Previous week</option>
+                	<option value="4" selected="{isSelected(getFilterParam(#period#),#4#)}">Current month</option>
+                	<option value="5" selected="{isSelected(getFilterParam(#period#),#5#)}">Previous month</option>
+                	<option value="6" selected="{isSelected(getFilterParam(#period#),#6#)}">Custom period</option>
                 	</select>
                 	</td>
             	</tr>
@@ -351,12 +378,12 @@ function SaveFilters()
             	<tr>
                 	<td nowrap>Date from:</td>
                 	<td>&nbsp;</td>
-                	<td nowrap><widget class="XLite_View_Date" template="modules/ProductAdviser/form_date.tpl" field="startDate" id_prefix="search_"></td>
+                	<td nowrap><widget class="XLite_View_Date" field="startDate" value="{getDateValue(#start#)}" id_prefix="search_"></td>
             	</tr>
             	<tr>
                 	<td nowrap>Date through:</td>
                 	<td>&nbsp;</td>
-                	<td nowrap><widget class="XLite_View_Date" template="modules/ProductAdviser/form_date.tpl" field="endDate" id_prefix="search_"></td>
+                	<td nowrap><widget class="XLite_View_Date" field="endDate" value="{getDateValue(#end#)}" id_prefix="search_"></td>
             	</tr>
             	</tbody>
             	</table>
@@ -396,7 +423,7 @@ function SaveFilters()
 
 <widget class="XLite_View_Pager" data="{notifications}" name="pager" itemsPerPage="{xlite.config.ProductAdviser.number_notifications}">
 
-<table IF="pager.pageData" border=0 cellpadding=1 cellspacing=3>
+<table IF="namedWidgets.pager.pageData" border=0 cellpadding=1 cellspacing=3>
 
 <script language="Javascript">
 <!--
@@ -540,7 +567,7 @@ function Delete()
 </span>
 <input type="hidden" name="action" value="">
 
-<tbody FOREACH="pager.pageData,ntf_id,ntf">
+<tbody FOREACH="namedWidgets.pager.pageData,ntf_id,ntf">
 <tr>
     <td align=center><input type=checkbox name="selected[{ntf.notify_id}]" value=1 id="notification_{ntf_id}" onClick="this.blur();CheckBoxHandler('{ntf_id}')"></td>
     <td>{ntf.person_info:h}</td>
@@ -610,8 +637,9 @@ function Delete()
         <br><br>
     </td>
 </tr>
-</form>
 </table>
+
+</form>
 
 </span>
 
@@ -688,12 +716,13 @@ function SwitchEditMode(preview, ntf_id)
 -->
 </script>
 
-<table border=0 cellpadding=1 cellspacing=3>
 <form action="admin.php" method=POST name="notifications_list_form">
 <span FOREACH="getAllParams(#action#),name,val">
 <input type="hidden" name="{name}" value="{val}">
 </span>
 <input type="hidden" name="action" value="send_notifications">
+
+<table border=0 cellpadding=1 cellspacing=3>
 
 <tr class=TableHead>
     <td>&nbsp;</td>
@@ -801,7 +830,8 @@ function SwitchEditMode(preview, ntf_id)
 <tr>
     <td colspan=7><input type=submit value=" Send " onClick="this.blur();"</td>
 </tr>
-</form>
 </table>
+
+</form>
 
 </span>
