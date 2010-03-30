@@ -71,7 +71,7 @@ class XLite_Module_GiftCertificates_View_Form_GiftCertificate_Apply extends XLit
         );
 
         $this->widgetParams[self::PARAM_FORM_TARGET]->setValue('gift_certificate');
-        $this->widgetParams[self::PARAM_FORM_ACTION]->setValue('add');
+        $this->widgetParams[self::PARAM_FORM_ACTION]->setValue('apply');
     }
 
     /**

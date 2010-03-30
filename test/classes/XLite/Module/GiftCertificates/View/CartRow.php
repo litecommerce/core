@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Module
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,79 +27,84 @@
  */
 
 /**
- * Module head class
+ * Verify (and apply) gift certificate box
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_Main extends XLite_Module_Abstract
+class XLite_Module_GiftCertificates_View_CartRow extends XLite_View_Abstract
 {
     /**
-     * Module type
+     * Targets this widget is allowed for
      *
-     * @var    int
+     * @var    array
      * @access protected
      * @since  3.0.0
      */
-    public static function getType()
-    {
-        return self::MODULE_GENERAL;
-    }
+    protected $allowedTargets = array('cart');
 
     /**
-     * Module version
-     *
-     * @var    string
-     * @access protected
-     * @since  3.0.0
-     */
-    public static function getVersion()
-    {
-        return '2.12.RC10';
-    }
-
-    /**
-     * Module description
-     *
-     * @var    string
-     * @access protected
-     * @since  3.0.0
-     */
-    public static function getDescription()
-    {
-        return 'Gift certificates';
-    }    
-
-    /**
-     * Determines if we need to show settings form link
-     *
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-    public static function showSettingsForm()
-    {
-        return true;
-    }
-
-    /**
-     * Perform some actions at startup
+     * Define widget parameters
      *
      * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/GiftCertificates/cart.tpl');
+    }
+
+    /**
+     * Get gift certificate id for input box
+     * 
+     * @return string
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function init()
+    public function getGcIdValue()
     {
-        parent::init();
-
-        $this->registerPaymentMethod('gift_certificate');
-
-        $img = XLite_Model_Image::getInstance();
-        $img->registerImageClass('ecard_thumbnail', 'e-Card thumbnails', 'ecards', 'thumbnail', 'ecard_id');
-        $img->registerImageClass('ecard_image', 'e-Card images', 'ecards', 'image', 'ecard_id');
-
-        $this->xlite->set('GiftCertificatesEnabled', true);
+        return 'Gift certificate number';
     }
+
+    /**
+     * Register JS files
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = 'modules/GiftCertificates/cart.js';
+        $list[] = 'popup/jquery.blockUI.js';
+        $list[] = 'popup/popup.js';
+
+        return $list;
+    }
+
+    /**
+     * Register CSS files
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'popup/popup.css';
+
+        return $list;
+    }
+
 }

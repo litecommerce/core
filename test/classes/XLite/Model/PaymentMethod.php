@@ -102,6 +102,20 @@ class XLite_Model_PaymentMethod extends XLite_Model_Abstract
         'class_object' => null,
     );
 
+	/**
+	 * Handle request 
+	 * 
+	 * @param XLite_Model_Cart $cart Cart
+	 *  
+	 * @return integer Operation status
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	public function handleRequest(XLite_Model_Cart $cart)
+	{
+	}
+
 	protected function getHandler($name = null)
 	{
 		if (is_null($name)) {

@@ -246,63 +246,87 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_Ab
 		return $this->_profile;
 	}
 
-	function getExpirationDate()
+	/**
+	 * Get expiration date 
+	 * 
+	 * @return integer
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	public function getExpirationDate()
 	{
-		$date = $this->get("expiration_date");
-		if ($date <= 0) {
-			$estimated_expiration = $this->get("add_date") + $this->get("defaultExpirationPeriod")  * 30 * 24 * 3600;
-			$date = $estimated_expiration;
+		$date = $this->get('expiration_date');
+		if (0 >= $date) {
+			$date = $this->get('add_date') + $this->getDefaultExpirationPeriod() * 30 * 24 * 3600;
 		}
 
 		return $date;
 	}
 
-	function isDisplayWarning()
+	/**
+	 * Check - display (and send) expiration warning or not
+	 * 
+	 * @return boolean
+	 * @access public
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	public function isDisplayWarning()
 	{
 		$result = false;
 
-		$warn_time = $this->config->GiftCertificates->expiration_warning_days * 24 * 3600;
 		$exp_date = $this->getExpirationDate();
-		$warn_date = $exp_date - $warn_time;
+		$warn_time = $exp_date - $this->config->GiftCertificates->expiration_warning_days * 24 * 3600;
+
 		if (
 			time() >= $warn_date
 			&& time() <= $exp_date
 		) {
 			if (
 				$this->config->GiftCertificates->expiration_email
-				&& !$this->get("exp_email_sent")
-				&& $this->get("debit") > 0
-				&& $this->get("status") == "A"
+				&& !$this->get('exp_email_sent')
+				&& 0 < $this->get('debit')
+				&& 'A' == $this->get('status')
 			) {
 				// send warning notification
 				$mailer = new XLite_Model_Mailer();
 				$mailer->cert = $this;
 				$mailer->compose(
 					$this->config->Company->site_administrator,
-					$this->get("recipient_email"),
+					$this->get('recipient_email'),
 					'modules/GiftCertificates/expiration_notification'
 				);
 				$mailer->send();
 
-				$this->set("exp_email_sent", 1);
+				$this->set('exp_email_sent', 1);
 				$this->update();
 			}
+
 			$result = true;
 		}
 
 		return $result;
 	}
 
-    function getExpirationConditions()
+    /**
+     * Get gift ceritficate expiration conditions 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getExpirationConditions()
     {
         $now = time();
         $exp_time = $now + $this->config->GiftCertificates->expiration_warning_days * 24 * 3600;
 
         return array(
-        	"expiration_date > '$now' AND expiration_date < '$exp_time'",
-        	"debit > 0",
-        	"exp_email_sent = 0",
-        	"status = 'A'",
+        	'expiration_date > ' . $now . ' AND expiration_date < ' . $exp_time,
+        	'debit > 0',
+        	'exp_email_sent = 0',
+        	'status = "A"',
 		);
     }
 }

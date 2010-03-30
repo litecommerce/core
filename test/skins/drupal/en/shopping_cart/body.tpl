@@ -29,4 +29,6 @@
     <widget template="shopping_cart/delivery.tpl">
   </div>
 
+  <widget module="GiftCertificates" class="XLite_Module_GiftCertificates_View_CartRow" />
+
 </div>

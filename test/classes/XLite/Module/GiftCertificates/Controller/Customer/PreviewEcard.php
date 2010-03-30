@@ -27,52 +27,55 @@
  */
 
 /**
- * Gift Certificate E-Card preview controller
+ * Preview giftcertificate e-card
  * 
- * @package    XLite
- * @subpackage Controller
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_Module_GiftCertificates_Controller_Customer_PreviewEcard extends XLite_Controller_Abstract
-{	
+{
     /**
-     * params 
+     * Controller parameters
      * 
-     * @var    string
+     * @var    array
      * @access public
      * @see    ____var_see____
      * @since  3.0.0
      */
-	public $params = array('target', 'gcid');	
+    public $params = array('target', 'gcid');    
 
     /**
-     * gc 
+     * Gift certificate (cache)
      * 
-     * @var    mixed
-     * @access public
+     * @var    XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $gc = null;	
+    protected $gc = null;    
     
     /**
-     * getGC 
+     * Get current gift certificate
      * 
-     * @return void
+     * @return XLite_Module_GiftCertificates_Model_GiftCertificate
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getGC()
+    protected function getGc()
     {
-        if (is_null($this->gc)) {
-            $this->gc = new XLite_Module_GiftCertificates_Model_GiftCertificate($this->gcid);
+        if (is_null(XLite_Core_Request::getInstance()->gc)) {
+            $this->gc = new XLite_Module_GiftCertificates_Model_GiftCertificate(
+                XLite_Core_Request::getInstance()->gcid
+            );
         }
+
         return $this->gc;
     }
 
     /**
-     * getRegularTemplate 
+     * Get regular template 
      * 
      * @return string
      * @access protected
@@ -82,6 +85,4 @@ class XLite_Module_GiftCertificates_Controller_Customer_PreviewEcard extends XLi
     {
         return 'modules/GiftCertificates/preview.tpl';
     }
-
-
 }

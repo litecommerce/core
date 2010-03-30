@@ -87,27 +87,49 @@ class XLite_Module_GiftCertificates_Controller_Customer_GiftCertificate extends 
             if (XLite_Core_Request::getInstance()->gcid) {
 
                 // Get from request
-                $this->gc = new XLite_Module_GiftCertificates_Model_GiftCertificate(XLite_Core_Request::getInstance()->gcid);
+                $this->gc = new XLite_Module_GiftCertificates_Model_GiftCertificate(
+                    XLite_Core_Request::getInstance()->gcid
+                );
 
             } else {
 
                 // Set default form values
                 $this->gc = new XLite_Module_GiftCertificates_Model_GiftCertificate();
-
-                $this->gc->set('send_via', 'E');
-                $this->gc->set('border', 'no_border');
-                if ($this->auth->isLogged()) {
-                    $profile = $this->auth->get('profile');
-                    $this->gc->set(
-                        'purchaser',
-                        $profile->get('billing_title') . ' ' . $profile->get('billing_firstname') . ' ' . $profile->get('billing_lastname')
-                    );
-                }
-                $this->gc->set('recipient_country', $this->config->General->default_country);
+                $this->assembleDefaultCertificate();
             }
         }
 
         return $this->gc;
+    }
+
+    /**
+     * Assemble default gift certificate 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function assembleDefaultCertificate()
+    {
+        $this->gc->set('send_via', 'E');
+        $this->gc->set('border', 'no_border');
+        if ($this->auth->isLogged()) {
+            $profile = $this->auth->get('profile');
+
+            $name = $profile->get('billing_title');
+
+            if ($profile->get('billing_firstname')) {
+                $name .= ($name ? ' ' : '') . $profile->get('billing_firstname');
+            }
+
+            if ($profile->get('billing_lastname')) {
+                $name .= ($name ? ' ' : '') . $profile->get('billing_lastname');
+            }
+
+            $this->gc->set('purchaser', $name);
+        }
+        $this->gc->set('recipient_country', $this->config->General->default_country);
     }
 
     /**
@@ -126,7 +148,7 @@ class XLite_Module_GiftCertificates_Controller_Customer_GiftCertificate extends 
 
         foreach ($this->getCart()->get('items') as $item) {
             if ($item->get('gcid') == $this->getGC()->get('gcid')) {
-                $item->set("GC", $this->getGC());
+                $item->set('GC', $this->getGC());
                 $item->update();
                 $found = true;
             }
@@ -152,12 +174,31 @@ class XLite_Module_GiftCertificates_Controller_Customer_GiftCertificate extends 
         $this->set('returnUrl', $this->buildURL('cart'));
     }
 
-    protected function doActionSelectEcard()
+    /**
+     * Apply gift certificate
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionApply()
     {
-        $this->saveGC();
-        $this->set('returnUrl', $this->buildURL('gift_certificate_ecards', '', array('gcid' => $this->getGC()->get('gcid'))));
+        $gcid = trim(XLite_Core_Request::getInstance()->gcid);
+        $this->getCart()->set('GC', new XLite_Module_GiftCertificates_Model_GiftCertificate($gcid));
+        $this->getCart()->update();
+
+        $this->set('returnUrl', $this->buildURL('checkout'));
     }
 
+    /**
+     * Delete e-card
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function doActionDeleteEcard()
     {
         $this->saveGC();
@@ -168,12 +209,6 @@ class XLite_Module_GiftCertificates_Controller_Customer_GiftCertificate extends 
             $gc->update();
             $this->set('returnUrl', $this->buildURL('gift_certificate', '', array('gcid' => $gc->get('gcid'))));
         }
-    }
-
-    protected function doActionPreviewEcard()
-    {
-        $this->saveGC();
-        $this->set('returnUrl', $this->buildURL('preview_ecard', '', array('gcid' => $this->getGC()->get('gcid'))));
     }
 
     /**
@@ -197,7 +232,7 @@ class XLite_Module_GiftCertificates_Controller_Customer_GiftCertificate extends 
             $gc->set('debit', $gc->get('amount'));
             $gc->set('add_date', time());
             if (!$gc->get('expiration_date')) {
-                $gc->set("expiration_date", time() + self::MONTH * $gc->get('defaultExpirationPeriod'));
+                $gc->set('expiration_date', time() + self::MONTH * $gc->getDdefaultExpirationPeriod());
             }
 
             if ($gc->get('gcid')) {
@@ -205,32 +240,10 @@ class XLite_Module_GiftCertificates_Controller_Customer_GiftCertificate extends 
 
             } else {
                 $gc->set('gcid', $gc->generateGC());
-                $gc->set("profile_id", $this->xlite->auth->getComplex('profile.profile_id'));
+                $gc->set('profile_id', $this->auth->getProfile()->get('profile_id'));
                 $gc->create();
             }
         }
-    }
-    
-    function getCountriesStates() {
-        $countriesArray = array();
-
-        $country = new XLite_Model_Country();
-        $countries = $country->findAll("enabled = '1'");
-        foreach($countries as $country) {
-            $countriesArray[$country->get("code")]["number"] = 0;
-            $countriesArray[$country->get("code")]["data"] = array();
-
-            $state = new XLite_Model_State();
-            $states = $state->findAll("country_code = '".$country->get("code")."'");
-            if (is_array($states) && count($states) > 0) {
-                $countriesArray[$country->get("code")]["number"] = count($states);
-                foreach($states as $state) {
-                    $countriesArray[$country->get("code")]["data"][$state->get("state_id")] = $state->get("state");
-                }
-            }
-        }
-
-        return $countriesArray;
     }
     
     /**

@@ -945,7 +945,7 @@ class XLite_Model_Abstract extends XLite_Base
      * @param mixed $groupby "groupby" condition
      * @param mixed $limit   "limit" condition
      *  
-     * @return void
+     * @return array
 	 * @access public
      * @since  3.0
      */

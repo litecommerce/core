@@ -491,9 +491,9 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     }
 
     /**
-     * getReturnUrl 
+     * Get return URL
      * 
-     * @return mixed
+     * @return string
      * @access public
      * @since  3.0.0
      */
