@@ -392,4 +392,225 @@ LoadableWidgetAbstract.prototype.hideModalScreen = function()
   return true;
 }
 
+/**
+ * Common input validator
+ */
+function InputValidator(container)
+{
+  if (!container) {
+    return false;
+  }
+
+  container = $(container);
+  if (!container.length) {
+    return false;
+  }
+
+  var o = this;
+
+  $(':input', container).each(
+    function() {
+      o.assignValidator(this);
+    }
+  );
+}
+
+InputValidator.prototype.assignValidator = function(elm)
+{
+  var m, methodName;
+
+  var c = elm.className;
+  if (c && !elm.validators) {
+    elm.validators = [];
+
+    var classes = c.split(/ /);
+    for (var i = 0; i < classes.length; i++) {
+      m = classes[i].match(/^field-(.+)$/);
+      if (m && m[1]) {
+        methodName = m[1].replace(/-[a-z]/, this.buildMethodName);
+        methodName = 'validate' + methodName.substr(0, 1).toUpperCase() + methodName.substr(1);
+        if (typeof(this[methodName]) !== 'undefined') {
+          elm.validators[elm.validators.length] = this[methodName];
+        }
+      }
+    }
+
+    if (elm.validators.length) {
+      elm.validator = this;
+      var o = this;
+      elm.validate = function() {
+        return o.checkElement.call(this);
+      }
+
+      $(elm).change(
+        function(event) {
+          this.validate(event);
+        }
+      );
+
+      if (elm.form && !elm.form.validate) {
+        elm.form.validate = function() {
+          return o.checkForm.call(this);
+        }
+
+        $(elm.form).submit(
+          function(event) {
+            return this.validate(event);
+          }
+        );
+      }
+
+    }
+  }
+}
+
+InputValidator.prototype.buildMethodName = function(str)
+{
+  return str.substr(1).toUpperCase();
+}
+
+InputValidator.prototype.checkElement = function(event)
+{
+  var result = {status: true};
+
+  // Check visibility
+  if (0 < this.validators.length) {
+    var hidden = $(this).parents().filter(
+      function() {
+        return this.style.display == 'none';
+      }
+    );
+
+    if (0 < hidden.length) {
+      return true;
+    }
+  }
+
+  for (var i = 0; i < this.validators.length && result.status; i++) {
+    result = this.validators[i].call(this, event);
+    if (!result.status) {
+      $(this).addClass('validation-error');
+      alert(result.message);
+      $(this).focus();
+
+    } else {
+      $(this).removeClass('validation-error');
+    }
+  }
+
+  return result.status;
+}
+
+InputValidator.prototype.checkForm = function(event)
+{
+  var result = true;
+
+  $(':input', this).each(
+    function() {
+      if (this.validate && result) {
+        result = this.validate();
+      }
+    }
+  );
+
+  return result;
+}
+
+/**
+ * Validators
+ */
+
+InputValidator.prototype.validateEmail = function()
+{
+  var re = new RegExp("^[a-z0-9!#$%&\'*+\\/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+\\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z](?:[a-z0-9-]*[a-z0-9])?$", 'gi');
+
+  return {
+    status: !this.value.length || this.value.search(re) !== -1,
+    message: 'E-mail address is invalid! Please correct'
+  };
+}
+
+InputValidator.prototype.validateInteger = function()
+{
+  return {
+    status: !this.value.length || this.value.search(/^[-+][0-9]+$/) !== -1,
+    message: 'Field is not integer! Please correct'
+  };
+}
+
+InputValidator.prototype.validateFloat = function()
+{
+  return {
+    status: !this.value.length || this.value.search(/^[-+]?[0-9]+\.?[0-9]*$/) !== -1,
+    message: 'Field is not float! Please correct'
+  };
+}
+
+InputValidator.prototype.validatePositive = function()
+{
+  var value = parseFloat(this.value);
+
+  return {
+    status: !this.value.length || 0 < value,
+    message: 'Field is not positive! Please correct'
+  };
+}
+
+InputValidator.prototype.validateNegative = function()
+{
+  var value = parseFloat(this.value);
+
+  return {
+    status: !this.value.length || 0 > value,
+    message: 'Field is not negative! Please correct'
+  };
+}
+
+InputValidator.prototype.validateNonZero = function()
+{
+  var value = parseFloat(this.value);
+
+  return {
+    status: !this.value.length || 0 != value,
+    message: 'Field is zero! Please correct'
+  };
+}
+
+InputValidator.prototype.validateRange = function()
+{
+  var result = {
+    status: true,
+    message: 'Field is invalid! Please correct'
+  };
+
+  var value = parseFloat(this.value);
+
+  if (this.value.length) {
+    if (typeof(this.min) !== 'undefined' && this.min > value) {
+      result.status = false;
+      result.message = 'Field too small!';
+    }
+
+    if (typeof(this.max) !== 'undefined' && this.max < value) {
+      result.status = false;
+      result.message = 'Field too big!';
+    }
+  }
+
+  return result;
+}
+
+InputValidator.prototype.validateRequired = function()
+{
+  return {
+    status: this.value !== null && 0 < this.value.length,
+    message: 'Field is required!'
+  };
+}
+
+$(document).ready(
+  function() {
+    new InputValidator(document);
+  }
+);
 

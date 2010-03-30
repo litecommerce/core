@@ -9,5 +9,6 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ *
  *}
 <input type="image" src="images/spacer.gif" class="{getClass()}" value="{getButtonLabel()}" title="{getButtonLabel()}" onclick="javascript: {getJSCode():h}" />

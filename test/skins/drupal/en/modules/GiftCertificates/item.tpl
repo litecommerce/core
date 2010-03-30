@@ -1,15 +1,27 @@
-{* SVN $Id$ *}
-<td class="delete-from-cart">
-  <input type="image" src="images/spacer.gif" />
-  {*<widget class="XLite_View_Button" type="button" href="{buildURL(#cart#,#delete#,_ARRAY_(#cart_id#^cart_id))}" label="X" />*}
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * Gift certificate cart item
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
+<td class="delete-from-list">
+  <widget class="XLite_View_Form_Cart_Item_Delete" name="itemRemove" item="{item}" cartId="{cart_id}" />
+    <widget class="XLite_View_Button_Image" label="Delete item" />
+  <widget name="itemRemove" end />
 </td>
 
 <td class="item-thumbnail">
-  <a href="{buildURL(#add_gift_certificate#,##,_ARRAY_(#gcid#^item.gcid))}"><img src="images/modules/GiftCertificates/gift_certificate.gif" alt="Gift certificate" /></a>
+  <a href="{buildURL(#gift_certificate#,##,_ARRAY_(#gcid#^item.gcid))}"><img src="images/modules/GiftCertificates/gift_certificate.gif" alt="Gift certificate" /></a>
 </td>
 
 <td class="item-info">
-  <div class="item-title"><a href="{buildURL(#add_gift_certificate#,##,_ARRAY_(#gcid#^item.gcid))}">Gift certificate</a></div>
+  <div class="item-title"><a href="{buildURL(#gift_certificate#,##,_ARRAY_(#gcid#^item.gcid))}">Gift certificate</a></div>
   <div class="item-description">From: {item.gc.purchaser}<br />To: {item.gc.recipient}</div>
 </td>
 
@@ -24,7 +36,7 @@
   </div>
 
   <div class="item-buttons">
-    <span class="modify-gc"><widget class="XLite_View_Button" type="button_link" href="{buildURL(#add_gift_certificate#,##,_ARRAY_(#gcid#^item.gcid))}" label="Modify certificate"></span>
+    <span class="modify-gc"><widget class="XLite_View_Button_Link" location="{buildURL(#gift_certificate#,##,_ARRAY_(#gcid#^item.gcid))}" label="Modify certificate" /></span>
   </div>
 
 </td>

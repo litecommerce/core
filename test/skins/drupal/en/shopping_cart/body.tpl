@@ -19,7 +19,9 @@
   </div>
 
   <div class="cart-buttons">
-    <widget class="XLite_View_Button_Regular" label="Clear cart" action="clear" />
+    <widget class="XLite_View_Form_Cart_Clear" name="clear_form" className="plain" />
+      <widget class="XLite_View_Button_Submit" label="Clear cart" />
+    <widget name="clear_form" end >
     <widget class="XLite_View_Button_Link" label="Continue shopping" location="{session.continueURL}" />
   </div>
 
