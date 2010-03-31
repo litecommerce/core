@@ -331,7 +331,7 @@ CREATE TABLE xlite_profiles (
   order_id int(11) NOT NULL default '0',
   sidebar_boxes TEXT NOT NULL,
   PRIMARY KEY (profile_id),
-  UNIQUE KEY (cms_profile_id),
+  KEY (cms_profile_id),
   KEY login (login),
   KEY order_id (order_id),
   KEY password (password),

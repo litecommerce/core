@@ -1,191 +1,360 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-*
-* @package Dialog
-* @access public
-* @version $Id$
-*/
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage View
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
+
+
+/**
+ * Orders list controller
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_Abstract
 {	
-    public $params = array('target', 'mode', 'order_id1', 'order_id2', 'login', 'status');	
+    public $params = array('target', 'mode', 'order_id', 'login', 'status');
+
+    /**
+     * noSuchUser 
+     * 
+     * @var    mixed
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     public $noSuchUser = false;
 
+    /**
+     * startDate 
+     * 
+     * @var    mixed
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $startDate = null;
+
+    /**
+     * endDate 
+     * 
+     * @var    mixed
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $endDate = null;
+
+    /**
+     * orders 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
 	protected $orders = null;
 
-    function fillForm()
+    /**
+     * fillForm 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function init()
     {
-        if (!isset($this->startDate)) {
+        parent::init();
+
+        $startDate = $this->getDateValue('startDate');
+        $endDate = $this->getDateValue('endDate');
+
+        if (0 == $startDate || 0 == $endDate) {
             $date = getdate(time());
-            $this->set("startDate", mktime(0,0,0,$date['mon'],1,$date['year']));
+            $startDate = mktime(0, 0, 0, $date['mon'], 1, $date['year']);
+            $endDate = mktime(0, 0, 0, $date['mon'], $date['mday'], $date['year']);
         }
-        parent::fillForm();
-    }
- 
-    function isQuickSearch()
-    {
-    	return !('export_xls' == $this->action);
+
+        $this->startDate = $startDate;
+        $this->endDate = $endDate;
+
     }
 
-    function getOrders()
+    /**
+     * getDateValue 
+     * 
+     * @param string $fieldName field name (prefix)
+     *  
+     * @return int
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDateValue($fieldName)
     {
-		$this->origProfile = true;
-		$this->enhacedSearch = false;
+        $dateValue = null;
 
-        if (is_null($this->orders)) {
+        if (isset(XLite_Core_Request::getInstance()->$fieldName)) {
+            $dateValue = XLite_Core_Request::getInstance()->get($fieldName);
+
+        } else {
+            $nameDay   = $fieldName . 'Day';
+            $nameMonth = $fieldName . 'Month';
+            $nameYear  = $fieldName . 'Year';
+
+            if (isset(XLite_Core_Request::getInstance()->$nameMonth)
+                && isset(XLite_Core_Request::getInstance()->$nameDay)
+                && isset(XLite_Core_Request::getInstance()->$nameYear))
+            {
+                $dateValue = mktime(
+                    0, 0, 0,
+                    XLite_Core_Request::getInstance()->get($nameMonth),
+                    XLite_Core_Request::getInstance()->get($nameDay),
+                    XLite_Core_Request::getInstance()->get($nameYear)
+                );
+            }
+        }
+
+        return $dateValue;
+
+    }
+
+    /**
+     * isQuickSearch 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isQuickSearch()
+    {
+    	return ('export_xls' != XLite_Core_Request::getInstance()->action);
+    }
+
+    /**
+     * getOrders 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getOrders()
+    {
+		$origProfile = true;
+        $enhacedSearch = false;
+        $onlyNormalProfile = false;
+
+		if (is_null($this->orders)) {
+
             $order = new XLite_Model_Order();
             $order->collectGarbage();
-			$order->fetchKeysOnly = true;
-			$order->fetchObjIdxOnly = $this->is("quickSearch");
-            if ($this->get("login")) {
+			$order->fetchKeysOnly = false;
+			$order->fetchObjIdxOnly = $this->isQuickSearch();
+
+            $login = XLite_Core_Request::getInstance()->login;
+
+            if (!empty($login)) {
+
                 $profile = new XLite_Model_Profile();
 				$profile->_range = null;
-                if (!$profile->find("login='" . addslashes($this->get("login")) . "' AND order_id<>'0'")) {
-                    $this->noSuchUser = true;
-                	if ($profile->find("login='" . addslashes($this->get("login")) . "' AND order_id<>'0'")) {
+
+                if (!$profile->find("login='" . addslashes($login) . "' AND order_id != '0'")) {
+					$this->noSuchUser = true;
+
+                	if ($profile->find("login='" . addslashes($login) . "' AND order_id = '0'")) {
                     	$this->noSuchUser = false;
-                    	$this->origProfile = false;
+						$origProfile = false;
+
                 	} else {
-                        $where = "login LIKE '%" . addslashes($this->get("login")) . "%'";
-                        $users = $profile->findAll($where);
+                        $where = "login LIKE '%" . addslashes($login) . "%'";
+						$users = $profile->findAll($where);
+
                         if (is_array($users) && count($users) > 0) {
 							$this->noSuchUser = false;
-                        	$this->enhacedSearch = true;
+                        	$enhacedSearch = true;
                         }
                 	}
-                }
+				}
+
             } else {
                 $profile = null;
             }
 
-            if (!$this->enhacedSearch) {
-            	if (($this->get("login") && $profile->get("profile_id")) || !$this->get("login")) {
+			if (!$enhacedSearch) {
+
+            	if ((!empty($login) && $profile->get('profile_id')) || empty($login)) {
                     $this->orders = $order->search(
                             $profile,
-                            $this->get("order_id1"),
-                            $this->get("order_id2"),
-                            $this->get("status"),
-                            $this->get("startDate"),
-                            $this->get("endDate")+24*3600,
-                            $this->origProfile);
-            	}
-            	if (count($this->orders) == 0 && is_object($profile)) {
-                    $where = "login='" . addslashes($this->get("login")) . "'";
+                            XLite_Core_Request::getInstance()->order_id,
+                            XLite_Core_Request::getInstance()->status,
+                            $this->getDateValue('startDate'),
+                            $this->getDateValue('endDate') + 24 * 3600,
+                            $origProfile
+                        );
+				}
+
+            	if (0 == count($this->orders) && is_object($profile)) {
+                    $where = "login='" . addslashes($login) . "'";
                     $users = $profile->findAll($where);
-                    $only_normal_profile = true;
+                    $onlyNormalProfile = true;
             	}
-            } 
-            if ($this->enhacedSearch || (!$this->enhacedSearch && count($this->orders) == 0)) {
+			}
+
+            if ($enhacedSearch || (!$enhacedSearch && 0 == count($this->orders))) {
             	$orders = $order->search(
                         null,
-                        $this->get("order_id1"),
-                        $this->get("order_id2"),
-                        $this->get("status"),
-                        $this->get("startDate"),
-                        $this->get("endDate")+24*3600); 
-                $this->orders = array();
+                        XLite_Core_Request::getInstance()->order_id,
+                        XLite_Core_Request::getInstance()->status,
+                        $this->getDateValue('startDate'),
+                        $this->getDateValue('endDate') + 24 * 3600
+                    );
+
+				$this->orders = array();
+
 				if (is_array($orders) && count($orders) > 0) {
-					for($i=0; $i<count($orders); $i++) {
+
+					for ($i = 0; $i < count($orders); $i++) {
+
                 		if ($order->isObjectDescriptor($orders[$i])) {
                 			$orders[$i] = $order->descriptorToObject($orders[$i]);
-                		}
-						$profile_id = $orders[$i]->get("profile_id");
-						$orig_profile_id = $orders[$i]->get("orig_profile_id");
-						for($j=0; $j<count($users); $j++) {
-							$uid = $users[$j]->get("profile_id");
-							if (!$only_normal_profile) {
-    							if ($uid == $profile_id || $uid == $orig_profile_id) {
+						}
+
+						$profileId = $orders[$i]->get('profile_id');
+						$origProfileId = $orders[$i]->get('orig_profile_id');
+
+						for ($j = 0; $j < count($users); $j++) {
+
+							$uid = $users[$j]->get('profile_id');
+
+							if (!$onlyNormalProfile) {
+
+    							if ($uid == $profileId || $uid == $origProfileId) {
     								$this->orders[] = $orders[$i];
     								break;
-    							}
-    						} else {
-    							if ($uid == $profile_id) {
+								}
+
+							} elseif ($uid == $profileId) {
     								$this->orders[] = $orders[$i];
     								break;
-    							}
     						}
 						}
 					}
 				}
             }
 
-            if ($this->action == "export_xls") {
-            	foreach($this->orders as $ord_idx => $order) {
-            		$taxes = 0;
+			if ($this->action == "export_xls") {
+
+				foreach($this->orders as $ord_idx => $order) {
+
+					$taxes = 0;
+
             		foreach($order->getDisplayTaxes() as $tax_name => $tax) {
             			$taxes += $tax;
-            		}
+					}
+
             		$this->orders[$ord_idx]->set("tax", $taxes);
             	}
             }
         }
+
         return $this->orders;
     }
 
-    function getCount() {
-        // how many orders were found
-        return count($this->get("orders"));
+    /**
+     * getNoSuchUser 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getNoSuchUser()
+    {
+        $this->getOrders();
+        return $this->noSuchUser;
     }
 
-    function getRecentOrders()
+    /**
+     * getCount: how many orders were found
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCount()
     {
-        if ($this->config->getComplex('General.recent_orders')) {
+        return count($this->getOrders());
+    }
+
+    /**
+     * getRecentOrders 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRecentOrders()
+    {
+        $result = array();
+
+        if ($this->config->General->recent_orders) {
             $order = new XLite_Model_Order();
             $order->collectGarbage();
             $where = "status in ('Q','P')";
             $count = $order->count($where);
-            $from = $count - $this->config->getComplex('General.recent_orders');
+            $from = $count - $this->config->General->recent_orders;
+
             if ($from < 0) {
                 $from = 0;
             }
+
             $order->_range = null;
-            return array_reverse($order->findAll($where, "date", null, "$from, $count"));
-        } else {
-            return array();
+            $result = array_reverse($order->findAll($where, "date", null, "$from, $count"));
+
         }
+
+        return $result;
     }
 
-	function action_export_xls()
+    /**
+     * doActionExportXls 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+	protected function doActionExportXls()
 	{
-        $w = new XLite_View_Abstract();
+        $w = new XLite_View_ExportXLS();
         $w->component = $this;
         $w->set("template", "order/export_xls.tpl");
         $this->startDownload("orders.xls");
@@ -204,37 +373,78 @@ class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_Abstract
         $this->set("silent", true);
 	}
 
-    function columnCount($order)
+    /**
+     * columnCount 
+     * 
+     * @param mixed $order ____param_comment____
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function columnCount($order)
     {
         return 6;
     }
 
-    function rowCount($order)
+    /**
+     * rowCount 
+     * 
+     * @param mixed $order ____param_comment____
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function rowCount($order)
     {
         return 38 + count($order->get("items"));
     }
 
-	function action_delete()
+    /**
+     * doActionDelete 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+	protected function doActionDelete()
 	{
-		if (isset($_POST["order_ids"])) {
-			foreach ($_POST["order_ids"] as $oid => $value) {
+		if (isset(XLite_Core_Request::getInstance()->order_ids)) {
+			foreach (XLite_Core_Request::getInstance()->order_ids as $oid => $value) {
 				$order = new XLite_Model_Order($oid);
 				$order->remove();
 			}
 		}
 	}
 
-    function getExportFormats()
+    /**
+     * getExportFormats 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getExportFormats()
     {
         return array("export_xls" => "MS Excel XP/XML");
     }
 
-    function getStartXML()
+    /**
+     * getStartXML 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getStartXML()
     {
         return '<?xml version="1.0"?>'."\n";;
     }
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+
