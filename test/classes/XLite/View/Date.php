@@ -35,7 +35,7 @@
  * @since      3.0.0
  */
 class XLite_View_Date extends XLite_View_FormField
-{	
+{
     /*
      * Constants: names of a widget parameters
      */
@@ -51,7 +51,7 @@ class XLite_View_Date extends XLite_View_FormField
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $params = array();	
+    protected $params = array();    
 
     /**
      * Lower year 
@@ -61,7 +61,7 @@ class XLite_View_Date extends XLite_View_FormField
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $lowerYear = 2000;	
+    protected $lowerYear = 2000;    
 
     /**
      * Higher year
@@ -71,7 +71,7 @@ class XLite_View_Date extends XLite_View_FormField
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $higherYear = 2035;	
+    protected $higherYear = 2035;    
 
     /**
      * Define widget parameters
@@ -151,7 +151,7 @@ class XLite_View_Date extends XLite_View_FormField
     {
         $daysArray = array();
 
-        for ($i = 1; $i <= 31; $i++) {
+        for ($i = 1; 31 >= $i; $i++) {
             $daysArray[$i] = $i == $this->getDay() ? 'selected' : '';
         }
 
@@ -171,7 +171,7 @@ class XLite_View_Date extends XLite_View_FormField
     {
         $monthsArray = array();
 
-        for ($i = 1; $i < 13; $i++) {
+        for ($i = 1; 13 > $i; $i++) {
             $monthsArray[$i] = $i == $this->getMonth() ? 'selected' : '';
         }
 
@@ -228,7 +228,7 @@ class XLite_View_Date extends XLite_View_FormField
      */
     protected function getMonthString($monthIndex = 0)
     {
-        return date("F", mktime(0, 0, 0, intval($monthIndex), 1, 2000));
+        return date('F', mktime(0, 0, 0, intval($monthIndex), 1, 2000));
     }
 
     /**

@@ -50,6 +50,14 @@ abstract class XLite_View_Form_Abstract extends XLite_View_Abstract
 
     const PARAM_CLASS_NAME = 'className';
 
+    /**
+     * Form arguments plain list
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected $plainList = null;
 
     /**

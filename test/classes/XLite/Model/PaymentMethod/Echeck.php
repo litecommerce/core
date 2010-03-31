@@ -63,7 +63,17 @@ class XLite_Model_PaymentMethod_Echeck extends XLite_Model_PaymentMethod
         $cart->update();
     }
 
-    function handleRequest($cart)
+    /**
+     * Handle request 
+     * 
+     * @param XLite_Model_Cart $cart Cart
+     *  
+     * @return integer Operation status
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function handleRequest(XLite_Model_Cart $cart)
     {
         $this->process($cart);
         $status = $cart->get("status");
@@ -71,8 +81,3 @@ class XLite_Model_PaymentMethod_Echeck extends XLite_Model_PaymentMethod
 		return ($status == 'Q' || $status == 'P') ? self::PAYMENT_SUCCESS : self::PAYMENT_FAILURE;
     }
 }
-
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

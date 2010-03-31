@@ -35,7 +35,7 @@
  * @since      3.0.0
  */
 class XLite_View_DatePicker extends XLite_View_FormField
-{	
+{
     /*
      * Constants: names of a widget parameters
      */

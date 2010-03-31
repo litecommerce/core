@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,11 +27,11 @@
  */
 
 /**
- * Product sidebar box widget
- *
- * @package    View
- * @subpackage Widget
- * @since      3.0
+ * Product box widget
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_View_ProductBox extends XLite_View_SideBarBox
 {
@@ -78,7 +78,7 @@ class XLite_View_ProductBox extends XLite_View_SideBarBox
         return $this->widgetParams[self::PARAM_PRODUCT_ID]->getObject();
     }
 
-	/**
+    /**
      * Define widget parameters
      *
      * @return void
@@ -87,7 +87,7 @@ class XLite_View_ProductBox extends XLite_View_SideBarBox
      */
     protected function defineWidgetParams()
     {
-		parent::defineWidgetParams();
+        parent::defineWidgetParams();
 
         $this->widgetParams += array(
             self::PARAM_PRODUCT_ID => new XLite_Model_WidgetParam_ObjectId_Product('Product Id', 0, true),
@@ -98,14 +98,13 @@ class XLite_View_ProductBox extends XLite_View_SideBarBox
      * Check if widget is visible
      *
      * @return bool
-     * @access protected
+     * @access public
      * @since  3.0.0
      */
     public function isVisible()
     {
-        return parent::isVisible() && $this->getProduct()->is('available');
+        return parent::isVisible() && $this->getProduct()->isAvailable();
     }
-
 
     /**
      * Get a list of CSS files required to display the widget properly

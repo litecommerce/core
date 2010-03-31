@@ -2,24 +2,36 @@
 // vim: set ts=4 sw=4 sts=4 et:
 
 /**
- * ____file_title____
- *  
- * @category   Lite Commerce
- * @package    Lite Commerce
- * @subpackage ____sub_package____
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version    SVN: $Id$
- * @link       http://www.qtmsoft.com/
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
  * @since      3.0.0
  */
 
 /**
- * XLite_View_Abstract 
+ * Abstract widget
  * 
- * @package    Lite Commerce
- * @subpackage ____sub_package____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 abstract class XLite_View_Abstract extends XLite_Core_Handler
 {
@@ -219,7 +231,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
             $paramName  = self::PARAM_SESSION_CELL;
             $paramValue = $this->getWidgetParams(self::PARAM_SESSION_CELL)->value;
 
-            $this->sessionCellStatus = ($paramValue == XLite_Core_Request::getInstance()->$paramName);
+            $this->sessionCellStatus = XLite_Core_Request::getInstance()->$paramName == $paramValue;
         }
 
         return $this->sessionCellStatus;
@@ -373,7 +385,8 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      */
     protected function checkTarget()
     {
-        return empty($this->allowedTargets) || in_array(XLite_Core_Request::getInstance()->target, $this->allowedTargets);
+        return empty($this->allowedTargets)
+            || in_array(XLite_Core_Request::getInstance()->target, $this->allowedTargets);
     }
 
     /**
@@ -387,7 +400,8 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
     {
         $allowedModes = $this->getParam(self::PARAM_MODE);
 
-        return empty($allowedModes) || in_array(XLite_Core_Request::getInstance()->mode, $allowedModes);
+        return empty($allowedModes)
+            || in_array(XLite_Core_Request::getInstance()->mode, $allowedModes);
     }
 
     /**
@@ -404,7 +418,10 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
 
         // Save all "request" parameters in session
         if ($this->checkSessionCell()) {
-            XLite_Model_Session::getInstance()->set($this->getParam(self::PARAM_SESSION_CELL), $this->getRequestParams());
+            XLite_Model_Session::getInstance()->set(
+                $this->getParam(self::PARAM_SESSION_CELL),
+                $this->getRequestParams()
+            );
         }
     }
 
@@ -425,7 +442,8 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
         if (!$this->checkTemplateStatus($original, $compiled)) {
 
             // Create directory for compiled template (if not exists)
-            if (!file_exists($dir = dirname($compiled))) {
+            $dir = dirname($compiled);
+            if (!file_exists($dir)) {
                 mkdirRecursive($dir, 0755);
             }
 
@@ -501,12 +519,15 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      * Check if widget is visible
      *
      * @return bool
-     * @access protected
+     * @access public
      * @since  3.0.0
      */
     public function isVisible()
     {
-        return parent::isVisible() && $this->getParam(self::PARAM_VISIBLE) && $this->checkTarget() && $this->checkMode(); 
+        return parent::isVisible()
+            && $this->getParam(self::PARAM_VISIBLE)
+            && $this->checkTarget()
+            && $this->checkMode(); 
     }
 
     /**
@@ -588,7 +609,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function cleanupResources()
+    public static function cleanUpResources()
     {
         self::$resources = self::getResourcesSchema();
     }
@@ -713,7 +734,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
             $string = $baseObject->get($field);
         }
 
-        if ($length == 0) {
+        if (0 == $length) {
 
             $string = '';
 
@@ -733,8 +754,8 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
     /**
      * Format date
      * 
-     * @param mixed  $base  string or object instance to get field value from
-     * @param string $field field to get value
+     * @param mixed  $base   string or object instance to get field value from
+     * @param string $field  field to get value
      * @param string $format date format
      *  
      * @return string
@@ -763,7 +784,11 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      */
     protected function time_format($base, $field = null, $format = null)
     {
-        return $this->date_format($base, $field, $this->config->General->date_format . ' ' . $this->config->General->time_format);
+        return $this->date_format(
+            $base,
+            $field,
+            $this->config->General->date_format . ' ' . $this->config->General->time_format
+        );
     }
 
     /**
@@ -859,9 +884,9 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      * Increment
      * 
      * @param int $value value to increment
-     * @param int $inc increment
+     * @param int $inc   increment
      *  
-     * @return void
+     * @return integer
      * @access protected
      * @since  3.0.0
      */
@@ -886,17 +911,17 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
     /**
      * For the "zebra" tables
      * 
-     * @param int    $row            row index
-     * @param string $odd_css_class  first CSS class
-     * @param string $even_css_class second CSS class
+     * @param int    $row          row index
+     * @param string $oddCSSClass  first CSS class
+     * @param string $evenCSSClass second CSS class
      *  
      * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected function getRowClass($row, $odd_css_class, $even_css_class = null)
+    protected function getRowClass($row, $oddCSSClass, $evenCSSClass = null)
     {
-        return 0 == ($row % 2) ? $odd_css_class : $even_css_class;
+        return 0 == ($row % 2) ? $oddCSSClass : $evenCSSClass;
     }
 
     /**

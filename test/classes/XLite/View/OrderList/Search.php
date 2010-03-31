@@ -26,6 +26,13 @@
  * @since      3.0.0
  */
 
+/**
+ * Orders search widget
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_View_OrderList_Search extends XLite_View_OrderList_Abstract
 {
     /**

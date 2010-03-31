@@ -64,7 +64,7 @@ class XLite_View_CategoryProducts extends XLite_View_ProductsList
         return 'Catalog';
     }
 
-     /**
+    /**
      * Define widget parameters
      *
      * @return void
@@ -118,7 +118,9 @@ class XLite_View_CategoryProducts extends XLite_View_ProductsList
      */
     protected function getSavedRequestParam($param)
     {
-        return (self::PARAM_CATEGORY_ID == $param) ? XLite_Core_Request::getInstance()->$param : parent::getSavedRequestParam($param);
+        return self::PARAM_CATEGORY_ID == $param
+            ? XLite_Core_Request::getInstance()->$param
+            : parent::getSavedRequestParam($param);
     }
 }
 

@@ -2,25 +2,36 @@
 // vim: set ts=4 sw=4 sts=4 et:
 
 /**
- * Minicart widget
- *  
- * @category  Litecommerce
- * @package   View
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license   http://www.qtmsoft.com/xpayments_eula.html X-Payments license agreement
- * @version   SVN: $Id$
- * @link      http://www.qtmsoft.com/
- * @see       ____file_see____
- * @since     3.0.0
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage View
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
  */
 
 /**
- * Side bar with minicart
- *
- * @package    View
- * @subpackage Widget
- * @since      3.0
+ * Minicart widget
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_View_Minicart extends XLite_View_SideBarBox
 {
@@ -90,7 +101,11 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
      */
     protected function getItemsList()
     {
-        return array_slice($this->getCart()->getItems(), 0, min(self::ITEMS_TO_DISPLAY, $this->getCart()->getItemsCount()));
+        return array_slice(
+            $this->getCart()->getItems(),
+            0,
+            min(self::ITEMS_TO_DISPLAY, $this->getCart()->getItemsCount())
+        );
     }
 
     /**
@@ -103,7 +118,14 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
     protected function getWishlistItems()
     {
         $wishlist = $this->get('wishlist');
-        return $wishlist ? array_slice($wishlist->getProducts(), 0, min(self::ITEMS_TO_DISPLAY, $this->countWishlistProducts())) : array();
+
+        return $wishlist
+            ? array_slice(
+                $wishlist->getProducts(),
+                0,
+                min(self::ITEMS_TO_DISPLAY, $this->countWishlistProducts())
+            )
+            : array();
     }
 
     /**
@@ -170,7 +192,9 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
      */
     protected function countWishlistProducts()
     {
-        return ($wishlist = $this->get('wishlist')) ? count($wishlist->getProducts()) : 0;
+        $wishlist = $this->get('wishlist');
+
+        return $wishlist ? count($wishlist->getProducts()) : 0;
     }
 
     /**

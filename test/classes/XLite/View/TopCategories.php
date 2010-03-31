@@ -119,7 +119,7 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
         return $category->getSubcategories();
     }
 
-	/**
+    /**
      * Define widget parameters
      *
      * @return void
@@ -128,7 +128,7 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
      */
     protected function defineWidgetParams()
     {
-		parent::defineWidgetParams();
+        parent::defineWidgetParams();
 
         $this->widgetParams += array(
             self::PARAM_DISPLAY_MODE => new XLite_Model_WidgetParam_List(
@@ -207,17 +207,19 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
     /**
      * Assemble list item link class name
      *
-     * @param intr                 $index    item number
-     * @param int                  $count    items count
+     * @param integer              $i        item number
+     * @param integer              $count    items count
      * @param XLite_Model_Category $category current category
      *
      * @return string
      * @access public
      * @since  3.0.0
      */
-    public function assembleLinkClassName($i, $count, $category)
+    public function assembleLinkClassName($i, $count, XLite_Model_Category $category)
     {
-        return (XLite_Core_Request::getInstance()->category_id == $category->get('category_id')) ? 'active' : '';
+        return XLite_Core_Request::getInstance()->category_id == $category->get('category_id')
+            ? 'active'
+            : '';
     }
 }
 

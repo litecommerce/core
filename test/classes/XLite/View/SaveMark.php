@@ -64,14 +64,16 @@ class XLite_View_SaveMark extends XLite_View_Abstract
      * Check if widget is visible
      *
      * @return bool
-     * @access protected
+     * @access public
      * @since  3.0.0
      */
     public function isVisible()
     {
+        $product = $this->getParam(self::PARAM_PRODUCT);
+
         return parent::isVisible()
-            && $this->getParam(self::PARAM_PRODUCT)
+            && $product
             && $this->config->General->enable_sale_price
-            && $this->getParam(self::PARAM_PRODUCT)->get('sale_price') > $this->getParam(self::PARAM_PRODUCT)->get('listPrice');
+            && $product->get('sale_price') > $product->get('listPrice');
     }
 }

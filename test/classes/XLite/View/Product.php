@@ -73,12 +73,12 @@ class XLite_View_Product extends XLite_View_Dialog
      * Check if widget is visible
      *
      * @return bool
-     * @access protected
+     * @access public
      * @since  3.0.0
      */
     public function isVisible()
     {
-        return parent::isVisible() && $this->getProduct()->is('available');
+        return parent::isVisible() && $this->getProduct()->isAvailable();
     }
 
     /**

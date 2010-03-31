@@ -75,7 +75,17 @@ class XLite_Model_PaymentMethod_CreditCard extends XLite_Model_PaymentMethod
         return (isset($_POST["cc_info"]) ? $_POST["cc_info"] : '');
     }
 
-    function handleRequest($cart)
+    /**
+     * Handle request 
+     * 
+     * @param XLite_Model_Cart $cart Cart
+     *  
+     * @return integer Operation status
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function handleRequest(XLite_Model_Cart $cart)
     {
         $this->cc_info = $this->getPaymentInfo();
         $this->process($cart);
@@ -91,4 +101,3 @@ class XLite_Model_PaymentMethod_CreditCard extends XLite_Model_PaymentMethod
         return $card->findAll();
     }
 }
-

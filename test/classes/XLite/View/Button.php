@@ -2,108 +2,65 @@
 // vim: set ts=4 sw=4 sts=4 et:
 
 /**
- * Button
- *  
- * @category  Litecommerce
- * @package   View
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license   http://www.qtmsoft.com/xpayments_eula.html X-Payments license agreement
- * @version   SVN: $Id$
- * @link      http://www.qtmsoft.com/
- * @see       ____file_see____
- * @since     3.0.0
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage View
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
  */
 
 /**
- * Button 
+ * Button widget
  * 
- * @package View
+ * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
 class XLite_View_Button extends XLite_View_Abstract
-{    
+{
     /**
-     * Template 
-     * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
+     * Widget parameter names
      */
-    public $template = 'common/button.tpl';
+
+    const PARAM_HREF  = 'href';
+    const PARAM_IMG   = 'img';
+    const PARAM_LABEL = 'label';
+
 
     /**
-     * Link
-     * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public $href = '#';    
-
-    /**
-     * Label 
-     * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public $label = 'Submit';
-
-    /**
-     * Image
-     * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public $img = null;
-
-    /**
-     * Button type 
-     * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public $type = 'link';
-
-    /**
-     * Initialization 
-     * 
+     * Define widget parameters
+     *
      * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
+     * @access protected
+     * @since  1.0.0
      */
-    public function initView()
+    protected function defineWidgetParams()
     {
-        parent::initView();
+        parent::defineWidgetParams();
 
-        switch ($this->type) {
-            case 'button':
-                $this->template = 'common/button_adv.tpl';
-                break;
+        $this->widgetParams += array(
+            self::PARAM_HREF  => new XLite_Model_WidgetParam_String('Location URL', '#'),
+            self::PARAM_IMG   => new XLite_Model_WidgetParam_String('Image', null),
+            self::PARAM_LABEL => new XLite_Model_WidgetParam_String('Label', 'Submit'),
+        );
 
-            case 'button_link':
-                $this->template = 'common/button_link.tpl';
-                break;
-        }
-
-        if (
-            !$this->xlite->is('adminZone')
-            && $this->auth->is('logged')
-            && strpos($this->href, 'target=profile') !== false
-            && strpos($this->href, 'mode=delete') !== false
-            && $this->auth->get('profile')->isAdmin()
-        ) {
-            $this->set('visible', false);
-        }
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/button.tpl');
     }
 }
-

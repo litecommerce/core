@@ -65,8 +65,12 @@ abstract class XLite_View_Form_Cart_Item_Abstract extends XLite_View_Form_Abstra
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams[self::PARAM_ITEM]    = new XLite_Model_WidgetParam_Object('Cart item', null, false, 'XLite_Model_OrderItem');
-        $this->widgetParams[self::PARAM_CART_ID] = new XLite_Model_WidgetParam_Int('Cart item id', null, false);
+        $this->widgetParams[self::PARAM_ITEM]    = new XLite_Model_WidgetParam_Object(
+            'Cart item', null, false, 'XLite_Model_OrderItem'
+        );
+        $this->widgetParams[self::PARAM_CART_ID] = new XLite_Model_WidgetParam_Int(
+            'Cart item id', null, false
+        );
 
         $this->widgetParams[self::PARAM_FORM_TARGET]->setValue('cart');
     }
@@ -75,7 +79,7 @@ abstract class XLite_View_Form_Cart_Item_Abstract extends XLite_View_Form_Abstra
      * Check if widget is visible
      *
      * @return bool
-     * @access protected
+     * @access public
      * @since  3.0.0
      */
     public function isVisible()

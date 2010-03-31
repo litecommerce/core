@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -230,13 +230,13 @@ class XLite_View_Pager extends XLite_View_Abstract
     }
 
     /**
-     * definePageURLs 
+     * definePageUrls 
      * 
      * @return void
      * @access protected
      * @since  3.0.0
      */
-    protected function definePageURLs()
+    protected function definePageUrls()
     {
         for ($i = 0; $i < $this->getPagesCount(); $i++) {
             $this->pageURLs[$i] = $this->buildUrlByPageId($i);
@@ -254,7 +254,7 @@ class XLite_View_Pager extends XLite_View_Abstract
     {
         if (!isset($this->pageURLs)) {
             $this->pageURLs = array();
-            $this->definePageURLs();
+            $this->definePageUrls();
         }
 
         return $this->pageURLs;
@@ -325,7 +325,7 @@ class XLite_View_Pager extends XLite_View_Abstract
      * Check if widget is visible
      *
      * @return bool
-     * @access protected
+     * @access public
      * @since  3.0.0
      */
     public function isVisible()

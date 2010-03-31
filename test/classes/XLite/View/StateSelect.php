@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,17 +27,17 @@
  */
 
 /**
- * XLite_View_StateSelect 
+ * State selector
  * 
- * @package    XLite
- * @subpackage ____sub_package____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_View_StateSelect extends XLite_View_FormField
 {
-	/**
-	 * Widget param names
-	 */
+    /**
+     * Widget param names
+     */
 
     const PARAM_FIELD_NAME = 'field';
     const PARAM_VALUE      = 'value';
@@ -54,11 +54,11 @@ class XLite_View_StateSelect extends XLite_View_FormField
     {
         parent::defineWidgetParams();
 
-		$this->widgetParams += array(
-			self::PARAM_FIELD_NAME => new XLite_Model_WidgetParam_String('Field name', ''),
-			self::PARAM_FIELD_ID => new XLite_Model_WidgetParam_String('Field ID', ''),
-			self::PARAM_VALUE => new XLite_Model_WidgetParam_String('Value', '')
-		);
+        $this->widgetParams += array(
+            self::PARAM_FIELD_NAME => new XLite_Model_WidgetParam_String('Field name', ''),
+            self::PARAM_FIELD_ID   => new XLite_Model_WidgetParam_String('Field ID', ''),
+            self::PARAM_VALUE      => new XLite_Model_WidgetParam_String('Value', '')
+        );
 
         $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/select_state.tpl');
     }

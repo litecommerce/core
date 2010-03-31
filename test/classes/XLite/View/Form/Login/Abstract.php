@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,25 +27,25 @@
  */
 
 /**
- * XLite_View_Form_Login_Abstract 
+ * Abstract log-in form
  * 
- * @package    XLite
- * @subpackage ____sub_package____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 abstract class XLite_View_Form_Login_Abstract extends XLite_View_Form_Abstract
 {
-	/**
-	 * getSecuritySetting 
-	 * 
-	 * @return bool
-	 * @access protected
-	 * @since  3.0.0
-	 */
-	abstract protected function getSecuritySetting();
+    /**
+     * getSecuritySetting 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    abstract protected function getSecuritySetting();
 
 
-	/**
+    /**
      * Current form name 
      * 
      * @return string
@@ -81,7 +81,7 @@ abstract class XLite_View_Form_Login_Abstract extends XLite_View_Form_Abstract
         return 'login';
     }
 
-	/**
+    /**
      * getDefaultParams 
      * 
      * @return array
@@ -92,7 +92,8 @@ abstract class XLite_View_Form_Login_Abstract extends XLite_View_Form_Abstract
     {
         $result = parent::getDefaultParams();
 
-        if ($url = $this->getReturnUrl()) {
+        $url = $this->getReturnUrl();
+        if ($url) {
             $result['returnUrl'] = $url;
         }
 
@@ -108,7 +109,7 @@ abstract class XLite_View_Form_Login_Abstract extends XLite_View_Form_Abstract
      */
     protected function getFormAction()
     {
-		return $this->getShopUrl(XLite::getInstance()->getScript(), $this->getSecuritySetting());
+        return $this->getShopUrl(XLite::getInstance()->getScript(), $this->getSecuritySetting());
     }
 }
 

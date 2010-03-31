@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -81,15 +81,15 @@ class XLite_View_Pager_Common extends XLite_View_Pager
     }
 
     /**
-     * definePageURLs
+     * Defaint pages URLs
      *
      * @return void
      * @access protected
      * @since  3.0.0
      */
-    protected function definePageURLs()
+    protected function definePageUrls()
     {
-        parent::definePageURLs();
+        parent::definePageUrls();
 
         $this->pageURLs = array_slice($this->pageURLs, $this->getFrameStartPage(), $this->pagesPerFrame, true);
     }

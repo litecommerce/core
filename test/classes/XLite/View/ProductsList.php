@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,11 +27,11 @@
  */
 
 /**
- * Products list
- *
- * @package    View
- * @subpackage Widget
- * @since      3.0
+ * Abstract product list
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 abstract class XLite_View_ProductsList extends XLite_View_Container
 {
@@ -260,7 +260,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
     }
 
     /**
-     * getPagerParams 
+     * Get pager parameters list
      * 
      * @return array
      * @access protected
@@ -268,11 +268,14 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
      */
     protected function getPagerParams()
     {
-        return array(self::PARAM_SESSION_CELL => $this->getSessionCell(), XLite_View_Pager::PARAM_DATA => $this->getData());
+        return array(
+            self::PARAM_SESSION_CELL     => $this->getSessionCell(),
+            XLite_View_Pager::PARAM_DATA => $this->getData()
+        );
     }
 
     /**
-     * getPager 
+     * Get pager 
      * 
      * @return XLite_View_Pager
      * @access protected
@@ -389,7 +392,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
     }
 
     /**
-     * getGridColumnsRange 
+     * Get grid columns range 
      * 
      * @return array
      * @access protected
@@ -397,7 +400,11 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
      */
     protected function getGridColumnsRange()
     {
-        $range = array_merge(array('css-defined'=>'css-defined'), range(self::GRID_COLUMNS_MIN, self::GRID_COLUMNS_MAX));
+        $range = array_merge(
+            array('css-defined' => 'css-defined'),
+            range(self::GRID_COLUMNS_MIN, self::GRID_COLUMNS_MAX)
+        );
+
         return array_combine($range, $range);
     }
 
@@ -634,7 +641,8 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
      */
     protected function isShowThumbnails()
     {
-       return $this->config->General->show_thumbnails && $this->getParam(self::PARAM_SHOW_THUMBNAIL);
+        return $this->config->General->show_thumbnails
+            && $this->getParam(self::PARAM_SHOW_THUMBNAIL);
     }
 
     /**
@@ -744,7 +752,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
      * Check if widget is visible
      *
      * @return bool
-     * @access protected
+     * @access public
      * @since  3.0.0
      */
     public function isVisible()
