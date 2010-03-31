@@ -11,14 +11,13 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 		'AES', 'RSA', 'PGP', 'XSLT', 'IV', 'DN', 'URL', 'IP', 'MIME', 'CRC', 'CRC32', 'MD4', 'MD5', 'API',
 		'NVP', 'PHP', 'CURL', 'VS', 'PC', 'UTF8', 'TTL', 'SMTP', 'IP4', 'CC', 'CVV2', 'UK', 'FMF', 'CSSURL',
 		'HMACMD5', 'HMAC', 'URI', 'ID', 'JS', 'SSL', 'AVS', 'CVV', 'DB', 'HSBC', 'SOAP', 'GMT', 'HTTPS', 'CLI',
-		'CMS'
+		'CMS', 'GC', 'AJAX', 'URLAJAX',
 	);
 
 	protected $nouns = array(
 	);
 
 	protected $verbs = array(
-		'xp',
 		'do', 'get', 'set', 'insert', 'append', 'detect', 'assign', 'register', 'unregister', 'unset',
 		'is', 'are', 'isset', 'remove', 'move', 'add', 'handle', 'display', 'view', 'prepare', 'check',
 		'run', 'dispatch', 'compose', 'test', 'connect', 'parse', 'throw', 'fetch', 'execute',
@@ -30,7 +29,8 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 		'lock', 'unlock', 'can', 'walk', 'pack', 'unpack', 'initialize', 'finish', 'create', 'mark', 'unmark',
 		'recrypt', 'revalidate', 'close' , 'change' , 'confirm', 'rewrite', 'store', 'log', 'finalize', 'encode', 'decode',
 		'substitute', 'implode', 'has', 'expand', 'load', 'assemble', 'activate', 'restore', 'show', 'install', 'emulate',
-		'perform', 'notify', 'cancel', 'sort', 'sanitize', 'use', 'accept', 'regenerate', 'inner', 'make',
+		'perform', 'notify', 'cancel', 'sort', 'sanitize', 'use', 'accept', 'regenerate', 'inner', 'make', 'count', 'build',
+		'refresh', 'postprocess', 'preprocess', 'include', 'truncate', 'inc', 'map', 'strip',
 	);
 
 	protected $cssPseudoClasses = array(
