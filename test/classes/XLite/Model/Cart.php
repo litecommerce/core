@@ -48,7 +48,7 @@ class XLite_Model_Cart extends XLite_Model_Order implements XLite_Base_ISingleto
 {
 	public static function getInstance()
     {
-        return self::_getInstance(__CLASS__);
+        return self::getInternalInstance(__CLASS__);
     }
 
     function __construct($id = null)

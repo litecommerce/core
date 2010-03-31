@@ -154,7 +154,7 @@ class XLite_View_RegisterForm extends XLite_View_Dialog
     protected function getProfile() 
     {
         $className = ($this->xlite->is('adminZone') ? 'XLite_Controller_Admin_Profile' : 'XLite_Controller_Customer_Profile');
-        $controllerObj = $this->_getInstance($className);
+        $controllerObj = $this->getInternalInstance($className);
         return $controllerObj->getProfile();
     }
 

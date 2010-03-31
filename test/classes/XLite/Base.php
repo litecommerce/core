@@ -92,7 +92,7 @@ class XLite_Base
      * @see    ____func_see____
      * @since  3.0
      */
-    protected static function _getInstance($className)
+    protected static function getInternalInstance($className)
     {
         // Create new instance of the object (if it is not already created)
         if (!isset(self::$instances[$className])) {
@@ -151,17 +151,25 @@ class XLite_Base
             $this->doDie(get_class($this) . ': method get() - invalid name passed ("' . $name . '")');
         }
 
+        $result = null;
+
         if (method_exists($this, 'get' . $name)) {
             $func = 'get' . $name;
-            return $this->$func();
-        }
 
-        if (method_exists($this, 'is' . $name)) {
+            // 'get' + property name
+            $result = $this->$func();
+
+        } elseif (method_exists($this, 'is' . $name)) {
             $func = 'is' . $name;
-            return $this->$func();
+
+            // 'is' + property name
+            $result = $this->$func();
+
+        } else {
+            $result = $this->$name;
         }
 
-        return $this->$name;
+        return $result;
     }
 
     /**
@@ -178,19 +186,24 @@ class XLite_Base
     {
         if (method_exists($this, 'set' . $name)) {
             $func = 'set' . $name;
+
+            // 'set' + property name
             $this->$func($value);
+
         } else {
             $this->$name = $value;
         }
     }
 
     /**
-     * Returns boolean property value named $name. If no property found, returns null
+     * Returns boolean property value named $name. If no property found, returns null 
      * 
-     * @param string $name property name
+     * @param mixed $name Property name
      *  
-     * @return bool
-     * @since  3.0
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function is($name)
     {
@@ -251,18 +264,24 @@ class XLite_Base
 
             if (is_array($obj)) {
                 $obj = $obj[$part];
+
             } else {
                 $prevObj = $obj;
-                $prevVal = $obj = $obj->get($prevProp = $part);
+                $prevProp = $part;
+                $obj = $obj->get($prevProp);
+                $prevVal = $obj;
             }
        
-            if (is_null($obj)) return;
+            if (is_null($obj)) {
+                break;
+            }
         }
 
         if (is_array($obj)) {
             $obj[$last] = $value;
             $prevObj->set($prevProp, $prevVal);
-        } else {
+
+        } elseif (!is_null($obj)) {
             $obj->set($last, $value);
         }
     }

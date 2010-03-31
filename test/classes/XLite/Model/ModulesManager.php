@@ -160,7 +160,7 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
 	 */
 	public static function getInstance()
     {
-        return self::_getInstance(__CLASS__);
+        return self::getInternalInstance(__CLASS__);
     }
 
     /**

@@ -222,7 +222,7 @@ class XLite_Model_Config extends XLite_Model_Abstract implements XLite_Base_ISin
 
 	public static function getInstance()
     {
-        return self::_getInstance(__CLASS__)->readConfig();
+        return self::getInternalInstance(__CLASS__)->readConfig();
     }
 }
 

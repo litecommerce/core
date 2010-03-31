@@ -68,7 +68,7 @@ class XLite_Model_CachingFactory extends XLite_Model_Factory implements XLite_Ba
      */
     public static function getInstance()
     {
-        return self::_getInstance(__CLASS__);
+        return self::getInternalInstance(__CLASS__);
     }
 
     /**

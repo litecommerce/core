@@ -81,7 +81,7 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
 	 */
 	public static function getInstance()
     {
-        return self::_getInstance(__CLASS__ . '_' . LC_SESSION_TYPE);
+        return self::getInternalInstance(__CLASS__ . '_' . LC_SESSION_TYPE);
     }
 
     /**

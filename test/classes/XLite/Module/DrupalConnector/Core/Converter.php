@@ -49,7 +49,7 @@ class XLite_Module_DrupalConnector_Core_Converter extends XLite_Core_Converter i
      */
     public static function getInstance()
     {
-        return self::_getInstance(__CLASS__);
+        return self::getInternalInstance(__CLASS__);
     }
 
     /**

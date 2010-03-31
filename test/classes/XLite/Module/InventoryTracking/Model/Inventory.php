@@ -80,7 +80,7 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
 
 	public static function getInstance()
     {
-        return self::_getInstance(__CLASS__);
+        return self::getInternalInstance(__CLASS__);
     }
 
     public function __construct($id = null) // {{{

@@ -58,9 +58,9 @@ abstract class XLite_Module_DrupalConnector_Model_Session extends XLite_Model_Se
      * @see    ____func_see____
      * @since  3.0
      */
-    protected static function _getInstance($className)
+    protected static function getInternalInstance($className)
     {
-		return parent::_getInstance($className . '_' . LC_SESSION_TYPE);
+		return parent::getInternalInstance($className . '_' . LC_SESSION_TYPE);
     }
 
 	/**

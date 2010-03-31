@@ -59,7 +59,7 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
 
 	public static function getInstance()
     {
-        return self::_getInstance(__CLASS__);
+        return self::getInternalInstance(__CLASS__);
     }
 
     /**

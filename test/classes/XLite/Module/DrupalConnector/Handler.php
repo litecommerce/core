@@ -33,7 +33,7 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
      */
     public static function getInstance()
     {
-        return self::_getInstance(__CLASS__);
+        return self::getInternalInstance(__CLASS__);
     }
 
 	/**

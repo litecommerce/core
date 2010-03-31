@@ -56,7 +56,7 @@ class XLite_Model_ProductInventory extends XLite_Model_Product implements XLite_
 
 	public static function getInstance()
     {
-        return self::_getInstance(__CLASS__);
+        return self::getInternalInstance(__CLASS__);
     }
 
     function _export($layout, $delimiter) // {{{

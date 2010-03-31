@@ -20,7 +20,7 @@ class XLite_Module_JoomlaConnector_Handler extends XLite_Core_CMSConnector
      */
     public static function getInstance()
     {
-        return self::_getInstance(__CLASS__);
+        return self::getInternalInstance(__CLASS__);
     }
 
 	/**

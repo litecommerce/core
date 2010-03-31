@@ -233,7 +233,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      */
     public static function getInstance()
     {
-        return self::_getInstance(__CLASS__);
+        return self::getInternalInstance(__CLASS__);
     }
 
     /**

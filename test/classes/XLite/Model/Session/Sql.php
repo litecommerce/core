@@ -55,7 +55,7 @@ class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_
 
 	public static function getInstance()
     {
-        return self::_getInstance(__CLASS__);
+        return self::getInternalInstance(__CLASS__);
     }
 
     /**
