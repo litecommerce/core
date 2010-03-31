@@ -1,71 +1,119 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* File explorer dialog
-*
-* @package Dialog
-* @access public
-* @version $Id$
-*/
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage View
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
+
+
+/**
+ * File explorer dialog
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_View_FileExplorer extends XLite_View_ColumnList
 {	
+    /*
+     * Widget parameters names
+     */
+    const PARAM_FORM_SELECTION_NAME = 'formSelectionName';
+    const PARAM_MODIFIER = 'modifier';
+    const PARAM_DSN = 'dsn';
+
+    /**
+	 * locale 
+	 * 
+	 * @var    mixed
+	 * @access protected
+	 * @see    ____var_see____
+	 * @since  3.0.0
+	 */
 	protected $locale = null;
 
-    public $template = "common/file_explorer.tpl";
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
 
-    function getLocale() // {{{
+        $this->widgetParams += array(
+            self::PARAM_FORM_SELECTION_NAME  => new XLite_Model_WidgetParam_String('Form selection name', ''),
+            self::PARAM_MODIFIER => new XLite_Model_WidgetParam_String('Modifier', null),
+            self::PARAM_DSN  => new XLite_Model_WidgetParam_String('DSN', null),
+        );
+
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/file_explorer.tpl');
+    }
+
+    /**
+     * getLocale 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocale()
     {
         if (is_null($this->locale)) {
             $this->locale = XLite::getInstance()->getOptions(array('skin_details', 'locale'));
-        }
+		}
+
         return $this->locale;
-    } // }}}
+    }
 
-
-    function getPath($zone = "default")
+    /**
+     * getPath 
+     * 
+     * @param string $zone ____param_comment____
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPath($zone = 'default')
     {
         return 'skins' . LC_DS . $zone . LC_DS . $this->getLocale();
     }
 
-    function getData()
+    /**
+     * getData 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getData()
     {
         // search for cached result
         if (!is_null($this->children)) {
@@ -73,21 +121,21 @@ class XLite_View_FileExplorer extends XLite_View_ColumnList
         }
 
         // if dialog DSN is specified, use it to get the list of files to edit
-        if (!is_null($this->get("dsn"))) {
-            return $this->get($this->get("dsn"));
+        if (!is_null($this->getParam(self::PARAM_DSN))) {
+            return $this->get($this->getParam(self::PARAM_DSN));
         }
 
         // check for zone otherwise
-        $modifier = $this->get("modifier");
+        $modifier = $this->getParam(self::PARAM_MODIFIER);
         if (is_null($modifier)) {
             return array();
         }
-        $zone = isset($_REQUEST[$modifier]) ? $_REQUEST[$modifier] : "default";
+        $zone = isset(XLite_Core_Request::getInstance()->$modifier) ? XLite_Core_Request::getInstance()->$modifier : "default";
         $path = $this->getPath($zone);
 
         // check for node
-        if (isset($_REQUEST["node"])) {
-            $path = $_REQUEST["node"];
+        if (isset(XLite_Core_Request::getInstance()->node)) {
+            $path = XLite_Core_Request::getInstance()->node;
         }    
 
         $childrenDirs = array();
@@ -95,7 +143,7 @@ class XLite_View_FileExplorer extends XLite_View_ColumnList
 
         if ($handle = @opendir($path)) {
             while (false !== ($file = readdir($handle))) {
-                if ($file{0} != ".") {
+                if ($file{0} != '.') {
                     if (is_file($path . '/'. $file)) {
                         $childrenFiles[] = $file;
                     } else {
@@ -104,20 +152,25 @@ class XLite_View_FileExplorer extends XLite_View_ColumnList
                 }
             }
             closedir($handle); 
-        }
+		}
+
         array_multisort($childrenDirs);
         $this->dir_count = count($childrenDirs);
         array_multisort($childrenFiles);
-        $children = array_merge($childrenDirs, $childrenFiles);
+		$children = array_merge($childrenDirs, $childrenFiles);
+
         for ($i=0; $i<count($children); $i++) {
             $children[$i] = new XLite_Model_FileNode($path . '/'. $children[$i]);
-        }
+		}
+
         if (preg_match('/^(.*\/.*\/.*)\/[^\/]+$/', $path, $matches)) {
             $par_node = new XLite_Model_FileNode($matches[1]);
             $par_node->name = '..';
             array_unshift($children, $par_node);
-        }
-        $this->children = $children;
+		}
+
+		$this->children = $children;
+
         return $this->children;
     }
 }

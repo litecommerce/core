@@ -41,6 +41,7 @@ class XLite_View_Tabber extends XLite_View_Abstract
      */
 	const PARAM_BODY      = 'body';
     const PARAM_SWITCH    = 'switch';
+    const PARAM_TAB_PAGES = 'tabPages';
 
     /**
      * tabPagesInfo 
@@ -64,8 +65,10 @@ class XLite_View_Tabber extends XLite_View_Abstract
         parent::defineWidgetParams();
 
 		$this->widgetParams += array(
-			self::PARAM_BODY       => new XLite_Model_WidgetParam_String('Body template file', '', false),
-            self::PARAM_SWITCH     => new XLite_Model_WidgetParam_String('Switch', 'page', false)
+			self::PARAM_BODY      => new XLite_Model_WidgetParam_String('Body template file', '', false),
+            self::PARAM_SWITCH    => new XLite_Model_WidgetParam_String('Switch', 'page', false),
+            self::PARAM_TAB_PAGES => new XLite_Model_WidgetParam_String('Name of function that returns tab pages', 'getTabPages', false)
+
 		);
 
 		$this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/tabber.tpl');
@@ -86,7 +89,8 @@ class XLite_View_Tabber extends XLite_View_Abstract
 
         $url = $this->get("url");
         $switch = $this->getParam(self::PARAM_SWITCH);
-        $dialogPages = XLite::getController()->getTabPages();
+        $functionName = $this->getParam(self::PARAM_TAB_PAGES);
+        $dialogPages = XLite::getController()->$functionName();
 
         if (is_array($dialogPages)) {
             foreach ($dialogPages as $page => $title) {

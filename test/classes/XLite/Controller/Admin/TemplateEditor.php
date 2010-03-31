@@ -102,7 +102,7 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
     
     function getTreePages() // {{{
     {
-        $zone = $this->getZone();
+        $zone = XLite::getInstance()->getOptions(array('skin_details', 'skin'));
         if (is_null($this->treePages)) {
             $this->treePages = array(
                     $zone => "Customer zone",
@@ -118,13 +118,13 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
         return isset($this->pageTemplates[$this->get("editor")]) ? $this->pageTemplates[$this->get("editor")] : null;
     }
     
-    function getUrl($params = null) // {{{
+    function getUrl(array $params = array()) // {{{
     {
         if ($this->get("editor") != "advanced") {
             $this->set("zone", null);
             $this->set("locale", null);
         }
-        return parent::getUrl();
+        return parent::getUrl($params);
     } // }}}
 
     // BASIC templates editor methods {{{
