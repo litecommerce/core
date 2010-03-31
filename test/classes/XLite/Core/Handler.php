@@ -2,25 +2,36 @@
 // vim: set ts=4 sw=4 sts=4 et:
 
 /**
- * ____file_title____
- *  
- * @category   Lite Commerce
- * @package    Lite Commerce
- * @subpackage ____sub_package____
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version    SVN: $Id$
- * @link       http://www.qtmsoft.com/
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
  * @since      3.0.0
  */
 
-
 /**
- * XLite_Core_Handler 
+ * Abstract handler (common parent for viewer and controller) 
  * 
- * @package    Lite Commerce
- * @subpackage ____sub_package____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 abstract class XLite_Core_Handler extends XLite_Base
 {
@@ -158,7 +169,7 @@ abstract class XLite_Core_Handler extends XLite_Base
     /**
      * setWidgetParams
      *
-     * @param array $param handler params
+     * @param array $params handler params
      *
      * @return void
      * @access public
@@ -226,35 +237,36 @@ abstract class XLite_Core_Handler extends XLite_Base
     }
 
     /**
-      * Check passed attributes
-      *
-      * @param array $attrs attributes to check
-      *
-      * @return array errors list
-      * @access public
-      * @since  1.0.0
-      */
-     public function validateAttributes(array $attrs)
-     {
-         $messages = array();
+     * Check passed attributes
+     *
+     * @param array $attrs attributes to check
+     *
+     * @return array errors list
+     * @access public
+     * @since  1.0.0
+     */
+    public function validateAttributes(array $attrs)
+    {
+        $messages = array();
 
-         foreach ($this->getWidgetSettings() as $name => $param) {
+        foreach ($this->getWidgetSettings() as $name => $param) {
 
-             if (isset($attrs[$name])) {
+            if (isset($attrs[$name])) {
 
-                 list($result, $widgetErrors) = $param->validate($attrs[$name]);
+                list($result, $widgetErrors) = $param->validate($attrs[$name]);
 
-                 if (false === $result) {
-                     $messages[] = $param->label . ': ' . implode('<br />' . $param->label . ': ', $widgetErrors);
-                 }
-             } else {
+                if (false === $result) {
+                    $messages[] = $param->label . ': ' . implode('<br />' . $param->label . ': ', $widgetErrors);
+                }
 
-                 $messages[] = $param->label . ': is not set';
-             }
-         }
+            } else {
 
-         return $messages;
-     }
+                $messages[] = $param->label . ': is not set';
+            }
+        }
+
+        return $messages;
+    }
 
     /**
      * Compose URL from target, action and additional params

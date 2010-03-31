@@ -2,24 +2,36 @@
 // vim: set ts=4 sw=4 sts=4 et:
 
 /**
- * Request
- *  
- * @category  Litecommerce
- * @package   Core
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license   http://www.qtmsoft.com/xpayments_eula.html X-Payments license agreement
- * @version   SVN: $Id$
- * @link      http://www.qtmsoft.com/
- * @see       ____file_see____
- * @since     3.0.0
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage Core
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
  */
 
 /**
- * Request
- *                         
- * @package    Core
- * @since      3.0                   
+ * Request 
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
 {
@@ -32,15 +44,15 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
      */
     protected $requestMethod = null;
 
-	/**
-	 * Request data 
-	 * 
-	 * @var    array
-	 * @access protected
-	 * @see    ____var_see____
-	 * @since  3.0.0
-	 */
-	protected $data = array();
+    /**
+     * Request data 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $data = array();
 
 
     /**
@@ -53,11 +65,15 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
      * @access protected
      * @since  3.0.0
      */
-    protected function stripSQLinjection($value)
+    protected function stripSQLInjection($value)
     {
         // (UNION SELECT) case
         if (false !== strpos(strtolower($value), 'union')) {
-            $value = preg_replace('/union([\s\(\)]|((?:\/\*).*(?:\*\/))|(?:union|select|all|distinct))+select/i', ' ', $value);
+            $value = preg_replace(
+                '/union([\s\(\)]|((?:\/\*).*(?:\*\/))|(?:union|select|all|distinct))+select/i',
+                ' ',
+                $value
+            );
         }
 
         // (BENCHMARK) case
@@ -79,7 +95,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
      */
     protected function sanitizeSingle($value)
     {
-        return strip_tags($this->stripSQLinjection($value));
+        return strip_tags($this->stripSQLInjection($value));
     }
 
     /**
@@ -121,7 +137,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
     protected function __construct()
     {
         $this->requestMethod = $_SERVER['REQUEST_METHOD'];
-		$this->mapRequest();
+        $this->mapRequest();
     }
 
     /**
@@ -145,14 +161,14 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
      * @access public
      * @since  3.0.0
      */
-	public function mapRequest(array $data = array())
-	{
+    public function mapRequest(array $data = array())
+    {
         if (empty($data)) {
             $data = $_REQUEST;
         }
 
         $this->data = array_merge($this->data, $this->prepare($data));
-	}
+    }
 
     /**
      * Return all data 
@@ -214,20 +230,20 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
         return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest';
     }
 
-	/**
-	 * Getter
-	 * 
-	 * @param string $name property name
-	 *  
-	 * @return mixed
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function __get($name)
-	{
-		return isset($this->data[$name]) ? $this->data[$name] : null;
-	}
+    /**
+     * Getter
+     * 
+     * @param string $name property name
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __get($name)
+    {
+        return isset($this->data[$name]) ? $this->data[$name] : null;
+    }
     
     /**
      * Setter 

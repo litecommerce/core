@@ -232,7 +232,7 @@ class XLite_Module_GiftCertificates_Controller_Customer_GiftCertificate extends 
             $gc->set('debit', $gc->get('amount'));
             $gc->set('add_date', time());
             if (!$gc->get('expiration_date')) {
-                $gc->set('expiration_date', time() + self::MONTH * $gc->getDdefaultExpirationPeriod());
+                $gc->set('expiration_date', time() + self::MONTH * $gc->getDefaultExpirationPeriod());
             }
 
             if ($gc->get('gcid')) {
@@ -240,7 +240,11 @@ class XLite_Module_GiftCertificates_Controller_Customer_GiftCertificate extends 
 
             } else {
                 $gc->set('gcid', $gc->generateGC());
-                $gc->set('profile_id', $this->auth->getProfile()->get('profile_id'));
+                
+                if ($this->auth->isLogged()) {
+                    $gc->set('profile_id', $this->auth->getProfile()->get('profile_id'));
+                }
+
                 $gc->create();
             }
         }

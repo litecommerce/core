@@ -2,24 +2,36 @@
 // vim: set ts=4 sw=4 sts=4 et:
 
 /**
- * CMS connector
- *  
- * @category  Litecommerce
- * @package   Core
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license   http://www.qtmsoft.com/xpayments_eula.html X-Payments license agreement
- * @version   SVN: $Id$
- * @link      http://www.qtmsoft.com/
- * @see       ____file_see____
- * @since     3.0.0
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage Core
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
  */
 
 /**
- * Singleton to connect to a CMS
- *                         
- * @package    Core
- * @since      3.0                   
+ * CMS connector 
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleton
 {
@@ -33,20 +45,20 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
     protected static $currentCMS = null;
 
 
-	/**
-	 * List of widgets which can be exported
-	 * 
-	 * @var    array
-	 * @access protected
-	 * @since  3.0
-	 */
-	protected $widgetsList = array(
-		'XLite_View_TopCategories'    => 'Categories list',
+    /**
+     * List of widgets which can be exported
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0
+     */
+    protected $widgetsList = array(
+        'XLite_View_TopCategories'    => 'Categories list',
         'XLite_View_Minicart'         => 'Minicart',
         'XLite_View_Subcategories'    => 'Subcategories',
         'XLite_View_CategoryProducts' => 'Category products list',
         'XLite_View_ProductBox'       => 'Product block',
-	);
+    );
 
     /**
      * Page types 
@@ -196,7 +208,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         );
     }
 
-     /**
+    /**
      * Return viewer for current page
      *
      * @return XLite_View_Controller
@@ -270,22 +282,22 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
     // -----> FIXME - to revise
 
 
-	/**
-	 * Set user data 
-	 * 
-	 * @param string  $email Email
-	 * @param array   $data  User data
-	 *  
-	 * @return void
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function setUserData($email, array $data)
-	{
+    /**
+     * Set user data 
+     * 
+     * @param string $email Email
+     * @param array  $data  User data
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setUserData($email, array $data)
+    {
         $result = false;
 
-		// Translation profile field names
+        // Translation profile field names
         $transTable = $this->getUserTranslationTable();
 
         $transData = array();
@@ -297,24 +309,24 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 
         $profile = new XLite_Model_Profile();
 
-    	if ($profile->find('login = \'' . addslashes($email) . '\'')) {
+        if ($profile->find('login = \'' . addslashes($email) . '\'')) {
 
-			// Update
-			if ($transData) {
-	            $profile->modifyProperties($transData);
-				$result = (bool)$profile->update();
-			}
+            // Update
+            if ($transData) {
+                $profile->modifyProperties($transData);
+                $result = (bool)$profile->update();
+            }
 
-		} else {
+        } else {
 
-			// Create
-			$transData['login'] = $email;
-			$profile->modifyProperties($transData);
-			$result = (bool)$profile->create();
-		}
+            // Create
+            $transData['login'] = $email;
+            $profile->modifyProperties($transData);
+            $result = (bool)$profile->create();
+        }
 
         return $result;
-	}
+    }
 
     /**
      * Remove user profile
@@ -328,62 +340,62 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
     public function removeUser($email)
     {
-		$result = false;
+        $result = false;
 
         $profile = new XLite_Model_Profile();
 
         if ($profile->find('login = \'' . addslashes($email) . '\'')) {
-			$profile->delete();
-			$result = true;
-		}
+            $profile->delete();
+            $result = true;
+        }
 
-		return $result;
+        return $result;
     }
 
-	/**
-	 * Log-in user in LC 
-	 * 
-	 * @param string $email Email
-	 *  
-	 * @return void
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function logInUser($email)
-	{
-		$profile = XLite_Model_Auth::getInstance()->loginSilent($email);
+    /**
+     * Log-in user in LC 
+     * 
+     * @param string $email Email
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function logInUser($email)
+    {
+        $profile = XLite_Model_Auth::getInstance()->loginSilent($email);
         
-		return !is_int($profile) || ACCESS_DENIED !== $profile;
-	}
+        return !is_int($profile) || ACCESS_DENIED !== $profile;
+    }
 
-	/**
-	 * Log-out user in LC 
-	 * 
-	 * @param string $email User email
-	 *  
-	 * @return void
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function logOutUser($email = null)
-	{
-		XLite_Model_Auth::getInstance()->logoff();
-	}
+    /**
+     * Log-out user in LC 
+     * 
+     * @param string $email User email
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function logOutUser($email = null)
+    {
+        XLite_Model_Auth::getInstance()->logoff();
+    }
 
-	/**
-	 * Get session TTL (in seconds) 
-	 * 
-	 * @return integer
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function getSessionTtl()
-	{
-		return $this->session->getTtl();
-	}
+    /**
+     * Get session TTL (in seconds) 
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSessionTtl()
+    {
+        return $this->session->getTtl();
+    }
 
     protected function getUserTranslationTable()
     {
