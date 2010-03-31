@@ -66,12 +66,12 @@ class XLite_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_Abstra
                 $this->set("invalid_userfile_state", "invalid_upload_file");
             }
 
-            if ($_POST["localfile"] != "" && !is_readable($_POST["localfile"])) {
+            if (XLite_Core_Request::getInstance()->localfile != "" && !is_readable(XLite_Core_Request::getInstance()->localfile)) {
                 $this->set("invalid_localfile", true);
                 $this->set("invalid_localfile_state", "invalid_file");
             }
             
-            if ($_FILES["userfile"]['tmp_name'] == "" && $_POST["localfile"] == "") {
+            if ($_FILES["userfile"]['tmp_name'] == "" && XLite_Core_Request::getInstance()->localfile == "") {
                 $this->set("invalid_userfile", true);
                 $this->set("invalid_userfile_state", "empty_file");
             }
@@ -126,7 +126,7 @@ class XLite_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_Abstra
 
     function action_layout($layout_name = "product_layout")
     {
-        $layout = implode(',', $_POST[$layout_name]);
+        $layout = implode(',', XLite_Core_Request::getInstance()->$layout_name);
         $config = new XLite_Model_Config();
         if ($config->find("name='$layout_name'")) {
             $config->set("value", $layout);
@@ -158,7 +158,7 @@ class XLite_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_Abstra
     function action_fields_layout()
     {
         $layout_name = "fields_layout";
-        $layout = implode(',', $_POST[$layout_name]);
+        $layout = implode(',', XLite_Core_Request::getInstance()->$layout_name);
         $config = new XLite_Model_Config();
         if ($config->find("name='$layout_name'")) {
             $config->set("value", $layout);

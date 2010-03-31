@@ -193,7 +193,7 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
     */
     function action_update_templates() // {{{
     {
-        foreach ($_POST["template"] as $path => $content) {
+        foreach (XLite_Core_Request::getInstance()->template as $path => $content) {
             $t = new XLite_Model_FileNode($path);
             $t->set("content", $content);
             $t->update();
@@ -210,8 +210,8 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
 
     function getMailTemplates()
     {
-        $node = $_REQUEST["node"];
-        $path = $_REQUEST["path"];
+        $node = XLite_Core_Request::getInstance()->node;
+        $path = XLite_Core_Request::getInstance()->path;
         $data["subject"] = new XLite_Model_FileNode("$node/subject.tpl");
         $data["body"] = new XLite_Model_FileNode("$node/body.tpl");
         $data["signature"] = new XLite_Model_FileNode("$path/signature.tpl");
@@ -221,24 +221,24 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
     function action_update_mail()
     {
     	$writePermitted = false;
-        $node = $_POST["node"];
-        $path = $_POST["path"];
+        $node = XLite_Core_Request::getInstance()->node;
+        $path = XLite_Core_Request::getInstance()->path;
         $s = new XLite_Model_FileNode("$node/subject.tpl");
-        $s->set("content", $_POST["subject"]);
+        $s->set("content", XLite_Core_Request::getInstance()->subject);
         $s->update();
         if ($s->writePermitted) {
 			$writePermitted = true;
         	$this->set("subjectWriteError", true);
         }
         $b = new XLite_Model_FileNode("$node/body.tpl");
-        $b->set("content", $_POST["body"]);
+        $b->set("content", XLite_Core_Request::getInstance()->body);
         $b->update();
         if ($b->writePermitted) {
 			$writePermitted = true;
         	$this->set("bodyWriteError", true);
         }
         $sig = new XLite_Model_FileNode("$path/signature.tpl");
-        $sig->set("content", $_POST["signature"]);
+        $sig->set("content", XLite_Core_Request::getInstance()->signature);
         $sig->update();
         if ($sig->writePermitted) {
 			$writePermitted = true;
@@ -258,8 +258,8 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
     {
         if (is_null($this->extraPage)) {
             $this->extraPage = new XLite_Model_ExtraPage();
-            if (isset($_REQUEST["page"]) && !empty($_REQUEST["page"])) {
-                $this->extraPage = $this->extraPage->findPage($_REQUEST["page"]);
+            if (isset(XLite_Core_Request::getInstance()->page) && !empty(XLite_Core_Request::getInstance()->page)) {
+                $this->extraPage = $this->extraPage->findPage(XLite_Core_Request::getInstance()->page);
             }    
         }
         return $this->extraPage;
@@ -282,15 +282,14 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
 				$title = $ep->get("title");
 				$content = $ep->getComplex('template.content');
 
-				$_REQUEST["page"] = $page;
+				XLite_Core_Request::getInstance()->page = $page;
 				$this->extraPage = null;
 				$this->getExtraPage();
 				$this->action_page_remove();
 
-				$_REQUEST["page"] = "";
-				$_POST["page"] = "";
-				$_POST["title"] = $title;
-				$_POST["content"] = $content;
+				XLite_Core_Request::getInstance()->page = "";
+				XLite_Core_Request::getInstance()->title = $title;
+				XLite_Core_Request::getInstance()->content = $content;
 				$this->extraPage = null;
 				$this->getExtraPage();
 				$this->action_update_page();
@@ -300,11 +299,11 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
 
     function action_update_page() // {{{
         {
-        $page = trim($_POST["page"]);
+        $page = trim(XLite_Core_Request::getInstance()->page);
         $this->extraPage = new XLite_Model_ExtraPage();
         $this->setComplex("extraPage.page", $page);
-        $this->setComplex("extraPage.title", trim($_POST["title"]));
-        $this->setComplex("extraPage.content", trim($_POST["content"]));
+        $this->setComplex("extraPage.title", trim(XLite_Core_Request::getInstance()->title));
+        $this->setComplex("extraPage.content", trim(XLite_Core_Request::getInstance()->content));
         if ($this->new_page) {
             $this->extraPage->add();
         } else {
@@ -338,10 +337,10 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
 
     function getFile() // {{{
     {
-        $path = isset($_REQUEST["file"]) ? $_REQUEST["file"] : null;
+        $path = isset(XLite_Core_Request::getInstance()->file) ? XLite_Core_Request::getInstance()->file : null;
         $file = new XLite_Model_FileNode($path);
-        if (isset($_REQUEST["content"])) {
-            $file->set("content", $_REQUEST["content"]);
+        if (isset(XLite_Core_Request::getInstance()->content)) {
+            $file->set("content", XLite_Core_Request::getInstance()->content);
         }
         return $file;
     } // }}}
@@ -361,25 +360,25 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
     
     function action_remove() // {{{
     {
-        $file = new XLite_Model_FileNode($_REQUEST["selected_file"]);
+        $file = new XLite_Model_FileNode(XLite_Core_Request::getInstance()->selected_file);
         $file->remove();
         $this->afterAdvanced();
     } // }}}
 
     function action_copy() // {{{
     {   
-        $file = new XLite_Model_FileNode($_REQUEST["selected_file"]);
+        $file = new XLite_Model_FileNode(XLite_Core_Request::getInstance()->selected_file);
         $basename = dirname($file->path);
-        $file->set("newPath", $basename . "/" . $_REQUEST["new_name"]);
+        $file->set("newPath", $basename . "/" . XLite_Core_Request::getInstance()->new_name);
         $file->copy();
         $this->afterAdvanced();
     } // }}}
 
     function action_rename() // {{{
     {   
-        $file = new XLite_Model_FileNode($_REQUEST["selected_file"]);
+        $file = new XLite_Model_FileNode(XLite_Core_Request::getInstance()->selected_file);
         $basename = dirname($file->path);
-        $file->set("newPath", $basename . "/" . $_REQUEST["new_name"]);
+        $file->set("newPath", $basename . "/" . XLite_Core_Request::getInstance()->new_name);
         $file->rename();
         $this->afterAdvanced();
     } // }}}
@@ -431,7 +430,7 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
     function action_restore() // {{{
     {
         $file = $this->get("file");
-        $to = $_REQUEST["selected_file"];
+        $to = XLite_Core_Request::getInstance()->selected_file;
 		$schema_file = preg_replace("/^(skins)/", sprintf("schemas/templates/%s",$this->config->getComplex('Skin.skin')), $to);
 		$from = (file_exists($schema_file) ? $schema_file : preg_replace("/^(skins)/", "skins_original", $to));
         copyRecursive($from, $to);

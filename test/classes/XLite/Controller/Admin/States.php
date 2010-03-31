@@ -66,8 +66,8 @@ class XLite_Controller_Admin_States extends XLite_Controller_Admin_Abstract
 
     function fillForm()
     {
-        if (isset($_REQUEST["country_code"])) {
-            $this->set("country_code", $_REQUEST["country_code"]);
+        if (isset(XLite_Core_Request::getInstance()->country_code)) {
+            $this->set("country_code", XLite_Core_Request::getInstance()->country_code);
         } else {
             $this->set("country_code", $this->getComplex('config.General.default_country'));
         }
@@ -87,38 +87,40 @@ class XLite_Controller_Admin_States extends XLite_Controller_Admin_Abstract
     {
 
 		$fields = array("country_code", "code", "state");
-		foreach ($_POST as $k=>$v) {
+		$postData = XLite_Core_Request::getInstance()->getData();
+
+		foreach ($postData as $k=>$v) {
 			if (in_array($k, $fields)) {
-				$_POST[$k] = trim($v);
+				$postData[$k] = trim($v);
 			}
 		}
 
-		if (empty($_POST["country_code"])) {
+		if (empty($postData["country_code"])) {
 			$this->set("valid", false);
 			$this->obligatorySetStatus("country_code");
 			return;
 		}
 
-		if (empty($_POST["code"])) {
+		if (empty($postData["code"])) {
 			$this->set("valid", false);
 			$this->obligatorySetStatus("code");
 			return;
 		}
 
-		if (empty($_POST["state"])) {
+		if (empty($postData["state"])) {
 			$this->set("valid", false);
 			$this->obligatorySetStatus("state");
 			return;
 		}
 
         $state = new XLite_Model_State();
-		if ( $state->find("state='".addslashes($_POST["state"])."' AND code='".addslashes($_POST["code"])."'") ) {
+		if ( $state->find("state='".addslashes($postData["state"])."' AND code='".addslashes($postData["code"])."'") ) {
 			$this->set("valid", false);
 			$this->obligatorySetStatus("exists");
 			return;
 		}
 
-        $state->set("properties", $_POST);
+        $state->set("properties", $postData);
         $state->create();
         $this->obligatorySetStatus("added");
     }
@@ -126,8 +128,8 @@ class XLite_Controller_Admin_States extends XLite_Controller_Admin_Abstract
     function action_update()
     {
         $stateData = array();
-        if (isset($_POST["state_data"])) {
-            $stateData = $_POST["state_data"];
+        if (isset(XLite_Core_Request::getInstance()->state_data)) {
+            $stateData = XLite_Core_Request::getInstance()->state_data;
         }
         // use POST'ed data to modify state properties
         foreach ($stateData as $state_id => $state_data) {
@@ -141,8 +143,8 @@ class XLite_Controller_Admin_States extends XLite_Controller_Admin_Abstract
     function action_delete()
     {
         $states = array();
-        if (isset($_POST["delete_states"])) {
-            $states = $_POST["delete_states"];
+        if (isset(XLite_Core_Request::getInstance()->delete_states)) {
+            $states = XLite_Core_Request::getInstance()->delete_states;
         }
         foreach ($states as $id => $state_id) {
             $state = new XLite_Model_State($state_id);

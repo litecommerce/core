@@ -61,7 +61,7 @@ class XLite_Controller_Admin_ExtraFields extends XLite_Controller_Admin_Abstract
     
     function isCategorySelected($name, $categoryID)
     {
-        return (isset($_POST[$name]) && is_array($_POST[$name])) ? in_array($categoryID, $_POST[$name]) : false;
+        return (isset(XLite_Core_Request::getInstance()->$name) && is_array(XLite_Core_Request::getInstance()->$name)) ? in_array($categoryID, XLite_Core_Request::getInstance()->$name) : false;
     }
     
     function getCategories() // {{{
@@ -163,7 +163,7 @@ class XLite_Controller_Admin_ExtraFields extends XLite_Controller_Admin_Abstract
             $categories = (array)$this->get("add_categories");
 
             $ef = new XLite_Model_ExtraField();
-            $ef->set("properties", $_POST);
+            $ef->set("properties", XLite_Core_Request::getInstance()->getData());
             if (!empty($categories)) {
                 $ef->setCategoriesList($categories);
             }

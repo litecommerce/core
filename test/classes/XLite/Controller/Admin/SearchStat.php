@@ -74,7 +74,7 @@ class XLite_Controller_Admin_SearchStat extends XLite_Controller_Admin_Stats
     function action_cleanup()
     {
         $searchStat = new XLite_Model_SearchStat();
-        $searchStat->cleanup($_POST["maxCount"]);
+        $searchStat->cleanup(XLite_Core_Request::getInstance()->maxCount);
     }
 
 }

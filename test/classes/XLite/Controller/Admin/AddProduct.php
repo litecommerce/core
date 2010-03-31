@@ -52,8 +52,8 @@ class XLite_Controller_Admin_AddProduct extends XLite_Controller_Admin_Abstract
 
     function init()
     {
-		if (!(isset($_REQUEST["product_id"]) && !isset($_REQUEST["action"]) && isset($_REQUEST["mode"]) && $_REQUEST["mode"] == "notification")) {
-			unset($_REQUEST["product_id"]);
+		if (!(isset(XLite_Core_Request::getInstance()->product_id) && !isset(XLite_Core_Request::getInstance()->action) && isset(XLite_Core_Request::getInstance()->mode) && XLite_Core_Request::getInstance()->mode == "notification")) {
+			XLite_Core_Request::getInstance()->product_id = null;
 		}
 
     	parent::init();
@@ -62,7 +62,7 @@ class XLite_Controller_Admin_AddProduct extends XLite_Controller_Admin_Abstract
     function action_add()
     {
         $product = $this->get("product");
-        $product->set("properties", $_POST);
+        $product->set("properties", XLite_Core_Request::getInstance()->getData());
         $product->create();
 
         $this->action_images();

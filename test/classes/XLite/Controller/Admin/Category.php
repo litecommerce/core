@@ -137,8 +137,8 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
                 $this->category = new XLite_Model_Category(); // empty category
             } else {
                 $categoryID = 0;
-                if (isset($_REQUEST["category_id"])) {
-                    $categoryID = $_REQUEST["category_id"];
+                if (isset(XLite_Core_Request::getInstance()->category_id)) {
+                    $categoryID = XLite_Core_Request::getInstance()->category_id;
                 }
                 $this->category = new XLite_Model_Category($categoryID);
             }
@@ -201,10 +201,10 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
         }
         // add category
         $category = new XLite_Model_Category();
-        $category->set("properties", $_POST);
+        $category->set("properties", XLite_Core_Request::getInstance()->getData());
         $category->set("category_id", null);
-        if (empty($_POST['parent'])) $_POST['parent'] = 0;
-        $category->set("parent",$_POST['parent']);
+        if (empty(XLite_Core_Request::getInstance()->parent)) XLite_Core_Request::getInstance()->parent = 0;
+        $category->set("parent", XLite_Core_Request::getInstance()->parent);
         $category->create();
 
         // upload category image
@@ -235,13 +235,14 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
     }
 
     function action_add_field()
-    {
-    	foreach($_POST as $post_key => $post_value)
+	{
+		$_postData = XLite_Core_Request::getInstance()->getData();
+    	foreach($_postData as $post_key => $post_value)
     	{
     		if (strcmp(substr($post_key, 0, 7), "add_ef_") == 0)
     		{
-    			$_POST[substr($post_key, 7)] = $post_value;
-    			unset($_POST[$post_key]);
+    			$_postData[substr($post_key, 7)] = $post_value;
+    			unset($_postData[$post_key]);
     		}
     	}
         // ADD field
@@ -251,7 +252,7 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
             if (!empty($categories)) 
             {
                 $ef = new XLite_Model_ExtraField();
-                $ef->set("properties", $_POST);
+                $ef->set("properties", $_postData);
                 $ef->setCategoriesList($categories);
                 $ef->create();
             }
@@ -264,14 +265,14 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
                         $category = new XLite_Model_Category($categoryID);
                         foreach ((array)$category->get("products") as $product) {
                             $ef = new XLite_Model_ExtraField();
-                            $ef->set("properties", $_POST);
+                            $ef->set("properties", $_postData);
                             $ef->set("product_id", $product->get("product_id"));
                             $ef->create();
                         }
                     }
                 } else {    
                     $ef = new XLite_Model_ExtraField();
-                    $ef->set("properties", $_POST);
+                    $ef->set("properties", $_postData);
                     $ef->create();
                 }    
             }

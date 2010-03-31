@@ -93,7 +93,7 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_Abstract
     function action_add_field()
     {
         $ef = new XLite_Model_ExtraField();
-        $ef->set("properties", $_POST);
+        $ef->set("properties", XLite_Core_Request::getInstance()->getData());
         $ef->create();
     }
 
@@ -118,7 +118,7 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_Abstract
     {
         // update product properties
         $product = new XLite_Model_Product($this->product_id);
-        $product->set("properties", $_POST);
+        $product->set("properties", XLite_Core_Request::getInstance()->getData());
         $product->update();
         
         // update product image and thumbnail

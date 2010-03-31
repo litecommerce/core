@@ -80,7 +80,7 @@ class XLite_Controller_Admin_Files extends XLite_Controller_Admin_Abstract
                 }
             }
         }    
-		if (isset($_REQUEST["mode"]) && $_REQUEST["mode"] == "full") {
+		if (isset(XLite_Core_Request::getInstance()->mode) && XLite_Core_Request::getInstance()->mode == "full") {
 			// backup database as well
 			$this->db->backup(SQL_DUMP_FILE, false);
 			$files[] = SQL_DUMP_FILE;

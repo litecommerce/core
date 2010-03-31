@@ -121,7 +121,7 @@ class XLite_Controller_Admin_Db extends XLite_Controller_Admin_Abstract
         $verbose  = false;
         $destfile = null; // write to 'stdout' by default
 
-        if ($_POST["write_to_file"]) {
+        if (XLite_Core_Request::getInstance()->write_to_file) {
             $destfile = $this->sqldump_file;
             $verbose  = true;
             (isset($this->mode) && $this->mode == "cp") or $this->startDump();
@@ -129,12 +129,12 @@ class XLite_Controller_Admin_Db extends XLite_Controller_Admin_Abstract
             $this->startDownload("db_backup.sql.php");
         }
         $this->db->backup($destfile, $verbose);
-        if (isset($_POST["write_to_file"])) {
+        if (isset(XLite_Core_Request::getInstance()->write_to_file)) {
             if (isset($this->mode) && $this->mode == "cp") {
                 // Windows Control Panel mode. suppress "back" message.
                 die("OK");
             } else {
-        		if ($_POST["write_to_file"]) {
+        		if (XLite_Core_Request::getInstance()->write_to_file) {
             		echo "<br><b>Database backup created successfully</b><br>";
             	}
                 $this->set("silent", true);
@@ -160,7 +160,7 @@ class XLite_Controller_Admin_Db extends XLite_Controller_Admin_Abstract
 
         // check whether to restore from file upload
 		mkdirRecursive(SQL_UPLOAD_DIR);
-        if (!isset($_POST['local_file']))
+        if (!isset(XLite_Core_Request::getInstance()->local_file))
         { 
             $upload = new XLite_Model_Upload($_FILES['userfile']);
             $srcfile = SQL_UPLOAD_DIR.$upload->getName();

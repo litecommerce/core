@@ -60,11 +60,12 @@ class XLite_Controller_Admin_Countries extends XLite_Controller_Admin_Abstract
     {
         // parse POST'ed data, modify country properties
         $country = new XLite_Model_Country();
-        if (!empty($_POST["countries"])) {
+        if (!empty(XLite_Core_Request::getInstance()->countries)) {
             foreach ($country->readAll() as $country) {
                 $code = $country->get("code");
-                if (array_key_exists($code, $_POST["countries"])) {
-                    $data = $_POST["countries"][$code];
+				if (array_key_exists($code, XLite_Core_Request::getInstance()->countries)) {
+					$_tmp = XLite_Core_Request::getInstance()->countries;
+                    $data = $_tmp[$code];
                     $data["eu_member"] = isset($data["eu_member"]) ? 'Y' : 'N';
                     $data["enabled"] = isset($data["enabled"]) ? 1 : 0;
                     $country->set("properties", $data);
@@ -78,34 +79,34 @@ class XLite_Controller_Admin_Countries extends XLite_Controller_Admin_Abstract
 
 	function action_add()
 	{
-		if ( empty($_POST["code"]) ) {
+		if ( empty(XLite_Core_Request::getInstance()->code) ) {
 			$this->set("valid", false);
 			$this->obligatorySetStatus("code");
 			return;
 		}
 
         $country = new XLite_Model_Country();
-        if ( $country->find("code='".$_POST["code"]."'") ) {
+        if ( $country->find("code='" . XLite_Core_Request::getInstance()->code . "'") ) {
             $this->set("valid", false);
             $this->obligatorySetStatus("exists");
             return;
         }
 
-		if ( empty($_POST["country"]) ) {
+		if ( empty(XLite_Core_Request::getInstance()->country) ) {
 			$this->set("valid", false);
 			$this->obligatorySetStatus("country");
 			return;
 		}
 
-		if ( empty($_POST["charset"]) ) {
+		if ( empty(XLite_Core_Request::getInstance()->charset) ) {
 			$this->set("valid", false);
 			$this->obligatorySetStatus("charset");
 			return;
 		}
 
-		$country->set("properties", $_POST);
-		$country->set("eu_member", isset($_POST["eu_member"]) ? 'Y' : 'N');
-		$country->set("enabled", isset($_POST["enabled"]) ? 1 : 0);
+		$country->set("properties", XLite_Core_Request::getInstance()->getData());
+		$country->set("eu_member", isset(XLite_Core_Request::getInstance()->eu_member) ? 'Y' : 'N');
+		$country->set("enabled", isset(XLite_Core_Request::getInstance()->enabled) ? 1 : 0);
 		$country->create();
 
 		$this->obligatorySetStatus("added");
@@ -113,7 +114,7 @@ class XLite_Controller_Admin_Countries extends XLite_Controller_Admin_Abstract
 
 	function action_delete()
 	{
-		$countries = $_POST["delete_countries"];
+		$countries = XLite_Core_Request::getInstance()->delete_countries;
 
 		if ( is_array($countries) && count($countries) > 0 ) {
 			foreach ($countries as $code) {

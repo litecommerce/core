@@ -81,7 +81,7 @@ class XLite_Controller_Admin_Wysiwyg extends XLite_Controller_Admin_Abstract
     {
         $this->startDump();
         $this->_resetLayout();
-        if (!isset($_REQUEST["mode"]) || $_REQUEST["mode"] != "cp") {
+        if (!isset(XLite_Core_Request::getInstance()->mode) || XLite_Core_Request::getInstance()->mode != "cp") {
             print "<pre>\n";
             if ($this->getBuilder()->export($this->exportTemplates)) {
                 print "\n\nA set of HTML pages generated successfully.<br>The pages are located in the 'var/html' subfolder of your LiteCommerce installation.\n";
@@ -107,7 +107,7 @@ class XLite_Controller_Admin_Wysiwyg extends XLite_Controller_Admin_Abstract
     {
         $this->startDump();
         $this->_resetLayout();
-        if (!isset($_REQUEST["mode"]) || $_REQUEST["mode"] != "cp") { 
+        if (!isset(XLite_Core_Request::getInstance()->mode) || XLite_Core_Request::getInstance()->mode != "cp") { 
             print "<pre>\n";
             if ($this->getBuilder()->import()) {
                 print "\n\nA set of template files generated successfully.\n";

@@ -124,8 +124,8 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
         $this->checkHtaccess();
 
         // auto-login request
-        if (!$this->auth->is("logged") && isset($_POST["login"]) && isset($_POST["password"])) {
-            if($this->auth->adminLogin($_POST["login"], $_POST["password"]) === ACCESS_DENIED) {
+        if (!$this->auth->is("logged") && isset(XLite_Core_Request::getInstance()->login) && isset(XLite_Core_Request::getInstance()->password)) {
+            if($this->auth->adminLogin(XLite_Core_Request::getInstance()->login, XLite_Core_Request::getInstance()->password) === ACCESS_DENIED) {
                 die("ACCESS DENIED");
             }
         }
@@ -135,12 +135,12 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
             return;
         }
 
-        if(!$this->isIgnoredTarget() && $this->getComplex('xlite.config.Security.admin_ip_protection') == "Y" && !$this->auth->isValidAdminIP($this) && !(XLite_Core_Request::getInstance()->target == 'payment_method' && $_REQUEST['action']=='callback')){
+        if(!$this->isIgnoredTarget() && $this->getComplex('xlite.config.Security.admin_ip_protection') == "Y" && !$this->auth->isValidAdminIP($this) && !(XLite_Core_Request::getInstance()->target == 'payment_method' && XLite_Core_Request::getInstance()->action == 'callback')){
             $this->redirect("admin.php?target=login&mode=access_denied");
             return;
         }
 
-		if (isset($_REQUEST['no_https'])) {
+		if (isset(XLite_Core_Request::getInstance()->no_https)) {
             $this->session->set("no_https", true);
         }
 
@@ -172,7 +172,7 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
 	function startDump()
 	{
 		parent::startDump();
-		if (!isset($_REQUEST["mode"]) || $_REQUEST["mode"]!="cp") {
+		if (!isset(XLite_Core_Request::getInstance()->mode) || XLite_Core_Request::getInstance()->mode != "cp") {
 			$this->displayPageHeader();
 		}
 	}
@@ -276,7 +276,7 @@ EOT;
 			isset($ignoreTargets[XLite_Core_Request::getInstance()->target]) 
 			&& (
 				in_array("*", $ignoreTargets[XLite_Core_Request::getInstance()->target]) 
-				|| (isset($_REQUEST['action']) && in_array($_REQUEST['action'], $ignoreTargets[XLite_Core_Request::getInstance()->target]))
+				|| (isset(XLite_Core_Request::getInstance()->action) && in_array(XLite_Core_Request::getInstance()->action, $ignoreTargets[XLite_Core_Request::getInstance()->target]))
 			)
 		) { 
             return true;
@@ -293,15 +293,15 @@ EOT;
 			isset($specialIgnoreTargets[XLite_Core_Request::getInstance()->target]) 
 			&& (
 				in_array("*", $specialIgnoreTargets[XLite_Core_Request::getInstance()->target]) 
-				|| (isset($_REQUEST['action']) && in_array($_REQUEST['action'], $specialIgnoreTargets[XLite_Core_Request::getInstance()->target]))
+				|| (isset(XLite_Core_Request::getInstance()->action) && in_array(XLite_Core_Request::getInstance()->action, $specialIgnoreTargets[XLite_Core_Request::getInstance()->target]))
 			) 
 			&& (
-				isset($_POST['login']) && isset($_POST['password'])
+				isset(XLite_Core_Request::getInstance()->login) && isset(XLite_Core_Request::getInstance()->password)
 			)
 		) {
             $login = $this->xlite->auth->getComplex('profile.login');
-            $post_login = $_POST['login'];
-            $post_password = $_POST['password'];
+            $post_login = XLite_Core_Request::getInstance()->login;
+            $post_password = XLite_Core_Request::getInstance()->password;
 
             if($login != $post_login)
                 return false;

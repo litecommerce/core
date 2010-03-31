@@ -54,33 +54,33 @@ class XLite_Controller_Admin_ShippingZones extends XLite_Controller_Admin_Shippi
 
     function action_update_states()
     {
-        if ($_POST["target_state_zone"] == 'new') {
+        if (XLite_Core_Request::getInstance()->target_state_zone == 'new') {
             // create new zone
             $zone = new XLite_Model_ShippingZone();
             $zone->create();
         } else {
             // move to specified zone
-            $zone = new XLite_Model_ShippingZone($_POST["target_state_zone"]);
+            $zone = new XLite_Model_ShippingZone(XLite_Core_Request::getInstance()->target_state_zone);
         }
         // move selected states
-        if (isset($_POST["states"])) {
-            $zone->set("states", $_POST["states"]);
+        if (isset(XLite_Core_Request::getInstance()->states)) {
+            $zone->set("states", XLite_Core_Request::getInstance()->states);
         }    
     }
 
     function action_update_countries()
     {
-        if ($_POST["target_country_zone"] == 'new') {
+        if (XLite_Core_Request::getInstance()->target_country_zone == 'new') {
             // create new zone
             $zone = new XLite_Model_ShippingZone();
             $zone->create();
         } else {
             // move to specified zone
-            $zone = new XLite_Model_ShippingZone($_POST["target_country_zone"]);
+            $zone = new XLite_Model_ShippingZone(XLite_Core_Request::getInstance()->target_country_zone);
         }
         // move selected countries
-        if (isset($_POST["countries"])) {
-            $zone->set("countries", $_POST["countries"]);
+        if (isset(XLite_Core_Request::getInstance()->countries)) {
+            $zone->set("countries", XLite_Core_Request::getInstance()->countries);
         }    
     }
 }

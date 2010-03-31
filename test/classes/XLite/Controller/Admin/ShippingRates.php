@@ -61,12 +61,12 @@ class XLite_Controller_Admin_ShippingRates extends XLite_Controller_Admin_Shippi
     {
         // read select condition from the request
         $condition = array();
-        if (isset($_REQUEST["shipping_zone_range"]) && strlen($_REQUEST["shipping_zone_range"])>0) {
-            $this->shipping_zone_range = $_REQUEST["shipping_zone_range"];
+        if (isset(XLite_Core_Request::getInstance()->shipping_zone_range) && strlen(XLite_Core_Request::getInstance()->shipping_zone_range) > 0) {
+            $this->shipping_zone_range = XLite_Core_Request::getInstance()->shipping_zone_range;
             $condition[] = "shipping_zone='$this->shipping_zone_range'";
         }
-        if (!empty($_REQUEST["shipping_id_range"])) {
-            $this->shipping_id_range = $_REQUEST["shipping_id_range"];
+        if (!empty(XLite_Core_Request::getInstance()->shipping_id_range)) {
+            $this->shipping_id_range = XLite_Core_Request::getInstance()->shipping_id_range;
             $condition[] = "shipping_id='$this->shipping_id_range'";
         }
         $condition = implode(" AND ", $condition);
@@ -103,7 +103,7 @@ class XLite_Controller_Admin_ShippingRates extends XLite_Controller_Admin_Shippi
     {
         $this->params[] = "message";
         $rate = new XLite_Model_ShippingRate();
-        $rate->set("properties", $_POST);
+        $rate->set("properties", XLite_Core_Request::getInstance()->getData());
         if (!$rate->isExists()) {
         	$this->set("message", "added");
         	$rate->create();
@@ -115,7 +115,7 @@ class XLite_Controller_Admin_ShippingRates extends XLite_Controller_Admin_Shippi
     function action_update()
     {
         $shippingRates = $this->get("shippingRates");
-        foreach($_POST["rate"] as $key => $rate_data) {
+        foreach(XLite_Core_Request::getInstance()->rate as $key => $rate_data) {
             if (array_key_exists($key, $shippingRates)) {
 				$rate = new XLite_Model_ShippingRate();
 				$rate->set("properties", $rate_data);
@@ -134,7 +134,7 @@ class XLite_Controller_Admin_ShippingRates extends XLite_Controller_Admin_Shippi
     function action_delete()
     {
         $shippingRates = $this->get("shippingRates");
-        $rate = $shippingRates[$_POST["deleted_rate"]];
+        $rate = $shippingRates[XLite_Core_Request::getInstance()->deleted_rate];
         $rate->delete();
     }
 }

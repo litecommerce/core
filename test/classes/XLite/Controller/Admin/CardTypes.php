@@ -58,9 +58,9 @@ class XLite_Controller_Admin_CardTypes extends XLite_Controller_Admin_Abstract
 
     function action_delete()
     {
-        if (isset($_POST["code"])) {
+        if (isset(XLite_Core_Request::getInstance()->code)) {
             $card = new XLite_Model_Card();
-            if ($card->find("code='".$_POST["code"]."'")) {
+            if ($card->find("code='" . XLite_Core_Request::getInstance()->code . "'")) {
                 $card->delete();
             }
         }
@@ -70,27 +70,27 @@ class XLite_Controller_Admin_CardTypes extends XLite_Controller_Admin_Abstract
 
     function action_add()
     {
-		if ( empty($_POST["code"]) ) {
+		if ( empty(XLite_Core_Request::getInstance()->code) ) {
 			$this->set("valid", false);
 			$this->obligatorySetStatus("code");
 			return;
 		}
 
-		if ( empty($_POST["card_type"]) ) {
+		if ( empty(XLite_Core_Request::getInstance()->card_type) ) {
 			$this->set("valid", false);
 			$this->obligatorySetStatus("card_type");
 			return;
 		}
 
         // checkboxes
-        if (!isset($_POST["cvv2"])) {
-            $_POST["cvv2"] = 0;
+        if (!isset(XLite_Core_Request::getInstance()->cvv2)) {
+			XLite_Core_Request::getInstance()->cvv2 = 0;
         }
-        if (!isset($_POST["enabled"])) {
-            $_POST["enabled"] = 0;
+        if (!isset(XLite_Core_Request::getInstance()->enabled)) {
+			XLite_Core_Request::getInstance()->enabled = 0;
         }
         $card = new XLite_Model_Card();
-        $card->set("properties", $_POST);
+        $card->set("properties", XLite_Core_Request::getInstance()->getData());
         if ($card->isExists()) {
             $this->set("valid", false);
             $this->obligatorySetStatus("exists");
@@ -104,7 +104,7 @@ class XLite_Controller_Admin_CardTypes extends XLite_Controller_Admin_Abstract
     
     function action_update()
     {
-        foreach ($_POST["card_types"] as $id => $data) {
+        foreach (XLite_Core_Request::getInstance()->card_types as $id => $data) {
             $data["enabled"] = array_key_exists("enabled", $data) ? 1 : 0;
             $data["cvv2"]    = array_key_exists("cvv2",    $data) ? 1 : 0;
             $card = new XLite_Model_Card(); 

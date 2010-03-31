@@ -55,21 +55,24 @@ class XLite_Controller_Admin_ShippingMethods extends XLite_Controller_Admin_Ship
     function action_add()
     {
         $shipping = new XLite_Model_Shipping();
-        $shipping->set("properties", $_POST);
+        $shipping->set("properties", XLite_Core_Request::getInstance()->getData());
         $shipping->create();
 		$this->xlite->set("action_add_valid", true);
     }
 
     function action_update()
     {
-        foreach($_POST["order_by"] as $shipping_id=>$order_by) {
+        foreach(XLite_Core_Request::getInstance()->order_by as $shipping_id=>$order_by) {
             $shipping = new XLite_Model_Shipping($shipping_id);
-            $shipping->set("order_by", $order_by);
-            if (isset($_POST["enabled"][$shipping_id])) {
-                $enabled = 1;
-            } else {
-                $enabled = 0;
-            }    
+			$shipping->set("order_by", $order_by);
+			$enabled = 0;
+
+			if (isset(XLite_Core_Request::getInstance()->enabled)) {
+				$_tmp = XLite_Core_Request::getInstance()->enabled;
+				if (isset($_tmp[$shipping_id])) {
+					$enabled = 1;
+				}
+            }
             $shipping->set("enabled", $enabled);
             $shipping->update();
         }
@@ -77,7 +80,7 @@ class XLite_Controller_Admin_ShippingMethods extends XLite_Controller_Admin_Ship
 
     function action_delete()
     {
-        $shipping = new XLite_Model_Shipping($_REQUEST["shipping_id"]);
+        $shipping = new XLite_Model_Shipping(XLite_Core_Request::getInstance()->shipping_id);
         $shipping->delete();
     }
 }

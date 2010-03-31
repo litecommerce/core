@@ -76,7 +76,7 @@ class XLite_Controller_Admin_Login extends XLite_Controller_Admin_Abstract
 
     function action_login()
     {
-        $profile = $this->auth->adminLogin($_POST["login"], $_POST["password"]);
+        $profile = $this->auth->adminLogin(XLite_Core_Request::getInstance()->login, XLite_Core_Request::getInstance()->password);
 
         if (is_int($profile) && ACCESS_DENIED === $profile) {
             $this->set("valid", false);

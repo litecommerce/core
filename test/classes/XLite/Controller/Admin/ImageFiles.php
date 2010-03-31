@@ -57,7 +57,7 @@ class XLite_Controller_Admin_ImageFiles extends XLite_Controller_Admin_Abstract
 	{
         $this->startDump();
 		$images = $this->get("imageClasses");
-		$imageClass = $images[$_REQUEST["index"]];
+		$imageClass = $images[XLite_Core_Request::getInstance()->index];
 		$n = $imageClass->getImage()->moveToFilesystem($from);
 		$m = $this->xlite->get("realyMovedImages");
 
@@ -72,7 +72,7 @@ class XLite_Controller_Admin_ImageFiles extends XLite_Controller_Admin_Abstract
 	function action_update_default_source()
 	{
 		$images = $this->get("imageClasses");
-		$imageClass = $images[$_REQUEST["index"]];
+		$imageClass = $images[XLite_Core_Request::getInstance()->index];
 		$imageClass->getImage()->setDefaultSource($this->get("default_source"));
 	}
 

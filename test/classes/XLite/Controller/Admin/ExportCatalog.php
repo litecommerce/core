@@ -131,7 +131,7 @@ class XLite_Controller_Admin_ExportCatalog extends XLite_Controller_Admin_Abstra
     function action_fields_layout()
     {
         $layout_name = "fields_layout";
-        $layout = implode(',', $_POST[$layout_name]);
+        $layout = implode(',', XLite_Core_Request::getInstance()->$layout_name);
         $config = new XLite_Model_Config();
         if ($config->find("name='$layout_name'")) {
             $config->set("value", $layout);

@@ -52,7 +52,7 @@ class XLite_Controller_Admin_Test extends XLite_Controller_Admin_Abstract
 {
     function action_upload()
     {
-        $upload_test = isset($_POST["upload_test"]) ? basename($_POST["upload_test"], ".txt") . ".txt" : "upload_test.txt";
+        $upload_test = isset(XLite_Core_Request::getInstance()->upload_test) ? basename(XLite_Core_Request::getInstance()->upload_test, ".txt") . ".txt" : "upload_test.txt";
         if (@is_readable($upload_test)) {
             @readfile($upload_test);
         } else {

@@ -56,7 +56,7 @@ class XLite_Controller_Admin_PaymentMethod extends XLite_Controller_Admin_Abstra
     function getPM()
     {
         if (is_null($this->pm)) {
-            $this->pm = XLite_Model_PaymentMethod::factory($_REQUEST['payment_method']);
+            $this->pm = XLite_Model_PaymentMethod::factory(XLite_Core_Request::getInstance()->payment_method);
         }
         return $this->pm;
     }    
