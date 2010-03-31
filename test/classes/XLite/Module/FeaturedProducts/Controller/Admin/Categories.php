@@ -35,36 +35,68 @@
  */
 class XLite_Module_FeaturedProducts_Controller_Admin_Categories extends XLite_Controller_Admin_Categories implements XLite_Base_IDecorator
 {
-    public function __construct(array $params)
+    /**
+     * init 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function init() 
     {
-        if (!isset($_REQUEST["search_category"])) {
-            $_REQUEST["search_category"] = $_REQUEST["category_id"];
+        parent::init();
+
+        if (!isset(XLite_Core_Request::getInstance()->search_category)) {
+            XLite_Core_Request::getInstance()->search_category = XLite_Core_Request::getInstance()->category_id;
         }    
     }
 
-	public function action_add_featured_products()
+    /**
+     * doActionAddFeaturedProducts 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+	protected function doActionAddFeaturedProducts()
 	{
-		if (isset($_POST["product_ids"])) {
-			$products = array();
-			foreach ($_POST["product_ids"] as $product_id => $value) {
+		if (isset(XLite_Core_Request::getInstance()->product_ids)) {
+            $products = array();
+
+			foreach (XLite_Core_Request::getInstance()->product_ids as $product_id => $value) {
 				$products[] = new XLite_Model_Product($product_id);
-			}
+            }
+
 			$category = new XLite_Model_Category($this->category_id);
 			$category->addFeaturedProducts($products);
 		}
 	}
 
+    /**
+     * getProducts 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function getProducts()
     {
-        if ($this->get("mode") != "search") {
+        if (XLite_Core_Request::getInstance()->mode != 'search') {
             return array();
         }
+
         $p = new XLite_Model_Product();
-        $result = $p->advancedSearch($this->substring,
-                                      $this->search_productsku,
-                                      $this->search_category,
-                                      $this->subcategory_search);
+        $result = $p->advancedSearch(
+            $this->substring,
+            $this->search_productsku,
+            $this->search_category,
+            $this->subcategory_search
+        );
         $this->productsFound = count($result);
+
         return $result;
     }
 
@@ -76,7 +108,7 @@ class XLite_Module_FeaturedProducts_Controller_Admin_Categories extends XLite_Co
 	 * @see    ____func_see____
 	 * @since  3.0.0
 	 */
-	public function action_update_featured_products()
+	protected function doActionUpdateFeaturedProducts()
 	{
 		// Delete featured products if it was requested
 		$deleteProducts = XLite_Core_Request::getInstance()->delete;
