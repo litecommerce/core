@@ -13,7 +13,7 @@
   text-align: right;
 }
 
-#shopping-cart .delete-from-list input
+.delete-from-list input
 {
   background: transparent url(img/cart-item-delete.gif) no-repeat top left;
   width: 13px;
