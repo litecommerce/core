@@ -10,8 +10,12 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<li IF="!cart.payedByGC=0">
-  <em>Paid with GC:</em>
+<li IF="!cart.payedByGC=0" class="paid-gc">
+  <em>
+    Paid with GC:
+    <widget class="XLite_Module_GiftCertificates_View_Form_GiftCertificate_Remove" name="remove_gc" />
+      <widget class="XLite_View_Button_Image" label="Remove GC" />
+    <widget name="remove_gc" end />
+  </em>
   {price_format(cart,#payedByGC#):h}
-  <div><widget class="XLite_View_Button_Link" location="{buildURL(#cart#,#remove_gc#,_ARRAY_(#return_target#^target))}" label="Remove GC" /></div>
 </li>
