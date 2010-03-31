@@ -144,7 +144,7 @@ class XLite_Model_Shipping extends XLite_Model_Abstract
      */
     public function getModuleName()
     {
-		$this->_die("getModuleName is not implemented for abstract class Shipping");
+		$this->doDie("getModuleName is not implemented for abstract class Shipping");
     }
 
 	/**
@@ -192,7 +192,7 @@ class XLite_Model_Shipping extends XLite_Model_Abstract
      */
     public function getRates(XLite_Model_Order $order)
     {
-		$this->_die("getRates(): Not implemented in abstract class Shipping");
+		$this->doDie("getRates(): Not implemented in abstract class Shipping");
     }
     
     /**

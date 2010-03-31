@@ -91,7 +91,7 @@ class XLite_Module_Promotion_Controller_Customer_Cart extends XLite_Controller_C
             $this->cart->set("DC", $dc);
             $this->updateCart();
         } else {
-            $this->_die("Internal error: DC not found");
+            $this->doDie("Internal error: DC not found");
         }
     }
 	

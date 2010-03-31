@@ -12,7 +12,7 @@ abstract class XLite_Module_Abstract extends XLite_Model_Module
 	protected function getModuleName()
 	{
 		return preg_match('/XLite_Module_(\w+)_Main/', get_class($this), $matches) ?
-			$matches[1] : $this->_die('Module class name is invalid - "' . get_class($this) . '"');
+			$matches[1] : $this->doDie('Module class name is invalid - "' . get_class($this) . '"');
 	}
 
 	/**

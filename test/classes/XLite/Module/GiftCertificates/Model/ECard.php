@@ -100,7 +100,7 @@ class XLite_Module_GiftCertificates_Model_ECard extends XLite_Model_Abstract
             closedir($dh); 
 
         } else {
-            $this->_die("Cannot read directory $path");
+            $this->doDie("Cannot read directory $path");
         }
 
         return $templates;
@@ -130,7 +130,7 @@ class XLite_Module_GiftCertificates_Model_ECard extends XLite_Model_Abstract
             closedir($dh);
 
         } else {
-            $this->_die("Cannot read directory $path");
+            $this->doDie("Cannot read directory $path");
         }
 
         return $borders;

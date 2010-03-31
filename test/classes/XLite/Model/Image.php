@@ -149,7 +149,7 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
                         );
                 $this->set($imageClass->idField, $id);
             } else {
-                $this->_die("Image class $class is not registered");
+                $this->doDie("Image class $class is not registered");
             }
         }
     }

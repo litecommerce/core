@@ -566,7 +566,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
         }
         if (!is_array($pos["orderbys"])) {
             print "pos = "; print_r($pos);
-            $this->_die("pos['orderbys'] must be an array");
+            $this->doDie("pos['orderbys'] must be an array");
         }
         $ratesToSort = $rateTree;
         array_multisort($pos["orderbys"], $ratesToSort);
@@ -593,7 +593,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
     {
         list($name,$oldval) = explode(':=', $expr);
         if (!isset($oldval)) {
-            $this->_die("expr=$expr - wrong format");
+            $this->doDie("expr=$expr - wrong format");
         }
         return "$name:=$value";
     }

@@ -115,8 +115,8 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
 
 		$function = 'mysql_' . ((isset($options['persistent']) && 'on' == strtolower($options['persistent'])) ? 'p' : '') . 'connect';
 
-		($this->connection = @$function($options['hostspec'], $options['username'], $options['password'])) || $this->_die(mysql_error());
-        @mysql_select_db($options['database'], $this->connection) || $this->_die(mysql_error()); 
+		($this->connection = @$function($options['hostspec'], $options['username'], $options['password'])) || $this->doDie(mysql_error());
+        @mysql_select_db($options['database'], $this->connection) || $this->doDie(mysql_error()); 
 
         $this->connected = true;
 
@@ -219,7 +219,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
     	    $start = microtime(true);
 		}
 
-		($res = @mysql_query($sql, $this->connection)) || $this->_die(mysql_errno() . ': ' . mysql_error() .  ' in ' . $sql);
+		($res = @mysql_query($sql, $this->connection)) || $this->doDie(mysql_errno() . ': ' . mysql_error() .  ' in ' . $sql);
 
 		if ($this->profilerEnabled) {
 	        $this->profiler->setQueryTime($sql, microtime(true) - $start);
@@ -341,7 +341,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
         // open backup file if necessary
         if (!is_null($file)) {
             if (!$handle = fopen($file, 'w')) {
-                $this->_die("Failed to open backup file $file for writing");
+                $this->doDie("Failed to open backup file $file for writing");
             }
         }    
         // do not cache backup queries
@@ -506,7 +506,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
             $id = mysql_list_fields($this->options['database'],
                     $table, $this->connection);
             if (empty($id)) {
-                $this->_die('Cannot get information about the table ' . $table . " (database " . $this->options['database'] . ") ");
+                $this->doDie('Cannot get information about the table ' . $table . " (database " . $this->options['database'] . ") ");
             }
         }
 
@@ -542,7 +542,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
         if (is_null($handle)) {
             echo $content;
         } else {
-            fwrite($handle, $content, strlen($content)) or $this->_die('<font color="red">Backup file write failed</font>');
+            fwrite($handle, $content, strlen($content)) or $this->doDie('<font color="red">Backup file write failed</font>');
         }
     } // }}}
 

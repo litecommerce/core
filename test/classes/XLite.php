@@ -126,7 +126,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
                 }
             }
         } else {
-            $this->_die('Unable to read/parse configuration file(s)');
+            $this->doDie('Unable to read/parse configuration file(s)');
         }
 
         return $options;
@@ -175,6 +175,14 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     }
     
 
+    /**
+     * Chec - is admin interface or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public static function isAdminZone()
     {
         return self::$adminZone;
@@ -362,9 +370,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Run application
      * 
-     * @param boolean $adminZone     Admin interface flag
-     * @param boolean $runController Run controller or not
-     * @param boolean $fromCMS       Call from CMS flag
+     * @param boolean $adminZone Admin interface flag
      *  
      * @return XLite_View_Abstract
      * @access public

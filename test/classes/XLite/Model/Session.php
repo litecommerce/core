@@ -248,7 +248,7 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
     function setID($id)
     {
 		if (!preg_match('/^[0-9a-fA-F]{31,32}$/', $id)) {
-			$this->_die('Session::setID(): Incorrect session ID has been detected: ' . $id);
+			$this->doDie('Session::setID(): Incorrect session ID has been detected: ' . $id);
 		}      
         $this->options["id"] = $id;
     }

@@ -631,12 +631,12 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         } elseif (is_readable($_POST["localfile"])) {
             $file = $_POST["localfile"];
         } else {
-            $this->_die("FAILED: data file unspecified");
+            $this->doDie("FAILED: data file unspecified");
         }
         // security check
         $name = $_FILES['userfile']['name'];
         if (strstr($name, '../') || strstr($name, '..\\')) {
-            $this->_die("ACCESS DENIED");
+            $this->doDie("ACCESS DENIED");
         }
         return $file;
     }

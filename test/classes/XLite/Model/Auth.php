@@ -593,7 +593,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         // check whether resource is valid (has getAccessLevel() method)
         if (!is_object($resource) || !method_exists($resource, "getAccessLevel"))
         {
-            $this->_die("Auth::isAuthorized(): Authorization failed: resource invalid");
+            $this->doDie("Auth::isAuthorized(): Authorization failed: resource invalid");
         }
         return $this->getComplex('profile.access_level') >= $resource->get("accessLevel");
     } // }}}
@@ -602,7 +602,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     function isValidAdminIP(&$resource, $checkOnly=false) // {{{
     {
         if (!is_object($resource)){
-            $this->_die("Auth::isValidAdminIP(): Validation Admin IP failed: resource invalid");
+            $this->doDie("Auth::isValidAdminIP(): Validation Admin IP failed: resource invalid");
         }
 
         $ip_v4_regexp_wildcard = "/^(25[0-5]|2[0-4][0-9]|\*|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|\*|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|\*|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|\*|[01]?[0-9][0-9]?)$/";

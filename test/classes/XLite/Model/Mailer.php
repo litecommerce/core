@@ -304,7 +304,7 @@ class XLite_Model_Mailer extends XLite_View_Abstract
 
    function mail() // {{{
     {
-        $this->_die("Mailer::mail() API is obsoleted");
+        $this->doDie("Mailer::mail() API is obsoleted");
     } // }}}
 }
 

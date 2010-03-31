@@ -156,7 +156,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
 			}
 			$col++;
 		}
-		$this->_die("File $this->file, line $line, col $col: $message");
+		$this->doDie("File $this->file, line $line, col $col: $message");
 	}
 	function isEos()
 	{
@@ -266,7 +266,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
 	{
         if ($this->offset<strlen($this->source) && substr($this->source, $this->offset, 1) == '<') {
             if (substr($this->source, $this->offset, 2) == '<?') {
-                $this->_die("&lt;?php&gt; tags are not allowed in templates");
+                $this->doDie("&lt;?php&gt; tags are not allowed in templates");
             }
         }
 		return false;

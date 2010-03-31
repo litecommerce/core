@@ -236,7 +236,7 @@ class XLite_Model_Abstract extends XLite_Base
             return false;
         }
         // die otherwise
-        $this->_die("Unable to update unspecified row for " . $this->alias);
+        $this->doDie("Unable to update unspecified row for " . $this->alias);
     } // }}}
 
     /**
@@ -267,7 +267,7 @@ class XLite_Model_Abstract extends XLite_Base
             return $result;
         }    
         // die otherwise
-        $this->_die("Unable to insert duplicate row for " . $this->alias . " " . join(',', $this->primaryKey));
+        $this->doDie("Unable to insert duplicate row for " . $this->alias . " " . join(',', $this->primaryKey));
     } // }}}
     
     /**
@@ -291,7 +291,7 @@ class XLite_Model_Abstract extends XLite_Base
             $new->create();
             return $new;
         } else {
-            $this->_die("Can't clone non-autoincremented object");
+            $this->doDie("Can't clone non-autoincremented object");
         }
     } // }}}
 
@@ -318,7 +318,7 @@ class XLite_Model_Abstract extends XLite_Base
             return;
         }
         // die otherwise
-        $this->_die("Unable to delete unspecified row from " . $this->alias);
+        $this->doDie("Unable to delete unspecified row from " . $this->alias);
     } // }}}
 
     /**
@@ -569,12 +569,12 @@ class XLite_Model_Abstract extends XLite_Base
 
     function _import(array $options) // {{{
     {
-        $this->_die("Base::_import() method should be overridden");
+        $this->doDie("Base::_import() method should be overridden");
     } // }}}
     
     function _export($layout, $delimiter) // {{{
     {
-        $this->_die("Base::_export() method should be overridden");
+        $this->doDie("Base::_export() method should be overridden");
     } // }}}
     
     function export($layout, $delimiter, $where = null, $orderby = null, $groupby = null) // {{{
@@ -893,7 +893,7 @@ class XLite_Model_Abstract extends XLite_Base
         }
 
         // die otherwise
-        $this->_die('Unable to read unspecified row for ' . $this->alias);
+        $this->doDie('Unable to read unspecified row for ' . $this->alias);
     }
 
     /**

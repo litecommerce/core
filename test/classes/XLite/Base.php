@@ -1,8 +1,41 @@
 <?php
+// vim: set ts=4 sw=4 sts=4 et:
 
+/**
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage Core
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
+
+/**
+ * Base class
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_Base
 {
-	/**
+    /**
      * Array of instances for all derived classes
      *
      * @var    array
@@ -12,48 +45,48 @@ class XLite_Base
      */
     protected static $instances = array();
 
-	/**
-	 * Singletons accessible directly from each object (see the "__get" method)
-	 * 
-	 * @var    array
-	 * @access protected
-	 * @since  3.0
-	 */
-	protected static $singletons = array(
+    /**
+     * Singletons accessible directly from each object (see the "__get" method)
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0
+     */
+    protected static $singletons = array(
         'xlite'    => 'XLite',
         'auth'     => 'XLite_Model_Auth',
         'session'  => 'XLite_Model_Session',
         'db'       => 'XLite_Model_Database',
         'logger'   => 'XLite_Logger',
-		'config'   => 'XLite_Model_Config',
-		'profiler' => 'XLite_Model_Profiler',
-		'mm'       => 'XLite_Model_ModulesManager',
-		'layout'   => 'XLite_Model_Layout',
+        'config'   => 'XLite_Model_Config',
+        'profiler' => 'XLite_Model_Profiler',
+        'mm'       => 'XLite_Model_ModulesManager',
+        'layout'   => 'XLite_Model_Layout',
     );
 
-	/**
-	 * Stop script execution 
-	 * 
-	 * @param string $message text to display
-	 *  
-	 * @return void
-	 * @access protected
-	 * @since  3.0
-	 */
-	protected function _die($message)
-	{
-		// TODO - add logging
+    /**
+     * Stop script execution 
+     * 
+     * @param string $message text to display
+     *  
+     * @return void
+     * @access protected
+     * @since  3.0
+     */
+    protected function doDie($message)
+    {
+        // TODO - add logging
 
-		debug_print_backtrace();
+        debug_print_backtrace();
 
-		die ($message);
-	}
+        die ($message);
+    }
 
-	/**
+    /**
      * Return pointer to the single instance of current class
      *
-	 * @param string $className name of derived class
-	 *
+     * @param string $className name of derived class
+     *
      * @return XLite_Base_Singleton
      * @access protected
      * @see    ____func_see____
@@ -69,34 +102,37 @@ class XLite_Base
         return self::$instances[$className];
     }
 
-	/**
-	 * "Magic" getter. It's called when object property is not found
-	 * FIXME - backward compatibility
-	 * 
-	 * @param string $name property name
-	 *  
-	 * @return mixed
-	 * @access public
-	 * @since  3.0
-	 */
-	public function __get($name)
-	{
-		return isset(self::$singletons[$name]) ? call_user_func(array(self::$singletons[$name], 'getInstance')) : null;
-	}
-
-	/**
-	 * "Magic" caller. It's called when object method is not found
-	 * 
-	 * @param string $method method to call
-	 * @param array  $args   call arrguments
-	 *  
-	 * @return void
-	 * @access public
-	 * @since  3.0
-	 */
-	public function __call($method, array $args = array())
+    /**
+     * "Magic" getter. It's called when object property is not found
+     * FIXME - backward compatibility
+     * 
+     * @param string $name property name
+     *  
+     * @return mixed
+     * @access public
+     * @since  3.0
+     */
+    public function __get($name)
     {
-        $this->_die('Trying to call undefined class method; class - "' . get_class($this) . '", function - "' . $method . '"');
+        return isset(self::$singletons[$name]) ? call_user_func(array(self::$singletons[$name], 'getInstance')) : null;
+    }
+
+    /**
+     * "Magic" caller. It's called when object method is not found
+     * 
+     * @param string $method method to call
+     * @param array  $args   call arrguments
+     *  
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function __call($method, array $args = array())
+    {
+        $this->doDie(
+            'Trying to call undefined class method;'
+            . ' class - "' . get_class($this) . '", function - "' . $method . '"'
+        );
     }
 
     /**
@@ -112,7 +148,7 @@ class XLite_Base
     {
         // FIXME - devcode; must be removed
         if (strpos($name, '.')) {
-            $this->_die(get_class($this) . ': method get() - invalid name passed ("' . $name . '")');
+            $this->doDie(get_class($this) . ': method get() - invalid name passed ("' . $name . '")');
         }
 
         if (method_exists($this, 'get' . $name)) {
@@ -128,17 +164,17 @@ class XLite_Base
         return $this->$name;
     }
 
-	/**
-	 * Set object property 
-	 * 
-	 * @param string $name  property name
-	 * @param mixed  $value property value
-	 *  
-	 * @return void
-	 * @access public
-	 * @since  3.0
-	 */
-	public function set($name, $value)
+    /**
+     * Set object property 
+     * 
+     * @param string $name  property name
+     * @param mixed  $value property value
+     *  
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function set($name, $value)
     {
         if (method_exists($this, 'set' . $name)) {
             $func = 'set' . $name;
@@ -161,77 +197,77 @@ class XLite_Base
         return (bool) $this->get($name);
     }
 
-	/**
-	 * Backward compatibility - the ability to use "<arg_1> . <arg_2> . ... . <arg_N>" chains in getters
-	 * 
-	 * @param string $name list of params delimeted by the "." (dot)
-	 *  
-	 * @return mixed
-	 * @access public
-	 * @since  3.0
-	 */
-	public function getComplex($name)
-	{
-		$obj = $this;
+    /**
+     * Backward compatibility - the ability to use "<arg_1> . <arg_2> . ... . <arg_N>" chains in getters
+     * 
+     * @param string $name list of params delimeted by the "." (dot)
+     *  
+     * @return mixed
+     * @access public
+     * @since  3.0
+     */
+    public function getComplex($name)
+    {
+        $obj = $this;
 
-		foreach (explode('.', $name) as $part) {
+        foreach (explode('.', $name) as $part) {
             if (is_object($obj)) {
-				if ($obj instanceof stdClass) {
-                	$obj = isset($obj->$part) ? $obj->$part : null;
+                if ($obj instanceof stdClass) {
+                    $obj = isset($obj->$part) ? $obj->$part : null;
 
-				} else {
-					$obj = $obj->get($part);
-				}
+                } else {
+                    $obj = $obj->get($part);
+                }
 
             } elseif (is_array($obj)) {
                 $obj = isset($obj[$part]) ? $obj[$part] : null;
             }
 
-			if (is_null($obj)) {
-				break;
-			}
-		}
+            if (is_null($obj)) {
+                break;
+            }
+        }
 
-		return $obj;
-	}
-
-	/**
-	 * Backward compatibility - the ability to use "<arg_1> . <arg_2> . ... . <arg_N>" chains in setters 
-	 * 
-	 * @param string $name  list of params delimeted by the "." (dot)
-	 * @param mixed  $value value to set_
-	 *  
-	 * @return void
-	 * @access public
-	 * @since  3.0
-	 */
-	public function setComplex($name, $value)
-    {
-		$obj   = $this;
-		$names = explode('.', $name);
-		$last  = array_pop($names);
-
-		foreach ($names as $part) {
-
-			if (is_array($obj)) {
-				$obj = $obj[$part];
-			} else {
-				$prevObj = $obj;
-                $prevVal = $obj = $obj->get($prevProp = $part);
-			}
-       
-			if (is_null($obj)) return;
-		}
-
-		if (is_array($obj)) {
-			$obj[$last] = $value;
-			$prevObj->set($prevProp, $prevVal);
-		} else {
-			$obj->set($last, $value);
-		}
+        return $obj;
     }
 
-	/**
+    /**
+     * Backward compatibility - the ability to use "<arg_1> . <arg_2> . ... . <arg_N>" chains in setters 
+     * 
+     * @param string $name  list of params delimeted by the "." (dot)
+     * @param mixed  $value value to set_
+     *  
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function setComplex($name, $value)
+    {
+        $obj   = $this;
+        $names = explode('.', $name);
+        $last  = array_pop($names);
+
+        foreach ($names as $part) {
+
+            if (is_array($obj)) {
+                $obj = $obj[$part];
+            } else {
+                $prevObj = $obj;
+                $prevVal = $obj = $obj->get($prevProp = $part);
+            }
+       
+            if (is_null($obj)) return;
+        }
+
+        if (is_array($obj)) {
+            $obj[$last] = $value;
+            $prevObj->set($prevProp, $prevVal);
+        } else {
+            $obj->set($last, $value);
+        }
+    }
+
+    /**
      * Backward compatibility - the ability to use "<arg_1> . <arg_2> . ... . <arg_N>" chains in getters
      *
      * @param string $name list of params delimeted by the "." (dot)
@@ -240,7 +276,7 @@ class XLite_Base
      * @access public
      * @since  3.0
      */
-	public function isComplex($name)
+    public function isComplex($name)
     {
         return (bool) $this->getComplex($name);
     }

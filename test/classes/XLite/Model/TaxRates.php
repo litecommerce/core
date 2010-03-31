@@ -826,7 +826,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
             if (is_array($node)) {
                 if (!isset($node["action"])) {
                     print_r($tree);
-                    $this->_die("Must contain 'action' key");
+                    $this->doDie("Must contain 'action' key");
                 }
                 $action = $node["action"];
                 if (is_array($action)) {

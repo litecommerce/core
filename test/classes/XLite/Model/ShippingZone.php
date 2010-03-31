@@ -102,17 +102,17 @@ class XLite_Model_ShippingZone extends XLite_Model_Abstract
 
     function find($where, $order = null)
     {
-        $this->_die("find() not applicable on ShippingZone");
+        $this->doDie("find() not applicable on ShippingZone");
     }
 
     function update()
     {
-        $this->_die("update() not applicable on ShippingZone");
+        $this->doDie("update() not applicable on ShippingZone");
     }
 
     function delete()
     {
-        $this->_die("Not implemented");    
+        $this->doDie("Not implemented");    
     }
 
     function create()

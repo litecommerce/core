@@ -57,11 +57,11 @@ class XLite_Controller_Customer_Callback extends XLite_Controller_Customer_Abstr
             $order_id_name = "order_id";
         }
         if (!isset($_REQUEST[$order_id_name])) {
-            $this->_die("The order ID variable '$order_id_name' is not found in request");
+            $this->doDie("The order ID variable '$order_id_name' is not found in request");
         }
         $cart = new XLite_Model_Order($_REQUEST[$order_id_name]);
         if (!$cart->is("exists")) {
-            $this->_die("Order #".$cart->get("order_id")." was not found. Please contact administrator.");
+            $this->doDie("Order #".$cart->get("order_id")." was not found. Please contact administrator.");
         }
 
 		// FIXME - orginal code; the "handleRequest" function is not exists for the "PaymentMethod" class

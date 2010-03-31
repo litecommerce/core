@@ -81,7 +81,7 @@ class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controll
             ob_clean();
 
             $ufile = "var/tmp/".$fname;
-            $this->fp = fopen($ufile, "wb") or $this->_die("FAILED: write failed for $ufile");
+            $this->fp = fopen($ufile, "wb") or $this->doDie("FAILED: write failed for $ufile");
             ob_start(array($this, 'outputHandler'));
         }
         $p = new XLite_Model_Product();
@@ -124,23 +124,23 @@ class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controll
 
     function upload($fname)
     {
-        $this->hasFTP() or $this->_die("FAILED: FTP extension not found!");
+        $this->hasFTP() or $this->doDie("FAILED: FTP extension not found!");
         func_flush();
         // save buffered content to upload file
         $ufile = "var/tmp/".$fname;
         $fp = fopen($ufile, "rb");
         $froogle_host = $this->getComplex('config.Froogle.froogle_host');
         print "Connecting to Froogle host ".$froogle_host." .. ";
-        $ftp = ftp_connect($froogle_host) or $this->_die("FAILED: unable to connect to $froogle_host");
+        $ftp = ftp_connect($froogle_host) or $this->doDie("FAILED: unable to connect to $froogle_host");
         print "[OK]<br>";
         print "Logging in .. ";
-        ftp_login($ftp, $this->getComplex('config.Froogle.froogle_username'), $this->getComplex('config.Froogle.froogle_password')) or $this->_die("FAILED: invalid login/password");
+        ftp_login($ftp, $this->getComplex('config.Froogle.froogle_username'), $this->getComplex('config.Froogle.froogle_password')) or $this->doDie("FAILED: invalid login/password");
         print "[OK]<br>";
         print "Uploading file $fname .. ";
-        ftp_fput($ftp, $fname, $fp, FTP_BINARY) or $this->_die("FAILED: unable to upload file");
+        ftp_fput($ftp, $fname, $fp, FTP_BINARY) or $this->doDie("FAILED: unable to upload file");
         print "[OK]<br>";
         ftp_quit($ftp);
-        $this->_die("FINISHED<BR>");
+        $this->doDie("FINISHED<BR>");
     }
 
     function hasFTP()
