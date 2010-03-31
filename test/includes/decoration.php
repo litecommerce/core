@@ -314,7 +314,7 @@ class Decorator
             $body = "\n";
             if (!empty($info[self::INFO_IS_SINGLETON])) {
                 $body .= "\t" . 'public static function getInstance()' . "\n"
-                         . "\t" . '{' . "\n\t\t" . 'return self::_getInstance(__CLASS__);' . "\n\t" . '}' . "\n";
+                         . "\t" . '{' . "\n\t\t" . 'return self::getInternalInstance(__CLASS__);' . "\n\t" . '}' . "\n";
             }
 
             // Top level class in decorator chain - has an empty body
