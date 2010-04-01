@@ -122,23 +122,17 @@ function SaveFilters()
       <td>&nbsp;</td>
     </tr>  
 
-    <tr IF="prices">
+    <tr>
       <td>Price:</td>
       <td colspan="4">
-        <select id="search_price" name="search[price]" size="1">
-          <option value="">Select range</option>
-          <option FOREACH="prices,v" value="{v.start:h},{v.end:h}" selected="{isSelected(search.price,strcat(v.start,v.end,#,#))}">{if:v.label}{v.label:h}{else:}&nbsp;&nbsp;&nbsp;{price_format(v.start:h)}{if:v.end:h}-{price_format(v.end:h)}{else:} ++{end:}{end:}</option>
-        </select>
+        <input type="text" class="start" name="search[start_price]" value="{search.start_price}" />&ndash;<input type="text" class="end" name="search[end_price]" value="{search.end_price}" />
       </td>
     </tr> 
 
-    <tr If="weights">
+    <tr>
       <td>Weight:</td>
       <td colspan="4">
-        <select id="search_weight" name="search[weight]" size="1">
-          <option value="">Select range</option>
-          <option FOREACH="weights,v" value="{v.start:h},{v.end:h}" selected="{isSelected(search.weight,strcat(v.start,v.end,#,#))}">{if:v.label}{v.label:h}{else:}{v.start:h}({config.General.weight_symbol:h}){if:v.end:h}-{v.end:h}({config.General.weight_symbol:h}){else:} ++{end:}{end:}</option>
-        </select>
+        <input type="text" class="start" name="search[start_weight]" value="{search.start_weight}" />&ndash;<input type="text" class="end" name="search[end_weight]" value="{search.end_weight}" />
       </td>
     </tr>
 

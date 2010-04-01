@@ -86,7 +86,7 @@ class XLite_Module_AdvancedSearch_Main extends XLite_Module_Abstract
      */
     public static function showSettingsForm()
     {
-        return true;
+        return false;
     }	
 
     /**

@@ -87,23 +87,17 @@
       <td colspan="2"><input type="text" name="search[sku]" value="{search.sku}" /></td>
     </tr>  
 
-    <tr IF="getPrices()">
-      <td class="row-title">Price:</td>
+    <tr class="price">
+      <td class="row-title">Price, $ (range):</td>
       <td colspan="2">
-        <select id="search_price" name="search[price]">
-          <option value="">Select range</option>
-          <option FOREACH="getPrices(),v" value="{v.start:h},{v.end:h}" selected="{isRangeSelected(search.price,v)}">{preparePriceOption(v)}</option>
-        </select>
+        <input type="text" class="start" name="search[start_price]" value="{search.start_price}" />&ndash;<input type="text" class="end" name="search[end_price]" value="{search.end_price}" />
       </td>
     </tr> 
 
-    <tr IF="getWeights()">
-      <td class="row-title">Weight:</td>
+    <tr class="weight">
+      <td class="row-title">Weight, {config.General.weight_symbol} (range):</td>
       <td colspan="2">
-        <select id="search_weight" name="search[weight]">
-          <option value="">Select range</option>
-          <option FOREACH="getWeights(),v" value="{v.start:h},{v.end:h}" selected="{isRangeSelected(search.weight,v)}">{prepareWeightOption(v)}</option>
-        </select>
+        <input type="text" class="start" name="search[start_weight]" value="{search.start_weight}" />&ndash;<input type="text" class="end" name="search[end_weight]" value="{search.end_weight}" />
       </td>
     </tr>
 

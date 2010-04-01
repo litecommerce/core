@@ -116,24 +116,6 @@ class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
     }
 
     /**
-     * getSortedList 
-     * 
-     * @param string $param config param
-     *  
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getSortedList($param)
-    {
-        $list = unserialize($this->config->AdvancedSearch->$param);
-        usort($list, array($this, 'getSortOrderCallback'));
-
-        return $list;
-    }
-
-
-    /**
      * Get a list of JavaScript files required to display the widget properly
      *
      * @return array
@@ -147,32 +129,6 @@ class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
         $list[] = 'modules/AdvancedSearch/advanced_search.js';
 
         return $list;
-    }
-
-    /**
-     * Get prices
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPrices()
-    {
-        return $this->getSortedList('prices');
-    }
-
-    /**
-     * Get weights
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getWeights()
-    {
-        return $this->getSortedList('weights');
     }
 
     /**
@@ -192,31 +148,6 @@ class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
     }
 
     /**
-     * Get sort order for prices / weights list (Callback)
-     * 
-     * @param array $val1 First record
-     * @param array $val2 Second record
-     *  
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getSortOrderCallback($val1, $val2)
-    {
-        $result = 0;
-
-        if ($val1['start'] != $val2['start']) {
-            $result = ($val1['start'] < $val2['start']) ? -1 : 1;
-
-        } elseif ($val1['label'] != $val2['label']) {
-            $result = ($val1['label'] > $val2['label']) ? -1 : 1;
-        }
-
-        return $result;
-    }
-
-    /**
      * String special concationation
      *
      * @param srting $val1      String 1
@@ -230,64 +161,6 @@ class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
     function strcat($val1, $val2, $delimeter)
     {
         return $val1 . $delimeter . $val2;
-    }
-
-    /**
-     * Prepare price option
-     *
-     * @param array $option Price range data
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function preparePriceOption($option)
-    {
-        if ($option['label']) {
-            $string = $option['label'];
-
-        } else {
-            $string = '&nbsp;&nbsp;&nbsp;' . $this->price_format($option['start']);
-
-            if ($option['end']) {
-                $string .= '-' . $this->price_format($option['end']);
-
-            } else {
-                $string .= ' ++';
-            }
-        }
-
-        return $string;
-    }
-
-    /**
-     * Prepare weight option
-     *
-     * @param array $option Weight range data
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function prepareWeightOption($option)
-    {
-        if ($option['label']) {
-            $string = $option['label'];
-
-        } else {
-            $string = $option['start'] . '(' . $this->config->General->weight_symbol . ')';
-
-            if ($option['end']) {
-                $string .= '-' . $option['end'] . '(' . $this->config->General->weight_symbol . ')';
-
-            } else {
-                $string .= ' ++';
-            }
-        }
-
-        return $string;
     }
 }
 
