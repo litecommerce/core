@@ -1,90 +1,114 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* Class description.
-*
-* @package Module_ProductOptions
-* @version $Id$
-*/
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage View
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
+
+
+/**
+ * Category selector
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_Module_ProductOptions_Validator_RequiredValidator extends XLite_Validator_Abstract
 {	
-    public $template = "common/required_validator.tpl";
+	const PARAM_OPTION_ID   = 'option_id';
+	const PARAM_FIELD_NAME  = 'field';
+	const PARAM_ACTION = 'action';
 
-    public function __construct()
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
     {
-    	parent::__construct();
-    	$this->params[] = "option_id";
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+			self::PARAM_OPTION_ID   => new XLite_Model_WidgetParam_Int('Option Id', null),
+			self::PARAM_FIELD_NAME  => new XLite_Model_WidgetParam_String('Field', null),
+			self::PARAM_ACTION => new XLite_Model_WidgetParam_String('Action', null)
+		);
+
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/required_validator.tpl');
     }
-    
-    function isValid()
-    {
-        if (!parent::isValid()) {
-            return false;
-        }
 
-		$fieldName = $this->get("field");
-		if (strpos($fieldName, "[") !== false) {
-			$fieldName = explode("[", $fieldName, 2);
-			if (substr($fieldName[1], 0, 1) == "]") {
-				$fieldName[1] = $this->get("option_id") . $fieldName[1];
+    /**
+     * isValid 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isValid()
+	{
+		$result = false;
+
+        if (parent::isValid()) {
+
+			$fieldName = $this->getParam(self::PARAM_FIELD_NAME);
+
+			if (strpos($fieldName, '[') !== false) {
+				$fieldName = explode('[', $fieldName, 2);
+
+				if (substr($fieldName[1], 0, 1) == ']') {
+					$fieldName[1] = $this->getParam(self::PARAM_OPTION_ID) . $fieldName[1];
+				}
+
+				$fieldName[1] = '[' . $fieldName[1];
+				@eval('$fieldData = $_POST[' . $fieldName[0] . ']'. $fieldName[1] . ';');
+				$result = !empty($fieldData) || !isset($fieldData);
+
+			} else {
+	        	$result = !empty(XLite_Core_Request::getInstance()->$fieldName) || !isset(XLite_Core_Request::getInstance()->$fieldName);
+    	    }
+
+			if (!$result) {
+
+                if (
+                     ( isset(XLite_Core_Request::getInstance()->action)
+                      && $this->getParam(self::PARAM_ACTION) != XLite_Core_Request::getInstance()->action )
+                     || 
+                     ( isset(XLite_Core_Request::getInstance()->action)
+                       && $this->getParam(self::PARAM_ACTION) == "update_product_option"
+                       && isset(XLite_Core_Request::getInstance()->option_id)
+                       && $this->getParam(self::PARAM_OPTION_ID) != XLite_Core_Request::getInstance()->option_id )
+                    ) {
+	            	$result = true;
+	        	}
 			}
-			$fieldName[1] = "[" . $fieldName[1];
-			@eval("\$fieldData = \$_POST[".$fieldName[0]."]".$fieldName[1].";");
-    		$result = !empty($fieldData) || !isset($fieldData);
-		} else {
-        	$result = !empty($_POST[$fieldName]) || !isset($_POST[$fieldName]);
-        }
-
-        if (!$result) {
-        	if (isset($_POST["action"]) && $this->get("action") != $_POST["action"]) {
-            	return true;
-        	}
-        	if (isset($_POST["action"]) && $this->get("action") == "update_product_option" && isset($_POST["option_id"]) && $this->get("option_id") != $_POST["option_id"]) {
-            	return true;
-        	}
 		}
+
         return $result;
     }
 
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
+

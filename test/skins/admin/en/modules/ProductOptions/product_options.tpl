@@ -1,157 +1,232 @@
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * Product options management template
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
+
 <span IF="product.hasOptions()&xlite.mm.activeModules.WholesaleTrading">
-<form action="admin.php" method="POST" name="expansion_form">
-<input FOREACH="allparams,name,val" type="hidden" name="{name}" value="{val}"/>
-<input type="hidden" name="action" value="update_limit">
-<table>
-	<tr>
-		<td>Display product options as a list of variants on the product details page:<br>(requires WholesaleTrading module functionality enabled)</td>
-		<td><input type="checkbox" name="expansion_limit" checked="{product.expansion_limit}"></td>
-	<tr>	
-	<tr>
-		<td colspan="2"><input type="submit" value=" Update "></td>
-	</tr>
-</table>
-</form>
+
+  <form action="admin.php" method="POST" name="expansion_form">
+
+    <input FOREACH="allparams,name,val" type="hidden" name="{name}" value="{val}" />
+    <input type="hidden" name="action" value="update_limit" />
+
+    <table>
+
+      <tr>
+        <td>
+          Display product options as a list of variants on the product details page: <br />
+          (requires WholesaleTrading module functionality enabled)
+        </td>
+        <td><input type="checkbox" name="expansion_limit" checked="{product.expansion_limit}" /></td>
+      </tr>
+
+      <tr>
+        <td colspan="2"><input type="submit" value=" Update "></td>
+      </tr>
+
+    </table>
+
+  </form>
+
 </span>
 
 <span IF="product.hasOptions()">
-<p>
-<widget module="ProductOptions" template="modules/ProductOptions/option_form_js.tpl">
-<table border=0 cellpadding=1 cellspacing=3>
-<!-- product options list -->
-<tr> <td colspan=4 class=AdminHead>Product options</td> </tr>
-<tr> <td colspan=4>&nbsp;</td> </tr>
-<tbody FOREACH="product.productOptions,idx,option">
-<form action="admin.php" method="POST" name="product_option_{option.option_id}">
-<input FOREACH="allparams,name,val" type="hidden" name="{name}" value="{val}"/>
-<input type="hidden" name="action" value="update_product_option">
-<input type="hidden" name="option_id" value="{option.option_id}">
-<tr>
-	<td class=TableHead colspan=3>
-		<table border=0 cellpadding=0>
-		<tr>
-            <td><a name="section_{option.option_id}"></a>Option class name:&nbsp;</td>
-            <td IF="!option.parent_option_id">
-            <input type=text name="optdata[optclass]" value="{option.optclass:r}" size=12>
-            <widget class="XLite_Module_ProductOptions_Validator_RequiredValidator" field="optdata[optclass]" action="update_product_option" option_id="{option.option_id}">
-			&nbsp;<span style="color: #606060">should be unique for easier stock management</span>
-            </td>
-            <td IF="option.parent_option_id">
-            <b>{option.optclass}</b><input type=hidden name="optdata[optclass]" value="{option.optclass:r}">
-			&nbsp;<span style="color: #606060">[GLOBAL]</span>
-            </td>
-		</tr>
-		</table>
-	</td>
-</tr>
-<tr>
-    <td class="TableRow">Option values</td>
-    <td class="TableRow">Option selection text</td>
-    <td class="TableRow">Pos.</td>
-</tr>
-<tr>
-    <td rowspan=3>
-    	<textarea cols=34 rows=5 name="optdata[options]">{option.options:r}</textarea>
-    </td>
-    <td valign=top>
-        <input type=text name="optdata[opttext]" value="{option.opttext:r}" size=34>
-    </td>
-    <td valign=top>
-		<input type=text name="optdata[orderby]" value="{option.orderby}" size=3>
-    </td>
-</tr>
-<tr>
-	<td class="TableRow">
-		<table border=0 cellpadding=0>
-		<tr>
-            <td>Option selector</td>
-        	<td class="TableRow" id="TextTRHead_{idx}" style="display: none">&nbsp;&nbsp;&nbsp;Size (symbols)</td>
-        	<td class="TableRow" id="TextareaTRHead_{idx}" style="display: none">&nbsp;&nbsp;&nbsp;Size (cols, rows)</td>
-		</tr>
-		</table>
-	</td>
-	<td>&nbsp;</td>
-</tr>
-<tr>
-	<td>
-		<table border=0 cellpadding=0>
-		<tr>
-            <td>
-            <select name="optdata[opttype]" id="opttype_{idx}" onChange="javascript: editSize(this.value, '_{idx}');">
-                <option value="Text" selected="option.opttype=#Text#">Text</option>
-                <option value="Textarea" selected="option.opttype=#Textarea#">Text Area</option>
-                <option value="SelectBox" selected="option.opttype=#SelectBox#">Select Box</option>
-                <option value="Radio button" selected="option.opttype=#Radio button#">Radio Button</option>
-            </select>
-            </td>
-        	<td id="TextTR_{idx}" style="display: none">
-        		<input type=text name="optdata[cols]" size=3 value="{option.cols}">
+
+  <widget module="ProductOptions" template="modules/ProductOptions/option_form_js.tpl" />
+
+  <table border=0 cellpadding=1 cellspacing=3>
+
+    <!-- product options list -->
+    <tr>
+      <td colspan=4 class=AdminHead>Product options</td>
+    </tr>
+
+  </table>
+
+  <br />
+
+  <form FOREACH="product.productOptions,idx,option" action="admin.php" method="POST" name="product_option_{option.option_id}">
+
+    <input FOREACH="allparams,name,val" type="hidden" name="{name}" value="{val}" />
+    <input type="hidden" name="action" value="update_product_option" />
+    <input type="hidden" name="option_id" value="{option.option_id}" />
+
+
+    <table border=0 cellpadding=1 cellspacing=3>
+
+      <tbody>
+
+        <tr>
+          <td class=TableHead colspan=3>
+
+            <table border=0 cellpadding=0>
+
+              <tr>
+                <td><a name="section_{option.option_id}"></a>Option class name:&nbsp;</td>
+                <td IF="!option.parent_option_id">
+                  <input type=text name="optdata[optclass]" value="{option.optclass:r}" size="12" />
+                  <widget class="XLite_Module_ProductOptions_Validator_RequiredValidator" field="optdata[optclass]" action="update_product_option" option_id="{option.option_id}">
+                  &nbsp;
+                  <span style="color: #606060">should be unique for easier stock management</span>
+                </td>
+                <td IF="option.parent_option_id">
+                  <b>{option.optclass}</b><input type=hidden name="optdata[optclass]" value="{option.optclass:r}">
+			            &nbsp;
+                  <span style="color: #606060">[GLOBAL]</span>
+                </td>
+              </tr>
+
+            </table>
+
+          </td>
+        </tr>
+
+        <tr>
+          <td class="TableRow">Option values</td>
+          <td class="TableRow">Option selection text</td>
+          <td class="TableRow">Pos.</td>
+        </tr>
+
+        <tr>
+          <td rowspan=3>
+          	<textarea cols=34 rows=5 name="optdata[options]">{option.options:r}</textarea>
+          </td>
+          <td valign=top>
+            <input type=text name="optdata[opttext]" value="{option.opttext:r}" size=34>
+          </td>
+          <td valign=top>
+        		<input type=text name="optdata[orderby]" value="{option.orderby}" size=3>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="TableRow">
+
+            <table border=0 cellpadding=0>
+
+              <tr>
+                <td>Option selector</td>
+              	<td class="TableRow" id="TextTRHead_{idx}" style="display: none">&nbsp;&nbsp;&nbsp;Size (symbols)</td>
+              	<td class="TableRow" id="TextareaTRHead_{idx}" style="display: none">&nbsp;&nbsp;&nbsp;Size (cols, rows)</td>
+              </tr>
+
+            </table>
+
+          </td>
+          <td>&nbsp;</td>
+        </tr>
+
+        <tr>
+          <td>
+
+            <table border=0 cellpadding=0>
+              <tr>
+                <td>
+                  <select name="optdata[opttype]" id="opttype_{idx}" onChange="javascript: editSize(this.value, '_{idx}');">
+                    <option value="Text" selected="option.opttype=#Text#">Text</option>
+                    <option value="Textarea" selected="option.opttype=#Textarea#">Text Area</option>
+                    <option value="SelectBox" selected="option.opttype=#SelectBox#">Select Box</option>
+                    <option value="Radio button" selected="option.opttype=#Radio button#">Radio Button</option>
+                  </select>
+                </td>
+               	<td id="TextTR_{idx}" style="display: none">
+              		<input type=text name="optdata[cols]" size=3 value="{option.cols}">
+              	</td>
+                <td id="TextareaTR_{idx}" style="display: none">
+                  <input type=text name="optdata[rows]" size=3 value="{option.rows}">
+                </td>
+          		</tr>
+
+        		</table>
+
+            <script language="Javascript">initEditSize("_{idx}");</script>
+
+          </td>
+          <td>&nbsp;</td>
+        </tr>
+
+        <tr>
+          <td colspan=2>
+            <input type="button" name="update" value="Update" onclick="document.product_option_{option.option_id}.action.value='update_product_option'; document.product_option_{option.option_id}.submit();" />
         	</td>
-            <td id="TextareaTR_{idx}" style="display: none">
-                <input type=text name="optdata[rows]" size=3 value="{option.rows}">
-            </td>
-		</tr>
-		</table>
-		<script language="Javascript">initEditSize("_{idx}");</script>
-	</td>
-	<td>&nbsp;</td>
-</tr>
-<tr>
-	<td colspan=2>
-        <input type="button" name="update" value="Update" onclick="document.product_option_{option.option_id}.action.value='update_product_option'; document.product_option_{option.option_id}.submit();">
-	</td>
-	<td align=right IF="option.parent_option_id">
-		<a href="admin.php?target=global_product_options"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle">Delete Global product option</a>
-	</td>
-	<td align=right IF="!option.parent_option_id">
-		<input type="button" name="delete" value="Delete" onClick="document.product_option_{option.option_id}.action.value='delete_product_option'; document.product_option_{option.option_id}.submit();">
-	</td>
-</tr>
-<tr>
-	<td colspan=3>
-        <hr>
-	</td>
-</tr>
-</form>
-</tbody>
-</table>
+        	<td align=right IF="option.parent_option_id">
+        		<a href="admin.php?target=global_product_options"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle">Delete Global product option</a>
+        	</td>
+        	<td align=right IF="!option.parent_option_id">
+        		<input type="button" name="delete" value="Delete" onClick="document.product_option_{option.option_id}.action.value='delete_product_option'; document.product_option_{option.option_id}.submit();" />
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan=3><hr /></td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </form>
+
 </span>
+
 <span IF="!product.hasOptions()">
-<table border=0 cellpadding=1 cellspacing=5>
-<tr>
-	<td class=AdminHead>Product options</td> 
-</tr>
-<tr>
-	<td>No product options defined.</td> 
-</tr>
-</table>
-<hr>
+
+  <table border=0 cellpadding=1 cellspacing=5>
+
+    <tr>
+    	<td class=AdminHead>Product options</td> 
+    </tr>
+
+    <tr>
+      <td>No product options defined.</td> 
+    </tr>
+
+  </table>
+
+<hr />
+
 </span>
 
-<table border=0 cellpadding=1 cellspacing=5>
 <!-- add product option form -->
-<tbody>
-<form action="admin.php" method="POST" name=add_option_form>
-<input FOREACH="allparams,name,val" type="hidden" name="{name}" value="{val}"/>
-<input type="hidden" name="action" value="add_product_option">
-<input type=hidden name="opttype" value="">
 
-<tr>
-    <td colspan=3><font class=AdminTitle>Add product option class</font></td>
-</tr>
+<form action="admin.php" method="POST" name="add_option_form">
 
-<widget module="ProductOptions" template="modules/ProductOptions/option_form.tpl" action="add_product_option">
+  <input FOREACH="allparams,name,val" type="hidden" name="{name}" value="{val}" />
+  <input type="hidden" name="action" value="add_product_option" />
+  <input type=hidden name="opttype" value="" />
 
-<tr>
-	<td colspan=3><br><input type="submit" name="add" value=" Add "></td>
-</tr>
+  <table border=0 cellpadding=1 cellspacing=5>
+
+    <tbody>
+
+      <tr>
+        <td colspan=3><font class=AdminTitle>Add product option class</font></td>
+      </tr>
+
+      <widget module="ProductOptions" template="modules/ProductOptions/option_form.tpl" action="add_product_option">
+
+      <tr>
+        <td colspan=3><br><input type="submit" name="add" value=" Add "></td>
+      </tr>
+
+    </tbody>
+
+  </table>
 
 </form>
-</tbody>
-</table>
 
 <table border=0 cellpadding=1 cellspacing=5>
+
 <tbody IF="product.hasOptions()">
+
 <tbody IF="!product.productOptionsNumber=#1#">
 <tr>
     <td colspan="4">&nbsp;</td>
@@ -181,9 +256,11 @@
 </tr>
 </form>
 </tbody>
+
 <tr>
     <td colspan=4>&nbsp;</td>
 </tr>
+
 </tbody>
 
 <tbody>

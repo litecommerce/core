@@ -77,8 +77,10 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
 					}
 
 		            if ($addSign) {
-						$rp->checkSafetyMode();
-						$products[$p_key] = $rp;
+                        $rp->checkSafetyMode();
+                        $_product = $relatedProducts[$p_key];
+                        $_product->set('product', $rp);
+                        $products[] = $_product;
 					}
 				}
 

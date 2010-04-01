@@ -105,7 +105,16 @@ class XLite_Module_ProductAdviser_View_RelatedProducts extends XLite_View_Produc
      */
     protected function getData()
     {
-        return $this->getProduct()->getRelatedProducts();
+        $products = array();
+        $relatedProducts = $this->getProduct()->getRelatedProducts();
+
+        if (is_array($relatedProducts)) {
+            foreach ($relatedProducts as $id => $product) {
+                $products[$id] = $product->get('product');
+            }
+        }
+
+        return $products;
     }
 
     /**

@@ -58,6 +58,13 @@ class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Control
 		}
 	}
 
+	public function getRelatedProducts($productId)
+	{
+		$product = new XLite_Module_ProductAdviser_Model_Product($productId);
+		$relatedProducts = $product->getRelatedProducts();
+		return $relatedProducts;
+	}
+
 	function getProducts()
 	{
 		if ($this->get("mode") != "search") {

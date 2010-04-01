@@ -57,10 +57,10 @@ class XLite_View_ImageUpload extends XLite_View_Abstract
         parent::defineWidgetParams();
 
 		$this->widgetParams += array(
-			self::PARAM_FIELD       => new XLite_Model_WidgetParam_String('Field', '', false),
-			self::PARAM_ACTION_NAME => new XLite_Model_WidgetParam_String('Action name', '', false),
-			self::PARAM_FORM_NAME   => new XLite_Model_WidgetParam_String('Form name', '', false),
-			self::PARAM_OBJECT      => new XLite_Model_WidgetParam_Object('Object', null, false),
+			self::PARAM_FIELD       => new XLite_Model_WidgetParam_String('Field', ''),
+			self::PARAM_ACTION_NAME => new XLite_Model_WidgetParam_String('Action name', ''),
+			self::PARAM_FORM_NAME   => new XLite_Model_WidgetParam_String('Form name', ''),
+			self::PARAM_OBJECT      => new XLite_Model_WidgetParam_Object('Object', null),
 		);
 
 		$this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/image_upload.tpl');
@@ -80,17 +80,21 @@ class XLite_View_ImageUpload extends XLite_View_Abstract
         $field = $this->getParam(self::PARAM_FIELD);
         $method = "has$field";
         $object = $this->getParam(self::PARAM_OBJECT);
+
+        $result = false;
+
         if (is_object($object) && method_exists($object, $method)) {
-            return $object->$method();
+            $result = $object->$method();
         }
-        return false;
+
+        return $result;
     }
 
     /**
      * Check if image is on file system 
      * 
      * @return void
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

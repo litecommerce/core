@@ -1,9 +1,23 @@
-{* SVN $Id$ *}
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * Detailed images management template
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
+
 <p class="ErrorMessage" IF="!product.detailedImages">There are no detailed images for this product</p>
 
 <br />
+
 <form IF="product.detailedImages" action="admin.php" name="images_form" method="POST">
-  <input FOREACH="allparams,name,val" type="hidden" name="{name}" value="{val}" />
+
+  <input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val}" />
   <input type="hidden" name="action" value="update_detailed_images" />
   <input type="hidden" name="image_id" value="" />
 
@@ -52,9 +66,11 @@
 <br />
 <br />
 <br />
+
 <form action="admin.php" method="POST" name="imageForm" enctype="multipart/form-data">
-  <input FOREACH="allparams,name,val" type="hidden" name="{name}" value="{val}"/>
-  <input type="hidden" name="action" value="add_detailed_image">
+
+  <input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val}" />
+  <input type="hidden" name="action" value="add_detailed_image" />
 
   <table cellspacing="3" cellpadding="0">
 
@@ -84,12 +100,12 @@
     <tr>	
     	<td valign="top">Image file:</td>
     	<td valign="middle">
-        <widget class="XLite_View_ImageUpload" field="image" actionName="add_detailed_image" formName="imageForm">
+        <widget class="XLite_View_ImageUpload" field="image" actionName="add_detailed_image" formName="imageForm" object="{product}" />
 	    </td>
     </tr>
 
     <tr>
-    	<td colspan="2"><input type="submit" value=" Add "></td>
+    	<td colspan="2"><input type="submit" value=" Add " /></td>
     </tr>	
 
   </table>

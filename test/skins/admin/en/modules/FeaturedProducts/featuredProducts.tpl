@@ -13,7 +13,7 @@
 
 <form action="admin.php" method="POST" IF="category.featuredProducts">
 
-  <input FOREACH="allparams,key,val" type="hidden" name="{key}" value="{val:r}" />
+  <input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}" />
   <input type="hidden" name="action" value="update_featured_products" />
 
   <table border=0 cellpadding=0 cellspacing=0 width="80%">
@@ -63,7 +63,7 @@
 
 <form action="admin.php" method="POST" IF="products">
 
-  <input FOREACH="allparams,key,val" type="hidden" name="{key}" value="{val:r}" />
+  <input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}" />
   <input type="hidden" name="action" value="add_featured_products" />
 
   <table border=0 cellpadding=0 cellspacing=0 width=400>
