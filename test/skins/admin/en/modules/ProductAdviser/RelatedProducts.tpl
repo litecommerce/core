@@ -62,7 +62,7 @@ function ProcessDelete()
 
 <table border=0 cellpadding=0 cellspacing=0 width="80%">
 <form action="admin.php" method="POST" name="related_product">
-<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
 <input type="hidden" name="action" value="update_related_products">
 <tr>
 	<td bgcolor=#dddddd>
@@ -163,7 +163,7 @@ function UncheckAllNew()
 </script>
 
 <form action="admin.php" method="POST">
-<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
 <input type="hidden" name="action" value="add_related_products">
 <tr>
 	<td bgcolor=#dddddd>

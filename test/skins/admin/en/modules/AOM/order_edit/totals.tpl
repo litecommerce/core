@@ -76,7 +76,7 @@
 </table>
 
 <form action="admin.php" method="POST" name="totals_form">
-<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
 <input type="hidden" name="action" value="update_totals">
 <input type="hidden" name="mode" value="totals">
 <table width="100%" cellpadding="2" cellspacing="2">

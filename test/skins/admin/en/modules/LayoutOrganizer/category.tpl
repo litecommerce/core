@@ -20,7 +20,7 @@ function visibleBox(id, status)
 <span IF="simpleScheme">
 <table border=0 cellpadding="0" cellspacing="0">
 <form action="admin.php" method=POST name="modify_form">
-<input type="hidden" FOREACH="allparams,param,v" name="{param}" value="{v}" />
+<input type="hidden" FOREACH="allparams,_name,_val" name="{_name}" value="{_val}" />
 <input type=hidden name=action value=modify_templates>
 <input type="hidden" name="mode" value="{mode}">
 <input type="hidden" name="category_id" value="{category_id}">
@@ -70,7 +70,7 @@ function visibleBox(id, status)
 <span IF="!simpleScheme">
 <table border=0 cellpadding="0" cellspacing="0">
 <form action="admin.php" method=POST name="modify_form">
-<input type="hidden" FOREACH="allparams,param,v" name="{param}" value="{v}" />
+<input type="hidden" FOREACH="allparams,_name,_val" name="{_name}" value="{_val}" />
 <input type=hidden name=action value=modify_templates>
 <input type="hidden" name="mode" value="{mode}">
 <input type="hidden" name="category_id" value="{category_id}">

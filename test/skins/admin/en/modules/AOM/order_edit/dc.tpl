@@ -1,5 +1,5 @@
 <form action="admin.php" name="del_dc_form" method="POST">
-<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
 <input type="hidden" name="action" value="del_dc">
 <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
     <tr>
@@ -40,7 +40,7 @@
 {end:}
 
 <form action="admin.php" name="dc_form" method="POST">
-<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
 <input type="hidden" name="mode" value="search_dc">
 <table cellpadding="0" cellspacing="3">
 <tr>
@@ -56,7 +56,7 @@
 <span IF="discountCoupons">
     <widget class="XLite_View_Pager" data="{discountCoupons}" name="pager">
     <form action="admin.php" method="POST" name="add_dc_form">
-    <input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+    <input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
     <input type="hidden" name="mode" value="dc">
     <input type="hidden" name="action" value="add_dc">
 <table cellpadding="0" cellspacing="3">

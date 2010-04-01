@@ -271,10 +271,10 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
 		}
 	}
 	
-	function __clone()
+	function cloneObject()
 	{	
 		$this->xlite->set("ITisCloneProduct", true);
-		$p = parent::__clone();
+		$p = parent::cloneObject();
 
 		$p->set("tracking", 0);
 		$p->update(); 

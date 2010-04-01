@@ -26,7 +26,7 @@
 <widget class="XLite_View_Pager" data="{products}" name="pager" itemsPerPage="{xlite.config.General.products_per_page_admin}">
 <br>
 <form name="aom_products_form" action="admin.php" method="POST">
-<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
 <input type="hidden" name="action" value="add_products">
 <input type="hidden" name="mode" value="products">
 <table border="0" cellpadding="0" cellspacing="3" width="100%">

@@ -6,7 +6,7 @@ This page allows you to import wholesale pricing from CSV file.<hr>
 
 <p>
 <form action="admin.php" method=POST name=data_form enctype="multipart/form-data" >
-<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
 <input type="hidden" name="action" value="import_wholesale_pricing">
 
 <table border=0>

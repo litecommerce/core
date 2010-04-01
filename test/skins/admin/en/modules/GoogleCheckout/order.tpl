@@ -127,7 +127,7 @@ function submitAction(form, action)
 {if:googleAllowCharge}
 {* Charge order *}
 <form action="admin.php" method="POST" name="charge_form">
-<input FOREACH="allParams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allParams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
 <input type="hidden" name="action" value="">
 
 <table border=0 cellpadding=3 cellspacing=2 width="100%">
@@ -162,7 +162,7 @@ function submitAction(form, action)
 
 {* Refund order *}
 <form action="admin.php" method="POST" name="refund_cancel_form">
-<input FOREACH="allParams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allParams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
 <input type="hidden" name="action" value="">
 
 <table border=0 cellpadding=3 cellspacing=2 width="100%">
@@ -257,7 +257,7 @@ function submitAction(form, action)
 
 {* Fulfillment commands *}
 <form action="admin.php" method="POST" name="fulfillment_form">
-<input FOREACH="allParams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allParams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
 <input type="hidden" name="action" value="">
 
 <table border=0 cellpadding=3 cellspacing=2 width="100%">
@@ -311,7 +311,7 @@ function submitAction(form, action)
 
 {* Send message *}
 <form action="admin.php" method="POST" name="message_form">
-<input FOREACH="allParams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allParams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
 <input type="hidden" name="action" value="">
 
 <table border=0 cellpadding=3 cellspacing=2 width="100%">
@@ -347,7 +347,7 @@ function submitAction(form, action)
 {* Archiving commands *}
 {if:googleAllowAcrhive}
 <form action="admin.php" method="POST" name="archive_form">
-<input FOREACH="allParams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allParams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
 <input type="hidden" name="action" value="">
 
 <table border=0 cellpadding=3 cellspacing=2 width="100%">

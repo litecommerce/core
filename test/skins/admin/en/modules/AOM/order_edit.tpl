@@ -122,7 +122,7 @@
 	}
 </script>
 <form name="order_form" action="admin.php" method="POST">
-<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
 <input type="hidden" name="action" value="clone_order">
 </form>
 						

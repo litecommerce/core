@@ -111,7 +111,7 @@ function switchToSimpleMode()
 <table border=0 cellpadding="3" cellspacing="2">
 <form action="admin.php" method=POST name="modify_form">
 <input type=hidden name=action value="fc_update">
-<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
 <input type="hidden" name="modified_scheme_id" value="">
 	<tr class="TableHead">
     	<td>#</td>
@@ -172,7 +172,7 @@ function switchToSimpleMode()
 <hr>
 <table border="0">
 <form action="admin.php" method=POST name="templates_form">
-<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
 <input type=hidden name=action value="fc_update_templates">
 <input type="hidden" name="scheme_id" value="{currentScheme.scheme_id}">
 	<tr>
@@ -218,7 +218,7 @@ function switchToSimpleMode()
 
 {if:xlite.session.fc_expert_mode}
 <form action="admin.php" method=POST name="options_form">
-<input FOREACH="getallparams(##),param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="getallparams(##),_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
 <input type=hidden name=action value="fc_update_templates">
 <input type="hidden" name="scheme_id" value="{currentScheme.scheme_id}">
 <input type="hidden" name="keyname" value="">

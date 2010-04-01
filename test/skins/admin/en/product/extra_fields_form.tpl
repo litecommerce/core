@@ -59,7 +59,7 @@ Use this section to define additional {if:target=#extra_fields#}global {end:}pro
 <p align=justify><b>Note: </b>It is strongly recommended that you do not use duplicate names for {if:target=#extra_fields#}global {end:}product extra fields.</p> 
 
 <form IF="extraFields" action="admin.php" method=POST name="extra_fields_form">
-<input type="hidden" foreach="allparams,param,v" name="{param}" value="{v}" />
+<input type="hidden" foreach="allparams,_name,_val" name="{_name}" value="{_val}" />
 <input type=hidden name=action value=update_fields>
 <input type=hidden name=delete id="delete_field" value="">
 
@@ -138,7 +138,7 @@ Use this section to define additional {if:target=#extra_fields#}global {end:}pro
 <br>
 
 <form action="admin.php" method=POST>
-<input type="hidden" foreach="allparams,param,v" name="{param}" value="{v}" />
+<input type="hidden" foreach="allparams,_name,_val" name="{_name}" value="{_val}" />
 <input type=hidden name=action value=add_field>
 
 <table border=0 cellpadding=3 cellspacing=1>

@@ -1,6 +1,6 @@
 
 <form action="admin.php" method=POST name=add_modify_form enctype="multipart/form-data">
-<input type="hidden" foreach="allparams,param,v" name="{param}" value="{v}"/>
+<input type="hidden" foreach="allparams,_name,_val" name="{_name}" value="{_val}"/>
 <input IF="mode=#add#" type=hidden name=action value="save_banner"/>
 <input IF="mode=#modify#" type=hidden name=action value="update_banner"/>
 

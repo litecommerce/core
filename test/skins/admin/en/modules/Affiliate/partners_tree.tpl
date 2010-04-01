@@ -2,7 +2,7 @@
 <br>
 
 <form action="admin.php" method=GET>
-<input type="hidden" foreach="allparams,param,v" name="{param}" value="{v}"/>
+<input type="hidden" foreach="allparams,_name,_val" name="{_name}" value="{_val}"/>
 
 <table border=0 cellpadding=3 cellspacing=2>
 <tr valign=top>

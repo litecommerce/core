@@ -27,7 +27,7 @@ function OnLoadLicense()
     <td>
         <br>
         <form action="admin.php" method="post" name="agree_frm">
-        <input FOREACH="allParams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+        <input FOREACH="allParams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
         <input type="hidden" name="action" value="next">
         <input type="hidden" name="confirmed" id="confirmedLicense" value="N">
         </form>

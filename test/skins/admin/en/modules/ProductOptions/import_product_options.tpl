@@ -6,7 +6,7 @@ This page allows you to import product options from CSV file.<hr>
     <font class="ErrorMessage">&gt;&gt; Error occured &lt;&lt;<br></font>
 </p>
 <form action="admin.php" method=POST name=data_form enctype="multipart/form-data" >
-<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
 <input type="hidden" name="action" value="import_product_options">
 
 <table border=0>

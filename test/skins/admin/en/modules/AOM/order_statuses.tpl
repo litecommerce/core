@@ -111,7 +111,7 @@
 	}
 </script>
 <form action="admin.php" method="POST" name="update_status_form">
-<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
 <input type="hidden" name="action" value="update">
 <table width="80%" cellpadding="0" cellspacing="0" border="0">
     <tr>
@@ -267,7 +267,7 @@
 </form>									
 <br>
 <form action="admin.php" method="POST" name="add_status_form">
-<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
 <input type="hidden" name="action" value="add_status">
 <table width="80%" cellpadding="0" cellspacing="0" border="0">
     <tr>

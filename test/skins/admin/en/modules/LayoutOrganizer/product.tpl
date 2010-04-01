@@ -2,7 +2,7 @@
 
 <table border=0 cellpadding="0" cellspacing="0">
 <form action="admin.php" method=POST name="modify_form">
-<input type="hidden" FOREACH="allparams,param,v" name="{param}" value="{v}" />
+<input type="hidden" FOREACH="allparams,_name,_val" name="{_name}" value="{_val}" />
 <input type=hidden name=action value=modify_templates>
 <input type="hidden" name="product_id" value="{product_id}">
 	<tr>

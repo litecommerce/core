@@ -82,9 +82,9 @@ class XLite_Module_DetailedImages_Model_Product extends XLite_Model_Product impl
         parent::delete();
     }
 
-	public function __clone()
+	public function cloneObject()
 	{
-		$product = parent::__clone();
+		$product = parent::cloneObject();
 
 		foreach ($this->getDetailedImages() as $image) {
 

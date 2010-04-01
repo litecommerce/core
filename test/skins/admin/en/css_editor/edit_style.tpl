@@ -1,7 +1,7 @@
 <p IF="status=#updated#" class="SuccessMessage">&gt;&gt; CSS style has been updated successfully &lt;&lt;</p>
 
 <form name="style_form" action="admin.php" method="POST">
-<input type="hidden" foreach="allparams,param,v" name="{param}" value="{v}"/>
+<input type="hidden" foreach="allparams,_name,_val" name="{_name}" value="{_val}"/>
 <input type="hidden" name="action" value="save">
 <input type="hidden" name="style" value="{css_style(style_id)}">
 

@@ -7,7 +7,7 @@
 <a name=report_form></a>
 
 <form name=ecommerce_report_form action="admin.php" method=POST>
-<input type="hidden" foreach="allparams,param,v" name="{param}" value="{v}"/>
+<input type="hidden" foreach="allparams,_name,_val" name="{_name}" value="{_val}"/>
 <input type=hidden name=action value=get_data>
 
 <table border="0" cellpadding="1" cellspacing="3">

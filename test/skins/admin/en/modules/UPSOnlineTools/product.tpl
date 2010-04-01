@@ -37,7 +37,7 @@ function displayContainerDetails(id)
 </script>
 
 <form action="admin.php" method="POST" name="settings_form">
-<input FOREACH="allParams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allParams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
 <input type="hidden" name="action" value="settings_update">
 
 Enter the product dimensions to be used for distributing the ordered products into containers for UPS delivery.

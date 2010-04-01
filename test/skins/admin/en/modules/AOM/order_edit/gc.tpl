@@ -6,7 +6,7 @@
 </table>    
 <br>
 <form name="delete_gc_form" action="admin.php" method="POST">
-<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
 <input type="hidden" name="action" value="delete_gc">
 <input type="hidden" name="mode" value="gc">
 <table width="100%" cellpadding="2" cellspacing="2">
@@ -46,7 +46,7 @@
 </table>
 </form>
 <form name="clean_gc_form" action="admin.php" method="POST">
-<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
 <input type="hidden" name="action" value="clean_gc">
 <input type="hidden" name="mode" value="gc">
 <table width="100%" cellpadding="2" cellspacing="2">
@@ -96,7 +96,7 @@
 <br>
 <font IF="cloneOrder.shipping_id=#-1#" class="Star">WARNING! To use a gift certificate for order payment please choose a valid delivery method on the "Order totals" page and click "Calculate/Update" button!</font>
 <form action="admin.php" name="gc_form" method="POST">
-<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
 <input type="hidden" name="mode" value="search_gc">
 <table cellpadding="0" cellspacing="3">
 <tr>
@@ -112,7 +112,7 @@
 <span IF="giftCertificates">
 	<widget class="XLite_View_Pager" data="{giftCertificates}" name="pager">
 	<form action="admin.php" method="POST" name="add_form">
-	<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}"/>
+	<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
     <input type="hidden" name="mode" value="gc">
     <input type="hidden" name="action" value="add_gc">
 <table cellpadding="0" cellspacing="3">

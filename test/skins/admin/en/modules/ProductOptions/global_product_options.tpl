@@ -46,7 +46,7 @@
 <table border="0" cellpadding="0" cellspacing="3">
 <tbody FOREACH="globalOptions,idx,option">
 <form IF="globalOptions" action="admin.php" method=POST name="options_form_{idx}">
-<input type="hidden" foreach="allparams,param,v" name="{param}" value="{v}" />
+<input type="hidden" foreach="allparams,_name,_val" name="{_name}" value="{_val}" />
 <input type="hidden" name="action" value="update_product_option">
 <input type="hidden" name="option_id" value="{option.option_id}">
 <tr>
@@ -186,7 +186,7 @@ function delete_warning(name)
 <p><font class="AdminTitle">Add global product option class</font>
 
 <form action="admin.php" method="POST" name=add_option_form>
-<input FOREACH="allparams,name,val" type="hidden" name="{name}" value="{val}"/>
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val}"/>
 <input type="hidden" name="action" value="add">
 <input type=hidden name="opttype" value="">
 

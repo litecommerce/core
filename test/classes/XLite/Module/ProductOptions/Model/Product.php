@@ -198,9 +198,9 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product impl
         parent::delete();
     }
     
-    function __clone()
+    function cloneObject()
     {
-        $p = parent::__clone();
+        $p = parent::cloneObject();
 
         if ($this->config->ProductOptions->clone_product_options) {
 

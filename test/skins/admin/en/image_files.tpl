@@ -109,7 +109,7 @@ Image files can either be placed in the <i><b>{imagesDir}</b></i> sub-directory 
 </table>
 <br />
 <form name="update_images_dir_form" method="POST">
-<input FOREACH="allparams,param,val" type="hidden" name="{param}" value="{val:r}" />
+<input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}" />
 <input type="hidden" name="action" value="update_images_dir" />
 Images directory : <input type="text" name="images_dir" value="{imagesDir}" size="30" /><br /><br />
 <b>Note:</b> enter the relative path to the directory, where images are stored. For example, if images are stored in the <i><b>images</b></i> sub-directory of your LiteCommerce installation, enter <i><b>images</b></i> in this field. If you don't specify images directory then <i><b>images</b></i> will be used as default.
