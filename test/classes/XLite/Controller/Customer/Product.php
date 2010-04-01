@@ -46,7 +46,13 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Catalo
      */
     protected function getCategoryId()
     {
-        return ($categoryId = parent::getCategoryId()) ? $categoryId : $this->getProductCategory()->get('category_id');
+        $categoryId = parent::getCategoryId();
+
+        if (!$categoryId && ($productCategory = $this->getProductCategory())) {
+            $categoryId = $productCategory->get('category_id');
+        }
+
+        return $categoryId;
     }
 
     /**

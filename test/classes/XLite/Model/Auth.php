@@ -70,6 +70,21 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     }
 
     /**
+     * Encrypts password (calculates MD5 hash)
+     * 
+     * @param string $password password to encrypt
+     *  
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public static function encryptPassword($password)
+    {
+        return md5($password);
+    }
+
+
+    /**
      * Checks whether user is logged 
      * 
      * @return bool
@@ -108,6 +123,41 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
 		return $result;
     }
 
+	/**
+     * Updates the specified profile on login. Saves profile to session 
+     * 
+     * @param XLite_Model_Profile $profile profile object
+     *  
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function loginProfile(XLite_Model_Profile $profile)
+    {
+        if ($result = $profile->isPersistent) {
+
+			$this->sessionRestart();
+
+            // check for the fisrt time login
+            if (!$profile->get('first_login')) {
+                // set first login date
+                $profile->set('first_login', time());
+            }
+            // set last login date
+            $profile->set('last_login', time());
+
+            // update profile
+            $profile->update();
+
+            // save to session
+            $this->session->set('profile_id', $profile->get('profile_id'));
+
+            $this->rememberLogin($profile->get('login'));
+        }
+
+        return $result;
+    }
+
 
     function _reReadProfiles($newValue = null)  // {{{
     {
@@ -116,17 +166,6 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
             return $_reReadProfiles;
         }
         $_reReadProfiles = $newValue;
-    } // }}}
-
-    /**
-    * Encrypts password (calculates MD5 hash).
-    *
-    * @param string $password
-    * @return string MD5 hash
-    */
-    function encryptPassword($password) // {{{
-    {
-        return md5($password);
     } // }}}
 
     function isEmptySippingInfoField(&$properties, $name)
@@ -181,7 +220,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         }
         if (strlen($profile->get("password")) > 0) {
             $profile->set("password", 
-            $this->encryptPassword($profile->get("password")));
+            self::encryptPassword($profile->get("password")));
             $anonymous = false;
         } else {
             $this->setComplex("session.anonymous", true);
@@ -251,7 +290,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         }
         if (strlen($profile->get("password")) > 0) {
             $profile->set("password", 
-            $this->encryptPassword($profile->get("password")));
+            self::encryptPassword($profile->get("password")));
         } else {
             $this->clearAnonymousPassword($profile);
         }
@@ -366,29 +405,6 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     } // }}}
 
     /**
-    * Updates the specified profile on login. Saves profile to session.
-    *
-    * @param Profile $profile The profile instance
-    */
-    function loginProfile($profile) // {{{
-    {
-        // check for the fisrt time login
-        if (!$profile->get("first_login")) {
-            // set first login date
-            $profile->set("first_login", time());
-        }
-        // set last login date
-        $profile->set("last_login", time());
-        
-        // update profile
-        $profile->update();
-        // save to session
-        $this->setComplex("session.profile_id", $profile->get("profile_id"));
-
-        $this->rememberLogin($profile->get("login"));
-    } // }}}
-
-    /**
     * Remember login $login in cookie
     */
     function rememberLogin($login) // {{{
@@ -417,7 +433,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     */
     function login($login, $password) // {{{
     {
-        $password = $this->encryptPassword($password);
+        $password = self::encryptPassword($password);
         // check for the valid parameters
         if (empty($login) || empty($password)) {
             return ACCESS_DENIED;
@@ -435,8 +451,6 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         if (!$profile->get("enabled")) {
             return ACCESS_DENIED;
         }
-
-		$this->sessionRestart();
 
         // log in
         $this->loginProfile($profile);

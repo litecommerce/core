@@ -107,6 +107,13 @@ class XLite_Model_Abstract extends XLite_Base
     public $fetchObjIdxOnly = false;
     
 
+    public function modify(array $properties)
+    {
+        $this->setProperties($properties);
+
+        return $this->isPersistent ? $this->update() : $this->create();
+    }
+
     /**
     * Returns the SQL database table name for this object. Uses "alias"
     * property as a key.

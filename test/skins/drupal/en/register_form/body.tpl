@@ -6,14 +6,14 @@
 <p align=justify>
 To create a customer account complete the form below and click on the 'Submit' button.
 <br>
-If you are a registered customer, you can <a href="cart.php?target=profile&amp;mode=login&amp;returnUrl={backUrl:u}"><u>login here</u></a>.
+If you are a registered customer, you can <a href="{buildURL(#profile#,##,_ARRAY_(#mode#^#login#,#returnUrl#^backUrl:u))}"><u>login here</u></a>.
 </p>
 </div>
 <div IF="target=#checkout#">
 <p align=justify>
 In order to perform the checkout we need to know your e-mail address and billing and shipping information. Complete the form below and click on the 'Submit' button to proceed. <span  IF="allowAnonymous">If you would like to create a customer account at our store, do not omit the password fields.</span>
 <br>
-If you are a registered customer, please <a href="cart.php?target=profile&amp;mode=login&amp;returnUrl={backUrl:u}"><u>log into your account</u></a> before you proceed with the checkout process.
+If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_(#mode#^#login#,#returnUrl#^backUrl:u))}"><u>log into your account</u></a> before you proceed with the checkout process.
 </p>
 </div>
 

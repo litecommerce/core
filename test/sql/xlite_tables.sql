@@ -292,6 +292,7 @@ CREATE TABLE xlite_profiles (
   password_hint_answer varchar(128) NOT NULL default '',
   access_level int(11) NOT NULL default '0',
   cms_profile_id int(11) NOT NULL default '0',
+  cms_name varchar(32) NOT NULL default '',
   billing_title varchar(32) NOT NULL default '',
   billing_firstname varchar(128) NOT NULL default '',
   billing_lastname varchar(128) NOT NULL default '',

@@ -36,6 +36,14 @@
 abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleton
 {
     /**
+     * Fields in user data translation table
+     */
+
+    const USER_DATA_FIELD    = 'field';
+    const USER_DATA_CALLBACK = 'callback';
+
+
+    /**
      * Current CMS name
      * 
      * @var    booln
@@ -87,6 +95,54 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
     {
     }
 
+    /**
+     * prepareUserDataTranslationField 
+     * 
+     * @param string $field field name
+     *  
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function prepareUserDataTranslationField($field)
+    {
+        return array(self::USER_DATA_FIELD => $field);
+    }
+
+    /**
+     * Return array of <lc_key, cms_key> pairs for user profiles
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getUserDataTranslationTable()
+    {
+        return array_map(
+            array($this, 'prepareUserDataTranslationField'),
+            XLite_Model_Factory::createObjectInstance('XLite_Model_Profile')->getCMSFields()
+        );
+    }
+
+
+    /**
+     * Return currently used CMS name
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    abstract public function getCMSName();
+
+    /**
+     * Get landing link
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0 EE
+     */
+    abstract public function getLandingLink();
+
 
     /**
      * Method to access the singleton
@@ -111,26 +167,6 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
     {
         return isset(self::$currentCMS);
     }
-
-
-    /**
-     * Return currently used CMS name
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    abstract public function getCMSName();
-
-    /**
-     * Get landing link
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0 EE
-     */
-    abstract public function getLandingLink();
-
 
     /**
      * Save passed params in the requester
@@ -271,118 +307,42 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         $profile = XLite_Model_CachingFactory::getObject(__METHOD__ . $cmsUserId, 'XLite_Model_Profile');
 
         if (!$profile->isRead) {
-            $profile->find('cms_profile_id = \'' . addslashes($cmsUserId) . '\'');
+            $profile->find('cms_profile_id = \'' . $cmsUserId . '\'' . ' AND cms_name = \'' . $this->getCMSName() . '\'');
         }
 
         return $profile;
     }
 
+    /**
+     * translateUserData 
+     * 
+     * @param array $data data to translate
+     *  
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function translateUserData(array $data)
+    {
+        $result = array();
+
+        foreach ($this->getUserDataTranslationTable() as $lcKey => $handler) {
+            if (isset($data[$handler[self::USER_DATA_FIELD]])) {
+                $value = $data[$handler[self::USER_DATA_FIELD]];
+
+                if (isset($handler[self::USER_DATA_CALLBACK])) {
+                    $value = call_user_func_array($handler[self::USER_DATA_CALLBACK], array($value));
+                }
+                $result[$lcKey] = $value;
+            }
+        }
+
+        return $result + array('cms_name' => $this->getCMSName());
+    }
 
 
     // -----> FIXME - to revise
 
-
-    /**
-     * Set user data 
-     * 
-     * @param string $email Email
-     * @param array  $data  User data
-     *  
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function setUserData($email, array $data)
-    {
-        $result = false;
-
-        // Translation profile field names
-        $transTable = $this->getUserTranslationTable();
-
-        $transData = array();
-        foreach ($transTable as $k => $v) {
-            if (isset($data[$k])) {
-                $transData[$v] = $data[$k];
-            }
-        }
-
-        $profile = new XLite_Model_Profile();
-
-        if ($profile->find('login = \'' . addslashes($email) . '\'')) {
-
-            // Update
-            if ($transData) {
-                $profile->modifyProperties($transData);
-                $result = (bool)$profile->update();
-            }
-
-        } else {
-
-            // Create
-            $transData['login'] = $email;
-            $profile->modifyProperties($transData);
-            $result = (bool)$profile->create();
-        }
-
-        return $result;
-    }
-
-    /**
-     * Remove user profile
-     * 
-     * @param string $email Email
-     *  
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function removeUser($email)
-    {
-        $result = false;
-
-        $profile = new XLite_Model_Profile();
-
-        if ($profile->find('login = \'' . addslashes($email) . '\'')) {
-            $profile->delete();
-            $result = true;
-        }
-
-        return $result;
-    }
-
-    /**
-     * Log-in user in LC 
-     * 
-     * @param string $email Email
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function logInUser($email)
-    {
-        $profile = XLite_Model_Auth::getInstance()->loginSilent($email);
-        
-        return !is_int($profile) || ACCESS_DENIED !== $profile;
-    }
-
-    /**
-     * Log-out user in LC 
-     * 
-     * @param string $email User email
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function logOutUser($email = null)
-    {
-        XLite_Model_Auth::getInstance()->logoff();
-    }
 
     /**
      * Get session TTL (in seconds) 
@@ -395,11 +355,6 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
     public function getSessionTtl()
     {
         return $this->session->getTtl();
-    }
-
-    protected function getUserTranslationTable()
-    {
-        return array();
     }
 }
 

@@ -28,6 +28,7 @@
 
 /**
  * Base class
+ * FIXME - must be abstract (see Model/Config.php)
  * 
  * @package XLite
  * @see     ____class_see____
@@ -64,6 +65,14 @@ class XLite_Base
         'layout'   => 'XLite_Model_Layout',
     );
 
+
+    /**
+     * Protected constructor. It's empty now
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
     protected function __construct() 
     {
     }
@@ -216,6 +225,7 @@ class XLite_Base
 
     /**
      * Backward compatibility - the ability to use "<arg_1> . <arg_2> . ... . <arg_N>" chains in getters
+     * FIXME - must be removed
      * 
      * @param string $name list of params delimeted by the "." (dot)
      *  
@@ -250,9 +260,10 @@ class XLite_Base
 
     /**
      * Backward compatibility - the ability to use "<arg_1> . <arg_2> . ... . <arg_N>" chains in setters 
+     * FIXME - must be removed
      * 
      * @param string $name  list of params delimeted by the "." (dot)
-     * @param mixed  $value value to set_
+     * @param mixed  $value value to set
      *  
      * @return void
      * @access public
@@ -292,6 +303,7 @@ class XLite_Base
 
     /**
      * Backward compatibility - the ability to use "<arg_1> . <arg_2> . ... . <arg_N>" chains in getters
+     * FIXME - must be removed
      *
      * @param string $name list of params delimeted by the "." (dot)
      *

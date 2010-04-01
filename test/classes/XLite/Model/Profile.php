@@ -35,6 +35,19 @@
  */
 class XLite_Model_Profile extends XLite_Model_Abstract
 {
+    /**
+     * Fields required for a CMS 
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $cmsFields = array(
+        'billing_title',
+        'billing_firstname',
+    );
+    
+
     // properties {{{
     
     /**
@@ -52,6 +65,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
 	'password_hint_answer' => '',
 	        'access_level' => '0',
           'cms_profile_id' => '0',
+                'cms_name' => '',
 	       'billing_title' => '',
 	   'billing_firstname' => '',
 	    'billing_lastname' => '',
@@ -107,6 +121,19 @@ class XLite_Model_Profile extends XLite_Model_Abstract
     public $alias = "profiles";	
     public $defaultOrder = "login";	
     public $_range = "order_id=0";
+
+
+    /**
+     * Return list of profile fields required for a CMS
+     * 
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getCMSFields()
+    {
+        return array_intersect_key($this->fields, array_fill_keys($this->cmsFields, true));
+    }
 
 
     /**

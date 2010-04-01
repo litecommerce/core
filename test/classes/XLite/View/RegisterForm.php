@@ -40,6 +40,52 @@ class XLite_View_RegisterForm extends XLite_View_Dialog
      */
     const PARAM_HEAD = 'head';
 
+
+    /**
+     * Get directory where template is located (body.tpl)
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDir()
+    {
+        return 'register_form';
+    }
+
+    /**
+     * Get dialog title
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getHead()
+    {
+        return $this->getParam(self::PARAM_HEAD);
+    }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_HEAD => new XLite_Model_WidgetParam_String('Dialog title', 'Profile details'),
+        );
+    }
+
+
+    // FIXME - to revise
+
     public $params = array("success");
 
 	protected $success = false;
@@ -64,48 +110,6 @@ class XLite_View_RegisterForm extends XLite_View_Dialog
     {
         parent::initView();
         $this->fillForm();
-    }
-
-    /**
-     * Get directory where template is located (body.tpl)
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getDir()
-    {
-        return 'profile';
-    }
-
-    /**
-     * Get dialog title
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getHead()
-    {
-        return $this->getParam(self::PARAM_HEAD);
-    }
-
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-		$this->widgetParams += array(
-            self::PARAM_HEAD      => new XLite_Model_WidgetParam_String('Dialog title', 'Profile details', false),
-		);
     }
 
     /**

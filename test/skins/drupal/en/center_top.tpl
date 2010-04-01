@@ -29,16 +29,16 @@
 <widget target="profile" mode="login" template="common/dialog.tpl" head="Authentication" body="authentication.tpl">
 <widget target="profile" mode="account" template="common/dialog.tpl" head="Your account" body="account.tpl">
 <widget target="login" template="common/dialog.tpl" body="authentication.tpl" head="Authentication">
-<widget target="profile" mode="register" class="XLite_View_RegisterForm" template="common/dialog.tpl" head="New customer" body="register_form.tpl" name="registerForm" IF="!showAV"/>
+<widget target="profile" mode="register" class="XLite_View_RegisterForm" head="New customer" name="registerForm" IF="!showAV" />
 <widget target="profile" mode="success" template="common/dialog.tpl" head="Registration complete" body="register_success.tpl">
-<widget target="profile" mode="modify" class="XLite_View_RegisterForm" template="common/dialog.tpl" head="Modify profile" body="profile.tpl" name="profileForm" IF="!showAV"/>
+<widget target="profile" mode="modify" class="XLite_View_RegisterForm" head="Modify profile" name="profileForm" IF="!showAV"/>
 <widget target="profile" mode="delete" template="common/dialog.tpl" head="Delete profile - Confirmation" body="delete_profile.tpl">
 <!-- [/profile] }}} -->
 
 <!-- [checkout] {{{ -->
 <widget target="checkout" mode="register,paymentMethod,details" template="common/dialog.tpl" body="checkout/checkout.tpl" head="Shopping cart" IF="!showAV"/>
 <widget module="PayPalPro" target="checkout" mode="register" template="common/dialog.tpl" body="modules/PayPalPro/retrieve_profile.tpl" head="Make checkout easier with PayPal Website Pro" visible="{xlite.PayPalProExpressEnabled}">
-<widget target="checkout" mode="register" class="XLite_View_RegisterForm" template="common/dialog.tpl" body="register_form.tpl" head="Customer Information" name="registerForm" allowAnonymous="{config.General.enable_anon_checkout}" IF="!showAV"/>
+<widget target="checkout" mode="register" class="XLite_View_RegisterForm" head="Customer Information" name="registerForm" allowAnonymous="{config.General.enable_anon_checkout}" IF="!showAV"/>
 <widget target="checkout" mode="paymentMethod" template="common/dialog.tpl" body="payment_method.tpl" head="Payment method">
 <widget target="checkout" mode="details" template="common/dialog.tpl" body="checkout/details_dialog.tpl" head="{cart.paymentMethod.name}">
 <widget target="checkoutSuccess" template="checkout/success.tpl">
