@@ -36,7 +36,7 @@
     <div class="item-sums">
       <span class="item-price">{price_format(item,#price#):h}</span>
       <span class="sums-multiply">x</span>
-      <span class="item-quantity"><input type="text" name="amount" value="{item.amount}" /></span>
+      <span class="item-quantity"><input type="text" name="amount" value="{item.amount}" class="wheel-ctrl field-integer field-positive field-non-zero" /></span>
       <span class="sums-equals">=</span>
       <span class="item-subtotal">{price_format(item,#total#):h}</span>
     </div>

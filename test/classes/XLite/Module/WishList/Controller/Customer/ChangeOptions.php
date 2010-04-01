@@ -53,16 +53,16 @@ class XLite_Module_WishList_Controller_Customer_ChangeOptions extends XLite_Modu
     }
 
 	/**
-	 * notify_product action
+	 * Change product options
 	 * 
 	 * @return void
 	 * @access protected
 	 * @see    ____func_see____
 	 * @since  3.0.0
 	 */
-	protected function action_change()
+	protected function doActionChange()
 	{
-        parent::action_change();
+        parent::doActionChange();
 
         if (XLite_Core_Request::getInstance()->source == 'wishlist') {
             // TODO - add exception checking
@@ -70,7 +70,7 @@ class XLite_Module_WishList_Controller_Customer_ChangeOptions extends XLite_Modu
             $this->getItem()->setProductOptions(XLite_Core_Request::getInstance()->product_options);
             $this->getItem()->update();
 
-            // TODO - add top message
+            XLite_Core_TopMessage::getInstance()->add('Options has been successfully changed');
         }
 	}
 

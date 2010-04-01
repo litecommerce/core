@@ -124,11 +124,8 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         }
 
         $code = 302;
-        if (
-            !$this->internalRedirect
-            && XLite_Core_Request::getInstance()->isAJAX()
-        ) {
-            $code = 278;
+        if (XLite_Core_Request::getInstance()->isAJAX()) {
+            $code = $this->internalRedirect ? 279 : 278;
         }
 
         header('Location: ' . $location, true, $code);

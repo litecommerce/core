@@ -116,12 +116,8 @@ function blockUIPopupXHRPreprocess(xhr, s)
 
   } else if (xhr.status == 279) {
 
-    // Close (without redirect)
-
-    blockUIPopupClose();
-  } else if (xhr.status == 302) {
-
     // Internal redirect
+
     var url = xhr.getResponseHeader('Location');
     if (url) {
       $.ajax(

@@ -19,12 +19,12 @@
 
   <div class="price">
     <label>Price, $ (range):</label>
-    <input type="text" class="start" name="search[start_price]" value="{search.start_price}" />&ndash;<input type="text" class="end" name="search[end_price]" value="{search.end_price}" />
+    <input type="text" class="start wheel-ctrl field-float field-positive" name="search[start_price]" value="{search.start_price}" />&ndash;<input type="text" class="end wheel-ctrl field-float field-positive" name="search[end_price]" value="{search.end_price}" />
   </div>
 
   <div class="weight">
     <label>Wight, {config.General.weight_symbol} (range):</label>
-    <input type="text" class="start" name="search[start_weight]" value="{search.start_weight}" />&ndash;<input type="text" class="end" name="search[end_weight]" value="{search.end_weight}" />
+    <input type="text" class="start wheel-ctrl field-integer field-positive" name="search[start_weight]" value="{search.start_weight}" />&ndash;<input type="text" class="end wheel-ctrl field-integer field-positive" name="search[end_weight]" value="{search.end_weight}" />
   </div>
 
   <div class="category">

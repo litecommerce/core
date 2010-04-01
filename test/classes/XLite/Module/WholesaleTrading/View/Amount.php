@@ -88,7 +88,6 @@ class XLite_Module_WholesaleTrading_View_Amount extends XLite_View_Abstract
         $list = parent::getJSFiles();
 
         $list[] = 'modules/WholesaleTrading/amount.js';
-        $list[] = 'modules/WholesaleTrading/jquery.mousewheel.js';
 
         return $list;
     }

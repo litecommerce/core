@@ -1,7 +1,7 @@
 /* vim: set ts=2 sw=2 sts=2 et: */
 
 /**
- * ____file_title____
+ * Common functions and classes
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -415,17 +415,19 @@ function InputValidator(container)
   );
 }
 
+InputValidator.prototype.classRegExp = /^field-(.+)$/;
+
 InputValidator.prototype.assignValidator = function(elm)
 {
-  var m, methodName;
-
-  var c = elm.className;
-  if (c && !elm.validators) {
+  if (elm.className && typeof(elm.validators) == 'undefined') {
     elm.validators = [];
 
-    var classes = c.split(/ /);
+    var classes = elm.className.split(/ /);
+    var m, methodName;
     for (var i = 0; i < classes.length; i++) {
-      m = classes[i].match(/^field-(.+)$/);
+
+      m = classes[i].match(this.classRegExp);
+
       if (m && m[1]) {
         methodName = m[1].replace(/-[a-z]/, this.buildMethodName);
         methodName = 'validate' + methodName.substr(0, 1).toUpperCase() + methodName.substr(1);
@@ -438,13 +440,13 @@ InputValidator.prototype.assignValidator = function(elm)
     if (elm.validators.length) {
       elm.validator = this;
       var o = this;
-      elm.validate = function() {
-        return o.checkElement.call(this);
+      elm.validate = function(silent) {
+        return o.checkElement.call(this, null, silent);
       }
 
       $(elm).change(
         function(event) {
-          this.validate(event);
+          this.validate();
         }
       );
 
@@ -455,7 +457,7 @@ InputValidator.prototype.assignValidator = function(elm)
 
         $(elm.form).submit(
           function(event) {
-            return this.validate(event);
+            return this.validate();
           }
         );
       }
@@ -469,7 +471,7 @@ InputValidator.prototype.buildMethodName = function(str)
   return str.substr(1).toUpperCase();
 }
 
-InputValidator.prototype.checkElement = function(event)
+InputValidator.prototype.checkElement = function(event, silent)
 {
   var result = {status: true};
 
@@ -490,8 +492,10 @@ InputValidator.prototype.checkElement = function(event)
     result = this.validators[i].call(this, event);
     if (!result.status) {
       $(this).addClass('validation-error');
-      alert(result.message);
-      $(this).focus();
+      if (!silent) {
+        alert(result.message);
+        $(this).focus();
+      }
 
     } else {
       $(this).removeClass('validation-error');
@@ -501,7 +505,7 @@ InputValidator.prototype.checkElement = function(event)
   return result.status;
 }
 
-InputValidator.prototype.checkForm = function(event)
+InputValidator.prototype.checkForm = function()
 {
   var result = true;
 
@@ -533,7 +537,7 @@ InputValidator.prototype.validateEmail = function()
 InputValidator.prototype.validateInteger = function()
 {
   return {
-    status: !this.value.length || this.value.search(/^[-+][0-9]+$/) !== -1,
+    status: !this.value.length || this.value.search(/^[-+]?[0-9]+$/) !== -1,
     message: 'Field is not integer! Please correct'
   };
 }
@@ -551,7 +555,7 @@ InputValidator.prototype.validatePositive = function()
   var value = parseFloat(this.value);
 
   return {
-    status: !this.value.length || 0 < value,
+    status: !this.value.length || 0 <= value,
     message: 'Field is not positive! Please correct'
   };
 }
@@ -561,7 +565,7 @@ InputValidator.prototype.validateNegative = function()
   var value = parseFloat(this.value);
 
   return {
-    status: !this.value.length || 0 > value,
+    status: !this.value.length || 0 >= value,
     message: 'Field is not negative! Please correct'
   };
 }
@@ -614,3 +618,65 @@ $(document).ready(
   }
 );
 
+/**
+ * Mousewheel controller
+ */
+function updateByMouseWheel(event, delta) {
+  event.stopPropagation();
+
+  var value = false;
+  var mantis = 0;
+
+  if (this.value.length == 0) {
+    value = 0;
+
+  } else if (this.value.search(/^ *[+-]?[0-9]+\.?[0-9]* *$/) != -1) {
+    var m = this.value.match(/^ *[+-]?[0-9]+\.([0-9]+) *$/);
+    if (m && m[1]) {
+      mantis = m[1].length;
+    }
+
+    value = parseFloat(this.value);
+    if (isNaN(value)) {
+      value = false;
+    }
+  }
+
+  if (value !== false) {
+    var min = $(this).data('min');
+    var max = $(this).data('max');
+
+    value = value + delta * -1;
+
+    if (typeof(min) != 'undefined' && min > value) {
+      value = min;
+    }
+
+    if (typeof(max) != 'undefined' && max < value) {
+      value = max;
+    }
+
+    if (mantis) {
+      value = Math.round(value * Math.pow(10, mantis)) / Math.pow(10, mantis);
+
+    } else {
+      value = Math.round(value);
+    }
+
+    var oldValue = this.value;
+    this.value = value;
+
+    if (typeof(this.validate) != 'undefined' && !this.validate(true)) {
+      this.value = oldValue;
+    }
+
+  }
+
+  return false;
+}
+
+$(document).ready(
+  function() {
+    $('input.wheel-ctrl:text').mousewheel(updateByMouseWheel);
+  }
+);

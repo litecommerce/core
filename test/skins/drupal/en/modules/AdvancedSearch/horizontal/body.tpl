@@ -90,14 +90,14 @@
     <tr class="price">
       <td class="row-title">Price, $ (range):</td>
       <td colspan="2">
-        <input type="text" class="start" name="search[start_price]" value="{search.start_price}" />&ndash;<input type="text" class="end" name="search[end_price]" value="{search.end_price}" />
+        <input type="text" class="start wheel-ctrl field-float field-positive" name="search[start_price]" value="{search.start_price}" />&ndash;<input type="text" class="end wheel-ctrl field-float field-positive" name="search[end_price]" value="{search.end_price}" />
       </td>
     </tr> 
 
     <tr class="weight">
       <td class="row-title">Weight, {config.General.weight_symbol} (range):</td>
       <td colspan="2">
-        <input type="text" class="start" name="search[start_weight]" value="{search.start_weight}" />&ndash;<input type="text" class="end" name="search[end_weight]" value="{search.end_weight}" />
+        <input type="text" class="start wheel-ctrl field-integer field-positive" name="search[start_weight]" value="{search.start_weight}" />&ndash;<input type="text" class="end wheel-ctrl field-integer field-positive" name="search[end_weight]" value="{search.end_weight}" />
       </td>
     </tr>
 

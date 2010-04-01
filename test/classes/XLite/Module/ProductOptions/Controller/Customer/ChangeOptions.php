@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_ProductOptions_Controller_Customer_ChangeOptions extends XLite_Controller_Customer_Abstract
-{	
+{
     /**
      * Item (cache)
      * 
@@ -45,8 +45,7 @@ class XLite_Module_ProductOptions_Controller_Customer_ChangeOptions extends XLit
      */
     protected $item = null;
 
-
-	/**
+    /**
      * Common method to determine current location 
      * 
      * @return array 
@@ -92,32 +91,47 @@ class XLite_Module_ProductOptions_Controller_Customer_ChangeOptions extends XLit
         }
     }
 
-	/**
-	 * notify_product action
-	 * 
-	 * @return void
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function action_change()
-	{
+    /**
+     * Change product options
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionChange()
+    {
         if (XLite_Core_Request::getInstance()->source == 'cart') {
             $this->getItem()->setProductOptions(XLite_Core_Request::getInstance()->product_options);
 
             $invalidOptions = $this->getItem()->get('invalidOptions');
+
             if (is_null($invalidOptions)) {
                 $this->getCart()->updateItem($this->getItem());
                 $this->getItem()->update();
                 $this->updateCart();
 
+                XLite_Core_TopMessage::getInstance()->add('Options has been successfully changed');
+
             } else {
 
-                // TODO - add top message
-                $this->set('valid', false);
+                XLite_Core_TopMessage::getInstance()->add('Invalid options', XLite_Core_TopMessage::ERROR);
+                $this->internalRedirect = true;
+                $this->set(
+                    'returnUrl',
+                    $this->buildUrl(
+                        'change_options',
+                        '',
+                        array(
+                            'source'     => XLite_Core_Request::getInstance()->source,
+                            'storage_id' => XLite_Core_Request::getInstance()->storage_id,
+                            'item_id'    => XLite_Core_Request::getInstance()->item_id,
+                        )
+                    )
+                );
             }
         }
-	}
+    }
 
     /**
      * Get cart / wishlist item 
@@ -136,7 +150,7 @@ class XLite_Module_ProductOptions_Controller_Customer_ChangeOptions extends XLit
                 XLite_Core_Request::getInstance()->source == 'cart'
                 && is_numeric(XLite_Core_Request::getInstance()->item_id)
             ) {
-                $items = $this->cart->getItems();
+                $items = $this->getCart()->getItems();
 
                 $itemId = XLite_Core_Request::getInstance()->item_id;
                 if (

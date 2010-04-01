@@ -586,7 +586,10 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      */
     public function getJSFiles()
     {
-        return array('js/common.js');
+        return array(
+            'js/common.js',
+            'js/jquery.mousewheel.js',
+        );
     }
 
     /**
