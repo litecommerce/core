@@ -356,7 +356,6 @@ class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_Abstract
 	{
         $w = new XLite_View_ExportXLS();
         $w->component = $this;
-        $w->set("template", "order/export_xls.tpl");
         $this->startDownload("orders.xls");
         $this->ColumnCount = 9;
         $this->RowCount = $this->get("count") + 2;
