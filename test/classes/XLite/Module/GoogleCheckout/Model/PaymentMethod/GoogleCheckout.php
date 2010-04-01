@@ -260,7 +260,7 @@ EOT;
 		}
 	}
 
-	function handleRequest($order)
+	function handleRequest(XLite_Model_Cart $order)
 	{
 		$response = $this->sendGoogleCheckoutRequest($order);
 

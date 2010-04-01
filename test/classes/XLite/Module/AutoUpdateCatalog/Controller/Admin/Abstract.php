@@ -68,7 +68,7 @@ class XLite_Module_AutoUpdateCatalog_Controller_Admin_Abstract extends XLite_Con
 
     function init()
     {
-        switch ($_REQUEST["target"]) {
+        switch ($this->getTarget()) {
             case "product":
             case "add_product":
             case "product_list":
