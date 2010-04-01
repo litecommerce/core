@@ -35,8 +35,4 @@
     <span class="item-subtotal">{price_format(item,#total#):h}</span>
   </div>
 
-  <div class="item-buttons">
-    <span class="modify-gc"><widget class="XLite_View_Button_Link" location="{buildURL(#gift_certificate#,##,_ARRAY_(#gcid#^item.gcid))}" label="Modify certificate" /></span>
-  </div>
-
 </td>
