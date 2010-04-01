@@ -749,6 +749,21 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
     }
 
     /**
+     * checkSideBarParams 
+     * 
+     * @param array $params params to check
+     *  
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function checkSideBarParams(array $params)
+    {
+        return isset($params[self::PARAM_WIDGET_TYPE]) && self::WIDGET_TYPE_SIDEBAR == $params[self::PARAM_WIDGET_TYPE];
+    }
+
+
+    /**
      * Check if widget is visible
      *
      * @return bool
@@ -803,12 +818,13 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
      */
     public function setWidgetParams(array $params)
     {
-        // FIXME - not a good idea, but I don't see a better way
-        if (isset($params[self::PARAM_WIDGET_TYPE]) && self::WIDGET_TYPE_SIDEBAR == $params[self::PARAM_WIDGET_TYPE]) {
-            $this->defaultTemplate = self::TEMPLATE_SIDEBAR;
-        }
-
         parent::setWidgetParams($params);
+
+        // FIXME - not a good idea, but I don't see a better way
+        if ($this->isWrapper() && $this->checkSideBarParams($params)) {
+            $this->defaultTemplate = self::TEMPLATE_SIDEBAR;
+            $this->widgetParams[self::PARAM_TEMPLATE]->setValue($this->getDefaultTemplate());
+        }
 
         // Do not change call order
         $this->widgetParams += $this->getPager()->getWidgetParams();
