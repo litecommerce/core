@@ -50,13 +50,25 @@ class XLite_Module_WholesaleTrading_Controller_Admin_PriceList extends XLite_Con
 	
 	protected $_priceList = array();
 	protected $wholesale_pricing = array();
-	
-	function getTemplate()
+
+	/**
+	 * getRegularTemplate 
+	 * 
+	 * @return void
+	 * @access protected
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	protected function getRegularTemplate()
 	{
-		if ($this->get('mode') == 'print') {
-			return "modules/WholesaleTrading/pl_print.tpl";
+		if ('print' == XLite_Core_Request::getInstance()->mode) {
+			$return = "modules/WholesaleTrading/pl_print.tpl";
+
+		} else {
+			$return = parent::getRegularTemplate();
 		}
-		return $this->template;
+
+		return $return;
 	}
 
 	function fillPriceList($category_id, $include_subcategories)

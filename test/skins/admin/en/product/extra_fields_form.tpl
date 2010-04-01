@@ -58,7 +58,8 @@ Use this section to define additional {if:target=#extra_fields#}global {end:}pro
 
 <p align=justify><b>Note: </b>It is strongly recommended that you do not use duplicate names for {if:target=#extra_fields#}global {end:}product extra fields.</p> 
 
-<form IF="extraFields" action="admin.php" method=POST name="extra_fields_form">
+<form IF="extraFields" action="admin.php" method="post" name="extra_fields_form">
+
 <input type="hidden" foreach="allparams,_name,_val" name="{_name}" value="{_val}" />
 <input type=hidden name=action value=update_fields>
 <input type=hidden name=delete id="delete_field" value="">
@@ -87,12 +88,12 @@ Use this section to define additional {if:target=#extra_fields#}global {end:}pro
     </td>
     <td IF="target=#extra_fields#">
         <select id="categories_{ef.field_id}" name="extra_fields[{ef.field_id}][categories][]" multiple size=7>
-            {foreach:categories,cat}
+            {foreach:getCategories(),cat}
             	{if:ef.isCategorySelected(cat.category_id)}
             	<option value="{cat.category_id}" selected>{cat.stringPath:h}</option>
             	{end:}
             {end:}
-            {foreach:categories,cat}
+            {foreach:getCategories(),cat}
             	{if:!ef.isCategorySelected(cat.category_id)}
             	<option value="{cat.category_id}">{cat.stringPath:h}</option>
             	{end:}
