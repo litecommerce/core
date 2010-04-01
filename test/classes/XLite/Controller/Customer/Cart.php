@@ -77,36 +77,44 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
     /**
      * 'Add' action 
      * 
-     * @return void
+     * @return boolean
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function action_add()
     {
-        if (!$this->canAddProductToCart()) {
-            return;
+        $result = false;
+
+        if ($this->canAddProductToCart()) {
+            $this->collectCartGarbage();
+
+            // add product to the cart
+            if ($this->getCart()->addItem($this->getCurrentItem())) {
+                $this->updateCart();
+
+                XLite_Core_TopMessage::getInstance()->add('Product has been added to cart');
+
+            } else {
+                XLite_Core_TopMessage::getInstance()->add('Product has not been added to cart', XLite_Core_TopMessage::ERROR);
+            }
+
+            // switch back to product catalog or to shopping cart
+            $this->set('returnUrlAbsolute', false);
+            $productListUrl = ($this->config->General->add_on_mode && isset($_SERVER['HTTP_REFERER']))
+                ? $_SERVER['HTTP_REFERER']
+                : $this->session->get('productListURL');
+
+            if ($this->config->General->redirect_to_cart) {
+                $this->session->set('continueURL', $productListUrl);
+
+            } else {
+                $this->set('returnUrl', $productListUrl);
+                $this->set('returnUrlAbsolute', $this->config->General->add_on_mode && isset($_SERVER['HTTP_REFERER']));
+            }
         }
 
-        $this->collectCartGarbage();
-
-        // add product to the cart
-        $this->getCart()->addItem($this->getCurrentItem());
-        $this->updateCart(); // recalculate shopping cart
-
-        // switch back to product catalog or to shopping cart
-        $this->set('returnUrlAbsolute', false);
-        $productListUrl = ($this->config->General->add_on_mode && isset($_SERVER['HTTP_REFERER']))
-            ? $_SERVER['HTTP_REFERER']
-            : $this->session->get('productListURL');
-
-        if ($this->config->General->redirect_to_cart) {
-            $this->session->set('continueURL', $productListUrl);
-
-        } else {
-            $this->set('returnUrl', $productListUrl);
-            $this->set('returnUrlAbsolute', $this->config->General->add_on_mode && isset($_SERVER['HTTP_REFERER']));
-        }
+        return $result;
     }
 
     /**

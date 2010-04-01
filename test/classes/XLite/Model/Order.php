@@ -128,16 +128,18 @@ class XLite_Model_Order extends XLite_Model_Abstract
     }
 
     /**
-     * addItem 
+     * Add item ro order
      * 
      * @param XLite_Model_OrderItem $newItem item to add
      *  
-     * @return void
+     * @return boolean
      * @access public
      * @since  3.0.0
      */
 	public function addItem(XLite_Model_OrderItem $newItem)
     {
+        $result = false;
+
 		if ($newItem->isValid()) {
 
 			$found = false;
@@ -154,7 +156,11 @@ class XLite_Model_Order extends XLite_Model_Abstract
 			if (!$found) {
 				$this->_createItem($newItem);
 			}
+
+            $result = true;
 		}
+
+        return $result;
     }
 
     /**

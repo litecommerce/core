@@ -61,6 +61,16 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     protected $locationPath = null;
 
     /**
+     * Internal redirect flag
+     * 
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $internalRedirect = false;
+
+    /**
      * Pages array for tabber
      * FIXME - must be protected
      * 
@@ -114,7 +124,10 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         }
 
         $code = 302;
-        if (XLite_Core_Request::getInstance()->isAJAX()) {
+        if (
+            !$this->internalRedirect
+            && XLite_Core_Request::getInstance()->isAJAX()
+        ) {
             $code = 278;
         }
 

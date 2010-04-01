@@ -119,6 +119,29 @@ function blockUIPopupXHRPreprocess(xhr, s)
     // Close (without redirect)
 
     blockUIPopupClose();
+  } else if (xhr.status == 302) {
+
+    // Internal redirect
+    var url = xhr.getResponseHeader('Location');
+    if (url) {
+      $.ajax(
+        {
+          type:     'get',
+          url:      url,
+          success:  function(data, s) {
+            data = blockUIPopupPreprocess(data, s);
+            blockUIPopup(data);
+            blockUIPopupPostprocess();
+          },
+          complete: function(xhr, s) {
+            blockUIPopupXHRPreprocess(xhr, s);
+          }
+        }
+      );
+
+    } else {
+      self.location.reload(true);
+    }
   }
 }
 
