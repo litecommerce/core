@@ -42,6 +42,7 @@ class XLite_View_CategorySelect extends XLite_View_Abstract
     const PARAM_FIELD_NAME           = 'fieldName';
     const PARAM_SELECTED_CATEGORY_ID = 'selectedCategoryId';
     const PARAM_CURRENT_CATEGORY_ID  = 'currentCategoryId';
+    const PARAM_IGNORE_CURRENT_PATH  = 'ignoreCurrentPath';
 
     protected $categories = null;
 
@@ -61,12 +62,13 @@ class XLite_View_CategorySelect extends XLite_View_Abstract
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_ALL_OPTION  => new XLite_Model_WidgetParam_Bool('Display All option', false),
-            self::PARAM_NONE_OPTION => new XLite_Model_WidgetParam_Bool('Display None option', false),
-            self::PARAM_ROOT_OPTION => new XLite_Model_WidgetParam_Bool('Display [Root level] option', false),
-            self::PARAM_FIELD_NAME  => new XLite_Model_WidgetParam_String('Field name', ''),
+            self::PARAM_ALL_OPTION           => new XLite_Model_WidgetParam_Bool('Display All option', false),
+            self::PARAM_NONE_OPTION          => new XLite_Model_WidgetParam_Bool('Display None option', false),
+            self::PARAM_ROOT_OPTION          => new XLite_Model_WidgetParam_Bool('Display [Root level] option', false),
+            self::PARAM_FIELD_NAME           => new XLite_Model_WidgetParam_String('Field name', ''),
             self::PARAM_SELECTED_CATEGORY_ID => new XLite_Model_WidgetParam_Int('Selected category id', 0),
-            self::PARAM_CURRENT_CATEGORY_ID => new XLite_Model_WidgetParam_Int('Current category id', 0)
+            self::PARAM_CURRENT_CATEGORY_ID  => new XLite_Model_WidgetParam_Int('Current category id', 0),
+            self::PARAM_IGNORE_CURRENT_PATH  => new XLite_Model_WidgetParam_Bool('Ignore current path', false)
         );
 
         $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/select_category.tpl');
@@ -105,8 +107,8 @@ class XLite_View_CategorySelect extends XLite_View_Abstract
 
             $this->categories = $c->findAll($where, $orderby, $groupby, $limit);
 
-            if ($this->rootOption && $this->currentCategory > 0) {
-                $currentCategory = new XLite_Model_Category($this->currentCategory);
+            if ($this->getParam(self::PARAM_ROOT_OPTION) && $this->getParam(self::PARAM_CURRENT_CATEGORY_ID) > 0) {
+                $currentCategory = new XLite_Model_Category($this->getParam(self::PARAM_CURRENT_CATEGORY_ID));
                 $currentCategoryPath = $currentCategory->getStringPath() . '/';
                 foreach ($this->categories as $i => $c) {
                     $name = $c->getStringPath();
@@ -166,7 +168,8 @@ class XLite_View_CategorySelect extends XLite_View_Abstract
     }
 
     /**
-     * getSelectedCategory 
+     * getSelectedCategory
+     * TODO: check if we need this function
      * 
      * @return void
      * @access protected
@@ -183,6 +186,7 @@ class XLite_View_CategorySelect extends XLite_View_Abstract
     
     /**
      * setFieldName 
+     * TODO: check if we need this function
      * 
      * @param string $name
      *  
