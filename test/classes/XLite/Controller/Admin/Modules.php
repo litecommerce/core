@@ -67,6 +67,8 @@ class XLite_Controller_Admin_Modules extends XLite_Controller_Admin_Abstract
 		$activeModules = isset(XLite_Core_Request::getInstance()->active_modules) ? XLite_Core_Request::getInstance()->active_modules : array();
 		$moduleType = isset(XLite_Core_Request::getInstance()->module_type) ? XLite_Core_Request::getInstance()->module_type : null;
 
+		$this->set('returnUrl', $this->buildUrl('modules'));
+
 		if (!XLite_Model_ModulesManager::getInstance()->updateModules($activeModules, $moduleType)) {
 			$this->valid = false;
             $this->hidePageHeader();

@@ -57,7 +57,7 @@
     <td width=10 class=Star>*</td>
     <td>
         <input type=text name=title value="{affiliatePlan.title:h}">
-        <widget class=CRequiredValidator field=title>
+        <widget class="XLite_Validator_RequiredValidator" field="title">
     </td>
 </tr>
 <tr>

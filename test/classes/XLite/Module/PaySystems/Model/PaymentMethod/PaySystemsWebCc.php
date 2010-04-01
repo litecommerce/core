@@ -49,7 +49,7 @@ class XLite_Module_PaySystems_Model_PaymentMethod_PaySystemsWebCc extends XLite_
 	public $hasConfigurationForm = true;	
 	public $processorName = "PaySystems";
 
-    function handleRequest($cart)
+    function handleRequest(XLite_Model_Cart $cart)
     {
 		require_once LC_MODULES_DIR . 'PaySystems' . LC_DS . 'encoded.php';
         func_PaymentMethod_pay_systems_web_cc_handleRequest($this, $cart);

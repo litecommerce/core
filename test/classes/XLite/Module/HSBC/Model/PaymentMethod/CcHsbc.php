@@ -51,7 +51,7 @@ class XLite_Module_HSBC_Model_PaymentMethod_CcHsbc extends XLite_Model_PaymentMe
 	public $timestamp = null;	
 	public $merchant_data = null;
 
-    function handleRequest($cart)
+    function handleRequest(XLite_Model_Cart $cart)
     {
 		require_once LC_MODULES_DIR . 'HSBC' . LC_DS . 'encoded.php';
         func_PaymentMethod_cc_hsbc_handleRequest($this, $cart);

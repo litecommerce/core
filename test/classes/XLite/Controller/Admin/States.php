@@ -54,6 +54,7 @@ class XLite_Controller_Admin_States extends XLite_Controller_Admin_Abstract
 			$this->params[] = "country_code";
 		}
 		parent::init();
+		$this->fillForm();
 	}
 
 	function obligatorySetStatus($status)

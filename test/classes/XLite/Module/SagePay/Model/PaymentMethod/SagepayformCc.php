@@ -44,7 +44,7 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepayformCc extends XLite_Model
 	public $hasConfigurationForm = true;	
     public $configurationTemplate = "modules/SagePay/config.tpl";
 
-    function handleRequest($cart)
+    function handleRequest(XLite_Model_Cart $cart)
     {
         require_once LC_MODULES_DIR . 'SagePay' . LC_DS . 'encoded.php';
         PaymentMethod_SagePayForm_handleRequest($this, $cart);

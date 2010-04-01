@@ -21,7 +21,7 @@
         <td valign=top class=Star>*</td>
         <td>
             <span IF="mode=#modify#"><img src="{getShopUrl(#cart.php#)}?target=image&action=banner_image&id={banner_id}&rnd={rand()}" border=0><br></span>
-			<widget class="XLite_View_ImageUpload" field="banner" actionName="images" formName="add_modify_form" object="{banner}">
+			<widget class="XLite_View_ImageUpload" field="banner" actionName="images" formName="add_modify_form" object="{banner}" />
         </td>
     </tr>
     <tr>

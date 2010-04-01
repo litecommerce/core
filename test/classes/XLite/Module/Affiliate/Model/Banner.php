@@ -73,6 +73,11 @@ class XLite_Module_Affiliate_Model_Banner extends XLite_Model_Abstract
         return $this->image;
     }
 
+	function getDefaultSource()
+	{
+		return 'D';
+	}
+
     function filter()
     {
         if (!$this->xlite->is("adminZone")) {

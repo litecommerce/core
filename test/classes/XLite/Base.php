@@ -64,6 +64,10 @@ class XLite_Base
         'layout'   => 'XLite_Model_Layout',
     );
 
+    protected function __construct() 
+    {
+    }
+
     /**
      * Stop script execution 
      * 

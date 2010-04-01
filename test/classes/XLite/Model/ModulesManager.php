@@ -246,7 +246,7 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
 			$this->changeModuleStatus($module, in_array($module->get("module_id"), $moduleIDs));
         }
 
-		XLite::getInstance()->setCleanUpCacheFlag(true);
+		$this->rebuildCache();
 
 		return true;
     }

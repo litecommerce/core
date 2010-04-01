@@ -60,7 +60,7 @@ class XLite_Module_PayFlowLink_Model_PaymentMethod_Payflowlink extends XLite_Mod
         }
     }
 
-    function handleRequest($cart)
+    function handleRequest(XLite_Model_Cart $cart)
     {
         require_once LC_MODULES_DIR . 'PayFlowLink' . LC_DS . 'encoded.php';
         PaymentMethod_PayFlowLink_handleRequest($this, $cart);

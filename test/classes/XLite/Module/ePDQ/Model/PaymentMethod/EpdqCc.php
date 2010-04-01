@@ -49,7 +49,7 @@ class XLite_Module_ePDQ_Model_PaymentMethod_EpdqCc extends XLite_Model_PaymentMe
     public $hasConfigurationForm = true;	
     public $processorName = "ePDQ";
 
-    function handleRequest($cart)
+    function handleRequest(XLite_Model_Cart $cart)
     {
 		require_once LC_MODULES_DIR . 'ePDQ' . LC_DS . 'encoded.php';
         func_PaymentMethod_epdq_cc_handleRequest($this, $cart);

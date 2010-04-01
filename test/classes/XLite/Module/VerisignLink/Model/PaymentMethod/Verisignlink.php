@@ -47,7 +47,7 @@ class XLite_Module_VerisignLink_Model_PaymentMethod_Verisignlink extends XLite_M
     public $configurationTemplate = "modules/VerisignLink/config.tpl";	
     public $formTemplate ="modules/VerisignLink/checkout.tpl";
 
-    function handleRequest($cart)
+    function handleRequest(XLite_Model_Cart $cart)
     {
         require_once LC_MODULES_DIR . 'VerisignLink' . LC_DS . 'encoded.php';
         PaymentMethod_VerisignLink_handleRequest($this, $cart);

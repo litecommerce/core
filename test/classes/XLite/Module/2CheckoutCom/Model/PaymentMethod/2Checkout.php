@@ -75,7 +75,7 @@ class XLite_Module_2CheckoutCom_Model_PaymentMethod_2Checkout extends XLite_Mode
     public $configurationTemplate = "modules/2CheckoutCom/config.tpl";	
     public $formTemplate ="modules/2CheckoutCom/checkout.tpl";
 
-    function handleRequest($cart)
+    function handleRequest(XLite_Model_Cart $cart)
     {
 		$params = $this->get("params");
 		if ($params["version"] != 2) {

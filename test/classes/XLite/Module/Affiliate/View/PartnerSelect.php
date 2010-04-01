@@ -43,7 +43,6 @@
 */
 class XLite_Module_Affiliate_View_PartnerSelect extends XLite_View_Abstract
 {	
-    public $template = "modules/Affiliate/select_partner.tpl";	
     public $formField = "partner_id";	
     public $allOption = true;
 
@@ -55,7 +54,22 @@ class XLite_Module_Affiliate_View_PartnerSelect extends XLite_View_Abstract
             $this->$field = $_REQUEST[$field];
         }
     }
-    
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/Affiliate/select_partner.tpl');
+    }
+
+
     function getPartners()
     {
         if (is_null($this->partners)) {

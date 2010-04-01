@@ -52,7 +52,7 @@ class XLite_Module_Promotion_Model_PaymentMethod_BonusPoints extends XLite_Model
     public $processorName = "Promotion/bonus points";	
     public $formTemplate = "modules/Promotion/checkout.tpl";
 	
-    function handleRequest($cart)
+    function handleRequest(XLite_Model_Cart $cart)
     {
 		$payedByPoints = $_POST["payedByPoints"];
 		$details = $cart->get("details");

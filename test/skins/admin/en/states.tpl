@@ -33,7 +33,7 @@ function setHeaderChecked()
 <form name="select_country_form" method="GET">
 <p class="AdminHead">Select country<p>
 <input type="hidden" name="target" value="states">
-<widget class="XLite_View_CountrySelect" field="country_code" onChange="document.select_country_form.submit();" all nonFixed>
+<widget class="XLite_View_CountrySelect" field="country_code" value="{country_code}" onChange="document.select_country_form.submit();" all nonFixed>
 </form>
 
 <span IF="!states">

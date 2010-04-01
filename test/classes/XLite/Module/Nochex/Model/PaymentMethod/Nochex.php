@@ -44,7 +44,7 @@ class XLite_Module_Nochex_Model_PaymentMethod_Nochex extends XLite_Model_Payment
     public $formTemplate = "modules/Nochex/checkout.tpl";	
     public $processorName = "Nochex";
 	
-	function handleRequest($order)
+	function handleRequest(XLite_Model_Cart $order)
 	{
 		require_once LC_MODULES_DIR . 'Nochex' . LC_DS . 'encoded.php';
 		PaymentMethod_nochex_handleRequest($order,$this);
