@@ -112,9 +112,4 @@ class XLite_Module_WishList_Controller_Customer_Cart extends XLite_Controller_Cu
         }
     }
 
-    function _needConvertToIntStr($name)
-    {
-        return $name == 'item_id' ? false : parent::_needConvertToIntStr($name);
-    }
-
 }
