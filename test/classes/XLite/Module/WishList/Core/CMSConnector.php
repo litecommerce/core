@@ -35,6 +35,6 @@ abstract class XLite_Module_WishList_Core_CMSConnector extends XLite_Core_CMSCon
 	{
         parent::__construct();
 
-        $this->pageTypes['XLite_Module_WishList_Controller_Customer_Wishlist'] = 'Wishlist';
+        $this->pageTypes['wishlist'] = 'Wish list';
 	}
 }

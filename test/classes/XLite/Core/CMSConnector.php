@@ -76,11 +76,11 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      * @since  3.0.0
      */
     protected $pageTypes = array(
-        'XLite_Controller_Customer_Category'  => 'Category page',
-        'XLite_Controller_Customer_Product'   => 'Product page',
-        'XLite_Controller_Customer_Cart'      => 'Shopping cart',
-        'XLite_Controller_Customer_Checkout'  => 'Checkout',
-        'XLite_Controller_Customer_OrderList' => 'Orders list',
+        'category'   => 'Category page',
+        'product'    => 'Product page',
+        'cart'       => 'Shopping cart',
+        'checkout'   => 'Checkout',
+        'order_list' => 'Orders list',
     );
 
 
@@ -133,6 +133,15 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      * @since  3.0.0
      */
     abstract public function getCMSName();
+
+    /**
+     * Return the default controller name 
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    abstract public function getDefaultTarget();
 
     /**
      * Get landing link
@@ -265,7 +274,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      * @param array  $params widget params
      * @param int    $delta  drupal-specific param - so called "delta"
      *  
-     * @return XLite_View_Abstract
+     * @return XLite_Core_WidgetDataTransport
      * @access public
      * @since  3.0.0
      */
@@ -279,17 +288,19 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
     /**
      * Return controller for current page
      *
-     * @param string $class  widget class name
-     * @param array  $params widget params
+     * @param string $target controller target
+     * @param array  $params controller params
      *
-     * @return XLite_Controller_Customer_Abstract
+     * @return XLite_Core_WidgetDataTransport
      * @access public
      * @since  3.0.0
      */
-    public function getPageInstance($class, array $params = array())
+    public function getPageInstance($target, array $params = array())
     {
+        $class = XLite_Core_Converter::getControllerClass($target);
+
         return new XLite_Core_WidgetDataTransport(
-            class_exists($class) ? new $class($params) : null
+            class_exists($class) ? new $class(array('target' => $target) + $params) : null
         );
     }
 

@@ -94,6 +94,18 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
     }
 
     /**
+     * Return the default controller name 
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getDefaultTarget()
+    {
+        return 'drupal';
+    }
+
+    /**
      * Get landing link 
      * 
      * @return string

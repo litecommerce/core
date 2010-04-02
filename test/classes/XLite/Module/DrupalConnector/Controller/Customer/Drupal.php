@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Core
+ * @subpackage ____sub_package____
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,27 +27,23 @@
  */
 
 /**
- * CMS connector
+ * XLite_Controller_Customer_Drupal 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @since      3.0.0
  */
-abstract class XLite_Module_GiftCertificates_Core_CMSConnector extends XLite_Core_CMSConnector implements XLite_Base_IDecorator
+class XLite_Controller_Customer_Drupal extends XLite_Controller_Customer_Abstract
 {
 	/**
-	 * Constructor
-	 * 
-	 * @return void
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function __construct()
-	{
-        parent::__construct();
-
-        $this->pageTypes['gift_certificate']       = 'Add gift certificate';
-        $this->pageTypes['check_gift_certificate'] = 'Check gift certificate';
+     * Do not perform any action 
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function handleRequest()
+    {
 	}
 }
+

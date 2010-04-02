@@ -35,12 +35,12 @@ abstract class XLite_Module_ProductAdviser_Core_CMSConnector extends XLite_Core_
     {
 		parent::__construct();
 
-        $this->widgetsList['XLite_Module_ProductAdviser_View_NewArrivals'] = 'New arrivals';
-        $this->widgetsList['XLite_Module_ProductAdviser_View_RecentlyViewed'] = 'Recently viewed products';
+        $this->widgetsList['XLite_Module_ProductAdviser_View_NewArrivals']     = 'New arrivals';
+        $this->widgetsList['XLite_Module_ProductAdviser_View_RecentlyViewed']  = 'Recently viewed products';
         $this->widgetsList['XLite_Module_ProductAdviser_View_RelatedProducts'] = 'Related products';
-        $this->widgetsList['XLite_Module_ProductAdviser_View_ProductAlsoBuy'] = 'People who buy this product also buy';
+        $this->widgetsList['XLite_Module_ProductAdviser_View_ProductAlsoBuy']  = 'People who buy this product also buy';
 
-        $this->pageTypes['XLite_Module_ProductAdviser_Controller_Customer_RecentlyViewed'] = 'Recently viewed products';
-        $this->pageTypes['XLite_Module_ProductAdviser_Controller_Customer_NewArrivals'] = 'New arrivals';
+        $this->pageTypes['recently_viewed'] = 'Recently viewed products';
+        $this->pageTypes['new_arrivals']    = 'New arrivals';
     }
 }
