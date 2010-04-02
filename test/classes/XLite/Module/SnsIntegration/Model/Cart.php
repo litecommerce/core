@@ -76,7 +76,7 @@ class XLite_Module_SnsIntegration_Model_Cart extends XLite_Model_Cart implements
         func_sns_request($this->config, $snsClientId, array($action));
 	}
 
-	function addItem($item)
+	function addItem(XLite_Model_OrderItem $item)
 	{
 		parent::addItem($item);
 

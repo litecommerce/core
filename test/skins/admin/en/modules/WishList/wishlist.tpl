@@ -55,7 +55,7 @@ function delete_warning()
   <tbody FOREACH="wishlist.products,item">
 
     <tr valign="top">
-      <td IF="item.hasImage()" valign=top align="left" width=100 rowspan="6"><a href="admin.php?target=product&product_id={item.product_id}"><img src="{item.imageURL}" border=0></a></td>
+      <td IF="item.hasImage()" valign=top align="left" width=100 rowspan="6"><a href="admin.php?target=product&product_id={item.product_id}"><img src="{item.getImageURL()}" border=0></a></td>
 			<td IF="!item.hasImage()" valign=top align="left" width=100 rowspan="6">&nbsp;</td> 
       <td nowrap valign=top>SKU:</td>
       <td valign=top>{item.sku}</td>

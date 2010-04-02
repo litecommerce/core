@@ -608,8 +608,17 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 	   	return $this->orderStatus;	
  	} // }}} 
 
-	function search($profile, $id1, $id2, $status, $startDate, $endDate, $start_total = null, $end_total = null, $shipping_id = null, $payment_method = null) // {{{
-    {
+	public function search(
+		$profile = null,
+		$id = null,
+		$status = null,
+		$startDate = null,
+		$endDate = null,
+		$start_total = null,
+		$end_total = null,
+		$shipping_id = null,
+		$payment_method = null
+	) {
         $where = array();
         if (isset($profile)) {
             $where[] = "orig_profile_id='" .$profile->get("profile_id")."'";

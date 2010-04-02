@@ -71,7 +71,7 @@ class XLite_Module_SnsIntegration_Model_Auth extends XLite_Model_Auth implements
         return $result;
     } // }}}
             
-    function loginProfile($profile) // {{{
+    function loginProfile(XLite_Model_Profile $profile) // {{{
     {
         if (strlen($profile->get("password")) && !($this->xlite->is("adminZone") || $this->xlite->is("aspZone"))) {
             // not anonymous

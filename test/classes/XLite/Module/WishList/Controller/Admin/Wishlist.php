@@ -44,27 +44,27 @@ class XLite_Module_WishList_Controller_Admin_Wishlist extends XLite_Controller_A
 	 * @since  3.0.0
 	 */
 	public $wishlist = null;
-	
+
 	/**
-	 * getTemplate 
+	 * getRegularTemplate 
 	 * 
 	 * @return void
-	 * @access public
+	 * @access protected
 	 * @see    ____func_see____
 	 * @since  3.0.0
 	 */
-	public function getTemplate()
+	protected function getRegularTemplate()
 	{
-		$template = $this->template;
-
 		if ('print' == XLite_Core_Request::getInstance()->mode) {
-            // print invoice
-        	$template = 'modules/WishList/wishlist.tpl';
+			$return = 'modules/WishList/wishlist.tpl';
+
+		} else {
+			$return = parent::getRegularTemplate();
 		}
 
-        return $template;
+		return $return;
 	}
-	
+
 	/**
 	 * getWishlist 
 	 * 
