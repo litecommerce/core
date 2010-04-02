@@ -65,14 +65,27 @@ class XLite_Module_DrupalConnector_Core_Converter extends XLite_Core_Converter i
      */
     public static function buildURL($target = '', $action = '', array $params = array())
     {
-        if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
+        if ($target == '') {
+            $target = XLite::TARGET_DEFAULT;
+        }
 
-	        $result = '?q=' . implode('/', array(self::DRUPAL_ROOT_NODE, $target, $action))
-        	    . '/' . XLite_Core_Converter::buildQuery($params, '-', '/');
+        if (!XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
 
-		} else {
-
+            // Standalone URL
             $result = parent::buildURL($target, $action, $params);
+
+        } elseif (XLite_Module_DrupalConnector_Handler::getInstance()->isPortal($target)) {
+
+            // Drupal URL (portal)
+            $result = '?q=' . XLite_Module_DrupalConnector_Handler::getInstance()->getPortalPrefix($target, $action)
+                . '/' . XLite_Core_Converter::buildQuery($params, '-', '/');
+
+        } else {
+
+            // Drupal URL
+    	    $result = '?q=' . implode('/', array(self::DRUPAL_ROOT_NODE, $target, $action))
+            	. '/' . XLite_Core_Converter::buildQuery($params, '-', '/');
+
 		}
 
 		return $result;
