@@ -87,6 +87,14 @@ class XLite_Module_AdvancedSearch_View_SearchResult extends XLite_View_SearchRes
             && ('advanced_search' != XLite_Core_Request::getInstance()->target || 'found' == XLite_Core_Request::getInstance()->submode);
     }
 
+    /**
+     * Search products 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function searchProducts()
     {
         $properties = $this->session->get('search');

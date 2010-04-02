@@ -89,7 +89,7 @@ class XLite_Module_DrupalConnector_Core_Converter extends XLite_Core_Converter i
     	    $result = '?q=' . implode('/', array(self::DRUPAL_ROOT_NODE, $target, $action));
 
             if ($params) {
-            	$params .= '/' . XLite_Core_Converter::buildQuery($params, '-', '/');
+            	$result .= '/' . XLite_Core_Converter::buildQuery($params, '-', '/');
             }
 
 		}

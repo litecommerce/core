@@ -55,7 +55,15 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
      */
     protected $products = null;    
 
-    public $search = null;    
+    /**
+     * Search conditions
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $search = null;
 
     /**
      * Common method to determine current location 
