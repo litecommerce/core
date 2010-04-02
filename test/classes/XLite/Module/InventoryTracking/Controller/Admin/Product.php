@@ -44,7 +44,9 @@
 */
 class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Controller_Admin_Product implements XLite_Base_IDecorator
 {	
-    public $maxOrderBy = 1;
+	public $maxOrderBy = 1;
+	protected $inventory = null;
+	protected $orderItem = null;
 
     public function __construct(array $params)
     {
@@ -80,7 +82,7 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
     {
         if (is_null($this->inventory)) {
             $this->inventory = new XLite_Module_InventoryTracking_Model_Inventory();
-            $found = $this->inventory->find("inventory_id='" . addslashes($this->getComplex('orderItem.key')) . "'");
+            $found = $this->inventory->find("inventory_id='" . addslashes($this->getOrderItem()->get('key')) . "'");
             $this->set("cardFound", $found);
             // set card status to DISABLED in ADD mode
             if (!$found) {

@@ -123,7 +123,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Product extends XLite_Control
 
 	function getUPSPackagingList()
 	{
-		$ups = new XLite_Module_UPS_Model_Shipping_Ups();   
+		$ups = new XLite_Module_UPSOnlineTools_Model_Shipping_Ups();
 
 
 		$list = array();
@@ -136,7 +136,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Product extends XLite_Control
 
 	function getCurrentPackaging()
 	{
-		$ups = new XLite_Module_UPS_Model_Shipping_Ups();
+		$ups = new XLite_Module_UPSOnlineTools_Model_Shipping_Ups();
 		$dims = $ups->getUPSContainerDims($this->getComplex('product.ups_packaging'));
 
 		return $dims;
