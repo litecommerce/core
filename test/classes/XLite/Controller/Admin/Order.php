@@ -49,10 +49,25 @@ class XLite_Controller_Admin_Order extends XLite_Controller_Admin_Abstract
 {	
     public $params = array("target", "order_id");
 
-    function getTemplate()
-    {
-        return ('invoice' == $this->get('mode')) ? 'common/print_invoice.tpl' : $this->template;
-    }
+	/**
+	 * getRegularTemplate 
+	 * 
+	 * @return void
+	 * @access protected
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	protected function getRegularTemplate()
+	{
+		if ('invoice' == XLite_Core_Request::getInstance()->mode) {
+			$return = "common/print_invoice.tpl";
+
+		} else {
+			$return = parent::getRegularTemplate();
+		}
+
+		return $return;
+	}
 
     function getOrder()
     {
