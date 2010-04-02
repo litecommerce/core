@@ -41,22 +41,6 @@
   padding: 0 0 0 6px;
 }
 
-.sort-box {
-  float: right;
-  white-space: nowrap;
-}
-
-.sort-box span,
-.sort-box select,
-.sort-box a
-{
-  vertical-align: middle;
-}
-
-.list-head .sort-box * {
-  vertical-align: middle;
-}
-
 /* List body and common styles */
 .list-body {
   padding: 0px;

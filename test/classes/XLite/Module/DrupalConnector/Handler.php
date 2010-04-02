@@ -210,8 +210,21 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
                 $prefix = $portal['prefix'];
             }
 
-            $prefix[] = 'target-' . $target;
-            $prefix[] = 'action-' . $action;
+            $defaultTarget = false;
+            if (is_array($portal['target'])) {
+                $defaultTarget = array_shift($portal['target']);
+
+            } elseif (is_string($portal['target'])) {
+                $defaultTarget = $portal['target'];
+            }
+
+            if (!$defaultTarget || $target != $defaultTarget) {
+                $prefix[] = 'target-' . $target;
+            }
+
+            if ($action) {
+                $prefix[] = 'action-' . $action;
+            }
 
             $result = implode('/', $prefix);
         }

@@ -43,7 +43,7 @@ class XLite_Controller_Customer_OrderList extends XLite_Controller_Customer_Abst
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $params = array('target', 'mode');
+    protected $params = array('target');
 
     /**
      * Common method to determine current location 
@@ -187,7 +187,7 @@ class XLite_Controller_Customer_OrderList extends XLite_Controller_Customer_Abst
 
         $this->session->set('orders_search', $ordersSearch);
 
-        $this->set('returnUrl', $this->buildUrl('order_list', '', array('mode' => 'search')));
+        $this->set('returnUrl', $this->buildUrl('order_list'));
     }
 
     /**
@@ -201,7 +201,7 @@ class XLite_Controller_Customer_OrderList extends XLite_Controller_Customer_Abst
     protected function doActionReset()
     {
         $this->session->set('orders_search', XLite_Model_Order::getDefaultSearchConditions());
-        $this->set('returnUrl', $this->buildUrl('order_list', '', array('mode' => 'search')));
+        $this->set('returnUrl', $this->buildUrl('order_list'));
     }
 
     /**
