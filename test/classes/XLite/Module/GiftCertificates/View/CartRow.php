@@ -59,6 +59,20 @@ class XLite_Module_GiftCertificates_View_CartRow extends XLite_View_Abstract
     }
 
     /**
+     * Check widget visibility
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isVisible()
+    {
+        return parent::isVisible()
+            && !XLite::getController()->getCart()->hasGiftCertificates();
+    }
+
+    /**
      * Get gift certificate id for input box
      * 
      * @return string

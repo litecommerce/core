@@ -54,7 +54,6 @@ class XLite_Module_GiftCertificates_View_AddGiftCertificate extends XLite_View_D
      */
     protected $allowedTargets = array('gift_certificate');
 
-
     /**
      * Return title
      *

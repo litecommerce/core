@@ -71,6 +71,8 @@ class XLite_Module_GiftCertificates_Model_PaymentMethod_GiftCertificate extends 
         $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate($gcid);
         $cart->set('GC', $gc);
 
+        // TODO - add GC checking
+
         $result = self::PAYMENT_SILENT;
 
         if ($cart->get('total') > 0) {

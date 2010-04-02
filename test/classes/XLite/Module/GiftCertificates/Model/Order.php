@@ -38,61 +38,140 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
     const GC_OK = 2;
     const GC_DISABLED = 3;
     
-    public $gc = null;    
+    /**
+     * Gift certificate (cache)
+     * 
+     * @var    XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $gc = null;    
 
-    public $skipShippingCostRecursion = false;    
+    /**
+     * Skip shipping cost getter flag
+     * 
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $skipShippingCostRecursion = false;    
 
-    public $shippedCertificates = null;    
+    /**
+     * Shipped certificates count
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $shippedCertificates = null;    
 
-    public $shippedItems = null;    
+    /**
+     * Shipped items 
+     * 
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $shippedItems = null;    
 
-    public $shippingCost = null;
+    /**
+     * Shipping cost 
+     * 
+     * @var    float
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $shippingCost = null;
 
+    /**
+     * Constructor
+     * 
+     * @param mixed $param Parameter
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function __construct($param = null)
     {
         // new fields
-        $this->fields["gcid"] = ""; // gift certificate unique ID or 0
-        $this->fields["payedByGC"] = ""; // how much of the order is payed by GC
+        $this->fields['gcid'] = ''; // gift certificate unique ID or 0
+        $this->fields['payedByGC'] = ''; // how much of the order is payed by GC
+
         parent::__construct($param);
     }
 
     /**
-    * Take into account GC while calculating order's total.
-    */
-    function calcTotal()
+     * Calc order total 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function calcTotal()
     {
         $this->shippingCost = null;
+
         parent::calcTotal();
-        if (($gcid = $this->get("gcid")) != "") {
-            if ($this->xlite->is("adminZone") && ($this->get("payedByGC") > 0)) {
-                $this->_payedByGC = min($this->get("total"), $this->get("payedByGC"));
-            } else {
-                $this->_payedByGC = min($this->get("total"), $this->getComplex('gc.debit'));
-            }
-            $this->set("total", $this->get("total") - $this->_payedByGC);
+
+        $gcid = $this->get('gcid');
+        if ($gcid) {
+            $gcAmount = ($this->xlite->is('adminZone') && 0 < $this->get('payedByGC'))
+                ? $this->get('payedByGC')
+                : $this->getGC()->get('debit');
+
+            $this->_payedByGC = min($this->get('total'), $gcAmount);
+
+            $this->set('total', $this->get('total') - $this->_payedByGC);
+
         } else {
             $this->_payedByGC = 0;
         }
-        $this->set("payedByGC", $this->_payedByGC);
+
+        $this->set('payedByGC', $this->_payedByGC);
     }
 
-    function calcTotals()
+    /**
+     * Calculate order totals 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function calcTotals()
     {
         // for PHP 5.2.4 in order not to affect the items during tax calculation, the cache must be cleaned up
-        $this->refresh("items");
+        $this->refresh('items');
+
         parent::calcTotals();
-        $this->refresh("items");
+
+        $this->refresh('items');
     }
 
-    function getGC()
+    /**
+     * Get gift certificate
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getGC()
     {
         if (is_null($this->gc)) {
-            if ($this->get("gcid")) {
-                $this->gc = new XLite_Module_GiftCertificates_Model_GiftCertificate($this->get("gcid"));
-            } else {
-                $this->gc = null;
-            }
+            $this->gc = $this->get('gcid')
+                ? new XLite_Module_GiftCertificates_Model_GiftCertificate($this->get('gcid'))
+                : null;
         }
+
         return $this->gc;
     }
 
@@ -132,185 +211,363 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
         return $result;
     }
     
-    function processed()
+    /**
+     * Processed order
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function processed()
     {
         parent::processed();
-        $this->setGCStatus("A");
+
+        $this->setGCStatus('A');
     }
 
-    function checkedOut()
+    /**
+     * Order after-checkout postprocessing
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function checkedOut()
     {
-        if ($_REQUEST['target'] != 'callback') {
+        if (XLite_Core_Request::getInstance()->target != 'callback') {
             $this->calcTotals();
         }
+
         parent::checkedOut();
+
         $this->changeGCDebit(-1);
     }
 
-    function declined()
+    /**
+     * Decline order
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function declined()
     {
         parent::declined();
-        $this->setGCStatus("P");
+        $this->setGCStatus('P');
     }
 
-    function queued()
+    /**
+     * Queued order
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function queued()
     {
         parent::queued();
-        $this->setGCStatus("P"); // becomes pending
+        $this->setGCStatus('P');
     }
 
-    function uncheckedOut()
+    /**
+     * Order after-checkout postprocessing
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function uncheckedOut()
     {
         parent::uncheckedOut();
         $this->changeGCDebit(1);
-        $this->setGCStatus("D");
+        $this->setGCStatus('D');
     }
 
-    function changeGCDebit($sign)
+    /**
+     * Change gift certificate debit 
+     * 
+     * @param integer $sign Sign (1 or -1)
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function changeGCDebit($sign)
     {
-        // call crypted code
-        require_once LC_MODULES_DIR . 'GiftCertificates' . LC_DS . 'encoded.php';
-        GiftCertificates_changeGCDebit($this, $sign);
+        $gc = $this->getGC();
+        if (!is_null($gc)) {
+            $gc->set('debit', $gc->get('debit') + $sign * $this->get('payedByGC'));
+            $gc->set('status', 0 >= $gc->get('debit') ? 'U' : 'A');
+            $gc->update();
+        }
     }
 
-    function setGCStatus($status)
+    /**
+     * Set gift certificate status
+     * 
+     * @param string $status Status code
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setGCStatus($status)
     {
-        $items = $this->get("items");
-        for($i=0; $i<count($items); $i++) {
-            $item = $items[$i];
-            if (!is_null($item->get("gc"))) {
-                $gc = $item->get("gc");
-                $gc->set("status", $status);
+        foreach ($this->getItems() as $item) {
+            if (!is_null($item->get('gc'))) {
+                $gc = $item->get('gc');
+                $gc->set('status', $status);
                 $gc->update();
             }
         }
     }
 
-    function checkout()
+    /**
+     * Checkout order
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function checkout()
     {
-        if (!is_null($this->get("gc"))) {
+        if (!is_null($this->getGC())) {
             // re-calculate total during checkout to prevemt double-payment
             $this->calcTotals();
             $this->update();
         }
+
         parent::checkout();
     }
 
-    function get($name)
+    /**
+     * Getter
+     * 
+     * @param string $name Property name
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function get($name)
     {
         // arounding problem in the "skins/default/en/shopping_cart/totals.tpl"
-        if ($name == "shipping_cost") {
-            if (!$this->skipShippingCostRecursion) {
-                $this->skipShippingCostRecursion = true;
-                $cost = $this->getShippingCost();
-                $this->skipShippingCostRecursion = false;
-                return $cost;
-            }
+        if (
+            'shipping_cost' == $name
+            && !$this->skipShippingCostRecursion
+        ) {
+            $this->skipShippingCostRecursion = true;
+            $result = $this->getShippingCost();
+            $this->skipShippingCostRecursion = false;
         }
-        return parent::get($name);
+
+        return isset($result) ? $result : parent::get($name);
     }
 
-    function getShippingCost()
+    /**
+     * Get shipping cost 
+     * 
+     * @return float
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getShippingCost()
     {
-        if ( is_null($this->shippingCost) ) {
+        if (is_null($this->shippingCost)) {
+
+            /* TODO - check this
             // LiteCommerce 1.2.2 bug fix
             if (!$this->is("shipped")) {
                 $this->shippingCost = 0;
                 return false;
             }
+            */
+
             // find shipped certificates
             $count = $this->countShippedCertificates();
             if ($count) {
                 $this->shippingCost = $this->hasShippedItems() ? parent::getShippingCost() : 0;
-                   $this->shippingCost += $count*$this->config->getComplex('GiftCertificates.shippingCost');
+                $this->shippingCost += $count * $this->config->GiftCertificates->shippingCost;
+
             } else {
                 $this->shippingCost = parent::getShippingCost();
             }
         }
+
         return $this->shippingCost;
     }
 
-    function isShipped()
+    /**
+     * Check - order shipped or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isShipped()
     {
-        if (parent::isShipped()) {
-            return true;
-        }
-        return $this->countShippedCertificates()>0;
+        return parent::isShipped()
+            || 0 < $this->countShippedCertificates();
     }
 
-    function countShippedCertificates()
+    /**
+     * Get shipped gift certificates count
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function countShippedCertificates()
     {
-        if (!isset($this->shippedCertificates)) {
-            $count = 0;
-            foreach ($this->get("items") as $item) {
-                if (!is_null($item->get("gc")) && $item->getComplex('gc.send_via') == "P") {
-                    $count++;
+        if (is_null($this->shippedCertificates)) {
+
+            $this->shippedCertificates = 0;
+            foreach ($this->getItems() as $item) {
+                $gc = $item->get('gc');
+                if (!is_null($gc) && $gc->get('send_via') == 'P') {
+                    $this->shippedCertificates++;
                 }
             }
-            $this->shippedCertificates = $count;
-        }
-        return $this->shippedCertificates;
-    }    
 
-    function hasShippedItems()
+        }
+
+        return $this->shippedCertificates;
+    } 
+
+    /**
+     * Check - has order shipped items or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function hasShippedItems()
     {
-        if (!isset($this->shippedItems)) {
+        if (is_null($this->shippedItems)) {
+
             $this->shippedItems = false;
-            foreach ($this->get("items") as $item) {
-                if ($item->is("shipped")) {
+            foreach ($this->getItems() as $item) {
+                if ($item->isShipped()) {
                     $this->shippedItems = true;
                     break;
                 }
             }
         }
+
         return $this->shippedItems;
     } 
 
-    function isShippingAvailable()
+    /**
+     * Check - shipping is available or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isShippingAvailable()
     {
-        if ($this->is("shipped"))
-            return ($this->getItemsCount() == $this->countShippedCertificates()) ? true : parent::isShippingAvailable();
-        else
-            return parent::isShippingAvailable();
+        return ($this->isSshipped() && $this->getItemsCount() == $this->countShippedCertificates())
+            ? true
+            : parent::isShippingAvailable();
     }
 
-    function isShippingDefined()
+    /**
+     * Check - shipping is defined or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isShippingDefined()
     {
-        if (!parent::isShippingDefined() && $this->is("shipped"))
-            return true;
-        else
-            return parent::isShippingDefined();
+        return (!parent::isShippingDefined() && $this->isShipped()) ? true : parent::isShippingDefined();
     }
 
-    function set($property, $value)
+    /**
+     * Setter
+     * 
+     * @param string $property Property name
+     * @param mixed  $value    Value
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function set($property, $value)
     {
-        if ($property != "shippingTaxes") {
-            parent::set($property, $value);
-        } else {
-            if ($this->getItemsCount() == $this->countShippedCertificates() && !$this->config->getComplex('Taxes.prices_include_tax')) {
-                parent::set($property, array());
-            } else {
-                parent::set($property, $value);
-            }
+        if (
+            'shippingTaxes' == $property
+            && $this->getItemsCount() == $this->countShippedCertificates()
+            && !$this->config->Taxes->prices_include_tax
+        ) {
+            $value = array();
         }
+
+        parent::set($property, $value);
     }
 
-    function hasGC($gcid)
+    /**
+     * Check - has order specified gift certificate or not
+     * 
+     * @param string $gcid Gift certificate id
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function hasGC($gcid)
     {
         $has = false;
+
         if ($gcid) {
-            $items = $this->get("items");
-            for ($i=0; $i<count($items); $i++) {
-                if ($items[$i]->get("gcid") == $gcid) {
+            $items = $this->getItems();
+            foreach ($this->getItems() as $item) {
+                if ($item->get('gcid') == $gcid) {
                     $has = true;
                     break;
                 }
             }
         }
+
         return $has;
     }
+
+    /**
+     * Get shipped gift certificates count
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function hasGiftCertificates()
+    {
+        $result = false;
+
+        foreach ($this->getItems() as $item) {
+            if (!is_null($item->get('gc'))) {
+                $result = true;
+                break;
+            }
+        }
+
+        return $result;
+    }
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

@@ -61,6 +61,20 @@ class XLite_Module_GiftCertificates_Controller_Customer_GiftCertificate extends 
     protected $gc = null;
 
     /**
+     * Return current page title
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return XLite_Core_Request::getInstance()->gcid
+            ? 'Update gift certificate'
+            : 'Add gift certificate';
+    }
+
+    /**
      * Common method to determine current location 
      * 
      * @return array
@@ -69,7 +83,7 @@ class XLite_Module_GiftCertificates_Controller_Customer_GiftCertificate extends 
      */
     protected function getLocation()
     {
-        return 'Add gift certificate to cart';
+        return $this->getTitle();
     }
 
     /**

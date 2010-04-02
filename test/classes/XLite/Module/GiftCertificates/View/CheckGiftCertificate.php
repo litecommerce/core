@@ -154,4 +154,18 @@ class XLite_Module_GiftCertificates_View_CheckGiftCertificate extends XLite_View
             ? XLite_Core_Request::getInstance()->gcid
             : 'Gift certificate number';
     }
+
+    /**
+     * Check - can apply gift certificate ro cart or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function canApply()
+    {
+        return 'A' == $this->getFoundGc()->get('status')
+            && !XLite::getController()->getCart()->hasGiftCertificates();
+    }
 }

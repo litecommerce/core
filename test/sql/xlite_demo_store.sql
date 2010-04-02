@@ -282,3 +282,6 @@ INSERT INTO xlite_wholesale_pricing (product_id, amount, price, membership) VALU
 
 update xlite_products set expansion_limit = 1 where product_id = 205;
 insert into xlite_purchase_limit values (205, 10, 100);
+
+INSERT INTO xlite_giftcerts VALUES ('TESTGIFT',1,'Mr. Guest Guest','123','E','max@cdev.ru','','','','','0','','','','','','50.00','50.00','A',1270203328,1332411328,0,'','','no_border',NULL);
+
