@@ -162,23 +162,9 @@ OrdersListController.prototype.postprocess = function(isSuccess)
 // Go to order page
 OrdersListController.prototype.goToOrder = function(li)
 {
-  var m = $(li).attr('class').match(/order-([0-9]+)/);
-  var orderId = false;
-  if (m) {
-    orderId = parseInt(m[1]);
-    if (isNaN(orderId) || 0 > orderId) {
-      orderId = false;
-    }
-  }
-
-  if (orderId !== false) {
-    self.location = URLHandler.buildURL(
-      {
-        target:   'order',
-        action:   '',
-        order_id: orderId,
-      }
-    );
+  var href = $('a.number', li).attr('href');
+  if (href) {
+    self.location = href;
 
   } else {
     // TODO - add top message

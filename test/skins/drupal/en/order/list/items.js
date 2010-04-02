@@ -35,6 +35,12 @@ function OrderItemsShortListController(container)
     }
   }
 
+  if (typeof(this.container.get(0).orderItemsShortListController) != 'undefined') {
+    return false;
+  }
+
+  this.container.get(0).orderItemsShortListController = this;
+
   this.modalTarget = this.container;
 
   this.widgetTarget = 'order_history';
@@ -139,11 +145,17 @@ OrderItemsShortListController.prototype.switchList = function()
 // Go to order page
 OrderItemsShortListController.prototype.goToOrder = function()
 {
-  self.location = URLHandler.buildURL(
-    {
-      target:   'order',
-      action:   '',
-      order_id: this.orderId,
-    }
-  );
+  var href = $('a.number', $(this.container).parenst('li').eq(0)).attr('href');
+
+  if (!href) {
+    href = URLHandler.buildURL(
+      {
+        target:   'order',
+        action:   '',
+        order_id: this.orderId,
+      }
+    );
+  }
+
+  self.location = href;
 }
