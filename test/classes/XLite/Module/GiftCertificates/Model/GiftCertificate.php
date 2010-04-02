@@ -277,7 +277,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_Ab
 		$result = false;
 
 		$exp_date = $this->getExpirationDate();
-		$warn_time = $exp_date - $this->config->GiftCertificates->expiration_warning_days * 24 * 3600;
+		$warn_date = $exp_date - $this->config->GiftCertificates->expiration_warning_days * 24 * 3600;
 
 		if (
 			time() >= $warn_date
