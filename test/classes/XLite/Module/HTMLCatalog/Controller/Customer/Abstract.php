@@ -44,12 +44,12 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_HTMLCatalog_Controller_Abstract extends XLite_Controller_Abstract implements XLite_Base_IDecorator
+class XLite_Module_HTMLCatalog_Controller_Customer_Abstract extends XLite_Controller_Customer_Abstract implements XLite_Base_IDecorator
 {
 	// FIXME - to remove
     function getLoginURL()
     {
-        $url = parent::getLoginURL();
+		$url = $this->buildUrl('');
         if ($this->xlite->get("ignoreCustomerSecurity")) {
             $sid = $this->session->getName() . "=" . $this->session->getID();
             if (strpos($url, $sid) !== false) {
