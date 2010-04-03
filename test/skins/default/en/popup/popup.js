@@ -6,101 +6,170 @@
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   SVN: $Id: popup.js 2108 2010-02-25 14:26:34Z max $
+ * @version   SVN: $Id: popup.js 2409 2010-04-01 13:51:53Z max $
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  */
 
+// Display block message
 function blockUIPopup(data)
 {
-	$.blockUI(
-    	{
-        	message: '<a href="#" class="close-link" onclick="javascript: blockUIPopupClose(); return false;"></a><div class="block-container"><div class="block-subcontainer">' + data + '</div></div>'
-        }
-	);
-	$('.blockOverlay')
-		.attr('title', 'Click to unblock')
-		.click(blockUIPopupClose); 
+  $.blockUI(
+    {
+      message: '<a href="#" class="close-link" onclick="javascript: blockUIPopupClose(); return false;"></a><div class="block-container"><div class="block-subcontainer">' + data + '</div></div>'
+    }
+  );
+
+  // Reposition
+  $('.blockMsg').css('left', Math.round(($(window).width() - $('.blockMsg').width()) / 2) + 'px');
+
+  // Modify overlay
+  $('.blockOverlay')
+    .attr('title', 'Click to unblock')
+    .click(blockUIPopupClose); 
 }
 
+// Close message box
 function blockUIPopupClose()
 {
-	$.unblockUI();
+  $.unblockUI();
 }
 
+// Display 'Please wait' message
 function blockUIPopupWait()
 {
-	blockUIPopup('<div class="block-wait">Please wait ...</div>');
+  blockUIPopup('<div class="block-wait">Please wait ...</div>');
 }
 
+// Open target / action / params based popup
+function openBlockUIPopup(target, action, params)
+{
+  if (!hasAJAXSupport()) {
+    return false;
+  }
+
+  if (!params) {
+    params = {};
+  }
+
+  params.target = target;
+  params.action = action ? action : '';
+
+  params.isPopup = true;
+
+  return $.ajax(
+    {
+      type:     'get',
+      url:      URLHandler.buildURL(params), 
+      success:  function(data, s) {
+        data = blockUIPopupPreprocess(data, s);
+        blockUIPopup(data);
+        blockUIPopupPostprocess();
+      },
+      complete: function(xhr, s) {
+        blockUIPopupXHRPreprocess(xhr, s);
+      }
+    }
+  );
+}
+
+// Open form-based popup
 function blockUIPopupFormTarget(form)
 {
-    if (form) {
-        blockUIPopupWait();
+  if (!form || !hasAJAXSupport()) {
+    return false;
+  }
 
-        $.ajax(
-			{
-				type: form.method.toUpperCase(),
-            	url:  form.action,
-            	data: $(form).serialize(),
-            	success: function(data, s) {
-					data = blockUIPopupPreprocess(data, s);
-	                blockUIPopup(data);
-					blockUIPopupPostprocess();
-				},
-				complete: function(xhr, s) {
-                    blockUIPopupXHRPreprocess(xhr, s);
-				}
-            }
-        );
+  blockUIPopupWait();
+
+  form = $(form).eq(0);
+
+  return $.ajax(
+    {
+      type:     form.attr('method'),
+      url:      form.attr('action'),
+      data:     form.serialize(),
+      success:  function(data, s) {
+        data = blockUIPopupPreprocess(data, s);
+        blockUIPopup(data);
+        blockUIPopupPostprocess();
+      },
+      complete: function(xhr, s) {
+        blockUIPopupXHRPreprocess(xhr, s);
+      }
     }
+  );
 }
 
 function blockUIPopupXHRPreprocess(xhr, s)
 {
-	// Redirect
-	if (xhr.status == 278) {
+  if (xhr.status == 278) {
 
-		blockUIPopupClose();
-		var url = xhr.getResponseHeader('Location');
-		if (url) {
-			self.location = url;
+    // Redirect
 
-		} else {
-			self.location.reload(true);
-		}
-	}
+    blockUIPopupClose();
+    var url = xhr.getResponseHeader('Location');
+    if (url) {
+      self.location = url;
+
+    } else {
+      self.location.reload(true);
+    }
+
+  } else if (xhr.status == 279) {
+
+    // Internal redirect
+
+    var url = xhr.getResponseHeader('Location');
+    if (url) {
+      $.ajax(
+        {
+          type:     'get',
+          url:      url,
+          success:  function(data, s) {
+            data = blockUIPopupPreprocess(data, s);
+            blockUIPopup(data);
+            blockUIPopupPostprocess();
+          },
+          complete: function(xhr, s) {
+            blockUIPopupXHRPreprocess(xhr, s);
+          }
+        }
+      );
+
+    } else {
+      self.location.reload(true);
+    }
+  }
 }
 
 function blockUIPopupPreprocess(data, s)
 {
-	return data;
+  return data;
 }
 
 function blockUIPopupPostprocess()
 {
-	$('.blockMsg form').each(
-		function() {
-	        $(this).submit(
-				function() {
-					blockUIPopupFormTarget(this);
-					return false;
-				}
-			);
-		}
-	);
+  $('.blockMsg form').submit(
+    function(event) {
+      event.stopPropagation();
+      $('button', this).attr('disabled', 'disabled');
+      blockUIPopupFormTarget(this);
+      return false;
+    }
+  );
 }
 
 $(document).ready(
-	function() {
-		$.blockUI.defaults.css = {};
-		$.blockUI.defaults.centerX =         true;
-		$.blockUI.defaults.centerY =         true;
-		$.blockUI.defaults.bindEvents =      true;
-		$.blockUI.defaults.constrainTabKey = true;
-		$.blockUI.defaults.showOverlay =     true;
-		$.blockUI.defaults.focusInput =      true;
-		$.blockUI.defaults.fadeIn =          0;
-		$.blockUI.defaults.fadeOut =         0;
-	}
+  function() {
+    $.blockUI.defaults.css = {};
+    $.blockUI.defaults.centerX =         true;
+    $.blockUI.defaults.centerY =         true;
+    $.blockUI.defaults.bindEvents =      true;
+    $.blockUI.defaults.constrainTabKey = true;
+    $.blockUI.defaults.showOverlay =     true;
+    $.blockUI.defaults.focusInput =      true;
+    $.blockUI.defaults.fadeIn =          0;
+    $.blockUI.defaults.fadeOut =         0;
+  }
 );

@@ -55,6 +55,8 @@ function openBlockUIPopup(target, action, params)
   params.target = target;
   params.action = action ? action : '';
 
+  params.isPopup = true;
+
   return $.ajax(
     {
       type:     'get',

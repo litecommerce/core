@@ -44,6 +44,18 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
     public $enabled = false;
 
 
+    /**
+     * getStartupFlag 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getStartupFlag()
+    {
+        return XLite::getInstance()->getOptions(array('profiler_details', 'enabled')) && !XLite_Core_Request::getInstance()->isPopup;
+    }
+
 	/**
 	 * Use this function to get a reference to this class object 
 	 * 
@@ -65,7 +77,7 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
      */
     public function __construct()
     {
-        $this->start(XLite::getInstance()->getOptions(array('profiler_details', 'enabled')));
+        $this->start($this->getStartupFlag());
     }
 
 	/**

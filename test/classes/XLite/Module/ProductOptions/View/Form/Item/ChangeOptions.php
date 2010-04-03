@@ -56,6 +56,30 @@ class XLite_Module_ProductOptions_View_Form_Item_ChangeOptions extends XLite_Vie
         return 'change_options';
     }
 
+    /**
+     * getDefaultTarget
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTarget()
+    {
+        return 'change_options';
+    }
+
+    /**
+     * getDefaultAction
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultAction()
+    {
+        return 'change';
+    }
+
     /** 
      * Define widget parameters
      *
@@ -72,9 +96,6 @@ class XLite_Module_ProductOptions_View_Form_Item_ChangeOptions extends XLite_Vie
             self::PARAM_STORAGE_ID => new XLite_Model_WidgetParam_Int('Storage id', XLite_Core_Request::getInstance()->storage_id),
             self::PARAM_ITEM_ID    => new XLite_Model_WidgetParam_Int('Item id', XLite_Core_Request::getInstance()->item_id),
         );
-
-        $this->widgetParams[self::PARAM_FORM_TARGET]->setValue('change_options');
-        $this->widgetParams[self::PARAM_FORM_ACTION]->setValue('change');
     }
 
     /**
@@ -106,7 +127,5 @@ class XLite_Module_ProductOptions_View_Form_Item_ChangeOptions extends XLite_Vie
             'item_id'    => $this->getParam(self::PARAM_ITEM_ID),
         );
     }
-
-
 }
 
