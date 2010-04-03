@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage View
+ * @subpackage ____sub_package____
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,60 +26,26 @@
  * @since      3.0.0
  */
 
+
 /**
- * Form field widget
+ * XLite_View_FormField_Input_Text 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @since      3.0.0
  */
-class XLite_View_FormField extends XLite_View_Abstract
+class XLite_View_FormField_Input_Text extends XLite_View_FormField_Input_Abstract
 {
     /**
-     * Widget param names 
-     */
-    const PARAM_FIELD = 'field';
-
-
-    /**
-     * Return widget default template
-     *
+     * Return field type
+     * 
      * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected function getDefaultTemplate()
+    protected function getFieldType()
     {
-        return null;
-    }
-
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_FIELD => new XLite_Model_WidgetParam_String('Field', null),
-        );
-    }
-
-    /**
-     * Used in form field components to display a form field according to the 'field' property
-     * FIXME - to check
-     * 
-     * @return mixed
-     * @access public
-     * @since  3.0
-     */
-    public function getValue()
-    {
-        return $this->getParam(self::PARAM_FIELD);
+        return self::FIELD_TYPE_TEXT;
     }
 }
 

@@ -65,6 +65,19 @@ class XLite_View_DatePicker extends XLite_View_FormField
      */
     protected $jsDateFormat = 'M dd, yy';
 
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'common/datepicker.tpl';
+    }
+
     /**
      * Define widget parameters
      *
@@ -78,22 +91,13 @@ class XLite_View_DatePicker extends XLite_View_FormField
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_FIELD     => new XLite_Model_WidgetParam_String(
-                'Name of date field prefix', 'date', false
-            ),
-            self::PARAM_VALUE     => new XLite_Model_WidgetParam_Int(
-                'Value of date field (timestamp)', null, false
-            ),
-            self::PARAM_HIGH_YEAR => new XLite_Model_WidgetParam_Int(
-                'The high year', date('Y', time()) - 1, false
-            ),
-            self::PARAM_LOW_YEAR  => new XLite_Model_WidgetParam_Int(
-                'The low year', 2035, false
-            ),
+            self::PARAM_FIELD     => new XLite_Model_WidgetParam_String('Name of date field prefix', 'date'),
+            self::PARAM_VALUE     => new XLite_Model_WidgetParam_Int('Value of date field (timestamp)', null),
+            self::PARAM_HIGH_YEAR => new XLite_Model_WidgetParam_Int('The high year', date('Y', time()) - 1),
+            self::PARAM_LOW_YEAR  => new XLite_Model_WidgetParam_Int('The low year', 2035),
         );
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/datepicker.tpl');
     }
+
 
     /**
      * Get element class name 
@@ -176,5 +180,4 @@ class XLite_View_DatePicker extends XLite_View_FormField
 
         return $list;
     }
-
 }

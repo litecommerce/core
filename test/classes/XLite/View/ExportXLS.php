@@ -34,21 +34,16 @@
  * @since      3.0.0
  */
 class XLite_View_ExportXLS extends XLite_View_Abstract
-{	
+{
     /**
-     * Get template directory 
-     * 
+     * Return widget default template
+     *
      * @return string
      * @access protected
-     * @see    ____func_see____
      * @since  3.0.0
      */
-
-    protected function defineWidgetParams()
+    protected function getDefaultTemplate()
     {
-        parent::defineWidgetParams();
-
-		$this->widgetParams[self::PARAM_TEMPLATE]->setValue('order/export_xls.tpl');
-
+        return 'order/export_xls.tpl';
     }
 } 

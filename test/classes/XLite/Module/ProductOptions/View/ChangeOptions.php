@@ -41,6 +41,7 @@ class XLite_Module_ProductOptions_View_ChangeOptions extends XLite_View_Abstract
 
     const PARAM_ITEM = 'item';
 
+
     /**
      * Product (cache)
      * 
@@ -60,6 +61,19 @@ class XLite_Module_ProductOptions_View_ChangeOptions extends XLite_View_Abstract
      */
     protected $allowedTargets = array('change_options');
 
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'modules/ProductOptions/change_options.tpl';
+    }
+
     /**
      * Define widget parameters
      *
@@ -72,11 +86,10 @@ class XLite_Module_ProductOptions_View_ChangeOptions extends XLite_View_Abstract
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_ITEM    => new XLite_Model_WidgetParam_Object('Item', null, false, 'XLite_Model_OrderItem'),
-         );
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/ProductOptions/change_options.tpl');
+            self::PARAM_ITEM => new XLite_Model_WidgetParam_Object('Item', null, false, 'XLite_Model_OrderItem'),
+        );
     }
+
 
     /**
      * Check widget visibility 

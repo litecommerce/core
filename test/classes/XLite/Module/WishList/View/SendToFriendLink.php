@@ -43,6 +43,18 @@ class XLite_Module_WishList_View_SendToFriendLink extends XLite_View_Abstract
 
 
     /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'modules/WishList/send_to_friend_link.tpl';
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -56,22 +68,6 @@ class XLite_Module_WishList_View_SendToFriendLink extends XLite_View_Abstract
         $this->widgetParams += array(
             self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
         );
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/WishList/send_to_friend_link.tpl');
-    }
-
-    /**
-     * Check visibility 
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isVisible()
-    {
-        return parent::isVisible()
-            && $this->getParam(self::PARAM_PRODUCT);
     }
 
     /**

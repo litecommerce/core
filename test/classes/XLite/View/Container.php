@@ -36,13 +36,6 @@
 abstract class XLite_View_Container extends XLite_View_Abstract
 {
     /**
-     * Default body template
-     */
-
-    const PARAM_BODY_TEMPLATE = 'body.tpl';
-
-
-    /**
      * Return title 
      * 
      * @return string
@@ -60,15 +53,6 @@ abstract class XLite_View_Container extends XLite_View_Abstract
      */
     abstract protected function getDir();
 
-    /**
-     * Return default template
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    abstract protected function getDefaultTemplate();
-
 
     /**
      * isWrapper 
@@ -80,6 +64,18 @@ abstract class XLite_View_Container extends XLite_View_Abstract
     protected function isWrapper()
     {
         return $this->getParam(self::PARAM_TEMPLATE) == $this->getDefaultTemplate();
+    }
+
+    /**
+     * Return file name for body template
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getBodyTemplate()
+    {
+        return 'body.tpl';
     }
 
     /**
@@ -103,7 +99,7 @@ abstract class XLite_View_Container extends XLite_View_Abstract
      */
     protected function getBody()
     {
-        return $this->getDir() . LC_DS . self::PARAM_BODY_TEMPLATE;
+        return $this->getDir() . LC_DS . $this->getBodyTemplate();
     }
 
     /**
@@ -116,20 +112,6 @@ abstract class XLite_View_Container extends XLite_View_Abstract
     protected function useBodyTemplate()
     {
         return XLite_Core_CMSConnector::isCMSStarted() && $this->isWrapper();
-    }
-
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue($this->getDefaultTemplate());
     }
 }
 

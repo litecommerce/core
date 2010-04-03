@@ -37,11 +37,13 @@
 class XLite_View_Date extends XLite_View_FormField
 {
     /*
-     * Constants: names of a widget parameters
+     * Names of the widget parameters
      */
+
     const PARAM_FIELD       = 'field';
     const PARAM_VALUE       = 'value';
     const PARAM_YEARS_RANGE = 'yearsRange';
+
 
     /**
      * Parameters for prefilling the form
@@ -73,6 +75,19 @@ class XLite_View_Date extends XLite_View_FormField
      */
     protected $higherYear = 2035;    
 
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'common/date.tpl';
+    }
+
     /**
      * Define widget parameters
      *
@@ -86,18 +101,10 @@ class XLite_View_Date extends XLite_View_FormField
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_FIELD => new XLite_Model_WidgetParam_String(
-                'Name of date field prefix', '', false
-            ),
-            self::PARAM_VALUE => new XLite_Model_WidgetParam_Int(
-                'Value of date field (timestamp)', time(), false
-            ),
-            self::PARAM_YEARS_RANGE => new XLite_Model_WidgetParam_Int(
-                'The range of years', null, false
-            )
+            self::PARAM_FIELD       => new XLite_Model_WidgetParam_String('Name of date field prefix', ''),
+            self::PARAM_VALUE       => new XLite_Model_WidgetParam_Int('Value of date field (timestamp)', time()),
+            self::PARAM_YEARS_RANGE => new XLite_Model_WidgetParam_Int('The range of years', null),
         );
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/date.tpl');
     }
 
     /**

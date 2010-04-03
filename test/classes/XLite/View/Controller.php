@@ -65,6 +65,18 @@ class XLite_View_Controller extends XLite_View_Abstract
     }
 
     /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'body.tpl';
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -79,8 +91,6 @@ class XLite_View_Controller extends XLite_View_Abstract
             self::PARAM_SILENT       => new XLite_Model_WidgetParam_Bool('Silent', false),
             self::PARAM_DUMP_STARTED => new XLite_Model_WidgetParam_Bool('Dump started', false)
         );
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('body.tpl');
     }
 
     /**

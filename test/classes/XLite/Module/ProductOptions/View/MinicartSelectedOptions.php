@@ -83,6 +83,19 @@ class XLite_Module_ProductOptions_View_MinicartSelectedOptions extends XLite_Vie
      */
     protected $lengthLimit = 2;
 
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'modules/ProductOptions/minicart.tpl';
+    }
+
     /**
      * Define widget parameters
      *
@@ -98,8 +111,6 @@ class XLite_Module_ProductOptions_View_MinicartSelectedOptions extends XLite_Vie
             self::PARAM_ITEM    => new XLite_Model_WidgetParam_Object('Item', null, false, 'XLite_Model_OrderItem'),
             self::PARAM_CART_ID => new XLite_Model_WidgetParam_Int('Cart id', 0, false),
         );
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/ProductOptions/minicart.tpl');
     }
 
     /**
@@ -113,6 +124,7 @@ class XLite_Module_ProductOptions_View_MinicartSelectedOptions extends XLite_Vie
     {
         return $this->getParam(self::PARAM_ITEM);
     }
+
 
     /**
      * Check widget visibility 
@@ -233,6 +245,5 @@ class XLite_Module_ProductOptions_View_MinicartSelectedOptions extends XLite_Vie
 
         return $list;
     }
-
 }
 

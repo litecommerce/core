@@ -43,6 +43,19 @@ class XLite_View_StateSelect extends XLite_View_FormField
     const PARAM_VALUE      = 'value';
     const PARAM_FIELD_ID   = 'fieldId';
 
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'common/select_state.tpl';
+    }
+
     /**
      * Define widget parameters
      *
@@ -59,8 +72,6 @@ class XLite_View_StateSelect extends XLite_View_FormField
             self::PARAM_FIELD_ID   => new XLite_Model_WidgetParam_String('Field ID', ''),
             self::PARAM_VALUE      => new XLite_Model_WidgetParam_String('Value', '')
         );
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/select_state.tpl');
     }
 
     /**

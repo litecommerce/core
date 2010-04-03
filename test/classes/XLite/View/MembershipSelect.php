@@ -43,6 +43,19 @@ class XLite_View_MembershipSelect extends XLite_View_FormField
 	const PARAM_ALL_OPTION = 'allOption';
 	const PARAM_PENDING_OPTION = 'pendingOption';
 
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'common/select_membership.tpl';
+    }
+
     /**
      * Define widget parameters
      *
@@ -60,9 +73,6 @@ class XLite_View_MembershipSelect extends XLite_View_FormField
 			self::PARAM_ALL_OPTION     => new XLite_Model_WidgetParam_Bool('Display All option', false, false),
 			self::PARAM_PENDING_OPTION => new XLite_Model_WidgetParam_Bool('Display Pending option', false, false)
 		);
-
-		$this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/select_membership.tpl');
     }
-
 }
 

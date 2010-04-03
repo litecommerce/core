@@ -35,19 +35,17 @@
  * @since   3.0.0
  */
 class XLite_Module_GiftCertificates_View_AddStatesInfo extends XLite_View_Abstract
-{	
+{
     /**
-     * Define widget parameters
+     * Return widget default template
      *
-     * @return void
+     * @return string
      * @access protected
-     * @since  1.0.0
+     * @since  3.0.0
      */
-    protected function defineWidgetParams()
+    protected function getDefaultTemplate()
     {
-        parent::defineWidgetParams();
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('js/select_states_begin_js.tpl');
+        return 'js/select_states_begin_js.tpl';
     }
 
     /**
@@ -60,12 +58,7 @@ class XLite_Module_GiftCertificates_View_AddStatesInfo extends XLite_View_Abstra
      */
     protected function isIgnoreErrors()
     {
-        if (!file_exists($this->get("template"))) {
-            return true;
-		}
-
-        return parent::is("ignoreErrors");
+        return file_exists($this->getTemplate()) ? parent::is("ignoreErrors") : true;
     }
 }
 
-?>

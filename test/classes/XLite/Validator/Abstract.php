@@ -36,6 +36,19 @@
 abstract class XLite_Validator_Abstract extends XLite_View_Abstract
 {
     /**
+     * Return widget default template
+     * FIXME - backward compatibility
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return $this->template;
+    }
+
+    /**
      * Attempts to display widget using its template 
      * 
      * @return void

@@ -70,23 +70,16 @@ abstract class XLite_Model_WidgetParam_Abstract extends XLite_Base
 
 
     /**
-     * Constructor
+     * Return list of conditions to check
      * 
-     * @param mixed $label     param label (text)
-     * @param mixed $value     default value
-     * @param mixed $isSetting display this setting in CMS or not
+     * @param mixed $value value to validate
      *  
-     * @return void
-     * @access public
+     * @return array
+     * @access protected
      * @since  3.0.0
      */
-    public function __construct($label, $value = null, $isSetting = false)
-    {
-        $this->label     = $label;
-        $this->isSetting = $isSetting;
+    abstract protected function getValidaionSchema($value);
 
-        $this->setValue($value);
-    }
 
     /**
      * Check passed conditions
@@ -113,16 +106,25 @@ abstract class XLite_Model_WidgetParam_Abstract extends XLite_Base
         return $messages;
     }
 
+
     /**
-     * Return list of conditions to check
+     * Constructor
      * 
-     * @param mixed $value value to validate
+     * @param mixed $label     param label (text)
+     * @param mixed $value     default value
+     * @param mixed $isSetting display this setting in CMS or not
      *  
-     * @return array
-     * @access protected
+     * @return void
+     * @access public
      * @since  3.0.0
      */
-    abstract protected function getValidaionSchema($value);
+    public function __construct($label, $value = null, $isSetting = false)
+    {
+        $this->label     = $label;
+        $this->isSetting = $isSetting;
+
+        $this->setValue($value);
+    }
 
     /**
      * Validate passed value

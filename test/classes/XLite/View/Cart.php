@@ -44,6 +44,7 @@ class XLite_View_Cart extends XLite_View_Dialog
      */
     protected $allowedTargets = array('cart');
 
+
     /**
      * Return title
      *
@@ -69,19 +70,15 @@ class XLite_View_Cart extends XLite_View_Dialog
     }
 
     /**
-     * Define widget parameters
+     * Return file name for body template
      *
      * @return void
      * @access protected
-     * @since  1.0.0
+     * @since  3.0.0
      */
-    protected function defineWidgetParams()
+    protected function getBodyTemplate()
     {
-        parent::defineWidgetParams();
-
-        if ($this->getCart()->isEmpty()) {
-            $this->widgetParams[self::PARAM_TEMPLATE]->setValue($this->getDir() . '/empty.tpl');
-        }
+        return $this->getCart()->isEmpty() ? 'empty.tpl' : parent::getBodyTemplate();
     }
 
     /**
@@ -93,12 +90,7 @@ class XLite_View_Cart extends XLite_View_Dialog
      */
     public function getCSSFiles()
     {
-        return array_merge(
-            parent::getCSSFiles(),
-            array(
-                $this->getDir() . '/cart.css',
-            )
-        );
+        return array_merge(parent::getCSSFiles(), array($this->getDir() . '/cart.css'));
     }
 
     /**
@@ -111,12 +103,7 @@ class XLite_View_Cart extends XLite_View_Dialog
      */
     public function getJSFiles()
     {
-        $list = parent::getJSFiles();
-
-        $list[] = $this->getDir() . '/cart.js';
-
-        return $list;
+        return array_merge(parent::getJSFiles(), array($this->getDir() . '/cart.js'));
     }
-
 }
 

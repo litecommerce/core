@@ -44,19 +44,19 @@ class XLite_Module_GiftCertificates_View_CartRow extends XLite_View_Abstract
      */
     protected $allowedTargets = array('cart');
 
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
 
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/GiftCertificates/cart.tpl');
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'modules/GiftCertificates/cart.tpl';
     }
+
 
     /**
      * Check widget visibility
@@ -68,8 +68,7 @@ class XLite_Module_GiftCertificates_View_CartRow extends XLite_View_Abstract
      */
     public function isVisible()
     {
-        return parent::isVisible()
-            && !XLite::getController()->getCart()->hasGiftCertificates();
+        return parent::isVisible() && !$this->getCart()->hasGiftCertificates();
     }
 
     /**
@@ -120,5 +119,4 @@ class XLite_Module_GiftCertificates_View_CartRow extends XLite_View_Abstract
 
         return $list;
     }
-
 }

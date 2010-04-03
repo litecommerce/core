@@ -26,6 +26,7 @@
  * @since      3.0.0
  */
 
+// FIXME - check this class
 
 /**
  * Category selector
@@ -36,9 +37,22 @@
  */
 class XLite_Module_ProductOptions_Validator_RequiredValidator extends XLite_Validator_Abstract
 {	
-	const PARAM_OPTION_ID   = 'option_id';
-	const PARAM_FIELD_NAME  = 'field';
-	const PARAM_ACTION = 'action';
+	const PARAM_OPTION_ID  = 'option_id';
+	const PARAM_FIELD_NAME = 'field';
+	const PARAM_ACTION     = 'action';
+
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'common/required_validator.tpl';
+    }
 
     /**
      * Define widget parameters
@@ -54,11 +68,10 @@ class XLite_Module_ProductOptions_Validator_RequiredValidator extends XLite_Vali
         $this->widgetParams += array(
 			self::PARAM_OPTION_ID   => new XLite_Model_WidgetParam_Int('Option Id', null),
 			self::PARAM_FIELD_NAME  => new XLite_Model_WidgetParam_String('Field', null),
-			self::PARAM_ACTION => new XLite_Model_WidgetParam_String('Action', null)
+			self::PARAM_ACTION      => new XLite_Model_WidgetParam_String('Action', null)
 		);
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/required_validator.tpl');
     }
+
 
     /**
      * isValid 
@@ -109,6 +122,5 @@ class XLite_Module_ProductOptions_Validator_RequiredValidator extends XLite_Vali
 
         return $result;
     }
-
 }
 

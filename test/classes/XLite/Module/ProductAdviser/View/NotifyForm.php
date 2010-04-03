@@ -15,6 +15,8 @@
  * @since     3.0.0
  */
 
+// FIXME - must be derived from he same class as the XLite_Module_ProductAdviser_View_NotifyLink one
+
 /**
  * Notify form widget
  *
@@ -32,6 +34,18 @@ class XLite_Module_ProductAdviser_View_NotifyForm extends XLite_View_Abstract
 
 
     /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'modules/ProductAdviser/OutOfStock/notify_form.tpl';
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -42,8 +56,9 @@ class XLite_Module_ProductAdviser_View_NotifyForm extends XLite_View_Abstract
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams[self::PARAM_PRODUCT] = new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product');
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/ProductAdviser/OutOfStock/notify_form.tpl');
+        $this->widgetParams += array(
+            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
+        );
     }
 
     /**
@@ -57,7 +72,6 @@ class XLite_Module_ProductAdviser_View_NotifyForm extends XLite_View_Abstract
     public function isVisible()
     {
         return parent::isVisible()
-            && $this->getParam(self::PARAM_PRODUCT)
             && $this->xlite->get('PA_InventorySupport')
             && $this->get('productNotificationEnabled')
             && $this->get('rejectedItem');

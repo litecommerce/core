@@ -43,6 +43,18 @@ class XLite_Module_WholesaleTrading_View_ExtendedOptions extends XLite_View_Abst
 
 
     /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'modules/WholesaleTrading/expanded_options.tpl';
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -56,8 +68,6 @@ class XLite_Module_WholesaleTrading_View_ExtendedOptions extends XLite_View_Abst
         $this->widgetParams += array(
             self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
         );
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/WholesaleTrading/expanded_options.tpl');
     }
 
     /**
@@ -71,7 +81,6 @@ class XLite_Module_WholesaleTrading_View_ExtendedOptions extends XLite_View_Abst
     public function isVisible()
     {
         return parent::isVisible()
-            && $this->getParam(self::PARAM_PRODUCT)
             && $this->getParam(self::PARAM_PRODUCT)->hasOptions()
             && $this->getParam(self::PARAM_PRODUCT)->get('showExpandedOptions');
     }

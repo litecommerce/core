@@ -45,6 +45,18 @@ class XLite_View_Button extends XLite_View_Abstract
 
 
     /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'common/button.tpl';
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -60,7 +72,5 @@ class XLite_View_Button extends XLite_View_Abstract
             self::PARAM_IMG   => new XLite_Model_WidgetParam_String('Image', null),
             self::PARAM_LABEL => new XLite_Model_WidgetParam_String('Label', 'Submit'),
         );
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/button.tpl');
     }
 }

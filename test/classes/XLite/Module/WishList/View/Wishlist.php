@@ -69,19 +69,15 @@ class XLite_Module_WishList_View_Wishlist extends XLite_View_Dialog
     }
 
     /**
-     * Define widget parameters
+     * Return file name for body template
      *
      * @return void
      * @access protected
-     * @since  1.0.0
+     * @since  3.0.0
      */
-    protected function defineWidgetParams()
+    protected function getBodyTemplate()
     {
-        parent::defineWidgetParams();
-
-        if (!$this->getItems()) {
-            $this->widgetParams[self::PARAM_TEMPLATE]->setValue($this->getDir() . '/empty.tpl');
-        }
+        return $this->getItems() ? parent::getBodyTemplate() : 'empty.tpl';
     }
 
     /**

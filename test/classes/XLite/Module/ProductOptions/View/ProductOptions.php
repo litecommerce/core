@@ -43,6 +43,18 @@ class XLite_Module_ProductOptions_View_ProductOptions extends XLite_View_Abstrac
 
 
     /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'modules/ProductOptions/product_options.tpl';
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -53,9 +65,11 @@ class XLite_Module_ProductOptions_View_ProductOptions extends XLite_View_Abstrac
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams[self::PARAM_PRODUCT] = new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product');
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/ProductOptions/product_options.tpl');
+        $this->widgetParams += array(
+            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
+        );
     }
+
 
     /**
      * Check widget visibility 
@@ -66,9 +80,7 @@ class XLite_Module_ProductOptions_View_ProductOptions extends XLite_View_Abstrac
      */
     public function isVisible()
     {
-        return parent::isVisible()
-            && $this->getParam(self::PARAM_PRODUCT)
-            && $this->getParam(self::PARAM_PRODUCT)->hasOptions();
+        return parent::isVisible() && $this->getParam(self::PARAM_PRODUCT)->hasOptions();
     }
 
     /**

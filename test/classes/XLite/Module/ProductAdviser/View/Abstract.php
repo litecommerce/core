@@ -45,7 +45,7 @@
 * @access public
 * @version $Id$
 */
-class XLite_Module_ProductAdviser_View_Abstract extends XLite_View_Abstract implements XLite_Base_IDecorator
+abstract class XLite_Module_ProductAdviser_View_Abstract extends XLite_View_Abstract implements XLite_Base_IDecorator
 {
 	function getPercents($columns)
 	{

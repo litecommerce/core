@@ -52,17 +52,15 @@ class XLite_View_MailExplorer extends XLite_View_ColumnList
     public $templates = array();
 
     /**
-     * Define widget parameters
+     * Return widget default template
      *
-     * @return void
+     * @return string
      * @access protected
-     * @since  1.0.0
+     * @since  3.0.0
      */
-    protected function defineWidgetParams()
+    protected function getDefaultTemplate()
     {
-        parent::defineWidgetParams();
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('template_editor/mail_list.tpl');
+        return 'template_editor/mail_list.tpl';
     }
 
     protected function getLocale()

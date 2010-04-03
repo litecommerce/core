@@ -42,6 +42,19 @@ class XLite_View_BuyNow extends XLite_View_Abstract
     const PARAM_PRODUCT = 'product';
     const PARAM_BUTTON_STYLE = 'style';
 
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'buy_now.tpl';
+    }
+
     /**
      * Define widget parameters
      *
@@ -54,15 +67,14 @@ class XLite_View_BuyNow extends XLite_View_Abstract
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
-            self::PARAM_BUTTON_STYLE => new XLite_Model_WidgetParam_String('Button style', '', false),
+            self::PARAM_PRODUCT      => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
+            self::PARAM_BUTTON_STYLE => new XLite_Model_WidgetParam_String('Button style', ''),
         );
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('buy_now.tpl');
     }
 
+
     /**
-      Check visibility 
+     * Check visibility 
      * 
      * @return boolean
      * @access public

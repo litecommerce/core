@@ -63,6 +63,19 @@ class XLite_View_OrderItemsShort extends XLite_View_Abstract
      */
     protected $order = null;
 
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'order/list/items.tpl';
+    }
+
     /**
      * Define widget parameters
      *
@@ -75,19 +88,12 @@ class XLite_View_OrderItemsShort extends XLite_View_Abstract
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_ORDER    => new XLite_Model_WidgetParam_Object(
-                'Order', null, false, 'XLite_Model_Order'
-            ),
-            self::PARAM_ORDER_ID => new XLite_Model_WidgetParam_Int(
-                'Order id', null, false
-            ),
-            self::PARAM_FULL => new XLite_Model_WidgetParam_Bool(
-                'Display full list', false, false
-            ),
+            self::PARAM_ORDER    => new XLite_Model_WidgetParam_Object('Order', null, false, 'XLite_Model_Order'),
+            self::PARAM_ORDER_ID => new XLite_Model_WidgetParam_Int('Order id', null, false),
+            self::PARAM_FULL     => new XLite_Model_WidgetParam_Bool('Display full list', false),
         );
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('order/list/items.tpl');
     }
+
 
     /**
      * Check widget visibility
@@ -99,8 +105,7 @@ class XLite_View_OrderItemsShort extends XLite_View_Abstract
      */
     public function isVisible()
     {
-        return parent::isVisible()
-            && $this->getOrder();
+        return parent::isVisible() && $this->getOrder();
     }
 
     /**

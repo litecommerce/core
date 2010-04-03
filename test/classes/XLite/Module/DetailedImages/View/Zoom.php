@@ -43,6 +43,18 @@ class XLite_Module_DetailedImages_View_Zoom extends XLite_View_Abstract
 
 
     /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'modules/DetailedImages/zoom.tpl';
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -53,9 +65,11 @@ class XLite_Module_DetailedImages_View_Zoom extends XLite_View_Abstract
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams[self::PARAM_PRODUCT] = new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product');
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/DetailedImages/zoom.tpl');
+        $this->widgetParams += array(
+            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
+        );
     }
+
 
     /**
      * Check visibility
@@ -68,7 +82,6 @@ class XLite_Module_DetailedImages_View_Zoom extends XLite_View_Abstract
     public function isVisible()
     {
         return parent::isVisible()
-            && $this->getParam(self::PARAM_PRODUCT)
             && $this->getParam(self::PARAM_PRODUCT)->get('detailedImages')
             && $this->getParam(self::PARAM_PRODUCT)->getHasZoom();
     }
@@ -106,6 +119,5 @@ class XLite_Module_DetailedImages_View_Zoom extends XLite_View_Abstract
 
         return $list;
     }
-
 }
 

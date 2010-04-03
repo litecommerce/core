@@ -63,6 +63,18 @@ class XLite_View_SearchResult extends XLite_View_ProductsList
     }
 
     /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'search_result/body.tpl';
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -74,10 +86,7 @@ class XLite_View_SearchResult extends XLite_View_ProductsList
         parent::defineWidgetParams();
 
         $this->widgetParams[self::PARAM_SUBMODE] = new XLite_Model_WidgetParam_String('Submode', 'found');
-
         $this->requestParams[] = self::PARAM_SUBMODE;
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('search_result/body.tpl');
     }
 
     /**

@@ -158,6 +158,18 @@ class XLite_View_Pager extends XLite_View_Abstract
     }
 
     /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'common/pager.tpl';
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -184,9 +196,6 @@ class XLite_View_Pager extends XLite_View_Abstract
         );
 
         $this->requestParams[] = self::PARAM_PAGE_ID;
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/pager.tpl'); 
-
     }
 
     /**

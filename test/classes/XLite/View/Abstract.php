@@ -112,6 +112,16 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
 
 
     /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    abstract protected function getDefaultTemplate();
+
+
+    /**
      * Return full URL by the skindir-related one
      * 
      * @param string $url relative URL
@@ -249,7 +259,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_TEMPLATE     => new XLite_Model_WidgetParam_File('Template', null),
+            self::PARAM_TEMPLATE     => new XLite_Model_WidgetParam_File('Template', $this->getDefaultTemplate()),
             self::PARAM_VISIBLE      => new XLite_Model_WidgetParam_Bool('Visible', true),
             self::PARAM_MODE         => new XLite_Model_WidgetParam_Array('Modes', array()),
             self::PARAM_SESSION_CELL => new XLite_Model_WidgetParam_String('Session cell', $this->getSessionCell()),

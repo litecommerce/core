@@ -44,6 +44,18 @@ class XLite_View_Button_Link extends XLite_View_Button_Abstract
 
 
     /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'button/regular.tpl';
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -58,8 +70,6 @@ class XLite_View_Button_Link extends XLite_View_Button_Abstract
             self::PARAM_LOCATION => new XLite_Model_WidgetParam_String('Redirect to', null, true),
             self::PARAM_JS_CODE  => new XLite_Model_WidgetParam_String('JS code', null, true),
         );
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('button/regular.tpl');
     }
 
     /**

@@ -60,6 +60,19 @@ abstract class XLite_View_Form_Abstract extends XLite_View_Abstract
      */
     protected $plainList = null;
 
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'form/start.tpl';
+    }
+
     /**
      * Open and close form tags
      * 
@@ -69,7 +82,7 @@ abstract class XLite_View_Form_Abstract extends XLite_View_Abstract
      */
     protected function getTemplate()
     {
-        return 'form/' . ($this->getParam(self::PARAM_END) ? 'end' : 'start') . '.tpl';
+        return $this->getParam(self::PARAM_END) ? 'form/end.tpl' : parent::getTemplate();
     }
 
     /**

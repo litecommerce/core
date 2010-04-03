@@ -34,28 +34,5 @@ class XLite_Model_WidgetParam_ObjectId_Product extends XLite_Model_WidgetParam_O
     {
         return 'XLite_Model_Product';
     }
-
-    /**
-     * Return list of conditions to check
-     *
-     * @param mixed $value value to validate
-     *
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getValidaionSchema($value)
-    {
-        return array(
-            array(
-                self::ATTR_CONDITION => 0 >= $value,
-                self::ATTR_MESSAGE   => ' is a non-positive number',
-            ),
-            array(
-                self::ATTR_CONDITION => !$this->getObject($value)->isExists(),
-                self::ATTR_MESSAGE   => ' record with such ID does not exist',
-            ),
-        ) + parent::getValidaionSchema($value);
-    }
 }
 

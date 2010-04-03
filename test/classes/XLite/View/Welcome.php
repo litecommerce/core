@@ -34,17 +34,15 @@ class XLite_View_Welcome extends XLite_View_Abstract
 
 
     /**
-     * Define widget parameters
+     * Return widget default template
      *
-     * @return void
+     * @return string
      * @access protected
-     * @since  1.0.0
+     * @since  3.0.0
      */
-    protected function defineWidgetParams()
+    protected function getDefaultTemplate()
     {
-        parent::defineWidgetParams();
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('welcome.tpl');
+        return 'welcome.tpl';
     }
 
 

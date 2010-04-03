@@ -43,6 +43,7 @@ class XLite_View_FileExplorer extends XLite_View_ColumnList
     const PARAM_MODIFIER = 'modifier';
     const PARAM_DSN = 'dsn';
 
+
     /**
 	 * locale 
 	 * 
@@ -52,6 +53,19 @@ class XLite_View_FileExplorer extends XLite_View_ColumnList
 	 * @since  3.0.0
 	 */
 	protected $locale = null;
+
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'common/file_explorer.tpl';
+    }
 
     /**
      * Define widget parameters
@@ -65,12 +79,10 @@ class XLite_View_FileExplorer extends XLite_View_ColumnList
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_FORM_SELECTION_NAME  => new XLite_Model_WidgetParam_String('Form selection name', ''),
-            self::PARAM_MODIFIER => new XLite_Model_WidgetParam_String('Modifier', null),
-            self::PARAM_DSN  => new XLite_Model_WidgetParam_String('DSN', null),
+            self::PARAM_FORM_SELECTION_NAME => new XLite_Model_WidgetParam_String('Form selection name', ''),
+            self::PARAM_MODIFIER            => new XLite_Model_WidgetParam_String('Modifier', null),
+            self::PARAM_DSN                 => new XLite_Model_WidgetParam_String('DSN', null),
         );
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/file_explorer.tpl');
     }
 
     /**

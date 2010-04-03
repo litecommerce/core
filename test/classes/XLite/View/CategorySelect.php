@@ -44,11 +44,25 @@ class XLite_View_CategorySelect extends XLite_View_Abstract
     const PARAM_CURRENT_CATEGORY_ID  = 'currentCategoryId';
     const PARAM_IGNORE_CURRENT_PATH  = 'ignoreCurrentPath';
 
+
     protected $categories = null;
 
     public $field;    
     public $formName;    
     public $selectedCategory = null;    
+
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'common/select_category.tpl';
+    }
 
     /**
      * Define widget parameters
@@ -70,8 +84,6 @@ class XLite_View_CategorySelect extends XLite_View_Abstract
             self::PARAM_CURRENT_CATEGORY_ID  => new XLite_Model_WidgetParam_Int('Current category id', 0),
             self::PARAM_IGNORE_CURRENT_PATH  => new XLite_Model_WidgetParam_Bool('Ignore current path', false)
         );
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/select_category.tpl');
     }
 
     /**

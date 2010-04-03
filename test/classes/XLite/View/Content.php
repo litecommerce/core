@@ -42,6 +42,18 @@ class XLite_View_Content extends XLite_View_Abstract
 
 
     /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return null;
+    }
+
+    /**
      * echoChunk
      *
      * @param string $chunk text chunk to output

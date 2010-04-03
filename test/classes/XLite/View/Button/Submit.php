@@ -36,6 +36,18 @@
 class XLite_View_Button_Submit extends XLite_View_Button_Abstract
 {
     /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'button/submit.tpl';
+    }
+
+    /**
      * getDefaultLabel
      *
      * @return string
@@ -45,20 +57,6 @@ class XLite_View_Button_Submit extends XLite_View_Button_Abstract
     protected function getDefaultLabel()
     {
         return 'Submit';
-    }
-
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('button/submit.tpl');
     }
 }
 

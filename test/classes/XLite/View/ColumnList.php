@@ -41,8 +41,10 @@ class XLite_View_ColumnList extends XLite_View_Abstract
      */
     const PARAM_COLUMN_COUNT = 'columnCount';
 
+
 	/**
      * columns 
+     * FIXME - must be protected
      * 
      * @var    array
      * @access public
@@ -50,6 +52,19 @@ class XLite_View_ColumnList extends XLite_View_Abstract
      * @since  3.0.0
      */
     public $columns = array();
+
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'common/column_list.tpl';
+    }
 
     /**
      * Define widget parameters
@@ -65,8 +80,6 @@ class XLite_View_ColumnList extends XLite_View_Abstract
         $this->widgetParams += array(
             self::PARAM_COLUMN_COUNT => new XLite_Model_WidgetParam_Int('Column count', 2)
         );
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/column_list.tpl');
     }
 
     /**

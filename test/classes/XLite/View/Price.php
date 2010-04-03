@@ -44,6 +44,18 @@ class XLite_View_Price extends XLite_View_Abstract
 
 
     /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'common/price_plain.tpl';
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -58,9 +70,8 @@ class XLite_View_Price extends XLite_View_Abstract
             self::PARAM_PRODUCT            => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
             self::PARAM_DISPLAY_ONLY_PRICE => new XLite_Model_WidgetParam_Bool('Only price', false),
         );
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/price_plain.tpl');
     }
+
 
     /**
      * Check if widget is visible
@@ -71,8 +82,7 @@ class XLite_View_Price extends XLite_View_Abstract
      */
     public function isVisible()
     {
-        return parent::isVisible()
-            && $this->getProduct();
+        return parent::isVisible() && $this->getProduct();
     }
 
     /**

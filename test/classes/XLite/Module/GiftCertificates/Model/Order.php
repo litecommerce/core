@@ -480,7 +480,7 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
      */
     public function isShippingAvailable()
     {
-        return ($this->isSshipped() && $this->getItemsCount() == $this->countShippedCertificates())
+        return ($this->isShipped() && $this->getItemsCount() == $this->countShippedCertificates())
             ? true
             : parent::isShippingAvailable();
     }

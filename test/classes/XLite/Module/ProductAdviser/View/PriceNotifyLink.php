@@ -41,6 +41,19 @@ class XLite_Module_ProductAdviser_View_PriceNotifyLink extends XLite_View_Abstra
      */
     protected $priceNotified = null;
 
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'modules/ProductAdviser/PriceNotification/product_button.tpl';
+    }
+
     /**
      * Define widget parameters
      *
@@ -55,8 +68,6 @@ class XLite_Module_ProductAdviser_View_PriceNotifyLink extends XLite_View_Abstra
         $this->widgetParams += array(
             self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
         );
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/ProductAdviser/PriceNotification/product_button.tpl');
     }
 
     /**

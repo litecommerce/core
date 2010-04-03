@@ -60,6 +60,19 @@ class XLite_View_ProductSelect extends XLite_View_Abstract
      */
     protected $product = null;
 
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'common/select_product.tpl';
+    }
+
     /**
      * Define widget parameters
      *
@@ -72,14 +85,12 @@ class XLite_View_ProductSelect extends XLite_View_Abstract
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_FORM_NAME  => new XLite_Model_WidgetParam_String('Form name', ''),
-            self::PARAM_FORM_FIELD => new XLite_Model_WidgetParam_String('Form field', ''),
-            self::PARAM_LABEL => new XLite_Model_WidgetParam_String('Form label', 'Select product'),
-            self::PARAM_PRODUCT  => new XLite_Model_WidgetParam_Object('Product object', null),
+            self::PARAM_FORM_NAME     => new XLite_Model_WidgetParam_String('Form name', ''),
+            self::PARAM_FORM_FIELD    => new XLite_Model_WidgetParam_String('Form field', ''),
+            self::PARAM_LABEL         => new XLite_Model_WidgetParam_String('Form label', 'Select product'),
+            self::PARAM_PRODUCT       => new XLite_Model_WidgetParam_Object('Product object', null),
             self::PARAM_REMOVE_BUTTON => new XLite_Model_WidgetParam_Bool('Display Remove button', false),
         );
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/select_product.tpl');
     }
 
     /**

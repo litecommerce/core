@@ -45,6 +45,19 @@ class XLite_View_ImageUpload extends XLite_View_Abstract
 
 	public $showDelete = true;	
 
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'common/image_upload.tpl';
+    }
+
     /**
      * Define widget parameters
      *
@@ -62,9 +75,6 @@ class XLite_View_ImageUpload extends XLite_View_Abstract
 			self::PARAM_FORM_NAME   => new XLite_Model_WidgetParam_String('Form name', ''),
 			self::PARAM_OBJECT      => new XLite_Model_WidgetParam_Object('Object', null),
 		);
-
-		$this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/image_upload.tpl');
-
     }
 
     /**

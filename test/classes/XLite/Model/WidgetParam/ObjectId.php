@@ -44,6 +44,41 @@ abstract class XLite_Model_WidgetParam_ObjectId extends XLite_Model_WidgetParam_
      */
     abstract protected function getClassName();
 
+
+    /**
+     * getIdValidCondition 
+     * 
+     * @param mixed $value value to check
+     *  
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getIdValidCondition($value)
+    {
+        return array(
+            self::ATTR_CONDITION => 0 >= $value,
+            self::ATTR_MESSAGE   => ' is a non-positive number',
+        );
+    }
+
+    /**
+     * getObjectExistsCondition 
+     * 
+     * @param mixed $value value to check
+     *  
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getObjectExistsCondition($value)
+    {
+        return array(
+            self::ATTR_CONDITION => !$this->getObject($value)->isExists(),
+            self::ATTR_MESSAGE   => ' record with such ID is not found',
+        );
+    }
+
     /**
      * Return object ID
      * 
@@ -71,10 +106,8 @@ abstract class XLite_Model_WidgetParam_ObjectId extends XLite_Model_WidgetParam_
     {
         $schema = parent::getValidaionSchema($value);
 
-        $schema[] = array(
-            self::ATTR_CONDITION => 0 > $value,
-            self::ATTR_MESSAGE   => ' is a negative number',
-        );
+        $schema[] = $this->getIdValidCondition($value);
+        $schema[] = $this->getObjectExistsCondition($value);
 
         return $schema;
     }
@@ -91,10 +124,9 @@ abstract class XLite_Model_WidgetParam_ObjectId extends XLite_Model_WidgetParam_
     public function getObject($id = null)
     {
         $id = $this->getId($id);
+
         return XLite_Model_CachingFactory::getObject(
-            __METHOD__ . $this->getClassName() . $id,
-            $this->getClassName(),
-            array($id)
+            __METHOD__ . $this->getClassName() . $id, $this->getClassName(), array($id)
         );
     }
 }

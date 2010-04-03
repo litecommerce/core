@@ -46,31 +46,44 @@ class XLite_Model_WidgetParam_ObjectId_Category extends XLite_Model_WidgetParam_
     }
 
     /**
-     * Return list of conditions to check
-     *
-     * @param mixed $value value to validate
-     *
-     * @return void
+     * getIdValidCondition 
+     * 
+     * @param mixed $value value to check
+     *  
+     * @return array
      * @access protected
      * @since  3.0.0
      */
-    protected function getValidaionSchema($value)
+    protected function getIdValidCondition($value)
     {
-        $schema = parent::getValidaionSchema($value);
+        $result = parent::getIdValidCondition($value);
 
-        if (!$this->rootIsAllowed) {
-            $schema[] = array(
-                self::ATTR_CONDITION => 0 == $value,
-                self::ATTR_MESSAGE   => ' is zero',
+        if ($this->rootIsAllowed) {
+            $result = array(
+                self::ATTR_CONDITION => 0 > $value,
+                self::ATTR_MESSAGE   => ' is a negative number',
             );
         }
 
-        $schema[] = array(
-            self::ATTR_CONDITION => 0 < $value && !$this->getObject($value)->isExists(),
-            self::ATTR_MESSAGE   => ' wrong ID (not found)',
-        );
+        return $result;
+    }
 
-        return $schema;
+    /**
+     * getObjectExistsCondition 
+     * 
+     * @param mixed $value value to check
+     *  
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getObjectExistsCondition($value)
+    {
+        $result = parent::getIdValidCondition($value);
+
+        $result[self::ATTR_CONDITION] = 0 < $value && $result[self::ATTR_CONDITION];
+
+        return $result;
     }
 
 

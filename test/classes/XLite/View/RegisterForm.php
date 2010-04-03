@@ -38,7 +38,9 @@ class XLite_View_RegisterForm extends XLite_View_Dialog
     /*
      * Widget parameters names
      */
-    const PARAM_HEAD = 'head';
+
+    const PARAM_HEAD       = 'head';
+    const PARAM_PROFILE_ID = 'profile_id';
 
 
     /**
@@ -68,6 +70,18 @@ class XLite_View_RegisterForm extends XLite_View_Dialog
     }
 
     /**
+     * Return current profile object 
+     * 
+     * @return XLite_Model_Profile
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getProfile()
+    {
+        return $this->widgetParams[self::PARAM_PROFILE_ID]->getObject();
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -79,199 +93,30 @@ class XLite_View_RegisterForm extends XLite_View_Dialog
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_HEAD => new XLite_Model_WidgetParam_String('Dialog title', 'Profile details'),
+            self::PARAM_HEAD => new XLite_Model_WidgetParam_String(
+                'Title', 'Profile details'
+            ),
+            self::PARAM_PROFILE_ID => new XLite_Model_WidgetParam_ObjectId_Profile(
+                'Profile Id', XLite_Core_Request::getInstance()->profile_id
+            ),
         );
     }
 
 
-    // FIXME - to revise
-
-    public $params = array("success");
-
-	protected $success = false;
-
-//	public $profile = null;
-
-    // whether to login user after successful registration or not	
-    public $autoLogin = true;
-    // true if the user already exists in the register form	
-    public $userExists = false;	
-    public $allowAnonymous = false;
-
     /**
-     * initView 
+     * Return list of register form fields 
      * 
-     * @return void
+     * @return array
      * @access public
-     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function initView()
+    public function getFormFields()
     {
-        parent::initView();
-        $this->fillForm();
+        $result = array();
+
+        // TODO - add decalarations here
+
+        return $result;
     }
-
-    /**
-     * Get mode 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getMode()
-    {
-        $mode = XLite_Core_Request::getInstance()->mode;
-
-        if (is_null($mode) || !in_array($mode, array('modify', 'register'))) {
-            $mode = 'modify';
-        }
-
-        return $mode;
-    }
-
-    protected function isShowMembership()
-    {
-        return count($this->config->Memberships->memberships) > 0;
-    }
-
-    protected function isFromCheckout()
-    {
-        return (strpos($this->returnUrl, 'target=checkout') !== false) ? true : false;
-    }
-
-    protected function getSuccess()
-    {
-        return $this->is('valid') && $this->success;
-    }
-
-    
-    /**
-     * Get profile
-     * 
-     * @return XLite_Model_Profile object
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getProfile() 
-    {
-        $className = ($this->xlite->is('adminZone') ? 'XLite_Controller_Admin_Profile' : 'XLite_Controller_Customer_Profile');
-        $controllerObj = $this->getInternalInstance($className);
-        return $controllerObj->getProfile();
-    }
-
-    /**
-     * Fill the form with the profile details 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-	protected function fillForm()
-    {
-        if ('register' == XLite_Core_Request::getInstance()->mode) {
-            // default registration form values
-            $this->billing_country = $this->config->General->default_country;
-            $this->billing_zipcode = $this->config->General->default_zipcode;
-            $this->shipping_country = '';
-            $this->billing_state = $this->shipping_state = '';
-        }
-
-        $profile = $this->getProfile();
-
-        if (!is_null($profile)) {
-            $this->set('properties', $profile->get('properties'));
-            // don't show passwords
-            $this->password = $this->confirm_password = '';
-        }
-
-        parent::fillForm();
-    }
-
-    // TODO: remove the functions below (move it to controllers)
-
-    protected function action_register()
-    {
-    	if (
-			isset($_REQUEST[XLite_Model_Session::SESSION_DEFAULT_NAME]) 
-			&& !(isset($_GET[XLite_Model_Session::SESSION_DEFAULT_NAME]) || isset($_POST[XLite_Model_Session::SESSION_DEFAULT_NAME]))
-		) {
-    		unset($_REQUEST[XLite_Model_Session::SESSION_DEFAULT_NAME]);
-        }
-
-		$this->xlite->session->set('_' . XLite_Model_Session::SESSION_DEFAULT_NAME, XLite_Model_Session::SESSION_DEFAULT_NAME . '=' . $this->xlite->session->getID());
-		$this->xlite->session->destroy();
-		$this->xlite->session->setID(SESSION_DEFAULT_ID);
-		$this->xlite->session->_initialize();
-
-        $this->profile = new XLite_Model_Profile();
-
-        if ($this->xlite->is('adminZone')) {
-            $this->profile->modifyAdminProperties($_REQUEST);
-
-        } else {
-            $this->profile->modifyProperties($_REQUEST);
-        }
-
-        if (!$this->isFromCheckout()) {
-
-            $result = $this->auth->register($this->profile);
-
-            if ($result == USER_EXISTS) {
-                $this->set('userExists', true);
-                $this->set('valid', false); // can't go thru
-
-            } else {
-                $this->set('mode', 'success'); // go to success page
-            }
-
-        } else {
-            // fill in shipping info
-            $this->auth->copyBillingInfo($this->profile);
-            $this->profile->update();
-			$this->set('success', true);
-        }
-    }
-
-        protected function action_modify()
-    {
-        if ($this->xlite->is('adminZone')) {
-            $this->profile->modifyAdminProperties($_REQUEST);
-
-        } else {
-
-        	if ($this->xlite->auth->isAdmin($this->profile)) {
-        		$this->set('valid', false);
-        		$this->set('userAdmin', true);
-        		return;
-        	}
-
-            $this->profile->modifyProperties($_REQUEST);
-        }
-
-        if (!$this->isFromCheckout()) {
-
-            $result = $this->auth->modify($this->profile);
-
-            if ($result == USER_EXISTS) {
-                // user already exists
-                $this->set('userExists', true);
-                $this->set('valid', false);
-
-            } else {
-                $this->set('success', true);
-            }
-
-        } else {
-            // fill in shipping info
-            $this->auth->copyBillingInfo($this->profile);
-            $this->profile->update();
-			$this->set('success', true);
-        }
-    }
-    
 }
 

@@ -32,6 +32,7 @@ class XLite_Model_WidgetParam_Array extends XLite_Model_WidgetParam_Abstract
      */
     protected $type = 'list';
 
+
     /**
      * Return list of conditions to check
      *

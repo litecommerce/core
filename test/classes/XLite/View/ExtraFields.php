@@ -54,6 +54,18 @@ class XLite_View_ExtraFields extends XLite_View_Abstract
 
 
     /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'extra_fields.tpl';
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -67,8 +79,6 @@ class XLite_View_ExtraFields extends XLite_View_Abstract
         $this->widgetParams += array(
             self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
         );
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('extra_fields.tpl');
     }
 
 

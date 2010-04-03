@@ -21,7 +21,7 @@
  * @subpackage ____sub_package____
  * @since      3.0.0
  */
-class XLite_Module_DrupalConnector_View_Abstract extends XLite_View_Abstract implements XLite_Base_IDecorator
+abstract class XLite_Module_DrupalConnector_View_Abstract extends XLite_View_Abstract implements XLite_Base_IDecorator
 {
         /**
      * Relative path from web directory path to the XLite web directory 

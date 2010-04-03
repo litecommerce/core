@@ -46,6 +46,18 @@ class XLite_Module_ProductOptions_View_SelectedOptions extends XLite_View_Abstra
 
 
     /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'modules/ProductOptions/selected_options.tpl';
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -62,8 +74,6 @@ class XLite_Module_ProductOptions_View_SelectedOptions extends XLite_View_Abstra
             self::PARAM_STORAGE_ID => new XLite_Model_WidgetParam_Int('Storage id', null),
             self::PARAM_ITEM_ID    => new XLite_Model_WidgetParam_Int('Item id', null),
         );
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/ProductOptions/selected_options.tpl');
     }
 
     /**

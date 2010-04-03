@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+// FIXME - check this class logic
+
 /**
  * 'Notify me' page
  *
@@ -69,6 +71,19 @@ class XLite_Module_ProductAdviser_View_NotifyMe extends XLite_View_Dialog
     }
 
     /**
+     * checkAction 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function checkAction()
+    {
+        return 'notify_product' == XLite_Core_Request::getInstance()->action;
+    }
+
+
+    /**
      * Check - product is out-of-stock or not 
      * 
      * @return boolean
@@ -78,8 +93,7 @@ class XLite_Module_ProductAdviser_View_NotifyMe extends XLite_View_Dialog
      */
     public function isOutOfStock()
     {
-        return 'notify_product' == XLite_Core_Request::getInstance()->action
-            && $this->getProduct()->isOutOfStock();
+        return $this->checkAction() && $this->getProduct()->isOutOfStock();
     }
 
     /**
@@ -92,8 +106,7 @@ class XLite_Module_ProductAdviser_View_NotifyMe extends XLite_View_Dialog
      */
     public function isSmallQuantity()
     {
-        return 'notify_product' == XLite_Core_Request::getInstance()->action
-            && $this->getProduct()->isInStock();
+        return $this->checkAction() && $this->getProduct()->isInStock();
     }
 
     /**
@@ -106,7 +119,7 @@ class XLite_Module_ProductAdviser_View_NotifyMe extends XLite_View_Dialog
      */
     public function isBigPrice()
     {
-        return 'notify_price' == XLite_Core_Request::getInstance()->action;
+        return $this->checkAction();
     }
 }
 

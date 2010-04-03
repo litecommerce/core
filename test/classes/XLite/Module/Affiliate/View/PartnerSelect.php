@@ -46,6 +46,7 @@ class XLite_Module_Affiliate_View_PartnerSelect extends XLite_View_Abstract
     public $formField = "partner_id";	
     public $allOption = true;
 
+	// FIXME - to remove
     function init()
     {
         parent::init();
@@ -55,18 +56,16 @@ class XLite_Module_Affiliate_View_PartnerSelect extends XLite_View_Abstract
         }
     }
 
-    /**
-     * Define widget parameters
+	/**
+     * Return widget default template
      *
-     * @return void
+     * @return string
      * @access protected
-     * @since  1.0.0
+     * @since  3.0.0
      */
-    protected function defineWidgetParams()
+    protected function getDefaultTemplate()
     {
-        parent::defineWidgetParams();
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/Affiliate/select_partner.tpl');
+        return 'modules/Affiliate/select_partner.tpl';
     }
 
 
@@ -79,7 +78,3 @@ class XLite_Module_Affiliate_View_PartnerSelect extends XLite_View_Abstract
         return $this->partners;
     }
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

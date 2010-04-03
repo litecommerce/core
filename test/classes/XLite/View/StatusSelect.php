@@ -44,6 +44,18 @@ class XLite_View_StatusSelect extends XLite_View_FormField
 
 
     /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'common/select_status.tpl';
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -59,7 +71,5 @@ class XLite_View_StatusSelect extends XLite_View_FormField
             self::PARAM_FIELD       => new XLite_Model_WidgetParam_String('Field name', ''),
             self::PARAM_VALUE       => new XLite_Model_WidgetParam_String('Status code', ''),
         );
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/select_status.tpl');
     }
 }

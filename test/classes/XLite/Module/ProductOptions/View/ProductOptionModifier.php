@@ -45,6 +45,18 @@ class XLite_Module_ProductOptions_View_ProductOptionModifier extends XLite_View_
 
 
     /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'modules/ProductOptions/product_option_modifier.tpl';
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -60,8 +72,6 @@ class XLite_Module_ProductOptions_View_ProductOptionModifier extends XLite_View_
             self::PARAM_OPTION       => new XLite_Model_WidgetParam_Object('Option', null, false, 'stdClass'),
             self::PARAM_OPTION_GROUP => new XLite_Model_WidgetParam_Object('Option group', null, false, 'XLite_Module_ProductOptions_Model_ProductOption'),
         );
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/ProductOptions/product_option_modifier.tpl');
     }
 
     /**
@@ -73,11 +83,7 @@ class XLite_Module_ProductOptions_View_ProductOptionModifier extends XLite_View_
      */
     public function isVisible()
     {
-        return parent::isVisible()
-            && $this->getParam(self::PARAM_OPTION)
-            && $this->getParam(self::PARAM_OPTION_GROUP)
-            && $this->getParam(self::PARAM_PRODUCT)
-            && $this->getParam(self::PARAM_OPTION)->modifyParams;
+        return parent::isVisible() && $this->getParam(self::PARAM_OPTION)->modifyParams;
     }
 
     /**
@@ -90,8 +96,7 @@ class XLite_Module_ProductOptions_View_ProductOptionModifier extends XLite_View_
      */
     public function isShowPrice()
     {
-        return $this->getParam(self::PARAM_PRODUCT)->isDisplayPriceModifier()
-            && !$this->getParam(self::PARAM_OPTION)->isZero;
+        return $this->getParam(self::PARAM_PRODUCT)->isDisplayPriceModifier() && !$this->getParam(self::PARAM_OPTION)->isZero;
     }
 }
 

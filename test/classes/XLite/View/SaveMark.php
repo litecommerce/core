@@ -39,8 +39,20 @@ class XLite_View_SaveMark extends XLite_View_Abstract
      * Widget parameter names
      */
 
-    const PARAM_PRODUCT            = 'product';
+    const PARAM_PRODUCT = 'product';
 
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'common/save_mark.tpl';
+    }
 
     /**
      * Define widget parameters
@@ -54,11 +66,10 @@ class XLite_View_SaveMark extends XLite_View_Abstract
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT            => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
+            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
         );
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/save_mark.tpl');
     }
+
 
     /**
      * Check if widget is visible
@@ -72,7 +83,6 @@ class XLite_View_SaveMark extends XLite_View_Abstract
         $product = $this->getParam(self::PARAM_PRODUCT);
 
         return parent::isVisible()
-            && $product
             && $this->config->General->enable_sale_price
             && $product->get('sale_price') > $product->get('listPrice');
     }

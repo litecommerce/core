@@ -43,6 +43,18 @@ class XLite_Module_WholesaleTrading_View_Amount extends XLite_View_Abstract
 
 
     /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'modules/WholesaleTrading/amount.tpl';
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -56,8 +68,6 @@ class XLite_Module_WholesaleTrading_View_Amount extends XLite_View_Abstract
         $this->widgetParams += array(
             self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
         );
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/WholesaleTrading/amount.tpl');
     }
 
     /**
@@ -128,6 +138,5 @@ class XLite_Module_WholesaleTrading_View_Amount extends XLite_View_Abstract
 
         return ($purchaseLimit && $purchaseLimit->get('min') > 1) ? $purchaseLimit->get('min') : 1;
     }
-
 }
 

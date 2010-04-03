@@ -43,6 +43,18 @@ class XLite_Module_ProductAdviser_View_PriceNotifyForm extends XLite_View_Abstra
 
 
     /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'modules/ProductAdviser/PriceNotification/notify_form.tpl';
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -53,9 +65,11 @@ class XLite_Module_ProductAdviser_View_PriceNotifyForm extends XLite_View_Abstra
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams[self::PARAM_PRODUCT] = new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product');
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/ProductAdviser/PriceNotification/notify_form.tpl');
+        $this->widgetParams += array(
+            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
+        );
     }
+
 
     /**
      * Check visibility 
@@ -67,9 +81,7 @@ class XLite_Module_ProductAdviser_View_PriceNotifyForm extends XLite_View_Abstra
      */
     public function isVisible()
     {
-        return parent::isVisible()
-            && $this->getParam(self::PARAM_PRODUCT)
-            && $this->get('priceNotificationEnabled');
+        return parent::isVisible() && $this->get('priceNotificationEnabled');
     }
 
     /**

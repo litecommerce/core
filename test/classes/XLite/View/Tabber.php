@@ -53,6 +53,19 @@ class XLite_View_Tabber extends XLite_View_Abstract
      */
     protected $tabPagesInfo = array();
 
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'common/tabber.tpl';
+    }
+
     /**
      * Define widget parameters
      *
@@ -70,9 +83,6 @@ class XLite_View_Tabber extends XLite_View_Abstract
             self::PARAM_TAB_PAGES => new XLite_Model_WidgetParam_String('Name of function that returns tab pages', 'getTabPages', false)
 
 		);
-
-		$this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/tabber.tpl');
-
     }
 
     /**

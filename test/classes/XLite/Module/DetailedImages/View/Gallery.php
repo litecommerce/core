@@ -43,6 +43,18 @@ class XLite_Module_DetailedImages_View_Gallery extends XLite_View_Abstract
 
 
     /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'modules/DetailedImages/gallery.tpl';
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -53,9 +65,11 @@ class XLite_Module_DetailedImages_View_Gallery extends XLite_View_Abstract
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams[self::PARAM_PRODUCT] = new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product');
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('modules/DetailedImages/gallery.tpl');
+        $this->widgetParams += array(
+            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
+        );
     }
+
 
     /**
      * Get LightBox library images directory 
@@ -82,9 +96,7 @@ class XLite_Module_DetailedImages_View_Gallery extends XLite_View_Abstract
      */
     public function isVisible()
     {
-        return parent::isVisible()
-            && $this->getParam(self::PARAM_PRODUCT)
-            && $this->getParam(self::PARAM_PRODUCT)->getDetailedImages();
+        return parent::isVisible() && $this->getParam(self::PARAM_PRODUCT)->getDetailedImages();
     }
 
     /**

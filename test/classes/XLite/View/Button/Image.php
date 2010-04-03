@@ -37,17 +37,15 @@
 class XLite_View_Button_Image extends XLite_View_Button_Regular
 {
     /**
-     * Define widget parameters
+     * Return widget default template
      *
-     * @return void
+     * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected function defineWidgetParams()
+    protected function getDefaultTemplate()
     {
-        parent::defineWidgetParams();
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('button/image.tpl');
+        return 'button/image.tpl';
     }
 }
 

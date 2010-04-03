@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+// FIXME - class should use the same approaches as the ProductsList one
+
 /**
  * Abstract sort widget 
  * 
@@ -45,6 +47,18 @@ abstract class XLite_View_Sort_Abstract extends XLite_View_Abstract
 
 
     /**
+     * Return widget default template
+     *                               
+     * @return string                
+     * @access protected             
+     * @since  3.0.0                 
+     */                              
+    protected function getDefaultTemplate()
+    {                                      
+        return 'common/sort.tpl';     
+    } 
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -56,18 +70,10 @@ abstract class XLite_View_Sort_Abstract extends XLite_View_Abstract
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PARAMS => new XLite_Model_WidgetParam_Array(
-                'URL params', array()
-            ),
-            self::PARAM_SORT_CRITERIONS => new XLite_Model_WidgetParam_Array(
-                'Sort criterions', array()
-            ),
-            self::PARAM_CELL => new XLite_Model_WidgetParam_Array(
-                'List conditions cell', array()
-            ),
+            self::PARAM_PARAMS          => new XLite_Model_WidgetParam_Array('URL params', array()),
+            self::PARAM_SORT_CRITERIONS => new XLite_Model_WidgetParam_Array('Sort criterions', array()),
+            self::PARAM_CELL            => new XLite_Model_WidgetParam_Array('List conditions cell', array()),
         );
-
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue('common/sort.tpl'); 
     }
 
     /**
@@ -79,8 +85,7 @@ abstract class XLite_View_Sort_Abstract extends XLite_View_Abstract
      */
     public function isVisible()
     {
-        return parent::isVisible()
-            && $this->getParam(self::PARAM_SORT_CRITERIONS);
+        return parent::isVisible() && $this->getParam(self::PARAM_SORT_CRITERIONS);
     }
 
     /**
