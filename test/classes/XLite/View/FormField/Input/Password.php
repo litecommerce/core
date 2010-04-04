@@ -40,10 +40,10 @@ class XLite_View_FormField_Input_Password extends XLite_View_FormField_Input_Abs
      * Return field type
      * 
      * @return string
-     * @access protected
+     * @access public
      * @since  3.0.0
      */
-    protected function getFieldType()
+    public function getFieldType()
     {
         return self::FIELD_TYPE_PASSWORD;
     }

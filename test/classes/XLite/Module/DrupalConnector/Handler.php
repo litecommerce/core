@@ -45,29 +45,6 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
      */
     protected $portals = null;
 
-    /**
-     * Return array of <lc_key, cms_key> pairs for user profiles
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getUserDataTranslationTable()
-    {
-        return parent::getUserDataTranslationTable() + array(
-            'cms_profile_id' => array(
-                self::USER_DATA_FIELD => 'uid',
-            ),
-            'login' => array(
-                self::USER_DATA_FIELD => 'mail',
-            ),
-            'password' => array(
-                self::USER_DATA_FIELD    => 'pass',
-                self::USER_DATA_CALLBACK => array('XLite_Model_Auth' , 'encryptPassword'),
-            ),
-        );
-    }
-
 
     /**
      * Method to access the singleton

@@ -543,7 +543,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
             	$conditions[] = $attrs['IF'];
 			}
 
-			$this->unsetAttributes($attrs, array('IF', 'class'));
+			$this->unsetAttributes($attrs, array('IF', 'FOREACH', 'class'));
 
 			$result .= '$this->getWidget(' 
 					   . (empty($attrs) ? (empty($arguments) ? '' : 'array()') : $this->getAttributesList($attrs)) 

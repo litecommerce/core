@@ -37,15 +37,15 @@
 abstract class XLite_View_FormField_Input_Abstract extends XLite_View_FormField_Abstract
 {
     /**
-     * Return widget default template 
-     * 
+     * Return field template
+     *
      * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected function getDefaultTemplate()
+    protected function getFieldTemplate()
     {
-        return 'form_field/input.tpl';
+        return 'input.tpl';
     }
 }
 

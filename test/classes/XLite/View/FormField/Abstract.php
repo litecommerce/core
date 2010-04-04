@@ -43,6 +43,8 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
     const PARAM_REQUIRED   = 'required';
     const PARAM_ATTRIBUTES = 'attributes';
     const PARAM_NAME       = 'name';
+    const PARAM_LABEL      = 'label';
+    const PARAM_COMMENT    = 'comment';
 
     /**
      * Available field types
@@ -57,14 +59,97 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
 
 
     /**
-     * Return field type
+     * fieldParams 
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $fieldParams = null;
+
+
+    /**
+     * Return field template
      * 
      * @return string
      * @access protected
      * @since  3.0.0
      */
-    abstract protected function getFieldType();
+    abstract protected function getFieldTemplate();
 
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'form_field.tpl';
+    }
+
+    /**
+     * Return name of the folder with templates
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDir()
+    {
+        return 'form_field';
+    }
+
+    /**
+     * Return list of field-specific params
+     * NOTE - params order is make sence!
+     * You must pass them into constructor in the exact order as described here
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function defineFieldParams()
+    {
+        $this->fieldParams = array(
+            self::PARAM_NAME       => new XLite_Model_WidgetParam_String('Name', null),
+            self::PARAM_VALUE      => new XLite_Model_WidgetParam_String('Value', null),
+            self::PARAM_LABEL      => new XLite_Model_WidgetParam_String('Label', null),
+            self::PARAM_REQUIRED   => new XLite_Model_WidgetParam_Bool('Required', false),
+            self::PARAM_COMMENT    => new XLite_Model_WidgetParam_String('Comment', null),
+            self::PARAM_ATTRIBUTES => new XLite_Model_WidgetParam_Array('Attributes', array()),
+        );
+    }
+
+    /**
+     * Return list of field-specific params
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getFieldParams()
+    {
+        if (!isset($this->fieldParams)) {
+            $this->defineFieldParams();
+        }
+
+        return $this->fieldParams;
+    }
+
+    /**
+     * getFieldParamsSchema 
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getFieldParamsSchema()
+    {
+        return array_keys($this->getFieldParams());
+    }
 
     /**
      * Return field name
@@ -113,10 +198,8 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
     {
         $result = '';
 
-        if (!empty($this->getParam(self::PARAM_ATTRIBUTES))) {
-            foreach ($this->getParam(self::PARAM_ATTRIBUTES) as $name => $value) {
-                $result .= ' ' . $name . '="' . $value . '"';
-            }
+        foreach ($this->getParam(self::PARAM_ATTRIBUTES) as $name => $value) {
+            $result .= ' ' . $name . '="' . $value . '"';
         }
 
         return $result;
@@ -133,12 +216,72 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams += array(
-            self::PARAM_VALUE      => new XLite_Model_WidgetParam_String('Value', null),
-            self::PARAM_REQUIRED   => new XLite_Model_WidgetParam_Bool('Required', false),
-            self::PARAM_ATTRIBUTES => new XLite_Model_WidgetParam_Array('Attributes', array()),
-            self::PARAM_NAME       => new XLite_Model_WidgetParam_String('Name', null),
-        );
+        $this->widgetParams += $this->getFieldParams();
+    }
+
+    /**
+     * Compose params' array from the arguments passed to constructor
+     * 
+     * @param array $params arguments passed to constructor
+     *  
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function prepareParams(array $params)
+    {
+        $result = array();
+
+        $keys  = $this->getFieldParamsSchema();
+        $count = min(count($keys), count($params));
+
+        for ($i = 0; $i < $count; $i++) {
+            $result[$keys[$i]] = $params[$i];
+        }
+
+        return $result;
+    }
+
+
+    /**
+     * Return field type
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    abstract public function getFieldType();
+
+
+    /**
+     * Define and set handler attributes; initialize handler
+     *
+     * @param array $params handler params
+     *
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function __construct(array $params = array())
+    {
+        $fieldParams = func_get_args();
+        array_shift($fieldParams);
+
+        parent::__construct($params + $this->prepareParams($fieldParams));
+    }
+
+    /**
+     * Wrapper; public function to retrieve widget params
+     * 
+     * @param string $name param name
+     *  
+     * @return mixed
+     * @access public
+     * @since  3.0.0
+     */
+    public function getFieldAttribute($name)
+    {
+        return $this->getParam($name);
     }
 }
 

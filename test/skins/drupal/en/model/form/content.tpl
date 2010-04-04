@@ -11,5 +11,7 @@
  * @since     3.0.0
  *}
 
-<input type="{getFieldType()}" name="{getParam(#name#)}" value="{getParam(#value#)}"{getAttributesCode()} />
+<table>
+  <tr FOREACH="getFormFields(),name,field">{field.display()}</tr>
+</table>
 

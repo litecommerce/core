@@ -68,7 +68,7 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
      */
     protected function getDefaultModelObjectKeys()
     {
-        return array('profile_id' => XLite_Core_Request::getInstance()->profile_id);
+        return array(XLite_Model_Session::getInstance()->get('profile_id'));
     }
 
     /**
@@ -81,6 +81,27 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
     protected function getFormClass()
     {
         return 'XLite_View_Form_Profile_Register';
+    }
+
+    /**
+     * Define form field classes and values
+     *
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function defineFormFields()
+    {
+        parent::defineFormFields();
+
+        $this->formFields += array(
+            'billingFirstname' => new XLite_View_FormField_Input_Text(
+                array(), 'billing_firstname', $this->getFieldValue('billing_firstname'), 'Name', true
+            ),
+            'billingAddress' => new XLite_View_FormField_Input_Text(
+                array(), 'billing_address', $this->getFieldValue('billing_address'), 'Street', true
+            ),
+        );
     }
 }
 

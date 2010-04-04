@@ -16,13 +16,7 @@
   <widget class="{getFormClass()}" name="{getFormName()}" IF="getFormParams()" formParams="{getFormParams()}" />
   <widget class="{getFormClass()}" name="{getFormName()}" IF="!getFormParams()" />
 
-    <widget template="{getDir()}/{getFormDir()}/header.tpl" />
-
-    {foreach:getFormFields(),name,field}{field.display()}{end:}
-  
-    <widget template="{getDir()}/{getFormDir()}/buttons.tpl" />
-
-    <widget template="{getDir()}/{getFormDir()}/footer.tpl" />
+    <widget FOREACH="_ARRAY_(#header#,#content#,#buttons#,#footer#),file" template="{getDir()}/{getFormDir()}/{file}.tpl" />
 
   <widget name="{getFormName()}" end />
 

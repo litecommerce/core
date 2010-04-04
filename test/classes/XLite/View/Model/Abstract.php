@@ -36,13 +36,11 @@
 abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
 {
     /**
-     * Passed model object 
-     * 
-     * @var    XLite_Model_Abstract
-     * @access protected
-     * @since  3.0.0
+     * Widget param names
      */
-    protected $modelObject = null;
+
+    const PARAM_MODEL_OBJECT = 'modelObject';
+
 
     /**
      * Unique name of current web form
@@ -128,7 +126,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
      */
     protected function getModelObject()
     {
-        return isset($this->modelObject) ? $this->modelObject : $this->getDefaultModelObject();
+        return $this->getParam(self::PARAM_MODEL_OBJECT); 
     }
 
     /**
@@ -207,23 +205,38 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
         return array();
     }
 
-
     /**
-     * Define and set handler attributes; initialize handler
+     * Retrieve property from th model object
      * 
-     * @param array                $params      handler params
-     * @param XLite_Model_Abstract $modelObject if passed, this object will be used instead of the default one
+     * @param string $field field/property name
      *  
-     * @return void
-     * @access public
+     * @return mixed
+     * @access protected
      * @since  3.0.0
      */
-    public function __construct(array $params = array(), XLite_Model_Abstract $modelObject = null)
+    protected function getFieldValue($field)
     {
-        parent::__construct($params);
-
-        $this->modelObject = $modelObject;
+        return $this->getModelObject()->get($field);
     }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_MODEL_OBJECT => new XLite_Model_WidgetParam_Object(
+                'Object', $this->getDefaultModelObject(), false, $this->getDefaultModelObjectClass()
+            ),
+        );
+    }
+
 
     /**
      * Return list of form fields

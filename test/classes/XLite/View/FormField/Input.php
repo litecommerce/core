@@ -44,20 +44,8 @@ class XLite_View_FormField_Input extends XLite_View_FormField_Input_Abstract
 
 
     /**
-     * Return field type
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getFieldType()
-    {
-        return $thsi->getParam(self::PARAM_TYPE);
-    }
-
-    /**
-     * Define widget params 
-     * 
+     * Define widget params
+     *
      * @return void
      * @access protected
      * @since  3.0.0
@@ -69,6 +57,19 @@ class XLite_View_FormField_Input extends XLite_View_FormField_Input_Abstract
         $this->widgetParams += array(
             self::PARAM_TYPE => new XLite_Model_WidgetParam_String('Type', null),
         );
+    }
+
+
+    /**
+     * Return field type
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getFieldType()
+    {
+        return $thsi->getParam(self::PARAM_TYPE);
     }
 }
 

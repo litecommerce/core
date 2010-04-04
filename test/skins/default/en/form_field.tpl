@@ -11,5 +11,7 @@
  * @since     3.0.0
  *}
 
-<input type="{getFieldType()}" name="{getParam(#name#)}" value="{getParam(#value#)}"{getAttributesCode()} />
+<td>{getParam(#label#)}</td>
+<td class="star">{if:getParam(#required#)}*{else:}&nbsp;{end:}</td>
+<td><widget template="{getDir()}/{getFieldTemplate()}" /></td>
 

@@ -36,14 +36,6 @@
 abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleton
 {
     /**
-     * Fields in user data translation table
-     */
-
-    const USER_DATA_FIELD    = 'field';
-    const USER_DATA_CALLBACK = 'callback';
-
-
-    /**
      * Current CMS name
      * 
      * @var    booln
@@ -322,33 +314,6 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         }
 
         return $profile;
-    }
-
-    /**
-     * translateUserData 
-     * 
-     * @param array $data data to translate
-     *  
-     * @return array
-     * @access public
-     * @since  3.0.0
-     */
-    public function translateUserData(array $data)
-    {
-        $result = array();
-
-        foreach ($this->getUserDataTranslationTable() as $lcKey => $handler) {
-            if (isset($data[$handler[self::USER_DATA_FIELD]])) {
-                $value = $data[$handler[self::USER_DATA_FIELD]];
-
-                if (isset($handler[self::USER_DATA_CALLBACK])) {
-                    $value = call_user_func_array($handler[self::USER_DATA_CALLBACK], array($value));
-                }
-                $result[$lcKey] = $value;
-            }
-        }
-
-        return $result + array('cms_name' => $this->getCMSName());
     }
 
 
