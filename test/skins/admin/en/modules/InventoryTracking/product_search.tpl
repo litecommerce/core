@@ -3,9 +3,9 @@
         <td width=10 height=10></td>
         <td height=10>
             <select name="inventory">
-                <option value="all" selected='{getInventory()=#all#}'>All</option>
-                <option value="low" selected='{getInventory()=#low#}'>Low stock</option>
-                <option value="out" selected='{getInventory()=#out#}'>Out of stock</option>
+                <option value="all" selected='{inventory=#all#}'>All</option>
+                <option value="low" selected='{inventory=#low#}'>Low stock</option>
+                <option value="out" selected='{inventory=#out#}'>Out of stock</option>
             </select>
         </td>
     </tr>
