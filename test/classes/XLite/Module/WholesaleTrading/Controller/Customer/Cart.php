@@ -69,7 +69,8 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Cart extends XLite_Contr
         $items = $this->getCart()->get('items');
 
         // alternative way to set product options
-        if (
+        // FIXME - resolve the issue with the "product_options" property
+        /*if (
             $this->xlite->get('ProductOptionsEnabled')
             && is_object($this->getProduct())
             && isset(XLite_Core_Request::getInstance()->OptionSetIndex[$this->getProduct()->get('product_id')])
@@ -78,7 +79,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Cart extends XLite_Contr
             foreach ($options_set[XLite_Core_Request::getInstance()->OptionSetIndex[$this->getProduct()->get('product_id')]] as $_opt) {
                 $this->product_options[$_opt->class] = $_opt->option_id;
             }
-        }
+        }*/
 
         // Detect amount
         if (

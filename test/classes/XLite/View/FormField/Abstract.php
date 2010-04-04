@@ -57,15 +57,6 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
 
 
     /**
-     * Return widget default template 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    abstract protected function getDefaultTemplate();
-
-    /**
      * Return field type
      * 
      * @return string

@@ -39,11 +39,11 @@ abstract class XLite_View_Form_Abstract extends XLite_View_Abstract
      * Widget parameter names
      */
 
-    const PARAM_FORM_TARGET = 'form_target';
-    const PARAM_FORM_ACTION = 'form_action';
-    const PARAM_FORM_NAME   = 'form_name';
-    const PARAM_FORM_PARAMS = 'form_params';
-    const PARAM_FORM_METHOD = 'form_method';
+    const PARAM_FORM_TARGET = 'formTarget';
+    const PARAM_FORM_ACTION = 'formAction';
+    const PARAM_FORM_NAME   = 'formName';
+    const PARAM_FORM_PARAMS = 'formParams';
+    const PARAM_FORM_METHOD = 'formMethod';
 
     const PARAM_START = 'start';
     const PARAM_END   = 'end';

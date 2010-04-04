@@ -105,8 +105,17 @@ class XLite_Model_Abstract extends XLite_Base
     * If set to true, findAll will fetch only object' indexes
     */    
     public $fetchObjIdxOnly = false;
-    
 
+
+    /**
+     * Update or create model object (DB record)
+     * 
+     * @param array $properties object properties
+     *  
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
     public function modify(array $properties)
     {
         $this->setProperties($properties);

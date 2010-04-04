@@ -140,7 +140,7 @@ abstract class XLite_Core_Handler extends XLite_Base
 
 
     /**
-     * __construct 
+     * Define and set handler attributes; initialize handler 
      * 
      * @param array $params handler params
      *  

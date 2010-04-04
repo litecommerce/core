@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Form start (order search)
+ * ____file_title____
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -11,6 +11,5 @@
  * @since     3.0.0
  *}
 
-<form action="{getFormAction()}" method="{getParam(#formMethod#)}" name="{getFormName()}" onsubmit="javascript: {getJSOnSubmitCode()}" class="search-orders" style="display: none;">
-<input FOREACH="getFormParamsAsPlainList(),paramName,paramValue" type="hidden" name="{paramName}" value="{paramValue}" />
+<widget class="XLite_View_Button_Submit" />
 
