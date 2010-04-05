@@ -36,6 +36,25 @@
 abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstract
 {
     /**
+     * billingAddressFields 
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $billingAddressFields = null;
+
+    /**
+     * shippingAddressFields 
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $shippingAddressFields = null;
+
+
+    /**
      * Return title
      *
      * @return string
@@ -94,14 +113,67 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
     {
         parent::defineFormFields();
 
-        $this->formFields += array(
-            'billingFirstname' => new XLite_View_FormField_Input_Text(
-                array(), 'billing_firstname', $this->getFieldValue('billing_firstname'), 'Name', true
-            ),
-            'billingAddress' => new XLite_View_FormField_Input_Text(
-                array(), 'billing_address', $this->getFieldValue('billing_address'), 'Street', true
-            ),
-        );
+        $this->formFields += $this->getBillingAddressFields();
+        $this->formFields += $this->getShippingAddressFields();
+    }
+
+
+    /**
+     * getBillingAddressFields 
+     * 
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getBillingAddressFields()
+    {
+        if (!isset($this->billingAddressFields)) {
+            $this->billingAddressFields = array(
+                'billingFirstname' => new XLite_View_FormField_Input_Text(
+                    array(), 'billing_firstname', $this->getFieldValue('billing_firstname'), 'Name', true
+                ),
+                'billingAddress' => new XLite_View_FormField_Input_Text(
+                    array(), 'billing_address', $this->getFieldValue('billing_address'), 'Street', true
+                ),
+            );
+        }
+
+        return $this->billingAddressFields;
+    }
+
+    /**
+     * getShippingAddressFields 
+     *  
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getShippingAddressFields()
+    {
+        if (!isset($this->shippingAddressFields)) {
+            $this->shippingAddressFields = array(
+                'shippingFirstname' => new XLite_View_FormField_Input_Text(
+                    array(), 'shipping_firstname', $this->getFieldValue('shipping_firstname'), 'Name', true
+                ),
+                'shippingAddress' => new XLite_View_FormField_Input_Text(
+                    array(), 'shipping_address', $this->getFieldValue('shipping_address'), 'Street', true
+                ),
+            );
+        }
+
+        return $this->shippingAddressFields;
+    }
+
+    /**
+     * isVisible 
+     * 
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function isVisible()
+    {
+        return parent::isVisible() && !$this->isExported();
     }
 }
 

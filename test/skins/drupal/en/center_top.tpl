@@ -38,7 +38,11 @@
 <!-- [checkout] {{{ -->
 <widget target="checkout" mode="register,paymentMethod,details" template="common/dialog.tpl" body="checkout/checkout.tpl" head="Shopping cart" IF="!showAV"/>
 <widget module="PayPalPro" target="checkout" mode="register" template="common/dialog.tpl" body="modules/PayPalPro/retrieve_profile.tpl" head="Make checkout easier with PayPal Website Pro" visible="{xlite.PayPalProExpressEnabled}">
-<widget target="checkout" mode="register" class="XLite_View_RegisterForm" head="Customer Information" name="registerForm" allowAnonymous="{config.General.enable_anon_checkout}" IF="!showAV"/>
+
+{* It's only the test *}
+<widget target="checkout" mode="register" class="XLite_View_Model_Profile" />
+{*<widget target="checkout" mode="register" class="XLite_View_RegisterForm" head="Customer Information" name="registerForm" allowAnonymous="{config.General.enable_anon_checkout}" IF="!showAV"/>*}
+
 <widget target="checkout" mode="paymentMethod" template="common/dialog.tpl" body="payment_method.tpl" head="Payment method">
 <widget target="checkout" mode="details" template="common/dialog.tpl" body="checkout/details_dialog.tpl" head="{cart.paymentMethod.name}">
 <widget target="checkoutSuccess" template="checkout/success.tpl">
