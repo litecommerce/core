@@ -493,86 +493,154 @@ class XLite_Model_Abstract extends XLite_Base
 
     // IMPORT/EXPORT methods {{{
 
-    function import(array $options) // {{{
+    /**
+     * Process the import error
+     * 
+     * @param bool $returnError Trigger for stopping script or returning false
+     *  
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function processImportError($returnError = false)
+    {
+        if (!$returnError) {
+            die($this->importError);
+        }
+
+        return false;
+    }
+
+    /**
+     * import 
+     * 
+     * @param array $options ____param_comment____
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function import(array $options)
     {
         global $DATA_DELIMITERS, $TEXT_QUALIFIERS;
 
-        $this->importError = "";
-        is_array($options) or $this->importError = "Invalid import options.";
+        $this->importError = '';
+
+        is_array($options) or $this->importError = 'Invalid import options.';
+
         if ($this->importError) {
-            if ($options['return_error']) return false;
-            else die($this->importError);
-        }
+            return $this->processImportError(false);
 
-        $file = $options["file"];
-        $handle = fopen($file, 'r') or $this->importError = "Failed to open import file $file.";
-        if ($this->importError) {
-            if ($options['return_error']) return false;
-            else die($this->importError);
-        }
+        } else {
 
-        if (!empty($options["delimiter"])) {
-            $options["delimiter"] = $DATA_DELIMITERS[$options["delimiter"]];
-        }
-        $qualifier = null;
-        if (!empty($options["text_qualifier"])) {
-            $qualifier = $TEXT_QUALIFIERS[$options["text_qualifier"]];
-        }
-        $layout = $options["layout"];
-        
-        $this->lineNo = 1;
-        $line_buffer = "";
-        while ($line = fgets($handle, 4096)) {
-            $error = "";
-            if (strlen($line_buffer) > 0) {
-                $line = $line_buffer . $line;
+            $file = $options['file'];
+
+            $handle = fopen($file, 'r') or $this->importError = "Failed to open import file $file.";
+
+            if ($this->importError) {
+                return $this->processImportError($options['return_error']);
             }
-            $columns = func_parse_csv($line, $options["delimiter"], $qualifier, $error);
-            if (is_null($columns) && $error == "Unexpected end of line; $qualifier expected") {
-                $line = str_replace("\r\n", " ", $line);
-                $line = str_replace("\n", " ", $line);
-                $line_buffer = $line;
-                continue;
-            } elseif (is_null($columns)) {
-                $this->importError = "CVS syntax error in line ".$this->lineNo.": $error.";
-                if ($options['return_error']) return false;
-                else die($this->importError);
-            }
-            $line_buffer = "";
-            $properties = array();
-            $layout_idx = 0;
-            for ($i = 0; $i < count($layout); $i++) {
-                if ($layout[$i] != "NULL") {
-                    array_key_exists($layout_idx, $columns) or $this->importError = "Invalid CSV file: column count does not match.";
-                    if ($this->importError) {
-                        if ($options['return_error']) return false;
-                        else die($this->importError);
-                    }
-                    $properties[$layout[$i]] = $columns[$layout_idx];
-                    $layout_idx ++;
-                }    
-            }   
-            $options["properties"] = $properties;
-            $this->_import($options);
-            $this->lineNo ++;
-        }
-    } // }}}
 
-    function getImportFields($layout = null) // {{{
+            if (!empty($options['delimiter'])) {
+                $options["delimiter"] = $DATA_DELIMITERS[$options['delimiter']];
+            }
+
+            $qualifier = null;
+
+            if (!empty($options['text_qualifier'])) {
+                $qualifier = $TEXT_QUALIFIERS[$options['text_qualifier']];
+            }
+
+            $layout = $options['layout'];
+            
+            $this->lineNo = 1;
+            $line_buffer = '';
+
+            while ($line = fgets($handle, 4096)) {
+
+                $error = '';
+
+                if (strlen($line_buffer) > 0) {
+                    $line = $line_buffer . $line;
+                }
+
+                $columns = func_parse_csv($line, $options['delimiter'], $qualifier, $error);
+
+                if (is_null($columns) && "Unexpected end of line; $qualifier expected" == $error) {
+                    $line = str_replace("\r\n", " ", $line);
+                    $line = str_replace("\n", " ", $line);
+                    $line_buffer = $line;
+                    continue;
+
+                } elseif (is_null($columns)) {
+                    $this->importError = "CVS syntax error in line " . $this->lineNo . ": $error.";
+                    return $this->processImportError($options['return_error']);
+
+                } elseif (is_array($columns) && count($columns) == 1 && empty($columns[0])) {
+                    continue;
+                }
+
+                $line_buffer = '';
+                $properties = array();
+                $layout_idx = 0;
+
+                for ($i = 0; $i < count($layout); $i++) {
+
+                    if ($layout[$i] != "NULL") {
+
+                        array_key_exists($layout_idx, $columns) or $this->importError = 'Invalid CSV file: column count does not match.';
+
+                        if ($this->importError) {
+                            return $this->processImportError($options['return_error']);
+                        }
+
+                        $properties[$layout[$i]] = $columns[$layout_idx];
+                        $layout_idx ++;
+                    }    
+                }
+
+                $options['properties'] = $properties;
+                $this->_import($options);
+                $this->lineNo ++;
+            }
+        }
+    }
+
+    /**
+     * getImportFields 
+     * 
+     * @param array $layout The list of fields for importing
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getImportFields($layout = null)
     {
-        isset($this->importFields) or die("importFields property undefined");
+        isset($this->importFields) or die('importFields property undefined');
 
         $fields = $this->importFields;
         $result = array();
+
         foreach ($fields as $field) {
             $result[] = $fields;
         }
+
         if (!is_null($layout)) {
+
             if (isset($this->config->ImportExport->$layout)) {
+
                 $layout = explode(',', $this->config->ImportExport->$layout);
+
                 foreach ($result as $id => $fields) {
+
                     if (isset($layout[$id])) {
+
                         $selected = $layout[$id];
+
                         if (array_key_exists($selected, $result[$id])) {
                             $result[$id][$selected] = true;
                         }    
@@ -580,8 +648,9 @@ class XLite_Model_Abstract extends XLite_Base
                 }
             }
         }
+
         return $result;
-    } // }}}
+    }
 
     function _import(array $options) // {{{
     {

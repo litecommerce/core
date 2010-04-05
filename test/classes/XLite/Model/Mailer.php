@@ -83,6 +83,19 @@ class XLite_Model_Mailer extends XLite_View_Abstract
         $this->set("name", "MailMessage");
     } // }}}
 
+	/**
+	 * getDefaultTemplate 
+	 * 
+	 * @return string
+	 * @access protected
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	protected function getDefaultTemplate()
+    {
+		return '';
+	}
+
     function set($name, $value)
     {
     	switch($name) {

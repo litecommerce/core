@@ -120,7 +120,9 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
 
         $this->connected = true;
 
-        $this->profiler->dbConnectTime = microtime(true) - $time;
+		$this->profiler->dbConnectTime = microtime(true) - $time;
+
+		$this->options = array_merge($this->options, $options);
     }
 
     protected function getCachedResult($sql)
@@ -347,7 +349,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
         // do not cache backup queries
         $this->set("cacheEnabled", false);
         // write backup file heading comments
-        $this->_write($handle, "-- WARNING: Do not change this line <?php die(); /*\n");
+		$this->_write($handle, "-- WARNING: Do not change this line <?php die(); ?>\n");
         foreach ($this->getTables() as $table) {
             // dump table chema
             if ($verbose) {
@@ -375,9 +377,8 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
         echo "Please wait...<br>\n";
         $error = query_upload($file, $this->db->connection, true, true);
         // cleanup compiled cache
-        echo "<br>\n";
-        func_cleanup_cache("classes", true);
-        func_cleanup_cache("skins", true);
+		echo "<br>\n";
+		XLite_Model_ModulesManager::getInstance()->cleanupCache();
         return $error;
     } // }}}
 
@@ -405,8 +406,8 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
             $schema .= ",\n";
             $table_list .= $field['Field'] . ', ';
         }
-        $schema = ereg_replace(",\n$", "", $schema);
-        $table_list = ereg_replace(", $", "", $table_list) . ')';
+        $schema = preg_replace("/,\n$/", "", $schema);
+        $table_list = preg_replace("/, $/", "", $table_list) . ')';
         // Add keys
         $index = array();
         foreach ($this->getTableKeys($table) as $key) {

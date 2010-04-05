@@ -53,7 +53,17 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
 	 * @see    ____var_see____
 	 * @since  3.0.0
 	 */
-	public $mode = "modify";
+	protected $defaultMode = "modify";
+
+    /**
+     * alowedModes 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $allowedModes = array('modify', 'register');
 
 	/**
 	 * backUrl 
@@ -90,6 +100,23 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
         'success' => null
     );
 
+    /**
+     * getMode 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getMode() {
+        $_mode = XLite_Core_Request::getInstance()->mode;
+
+        if (empty($_mode) || !in_array($_mode, $this->allowedModes))
+            $_mode = $this->defaultMode;
+
+        return $_mode;
+    }
+
     /*
     protected function getDeleteUrl()
     {
@@ -111,7 +138,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
      */
     public function handleRequest()
     {
-        if ('delete' == XLite_Core_Request::getInstance()->mode) {
+        if ('delete' == $this->getMode()) {
 
             $profile = $this->getProfile();
 
@@ -225,7 +252,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
 			$this->statusData['success'] = true;
         }
 
-        if ('success' == $this->get('mode')) {
+        if ('success' == $this->getMode()) {
             $this->set('returnUrl', $this->buildUrl('profile', '', array('profile_id' => $this->profile->get('profile_id'))));
         }
     }

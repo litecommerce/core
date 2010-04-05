@@ -65,7 +65,7 @@ class XLite_Module_GiftCertificates_View_CEcardSelect extends XLite_View_Abstrac
         return $this->gc;
     }
 
-	function getTemplate()
+	protected function getDefaultTemplate()
 	{
 		if ($this->xlite->GiftCertificates_wysiwyg_work) {
 			return "modules/GiftCertificates/ecards.tpl";
