@@ -148,7 +148,7 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
     protected function definePortals()
     {
         $this->portals = array(
-            'user/%/orders_history' => array(
+            'user/%/orders' => array(
                 'menu'   => array(
                     'title'             => 'Orders history',
                     'description'       => 'Orders history',
@@ -159,7 +159,7 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
                 'prefix' => array($this, 'getOrdersURLPrefix'),
                 'argumentsPreprocessor' => array($this, 'getOrdersArgPreprocess'),
             ),
-            'user/%/orders_history/%' => array(
+            'user/%/orders/%' => array(
                 'menu'   => array(
                     'title'             => 'Order',
                     'description'       => 'Order',
@@ -168,6 +168,17 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
                 ),
                 'target' => 'order',
                 'prefix' => array($this, 'getOrderURLPrefix'),
+                'argumentsPreprocessor' => array($this, 'getOrderArgPreprocess'),
+            ),
+            'user/%/orders/%/invoice' => array(
+                'menu'   => array(
+                    'title'             => 'Invoice',
+                    'description'       => 'Invoice',
+                    'access arguments'  => array('access user profiles'),
+                    'weight'            => 100,
+                ),
+                'target' => 'invoice',
+                'prefix' => array($this, 'getInvoiceURLPrefix'),
                 'argumentsPreprocessor' => array($this, 'getOrderArgPreprocess'),
             ),
 
@@ -212,16 +223,22 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
 
         if (isset($portal['prefix'])) {
             $prefix = array();
+
+            if (isset($params['printable']) && $params['printable']) {
+                $prefix[] = 'print';
+                unset($params['printable']);
+            }
+
             $this->portalParams = $params;
 
             if (is_callable($portal['prefix'])) {
-                $prefix = call_user_func($portal['prefix']);
+                $prefix = array_merge($prefix, call_user_func($portal['prefix']));
 
             } elseif (is_string($portal['prefix'])) {
-                $prefix = explode('/', $portal['prefix']);
+                $prefix = array_merge($prefix, explode('/', $portal['prefix']));
 
             } elseif (is_array($portal['prefix'])) {
-                $prefix = $portal['prefix'];
+                $prefix = array_merge($prefix, $portal['prefix']);
             }
 
             $defaultTarget = false;
@@ -296,7 +313,7 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
         return array(
             'user',
             $uid,
-            'orders_history',
+            'orders',
         );
     }
 
@@ -319,6 +336,23 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
         } else {
             $result[] = 0;
         }
+
+        return $result;
+    }
+
+    /**
+     * Get URL prefix for Invoice portal
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getInvoiceURLPrefix()
+    {
+        $result = $this->getOrderURLPrefix();
+
+        $result[] = 'invoice';
 
         return $result;
     }

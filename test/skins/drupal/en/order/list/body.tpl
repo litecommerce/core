@@ -26,7 +26,7 @@
         {time_format(order.date)}
         <div class="status-{order.status}">
           <widget template="common/order_status.tpl" />
-          <a href="{buildURL(#order#,##,_ARRAY_(#order_id#^order.order_id,#printable#^#1#))}"><img src="images/spacer.gif" alt="Print" /></a>
+          <a href="{buildURL(#invoice#,##,_ARRAY_(#order_id#^order.order_id,#printable#^#1#))}"><img src="images/spacer.gif" alt="Print" /></a>
         </div>
       </div>
 

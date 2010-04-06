@@ -1,5 +1,15 @@
-{* SVN $Id$ *}
+{* vim: set ts=2 sw=2 sts=2 et: *}
 
+{**
+ * Center widgets switcher
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
 <!-- [catalog] {{{ -->
 <widget class="XLite_View_Category" />
 <widget class="XLite_View_Product" />
@@ -56,6 +66,7 @@
 <!-- [order] {{{ -->
 <widget class="XLite_View_OrderSearch" />
 <widget class="XLite_View_Order" />
+<widget class="XLite_View_Invoice" />
 <!-- [/order] }}} -->
 
 <!-- [modules] {{{ -->

@@ -106,13 +106,20 @@ class XLite_Module_DrupalConnector_Core_Converter extends XLite_Core_Converter i
      */
     public static function buildDrupalURL($target = '', $action = '', array $params = array())
     {
-        $result = '?q=' . implode('/', array(self::DRUPAL_ROOT_NODE, $target, $action));
+        $parts = array(
+            self::DRUPAL_ROOT_NODE,
+            $target,
+            $action
+        );
 
-        if ($params) {
-            $result .= '/' . XLite_Core_Converter::buildQuery($params, '-', '/');
+        if (isset($params['printable']) && $params['printable']) {
+            array_unshift($parts, 'print');
+            unset($params['printable']);
         }
 
-        return $result;
+        $parts = array_merge($parts, $params);
+
+        return '?q=' . implode('/', $parts);
     }
 
 }
