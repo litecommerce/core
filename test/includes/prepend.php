@@ -50,6 +50,8 @@ ini_set('display_errors', true);
 define('LC_DS', DIRECTORY_SEPARATOR);
 define('LC_ROOT_DIR', rtrim(LC_DIR, LC_DS) . LC_DS);
 
+define('LC_EXT_LIB_DIR', LC_ROOT_DIR . 'lib' . LC_DS);
+
 define('LC_CLASSES_DIR', LC_ROOT_DIR . 'classes' . LC_DS);
 define('LC_LIB_DIR', LC_CLASSES_DIR . 'XLite' . LC_DS);
 define('LC_MODULES_DIR', LC_LIB_DIR . 'Module' . LC_DS);

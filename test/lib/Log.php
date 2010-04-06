@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: Log.php 1606 2010-01-13 17:28:08Z vvs $
 // $Horde: horde/lib/Log.php,v 1.15 2000/06/29 23:39:45 jon Exp $
 
 /**
