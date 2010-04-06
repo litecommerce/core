@@ -150,10 +150,10 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
         $this->portals = array(
             'user/%/orders' => array(
                 'menu'   => array(
-                    'title'             => 'Orders history',
-                    'description'       => 'Orders history',
-                    'access arguments'  => array('access user profiles'),
-                    'weight'            => 100,
+                    'title'            => 'Orders history',
+                    'description'      => 'Orders history',
+                    'access arguments' => array('access user profiles'),
+                    'weight'           => 100,
                 ),
                 'target' => 'order_list',
                 'prefix' => array($this, 'getOrdersURLPrefix'),
@@ -161,10 +161,11 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
             ),
             'user/%/orders/%' => array(
                 'menu'   => array(
-                    'title'             => 'Order',
-                    'description'       => 'Order',
-                    'access arguments'  => array('access user profiles'),
-                    'weight'            => 100,
+                    'title'            => 'Order',
+                    'description'      => 'Order',
+                    'access arguments' => array('access user profiles'),
+                    'weight'           => 100,
+                    'type'             => MENU_CALLBACK,
                 ),
                 'target' => 'order',
                 'prefix' => array($this, 'getOrderURLPrefix'),
@@ -172,10 +173,11 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
             ),
             'user/%/orders/%/invoice' => array(
                 'menu'   => array(
-                    'title'             => 'Invoice',
-                    'description'       => 'Invoice',
-                    'access arguments'  => array('access user profiles'),
-                    'weight'            => 100,
+                    'title'            => 'Invoice',
+                    'description'      => 'Invoice',
+                    'access arguments' => array('access user profiles'),
+                    'weight'           => 100,
+                    'type'             => MENU_CALLBACK,
                 ),
                 'target' => 'invoice',
                 'prefix' => array($this, 'getInvoiceURLPrefix'),

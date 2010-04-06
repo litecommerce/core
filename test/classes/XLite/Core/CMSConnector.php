@@ -260,6 +260,21 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
     }
 
     /**
+     * Get controller 
+     * 
+     * @return XLite_Controller_Abstract
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getController()
+    {
+        return XLite_Model_CachingFactory::getObjectFromCallback(
+            __METHOD__, $this->getApplication(), 'getController'
+        );
+    }
+
+    /**
      * Check controller access
      *
      * @return boolean
@@ -268,14 +283,11 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
     public function isAllowed()
     {
-
-        $oldController = XLite_Model_CachingFactory::getObjectFromCallback(
-            __METHOD__, $this->getApplication(), 'getController'
-        );
+        $oldController = $this->getController();
 
         $this->getApplication()->setController();
         $controller = XLite_Model_CachingFactory::getObjectFromCallback(
-            'target-' . XLite_Core_Request::getInstance()->target,
+            __METHOD__ . '-' . XLite_Core_Request::getInstance()->target,
             $this->getApplication(),
             'getController'
         );
