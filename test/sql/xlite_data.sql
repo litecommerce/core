@@ -167,6 +167,7 @@ INSERT INTO xlite_config VALUES ('admin_security','Use HTTPS in the Administrato
 INSERT INTO xlite_config VALUES ('full_customer_security','Customer Zone fully on HTTPS','N','Security',5,'checkbox');
 INSERT INTO xlite_config VALUES ('logoff_clear_cart','Clear cart on customer logoff','N','Security',10,'checkbox');
 INSERT INTO xlite_config VALUES ('httpsClient','HTTPS client to use (for integration with secure payment/shipping services)','autodetect','Security',20,'select');
+INSERT INTO xlite_config VALUES ('proxy','HTTPS proxy','','Security',25,'');
 -- UPDATE xlite_config SET orderby='20', comment='HTTPS client to use (for integration with secure payment/shipping services)' WHERE name = 'httpsClient' AND category = 'Security';
 -- INSERT INTO xlite_config VALUES ('customer_password_hint','Use password hint to help customers recall forgotten passwords','N','Security',5,'checkbox');
 INSERT INTO xlite_config VALUES ('allow_admin_ip','Allow admin IP','','SecurityIP',40,'');

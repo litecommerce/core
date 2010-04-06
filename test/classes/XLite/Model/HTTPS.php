@@ -111,6 +111,46 @@ class XLite_Model_HTTPS extends XLite_Base
     protected $use_ssl3 = false;
 
     /**
+     * Timeout (seconds)
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $timeout = null;
+
+    /**
+     * Request user name
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $user = null;
+
+    /**
+     * Request password 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $password = null;
+
+    /**
+     * Response HTTP code 
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $responseCode = null;
+
+    /**
      * Request response 
      * 
      * @var    string
@@ -119,6 +159,26 @@ class XLite_Model_HTTPS extends XLite_Base
      * @since  3.0.0
      */
     protected $response = null;    
+
+    /**
+     * Raw response headers 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $rawHeaders = null;
+
+    /**
+     * Response headers 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $responseHeaders = array();
 
     /**
      * CURL error code 
@@ -230,7 +290,16 @@ class XLite_Model_HTTPS extends XLite_Base
      * @since  3.0.0
      */
     protected $writableProperties = array(
-        'url', 'data', 'cert', 'kcert', 'method', 'conttype', 'use_ssl3',
+        'url',
+        'data',
+        'cert',
+        'kcert',
+        'method',
+        'conttype',
+        'use_ssl3',
+        'timeout',
+        'user',
+        'password',
     );
 
     /**
@@ -242,7 +311,7 @@ class XLite_Model_HTTPS extends XLite_Base
      * @since  3.0.0
      */
     protected $readableProperties = array(
-        'response', 'error',
+        'response', 'error', 'responseHeaders', 'responseCode',
     );
 
     /**
@@ -353,6 +422,11 @@ class XLite_Model_HTTPS extends XLite_Base
      */
     public function request()
     {
+        $this->rawHeaders = '';
+        $this->responseCode = null;
+        $this->responseHeaders = array();
+        $this->response = null;
+
         $software = 'autodetect' == $this->config->Security->httpsClient
             ? $this->detectSoftware()
             : $this->config->Security->httpsClient;
@@ -480,9 +554,14 @@ class XLite_Model_HTTPS extends XLite_Base
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function initLlibCURL()
+    protected function initLibCURL()
     {
         $c = curl_init($this->url);
+
+        $url = new Net_URL($this->url);
+        if ($url->port != 443 && $url->port != 80) {
+            curl_setopt($c, CURLOPT_PORT, $url->port);
+        }
 
         $post = 'POST' == $this->method;
         curl_setopt($c, CURLOPT_FOLLOWLOCATION, true);
@@ -491,7 +570,18 @@ class XLite_Model_HTTPS extends XLite_Base
             curl_setopt($c, CURLOPT_SSLVERSION, 3);
         }
 
+        if ($this->timeout) {
+            curl_setopt($c, CURLOPT_TIMEOUT, $this->timeout);
+        }
+
+        if ($this->config->Security->proxy) {
+            curl_setopt($c, CURLOPT_PROXYTYPE, CURLPROXY_HTTP);
+            curl_setopt($c, CURLOPT_PROXY, $this->config->Security->proxy);
+        }
+
         curl_setopt($c, CURLOPT_POST, $post);
+        curl_setopt($c, CURLOPT_HEADER, false);
+        curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
 
         if ($post) {
             curl_setopt($c, CURLOPT_POSTFIELDS, $this->getPost());
@@ -499,6 +589,10 @@ class XLite_Model_HTTPS extends XLite_Base
 
         curl_setopt($c, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($c, CURLOPT_SSL_VERIFYHOST, 0);
+
+        if ($this->referer) {
+            curl_setopt($c, CURLOPT_REFERER, $this->referer);
+        }
 
         $headers = $this->getHeaders();
         if (count($headers) > 0) {
@@ -512,13 +606,49 @@ class XLite_Model_HTTPS extends XLite_Base
             }
         }
 
-        if (!empty($this->referer)) {
-            $headerString = 'Referer: ' . $this->referer . "\r\n";
-            curl_setopt($c, CURLOPT_CUSTOMREQUEST, $headerString);
-            curl_setopt($c, CURLOPT_HEADER, 1);
+        if (!function_exists('xliteCURLHeaderCallback')) {
+            function xliteCURLHeaderCallback($curl, $header) {
+                global $xliteCURLObject;
+
+                return $xliteCURLObject->setHeadersCallback($header);
+            }
+        }
+
+        global $xliteCURLObject;
+
+        $xliteCURLObject = $this;
+
+        curl_setopt($c, CURLOPT_HEADERFUNCTION, 'xliteCURLHeaderCallback');
+
+        if ($this->user) {
+            curl_setopt($c, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+
+            if ($this->password) {
+                curl_setopt($c, CURLOPT_USERPWD, $this->user . ':' . $this->password);
+
+            } else {
+                curl_setopt($c, CURLOPT_USERPWD, $this->user);
+            }
         }
 
         return $c;
+    }
+
+    /**
+     * Append raw response headers
+     * 
+     * @param string $string Headers string
+     *  
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setHeadersCallback($string)
+    {
+        $this->rawHeaders .= $string;
+
+        return strlen($string);
     }
 
     /**
@@ -538,18 +668,29 @@ class XLite_Model_HTTPS extends XLite_Base
 
         } else {
 
-            $c = $this->initLlibCURL();
+            $c = $this->initLibCURL();
 
-            ob_start();
-            curl_exec($c);
-            $this->response = ob_get_contents();
-            ob_end_clean();
+            $this->response = curl_exec($c);
             $this->curlErrorCode = curl_errno($c);
             $this->error = curl_error($c);
             curl_close($c);
 
             if ($this->curlErrorCode) {
                 $result = self::HTTPS_ERROR;
+
+            } else {
+                $responseHeaders = array_map('trim', explode("\n", $this->rawHeaders));
+                if (preg_match('/HTTP\/1\.\d (\d+)/', $responseHeaders[0], $match)) {
+                    $this->responseCode = intval($match[1]);
+                }
+                unset($responseHeaders[0]);
+
+                foreach ($responseHeaders as $v) {
+                    $v = explode(':', $v, 2);
+                    if (2 == count($v)) {
+                        $this->responseHeaders[$v[0]] = trim($v[1]);
+                    }
+                }
             }
         }
         
@@ -557,7 +698,7 @@ class XLite_Model_HTTPS extends XLite_Base
     }
 
     /**
-     * detect ecternal curl 
+     * Detect external curl 
      * 
      * @return integer
      * @access protected
@@ -625,6 +766,25 @@ class XLite_Model_HTTPS extends XLite_Base
 
         if ($this->use_ssl3) {
             $execline .= ' --sslv3';
+        }
+
+        if ($this->timeout) {
+            $execline .= ' --connect-timeout ' . $this->timeout . ' -m ' . $this->timeout;
+        }
+
+        if ($this->config->Security->proxy) {
+            $execline .= '  --proxy ' . $this->config->Security->proxy;
+        }
+
+        if ($this->user) {
+            $execline .= ' --anyauth';
+
+            if ($this->password) {
+                $execline .= '  --user ' . $this->user . ':' . $this->password;
+
+            } else {
+                $execline .= '  --user ' . $this->user;
+            }
         }
 
         if ($this->conttype != 'application/x-www-form-urlencoded') {
