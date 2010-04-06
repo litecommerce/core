@@ -42,8 +42,18 @@
 * @version $Id$
 */
 class XLite_Module_Affiliate_View_RichBanner extends XLite_View_Abstract
-{	
-    public $template = "modules/Affiliate/empty.tpl";
+{    
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'modules/Affiliate/empty.tpl';
+    }
 
     function display()
     {

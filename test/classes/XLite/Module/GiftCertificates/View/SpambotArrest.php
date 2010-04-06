@@ -45,8 +45,18 @@
 * @version $Id$
 */
 class XLite_Module_GiftCertificates_View_SpambotArrest extends XLite_View_Abstract
-{	
-    public $template = "common/spambot_arrest.tpl";
+{    
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'common/spambot_arrest.tpl';
+    }
 
     function isIgnoreErrors()
     {
@@ -57,7 +67,3 @@ class XLite_Module_GiftCertificates_View_SpambotArrest extends XLite_View_Abstra
         return parent::is("ignoreErrors");
     }
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

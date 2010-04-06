@@ -19,6 +19,18 @@ class XLite_Module_GiftCertificates_View_CEcard extends XLite_View_Abstract
 {    
     public $gc = null;
 
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return '';
+    }
+
     function getTemplate()
     {
         return 'modules/GiftCertificates/ecards/' . $this->getComplex('gc.ecard.template') . '.tpl';
