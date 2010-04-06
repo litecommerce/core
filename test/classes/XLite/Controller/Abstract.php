@@ -86,10 +86,10 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
      * Check if current page is accessible
      * 
      * @return bool
-     * @access protected
+     * @access public
      * @since  3.0.0
      */
-    protected function checkAccess()
+    public function checkAccess()
     {
         return XLite_Model_Auth::getInstance()->isAuthorized($this);
     }
@@ -120,7 +120,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         XLite_Model_Profiler::getInstance()->enabled = false;
 
         if ($this->returnUrlAbsolute) {
-            $location = $this->getShopUrl($location, $this->get('secure'));
+            $location = $this->getShopUrl($location, $this->getSsecure());
         }
 
         $code = 302;
@@ -129,6 +129,19 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         }
 
         header('Location: ' . $location, true, $code);
+    }
+
+    /**
+     * Get secure controller status
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSecure()
+    {
+        return false;
     }
 
     /**
@@ -313,9 +326,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     {
         if (!$this->checkAccess()) {
 
-            $this->params = array('target');
-            $this->set('target', 'access_denied');
-            XLite_Core_Request::getInstance()->target = 'access_denied';
+            $this->markAsAccessDenied();
 
         } elseif (!empty(XLite_Core_Request::getInstance()->action) && $this->isValid()) {
 
@@ -332,6 +343,21 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         if (XLite_Core_Request::getInstance()->isPost() && $this->isValid() && !$this->silent) {
             $this->redirect();
         }
+    }
+
+    /**
+     * Mark controller run thread as access denied
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function markAsAccessDenied()
+    {
+        $this->params = array('target');
+        $this->set('target', 'access_denied');
+        XLite_Core_Request::getInstance()->target = 'access_denied';
     }
 
     /**
@@ -671,7 +697,15 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         return $check;
     }
 
-    function getCharset()
+    /**
+     * Get controller charset 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCharset()
     {
         $charset = $this->getComplex('cart.profile.billingCountry.charset');
         if ($charset)

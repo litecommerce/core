@@ -45,6 +45,15 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
      */
     protected $portals = null;
 
+    /**
+     * Portal parameters 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $portalParams = array();
 
     /**
      * Method to access the singleton
@@ -146,9 +155,22 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
                     'access arguments'  => array('access user profiles'),
                     'weight'            => 100,
                 ),
-                'target' => array('order_list', 'order'),
-                'prefix' => array($this, 'getOrderURLPrefix'),
+                'target' => 'order_list',
+                'prefix' => array($this, 'getOrdersURLPrefix'),
+                'argumentsPreprocessor' => array($this, 'getOrdersArgPreprocess'),
             ),
+            'user/%/orders_history/%' => array(
+                'menu'   => array(
+                    'title'             => 'Order',
+                    'description'       => 'Order',
+                    'access arguments'  => array('access user profiles'),
+                    'weight'            => 100,
+                ),
+                'target' => 'order',
+                'prefix' => array($this, 'getOrderURLPrefix'),
+                'argumentsPreprocessor' => array($this, 'getOrderArgPreprocess'),
+            ),
+
         );
     }
 
@@ -172,13 +194,14 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
      * 
      * @param string $target Target code
      * @param string $action Action code
+     * @param array  $params Parameters
      *  
      * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getPortalPrefix($target, $action)
+    public function getPortalPrefix($target, $action, array &$params)
     {
         $key = $this->getPortalKey($target);
         $portals = $this->getPortals();
@@ -189,6 +212,8 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
 
         if (isset($portal['prefix'])) {
             $prefix = array();
+            $this->portalParams = $params;
+
             if (is_callable($portal['prefix'])) {
                 $prefix = call_user_func($portal['prefix']);
 
@@ -216,6 +241,7 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
             }
 
             $result = implode('/', $prefix);
+            $params = $this->portalParams;
         }
 
         if (false === $result) {
@@ -256,14 +282,14 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
     }
 
     /**
-     * Get URL prefix for Orders / Order portal
+     * Get URL prefix for Orders portal
      * 
      * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getOrderURLPrefix()
+    public function getOrdersURLPrefix()
     {
         $uid = user_uid_optional_to_arg('%');
 
@@ -273,5 +299,65 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
             'orders_history',
         );
     }
+
+    /**
+     * Get URL prefix for Order portal
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getOrderURLPrefix()
+    {
+        $result = $this->getOrdersURLPrefix();
+
+        if (isset($this->portalParams['order_id']) && $this->portalParams['order_id']) {
+            $result[] = $this->portalParams['order_id'];
+            unset($this->portalParams['order_id']);
+
+        } else {
+            $result[] = 0;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Orders page arguments preprocessing
+     * 
+     * @param array $args Arguments
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getOrdersArgPreprocess(array $args)
+    {
+        return array(
+            'profile_id' => $args[1],
+        );
+    }
+
+    /**
+     * Orders page arguments preprocessing
+     * 
+     * @param array $args Arguments
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getOrderArgPreprocess(array $args)
+    {
+        $result = $this->getOrdersArgPreprocess($args);
+
+        $result['order_id'] = $args[3];
+
+        return $result;
+    }
+
 }
 

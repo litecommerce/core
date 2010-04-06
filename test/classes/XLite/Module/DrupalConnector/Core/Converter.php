@@ -77,7 +77,7 @@ class XLite_Module_DrupalConnector_Core_Converter extends XLite_Core_Converter i
         } elseif (XLite_Module_DrupalConnector_Handler::getInstance()->isPortal($target)) {
 
             // Drupal URL (portal)
-            $result = '?q=' . XLite_Module_DrupalConnector_Handler::getInstance()->getPortalPrefix($target, $action);
+            $result = '?q=' . XLite_Module_DrupalConnector_Handler::getInstance()->getPortalPrefix($target, $action, $params);
 
             if ($params) {
                 $result .= '/' . XLite_Core_Converter::buildQuery($params, '-', '/');
@@ -86,15 +86,33 @@ class XLite_Module_DrupalConnector_Core_Converter extends XLite_Core_Converter i
         } else {
 
             // Drupal URL
-    	    $result = '?q=' . implode('/', array(self::DRUPAL_ROOT_NODE, $target, $action));
-
-            if ($params) {
-            	$result .= '/' . XLite_Core_Converter::buildQuery($params, '-', '/');
-            }
+    	    $result = self::buildDrupalURL($target, $action, $params);
 
 		}
 
 		return $result;
+    }
+
+    /**
+     * Compose URL from target, action and additional params
+     *
+     * @param string $target page identifier
+     * @param string $action action to perform
+     * @param array  $params additional params
+     *
+     * @return string
+     * @access public
+     * @since  3.0
+     */
+    public static function buildDrupalURL($target = '', $action = '', array $params = array())
+    {
+        $result = '?q=' . implode('/', array(self::DRUPAL_ROOT_NODE, $target, $action));
+
+        if ($params) {
+            $result .= '/' . XLite_Core_Converter::buildQuery($params, '-', '/');
+        }
+
+        return $result;
     }
 
 }

@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage Controller
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,20 +27,35 @@
  */
 
 /**
- * XLite_Controller_Customer_Order 
+ * Order controller
  * 
- * @package    XLite
- * @subpackage ____sub_package____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_Controller_Customer_Order extends XLite_Controller_Customer_Abstract
-{	
-    public $params = array("target", "order_id");	
-    public $order = null;	
-    public $isAccessDenied = false;
+{
+    /**
+     * Controller parameters
+     * 
+     * @var    array
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $params = array('target', 'order_id');    
 
+    /**
+     * Order (cache)
+     * 
+     * @var    XLite_Model_Order
+     * @access private
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    private $order = null;    
 
-	/**
+    /**
      * Add the base part of the location path
      * 
      * @return void
@@ -51,10 +66,10 @@ class XLite_Controller_Customer_Order extends XLite_Controller_Customer_Abstract
     {
         parent::addBaseLocation();
 
-		$this->locationPath->addNode(new XLite_Model_Location('Search orders', $this->buildURL('order_list')));
+        $this->locationPath->addNode(new XLite_Model_Location('Search orders', $this->buildURL('order_list')));
     }
 
-	/**
+    /**
      * Common method to determine current location 
      * 
      * @return string
@@ -66,48 +81,68 @@ class XLite_Controller_Customer_Order extends XLite_Controller_Customer_Abstract
         return 'Order details';
     }
 
-
-    function getTemplate()
+    /**
+     * Check if current page is accessible
+     * 
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function checkAccess()
     {
-        if ($this->get("mode") == "invoice") {
-            // print invoice
-            return "common/print_invoice.tpl";
-        }
-        return parent::getTemplate();
+        return parent::checkAccess()
+            && (
+                $this->session->get('last_order_id') == XLite_Core_Request::getInstance()->order_id
+                || (
+                    $this->auth->isLogged()
+                    && $this->auth->getProfile()->get('profile_id') == $this->getOrder()->get('orig_profile_id')
+                )
+            );
     }
 
-    function handleRequest()
-    {
-        // security check
-        if ($this->session->get("last_order_id") == $this->get("order_id")) {
-            parent::handleRequest();
-            return;
-        } else {
-            if ($this->auth->is("logged") && $this->auth->getComplex('profile.profile_id') == $this->getComplex('order.orig_profile_id')) {
-                parent::handleRequest();
-                return;
-            }    
-        }
-        $this->redirect("cart.php?mode=accessDenied");
-    }
-
-    function getOrder()
+    /**
+     * Get order 
+     * 
+     * @return XLite_Model_Order
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getOrder()
     {
         if (is_null($this->order)) {
-            $this->order = new XLite_Model_Order($this->get("order_id"));
+            $this->order = new XLite_Model_Order(XLite_Core_Request::getInstance()->order_id);
         }
+
         return $this->order;
     }
 
-	function getCharset()
-	{
-		$charset = $this->getComplex('order.profile.billingCountry.charset');
-		return ($charset) ? $charset : parent::getCharset();
-	}
-
-    function getSecure()
+    /**
+     * Get controller charset 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCharset()
     {
-        return $this->getComplex('config.Security.customer_security');
+        $charset = $this->getOrder()->getProfile()->getComplex('billingCountry.charset');
+
+        return $charset ? $charset : parent::getCharset();
+    }
+
+    /**
+     * Get secure controller status
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSecure()
+    {
+        return $this->config->Security->customer_security;
     }
 }
 

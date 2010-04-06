@@ -84,10 +84,10 @@ class XLite_Controller_Customer_OrderList extends XLite_Controller_Customer_Abst
      * Check if current page is accessible
      * 
      * @return bool
-     * @access protected
+     * @access public
      * @since  3.0.0
      */
-    protected function checkAccess()
+    public function checkAccess()
     {
         return parent::checkAccess()
             && $this->auth->isLogged();

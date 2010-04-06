@@ -70,7 +70,7 @@ class XLite_View_OrderList_Search extends XLite_View_OrderList_Abstract
 
             $order = new XLite_Model_Order();
             $this->orders = $order->search(
-                $this->auth->getProfile(),
+                $this->getProfile(),
                 $conditions['order_id'],
                 $conditions['status'],
                 $conditions['startDate'],
@@ -82,6 +82,19 @@ class XLite_View_OrderList_Search extends XLite_View_OrderList_Abstract
         }
 
         return $this->orders;
+    }
+
+    /**
+     * Get profile 
+     * 
+     * @return XLite_Model_Profile
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getProfile()
+    {
+        return $this->auth->getProfile();
     }
 
     /**

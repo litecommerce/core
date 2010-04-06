@@ -330,6 +330,23 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     }
 
     /**
+     * Set controller 
+     * 
+     * @param mixed $controller Controller
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function setController($controller = null)
+    {
+        if (is_null($controller) || $controller instanceof XLite_Controller_Abstract) {
+            self::$controller = $controller;
+        }
+    }
+
+    /**
      * Initialize all active modules 
      * 
      * @return void

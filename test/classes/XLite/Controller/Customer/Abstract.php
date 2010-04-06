@@ -167,15 +167,16 @@ abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstr
 
 		if ($this->getComplex('config.Security.full_customer_security')) {
 			$result = $this->xlite->get('HTMLCatalogWorking');
+
 		} elseif (!is_null($this->get('feed')) && $this->get('feed') == 'login') {
-			$result = $this->getComplex('config.Security.customer_security');
+			$result = $this->config->Security->customer_security;
 		}
 
 		return $result;
     }
 
     /**
-     * getExternalLink 
+     * Get external link 
      * 
      * @return string
      * @access public
@@ -183,7 +184,11 @@ abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstr
      */
     public function getExternalLink()
     {
-        return $this->buildURL($this->getTarget(), '', $this->getParamsHash(array_keys($this->getWidgetSettings())));
+        return $this->buildURL(
+            $this->getTarget(),
+            '',
+            $this->getParamsHash(array_keys($this->getWidgetSettings()))
+        );
     }
 }
 

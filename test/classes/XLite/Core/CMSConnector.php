@@ -258,7 +258,36 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
             __METHOD__, $this->getApplication(), 'getViewer'
         );
     }
-    
+
+    /**
+     * Check controller access
+     *
+     * @return boolean
+     * @access public
+     * @since  3.0.0
+     */
+    public function isAllowed()
+    {
+
+        $oldController = XLite_Model_CachingFactory::getObjectFromCallback(
+            __METHOD__, $this->getApplication(), 'getController'
+        );
+
+        $this->getApplication()->setController();
+        $controller = XLite_Model_CachingFactory::getObjectFromCallback(
+            'target-' . XLite_Core_Request::getInstance()->target,
+            $this->getApplication(),
+            'getController'
+        );
+        
+        $result = $controller->checkAccess()
+            && $this->getViewer()->isVisible();
+
+        $this->getApplication()->setController($oldController);
+
+        return $result;
+    }
+ 
     /**
      * Return widget
      * 

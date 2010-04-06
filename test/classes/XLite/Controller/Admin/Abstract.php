@@ -39,12 +39,13 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
      * Check if current page is accessible
      *
      * @return bool
-     * @access protected
+     * @access public
      * @since  3.0.0
      */
-    protected function checkAccess()
+    public function checkAccess()
     {
-        return parent::checkAccess() && $this->checkXliteForm();
+        return parent::checkAccess()
+            && $this->checkXliteForm();
     }
 
 	/**
