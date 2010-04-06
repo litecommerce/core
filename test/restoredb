@@ -48,7 +48,13 @@ query_upload("sql/xlite_demo.sql", $connection, true);
 
 if (isset($argv[1]) && $argv[1] == "demo") {
     echo "xlite_demo_store.sql\n";
-    query_upload("sql/xlite_demo_store.sql", $connection, true);
+	query_upload("sql/xlite_demo_store.sql", $connection, true);
+
+	if (isset($argv[2]) && $argv[2] == 'all') {
+	    echo "xlite_all_modules.sql\n";
+		query_upload("sql/xlite_all_modules.sql", $connection, true);
+	}
+
 } else {
     mysql_query("REPLACE INTO xlite_profiles (profile_id, login, password, access_level, billing_title, billing_firstname, billing_lastname, billing_phone, billing_address, billing_city, billing_state, billing_country, billing_zipcode, shipping_title, shipping_firstname, shipping_lastname, shipping_phone, shipping_address, shipping_city, shipping_state, shipping_country, shipping_zipcode, first_login, last_login, status) VALUES (1,'vvs@cdev.ru','eb0a191797624dd3a48fa681d3061212',100,'Mr.','Bit','Bucket','0123456789','Billing street, 1','Edmond',38,'US','73003','Mr.','Bit','Bucket','9876543210','Shipping street, 1','Edmond',38,'US','73003',1053689339,1058449247,'E')");
 }
