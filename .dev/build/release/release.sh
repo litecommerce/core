@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #
-# $Id$
+# SVN: $Id$
 #
 # Release generator script for LiteCommerce
 #
@@ -207,7 +207,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 
 	# Generate the list of modules that must be removed
 	MODULES_TODELETE=""
-	LIST_FOR_SEARCH=`ls classes/XLite/Module`" "`ls skins/admin/en/modules`" "`ls skins/default/en/modules`" "`ls skins/drupal/en/modules`" "`ls skins/mail/en/modules`
+	LIST_FOR_SEARCH=`ls classes/XLite/Module | grep -v '\.php'`" "`ls skins/admin/en/modules`" "`ls skins/default/en/modules`" "`ls skins/drupal/en/modules`" "`ls skins/mail/en/modules`
 	for i in ${LIST_FOR_SEARCH}; do
 		found=0
 		for j in ${XLITE_MODULES}; do
