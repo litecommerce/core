@@ -129,6 +129,16 @@ class XLite_Model_Mailer extends XLite_View_Abstract
     protected $template = null;
 
     /**
+     *Eembedded images list
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $images = array();
+
+    /**
      * Get default template 
      * 
      * @return string
@@ -270,15 +280,13 @@ class XLite_Model_Mailer extends XLite_View_Abstract
         if (is_array($images)) {
             foreach ($images as $img) {
                 // Append to $attachment array
-                $cur = count($this->mail->attachment);
-                $this->mail->attachment[$cur][0] = $img['data'];
-                $this->mail->attachment[$cur][1] = $img['name'];
-                $this->mail->attachment[$cur][2] = $img['name'];
-                $this->mail->attachment[$cur][3] = 'base64';
-                $this->mail->attachment[$cur][4] = $img['mime'];
-                $this->mail->attachment[$cur][5] = true; // isStringAttachment
-                $this->mail->attachment[$cur][6] = 'inline';
-                $this->mail->attachment[$cur][7] = $img['name'] . '@mail.lc'; // CID
+                $this->mail->AddEmbeddedImage(
+                    $img['data'],
+                    $img['name'] . '@mail.lc',
+                    $img['name'],
+                    'base64',
+                    $img['mime']
+                );
             }
         }
 
