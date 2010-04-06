@@ -79,10 +79,10 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
 				}
 
 				// return NULL if shipping class not defined
-				if (!func_class_exists("Shipping_".$sm->get("class"))) {
+				if (!class_exists('XLite_Model_Shipping_' . $sm->get('class'))) {
 					$this->assignFirstShippingRate();
 					$this->_carrier = null;
-					return "";
+					return '';
                 }
                 return $this->_carrier = $sm->get("class");
 			}
