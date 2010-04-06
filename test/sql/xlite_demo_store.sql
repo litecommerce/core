@@ -21,7 +21,26 @@ REPLACE INTO `xlite_config` VALUES ('membershipsCollection','Membership levels',
 
 -- Enable demo modules
 --TODO - revert after develop period UPDATE xlite_modules SET enabled=1 where name='DemoMode';
-UPDATE xlite_modules SET enabled = '1' WHERE name IN ('Affiliate', 'Bestsellers', 'FeaturedProducts', 'DetailedImages', 'ProductOptions', 'InventoryTracking', 'WishList', 'MultiCategories', 'DrupalConnector', 'JoomlaConnector', 'GiftCertificates', 'ProductAdviser', 'AdvancedSearch', 'WholesaleTrading');
+UPDATE xlite_modules SET enabled = '1' WHERE name IN (
+	'AdvancedSearch',
+	'AuthorizeNet',
+	'Bestsellers',
+	'DetailedImages',
+	'DrupalConnector',
+	'FeaturedProducts',
+	'GiftCertificates',
+	'GoogleCheckout',
+	'InventoryTracking',
+	'JoomlaConnector',
+	'MultiCategories',
+	'PayPalPro',
+	'ProductAdviser',
+	'ProductOptions',
+	'UPSOnlineTools',
+	'USPS',
+	'WishList',
+	'WholesaleTrading'
+);
 
 -- Configure look and feel for category products
 UPDATE xlite_config SET value='modules/ShowcaseOrganizer/icons.tpl' WHERE category='ShowcaseOrganizer' AND name='template';
