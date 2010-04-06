@@ -30,7 +30,10 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 		'recrypt', 'revalidate', 'close' , 'change' , 'confirm', 'rewrite', 'store', 'log', 'finalize', 'encode', 'decode',
 		'substitute', 'implode', 'has', 'expand', 'load', 'assemble', 'activate', 'restore', 'show', 'install', 'emulate',
 		'perform', 'notify', 'cancel', 'sort', 'sanitize', 'use', 'accept', 'regenerate', 'inner', 'make', 'count', 'build',
-		'refresh', 'postprocess', 'preprocess', 'include', 'truncate', 'inc', 'map', 'strip',
+		'refresh', 'postprocess', 'preprocess', 'include', 'truncate', 'inc', 'map', 'strip', 'calc', 'compile',
+
+		// FIXME - rename later
+		'processed', 'checked', 'declined', 'queued', 'unchecked', 'checkout',
 	);
 
 	protected $cssPseudoClasses = array(

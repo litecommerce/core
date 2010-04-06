@@ -71,7 +71,7 @@ if (isset($_SERVER['argv']) && preg_match('/--log-xml\s+(\S+)\s/s', implode(' ',
 
 PHPUnit_Util_Filter::addDirectoryToFilter(PATH_ROOT . '/.dev');
 PHPUnit_Util_Filter::addDirectoryToFilter(PATH_SRC . '/etc');
-PHPUnit_Util_Filter::addDirectoryToWhitelist(PATH_SRC . '/var/run');
+PHPUnit_Util_Filter::addDirectoryToWhitelist(PATH_SRC . '/var/run/classes');
 
 /**
  * Class to run all the tests
