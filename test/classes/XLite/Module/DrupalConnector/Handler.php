@@ -185,6 +185,20 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
             ),
 
         );
+
+        if (XLite_Model_ModulesManager::getInstance()->isActiveModule('WishList')) {
+            $this->portals['user/%/wishlist'] = array(
+                'menu'   => array(
+                    'title'            => 'Wish list',
+                    'description'      => 'Wish list',
+                    'access arguments' => array('access user profiles'),
+                    'weight'           => 110,
+                ),
+                'target' => 'wishlist',
+                'prefix' => array($this, 'getWishlistURLPrefix'),
+                'argumentsPreprocessor' => array($this, 'getOrdersArgPreprocess'),
+            );
+        }
     }
 
     /**
@@ -393,6 +407,25 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
         $result['order_id'] = $args[3];
 
         return $result;
+    }
+
+    /**
+     * Get URL prefix for Wishlist portal
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getWishlistURLPrefix()
+    {
+        $uid = user_uid_optional_to_arg('%');
+
+        return array(
+            'user',
+            $uid,
+            'wishlist',
+        );
     }
 
 }
