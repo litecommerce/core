@@ -1,6 +1,8 @@
 #!/usr/local/bin/php -q
 <?php
 
+chdir(dirname(__FILE__));
+
 include "includes/functions.php";
 
 set_time_limit(0);
