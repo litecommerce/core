@@ -85,6 +85,19 @@ class XLite_Module_GiftCertificates_View_CartRow extends XLite_View_Abstract
     }
 
     /**
+     * Get button label 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getButtonLabel()
+    {
+        return 'Apply';
+    }
+
+    /**
      * Register JS files
      *
      * @return array

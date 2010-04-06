@@ -14,15 +14,15 @@
 
   <img src="images/spacer.gif" alt="" />
   <input type="text" name="gcid" value="{getGcIdValue()}"{if:!gcid} class="temporary"{end:} />
-  <widget class="XLite_View_Button_Submit" label="Verify" />
+  <widget class="XLite_View_Button_Submit" label="{getButtonLabel()}" />
 
 <script type="text/javascript">
 <!--
 $(document).ready(
   function() {
     $('form.verify-gc').submit(
-      function() {
-        return 0 == $('input.temporary', this).length;
+      function(event) {
+        $('input.temporary', this).val('');
       }
     );
 

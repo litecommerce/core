@@ -168,4 +168,18 @@ class XLite_Module_GiftCertificates_View_CheckGiftCertificate extends XLite_View
         return 'A' == $this->getFoundGc()->get('status')
             && !XLite::getController()->getCart()->hasGiftCertificates();
     }
+
+    /**
+     * Get button label
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getButtonLabel()
+    {
+        return 'Verify';
+    }
+
 }
