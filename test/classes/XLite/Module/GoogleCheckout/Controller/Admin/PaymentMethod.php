@@ -66,7 +66,7 @@ class XLite_Module_GoogleCheckout_Controller_Admin_PaymentMethod extends XLite_C
     	$https->url      = $url;
 
 		$this->xlite->logger->log("Request to: " . $url . " with data:\n" . $data);
-    	if ($https->request() == HTTPS_ERROR) {
+    	if ($https->request() == XLite_Model_HTTPS::HTTPS_ERROR) {
     		$this->error = $https->error;
     		return array();
     	}

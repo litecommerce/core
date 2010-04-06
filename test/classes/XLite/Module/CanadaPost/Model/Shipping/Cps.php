@@ -81,7 +81,7 @@ class XLite_Module_CanadaPost_Model_Shipping_Cps extends XLite_Model_Shipping_On
 		$request->method = "POST";
 		$request->data = $this->createRequest($options,$originalZipcode,$originalCountry,$itemsPrice,$weight,$description,$packed,$destinationCity,$destinationZipcode,$destinationState, $destinationCountry);
 		$request->request();
-        if ($request->request() == HTTPS_ERROR) {
+        if ($request->request() == XLite_Model_HTTPS::HTTPS_ERROR) {
             $this->error = $request->error;
             return array();
         }

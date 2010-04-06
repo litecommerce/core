@@ -52,8 +52,8 @@ class XLite_Module_CardinalCommerce_Model_HTTPS extends XLite_Model_HTTPS implem
 {
     function requestLibCurl()
     {
-        if ($this->LibCurl_detect() == HTTPS_ERROR) {
-            return HTTPS_ERROR;
+        if ($this->LibCurl_detect() == XLite_Model_HTTPS::HTTPS_ERROR) {
+            return XLite_Model_HTTPS::HTTPS_ERROR;
         }
         $c = curl_init($this->url);
         curl_setopt($c, CURLOPT_FOLLOWLOCATION, true);
@@ -85,15 +85,15 @@ class XLite_Module_CardinalCommerce_Model_HTTPS extends XLite_Model_HTTPS implem
         curl_close ($c);
         
         if ($this->curlErrorCode) {
-            return HTTPS_ERROR;
+            return XLite_Model_HTTPS::HTTPS_ERROR;
         }
-        return HTTPS_SUCCESS;
+        return XLite_Model_HTTPS::HTTPS_SUCCESS;
     }
 
     function requestCurl()
     {
-        if ($this->Curl_detect() == HTTPS_ERROR) {
-            return HTTPS_ERROR;
+        if ($this->Curl_detect() == XLite_Model_HTTPS::HTTPS_ERROR) {
+            return XLite_Model_HTTPS::HTTPS_ERROR;
         }
         $supports_insecure = $this->supports_insecure;
 
@@ -104,7 +104,7 @@ class XLite_Module_CardinalCommerce_Model_HTTPS extends XLite_Model_HTTPS implem
         } else {
             if (!$supports_insecure) {
                 $this->error = "curl version must be > 7.10 or you must use SSL certificates";
-                return HTTPS_ERROR;
+                return XLite_Model_HTTPS::HTTPS_ERROR;
             }
         }
         if($this->kcert) {
@@ -143,9 +143,9 @@ class XLite_Module_CardinalCommerce_Model_HTTPS extends XLite_Model_HTTPS implem
             exec("$execline $this->url 2>&1", $erromsg, $this->curlErrorCode);
             $erromsg = join('', $erromsg);
             $this->error .= " '" . $erromsg . "'";
-            return HTTPS_ERROR;
+            return XLite_Model_HTTPS::HTTPS_ERROR;
         }
-        return HTTPS_SUCCESS;
+        return XLite_Model_HTTPS::HTTPS_SUCCESS;
     }
 
 }

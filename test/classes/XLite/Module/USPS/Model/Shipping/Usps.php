@@ -384,7 +384,7 @@ EOT;
             $https->urlencoded = true;
             $https->url = $url;
 
-            if ($https->request() == HTTPS_ERROR) {
+            if ($https->request() == XLite_Model_HTTPS::HTTPS_ERROR) {
                 $this->error = $https->error;
                 return "";
             }

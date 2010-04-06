@@ -75,8 +75,8 @@ class XLite_Module_UPSOnlineTools_Model_HTTPS extends XLite_Model_HTTPS
 
     function requestCurl()
     {
-        if ($this->Curl_detect() == HTTPS_ERROR) {
-            return HTTPS_ERROR;
+        if ($this->Curl_detect() == XLite_Model_HTTPS::HTTPS_ERROR) {
+            return XLite_Model_HTTPS::HTTPS_ERROR;
         }
         $supports_insecure = $this->supports_insecure;
 
@@ -87,7 +87,7 @@ class XLite_Module_UPSOnlineTools_Model_HTTPS extends XLite_Model_HTTPS
         } else {
             if (!$supports_insecure) {
                 $this->error = "curl version must be > 7.10 or you must use SSL certificates";
-                return HTTPS_ERROR;
+                return XLite_Model_HTTPS::HTTPS_ERROR;
             }
         }
 
@@ -132,10 +132,10 @@ class XLite_Module_UPSOnlineTools_Model_HTTPS extends XLite_Model_HTTPS
             exec("$execline $this->url 2>&1", $erromsg, $this->curlErrorCode);
             $erromsg = join('', $erromsg);
             $this->error .= " '" . $erromsg . "'";
-            return HTTPS_ERROR;
+            return XLite_Model_HTTPS::HTTPS_ERROR;
         }
 
-        return HTTPS_SUCCESS;
+        return XLite_Model_HTTPS::HTTPS_SUCCESS;
     }
 
     function requestOpenSSL()
@@ -143,7 +143,7 @@ class XLite_Module_UPSOnlineTools_Model_HTTPS extends XLite_Model_HTTPS
         $opensslBinary = func_find_executable("openssl");
         if (!$opensslBinary) {
             $this->error = "openssl executable is not found";
-            return HTTPS_ERROR;
+            return XLite_Model_HTTPS::HTTPS_ERROR;
         }
         $url = new Net_URL($this->url);
         if ($url->port == 80 ) { // default port?
@@ -162,7 +162,7 @@ class XLite_Module_UPSOnlineTools_Model_HTTPS extends XLite_Model_HTTPS
 	        $fp = popen($cmdline, "w+");
     	    if(!$fp) {
         	    $this->error = "Can't execute command $cmdline";
-           	 	return HTTPS_ERROR;
+           	 	return XLite_Model_HTTPS::HTTPS_ERROR;
  		    }
         	fputs($fp, $str = "$this->method $url->path?" . $url->getQueryString() . " HTTP/1.0\r\n");
         	fputs($fp, "Host: $url->host\r\n");
@@ -202,7 +202,7 @@ class XLite_Module_UPSOnlineTools_Model_HTTPS extends XLite_Model_HTTPS
 			$fp = proc_open($cmdline,$descriptorspec,$pipes);
 			if(!is_resource($fp)) {
 				$this->error = "Can't execute command $cmdline";
-				return HTTPS_ERROR;
+				return XLite_Model_HTTPS::HTTPS_ERROR;
 			}
 			fputs($pipes[0], "$this->method $url->path?" . $url->getQueryString() . " HTTP/1.0\r\n");
 			fputs($pipes[0], "Host: $url->host\r\n");
@@ -244,7 +244,7 @@ class XLite_Module_UPSOnlineTools_Model_HTTPS extends XLite_Model_HTTPS
         if ($pos === false )
         {
             $this->error = "openssl error ".$data;
-            return HTTPS_ERROR;
+            return XLite_Model_HTTPS::HTTPS_ERROR;
         }
         // parse headers
         if (preg_match("/HTTP\/1\.[01] (\d+)/m", $data, $matches)) {
@@ -297,7 +297,7 @@ class XLite_Module_UPSOnlineTools_Model_HTTPS extends XLite_Model_HTTPS
             return $this->requestOpenSSL();
         }
 
-        return HTTPS_SUCCESS;
+        return XLite_Model_HTTPS::HTTPS_SUCCESS;
     }
 }
 // WARNING :

@@ -107,7 +107,7 @@ class XLite_Module_UPS_Model_Shipping_Ups extends XLite_Model_Shipping_Online
         foreach ($lines as $line) {
             $https->data .= trim($line);
         }
-        if ($https->request() == HTTPS_ERROR) {
+        if ($https->request() == XLite_Model_HTTPS::HTTPS_ERROR) {
             $this->error = $https->error;
             return array();
         }

@@ -142,7 +142,7 @@ function func_sns_request($config, $clientId, $actions, $timestamp = null)
         $logger->log("/Sns request");
         $config->xlite->set("SNSResponse", null);
 
-        if ($https->request() == HTTPS_ERROR) {
+        if ($https->request() == XLite_Model_HTTPS::HTTPS_ERROR) {
         	$logger->log("[Sns request] - ERROR: Connection error (" . $https->error . ")");
     		return false;
         }

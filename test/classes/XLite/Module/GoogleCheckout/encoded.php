@@ -94,7 +94,7 @@ function GoogleCheckout_sendRequest($_this, &$payment, &$data)
 
     $_this->error = null;
 	$_this->xlite->logger->log("Sending request to: " . $https->url);
-	if ($https->request() == HTTPS_ERROR) {
+	if ($https->request() == XLite_Model_HTTPS::HTTPS_ERROR) {
 		$_this->xlite->logger->log("HTTPS_ERROR: " . $https->error);
 		$_this->error = $https->error;
 		return array();
