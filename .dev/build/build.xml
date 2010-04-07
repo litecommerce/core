@@ -157,7 +157,7 @@
 
 	<target name="analysis">
 		<exec executable="svn" dir="${sourceDir}" output="${buildDir}/reports/xlite-svn.log">
-			<arg line="log --verbose --xml" />
+			<arg line="log --verbose --xml -r '{2010-02-01}:HEAD'" />
 		</exec>
 		<exec executable="python" dir="${sourceDir}" output="${buildDir}/reports/xlite.gource">
 			<arg line="${sourceDir}/.dev/build/svn-gource.py --filter-dirs ${buildDir}/reports/xlite-svn.log" />
