@@ -142,5 +142,17 @@ class XLite_View_Product extends XLite_View_Dialog
             $prev = $p;
         }
     }
+
+    /**
+     * Check - available product for sale or not
+     *
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function isAvailableForSale()
+    {
+        return true;
+    }
 }
 

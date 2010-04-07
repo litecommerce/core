@@ -93,14 +93,6 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Product extends XLite_Co
 		}
     }
 
-    function isAvailableForSale()
-    {
-		if (!$this->isComplex('product.saleAvailable')) {
-			return false;
-		}	
-        return parent::isAvailableForSale();
-    }
-
 	function getWholesalePricing()
 	{
 		if (is_null($this->wholesale_pricing)) {

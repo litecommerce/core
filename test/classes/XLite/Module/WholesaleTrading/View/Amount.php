@@ -81,8 +81,7 @@ class XLite_Module_WholesaleTrading_View_Amount extends XLite_View_Abstract
     public function isVisible()
     {
         return parent::isVisible()
-            && $this->getParam(self::PARAM_PRODUCT)->isPriceAvailable()
-            && $this->isAvailableForSale();
+            && $this->getParam(self::PARAM_PRODUCT)->isPriceAvailable();
     }
 
     /**

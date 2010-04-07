@@ -2,24 +2,36 @@
 // vim: set ts=4 sw=4 sts=4 et:
 
 /**
- * ____file_title____
- *  
- * @category   Lite Commerce
- * @package    Lite Commerce
- * @subpackage ____sub_package____
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage Controller
  * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version    SVN: $Id$
- * @link       http://www.qtmsoft.com/
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
  * @since      3.0.0
  */
 
 /**
- * XLite_Controller_Customer_Product 
+ * Product
  * 
- * @package    Lite Commerce
- * @subpackage ____sub_package____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Catalog
 {
@@ -38,7 +50,7 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Catalo
     }
 
     /**
-     * getCategoryId
+     * Get product category id
      *
      * @return int
      * @access protected
@@ -48,8 +60,11 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Catalo
     {
         $categoryId = parent::getCategoryId();
 
-        if (!$categoryId && ($productCategory = $this->getProductCategory())) {
-            $categoryId = $productCategory->get('category_id');
+        if (!$categoryId) {
+            $productCategory = $this->getProductCategory();
+            if ($productCategory) {
+                $categoryId = $productCategory->get('category_id');
+            }
         }
 
         return $categoryId;
@@ -105,7 +120,6 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Catalo
         return $this->getProduct()->get('name');
     }
 
-
     /**
      * getDescription 
      * 
@@ -115,7 +129,11 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Catalo
      */
     public function getDescription()
     {
-        return ($descr = parent::getDescription()) ? $descr : $this->getProduct()->get('brief_description');
+        $descr = parent::getDescription();
+
+        return $descr
+            ? $descr
+            : $this->getProduct()->get('brief_description');
     }
 
     /**
@@ -125,28 +143,19 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Catalo
      * @access public
      * @since  3.0.0
      */
-	public function handleRequest()
-	{
-        if ($this->getProduct()->is('exists')) {
+    public function handleRequest()
+    {
+        if ($this->getProduct()->isExists()) {
             parent::handleRequest();
+
         } elseif ($this->isCategoryAvailable()) {
-            $this->set('returnUrl', $this->buildURL('category', '', array('category_id' => $this->getCategoryId())));
+            $this->set(
+                'returnUrl',
+                $this->buildURL('category', '', array('category_id' => $this->getCategoryId()))
+            );
+
         } else {
             $this->set('returnUrl', $this->buildURL());
         }
     }
-
-    /**
-     * Check - available product for sale or not 
-     * TODO - check if it's need to be revised
-     * 
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-    public function isAvailableForSale()
-    {
-        return true;
-    }
 }
-

@@ -55,7 +55,7 @@ $(document).ready(
 
     <widget module="ProductOptions" class="XLite_Module_ProductOptions_View_ProductOptions" product="{product}" />
 
-    <widget module="WholesaleTrading" class="XLite_Module_WholesaleTrading_View_Amount" product="{product}" />
+    <widget module="WholesaleTrading" class="XLite_Module_WholesaleTrading_View_Amount" product="{product}" IF="isAvailableForSale()" />
 
     <div IF="availableForSale" class="buttons-row">
       <widget class="XLite_View_Button_Submit" label="Add to Cart" />

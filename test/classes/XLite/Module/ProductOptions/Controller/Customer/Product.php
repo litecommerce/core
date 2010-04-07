@@ -63,20 +63,4 @@ class XLite_Module_ProductOptions_Controller_Customer_Product extends XLite_Cont
     {
         return $this->getComplex('product.optionValidator');
     }
-
-    function isAvailableForSale()
-    {
-		if ($this->xlite->get("InventoryTrackingEnabled")) {
-        	$product = $this->get("product"); 
-            if ($product->getComplex('inventory.found') && !$product->get("tracking")) {
-                return $product->getComplex('inventory.amount') > 0;
-            }
-		}
-        return parent::isAvailableForSale();
-    }
 }
-
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
