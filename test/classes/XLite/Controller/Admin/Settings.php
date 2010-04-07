@@ -1,98 +1,85 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* General Settings dialog
-*
-* @package Dialog
-* @access public
-* @version $Id$
-*
-*/
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage Controller
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
+
+/**
+ * Settings
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
 {
-	/**
-	 * List of pages with captcha 
-	 * 
-	 * @return array
-	 * @access protected
-	 * @since  3.0.0
-	 */
-	protected static function getCaptchaPages()
+    /**
+     * List of pages with captcha 
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected static function getCaptchaPages()
     {
         return array(
-			'on_contactus'        => '',
-			'on_register'         => '',
-			'on_add_giftcert'     => 'GiftCertificates',
-			'on_partner_register' => 'Affiliate'
-		);
+            'on_contactus'        => '',
+            'on_register'         => '',
+            'on_add_giftcert'     => 'GiftCertificates',
+            'on_partner_register' => 'Affiliate'
+        );
     }
 
-	/**
-	 * Return list of enabled captcha pages 
-	 * 
-	 * @return array
-	 * @access public
-	 * @since  3.0.0
-	 */
-	public function getEnabledCaptchaPages()
+    /**
+     * Return list of enabled captcha pages 
+     * 
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getEnabledCaptchaPages()
     {
-		$result = array();
+        $result = array();
 
-		foreach ($this->getCaptchaPages() as $idx => $module) {
-			if (XLite_Model_ModulesManager::getInstance()->isActiveModule($module)) {
-				$result[] = $module;
-			}
-		}
+        foreach ($this->getCaptchaPages() as $idx => $module) {
+            if (XLite_Model_ModulesManager::getInstance()->isActiveModule($module)) {
+                $result[] = $module;
+            }
+        }
 
-		return $result;
+        return $result;
     }
 
-	/**
-	 * Check for the GDLib extension 
-	 * 
-	 * @return void
-	 * @access public
-	 * @since  3.0.0
-	 */
-	public function isGDLibLoaded()
+    /**
+     * Check for the GDLib extension 
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function isGDLibLoaded()
     {
         return extension_loaded('gd') && function_exists("gd_info");
     }
@@ -100,8 +87,8 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
 
 
 
-    public $params = array('target', 'page');	
-    public $page = "General";	
+    public $params = array('target', 'page');    
+    public $page = "General";    
     public $_waiting_list = null;
 
     function handleRequest()
@@ -136,75 +123,91 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
         $settings = $this->get("settings");
         return $settings->getByCategory($this->page);
     }
-	
-	function check_https($https_client)	
-	{
-		$https = new XLite_Model_HTTPS();
-		switch ($https_client) {
-			case 'libcurl' : return $https->LibCurl_detect(); break;
-			case 'curl'	  : return $https->Curl_detect(); break;
-			case 'openssl' : !LC_OS_IS_WIN && func_find_executable("openssl") ? 2 : 1; break;
-			default: return $https->AutoDetect() !== false ? 2 : 1;
-		}
-	}
+    
+    function check_https($https_client)    
+    {
+        $https = new XLite_Model_HTTPS();
+        $result = false;
+
+        switch ($https_client) {
+            case 'libcurl':
+                $result = $https->detectLibCURL();
+                break;
+
+            case 'curl':
+                $result = $https->detectCURL();
+                break;
+
+            case 'openssl':
+                $result = $https->detectOpenSSL();
+                break;
+
+            default:
+                $result = $https->detectSoftware()
+                    ? XLite_Model_HTTPS::HTTPS_SUCCESS
+                    : XLite_Model_HTTPS::HTTPS_ERROR;
+        }
+
+        return $result;
+    }
 
     function isOpenBasedirRestriction()
     {
         $res = (string) @ini_get("open_basedir");
         return ($res != "");
     }
-	
-	function get($name) 
-	{
-		switch($name) {
-            case 'phpversion' 	: return phpversion(); break;
+    
+    function get($name) 
+    {
+        switch($name) {
+            case 'phpversion'     : return phpversion(); break;
             case 'timezone_changable' : return func_is_timezone_changable(); break;
-			case 'os_type'		: list($os_type, $tmp) = explode(" ", php_uname());
-        						  return $os_type;
-								  break;
-			case 'mysql_server'	: return mysql_get_server_info(); break;
-			case 'mysql_client'	: return mysql_get_client_info(); break;
-			case 'root_folder'	: return getcwd(); break;
-			case 'web_server'	: if(isset($_SERVER["SERVER_SOFTWARE"])) return $_SERVER["SERVER_SOFTWARE"]; else  return ""; break;
-			case 'xml_parser'	: 	ob_start();
-    								phpinfo(INFO_MODULES);
-    								$php_info = ob_get_contents();
-    								ob_end_clean();
-    								if( preg_match('/EXPAT.+>([\.\d]+)/mi', $php_info, $m) )
-        								return $m[1];
-    								return function_exists("xml_parser_create")?"found":"";
-									break;
+            case 'os_type'        : list($os_type, $tmp) = explode(" ", php_uname());
+                                  return $os_type;
+                                  break;
+            case 'mysql_server'    : return mysql_get_server_info(); break;
+            case 'mysql_client'    : return mysql_get_client_info(); break;
+            case 'root_folder'    : return getcwd(); break;
+            case 'web_server'    : if(isset($_SERVER["SERVER_SOFTWARE"])) return $_SERVER["SERVER_SOFTWARE"]; else  return ""; break;
+            case 'xml_parser'    :     ob_start();
+                                    phpinfo(INFO_MODULES);
+                                    $php_info = ob_get_contents();
+                                    ob_end_clean();
+                                    if( preg_match('/EXPAT.+>([\.\d]+)/mi', $php_info, $m) )
+                                        return $m[1];
+                                    return function_exists("xml_parser_create")?"found":"";
+                                    break;
             case 'gdlib'        :   
-    								if (!$this->is("GDLibLoaded")) {
-    									return "";
-    								} else {
+                                    if (!$this->is("GDLibLoaded")) {
+                                        return "";
+                                    } else {
                                         ob_start();
                                         phpinfo(INFO_MODULES);
                                         $php_info = ob_get_contents();
                                         ob_end_clean();
                                         if (preg_match('/GD.+>([\.\d]+)/mi', $php_info, $m)) {
-        									$gdVersion = $m[1];
-            							} else {
-    										$gdVersion = @gd_info();
-    										if (is_array($gdVersion) && isset($gdVersion["GD Version"])) {
-    											$gdVersion = $gdVersion["GD Version"];
-    										} else {
-    											$gdVersion = "unknown";
-    										}
-    									}
-    									return "found (" . $gdVersion . ")";
-    								}
-									break;
+                                            $gdVersion = $m[1];
+                                        } else {
+                                            $gdVersion = @gd_info();
+                                            if (is_array($gdVersion) && isset($gdVersion["GD Version"])) {
+                                                $gdVersion = $gdVersion["GD Version"];
+                                            } else {
+                                                $gdVersion = "unknown";
+                                            }
+                                        }
+                                        return "found (" . $gdVersion . ")";
+                                    }
+                                    break;
                                   
-			case 'lite_version'	: return $this->config->Version->version; break;
-			case 'libcurl'		: 
-									$libcurlVersion = curl_version();
-									if (is_array($libcurlVersion)) {
-										$libcurlVersion = $libcurlVersion["version"];
-									}
-									return $libcurlVersion;
-			case 'curl'			: return $this->ext_curl_version(); break;
-            case 'openssl'		: return $this->openssl_version(); break;
+            case 'lite_version'    : return $this->config->Version->version; break;
+            case 'libcurl'        : 
+                                    $libcurlVersion = curl_version();
+                                    if (is_array($libcurlVersion)) {
+                                        $libcurlVersion = $libcurlVersion["version"];
+                                    }
+                                    return $libcurlVersion;
+            case 'curl'            : return $this->ext_curl_version(); break;
+            case 'openssl'        : return $this->openssl_version(); break;
             case 'check_files'  :
                                     $result = array();
                                     $files = array("cart.html");
@@ -212,11 +215,11 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
                                         $mode = $this->getFilePermission($file);
                                         $modeStr = $this->getFilePermissionStr($file);
                                         $res = array("file" => $file, "error" => "");
-										if (!is_file($file)) {
-											$res["error"] = "does_not_exist";
-											$result[] = $res;
-											continue;
-										}
+                                        if (!is_file($file)) {
+                                            $res["error"] = "does_not_exist";
+                                            $result[] = $res;
+                                            continue;
+                                        }
                                         $perm = substr(sprintf('%o', @fileperms($file)), -4);
                                         if($perm != $modeStr){
                                             if(!@chmod($file, $mode)){
@@ -236,31 +239,31 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
                                         $result[] = $res;
                                     }
                                     return $result;
-			case 'check_dirs'	:
-									$result = array();
-									$dirs = array("var/run", "var/log", "var/html", "var/backup", "var/tmp", "catalog", "images", "classes/modules", "skins/default/en/modules", "skins/admin/en/modules", "skins/default/en/images/modules", "skins/admin/en/images/modules", "skins/mail/en/modules", "skins/mail/en/images/modules");
-									foreach ($dirs as $dir) {
+            case 'check_dirs'    :
+                                    $result = array();
+                                    $dirs = array("var/run", "var/log", "var/html", "var/backup", "var/tmp", "catalog", "images", "classes/modules", "skins/default/en/modules", "skins/admin/en/modules", "skins/default/en/images/modules", "skins/admin/en/images/modules", "skins/mail/en/modules", "skins/mail/en/images/modules");
+                                    foreach ($dirs as $dir) {
                                         $mode = $this->getDirPermission($dir);
                                         $modeStr = $this->getDirPermissionStr($dir);
-										$res = array("dir" => $dir, "error" => "", "subdirs" => array());
+                                        $res = array("dir" => $dir, "error" => "", "subdirs" => array());
 
-										if (!is_dir($dir)) {
-											$full_path = "";
-											$path = explode("/", $dir);
-											foreach ($path as $sub) {
-												$full_path .= $sub."/";
-												if (!is_dir($full_path)) {
-													if (@mkdir($full_path, $mode) !== true )
-														break;
-												}
-											}
-										}
+                                        if (!is_dir($dir)) {
+                                            $full_path = "";
+                                            $path = explode("/", $dir);
+                                            foreach ($path as $sub) {
+                                                $full_path .= $sub."/";
+                                                if (!is_dir($full_path)) {
+                                                    if (@mkdir($full_path, $mode) !== true )
+                                                        break;
+                                                }
+                                            }
+                                        }
 
-										if (!is_dir($dir)) {
-											$res["error"] = "cannot_create";
-											$result[] = $res;
-											continue;
-										}
+                                        if (!is_dir($dir)) {
+                                            $res["error"] = "cannot_create";
+                                            $result[] = $res;
+                                            continue;
+                                        }
 
                                         $perm = substr(sprintf('%o', @fileperms($dir)), -4);
                                         if($perm != $modeStr){
@@ -291,13 +294,13 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
                                             continue;
                                         }
 
-										$result[] = $res;
-									}
-									return $result;
-									break;
-			default 			: return parent::get($name);
-		}	
-	}
+                                        $result[] = $res;
+                                    }
+                                    return $result;
+                                    break;
+            default             : return parent::get($name);
+        }    
+    }
 
     function getDirPermission($dir)
     {
@@ -399,101 +402,101 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
         }
     }
 
-	function ext_curl_version()
-	{
-		$curlBinary = @func_find_executable("curl");
-		@exec("$curlBinary --version", $output);
+    function ext_curl_version()
+    {
+        $curlBinary = @func_find_executable("curl");
+        @exec("$curlBinary --version", $output);
         $version = @$output[0];
-		if(preg_match('/curl ([^ $]+)/', $version, $ver))
-				return $ver[1];
-		else 
-				return "";	
-	}  
-	
-	function openssl_version()
-	{
-		$opensslBinary = @func_find_executable("openssl");
-		return @exec("$opensslBinary version");
-	}
+        if(preg_match('/curl ([^ $]+)/', $version, $ver))
+                return $ver[1];
+        else 
+                return "";    
+    }  
+    
+    function openssl_version()
+    {
+        $opensslBinary = @func_find_executable("openssl");
+        return @exec("$opensslBinary version");
+    }
 
     function httpRequest($url_request)
     {
-    	@ini_get('allow_url_fopen') or @ini_set('allow_url_fopen', 1);
-    	$handle = @fopen ($url_request, "r");
+        @ini_get('allow_url_fopen') or @ini_set('allow_url_fopen', 1);
+        $handle = @fopen ($url_request, "r");
 
-    	$response = "";
-    	if ($handle) {
-    		while (!feof($handle)) {
-    			$response .= fread($handle, 8192);
-    		}
+        $response = "";
+        if ($handle) {
+            while (!feof($handle)) {
+                $response .= fread($handle, 8192);
+            }
 
-    		@fclose($handle);
-    	} else {
-    		global $php_errormsg;
+            @fclose($handle);
+        } else {
+            global $php_errormsg;
 
-			// FIXME - to delete?
-    		$includes .= "." . DIRECTORY_SEPARATOR . "lib" . PATH_SEPARATOR;
-    		$includes .= "." . DIRECTORY_SEPARATOR . PATH_SEPARATOR;
-    		@ini_set("include_path", $includes);
+            // FIXME - to delete?
+            $includes .= "." . DIRECTORY_SEPARATOR . "lib" . PATH_SEPARATOR;
+            $includes .= "." . DIRECTORY_SEPARATOR . PATH_SEPARATOR;
+            @ini_set("include_path", $includes);
 
-    		$php_errormsg = "";
-    		$_this->error = "";
+            $php_errormsg = "";
+            $_this->error = "";
 
-    		require_once LC_ROOT_DIR . 'lib' . LC_DS . 'PEAR.php';
-    		require_once LC_ROOT_DIR . 'lib' . LC_DS . 'HTTP' . LC_DS . 'Request.php';
+            require_once LC_ROOT_DIR . 'lib' . LC_DS . 'PEAR.php';
+            require_once LC_ROOT_DIR . 'lib' . LC_DS . 'HTTP' . LC_DS . 'Request.php';
 
-    		$http = new HTTP_Request($url_request);
-    		$http->_timeout = 3;
-    		$track_errors = @ini_get("track_errors");
-    		@ini_set("track_errors", 1);
+            $http = new HTTP_Request($url_request);
+            $http->_timeout = 3;
+            $track_errors = @ini_get("track_errors");
+            @ini_set("track_errors", 1);
 
-    		$result = @$http->sendRequest();
-    		@ini_set("track_errors", $track_errors);
+            $result = @$http->sendRequest();
+            @ini_set("track_errors", $track_errors);
 
-    		if (!($php_errormsg || PEAR::isError($result))) {
-    			$response = $http->getResponseBody();
-    		} else {
-    			return false;
-    		}
-    	}
+            if (!($php_errormsg || PEAR::isError($result))) {
+                $response = $http->getResponseBody();
+            } else {
+                return false;
+            }
+        }
 
-    	return $response;
+        return $response;
     }
 
-	function getAnsweredVersion()
-	{
-		if (isset($this->_answeredVersion)) {
-			return $this->_answeredVersion;
-		}
+    function getAnsweredVersion()
+    {
+        if (isset($this->_answeredVersion)) {
+            return $this->_answeredVersion;
+        }
 
-		$checkUrl = $this->xlite->getShopUrl("admin.php?target=upgrade&action=version");
-		$this->_answeredVersionError = false;
-		$response = $this->httpRequest($checkUrl);
-		if ($this->get("lite_version") != $response) {
-			$this->_answeredVersionError = true;
-		}
-		$this->_answeredVersion = $response;
+        $checkUrl = $this->xlite->getShopUrl("admin.php?target=upgrade&action=version");
+        $this->_answeredVersionError = false;
+        $response = $this->httpRequest($checkUrl);
+        if ($this->get("lite_version") != $response) {
+            $this->_answeredVersionError = true;
+        }
+        $this->_answeredVersion = $response;
 
-		return $this->_answeredVersion;
-	}
+        return $this->_answeredVersion;
+    }
 
-	function getAnsweredVersionError()
-	{
-		return $this->_answeredVersionError;
-	}
+    function getAnsweredVersionError()
+    {
+        return $this->_answeredVersionError;
+    }
 
-	function action_phpinfo()
-	{
-		die(phpinfo());	
-	} 
-	
-	function action_update()
+    function action_phpinfo()
+    {
+        die(phpinfo());    
+    } 
+    
+    function action_update()
     {
         $options = $this->get("options");
         for ($i=0; $i<count($options); $i++) {
             $name = $options[$i]->get("name");
             $type = $options[$i]->get("type");
-			if ($type=='checkbox') {
+            if ($type=='checkbox') {
                 $val = empty(XLite_Core_Request::getInstance()->$name) ? 'N' : 'Y';
             } elseif ($type == "serialized" && isset(XLite_Core_Request::getInstance()->$name) && is_array(XLite_Core_Request::getInstance()->$name)) {
                 $val = serialize(XLite_Core_Request::getInstance()->$name);
@@ -520,9 +523,9 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
 
     function getCountriesStates()
     {
-    	if (!isset($this->_profileDialog)) {
-    		$this->_profileDialog = new XLite_Controller_Admin_Profile();
-    	}
+        if (!isset($this->_profileDialog)) {
+            $this->_profileDialog = new XLite_Controller_Admin_Profile();
+        }
         return $this->_profileDialog->getCountriesStates();
     }
 
@@ -536,15 +539,15 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
         return $this->_waiting_list;
     }
 
-	function getCurrentIP()
-	{
-	    return $_SERVER['REMOTE_ADDR'];
-	}
+    function getCurrentIP()
+    {
+        return $_SERVER['REMOTE_ADDR'];
+    }
 
-	function isCurrentIpValid()
-	{
-		return $this->auth->isValidAdminIP($this, true) == IP_VALID;
-	}
+    function isCurrentIpValid()
+    {
+        return $this->auth->isValidAdminIP($this, true) == IP_VALID;
+    }
 
     function action_approve_ip()
     {

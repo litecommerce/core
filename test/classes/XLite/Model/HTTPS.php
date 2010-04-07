@@ -161,6 +161,16 @@ class XLite_Model_HTTPS extends XLite_Base
     protected $response = null;    
 
     /**
+     * Response error message
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $error = '';
+
+    /**
      * Raw response headers 
      * 
      * @var    string
@@ -494,11 +504,11 @@ class XLite_Model_HTTPS extends XLite_Base
      * Detect software 
      * 
      * @return string
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function detectSoftware()
+    public function detectSoftware()
     {
         $result = false;
 
@@ -519,11 +529,11 @@ class XLite_Model_HTTPS extends XLite_Base
      * Detect libcurl 
      * 
      * @return integer
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function detectLibCURL()
+    public function detectLibCURL()
     {
         $result = self::HTTPS_SUCCESS;
 
@@ -533,12 +543,10 @@ class XLite_Model_HTTPS extends XLite_Base
 
         } else {
             $version = curl_version();
-            if (is_array($version)) {
-                if (in_array('https', $info['protocols'])) {
-                    $result = self::HTTPS_ERROR;
-                }
-
-            } elseif (stristr($version, 'ssl') || stristr($version, 'tls')) {
+            if (
+                (is_array($version) && !in_array('https', $version['protocols']))
+                || (!is_array($version) && !preg_match('/ssl|tls/Ssi', $version))
+            ) {
                 $result = self::HTTPS_ERROR;
             }
         }
@@ -679,21 +687,10 @@ class XLite_Model_HTTPS extends XLite_Base
                 $result = self::HTTPS_ERROR;
 
             } else {
-                $responseHeaders = array_map('trim', explode("\n", $this->rawHeaders));
-                if (preg_match('/HTTP\/1\.\d (\d+)/', $responseHeaders[0], $match)) {
-                    $this->responseCode = intval($match[1]);
-                }
-                unset($responseHeaders[0]);
-
-                foreach ($responseHeaders as $v) {
-                    $v = explode(':', $v, 2);
-                    if (2 == count($v)) {
-                        $this->responseHeaders[$v[0]] = trim($v[1]);
-                    }
-                }
+                $this->parseResponseHeaders($this->rawHeaders);
             }
         }
-        
+
         return $result;
     }
 
@@ -701,11 +698,11 @@ class XLite_Model_HTTPS extends XLite_Base
      * Detect external curl 
      * 
      * @return integer
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function detectCURL()
+    public function detectCURL()
     {
         $this->curlBinary = func_find_executable('curl');
 
@@ -806,11 +803,18 @@ class XLite_Model_HTTPS extends XLite_Base
             $execline .= ' --get';
         }
 
-        $cmd = $execline . ' -s ' . $this->url;
+        $fname = $this->getTempFilename('lc_curl_headers');
+        $execline .= ' -D ' . $fname;
+
         $this->response = array();
-        exec($cmd, $this->response, $this->curlErrorCode);
+        exec($execline . ' -s ' . $this->url, $this->response, $this->curlErrorCode);
 
         $this->response = join('', $this->response);
+        if (file_exists($fname)) {
+            $this->rawHeaders = file_get_contents($fname);
+            unlink($fname);
+        }
+
         if ($this->curlErrorCode) {
             if (isset($this->curlErrors[$this->curlErrorCode])) {
                 $this->error = 'Curl error ' . $this->curlErrorCode . ': '
@@ -835,7 +839,31 @@ class XLite_Model_HTTPS extends XLite_Base
             return self::HTTPS_ERROR;
         }
 
+        if ($this->rawHeaders) {
+            $this->parseResponseHeaders($this->rawHeaders);
+        }
+
         return self::HTTPS_SUCCESS;
+    }
+
+    /**
+     * Detect OpenSSL bouncer availability
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function detectOpenSSL()
+    {
+        $result = self::HTTPS_SUCCESS;
+
+        if (LC_OS_IS_WIN || !func_find_executable('openssl')) {
+            $this->error = 'openssl executable is not found';
+            $result = self::HTTPS_ERROR;
+        }
+
+        return $result;
     }
 
     /**
@@ -848,11 +876,7 @@ class XLite_Model_HTTPS extends XLite_Base
      */
     protected function requestOpenSSL()
     {
-        $opensslBinary = func_find_executable('openssl');
-
-        if (!$opensslBinary) {
-            $this->error = 'openssl executable is not found';
-
+        if (self::HTTPS_ERROR == $this->detectOpenSSL()) {
             return self::HTTPS_ERROR;
         }
 
@@ -877,13 +901,15 @@ class XLite_Model_HTTPS extends XLite_Base
             $args[] = '-ssl3';
         }
 
-        $cmdline = $opensslBinary . ' s_client ' . implode(' ', $args) . ' -quiet 2>&1';
+        $cmdline = func_find_executable('openssl') . ' s_client ' . implode(' ', $args) . ' -quiet 2>&1';
         $data = $this->getPost();
+
+        $errFile = $this->getTempFilename('lc_ossl_errors');
 
         $descriptorspec = array(
             array('pipe', 'r'),
             array('pipe', 'w'),
-            array('file', '/tmp/error-output.txt', 'a')
+            array('file', $errFile, 'a')
         );
 
         $fp = proc_open($cmdline, $descriptorspec, $pipes);
@@ -938,22 +964,15 @@ class XLite_Model_HTTPS extends XLite_Base
         }
 
         // parse headers
-        if (preg_match('/HTTP\/1\.[01] (\d+)/m', $data, $matches)) {
-            $this->status = $matches[1];
-        }
-
-        $this->headers = array();
-        $headers = explode("\n", substr($data, 0, $pos));
+        $this->parseResponseHeaders(substr($data, 0, $pos));
         $this->response = trim(substr($data, $pos));
 
-        foreach ($headers as $header) {
-            $pos = strpos($header, ':');
-            if (false !== $pos) {
-                $this->headers[strtolower(substr($header, 0, $pos))] = trim(substr($header, $pos+1));
-            }
-        }
         // handle redirect
-        if (isset($this->headers['location']) && $this->status == '302') {
+        if (
+            isset($this->headers['location'])
+            && $this->headers['location']
+            && 302 == $this->responseCode
+        ) {
             $redirect = $this->headers['location'];
             $url->querystring = '';
             $url->anchor = '';
@@ -999,5 +1018,33 @@ class XLite_Model_HTTPS extends XLite_Base
         }
 
         return self::HTTPS_SUCCESS;
+    }
+
+    protected function parseResponseHeaders($rawHeaders)
+    {
+        $responseHeaders = array_map('trim', explode("\n", $rawHeaders));
+        if (preg_match('/HTTP\/1\.\d (\d+)/', $responseHeaders[0], $match)) {
+            $this->responseCode = intval($match[1]);
+        }
+        unset($responseHeaders[0]);
+
+        foreach ($responseHeaders as $v) {
+            $v = explode(':', $v, 2);
+            if (2 == count($v)) {
+                $this->responseHeaders[strtolower($v[0])] = trim($v[1]);
+            }
+        }
+    }
+
+    protected function getTempFilename($name = 'temp')
+    {
+        if (function_exists('sys_get_temp_dir')) {
+            $dir = sys_get_temp_dir();
+
+        } else {
+            $dir = LC_VAR_DIR;
+        }
+
+        return tempnam($dir, $name);
     }
 }
