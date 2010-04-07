@@ -358,6 +358,8 @@ EOT;
 			require_once LC_ROOT_DIR . 'lib' . LC_DS . 'PEAR.php';
 		    require_once LC_ROOT_DIR . 'lib' . LC_DS . 'HTTP' . LC_DS . 'Request.php';
 
+			$pearObj = new PEAR();
+
 			$http = new HTTP_Request($url."?$queryString"); 
 			$http->_timeout = 5; // can't wait long when we are in shopping cart
 			$track_errors = ini_get("track_errors");
@@ -370,7 +372,7 @@ EOT;
 				return "";
 			}
 
-			if (PEAR::isError($result)) {
+			if ($pearObj->isError($result)) {
 				$this->error = $result->getMessage();
 				return "";
 			}
