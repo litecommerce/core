@@ -52,7 +52,7 @@
             <arg line="-c -b ${label}" />
         </exec>
 		<exec executable="/usr/bin/tar" dir="${buildDir}">
-			<arg line="-xzf ${buildDir}/output/litecommerce-3.0.tgz" />
+			<arg line="-xzf ${buildDir}/output/litecommerce-${version}-build${label}.tgz" />
 		</exec>
 		<move file="${buildDir}/litecommerce" tofile="${buildDir}/src" />
 		<mkdir dir="${buildDir}/.dev" />
