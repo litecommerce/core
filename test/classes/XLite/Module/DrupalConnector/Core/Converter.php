@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+// FIXME - must be refactored
+
 /**
  * Miscelaneous convertion routines
  *
@@ -106,20 +108,13 @@ class XLite_Module_DrupalConnector_Core_Converter extends XLite_Core_Converter i
      */
     public static function buildDrupalURL($target = '', $action = '', array $params = array())
     {
-        $parts = array(
-            self::DRUPAL_ROOT_NODE,
-            $target,
-            $action
-        );
+        $parts = array(self::DRUPAL_ROOT_NODE, $target, $action);
 
         if (isset($params['printable']) && $params['printable']) {
             array_unshift($parts, 'print');
             unset($params['printable']);
         }
 
-        $parts = array_merge($parts, $params);
-
-        return '?q=' . implode('/', $parts);
+        return '?q=' . implode('/', $parts) . '/' . XLite_Core_Converter::buildQuery($params, '-', '/');
     }
-
 }
