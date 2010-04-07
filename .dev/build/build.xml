@@ -54,6 +54,9 @@
 			<arg line="-xzf ${buildDir}/output/litecommerce-3.0.tgz" />
 		</exec>
 		<move file="${buildDir}/litecommerce" tofile="${buildDir}/src" />
+        <copy todir="${buildDir}">
+            <fileset dir="${sourceDir}/.dev" />
+        </copy>
         <exec executable="/usr/local/php-530/bin/php" dir="${buildDir}/src">
             <arg line="${sourceDir}/.dev/build/devcode_postprocess.php" />
         </exec>
