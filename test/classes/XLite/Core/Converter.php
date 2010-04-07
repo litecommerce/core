@@ -102,17 +102,20 @@ class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Compose URL from target, action and additional params
      *
-     * @param string $target page identifier
-     * @param string $action action to perform
-     * @param array  $params additional params
+     * @param string $target    Page identifier
+     * @param string $action    Action to perform
+     * @param array  $params    Additional params
+     * @param string $interface Interface script
      *
      * @return string
      * @access public
      * @since  3.0.0
      */
-    public static function buildURL($target = '', $action = '', array $params = array())
+    public static function buildURL($target = '', $action = '', array $params = array(), $interface = null)
     {
-        $url = XLite::getInstance()->getScript();
+        $url = is_null($interface)
+            ? XLite::getInstance()->getScript()
+            : $interface;
 
         $parts = array();
 

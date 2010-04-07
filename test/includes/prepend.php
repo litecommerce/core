@@ -41,7 +41,7 @@ define('LC_DIR', realpath(dirname(dirname(__FILE__))));
 
 // It's the feature of PHP 5. We need to explicitly define current time zone.
 // See also http://bugs.php.net/bug.php?id=48914
-date_default_timezone_set(@date_default_timezone_get());
+@date_default_timezone_set(@date_default_timezone_get());
 
 // Display all errors and warnings
 error_reporting(E_ALL | E_STRICT);
@@ -73,6 +73,10 @@ define('LC_OS_IS_WIN', LC_OS_CODE === 'win');
 // Session type
 define('LC_SESSION_TYPE', 'Sql');
 
+set_include_path(
+	get_include_path()
+	. PATH_SEPARATOR . LC_EXT_LIB_DIR
+);
 
 // Some common functions
 require_once LC_ROOT_DIR . 'includes' . LC_DS . 'functions.php';
