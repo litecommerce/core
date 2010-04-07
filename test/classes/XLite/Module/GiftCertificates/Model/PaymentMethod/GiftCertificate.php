@@ -92,4 +92,28 @@ class XLite_Module_GiftCertificates_Model_PaymentMethod_GiftCertificate extends 
         return $result;
     }
 
+    /**
+     * Return list of active payment methods
+     *
+     * @return XLite_Model_PaymentMethod
+     * @access public
+     * @since  3.0
+     */
+    public function getActiveMethods()
+    {
+        $result = array();
+
+        $controller = XLite::getController();
+
+        if (method_exists($controller, 'getCart') && !$controller->getCart()->canApplyGiftCertificate()) {
+            $result = $this->findAll('enabled = \'1\' AND payment_method != \'gift_certificate\'');
+
+        } else {
+            $result = parent::getActiveMethods();
+        }
+
+        return $result;
+    }
+
+
 }

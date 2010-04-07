@@ -68,7 +68,8 @@ class XLite_Module_GiftCertificates_View_CartRow extends XLite_View_Abstract
      */
     public function isVisible()
     {
-        return parent::isVisible() && !$this->getCart()->hasGiftCertificates();
+        return parent::isVisible()
+            && $this->getCart()->canApplyGiftCertificate();
     }
 
     /**

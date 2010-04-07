@@ -166,7 +166,7 @@ class XLite_Module_GiftCertificates_View_CheckGiftCertificate extends XLite_View
     public function canApply()
     {
         return 'A' == $this->getFoundGc()->get('status')
-            && !XLite::getController()->getCart()->hasGiftCertificates();
+            && XLite::getController()->getCart()->canApplyGiftCertificate();
     }
 
     /**

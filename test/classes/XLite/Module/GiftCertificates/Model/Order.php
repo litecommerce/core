@@ -550,14 +550,14 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
     }
 
     /**
-     * Get shipped gift certificates count
+     * Check - has order gift certificates or not
      * 
-     * @return integer
-     * @access public
+     * @return boolean
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function hasGiftCertificates()
+    protected function hasGiftCertificates()
     {
         $result = false;
 
@@ -569,5 +569,45 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
         }
 
         return $result;
+    }
+
+    /**
+     * Check - has order regular products or not
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function hasRegularProducts()
+    {
+        $result = false;
+
+        foreach ($this->getItems() as $item) {
+            $product = $item->getProduct();
+            if (!is_null($product) && $product->isExists()) {
+                $result = true;
+                break;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Check - can apply gift certificate to order or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function canApplyGiftCertificate()
+    {
+        $option = $this->config->GiftCertificates->prohibit_pay_gc;
+
+        return 'N' == $option
+            || ('O' == $option && ($this->hasRegularProducts() || !$this->hasGiftCertificates()))
+            || ('P' == $option && !$this->hasGiftCertificates());
     }
 }
