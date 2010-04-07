@@ -76,9 +76,10 @@ define('LC_SESSION_TYPE', 'Sql');
 // Some common functions
 require_once LC_ROOT_DIR . 'includes' . LC_DS . 'functions.php';
 
-// Check and (if needed) rebild classes cache
-require_once LC_ROOT_DIR . 'includes' . LC_DS . 'decoration.php';
-
+if (!defined('XLITE_INSTALL_MODE')) {
+	// Check and (if needed) rebild classes cache
+	include_once LC_ROOT_DIR . 'includes' . LC_DS . 'decoration.php';
+}
 
 /**
  * Class autoload function
@@ -93,9 +94,14 @@ function __lc_autoload($className)
 {
 	// FIXME - remove checks
 	if (0 === strpos($className, 'XLite')) {
-		$fn = LC_CLASSES_CACHE_DIR . str_replace('_', LC_DS, $className) . '.php';
+		if (defined('XLITE_INSTALL_MODE')) {
+			$fn = LC_CLASSES_DIR . str_replace('_', LC_DS, $className) . '.php';
+		} else {
+			$fn = LC_CLASSES_CACHE_DIR . str_replace('_', LC_DS, $className) . '.php';
+		}
+
 		if (file_exists($fn)) {
-			include_once (LC_CLASSES_CACHE_DIR . str_replace('_', LC_DS, $className) . '.php');
+			include_once $fn;
 		}
 	}
 }
