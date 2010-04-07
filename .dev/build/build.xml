@@ -16,6 +16,7 @@
 		<property name="sourceDir" location="${root}" />
 		<property name="jmeterDir" location="${sourceDir}/.dev/lib/jmeter" />
 		<property name="srcDir" location="${sourceDir}/test" />
+		<property name="label" value="manual" />
 	</target>
 
     <target name="set-properties-cc" depends="set-properties-common">
@@ -28,7 +29,7 @@
     </target>
 
     <target name="set-properties-common">
-        <property name="version" value="3.0-ee" />
+        <property name="version" value="3.0" />
 		<property name="apiUrl" value="http://xcart2-530.crtdev.local/~max/xlite/build/api" />
     </target>
 
@@ -48,7 +49,7 @@
 
     <target name="prepare">
         <exec executable="${sourceDir}/.dev/build/release/release.sh" dir="${buildDir}">
-            <arg line="-c" />
+            <arg line="-c -b ${label}" />
         </exec>
 		<exec executable="/usr/bin/tar" dir="${buildDir}">
 			<arg line="-xzf ${buildDir}/output/litecommerce-3.0.tgz" />
@@ -171,7 +172,11 @@
 		<delete>
 			<fileset dir="${buildDir}/.dev" />
 		</delete>
-		<!--tar destfile="${buildDir}/xlite-${version}.tgz" basedir="${buildDir}/src" compression="gzip" /-->
-		<tar destfile="${buildDir}/xlite-${version}-api.tgz" basedir="${buildDir}/api" compression="gzip" />
+		<tar destfile="${buildDir}/litecommerce-${version}.${label}-api.tgz" basedir="${buildDir}/api" compression="gzip" />
+		<copy todir="/u/xcart/lc_night_builds" overwrite="true">
+			<fileset dir="${buildDir}/output" />
+			<fileset file="${buildDir}/litecommerce-${version}.${label}-api.tgz" />
+		</copy>
     </target>
+
 </project>
