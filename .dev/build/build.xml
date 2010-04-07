@@ -42,9 +42,12 @@
     </target>
 
 	<target name="update">
-		<exec executable="svn" dir="${sourceDir}">
+		<exec executable="svn" dir="${sourceDir}/.dev">
 			<arg line="up" />
 		</exec>
+        <exec executable="svn" dir="${srcDir}">
+            <arg line="up" />
+        </exec>
 	</target>
 
     <target name="prepare">
