@@ -122,6 +122,7 @@ CREATE TABLE xlite_modules (
   dependencies varchar(1024) NOT NULL default '',
   mutual_modules varchar(1024) NOT NULL default '',
   type int(1) unsigned NOT NULL default '0',
+  version varchar(12) NOT NULL default '',
   PRIMARY KEY (module_id),
   UNIQUE KEY (name),
   KEY enabled (enabled),
