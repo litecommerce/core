@@ -67,26 +67,12 @@ class XLite_Module_DemoMode_Controller_Admin_DemoMode extends XLite_Controller_A
             	"700",		// DetailedImages
             	"2000",		// ProductOptions
             	"1500",		// InventoryTracking
-            	"4500",		// ShowcaseOrganizer
-            	"5020",		// SnsIntegration
             	"760",		// MultiCategories
             );
         }
 		if (!in_array("10", $_REQUEST["active_modules"])) {
             $_REQUEST["active_modules"][] = "10";
 		}
-        if (!in_array("5020", $_REQUEST["active_modules"])) {
-            $_REQUEST["active_modules"][] = "5020";
-        }
-        // ShowcaseOrganizer && LayoutOrganizer
-        if (in_array("4500", $_REQUEST["active_modules"]) && in_array("4505", $_REQUEST["active_modules"])) {
-            foreach($_REQUEST["active_modules"] as $m_key => $m) {
-                if ($m == "4500") {
-                    unset($_REQUEST["active_modules"][$m_key]);
-                    break;
-                }
-            }
-        }
  
 		XLite_Model_ModulesManager::getInstance()->updateModules($_REQUEST["active_modules"]);
 

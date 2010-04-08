@@ -92,12 +92,7 @@
 
 <widget name="categoriesWidget" target="categories" template="common/dialog.tpl" head="Manage categories" body="categories/body.tpl" visible="{!getRequestParamValue(#mode#)=#delete_all#}">
 <widget module="FeaturedProducts" template="common/dialog.tpl" head="Featured products" body="modules/FeaturedProducts/featuredProducts.tpl" IF="{namedWidgets.categoriesWidget.visible}">
-<span IF="!xlite.LayoutOrganizerEnabled">
 <widget target="category" class="XLite_View_Tabber" body="{getPageTemplate()}" switch="page" visible="{!getRequestParamValue(#mode#)=#delete#}">
-</span>
-<span IF="xlite.LayoutOrganizerEnabled">
-<widget module="LayoutOrganizer" target="category" class="XLite_View_Tabber" body="{getPageTemplate()}" switch="page" visible="{!getRequestParamValue(#mode#)=#delete#}">
-</span>
 <widget target="categories" template="common/dialog.tpl" body="categories/delete_all.tpl" head="Confirmation" mode="delete_all">
 <widget target="category" template="common/dialog.tpl" body="categories/delete.tpl" head="Confirmation" mode="delete">
 
@@ -200,7 +195,6 @@
 <widget module="ProductAdviser" template="modules/ProductAdviser/main.tpl">
 <widget module="WishList" target="wishlists" template="modules/WishList/wishlists.tpl" head="Wish Lists">
 <widget module="WishList" target="wishlist" template="common/dialog.tpl" body="modules/WishList/wishlist.tpl" head="Wish List">
-<widget module="LayoutOrganizer" template="modules/LayoutOrganizer/main.tpl">
 <widget module="WholesaleTrading" template="modules/WholesaleTrading/main.tpl"> 
 <!-- [/center] -->
     </td>

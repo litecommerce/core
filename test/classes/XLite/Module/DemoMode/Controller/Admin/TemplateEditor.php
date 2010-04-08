@@ -38,9 +38,9 @@
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
 /**
-* Admin_Dialog_template_editor_LayoutOrganizer description.
+* XLite_Module_DemoMode_Controller_Admin_TemplateEditor
 *
-* @package Module_LayoutOrganizer
+* @package Module
 * @access public
 * @version $Id$
 */

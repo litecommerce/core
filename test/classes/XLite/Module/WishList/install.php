@@ -247,63 +247,6 @@ $replace_str = <<<EOT
 EOT;
 patch_template($location, "WishList_Add2Cart", $find_str, $replace_str);
 
-$location = "skins/default/en/modules/LayoutOrganizer/schemes/scheme001_Forest_Green/prod_template.tpl";
-if (is_template_patched($location, "CButton"))
-{
-	$find_str = <<<EOT
-            <td colspan=2>
-                <widget class="CButton" label="Add to Cart" href="javascript: if (isValid()) document.add_to_cart.submit()" img="cart4button.gif" font="FormButton">
-            </td>
-EOT;
-	$replace_str = <<<EOT
-            <td>
-                <widget class="CButton" label="Add to Cart" href="javascript: if (isValid()) document.add_to_cart.submit()" img="cart4button.gif" font="FormButton">
-            </td>
-            <td>
-                <widget module="WishList" template="modules/WishList/add.tpl" href="javascript: WishList_Add2Cart();">
-            </td>
-EOT;
-	patch_template($location, "WishList", $find_str, $replace_str);
-}
-
-$location = "skins/default/en/modules/LayoutOrganizer/schemes/scheme002_Soap_Bubbles/prod_template.tpl";
-if (is_template_patched($location, "CButton"))
-{
-	$find_str = <<<EOT
-            <td colspan=2>
-                <widget class="CButton" label="Add to Cart" href="javascript: if (isValid()) document.add_to_cart.submit()" img="cart4button.gif" font="FormButton">
-            </td>
-EOT;
-	$replace_str = <<<EOT
-            <td>
-                <widget class="CButton" label="Add to Cart" href="javascript: if (isValid()) document.add_to_cart.submit()" img="cart4button.gif" font="FormButton">
-            </td>
-            <td>
-                <widget module="WishList" template="modules/WishList/add.tpl" href="javascript: WishList_Add2Cart();">
-            </td>
-EOT;
-	patch_template($location, "WishList", $find_str, $replace_str);
-}
-
-$location = "skins/default/en/modules/LayoutOrganizer/schemes/scheme003_Film_Tape/prod_template.tpl";
-if (is_template_patched($location, "CButton"))
-{
-	$find_str = <<<EOT
-            <td colspan=2>
-                <widget class="CButton" label="Add to Cart" href="javascript: if (isValid()) document.add_to_cart.submit()" img="cart4button.gif" font="FormButton">
-            </td>
-EOT;
-	$replace_str = <<<EOT
-            <td>
-                <widget class="CButton" label="Add to Cart" href="javascript: if (isValid()) document.add_to_cart.submit()" img="cart4button.gif" font="FormButton">
-            </td>
-            <td>
-                <widget module="WishList" template="modules/WishList/add.tpl" href="javascript: WishList_Add2Cart();">
-            </td>
-EOT;
-	patch_template($location, "WishList", $find_str, $replace_str);
-}
-
 $location = "skins/default/en/category_products.tpl";
 
 if (!is_template_patched($location, "WishList"))
