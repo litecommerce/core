@@ -57,9 +57,12 @@ define('LC_LIB_DIR', LC_CLASSES_DIR . 'XLite' . LC_DS);
 define('LC_MODULES_DIR', LC_LIB_DIR . 'Module' . LC_DS);
 
 define('LC_VAR_DIR', LC_ROOT_DIR . 'var' . LC_DS);
+
 define('LC_COMPILE_DIR', LC_VAR_DIR . 'run' . LC_DS);
 define('LC_CLASSES_CACHE_DIR', LC_COMPILE_DIR . 'classes' . LC_DS);
 define('LC_SKINS_CACHE_DIR', LC_COMPILE_DIR . 'skins' . LC_DS);
+
+define('LC_TMP_DIR', LC_VAR_DIR . 'tmp' . LC_DS);
 
 define('LC_SKINS_DIR', LC_ROOT_DIR . 'skins' . LC_DS);
 define('LC_CUSTOMER_AREA_SKIN', LC_SKINS_DIR . 'default' . LC_DS . 'en' . LC_DS);

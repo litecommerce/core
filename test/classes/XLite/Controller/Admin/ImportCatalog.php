@@ -211,7 +211,7 @@ class XLite_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_Abstra
     function getImagesDir()
     {
         $image = new XLite_Model_Image();
-        return ($this->getComplex('xlite.config.Images.images_directory') != "") ? $this->getComplex('xlite.config.Images.images_directory') : IMAGES_DIR;
+        return ($this->getComplex('xlite.config.Images.images_directory') != "") ? $this->getComplex('xlite.config.Images.images_directory') : XLite_Model_Image::IMAGES_DIR;
     }
 }
 

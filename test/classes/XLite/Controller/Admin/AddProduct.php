@@ -102,13 +102,13 @@ class XLite_Controller_Admin_AddProduct extends XLite_Controller_Admin_Abstract
     function action_images()
     {
         $tn = $this->getComplex('product.thumbnail');
-        if ($tn->handleRequest() != IMAGE_OK && $tn->_shouldProcessUpload) {
+        if ($tn->handleRequest() != XLite_Model_Image::IMAGE_OK && $tn->_shouldProcessUpload) {
         	$this->set("valid", false);
         	$this->set("thumbnail_read_only", true);
         }
 
         $img = $this->getComplex('product.image'); 
-        if ($img->handleRequest() != IMAGE_OK && $img->_shouldProcessUpload) {
+        if ($img->handleRequest() != XLite_Model_Image::IMAGE_OK && $img->_shouldProcessUpload) {
         	$this->set("valid", false);
         	$this->set("image_read_only", true);
         }

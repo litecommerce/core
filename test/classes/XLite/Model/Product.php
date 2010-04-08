@@ -778,7 +778,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
         $properties       = $options["properties"];
         $default_category = $options["default_category"];
         $image = new XLite_Model_Image();
-        $images_directory = ($options["images_directory"] != "") ? $options["images_directory"] : IMAGES_DIR;
+        $images_directory = ($options["images_directory"] != "") ? $options["images_directory"] : XLite_Model_Image::IMAGES_DIR;
         $save_images      = $options["save_images"];
 		$uniq_identifier  = $options["unique_identifier"];
 

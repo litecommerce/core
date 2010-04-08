@@ -9,6 +9,9 @@ CREATE TABLE xlite_images (
         enabled int(1) NOT NULL default '1',
         order_by int(11) NOT NULL default '0',
 		is_zoom char(1) NOT NULL default '',
+        image_width int(11) NOT NULL default 0,
+        image_height int(11) NOT NULL default 0,
+        image_size int(11) NOT NULL default 0,
         PRIMARY KEY  (image_id),
 		KEY pz (product_id, is_zoom)
 ) TYPE=MyISAM;

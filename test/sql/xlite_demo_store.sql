@@ -86,9 +86,9 @@ update xlite_products set image=concat('pi_',product_id,'.',substring(image_type
 update xlite_products set thumbnail=concat('pt_',product_id,'.', substring(thumbnail_type, 7)),thumbnail_source='F' where thumbnail_source='D';
 update xlite_categories set image=concat('ci_',category_id,'.', substring(image_type, 7)),image_source='F' where image_source='D';
 
-REPLACE INTO xlite_images VALUES (1,205,'di_205.jpeg','F','image/jpeg','Beatles "Vintage Logo" T-shirt', 1, 1,'Y');
-REPLACE INTO xlite_images VALUES (2,205,'di_206.jpeg','F','image/jpeg','Beatles "Vintage Logo" T-shirt #2', 1, 2,'');
-REPLACE INTO xlite_images VALUES (3,205,'di_207.jpeg','F','image/jpeg','Beatles "Vintage Logo" T-shirt #3', 1, 3,'');
+REPLACE INTO xlite_images VALUES (1,205,'di_205.jpeg','F','image/jpeg','Beatles "Vintage Logo" T-shirt', 1, 1,'Y', 0, 0, 0);
+REPLACE INTO xlite_images VALUES (2,205,'di_206.jpeg','F','image/jpeg','Beatles "Vintage Logo" T-shirt #2', 1, 2,'', 0, 0, 0);
+REPLACE INTO xlite_images VALUES (3,205,'di_207.jpeg','F','image/jpeg','Beatles "Vintage Logo" T-shirt #3', 1, 3,'', 0, 0, 0);
 
 INSERT INTO xlite_partner_plans VALUES (1, 'TestPlan', 100, 1);
 INSERT INTO xlite_partner_plan_commissions VALUES (1, '2.00', '%', 144, 'P');

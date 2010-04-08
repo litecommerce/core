@@ -1,92 +1,160 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* Detailed images module base class.
-*
-* @package Module_DetailedImages
-* @access public
-* @version $Id$
-*/
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage Model
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
+
+/**
+ * Detailed image
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstract
-{	
-    public $fields = array(
-            'image_id'     => 0,
-            'product_id'   => 0,
-            'image_source' => 'D',
-            'image_type'   => 'image/jpeg',
-            'alt'          => '',
-            'enabled'      => 1,
-            'order_by'     => 0,
-			'is_zoom'      => ''
-            );	
+{    
+    /**
+     * Model fields list
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $fields = array(
+    	'image_id'     => 0,
+        'product_id'   => 0,
+        'image_source' => 'D',
+        'image_type'   => 'image/jpeg',
+        'alt'          => '',
+        'enabled'      => 1,
+        'order_by'     => 0,
+        'is_zoom'      => '',
+	);    
 
-    public $alias = "images";	
-    public $autoIncrement = "image_id";	
-    public $defaultOrder = "order_by";	
-    public $image = null;
+    /**
+     * Table alias 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $alias = 'images';    
 
-    function getImage() // {{{
+    /**
+     * Auto increment field name
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $autoIncrement = 'image_id';    
+
+    /**
+     * Default order field name
+     * 
+     * @var    string
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $defaultOrder = 'order_by';    
+
+    /**
+     * Image object (cache)
+     * 
+     * @var    XLite_Model_Image
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $image = null;
+
+    /**
+     * Get image 
+     * 
+     * @return XLite_Model_Image
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getImage()
     {
         if (is_null($this->image)) {
-            $this->image = new XLite_Model_Image("detailed_image", $this->get("image_id"));
+            $this->image = new XLite_Model_Image('detailed_image', $this->get('image_id'));
         }
 
         return $this->image;
-    } // }}}
+    }
 
-	function getImageURL() // {{{
-	{
-		return $this->getImage()->get('url');
-	} // }}}
+    /**
+     * Get image URL 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getImageURL()
+    {
+        return $this->getImage()->get('url');
+    }
 
-    public function findImages($product_id = 0) // {{{
+    /**
+     * Find images by product id
+     * 
+     * @param int $product_id Product id
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findImages($product_id = 0)
     {
         return $this->findAll('product_id = \'' . $product_id . '\'');
-    } // }}}
+    }
 
-    public function findZoom($product_id = 0) // {{{
+    /**
+     * Find image for zoom functionality
+     * 
+     * @param int $product_id Product id
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findZoom($product_id = 0)
     {
         return $this->findAll('product_id = \'' . $product_id . '\' AND is_zoom = \'Y\'');
-    } // }}}
+    }
 
-    function getImportFields($layout = null) // {{{
+    function getImportFields($layout = null)
     {
         $layout = array();
         if (isset($this->config->ImportExport->detailed_images_layout)) {
@@ -95,13 +163,13 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstra
 
         // detailed image import fields
         $fields = array(
-            'NULL'      => true,
-            'sku'       => false,
-            'name'      => false,
-            'image'     => false,
-            'alt'       => false,
-            'enabled'   => false,
-            'order_by'  => false
+            'NULL'     => true,
+            'sku'      => false,
+            'name'     => false,
+            'image'    => false,
+            'alt'      => false,
+            'enabled'  => false,
+            'order_by' => false
         );
 
         $result = array();
@@ -120,11 +188,11 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstra
         }
 
         return $result;
-    } // }}}
+    }
 
     function deepCopyTo($id)
     {
-        $_image = $this->get("image");
+        $_image = $this->getImage();
 
         $newImg = new XLite_Model_Image($_image->imageClass, $_image->get($_image->autoIncrement));
 
@@ -133,29 +201,29 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstra
         }
 
         $newImg->properties = $_image->properties;
-        if ($newImg->get("source") == "F") {
-            $fnPrevious = $newImg->get("data");
+        if ($newImg->get('source') == 'F') {
+            $fnPrevious = $newImg->get('data');
         }
 
         $newImg->setComplex($_image->autoIncrement, $id);
-        if ($newImg->get("source") == "F") {
+        if ($newImg->get('source') == 'F') {
 
-			// createFileName
-	        if (is_null($id)) {
-       		    $id = $newImg->get($newImg->autoIncrement);
-	        }
+            // createFileName
+            if (is_null($id)) {
+                   $id = $newImg->get($newImg->autoIncrement);
+            }
 
-    	    $ext = $newImg->get("type");
-        	$ext = (empty($ext)) ? ".gif" : ("." . substr($newImg->get("type"), 6));
-	        $fnNew = $newImg->alias{0} . $newImg->fieldPrefix{0} . "_$id$ext";
+            $ext = $newImg->get('type');
+            $ext = (empty($ext)) ? '.gif' : ('.' . substr($newImg->get('type'), 6));
+            $fnNew = $newImg->alias{0} . $newImg->fieldPrefix{0} . '_' . $id . $ext;
 
-			// copyImageFile
-	        $src = $newImg->getFilePath($fnPrevious);
-	        $dest = $newImg->getFilePath($fnNew);
-    	    copy($src, $dest);
-        	@chmod($dest, 0644);
+            // copyImageFile
+            $src = $newImg->getFilePath($fnPrevious);
+            $dest = $newImg->getFilePath($fnNew);
+            copy($src, $dest);
+            @chmod($dest, 0644);
 
-            $newImg->set("data", $fnNew);
+            $newImg->set('data', $fnNew);
         }
 
         $newImg->update();
@@ -163,77 +231,84 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstra
         return $newImg;
     }
 
-    public function import(array $options) // {{{
+    public function import(array $options)
     {
         static $line;
 
         if (!isset($line)) {
-			$line = 1;
+            $line = 1;
 
-		} else {
-			$line++;
-		}
+        } else {
+            $line++;
+        }
 
-        $properties = $options["properties"];
-        $save_images = $options["save_images"];
-        $images_directory = $options["images_directory"];
+        $properties = $options['properties'];
+        $save_images = $options['save_images'];
+        $images_directory = $options['images_directory'];
 
         if (!empty($images_directory)) {
 
             // update images base directory
             $cfg = new XLite_Model_Config();
-            if ($cfg->find("name='images_directory'")) {
-                $cfg->set("value", $images_directory);
+            if ($cfg->find('name = \'images_directory\'')) {
+                $cfg->set('value', $images_directory);
                 $cfg->update();
 
             } else {
-                $cfg->set("name", "images_directory");
-                $cfg->set("category", "Images");
-                $cfg->set("value", $images_directory);
+                $cfg->set('name', 'images_directory');
+                $cfg->set('category', 'Images');
+                $cfg->set('value', $images_directory);
                 $cfg->create();
             }
+
             // re-read config data
             $cfg->readConfig();
         }
 
-        $image = $properties["image"];
+        $image = $properties['image'];
 
         $images_directory = isset($this->config->Images->images_directory)
-			? $this->config->Images->images_directory 
-			: "";
+            ? $this->config->Images->images_directory 
+            : '';
+
         $image_path = empty($images_directory) 
-			? $image 
-			: "$images_directory/$image";
+            ? $image 
+            : $images_directory . '/' . $image;
 
         $product = new XLite_Model_Product();
         $found = false;
 
-        if (!empty($properties["sku"]) && $product->find("sku='".addslashes($properties["sku"])."'")) {
-			// try to find product by SKU
+        if (
+			!empty($properties['sku'])
+			&& $product->find('sku = \'' . addslashes($properties['sku']) . '\'')
+		) {
+            // try to find product by SKU
             $found = true;
 
-        } elseif (empty($properties["sku"]) &&  !empty($properties["name"]) && $product->find("name='".addslashes($properties["name"])."'")) {
-			// .. or by NAME
+        } elseif (
+			empty($properties['sku']) &&
+			!empty($properties['name']) && $product->find('name = \'' . addslashes($properties['name']) . '\'')
+		) {
+            // .. or by NAME
             $found = true;    
         }
 
         if (!$found) {
-            
-            echo "<b>line# $line:</b> <font color=red>No product found for detailed image $image</font>";
-            echo '<br /><br><a href="admin.php?target=import_catalog&page=detailed_images"><u>Click here to return to admin interface</u></a>';
-            die;
+            $this->doDie(
+				'line# ' . $line . ': No product found for detailed image ' . $image
+			);
         }
 
         $detailed_image = new XLite_Module_DetailedImages_Model_DetailedImage();
-        echo "<b>line# $line:</b> Importing detailed image $image for product ".$product->get("name")."<br>\n";
+        echo '<b>line# ' . $line . ':</b> Importing detailed image $image for product ' . $product->get('name' ) .'<br />' . "\n";
 
         // create detailed image
-        $detailed_image->set("product_id", $product->get("product_id"));
-        $detailed_image->set("properties", $properties);
+        $detailed_image->set('product_id', $product->get('product_id'));
+        $detailed_image->set('properties', $properties);
         $detailed_image->create();
 
         // fill image content
-        $img = $detailed_image->get("image");
+        $img = $detailed_image->get('image');
         if ($save_images) {
 
             // save image content to database
@@ -242,18 +317,16 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstra
         } else {
 
             // update image info
-            $img->set("data", $image);
-            $img->set("source", "F");
-            $img->set("type", $img->getImageType($image_path));
+            $img->set('data', $image);
+            $img->set('source', 'F');
+            $img->set('type', $img->getImageType($image_path));
             $img->update();
         }
-    } // }}}
-	
-	function delete() // {{{
-	{
-		$image = $this->get("image");
-		$image->delete();
-
-		parent::delete();
-	} // }}}
+    }
+    
+    function delete()
+    {
+        $this->getImage()->delete();
+        parent::delete();
+    }
 }
