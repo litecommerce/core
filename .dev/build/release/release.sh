@@ -230,6 +230,13 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 		rm -rf skins/mail/en/modules/${dn}
 	done
 
+	mv skins skins_original
+
+	mkdir skins
+
+	find . -type d -exec chmod 755 {} \;
+	find . -type f -exec chmod 644 {} \;
+
 	cd $OUTPUT_DIR
 
 	tar -czf litecommerce-${VERSION}.tgz ${LITECOMMERCE_DIRNAME}
@@ -250,6 +257,9 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 		done
 
 	fi
+
+	find . -type d -exec chmod 755 {} \;
+	find . -type f -exec chmod 644 {} \;
 
 	tar -czf ${OUTPUT_DIR}/lc_connector-${VERSION}.tgz modules/lc_connector
 
