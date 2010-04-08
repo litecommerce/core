@@ -50,7 +50,7 @@ class XLite_Model_Shipping_Online extends XLite_Model_Shipping
 {	
     public $optionsTable;
 
-    function getOptions()
+    public function getOptions()
     {
         
         $name = $this->configCategory;

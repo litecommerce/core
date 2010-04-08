@@ -31,6 +31,7 @@ CREATE TABLE xlite_usps_nat_cache (
 
 INSERT INTO xlite_config VALUES ('userid','','','USPS',0,'');
 INSERT INTO xlite_config VALUES ('server','','','USPS',0,'');
+INSERT INTO xlite_config VALUES ('https','','Y','USPS',0,'');
 INSERT INTO xlite_config VALUES ('container_express','','None','USPS',0,'');
 INSERT INTO xlite_config VALUES ('container_priority','','None','USPS',0,'');
 INSERT INTO xlite_config VALUES ('mailtype','','Package','USPS',0,'');

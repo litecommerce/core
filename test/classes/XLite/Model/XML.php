@@ -190,4 +190,64 @@ class XLite_Model_XML extends XLite_Base
         return $tree;
     }
 
+    /**
+     * Get formatted XML block
+     * 
+     * @param string $xml XML
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getFormattedXML($xml)
+    {
+        $xml = preg_replace('/>[ ' . "\t\n\r" . ']+</', '><', trim($xml));
+
+        $level = -1;
+        $i = 0;
+        $prev = 0;
+        $path = array();
+        while (preg_match('/<([\w\d_\?]+)(?: [^>]+)?' . '>/S', substr($xml, $i), $match)) {
+            $tn = $match[1];
+            $len = strlen($match[0]);
+            $i = strpos($xml, $match[0], $i);
+            $level++;
+
+            // Detect close-tags
+            if (0 < $i - $prev) {
+                $ends = substr_count(substr($xml, $prev, $i - $prev), '</');
+                if ($ends > 0) {
+                    $level -= $ends;
+                }
+            }
+
+            // Add indents
+            if (0 < $level) {
+                $xml = substr($xml, 0, $i) . str_repeat("\t", $level) . substr($xml, $i);
+                $i += $level;
+            }
+
+            // Add EOL symbol
+            $end = strpos(substr($xml, $i + $len), '</' . $tn . '>');
+            if (
+                ($end !== false && preg_match('/<[\w\d_\?]+(?: [^>]+)?' . '>/S', substr($xml, $i + $len, $end)))
+                || '?' == substr($tn, 0, 1)
+            ) {
+                $xml = substr($xml, 0, $i + $len) . "\n" . substr($xml, $i + $len);
+                $i++;
+
+                // Add indent for close-tag
+                if (0 < $level) {
+                    $end += $i + $len;
+                    $xml = substr($xml, 0, $end) . str_repeat("\t", $level) . substr($xml, $end);
+                }
+            }
+
+            $i += $len;
+            $prev = $i;
+        }
+
+        return preg_replace('/(<\/[\w\d_]+>)/', '\1' . "\n", $xml);
+    }
 }

@@ -136,6 +136,26 @@ class XLite_Module_USPS_Model_Shipping_Usps extends XLite_Model_Shipping_Online
     );
 
     /**
+     * XPath obkect
+     * 
+     * @var    DOMXPath
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $xpath = null;
+
+    /**
+     * Raw rates 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $rawRates = array();
+
+    /**
      * Get shipping module name 
      * 
      * @return string
@@ -161,6 +181,7 @@ class XLite_Module_USPS_Model_Shipping_Usps extends XLite_Model_Shipping_Online
     public function getRates(XLite_Model_Order $order)
     {
         $result = array();
+        $this->rawRates = array();
 
         if (
             (!is_null($order->getProfile()) || $this->config->General->def_calc_shippings_taxes)
@@ -300,12 +321,14 @@ class XLite_Module_USPS_Model_Shipping_Usps extends XLite_Model_Shipping_Online
      * @param obhect  $options        Options
      *  
      * @return array of XLite_Model_ShippingRate
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getNationalRatesQuery($ounces, $zipOrigination, $zipDestination, $options) 
+    public function getNationalRatesQuery($ounces, $zipOrigination, $zipDestination, $options) 
     {
+        $this->rawRates = array();
+
         // transform the #####-#### ZIP format into just #####
         $zipOrigination = $this->_normalizeZip($zipOrigination);
         $zipDestination = $this->_normalizeZip($zipDestination);
@@ -494,12 +517,14 @@ EOT;
      * @param object  $options            Options
      *  
      * @return array of XLite_Model_ShippingRate
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getInternationalRatesQuery($ounces, $destinationCountry, $options)
+    public function getInternationalRatesQuery($ounces, $destinationCountry, $options)
     {
+        $this->rawRates = array();
+
         $valueOfContent = intval($options->value_of_content);
         $valueOfContentXml = 0 < $valueOfContent
             ? '<ValueOfContents>' . $valueOfContent . '</ValueOfContents>'
@@ -553,150 +578,148 @@ EOT;
      */
     protected function parseResponse($response, $destination)
     {
-        $rates = array();
+        $this->rawRates = array();
         $this->error = '';
         $this->xmlError = false;
-        $xml = new XLite_Model_XML();
-        $tree = $xml->parse($response);
 
-        if (!$tree) {
+        $dom = new DOMDocument();
+        $result = @$dom->loadXML($response, LIBXML_NOERROR | LIBXML_NOWARNING | LIBXML_ERR_NONE);
+        $this->xpath = new DOMXPath($dom);
+
+        if (!$result) {
 
             $this->error = $xml->error;
             $this->xmlError = true;
-            $this->response = $xml->xml;
+            $this->response = $response;
 
         } elseif (
             'I' == $destination
-            && isset($tree['INTLRATERESPONSE']['PACKAGE'][0]['ERROR'])
+            && $this->xpath->query('//IntlRateResponse/Package/Error')->length
         ) {
 
-            $this->error = $tree['INTLRATERESPONSE']['PACKAGE'][0]['ERROR']['DESCRIPTION'];
+            $this->error = $this->xpath->query('//IntlRateResponse/Package/Error/Description')->item(0)->nodeValue;
 
         } elseif ('I' == $destination) {
 
-            if (is_array($tree['INTLRATERESPONSE']['PACKAGE'][0]['SERVICE'])) {
-                $rates = $this->saveInternationalRates($tree['INTLRATERESPONSE']['PACKAGE'][0]['SERVICE']);
+            $services = $this->xpath->query('//IntlRateResponse/Package/Service');
+            if ($services->length) {
+                $this->saveInternationalRates($services);
             }
 
-        } elseif (is_array($tree['RATEV3RESPONSE']['PACKAGE'])) {
+        } elseif ($this->xpath->query('//RateV3Response/Package')->length) {
 
-            $rates = $this->saveNationalRates($tree['RATEV3RESPONSE']['PACKAGE']);
+            $this->saveNationalRates($this->xpath->query('//RateV3Response/Package'));
 
-        } elseif (is_array($tree['RATERESPONSE']['PACKAGE'])) {
+        } elseif ($this->xpath->query('//RateResponse/Package')->length) {
 
-            $rates = $this->saveNationalRatesOld($tree['RATERESPONSE']['PACKAGE']);
+            $this->saveNationalRatesOld($this->xpath->query('//RateResponse/Package'));
 
         }
 
-        return $rates;
+        return $this->rawRates;
     }
 
     /**
      * Save international rates 
      * 
-     * @param array $services Services list
+     * @param DOMNodeList $services Services list
      *  
-     * @return array of XLite_Model_ShippingRate
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function saveInternationalRates(array $services)
+    protected function saveInternationalRates(DOMNodeList $services)
     {
-        $rates = array();
-
         foreach ($services as $service) {
-            $shipping = $this->getService(
-                'usps',
-                'U.S.P.S. ' . $service['SVCDESCRIPTION'],
-                'I'
+            $this->buildRate(
+                'I',
+                $this->xpath->query('SvcDescription', $service)->item(0)->nodeValue,
+                $this->xpath->query('Postage', $service)->item(0)->nodeValue
             );
-            $id = $shipping->get('shipping_id');
-
-            $rates[$id] = new XLite_Model_ShippingRate();
-            $rates[$id]->shipping = $shipping;
-            $rates[$id]->rate = doubleval(trim($service['POSTAGE']));
         }
-
-        return $rates;
     }
 
     /**
      * Save national rates 
      * 
-     * @param array $services Services list
+     * @param DOMNodeList $services Services list
      *  
-     * @return array of XLite_Model_ShippingRate
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function saveNationalRates(array $services)
+    protected function saveNationalRates(DOMNodeList $services)
     {
-        $rates = array();
-
         foreach ($services as $service) {
-            if (isset($service['ERROR'])) {
-                $this->error = $service['ERROR']['DESCRIPTION'];
+            if ($this->xpath->query('Error', $service)->length) {
+                $this->error = $this->xpath->query('Error/Description', $service)->item(0)->nodeValue;
                 continue;
             }
 
-            $index = '';
-            while (isset($service['POSTAGE' . $index])) {
-                $postage = $service['POSTAGE' . $index];
-                $index = empty($index) ? 1 : $index + 1;
-                $shipping = $this->getService(
-                    'usps',
-                    'U.S.P.S. ' . $postage['MAILSERVICE'],
-                    'L'
+            foreach ($this->xpath->query('Postage', $service) as $postage) {
+                $this->buildRate(
+                    'L',
+                    $this->xpath->query('MailService', $postage)->item(0)->nodeValue,
+                    $this->xpath->query('Rate', $postage)->item(0)->nodeValue
                 );
-                $id = $shipping->get('shipping_id');
-
-                $rates[$id] = new XLite_Model_ShippingRate();
-                $rates[$id]->shipping = $shipping;
-                $rates[$id]->rate = doubleval(trim($postage['RATE']));
             }
         }
-
-        return $rates;
     }
 
     /**
      * Save national rates (old variant)
      * 
-     * @param array $services Services list
+     * @param DOMNodeList $services Services list
      *  
-     * @return array of XLite_Model_ShippingRate
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function saveNationalRatesOld(array $services)
+    protected function saveNationalRatesOld(DOMNodeList $services)
     {
-        $rates = array();
-
         foreach ($services as $service) {
-            if (isset($service['ERROR'])) {
+            if ($this->xpath->query('Error', $service)->length) {
 
-                $this->error = $service['ERROR']['DESCRIPTION'];
+                $this->error = $this->xpath->query('Error/Description', $service)->item(0)->nodeValue;
 
-            } elseif (isset($this->translations[$service['SERVICE']])) {
+            } elseif (isset($this->translations[$this->xpath->query('Service', $service)->item(0)->nodeValue])) {
 
-                $shipping = $this->getService(
-                    'usps',
-                    'U.S.P.S. ' . $this->translations[$service['SERVICE']],
-                    'L'
+                $this->buildRate(
+                    'L',
+                    $this->translations[$this->xpath->query('Service', $service)->item(0)->nodeValue],
+                    $this->xpath->query('Postage', $service)->item(0)->nodeValue
                 );
-                $id = $shipping->get('shipping_id');
-
-                $rates[$id] = new XLite_Model_ShippingRate();
-                $rates[$id]->shipping = $shipping;
-                $rates[$id]->rate = doubleval(trim($service['POSTAGE']));
-
             }
         }
+    }
 
-        return $rates;
+    /**
+     * Build shipping rate and add to internal list
+     * 
+     * @param string $destination Destination code
+     * @param string $suffix      Shipping method suffix
+     * @param string $rate        Unformatted rate
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function buildRate($destination, $suffix, $rate)
+    {
+        $shipping = $this->getService(
+            'usps',
+            'U.S.P.S. ' . $suffix,
+            $destination
+        );
+        $id = $shipping->get('shipping_id');
+
+        $this->rawRates[$id] = new XLite_Model_ShippingRate();
+        $this->rawRates[$id]->shipping = $shipping;
+        $this->rawRates[$id]->rate = doubleval(trim($rate));
     }
 
     /**
@@ -724,22 +747,22 @@ EOT;
 
         if ('Y' == $options->https) {
 
-            require_once LC_EXT_LIB_DIR . 'HTTP' . LC_DS . 'Request.php';
+            require_once LC_EXT_LIB_DIR . 'PEAR.php';
+            require_once LC_EXT_LIB_DIR . 'HTTP' . LC_DS . 'Request2.php';
 
-            $pearObj = new PEAR();
+            $response = false;
 
-            $http = new HTTP_Request('http://' . $url . $file . '?' . $queryString);
-            $http->_timeout = 5;
-            $result = $http->sendRequest();
+            try {
 
-            if ($pearObj->isError($result)) {
+                $http = new HTTP_Request2(
+                    'http://' . $url . $file . '?' . $queryString,
+                    HTTP_Request2::METHOD_GET
+                );
+                $http->setConfig('timeout', 5);
+                $response = $http->send()->getBody();;
 
-                $this->error = $result->getMessage();
-
-            } else {
-
-                $response = $http->getResponseBody();
-
+            } catch (Exception $e) {
+                $this->error = $e->getMessage();
             }
 
         } else {
