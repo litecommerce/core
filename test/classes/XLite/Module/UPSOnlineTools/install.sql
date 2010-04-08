@@ -5,7 +5,6 @@
 -- @version $Id: install.sql,v 1.5 2009/02/25 10:28:52 fundaev Exp $
 --
 
-ALTER TABLE xlite_modules CHANGE version version varchar(12) NOT NULL DEFAULT '0';
 INSERT INTO xlite_shipping(shipping_id,class,destination,name,enabled,order_by) VALUES (134,'ups','L','UPS Standard',1,20);
 INSERT INTO xlite_shipping(shipping_id,class,destination,name,enabled,order_by) VALUES (24,'ups','L','UPS 3 Day Select',1,70);
 INSERT INTO xlite_shipping(shipping_id,class,destination,name,enabled,order_by) VALUES (23,'ups','L','UPS Ground',1,80);
@@ -50,7 +49,8 @@ INSERT INTO xlite_config(name,value,category) VALUES ('currency_code','','UPSOnl
 INSERT INTO xlite_config(name,value,category) VALUES ('residential','','UPSOnlineTools');
 INSERT INTO xlite_config(name,value,category) VALUES ('delivery_conf','0','UPSOnlineTools');
 
-INSERT INTO xlite_config (name, comment, value, category, type) VALUES ('packing_algorithm', 'Packing algorithm', '0', 'UPSOnlineTools', 'text');
+INSERT INTO xlite_config (name, comment, value, category, orderby, type) VALUES ('packing_algorithm', 'Packing algorithm', '0', 'UPSOnlineTools', '0', 'text');
+
 INSERT INTO xlite_config (name, value, category, type) VALUES ('display_gdlib', '0', 'UPSOnlineTools', 'text');
 INSERT INTO xlite_config (name, value, category, type) VALUES ('visual_container_width', '200', 'UPSOnlineTools', 'text');
 INSERT INTO xlite_config (name, value, category, type) VALUES ('packing_limit', '150', 'UPSOnlineTools', 'text');
@@ -58,11 +58,16 @@ INSERT INTO xlite_config (name, value, category, type) VALUES ('packing_limit', 
 INSERT INTO xlite_config (name, value, category, type) VALUES ('cache_autoclean', '1', 'UPSOnlineTools', 'text');
 INSERT INTO xlite_config (name, value, category, type) VALUES ('level_display_method', '0', 'UPSOnlineTools', 'text');
 
+DROP TABLE IF EXISTS xlite_ups_online_tools_cache;
 CREATE TABLE xlite_ups_online_tools_cache(
-        pounds decimal(12,2) not null,
+		pounds decimal(12,2) not null,
+		origin_address varchar(64) not null,
+		origin_state varchar(12) not null,
         origin_zipcode varchar(12) not null,
         origin_country varchar(2) not null,
 		origin_city varchar(64) not null default '',
+		destination_address varchar(64) not null,
+		destination_state varchar(12) not null,
         destination_zipcode varchar(12) not null,
         destination_country varchar(2) not null,
 		destination_city varchar(64) not null default '',
@@ -75,11 +80,6 @@ CREATE TABLE xlite_ups_online_tools_cache(
         date int not null,
         primary key (pounds,origin_zipcode,origin_country,origin_city,destination_zipcode,destination_country,destination_city,pickup,sat_delivery,sat_pickup,residential,fingerprint));
 
-ALTER TABLE xlite_ups_online_tools_cache ADD COLUMN origin_address varchar(64) not null AFTER pounds;
-ALTER TABLE xlite_ups_online_tools_cache ADD COLUMN origin_state varchar(12) not null AFTER origin_address;
-ALTER TABLE xlite_ups_online_tools_cache ADD COLUMN destination_address varchar(64) not null AFTER origin_city;
-ALTER TABLE xlite_ups_online_tools_cache ADD COLUMN destination_state varchar(12) not null AFTER destination_address;
-
 ALTER TABLE xlite_products ADD COLUMN ups_width decimal(12,2) NOT NULL default 1;
 ALTER TABLE xlite_products ADD COLUMN ups_height decimal(12,2) NOT NULL default 1;
 ALTER TABLE xlite_products ADD COLUMN ups_length decimal(12,2) NOT NULL default 1;
@@ -91,7 +91,6 @@ ALTER TABLE xlite_products ADD COLUMN ups_packaging int(11) NOT NULL default 0;
 
 ALTER TABLE xlite_orders ADD COLUMN ups_containers text NOT NULL default '';
 
-INSERT INTO xlite_config (name, comment, value, category, orderby, type) VALUES ('packing_algorithm', 'Packing algorithm', '0', 'UPSOnlineTools', '0', 'text');
 
 UPDATE xlite_countries SET eu_member='Y' WHERE code='BG';
 UPDATE xlite_countries SET eu_member='Y' WHERE code='CY';

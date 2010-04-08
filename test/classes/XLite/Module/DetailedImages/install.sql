@@ -1,4 +1,4 @@
-ALTER TABLE xlite_modules CHANGE version version varchar(12) NOT NULL DEFAULT '0';
+DROP TABLE IF EXISTS xlite_images;
 CREATE TABLE xlite_images (
         image_id int(11) NOT NULL auto_increment,
         product_id int(11) NOT NULL default '0',
@@ -12,4 +12,3 @@ CREATE TABLE xlite_images (
         PRIMARY KEY  (image_id),
 		KEY pz (product_id, is_zoom)
 ) TYPE=MyISAM;
-ALTER TABLE xlite_images MODIFY image mediumblob;

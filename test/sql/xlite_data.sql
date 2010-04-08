@@ -12,7 +12,7 @@ INSERT INTO xlite_config VALUES ('tax_rates','Tax rates','a:3:{i:0;s:6:\"Tax:=0\
 INSERT INTO xlite_config VALUES ('use_billing_info','Use billing info to calculate taxes','N','Taxes',10,'checkbox');
 INSERT INTO xlite_config VALUES ('taxes','','a:1:{i:0;a:2:{s:4:\"name\";s:3:\"Tax\";s:13:\"display_label\";s:3:\"Tax\";}}','Taxes',0,'text');
 INSERT INTO xlite_config VALUES ('prices_include_tax','Prices include tax','N','Taxes',200,'checkbox');
-INSERT INTO xlite_config VALUES ('version','','3.0','Version',0,'');
+INSERT INTO xlite_config VALUES ('version','','3.0.0','Version',0,'');
 INSERT INTO xlite_config VALUES ('memberships','Membership levels','a:0:{}','Memberships',0,'serialized');
 INSERT INTO xlite_config VALUES ('membershipsCollection','Membership levels','a:0:{}','Memberships',0,'serialized');
 INSERT INTO xlite_config VALUES ('product_layout','','sku,name,category,brief_description,description,thumbnail,image,price,tax_class,weight,order_by,enabled,NULL','ImportExport',0,NULL);

@@ -1,10 +1,10 @@
-ALTER TABLE xlite_modules CHANGE version version varchar(12) NOT NULL DEFAULT '0';
+DROP TABLE IF EXISTS xlite_related_products;
 CREATE TABLE xlite_related_products (
 	product_id int(11) NOT NULL default '0',
 	related_product_id int(11) NOT NULL default '0',
 	order_by int(11) NOT NULL default '0',
 	PRIMARY KEY (related_product_id,product_id)
-);
+) TYPE=MyISAM;
 
 INSERT INTO xlite_config VALUES ('filters_preferences', '', '', 'ProductAdviser', 1000, 'serialized');
 
@@ -163,6 +163,7 @@ VALUES
 );
 UPDATE xlite_config SET comment='Enable multiple additions at once' WHERE category='ProductAdviser' AND name='rp_bulk_shopping';
 
+DROP TABLE IF EXISTS xlite_products_recently_viewed;
 CREATE TABLE xlite_products_recently_viewed (
 	sid VARCHAR(32) NOT NULL default '',
 	product_id int(11) NOT NULL default '0',
@@ -171,7 +172,7 @@ CREATE TABLE xlite_products_recently_viewed (
 	PRIMARY KEY (sid,product_id),
 	KEY (views_number),
 	KEY (last_viewed)
-);
+) TYPE=MyISAM;
 
 INSERT INTO xlite_config 
 (
@@ -192,6 +193,7 @@ VALUES
 	'text'
 );
 
+DROP TABLE IF EXISTS xlite_products_new_arrivals;
 CREATE TABLE xlite_products_new_arrivals (
 	product_id int(11) NOT NULL default '0',
 	added int(11) NOT NULL default '0',
@@ -201,7 +203,7 @@ CREATE TABLE xlite_products_new_arrivals (
 	KEY (added),
 	KEY (new),
 	KEY (updated)
-);
+) TYPE=MyISAM;
 
 INSERT INTO xlite_config 
 (
@@ -280,13 +282,14 @@ VALUES
 	'select'
 );
 
+DROP TABLE IF EXISTS xlite_products_also_buy;
 CREATE TABLE xlite_products_also_buy (
 	product_id int(11) NOT NULL default '0',
 	product_id_also_buy int(11) NOT NULL default '0',
 	counter int(11) NOT NULL default '0',
 	PRIMARY KEY (product_id, product_id_also_buy),
 	KEY (counter)
-);
+) TYPE=MyISAM;
 
 INSERT INTO xlite_config 
 (
@@ -461,6 +464,7 @@ VALUES
 	'text'
 );
 
+DROP TABLE IF EXISTS xlite_customers_notifications;
 CREATE TABLE xlite_customers_notifications (
 	notify_id int(11) NOT NULL auto_increment,
 	type enum('product','price') default NULL,
@@ -480,7 +484,7 @@ CREATE TABLE xlite_customers_notifications (
 	KEY profile_id (profile_id),
 	KEY email (email),
 	KEY product_id (product_id)
-);
+) TYPE=MyISAM;
 
 UPDATE xlite_config SET orderby='1000' WHERE category='ProductAdviser' AND name='customer_notifications_enabled';
 INSERT INTO xlite_config 

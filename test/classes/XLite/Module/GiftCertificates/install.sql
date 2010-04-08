@@ -1,4 +1,4 @@
-ALTER TABLE xlite_modules CHANGE version version varchar(12) NOT NULL DEFAULT '0';
+DROP TABLE IF EXISTS xlite_giftcerts;
 CREATE TABLE xlite_giftcerts ( 
     gcid varchar(16) NOT NULL default '', 
     profile_id int(11) NOT NULL default 0, 
@@ -19,7 +19,7 @@ CREATE TABLE xlite_giftcerts (
     amount decimal(12,2) NOT NULL default '0.00', 
     debit decimal(12,2) NOT NULL default '0.00', 
     status char(1) NOT NULL default 'P', 
-    add_date int(11) NOT NULL default '0',
+	add_date int(11) NOT NULL default '0',
     expiration_date int(11) NOT NULL default '0',
     exp_email_sent int(1) NOT NULL default 0,
     greetings varchar(100) NOT NULL default '',
@@ -28,11 +28,8 @@ CREATE TABLE xlite_giftcerts (
     ecard_id int, 
     PRIMARY KEY  (gcid), KEY add_date (add_date)
 ) TYPE=MyISAM;
-ALTER TABLE xlite_giftcerts ADD expiration_date int(11) NOT NULL default '0' AFTER add_date;
-ALTER TABLE xlite_giftcerts ADD profile_id int(11) NOT NULL default '0' AFTER gcid;
-ALTER TABLE xlite_giftcerts ADD exp_email_sent int(1) NOT NULL default 0 AFTER expiration_date;
-ALTER TABLE xlite_giftcerts ADD recipient_custom_state varchar(64) NOT NULL default '' AFTER recipient_state;
 
+DROP TABLE IF EXISTS xlite_ecards;
 CREATE TABLE xlite_ecards (
     ecard_id int not null primary key auto_increment,
     thumbnail mediumblob,
