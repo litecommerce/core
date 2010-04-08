@@ -224,7 +224,7 @@ if (navigator.appName.indexOf('Microsoft') >= 0) {
 <table WIDTH="100%" BORDER=0 CELLPADDING=3 CELLSPACING=0>
 <tr>
 <td bgcolor=#E0E0E0 HEIGHT=15 align=left>
-&nbsp;<font color="#8A8A8A">Powered by LiteCommerce:</font> <a href="http://www.litecommerce.com"><font color="#8A8A8A"><u>ecommerce software</u></font></a>
+<widget class="XLite_View_PoweredBy" />
 </td>
 <td bgcolor=#E0E0E0 HEIGHT=15 align=right>
 <font color="#8A8A8A">Copyright &copy; {config.Company.start_year} {config.Company.company_name}</font>

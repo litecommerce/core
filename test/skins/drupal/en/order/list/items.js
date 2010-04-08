@@ -145,17 +145,5 @@ OrderItemsShortListController.prototype.switchList = function()
 // Go to order page
 OrderItemsShortListController.prototype.goToOrder = function()
 {
-  var href = $('a.number', $(this.container).parenst('li').eq(0)).attr('href');
-
-  if (!href) {
-    href = URLHandler.buildURL(
-      {
-        target:   'order',
-        action:   '',
-        order_id: this.orderId,
-      }
-    );
-  }
-
-  self.location = href;
+  self.location = $('a.number', $(this.container).parenst('li').eq(0)).attr('href');
 }

@@ -93,7 +93,7 @@ if (navigator.appName.indexOf('Microsoft') >= 0) {
 <tr>
 <td align="center">
 <!-- [bottom] -->
-<widget template="powered_by_litecommerce.tpl">
+<widget class="XLite_View_PoweredBy" />
 <!-- [/bottom] -->
 
 </td>

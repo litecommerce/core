@@ -85,3 +85,5 @@
 <!-- [search] {{{ -->
 <widget class="XLite_View_SearchResult" />
 <!-- [/search] }}} -->
+
+<widget class="XLite_View_PoweredBy" />

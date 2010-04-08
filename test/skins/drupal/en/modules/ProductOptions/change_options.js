@@ -10,15 +10,7 @@
  * @link    http://www.litecommerce.com/
  * @since   3.0.0
  */
-function changeOption(type, storageId, itemId)
+function changeOption()
 {
-  return openBlockUIPopup(
-    'change_options',
-    '',
-    {
-      source: type,
-      storage_id: storageId,
-      item_id: itemId
-    }
-  );
+  return !openBlockUIPopupURL(this.href);
 }

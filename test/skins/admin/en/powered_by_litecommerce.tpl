@@ -1,7 +1,15 @@
-<table width="100%" border="0" cellpadding="3" cellspacing="0">
-<tr bgcolor=#E0E0E0 height=15>
-	<td align=left><font color="#8A8A8A">Powered by LiteCommerce</font>
-</td>
-	<td align=right><font color="#8A8A8A">Copyright &copy; {config.Company.start_year} {config.Company.company_name}</font></td>
-</tr>
-</table>
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * Powered by box
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
+<div class="powered-by">
+Powered by LiteCommerce <a href="http://litecommerce.com" class="powered-by">{getPrNotice()}</a>
+</div>

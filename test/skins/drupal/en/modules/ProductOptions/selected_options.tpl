@@ -14,4 +14,4 @@
   {option.class:h}: {option.option:h}<span IF="optionArrayPointer<optionArraySize">, </span>
 </span>
 
-<div IF="getParam(#source#)" class="item-change-options"><a href="javascript:void(0);" onclick="javascript: return changeOption('{getParam(#source#)}', '{getParam(#storage_id#)}', '{getParam(#item_id#)}');">Change options</a></div>
+<div IF="getParam(#source#)" class="item-change-options"><a href="{buildUrl(#change_options#,##,_ARRAY_(#source#^getParam(#source#),#storage_id#^getParam(#storage_id#),#item_id#^getParam(#item_id#)))}" onclick="javascript: return changeOption.call(this);">Change options</a></div>

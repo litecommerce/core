@@ -41,26 +41,17 @@ function blockUIPopupWait()
   blockUIPopup('<div class="block-wait">Please wait ...</div>');
 }
 
-// Open target / action / params based popup
-function openBlockUIPopup(target, action, params)
+// Open URL-based popup
+function openBlockUIPopupURL(url)
 {
   if (!hasAJAXSupport()) {
     return false;
   }
 
-  if (!params) {
-    params = {};
-  }
-
-  params.target = target;
-  params.action = action ? action : '';
-
-  params.isPopup = true;
-
   return $.ajax(
     {
       type:     'get',
-      url:      URLHandler.buildURL(params), 
+      url:      url,
       success:  function(data, s) {
         data = blockUIPopupPreprocess(data, s);
         blockUIPopup(data);

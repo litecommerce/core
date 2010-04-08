@@ -1,6 +1,15 @@
-<table width="100%" border="0" cellpadding=10 cellspacing="0">
-<tr>
-	<td><font class="Bottom">Powered by LiteCommerce:</font> {if:target=#main#}<a href="http://www.litecommerce.com"><font class="Bottom"><u>{LiteCommerceLinkDescription}</u></font></a>{else:}<font class="Bottom"><u>{LiteCommerceLinkDescription}</u></font>{end:}</td>
-	<td align=right><font class="Bottom">Copyright &copy; {config.Company.start_year} {config.Company.company_name}</font></td>
-</tr>
-</table>
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * Powered by box
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
+<div class="powered-by">
+Powered by LiteCommerce {if:isLink()}<a href="http://litecommerce.com" class="powered-by">{end:}{getPrNotice()}{if:isLink()}</a>{end:}
+</div>

@@ -175,7 +175,7 @@ Help |  <A href="cart.php?target=help&amp;mode=contactus"><FONT class="BottomMen
 </TR>
 </TABLE>
 
-<widget template="powered_by_litecommerce.tpl">
+<widget class="XLite_View_PoweredBy" />
 
 </TD>
 </TR>

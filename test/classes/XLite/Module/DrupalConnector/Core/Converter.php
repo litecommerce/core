@@ -80,11 +80,13 @@ class XLite_Module_DrupalConnector_Core_Converter extends XLite_Core_Converter i
         } elseif (XLite_Module_DrupalConnector_Handler::getInstance()->isPortal($target)) {
 
             // Drupal URL (portal)
-            $result = '?q=' . XLite_Module_DrupalConnector_Handler::getInstance()->getPortalPrefix($target, $action, $params);
+            $result = XLite_Module_DrupalConnector_Handler::getInstance()->getPortalPrefix($target, $action, $params);
 
             if ($params) {
                 $result .= '/' . XLite_Core_Converter::buildQuery($params, '-', '/');
             }
+
+            $result = url($result);
 
         } else {
 
@@ -116,12 +118,12 @@ class XLite_Module_DrupalConnector_Core_Converter extends XLite_Core_Converter i
             unset($params['printable']);
         }
 
-        $url = '?q=' . implode('/', $parts);
+        $url = implode('/', $parts);
 
         if ($params) {
             $url .= '/' . XLite_Core_Converter::buildQuery($params, '-', '/');
         }
 
-        return $url;
+        return url($url);
     }
 }
