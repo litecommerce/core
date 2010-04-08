@@ -27,8 +27,6 @@
 
 <p>
 
-<widget module="FlyoutCategories" template="modules/FlyoutCategories/categories_auto.tpl" />
-
 <form name="add_modify_form" action="admin.php" method="POST" enctype="multipart/form-data">
 
   <input type="hidden" name="target" value="category" />
@@ -83,8 +81,6 @@
 	    <td class="FormButton" valign="top">Icon</td>
       <td>&nbsp;</td>
     </tr>
-
-    <widget module="FlyoutCategories" template="modules/FlyoutCategories/add_modify_body.tpl" />
 
     <tr>
       <td class="FormButton">Category page title </td>

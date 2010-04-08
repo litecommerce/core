@@ -91,7 +91,6 @@
 </TD>
 </TR>
 </TABLE>
-<widget module="FlyoutCategories" template="modules/FlyoutCategories/main_flat.tpl">
 <!-- [/top] -->
 
 <!-- [main_view] -->
@@ -120,12 +119,7 @@
 <widget template="search_products.tpl" />
 <!-- [/search] -->
 
-<div IF="xlite.FlyoutCategoriesEnabled">
-<widget module="FlyoutCategories" template="modules/FlyoutCategories/main_side.tpl">
-</div>
-<div IF="!xlite.FlyoutCategoriesEnabled">
 <widget class="XLite_View_TopCategories" />
-</div>
 <widget module="Bestsellers" class="XLite_Module_Bestsellers_View_Bestsellers" widgetType="sidebar" />
 <widget module="GiftCertificates" template="common/sidebar_box.tpl" head="Gift certificates" dir="modules/GiftCertificates/menu">
 <widget module="Affiliate" template="common/sidebar_box.tpl" head="Affiliate" dir="modules/Affiliate/menu">
@@ -196,15 +190,4 @@ Help |  <A href="cart.php?target=help&amp;mode=contactus"><FONT class="BottomMen
 </TD>
 </TR>
 </TABLE>
-
-<!-- [end] -->
-<div IF="xlite.FlyoutCategoriesEnabled&xlite.config.FlyoutCategories.scheme">
-<widget module="FlyoutCategories" template="modules/FlyoutCategories/main_footer.tpl">
-</div>
-<!-- [/end] -->
-
-
-
-
-
 

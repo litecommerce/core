@@ -129,7 +129,6 @@
 </script>
 
 <p>Use this section to review the list of existing membership levels and add new ones.</p>
-<widget module="FlyoutCategories" template="modules/FlyoutCategories/memberships_auto.tpl">
 
 <span IF="memberships">
 

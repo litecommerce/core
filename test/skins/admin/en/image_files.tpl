@@ -19,7 +19,6 @@ Use this section to manage your store's image files.
 </TR>
 </table>
 <br />
-<widget module="FlyoutCategories" template="modules/FlyoutCategories/categories_auto.tpl">
 <table cellpadding="0" cellspacing="0" border="0">
 	<tr>
 		<td class="CenterBorder">

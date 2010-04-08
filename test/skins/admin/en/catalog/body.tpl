@@ -8,4 +8,3 @@
 <a href="admin.php?target=export_catalog">Export catalog</a><br>
 <a href="admin.php?target=update_inventory">Inventory management</a><br>
 <a IF="xlite.mm.activeModules.ProductOptions" href="admin.php?target=global_product_options">Global product options<br></a>
-<a IF="xlite.mm.activeModules.HTMLCatalog" href="admin.php?target=catalog">HTML catalog<br></a>

@@ -70,6 +70,4 @@
 <widget module="EcommerceReports" template="modules/EcommerceReports/location.tpl">
 <widget module="Newsletters" template="modules/Newsletters/location.tpl">
 <widget module="UPSOnlineTools" template="modules/UPSOnlineTools/location.tpl">
-<widget module="FlyoutCategories" template="modules/FlyoutCategories/location.tpl">
 <widget module="ProductAdviser" template="modules/ProductAdviser/location.tpl">
-<widget module="LayoutOrganizer" template="modules/LayoutOrganizer/location.tpl">

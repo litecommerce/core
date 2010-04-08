@@ -90,9 +90,6 @@
 <widget target="modules" template="common/dialog.tpl" head="Modules" body="modules.tpl">
 <widget target="module" template="common/dialog.tpl" head="Module {page} settings" body="general_settings.tpl">
 
-<widget module="HTMLCatalog" target="catalog" template="common/dialog.tpl" head="HTML catalog" body="modules/HTMLCatalog/catalog.tpl">
-<widget module="AutoUpdateCatalog" mode="confirm" target="autoupdate_catalog" template="common/dialog.tpl" head="Confirm HTML catalog update" body="modules/AutoUpdateCatalog/body.tpl">
-
 <widget name="categoriesWidget" target="categories" template="common/dialog.tpl" head="Manage categories" body="categories/body.tpl" visible="{!getRequestParamValue(#mode#)=#delete_all#}">
 <widget module="FeaturedProducts" template="common/dialog.tpl" head="Featured products" body="modules/FeaturedProducts/featuredProducts.tpl" IF="{namedWidgets.categoriesWidget.visible}">
 <span IF="!xlite.LayoutOrganizerEnabled">
@@ -205,7 +202,6 @@
 <widget module="WishList" target="wishlist" template="common/dialog.tpl" body="modules/WishList/wishlist.tpl" head="Wish List">
 <widget module="LayoutOrganizer" template="modules/LayoutOrganizer/main.tpl">
 <widget module="WholesaleTrading" template="modules/WholesaleTrading/main.tpl"> 
-<widget module="FlyoutCategories" template="modules/FlyoutCategories/main.tpl">
 <!-- [/center] -->
     </td>
     <td width="10">&nbsp;</td>
