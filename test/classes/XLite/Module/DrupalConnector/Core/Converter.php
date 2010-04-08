@@ -65,7 +65,7 @@ class XLite_Module_DrupalConnector_Core_Converter extends XLite_Core_Converter i
      * @access public
      * @since  3.0
      */
-    public static function buildURL($target = '', $action = '', array $params = array())
+    public static function buildURL($target = '', $action = '', array $params = array(), $interface = null)
     {
         if ($target == '') {
             $target = XLite::TARGET_DEFAULT;
