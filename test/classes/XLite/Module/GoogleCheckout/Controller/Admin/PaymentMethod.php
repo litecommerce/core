@@ -41,7 +41,7 @@ func_define('CALLBACK_CHECK_MESSAGE', 'CHECK_CALLBACK_STATUS');
 func_define('CALLBACK_PASSED_MESSAGE', 'CALLBACK TEST PASSED');
 
 /**
-* Admin_Dialog_module_SnsIntegration description.
+* XLite_Module_GoogleCheckout_Controller_Admin_PaymentMethod
 *
 * @package GoogleCheckout
 * @access public

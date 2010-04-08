@@ -134,7 +134,6 @@
     <TD width="15"><IMG src="images/spacer.gif" width="15" height="1" alt=""></TD>
     <TD width="170" valign="top"><BR>
 <!-- [right] -->
-<widget module="SnsIntegration" template="modules/SnsIntegration/tracker.tpl">
 <widget class="XLite_View_Minicart" />
 <widget template="common/sidebar_box.tpl" dir="login" name="loginWidget" head="Authentication" IF="{!auth.isLogged()}" />
 <widget template="common/sidebar_box.tpl" dir="profile" name="profileWidget" head="Your profile" IF="{auth.isLogged()}" />

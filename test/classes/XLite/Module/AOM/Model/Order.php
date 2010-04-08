@@ -194,11 +194,6 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
                 $this->changeInventory(true);
             }
         }
-		if ($this->xlite->get("SnsIntegrationEnabled")) {
-            if (method_exists($this,"snsintegration_processed")) {
-				$this->SnsIntegration_processed();
-			}
-		}
         if ($this->xlite->get("AffiliateEnabled")) {
             if (method_exists($this,"affiliate_processed")) {
             	$this->Affiliate_processed();
