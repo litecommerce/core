@@ -165,10 +165,7 @@ abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstr
     {
 		$result = parent::isSecure();
 
-		if ($this->getComplex('config.Security.full_customer_security')) {
-			$result = $this->xlite->get('HTMLCatalogWorking');
-
-		} elseif (!is_null($this->get('feed')) && $this->get('feed') == 'login') {
+        if (!is_null($this->get('feed')) && $this->get('feed') == 'login') {
 			$result = $this->config->Security->customer_security;
 		}
 

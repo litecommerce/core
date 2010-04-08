@@ -54,9 +54,6 @@ class XLite_Module_DemoMode_Controller_Abstract extends XLite_Controller_Abstrac
             $this->redirect(XLite::ADMIN_SELF . "?target=demo_mode");
             die();
         }
-        if (!$this->xlite->is("adminZone")) {
-            $this->xlite->set("FlyoutCategoriesEnabled", false);
-        }
 
         parent::init();
     }

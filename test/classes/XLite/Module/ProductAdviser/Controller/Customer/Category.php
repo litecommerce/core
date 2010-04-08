@@ -48,18 +48,6 @@ class XLite_Module_ProductAdviser_Controller_Customer_Category extends XLite_Con
 {	
 	public $priceNotified = array();
 
-	// FIXME - correct and uncomment this after the HTMLCatalog module revision
-    /*function init()
-    {
-		if ($this->xlite->get("HTMLCatalogWorking") == true) {
-			$statistic = new XLite_Module_ProductAdviser_Model_ProductRecentlyViewed();
-			$statistic->collectGarbage();
-			$statistic->cleanCurrentGarbage();
-		}
-
-        parent::init();
-    }*/
-
 	function getPriceNotificationSaved($product_id = 0)
 	{
 		if (!$this->config->getComplex('ProductAdviser.customer_notifications_enabled')) {

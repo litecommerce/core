@@ -46,7 +46,6 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
 		if (
 			$product_id > 0
 			&& $this->config->ProductAdviser->number_recently_viewed > 0
-			&& $this->xlite->get("HTMLCatalogWorking") != true
 		) {
     		$referer = (isset($_SERVER["HTTP_REFERER"])) ? $_SERVER["HTTP_REFERER"] : "NO_HTTP_REFERER";
             $referer = md5($referer);
@@ -79,12 +78,6 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
             	}
     		}
     	}
-
-		if ($product_id > 0 && $this->xlite->get("HTMLCatalogWorking") == true) {
-			$statistic = new XLite_Module_ProductAdviser_Model_ProductRecentlyViewed();
-			$statistic->collectGarbage();
-			$statistic->cleanCurrentGarbage();
-		}
 
         parent::init();
 

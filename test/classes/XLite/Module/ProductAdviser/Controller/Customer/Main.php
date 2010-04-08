@@ -48,17 +48,6 @@ class XLite_Module_ProductAdviser_Controller_Customer_Main extends XLite_Control
 {	
 	public $priceNotified = array();
 
-    function init(array $params = array())
-    {
-		parent::init($params);
-
-		if ($this->xlite->get("HTMLCatalogWorking") == true) {
-			$statistic = new XLite_Module_ProductAdviser_Model_ProductRecentlyViewed();
-			$statistic->collectGarbage();
-			$statistic->cleanCurrentGarbage();
-		}
-    }
-
 	function getPriceNotificationSaved($product_id = 0)
 	{
 		if (!$this->config->getComplex('ProductAdviser.customer_notifications_enabled')) {

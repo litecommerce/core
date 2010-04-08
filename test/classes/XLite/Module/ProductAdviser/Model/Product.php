@@ -373,7 +373,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
      */
     public function _checkSafetyMode()
     {
-    	return $this->xlite->get("HTMLCatalogWorking");
+    	return false;
     }
 
     /**
