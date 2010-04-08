@@ -564,14 +564,23 @@ class XLite_Model_HTTPS extends XLite_Base
      */
     protected function initLibCURL()
     {
-        $c = curl_init($this->url);
+        $post = 'POST' == $this->method;
+
+        $url = $this->url;
+        if (!$post) {
+            $data = $this->getPost();
+            if ($data) {
+                $url .= (false === strpos($url, '?') ? '?' : '&') . $data;
+            }
+        }
+
+        $c = curl_init($url);
 
         $url = new Net_URL($this->url);
         if ($url->port != 443 && $url->port != 80) {
             curl_setopt($c, CURLOPT_PORT, $url->port);
         }
 
-        $post = 'POST' == $this->method;
         curl_setopt($c, CURLOPT_FOLLOWLOCATION, true);
 
         if ($this->use_ssl3) {

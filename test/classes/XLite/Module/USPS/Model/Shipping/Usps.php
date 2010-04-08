@@ -94,8 +94,8 @@ class XLite_Module_USPS_Model_Shipping_Usps extends XLite_Model_Shipping_Online
      */
     protected $optionsFields = array(
         'userid',
-        'password',
         'server',
+        'https',
         'container_express',
         'container_priority',
         'mailtype',
@@ -312,17 +312,15 @@ class XLite_Module_USPS_Model_Shipping_Usps extends XLite_Model_Shipping_Online
 
         // Express container type
         $containerExpress = strtoupper($options->container_express);
-        if (!in_array($containerExpress, $this->expressContainers)) {
-            $containerExpress = '';
-        }
-        $containerExpress = '<Container>' . $containerExpress . '</Container>';
+        $containerExpress = in_array($containerExpress, $this->expressContainers)
+            ? '<Container>' . $containerExpress . '</Container>'
+            : '';
 
         // Priority container type
         $containerPriority = strtoupper($options->container_priority);
-        if (!in_array($containerPriority, $this->priorityContainers)) {
-            $containerPriority = '';
-        }
-        $containerPriorityTag = '<Container>' . $containerPriority . '</Container>';
+        $containerPriorityTag = in_array($containerPriority, $this->priorityContainers)
+            ? '<Container>' . $containerPriority . '</Container>'
+            : '';
 
         // Make Dimensions
         $dimXml    = $dimGirthXml = '';
@@ -351,8 +349,8 @@ EOT;
             : '';
 
         $request = <<<EOT
-<RateV3Request USERID='$options->userid' PASSWORD='$options->password'>
-  <Package ID='0'>
+<RateV3Request USERID="$options->userid">
+  <Package ID="0">
     <Service>EXPRESS</Service>
     <ZipOrigination>$zipOrigination</ZipOrigination>
     <ZipDestination>$zipDestination</ZipDestination>
@@ -361,17 +359,20 @@ EOT;
     $containerExpress
     <Size>$options->package_size</Size>
   </Package>
-  <Package ID='1'>
+  <Package ID="1">
     <Service>FIRST CLASS</Service>
     <FirstClassMailType>$firstClassMailType</FirstClassMailType>
     <ZipOrigination>$zipOrigination</ZipOrigination>
     <ZipDestination>$zipDestination</ZipDestination>
     <Pounds>0</Pounds>
     <Ounces>$ounces</Ounces>
+    <Container>None</Container>
     <Size>$options->package_size</Size>
+    $dimXml
+    $dimGirthXml
     $machinableFirstClass
   </Package>
-  <Package ID='2'>
+  <Package ID="2">
     <Service>PRIORITY</Service>
     <ZipOrigination>$zipOrigination</ZipOrigination>
     <ZipDestination>$zipDestination</ZipDestination>
@@ -382,37 +383,41 @@ EOT;
     $dimXml
     $dimGirthXml
   </Package>
-  <Package ID='3'>
+  <Package ID="3">
     <Service>PARCEL</Service>
     <ZipOrigination>$zipOrigination</ZipOrigination>
     <ZipDestination>$zipDestination</ZipDestination>
     <Pounds>0</Pounds>
     <Ounces>$ounces</Ounces>
+    <Container>None</Container>
     <Size>$options->package_size</Size>
     <Machinable>$options->machinable</Machinable>
   </Package>
-  <Package ID='4'>
+  <Package ID="4">
     <Service>BPM</Service>
     <ZipOrigination>$zipOrigination</ZipOrigination>
     <ZipDestination>$zipDestination</ZipDestination>
     <Pounds>0</Pounds>
     <Ounces>$ounces</Ounces>
+    <Container>None</Container>
     <Size>$options->package_size</Size>
   </Package>
-  <Package ID='5'>
+  <Package ID="5">
     <Service>LIBRARY</Service>
     <ZipOrigination>$zipOrigination</ZipOrigination>
     <ZipDestination>$zipDestination</ZipDestination>
     <Pounds>0</Pounds>
     <Ounces>$ounces</Ounces>
+    <Container>None</Container>
     <Size>$options->package_size</Size>
   </Package>
-  <Package ID='6'>
+  <Package ID="6">
     <Service>MEDIA</Service>
     <ZipOrigination>$zipOrigination</ZipOrigination>
     <ZipDestination>$zipDestination</ZipDestination>
     <Pounds>0</Pounds>
     <Ounces>$ounces</Ounces>
+    <Container>None</Container>
     <Size>$options->package_size</Size>
   </Package>
 </RateV3Request>
@@ -501,8 +506,8 @@ EOT;
             : '';
 
         $request = <<<EOT
-<IntlRateRequest USERID='$options->userid'>
-    <Package ID='0'>
+<IntlRateRequest USERID="$options->userid">
+    <Package ID="0">
         <Pounds>0</Pounds>
         <Ounces>$ounces</Ounces>
         <MailType>$options->mailtype</MailType>
@@ -712,13 +717,18 @@ EOT;
         $response = '';
 
         $url = trim($options->server);
-        if (!preg_match('/^https/i', $url)) {
+
+        $file = 'testing.shippingapis.com' == $url
+            ? '/ShippingAPITest.dll'
+            : '/ShippingAPI.dll';
+
+        if ('Y' == $options->https) {
 
             require_once LC_EXT_LIB_DIR . 'HTTP' . LC_DS . 'Request.php';
 
             $pearObj = new PEAR();
 
-            $http = new HTTP_Request($url . '?' . $queryString);
+            $http = new HTTP_Request('http://' . $url . $file . '?' . $queryString);
             $http->_timeout = 5;
             $result = $http->sendRequest();
 
@@ -736,10 +746,10 @@ EOT;
 
             $https = new XLite_Model_HTTPS();
             $https->data = $queryString;
-            $https->method = 'POST';
+            $https->method = 'GET';
             $https->conttype = 'application/xml';
             $https->urlencoded = true;
-            $https->url = $url;
+            $https->url = 'https://' . $url . ':443' . $file;
 
             if ($https->request() == XLite_Model_HTTPS::HTTPS_ERROR) {
                 $this->error = $https->error;

@@ -57,9 +57,10 @@ class XLite_Module_DrupalConnector_Core_Converter extends XLite_Core_Converter i
     /**
      * Compose URL from target, action and additional params
      *
-     * @param string $target page identifier
-     * @param string $action action to perform
-     * @param array  $params additional params
+     * @param string $target    page identifier
+     * @param string $action    action to perform
+     * @param array  $params    additional params
+     * @param string $interface Interface script
      *
      * @return string
      * @access public
@@ -74,7 +75,7 @@ class XLite_Module_DrupalConnector_Core_Converter extends XLite_Core_Converter i
         if (!XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
 
             // Standalone URL
-            $result = parent::buildURL($target, $action, $params);
+            $result = parent::buildURL($target, $action, $params, $interface);
 
         } elseif (XLite_Module_DrupalConnector_Handler::getInstance()->isPortal($target)) {
 
@@ -115,6 +116,12 @@ class XLite_Module_DrupalConnector_Core_Converter extends XLite_Core_Converter i
             unset($params['printable']);
         }
 
-        return '?q=' . implode('/', $parts) . '/' . XLite_Core_Converter::buildQuery($params, '-', '/');
+        $url = '?q=' . implode('/', $parts);
+
+        if ($params) {
+            $url .= '/' . XLite_Core_Converter::buildQuery($params, '-', '/');
+        }
+
+        return $url;
     }
 }
