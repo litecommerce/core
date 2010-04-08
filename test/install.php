@@ -41,6 +41,7 @@ if (!(basename(__FILE__) === 'install.php')) { // is not install.php
 }
 
 define ('XLITE_INSTALL_MODE', 1);
+define ('LC_VERSION', '3.0.0');
 
 // fixes compatibility issues
 include_once "includes/prepend.php";
@@ -105,7 +106,6 @@ if (isset($_ENV['TMPDIR'])) {
 }
 
 $reportFName = $tmpdir . DIRECTORY_SEPARATOR . REPORT_FILENAME;
-$is_trial = false;
 
  // Predefined common variables {{{
 $templates_repository = "skins_original";
@@ -113,7 +113,6 @@ $schemas_repository = "schemas";
 $templates_directory = "skins";
 $default_skin = "default";
 $default_locale = "en";
-$modules_path = "classes/modules";
 $templates_backup = $schemas_repository.'/templates/backup';
 
 $min_ver = "4.1.0";
@@ -133,7 +132,7 @@ $directories_to_create[] = "var/html";
 $directories_to_create[] = "var/run";
 $directories_to_create[] = "var/tmp";
 
-$others_directories = array("var", "images", "files", "classes/modules", "catalog", $templates_directory);
+$others_directories = array("var", "images", "files", $templates_directory);
 
 $suphp_mode = get_php_execution_mode();
 
@@ -196,7 +195,7 @@ if (isset($HTTP_GET_VARS["target"]) && $HTTP_GET_VARS["target"] == "install") {
 <HTML>
 <HEAD>
 <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<TITLE>LiteCommerce Installation Wizard</TITLE>
+<TITLE>LiteCommerce v.<?php echo LC_VERSION; ?> Installation Wizard</TITLE>
 
 <STYLE type="text/css">
 
@@ -341,7 +340,7 @@ function ShowNotes(status)
    <TD class="Head"  WIDTH="100%" background="skins_original/admin/en/images/head_demo_02.gif">
 <TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 align=right>
 <TR><TD align=right>
-   <FONT class=HeadTitle><B>LiteCommerce Installation Wizard</B></FONT>&nbsp;&nbsp;<BR>
+<FONT class=HeadTitle><B>LiteCommerce v.<?php echo LC_VERSION; ?> Installation Wizard</B></FONT>&nbsp;&nbsp;<BR>
    <IMG SRC="skins_original/admin/en/images/spacer.gif" WIDTH=339 HEIGHT=1 ALT="" border=0>&nbsp;&nbsp;
 </TD>
 </TR>
@@ -372,11 +371,8 @@ function ShowNotes(status)
 
 ?>
 
-<?php if ($is_trial) {
-?><FORM method="POST" name="report_form" action="https://secure.qtmsoft.com/service.php?target=install_feedback_report"><?php
-} else {
-?><FORM method="POST" name="report_form" action="https://secure.qtmsoft.com/customer.php?target=customer_info&action=install_feedback_report"><?php
-} ?>
+<FORM method="POST" name="report_form" action="https://secure.qtmsoft.com/customer.php?target=customer_info&action=install_feedback_report">
+
 <input type="hidden" name="product_type" value="LC">
 
 <table border="0" cellpadding="1" cellspacing="2" align=center width=90%>
@@ -391,25 +387,6 @@ function ShowNotes(status)
 	<tr>
 		<td colspan=2>&nbsp;</td>
 	</tr>
-<?php
-if ($is_trial) {
-?>
-	<tr>
-		<td nowrap width=10%><b>Your contact e-mail:&nbsp;</b></td>
-		<td width=100%><input type="text" name="user_email" size=33 value=""></td>
-	</tr>
-<?php
-} else {
-/*
-?>
-	<tr>
-		<td nowrap width=20%><b>Support Helpdesk account e-mail:&nbsp;</b></td>
-		<td><input type="text" name="user_email" size=33 value=""></td>
-	</tr>
-<?php
-//*/
-}
-?>
 	<tr>
 		<td colspan=2>&nbsp;</td>
 	</tr>
@@ -441,17 +418,7 @@ if ($is_trial) {
 		<td colspan=2>
         <table border="0" cellpadding="1" cellspacing="2" align=center width=100%>
         	<tr>
-<?php
-if ($is_trial) {
-?>
-        		<td align=left><input type="submit" class="DialogMainButton" value="Send report"></td>
-<?php
-} else {
-?>
         		<td align=left><input type="submit" class="DialogMainButton" value="Send report (*)"></td>
-<?php
-}
-?>
         		<td align=right><input type="button" value="Close window" onClick="javascript: window.close();"></td>
         		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
         	</tr>
@@ -459,9 +426,6 @@ if ($is_trial) {
 		</td>
 	</tr>
 <?php if (!$is_original) { ?><SCRIPT language="javascript">showWaitingAlert(false, "report_");</SCRIPT><?php } ?>
-<?php
-if (!$is_trial) {
-?>
 	<tr>
 		<td colspan=2>
 		<b>(*)</b> The report will be sent to our support HelpDesk. A regular support ticket will be created on your behalf. <br>
@@ -469,9 +433,6 @@ if (!$is_trial) {
 		<br><br>
 		</td>
 	</tr>
-<?php
-}
-?>
 </table>
 </FORM>
 </center>
@@ -546,18 +507,6 @@ $modules = array (
 			"js_back"       => 0,
 			"js_next"       => 0,
             "remove_params" => array()
-		),
-	array( // 4
-			"name"          => "cfg_install_dirs",
-			"comment"       => "Configuring the look &amp; feel of your store",
-            "auth_required" => true,
-			"js_back"       => 0,
-			"js_next"       => 0,
-            "remove_params" => array(
-                'layout',
-                'http_host',
-                'web_dir'
-            )
 		),
 	array( // 5
 			"name"          => "install_dirs",
@@ -656,7 +605,7 @@ if (isset($params["force_current"]) && (isset($_POST['go_back']) && $_POST['go_b
 <HTML>
 <HEAD>
 <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<TITLE>LiteCommerce Installation Wizard</TITLE>
+<TITLE>LiteCommerce v.<?php echo LC_VERSION; ?> Installation Wizard</TITLE>
 
 <STYLE type="text/css">
 
@@ -685,7 +634,7 @@ A:active  {
 if ($current == 0) {
 ?>
 .background {
-	BACKGROUND-COLOR: #FFFFFF; BACKGROUND-IMAGE: URL('<?php echo (isHTTPS() ? 'https://' : 'http://'); ?>www.litecommerce.com/img/logo_lite<?php echo (($is_trial) ? "_trial" : ""); ?>.gif');
+	BACKGROUND-COLOR: #FFFFFF; BACKGROUND-IMAGE: URL('<?php echo (isHTTPS() ? 'https://' : 'http://'); ?>www.litecommerce.com/img/logo_lite.gif');
 }
 <?php
 }else {
@@ -821,7 +770,7 @@ function setNextButtonDisabled(flag)
    <TD class="Head"  WIDTH="100%" background="skins_original/admin/en/images/head_demo_02.gif">
 <TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 align=right>
 <TR><TD align=right>
-   <FONT class=HeadTitle><B>LiteCommerce Installation Wizard</B></FONT>&nbsp;&nbsp;<BR>
+<FONT class=HeadTitle><B>LiteCommerce v.<?php echo LC_VERSION; ?> Installation Wizard</B></FONT>&nbsp;&nbsp;<BR>
    <IMG SRC="skins_original/admin/en/images/spacer.gif" WIDTH=339 HEIGHT=1 ALT="" border=0><br>
    <FONT class=HeadSteps><B><FONT color="#000000">Step <?php echo $current ?>:</FONT> <?php echo $modules[$current]["comment"] ?></B></FONT>&nbsp;&nbsp;
 </TD>
@@ -936,7 +885,7 @@ if (!empty($params) && (!isset($_POST['go_back']) || $_POST['go_back'] !== '1'))
 
 <HR size=1 noshade>
 <DIV ALIGN=right style="margin-bottom: 8px;">
-  <FONT size=1>Copyright &copy; 2003 - 2009 <A href="http://www.creativedevelopment.biz">Creative Development</A>&nbsp;&nbsp;</FONT>
+  <FONT size=1>Copyright &copy; 2003 - 2010 <A href="http://www.creativedevelopment.biz">Creative Development</A>&nbsp;&nbsp;</FONT>
 </DIV>
 
 </TD>
@@ -1281,11 +1230,9 @@ function inst_http_request($url_request) // {{{
 
 function make_check_report($check_list) // {{{
 {
-	global $is_trial;
-
 	$phpinfo_disabled = false;
 
-	$report = "LiteCommerce".(($is_trial) ? " trial " : " ")."version 2.2.41\n";
+	$report = "LiteCommerce version " . LC_VERSION . "\n";
 	$report .= "Report time stamp: ". date("d, M Y  H:i"). "\n\n";
 
 	foreach ($check_list as $key=>$item) {
@@ -1928,31 +1875,6 @@ function get_info() { // {{{
     return $info;
 } // }}}
 
-function update_modules_skins() // {{{
-{
-	global $modules_path, $config_file;
-	$data = @parse_ini_file($config_file);
-	$mysql_link = @mysql_connect($data['hostspec'],$data['username'],$data['password']);
-	if (!$mysql_link) {
-		return false;	
-	} elseif (!mysql_select_db($data['database'])) 
-	{
-		return false;
-	} else {
-		@mysql_query("SET sql_mode='MYSQL40'");
-		$my_query = mysql_query("SELECT name FROM xlite_modules");
-		while($row = @mysql_fetch_row($my_query))
-		{
-			if (@file_exists("./".$modules_path."/".$row[0]."/install.php")) {
-				echo "Changing some skins to work with " .$row[0]. " module correctly...<br>";
-				@include_once("./".$modules_path."/".$row[0]."/install.php");	
-			}
-		}
-	}	
-		
-		
-} // }}}
-
 //recursive chmod
 function chmod_R($path, $filemode)
 {
@@ -1980,84 +1902,10 @@ function chmod_R($path, $filemode)
         return false;
 }
 
-function set_layout(&$params)// {{{
-{
-	global $config_file;
-
-	clearstatcache();
-    if (!@is_readable($config_file) || !@is_writable($config_file)) return false;
-
-	$data = @parse_ini_file($config_file);
-
-	if (!isset($data['hostspec'])&&!isset($data['username'])&&!isset($data['password'])&&!isset($data['database'])) {
-		fatal_error("Can't find database settings in your ".$config_file." file");
-		return false;	
-	} else
-	{
-		$my_link = @mysql_connect($data['hostspec'],$data['username'],$data['password']);
-		if (!$my_link)	{
-			fatal_error("Can't connect to your MySQL server");
-			return false;	
-		} else if(!@mysql_select_db($data['database']))
-		{
-			fatal_error("Can't connect to your database");
-			return false;	
-		} else
-		{
-			@mysql_query("SET sql_mode='MYSQL40'");
-			$my_result = mysql_query("SELECT * FROM xlite_config WHERE name ='skin'");
-			$params['layout'] = stripslashes($params['layout']);
-			if (!mysql_num_rows($my_result))
-			{	
-				@mysql_query("INSERT INTO xlite_config (name, comment, value, category, orderby, type) VALUES ('skin','','".$params[layout]."','Skin','0','')");	
-			} else
-			{
-				@mysql_query("UPDATE xlite_config SET value = '".$params['layout']."' where name ='skin'");
-			}
-		}
-			
-	}
-}	
-//}}}
-
-function backup_layout($schemas_repository, $parent_dir, &$params) // {{{
-{
-
-	global $templates_repository, $templates_backup;
-	$status = true;
-
-	if (!$handle = @opendir($schemas_repository)) {
-		echo "Status failed".status(false)."<BR>\n";
-		$status = false;
-	}
-	
-	while (($file = readdir($handle)) !== false) {
-		if (@is_file("$templates_repository$parent_dir/$file")) {
-				if (!@copy("$templates_repository$parent_dir/$file","$templates_backup$parent_dir/$file"))
-				{
-					echo "Copying $templates_repository$parent_dir/$file to $templates_backup$parent_dir/$file ... ".status(false)."<BR>\n";
-					$status &= false;
-				}
-				
-		} else if (@is_dir("$templates_repository$parent_dir/$file") && !@file_exists("$templates_backup$parent_dir/$file")&&$file!='.'&&$file!='..')
-		{
-			if(!@mkdir("$templates_backup$parent_dir/$file", 0777)) {
-				$status &= false;
-			}	
-			$status	&= backup_layout($schemas_repository."/".$file,"$parent_dir/$file", $params);
-
-		} 
-		flush();
-						
-	}	
-	closedir($handle);
-	return $status;
-}
-
 // Move images from required field to the filesystem
 function move_images_to_fs($table, $id, $prefix, $file_prefix, $path="images/")
 {
-    global $modules_path, $config_file;
+    global $config_file;
 
 	if ( !@file_exists($path) ) {
 		$res = @mkdir($path, 0777);
@@ -3117,26 +2965,17 @@ The configuration of the server where LiteCommerce will be installed makes sendi
 
 <?php
 $perms = array(); 
-global $modules_path, $templates_repository, $schemas_repository;
-global $is_trial;
+global $templates_repository, $schemas_repository;
 global $others_directories;
 global $suphp_mode;
 if (substr(PHP_OS, 0, 3) != 'WIN') {
     if($suphp_mode == "0") {
     	if (!@is_writable(".")) $perms[] = "&gt; chmod 0777 .";
     	if (!@is_writable($config_file)) $perms[] = "&gt; chmod 0666 $config_file";
-    	//if (!@is_writable($modules_path)) $perms[] = "&gt; chmod 0777 " . $modules_path;
         foreach($others_directories as $dir) {
             if (!@is_writable($dir)) $perms[] = "&gt; chmod 0777 " . $dir;
         }
     }
-
-if ($is_trial) {
-	//if (!is_writable($schemas_repository)) $perms[] = "&gt; chmod 0777 " . $schemas_repository;
-	//if (!is_writable($templates_repository)) $perms[] = "&gt; chmod 0777 " . $templates_repository;
-	if (!@is_writable("var")) $perms[] = "&gt; chmod 0777 var";
-	if (!@is_writable("var/run")) $perms[] = "&gt; chmod 0777 var/run";
-}
 
     if ($dh = @opendir("bin")) {
         while (($file = readdir($dh)) !== false) {
@@ -3233,7 +3072,7 @@ if ($is_trial) {
 function module_cfg_install_db(&$params) {
 	global $HTTP_SERVER_VARS, $error, $schemas_repository; 
 	global $report_uid, $reportFName;
-	global $modules_path, $is_trial, $templates_repository, $schemas_repository;
+	global $templates_repository, $schemas_repository;
 	$clrNumber = 2;
 
 	if (@file_exists($reportFName)) {
@@ -3259,18 +3098,11 @@ function module_cfg_install_db(&$params) {
                 if (ftpChmod($ftp_connection, ".", $ftpUser, '0755', '0777')) {
                     $params['set_chmod'] = 1;
                 }
-                ftpChmod($ftp_connection, $modules_path, $ftpUser, '0755', '0777');
 
                 ftpChmod($ftp_connection, "etc/config.php", $ftpUser, '0644', '0666');
                 ftpChmod($ftp_connection, "LICENSE", $ftpUser, '0644', '0666');
                 ftpChmod($ftp_connection, "cart.html", $ftpUser, '0644', '0666');
 
-                if ($is_trial) {
-                	//ftpChmod($ftp_connection, $schemas_repository, $ftpUser, '0755', '0777');
-                	//ftpChmod($ftp_connection, $templates_repository, $ftpUser, '0755', '0777');
-                	ftpChmod($ftp_connection, "var", $ftpUser, '0755', '0777');
-                	ftpChmod($ftp_connection, "var/run", $ftpUser, '0755', '0777');
-                }
             }
 
 /*			ftp_site($ftp_connection,"CHMOD 0777 schemas");
@@ -3551,7 +3383,7 @@ function module_cfg_install_db_js_next() {
 // Install_db module {{{
 
 function module_install_db(&$params) {
-	global $error, $is_trial;
+	global $error;
 	$clrNumber = 2;
 	//global $installation_auth_code;
 
@@ -3614,7 +3446,7 @@ function module_install_db(&$params) {
 
 // Importing states
 
-		if (!empty($params["states"])) {
+		if ($ck_res && !empty($params["states"])) {
 			echo "<BR><B>Importing geographic areas...</B><BR>\n"; flush();
 			$country_codes = explode("-",$params["states"]);
 			foreach($country_codes as $country_code)
@@ -3623,54 +3455,43 @@ function module_install_db(&$params) {
 
 // Importing sample data
 
-		if ($params["demo"] == 1) {
+		if ($ck_res && $params["demo"] == 1) {
 			echo "<BR><B>Importing sample categories and products...</B><BR>\n"; flush();
 
 			$ck_res &= query_upload("sql/xlite_demo.sql");
 		}
 
+// Importing modules
+
+        if ($ck_res) {
+
+            echo "<BR><B>Importing modules...</B><BR>\n"; flush();
+
+            $modulesDir = opendir("classes/XLite/Module");
+
+            while (($dir = readdir($modulesDir)) !== false) {
+
+            	if ($dir{0}!='.' && is_dir("classes/XLite/Module/$dir")) {
+
+        	    	include_once 'classes/XLite/Module/' . $dir . '/Main.php';
+            		$class = 'XLite_Module_' . $dir . '_Main';
+
+                    echo "<BR>&nbsp;&nbsp;&nbsp;<B>$dir...</B><BR>\n"; flush();
+
+            		mysql_query('REPLACE INTO xlite_modules SET name = \'' . $dir . '\', mutual_modules = \'' . implode(',', call_user_func(array($class, 'getMutualModules'))) . '\', type = \'' . call_user_func(array($class, 'getType')). '\'');
+
+                    if (file_exists($sqlFile = 'classes/XLite/Module/' . $dir . '/install.sql')) {
+                        $ck_res &= query_upload($sqlFile);
+                    }
+            	}
+            }
+        
+            closedir($modulesDir);
+
+        }
+
 		if (!$ck_res)
 			fatal_error("Fatal error encountered while importing database. The possible reason is insufficient access rights to the database.<BR> This unexpected error has canceled the installation. To install the software, please correct the problem and start the installation again.");
-
-		if ($is_trial) {
-			// Importing modules
-			global $modules_path;        
-			$modules = opendir($modules_path);
-			while (($dir = readdir($modules)) !== false) {
-				if ($dir{0}!='.' && @is_dir($modules_path."/$dir")) {
-					$manifest = $modules_path."/$dir/MANIFEST";
-					if (@file_exists($manifest)) {
-						$cm_params = parse_ini_file($manifest);
-						$cm_params["enabled"] = 1;
-						$list = array();
-						foreach ($cm_params as $name=>$val) {
-							$list[] = "$name='" . addslashes($val) . "'";
-						}
-						echo "<BR><B>Adding module $dir...</B><BR>\n"; flush();
-						mysql_query("REPLACE INTO xlite_modules SET " . join(',', $list));
-						$sqlFile = $modules_path."/$dir/install.sql";
-						if (@file_exists($sqlFile)) {
-							ob_start();
-							query_upload($sqlFile, null, true);
-							ob_end_clean();
-						}
-					}
-				}
-			}
-			closedir($modules);
-
-			if ($params["demo"] == 1) {
-				ob_start();
-				$ck_res &= query_upload("sql/xlite_modules.sql", null, true);
-				ob_end_clean();
-			}
-
-			if (check_exp_date(true)) {
-				$exp_date = dechex(mktime (0, 0, 0, date("m") + 1, date("d"), date("Y")));
-				$exp_date_md5 = encodeMD5($exp_date);
-				mysql_query("INSERT INTO xlite_config VALUES('tax_code', '$exp_date_md5', '$exp_date', 'Tax', 50, NULL)");
-			}
-		}
 
         // Move all images to the file system XXXXX
         if ( !empty($params["images_to_fs"]) )
@@ -3716,146 +3537,11 @@ function module_install_db(&$params) {
 	return false;
 } // }}} 
 
-// Cfg_install_dirs module. Gets color/layout settings {{{
-function module_cfg_install_dirs(&$params) {
-	global $error, $schemas_repository,$templates_backup;
-	$clrNumber = 2;
-
-?>
-<CENTER>
-<P>
- <B><FONT color="darkgreen">Configure the look &amp; feel of your store:</FONT></B>
-</P>
-
-
-<TABLE width="100%" border=0 cellpadding=4>
-
- <TR class="Clr<?php echo $clrNumber; $clrNumber = ($clrNumber == 2) ? 1 : 2; ?>">
-  <TD><B>Layout skin</B><BR>Select the layout skin for your store.</TD>
-  <TD>
-   <SELECT name="params[layout]" id="schemas_list" onChange="selectPreview(this)">
-<?php
-if ($dir = @opendir($schemas_repository."/templates")) {
-	$orig_files = array();
-    while (($file = readdir($dir)) !== false) {
-		if (!($file == "." || $file == "..")) {
-			$orig_files[] = $file;
-		}	
-	}
-    closedir($dir);
-
-	asort($orig_files);
-	$reverse_sorting = false; // = true;
-	$files = array();
-	$preferential = array();
-	foreach($orig_files as $key => $file) {
-		if (strpos($file, "_modern") !== false) {
-			$preferential[] = $file;
-			unset($orig_files[$key]);
-		}
-	}
-	if (!$reverse_sorting) {
-    	foreach($preferential as $file) {
-    		$files[$file] = array("name" => $file);
-    	}
-    }
-	foreach($orig_files as $file) {
-		$files[$file] = array("name" => $file);
-	}
-	if ($reverse_sorting) {
-    	foreach($preferential as $file) {
-    		$files[$file] = array("name" => $file);
-    	}
-    }
-
-	foreach($files as $value) {
-		echo "<OPTION value=\"".$value["name"]."\">".str_replace("_"," ",$value["name"])."</OPTION><BR>\n";
-	}
-
-    // check whether http params set
-    if (!(isset($params["http_host"]) && isset($params["web_dir"]))) {
-        // attempt to read http_host from config file
-    	global $config_file;
-        if ($options = @parse_ini_file($config_file)) {
-        	// fill the params array
-        	$params["http_host"] = $options["http_host"];
-        	$params["web_dir"] = $options["web_dir"];
-        }
-    }
-    if (isset($params["http_host"]) && isset($params["web_dir"])) {
-		foreach($files as $key => $value) {
-			$preview = "schemas/templates/".$value["name"]."/preview.gif";
-			if (@is_readable($preview)) {
-				$files[$key]["preview"] = $preview;
-			}
-		}
-    }
-}
-
-?>
-   </SELECT>
-  </TD>
- </TR>
- <TR id="preview_container" style="display: none;">
-  <TD colspan=2>
-	<TABLE width="640" border=0 cellpadding=0 cellspacing=0 align=center>
-  		<TR>
-  		<TD width=640><DIV style="overflow: auto; height: 350; width: 660"><IMG id="preview_img" border=1 src="schemas/templates/2-columns_modern/preview.gif"></DIV></TD>
-  		</TR>
-	</TABLE>
-  </TD>
- </TR>
-</TABLE>
-
-<SCRIPT language="JavaScript">
-var previewImages = new Array();
-
-<?php
-	foreach($files as $key => $value) {
-		if (isset($value["preview"]) && isset($params["http_host"]) && isset($params["web_dir"])) {
-?>
-previewImages["<?php echo $key; ?>"] = "<?php echo (isHTTPS() ? ("https://" . (isset($params["https_host"]) ? $params["https_host"] : $params["http_host"])) : ("http://" . $params["http_host"])) . $params["web_dir"] . "/" . $value["preview"]; ?>";
-<?php
-		}
-	}
-?>
-
-function selectPreview(elm)
-{
-	var preview_container = document.getElementById("preview_container");
-    if (preview_container) {
-    	preview_container.style.display = "none";
-    }
-	if (previewImages[elm.value]) {
-		var preview_img = document.getElementById("preview_img");
-		if (preview_img) {
-			preview_img.src = previewImages[elm.value];
-		}
-        if (preview_container) {
-        	preview_container.style.display = "";
-        }
-	}
-}
-
-var schemas_list = document.getElementById("schemas_list");
-if (schemas_list) {
-	selectPreview(schemas_list);
-}
-
-</SCRIPT>
-
-<BR><?php message("Push the \"Next\" button below to begin the installation");?><BR><BR>
-<?php
- } // }}}
-
-
 // Install_dirs module {{{
 function module_install_dirs(&$params) {
 	global $directories_to_create, $files_to_create, $templates_repository, $schemas_repository, $error, $default_skin, $default_locale, $templates_directory, $config_file, $others_directories;
 	$clrNumber = 2;
 
-	set_layout($params);
-	// temporary function
 ?>
 </TD>
 </TR>
@@ -3892,40 +3578,10 @@ function module_install_dirs(&$params) {
 		
 	$ck_res &= copy_files($templates_repository, "", $templates_directory);
 
-	if (!empty($params["layout"])) {
-
-		echo "<BR><B>Installing layout skin...</B><BR>\n";
-	    // switch templates_repository to layout folder
-		$ck_res &= copy_files($schemas_repository."/templates/".$params["layout"], "", $templates_directory);
-	}
-
-	update_modules_skins();
-
 	if (!$ck_res) {
 		fatal_error("Fatal error encountered while creating directories, probably because of incorrect directory permissions. This unexpected error has canceled the installation. To install the software, please correct the problem and start the installation again.");
-	} else {
+    }
 
-        /* Updating config.php file ?
-
-		echo "<BR><B>Updating $config_file file... </B><BR>\n"; flush();
-
-		$res = change_config($params);
-		echenabledstatus($res)."<BR>\n";
-
-        */
-/*
-?>
-<A name=preview>
-<CENTER>
-<H3>Look &amp; feel preview (<a href="javascript: preview.location.reload()">click to refresh</a>)</H3>
-<IFRAME src="cart.php" width="80%" height="400" scrolling="auto" frameborder="1" align=center name=preview>
-</IFRAME>
-<BR>
-<BR>
-</CENTER>
-<?php
-*/
-	}
 ?>
 
 <TABLE class="TableTop" width="100%" border=0 cellspacing=0 cellpadding=0>
@@ -4161,11 +3817,11 @@ function module_create_admin(&$params) {
 // Install_done module {{{
 
 function module_install_done(&$params) {
-	global $error, $templates_repository, $config_file, $is_trial;
+	global $error, $templates_repository, $config_file;
 	$clrNumber = 2;
 
     // if authcode IS NULL, then this is probably the first install, skip
-    if ($is_trial || isset($params["auth_code"]) && isset($params["login"]) && isset($params["password"]) && isset($params["confirm_password"]) && strlen($params["login"].$params["password"].$params["confirm_password"]) > 0) {
+    if (isset($params["auth_code"]) && isset($params["login"]) && isset($params["password"]) && isset($params["confirm_password"]) && strlen($params["login"].$params["password"].$params["confirm_password"]) > 0) {
         // create/update admin account from the previous step
         module_create_admin($params);
     }
