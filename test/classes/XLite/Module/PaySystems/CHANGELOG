@@ -1,3 +1,0 @@
-Version 2.1:
-- [!] 07 Mar 2005, Asd - Bug: The compiled code/templates cache was not cleaned up during the module uninstallation. Fixed.
-

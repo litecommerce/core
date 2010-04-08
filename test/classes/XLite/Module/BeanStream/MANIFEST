@@ -1,6 +1,0 @@
-module_id=1285
-name=BeanStream
-description=BeanStream credit card payment processor
-enabled=1
-version=2.1
-dependencies=

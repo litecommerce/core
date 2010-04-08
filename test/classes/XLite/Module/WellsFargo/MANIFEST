@@ -1,7 +1,0 @@
-module_id=1325
-name=WellsFargo
-description=WellsFargo Payment Gateway
-enabled=1
-version=2.1
-dependencies=
-

@@ -1,6 +1,0 @@
-module_id=40004
-name=PHPCyberSource
-description="CyberSource credit card payment processor [PHP API]"
-enabled=1
-version=2.2
-dependencies=

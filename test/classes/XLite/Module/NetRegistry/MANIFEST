@@ -1,6 +1,0 @@
-module_id=1395
-name=NetRegistry
-description=NetRegistry credit card payment processor
-enabled=1
-version=2.3
-dependencies=

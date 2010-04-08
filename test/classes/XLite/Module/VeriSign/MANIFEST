@@ -1,6 +1,0 @@
-module_id=1385
-name=VeriSign
-description="VeriSign credit card payment processor"
-enabled=1
-version=2.5
-dependencies=

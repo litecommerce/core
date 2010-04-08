@@ -1,7 +1,0 @@
-module_id=1380
-name=HSBC
-description=HSBC Payment Gateway
-enabled=1
-version=2.11
-dependencies=
-

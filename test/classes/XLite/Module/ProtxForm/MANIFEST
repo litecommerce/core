@@ -1,6 +1,0 @@
-module_id=1415
-name=ProtxForm
-description=Protx VSP Form credit card payment processor
-enabled=1
-version=2.0
-dependencies=

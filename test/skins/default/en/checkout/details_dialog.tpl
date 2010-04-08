@@ -41,12 +41,8 @@
 
 <p>
 <widget template="checkout/credit_card.tpl" visible="{cart.paymentMethod.formTemplate=#checkout/credit_card.tpl#}">
-<widget module="VerisignLink" template="modules/VerisignLink/checkout.tpl" visible="{cart.paymentMethod.formTemplate=#modules/VerisignLink/checkout.tpl#}">
 <widget template="checkout/echeck.tpl" visible="{cart.paymentMethod.formTemplate=#checkout/echeck.tpl#}">
 <widget template="checkout/offline.tpl" visible="{cart.paymentMethod.formTemplate=#checkout/offline.tpl#}">
-<widget module="PaySystems" template="modules/PaySystems/checkout.tpl" visible="{cart.paymentMethod.formTemplate=#modules/PaySystems/checkout.tpl#}">
-<widget module="WellsFargo" template="modules/WellsFargo/checkout.tpl" visible="{cart.paymentMethod.formTemplate=#modules/WellsFargo/checkout.tpl#}">
-<widget module="HSBC" template="modules/HSBC/checkout.tpl" visible="{cart.paymentMethod.formTemplate=#modules/HSBC/checkout.tpl#}">
 <widget module="ePDQ" template="modules/ePDQ/checkout.tpl" visible="{cart.paymentMethod.formTemplate=#modules/ePDQ/checkout.tpl#}">
 <widget module="WorldPay" template="modules/WorldPay/checkout.tpl" visible="{cart.paymentMethod.formTemplate=#modules/WorldPay/checkout.tpl#}">
 <widget module="GiftCertificates" template="modules/GiftCertificates/checkout.tpl" visible="{cart.paymentMethod.formTemplate=#modules/GiftCertificates/checkout.tpl#}">
