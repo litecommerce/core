@@ -233,6 +233,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 	mv skins skins_original
 
 	mkdir skins
+	cp skins_original/.htaccess skins/.htaccess
 
 	find . -type d -exec chmod 755 {} \;
 	find . -type f -exec chmod 644 {} \;
