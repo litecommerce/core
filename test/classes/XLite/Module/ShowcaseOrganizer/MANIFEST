@@ -1,6 +1,0 @@
-module_id=4500
-name=ShowcaseOrganizer
-description="Allows to configure product list look&feel"
-enabled=1
-version=2.6.RC1
-dependencies=
