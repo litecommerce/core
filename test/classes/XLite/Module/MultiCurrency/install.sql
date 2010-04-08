@@ -1,4 +1,4 @@
-ALTER TABLE xlite_modules CHANGE version version varchar(12) NOT NULL DEFAULT '0';
+DROP TABLE IF EXISTS xlite_country_currencies;
 CREATE TABLE xlite_country_currencies (
 	currency_id 	int(11) 		auto_increment,
 	code 			varchar(3)		NOT NULL default '',

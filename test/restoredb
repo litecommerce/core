@@ -37,6 +37,7 @@ while (($dir = readdir($modules)) !== false) {
 		require_once 'classes/XLite/Module/' . $dir . '/Main.php';
 		$class = 'XLite_Module_' . $dir . '_Main';
 
+		print "$dir...\n";
 		mysql_query('REPLACE INTO xlite_modules SET name = \'' . $dir . '\', mutual_modules = \'' . implode(',', call_user_func(array($class, 'getMutualModules'))) . '\', type = \'' . call_user_func(array($class, 'getType')). '\'');
 
 		!file_exists($sqlFile = 'classes/XLite/Module/' . $dir . '/install.sql') || query_upload($sqlFile, $connection, true);
