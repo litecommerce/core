@@ -42,10 +42,6 @@ UPDATE xlite_modules SET enabled = '1' WHERE name IN (
 	'WholesaleTrading'
 );
 
--- Configure look and feel for category products
-UPDATE xlite_config SET value='modules/ShowcaseOrganizer/icons.tpl' WHERE category='ShowcaseOrganizer' AND name='template';
-UPDATE xlite_config SET value='2' WHERE category='ShowcaseOrganizer' AND name='so_columns';
-
 -- Update categories (shorten it to 4 enabled)
 UPDATE xlite_categories SET enabled=0 WHERE category_id=62;
 UPDATE xlite_categories SET enabled=0 WHERE category_id=75;
