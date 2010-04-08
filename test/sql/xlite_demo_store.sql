@@ -96,169 +96,6 @@ INSERT INTO xlite_partner_plan_commissions VALUES (1, '3.00', '%', 23, 'C');
 INSERT INTO xlite_banners VALUES (1, 'GraphBanner', 'GIF89an\0\0’\0\0DEF ¥ÜˇÈ∫ãîö‰Àì•±∫cccˇÓ…ˇÈ∑Ó”ôWWW€√é√ØÇ—ªâôãlˇˇˇ¿œŸVY[SZ^^be;;;pvzyÄÖÇäê∑≈œù®Ø}ÖäˇÚ’Æª≈\\`bhlpìû§ùùùMOP◊◊◊ﬂ∆êkkkÊ÷≥˘Ó’RTU‰ÿΩ∞∞∞∂´ìˇÌ≈ÿ¡åˇÒ“§óy„—®ªß~[^_â~dÃ∑á‘ΩãÛ◊õ∞ûx µàÕ∏áËŒï™ôuŸ¬ç˜‹†˘ﬂß”ºä˛‰´!˘\0\0\0\0\0,\0\0\0\0n\0\0\0ˇ@àpH,\Zè»§r…l:ü–®tJÖ4\0†£)Tø‡rq›#Ü„4HNﬁìd\0ü¥/»\'…ÎmpÇoÖpDuàbD\'/=	;;\0mGC§§•zrêß®B¶Eßè|≤®ªïC1%+?59\r8\'^F\0ÉØå≤¨¨œ∞u!ØoÕ∞rBŸqB!Õæ\Z*-ƒ<	#\r>\Z£¥“≠¢`·*0!í¿hB.àB»`•(6º˚AÅ\Z¿Ëêèà°CB\n·6NõS9‘A\'•í q©gB\"\nP`ëqÄˇô@É:´y‡fN\n22¯)¥©∫ú$\"æ√©3i\0$rj› µ´◊Ø`√äK6ßêú ⁄M= 3Äe„ ùKwÏŸ\"@µ\"\nD‘L∏pÿªR(»‘˜h≈Æ$pçúì≤ÿ»ò\rkã8±çu:ﬁjY´Â“_1´ﬁÃzkgº B7¶˙\0ıd…aK€nm±_—¿eW∆mZÚÍ⁄ôã+G~zur’∆u?üN¸∏Ô—^C€¶Ï˙r“ﬁ°áüY<ÛËÂΩ_?*ñÍv‹Õá_Œæ}‰ÚÒ«óÆˇ~Á–`πG\\~ÕáﬂmÚ≈◊ÅË•7üyØ·D€W\"x†y˘-®·~˜ı◊s›ÉÍA¿’Ñf»†âﬂ’ó`á*^ùÖ⁄ˆ\Zpa	¯!sÁI7ﬁçûhûéı≠6#â]—ˆ£}Hòcq\nˆË‚p\nB…$n3“òoXfiñàE÷®Âó¨UiÂVDÇiÊ\\bñ9Êôlñï¶_p>÷Êún:eÁùE\0;', 'D', 'image/gif', 'image', 'Test banner', 'top', 'Test banner', '_blank', 1, 0, 0, 0, 0);
 INSERT INTO xlite_banners VALUES (2, 'MediaRichBanner', 'GIF89an\0\0’\0\0DEF ¥ÜˇÈ∫ãîö‰Àì•±∫cccˇÓ…ˇÈ∑Ó”ôWWW€√é√ØÇ—ªâôãlˇˇˇ¿œŸVY[SZ^^be;;;pvzyÄÖÇäê∑≈œù®Ø}ÖäˇÚ’Æª≈\\`bhlpìû§ùùùMOP◊◊◊ﬂ∆êkkkÊ÷≥˘Ó’RTU‰ÿΩ∞∞∞∂´ìˇÌ≈ÿ¡åˇÒ“§óy„—®ªß~[^_â~dÃ∑á‘ΩãÛ◊õ∞ûx µàÕ∏áËŒï™ôuŸ¬ç˜‹†˘ﬂß”ºä˛‰´!˘\0\0\0\0\0,\0\0\0\0n\0\0\0ˇ@àpH,\Zè»§r…l:ü–®tJÖ4\0†£)Tø‡rq›#Ü„4HNﬁìd\0ü¥/»\'…ÎmpÇoÖpDuàbD\'/=	;;\0mGC§§•zrêß®B¶Eßè|≤®ªïC1%+?59\r8\'^F\0ÉØå≤¨¨œ∞u!ØoÕ∞rBŸqB!Õæ\Z*-ƒ<	#\r>\Z£¥“≠¢`·*0!í¿hB.àB»`•(6º˚AÅ\Z¿Ëêèà°CB\n·6NõS9‘A\'•í q©gB\"\nP`ëqÄˇô@É:´y‡fN\n22¯)¥©∫ú$\"æ√©3i\0$rj› µ´◊Ø`√äK6ßêú ⁄M= 3Äe„ ùKwÏŸ\"@µ\"\nD‘L∏pÿªR(»‘˜h≈Æ$pçúì≤ÿ»ò\rkã8±çu:ﬁjY´Â“_1´ﬁÃzkgº B7¶˙\0ıd…aK€nm±_—¿eW∆mZÚÍ⁄ôã+G~zur’∆u?üN¸∏Ô—^C€¶Ï˙r“ﬁ°áüY<ÛËÂΩ_?*ñÍv‹Õá_Œæ}‰ÚÒ«óÆˇ~Á–`πG\\~ÕáﬂmÚ≈◊ÅË•7üyØ·D€W\"x†y˘-®·~˜ı◊s›ÉÍA¿’Ñf»†âﬂ’ó`á*^ùÖ⁄ˆ\Zpa	¯!sÁI7ﬁçûhûéı≠6#â]—ˆ£}Hòcq\nˆË‚p\nB…$n3“òoXfiñàE÷®Âó¨UiÂVDÇiÊ\\bñ9Êôlñï¶_p>÷Êún:eÁùE\0;', 'D', 'image/gif', 'rich', '<TABLE cellspacing=1 cellpadding=0 border=0 bgcolor=#0000ff>\r\n<TR>\r\n<TD>[url][obj][/url]</TD>\r\n</TR>\r\n<TR>\r\n<TD bgcolor=#0000FF align=center>[url]<FONT color=#FFFFFF>TestBanner</FONT>[/url]</TD>\r\n</TR>\r\n</TABLE>', 'bottom', '', '_blank', 1, 0, 0, 0, 0);
 
-TRUNCATE xlite_newslists;
-INSERT INTO xlite_newslists (list_id, name, description, show_as_news, enabled) VALUES (1,'News List #1','LiteCommerce News',1,1);
-
-TRUNCATE xlite_newsletters;
-INSERT INTO xlite_newsletters (news_id, subject, body, send_date, list_id) VALUES (1,'\"INVENTORY TRACKING\" AND \"PRODUCT OPTIONS\" ADD-ONS ARE IMPROVED.','<P align=justify>\r\nRequested functionality is available now! We made those add-ons more stable and added new hot features.\r\n<BR><BR>\r\nThe following fetuares were added to the \"<a href=\"http://www.litecommerce.com/addon.html?addon=inventory\"><u>InventoryTracking</u></a>\" add-on:\r\n<UL>\r\n<LI>the ability to clone inventory data of a product during the cloning of the product;\r\n<LI>the ability to track products with defined product options without tracking the product options.\r\n</UL>\r\nThe following fetuares were added to the \"<a  href=\"http://www.litecommerce.com/addon.html?addon=options\"><u>ProductOptions</u></a>\" add-on:\r\n<UL>\r\n<LI>the ability to clone product options of a product during the cloning of the product;\r\n<LI>now all inventory tracking data will be recalculated automatically when admin changes/deletes a product option class or  a product options list.\r\n</UL>\r\n</P>\r\n<BR>\r\n',1110528360,1);
-INSERT INTO xlite_newsletters (news_id, subject, body, send_date, list_id) VALUES (2,'LITECOMMERCE SECURITY PRODUCTS','<P>\r\nTo establish secure and confidential online transactions within your e-store and to increase the level of trust of your customers it is highly recommended to utilize SSL certificates and TrustLogo seals on every e-commerce web site.\r\n<P>\r\nWe are glad to inform you that we are now offering SSL certificates and TrustLogos for sale. These products are provided by the world leading Certification Authority - <A href=\"http://www.comodogroup.com\" rel=\"nofollow\">Comodo Group</A>. For details, conditions and prices, please visit <A href=\"http://www.litecommerce.com/ssl_certificates.html\"><u>SSL certificates page</u></A> and <A href=\"http://www.litecommerce.com/trustlogo.html\"><u>TrustLogo page</u></A>. We target to provide you with up-to-date security technologies in order to make your online business with LiteCommerce profitable and perfect.\r\n</P>\r\n',1111305960,1);
-
-TRUNCATE xlite_news_subscribers;
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user1@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user2@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user16@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user17@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user18@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user19@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user20@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user21@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user22@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user23@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user24@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user25@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user26@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user27@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user28@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user29@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user160@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user161@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user162@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user163@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user164@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user165@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user166@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user167@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user168@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user169@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user170@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user171@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user172@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user173@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user174@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user175@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user176@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user177@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user178@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user179@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user180@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user181@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user182@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user183@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user184@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user185@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user186@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user187@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user188@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user189@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user190@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user191@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user192@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user193@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user194@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user195@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user196@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user197@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user198@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user199@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user201@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user202@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user203@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user204@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user205@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user206@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user207@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user208@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user209@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user285@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user284@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user283@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user282@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user281@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user280@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user279@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user278@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user277@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user276@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user275@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user274@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user273@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user272@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user271@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user270@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user269@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user268@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user267@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user266@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user265@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user264@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user263@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user262@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user261@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user260@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user259@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user258@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user257@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user256@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user255@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user254@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user253@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user252@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user251@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user250@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user249@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user248@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user247@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user246@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user245@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user244@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user243@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user242@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user241@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user240@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user239@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user238@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user237@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user236@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user235@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user234@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user233@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user232@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user231@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user230@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user229@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user228@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user227@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user226@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user225@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user224@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user223@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user222@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user221@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user220@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user219@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user218@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user217@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user216@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user215@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user214@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user213@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user212@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user211@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user210@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user286@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user287@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user288@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user289@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user290@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user291@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user292@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user298@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user297@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user296@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user295@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user294@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user293@example.com',1100546388);
-INSERT INTO xlite_news_subscribers (list_id, email, since_date) VALUES (1,'user299@example.com',1100546388);
 
 -- Dump for ProductAdviser module
 truncate xlite_products_new_arrivals;
