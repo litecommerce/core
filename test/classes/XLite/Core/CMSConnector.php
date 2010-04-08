@@ -276,6 +276,8 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 
     /**
      * Check controller access
+     * FIXME - do not uncomment: this will break the "runFrontController()" functionality
+     * TODO  - code must be refactored
      *
      * @return boolean
      * @access public
@@ -283,7 +285,9 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
     public function isAllowed()
     {
-        $oldController = $this->getController();
+        return true;
+
+        /*$oldController = $this->getController();
 
         $this->getApplication()->setController();
         $controller = XLite_Model_CachingFactory::getObjectFromCallback(
@@ -297,7 +301,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 
         $this->getApplication()->setController($oldController);
 
-        return $result;
+        return $result;*/
     }
  
     /**
