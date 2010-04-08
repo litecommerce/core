@@ -97,7 +97,7 @@ class XLite_Module_USPS_Main extends XLite_Module_Abstract
      */
     public static function getSettingsForm()
     {
-        return $this->buildUrl('usps', '', array(), XLite::ADMIN_SELF);
+        return XLite_Core_Converter::buildUrl('usps', '', array(), XLite::ADMIN_SELF);
     }
 
     /**
