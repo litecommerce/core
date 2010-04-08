@@ -1,0 +1,4 @@
+Options -Indexes
+<IfModule mod_access.c>
+Deny from all  
+</IfModule>
