@@ -444,8 +444,6 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
       {*extraFields*}
 
-    <widget module="Newsletters" template="modules/Newsletters/subscription_form.tpl" />
-
     <widget module="Affiliate" template="modules/Affiliate/partner_fields.tpl" name="partnerProfileForm" />
 
     <widget module="Promotion" template="modules/Promotion/bonus_points.tpl" />

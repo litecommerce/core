@@ -193,10 +193,10 @@ copy_schema_template("new_arrivals.tpl", $schema, $MODULE_NAME);
 $location = "skins/admin/en/location.tpl";
 $check_str = "modules/ProductAdviser/location.tpl";
 $find_str = <<<EOT
-<widget module="Newsletters" template="modules/Newsletters/location.tpl">
+<widget module="EcommerceReports" template="modules/EcommerceReports/location.tpl">
 EOT;
 $replace_str = <<<EOT
-<widget module="Newsletters" template="modules/Newsletters/location.tpl">
+<widget module="EcommerceReports" template="modules/EcommerceReports/location.tpl">
 <widget module="ProductAdviser" template="modules/ProductAdviser/location.tpl">
 EOT;
 patch_template($location, $check_str, $find_str, $replace_str);
@@ -205,10 +205,10 @@ patch_template($location, $check_str, $find_str, $replace_str);
 $location = "skins/admin/en/main.tpl";
 $check_str = "modules/ProductAdviser/main.tpl";
 $find_str = <<<EOT
-<widget module="Newsletters" template="modules/Newsletters/newsletters.tpl">
+<widget module="Affiliate" template="modules/Affiliate/main.tpl">
 EOT;
 $replace_str = <<<EOT
-<widget module="Newsletters" template="modules/Newsletters/newsletters.tpl">
+<widget module="Affiliate" template="modules/Affiliate/main.tpl">
 <widget module="ProductAdviser" template="modules/ProductAdviser/main.tpl">
 EOT;
 patch_template($location, $check_str, $find_str, $replace_str);
@@ -424,10 +424,10 @@ EOT;
 	$location = "skins/default/en/main.tpl";
 	if (!is_template_patched($location, "modules/ProductAdviser/main.tpl")) {
     	$find_str = <<<EOT
-<widget module="Newsletters" template="modules/Newsletters/newsletters.tpl">
+<widget template="common/sidebar_box.tpl" dir="authentication" name="authenticationWidget" head="Authentication" IF="{auth.isLogged()}" />
 EOT;
     	$replace_str = <<<EOT
-<widget module="Newsletters" template="modules/Newsletters/newsletters.tpl">
+<widget template="common/sidebar_box.tpl" dir="authentication" name="authenticationWidget" head="Authentication" IF="{auth.isLogged()}" />
 <widget module="ProductAdviser" template="modules/ProductAdviser/main.tpl">
 EOT;
     	patch_template($location, null, $find_str, $replace_str);
@@ -490,19 +490,19 @@ EOT;
 	$location = "skins/default/en/main.tpl";
 	if (!is_template_patched($location, "modules/ProductAdviser/main.tpl")) {
     	$find_str = <<<EOT
-<widget module="Newsletters" template="modules/Newsletters/newsletters.tpl">
+<widget template="common/sidebar_box.tpl" dir="authentication" name="authenticationWidget" head="Authentication" IF="{auth.isLogged()}" />
 EOT;
     	$replace_str = <<<EOT
-<widget module="Newsletters" template="modules/Newsletters/newsletters.tpl">
+<widget template="common/sidebar_box.tpl" dir="authentication" name="authenticationWidget" head="Authentication" IF="{auth.isLogged()}" />
 <widget module="ProductAdviser" template="modules/ProductAdviser/main.tpl">
 EOT;
     	patch_template($location, null, $find_str, $replace_str);
 
     	$find_str = <<<EOT
-<widget module="Newsletters" template="common/sidebar_box.tpl" dir="modules/Newsletters/menu_news" head="News">
+<widget template="common/sidebar_box.tpl" dir="authentication" name="authenticationWidget" head="Authentication" IF="{auth.isLogged()}" />
 EOT;
     	$replace_str = <<<EOT
-<widget module="Newsletters" template="common/sidebar_box.tpl" dir="modules/Newsletters/menu_news" head="News">
+<widget template="common/sidebar_box.tpl" dir="authentication" name="authenticationWidget" head="Authentication" IF="{auth.isLogged()}" />
 <widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_NewArrivals" template="common/sidebar_box.tpl" display_in="menu">
 <widget module="ProductAdviser" target="main,category,product,cart" class="CRecentliesProducts" template="common/sidebar_box.tpl" head="Recently viewed" dir="modules/ProductAdviser/RecentlyViewed">
 EOT;
@@ -517,6 +517,7 @@ $location = "skins/default/en/location.tpl";
 $check_str = "modules/ProductAdviser/location.tpl";
 $find_str = <<<EOT
 <widget module="Newsletters" template="modules/Newsletters/location.tpl">
+
 EOT;
 $replace_str = <<<EOT
 <widget module="Newsletters" template="modules/Newsletters/location.tpl">

@@ -68,6 +68,5 @@
 <widget module="Affiliate" template="modules/Affiliate/location.tpl">
 <widget module="Egoods" template="modules/Egoods/location.tpl">
 <widget module="EcommerceReports" template="modules/EcommerceReports/location.tpl">
-<widget module="Newsletters" template="modules/Newsletters/location.tpl">
 <widget module="UPSOnlineTools" template="modules/UPSOnlineTools/location.tpl">
 <widget module="ProductAdviser" template="modules/ProductAdviser/location.tpl">

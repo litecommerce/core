@@ -190,7 +190,6 @@
 <widget module="DemoMode" target="demo_mode"  template="common/dialog.tpl" body="modules/DemoMode/denied.tpl" head="Demo Mode Access Error">
 <widget module="XCartImport" target="xcart_import" template="common/dialog.tpl" body="modules/XCartImport/dialog.tpl" head="Import X-Cart data">
 <widget module="Affiliate" template="modules/Affiliate/main.tpl">
-<widget module="Newsletters" template="modules/Newsletters/newsletters.tpl">
 <widget module="UPSOnlineTools" template="modules/UPSOnlineTools/main.tpl">
 <widget module="ProductAdviser" template="modules/ProductAdviser/main.tpl">
 <widget module="WishList" target="wishlists" template="modules/WishList/wishlists.tpl" head="Wish Lists">

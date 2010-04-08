@@ -345,7 +345,6 @@ Please leave the password fields empty<br> if you don't want to change the passw
 
 <widget module="WholesaleTrading" template="modules/WholesaleTrading/profile_form.tpl">
 {*extraFields*}
-<widget module="Newsletters" template="modules/Newsletters/subscription_form.tpl">
 <widget module="GiftCertificates" template="modules/GiftCertificates/active_certificates.tpl">
 
 </table>

@@ -91,14 +91,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
         $recipients = array_unique($recipients);
         echo "Sending newsletters .. ";
         if (!empty($recipients)) {
-            $nl = new XLite_Module_Newsletters_Model_NewsLetter();
-            $nl->compose($this->getComplex('config.Company.site_administrator'),
-                         $recipients,
-                         $this->get("subject"),
-                         $this->get("body")
-                         );
-            $nl->send();
-            echo "[OK]<br><br>";
+            echo "Newsletters module required!<br><br>";
         } else {
             echo "no recipients found, select one or more orders!<br><br>"; 
         }

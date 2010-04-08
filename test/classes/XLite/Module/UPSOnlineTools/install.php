@@ -189,10 +189,10 @@ $location = "skins/admin/en/location.tpl";
 if (!is_template_patched($location, "UPSOnlineTools"))
 {
     $find_str = <<<EOT
-<widget module="Newsletters" template="modules/Newsletters/location.tpl">
+<widget module="EcommerceReports" template="modules/EcommerceReports/location.tpl">
 EOT;
     $replace_str = <<<EOT
-<widget module="Newsletters" template="modules/Newsletters/location.tpl">
+<widget module="EcommerceReports" template="modules/EcommerceReports/location.tpl">
 <widget module="UPSOnlineTools" template="modules/UPSOnlineTools/location.tpl">
 EOT;
     patch_template($location, null, $find_str, $replace_str);
@@ -207,10 +207,10 @@ $location = "skins/admin/en/main.tpl";
 if (!is_template_patched($location, "UPSOnlineTools"))
 {
     $find_str = <<<EOT
-<widget module="Newsletters" template="modules/Newsletters/newsletters.tpl">
+<widget module="Affiliate" template="modules/Affiliate/main.tpl">
 EOT;
     $replace_str = <<<EOT
-<widget module="Newsletters" template="modules/Newsletters/newsletters.tpl">
+<widget module="Affiliate" template="modules/Affiliate/main.tpl">
 <widget module="UPSOnlineTools" template="modules/UPSOnlineTools/main.tpl">
 EOT;
     patch_template($location, null, $find_str, $replace_str);

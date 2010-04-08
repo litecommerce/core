@@ -227,8 +227,7 @@
     <tr>
         <td>&nbsp;</td>
         <td>
-        <input IF="!xlite.mm.activeModules.Newsletters" type=button name=send_newsletter value=" Send " onclick="alert('Please install and enable Newsletters add-on first.');"/>
-        <input IF="xlite.mm.activeModules.Newsletters" type=submit name=send_newsletter value=" Send "/>
+        <input type=button name=send_newsletter value=" Send " onclick="alert('Please install and enable Newsletters add-on first.');"/>
         </td>
     </tr>
     </table>

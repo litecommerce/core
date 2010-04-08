@@ -345,7 +345,6 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
 
 {*extraFields*}
 <widget module="WholesaleTrading" template="modules/WholesaleTrading/profile_form.tpl">
-<widget module="Newsletters" template="modules/Newsletters/subscription_form.tpl">
 
 </table>
 
