@@ -80,7 +80,7 @@ class XLite_Module_SagePay_Main extends XLite_Module_Abstract
      */
     public static function getDescription()
     {
-        return 'VSP Direct and VSP Form credit card payment processor (former Protx)';
+        return 'VSP Direct and VSP Form credit card payment processor';
     }	
 
     /**

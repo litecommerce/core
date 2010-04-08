@@ -33,7 +33,7 @@
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
 /**
-* VeriSign PayFlow Link payment method 
+* PayFlow Link payment method 
 *
 * @package Module_PayFlowLink
 * @access public
