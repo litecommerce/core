@@ -230,6 +230,8 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 		rm -rf skins/mail/en/modules/${dn}
 	done
 
+	rm -f images/*
+
 	mv skins skins_original
 
 	mkdir skins
@@ -242,7 +244,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 
 	tar -czf litecommerce-${VERSION}.tgz ${LITECOMMERCE_DIRNAME}
 
-	echo "LiteCommerce $VERSION distributive is completed"
+	echo -e "\n  + LiteCommerce $VERSION distributive is completed"
 
 	#
 	# LiteCommerce+Drupal distributive generating...
@@ -264,11 +266,11 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 
 	tar -czf ${OUTPUT_DIR}/lc_connector-${VERSION}.tgz modules/lc_connector
 
-	echo "LC Connector v.$VERSION module for Drupal is completed"
+	echo "  + LC Connector v.$VERSION module for Drupal is completed"
 
 	tar -czf ${OUTPUT_DIR}/lccms_theme-${VERSION}.tgz themes/lccms
 
-	echo "LCCMS v.$VERSION theme for Drupal is completed"
+	echo "  + LCCMS v.$VERSION theme for Drupal is completed"
 
 	mv ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME} modules/lc_connector/
 
@@ -278,7 +280,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 
 	rm -rf ${OUTPUT_DIR}/${DRUPAL_DIRNAME}
 
-	echo "Drupal+LiteCommerce v.$VERSION distributive is completed"
+	echo "  + Drupal+LiteCommerce v.$VERSION distributive is completed"
 
 
 else # / if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DIRNAME}" ]
@@ -293,5 +295,5 @@ fi
 _php_code='$s=mktime()-'$START_TIME'; echo sprintf("%d:%02d:%02d", ($s1=intval($s/3600)), ($s2=intval(($s-$s1*3600)/60)), ($s-$s1*3600-$s2*60));'
 _elapsed_time=`eval $PHP" -qr '"$_php_code"'"`
 
-echo "Time elapsed: ${_elapsed_time}"
+echo -e "\nTime elapsed: ${_elapsed_time}"
 

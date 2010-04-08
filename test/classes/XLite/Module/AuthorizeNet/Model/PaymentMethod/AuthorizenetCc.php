@@ -70,12 +70,6 @@ class XLite_Module_AuthorizeNet_Model_PaymentMethod_AuthorizenetCc extends XLite
 
     function initRequest($cart, &$request)
     {
-		if ($this->xlite->get("cc_initRequestAlternate")) {
-			$_object = new XLite_Module_CardinalCommerce_Model_PaymentMethodAuthorizenetCc();
-			$_object->set("CardinalMPI", $this->get("CardinalMPI"));
-			$_object->initRequest($cart, $request);
-		}
-
         $request->data['x_Method'] = 'CC';
         $request->data['x_Card_Num'] = $this->cc_info["cc_number"];
         $request->data['x_Exp_Date'] = $this->cc_info["cc_date"];
