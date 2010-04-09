@@ -1,4 +1,22 @@
-ALTER TABLE xlite_modules CHANGE version version varchar(12) NOT NULL DEFAULT '0';
+DROP TABLE IF EXISTS xlite_cps_cache;
+CREATE TABLE xlite_cps_cache(
+	weight decimal(12,2) not null,
+	origin_zipcode varchar(12) not null,
+	origin_country varchar(40) not null,
+	dest_zipcode varchar(12) not null,
+	dest_city varchar(40) not null,
+	dest_country varchar(40) not null,
+	dest_state varchar(40) not null,
+	insured decimal(12,2) not null default 0,
+	packed char(1) not null default 'Y',
+	height decimal(12,2) not null,
+	width decimal(12,2) not null,
+	length decimal(12,2) not null,
+	rates varchar(255) not null,
+	date int not null,
+	PRIMARY KEY (weight,origin_zipcode,origin_country,dest_zipcode,dest_city,dest_country,dest_state,insured,packed,height,width,length)
+) TYPE=MyISAM;
+
 INSERT INTO xlite_config VALUES ('merchant_id','','','CanadaPost',0,'');
 INSERT INTO xlite_config VALUES ('insured','','0','CanadaPost',0,'');
 INSERT INTO xlite_config VALUES ('test_server','','1','CanadaPost',0,'');
@@ -32,26 +50,5 @@ INSERT INTO xlite_shipping VALUES (99,'cps','I','Canada Post Small Packets Surfa
 INSERT INTO xlite_shipping VALUES (100,'cps','I','Canada Post Small Packets Air International',1,0); 
 INSERT INTO xlite_shipping VALUES (101,'cps','I','Canada Post XPressPost International',1,0); 
 INSERT INTO xlite_shipping VALUES (102,'cps','I','Canada Post Expedited US Business',1,0);
-
-DROP TABLE IF EXISTS xlite_cps_cache;
-CREATE TABLE xlite_cps_cache(
-	weight decimal(12,2) not null,
-	origin_zipcode varchar(12) not null,
-	origin_country varchar(40) not null,
-	dest_zipcode varchar(12) not null,
-	dest_city varchar(40) not null,
-	dest_country varchar(40) not null,
-	dest_state varchar(40) not null,
-	insured decimal(12,2) not null default 0,
-	packed char(1) not null default 'Y',
-	height decimal(12,2) not null,
-	width decimal(12,2) not null,
-	length decimal(12,2) not null,
-	rates varchar(255) not null,
-	date int not null,
-	primary key (weight,origin_zipcode,origin_country,dest_zipcode,dest_city,dest_country,dest_state,insured,packed,height,width,length)
-);
-ALTER TABLE xlite_cps_cache CHANGE dest_city dest_city VARCHAR(40)  NOT NULL;
-ALTER TABLE xlite_cps_cache CHANGE origin_country origin_country VARCHAR(40)  NOT NULL;
 
 

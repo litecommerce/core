@@ -1,4 +1,25 @@
-ALTER TABLE xlite_modules CHANGE version version varchar(12) NOT NULL DEFAULT '0';
+DROP TABLE IF EXISTS xlite_ints_cache;
+CREATE TABLE xlite_ints_cache (
+  pounds decimal(12,2) NOT NULL default '0.00',
+  orig_country char(2) NOT NULL default '',
+  dest_country char(2) NOT NULL default '',
+  orig_zipcode varchar(32) NOT NULL default '',
+  dest_zipcode varchar(32) NOT NULL default '',
+  delivery char(3) NOT NULL default '',
+  pickup char(3) NOT NULL default '',
+  length decimal(12,2) NOT NULL default '0.00',
+  width decimal(12,2) NOT NULL default '0.00',
+  height decimal(12,2) NOT NULL default '0.00',
+  packaging char(3) NOT NULL default '',
+  contents char(3) NOT NULL default '',
+  codvalue int(11) NOT NULL default '0',
+  insvalue int(11) NOT NULL default '0',
+  date int(11) NOT NULL default '0',
+  rates varchar(255) NOT NULL default '',
+  PRIMARY KEY  (pounds,orig_country,dest_country,orig_zipcode,dest_zipcode,delivery,pickup,length,width,height,packaging,contents,codvalue,insvalue)
+) TYPE=MyISAM;
+
+
 INSERT INTO xlite_shipping VALUES (220,'intershipper','I','FedEx International Economy',1,0);
 INSERT INTO xlite_shipping VALUES (219,'intershipper','I','FedEx International Priority',1,0);
 INSERT INTO xlite_shipping VALUES (218,'intershipper','I','USPS Global Express Mail',1,0);
@@ -35,23 +56,4 @@ INSERT INTO xlite_config(name,value,category) VALUES ('pickup','DRP','Intershipp
 INSERT INTO xlite_config(name,value,category) VALUES ('userid','','Intershipper');
 INSERT INTO xlite_config(name,value,category) VALUES ('width','','Intershipper');
 
-CREATE TABLE xlite_ints_cache (
-  pounds decimal(12,2) NOT NULL default '0.00',
-  orig_country char(2) NOT NULL default '',
-  dest_country char(2) NOT NULL default '',
-  orig_zipcode varchar(32) NOT NULL default '',
-  dest_zipcode varchar(32) NOT NULL default '',
-  delivery char(3) NOT NULL default '',
-  pickup char(3) NOT NULL default '',
-  length decimal(12,2) NOT NULL default '0.00',
-  width decimal(12,2) NOT NULL default '0.00',
-  height decimal(12,2) NOT NULL default '0.00',
-  packaging char(3) NOT NULL default '',
-  contents char(3) NOT NULL default '',
-  codvalue int(11) NOT NULL default '0',
-  insvalue int(11) NOT NULL default '0',
-  date int(11) NOT NULL default '0',
-  rates varchar(255) NOT NULL default '',
-  PRIMARY KEY  (pounds,orig_country,dest_country,orig_zipcode,dest_zipcode,delivery,pickup,length,width,height,packaging,contents,codvalue,insvalue)
-) TYPE=MyISAM;
 

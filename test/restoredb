@@ -1,6 +1,18 @@
 #!/usr/local/bin/php -q
 <?php
 
+function _do_query_upload($sqlfile, $connection = null, $ignoreErrors = false) {
+	echo "+++ $sqlfile\n";
+	ob_start();
+	query_upload($sqlfile, $connection, $ignoreErrors);
+	$output = ob_get_contents();
+	ob_end_clean();
+	$output = strip_tags($output);
+	if (!empty($output) && preg_match("/\[NOTE:/", $output)) {
+		echo "\n$output\n";
+	}
+}
+
 chdir(dirname(__FILE__));
 
 include "includes/functions.php";
@@ -12,17 +24,12 @@ $config = parse_ini_file("etc/config.local.php");
 $config['hostspec'] .= empty($config['socket'])
 	? (empty($config['port']) ? '' : ':' . $config['port'])
 	: ':' . $config['socket'];
-$connection = mysql_connect($config["hostspec"],$config["username"],$config["password"]);
+$connection = mysql_connect($config["hostspec"], $config["username"], $config["password"]);
 mysql_select_db($config["database"]);
 
-print "dbclear.sql\n";
-query_upload("sql/dbclear.sql", $connection, true);
-print "xlite_tables.sql\n";
-query_upload("sql/xlite_tables.sql", $connection, true);
-print "xlite_data.sql\n";
-query_upload("sql/xlite_data.sql", $connection, true);
-print "states_US.sql\n";
-query_upload("sql/states_US.sql", $connection, true);
+_do_query_upload("sql/xlite_tables.sql", $connection, true);
+_do_query_upload("sql/xlite_data.sql", $connection, true);
+_do_query_upload("sql/states_US.sql", $connection, true);
 
 require_once 'classes/XLite/Base.php';
 require_once 'classes/XLite/Model/Abstract.php';
@@ -31,31 +38,29 @@ require_once 'classes/XLite/Module/Abstract.php';
 
 // modules
 $modules = opendir("classes/XLite/Module");
+
 while (($dir = readdir($modules)) !== false) {
 	if ($dir{0}!='.' && is_dir("classes/XLite/Module/$dir")) {
 
 		require_once 'classes/XLite/Module/' . $dir . '/Main.php';
 		$class = 'XLite_Module_' . $dir . '_Main';
 
-		print "$dir...\n";
 		mysql_query('REPLACE INTO xlite_modules SET name = \'' . $dir . '\', mutual_modules = \'' . implode(',', call_user_func(array($class, 'getMutualModules'))) . '\', type = \'' . call_user_func(array($class, 'getType')). '\'');
 
-		!file_exists($sqlFile = 'classes/XLite/Module/' . $dir . '/install.sql') || query_upload($sqlFile, $connection, true);
+		!file_exists($sqlFile = 'classes/XLite/Module/' . $dir . '/install.sql') || _do_query_upload($sqlFile, $connection, true);
 	}
 }
+
 closedir($modules);
-print "xlite_modules.sql\n";
-query_upload("sql/xlite_modules.sql", $connection, true);
-print "xlite_demo.sql\n";
-query_upload("sql/xlite_demo.sql", $connection, true);
+
+_do_query_upload("sql/xlite_modules.sql", $connection, true);
+_do_query_upload("sql/xlite_demo.sql", $connection, true);
 
 if (isset($argv[1]) && $argv[1] == "demo") {
-    echo "xlite_demo_store.sql\n";
-	query_upload("sql/xlite_demo_store.sql", $connection, true);
+	_do_query_upload("sql/xlite_demo_store.sql", $connection, true);
 
 	if (isset($argv[2]) && $argv[2] == 'all') {
-	    echo "xlite_all_modules.sql\n";
-		query_upload("sql/xlite_all_modules.sql", $connection, true);
+		_do_query_upload("sql/xlite_all_modules.sql", $connection, true);
 	}
 
 } else {

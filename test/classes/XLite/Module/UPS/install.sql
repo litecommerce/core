@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS xlite_ups_cache;
+-- DROP TABLE IF EXISTS xlite_ups_cache;
 CREATE TABLE xlite_ups_cache(
         pounds decimal(12,2) not null,
         origin_zipcode varchar(12) not null,

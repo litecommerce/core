@@ -1,4 +1,3 @@
-ALTER TABLE xlite_modules CHANGE version version varchar(12) NOT NULL DEFAULT '0';
 INSERT INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ( 'froogle_host', 'Froogle host', 'hedwig.google.com', 'Froogle', '5', 'text');
 INSERT INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ( 'froogle_username', 'Froogle username', '', 'Froogle', '10', 'text');
 INSERT INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ( 'froogle_password', 'Froogle password', '', 'Froogle', '15', 'text');
