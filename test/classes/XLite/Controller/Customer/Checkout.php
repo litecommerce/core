@@ -57,6 +57,11 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
      */
     protected $checkoutSteps = null;
 
+    protected function checkCMSProfile()
+    {
+        return XLite_Core_CMSConnector::isCMSStarted() && XLite_Model_Auth::getInstance()->getProfile()->isValidForCMS();
+    }
+
     protected function isCheckoutNotAllowed()
     {
         return $this->getCart()->isMinOrderAmountError() || $this->getCart()->isMaxOrderAmountError();
@@ -64,7 +69,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 
     protected function isRegistrationNeeded()
     {
-        return !XLite_Model_Auth::getInstance()->isLogged();
+        return !XLite_Model_Auth::getInstance()->isLogged() || !$this->checkCMSProfile();
     }
 
     protected function isZeroOrderTotal()

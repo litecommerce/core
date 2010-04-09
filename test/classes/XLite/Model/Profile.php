@@ -110,6 +110,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
     public $_range = "order_id=0";
 
 
+    
     /**
     * Modifies safe properties (excluding adminSecurefields).
     * Useful when a admin edit(create) profile.
@@ -127,7 +128,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
                     }
                 }
             }
-        $this->setProperties($properties);
+            $this->setProperties($properties);
         }
     }
 

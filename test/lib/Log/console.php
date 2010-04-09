@@ -195,7 +195,7 @@ class Log_console extends Log
          */
         if ($this->_buffering) {
             $this->_buffer .= $line;
-        } else {
+        } elseif (is_resource($this->_stream)) {
             fwrite($this->_stream, $line);
         }
 
