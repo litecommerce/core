@@ -39,7 +39,6 @@ INSERT INTO xlite_config VALUES ('add_on_mode','Checkout desk operation mode','N
 INSERT INTO xlite_config VALUES ('add_on_mode_page','Checkout desk operation mode main page','cart.php?target=cart','General',125,'select');
 INSERT INTO xlite_config VALUES ('safe_mode','Safe mode (do not initialize modules)','N','General',130,'checkbox');
 -- UPDATE xlite_config SET orderby = 130, comment='Safe mode (do not initialize modules)' WHERE category = 'General' AND name = 'safe_mode';
-INSERT INTO xlite_config VALUES ('without_powered_by','Remove \'Powered by\' labels','N','General',140,'checkbox');
 
 --  Customer Zone Settings 	
 

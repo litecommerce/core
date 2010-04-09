@@ -48,20 +48,6 @@ class XLite_View_PoweredBy extends XLite_View_Abstract
     }
 
     /**
-     * Check widget visibility
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isVisible()
-    {
-        return parent::isVisible()
-            && 'Y' != $this->config->General->without_powered_by;
-    }
-
-    /**
      * Check - display widget as link or as box
      * 
      * @return boolean
