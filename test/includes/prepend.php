@@ -44,7 +44,7 @@ define('LC_DIR', realpath(dirname(dirname(__FILE__))));
 @date_default_timezone_set(@date_default_timezone_get());
 
 // Display all errors and warnings
-error_reporting(E_ALL | E_STRICT);
+error_reporting(E_ALL);
 ini_set('display_errors', true);	
 
 define('LC_DS', DIRECTORY_SEPARATOR);
