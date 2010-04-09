@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'console.php');
+
 /**
  * Debug logger
  * 
