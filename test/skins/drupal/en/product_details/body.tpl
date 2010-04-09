@@ -20,9 +20,10 @@
 
   <div IF="product.hasImage()" class="product-thumbnail">
     <div IF="!product.getHasZoom()" class="product-thumbnail-box">
-      <img class="product-thumbnail" src="{product.imageURL}" id="product_image_{product.product_id}" alt="" />
+      <widget class="XLite_View_Image" image="{product.getImage()}" className="product-thumbnail" id="product_image_{product.product_id}" maxWidth="100" />
       <widget class="XLite_View_SaveMark" product="{product}" />
 <script type="text/javascript">
+<!--
 $(document).ready(
   function() {
     var e = $('.product-thumbnail-box');
@@ -30,6 +31,7 @@ $(document).ready(
     e.width(i.width()).height(i.height());
   }
 );
+-->
 </script>
     </div>
 

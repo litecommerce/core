@@ -18,7 +18,13 @@
 </td>
 
 <td class="item-thumbnail" IF="item.hasThumbnail()">
-  <a href="{item.url}"><img src="{item.thumbnailURL}" alt="{item.name}" /></a>
+  <a href="{item.url}">
+  {if:item.getThumbnail()}
+    <widget class="XLite_View_Image" image="{item.getThumbnail()}" alt="{item.name}" maxWidth="75" maxHeight="75" />
+  {else:}
+    <img src="{item.thumbnailURL}" alt="{item.name}" />
+  {end:}
+  </a>
 </td>
 
 <td class="item-info">

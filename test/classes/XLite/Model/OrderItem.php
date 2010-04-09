@@ -266,7 +266,22 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
             ? $this->realProduct->getThumbnailURL()
             : $this->getProduct()->getThumbnailURL();
 	}
-    
+
+    /**
+     * Get item thumbnail
+     *
+     * @return XLite_Model_Image
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getThumbnail()
+    {
+        return (!$this->isValid() && $this->getRealProduct())
+            ? null
+            : $this->getProduct()->getThumbnail();
+    }
+ 
     /**
      * Get item description 
      * 

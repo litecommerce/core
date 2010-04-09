@@ -12,7 +12,7 @@
  *}
 <ul class="di-gallery">
   <li FOREACH="product.getDetailedImages(),image">
-    <div><a href="{image.imageURL}"><img src="{image.imageURL}" alt="{image.alt:r}" /></a></div>
+    <div><a href="{image.imageURL}"><widget class="XLite_Module_DetailedImages_View_Image" image="{image.image}" maxWidth="50" maxHeight="40" /></a></div>
   </li>
 </ul>
 <a href="javascript:void(0);" onclick="javascript: $('.di-gallery a').eq(0).trigger('click')">See all images ({product.getDetailedImagesCount()})</a>
