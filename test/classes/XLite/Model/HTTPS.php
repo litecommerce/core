@@ -333,7 +333,7 @@ class XLite_Model_HTTPS extends XLite_Base
      */
     public function __construct()
     {
-        require_once LC_EXT_LIB_DIR . 'Net' . LC_DS . 'URL.php';
+        require_once LC_EXT_LIB_DIR . 'Net' . LC_DS . 'URL2.php';
     }
 
     /**
@@ -576,7 +576,7 @@ class XLite_Model_HTTPS extends XLite_Base
 
         $c = curl_init($url);
 
-        $url = new Net_URL($this->url);
+        $url = new Net_URL2($this->url);
         if ($url->port != 443 && $url->port != 80) {
             curl_setopt($c, CURLOPT_PORT, $url->port);
         }
@@ -829,7 +829,7 @@ class XLite_Model_HTTPS extends XLite_Base
                 $this->error = 'Curl error ' . $this->curlErrorCode . ': '
                     . $this->curlErrors[$this->curlErrorCode];
 
-                $url = new Net_URL($this->url);
+                $url = new Net_URL2($this->url);
 
                 $this->error = str_replace('PROTO', $url->protocol, $this->error);
                 $this->error = str_replace('FULLURL', $this->url, $this->error);
@@ -889,7 +889,7 @@ class XLite_Model_HTTPS extends XLite_Base
             return self::HTTPS_ERROR;
         }
 
-        $url = new Net_URL($this->url);
+        $url = new Net_URL2($this->url);
         if ($url->port == 80) {
             $url->port = 443;
         }    
@@ -988,7 +988,7 @@ class XLite_Model_HTTPS extends XLite_Base
 
             // Absolute URL
             if (preg_match('/^https?:\/\//i', $redirect)) {
-                $url = new Net_URL($redirect);
+                $url = new Net_URL2($redirect);
 
             } elseif ($redirect{0} == '/') {
                 // Absolute path
@@ -1003,7 +1003,7 @@ class XLite_Model_HTTPS extends XLite_Base
                     $redirect = dirname($url->path) . '/' . $redirect;
                 }
 
-                $redirect = Net_URL::resolvePath($redirect);
+                $redirect = Net_URL2::resolvePath($redirect);
                 $url->path = $redirect;
 
             } else {

@@ -137,3 +137,7 @@ insert into xlite_purchase_limit values (205, 10, 100);
 
 INSERT INTO xlite_giftcerts VALUES ('TESTGIFT',1,'Mr. Guest Guest','123','E','max@cdev.ru','','','','','0','','','','','','50.00','50.00','A',1270203328,1332411328,0,'','','no_border',NULL);
 
+UPDATE xlite_config SET value = 'ogqjninmqonpqsqhqnqjnnojoipipgokpe' WHERE name = 'UPS_accesskey';
+UPDATE xlite_config SET value = 'fiefeherephderekegeken' WHERE name = 'UPS_password';
+UPDATE xlite_config SET value = 'jpinhliriqhmikhmfififkgi' WHERE name = 'UPS_username';
+

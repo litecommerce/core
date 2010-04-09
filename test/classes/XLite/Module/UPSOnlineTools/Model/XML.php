@@ -66,7 +66,7 @@ class XLite_Module_UPSOnlineTools_Model_XML extends XLite_Model_XML
         }
         xml_parser_free($this->xml_parser);
         $i = 0;
-        return $this->_compileTree($values, $i);
+        return $this->compileTree($values, $i);
     }
 
 }

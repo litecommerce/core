@@ -83,9 +83,9 @@ class XLite_Module_Intershipper_Model_Shipping_Intershipper extends XLite_Model_
         $ZipDestination = $this->_normalizeZip($ZipDestination);
 
         require_once LC_ROOT_DIR . 'lib' . LC_DS . 'PEAR.php';
-        require_once LC_ROOT_DIR . 'lib' . LC_DS . 'HTTP' . LC_DS . 'Request.php';
+        require_once LC_ROOT_DIR . 'lib' . LC_DS . 'HTTP' . LC_DS . 'Request2.php';
 
-        $http = new HTTP_Request("http://www.intershipper.com/Interface/Intershipper/XML/v2.0/HTTP.jsp");
+        $http = new HTTP_Request2("http://www.intershipper.com/Interface/Intershipper/XML/v2.0/HTTP.jsp");
         $http->_timeout = 5; // can't wait long when we are in shopping cart
         $http->_method = HTTP_REQUEST_METHOD_POST;
         $http->addPostData("Version","2.0.0.0");

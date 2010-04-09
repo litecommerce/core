@@ -443,9 +443,9 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
             $_this->error = "";
 
             require_once LC_ROOT_DIR . 'lib' . LC_DS . 'PEAR.php';
-            require_once LC_ROOT_DIR . 'lib' . LC_DS . 'HTTP' . LC_DS . 'Request.php';
+            require_once LC_ROOT_DIR . 'lib' . LC_DS . 'HTTP' . LC_DS . 'Request2.php';
 
-            $http = new HTTP_Request($url_request);
+            $http = new HTTP_Request2($url_request);
             $http->_timeout = 3;
             $track_errors = @ini_get("track_errors");
             @ini_set("track_errors", 1);

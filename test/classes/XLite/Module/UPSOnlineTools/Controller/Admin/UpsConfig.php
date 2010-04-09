@@ -59,7 +59,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
 
 	function getPackingTypeList()
 	{
-		$ups = new XLite_Module_UPS_Model_Shipping_Ups();	
+		$ups = new XLite_Module_UPSOnLineTools_Model_Shipping_Ups();	
 		return $ups->get("upscontainerslist");
 	}
 
@@ -100,7 +100,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
         }
 
 		// Clear UPSOnlineTools cache
-		$ups = new XLite_Module_UPS_Model_Shipping_Ups();
+		$ups = new XLite_Module_UPSOnLineTools_Model_Shipping_Ups();
 		$ups->_cleanCache("ups_online_tools_cache");
     }
 
@@ -117,7 +117,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
     function action_test() 
     {
 		require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
-        $this->ups = new XLite_Module_UPS_Model_Shipping_Ups();
+        $this->ups = new XLite_Module_UPSOnLineTools_Model_Shipping_Ups();
 
 		$ptype = $this->xlite->getComplex('config.UPSOnlineTools.packing_algorithm');
 		$total_weight = $this->get("pounds");

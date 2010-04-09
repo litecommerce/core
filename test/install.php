@@ -1209,8 +1209,8 @@ function inst_http_request($url_request) // {{{
 		$php_errormsg = "";
 		$_this->error = "";
 		require_once "PEAR.php";
-		require_once "HTTP/Request.php";
-		$http = new HTTP_Request($url_request);
+		require_once "HTTP/Request2.php";
+		$http = new HTTP_Request2($url_request);
 		$http->_timeout = 3;
 		$track_errors = @ini_get("track_errors");
 		@ini_set("track_errors", 1);

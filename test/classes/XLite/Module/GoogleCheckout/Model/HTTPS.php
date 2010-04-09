@@ -38,7 +38,7 @@
 
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
-require_once LC_ROOT_DIR . 'lib' . LC_DS . 'Net' . LC_DS . 'URL.php';
+require_once LC_ROOT_DIR . 'lib' . LC_DS . 'Net' . LC_DS . 'URL2.php';
 
 /**
 * @package GoogleCheckout
@@ -183,7 +183,7 @@ class XLite_Module_GoogleCheckout_Model_HTTPS extends XLite_Model_HTTPS
         if ($this->curlErrorCode) {
             if (isset($this->curlErrors[$this->curlErrorCode])) {
                 $this->error = "Curl error $this->curlErrorCode: ".$this->curlErrors[$this->curlErrorCode];
-                $url = new Net_URL($this->url);
+                $url = new Net_URL2($this->url);
                 $this->error = str_replace("PROTO", $url->protocol,  $this->error);
                 $this->error = str_replace("FULLURL", $this->url,  $this->error);
                 $this->error = str_replace("HOST",  $url->host,  $this->error);
@@ -206,7 +206,7 @@ class XLite_Module_GoogleCheckout_Model_HTTPS extends XLite_Model_HTTPS
             $this->error = "openssl executable is not found";
             return XLite_Model_HTTPS::HTTPS_ERROR;
         }
-        $url = new Net_URL($this->url);
+        $url = new Net_URL2($this->url);
         if ($url->port == 80 ) { // default port?
             $url->port = 443;
         }    
@@ -328,7 +328,7 @@ class XLite_Module_GoogleCheckout_Model_HTTPS extends XLite_Model_HTTPS
             $url->anchor = '';
             // Absolute URL
             if (preg_match('/^https?:\/\//i', $redirect)) {
-                $url = new Net_URL($redirect);
+                $url = new Net_URL2($redirect);
             } else if ($redirect{0} == '/') {
                 // Absolute path
                 $url->path = $redirect;
@@ -339,7 +339,7 @@ class XLite_Module_GoogleCheckout_Model_HTTPS extends XLite_Model_HTTPS
                 } else {
                     $redirect = dirname($url->path) . '/' . $redirect;
                 }
-                $redirect = Net_URL::resolvePath($redirect);
+                $redirect = Net_URL2::resolvePath($redirect);
                 $url->path = $redirect;
             // Filename, no path
             } else {
