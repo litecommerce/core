@@ -70,28 +70,6 @@ class XLite_Model_Shipping extends XLite_Model_Abstract
         return trim(preg_replace('/\s+/', ' ', $name));
     }
 
-    /**
-     * Return only enabled services from the $methods list 
-     * 
-     * @param array $methods methods list
-     *  
-     * @return array
-     * @access protected
-     * @since  3.0
-     */
-    protected function filterEnabled(array $methods)
-    {
-        $filtered = array();
-
-        foreach ($methods as $id => $rate) {
-            if ($rate->shipping->is('enabled')) {
-                $filtered[$id] = $rate;
-            }
-        }
-
-        return $filtered;
-    }
-
 	/**
 	 * Return shipping zone 
 	 * 
@@ -115,6 +93,28 @@ class XLite_Model_Shipping extends XLite_Model_Abstract
 		return $zone;
     }
 
+
+	/**
+     * Return only enabled services from the $methods list 
+     * 
+     * @param array $methods methods list
+     *  
+     * @return array
+     * @access public
+     * @since  3.0
+     */
+    public function filterEnabled(array $methods)
+    {
+        $filtered = array();
+
+        foreach ($methods as $id => $rate) {
+            if ($rate->shipping->is('enabled')) {
+                $filtered[$id] = $rate;
+            }
+        }
+
+        return $filtered;
+    }
 
 	/**
 	 * Check module class 
