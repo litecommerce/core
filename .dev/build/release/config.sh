@@ -1,4 +1,4 @@
-# $Id$
+# SVN: $Id$
 #
 # Data definition for LiteCommerce release script
 #

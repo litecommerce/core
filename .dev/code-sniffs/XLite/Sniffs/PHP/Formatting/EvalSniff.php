@@ -70,23 +70,8 @@ class XLite_Sniffs_PHP_Formatting_EvalSniff extends XLite_ReqCodesSniff
         	        . 'Использование create_function() запрещено',
     	            $stackPtr
 	            );
-
-			} elseif (
-				in_array($tokens[$stackPtr]['content'], array('system', 'exec', 'passthru', 'shell_exec', 'proc_open'))
-				&& $tokens[$stackPtr - 1]['code'] !== T_OBJECT_OPERATOR
-			) {
-
-                $phpcsFile->addError(
-                    $this->getReqPrefix('REQ.PHP.3.18.1')
-                    . 'Запрещено использовать системные функции операционной системы',
-                    $stackPtr
-                );
-
 			}
-
 		}
     }
 
-}//end class
-
-?>
+}
