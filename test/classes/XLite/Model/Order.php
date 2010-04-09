@@ -612,9 +612,9 @@ class XLite_Model_Order extends XLite_Model_Abstract
                     }
 
                 } else {
-                    $this->xlite->logger->log("->Order::_sortRates");
-                    $this->xlite->logger->log("$k index points to an invalid object");
-                    $this->xlite->logger->log("<-Order::_sortRates");
+                    $this->logger->log("->Order::_sortRates");
+                    $this->logger->log("$k index points to an invalid object");
+                    $this->logger->log("<-Order::_sortRates");
                 }
             }
             if ($minRate !== "") {

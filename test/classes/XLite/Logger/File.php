@@ -1,144 +1,169 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*
-* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
-*/
-
-require_once LC_ROOT_DIR . 'lib' . LC_DS . 'Log.php';
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* The Log_file class is a concrete implementation of the Log::
-* abstract class which writes message to a text file.
-* 
-* @package kernel
-* @access public
-* @version $Id$
-*/
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage Logger
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
 
-define("DEFAULT_CONTENT", "<?php die(); /* WARNING: Do not change this line! */ ?>");
+require_once LC_EXT_LIB_DIR . 'Log.php';
 
-class XLite_Logger_File extends Log {
-    
-    // {{{ properties
-    
-    /** String holding the filename of the logfile. */	
-    public $filename = '';
+/**
+ * File-based logger
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
+class XLite_Logger_File extends Log
+{
 
-    /** Integer holding the file handle. */	
-    public $fp = '';
-
-    // }}}
-    
-    
-    // {{{ constructor
     /**
-     * Constructs a new logfile object.
-     * 
-     * @param $log_name The filename of the logfile.
-     * @param $ident    (optional) The identity string.
-     * @param $conf     (optional) The configuration array.
+     * Log file header
      */
-    function __construct ($log_name, $ident = '', $conf = false) {
-        $filename_pattern = "/\.php$/";
-        if(!preg_match($filename_pattern, $log_name)){
-            $log_name .= ".php";
+    const DEFAULT_CONTENT = '<?php die(); /* WARNING: Do not change this line! */ ?>';    
+    
+    /**
+     * File name 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $filename = '';
+
+    /**
+     * File pointer 
+     * 
+     * @var    resource
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $fp = null;
+
+    /**
+     * Opened flag
+     * 
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $opened = false;
+
+    /**
+     * Constructor
+     * 
+     * @param string  $logName Log name
+     * @param string  $ident   Identifier
+     * @param boolean $conf    Configuration
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct($logName, $ident = '', $conf = false)
+    {
+        $filenamePattern = '/\.php$/';
+        if (!preg_match('/\.php$/', $logName)) {
+            $logName .= '.php';
         }
 
-        $this->filename = $log_name;
+        $this->filename = $logName;
         $this->ident = $ident;
     }
-    // }}}
     
-    
-    // {{{ open()
     /**
-     * Opens the logfile for appending, if it has not already been opened.
-     * If the file doesn't already exist, attempt to create it.  This is
-     * implicitly called by log(), if necessary.
+     * Open log file
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
      */
-    function open () {
+    public function open()
+    {
         if (!$this->opened) {
-            if(!file_exists($this->filename))
-                $add_content = true;
+            $addContent = !file_exists($this->filename);
 
-            $this->fp = fopen($this->filename, 'a');
+            $this->fp = @fopen($this->filename, 'a');
             $this->opened = true;
 
-            if($add_content && $this->fp){
-                $entry = sprintf("%s\n", DEFAULT_CONTENT);
-                fwrite($this->fp, $entry);
+            if ($addContent && $this->fp) {
+                fwrite($this->fp, self::DEFAULT_CONTENT . "\n");
             }
         }
     }
-    // }}}
     
-    // {{{ close()
     /**
-     * Closes the logfile, if it is open.
+     * Close log file
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
      */
-    function close () {
+    public function close()
+    {
         if ($this->opened) {
-            fclose($this->fp);
+            if ($this->fp) {
+                fclose($this->fp);
+            }
+
             $this->opened = false;
         }
     }
-    // }}}
     
-    // {{{ log()
     /**
-     * Writes $message to the currently open logfile.  Calls open(), if
-     * necessary.  Also, passes the message along to any Log_observer
-     * instances that are observing this Log.
+     * Add log 
      * 
-     * @param $message  The textual message to be logged.
-     * @param $priority Logging facility
+     * @param string $message  Message
+     * @param string $priority Priority code
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
      */
-    function log ($message, $priority) {
-        if (!$this->opened)
+    public function log($message, $priority)
+    {
+        if (!$this->opened) {
             $this->open();
+        }
         
-        $entry = sprintf("%s %s [%s] %s\n", strftime("%b %d %T"),
-            $this->ident, $priority, $message);
+        $entry = sprintf(
+            '%s %s [%s] %s' . "\n",
+            strftime('%b %d %T'),
+            $this->ident,
+            $priority,
+            $message
+        );
 
-        if ($this->fp)
+        if ($this->fp) {
             fwrite($this->fp, $entry);
+        }
     }
-    // }}}
-    
 }
-
-?>

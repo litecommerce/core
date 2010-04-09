@@ -201,7 +201,9 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
      */
     protected function getViewerTemplate()
     {
-        return $this->getParam(self::PARAM_IS_EXPORTED) ? $this->getCMSTemplate() : $this->getRegularTemplate();
+        return $this->getParam(self::PARAM_IS_EXPORTED)
+            ? $this->getCMSTemplate()
+            : $this->getRegularTemplate();
     }
 
     /**
@@ -227,7 +229,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     }
 
     /**
-     * getTarget 
+     * Get target 
      * 
      * @return string
      * @access protected
@@ -239,7 +241,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     }
 
     /**
-     * getAction 
+     * Get action 
      * 
      * @return string
      * @access protected
@@ -331,7 +333,13 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         } elseif (!empty(XLite_Core_Request::getInstance()->action) && $this->isValid()) {
 
             $oldMethodName = 'action_' . XLite_Core_Request::getInstance()->action;
-            $newMethodName = 'doAction' . preg_replace('/_([a-z])/Sse', 'strtoupper("\1")', '_' . XLite_Core_Request::getInstance()->action);
+            $newMethodName = 'doAction'
+                . preg_replace(
+                    '/_([a-z])/Sse',
+                    'strtoupper("\1")',
+                    '_' . XLite_Core_Request::getInstance()->action
+                );
+
             if (method_exists($this, $oldMethodName)) {
                 $this->$oldMethodName();
 
@@ -426,7 +434,11 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 	 */
 	public function getCategory()
     {
-		return XLite_Model_CachingFactory::getObject(__METHOD__, 'XLite_Model_Category', array($this->getCategoryId()));
+		return XLite_Model_CachingFactory::getObject(
+            __METHOD__,
+            'XLite_Model_Category',
+            array($this->getCategoryId())
+        );
     }
 
 	/**
@@ -439,7 +451,11 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 	 */
 	public function getProduct()
     {
-		return XLite_Model_CachingFactory::getObject(__METHOD__, 'XLite_Model_Product', array($this->getProductId()));
+		return XLite_Model_CachingFactory::getObject(
+            __METHOD__,
+            'XLite_Model_Product',
+            array($this->getProductId())
+        );
     }
 
     /**

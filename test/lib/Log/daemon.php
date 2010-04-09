@@ -1,50 +1,66 @@
 <?php
 /**
  * $Header$
- * $Horde: horde/lib/Log/syslog.php,v 1.6 2000/06/28 21:36:13 jon Exp $
  *
- * @version $Revision: 291780 $
+ * @version $Revision: 250926 $
  * @package Log
  */
 
 /**
- * The Log_syslog class is a concrete implementation of the Log::
- * abstract class which sends messages to syslog on UNIX-like machines
- * (PHP emulates this with the Event Log on Windows machines).
+ * The Log_daemon class is a concrete implementation of the Log::
+ * abstract class which sends messages to syslog daemon on UNIX-like machines.
+ * This class uses the syslog protocol: http://www.ietf.org/rfc/rfc3164.txt
  *
- * @author  Chuck Hagenbuch <chuck@horde.org>
- * @author  Jon Parise <jon@php.net>
- * @since   Horde 1.3
- * @since   Log 1.0
+ * @author  Bart van der Schans <schans@dds.nl>
+ * @version $Revision: 250926 $
  * @package Log
- *
- * @example syslog.php      Using the syslog handler.
  */
-class Log_syslog extends Log
+class Log_daemon extends Log
 {
     /**
      * Integer holding the log facility to use.
-     * @var integer
-     * @access private
+     * @var string
      */
-    var $_name = LOG_SYSLOG;
+    var $_name = LOG_DAEMON;
 
     /**
-     * Should we inherit the current syslog connection for this process, or
-     * should we call openlog() to start a new syslog connection?
-     * @var boolean
-     * @access private
+     * Var holding the resource pointer to the socket
+     * @var resource
      */
-    var $_inherit = false;
+    var $_socket;
 
     /**
-     * Maximum message length that will be sent to syslog().  If the handler 
-     * receives a message longer than this length limit, it will be split into 
-     * multiple syslog() calls.
-     * @var integer
-     * @access private
+     * The ip address or servername
+     * @see http://www.php.net/manual/en/transports.php
+     * @var string
      */
-    var $_maxLength = 500;
+    var $_ip = '127.0.0.1';
+
+    /**
+     * Protocol to use (tcp, udp, etc.)
+     * @see http://www.php.net/manual/en/transports.php
+     * @var string
+     */
+    var $_proto = 'udp';
+
+    /**
+     * Port to connect to
+     * @var int
+     */
+    var $_port = 514;
+
+    /**
+     * Maximum message length in bytes
+     * @var int
+     */
+    var $_maxsize = 4096;
+
+    /**
+     * Socket timeout in seconds
+     * @var int
+     */
+    var $_timeout = 1;
+
 
     /**
      * Constructs a new syslog object.
@@ -52,10 +68,10 @@ class Log_syslog extends Log
      * @param string $name     The syslog facility.
      * @param string $ident    The identity string.
      * @param array  $conf     The configuration array.
-     * @param int    $level    Log messages up to and including this level.
+     * @param int    $maxLevel Maximum level at which to log.
      * @access public
      */
-    function Log_syslog($name, $ident = '', $conf = array(),
+    function Log_daemon($name, $ident = '', $conf = array(),
                         $level = PEAR_LOG_DEBUG)
     {
         /* Ensure we have a valid integer value for $name. */
@@ -63,18 +79,39 @@ class Log_syslog extends Log
             $name = LOG_SYSLOG;
         }
 
-        if (isset($conf['inherit'])) {
-            $this->_inherit = $conf['inherit'];
-            $this->_opened = $this->_inherit;
-        }
-        if (isset($conf['maxLength'])) {
-            $this->_maxLength = $conf['maxLength'];
-        }
-
         $this->_id = md5(microtime());
         $this->_name = $name;
         $this->_ident = $ident;
         $this->_mask = Log::UPTO($level);
+
+        if (isset($conf['ip'])) {
+            $this->_ip = $conf['ip'];
+        }
+        if (isset($conf['proto'])) {
+            $this->_proto = $conf['proto'];
+        }
+        if (isset($conf['port'])) {
+            $this->_port = $conf['port'];
+        }
+        if (isset($conf['maxsize'])) {
+            $this->_maxsize = $conf['maxsize'];
+        }
+        if (isset($conf['timeout'])) {
+            $this->_timeout = $conf['timeout'];
+        }
+        $this->_proto = $this->_proto . '://';
+
+        register_shutdown_function(array(&$this, '_Log_daemon'));
+    }
+
+    /**
+     * Destructor.
+     *
+     * @access private
+     */
+    function _Log_daemon()
+    {
+        $this->close();
     }
 
     /**
@@ -85,9 +122,13 @@ class Log_syslog extends Log
     function open()
     {
         if (!$this->_opened) {
-            $this->_opened = openlog($this->_ident, LOG_PID, $this->_name);
+            $this->_opened = (bool)($this->_socket = @fsockopen(
+                                                $this->_proto . $this->_ip,
+                                                $this->_port,
+                                                $errno,
+                                                $errstr,
+                                                $this->_timeout));
         }
-
         return $this->_opened;
     }
 
@@ -97,11 +138,10 @@ class Log_syslog extends Log
      */
     function close()
     {
-        if ($this->_opened && !$this->_inherit) {
-            closelog();
+        if ($this->_opened) {
             $this->_opened = false;
+            return fclose($this->_socket);
         }
-
         return true;
     }
 
@@ -110,12 +150,11 @@ class Log_syslog extends Log
      * open() if necessary. Also passes the message along to any Log_observer
      * instances that are observing this Log.
      *
-     * @param mixed $message String or object containing the message to log.
+     * @param string $message  The textual message to be logged.
      * @param int $priority (optional) The priority of the message.  Valid
-     *                  values are: PEAR_LOG_EMERG, PEAR_LOG_ALERT,
-     *                  PEAR_LOG_CRIT, PEAR_LOG_ERR, PEAR_LOG_WARNING,
-     *                  PEAR_LOG_NOTICE, PEAR_LOG_INFO, and PEAR_LOG_DEBUG.
-     * @return boolean  True on success or false on failure.
+     *                  values are: LOG_EMERG, LOG_ALERT, LOG_CRIT,
+     *                  LOG_ERR, LOG_WARNING, LOG_NOTICE, LOG_INFO,
+     *                  and LOG_DEBUG.  The default is LOG_INFO.
      * @access public
      */
     function log($message, $priority = null)
@@ -138,27 +177,24 @@ class Log_syslog extends Log
         /* Extract the string representation of the message. */
         $message = $this->_extractMessage($message);
 
-        /* Build a syslog priority value based on our current configuration. */
-        $priority = $this->_toSyslog($priority);
-        if ($this->_inherit) {
-            $priority |= $this->_name;
+        /* Set the facility level. */
+        $facility_level = intval($this->_name) +
+                          intval($this->_toSyslog($priority));
+
+        /* Prepend ident info. */
+        if (!empty($this->_ident)) {
+            $message = $this->_ident . ' ' . $message;
         }
 
-        /* Split the string into parts based on our maximum length setting. */
-        $parts = str_split($message, $this->_maxLength);
-        if ($parts === false) {
-            return false;
+        /* Check for message length. */
+        if (strlen($message) > $this->_maxsize) {
+            $message = substr($message, 0, ($this->_maxsize) - 10) . ' [...]';
         }
 
-        foreach ($parts as $part) {
-            if (!syslog($priority, $part)) {
-                return false;
-            }
-        }
+        /* Write to socket. */
+        fwrite($this->_socket, '<' . $facility_level . '>' . $message . "\n");
 
         $this->_announce(array('priority' => $priority, 'message' => $message));
-
-        return true;
     }
 
     /**

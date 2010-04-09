@@ -1,84 +1,84 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
-
-require_once LC_ROOT_DIR . 'lib' . LC_DS . 'Log.php';
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* Class Log_debug is a concrete implementation of the Log::
-* abstract class which sends messages to STDERR. Use for or the debug
-* purposes only.
-*
-* @package Kernel
-* @access public
-* @version $Id$
-*/
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage Logger
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
+
+require_once LC_EXT_LIB_DIR . 'Log.php';
+
+/**
+ * Debug logger
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_Logger_Debug extends Log
 {
     /**
-    * Constructor.
-    *
-    * @param string $log_name  (ignored) The target log name.
-    * @param string $ident     (optional) The identification field.
-    * @param array  $conf      (ignored) The connection configuration array.
-    */
-    function __construct($log_name, $ident = '', $conf = false) {
+     * Constructor
+     *
+     * @param string  $logName Log name
+     * @param string  $ident   Identifier
+     * @param boolean $conf    Configuration
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct($logName, $ident = '', $conf = false)
+    {
         $this->ident = $ident;
     }
 
     /**
-    * Sends $message to the STDERR stream.
-    *
-    * @param string  $message  The textual message to be logged.
-    * @param integer $priority (optional) The priority of the message.
-    */
-    function log($message, $priority = LOG_INFO)
+     * Add log
+     *
+     * @param string $message  Message
+     * @param string $priority Priority code
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function log($message, $priority = LOG_INFO)
     {
-        $stderr = fopen('php://stderr', 'w');
-        $entry = sprintf(">>> %s %s [%s] %s\n", strftime("%b %d %H:%M:%S %Y"),
-            $this->ident, Log::priorityToString($priority), $message);
-        fputs($stderr, $entry);
-        fclose($stderr);
+        $entry = sprintf(
+            '>>> %s %s [%s] %s' . "\n",
+            strftime('%b %d %H:%M:%S %Y'),
+            $this->ident,
+            Log::priorityToString($priority),
+            $message
+        );
+
+        $stderr = @fopen('php://stderr', 'w');
+        if ($stderr) {
+            fputs($stderr, $entry);
+            fclose($stderr);
+        }
     }
 }
-
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
