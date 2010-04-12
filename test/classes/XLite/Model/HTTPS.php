@@ -988,56 +988,21 @@ class XLite_Model_HTTPS extends XLite_Base
         $this->response = trim(substr($data, $pos));
 
         // handle redirect
+        $result = self::HTTPS_SUCCESS;
         if (
             isset($this->headers['location'])
             && $this->headers['location']
             && 302 == $this->responseCode
         ) {
-            $redirect = $this->headers['location'];
-            $url->querystring = '';
-            $url->anchor = '';
-
-            // Absolute URL
-            if (preg_match('/^https?:\/\//i', $redirect)) {
-                $url = new Net_URL2($redirect);
-
-            } elseif ($redirect{0} == '/') {
-                // Absolute path
-                $url->path = $redirect;
-
-            } elseif (substr($redirect, 0, 3) == '../' OR substr($redirect, 0, 2) == './') {
-                // Relative path
-                if (substr($url->path, -1) == '/') {
-                    $redirect = $url->path . $redirect;
-
-                } else {
-                    $redirect = dirname($url->path) . '/' . $redirect;
-                }
-
-                $redirect = Net_URL2::resolvePath($redirect);
-                $url->path = $redirect;
-
-            } else {
-                // Filename, no path
-                if (substr($url->path, -1) == '/') {
-                    $redirect = $url->path . $redirect;
-
-                } else {
-                    $redirect = dirname($url->path) . '/' . $redirect;
-                }
-
-                $url->path = $redirect;
-            }
-
             $this->method  = 'GET';
             $this->data    = '';
             $this->headers = array();
-            $this->url     = $url->getURL();
+            $this->url     = $url->resolve($this->headers['location'])->getURL();
 
-            return $this->requestOpenSSL();
+            $result = $this->requestOpenSSL();
         }
 
-        return self::HTTPS_SUCCESS;
+        return $result;
     }
 
     protected function parseResponseHeaders($rawHeaders)

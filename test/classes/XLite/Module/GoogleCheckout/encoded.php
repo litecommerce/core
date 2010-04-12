@@ -106,14 +106,7 @@ function GoogleCheckout_sendRequest($_this, &$payment, &$data)
 
 function GoogleCheckout_getHTTPS_Object()
 {
-	$obj = new XLite_Model_HTTPS();
-	if (method_exists($obj, "getHeaders")) {
-		return $obj;
-	}
-
-	$obj = null;
-
-	return new XLite_Module_GoogleCheckout_Model_HTTPS();
+	return new XLite_Model_HTTPS();
 }
 
 function GoogleCheckout_getXML_Object()

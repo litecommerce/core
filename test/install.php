@@ -1196,33 +1196,22 @@ function inst_http_request($url_request) // {{{
 
 		@fclose($handle);
 	} else {
-		global $php_errormsg;
 
-		if (is_php5()) {
-			$includes .= "." . DIRECTORY_SEPARATOR . "lib5" . PATH_SEPARATOR;
-		} else {
-			$includes .= "." . DIRECTORY_SEPARATOR . "lib" . PATH_SEPARATOR;
-		}
-		$includes .= "." . DIRECTORY_SEPARATOR . PATH_SEPARATOR;
-		@ini_set("include_path", $includes);
+		$_this->error = '';
 
-		$php_errormsg = "";
-		$_this->error = "";
-		require_once "PEAR.php";
-		require_once "HTTP/Request2.php";
-		$http = new HTTP_Request2($url_request);
-		$http->_timeout = 3;
-		$track_errors = @ini_get("track_errors");
-		@ini_set("track_errors", 1);
+		require_once LC_EXT_LIB_DIR . 'PEAR.php';
+		require_once LC_EXT_LIB_DIR . 'HTTP' . LC_DS . 'Request2.php';
 
-		$result = @$http->sendRequest();
-		@ini_set("track_errors", $track_errors);
+        try {
+    		$http = new HTTP_Request2($url_request);
+            $http->setConfig('timeout', 5);
+		    $response = $http->send()->getBody();
 
-		if (!($php_errormsg || PEAR::isError($result))) {
-			$response = $http->getResponseBody();
-		} else {
-			return false;
-		}
+        } catch (Exception $e) {
+            $_this->error = $e->getMessage();
+            $response = false;
+        }
+
 	}
 
 	return $response;
