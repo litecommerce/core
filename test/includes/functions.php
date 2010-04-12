@@ -132,26 +132,33 @@ EOT;
 * Executable lookup
 * Return false if not executable.
 */
-function func_find_executable($filename) { // {{{
-    $directories = explode(PATH_SEPARATOR, getenv("PATH"));
-	array_unshift($directories, "./bin", "/usr/bin", "/usr/local/bin");
+function func_find_executable($filename) {
+    $directories = explode(PATH_SEPARATOR, getenv('PATH'));
+	array_unshift($directories, './bin', '/usr/bin', '/usr/local/bin');
 
-    foreach($directories as $dir) {
-        $file = $dir.'/'.$filename;
-        if( func_is_executable($file) ) return @realpath($file);
-        $file .= ".exe";
-        if( func_is_executable($file) ) return @realpath($file);
+    foreach ($directories as $dir) {
+        $file = $dir . '/' . $filename;
+        if (func_is_executable($file)) {
+			return @realpath($file);
+		}
+
+        $file .= '.exe';
+        if (func_is_executable($file)) {
+			return @realpath($file);
+		}
     }
+
     return false;
-} // }}}
+}
 
 /*
 * Emulator for the is_executable function if it doesn't exists (f.e. under windows)
 */
-function func_is_executable($file) { // {{{
-    if(@function_exists("is_executable")) return @is_executable($file);
-    return @is_file ($file) && @is_readable($file);
-} // }}}
+function func_is_executable($file) {
+    return function_exists('is_executable')
+		? (file_exists($file) && is_executable($file))
+		: (is_file($file) && is_readable($file));
+}
 
 /**
 * shutdown function

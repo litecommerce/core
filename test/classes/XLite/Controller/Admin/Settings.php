@@ -421,7 +421,10 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
 
     function httpRequest($url_request)
     {
-        @ini_get('allow_url_fopen') or @ini_set('allow_url_fopen', 1);
+        if (!@ini_get('allow_url_fopen')) {
+             @ini_set('allow_url_fopen', 1);
+        }
+
         $handle = @fopen ($url_request, "r");
 
         $response = "";
@@ -430,34 +433,25 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
                 $response .= fread($handle, 8192);
             }
 
-            @fclose($handle);
+            fclose($handle);
+
         } else {
-            global $php_errormsg;
 
-            // FIXME - to delete?
-            $includes .= "." . DIRECTORY_SEPARATOR . "lib" . PATH_SEPARATOR;
-            $includes .= "." . DIRECTORY_SEPARATOR . PATH_SEPARATOR;
-            @ini_set("include_path", $includes);
+            require_once LC_EXT_LIB_DIR . 'PEAR.php';
+            require_once LC_EXT_LIB_DIR . 'HTTP' . LC_DS . 'Request2.php';
 
-            $php_errormsg = "";
-            $_this->error = "";
+            $this->error = '';
 
-            require_once LC_ROOT_DIR . 'lib' . LC_DS . 'PEAR.php';
-            require_once LC_ROOT_DIR . 'lib' . LC_DS . 'HTTP' . LC_DS . 'Request2.php';
+            try {
+                $http = new HTTP_Request2($url_request);
+                $http->setConfig('timeout', 5);
+                $response = $http->send()->getBody();
 
-            $http = new HTTP_Request2($url_request);
-            $http->_timeout = 3;
-            $track_errors = @ini_get("track_errors");
-            @ini_set("track_errors", 1);
-
-            $result = @$http->sendRequest();
-            @ini_set("track_errors", $track_errors);
-
-            if (!($php_errormsg || PEAR::isError($result))) {
-                $response = $http->getResponseBody();
-            } else {
-                return false;
+            }  catch (Exception $e) {
+                $this->error = $e->getMessage();
+                $response = false;
             }
+
         }
 
         return $response;
@@ -469,7 +463,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
             return $this->_answeredVersion;
         }
 
-        $checkUrl = $this->xlite->getShopUrl("admin.php?target=upgrade&action=version");
+        $checkUrl = $this->xlite->getShopUrl($this->buildUrl('upgrade', 'version'));
         $this->_answeredVersionError = false;
         $response = $this->httpRequest($checkUrl);
         if ($this->get("lite_version") != $response) {

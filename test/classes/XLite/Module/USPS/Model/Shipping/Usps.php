@@ -759,7 +759,7 @@ EOT;
                     HTTP_Request2::METHOD_GET
                 );
                 $http->setConfig('timeout', 5);
-                $response = $http->send()->getBody();;
+                $response = $http->send()->getBody();
 
             } catch (Exception $e) {
                 $this->error = $e->getMessage();

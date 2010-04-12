@@ -82,58 +82,66 @@ class XLite_Module_Intershipper_Model_Shipping_Intershipper extends XLite_Model_
         $ZipOrigination = $this->_normalizeZip($ZipOrigination);
         $ZipDestination = $this->_normalizeZip($ZipDestination);
 
-        require_once LC_ROOT_DIR . 'lib' . LC_DS . 'PEAR.php';
-        require_once LC_ROOT_DIR . 'lib' . LC_DS . 'HTTP' . LC_DS . 'Request2.php';
+        require_once LC_EXT_LIB_DIR . 'PEAR.php';
+        require_once LC_EXT_LIB_DIR . 'HTTP' . LC_DS . 'Request2.php';
 
-        $http = new HTTP_Request2("http://www.intershipper.com/Interface/Intershipper/XML/v2.0/HTTP.jsp");
-        $http->_timeout = 5; // can't wait long when we are in shopping cart
-        $http->_method = HTTP_REQUEST_METHOD_POST;
-        $http->addPostData("Version","2.0.0.0");
-        $http->addPostData("ShipmentID",""); // must be empty?
-        $http->addPostData("QueryID","1");
-        $http->addPostData("Username",$options->userid);
-        $http->addPostData("Password",$options->password);
-        $http->addPostData("TotalClasses","4");
-        $http->addPostData("ClassCode1","GND");
-        $http->addPostData("ClassCode2","1DY");
-        $http->addPostData("ClassCode3","2DY");
-        $http->addPostData("ClassCode4","3DY");
-        $http->addPostData("DeliveryType",$options->delivery);
-        $http->addPostData("ShipMethod",$options->pickup);
-        $http->addPostData("OriginationPostal",$ZipOrigination);
-        $http->addPostData("OriginationCountry",$CountryOrigination);
-        $http->addPostData("DestinationPostal",$ZipDestination);
-        $http->addPostData("DestinationCountry",$CountryDestination);
-        $http->addPostData("Currency","USD");
-        $http->addPostData("TotalPackages","1");
-        $http->addPostData("BoxID1","box1");
-        $http->addPostData("Weight1",$weight);
-        $http->addPostData("WeightUnit1","OZ");
-        $http->addPostData("Length1",$options->length);
-        $http->addPostData("Width1",$options->width);
-        $http->addPostData("Height1",$options->height);
-        $http->addPostData("DimensionalUnit1",$options->dunit);
-        $http->addPostData("Packaging1",$options->packaging);
-        $http->addPostData("Contents1",$options->contents);
-        $http->addPostData("Insurance1",$options->insvalue);
-        $http->addPostData("TotalCarriers",4);
-        $http->addPostData("CarrierCode1","UPS");
-        $http->addPostData("CarrierCode2","FDX");
-        $http->addPostData("CarrierCode3","USP");
-        $http->addPostData("CarrierCode4","DHL");
+        $http = new HTTP_Request2('http://www.intershipper.com/Interface/Intershipper/XML/v2.0/HTTP.jsp', HTTP_Request2::METHOD_POST);
+		$http->setConfig('timeout', 5);
+
+        $http->addPostParameter('Version', '2.0.0.0');
+        $http->addPostParameter('ShipmentID', ''); // must be empty?
+        $http->addPostParameter('QueryID', 1);
+        $http->addPostParameter('Username', $options->userid);
+        $http->addPostParameter('Password', $options->password);
+        $http->addPostParameter('TotalClasses', 4);
+        $http->addPostParameter('ClassCode1', 'GND');
+        $http->addPostParameter('ClassCode2', '1DY');
+        $http->addPostParameter('ClassCode3', '2DY');
+        $http->addPostParameter('ClassCode4', '3DY');
+        $http->addPostParameter('DeliveryType', $options->delivery);
+        $http->addPostParameter('ShipMethod', $options->pickup);
+        $http->addPostParameter('OriginationPostal', $ZipOrigination);
+        $http->addPostParameter('OriginationCountry', $CountryOrigination);
+        $http->addPostParameter('DestinationPostal', $ZipDestination);
+        $http->addPostParameter('DestinationCountry', $CountryDestination);
+        $http->addPostParameter('Currency', 'USD');
+        $http->addPostParameter('TotalPackages', 1);
+        $http->addPostParameter('BoxID1', 'box1');
+        $http->addPostParameter('Weight1', $weight);
+        $http->addPostParameter('WeightUnit1', 'OZ');
+        $http->addPostParameter('Length1', $options->length);
+        $http->addPostParameter('Width1', $options->width);
+        $http->addPostParameter('Height1', $options->height);
+        $http->addPostParameter('DimensionalUnit1', $options->dunit);
+        $http->addPostParameter('Packaging1', $options->packaging);
+        $http->addPostParameter('Contents1', $options->contents);
+        $http->addPostParameter('Insurance1', $options->insvalue);
+        $http->addPostParameter('TotalCarriers', 4);
+        $http->addPostParameter('CarrierCode1', 'UPS');
+        $http->addPostParameter('CarrierCode2', 'FDX');
+        $http->addPostParameter('CarrierCode3', 'USP');
+        $http->addPostParameter('CarrierCode4', 'DHL');
+
         if ($cod) {
-            $http->addPostData("Cod1",(int)($cod*100));
+            $http->addPostParameter('Cod1', intval($cod * 100));
         }
+
         return $http;
     }
 
     function _queryRates($weight, $ZipOrigination, $CountryOrigination, 
                          $ZipDestination, $CountryDestination,$options, $cod)
     {
-        $http = $this->_prepareRequest($weight, $ZipOrigination, 
-            $CountryOrigination, $ZipDestination, $CountryDestination,$options, $cod);
-        $http->sendRequest();
-        $response = $http->getResponseBody();
+		try {
+	        $http = $this->_prepareRequest($weight, $ZipOrigination, 
+    	        $CountryOrigination, $ZipDestination, $CountryDestination,$options, $cod);
+        	$response = $http->send()->getBodyt();
+
+		} catch (Exception $e) {
+			// TODO - add error processing
+			$response = false;
+        }
+
         // parse response 
         if ($CountryDestination == $CountryOrigination) {
             $destination = "L"; // Local

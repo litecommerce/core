@@ -191,6 +191,16 @@ class XLite_Model_HTTPS extends XLite_Base
     protected $responseHeaders = array();
 
     /**
+     * Path to curl executable file
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $curlBinary = null;
+
+    /**
      * CURL error code 
      * 
      * @var    integer

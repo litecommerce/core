@@ -44,8 +44,6 @@ function Shipping_aupost_getRates($_this, $order)
 
 function Shipping_aupost_queryRates($_this, $options, $originalZipcode, $destinationZipcode, $destinationCountry, $weight, $weight_unit=null) // {{{
 {
-    global $php_errormsg;
-	
 	$ap_host = "http://drc.edeliver.com.au";
 	$ap_url = "/ratecalc.asp";
 
@@ -66,44 +64,37 @@ function Shipping_aupost_queryRates($_this, $options, $originalZipcode, $destina
     $error_arose = false;
     $php_last_errormsg = "";
     $_this->last_error = "";
+
+    require_once LC_EXT_LIB_DIR . 'PEAR.php';
+    require_once LC_EXT_LIB_DIR . 'HTTP' . LC_DS . 'Request2.php';
+
     foreach($stypes as $stype => $stype_name) {
-        $php_errormsg = "";
         $_this->error = "";
 
-        require_once LC_ROOT_DIR . 'lib' . LC_DS . 'PEAR.php';
-        require_once LC_ROOT_DIR . 'lib' . LC_DS . 'HTTP' . LC_DS . 'Request2.php';
+		try {
+	        $http = new HTTP_Request2($ap_host . $ap_url); 
+			$http->setConfig('timeout', 5);
 
-        $http = new HTTP_Request2($ap_host . $ap_url); 
-        $http->_timeout = 5; // can't wait long when we are in shopping cart
-        $track_errors = ini_get("track_errors");
-        ini_set("track_errors", 1);
+			$http->addPostParameter('Pickup_Postcode', $originalZipcode);
+			$http->addPostParameter('Destination_Postcode', $destinationZipcode);
+			$http->addPostParameter('Country', $destinationCountry);
+			$http->addPostParameter('Weight', ceil($weight));
+			$http->addPostParameter('Length', ceil($options->length));
+			$http->addPostParameter('Width', ceil($options->width));
+			$http->addPostParameter('Height', ceil($options->height));
+			$http->addPostParameter('Quantity', '1');
+			$http->addPostParameter('Service_type', $stype);
 
-		$http->addPostData("Pickup_Postcode", $originalZipcode);
-		$http->addPostData("Destination_Postcode", $destinationZipcode);
-		$http->addPostData("Country", $destinationCountry);
-		$http->addPostData("Weight", ceil($weight));
-		$http->addPostData("Length", ceil($options->length));
-		$http->addPostData("Width", ceil($options->width));
-		$http->addPostData("Height", ceil($options->height));
-		$http->addPostData("Quantity", "1");
-		$http->addPostData("Service_type", $stype);
+	        $result = $http->send()->getBody();
 
-        $result = @$http->sendRequest();
-        ini_set("track_errors", $track_errors);
-        if ($php_errormsg) {
-        	$error_arose = true;
-        	$php_last_errormsg = $php_errormsg;
-            continue;
-        }
-        if (PEAR::isError($result)) {
-            $_this->error = $result->getMessage();
-        	$error_arose = true;
-        	$_this->last_error = $_this->error;
-            continue;
-        }
+		} catch (Exception $e) {
+			$error_arose = true;
+			$_this->error = $e->getMessage();
+			$_this->last_error = $_this->error;
+			continue;
+		}
 
         $return = array();
-        $result = $http->getResponseBody();
 
         if (preg_match_all("/^([^=]+)=(.*)$/m", $result, $preg)) {
             foreach($preg[1] as $k => $v) {
