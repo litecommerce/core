@@ -76,11 +76,10 @@ web_dir = ""
 ;
 [log_details]
 ;type = file
-;type = debug
 ;type = client
 type = "null"
 name = "var/log/xlite.log.php"
-level = LOG_DEBUG
+level = PEAR_LOG_DEBUG
 ident = "XLite"
 suppress_errors = Off
 suppress_logging_errors = Off

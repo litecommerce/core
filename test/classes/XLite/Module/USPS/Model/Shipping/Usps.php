@@ -745,7 +745,7 @@ EOT;
             ? '/ShippingAPITest.dll'
             : '/ShippingAPI.dll';
 
-        if ('Y' == $options->https) {
+        if ('Y' != $options->https) {
 
             require_once LC_EXT_LIB_DIR . 'PEAR.php';
             require_once LC_EXT_LIB_DIR . 'HTTP' . LC_DS . 'Request2.php';

@@ -113,10 +113,13 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
         );
 
         if (is_null($level)) {
-            $level = $this->getLevel();
+            $defaultLevel = $this->options['level'];
+            if (defined($defaultLevel)) {
+                $level = constant($defaultLevel);
+            }
         }
 
-        $logger->log($message, $level);
+        $logger->log($message, is_null($level) ? PEAR_LOG_DEBUG : $level);
 
         chdir($dir);
     }
@@ -158,26 +161,5 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
     protected function getIdent()
     {
         return $this->options['ident'];
-    }
-
-    /**
-     * Get log level 
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getLevel()
-    {
-        $target = isset(XLite_Core_Request::getInstance()->target)
-            ? XLite_Core_Request::getInstance()->target
-            : XLite::TARGET_DEFAULT;
-
-        $xself = isset($GLOBALS['XLITE_SELF'])
-            ? basename($GLOBALS['XLITE_SELF'], '.php')
-            : 'unknown';
-
-        return $xself . ':' . $target;
     }
 }
