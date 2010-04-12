@@ -721,11 +721,11 @@ class XLite_Model_Abstract extends XLite_Base
      * @param float $price Currency value
      *  
      * @return string
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function formatCurrency($price)
+    public function formatCurrency($price)
     {
         return sprintf('%.02f', round(doubleval($price), 2));
     }
