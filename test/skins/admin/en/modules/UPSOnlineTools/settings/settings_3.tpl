@@ -1,4 +1,4 @@
-<span IF="message" class="ErrorMessage">{message}<br/><br/></span>
+<span IF="getMessage()" class="ErrorMessage">{getMessage()}<br/><br/></span>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr valign="top">

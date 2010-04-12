@@ -58,6 +58,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         'XLite_View_Subcategories'    => 'Subcategories',
         'XLite_View_CategoryProducts' => 'Category products list',
         'XLite_View_ProductBox'       => 'Product block',
+        'XLite_View_PoweredBy'        => '\'Powered by\' block',
     );
 
     /**
