@@ -136,7 +136,7 @@ class XLite_Module_USPS_Model_Shipping_Usps extends XLite_Model_Shipping_Online
     );
 
     /**
-     * XPath obkect
+     * XPath object
      * 
      * @var    DOMXPath
      * @access protected

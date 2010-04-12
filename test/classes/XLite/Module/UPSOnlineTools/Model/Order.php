@@ -1,93 +1,103 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* Class represens an order.
-*
-* @package Module_UPSOnlineTools
-* @access public
-* @version $Id$
-*/
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage Model
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
 
+/**
+ * Order
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
-{	
-	public $_ups_containers = null;
+{
+    const PACKAGING_TYPE_NONE = 0;
+    const PACKAGING_TYPE_PACKAGE = 2;
 
-	public function __construct($id=null)
-	{
-		parent::__construct($id);
-		$this->fields["ups_containers"] = base64_encode(serialize(array()));
-	}
+    // 0 - Fixed size
+    const BINPACKING_SIMPLE_FIXED_SIZE = 0;
+    // 1 - Max size
+    const BINPACKING_SIMPLE_MAX_SIZE = 1;
+    // 2 - Bin Packing
+    const BINPACKING_NORMAL_ALGORITHM = 2;
+    // 3 - Bin Packing oversize
+    const BINPACKING_OVERSIZE_ALGORITHM = 3;
 
-	function assignFirstShippingRate()
-	{
-		$rates = $this->get("shippingRates");
-		$new_rate = array_shift($rates);
-		$this->set("shippingMethod", $new_rate->get("shipping"));
-	}
+    public $_ups_containers = null;
+
+    /**
+     * Constructor
+     * 
+     * @param mixed $id Unique id
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct($id = null)
+    {
+        parent::__construct($id);
+
+        $this->fields['ups_containers'] = base64_encode(serialize(array()));
+    }
+
+    function assignFirstShippingRate()
+    {
+        $rates = $this->get("shippingRates");
+        $new_rate = array_shift($rates);
+        $this->set("shippingMethod", $new_rate->get("shipping"));
+    }
 
     function getCarrier()
-	{
+    {
         if (!isset($this->_carrier)) {
             $carriers = $this->getCarriers();
 
-			if ($this->get("shipping_id")) {
-				$sm = new XLite_Model_Shipping();
+            if ($this->get("shipping_id")) {
+                $sm = new XLite_Model_Shipping();
 
-				// return NULL if shipping method not available
-				if (!$sm->find("shipping_id='".$this->get("shipping_id")."' AND enabled='1'")) {
-					$this->assignFirstShippingRate();
-					$this->_carrier = null;
-					return "";
-				}
+                // return NULL if shipping method not available
+                if (!$sm->find("shipping_id='".$this->get("shipping_id")."' AND enabled='1'")) {
+                    $this->assignFirstShippingRate();
+                    $this->_carrier = null;
+                    return "";
+                }
 
-				// return NULL if shipping class not defined
-				if (!class_exists('XLite_Model_Shipping_' . $sm->get('class'))) {
-					$this->assignFirstShippingRate();
-					$this->_carrier = null;
-					return '';
+                // return NULL if shipping class not defined
+                if (!class_exists('XLite_Model_Shipping_' . $sm->get('class'))) {
+                    $this->assignFirstShippingRate();
+                    $this->_carrier = null;
+                    return '';
                 }
                 return $this->_carrier = $sm->get("class");
-			}
+            }
 
-			$this->_carrier = ((count($carriers) > 1) ? $this->getComplex('shippingMethod.class') : "");
+            $this->_carrier = ((count($carriers) > 1) ? $this->getComplex('shippingMethod.class') : "");
         }
         return $this->_carrier;
     }
@@ -122,42 +132,92 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
 
     function calcShippingRates()
     {
-		$return = parent::calcShippingRates();
-        uasort($return, 'cmp_carrier_array');
+        $return = parent::calcShippingRates();
+
+        uasort($return, array($this, 'getShippingRatesOrderCallback'));
+
         $this->_shippingRates = $return;
+
         return $this->_shippingRates;
     }
 
-	function set($name, $value)
-	{
-		if ($name == "ups_containers") {
-			$value = base64_encode(serialize((array)$value));
-		}
+    public function getShippingRatesOrderCallback($a, $b)
+    {
+        $class_a = $a->getComplex('shipping.class');
+        $class_b = $b->getComplex('shipping.class');
 
-		parent::set($name, $value);
-	}
+        if ($class_a == 'ups' && $class_b != 'ups') {
+            return false;
+        }
 
-	function get($name)
-	{
-		$value = parent::get($name);
+        if ($class_b == 'ups' && $class_a != 'ups') {
+            return true;
+        }
 
-		if ($name == "ups_containers") {
-			$value = unserialize(base64_decode($value));
-			if (!is_array($value)) {
-				$value = array();
-			}
-		}
+        $pos_a = $a->getComplex('shipping.order_by');
+        $pos_b = $b->getComplex('shipping.order_by');
 
-		return $value;
-	}
+        return ($pos_a > $pos_b);
+    }
 
-	function getUPSContainersFingerprint()
-	{
-		$raw = parent::get("ups_containers");
-		return md5($raw);
-	}
+    /**
+     * Setter
+     * 
+     * @param string $name  Property name
+     * @param mixed  $value Property value
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function set($name, $value)
+    {
+        if ('ups_containers' == $name) {
+            $value = base64_encode(serialize((array)$value));
+        }
 
-	function ups_online_tools_getItemsFingerprint()
+        parent::set($name, $value);
+    }
+
+    /**
+     * Getter
+     * 
+     * @param string $name Property name
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function get($name)
+    {
+        $value = parent::get($name);
+
+        if ('ups_containers' == $name) {
+            $value = unserialize(base64_decode($value));
+            if (!is_array($value)) {
+                $value = array();
+            }
+        }
+
+        return $value;
+    }
+
+    /**
+     * Get UPS containers data fingerprint 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getUPSContainersFingerprint()
+    {
+        return md5(parent::get('ups_containers'));
+    }
+
+    function ups_online_tools_getItemsFingerprint()
     {
         if ($this->isEmpty()) {
             return false;
@@ -177,353 +237,337 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
         return md5(serialize($result));
     }
 
-	function getPackItems()
-	{
-		$items = array();
-		$global_id = 1;
-		foreach ((array)$this->get("items") as $item) {
-			for ($i = 0; $i < $item->get("amount"); $i++) {
-				$obj = $item->get("packItem");
-				$obj->set("GlobalId", $global_id);
+    function getPackItems()
+    {
+        $items = array();
+        $global_id = 1;
+        foreach ((array)$this->get("items") as $item) {
+            for ($i = 0; $i < $item->get("amount"); $i++) {
+                $obj = $item->get("packItem");
+                $obj->set("GlobalId", $global_id);
 
-				$items[] = $obj;
-			}
+                $items[] = $obj;
+            }
 
-			$global_id++;
-		}
+            $global_id++;
+        }
 
-		return $items;
-	}
+        return $items;
+    }
 
-	function packOrderItems(&$failed_items)
-	{
-		$containers = array();
+    function packOrderItems(&$failed_items)
+    {
+        $containers = array();
 
-		// build list of all used packaging
-		$packaging_ids = array($this->xlite->getComplex('config.UPSOnlineTools.packaging_type'));
-		foreach ((array)$this->get("items") as $item) {
-			$packaging_ids[] = $item->getComplex('product.ups_packaging');
-		}
-		$packaging_ids = array_unique($packaging_ids);
+        // build list of all used packaging
+        $packaging_ids = array($this->xlite->getComplex('config.UPSOnlineTools.packaging_type'));
+        foreach ((array)$this->get("items") as $item) {
+            $packaging_ids[] = $item->getComplex('product.ups_packaging');
+        }
+        $packaging_ids = array_unique($packaging_ids);
 
 
-		// process order items
-		$items = $this->get("packItems");
+        // process order items
+        $items = $this->get("packItems");
 
-		$itemsProcess = array();
-		$itemsSkip = array();
-		$itemsFailed = array();
+        $itemsProcess = array();
+        $itemsSkip = array();
+        $itemsFailed = array();
 
-		$packing_algorithm = $this->xlite->getComplex('config.UPSOnlineTools.packing_algorithm');
+        $packing_algorithm = $this->xlite->getComplex('config.UPSOnlineTools.packing_algorithm');
 
-		// prevent execution timeout.
-		if (count($items) > $this->xlite->getComplex('config.UPSOnlineTools.packing_limit')) {
-			$packing_algorithm = BINPACKING_SIMPLE_MAX_SIZE;
-		}
+        // prevent execution timeout.
+        if (count($items) > $this->xlite->getComplex('config.UPSOnlineTools.packing_limit')) {
+            $packing_algorithm = self::BINPACKING_SIMPLE_MAX_SIZE;
+        }
 
-		$is_single_container = false;
-		if (in_array($packing_algorithm, array(BINPACKING_SIMPLE_FIXED_SIZE, BINPACKING_SIMPLE_MAX_SIZE))) {
-			$is_single_container = true;
-		}
+        $is_single_container = false;
+        if (in_array($packing_algorithm, array(self::BINPACKING_SIMPLE_FIXED_SIZE, self::BINPACKING_SIMPLE_MAX_SIZE))) {
+            $is_single_container = true;
+        }
 
-		// Step #1:
-		// try to pack all item in product-defined containers
-		foreach ($packaging_ids as $packaging_id) {
-			$itemsProcess = array();
-			foreach ($items as $item) {
-				$packaging = $item->get("packaging");
+        // Step #1:
+        // try to pack all item in product-defined containers
+        foreach ($packaging_ids as $packaging_id) {
+            $itemsProcess = array();
+            foreach ($items as $item) {
+                $packaging = $item->get("packaging");
 
-				if ($packaging == PACKAGING_TYPE_NONE) {
-					$packaging = $this->xlite->getComplex('config.UPSOnlineTools.packaging_type');
-				}
-				if ($packaging == $packaging_id || $is_single_container) {
-					$itemsProceed[] = $item;
-				} else {
-					$itemsSkip[] = $item;
-				}
-			}
+                if ($packaging == self::PACKAGING_TYPE_NONE) {
+                    $packaging = $this->xlite->getComplex('config.UPSOnlineTools.packaging_type');
+                }
+                if ($packaging == $packaging_id || $is_single_container) {
+                    $itemsProceed[] = $item;
+                } else {
+                    $itemsSkip[] = $item;
+                }
+            }
 
-			$items = $itemsSkip;
-			$itemsSkip = array();
+            $items = $itemsSkip;
+            $itemsSkip = array();
 
-			if (is_array($itemsProceed) && count($itemsProceed) > 0) {
-				$result = $this->_packOrderItems($itemsProceed, $packing_algorithm, $packaging_id);
-				$itemsFailed = array_merge($itemsFailed, $itemsProceed);
-				if (is_array($result) && count($result) > 0) {
-					$containers = array_merge($containers, $result);
-				}
+            if (is_array($itemsProceed) && count($itemsProceed) > 0) {
+                $result = $this->_packOrderItems($itemsProceed, $packing_algorithm, $packaging_id);
+                $itemsFailed = array_merge($itemsFailed, $itemsProceed);
+                if (is_array($result) && count($result) > 0) {
+                    $containers = array_merge($containers, $result);
+                }
 
-				$itemsProceed = array();
-			}
-		}
+                $itemsProceed = array();
+            }
+        }
 
-		$items = $itemsFailed;
-		$itemsFailed = array();
+        $items = $itemsFailed;
+        $itemsFailed = array();
 
-		// Step #2
-		// We have unpacked items,
-		// try to pack with UPS module params
-		if (is_array($items) && count($items) > 0) {
-			$result = $this->_packOrderItems($items, null, null);
-			if (is_array($result) && count($result) > 0) {
-				$containers = array_merge($containers, $result);
-			}
-		}
+        // Step #2
+        // We have unpacked items,
+        // try to pack with UPS module params
+        if (is_array($items) && count($items) > 0) {
+            $result = $this->_packOrderItems($items, null, null);
+            if (is_array($result) && count($result) > 0) {
+                $containers = array_merge($containers, $result);
+            }
+        }
 
-		// Step #3
-		// We still have items.
-		// Try to put them in container with max-size Packing algorithm.
-		if (is_array($items) && count($items) > 0) {
-			$result = $this->_packOrderItems($items, BINPACKING_SIMPLE_MAX_SIZE, PACKAGING_TYPE_PACKAGE);
-			if (is_array($result) && count($result) > 0) {
-				$containers = array_merge($containers, $result);
-			}
-		}
+        // Step #3
+        // We still have items.
+        // Try to put them in container with max-size Packing algorithm.
+        if (is_array($items) && count($items) > 0) {
+            $result = $this->_packOrderItems($items, self::BINPACKING_SIMPLE_MAX_SIZE, self::PACKAGING_TYPE_PACKAGE);
+            if (is_array($result) && count($result) > 0) {
+                $containers = array_merge($containers, $result);
+            }
+        }
 
-		$ups_containers = "";
-		if (count($items) <= 0) {
-			// All items packed in containers
-			$ups_containers = (array) $this->prepareUpsContainers($containers);
-		} else {
-			// Failed to pack some items
-			$ups_containers = base64_encode(serialize(array()));
-			$failed_items = $items;
-		}
+        $ups_containers = "";
+        if (count($items) <= 0) {
+            // All items packed in containers
+            $ups_containers = (array) $this->prepareUpsContainers($containers);
+        } else {
+            // Failed to pack some items
+            $ups_containers = base64_encode(serialize(array()));
+            $failed_items = $items;
+        }
 
-		$this->set("ups_containers", $ups_containers);
+        $this->set("ups_containers", $ups_containers);
 
-		if (!$this->xlite->get("PromotionEnabled")) {
-			$this->update();
-		}
+        if (!$this->xlite->get("PromotionEnabled")) {
+            $this->update();
+        }
 
-		return $containers;
-	}
+        return $containers;
+    }
 
-	function prepareUpsContainers($containers)
-	{
-		$export_data = array();
-		foreach ((array)$containers as $container) {
-			$export_data[] = $container->export();
-		}
+    function prepareUpsContainers($containers)
+    {
+        $export_data = array();
+        foreach ((array)$containers as $container) {
+            $export_data[] = $container->export();
+        }
 
-		$container_index = 1;
-		foreach ((array)$export_data as $conId=>$con) {
-			$export_data[$conId]["container_id"] = $container_index++;
-		}
-		return $export_data;
-	}
+        $container_index = 1;
+        foreach ((array)$export_data as $conId=>$con) {
+            $export_data[$conId]["container_id"] = $container_index++;
+        }
+        return $export_data;
+    }
 
-	function _packOrderItems(&$items, $ptype=null, $packaging_type=null, $extra=array())
-	{
-		require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
+    function _packOrderItems(&$items, $ptype=null, $packaging_type=null, $extra=array())
+    {
+        require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
 
-		$ups_containers = array();
+        $ups_containers = array();
 
-		if (is_null($ptype)) {
-			$ptype = $this->xlite->getComplex('config.UPSOnlineTools.packing_algorithm');
-		}
+        if (is_null($ptype)) {
+            $ptype = $this->xlite->getComplex('config.UPSOnlineTools.packing_algorithm');
+        }
 
-		if (is_null($packaging_type)) {
-			$packaging_type = $this->xlite->getComplex('config.UPSOnlineTools.packaging_type');
-		}
+        if (is_null($packaging_type)) {
+            $packaging_type = $this->xlite->getComplex('config.UPSOnlineTools.packaging_type');
+        }
 
-		$total_weight = 0;
+        $total_weight = 0;
 
-		$is_additional_handling = false;
-		$declared_value = 0;
+        $is_additional_handling = false;
+        $declared_value = 0;
 
-		foreach ($items as $item) {
-			$declared_value += $item->get("declaredValue");
-			$total_weight += $item->get("weight");
-		}
+        foreach ($items as $item) {
+            $declared_value += $item->get("declaredValue");
+            $total_weight += $item->get("weight");
+        }
 
-		// process with containers...
-		switch ($ptype) {
-			case BINPACKING_SIMPLE_FIXED_SIZE:
-			case BINPACKING_SIMPLE_MAX_SIZE:
-			default:
+        // process with containers...
+        switch ($ptype) {
+            case self::BINPACKING_SIMPLE_FIXED_SIZE:
+            case self::BINPACKING_SIMPLE_MAX_SIZE:
+            default:
 
-				if ($ptype == BINPACKING_SIMPLE_MAX_SIZE) {
-					// Max size
-					$_width = 0;
-					$_length = 0;
-					$_height = 0;
+                if ($ptype == self::BINPACKING_SIMPLE_MAX_SIZE) {
+                    // Max size
+                    $_width = 0;
+                    $_length = 0;
+                    $_height = 0;
 
-					foreach ($items as $item) {
-						$_width = max($_width, $item->get("width"));
-						$_length = max($_length, $item->get("length"));
-						$_height = max($_height, $item->get("height"));
-					}
-				} else {
-					// fixed-size container or unknown
-					$_width = $this->xlite->getComplex('config.UPSOnlineTools.width');
-					$_length = $this->xlite->getComplex('config.UPSOnlineTools.length');
-					$_height = $this->xlite->getComplex('config.UPSOnlineTools.height');
-				}
+                    foreach ($items as $item) {
+                        $_width = max($_width, $item->get("width"));
+                        $_length = max($_length, $item->get("length"));
+                        $_height = max($_height, $item->get("height"));
+                    }
+                } else {
+                    // fixed-size container or unknown
+                    $_width = $this->xlite->getComplex('config.UPSOnlineTools.width');
+                    $_length = $this->xlite->getComplex('config.UPSOnlineTools.length');
+                    $_height = $this->xlite->getComplex('config.UPSOnlineTools.height');
+                }
 
-				$weight_limit = 150; // lbs
+                $weight_limit = 150; // lbs
 
-				$container = new XLite_Module_UPSOnlineTools_Model_Container();
-				$container->setDimensions($_width, $_length, $_height);
-				$container->setWeightLimit($weight_limit);
-				$container->setContainerType(PACKAGING_TYPE_PACKAGE); // Package type
+                $container = new XLite_Module_UPSOnlineTools_Model_Container();
+                $container->setDimensions($_width, $_length, $_height);
+                $container->setWeightLimit($weight_limit);
+                $container->setContainerType(self::PACKAGING_TYPE_PACKAGE); // Package type
 
-				$ups_containers[] = $container;
+                $ups_containers[] = $container;
 
-				// pack items in containers
-				for ($iid = 0; $iid < count($items);) {
+                // pack items in containers
+                for ($iid = 0; $iid < count($items);) {
 
-					$item = $items[$iid];
-					$item_weight = $item->get("weight");
+                    $item = $items[$iid];
+                    $item_weight = $item->get("weight");
 
-					if ($item_weight > $weight_limit)
-						return false;
+                    if ($item_weight > $weight_limit)
+                        return false;
 
-					$continue = false;
-					foreach ($ups_containers as $i=>$cont) {
-						$c_weight = $cont->getWeight();
-						$declared_value = $cont->getDeclaredValue();
+                    $continue = false;
+                    foreach ($ups_containers as $i=>$cont) {
+                        $c_weight = $cont->getWeight();
+                        $declared_value = $cont->getDeclaredValue();
 
-						if ($c_weight + $item_weight <= $weight_limit) {
-							$ups_containers[$i]->addExtraItemIds($item->get("OrderItemId"));
-							$ups_containers[$i]->setWeight($c_weight + $item_weight);
-							$ups_containers[$i]->setDeclaredValue($declared_value + $item->get("declaredValue"));
+                        if ($c_weight + $item_weight <= $weight_limit) {
+                            $ups_containers[$i]->addExtraItemIds($item->get("OrderItemId"));
+                            $ups_containers[$i]->setWeight($c_weight + $item_weight);
+                            $ups_containers[$i]->setDeclaredValue($declared_value + $item->get("declaredValue"));
 
-							if ($item->get("additional_handling")) {
-								$ups_containers[$i]->setAdditionalHandling(true);
-							}
+                            if ($item->get("additional_handling")) {
+                                $ups_containers[$i]->setAdditionalHandling(true);
+                            }
 
-							$iid++;
-							$continue = true;
+                            $iid++;
+                            $continue = true;
 
-							break;
-						}
-					}
+                            break;
+                        }
+                    }
 
-					// pack next item
-					if ($continue)
-						continue;
+                    // pack next item
+                    if ($continue)
+                        continue;
 
-					// add new container
-					$c = new XLite_Module_UPSOnlineTools_Model_Container();
-					$c->setDimensions($_width, $_length, $_height);
-					$c->setWeightLimit($weight_limit);
-					$c->setContainerType(PACKAGING_TYPE_PACKAGE); // Package type
-					$ups_containers[] = $c;
-				}
+                    // add new container
+                    $c = new XLite_Module_UPSOnlineTools_Model_Container();
+                    $c->setDimensions($_width, $_length, $_height);
+                    $c->setWeightLimit($weight_limit);
+                    $c->setContainerType(self::PACKAGING_TYPE_PACKAGE); // Package type
+                    $ups_containers[] = $c;
+                }
 
-				$items = array();
-			break;
-			////////////////////////////////////////////////////////
-			case BINPACKING_NORMAL_ALGORITHM:	// pack all items in one package
-				$sm = new XLite_Module_UPS_Model_Shipping_Ups();
-				$pack = $sm->getUPSContainerDims($packaging_type);
+                $items = array();
+            break;
+            ////////////////////////////////////////////////////////
+            case self::BINPACKING_NORMAL_ALGORITHM:    // pack all items in one package
+                $sm = new XLite_Module_UPS_Model_Shipping_Ups();
+                $pack = $sm->getUPSContainerDims($packaging_type);
 
-				$const_items = $items;
-				$ups_containers = UPSOnlineTools_solve_binpack($pack["width"], $pack["length"], $pack["height"], $pack["weight_limit"], $items);
+                $const_items = $items;
+                $ups_containers = UPSOnlineTools_solve_binpack($pack["width"], $pack["length"], $pack["height"], $pack["weight_limit"], $items);
 
-				// if can't place all items in defined container - fit container size
-				if ($ups_containers === false || count($ups_containers) != 1 || count($items) > 0) {
-					$summ = 0;
-					foreach ($const_items as $item) {
-						$summ += $item->get("width");
-						$summ += $item->get("length");
-						$summ += $item->get("height");
-					}
+                // if can't place all items in defined container - fit container size
+                if ($ups_containers === false || count($ups_containers) != 1 || count($items) > 0) {
+                    $summ = 0;
+                    foreach ($const_items as $item) {
+                        $summ += $item->get("width");
+                        $summ += $item->get("length");
+                        $summ += $item->get("height");
+                    }
 
-					// calc average container size
-					$medium_width = ceil($summ / (max(1, count($const_items)) * 3));
-					$inc_width = $medium_width * 0.1;
+                    // calc average container size
+                    $medium_width = ceil($summ / (max(1, count($const_items)) * 3));
+                    $inc_width = $medium_width * 0.1;
 
-					// iterate while all items will pack in single container
-					$fuse = 35;
-					do {
-						$items = $const_items;
-						$ups_containers = UPSOnlineTools_solve_binpack($medium_width, $medium_width, $medium_width, 0, $items);
-						$medium_width += $inc_width;
+                    // iterate while all items will pack in single container
+                    $fuse = 35;
+                    do {
+                        $items = $const_items;
+                        $ups_containers = UPSOnlineTools_solve_binpack($medium_width, $medium_width, $medium_width, 0, $items);
+                        $medium_width += $inc_width;
 
-						// return with error after N=35 tries.
-						if ($fuse-- <= 0) {
-							return false;
-						}
+                        // return with error after N=35 tries.
+                        if ($fuse-- <= 0) {
+                            return false;
+                        }
 
-						// increase incremental step on each iteration
-						$inc_width += $inc_width * 0.1;
-					} while($ups_containers === false || count($ups_containers) > 1 || count($items) > 0);
+                        // increase incremental step on each iteration
+                        $inc_width += $inc_width * 0.1;
+                    } while($ups_containers === false || count($ups_containers) > 1 || count($items) > 0);
 
-					$packaging_type = PACKAGING_TYPE_PACKAGE;	// Package type 
-				}
+                    $packaging_type = self::PACKAGING_TYPE_PACKAGE;    // Package type 
+                }
 
-				foreach ($ups_containers as $k=>$v) {
-					$ups_containers[$k]->setContainerType($packaging_type);
-				}
-			break;
-			////////////////////////////////////////////////////////
-			case BINPACKING_OVERSIZE_ALGORITHM:	// pack items in similar containers
-				$sm = new XLite_Module_UPS_Model_Shipping_Ups();
-				$pack = $sm->getUPSContainerDims($packaging_type);
+                foreach ($ups_containers as $k=>$v) {
+                    $ups_containers[$k]->setContainerType($packaging_type);
+                }
+            break;
+            ////////////////////////////////////////////////////////
+            case self::BINPACKING_OVERSIZE_ALGORITHM:    // pack items in similar containers
+                $sm = new XLite_Module_UPS_Model_Shipping_Ups();
+                $pack = $sm->getUPSContainerDims($packaging_type);
 
-				$ups_containers = UPSOnlineTools_solve_binpack($pack["width"], $pack["length"], $pack["height"], $pack["weight_limit"], $items);
+                $ups_containers = UPSOnlineTools_solve_binpack($pack["width"], $pack["length"], $pack["height"], $pack["weight_limit"], $items);
 
-				if ($ups_containers === false/* || count($items) > 0*/) {
-					// return "oversized" items
-					return false;
-				}
+                if ($ups_containers === false/* || count($items) > 0*/) {
+                    // return "oversized" items
+                    return false;
+                }
 
-				foreach ($ups_containers as $k=>$v) {
-					$ups_containers[$k]->setContainerType($packaging_type);
-				}
-			break;
-		}
+                foreach ($ups_containers as $k=>$v) {
+                    $ups_containers[$k]->setContainerType($packaging_type);
+                }
+            break;
+        }
 
-		if (!is_array($ups_containers) || count($ups_containers) <= 0) {
-			return false;
-		}
+        if (!is_array($ups_containers) || count($ups_containers) <= 0) {
+            return false;
+        }
 
 
 // TODO: ..............
-		// Analyze containers for AdditionalHandling condition(s)
-		if ($ptype == BINPACKING_NORMAL_ALGORITHM || $ptype == BINPACKING_OVERSIZE_ALGORITHM) {
-			foreach ($ups_containers as $container_id=>$container) {
-				$found = false;
+        // Analyze containers for AdditionalHandling condition(s)
+        if ($ptype == self::BINPACKING_NORMAL_ALGORITHM || $ptype == self::BINPACKING_OVERSIZE_ALGORITHM) {
+            foreach ($ups_containers as $container_id=>$container) {
+                $found = false;
 
-				foreach ((array)$container->getLevels() as $level) {
-					foreach ((array)$level->getItems() as $item) {
-						$item_id = $item->get("item_id");
+                foreach ((array)$container->getLevels() as $level) {
+                    foreach ((array)$level->getItems() as $item) {
+                        $item_id = $item->get("item_id");
 
-						$oi = new XLite_Model_OrderItem();
-						if ($oi->find("item_id='".addslashes($item_id)."'")) {
-							if ($oi->getComplex('product.ups_add_handling')) {
-								$ups_containers[$container_id]->setAdditionalHandling(true);
-								$found = true;
-								break;
-							}
-						}
-					}
+                        $oi = new XLite_Model_OrderItem();
+                        if ($oi->find("item_id='".addslashes($item_id)."'")) {
+                            if ($oi->getComplex('product.ups_add_handling')) {
+                                $ups_containers[$container_id]->setAdditionalHandling(true);
+                                $found = true;
+                                break;
+                            }
+                        }
+                    }
 
-					if ($found) {
-						break;
-					}
-				}
-			}
-		}
+                    if ($found) {
+                        break;
+                    }
+                }
+            }
+        }
 
-		return $ups_containers;
-	}
+        return $ups_containers;
+    }
 }
-
-function cmp_carrier_array($a, $b)
-{
-    $class_a = $a->getComplex('shipping.class');
-    $class_b = $b->getComplex('shipping.class');
-    if ($class_a == 'ups' && $class_b != 'ups') return false;
-    if ($class_b == 'ups' && $class_a != 'ups') return true;
-    $pos_a = $a->getComplex('shipping.order_by');
-    $pos_b = $b->getComplex('shipping.order_by');
-    return ($pos_a > $pos_b);
-}
-
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

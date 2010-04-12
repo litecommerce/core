@@ -108,7 +108,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Product extends XLite_Control
 
 		$fields = array("ups_width", "ups_height", "ups_length");
 		foreach ($fields as $field) {
-			$properties[$field] = max(MIN_DIM_SIZE, $this->get($field));
+			$properties[$field] = max(XLite_Module_UPSOnlineTools_Model_PackItem::MIN_DIM_SIZE, $this->get($field));
 		}
 
 		$properties["ups_packaging"] = $this->get("ups_packaging");

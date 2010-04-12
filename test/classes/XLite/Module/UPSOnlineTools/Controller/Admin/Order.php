@@ -185,7 +185,10 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Order extends XLite_Controlle
 
 		$order = $this->get("order");
 
-		if (UPSOnlineTools_gdlib_valid() && $this->config->getComplex('UPSOnlineTools.display_gdlib')) {
+		if (
+			XLite_Module_UPSOnlineTools_Main::isGDlibEnabled()
+			&& $this->config->UPSOnlineTools->display_gdlib
+		) {
 			// GDlib
 			return '<img src="cart.php?target=image&mode=ups_container_level_details&order_id='.$order->get("order_id").'&container='.$container_id.'&level='.$level_id.'&id='.$this->xlite->session->getID().'" border=2 alt="Container #'.($container_id + 1).', Layer #'.($level_id + 1).'">';
 		}

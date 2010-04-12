@@ -715,9 +715,19 @@ class XLite_Model_Abstract extends XLite_Base
 
     // END IMPORT/EXPORT methods }}}
 
-    function formatCurrency($price)
+    /**
+     * Get formatted currency value
+     * 
+     * @param float $price Currency value
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function formatCurrency($price)
     {
-        return sprintf("%.02f", round(doubleval($price), 2));
+        return sprintf('%.02f', round(doubleval($price), 2));
     }
 
 

@@ -56,6 +56,16 @@ class XLite_Model_XML extends XLite_Base
     protected $error = '';
 
     /**
+     * Parser encode character set
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $parserEncode = 'ISO-8859-1';
+
+    /**
      * Postprocessed XML with errors placeholder 
      * 
      * @var    string
@@ -106,7 +116,7 @@ class XLite_Model_XML extends XLite_Base
             $this->doDie('wrong xml');
         }
 
-        $this->xml_parser = xml_parser_create();
+        $this->xml_parser = xml_parser_create($this->parserEncode);
 
         $xml = trim($xml);
 

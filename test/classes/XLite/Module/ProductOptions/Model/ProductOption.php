@@ -261,22 +261,6 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
       	return $opt->weight_modifier;
     } // }}} 
 
-    function formatCurrency($price)
-    {   
-    	$isNewFC = $this->xlite->get("ProductOptionsNewFC");
-    	if (!isset($isNewFC)) {
-			$classMethods = array_map("strtolower", get_class_methods(get_parent_class(get_class($this))));
-			$isNewFC = in_array("formatcurrency", $classMethods);
-			$this->xlite->set("ProductOptionsNewFC", $isNewFC);
-		}
-
-		if ($isNewFC) {
-			return parent::formatCurrency($price);
-		} else {
-        	return round($price, 2);
-        }
-    }               
-
 	function update() // {{{ 
 	{
 		if ($this->xlite->get("InventoryTrackingEnabled")) {

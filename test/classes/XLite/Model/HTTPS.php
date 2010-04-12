@@ -310,6 +310,7 @@ class XLite_Model_HTTPS extends XLite_Base
         'timeout',
         'user',
         'password',
+        'urlencoded',
     );
 
     /**
