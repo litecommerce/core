@@ -175,5 +175,21 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
 
         return $this->shippingAddressFields;
     }
+
+    /**
+     * Get a list of CSS files required to display the widget properly 
+     * 
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = $this->getDir() . '/profile/profile.css';
+
+        return $list;
+    }
 }
 
