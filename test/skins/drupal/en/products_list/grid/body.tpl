@@ -16,7 +16,7 @@
     <div>
       <widget class="XLite_View_AddedToCartMark" product="{product}" />
       <span class="draggable-mark">Drag me to the cart</span>
-      <a IF="isShowThumbnails()&product.hasThumbnail()" class="product-thumbnail" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}"><img src="{product.getThumbnailURL()}" alt="{product.name}" /></a>
+      <a IF="isShowThumbnails()&product.hasThumbnail()" class="product-thumbnail" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}"><widget class="XLite_View_Image" image="{product.getThumbnail()}" maxWidth="70" maxHeight="90" alt="{product.name}" /></a>
       <a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" class="product-name">{product.name:h}</a>
       <widget class="XLite_View_Price" product="{product}" displayOnlyPrice="true" IF="isShowPrice()" />
       <widget class="XLite_View_BuyNow" product="{product}" IF="isShowAdd2Cart()" style="aux-button add-to-cart" />
