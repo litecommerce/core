@@ -104,8 +104,12 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
 
     /**
      * Return list of field-specific params
-     * NOTE - params order is make sence!
+     * 
+     * NOTE: params order is make sence!
      * You must pass them into constructor in the exact order as described here
+     *
+     * NOTE: keep this function synchronized 
+     * with the XLite_View_Model_Abstract::getFieldSchemaArgs() one
      * 
      * @return void
      * @access protected

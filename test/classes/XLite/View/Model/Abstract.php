@@ -42,6 +42,18 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     const PARAM_MODEL_OBJECT  = 'modelObject';
     const PARAM_FIELDSET_NAME = 'fieldsetName';
 
+    /**
+     * Indexes in field schemas 
+     */
+
+    const SCHEMA_CLASS      = 'class';
+    const SCHEMA_VALUE      = 'value';
+    const SCHEMA_REQUIRED   = 'required';
+    const SCHEMA_ATTRIBUTES = 'attributes';
+    const SCHEMA_NAME       = 'name';
+    const SCHEMA_LABEL      = 'label';
+    const SCHEMA_COMMENT    = 'comment';
+    
 
     /**
      * Unique name of current web form
@@ -309,6 +321,55 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
         );
     }
 
+    /**
+     * getFieldSchemaArgs 
+     * 
+     * NOTE: keep this function synchronized 
+     * with the XLite_View_FormField_Abstract::defineFieldParams() one
+     * 
+     * @param string $name node name
+     * @param array  $data field description
+     *  
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getFieldSchemaArgs($name, array $data)
+    {
+        return array(
+            array(),
+            isset($data[self::SCHEMA_NAME]) ? $data[self::SCHEMA_NAME] : $this->composeFieldName($name),
+            isset($data[self::SCHEMA_VALUE]) ? $data[self::SCHEMA_VALUE] : $this->getFieldValue($name),
+            empty($data[self::SCHEMA_LABEL]) ? '' : $data[self::SCHEMA_LABEL],
+            !empty($data[self::SCHEMA_REQUIRED]),
+            empty($data[self::SCHEMA_COMMENT]) ? '' : $data[self::SCHEMA_COMMENT],
+            empty($data[self::SCHEMA_ATTRIBUTES]) ? array() : $data[self::SCHEMA_ATTRIBUTES],
+        );
+    }
+
+
+    /**
+     * getFieldsBySchema 
+     * 
+     * @param array $schema field descriptions
+     *  
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getFieldsBySchema(array $schema)
+    {
+        $result = array();
+
+        foreach ($schema as $name => $data) {
+
+            $result[$name] = XLite_Model_Factory::createObjectInstance(
+                $data[self::SCHEMA_CLASS], $this->getFieldSchemaArgs($name, $data)
+            );
+        }
+
+        return $result;
+    }
 
     /**
      * Return list of form fields
