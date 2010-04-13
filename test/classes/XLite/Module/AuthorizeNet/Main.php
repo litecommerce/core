@@ -1,57 +1,46 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* Class description.
-*
-* @package Module_AuthorizeNet
-* @access public
-* @version $Id$
-*/
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage Model
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
+
+/**
+ * Authorize.NET module
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_Module_AuthorizeNet_Main extends XLite_Module_Abstract
 {
     /**
      * Module type
      *
-     * @var    int
-     * @access protected
-     * @since  3.0
+     * @return int
+     * @access public
+     * @since  3.0.0
      */
     public static function getType()
     {
@@ -61,9 +50,9 @@ class XLite_Module_AuthorizeNet_Main extends XLite_Module_Abstract
     /**
      * Module version
      *
-     * @var    string
-     * @access protected
-     * @since  3.0
+     * @return string
+     * @access public
+     * @since  3.0.0
      */
     public static function getVersion()
     {
@@ -73,21 +62,21 @@ class XLite_Module_AuthorizeNet_Main extends XLite_Module_Abstract
     /**
      * Module description
      *
-     * @var    string
-     * @access protected
-     * @since  3.0
+     * @return string
+     * @access public
+     * @since  3.0.0
      */
     public static function getDescription()
     {
         return 'Authorize.Net credit card payment processor';
-    }	
+    }    
 
     /**
      * Determines if we need to show settings form link
      *
      * @return bool
      * @access public
-     * @since  3.0
+     * @since  3.0.0
      */
     public static function showSettingsForm()
     {
@@ -99,11 +88,16 @@ class XLite_Module_AuthorizeNet_Main extends XLite_Module_Abstract
      *
      * @return string
      * @access public
-     * @since  3.0
+     * @since  3.0.0
      */
     public static function getSettingsForm()
     {
-       return "admin.php?target=payment_method&payment_method=authorizenet_cc";
+        XLite_Core_Converter::buildUrl(
+            'payment_method',
+            '',
+            array('payment_method' => 'authorizenet_cc'),
+            XLite::ADMIN_SELF
+        );
     }
 
     /**
@@ -111,7 +105,7 @@ class XLite_Module_AuthorizeNet_Main extends XLite_Module_Abstract
      *
      * @return void
      * @access public
-     * @since  3.0
+     * @since  3.0.0
      */
     public function init()
     {
@@ -120,11 +114,6 @@ class XLite_Module_AuthorizeNet_Main extends XLite_Module_Abstract
         $this->registerPaymentMethod('authorizenet_cc');
         $this->registerPaymentMethod('authorizenet_ch');
 
-		$this->xlite->set("AuthorizeNetEnabled", true);
+        $this->xlite->set('AuthorizeNetEnabled', true);
     }
 }
-
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>
