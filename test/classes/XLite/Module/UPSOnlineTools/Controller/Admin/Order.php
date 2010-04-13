@@ -106,7 +106,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Order extends XLite_Controlle
 
 	function getUPSContainerName($container_type)
 	{
-		$sm = new XLite_Module_UPS_Model_Shipping_Ups();
+		$sm = new XLite_Module_UPSOnlineTools_Model_Shipping_Ups();
 		$desc = $sm->getUPSContainerDims($container_type);
 		return $desc["name"];
 	}

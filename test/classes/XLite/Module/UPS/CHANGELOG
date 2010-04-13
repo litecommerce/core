@@ -1,9 +1,0 @@
-Version 2.3:
-- [+] Osipov - Improvement (0009795): If the module settings are not complete, the real time shipping rates are not calculated.
-- [!] 07 Mar 2005, Asd - Bug: The compiled code/templates cache was not cleaned up during the module uninstallation. Fixed.
-
-Version 2.2:
- - [!] 21 Feb 2005, Asd - Bug: The problem with missing shipping rates for countries which don't support lbs and are not Canada, United States or Europe countries. There was a misspelling in classes/modules/UPS/kernel/Shipping/ups.php so shipping methods are not shown. Fixed.
- 
-
-

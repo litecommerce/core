@@ -104,19 +104,6 @@ class XLite_Module_UPSOnlineTools_Main extends XLite_Module_Abstract
     }
 
     /**
-     * Return list of modules whitch are not allowed to be enbled at one time
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getMutualModules()
-    {
-        return array_merge(parent::getMutualModules(), array('UPS'));
-    }
-
-    /**
      * Initialize module 
      * 
      * @return void

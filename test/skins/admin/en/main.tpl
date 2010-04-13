@@ -178,8 +178,6 @@
 <widget module="Promotion" target="DiscountCoupons" template="common/dialog.tpl" body="modules/Promotion/coupons.tpl" head="Discount coupons">
 <widget module="Promotion" template="modules/Promotion/main.tpl">
 
-<widget module="UPS" target="ups" class="XLite_View_Tabber" body="{pageTemplate}" switch="target">
-<widget module="UPS" target="ups"  template="common/dialog.tpl" body="modules/UPS/test.tpl" head="UPS Live Test">
 <widget module="USPS" target="usps" class="XLite_View_Tabber" body="{pageTemplate}" switch="target">
 <widget module="USPS" target="usps"  template="common/dialog.tpl" body="modules/USPS/test.tpl" head="USPS Live Test">
 <widget module="Intershipper" target="intershipper" class="XLite_View_Tabber" body="{pageTemplate}" switch="target">

@@ -33,7 +33,6 @@
 <span IF="target=#states#">&nbsp;::&nbsp;<a href="admin.php?target=states" class="NavigationPath">States</a></span>
 <span IF="target=#usps#">&nbsp;::&nbsp;<a href="admin.php?target=usps" class="NavigationPath">Shipping settings :: USPS Settings</a></span>
 <span IF="target=#cps#">&nbsp;::&nbsp;<a href="admin.php?target=cps" class="NavigationPath">Shipping settings :: Canada Post Settings</a></span>
-<span IF="target=#ups#">&nbsp;::&nbsp;<a href="admin.php?target=ups" class="NavigationPath">Shipping settings :: UPS Settings</a></span>
 <span IF="target=#intershipper#">&nbsp;::&nbsp;<a href="admin.php?target=intershipper" class="NavigationPath">Shipping settings :: Intershipper Settings</a></span>
 <span IF="target=#css_edit#">&nbsp;::&nbsp;<a href="admin.php?target=css_edit" class="NavigationPath">CSS Editor</a></span>
 <span IF="target=#image_edit#">&nbsp;::&nbsp;<a href="admin.php?target=image_edit" class="NavigationPath">Image Editor</a></span>

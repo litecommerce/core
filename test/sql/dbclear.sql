@@ -45,7 +45,6 @@ DROP TABLE IF EXISTS xlite_special_offer_products;
 DROP TABLE IF EXISTS xlite_special_offers;
 DROP TABLE IF EXISTS xlite_states;
 DROP TABLE IF EXISTS xlite_upgrades;
-DROP TABLE IF EXISTS xlite_ups_cache;
 DROP TABLE IF EXISTS xlite_usps_int_cache;
 DROP TABLE IF EXISTS xlite_usps_nat_cache;
 DROP TABLE IF EXISTS xlite_wholesale_pricing;

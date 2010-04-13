@@ -38,7 +38,7 @@
 /* vim: set expandtab tabstop=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
 
 /**
-* Module_UPS_Admin_Dialog_shipping_settings description.
+* Shipping settings
 *
 * @package $Package$
 * @version $Id$

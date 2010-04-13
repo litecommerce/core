@@ -85,7 +85,7 @@ class XLite_Module_UPSOnlineTools_View_RegisterForm extends XLite_View_RegisterF
             return false;
         }
         else {
-            $obj = new XLite_Module_UPS_Model_Shipping_Ups();
+            $obj = new XLite_Module_UPSOnlineTools_Model_Shipping_Ups();
             $av_result = array();
 
 			# copy billing to shipping
