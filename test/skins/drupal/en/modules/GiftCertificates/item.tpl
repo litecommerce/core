@@ -17,7 +17,7 @@
 </td>
 
 <td class="item-thumbnail">
-  <a href="{buildURL(#gift_certificate#,##,_ARRAY_(#gcid#^item.gcid))}"><img src="images/modules/GiftCertificates/gift_certificate.gif" alt="Gift certificate" /></a>
+  <a href="{buildURL(#gift_certificate#,##,_ARRAY_(#gcid#^item.gcid))}"><img src="images/modules/GiftCertificates/gift_certificate.png" alt="Gift certificate" /></a>
 </td>
 
 <td class="item-info">
