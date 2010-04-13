@@ -21,8 +21,8 @@
         <a class="product-name" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^product.category.category_id))}">{product.name:h}</a>
         <br />
 
-        <widget class="XLite_View_Price" product="{product}" displayOnlyPrice="true" IF="isShowPrice()" />
-        <widget class="XLite_View_BuyNow" product="{product}" IF="isShowAdd2Cart()" style="aux-button add-to-cart" />
+{*        <widget class="XLite_View_Price" product="{product}" displayOnlyPrice="true" IF="isShowPrice()" /> *}
+        <widget class="XLite_View_BuyNow" product="{product}" IF="isShowAdd2Cart()" style="aux-button add-to-cart" showPrice="{isShowPrice()}" />
 
     </div>
 

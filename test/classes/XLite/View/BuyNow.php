@@ -41,7 +41,7 @@ class XLite_View_BuyNow extends XLite_View_Abstract
 
     const PARAM_PRODUCT = 'product';
     const PARAM_BUTTON_STYLE = 'style';
-
+    const PARAM_SHOW_PRICE = 'showPrice';
 
     /**
      * Return widget default template
@@ -69,6 +69,7 @@ class XLite_View_BuyNow extends XLite_View_Abstract
         $this->widgetParams += array(
             self::PARAM_PRODUCT      => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
             self::PARAM_BUTTON_STYLE => new XLite_Model_WidgetParam_String('Button style', ''),
+            self::PARAM_SHOW_PRICE => new XLite_Model_WidgetParam_String('Show the product price in the button', ''),
         );
     }
 
@@ -98,4 +99,18 @@ class XLite_View_BuyNow extends XLite_View_Abstract
     {
         return $this->getParam(self::PARAM_PRODUCT);
     }
+
+    /**
+     * Check whether the product price is to be shown as the button label
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isShowPrice()
+    {
+        return $this->getParam(self::PARAM_SHOW_PRICE);
+    }
+
 }
