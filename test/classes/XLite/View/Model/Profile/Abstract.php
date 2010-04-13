@@ -67,6 +67,18 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
     }
 
     /**
+     * getFormContentTemplate
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getFormContentTemplate()
+    {
+        return 'profile/form_content.tpl';
+    }
+
+    /**
      * getDefaultModelObjectClass
      *
      * @return string
@@ -130,10 +142,10 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
         if (!isset($this->billingAddressFields)) {
             $this->billingAddressFields = array(
                 'billingFirstname' => new XLite_View_FormField_Input_Text(
-                    array(), 'billing_firstname', $this->getFieldValue('billing_firstname'), 'Name', true
+                    array(), $this->composeFieldName('billing_firstname'), $this->getFieldValue('billing_firstname'), 'Name', true
                 ),
                 'billingAddress' => new XLite_View_FormField_Input_Text(
-                    array(), 'billing_address', $this->getFieldValue('billing_address'), 'Street', true
+                    array(), $this->composeFieldName('billing_address'), $this->getFieldValue('billing_address'), 'Street', true
                 ),
             );
         }
@@ -153,27 +165,15 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
         if (!isset($this->shippingAddressFields)) {
             $this->shippingAddressFields = array(
                 'shippingFirstname' => new XLite_View_FormField_Input_Text(
-                    array(), 'shipping_firstname', $this->getFieldValue('shipping_firstname'), 'Name', true
+                    array(), $this->composeFieldName('shipping_firstname'), $this->getFieldValue('shipping_firstname'), 'Name', true
                 ),
                 'shippingAddress' => new XLite_View_FormField_Input_Text(
-                    array(), 'shipping_address', $this->getFieldValue('shipping_address'), 'Street', true
+                    array(), $this->composeFieldName('shipping_address'), $this->getFieldValue('shipping_address'), 'Street', true
                 ),
             );
         }
 
         return $this->shippingAddressFields;
-    }
-
-    /**
-     * isVisible 
-     * 
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-    public function isVisible()
-    {
-        return parent::isVisible() && !$this->isExported();
     }
 }
 

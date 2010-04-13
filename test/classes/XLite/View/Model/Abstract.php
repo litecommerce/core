@@ -39,7 +39,8 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
      * Widget param names
      */
 
-    const PARAM_MODEL_OBJECT = 'modelObject';
+    const PARAM_MODEL_OBJECT  = 'modelObject';
+    const PARAM_FIELDSET_NAME = 'fieldsetName';
 
 
     /**
@@ -88,6 +89,74 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
      */
     abstract protected function getFormClass();
 
+   
+    /**
+     * getFormContentTemplate 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getFormContentTemplate()
+    {
+        return 'form_content.tpl';
+    }
+ 
+    /**
+     * Return file name for body template
+     *
+     * @return id
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getBodyTemplate()
+    {
+        return $this->isExported() ? $this->getFormContentTemplate() : parent::getBodyTemplate();
+    }
+
+    /**
+     * composeFieldName 
+     * 
+     * @param string $name name to prepare
+     *  
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function composeFieldName($name)
+    {
+        $fieldsetName = $this->getFieldsetName();
+
+        if (!empty($fieldsetName)) {
+            $name = $fieldsetName . '[' . $name . ']';
+        }
+
+        return $name;
+    }
+
+    /**
+     * getDefaultFieldsetName 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultFieldsetName()
+    {
+        return 'postedData';
+    }
+
+    /**
+     * getFieldsetName 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getFieldsetName()
+    {
+        return $this->getParam(self::PARAM_FIELDSET_NAME);
+    }
 
     /**
      * getDefaultModelObjectSignature 
@@ -234,6 +303,9 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
             self::PARAM_MODEL_OBJECT => new XLite_Model_WidgetParam_Object(
                 'Object', $this->getDefaultModelObject(), false, $this->getDefaultModelObjectClass()
             ),
+            self::PARAM_FIELDSET_NAME => new XLite_Model_WidgetParam_String(
+                'Fieldset name', $this->getDefaultFieldsetName() 
+            ),
         );
     }
 
@@ -252,6 +324,38 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
         }
 
         return $this->formFields;
+    }
+
+    /**
+     * getErrorMessages 
+     * 
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getErrorMessages()
+    {
+        $messages = array();
+
+        foreach ($this->getFormFields() as $key => $field) {
+            if ($result = $field->validate()) {
+                $messages[$key] = $result;
+            }
+        }
+
+        return $messages;
+    }
+
+    /**
+     * isValid 
+     * 
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function isValid()
+    {
+        return !((bool) $this->getErrorMessages());
     }
 }
 

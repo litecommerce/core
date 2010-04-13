@@ -12,20 +12,25 @@
  *}
 
 {* Checkout pages: cart content *}
-<widget module="ProductOptions" template="modules/ProductOptions/selected_options_js.tpl">
+<div id="shopping-cart" IF="!cart.isEmpty()">
 
-<div id="shopping-cart">
-  <widget class="XLite_View_Form_Checkout_Main" name="checkout_form" />
+  <widget module="ProductOptions" template="modules/ProductOptions/selected_options_js.tpl">
 
   <widget template="shopping_cart/items.tpl" />
 
   <div class="cart-totals">
-    <li><em>Subtotal:</em>
-      {price_format(cart,#subtotal#):h}
-    </li>
+    Subtotal: {price_format(cart,#subtotal#):h}
   </div>
 
-  <widget name="checkout_form" end />
+  <widget module="ProductAdviser" template="modules/ProductAdviser/OutOfStock/notify_form.tpl" visible="{xlite.PA_InventorySupport}">
+
+  <br /><br />
+
 </div>
 
-<widget module="ProductAdviser" template="modules/ProductAdviser/OutOfStock/notify_form.tpl" visible="{xlite.PA_InventorySupport}">
+{if:isExported()}
+  {getRegisterFormPlaceholder():r}
+{else:}
+  <widget mode="register" class="XLite_View_Model_Profile" />
+{end:}
+

@@ -1,11 +1,16 @@
-<p>
-	<h3>
-There are no shipping methods available
-	</h3>
-</p>
-<p>
-You cannot proceed! Please contact administrator. 
-</p>
-<p>
-<widget class="XLite_View_Button" label="Go back" href="javascript: history.go(-1)" font="FormButton">
-</p>
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * ____file_title____
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
+
+<p />You cannot proceed: there are no shipping methods available. Please contact administrator
+
+<div><widget class="XLite_View_Button_GoBack" /></div>

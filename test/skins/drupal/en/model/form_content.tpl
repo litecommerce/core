@@ -11,6 +11,5 @@
  * @since     3.0.0
  *}
 
-<p />You cannot proceed: there are no shipping methods available. Please contact administrator
+<widget FOREACH="_ARRAY_(#header#,#content#,#footer#),file" template="{getDir()}/{getFormDir()}/{file}.tpl" />
 
-<div><widget class="XLite_View_Button_GoBack" /></div>

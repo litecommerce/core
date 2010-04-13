@@ -123,18 +123,6 @@ class XLite_Model_Abstract extends XLite_Base
         return $this->isPersistent ? $this->update() : $this->create();
     }
 
-    /**
-     * isValidForCMS 
-     * 
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-    public function isValidForCMS()
-    {
-        return true;
-    }
-
 
     /**
     * Returns the SQL database table name for this object. Uses "alias"

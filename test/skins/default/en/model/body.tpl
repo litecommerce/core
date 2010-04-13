@@ -16,7 +16,8 @@
   <widget class="{getFormClass()}" name="{getFormName()}" IF="getFormParams()" formParams="{getFormParams()}" />
   <widget class="{getFormClass()}" name="{getFormName()}" IF="!getFormParams()" />
 
-    <widget FOREACH="_ARRAY_(#header#,#content#,#buttons#,#footer#),file" template="{getDir()}/{getFormDir()}/{file}.tpl" />
+    <widget template="{getDir()}/form_content.tpl" />
+    <widget template="{getDir()}/{getFormDir()}/buttons.tpl" />
 
   <widget name="{getFormName()}" end />
 

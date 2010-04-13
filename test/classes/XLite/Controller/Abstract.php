@@ -42,6 +42,8 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     const PARAM_TARGET = 'target';
     const PARAM_ACTION = 'action';
 
+    const PARAM_RETURN_URL = 'returnUrl';
+
     /**
      * Controller params
      * FIXME - must be moved to the low-level controllers
@@ -229,30 +231,6 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     }
 
     /**
-     * Get target 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getTarget()
-    {
-        return $this->getParam(self::PARAM_TARGET);
-    }
-
-    /**
-     * Get action 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getAction()
-    {
-        return $this->getParam(self::PARAM_ACTION);
-    }
-
-    /**
      * getCategoryId
      * FIXME - must be moved to the low-level controllers
      *
@@ -278,6 +256,30 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         return $this->getParam(self::PARAM_PRODUCT_ID);
     }
 
+
+    /**
+     * Get target
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTarget()
+    {
+        return $this->getParam(self::PARAM_TARGET);
+    }
+
+    /**
+     * Get action
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getAction()
+    {
+        return $this->getParam(self::PARAM_ACTION);
+    }
 
     /**
      * Get the full URL of the page

@@ -69,7 +69,7 @@ abstract class XLite_View_Container extends XLite_View_Abstract
     /**
      * Return file name for body template
      * 
-     * @return void
+     * @return string
      * @access protected
      * @since  3.0.0
      */

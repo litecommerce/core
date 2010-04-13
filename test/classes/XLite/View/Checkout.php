@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage View
+ * @subpackage Cart
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,36 +27,76 @@
  */
 
 /**
- * Update cart item form
+ * XLite_View_Checkout 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @since      3.0.0
  */
-class XLite_View_Form_Cart_Item_Update extends XLite_View_Form_Cart_Item_Abstract
+class XLite_View_Checkout extends XLite_View_Dialog
 {
     /**
-     * Current form name 
-     * 
-     * @return string
+     * Targets this widget is allowed for
+     *
+     * @var    array
      * @access protected
      * @since  3.0.0
      */
-    protected function getFormName()
-    {
-        return 'update_' . parent::getFormName();
-    }
+    protected $allowedTargets = array('checkout');
+
 
     /**
-     * getDefaultAction
+     * Return title
      *
      * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected function getDefaultAction()
+    protected function getHead()
     {
-        return 'update';
+        return 'Checkout';
+    }
+
+    /**
+     * Return templates directory name
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDir()
+    {
+        return 'checkout';
+    }
+
+
+    /**
+     * getRegisterFormPlaceholder 
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public static function getRegisterFormPlaceholder()
+    {
+        return '<!-- ____REGISTER_FORM_PLACEHOLDER____ -->';
+    }
+
+    /**
+     * Get a list of CSS files required to display the widget properly
+     *
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'shopping_cart/cart.css';
+        $list[] = 'checkout/checkout.css';
+
+        return $list;
     }
 }
 

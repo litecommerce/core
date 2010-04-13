@@ -55,6 +55,33 @@ abstract class XLite_View_Form_Cart_Item_Abstract extends XLite_View_Form_Abstra
     }
 
     /**
+     * getDefaultTarget
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTarget()
+    {
+        return 'cart';
+    }
+
+    /**
+     * getDefaultParams
+     *
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultParams()
+    {
+        return parent::getDefaultParams() + array(
+            XLite_Controller_Abstract::PARAM_RETURN_URL => $this->buildURL($this->getTarget()),
+        );
+    }
+
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -65,29 +92,14 @@ abstract class XLite_View_Form_Cart_Item_Abstract extends XLite_View_Form_Abstra
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams[self::PARAM_ITEM]    = new XLite_Model_WidgetParam_Object(
+        $this->widgetParams[self::PARAM_ITEM] = new XLite_Model_WidgetParam_Object(
             'Cart item', null, false, 'XLite_Model_OrderItem'
         );
         $this->widgetParams[self::PARAM_CART_ID] = new XLite_Model_WidgetParam_Int(
             'Cart item id', null, false
         );
-
-        $this->widgetParams[self::PARAM_FORM_TARGET]->setValue('cart');
     }
 
-    /**
-     * Check if widget is visible
-     *
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-    public function isVisible()
-    {
-        return parent::isVisible()
-            && $this->getParam(self::PARAM_ITEM);
-    }
-    
     /**
      * Called before the includeCompiledFile()
      *

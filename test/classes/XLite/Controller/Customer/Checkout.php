@@ -57,9 +57,9 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
      */
     protected $checkoutSteps = null;
 
-    protected function checkCMSProfile()
+    protected function checkProfile()
     {
-        return XLite_Core_CMSConnector::isCMSStarted() && XLite_Model_Auth::getInstance()->getProfile()->isValidForCMS();
+        return XLite_Model_CachingFactory::getObject(__METHOD__, 'XLite_View_Model_Profile')->isValid();
     }
 
     protected function isCheckoutNotAllowed()
@@ -69,7 +69,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 
     protected function isRegistrationNeeded()
     {
-        return !XLite_Model_Auth::getInstance()->isLogged() || !$this->checkCMSProfile();
+        return !XLite_Model_Auth::getInstance()->isLogged() || !$this->checkProfile();
     }
 
     protected function isZeroOrderTotal()

@@ -152,18 +152,6 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
     }
 
     /**
-     * Return field name
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getName()
-    {
-        return $this->getParam(self::PARAM_NAME);
-    }
-
-    /**
      * Return field value
      * 
      * @return mixed
@@ -271,6 +259,18 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
     }
 
     /**
+     * Return field name
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getName()
+    {
+        return $this->getParam(self::PARAM_NAME);
+    }
+
+    /**
      * Wrapper; public function to retrieve widget params
      * 
      * @param string $name param name
@@ -282,6 +282,18 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
     public function getFieldAttribute($name)
     {
         return $this->getParam($name);
+    }
+
+    /**
+     * Validate field value
+     *
+     * @return mixed
+     * @access public
+     * @since  3.0.0
+     */
+    public function validate()
+    {
+        return ('' == $this->getValue() && $this->isRequired()) ? 'is empty' : null;
     }
 }
 
