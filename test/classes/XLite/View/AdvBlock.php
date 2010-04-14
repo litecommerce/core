@@ -36,6 +36,16 @@
 class XLite_View_AdvBlock extends XLite_View_Abstract
 {
     /**
+     * Show widget (for internal block)
+     * 
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $forceShow = false;
+
+    /**
      * Return widget default template
      *
      * @return string
@@ -60,7 +70,7 @@ class XLite_View_AdvBlock extends XLite_View_Abstract
         return parent::isVisible()
             && XLite::isAdminZone()
             && $this->auth->isLogged()
-            && !$this->session->get('advertise_show');
+            && ($this->forceShow || !$this->session->get('advertise_show'));
     }
 
     /**
@@ -75,6 +85,7 @@ class XLite_View_AdvBlock extends XLite_View_Abstract
     {
         $idx = mt_rand(1, 3);
         $this->session->set('advertise_show', $idx);
+        $this->forceShow = true;
 
         return 'advertise/block_' . $idx . '.tpl';
     }
