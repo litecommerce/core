@@ -1,75 +1,70 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URLs:                                                       |
-|                                                                              |
-| FOR LITECOMMERCE                                                             |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| FOR LITECOMMERCE ASP EDITION                                                 |
-| http://www.litecommerce.com/software_license_agreement_asp.html              |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
-|                                                                              |
-| The Initial Developer of the Original Code is Creative Development LLC       |
-| Portions created by Creative Development LLC are Copyright (C) 2003 Creative |
-| Development LLC. All Rights Reserved.                                        |
-+------------------------------------------------------------------------------+
-*/
-
-/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
-* Base class for Shipping configuration.
-*
-* @package Module_UPSOnlineTools
-* @access public
-* @version $Id$
-*/
-class XLite_Module_UPSOnlineTools_Controller_Admin_ShippingSettings extends XLite_Controller_Admin_ShippingSettings implements XLite_Base_IDecorator
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage Controller
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
+
+/**
+ * Shipping settings controller
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
+class XLite_Module_UPSOnlineTools_Controller_Admin_ShippingSettings extends XLite_Controller_Admin_ShippingSettings
+implements XLite_Base_IDecorator
 {
-	function getShippings()
-	{
-		if (!is_null($this->_shippings)) {
-			return $this->_shippings;
-		}
+    /**
+     * Get shippings list
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getShippings()
+    {
+        if (is_null($this->_shippings)) {
 
-        require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
-		parent::getShippings();
+            parent::getShippings();
 
-		foreach($this->_shippings as $shippingKey => $shipping) {
-			if ($shipping->get("class") == "ups") {
-				$name = UPSOnlineTools_getNameUPS($shipping->get("name"));
-				$name = str_replace("<sup>nd", "-nd", $name);
-				$name = str_replace("<sup>", " ", $name);
-				$name = str_replace("</sup>", "", $name);
-				$this->_shippings[$shippingKey]->set("name", $name);
-			}
-		}
-		
-		return $this->_shippings;
-	}
+            $method = new XLite_Module_UPSOnlineTools_Model_Shipping_Ups(); 
+
+            foreach ($this->_shippings as $shippingKey => $shipping) {
+                if ($shipping->get('class') == 'ups') {
+                    $name = $method->getNameUPS($shipping->get('name'));
+
+                    $name = str_replace('<sup>nd', '-nd', $name);
+                    $name = str_replace('<sup>', ' ', $name);
+                    $name = str_replace('</sup>', '', $name);
+
+                    $this->_shippings[$shippingKey]->set('name', $name);
+                }
+            }
+        }
+
+        return $this->_shippings;
+    }
 }
-// WARNING :
-// Please ensure that you have no whitespaces / empty lines below this message.
-// Adding a whitespace or an empty line below this line will cause a PHP error.
-?>

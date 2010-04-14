@@ -870,11 +870,11 @@ EOT;
      * @param string $name Method name
      *  
      * @return string
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getNameUPS($name)
+    public function getNameUPS($name)
     {
         if (in_array($name, array('UPS Express Plus', 'UPS Today Express Saver'))) {
             return $name;
@@ -904,7 +904,7 @@ EOT;
             ),
         );
 
-        foreach ($replace as $sign=>$marks) {
+        foreach ($replace as $sign => $marks) {
             foreach ($marks as $key) {
                 if (preg_match('/' . $key . '$/S', $name)) {
                     $name = preg_replace('/' . $key . '$/S', $key . $sign, $name);
