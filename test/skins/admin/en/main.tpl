@@ -81,9 +81,12 @@
             </table>
     </noscript>
 <!-- [center] -->
-<widget template="location.tpl" visible="{!target=#main#}">
-<p>
+{if:!target=#main#}
+<widget template="location.tpl">
+<p />
+{end:}
 <widget target="access_denied" template="access_denied.tpl">
+<widget class="XLite_View_AdvBlock" />
 <widget module="DemoMode" target="settings,payment_method,payment_methods,modules,memberships" template="common/dialog.tpl" body="modules/DemoMode/warning.tpl" head="Demo mode warning">
 <widget template="common/dialog.tpl" head="Customer zone warning" body="customer_zone_warning.tpl" IF="{getCustomerZoneWarning()}">
 <widget target="main" template="common/dialog.tpl" head="Welcome to the Administrator Zone" body="menu.tpl">

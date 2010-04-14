@@ -293,3 +293,91 @@ A.AomMenu:active  {
 .displayPageFooter {
 	COLOR: #8A8A8A; BACKGROUND-COLOR: #E0E0E0;
 }
+
+/* Advertise block */
+.adv-block {
+  border: 7px solid #dee8ee;
+  margin-bottom: 30px;
+}
+
+.adv-block .internal {
+  border: 1px solid #8fa7b9;
+  padding: 0px 0px 15px 25px;
+  position: relative;
+}
+
+.adv-block a.close {
+  position: absolute;
+  display: block;
+  top: 5px;
+  right: 5px;
+  outline: 0;
+}
+
+.adv-block a.close,
+.adv-block a.close img
+{
+  background: transparent url(images/remove.png) no-repeat left top;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  width: 13px;
+  height: 13px;
+}
+
+.adv-block a {
+  color: #043fa0;
+  text-decoration: underline;
+}
+
+.adv-block td {
+  padding: 0px;
+  text-align: left;
+  color: #1e1e1e;
+  vertical-align: top;
+}
+
+.adv-block td.qualiteam {
+  text-align: right;
+  padding-top: 22px;
+  padding-right: 25px;
+  padding-left: 60px;
+}
+
+.adv-block h2 {
+  font-size: 34px;
+  color: #082032;
+  margin: 0px;
+  padding: 0px;
+  padding-top: 22px;
+  padding-bottom: 18px;
+}
+
+.adv-block span {
+  line-height: 19px;
+}
+
+.adv-block p,
+.adv-block p a
+{
+  font-size: 18px;
+}
+
+.adv-block p {
+  color: #3b3b3b;
+  margin: 0px;
+  padding: 0px;
+  padding-top: 18px;
+}
+
+.adv-block h2.custom,
+.adv-block h2.support
+{
+  background: transparent url(images/adv_icon_support.png) no-repeat left 22px;
+  padding-left: 50px; 
+}
+
+.adv-block h2.hosting {
+  background: transparent url(images/adv_icon_support.png) no-repeat left 22px;
+  padding-left: 50px;
+}
