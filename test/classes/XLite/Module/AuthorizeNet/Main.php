@@ -112,7 +112,6 @@ class XLite_Module_AuthorizeNet_Main extends XLite_Module_Abstract
         parent::init();
         
         $this->registerPaymentMethod('authorizenet_cc');
-        $this->registerPaymentMethod('authorizenet_ch');
 
         $this->xlite->set('AuthorizeNetEnabled', true);
     }

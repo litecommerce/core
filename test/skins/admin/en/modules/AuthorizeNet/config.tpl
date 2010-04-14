@@ -60,6 +60,17 @@ To obtain the transaction key from the Merchant Interface, do the following:<br>
 </tr>
 
 <tr>
+  <td valign="top">
+    <b>Security options:</b><br />
+    These options protect your orders: they prohibit changing order total during payment process and paying in another currency.<br />
+    <b>Note:</b> It is strongly recommended not to disable these options.
+  </td>
+  <td valign="top">
+    <input type="checkbox" id="check_total_id" name="params[check_total]" value="1" checked="{isSelected(pm.params.check_total,#1#)}"><label for="check_total_id">Perform order total check after transaction</label><br>
+  </td>
+</tr>
+
+<tr>
 <td colspan="2">
 To configure the filter to reject certain Card Code responses, do the following:<br>
 Log into the Merchant Interface<br>
@@ -92,6 +103,13 @@ Log into the Merchant Interface<br>
 <td>Invoice number prefix:</td>
 <td>
 <input type="text" value="{pm.params.prefix:r}" name="params[prefix]" size="10">
+</td>
+</tr>
+
+<tr>
+<td>The difference between your server time<br /> and the Authorize.Net server time (in seconds) <span class="Star">*</span></td>
+<td>
+<input type="text" value="{pm.params.prefix:r}" name="params[offset]" size="10" />
 </td>
 </tr>
 
@@ -295,9 +313,6 @@ Log into the Merchant Interface<br>
 </select>
 </td>
 </tr>
-<tr><td>URL:</td><td>
-<input type="text" size="50" name="params[url]" value="{pm.params.url:r}">
-</td></tr>
 </table>
 <p>
 <input type=submit value=" Update ">
