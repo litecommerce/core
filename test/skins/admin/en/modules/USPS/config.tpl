@@ -44,7 +44,10 @@ function processClearCache()
   </tr>
   <tr>
     <td width="30%"><b>Use HTTPS:</b></td>
-    <td><input type="checkbox" name="https" value="Y" checked="{settings.https=#Y#}"></td>
+    <td>
+      <input type="hidden" name="https" value="" />
+      <input type="checkbox" name="https" value="Y" checked="{settings.https=#Y#}">
+    </td>
   </tr>
 
   <tr>
