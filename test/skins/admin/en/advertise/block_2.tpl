@@ -11,5 +11,5 @@
  * @since     3.0.0
  *}
 <h2 class="hosting">Hosting</h2>
-<span>Do you know that Qualiteam Software not just develops X-Cart shopping cart but also provides <a href="#">hosting services</a> to X-Cart users? Our services are configured to achieve the maximal performance and compatibility with X-Cart software. Some hosting plans come with a free dedicated SSL certificate and free technical support for X-Cart software.</span>
-<p>Sounds interesting? <a href="">See our hosting plans</a></p>
+<span>Do you know that Qualiteam Software not just develops Litecommerce shopping cart but also provides <a href="http://www.litecommerce.com/hosting">hosting services</a> to Litecommerce users? Our services are configured to achieve the maximal performance and compatibility with Litecommerce software. Some hosting plans come with a free dedicated SSL certificate and free technical support for Litecommerce software.</span>
+<p>Sounds interesting? <a href="http://www.litecommerce.com/hosting_plans">See our hosting plans</a></p>
