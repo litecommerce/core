@@ -370,14 +370,17 @@ A.AomMenu:active  {
   padding-top: 18px;
 }
 
-.adv-block h2.custom,
-.adv-block h2.support
-{
+.adv-block h2.custom {
+  background: transparent url(images/adv_icon_custom.png) no-repeat left 8px;
+  padding-left: 70px;
+}
+
+.adv-block h2.support {
   background: transparent url(images/adv_icon_support.png) no-repeat left 22px;
   padding-left: 50px; 
 }
 
 .adv-block h2.hosting {
-  background: transparent url(images/adv_icon_support.png) no-repeat left 22px;
-  padding-left: 50px;
+  background: transparent url(images/adv_icon_hosting.png) no-repeat left 20px;
+  padding-left: 55px;
 }
