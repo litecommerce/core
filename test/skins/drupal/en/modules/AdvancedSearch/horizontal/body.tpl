@@ -16,7 +16,7 @@
 
     <tr class="substring">
       <td class="row-title" rowspan="2">Search for:</td>
-      <td><input type="text" name="search[substring]" value="{search.substring}" /></td>
+      <td class="search-query"><input type="text" name="search[substring]" value="{search.substring}" /></td>
       <td class="top-button"><widget class="XLite_View_Button_Submit" label="Search" /></td>
     </tr> 
 
