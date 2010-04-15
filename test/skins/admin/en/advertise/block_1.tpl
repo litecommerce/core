@@ -11,5 +11,5 @@
  * @since     3.0.0
  *}
 <h2 class="custom">Custom development</h2>
-<span>Do you know that Qualitem Software hot just develops Litecommerce shopping cart but also provides professional <a href="http://www.litecommerce.com/web_design">web design</a> and <a href="http://www.litecommerce.com/custome_development">custom development</a> services? We would be glad to help you to design and customize your online store to your business needs.</span>
+<span>Do you know that Qualitem Software hot just develops LiteCommerce shopping cart but also provides professional <a href="http://www.litecommerce.com/web_design">web design</a> and <a href="http://www.litecommerce.com/custome_development">custom development</a> services? We would be glad to help you to design and customize your online store to your business needs.</span>
 <p>Need custom work? <a href="http://www.litecommerce.com/request_quote">Request to quote</a></p>

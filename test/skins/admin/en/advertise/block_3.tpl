@@ -11,5 +11,5 @@
  * @since     3.0.0
  *}
 <h2 class="support">Support</h2>
-<span>If you need help or have questions, you are welcome to ask other Litecommerce users in <a href="http://www.litecommerce.com/forum">Litecommerce community</a> forums and use our <a href="http://www.litecommerce.com/support">paid technical support services</a>. Our technical support system is incident-based and is avalable for small tweaks and questions as well as for complex works on your server.</span>
+<span>If you need help or have questions, you are welcome to ask other LiteCommerce users in <a href="http://www.litecommerce.com/forum">LiteCommerce community</a> forums and use our <a href="http://www.litecommerce.com/support">paid technical support services</a>. Our technical support system is incident-based and is avalable for small tweaks and questions as well as for complex works on your server.</span>
 <p>Having problem? <a href="http://www.litecommerce.com/support">Get help!</a></p>
