@@ -25,51 +25,8 @@
  * @see        ____file_see____
  * @since      3.0.0
  */
-
-
-/**
- * XLite_View_FormField_Input 
- * 
- * @package    XLite
- * @subpackage ____sub_package____
- * @since      3.0.0
- */
-class XLite_View_FormField_Input extends XLite_View_FormField_Input_Abstract
+ 
+class XLite_View_FormField_Select_Regular extends XLite_View_FormField_Select_Abstract
 {
-    /**
-     * Widget param names 
-     */
-
-    const PARAM_TYPE = 'type';
-
-
-    /**
-     * Define widget params
-     *
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_TYPE => new XLite_Model_WidgetParam_String('Type', null),
-        );
-    }
-
-
-    /**
-     * Return field type
-     * 
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getFieldType()
-    {
-        return $thsi->getParam(self::PARAM_TYPE);
-    }
 }
 

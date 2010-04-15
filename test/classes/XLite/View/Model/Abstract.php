@@ -44,15 +44,20 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
 
     /**
      * Indexes in field schemas 
+     *
+     * FIXME: keep this list synchronized with the classes,
+     * derived from the XLite_View_FormField_Abstract
      */
 
     const SCHEMA_CLASS      = 'class';
-    const SCHEMA_VALUE      = 'value';
-    const SCHEMA_REQUIRED   = 'required';
-    const SCHEMA_ATTRIBUTES = 'attributes';
-    const SCHEMA_NAME       = 'name';
-    const SCHEMA_LABEL      = 'label';
-    const SCHEMA_COMMENT    = 'comment';
+    const SCHEMA_VALUE      = XLite_View_FormField_Abstract::PARAM_VALUE;
+    const SCHEMA_REQUIRED   = XLite_View_FormField_Abstract::PARAM_REQUIRED;
+    const SCHEMA_ATTRIBUTES = XLite_View_FormField_Abstract::PARAM_ATTRIBUTES;
+    const SCHEMA_NAME       = XLite_View_FormField_Abstract::PARAM_NAME;
+    const SCHEMA_LABEL      = XLite_View_FormField_Abstract::PARAM_LABEL;
+    const SCHEMA_COMMENT    = XLite_View_FormField_Abstract::PARAM_COMMENT;
+
+    const SCHEMA__OPTIONS   = XLite_View_FormField_Select_Abstract::PARAM_OPTIONS;
 
     /**
      * Session cell to store form data 
@@ -346,8 +351,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     /**
      * getFieldSchemaArgs 
      * 
-     * NOTE: keep this function synchronized 
-     * with the XLite_View_FormField_Abstract::defineFieldParams() one
+     * FIXME. You understand :)
      * 
      * @param string $name node name
      * @param array  $data field description
@@ -358,15 +362,17 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
      */
     protected function getFieldSchemaArgs($name, array $data)
     {
-        return array(
-            array(),
-            isset($data[self::SCHEMA_NAME]) ? $data[self::SCHEMA_NAME] : $this->composeFieldName($name),
-            isset($data[self::SCHEMA_VALUE]) ? $data[self::SCHEMA_VALUE] : $this->getDefaultFieldValue($name),
-            empty($data[self::SCHEMA_LABEL]) ? '' : $data[self::SCHEMA_LABEL],
-            !empty($data[self::SCHEMA_REQUIRED]),
-            empty($data[self::SCHEMA_COMMENT]) ? '' : $data[self::SCHEMA_COMMENT],
-            empty($data[self::SCHEMA_ATTRIBUTES]) ? array() : $data[self::SCHEMA_ATTRIBUTES],
-        );
+        if (!isset($data[self::SCHEMA_NAME])) {
+            $data[self::SCHEMA_NAME] = $this->composeFieldName($name);
+        }
+
+        if (!isset($data[self::SCHEMA_VALUE])) {
+            $data[self::SCHEMA_VALUE] = $this->getDefaultFieldValue($name);
+        }
+
+        // ...
+
+        return $data;
     }
 
     /**
@@ -589,10 +595,8 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
         $result = array();
 
         foreach ($schema as $name => $data) {
-
-            $result[$name] = XLite_Model_Factory::createObjectInstance(
-                $data[self::SCHEMA_CLASS], $this->getFieldSchemaArgs($name, $data)
-            );
+            $class = $data[self::SCHEMA_CLASS];
+            $result[$name] = new $class($this->getFieldSchemaArgs($name, $data));
         }
 
         return $result;

@@ -120,6 +120,10 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
     protected function getBillingAddressFieldsSchema()
     {
         return array(
+            'billing_title' => array(
+                self::SCHEMA_CLASS    => 'XLite_View_FormField_Select_Profile_Title',
+                self::SCHEMA_LABEL    => 'Title',
+            ),
             'billing_firstname' => array(
                 self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
                 self::SCHEMA_LABEL    => 'Name',
@@ -143,6 +147,10 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
     protected function getShippingAddressFieldsSchema()
     {
         return array(
+            'shipping_title' => array(
+                self::SCHEMA_CLASS    => 'XLite_View_FormField_Select_Profile_Title',
+                self::SCHEMA_LABEL    => 'Title',
+            ),
             'shipping_firstname' => array(
                 self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
                 self::SCHEMA_LABEL    => 'Name',

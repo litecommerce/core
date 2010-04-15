@@ -59,15 +59,6 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
 
 
     /**
-     * fieldParams 
-     * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $fieldParams = null;
-
-    /**
      * validityFlag
      *
      * @var    bool
@@ -109,59 +100,6 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
     protected function getDir()
     {
         return 'form_field';
-    }
-
-    /**
-     * Return list of field-specific params
-     * 
-     * NOTE: params order is make sence!
-     * You must pass them into constructor in the exact order as described here
-     *
-     * NOTE: keep this function synchronized 
-     * with the XLite_View_Model_Abstract::getFieldSchemaArgs() one
-     * 
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function defineFieldParams()
-    {
-        $this->fieldParams = array(
-            self::PARAM_NAME       => new XLite_Model_WidgetParam_String('Name', null),
-            self::PARAM_VALUE      => new XLite_Model_WidgetParam_String('Value', null),
-            self::PARAM_LABEL      => new XLite_Model_WidgetParam_String('Label', null),
-            self::PARAM_REQUIRED   => new XLite_Model_WidgetParam_Bool('Required', false),
-            self::PARAM_COMMENT    => new XLite_Model_WidgetParam_String('Comment', null),
-            self::PARAM_ATTRIBUTES => new XLite_Model_WidgetParam_Array('Attributes', array()),
-        );
-    }
-
-    /**
-     * Return list of field-specific params
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getFieldParams()
-    {
-        if (!isset($this->fieldParams)) {
-            $this->defineFieldParams();
-        }
-
-        return $this->fieldParams;
-    }
-
-    /**
-     * getFieldParamsSchema 
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getFieldParamsSchema()
-    {
-        return array_keys($this->getFieldParams());
     }
 
     /**
@@ -289,30 +227,14 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams += $this->getFieldParams();
-    }
-
-    /**
-     * Compose params' array from the arguments passed to constructor
-     * 
-     * @param array $params arguments passed to constructor
-     *  
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function prepareParams(array $params)
-    {
-        $result = array();
-
-        $keys  = $this->getFieldParamsSchema();
-        $count = min(count($keys), count($params));
-
-        for ($i = 0; $i < $count; $i++) {
-            $result[$keys[$i]] = $params[$i];
-        }
-
-        return $result;
+        $this->widgetParams += array(
+            self::PARAM_NAME       => new XLite_Model_WidgetParam_String('Name', null),
+            self::PARAM_VALUE      => new XLite_Model_WidgetParam_String('Value', null),
+            self::PARAM_LABEL      => new XLite_Model_WidgetParam_String('Label', null),
+            self::PARAM_REQUIRED   => new XLite_Model_WidgetParam_Bool('Required', false),
+            self::PARAM_COMMENT    => new XLite_Model_WidgetParam_String('Comment', null),
+            self::PARAM_ATTRIBUTES => new XLite_Model_WidgetParam_Array('Attributes', array()),
+        );
     }
 
     /**
@@ -349,23 +271,6 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
      */
     abstract public function getFieldType();
 
-
-    /**
-     * Define and set handler attributes; initialize handler
-     *
-     * @param array $params handler params
-     *
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function __construct(array $params = array())
-    {
-        $fieldParams = func_get_args();
-        array_shift($fieldParams);
-
-        parent::__construct($params + $this->prepareParams($fieldParams));
-    }
 
     /**
      * Return field name
