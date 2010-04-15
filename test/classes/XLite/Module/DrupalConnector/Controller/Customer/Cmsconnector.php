@@ -61,6 +61,7 @@ class XLite_Module_DrupalConnector_Controller_Customer_Cmsconnector extends XLit
 		}
 
 		$this->set('returnUrl', 'admin.php');
+        $this->redirect();
     }
 
 }
