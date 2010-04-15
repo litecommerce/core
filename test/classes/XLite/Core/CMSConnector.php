@@ -36,6 +36,12 @@
 abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleton
 {
     /**
+     * Name of the request param, which determines the redirect behaviour
+     */
+    const NO_REDIRECT = '____NO_REDIRECT____';
+
+
+    /**
      * Current CMS name
      * 
      * @var    booln

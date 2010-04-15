@@ -36,6 +36,20 @@
 class XLite_Core_Operator extends XLite_Base implements XLite_Base_ISingleton
 {
     /**
+     * Check if we need to perform a redirect or not 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function checkRedirectStatus()
+    {
+        return !XLite_Core_CMSConnector::isCMSStarted() 
+            || !XLite_Core_Request::getInstance()->__get(XLite_Core_CMSConnector::NO_REDIRECT);
+    }
+
+
+    /**
      * Singleton access method
      * 
      * @return XLite_Core_Converter
@@ -59,7 +73,9 @@ class XLite_Core_Operator extends XLite_Base implements XLite_Base_ISingleton
 	 */
 	public function redirect($location, $code = 302)
 	{
-		header('Location: ' . $location, true, $code);
+        if ($this->checkRedirectStatus()) {
+    		header('Location: ' . $location, true, $code);
+        }
 	}
 }
 
