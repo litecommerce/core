@@ -12,7 +12,10 @@
  */
 
 .form_field_error {
-  border: solid 5px #ff0000;
-  background-color: #ffb6c1;
+  border-color: #ff0000;
+}
+
+input[type="text"].form_field_error {
+  border-color: #ff0000;
 }
 
