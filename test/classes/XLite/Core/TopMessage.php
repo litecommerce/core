@@ -129,6 +129,29 @@ class XLite_Core_TopMessage extends XLite_Base implements XLite_Base_ISingleton
     }
 
     /**
+     * Add messages
+     * 
+     * @param string $text Message text
+     * @param string $type Message type
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function addBatch(array $messages, $type = self::INFO)
+    {
+        $result = false;
+
+        foreach ($messages as $message) {
+            $currentResult = $this->add($message, $type);
+            $result = $result && $currentResult;
+        }
+
+        return $result;
+    }
+
+    /**
      * Get messages 
      * 
      * @return array

@@ -179,18 +179,12 @@ class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_
     */
     public function get($name)
     {
-		$result = null;
-
-        if (is_array($this->_data) && array_key_exists($name, $this->_data)) {
-            $result = unserialize($this->_data[$name]);
-        }
-
-        return $result;
+		return $this->isRegistered($name) ? unserialize($this->_data[$name]) : null;
     }
 
     public function isRegistered($name)
     {
-	    return is_array($this->_data) && array_key_exists($name, $this->_data);
+	    return is_array($this->_data) && isset($this->_data[$name]);
     }
     
     /**

@@ -110,16 +110,12 @@ class XLite_Model_Abstract extends XLite_Base
     /**
      * Update or create model object (DB record)
      * 
-     * @param array $properties object properties
-     *  
      * @return bool
      * @access public
      * @since  3.0.0
      */
-    public function modify(array $properties)
+    public function modify()
     {
-        $this->setProperties($properties);
-
         return $this->isPersistent ? $this->update() : $this->create();
     }
 

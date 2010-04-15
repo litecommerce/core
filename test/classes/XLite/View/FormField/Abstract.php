@@ -67,6 +67,15 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
      */
     protected $fieldParams = null;
 
+    /**
+     * validityFlag
+     *
+     * @var    bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $validityFlag = null;
+
 
     /**
      * Return field template
@@ -156,6 +165,66 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
     }
 
     /**
+     * getSavedValue 
+     * 
+     * @return mixed
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getSavedValue()
+    {
+        $form = XLite_View_Model_Abstract::getCurrentForm();
+
+        return isset($form) ? $form->getSavedFieldValue($this->getName()) : null;
+    }
+
+    /**
+     * checkSavedValue 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function checkSavedValue()
+    {
+        return !is_null($this->getSavedValue());
+    }
+
+    /**
+     * getValidityFlag 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getValidityFlag()
+    {
+        if (!isset($this->validityFlag)) {
+            $this->validityFlag = !$this->checkForRequiredFieldError();
+        }
+
+        return $this->validityFlag;
+    }
+
+    /**
+     * prepareAttributes 
+     * 
+     * @param array $attrs field attributes to prepare
+     *  
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function prepareAttributes(array $attrs)
+    {
+        if (!$this->getValidityFlag() && $this->checkSavedValue()) {
+            $attrs['class'] = (empty($attrs['class']) ? '' : $attrs['class'] . ' ') . 'form_field_error';
+        }
+
+        return $attrs;
+    }
+
+    /**
      * Return field value
      * 
      * @return mixed
@@ -164,7 +233,7 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
      */
     protected function getValue()
     {
-        return $this->getParam(self::PARAM_VALUE);
+        return $this->checkSavedValue() ? $this->getSavedValue() : $this->getParam(self::PARAM_VALUE);
     }
 
     /**
@@ -180,6 +249,18 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
     }
 
     /**
+     * getAttributes 
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getAttributes()
+    {
+        return $this->prepareAttributes($this->getParam(self::PARAM_ATTRIBUTES));
+    }
+
+    /**
      * Return HTML representation for widget attributes
      * 
      * @return string
@@ -190,7 +271,7 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
     {
         $result = '';
 
-        foreach ($this->getParam(self::PARAM_ATTRIBUTES) as $name => $value) {
+        foreach ($this->getAttributes() as $name => $value) {
             $result .= ' ' . $name . '="' . $value . '"';
         }
 
@@ -232,6 +313,30 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
         }
 
         return $result;
+    }
+
+    /**
+     * checkForRequiredFieldError 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function checkForRequiredFieldError()
+    {
+        return '' == $this->getValue() && $this->isRequired();
+    }
+
+    /**
+     * getRequiredFieldErrorMessage 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getRequiredFieldErrorMessage()
+    {
+        return 'The "' . $this->getParam(self::PARAM_LABEL) . '" field is empty';
     }
 
 
@@ -297,7 +402,23 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
      */
     public function validate()
     {
-        return ('' == $this->getValue() && $this->isRequired()) ? 'is empty' : null;
+        return array($this->getValidityFlag(), $this->getValidityFlag() ? null : $this->getRequiredFieldErrorMessage());
+    }
+
+    /**
+     * Get a list of CSS files required to display the widget properly
+     *
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = $this->getDir() . '/form_field.css';
+
+        return $list;
     }
 }
 

@@ -163,7 +163,7 @@ class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_Abstract
             }
             
             if ($sendNotification) {
-                $this->auth->modify($profile);
+                $this->auth->modifyProfile($profile);
             } else {
                 $profile->update();
             }

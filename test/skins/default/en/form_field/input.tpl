@@ -11,5 +11,5 @@
  * @since     3.0.0
  *}
 
-<input type="{getFieldType()}" name="{getParam(#name#)}" value="{getParam(#value#)}"{getAttributesCode()} />
+<input type="{getFieldType()}" name="{getParam(#name#)}" value="{getParam(#value#)}"{getAttributesCode():h} />
 

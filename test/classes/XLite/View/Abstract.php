@@ -436,6 +436,17 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
     }
 
     /**
+     * Called after the includeCompiledFile()
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function closeView()
+    {
+    }
+
+    /**
      * Compile and display a template
      *
      * @return void
@@ -552,6 +563,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
         if ($this->isVisible()) {
             $this->initView();
             $this->includeCompiledFile();
+            $this->closeView();
         }
     }
 

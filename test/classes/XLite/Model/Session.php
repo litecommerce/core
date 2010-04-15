@@ -38,6 +38,7 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
 
     /**
      * Generate new form ID
+     * TODO - to revise
      * 
      * @return string
      * @access protected
@@ -72,29 +73,6 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
         $this->options = array_merge($this->options, XLite::getInstance()->getOptions('host_details'));
     }
 
-	/**
-	 * Return object instance
-	 * 
-	 * @return XLite_Model_Session
-	 * @access public
-	 * @since  3.0.0
-	 */
-	public static function getInstance()
-    {
-        return self::getInternalInstance(__CLASS__ . '_' . LC_SESSION_TYPE);
-    }
-
-    /**
-     * Close session
-     * 
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function __destruct()
-    {
-		$this->writeClose();
-    }
 
     /**
      * Destroys the concrete session object. Abstract method, should be overridden
@@ -113,6 +91,62 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
      * @since  3.0.0
      */
     abstract public function writeClose();
+
+
+    /**
+     * Return object instance
+     *
+     * @return XLite_Model_Session
+     * @access public
+     * @since  3.0.0
+     */
+    public static function getInstance()
+    {
+        return self::getInternalInstance(__CLASS__ . '_' . LC_SESSION_TYPE);
+    }
+
+    /**
+     * Returns the value for the specified session variable
+     * FIXME - rename and make abstract
+     *
+     * @param string $name variable name
+     *
+     * @return mixed variable value
+     * @access public
+     * @since  3.0.0
+     */
+    public function get($name)
+    {
+        $this->doDie('XLite_Model_Session::get(): Trying to call the abstract method');
+    }
+
+    /**
+     * Sets the variable with specified name and value (add it to the data container)
+     * FIXME - rename and make abstract
+     *
+     * @param string $name  variable name
+     * @param mixed  $value variable value
+     *
+     * @return mixed the concrete Session object SetVar method result or singleton result on error
+     * @access public
+     * @since  3.0.0
+     */
+    public function set($name, $value)
+    {
+        $this->doDie('XLite_Model_Session::set(): Trying to call the abstract method');
+    }
+
+    /**
+     * Close session
+     *
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function __destruct()
+    {
+        $this->writeClose();
+    }
 
     /**
      * Return current form ID 
@@ -159,31 +193,6 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
 		'ttl'  => self::SESSION_DEFAULT_TTL
 	);
 
-    /**
-    * Sets the variable with specified name and value (add it to
-    * the data container). FIXME
-    *
-    * @param string $name    The variable name.
-    * @param mixed  $value   The variable value.
-    * @access public
-    * @return mixed          The concrete Session object SetVar method
-    *                        result or singleton result on error.
-    */
-    function set($name, $value)
-    {
-    }
-    
-    /**
-    * Returns the value for the specified session variable. FIXME
-    * 
-    * @param string $name     The variable name
-    *
-    * @access public
-    * @return mixed           The variable value
-    */
-    function get($name)
-    {
-    }
 
     /**
     * Checks whether the variable has been registered to session. FIXME

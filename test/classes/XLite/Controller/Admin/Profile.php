@@ -284,7 +284,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
 
         if (!$this->isFromCheckout()) {
 
-            $result = $this->auth->modify($this->profile);
+            $result = $this->auth->modifyProfile($this->profile);
 
             if (USER_EXISTS == $result) {
                 // user already exists

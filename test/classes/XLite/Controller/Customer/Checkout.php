@@ -57,6 +57,19 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
      */
     protected $checkoutSteps = null;
 
+
+    /**
+     * getModelFormClass 
+     * 
+     * @return string|null
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getModelFormClass()
+    {
+        return 'XLite_View_Model_Profile';
+    }
+
     protected function checkProfile()
     {
         return XLite_Model_CachingFactory::getObject(__METHOD__, 'XLite_View_Model_Profile')->isValid();
@@ -315,6 +328,33 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
         return 'Checkout';
     }
 
+    public function doActionRegister()
+    {
+        $this->getModelForm()->performAction('modify');
+    }
+
+    // TODO - move functionality to the the function above
+    /*function action_register()
+    {
+        $this->registerForm->action_register();
+        $this->set("valid", $this->registerForm->is("valid"));
+        if ($this->registerForm->is("valid")) {
+            $this->auth->loginProfile($this->registerForm->get("profile"));
+            if (!strlen($this->get("password"))) {
+                // is anonymous?
+                $this->auth->setComplex("profile.order_id", $this->getCart()->get("order_id"));
+                $this->auth->getProfile()->update();
+            }
+            $cart = XLite_Model_Cart::getInstance();
+            if (!$cart->isEmpty()) {
+                $cart->set("profile_id", $this->auth->getComplex('profile.profile_id'));
+                $cart->update();
+                $this->recalcCart();
+            }
+        }
+    }*/
+
+
     /**
      * action_checkout
      * FIXME - must be completely revised 
@@ -476,26 +516,6 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 			$this->params[] = "error";
 			$this->set("error", "pmSelect");
 		}
-    }
-
-    function action_register()
-    {
-        $this->registerForm->action_register();
-        $this->set("valid", $this->registerForm->is("valid"));
-        if ($this->registerForm->is("valid")) {
-            $this->auth->loginProfile($this->registerForm->get("profile"));
-            if (!strlen($this->get("password"))) {
-                // is anonymous?
-                $this->auth->setComplex("profile.order_id", $this->getCart()->get("order_id"));
-                $this->auth->getProfile()->update();
-            }
-    		$cart = XLite_Model_Cart::getInstance();
-     		if (!$cart->isEmpty()) {
-     			$cart->set("profile_id", $this->auth->getComplex('profile.profile_id'));
-     			$cart->update();
-    			$this->recalcCart();
-     		}
-        }
     }
 
     function success()

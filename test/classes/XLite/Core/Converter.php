@@ -67,17 +67,18 @@ class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
      * @param array  $params    params list
      * @param string $glue      char to agglutinate "name" and "value"
      * @param string $separator char to agglutinate <"name", "value"> pairs
+     * @param string $quotes    char to quote the "value" param
      *  
      * @return string
      * @access public
      * @since  3.0
      */
-    public static function buildQuery(array $params, $glue = '=', $separator = '&')
+    public static function buildQuery(array $params, $glue = '=', $separator = '&', $quotes = '')
     {
         $result = array();
 
         foreach ($params as $name => $value) {
-            $result[] = $name . $glue . $value;
+            $result[] = $name . $glue . $quotes . $value . $quotes;
         }
 
         return implode($separator, $result);
@@ -167,5 +168,27 @@ class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
     public static function getArraySchema(array $keys = array(), array $values = array())
     {
         return array_combine($keys, $values);
+    }
+
+    /**
+     * Convert to one-dimensional array 
+     * 
+     * @param array  $data    array to flat
+     * @param string $currKey parameter for recursive calls
+     *  
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function flatArray(array $data, $currKey = '')
+    {
+        $result = array();
+
+        foreach ($data as $key => $value) {
+            $key = $currKey . (empty($currKey) ? $key : '[' . $key . ']');
+            $result += is_array($value) ? $this->flatArray($value, $key) : array($key => $value);
+        }
+
+        return $result;
     }
 }

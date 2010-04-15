@@ -98,6 +98,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 
     /**
      * Perform redirect 
+     * FIXME - must be moved to XLite_Core_Operator
      * 
      * @param string $url redirect URL
      *  
@@ -130,7 +131,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
             $code = $this->internalRedirect ? 279 : 278;
         }
 
-        header('Location: ' . $location, true, $code);
+        XLite_Core_Operator::getInstance()->redirect($location, $code);
     }
 
     /**
@@ -203,9 +204,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
      */
     protected function getViewerTemplate()
     {
-        return $this->getParam(self::PARAM_IS_EXPORTED)
-            ? $this->getCMSTemplate()
-            : $this->getRegularTemplate();
+        return $this->getParam(self::PARAM_IS_EXPORTED) ? $this->getCMSTemplate() : $this->getRegularTemplate();
     }
 
     /**
@@ -228,6 +227,32 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
             self::PARAM_CATEGORY_ID => new XLite_Model_WidgetParam_ObjectId_Category('Category Id', 0),
             self::PARAM_PRODUCT_ID  => new XLite_Model_WidgetParam_ObjectId_Product('Product Id', 0),
         );
+    }
+
+    /**
+     * getModelFormClass 
+     * 
+     * @return string|null
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getModelFormClass()
+    {
+        return null;
+    }
+
+    /**
+     * getModelForm 
+     * 
+     * @return XLite_View_Model_Abstract|null
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getModelForm()
+    {
+        $class = $this->getModelFormClass();
+
+        return isset($class) ? XLite_Model_CachingFactory::getObject(__METHOD__ . $class, $class) : null;
     }
 
     /**

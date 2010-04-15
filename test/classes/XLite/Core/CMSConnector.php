@@ -89,32 +89,17 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
     }
 
     /**
-     * prepareUserDataTranslationField 
+     * getProfileDBFields 
      * 
-     * @param string $field field name
+     * @param int $cmsUserId CMS user Id
      *  
      * @return array
      * @access protected
      * @since  3.0.0
      */
-    protected function prepareUserDataTranslationField($field)
+    protected function getProfileDBFields($cmsUserId)
     {
-        return array(self::USER_DATA_FIELD => $field);
-    }
-
-    /**
-     * Return array of <lc_key, cms_key> pairs for user profiles
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getUserDataTranslationTable()
-    {
-        return array_map(
-            array($this, 'prepareUserDataTranslationField'),
-            XLite_Model_Factory::createObjectInstance('XLite_Model_Profile')->getCMSFields()
-        );
+        return array('cms_profile_id' => $cmsUserId, 'cms_name' => $this->getCMSName());
     }
 
 
@@ -343,6 +328,21 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
     }
 
     /**
+     * prepareProfileData 
+     * 
+     * @param int   $cmsUserId CMS user Id
+     * @param array $data      data to prepare
+     *  
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function prepareProfileData($cmsUserId, array $data)
+    {
+        return $this->getProfileDBFields($cmsUserId) + $data;
+    }
+
+    /**
      * getProfile
      * 
      * @param int $cmsUserId internal user ID in CMS
@@ -356,10 +356,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         $profile = XLite_Model_CachingFactory::getObject(__METHOD__ . $cmsUserId, 'XLite_Model_Profile');
 
         if (!$profile->isRead) {
-            $profile->find(
-                'cms_profile_id = \'' . $cmsUserId . '\''
-                . ' AND cms_name = \'' . $this->getCMSName() . '\''
-            );
+            $profile->find(XLite_Core_Converter::getInstance()->buildQuery($this->getProfileDBFields($cmsUserId), '=', ' AND ', '\''));
         }
 
         return $profile;

@@ -331,6 +331,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
 
     /**
      * Set controller 
+     * FIXME - to delete
      * 
      * @param mixed $controller Controller
      *  

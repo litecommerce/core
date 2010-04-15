@@ -183,18 +183,6 @@ class XLite_View_Controller extends XLite_View_Abstract
         func_refresh_end();
     }
 
-    /**
-     * Postprocess 
-     * 
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function postprocess()
-    {
-        XLite::getController()->postprocess();
-    }
-
 
     /**
      * __construct 

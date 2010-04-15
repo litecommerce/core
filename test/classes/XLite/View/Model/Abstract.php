@@ -53,16 +53,22 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     const SCHEMA_NAME       = 'name';
     const SCHEMA_LABEL      = 'label';
     const SCHEMA_COMMENT    = 'comment';
-    
 
     /**
-     * Unique name of current web form
+     * Session cell to store form data 
+     */
+    const SAVED_FORM = 'savedForm';
+
+
+    /**
+     * currentForm 
      * 
-     * @var    string
+     * @var    XLite_View_Model_Abstract
      * @access protected
      * @since  3.0.0
      */
-    protected $formName = null;
+    protected static $currentForm = null;
+
 
     /**
      * List of form fields 
@@ -72,6 +78,24 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
      * @since  3.0.0
      */
     protected $formFields = null;
+
+    /**
+     * errorMessages 
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $errorMessages = null;
+
+    /**
+     * savedData 
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $savedData;
 
 
     /**
@@ -247,19 +271,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     }
 
     /**
-     * Generate unique name for the current form widget
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function generateFormName()
-    {
-        return uniqid();
-    }
-
-    /**
-     * Return unique name for the current form widget (this name is used by Flexy compiler)
+     * getFormName
      * 
      * @return string
      * @access protected
@@ -267,11 +279,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
      */
     protected function getFormName()
     {
-        if (!isset($this->formName)) {
-            $this->formName = $this->generateFormName();
-        }
-
-        return $this->formName;
+        return get_class($this);
     }
 
     /**
@@ -295,7 +303,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
      * @access protected
      * @since  3.0.0
      */
-    protected function getFieldValue($field)
+    protected function getDefaultFieldValue($field)
     {
         return $this->getModelObject()->get($field);
     }
@@ -339,7 +347,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
         return array(
             array(),
             isset($data[self::SCHEMA_NAME]) ? $data[self::SCHEMA_NAME] : $this->composeFieldName($name),
-            isset($data[self::SCHEMA_VALUE]) ? $data[self::SCHEMA_VALUE] : $this->getFieldValue($name),
+            isset($data[self::SCHEMA_VALUE]) ? $data[self::SCHEMA_VALUE] : $this->getDefaultFieldValue($name),
             empty($data[self::SCHEMA_LABEL]) ? '' : $data[self::SCHEMA_LABEL],
             !empty($data[self::SCHEMA_REQUIRED]),
             empty($data[self::SCHEMA_COMMENT]) ? '' : $data[self::SCHEMA_COMMENT],
@@ -347,6 +355,193 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
         );
     }
 
+    /**
+     * setModelProperties 
+     * 
+     * @param array $data data to set
+     *  
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function setModelProperties(array $data)
+    {
+        $this->getModelObject()->setProperties($data);
+    }
+
+    /**
+     * prepareFormDataToSave 
+     * 
+     * @param array $data data to save
+     *  
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function prepareFormDataToSave(array $data)
+    {
+        return XLite_Core_Converter::getInstance()->flatArray($data);
+    }
+
+    /**
+     * getFormData 
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getFormData()
+    {
+        $data = XLite_Model_Session::getInstance()->get(self::SAVED_FORM);
+
+        return isset($data) ? $data : array();
+    }
+
+    /**
+     * saveFormData 
+     * 
+     * @param mixed $data data to save
+     *  
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function saveFormData($data)
+    {
+        $savedData = $this->getFormData();
+
+        if (isset($data)) {
+            $savedData[$this->getFormName()] = $this->prepareFormDataToSave($data);
+        } else {
+            unset($savedData[$this->getFormName()]);
+        }
+
+        XLite_Model_Session::getInstance()->set(self::SAVED_FORM, empty($savedData) ? null : $savedData);
+    }
+
+    /**
+     * clearFormData 
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function clearFormData()
+    {
+        $this->saveFormData(null);
+    }
+
+    /**
+     * Save form state in session 
+     * 
+     * @param array $data form fields
+     *  
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function saveFormErrors(array $data)
+    {
+        $this->saveFormData($data);
+    }
+
+    /**
+     * Perform some action on success 
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function success()
+    {
+    }
+
+    /**
+     * startCurrentForm 
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function startCurrentForm()
+    {
+        self::$currentForm = $this;
+    }
+
+    /**
+     * Called before the includeCompiledFile()
+     *
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function initView()
+    {
+        parent::initView();
+
+        $this->startCurrentForm();
+    }
+
+    /**
+     * Called after the includeCompiledFile()
+     *
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function closeView()
+    {
+        parent::closeView();
+
+        $this->clearFormData();
+    }
+
+
+    /**
+     * getCurrentForm 
+     * 
+     * @return XLite_View_Model_Abstract
+     * @access public
+     * @since  3.0.0
+     */
+    public static function getCurrentForm()
+    {
+        return self::$currentForm;
+    }
+
+
+    /**
+     * __construct 
+     * 
+     * @param array $params widget params
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function __construct(array $params = array())
+    {
+        parent::__construct($params);
+
+        // Do not wrap this operation into a function: it will decrease the perfomance
+        $this->savedData = $this->getFormData();
+        $this->savedData = isset($this->savedData[$this->getFormName()]) ? $this->savedData[$this->getFormName()] : array();
+    }
+
+
+    /**
+     * getSavedFieldValue 
+     * 
+     * @param string $name field name
+     *  
+     * @return mixed
+     * @access public
+     * @since  3.0.0
+     */
+    public function getSavedFieldValue($name)
+    {
+        return isset($this->savedData[$name]) ? $this->savedData[$name] : null;
+    }
 
     /**
      * getFieldsBySchema 
@@ -396,15 +591,19 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
      */
     public function getErrorMessages()
     {
-        $messages = array();
+        if (!isset($this->errorMessages)) {
+            $this->errorMessages = array();
 
-        foreach ($this->getFormFields() as $key => $field) {
-            if ($result = $field->validate()) {
-                $messages[$key] = $result;
+            foreach ($this->getFormFields() as $field) {
+                list($flag, $message) = $field->validate();
+
+                if (!$flag) {
+                    $this->errorMessages[$field->getName()] = $message;
+                }
             }
         }
 
-        return $messages;
+        return $this->errorMessages;
     }
 
     /**
@@ -417,6 +616,95 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     public function isValid()
     {
         return !((bool) $this->getErrorMessages());
+    }
+
+    /**
+     * performAction 
+     * 
+     * @param string $action action to perform
+     * @param array  $data   form data
+     *  
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function performAction($action, array $data = array())
+    {
+        if (empty($data)) {
+            $data = XLite_Core_Request::getInstance()->getData();
+        }
+
+        $fieldset = $this->getFieldsetName();
+        if (isset($data[$fieldset]) && is_array($data[$fieldset])) {
+            $properties = $data[$fieldset];
+        }
+
+        $this->setModelProperties($properties);
+
+        if ($result = $this->isValid()) {
+            call_user_func_array(array($this, 'performAction' . ucfirst($action)), array($properties));
+            $this->success();
+        } else {
+            $this->saveFormErrors($data);
+        }
+
+        return $result;
+    }
+
+    /**
+     * performActionCreate 
+     * 
+     * @param array $data model properties
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function performActionCreate(array $data = array())
+    {
+        $this->getModelObject()->create();
+    }
+
+    /**
+     * performActionUpdate 
+     * 
+     * @param array $data model properties
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function performActionUpdate(array $data = array())
+    {
+        $this->getModelObject()->update();
+    }
+
+    /**
+     * performActionModify 
+     * 
+     * @param array $data model properties
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function performActionModify(array $data = array())
+    {
+        $this->getModelObject()->modify();
+    }
+
+    /**
+     * performActionDelete 
+     * 
+     * @param array $data model properties
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function performActionDelete(array $data = array())
+    {
+        $this->getModelObject()->delete();
     }
 }
 

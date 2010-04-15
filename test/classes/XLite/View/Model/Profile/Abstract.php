@@ -36,25 +36,6 @@
 abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstract
 {
     /**
-     * billingAddressFields 
-     * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-//    protected $billingAddressFields = null;
-
-    /**
-     * shippingAddressFields 
-     * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $shippingAddressFields = null;
-
-
-    /**
      * Return title
      *
      * @return string
@@ -185,12 +166,7 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
      */
     public function getBillingAddressFields()
     {
-        return XLite_Model_CachingFactory::getObjectFromCallback(
-            __METHOD__,
-            $this,
-            'getFieldsBySchema',
-            array($this->getBillingAddressFieldsSchema())
-        );
+        return $this->getFieldsBySchema($this->getBillingAddressFieldsSchema());
     }
 
     /**
@@ -202,12 +178,7 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
      */
     public function getShippingAddressFields()
     {
-        return XLite_Model_CachingFactory::getObjectFromCallback(
-            __METHOD__,
-            $this,
-            'getFieldsBySchema',
-            array($this->getShippingAddressFieldsSchema())
-        );
+        return $this->getFieldsBySchema($this->getShippingAddressFieldsSchema());
     }
 
     /**

@@ -12,19 +12,6 @@
 class XLite_Module_JoomlaConnector_Handler extends XLite_Core_CMSConnector
 {
 	/**
-     * Return array of <lc_key, cms_key> pairs for user profiles
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getUserDataTranslationTable()
-    {
-        return array();
-    } 
-
-
-	/**
      * Method to access the singleton
      *
      * @return XLite_Module_JoomlaConnector_Handler
