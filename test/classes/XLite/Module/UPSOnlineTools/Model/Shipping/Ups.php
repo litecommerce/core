@@ -312,7 +312,7 @@ EOT;
         $originCountry = $this->config->Company->location_country;
 
         // Define company state
-        $state_id = $this->config->getComplex('Company.location_state');
+        $state_id = $this->config->Company->location_state;
         if ($state_id != -1) {
             $state = new XLite_Model_State($state_id);
             $originState = $state->get('code');
