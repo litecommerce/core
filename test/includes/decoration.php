@@ -1004,11 +1004,11 @@ class Decorator
      * @access public
      * @since  3.0
      */
-    public function rebuildCache($force = false, $displayProgress = true)
+    public function rebuildCache($force = false)
     {
         if ($this->isNeedRebuild() || $this->isDeveloperMode() || $force) {
 
-            $displayProgress && ((('cli' == php_sapi_name()) && $this->showPlainTextBlock()) || (empty($_REQUEST['action']) && $this->showJavaScriptBlock()));
+			defined(SILENT_CACHE_REBUILD) && ((('cli' == php_sapi_name()) && $this->showPlainTextBlock()) || (empty($_REQUEST['action']) && $this->showJavaScriptBlock()));
 
             $this->setMaxExecutionTime();
 
