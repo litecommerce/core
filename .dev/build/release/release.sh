@@ -261,6 +261,8 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 
 	fi
 
+	sed -i '' -E 's/lc_path = .*/lc_path = .\/litecommerce/' modules/lc_connector/lc_connector.info
+
 	find . -type d -exec chmod 755 {} \;
 	find . -type f -exec chmod 644 {} \;
 
@@ -273,6 +275,11 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 	echo "  + LCCMS v.$VERSION theme for Drupal is completed"
 
 	mv ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME} modules/lc_connector/
+
+	cd modules/lc_connector/${LITECOMMERCE_DIRNAME}
+
+	rm -rf skins_original/default
+	mv skins_original/drupal skins_original/default
 
 	cd $OUTPUT_DIR
 
