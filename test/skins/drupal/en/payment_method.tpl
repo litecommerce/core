@@ -40,22 +40,22 @@ function continueCheckout()
 }
 </script>
 
-<span class="ErrorMessage" IF="error=#pmSelect#">To proceed with checkout, you need to select a payment method.</span>
+<div id="payment-methods-box">
 
-<form action="{buildURL(#checkout#)}" method="post" name="payment_method">
-<table border="0" align="center">
-<tr FOREACH="paymentMethods,payment_method">
-    <td width="5%"><input type="radio" name="payment_id" value="{payment_method.payment_method}" checked=isSelected(config.Payments.default_select_payment,payment_method.payment_method)></td>
-    <td nowrap><b>{payment_method.name:h}</b></td>
-    <td nowrap>{payment_method.details:h}</td>
-</tr>
-<tr>
-    <td colspan="3" align="center">
-        <br>
-        <input type="hidden" name="target" value="checkout">
-        <input type="hidden" name="action" value="payment">
-        <widget class="XLite_View_Button_Regular" label="Continue.." jsCode="continueCheckout();" />
-    </td>
-</tr>
-</table>
-</form>
+  <h4>Payment methods</h4>
+
+  <widget class="XLite_View_Form_Checkout_PaymentMethod" name="payment_method_form" />
+
+  <ul IF="paymentMethods">
+    <li FOREACH="paymentMethods,payment_method">
+      <input type="radio" name="payment_id" value="{payment_method.payment_method}" id="payment_{payment_method.payment_method}" checked="isSelected(config.Payments.default_select_payment,payment_method.payment_method)" />
+      <label for="payment_{payment_method.payment_method}" checked="isSelected(config.Payments.default_select_payment,payment_method.payment_method)" class="payment-method-title">{payment_method.name:h}</label>
+      &nbsp;&nbsp;<span class="payment-method-descr" IF="{payment_method.details}">({payment_method.details:h})</span>
+    </li>
+  </ul>
+
+  <br /><widget class="XLite_View_Button_Regular" label="Continue.." jsCode="continueCheckout();" />
+
+  <widget name="payment_method_form" end />
+
+</div>

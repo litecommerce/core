@@ -15,7 +15,8 @@
   <widget template="shopping_cart/items.tpl" />
 
   <div class="cart-totals">
-    <widget template="shopping_cart/totals.tpl">
+    <widget template="shopping_cart/totals.tpl" />
+    <widget template="shopping_cart/checkout_buttons.tpl" />
   </div>
 
   <div class="cart-buttons">

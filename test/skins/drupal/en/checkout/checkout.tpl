@@ -20,9 +20,8 @@
   <widget template="shopping_cart/items.tpl" />
 
   <div class="cart-totals">
-    <li><em>Subtotal:</em>
-      {price_format(cart,#subtotal#):h}
-    </li>
+    <li IF="!auth.isLogged()"><em>Subtotal:</em>{price_format(cart,#subtotal#):h}</li>
+    <widget IF="auth.isLogged()" template="shopping_cart/totals.tpl">
   </div>
 
   <widget name="checkout_form" end />
