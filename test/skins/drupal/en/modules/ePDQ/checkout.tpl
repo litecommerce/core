@@ -1,3 +1,15 @@
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * ____file_title____
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
 <form action="https://{xlite.options.host_details.https_host}{xlite.options.host_details.web_dir_wo_slash}/classes/modules/ePDQ/submit.php" method="POST" name="ePDQ_form">
 {cart.paymentMethod.getePDQdata(cart):h}
 <input type=hidden name=merchantdisplayname value="{cart.paymentMethod.params.param01}">

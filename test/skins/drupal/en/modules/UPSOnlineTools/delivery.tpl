@@ -1,3 +1,15 @@
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * ____file_title____
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
 <table width="100%" border=0 cellpadding=5 cellspacing=0>
 <tr IF="xlite.session.ups_failed_items&cart.shippingMethod.class=#ups#">
 	<td {if:cart.shippingAvailable&cart.shipped&cart.getCarrierRates()}colspan=3{else:}colspan=2{end:} class="ErrorMessage">United Parcel Service carrier is unavailable. One or more items added to cart exceed the size or the weight limit of the container. Please contact the <a href="mailto: {config.Company.site_administrator:h}"><font class="ErrorMessage"><u>store administrator.</u></font></a></td>

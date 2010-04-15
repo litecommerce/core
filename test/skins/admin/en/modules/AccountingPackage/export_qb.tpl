@@ -1,6 +1,15 @@
-{* Export orders info into QuickBooks IIF file format *}
+{* vim: set ts=2 sw=2 sts=2 et: *}
 
-{* ********** CUSTOMER FIELD FORMAT ********** *}
+{**
+ * ____file_title____
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
 !CUST{delimiter}NAME{delimiter}BADDR1{delimiter}BADDR2{delimiter}BADDR3{delimiter}SADDR1{delimiter}SADDR2{delimiter}SADDR3{delimiter}EMAIL{delimiter}PHONE1{delimiter}FAXNUM{delimiter}
 
 {* ********** CUSTOMER DETAILS ********** *}

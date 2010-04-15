@@ -1,3 +1,15 @@
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * ____file_title____
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
 Use this section to define types of credit cards accepted at your store.<hr>
 
 <font IF="status=#added#" class="SuccessMessage"><br>&gt;&gt;&nbsp;Credit card added successfully&nbsp;&lt;&lt;<br><br></font>
@@ -100,4 +112,3 @@ Use this section to define types of credit cards accepted at your store.<hr>
 </table>
 
 <p><b>Note:</b> Checkmark the 'CVV2' field if a credit card type requires it.
-

@@ -1,3 +1,15 @@
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * ____file_title____
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
 <widget target="partners" template="common/dialog.tpl" head="Partners" body="modules/Affiliate/partners.tpl">
 <widget target="affiliate_plans" mode="" template="common/dialog.tpl" head="Affiliate plans" body="modules/Affiliate/affiliate_plans.tpl">
 <widget target="affiliate_plans" mode="delete" template="common/dialog.tpl" head="Delete affiliate plan &quot;{affiliatePlan.title:h}&quot;" body="modules/Affiliate/confirm_delete_plan.tpl">
@@ -13,4 +25,3 @@
 <widget target="sales_stats" class="XLite_View_Tabber" body="{pageTemplate}" switch="target">
 <widget target="top_performers" class="XLite_View_Tabber" body="{pageTemplate}" switch="target">
 <widget target="partners_tree" class="XLite_View_Tabber" body="{pageTemplate}" switch="target">
-

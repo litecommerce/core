@@ -1,3 +1,15 @@
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * ____file_title____
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
 <p align="justify">
 This section lists search queries performed by customers. Statistics can be ordered by strings searched (query), search count or amount of products found by the search tool.
 </p>
@@ -37,5 +49,3 @@ Order by: <select name="listOrder" onChange="document.searchStat.submit()">
 </select>
 <input type="submit" value="Cleanup">
 </form>
-
-

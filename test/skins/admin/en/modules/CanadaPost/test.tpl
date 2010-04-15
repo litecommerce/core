@@ -1,3 +1,15 @@
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * ____file_title____
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
 <form action="admin.php#test_" method="GET">
     <input type="hidden" name="target" value="cps">
     <input type="hidden" name="action" value="test">
@@ -62,4 +74,3 @@
 <br>
 - For international destinations only 'Country' has to be valid ('City', 'Postal Code' and 'State' are not used).
 </p>
-

@@ -1,3 +1,15 @@
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * ____file_title____
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
 <p IF="message=#added#"><font class="SuccessMessage">&gt;&gt;&nbsp;Shipping rate has been added successfully&nbsp;&lt;&lt;</font></p>
 <p IF="message=#add_failed#"><font class="ErrorMessage">&gt;&gt;&nbsp;Shipping rate cannot be added&nbsp;&lt;&lt;</font><br>Please make sure that <b>"min weight", "min total", "min items", "shipping zone", "shipping method"</b> fields do not overlap with other shipping rates.</p>
 

@@ -1,3 +1,15 @@
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * ____file_title____
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
 This page allows you to configure partner registration form <a href="#default_fields"><u>default fields</u></a>, <a href="#add_field"><u>add new field</u></a> or <a href="#additional_fields"><u>modify existing additional fields</u></a>.
 <p>
 <form action="admin.php" method=POST>

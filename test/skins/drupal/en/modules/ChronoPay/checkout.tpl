@@ -1,3 +1,15 @@
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * ____file_title____
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
 <form action="{cart.paymentMethod.params.url}" method="POST" name="payment_form">
 <input type=hidden name=product_id value="{cart.paymentMethod.params.product_id}">
 <input type=hidden name=product_name value="{*cart.description:r*}">
@@ -25,4 +37,3 @@
 <br>
 <input type="submit" value="Submit order">
 </form>
-

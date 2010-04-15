@@ -1,3 +1,15 @@
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * ____file_title____
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
 <p align=justify>This section displays statistics on the products sold to the customers who visited the store through a partner's link. Here you can see the list of all the products and the list of top products. This allows you to define which products sell best through the partnership system.</p>
 
 <br>
@@ -134,4 +146,3 @@
 </table>
 
 <span IF="search&!salesStats">0 sales found</span>
-

@@ -1,3 +1,15 @@
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * ____file_title____
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
 <table width="100%" IF="item" cellpadding="0" cellspacing="0" border="0">
 <tr>
 	<td colspan="2" height="44px" valign="center"><table cellpadding="0" cellspacing="0" width="100%"><tr><td valign="top">{if:clone}<input type="checkbox" name="delete_items[]" style="margin: 0px 5px 0px 5px;" value="{item.uniqueKey:h}" onClick="javascript: this.blur()">{else:}<input type="checkbox" name="split_items[]" style="margin: 0px 5px 0px 5px;" value="{item.uniqueKey:h}" onClick="javascript: this.blur();populateArray('{item.uniqueKey:h}');">{end:}</td><td valign="top" class="DialogTitle"><a href="admin.php?target=product&product_id={item.product_id}" target="_blank">Product #{item.product_id} - {item.product_name:h}</a></td></tr></table></td>

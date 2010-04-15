@@ -1,3 +1,15 @@
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * ____file_title____
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
 "Customer ID","Invoice/CM #","Apply to Invoice Number","Credit Memo","Date","Ship By","Quote","Quote #","Quote Good Thru Date","Drop Ship","Ship to Name","Ship to Address-Line One","Ship to Address-Line Two","Ship to City","Ship to State","Ship to Zipcode","Ship to Country","Customer PO","Ship Via","Ship Date","Date Due","Discount Amount","Discount Date","Displayed Terms","Sales Representative ID","Accounts Receivable Account","Sales Tax Code","Invoice Note","Note Prints After Line Items","Statement Note","Stmt Note Prints Before Ref","Internal Note","Beginning Balance Transaction","Number of Distributions","Invoice/CM Distribution","Apply to Invoice Distribution","Apply To Sales Order","Quantity","SO Number","Item ID","SO Distribution","Description","G/L Account","Unit Price","Tax Type","Amount","Job ID","Sales Tax Authority","Transaction Period","Transaction Number","Return Authorization"{crlf}
 {foreach:orders,oid,order}
 {addDistribution(order,#shipping#)}

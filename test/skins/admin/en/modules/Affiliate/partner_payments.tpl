@@ -1,3 +1,15 @@
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * ____file_title____
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
 <p align=justify>This section contains information on partner commissions including amounts already paid, amounts approved for payment but not paid, commissions on pending orders and commission limits for each particular partner.</p>
 
 <p align=justify><b>Note:</b> &quot;Ready to be paid&quot; check box will appear when the commission earned by a partner exceeds the minimum limit defined by the partners affiliate plan.</p>

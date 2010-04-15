@@ -1,3 +1,15 @@
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * ____file_title____
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
 <p align=justify>This page allows you to configure AdvancedSecurity module. You should have <a href="http://www.gnupg.org" target=_blank><u>GNU Privacy Guard software</u></a> version 1.2.3 or better installed on your hosting to use this module. You can test module configuration using <a href="#test_gpg"><u>Test AdvancedSecurity configuration</u></a> dialog below. 
 
 <br><br>
@@ -115,4 +127,3 @@ function confirmDelete() {
 <tr> <td colspan=2>&nbsp;</td><td><input type=submit value="Download secret key"></td> </tr>
 </table>
 </form>
-

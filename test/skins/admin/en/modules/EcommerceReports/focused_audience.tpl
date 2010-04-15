@@ -1,3 +1,15 @@
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * ____file_title____
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
 <p align=justify>From this page you can search users with the specified parameters, export selected users data and send newsletters to the focused group.</p>
 
 <p><b>NOTE:</b> You need to install Newsletters add-on in order to send newsletters to the focused group.</p>
@@ -267,4 +279,3 @@
 </p>
 
 </form>
-

@@ -1,4 +1,15 @@
-{* Login error page *}
+{* vim: set ts=2 sw=2 sts=2 et: *}
+
+{**
+ * ____file_title____
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ *}
 If you already have an account, you can authenticate yourself by filling in the form below. Mandatory fields are marked with an asterisk (<font color="red">*</font>).
 
 <hr size="1" noshade>
