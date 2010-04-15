@@ -25,6 +25,14 @@
  * @see        ____file_see____
  * @since      3.0.0
  */
+
+/**
+ * ____description____
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_Module_WishList_Controller_Customer_SendFriend extends XLite_Controller_Customer_Abstract
 {
     /**
@@ -102,4 +110,3 @@ class XLite_Module_WishList_Controller_Customer_SendFriend extends XLite_Control
     }
 
 }
-

@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage Model
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,6 +26,13 @@
  * @since      3.0.0
  */
 
+/**
+ * ____description____
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_Model_CheckoutStep extends XLite_Model_ListNode
 {
     protected $isPassed = false;
@@ -47,4 +54,3 @@ class XLite_Model_CheckoutStep extends XLite_Model_ListNode
         return $this->checkKey($mode) && $this->isPassed();
     }
 }
-
