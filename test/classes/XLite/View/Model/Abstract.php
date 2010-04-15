@@ -57,7 +57,10 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     /**
      * Session cell to store form data 
      */
-    const SAVED_FORM = 'savedForm';
+
+    const SAVED_FORM        = 'savedForm';
+    const SAVED_FORM_PARAMS = 'savedFormParams';
+    const SAVED_FORM_DATA   = 'savedFormData';
 
 
     /**
@@ -96,6 +99,17 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
      * @since  3.0.0
      */
     protected $savedData;
+
+    /**
+     * keyParams 
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $keyParams = array(
+        self::PARAM_FIELDSET_NAME,
+    );
 
 
     /**
@@ -384,17 +398,44 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     }
 
     /**
-     * getFormData 
+     * getSavedForm 
+     * 
+     * @param string $field data field to return
+     *  
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getSavedForm($field = null)
+    {
+        $data = XLite_Model_Session::getInstance()->get(self::SAVED_FORM);
+        $name = $this->getFormName();
+
+        return isset($data[$name][$field]) ? $data[$name][$field] : array();
+    }
+
+    /**
+     * getFormSavedData 
      * 
      * @return array
      * @access protected
      * @since  3.0.0
      */
-    protected function getFormData()
+    protected function getFormSavedData()
     {
-        $data = XLite_Model_Session::getInstance()->get(self::SAVED_FORM);
+        return $this->getSavedForm(self::SAVED_FORM_DATA);
+    }
 
-        return isset($data) ? $data : array();
+    /**
+     * getFormSavedParams 
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getFormSavedParams()
+    {
+        return $this->getSavedForm(self::SAVED_FORM_PARAMS);
     }
 
     /**
@@ -408,10 +449,13 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
      */
     protected function saveFormData($data)
     {
-        $savedData = $this->getFormData();
+        $savedData = $this->getFormSavedData();
 
         if (isset($data)) {
-            $savedData[$this->getFormName()] = $this->prepareFormDataToSave($data);
+            $savedData[$this->getFormName()] = array(
+                self::SAVED_FORM_PARAMS => $this->getParamsHash($this->keyParams),
+                self::SAVED_FORM_DATA   => $this->prepareFormDataToSave($data),
+            );
         } else {
             unset($savedData[$this->getFormName()]);
         }
@@ -469,20 +513,6 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     }
 
     /**
-     * Called before the includeCompiledFile()
-     *
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function initView()
-    {
-        parent::initView();
-
-        $this->startCurrentForm();
-    }
-
-    /**
      * Called after the includeCompiledFile()
      *
      * @return void
@@ -521,16 +551,18 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
      */
     public function __construct(array $params = array())
     {
-        parent::__construct($params);
+        parent::__construct($params + $this->getFormSavedParams());
 
-        // Do not wrap this operation into a function: it will decrease the perfomance
-        $this->savedData = $this->getFormData();
-        $this->savedData = isset($this->savedData[$this->getFormName()]) ? $this->savedData[$this->getFormName()] : array();
+        $this->startCurrentForm();
+        $this->savedData = $this->getFormSavedData();
     }
 
 
     /**
      * getSavedFieldValue 
+     * 
+     * NOTE: do not use the getFormSavedData() function:
+     * it will decrease the perfomance
      * 
      * @param string $name field name
      *  
