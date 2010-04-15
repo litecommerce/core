@@ -49,5 +49,7 @@ sql/xlite_modules.sql
 "
 
 # Drupal files that must be removed from all distributives
-DRUPAL_FILES_TODELETE=""
+DRUPAL_FILES_TODELETE="
+profiles/default
+"
 
