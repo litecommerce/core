@@ -47,6 +47,7 @@ function Shipping_intershipper_parseResponse($_this, $response, $destination)
             }
 
             $serviceName = "$carrier $service";
+            // TODO - add 4 argument for getService()
             $shipping = $_this->getService("intershipper", $serviceName, $destination);
             $id = $shipping->get("shipping_id");
             $rates[$id] = new XLite_Model_ShippingRate();

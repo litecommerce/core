@@ -270,8 +270,9 @@ class XLite_Model_Shipping extends XLite_Model_Abstract
     {
         $name = $this->_normalizeName($name);
 
+        $shipping = self::getInstanceByName($class);
+
         // search for the shipping method specified by ($class, $name)
-        $shipping = new self();
         if (!$shipping->find('class = \'' . $class . '\' AND name = \'' . addslashes($name) . '\' AND destination = \'' . $destination . '\'')) {
             // create a new service, disabled
             $shipping->set('class', $class);
@@ -309,6 +310,26 @@ class XLite_Model_Shipping extends XLite_Model_Abstract
 			self::registerShippingModule($name, $class);
 		}
 	}
+
+    /**
+     * Get instance by name 
+     * 
+     * @param string  $name       Shipping module name
+     * @param integer $shippingId Shipping method id
+     *  
+     * @return XLite_Model_Shipping
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getInstanceByName($name, $shippingId)
+    {
+        $className = isset(self::$registeredShippingModules[$name])
+            ? get_class(self::$registeredShippingModules[$name])
+            : 'XLite_Model_Shipping';
+
+        return new $className($shippingId);
+    }
 }
 
 // Instantiate classes

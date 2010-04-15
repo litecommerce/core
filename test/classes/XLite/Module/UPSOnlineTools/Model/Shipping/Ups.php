@@ -1843,4 +1843,5 @@ EOT;
 
         return $result->length ? $result->item(0)->nodeValue : null;
     }
+
 }

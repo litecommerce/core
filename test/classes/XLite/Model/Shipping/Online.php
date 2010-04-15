@@ -81,26 +81,48 @@ class XLite_Model_Shipping_Online extends XLite_Model_Shipping
     function unserializeCacheRates($rates)
     {
         $result = array();
+
         $cart = XLite_Model_Cart::getInstance();
-        $order = new XLite_Model_Order($cart->get("order_id"));
-        $weight = (double) $order->get("weight");
-        $total = (double) $order->calcSubTotal(true); // SubTotal for "shipped only" items
-        $items = $order->get("shippedItemsCount");
+
+        $order = new XLite_Model_Order($cart->get('order_id'));
+        $weight = doubleval($order->get('weight'));
+        $total = doubleval($order->calcSubTotal(true)); // SubTotal for "shipped only" items
+        $items = $order->get('shippedItemsCount');
         $zone = $this->getZone($order);
 
         if (!empty($rates)) {
             foreach (explode(',', $rates) as $rate) {
-                list($shipping_id, $rate_value) = explode(':', $rate);
+                list($shipping_id, $rate_value) = explode(':', $rate, 2);
                 $rateObject = new XLite_Model_ShippingRate($shipping_id);
-                $rateObject->find($sql="(shipping_id=-1 OR shipping_id='$shipping_id') AND (shipping_zone=-1 OR shipping_zone='$zone') AND min_weight<=$weight AND max_weight>=$weight AND min_total<=$total AND min_items<=$items AND max_items>=$items AND max_total>$total", "shipping_id DESC, shipping_zone DESC");
-                $rateObject->shipping = new XLite_Model_Shipping($shipping_id);
-                if ($rateObject->shipping->is("exists") && $rateObject->shipping->is("enabled")) {
+
+                $sql = '(shipping_id = -1 OR shipping_id = \'' . $shipping_id . '\')'
+                    . ' AND (shipping_zone = -1 OR shipping_zone = \'' . $zone . '\')'
+                    . ' AND min_weight <= ' . $weight
+                    . ' AND max_weight >= ' . $weight
+                    . ' AND min_total <= ' .$total
+                    . ' AND min_items <= ' .$items
+                    . ' AND max_items >= ' . $items
+                    . ' AND max_total > ' . $total;
+
+                $rateObject->find($sql, 'shipping_id DESC, shipping_zone DESC');
+
+                $shipping = new XLite_Model_Shipping($shipping_id);
+                $rateObject->shipping = XLite_Model_Shipping::getInstanceByName($shipping->get('class'), $shipping_id);
+
+                if ($rateObject->shipping->isExists() && $rateObject->shipping->is('enabled')) {
+
                     // haven't we remove this shipping?
-                    $rateObject->rate = (double)$rate_value + (double)$rateObject->get("flat") + (double)$rateObject->get("per_item") * $items + (double)$rateObject->get("percent")*$total/100 + (double)$rateObject->get("per_lbs")*$weight;
-                    $result[$rateObject->shipping->get("shipping_id")] = $rateObject;
+                    $rateObject->rate = doubleval($rate_value)
+                        + doubleval($rateObject->get('flat'))
+                        + doubleval($rateObject->get('per_item')) * $items
+                        + doubleval($rateObject->get('percent')) * $total / 100
+                        + doubleval($rateObject->get("per_lbs")) * $weight;
+
+                    $result[$rateObject->shipping->get('shipping_id')] = $rateObject;
                 }    
             }
         }
+
         return $result;
     }
 
