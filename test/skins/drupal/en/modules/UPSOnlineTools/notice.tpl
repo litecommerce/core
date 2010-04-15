@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * UPS Online Tools notice
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,13 +10,13 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<TABLE border="0">
-<TR>
-<TD align="center"><widget template="modules/UPSOnlineTools/ups_logo.tpl"></TD>
-<TD align="center" class="SmallText">
-    NOTICE: These fees do not necessarily represent UPS published rates and may include charges levied by {config.Company.company_name:h}
-<BR><BR>
-UPS, UPS brandmark, and the Color Brown are trademarks of United Parcel Service of America, Inc. All Rights Reserved.
-</TD>
-</TR>
-</TABLE>
+<table cellspacing="0" class="form-table ups-notice">
+  <tr>
+    <td class="logo"><widget template="modules/UPSOnlineTools/ups_logo.tpl" /></td>
+    <td class="text">
+      NOTICE: These fees do not necessarily represent UPS published rates and may include charges levied by {config.Company.company_name:h}
+      <br /><br />
+      UPS, UPS brandmark, and the Color Brown are trademarks of United Parcel Service of America, Inc. All Rights Reserved.
+    </td>
+  </tr>
+</table>

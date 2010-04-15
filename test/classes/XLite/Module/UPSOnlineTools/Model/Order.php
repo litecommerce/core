@@ -40,10 +40,13 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
 
     // 0 - Fixed size
     const BINPACKING_SIMPLE_FIXED_SIZE = 0;
+
     // 1 - Max size
     const BINPACKING_SIMPLE_MAX_SIZE = 1;
+
     // 2 - Bin Packing
     const BINPACKING_NORMAL_ALGORITHM = 2;
+
     // 3 - Bin Packing oversize
     const BINPACKING_OVERSIZE_ALGORITHM = 3;
 
@@ -88,17 +91,16 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
                     return "";
                 }
 
-                // return NULL if shipping class not defined
-                if (!class_exists('XLite_Model_Shipping_' . $sm->get('class'))) {
-                    $this->assignFirstShippingRate();
-                    $this->_carrier = null;
-                    return '';
-                }
+                $sm = XLite_Model_Shipping::getInstanceByName($sm->get('class'), $this->get("shipping_id"));
+
                 return $this->_carrier = $sm->get("class");
             }
 
-            $this->_carrier = ((count($carriers) > 1) ? $this->getComplex('shippingMethod.class') : "");
+            $this->_carrier = 1 < count($carriers)
+                ? $this->getComplex('shippingMethod.class')
+                : '';
         }
+
         return $this->_carrier;
     }
 
@@ -123,10 +125,21 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
     function getCarrierRates($carrier = null)
     {
         $rates = $this->getShippingRates();
-        if (is_null($carrier)) $carrier = $this->getCarrier();
-        if (!$carrier || !is_array($rates)) return $rates;
-        foreach($rates as $k=>$rate)
-            if ($carrier != $rate->getComplex('shipping.class')) unset($rates[$k]);
+
+        if (is_null($carrier)) {
+            $carrier = $this->getCarrier();
+        }
+
+        if (!$carrier || !is_array($rates)) {
+            return $rates;
+        }
+
+        foreach ($rates as $k => $rate) {
+            if ($carrier != $rate->getComplex('shipping.class')) {
+                unset($rates[$k]);
+            }
+        }
+
         return $rates;
     }
 
@@ -154,10 +167,7 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
             return true;
         }
 
-        $pos_a = $a->getComplex('shipping.order_by');
-        $pos_b = $b->getComplex('shipping.order_by');
-
-        return ($pos_a > $pos_b);
+        return $a->getComplex('shipping.order_by') > $b->getComplex('shipping.order_by');
     }
 
     /**

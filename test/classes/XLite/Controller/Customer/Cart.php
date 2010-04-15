@@ -155,7 +155,9 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
         $cartId = XLite_Core_Request::getInstance()->cart_id;
         $amount = XLite_Core_Request::getInstance()->amount;
         if (!is_array($amount)) {
-            $amount = array($cartId => $amount);
+            $amount = isset(XLite_Core_Request::getInstance()->cart_id)
+                ? array($cartId => $amount)
+                : array();
         }
 
         foreach ($items as $key => $i) {

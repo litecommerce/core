@@ -10,16 +10,19 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<p IF="cart.shippingAvailable&cart.shipped&cart.getShippingRates()">
+<div IF="cart.shippingAvailable&cart.shipped&cart.getShippingRates()" class="delivery-box">
+  <widget class="XLite_View_Form_Cart_Main" name="shopping_form" />
+
+  <h4>Delivery</h4>
 
   <widget module="UPSOnlineTools" template="modules/UPSOnlineTools/delivery.tpl">
 
-  <span IF="!xlite.UPSOnlineToolsEnabled">
+  <ul IF="!xlite.UPSOnlineToolsEnabled" class="deliveries">
+    <li FOREACH="cart.getShippingRates(),key,rate">
+      <input type="radio" id="shipping_{rate.shipping.shipping_id}" name="shipping" onclick="javascript: this.form.submit();" value="{rate.shipping.shipping_id}" checked="{cart.isSelected(#shipping_id#,key)}" />
+      <label for="shipping_{rate.shipping.shipping_id}"{if:cart.isSelected(#shipping_id#,key)} class="selected"{end:}>{rate.shipping.name:h} ({price_format(rate,#rate#):h})</label>
+    </li>
+  </ul>
 
-    <strong>Delivery:&nbsp;&nbsp;</strong>
-    <select name="shipping" onchange="javascript: cart_form.submit();">
-      <option FOREACH="cart.getShippingRates(),key,rate" value="{rate.shipping.shipping_id}" selected="{cart.isSelected(#shipping_id#,key)}">{rate.shipping.name:h} {price_format(rate,#rate#):h}</option>
-    </select>
-
-  </span>
-</p>
+  <widget name="shopping_form" end />
+</div>

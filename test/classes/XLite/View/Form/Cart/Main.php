@@ -70,17 +70,5 @@ class XLite_View_Form_Cart_Main extends XLite_View_Form_Abstract
     {
         return 'update';
     }
-
-    /**
-     * getDefaultParams 
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultParams()
-    {
-        return parent::getDefaultParams() + array('cart_id' => 0);;
-    }
 }
 
