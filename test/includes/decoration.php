@@ -1,13 +1,38 @@
 <?php
-
-/* $Id$ */
+// vim: set ts=4 sw=4 sts=4 et:
 
 /**
- * Decorator - classes cache builder
+ * LiteCommerce
  * 
- * @package    Lite Commerce
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
+
+
+/**
+ * Decorator - classes cache builder 
+ * 
+ * @package    XLite
  * @subpackage Includes
- * @since      3.0
+ * @since      3.0.0
  */
 class Decorator
 {
@@ -1008,7 +1033,13 @@ class Decorator
     {
         if ($this->isNeedRebuild() || $this->isDeveloperMode() || $force) {
 
-			defined(SILENT_CACHE_REBUILD) && ((('cli' == php_sapi_name()) && $this->showPlainTextBlock()) || (empty($_REQUEST['action']) && $this->showJavaScriptBlock()));
+            if (!defined('SILENT_CACHE_REBUILD')) {
+                if ('cli' == php_sapi_name()) {
+                    $this->showPlainTextBlock();
+                } elseif (empty($_REQUEST['action'])) {
+                    $this->showJavaScriptBlock();
+                }
+            }
 
             $this->setMaxExecutionTime();
 
