@@ -36,6 +36,22 @@
 abstract class XLite_Module_DrupalConnector_View_Model_Abstract extends XLite_View_Model_Abstract implements XLite_Base_IDecorator
 {
     /**
+     * This object will be used if another one is not pased
+     *
+     * @return XLite_Model_Abstract
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultModelObject()
+    {
+        $handler = XLite_Module_DrupalConnector_Handler::getInstance();
+
+        return $handler->checkCurrentCMS() 
+            ? $handler->getProfile(user_uid_optional_to_arg(null)) 
+            : parent::getDefaultModelObject();
+    }
+
+    /**
      * Save form state in session
      *
      * @param array $data form fields

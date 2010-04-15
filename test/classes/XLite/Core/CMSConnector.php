@@ -108,6 +108,22 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         return array('cms_profile_id' => $cmsUserId, 'cms_name' => $this->getCMSName());
     }
 
+    /**
+     * getProfileWhereCondition 
+     * 
+     * @param int $cmsUserId CMS user Id
+     *  
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getProfileWhereCondition($cmsUserId)
+    {
+        return XLite_Core_Converter::getInstance()->buildQuery(
+            $this->getProfileDBFields($cmsUserId), '=', ' AND ', '\''
+        ) . ' AND cms_profile_id > \'0\'';
+    }
+
 
     /**
      * Return currently used CMS name
@@ -362,7 +378,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         $profile = XLite_Model_CachingFactory::getObject(__METHOD__ . $cmsUserId, 'XLite_Model_Profile');
 
         if (!$profile->isRead) {
-            $profile->find(XLite_Core_Converter::getInstance()->buildQuery($this->getProfileDBFields($cmsUserId), '=', ' AND ', '\''));
+            $profile->find($this->getProfileWhereCondition($cmsUserId));
         }
 
         return $profile;
