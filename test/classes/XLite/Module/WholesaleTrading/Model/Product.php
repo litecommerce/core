@@ -239,7 +239,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
         );
 
         // It's the hack to prevent multiple readings for different actions
-        if (!$result->isRead) {
+        if ($result->isPersistent && !$result->isRead) {
             $result->read();
             $result->isRead = true;
         }
