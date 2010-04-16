@@ -224,9 +224,12 @@ Included file sizes: <table>{foreach:profiler.includedFiles,file} <tr><td>{file.
 
     function addQuery($query)
     {
-        if (strlen($query)>300) {
+        // Uncomment if you want to truncate queries
+        /*if (strlen($query)>300) {
             $query = substr($query, 0, 300) . ' ...';
-        }
+            
+        }*/
+
         if (isset(self::$queries[$query])) {
             self::$queries[$query]++;
         } else {

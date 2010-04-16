@@ -230,12 +230,26 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 
     function _available_action($action)
     {
-        if (!isset($this->product_access) || is_null($this->product_access)) {
-            $this->product_access = new XLite_Module_WholesaleTrading_Model_ProductAccess();
-            $this->product_access->set("product_id", $this->get("product_id"));
-        }
+        $productId = $this->get('product_id');
 
-        return $this->product_access->groupInAccessList($this->auth->getComplex('profile.membership'), $action . "_group");
+        $result = XLite_Model_CachingFactory::getObject(
+            __METHOD__ . $productId,
+            'XLite_Module_WholesaleTrading_Model_ProductAccess',
+            array($productId)
+        );
+
+        // It's the hack to prevent multiple readings for different actions
+        if (!$result->isRead) {
+            $result->read();
+            $result->isRead = true;
+        }
+        
+        return XLite_Model_CachingFactory::getObjectFromCallback(
+            __METHOD__ . $productId . $action,
+            $result,
+            'groupInAccessList',
+            array($this->auth->getComplex('profile.membership'), $action . '_group')
+        );
     }
     
     function isShowAvailable()
