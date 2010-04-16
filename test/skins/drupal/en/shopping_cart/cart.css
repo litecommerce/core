@@ -37,3 +37,8 @@
 {
   float: right;
 }
+
+div.ups-notice {
+  background: transparent url(../images/modules/UPSOnlineTools/ups_logo.gif) no-repeat 5px 5px;
+  padding-left: 100px;
+}
