@@ -26,26 +26,15 @@
  * @since      3.0.0
  */
 
-
-abstract class XLite_View_FormField_Select_Abstract extends XLite_View_FormField_Abstract
+/**
+ * XLite_View_FormField_Select_State 
+ * 
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @since      3.0.0
+ */
+class XLite_View_FormField_Select_State extends XLite_View_FormField_Select_Regular
 {
-    /**
-     * Widget param names 
-     */
-
-    const PARAM_OPTIONS = 'options';
-
-    
-    /**
-     * getDefaultOptions
-     *
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    abstract protected function getDefaultOptions();
-
-
     /**
      * Return field template
      *
@@ -55,47 +44,19 @@ abstract class XLite_View_FormField_Select_Abstract extends XLite_View_FormField
      */
     protected function getFieldTemplate()
     {
-        return 'select.tpl';
+        return 'select_state.tpl';
     }
 
     /**
-     * getOptions 
-     * 
+     * getDefaultOptions
+     *
      * @return array
      * @access protected
      * @since  3.0.0
      */
-    protected function getOptions()
+    protected function getDefaultOptions()
     {
-        return $this->getParam(self::PARAM_OPTIONS);
-    }
-
-    /**
-     * Define widget params
-     *
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_OPTIONS => new XLite_Model_WidgetParam_Array('Options', $this->getDefaultOptions(), false),
-        );
-    }
-
-    /**
-     * Return field type
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getFieldType()
-    {
-        return self::FIELD_TYPE_SELECT;
+        return XLite_Model_CachingFactory::getObjectFromCallback(__METHOD__, 'XLite_Model_State', 'findAll');
     }
 }
 

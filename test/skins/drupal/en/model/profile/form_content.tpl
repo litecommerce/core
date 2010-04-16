@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<table>
+<table id="register-form">
   <tr>
     <td class="section_title"><h3>Billing address</h3></td>
     <td>&nbsp;</td>

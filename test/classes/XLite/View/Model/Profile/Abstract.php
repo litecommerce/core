@@ -36,6 +36,69 @@
 abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstract
 {
     /**
+     * addressSchema 
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $addressSchema = array(
+        'title' => array(
+            self::SCHEMA_CLASS    => 'XLite_View_FormField_Select_Title',
+            self::SCHEMA_LABEL    => 'Title',
+        ),
+        'firstname' => array(
+            self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
+            self::SCHEMA_LABEL    => 'Firstname',
+            self::SCHEMA_REQUIRED => true,
+        ),
+        'lastname' => array(
+            self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
+            self::SCHEMA_LABEL    => 'Lastname',
+            self::SCHEMA_REQUIRED => true,
+        ),
+        'company' => array(
+            self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
+            self::SCHEMA_LABEL    => 'Company',
+        ),
+        'phone' => array(
+            self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
+            self::SCHEMA_LABEL    => 'Phone',
+            self::SCHEMA_REQUIRED => true,
+        ),
+        'fax' => array(
+            self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
+            self::SCHEMA_LABEL    => 'Fax',
+        ),
+        'address' => array(
+            self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
+            self::SCHEMA_LABEL    => 'Address',
+            self::SCHEMA_REQUIRED => true,
+        ),
+        'city' => array(
+            self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
+            self::SCHEMA_LABEL    => 'City',
+            self::SCHEMA_REQUIRED => true,
+        ),
+        'state' => array(
+            self::SCHEMA_CLASS    => 'XLite_View_FormField_Select_State',
+            self::SCHEMA_LABEL    => 'State',
+            self::SCHEMA_REQUIRED => true,
+        ),
+        'country' => array(
+            self::SCHEMA_CLASS    => 'XLite_View_FormField_Select_Country',
+            self::SCHEMA_LABEL    => 'Country',
+            self::SCHEMA_REQUIRED => true,
+        ),
+        'zipcode' => array(
+            self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
+            self::SCHEMA_LABEL    => 'Zip code',
+            self::SCHEMA_REQUIRED => true,
+        ),
+    );
+
+
+    /**
      * Return title
      *
      * @return string
@@ -111,57 +174,23 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
     }
 
     /**
-     * getBillingAddressFieldsSchema 
+     * getAddressSchema 
      * 
+     * @param string $type address type
+     *  
      * @return array
      * @access protected
      * @since  3.0.0
      */
-    protected function getBillingAddressFieldsSchema()
+    protected function getAddressSchema($type)
     {
-        return array(
-            'billing_title' => array(
-                self::SCHEMA_CLASS    => 'XLite_View_FormField_Select_Profile_Title',
-                self::SCHEMA_LABEL    => 'Title',
-            ),
-            'billing_firstname' => array(
-                self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
-                self::SCHEMA_LABEL    => 'Name',
-                self::SCHEMA_REQUIRED => true,
-            ),
-            'billing_address' => array(
-                self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
-                self::SCHEMA_LABEL    => 'Street',
-                self::SCHEMA_REQUIRED => true,
-            ),
-        );
-    }
+        $result = array();
 
-    /**
-     * getShippingAddressFieldsSchema 
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getShippingAddressFieldsSchema()
-    {
-        return array(
-            'shipping_title' => array(
-                self::SCHEMA_CLASS    => 'XLite_View_FormField_Select_Profile_Title',
-                self::SCHEMA_LABEL    => 'Title',
-            ),
-            'shipping_firstname' => array(
-                self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
-                self::SCHEMA_LABEL    => 'Name',
-                self::SCHEMA_REQUIRED => true,
-            ),
-            'shipping_address' => array(
-                self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
-                self::SCHEMA_LABEL    => 'Street',
-                self::SCHEMA_REQUIRED => true,
-            ),
-        );
+        foreach ($this->addressSchema as $key =>$data) {
+            $result[$type . '_' . $key] = $data;
+        }
+
+        return $result;
     }
 
 
@@ -174,7 +203,7 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
      */
     public function getBillingAddressFields()
     {
-        return $this->getFieldsBySchema($this->getBillingAddressFieldsSchema());
+        return $this->getFieldsBySchema($this->getAddressSchema('billing'));
     }
 
     /**
@@ -186,7 +215,7 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
      */
     public function getShippingAddressFields()
     {
-        return $this->getFieldsBySchema($this->getShippingAddressFieldsSchema());
+        return $this->getFieldsBySchema($this->getAddressSchema('shipping'));
     }
 
     /**

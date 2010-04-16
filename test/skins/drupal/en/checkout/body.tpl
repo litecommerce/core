@@ -25,9 +25,9 @@
 
   <widget module="ProductAdviser" template="modules/ProductAdviser/OutOfStock/notify_form.tpl" visible="{xlite.PA_InventorySupport}">
 
-  <br /><br />
-
 </div>
+
+<div style="clear: both;">&nbsp;</div>
 
 {if:isExported()}
   {getRegisterFormPlaceholder():r}

@@ -27,24 +27,59 @@
  */
 
 /**
- * XLite_View_FormField_Select_Profile_Title 
+ * XLite_View_FormField_Select_Country 
  * 
  * @package    XLite
  * @subpackage ____sub_package____
  * @since      3.0.0
  */
-class XLite_View_FormField_Select_Profile_Title extends XLite_View_FormField_Select_Regular
+class XLite_View_FormField_Select_Country extends XLite_View_FormField_Select_Regular
 {
     /**
-     * getTitles 
-     * 
-     * @return array
+     * Widget param names
+     */
+
+    const PARAM_ALL = 'all';
+
+
+    /**
+     * Return field template
+     *
+     * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected function getTitles()
+    protected function getFieldTemplate()
     {
-        return array('Mr.' => 'Mr.', 'Ms.' => 'Ms.', 'Mrs.' => 'Mrs.');
+        return 'select_country.tpl';
+    }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_ALL => new XLite_Model_WidgetParam_Bool('All', false),
+        );
+    }
+
+    /**
+     * getSearchCondition
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getSearchCondition()
+    {
+        return $this->getParam(self::PARAM_ALL) ? 'enabled = \'1\'' : null;
     }
 
     /**
@@ -56,7 +91,7 @@ class XLite_View_FormField_Select_Profile_Title extends XLite_View_FormField_Sel
      */
     protected function getDefaultOptions()
     {
-        return array_merge(parent::getDefaultOptions(), $this->getTitles());
+        return XLite_Model_CachingFactory::getObjectFromCallback(__METHOD__, 'XLite_Model_Country', 'findAll', array($this->getSearchCondition()));
     }
 }
 

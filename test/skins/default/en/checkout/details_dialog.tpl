@@ -48,7 +48,7 @@
 </tr>
 </table>
 
-<p /><widget class="XLite_View_Button_Link" label="Modify address information" location="{buildURL(#profile#,##,_ARRAY_(#mode#^#modify#,#returnUrl#^getURL()))}" />
+<p /><widget class="XLite_View_Button_Link" label="Modify address information" location="{buildURL(#checkout#,##,_ARRAY_(#mode#^#register#))}" />
 <p /><widget class="XLite_View_Button_Link" label="Change payment method" location="{buildURL(#checkout#,##,_ARRAY_(#mode#^#paymentMethod#))}" />
 
 <p>

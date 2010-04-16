@@ -25,8 +25,26 @@
  * @see        ____file_see____
  * @since      3.0.0
  */
- 
-abstract class XLite_View_FormField_Select_Regular extends XLite_View_FormField_Select_Abstract
+
+/**
+ * XLite_View_FormField_Select_Title 
+ * 
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @since      3.0.0
+ */
+class XLite_View_FormField_Select_Title extends XLite_View_FormField_Select_Regular
 {
+    /**
+     * getDefaultOptions
+     *
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultOptions()
+    {
+        return array('Mr.' => 'Mr.', 'Ms.' => 'Ms.', 'Mrs.' => 'Mrs.');
+    }
 }
 

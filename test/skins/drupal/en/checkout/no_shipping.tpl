@@ -11,6 +11,9 @@
  * @since     3.0.0
  *}
 
-<p />You cannot proceed: there are no shipping methods available. Please contact administrator
+<p />You cannot proceed: there are no shipping methods available. Please contact administrator<br /><br />
 
-<div><widget class="XLite_View_Button_GoBack" /></div>
+<widget class="XLite_View_Button_Link" label="Return to cart" location="{buildUrl(#cart#)}" />
+&nbsp;&nbsp;
+<widget class="XLite_View_Button_Link" label="Modify address info" location="{buildUrl(#checkout#,##,_ARRAY_(#mode#^#register#))}" />
+

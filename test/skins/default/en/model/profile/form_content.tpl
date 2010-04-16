@@ -11,11 +11,11 @@
  * @since     3.0.0
  *}
 
-<table>
+<table id="register-form">
   <tr>
-    <td width="45%" class="block"><h3 class="title">Billing address</h3></td>
+    <td class="section_title"><h3>Billing address</h3></td>
     <td>&nbsp;</td>
-    <td width="45%" class="block"><h3 class="title">Shipping address</h3></td>
+    <td class="section_title"><h3>Shipping address</h3></td>
   </tr>
   <tr>
     <td>

@@ -19,12 +19,15 @@
   <widget template="shopping_cart/items.tpl" />
 
   <div class="cart-totals">
-    Subtotal: {price_format(cart,#subtotal#):h}
+    <span IF="!auth.isLogged()">Subtotal: {price_format(cart,#subtotal#):h}</span>
+    <widget IF="auth.isLogged()" template="shopping_cart/totals.tpl" />
   </div>
 
   <widget module="ProductAdviser" template="modules/ProductAdviser/OutOfStock/notify_form.tpl" visible="{xlite.PA_InventorySupport}">
 
 </div>
+
+<div style="clear: both;">&nbsp;</div>
 
 {if:isExported()}
   {getRegisterFormPlaceholder():r}
