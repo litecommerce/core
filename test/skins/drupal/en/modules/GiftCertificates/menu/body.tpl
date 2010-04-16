@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Module menu
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,5 +10,5 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<a href="cart.php?target=add_gift_certificate">Add to cart</a><br>
+<a href="cart.php?target=gift_certificate">Add to cart</a><br>
 <a href="cart.php?target=check_gift_certificate">Verify certificate</a><br>

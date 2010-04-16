@@ -168,7 +168,7 @@ class XLite_Module_GiftCertificates_Model_OrderItem extends XLite_Model_OrderIte
 
         if ($this->get('gcid')) {
             $url = XLite_Core_Converter::getInstance()->buildURL(
-                'add_gift_certificate',    
+                'gift_certificate',    
                 '',
                 array(
                     'gcid' => $this->get('gcid'),

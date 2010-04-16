@@ -19,7 +19,7 @@
 	<link href="skins/drupal/en/style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-  <widget name="returnButton" class="XLite_View_Button" type="button_link" href="{buildURL(#add_gift_certificate#,##,_ARRAY_(#gcid#^gc.gcid))}" label="Return">
+  <widget name="returnButton" class="XLite_View_Button" type="button_link" href="{buildURL(#gift_certificate#,##,_ARRAY_(#gcid#^gc.gcid))}" label="Return">
   <hr size="1" />
   {gc.showECardBody()}
   <hr size="1" />

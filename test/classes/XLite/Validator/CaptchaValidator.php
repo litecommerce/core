@@ -37,11 +37,11 @@ class XLite_Validator_CaptchaValidator extends XLite_Validator_Abstract
 {	
     public $template = "common/captcha_validator.tpl";	
     public $validation_required = array( // array: target => array(action, option_name);
-                    'help'                 => array('action'=>'contactus', 'option'=>'on_contactus'),
-                    'profile'              => array('action'=>'register',  'option'=>'on_register'),
-                    'partner_profile'      => array('action'=>'register',  'option'=>'on_partner_register'),
-                    'add_gift_certificate' => array('action'=>'add',       'option'=>'on_add_giftcert')
-                );
+        'help'             => array('action' => 'contactus', 'option' => 'on_contactus'),
+        'profile'          => array('action' => 'register',  'option' => 'on_register'),
+        'partner_profile'  => array('action' => 'register',  'option' => 'on_partner_register'),
+        'gift_certificate' => array('action' => 'add',       'option' => 'on_add_giftcert')
+    );
 
     function isValid()
     {

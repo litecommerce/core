@@ -26,4 +26,4 @@
     </td>
   </tr>
 </table>
-<widget class="XLite_View_Button" type="button_link" href="{buildURL(#add_gift_certificate#,##,_ARRAY_(#gcid#^gcid))}" label="Cancel">
+<widget class="XLite_View_Button" type="button_link" href="{buildURL(#gift_certificate#,##,_ARRAY_(#gcid#^gcid))}" label="Cancel">

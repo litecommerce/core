@@ -145,7 +145,7 @@ class XLite_Module_GiftCertificates_Controller_Admin_AddGiftCertificate extends 
 			$gc = $this->get("gc");
         	$gc->set("ecard_id", 0);
         	$gc->update();
-        	$this->set("returnUrl", $this->buildUrl('add_gift_certificate', '', array('gcid' => $gc->get('gcid'))));
+        	$this->set("returnUrl", $this->buildUrl('gift_certificate', '', array('gcid' => $gc->get('gcid'))));
         }
     }
 

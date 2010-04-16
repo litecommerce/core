@@ -62,6 +62,6 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificateSelectEcard 
      */
     public function getReturnURL()
     {
-        return $this->buildUrl('add_gift_certificate', '', array('gcid' => XLite_Core_Request::getInstance()->gcid));
+        return $this->buildUrl('gift_certificate', '', array('gcid' => XLite_Core_Request::getInstance()->gcid));
     }
 }

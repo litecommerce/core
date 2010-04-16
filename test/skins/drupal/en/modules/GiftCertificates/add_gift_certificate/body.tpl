@@ -99,9 +99,9 @@ var bordersDir = '{gc.bordersDir}';
           <img IF="gc.ecard_id" src="{gc.eCard.thumbnail.url}" />
 
           <ul>
-            <li><a href="{buildURL(#add_gift_certificate#,#select_ecard#,_ARRAY_(#gcid#^gcid))}">Select e-Card</a></li>
-            <li IF="gc.ecard_id"><a href="{buildURL(#add_gift_certificate#,#delete_ecard#,_ARRAY_(#gcid#^gcid))}">Delete e-Card</a></li>
-            <li IF="gc.ecard_id"><a href="{buildURL(#add_gift_certificate#,#preview_ecard#,_ARRAY_(#gcid#^gcid))}">Preview e-Card</a></li>
+            <li><a href="{buildURL(#gift_certificate#,#select_ecard#,_ARRAY_(#gcid#^gcid))}">Select e-Card</a></li>
+            <li IF="gc.ecard_id"><a href="{buildURL(#gift_certificate#,#delete_ecard#,_ARRAY_(#gcid#^gcid))}">Delete e-Card</a></li>
+            <li IF="gc.ecard_id"><a href="{buildURL(#gift_certificate#,#preview_ecard#,_ARRAY_(#gcid#^gcid))}">Preview e-Card</a></li>
           </ul>
 
         </td>
