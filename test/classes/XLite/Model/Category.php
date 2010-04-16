@@ -213,15 +213,15 @@ class XLite_Model_Category extends XLite_Model_Abstract
     */
     function getParentCategory() // {{{
     {
-        if (is_null($this->parent) && $this->get("category_id") && $this->get("parent")) {
-            $this->parent = new XLite_Model_Category($this->get("parent"));
-        }
-        return $this->parent;
+        $parent = $this->get('parent');
+
+        return ($this->get('category_id') && $parent)
+            ? XLite_Model_CachingFactory::getObject(__METHOD__ . $parent, 'XLite_Model_Category', array($parent))
+            : null;
     } // }}}
     
     function setParentCategory($v) // {{{
     {
-        $this->parent = $v;
         $this->set("parent", $v->get("category_id"));
     } // }}}
 
