@@ -172,15 +172,3 @@
 .list-body-table tr td.product-name-column {
   width: 100%;
 }
-
-/* Modal wait screen */
-.wait-block {
-  display: none;
-}
-
-.wait-block-overlay {
-  background: #000 none;
-  opacity: 0.1;
-  cursor: wait;
-}
-

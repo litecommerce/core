@@ -20,7 +20,7 @@
 <div class="order-buttons">
   <a href="{buildUrl(#invoice#,##,_ARRAY_(#order_id#^order.order_id,#printable#^#1#))}" class="printable first"><img src="images/spacer.gif" alt="" /><span>Print invoice</span></a>
   |
-  <a href="{buildUrl(#order_list#,##,_ARRAY_(#mode#^#search#))}" class="last">Back to order list</a>
+  <a href="{buildUrl(#order_list#)}" class="last">Back to order list</a>
 </div>
 
 <hr class="tiny" />
