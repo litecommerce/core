@@ -35,16 +35,6 @@
  */
 class XLite_Model_Category extends XLite_Model_Abstract
 {
-	/**
-	 * List of subcategories 
-	 * 
-	 * @var    array
-	 * @access protected
-	 * @since  3.0.0
-	 */
-	protected $subcategories = null;
-
-
     /**
      * Returns the subcategories list for the current category 
      * 
@@ -56,13 +46,14 @@ class XLite_Model_Category extends XLite_Model_Abstract
      */
     public function getSubcategories($where = null)
     {
-		if (!isset($this->subcategories)) {
-			$this->subcategories = $this->findAll(
-				'parent = \'' . $this->get('category_id') . '\'' . (isset($where) ? ' AND ' . $where : '')
-			);
-		}
+        $categoryId =  $this->get('category_id');
 
-		return $this->subcategories;
+        return XLite_Model_CachingFactory::getObjectFromCallback(
+            __METHOD__ . $categoryId . $where,
+            $this,
+            'findAll',
+            array('parent = \'' . $categoryId . '\'' . (isset($where) ? ' AND ' . $where : ''))
+        );
     }
 
     /**
@@ -458,11 +449,11 @@ class XLite_Model_Category extends XLite_Model_Abstract
             $result = $this->filterRule();
 			if ($result) {
 				// check parent categories
-				$c = $this->get("parentCategory");
-                if (!is_null($c)) {
-                    if (!$c->filter()) {
-                        $result = false;
-                    }
+                $parent = $this->getParentCategory();
+                if (isset($parent)) {
+                    $result = $result && XLite_Model_CachingFactory::getObjectFromCallback(
+                        __METHOD__ . $parent->get('category_id'), $parent, 'filter'
+                    );  
                 }
             }
 

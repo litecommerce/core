@@ -113,9 +113,15 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
      */
     protected function getCategories($categoryId = null)
     {
-        $category = is_null($categoryId)
-            ? $this->getWidgetParams(self::PARAM_ROOT_ID)->getObject()
-            : new XLite_Model_Category($categoryId);
+        if (isset($categoryId)) {
+            $category = XLite_Model_CachingFactory::getObject(
+                __METHOD__ . $this->getParam(self::PARAM_ROOT_ID),
+                'XLite_Model_Category',
+                array($categoryId)
+            );
+        } else {
+            $category = $this->getWidgetParams(self::PARAM_ROOT_ID)->getObject();
+        }
 
         return $category->getSubcategories();
     }
