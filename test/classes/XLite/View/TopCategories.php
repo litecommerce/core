@@ -41,6 +41,7 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
 
     const PARAM_DISPLAY_MODE = 'displayMode';
     const PARAM_ROOT_ID      = 'rootId';
+    const PARAM_IS_SUBTREE   = 'is_subtree';
 
     /**
      * Allowed display modes
@@ -134,8 +135,11 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
             self::PARAM_DISPLAY_MODE => new XLite_Model_WidgetParam_List(
                 'Display mode', 'list', true, $this->displayModes
             ),
-            self::PARAM_ROOT_ID => new XLite_Model_WidgetParam_ObjectId_Category(
+            self::PARAM_ROOT_ID      => new XLite_Model_WidgetParam_ObjectId_Category(
                 'Parent category ID (leave 0 for root categories list)', 0, true, true
+            ),
+            self::PARAM_IS_SUBTREE   => new XLite_Model_WidgetParam_Bool(
+                'Is subtree', false, false
             ),
         );
     }
