@@ -36,6 +36,16 @@
 class XLite_Module_AdvancedSearch_View_SearchResult extends XLite_View_SearchResult implements XLite_Base_IDecorator
 {
     /**
+     * searchParams 
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $searchParams = null;
+
+
+    /**
      * Initialize
      * 
      * @return void
@@ -87,8 +97,31 @@ class XLite_Module_AdvancedSearch_View_SearchResult extends XLite_View_SearchRes
             && ('advanced_search' != XLite_Core_Request::getInstance()->target || 'found' == XLite_Core_Request::getInstance()->submode);
     }
 
+
+    /**
+     * getSearchParamValue
+     * 
+     * @param string $name param name
+     *  
+     * @return mixed
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getSearchParamValue($name)
+    {
+        if (!isset($this->searchParams)) {
+            $this->searchParams = XLite_Model_Session::getInstance()->get('search');
+            if (!is_array($this->searchParams)) {
+                $this->searchParams = array();
+            }
+        }
+
+        return empty($this->searchParams[$name]) ? null : $this->searchParams[$name];
+    }
+
     /**
      * Search products 
+     * FIXME
      * 
      * @return void
      * @access protected
@@ -145,27 +178,27 @@ class XLite_Module_AdvancedSearch_View_SearchResult extends XLite_View_SearchRes
             }
 
             $this->data = $p->_advancedSearch(
-                $properties['substring'],
+                $this->getSearchParamValue('substring'),
                 $this->getParam(self::PARAM_SORT_BY) . ' ' . strtoupper($this->getParam(self::PARAM_SORT_ORDER)),
-                $properties['sku'],
-                isset($properties['category']) ? $properties['category'] : null,
-                $properties['subcategories'],
+                $this->getSearchParamValue('sku'),
+                $this->getSearchParamValue('category'),
+                $this->getSearchParamValue('subcategories'),
                 true,
-                $properties['logic'],
-                $properties['title'],
-                $properties['description'],
-                $properties['brief_description'],
-                $properties['meta_tags'],
-                $properties['extra_fields'],
-                $properties['options'],
-                isset($properties['start_price'])  ? $properties['start_price'] : null,
-                isset($properties['end_price'])    ? $properties['end_price'] : null,
-                isset($properties['start_weight']) ? $properties['start_weight'] : null,
-                isset($properties['end_weight'])   ? $properties['end_weight'] : null
+                $this->getSearchParamValue('logic'),
+                $this->getSearchParamValue('title'),
+                $this->getSearchParamValue('description'),
+                $this->getSearchParamValue('brief_description'),
+                $this->getSearchParamValue('meta_tags'),
+                $this->getSearchParamValue('extra_fields'),
+                $this->getSearchParamValue('options'),
+                $this->getSearchParamValue('start_price'),
+                $this->getSearchParamValue('end_price'),
+                $this->getSearchParamValue('start_weight'),
+                $this->getSearchParamValue('end_weight')
             );
 
             $searchStat = new XLite_Model_SearchStat();
-            $searchStat->add($properties['substring'], count($this->data));
+            $searchStat->add($this->getSearchParamValue('substring'), count($this->data));
         }
     }
 }
