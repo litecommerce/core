@@ -177,7 +177,7 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
 <p>
 <?php
 foreach (self::$queries as $query => $count) {
-    echo "[" . ($count>3?"<font color=red>$count</font>":$count)."] $query<br>\n";
+    echo "[" . ($count>2?"<font color=red>$count</font>":$count)."] $query<br>\n";
 }
 ?>
 <!--

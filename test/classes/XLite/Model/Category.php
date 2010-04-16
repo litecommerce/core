@@ -65,7 +65,13 @@ class XLite_Model_Category extends XLite_Model_Abstract
      */
     public function getImage()
     {
-		return new XLite_Model_Image('category', $this->get('category_id'));
+        $categoryId = $this->get('category_id');
+
+        return XLite_Model_CachingFactory::getObject(
+            __METHOD__ . $categoryId,
+            'XLite_Model_Image',
+            array('category', $categoryId)
+        );
 	}
 
 	/**
