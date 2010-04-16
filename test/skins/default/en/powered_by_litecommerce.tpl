@@ -11,5 +11,5 @@
  * @since     3.0.0
  *}
 <div class="powered-by">
-Powered by LiteCommerce {if:isLink()}<a href="http://litecommerce.com" class="powered-by">{end:}{getPrNotice()}{if:isLink()}</a>{end:}
+Powered by LiteCommerce {if:isLink()}<a href="http://www.litecommerce.com" class="powered-by">{end:}{getPrNotice()}{if:isLink()}</a>{end:}
 </div>

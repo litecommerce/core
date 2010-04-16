@@ -35,6 +35,18 @@
  */
 class XLite_View_PoweredBy extends XLite_View_Abstract
 {
+    const CELL_NAME = 'prnotice_index';
+
+    /**
+     * Advertise phrases 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $phrases = array();
+
     /**
      * Return widget default template
      *
@@ -86,6 +98,28 @@ class XLite_View_PoweredBy extends XLite_View_Abstract
      */
     public function getPrNotice()
     {
-        return 'shopping cart';
+        $phrase = 'shopping cart';
+
+        if (isset($this->phrases) && is_array($this->phrases) && 0 < count($this->phrases)) {
+
+            $item = XLite_Model_Config::getInstance()->find('name = \'' . self::CELL_NAME . '\' AND category = \'\'');
+            if (!$item || !isset($this->phrases[$item->get('value')])) {
+                $index = mt_rand(0, count($this->phrases) - 1);
+
+                XLite_Model_Config::getInstance()->createOption('', self::CELL_NAME, $index);
+
+            } else {
+                $index = intval($item->get('value'));
+            }
+
+            $tmp = $this->phrases[$index];
+
+            if (is_string($tmp) && 0 < strlen(trim($tmp))) {
+                $phrase = $tmp;
+            }
+
+        }
+
+        return $phrase;
     }
 }

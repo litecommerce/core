@@ -27,7 +27,7 @@
  */
 
 /**
- * ____description____
+ * DB-based configuration registry
  * 
  * @package XLite
  * @see     ____class_see____

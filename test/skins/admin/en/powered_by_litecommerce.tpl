@@ -11,5 +11,5 @@
  * @since     3.0.0
  *}
 <div class="powered-by">
-Powered by LiteCommerce <a href="http://litecommerce.com" class="powered-by">{getPrNotice()}</a>
+Powered by LiteCommerce <a href="http://www.litecommerce.com" class="powered-by">{getPrNotice()}</a>
 </div>
