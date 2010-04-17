@@ -86,6 +86,7 @@ abstract class XLite_View_FormField_Select_Abstract extends XLite_View_FormField
         );
     }
 
+
     /**
      * Return field type
      *

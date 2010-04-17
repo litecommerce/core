@@ -111,15 +111,15 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
     }
 
     /**
-     * getFormContentTemplate
+     * Return file name for body template
      *
-     * @return string
+     * @return id
      * @access protected
      * @since  3.0.0
      */
-    protected function getFormContentTemplate()
+    protected function getBodyTemplate()
     {
-        return 'profile/form_content.tpl';
+        return $this->isExported() ? 'profile/form_content.tpl' : parent::getBodyTemplate();
     }
 
     /**

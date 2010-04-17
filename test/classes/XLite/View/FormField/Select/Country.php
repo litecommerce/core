@@ -43,6 +43,16 @@ class XLite_View_FormField_Select_Country extends XLite_View_FormField_Select_Re
 
 
     /**
+     * searchCondition 
+     * 
+     * @var    string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $searchCondition = null;
+
+
+    /**
      * Return field template
      *
      * @return string
@@ -71,18 +81,6 @@ class XLite_View_FormField_Select_Country extends XLite_View_FormField_Select_Re
     }
 
     /**
-     * getSearchCondition
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getSearchCondition()
-    {
-        return $this->getParam(self::PARAM_ALL) ? 'enabled = \'1\'' : null;
-    }
-
-    /**
      * getDefaultOptions
      *
      * @return array
@@ -91,7 +89,26 @@ class XLite_View_FormField_Select_Country extends XLite_View_FormField_Select_Re
      */
     protected function getDefaultOptions()
     {
-        return XLite_Model_CachingFactory::getObjectFromCallback(__METHOD__, 'XLite_Model_Country', 'findAll', array($this->getSearchCondition()));
+        return XLite_Model_CachingFactory::getObjectFromCallback(__METHOD__, 'XLite_Model_Country', 'findAll', array($this->searchCondition));
+    }
+
+
+    /**
+     * __construct 
+     * 
+     * @param array $params widget params
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function __construct(array $params = array())
+    {
+        if (!empty($params[self::PARAM_ALL])) {
+            $this->searchCondition = 'enabled = \'1\'';
+        }
+
+        parent::__construct($params);
     }
 }
 

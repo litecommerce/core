@@ -146,18 +146,6 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
 
    
     /**
-     * getFormContentTemplate 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getFormContentTemplate()
-    {
-        return 'form_content.tpl';
-    }
- 
-    /**
      * Return file name for body template
      *
      * @return id
@@ -166,7 +154,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
      */
     protected function getBodyTemplate()
     {
-        return $this->isExported() ? $this->getFormContentTemplate() : parent::getBodyTemplate();
+        return 'form_content.tpl';
     }
 
     /**
