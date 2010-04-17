@@ -7,6 +7,10 @@
 #
 
 #############################################################################
+
+#
+# Show usage help
+#
 show_usage ()
 {
 	cat <<EOT
@@ -27,6 +31,51 @@ Examples:
 EOT
 	exit 2
 }
+
+#
+# Insert SEO phrases to classes/XLite/View/PoweredBy.php 
+#
+insert_seo_phrases ()
+{
+
+	# Check if file for patching exists
+	[ ! -f "$2/classes/XLite/View/PoweredBy.php" ] && die "Failed: output file not found: $2/classes/XLite/View/PoweredBy.php"
+
+	# Prepare replacement text
+	REPLACEMENT="    protected \$phrases = array(\\"
+
+	index=1
+	while true; do
+		str=`echo "$1" | sed '/^$/d' | sed -n "${index}p"`
+		[ "x$str" = "x" ] && break
+		REPLACEMENT="$REPLACEMENT
+	    \"$str\",\\"
+		index=`expr $index + 1`
+	done
+
+	REPLACEMENT=$REPLACEMENT"
+    );
+	"
+
+	# Prepare sed command
+	search_for="protected \$phrases = array();"
+
+	sed_cmd="sed -i '' '/$search_for/ c\\
+    $REPLACEMENT
+' $2/classes/XLite/View/PoweredBy.php"
+
+	eval "$sed_cmd"
+}
+
+#
+# Display error message and exit
+#
+die ()
+{
+	[ "x$1" != "x" ] && echo $1
+	exit 2
+}
+
 #############################################################################
 
 PHP='/usr/local/bin/php'
@@ -34,18 +83,11 @@ START_TIME=`$PHP -qr 'echo mktime();'`
 
 echo -e "LiteCommerce distributives generator\n"
 
-#
 # Directory names within distribution packages
-#
 LITECOMMERCE_DIRNAME="litecommerce"
 DRUPAL_DIRNAME="drupal"
 
-
-
-#
-# Options
-#
-
+# Read options
 while getopts "b:cd:f:sh" option; do
 	case $option in
 		b) XLITE_BUILD_NUMBER=$OPTARG ;;
@@ -126,7 +168,6 @@ echo "Generating LiteCommerce from SVN reporitory";
 echo "";
 
 # Prepare output directory
-
 if [ -d $OUTPUT_DIR -a ! $SAFE_MODE ]; then
 
 	echo "Cleaning the output dir...";
@@ -135,10 +176,15 @@ if [ -d $OUTPUT_DIR -a ! $SAFE_MODE ]; then
 
 fi
 
+# Create output directory
 [ ! -d $OUTPUT_DIR ] && mkdir -p $OUTPUT_DIR
+
+# Create directory for temporary files
+[ ! -d $OUTPUT_DIR/tmp ] && mkdir -p $OUTPUT_DIR/tmp
 
 cd $OUTPUT_DIR
 
+# Checkout projects
 if [ ! $SAFE_MODE ]; then
 
 	# Do LiteCommerce checkout...
@@ -237,6 +283,13 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 	mkdir skins
 	cp skins_original/.htaccess skins/.htaccess
 
+	# Save copy of original file PoweredBy.php
+	cp ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/classes/XLite/View/PoweredBy.php ${OUTPUT_DIR}/tmp
+
+	# Patch file PoweredBy.php
+	insert_seo_phrases "$LC_SEO_PHRASES" "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}"
+
+	# Prepare permisions
 	find . -type d -exec chmod 755 {} \;
 	find . -type f -exec chmod 644 {} \;
 
@@ -263,6 +316,13 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 
 	sed -i '' -E 's/lc_path = .*/lc_path = .\/litecommerce/' modules/lc_connector/lc_connector.info
 
+	# Restore orininal file PoweredBy.php from temporary directory
+	cp ${OUTPUT_DIR}/tmp/PoweredBy.php ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/classes/XLite/View/
+
+	# Patch file PoweredBy.php
+	insert_seo_phrases "$DRUPAL_SEO_PHRASES" "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}"
+
+	# Prepare permissions
 	find . -type d -exec chmod 755 {} \;
 	find . -type f -exec chmod 644 {} \;
 
@@ -285,7 +345,9 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 
 	tar -czf drupal-lc-${VERSION}.tgz ${DRUPAL_DIRNAME}
 
+	# Remove obsolete directories
 	rm -rf ${OUTPUT_DIR}/${DRUPAL_DIRNAME}
+	rm -rf ${OUTPUT_DIR}/tmp
 
 	echo "  + Drupal+LiteCommerce v.$VERSION distributive is completed"
 

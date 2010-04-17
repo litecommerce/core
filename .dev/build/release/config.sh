@@ -53,3 +53,22 @@ DRUPAL_FILES_TODELETE="
 profiles/default
 "
 
+LC_SEO_PHRASES="
+shopping cart
+php shopping cart
+shopping cart software
+shopping cart system
+ecommerce shopping cart
+online shopping cart
+ecommerce software
+ecommerce solution
+e-commerce software
+e-commerce solution
+"
+
+DRUPAL_SEO_PHRASES="
+e-commerce cms software
+e-commerce cms solution
+"
+
+
