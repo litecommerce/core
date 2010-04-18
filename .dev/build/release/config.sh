@@ -51,6 +51,7 @@ sql/xlite_modules.sql
 # Drupal files that must be removed from all distributives
 DRUPAL_FILES_TODELETE="
 profiles/default
+includes/install.pgsql.inc
 "
 
 LC_SEO_PHRASES="
@@ -69,6 +70,9 @@ e-commerce solution
 DRUPAL_SEO_PHRASES="
 e-commerce cms software
 e-commerce cms solution
+php e-commerce cms software
+php e-commerce cms solution
+
 "
 
 
