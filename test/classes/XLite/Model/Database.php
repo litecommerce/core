@@ -203,8 +203,12 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
 	}
 
 	function query($sql)
-	{
-		if ($this->profilerEnabled) {
+    {
+        if (!is_resource($this->connection)) {
+            $this->doDie('There are no connection to the database');
+        }
+
+        if ($this->profilerEnabled) {
 	        $this->profiler->addQuery($sql);
     	    $start = microtime(true);
 		}
