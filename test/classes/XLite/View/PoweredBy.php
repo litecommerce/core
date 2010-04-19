@@ -35,8 +35,6 @@
  */
 class XLite_View_PoweredBy extends XLite_View_Abstract
 {
-    const CELL_NAME = 'prnotice_index';
-
     /**
      * Advertise phrases 
      * 
@@ -102,14 +100,17 @@ class XLite_View_PoweredBy extends XLite_View_Abstract
 
         if (isset($this->phrases) && is_array($this->phrases) && 0 < count($this->phrases)) {
 
-            $item = XLite_Model_Config::getInstance()->find('name = \'' . self::CELL_NAME . '\' AND category = \'\'');
-            if (!$item || !isset($this->phrases[$item->get('value')])) {
+            if (
+                !isset($this->config->Internal->prnotice_index)
+                || !isset($this->phrases[$this->config->Internal->prnotice_index])
+            ) {
                 $index = mt_rand(0, count($this->phrases) - 1);
 
-                XLite_Model_Config::getInstance()->createOption('', self::CELL_NAME, $index);
+                $config = new XLite_Model_Config();
+                $config->createOption('Internal', 'prnotice_index', $index);
 
             } else {
-                $index = intval($item->get('value'));
+                $index = intval($this->config->Internal->prnotice_index);
             }
 
             $tmp = $this->phrases[$index];
