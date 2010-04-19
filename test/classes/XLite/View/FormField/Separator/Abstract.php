@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage View
+ * @subpackage ____sub_package____
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,37 +26,39 @@
  * @since      3.0.0
  */
 
+
 /**
- * Payment method selection
+ * XLite_View_FormField_Separator_Abstract 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @since      3.0.0
  */
-class XLite_View_Form_Checkout_PaymentMethod extends XLite_View_Form_Checkout_Abstract
+abstract class XLite_View_FormField_Separator_Abstract extends XLite_View_FormField_Abstract
 {
     /**
-     * Current form name 
-     * 
+     * Return widget default template
+     *
      * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected function getFormName()
+    protected function getDefaultTemplate()
     {
-        return 'payment_method';
+        return $this->getDir() . '/' . $this->getFieldTemplate();
     }
 
+
     /**
-     * getDefaultAction 
-     * 
+     * Return field type
+     *
      * @return string
-     * @access protected
+     * @access public
      * @since  3.0.0
      */
-    protected function getDefaultAction()
+    public function getFieldType()
     {
-        return 'payment';
+        return self::FIELD_TYPE_SEPARATOR;
     }
 }
 

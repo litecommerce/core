@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage View
+ * @subpackage ____sub_package____
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,36 +27,24 @@
  */
 
 /**
- * Payment method selection
+ * XLite_View_Form_Checkout_Abstract 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @since      3.0.0
  */
-class XLite_View_Form_Checkout_PaymentMethod extends XLite_View_Form_Checkout_Abstract
+abstract class XLite_View_Form_Checkout_Abstract extends XLite_View_Form_Abstract
 {
     /**
-     * Current form name 
+     * getDefaultTarget 
      * 
      * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected function getFormName()
+    protected function getDefaultTarget()
     {
-        return 'payment_method';
-    }
-
-    /**
-     * getDefaultAction 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultAction()
-    {
-        return 'payment';
+        return 'checkout';
     }
 }
 

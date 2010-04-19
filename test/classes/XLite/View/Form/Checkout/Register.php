@@ -27,13 +27,13 @@
  */
 
 /**
- * Payment method selection
+ * XLite_View_Form_Checkout_Register 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @since      3.0.0
  */
-class XLite_View_Form_Checkout_PaymentMethod extends XLite_View_Form_Checkout_Abstract
+class XLite_View_Form_Checkout_Register extends XLite_View_Form_Checkout_Abstract
 {
     /**
      * Current form name 
@@ -44,7 +44,7 @@ class XLite_View_Form_Checkout_PaymentMethod extends XLite_View_Form_Checkout_Ab
      */
     protected function getFormName()
     {
-        return 'payment_method';
+        return 'register_form';
     }
 
     /**
@@ -56,7 +56,7 @@ class XLite_View_Form_Checkout_PaymentMethod extends XLite_View_Form_Checkout_Ab
      */
     protected function getDefaultAction()
     {
-        return 'payment';
+        return 'register';
     }
 }
 

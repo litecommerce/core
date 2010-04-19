@@ -146,18 +146,6 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
 
    
     /**
-     * Return file name for body template
-     *
-     * @return id
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getBodyTemplate()
-    {
-        return 'form_content.tpl';
-    }
-
-    /**
      * composeFieldName 
      * 
      * @param string $name name to prepare

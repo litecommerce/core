@@ -36,6 +36,31 @@
 abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstract
 {
     /**
+     * profileSchema 
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $profileSchema = array(
+        'login' => array(
+            self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
+            self::SCHEMA_LABEL    => 'E-mail',
+            self::SCHEMA_REQUIRED => true,
+        ),
+        'password' => array(
+            self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Password',
+            self::SCHEMA_LABEL    => 'Password',
+            self::SCHEMA_REQUIRED => true,
+        ),
+        'passwordConfirm' => array(
+            self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Password',
+            self::SCHEMA_LABEL    => 'Confirm password',
+            self::SCHEMA_REQUIRED => true,
+        ),
+    );
+
+    /**
      * addressSchema 
      * 
      * @var    array
@@ -155,7 +180,7 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
      */
     protected function getFormClass()
     {
-        return 'XLite_View_Form_Profile_Register';
+        return 'XLite_View_Form_Checkout_Register';
     }
 
     /**
@@ -169,7 +194,19 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
     {
         parent::defineFormFields();
 
+        $this->formFields['sepInfo'] = new XLite_View_FormField_Separator_Regular(
+            array(self::SCHEMA_LABEL => 'E-mail & Password')
+        );
+        $this->formFields += $this->getProfileFields();
+
+        $this->formFields['sepBillAddr'] = new XLite_View_FormField_Separator_Regular(
+            array(self::SCHEMA_LABEL => 'Billing Address')
+        );
         $this->formFields += $this->getBillingAddressFields();
+
+        $this->formFields['sepShipAddr'] = new XLite_View_FormField_Separator_Regular(
+            array(self::SCHEMA_LABEL => 'Shipping Address')
+        );
         $this->formFields += $this->getShippingAddressFields();
     }
 
@@ -193,6 +230,18 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
         return $result;
     }
 
+
+    /**
+     * getProfileFields 
+     * 
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getProfileFields()
+    {
+        return $this->getFieldsBySchema($this->profileSchema);
+    }
 
     /**
      * getBillingAddressFields 

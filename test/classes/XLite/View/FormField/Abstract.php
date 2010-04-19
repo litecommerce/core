@@ -175,6 +175,18 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
     }
 
     /**
+     * getLabel 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getLabel()
+    {
+        return $this->getParam(self::PARAM_LABEL);
+    }
+
+    /**
      * Check if field is required
      * 
      * @return bool
@@ -258,7 +270,7 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
      */
     protected function getRequiredFieldErrorMessage()
     {
-        return 'The "' . $this->getParam(self::PARAM_LABEL) . '" field is empty';
+        return 'The "' . $this->getLabel() . '" field is empty';
     }
 
 

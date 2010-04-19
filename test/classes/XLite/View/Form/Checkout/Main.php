@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Form_Checkout_Main extends XLite_View_Form_Abstract
+class XLite_View_Form_Checkout_Main extends XLite_View_Form_Checkout_Abstract
 {
     /**
      * Current form name 
@@ -45,18 +45,6 @@ class XLite_View_Form_Checkout_Main extends XLite_View_Form_Abstract
     protected function getFormName()
     {
         return 'checkout_form';
-    }
-
-    /**
-     * getDefaultTarget 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultTarget()
-    {
-        return 'checkout';
     }
 
     /**
