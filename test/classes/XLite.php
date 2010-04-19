@@ -116,11 +116,11 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      */
     protected function parseConfigFile()
     {
-        $options = parse_ini_file(LC_ROOT_DIR . 'etc' . LC_DS . 'config.php', true);
+        $options = parse_ini_file(LC_CONFIG_DIR . 'config.php', true);
 
         if (is_array($options)) {
-            if (file_exists(LC_ROOT_DIR . 'etc' . LC_DS . 'config.local.php')) {
-                $optionsLocal = parse_ini_file(LC_ROOT_DIR . 'etc' . LC_DS . 'config.local.php', true);
+            if (file_exists(LC_CONFIG_DIR . 'config.local.php')) {
+                $optionsLocal = parse_ini_file(LC_CONFIG_DIR . 'config.local.php', true);
                 if (is_array($optionsLocal)) {
                     $options = array_merge($options, $optionsLocal);
                 }

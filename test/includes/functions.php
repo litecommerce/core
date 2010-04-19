@@ -1177,6 +1177,39 @@ function func_get_timezones() { // {{{
     return $timezone_identifiers;
 } // }}}
 
+/**
+ * Check if LiteCommerce installed
+ * 
+ * @return bool
+ * @since  3.0
+ */
+function isLiteCommerceInstalled()
+{
+    $checkResult = (file_exists(LC_SKINS_DIR . 'admin/en/welcome.tpl')
+                    && file_exists(LC_CONFIG_DIR . 'config.php'));
+
+    if ($checkResult) {
+
+        $data = XLite::getInstance()->getOptions('database_details');
+
+        if (is_array($data)) {
+            $checkResult = !empty($data['hostspec']) &&
+                            !empty($data['database']) &&
+                            !empty($data['username']);
+
+            if ($checkResult) {
+                $checkResult = (mysql_connect($data['hostspec'], $data['username'], $data['password']) && mysql_select_db($data['database']));
+                if ($checkResult) {
+                    $checkResult = (@mysql_query('SELECT name from xlite_modules LIMIT 1') != false);
+                }
+            }
+        }
+    }
+    
+    return $checkResult;
+}
+
+
 // WARNING :
 // Please ensure that you have no whitespaces / empty lines below this message.
 // Adding a whitespace or an empty line below this line will cause a PHP error.
