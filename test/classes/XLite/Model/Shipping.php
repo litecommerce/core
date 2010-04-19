@@ -322,13 +322,13 @@ class XLite_Model_Shipping extends XLite_Model_Abstract
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getInstanceByName($name, $shippingId)
+    public static function getInstanceByName($name, $shippingId = null)
     {
         $className = isset(self::$registeredShippingModules[$name])
             ? get_class(self::$registeredShippingModules[$name])
             : 'XLite_Model_Shipping';
 
-        return new $className($shippingId);
+        return $shippingId ? new $className($shippingId) : new $className();
     }
 }
 

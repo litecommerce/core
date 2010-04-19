@@ -33,7 +33,12 @@
   height: 13px;
 }
 
-#shopping-cart .cart-totals
+#shopping-cart td.cart-totals {
+  text-align: right;
+}
+
+#shopping-cart div.cart-totals,
+#shopping-cart form.verify-gc
 {
   float: right;
 }
