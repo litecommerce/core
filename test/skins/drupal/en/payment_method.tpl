@@ -12,9 +12,7 @@
  *}
 <div id="payment-methods-box">
 
-  <h4>Payment methods</h4>
-
-  <widget class="XLite_View_Form_Checkout_PaymentMethod" name="payment_method_form" className="payment-methods" />
+  <h2>Payment methods</h2>
 
   <ul IF="paymentMethods">
     {foreach:paymentMethods,payment_method}
@@ -25,11 +23,5 @@
     </li>
     {end:}
   </ul>
-
-  <div class="center">
-    <widget class="XLite_View_Button_Submit" label="Continue..." />
-  </div>
-
-  <widget name="payment_method_form" end />
 
 </div>

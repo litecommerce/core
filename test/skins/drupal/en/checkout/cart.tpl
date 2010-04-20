@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<div id="shopping-cart">
+<div id="shopping-cart" class="checkout-cart">
 
   <widget module="ProductOptions" template="modules/ProductOptions/selected_options_js.tpl">
 

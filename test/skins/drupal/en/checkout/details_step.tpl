@@ -14,10 +14,13 @@
 
 <widget class="XLite_View_Form_Checkout_Place" name="checkout" className="checkout-details" />
   <span class="title">E-Mail:</span> {cart.profile.login}<br />
+  <br />
 
-  <div class="address billing">
-    <h4>Billing address</h4>
-    <div>
+  <div class="billing-address-form">
+
+    <h2>Billing address</h2>
+
+    <div class="user-address-form">
       <strong>{cart.profile.billing_firstname} {cart.profile.billing_lastname}</strong><br />
       <br />
       {cart.profile.billing_address}<br />
@@ -26,11 +29,14 @@
       <br />
       {cart.profile.billing_phone}
     </div>
+
   </div>
 
-  <div class="address shipping">
-    <h4 class="title">Shipping address</h4>
-    <div>
+  <div class="shipping-address-form">
+
+    <h2>Shipping address</h2>
+
+    <div class="user-address-form">
       <strong>{cart.profile.shipping_firstname} {cart.profile.shipping_lastname}</strong><br />
       <br />
       {cart.profile.shipping_address}<br />
@@ -39,6 +45,7 @@
       <br />
       {cart.profile.shipping_phone}
     </div>
+
   </div>
 
   <div class="center"><widget class="XLite_View_Button_Link" label="Change addresses" location="{buildURL(#checkout#,##,_ARRAY_(#mode#^#register#))}" /></div>
@@ -48,10 +55,7 @@
     <widget template="checkout/payment_method_switcher.tpl" />
   </div>
 
-  <div class="cart-totals">
-    <span class="title">Summary</span><br />
-    <widget template="shopping_cart/totals.tpl" />
-  </div>
+  <widget template="checkout/totals.tpl" />
 
   <div class="notes">
     Customer notes:<br />

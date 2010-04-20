@@ -1,7 +1,7 @@
-/* vim: set ts=2 sw=2 sts=2 et: */
+{* vim: set ts=2 sw=2 sts=2 et: *}
 
-/**
- * Checkout styles
+{**
+ * Cart totals box
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,10 +9,8 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- */
-.checkout-totals .cart-sums
-{
-  list-style: none;
-}
-
-
+ *}
+<div class="cart-totals checkout-totals">
+  <h2>Summary</h2>
+  <widget template="shopping_cart/totals.tpl" />
+</div>
