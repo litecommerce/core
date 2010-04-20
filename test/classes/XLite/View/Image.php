@@ -38,10 +38,11 @@ class XLite_View_Image extends XLite_View_Abstract
     /**
      * Widget arguments names 
      */
-    const PARAM_IMAGE      = 'image';
-    const PARAM_ALT        = 'alt';
-    const PARAM_MAX_WIDTH  = 'maxWidth';
-    const PARAM_MAX_HEIGHT = 'maxHeight';
+    const PARAM_IMAGE        = 'image';
+    const PARAM_ALT          = 'alt';
+    const PARAM_MAX_WIDTH    = 'maxWidth';
+    const PARAM_MAX_HEIGHT   = 'maxHeight';
+    const PARAM_CENTER_IMAGE = 'centerImage';
 
 
     /**
@@ -56,6 +57,7 @@ class XLite_View_Image extends XLite_View_Abstract
         'className'   => 'class',
         'id'          => 'id',
         'onclick'     => 'onclick',
+        'style'       => 'style',
         'onmousemove' => 'onmousemove',
         'onmouseup'   => 'onmouseup',
         'onmousedown' => 'onmousedown',
@@ -97,10 +99,11 @@ class XLite_View_Image extends XLite_View_Abstract
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_IMAGE      => new XLite_Model_WidgetParam_Object('Image', null, false, 'XLite_Model_Image'),
-            self::PARAM_ALT        => new XLite_Model_WidgetParam_String('Alt. text', '', false),
-            self::PARAM_MAX_WIDTH  => new XLite_Model_WidgetParam_Int('Max. width', 0),
-            self::PARAM_MAX_HEIGHT => new XLite_Model_WidgetParam_Int('Max. height', 0),
+            self::PARAM_IMAGE        => new XLite_Model_WidgetParam_Object('Image', null, false, 'XLite_Model_Image'),
+            self::PARAM_ALT          => new XLite_Model_WidgetParam_String('Alt. text', '', false),
+            self::PARAM_MAX_WIDTH    => new XLite_Model_WidgetParam_Int('Max. width', 0),
+            self::PARAM_MAX_HEIGHT   => new XLite_Model_WidgetParam_Int('Max. height', 0),
+            self::PARAM_CENTER_IMAGE => new XLite_Model_WidgetParam_Checkbox('Center the image after resizing', true),
         );
     }
 
@@ -127,7 +130,14 @@ class XLite_View_Image extends XLite_View_Abstract
         // Calculate new image dimensions
         if (isset($params[self::PARAM_IMAGE])) {
             $this->calculateDimensions();
+
+            // Center the image vertically and horizontally
+            if ($this->getParam(self::PARAM_CENTER_IMAGE)) {
+                $this->centerImage();
+            }
+
         }
+
     }
 
     /**
@@ -229,4 +239,44 @@ class XLite_View_Image extends XLite_View_Abstract
             unset($this->properties['height']);
         }
     }
+
+    /**
+     * Return a CSS style centering the image vertically and horizontally
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function centerImage()
+    {
+        $vertical = ($this->getParam(self::PARAM_MAX_HEIGHT) - $this->properties['height']) / 2;
+        $horizontal = ($this->getParam(self::PARAM_MAX_WIDTH) - $this->properties['width']) / 2;
+
+        $top = ceil($vertical);
+        $bottom = floor($vertical);
+        $left = ceil($horizontal);
+        $right = floor($horizontal);
+
+        $this->addInlineStyle('padding: '.$top.'px '.$right.'px '.$bottom.'px '.$left.'px;');
+    }
+
+    /**
+     * Add CSS styles to the value of "style" attribute of the image tag
+     * 
+     * @param string $style CSS styles to be added to the end of "style" attribute
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addInlineStyle($style)
+    {
+        if (!isset($this->properties['style']))
+            $this->properties['style'] = '';
+
+        $this->properties['style'] .= $style;
+    }
+
 }
