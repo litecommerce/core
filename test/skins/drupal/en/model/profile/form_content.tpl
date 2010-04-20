@@ -11,16 +11,26 @@
  * @since     3.0.0
  *}
 <div class="user-addresses">
+
   <div class="billing-address-form">
+
     <h2>Billing address</h3>
-    <table class="user-address-form">
+
+    <table class="user-address-form" cellspacing="0">
       <tr FOREACH="getBillingAddressFields(),field">{field.display()}</tr>
     </table>
+
   </div>
+
   <div class="shipping-address-form">
-    <h3>Shipping address</h3>
-    <table class="user-address-form">
+
+    <h2>Shipping address</h2>
+
+    <table class="user-address-form" cellspacing="0">
       <tr FOREACH="getShippingAddressFields(),field">{field.display()}</tr>
     </table>
+
   </div>
+
 </div>
+<div class="clear">&nbsp;</div>

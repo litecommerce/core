@@ -10,27 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<div id="shopping-cart">
-
-  <widget module="ProductOptions" template="modules/ProductOptions/selected_options_js.tpl">
-
-  <widget template="shopping_cart/items.tpl" />
-
-  <div class="shipping-estimator">
-    <h4>Delivery</h4>
-    {cart.shippingMethod.name} ({price_format(cart,#shipping_cost#):h})<br />
-  </div>
-
-  <div class="cart-totals">
-    <span IF="!auth.isLogged()">Subtotal: {price_format(cart,#subtotal#):h}</span>
-    <widget IF="auth.isLogged()" template="shopping_cart/totals.tpl" />
-  </div>
-
-  <widget module="ProductAdviser" template="modules/ProductAdviser/OutOfStock/notify_form.tpl" visible="{xlite.PA_InventorySupport}" />
-
-</div>
-
-<div class="clear">&nbsp;</div>
+<widget template="checkout/cart.tpl" />
 
 <widget class="XLite_View_Form_Checkout_Place" name="checkout" className="checkout-details" />
   <span class="title">E-Mail:</span> {cart.profile.login}<br />
