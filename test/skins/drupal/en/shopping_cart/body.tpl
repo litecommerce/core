@@ -26,7 +26,9 @@
         </div>
 
         <div class="shipping-estimator">
-          <widget template="shopping_cart/delivery.tpl">
+          <widget class="XLite_View_Form_Cart_Main" name="shopping_form" />
+            <widget template="shopping_cart/delivery.tpl">
+          <widget name="shopping_form" end />
         </div>
 
       </td>

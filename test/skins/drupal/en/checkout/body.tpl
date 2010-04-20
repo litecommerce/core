@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Checkout widget body
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,28 +10,13 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
+<widget mode="paymentMethod" template="checkout/payment_methods_step.tpl" />
+<widget mode="register" template="checkout/register_step.tpl" />
+<widget mode="details" template="checkout/details_step.tpl" />
 
-{* Checkout pages: cart content *}
-<div id="shopping-cart" IF="!cart.isEmpty()">
-
-  <widget module="ProductOptions" template="modules/ProductOptions/selected_options_js.tpl">
-
-  <widget template="shopping_cart/items.tpl" />
-
-  <div class="cart-totals">
-    <span IF="!auth.isLogged()">Subtotal: {price_format(cart,#subtotal#):h}</span>
-    <widget IF="auth.isLogged()" template="shopping_cart/totals.tpl" />
-  </div>
-
-  <widget module="ProductAdviser" template="modules/ProductAdviser/OutOfStock/notify_form.tpl" visible="{xlite.PA_InventorySupport}">
-
-</div>
-
-<div style="clear: both;">&nbsp;</div>
-
-{if:isExported()}
-  {getRegisterFormPlaceholder():r}
-{else:}
-  <widget mode="register" class="XLite_View_Model_Profile" />
-{end:}
-
+{*
+<widget mode="notAllowed" template="common/dialog.tpl" body="checkout/not_allowed.tpl" head="Checkout not allowed">
+<widget mode="noShipping" template="common/dialog.tpl" body="checkout/no_shipping.tpl" head="No shipping method available">
+<widget mode="noPayment" template="common/dialog.tpl" body="checkout/no_payment.tpl" head="No payment method available">
+<widget mode="error" template="common/dialog.tpl" body="checkout/failure.tpl" head="Checkout error">
+*}

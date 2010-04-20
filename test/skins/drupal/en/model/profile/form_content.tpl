@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Register form
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -11,23 +11,23 @@
  * @since     3.0.0
  *}
 
-<table id="register-form">
-  <tr>
-    <td class="section_title"><h3>Billing address</h3></td>
-    <td>&nbsp;</td>
-    <td class="section_title"><h3>Shipping address</h3></td>
-  </tr>
-  <tr>
-    <td>
-      <table>
+<div class="register-form">
+  <div class="address billing">
+    <h4>Billing address</h4>
+    <div class="details">
+      <table cellspacing="0" class="form-table">
         <tr FOREACH="getBillingAddressFields(),field">{field.display()}</tr>
       </table>
-    </td>
-    <td>&nbsp;</td>
-    <td>
-      <table>
+    </div>
+  </div>
+
+  <div class="address shipping">
+    <h4>Shipping address</h4>
+    <div class="details">
+      <table cellspacing="0" class="form-table">
         <tr FOREACH="getShippingAddressFields(),field">{field.display()}</tr>
       </table>
-    </td>
-  </tr>
-</table>
+    </div>
+  </div>
+</div>
+<div class="clear">&nbsp;</div>

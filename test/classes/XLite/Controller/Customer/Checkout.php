@@ -27,7 +27,7 @@
  */
 
 /**
- * XLite_Controller_Customer_Checkout 
+ * Checkout
  * 
  * @package    XLite
  * @subpackage ____sub_package____
@@ -368,6 +368,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
         $itemsBeforeUpdate = $this->getCart()->getItemsFingerprint();
         $this->updateCart();
         $itemsAfterUpdate = $this->getCart()->getItemsFingerprint();
+
         if ($this->get("absence_of_product") || $this->getCart()->isEmpty() || $itemsAfterUpdate != $itemsBeforeUpdate) {
             $this->set("absence_of_product", true);
             $this->redirect($this->buildURL('cart'));
@@ -376,10 +377,10 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 
         $pm = $this->getCart()->get("paymentMethod");
         if (!is_null($pm)) {
-            $notes = isset($_POST["notes"]) ? $_POST["notes"] : '';
-            $this->setComplex("cart.notes", $notes);
+            $notes = isset(XLite_Core_Request::getInstance()->notes) ? XLite_Core_Request::getInstance()->notes : '';
+            $this->getCart()->set('notes', $notes);
 
-            switch($pm->handleRequest($this->cart)) {
+            switch ($pm->handleRequest($this->getCart())) {
 
                 case XLite_Model_PaymentMethod::PAYMENT_SILENT:
                     // don't call output()
@@ -388,11 +389,25 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 
                 case XLite_Model_PaymentMethod::PAYMENT_SUCCESS:
                     $this->success();
-                    $this->set('returnUrl', $this->buildURL('checkoutSuccess', '', array('order_id' => $this->getCart()->get('order_id'))));
+                    $this->set(
+                        'returnUrl',
+                        $this->buildURL(
+                            'checkoutSuccess',
+                            '',
+                            array('order_id' => $this->getCart()->get('order_id'))
+                        )
+                    );
                     break;
 
                 case XLite_Model_PaymentMethod::PAYMENT_FAILURE:
-                    $this->set('returnUrl', $this->buildURL('checkout', '', array('mode' => 'error', 'order_id' => $this->getCart()->get('order_id'))));
+                    $this->set(
+                        'returnUrl',
+                        $this->buildURL(
+                            'checkout',
+                            '',
+                            array('mode' => 'error', 'order_id' => $this->getCart()->get('order_id'))
+                        )
+                    );
                     break;
             }
         }
@@ -409,6 +424,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
         if ($this->isCartProcessed()) {
             $this->success();
             $this->returnUrl = $this->buildURL('checkoutSuccess', '', array('order_id' => $orderId));
+
         } else {
             $this->returnUrl = $this->buildURL('checkout', '', array('mode' => 'error', 'order_id' => $orderId));
         }
@@ -518,6 +534,16 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 		}
     }
 
+    function action_shipping()
+    {
+        $this->checkHtaccess();
+
+        if (isset(XLite_Core_Request::getInstance()->shipping)) {
+            $this->getCart()->set('shipping_id', XLite_Core_Request::getInstance()->shipping);
+            $this->updateCart();
+        }
+    }
+
     function success()
     {
         $this->getCart()->succeed();
@@ -546,5 +572,6 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
     {
         return $this->getComplex('xlite.config.General.display_check_number');
     }
+
 }
 

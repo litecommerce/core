@@ -44,7 +44,6 @@ class XLite_View_Checkout extends XLite_View_Dialog
      */
     protected $allowedTargets = array('checkout');
 
-
     /**
      * Return title
      *
@@ -97,6 +96,52 @@ class XLite_View_Checkout extends XLite_View_Dialog
         $list[] = 'checkout/checkout.css';
 
         return $list;
+    }
+
+    /**
+     * Get a list of JS files required to display the widget properly
+     *
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = 'checkout/check_cc.js';
+        $list[] = 'checkout/checkout.js';
+
+        return $list;
+    }
+
+    /**
+     * Get current Year 
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCurrentYear()
+    {
+        return intval(date('Y'));
+    }
+
+    /**
+     * Check - specified payment method is selected or not
+     * 
+     * @param XLite_Model_PaymentMethod $paymentMethod Payment method
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isPaymentSelected(XLite_Model_PaymentMethod $paymentMethod)
+    {
+        return $this->getCart()->get('paymentMethod')
+            && $this->getCart()->get('paymentMethod')->get('payment_method') == $paymentMethod->get('payment_method');
     }
 }
 
