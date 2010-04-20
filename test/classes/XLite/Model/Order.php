@@ -928,13 +928,18 @@ class XLite_Model_Order extends XLite_Model_Abstract
 	}
 
     /**
-    * Calculates order totals and store them in the order properties:
-    * total, subtotal, tax, shipping, etc
-    */
-    function calcTotals() // {{{
+     * Calculates order totals and store them in the order properties:
+     * total, subtotal, tax, shipping, etc
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function calcTotals()
     {
         $this->calcTotal();
-    } // }}}
+    }
 
     /**
     * Generate a string representation of the order
@@ -1145,28 +1150,57 @@ class XLite_Model_Order extends XLite_Model_Abstract
 
     } // }}}
 
-    function checkedOut()
-    {
-    }
-
-    function uncheckedOut() 
-    {
-    }
-
-    function queued() 
+    /**
+     * Order 'complete' event
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkedOut()
     {
     }
 
     /**
-    * Called when an order successfully placed by a client.
-    */
-    function succeed()
+     * Order 'charge back' event
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function uncheckedOut() 
+    {
+    }
+
+    /**
+     * Called when an order is qeued
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function queued() 
+    {
+    }
+
+    /**
+     * Called when an order successfully placed by a client 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function succeed()
     {
         // save order ID#
-        $this->session->set("last_order_id", $this->get("order_id"));
+        $this->session->set('last_order_id', $this->get('order_id'));
 
         // send email notification about initially placed order
-        $status = $this->get("status");
+        $status = $this->get('status');
         if (
             !in_array($status, array("P", "C", "I"))
             && ($this->config->Email->enable_init_order_notif || $this->config->Email->enable_init_order_notif_customer)
@@ -1177,27 +1211,28 @@ class XLite_Model_Order extends XLite_Model_Abstract
             $mail->order = $this;
 
             // notify customer
-            if ($this->config->getComplex('Email.enable_init_order_notif_customer')) {
+            if ($this->config->Email->enable_init_order_notif_customer) {
                 $mail->adminMail = false;
                 $mail->selectCustomerLayout();
-                $mail->set("charset", $this->getComplex('profile.billingCountry.charset'));
+                $mail->set('charset', $this->getProfile()->getComplex('billingCountry.charset'));
                 $mail->compose(
-                    $this->config->getComplex('Company.orders_department'),
-                    $this->getComplex('profile.login'),
-                    "order_created"
+                    $this->config->Company->orders_department,
+                    $this->getProfile()->get('login'),
+                    'order_created'
                 );
                 $mail->send();
             }
 
             // notify admin about initially placed order
-            if ($this->config->getComplex('Email.enable_init_order_notif')) {
+            if ($this->config->Email->enable_init_order_notif) {
+
                 // whether or not to show CC info in mail notification
                 $mail->adminMail = true;
-                $mail->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
+                $mail->set('charset', $this->xlite->config->Company->locationCountry->get('charset'));
                 $mail->compose(
-                    $this->config->getComplex('Company.site_administrator'),
-                    $this->config->getComplex('Company.orders_department'),
-                    "order_created_admin"
+                    $this->config->Company->site_administrator,
+                    $this->config->Company->orders_department,
+                    'order_created_admin'
 				);
                 $mail->send();
             }
@@ -1205,63 +1240,77 @@ class XLite_Model_Order extends XLite_Model_Abstract
     }
     
     /**
-    * called when an order becomes processed, before saving it
-    * to the databsse
-    */
-    function processed() // {{{
+     * Called when an order becomes processed, before saving it to the database
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function processed()
     {
         $mail = new XLite_Model_Mailer();
         $mail->order = $this; 
         $mail->adminMail = true;
-        $mail->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
+        $mail->set('charset', $this->xlite->config->Company->locationCountry->get("charset"));
         $mail->compose(
-            $this->config->getComplex('Company.site_administrator'),
-            $this->config->getComplex('Company.orders_department'),
-            "order_processed"
+            $this->config->Company->site_administrator,
+            $this->config->Company->orders_department,
+            'order_processed'
 		);
         $mail->send();
 
         $mail->adminMail = false;
         $mail->selectCustomerLayout();
-        $mail->set("charset", $this->getComplex('profile.billingCountry.charset'));
+        $mail->set('charset', $this->getProfile()->getComplex('billingCountry.charset'));
         $mail->compose(
-            $this->config->getComplex('Company.site_administrator'),
-            $this->getComplex('profile.login'),
-            "order_processed"
+            $this->config->Company->site_administrator,
+            $this->getProfile()->get('login'),
+            'order_processed'
 		);
         $mail->send();
-    } // }}}
+    }
 
     /**
-    * Called when an order status changed from processed to not processed
-    */
-    function declined()
+     * Called when an order status changed from processed to not processed
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function declined()
     {
     }
 
     /**
-    * Called when the order status changed to failed
-    */
-    function failed()
+     * Called when the order status changed to failed
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function failed()
     {
         $mail = new XLite_Model_Mailer();
         $mail->order = $this; 
         $mail->adminMail = true;
-        $mail->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
+        $mail->set('charset', $this->xlite->config->Company->locationCountry->get("charset"));
         $mail->compose(
-            $this->config->getComplex('Company.site_administrator'),
-            $this->config->getComplex('Company.orders_department'),
-            "order_failed"
+            $this->config->Company->site_administrator,
+            $this->config->Company->orders_department,
+            'order_failed'
 		);
         $mail->send();
 
         $mail->adminMail = false;
         $mail->selectCustomerLayout();
-        $mail->set("charset", $this->getComplex('profile.billingCountry.charset'));
+        $mail->set("charset", $this->getProfile()->getComplex('billingCountry.charset'));
         $mail->compose(
-            $this->config->getComplex('Company.orders_department'),
-            $this->getComplex('profile.login'),
-            "order_failed"
+            $this->config->Company->orders_department,
+            $this->getProfile()->get('login'),
+            'order_failed'
 		);
         $mail->send();
     }

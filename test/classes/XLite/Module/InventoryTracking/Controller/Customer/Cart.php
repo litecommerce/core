@@ -33,9 +33,18 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_InventoryTracking_Controller_Customer_Cart extends XLite_Controller_Customer_Cart implements XLite_Base_IDecorator
-{    
-    public $addReturnUrl = null;
+class XLite_Module_InventoryTracking_Controller_Customer_Cart extends XLite_Controller_Customer_Cart
+implements XLite_Base_IDecorator
+{
+    /**
+     * Additional return URL
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $addReturnUrl = null;
 
     /**
      * Recalculates the shopping cart
@@ -47,23 +56,35 @@ class XLite_Module_InventoryTracking_Controller_Customer_Cart extends XLite_Cont
     protected function updateCart()
     {
         parent::updateCart();
-        if ($this->get("action") == "add" && !is_null($this->getComplex('cart.outOfStock'))) {
-            $product_id = $this->getComplex('cart.outOfStock');
-            $category_id = intval($this->category_id);
-            if ($category_id == 0) {
-                $product = new XLite_Model_Product($product_id);
-                $category_id = $product->getComplex('category.category_id');
+
+        if (
+            XLite_Core_Request::getInstance()->action == 'add'
+            && !is_null($this->getCart()->get('outOfStock'))
+        ) {
+            $productId = $this->getCart()->get('outOfStock');
+            $categoryId = intval(XLite_Core_Request::getInstance()->category_id);
+            if (0 == $categoryId) {
+                $product = new XLite_Model_Product($productId);
+                $categoryId = $product->getComplex('category.category_id');
             }
-            $this->addReturnUrl = "cart.php?target=product&product_id=$product_id&category_id=$category_id&mode=out_of_stock";
+
+            $this->addReturnUrl = $this->buildUrl(
+                'product',
+                '',
+                array('product_id' => $productId, 'category_id' => $categoryId, 'mode' => 'out_of_stock')
+            );
         }
-        if ($this->get("action") == "add" && $this->getComplex('cart.exceeding'))    
-        {
-             $this->addReturnUrl = "cart.php?target=cart&mode=exceeding";
+
+        if (
+            XLite_Core_Request::getInstance()->action == 'add'
+            && $this->getCart()->get('exceeding')
+        ) {
+            $this->addReturnUrl = $this->buildUrl('cart', '', array('mode' => 'exceeding'));
         }
     }
 
     /**
-     * 'add' action
+     * Add to cart
      *
      * @return void
      * @access protected
@@ -74,8 +95,8 @@ class XLite_Module_InventoryTracking_Controller_Customer_Cart extends XLite_Cont
     {
         parent::action_add();
 
-        if (isset($this->addReturnUrl)) {
-            $this->set("returnUrl", $this->addReturnUrl);
+        if ($this->addReturnUrl) {
+            $this->set('returnUrl', $this->addReturnUrl);
         }
     }
 }

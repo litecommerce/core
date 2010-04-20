@@ -684,11 +684,13 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
     /**
      * Check - show Add to cart button or not
      *
+     * @param XLite_Model_Product $product Product
+     *
      * @return boolean
      * @access protected
      * @since  3.0.0
      */
-    protected function isShowAdd2Cart()
+    protected function isShowAdd2Cart(XLite_Model_Product $product)
     {
         return $this->getParam(self::PARAM_SHOW_ADD2CART);
     }

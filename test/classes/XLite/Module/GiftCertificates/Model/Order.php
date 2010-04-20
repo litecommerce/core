@@ -212,14 +212,14 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
     }
     
     /**
-     * Processed order
+     * Called when an order becomes processed, before saving it to the database
      * 
      * @return void
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function processed()
+    protected function processed()
     {
         parent::processed();
 
@@ -230,11 +230,11 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
      * Order after-checkout postprocessing
      * 
      * @return void
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function checkedOut()
+    protected function checkedOut()
     {
         if (XLite_Core_Request::getInstance()->target != 'callback') {
             $this->calcTotals();
@@ -249,11 +249,11 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
      * Decline order
      * 
      * @return void
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function declined()
+    protected function declined()
     {
         parent::declined();
         $this->setGCStatus('P');
@@ -263,11 +263,11 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
      * Queued order
      * 
      * @return void
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function queued()
+    protected function queued()
     {
         parent::queued();
         $this->setGCStatus('P');
@@ -277,11 +277,11 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
      * Order after-checkout postprocessing
      * 
      * @return void
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function uncheckedOut()
+    protected function uncheckedOut()
     {
         parent::uncheckedOut();
         $this->changeGCDebit(1);

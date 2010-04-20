@@ -27,7 +27,7 @@
  */
 
 /**
- * ____description____
+ * Order
  * 
  * @package XLite
  * @see     ____class_see____
@@ -35,32 +35,72 @@
  */
 class XLite_Module_InventoryTracking_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
 {
-	public function __construct($id = null)
-	{
-		$this->fields['inventory_changed'] = 0;
-		parent::__construct($id);
-	}
-
-    function calcTotals()
+    /**
+     * Constructor
+     * 
+     * @param mixed $id ____param_comment____
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct($id = null)
     {
-		// if inventory is not yet updated
-		if (!$this->get("inventory_changed")) {
-	        // update items amount, check inventory
-    	    foreach ($this->get("items") as $item) {
-        	    $this->updateInventory($item);
-	        }
-    	    // clear items cache
-        	$this->_items = null;
-		}
+        $this->fields['inventory_changed'] = 0;
+
+        parent::__construct($id);
+    }
+
+    /**
+     * Calculates order totals and store them in the order properties:
+     * total, subtotal, tax, shipping, etc
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function calcTotals()
+    {
+        if (!$this->get('inventory_changed')) {
+
+            // if inventory is not yet updated
+
+            // update items amount, check inventory
+            foreach ($this->getItems() as $item) {
+                $this->updateInventory($item);
+            }
+
+            // clear items cache
+            $this->_items = null;
+        }
+
         parent::calcTotals();
     }
 
-    function updateInventory($item)
+    /**
+     * Update inventory 
+     * 
+     * @param XLite_Model_OrderItem $item Order item
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function updateInventory(XLite_Model_OrderItem $item)
     {
-        require_once LC_MODULES_DIR . 'InventoryTracking' . LC_DS . 'encoded.php';
         $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
-		if ($this->xlite->get("ProductOptionsEnabled") && $item->getComplex('product.productOptions')&& $item->getComplex('product.tracking')) {
-            /* KOI8-R comment:
+
+        if (
+            $this->xlite->get('ProductOptionsEnabled')
+            && $item->getProduct()
+            && $item->getProduct()->get('productOptions')
+            && $item->getProduct()->get('tracking')
+        ) {
+            // DEVCODE
+            /*
             Если у продукта есть опции, и Track with product options выставлено, то попадаем сюда
             Объясняю на примере:
                 Есть продукт TEST, у него 2 опции - select box (A, B, C) и TextArea.
@@ -76,102 +116,251 @@ class XLite_Module_InventoryTracking_Model_Order extends XLite_Model_Order imple
                 
                 Вообще, весь этот метод updateInventory надо отрефакторить
             */
-            $inventories = $inventory->findAll("inventory_id LIKE '".$item->get("product_id")."|%' AND enabled=1", "order_by");
+            // /DEVCODE
+
+            $inventories = $inventory->findAll(
+                'inventory_id LIKE \'' . $item->get('product_id') . '|%\' AND enabled = 1',
+                'order_by'
+            );
+
             foreach ($inventories as $i) {
-                $items = $item->findAll("product_id = " . $item->get("product_id") . " AND order_id = " . $item->get("order_id"));
-                for ($j = 0; $j < count($items); $j++) {
-                    // ручное выставление поля order, т.к. простое получение массива через findAll() этого не делает
-                    $items[$j]->order = $this; 
+                $items = $item->findAll(
+                    'product_id = ' . $item->get('product_id') . ' AND order_id = ' . $item->get('order_id')
+                );
+                foreach ($items as $subitem) {
+                    // manual declration - findAll() do not this declaration
+                    $subitem->order = $this; 
                 }
+
                 $suitableItems = array();
                 foreach ($items as $tempItem) {
-                    $key = $tempItem->get("key");
-                    if ($i->keyMatch($key)) {
+                    if ($i->keyMatch($tempItem->get('key'))) {
                         $suitableItems[] = $tempItem;
                     }
                 }
-                func_update_inventory($this, $i, $suitableItems);
+
+                $this->updateItemInventory($i, $suitableItems);
             }
+
         } else {
-            /* KOI8-R comment:
-            В эту ветку попадаем в двух случаях 
+            // DEVCODE
+            /* В эту ветку попадаем в двух случаях 
               1) У продукта вообще нет опций. Всё просто и тупо.
               2) У продукта есть опции, но InventoryTracking для продукта 
               настроен как "without options tracking", т.е. все продукты с опциями
               необходимо считать "как один"
               
-            Вот в этом втором случае в функцию func_update_inventory необходимо передавать 
+            Вот в этом втором случае в функцию $this->updateItemInventory необходимо передавать 
             массив продуктов, т.е. все продукты с одинаковым product_id, но разным набором
-            опций. В функцию func_update_inventory соответственно внесены небольшие изменения
+            опций. В функцию $this->updateItemInventory соответственно внесены небольшие изменения
             для работы с массивом, а не скаляром как раньше.
             */
-            if ($inventory->find("inventory_id='".$item->get("product_id")."' AND enabled=1")) {
-                $items = $item->findAll("product_id='" . $item->get("product_id") . "' AND order_id='" . $item->get("order_id") . "'");
-                func_update_inventory($this, $inventory, $items);
+            // /DEVCODE
+            if ($inventory->find('inventory_id = \'' . $item->get('product_id') . '\' AND enabled = 1')) {
+                $items = $item->findAll(
+                    'product_id = \'' . $item->get('product_id') . '\''
+                    . ' AND order_id = \'' . $item->get('order_id') . '\''
+                );
+                $this->updateItemInventory($inventory, $items);
             }
         }
     }
 
-    function changeInventory($status)
+    /**
+     * Update item inventory 
+     * 
+     * @param XLite_Module_InventoryTracking_Model_Inventory $inventory Item inventory
+     * @param array                                          $items     Order items
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function updateItemInventory(XLite_Module_InventoryTracking_Model_Inventory $inventory, array $items)
     {
-		$inventory_changed = false;
-        require_once LC_MODULES_DIR . 'InventoryTracking' . LC_DS . 'encoded.php';
+        $amount = $inventory->get('amount');
+
+        // check inventory
+        if (0 >= $amount) {
+            // product out of stock, delete these items from cart/order
+            foreach ($items as $item) {
+                $item->getOrder()->deleteItem($item);
+            }
+
+            // set item id
+            if (count($items) > 0) {
+                $this->set('outOfStock', $items[0]->get('product_id'));
+            }
+
+        } else {
+
+            $quantity = 0;
+            foreach ($items as $item) {
+                $quantity += $item->get('amount');
+            }
+
+            // trim items amount to available amount
+            if (0 > $amount - $quantity) {
+                $index = 0;
+        
+                while ($amount >= $items[$index]->get('amount')) {
+                    $amount -= $items[$index]->get('amount');
+                    $index++;
+                }
+        
+                $items[$index]->updateAmount($amount);
+                $items[$index]->set('outOfStock', true);
+                $this->set('exceeding', $items[$index]->get('product_id'));
+            }
+        }
+    }
+
+    /**
+     * Change inventory 
+     * 
+     * @param boolean $status Decrease inventory flag
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function changeInventory($status)
+    {
+        $inventoryChanged = false;
+
         // update product(s) inventory        
-        foreach ($this->get("items") as $item) {
+        foreach ($this->getItems() as $item) {
             $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
-            $key = $item->get("key");
-			if ($this->xlite->get("ProductOptionsEnabled") && $item->getComplex('product.productOptions') && $item->getComplex('product.tracking')) {
+
+            if (
+                $this->xlite->get('ProductOptionsEnabled')
+                && $item->getProduct()
+                && $item->getProduct()->get('productOptions')
+                && $item->getProduct()->get('tracking')
+            ) {
                 // product has product options
-                $inventories = $inventory->findAll("inventory_id LIKE '".$item->get("product_id")."|%' AND enabled=1", "order_by");
+                $key = $item->get('key');
+                $inventories = $inventory->findAll(
+                    'inventory_id LIKE \'' . $item->get('product_id') . '|%\' AND enabled = 1',
+                    'order_by'
+                );
                 foreach ($inventories as $i) {
                     if ($i->keyMatch($key)) {
-                        func_change_inventory($this, $status, $i, $item);
-						$inventory_changed = true;
+                        $this->changeItemInventory($status, $i, $item);
+                        $inventoryChanged = true;
                     }
                 }
-            } elseif ($inventory->find("inventory_id='".$item->get("product_id")."' AND enabled=1")) {
+
+            } elseif (
+                $inventory->find('inventory_id = \'' . $item->get('product_id') . '\' AND enabled = 1')
+            ) {
                 // product has NO product options
-                func_change_inventory($this, $status, $inventory, $item);
-				$inventory_changed = true;
+                $this->changeItemInventory($status, $inventory, $item);
+                $inventoryChanged = true;
             }
         }
-		if ($inventory_changed) {
-			$this->set("inventory_changed", $status);
-		}
+
+        if ($inventoryChanged) {
+            $this->set('inventory_changed', $status);
+        }
     }
 
-    function checkedOut()
+    /**
+     * Change item inventory 
+     * 
+     * @param boolean                                        $status    Decrease inventory flag
+     * @param XLite_Module_InventoryTracking_Model_Inventory $inventory Inventory item
+     * @param XLite_Model_OrderItem                          $item      Order item
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function changeItemInventory($status, XLite_Module_InventoryTracking_Model_Inventory $inventory, XLite_Model_OrderItem $item)
+    {
+        $amount = $status
+            ? $inventory->get('amount') - $item->get('amount')
+            : $inventory->get('amount') + $item->get('amount');
+        $inventory->set('amount', $amount);
+        $inventory->update();
+
+        // check low_avail_limit
+        if ($this->config->InventoryTracking->send_notification) {
+            $inventory->checkLowLimit($item);
+        }
+    }
+
+    /**
+     * Order 'complete' event
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkedOut()
     {
         // decrease product(s) inventory  with placed order
-        if ($this->getComplex('config.InventoryTracking.track_placed_order')) {
+        if ($this->config->InventoryTracking->track_placed_order) {
             $this->changeInventory(true);
         }
+
         parent::checkedOut();
     }
     
-    function uncheckedOut()
+    /**
+     * Order 'charge back' event
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function uncheckedOut()
     {
-        if ($this->getComplex('config.InventoryTracking.track_placed_order')) {
+        if ($this->config->InventoryTracking->track_placed_order) {
             $this->changeInventory(false);
         }
+
         parent::uncheckedOut();
     }
     
-    function processed()
+    /**
+     * Called when an order becomes processed, before saving it to the database
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function processed()
     {
         // decrease product(s) inventory  with processed order
-        if (!$this->getComplex('config.InventoryTracking.track_placed_order')) {
+        if (!$this->config->InventoryTracking->track_placed_order) {
             $this->changeInventory(true);
-        }    
+        }
+
         parent::processed();
     }
      
-    function declined()
+    /**
+     * Called when an order status changed from processed to not processed
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function declined()
     {
         // increase inventory if order was processed
-        if ($this->_oldStatus == 'P' && !$this->getComplex('config.InventoryTracking.track_placed_order')) {
+        if ($this->_oldStatus == 'P' && !$this->config->InventoryTracking->track_placed_order) {
             $this->changeInventory(false);
         }
+
         parent::declined();
     }
 }
