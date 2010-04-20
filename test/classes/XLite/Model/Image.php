@@ -805,5 +805,166 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
 
         return substr($this->alias, 0, 1) . substr($this->fieldPrefix, 0, 1) . '_' . $id . $ext;
     }
-    
+
+    /**
+     * Resize image
+     * 
+     * @param integer $width  New width
+     * @param integer $height New height
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function resize($width, $height)
+    {
+        static $types = array(
+            'image/jpeg' => 'jpeg',
+            'image/jpg'  => 'jpeg',
+            'image/gif'  => 'gif',
+            'image/xpm'  => 'xpm',
+            'image/gd'   => 'gd',
+            'image/gd2'  => 'gd2',
+            'image/wbmp' => 'wbmp',
+            'image/bmp'  => 'wbmp',
+        );
+
+        $type = $this->get('type');
+
+        if (!isset($types[$type])) {
+            return false;
+        }
+
+        $type = $types[$type];
+
+        $func = 'imagecreatefrom' . $type;
+        if (!function_exists($func)) {
+            return false;
+        }
+
+        $source = $this->get($this->sourceField);
+        $data = false;
+
+        if ('D' == $source) {
+            $data = $this->get($this->dataField);
+
+        } elseif ('F' == $source) {
+            $data = file_get_contents($this->get($this->dataField));
+        }
+
+        if (!$data) {
+            return false;
+        }
+
+        if (function_exists('sys_get_temp_dir')) {
+            $dir = sys_get_temp_dir();
+
+        } else {
+            $dir = LC_VAR_DIR;
+        }
+
+        $fn = tempnam($dir, 'image');
+
+        file_put_contents($fn, $data);
+        unset($data, $source);
+
+        $image = $func($fn);
+        unlink($fn);
+
+        if (!$image) {
+            return false;
+        }
+
+        $newImage = imagecreatetruecolor($width, $height);
+        imagealphablending($newImage, false);
+        imagesavealpha($newImage, true);
+
+        $res = imagecopyresampled(
+            $newImage,
+            $image,
+            0,
+            0,  
+            0,
+            0,
+            $width,
+            $height,
+            $this->get('width'),
+            $this->get('height')
+        );
+        imagedestroy($image);
+
+        require_once LC_EXT_LIB_DIR . 'phpunsharpmask.php';
+
+        $unsharpImage = UnsharpMask($newImage);
+        if ($unsharpImage) {
+            $newImage = $unsharpImage;
+        }
+
+        $func = 'image' . $type;
+
+        if (!$func($newImage, $fn)) {
+            return false;
+        }
+        imagedestroy($newImage);
+
+        $image = file_get_contents($fn);
+        unlink($fn);
+
+        return $image;
+    }
+
+    /**
+     * Get cropped image dimensions 
+     * 
+     * @param integer $maxw Maximum width
+     * @param integer $maxh Masimum height
+     *  
+     * @return array (new width & height)
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCroppedDimensions($maxw, $maxh)
+    {
+        $w = $this->get('width');
+        $h = $this->get('height');
+
+        $maxw = max(0, intval($maxw));
+        $maxh = max(0, intval($maxh));
+
+        $properties = array(
+            'width'  => 0 < $w ? $w : $maxw,
+            'height' => 0 < $h ? $h : $maxh,
+        );
+
+        if (0 < $w && 0 < $h && (0 < $maxw || 0 < $maxh)) {
+
+            if (0 < $maxw && 0 < $maxh) {
+                $kw = $w > $maxw ? $maxw / $w : 1;
+                $kh = $h > $maxh ? $maxh / $h : 1;
+                $k = $kw < $kh ? $kw : $kh;
+
+            } elseif (0 < $maxw) {
+                $k = $w > $maxw ? $maxw / $w : 1;
+
+            } elseif (0 < $maxh) {
+                $k = $h > $maxh ? $maxh / $h : 1;
+
+            }
+
+            $properties['width'] = max(1, round($k * $w, 0));
+            $properties['height'] = max(1, round($k * $h, 0));
+        }
+
+        if (0 == $properties['width']) {
+            $properties['width'] = null;
+        }
+
+        if (0 == $properties['height']) {
+            $properties['height'] = null;
+        }
+
+        return array($properties['width'], $properties['height']);
+    }
 }
