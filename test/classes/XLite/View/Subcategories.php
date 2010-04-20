@@ -40,6 +40,8 @@ class XLite_View_Subcategories extends XLite_View_Dialog
      */
 
     const PARAM_DISPLAY_MODE = 'displayMode';
+    const PARAM_ICON_MAX_WIDTH = 'iconWidth';
+    const PARAM_ICON_MAX_HEIGHT = 'iconHeight';
 
     /**
      * Allowed display modes
@@ -149,7 +151,41 @@ class XLite_View_Subcategories extends XLite_View_Dialog
             self::PARAM_DISPLAY_MODE => new XLite_Model_WidgetParam_List(
                 'Display mode', self::DISPLAY_MODE_ICONS, true, $this->displayModes
             ),
+            self::PARAM_ICON_MAX_WIDTH => new XLite_Model_WidgetParam_Int(
+                'Maximal icon width', 90, true
+            ),
+            self::PARAM_ICON_MAX_HEIGHT => new XLite_Model_WidgetParam_Int(
+                'Maximal icon height', 90, true
+            ),
         );
     }
+
+    /**
+     * Return the maximal icon width
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getIconWidth()
+    {
+        return $this->getParam(self::PARAM_ICON_MAX_WIDTH);
+    }
+
+    /**
+     * Return the maximal icon height
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getIconHeight()
+    {
+        return $this->getParam(self::PARAM_ICON_MAX_HEIGHT);
+    }
+
+
 }
 
