@@ -48,6 +48,33 @@ class XLite_Core_Operator extends XLite_Base implements XLite_Base_ISingleton
             || !XLite_Core_Request::getInstance()->__get(XLite_Core_CMSConnector::NO_REDIRECT);
     }
 
+    /**
+     * setHeaderLocation
+     * 
+     * @param string $location URL
+     * @param int    $code     operation code
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    protected function setHeaderLocation($location, $code = 302)
+    {
+        header('Location: ' . $location, true, $code);
+    }
+
+    /**
+     * finish 
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function finish()
+    {
+        exit (0);
+    }
+
 
     /**
      * Singleton access method
@@ -74,7 +101,8 @@ class XLite_Core_Operator extends XLite_Base implements XLite_Base_ISingleton
 	public function redirect($location, $code = 302)
 	{
         if ($this->checkRedirectStatus()) {
-    		header('Location: ' . $location, true, $code);
+            $this->setHeaderLocation($location, $code);
+            $this->finish();
         }
 	}
 }

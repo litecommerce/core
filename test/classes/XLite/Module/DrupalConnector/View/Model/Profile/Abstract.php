@@ -27,13 +27,13 @@
  */
 
 /**
- * XLite_Module_DrupalConnector_View_Model_Abstract 
+ * XLite_Module_DrupalConnector_View_Model_Profile_Abstract 
  * 
  * @package    XLite
  * @subpackage ____sub_package____
  * @since      3.0.0
  */
-abstract class XLite_Module_DrupalConnector_View_Model_Abstract extends XLite_View_Model_Abstract implements XLite_Base_IDecorator
+abstract class XLite_Module_DrupalConnector_View_Model_Profile_Abstract extends XLite_View_Model_Profile_Abstract implements XLite_Base_IDecorator
 {
     /**
      * This object will be used if another one is not pased
@@ -49,39 +49,6 @@ abstract class XLite_Module_DrupalConnector_View_Model_Abstract extends XLite_Vi
         return $handler->checkCurrentCMS() 
             ? $handler->getProfile(user_uid_optional_to_arg(null)) 
             : parent::getDefaultModelObject();
-    }
-
-    /**
-     * Save form state in session
-     *
-     * @param array $data form fields
-     *
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function saveFormErrors(array $data)
-    {
-        parent::saveFormErrors($data);
-
-		XLite_Core_TopMessage::getInstance()->addBatch(
-			$this->getErrorMessages(),
-			XLite_Core_TopMessage::ERROR
-		);
-    }
-
-    /**
-     * Perform some action on success
-     *
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function success()
-    {
-        parent::success();
-
-        XLite_Core_TopMessage::getInstance()->add('Data have been saved successfully', XLite_Core_TopMessage::INFO);
     }
 }
 

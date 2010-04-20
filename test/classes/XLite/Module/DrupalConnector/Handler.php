@@ -108,19 +108,6 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
     }
 
     /**
-     * Get previous messages
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getTopMessages()
-    {
-        return XLite_Core_TopMessage::getInstance()->getPreviousMessages();
-    }
-
-    /**
      * Get portals 
      * 
      * @return array

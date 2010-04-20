@@ -16,10 +16,10 @@
 }
 
 .form_field_error {
-  border-color: #ff0000;
+  border: 1px solid #ff0000;
 }
 
 input[type="text"].form_field_error {
-  border-color: #ff0000;
+  border: 1px solid #ff0000;
 }
 

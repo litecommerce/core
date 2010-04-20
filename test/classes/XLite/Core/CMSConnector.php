@@ -384,6 +384,19 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         return $profile;
     }
 
+    /**
+     * Get previous messages
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTopMessages()
+    {
+        return XLite_Core_TopMessage::getInstance()->getPreviousMessages();
+    }
+
 
     // -----> FIXME - to revise
 

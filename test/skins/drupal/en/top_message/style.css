@@ -1,0 +1,63 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * ____file_title____
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ */
+
+#top_messages {
+  position: fixed;
+  display: block
+  top: 0px;
+  left: 25%;
+  right: 25%;
+  margin: 0px auto;
+  z-index: 20000;
+  background-color: #fff;
+}
+
+#top_messages a.close {
+  width: 13px;
+  height: 13px;
+  display: block;
+  position: absolute;
+  right: 8px;
+  top: 5px;
+  background: #fff url(images/remove.gif) no-repeat;
+}
+
+#top_messages ul {
+  border-style: none solid solid solid;
+  border-color: #bbc7d2;
+  list-style: none;
+  margin: 0px;
+  padding: 15px;
+}
+
+#top_messages li {
+  list-style: none;
+  padding-left: 25px;
+  background-repeat: no-repeat;
+  height: 18px;
+}
+
+#top_messages li.status {
+  background-image: url(images/icon_notify_info.png);
+  color: #3171ab;
+}
+
+#top_messages li.warning {
+  background-image: url(images/icon_notify_warn.png);
+  color: #000;
+}
+
+#top_messages li.error {
+  background-image: url(images/icon_notify_error.png);
+  color: #cc1e1e;
+}

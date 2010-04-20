@@ -38,9 +38,17 @@ class XLite_Core_TopMessage extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Message types 
      */
+
     const INFO    = 'info';
     const WARNING = 'warning';
     const ERROR   = 'error';
+
+    /**
+     * Message fields 
+     */
+
+    const FIELD_TEXT = 'text';
+    const FIELD_TYPE = 'type';
 
 
     /**
@@ -117,8 +125,8 @@ class XLite_Core_TopMessage extends XLite_Base implements XLite_Base_ISingleton
 
                 $messages = $this->getMessages();
                 $messages[] = array(
-                    'text' => $text,
-                    'type' => $type,
+                    self::FIELD_TEXT => $text,
+                    self::FIELD_TYPE => $type,
                 );
                 $this->session->set('topMessages', $messages);
                 $result = true;

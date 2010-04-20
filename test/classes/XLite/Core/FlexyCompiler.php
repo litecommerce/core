@@ -390,9 +390,9 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
                         list($expr,$k,$forvar) = $this->flexyForeach($this->getTokenText($pos+1));
                         $exprNumber = $forvar . 'ArraySize';
                         $exprCounter = $forvar . 'ArrayPointer';
-                        $this->subst($token["start"], 0, self::PHP_OPEN . " \$$forvar = isset(\$this->$forvar) ? \$this->$forvar : null; \$_foreach_var = $expr; if (!is_null(\$_foreach_var)) { \$this->$exprNumber=count(\$_foreach_var); \$this->$exprCounter=0; } if (!is_null(\$_foreach_var)) foreach(\$_foreach_var as $k){ \$this->$exprCounter++; " . self::PHP_CLOSE);
+                        $this->subst($token["start"], 0, self::PHP_OPEN . " \$$forvar = isset(\$this->$forvar) ? \$this->$forvar : null; \$_foreach_var = $expr; if (isset(\$_foreach_var)) { \$this->$exprNumber=count(\$_foreach_var); \$this->$exprCounter=0; } if (isset(\$_foreach_var)) foreach(\$_foreach_var as $k){ \$this->$exprCounter++; " . self::PHP_CLOSE);
                         $this->subst($this->tokens[$pos]["start"], $this->tokens[$pos]["end"], '');
-                        $this->subst($this->tokens[$pos1]["end"]-1, $this->tokens[$pos1]["end"], ">" . self::PHP_OPEN . " } \$this->$forvar = \$$forvar; " . self::PHP_CLOSE);
+                        $this->subst($this->tokens[$pos1]["end"]-1, $this->tokens[$pos1]["end"], ">\n" . self::PHP_OPEN . " } \$this->$forvar = \$$forvar; " . self::PHP_CLOSE);
 
                     } else {
                         $this->error("No closing tag for foreach");
@@ -522,14 +522,14 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
     {
 		$result = '';
 
-		if (is_null($module) || XLite_Model_ModulesManager::getInstance()->isActiveModule($module)) {
+		if (!isset($module) || XLite_Model_ModulesManager::getInstance()->isActiveModule($module)) {
 
 			$arguments  = isset($attrs['class']) ? $this->flexyAttribute($attrs['class']) : (isset($name) ? 'null' : '');
 			$arguments .= isset($name) ? ', ' . $this->flexyAttribute($name) : '';
 
         	$conditions = array();
 
-			if (!is_null($target)) {
+			if (isset($target)) {
 				$conditions[] = '$this->isDisplayRequired(array(\'' 
 								. str_replace(',', '\',\'', preg_replace('/[^\w,]+/', '', $target)) 
 								. '\'))';
@@ -659,7 +659,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
 			list($expr,$k,$forvar) = $this->flexyForeach(substr($str, 9));
 			$exprNumber = "$forvar"."ArraySize";
 			$exprCounter = "$forvar"."ArrayPointer";
-			return self::PHP_OPEN . " \$_foreach_var = $expr; if (!is_null(\$_foreach_var)) { \$this->$exprNumber=count(\$_foreach_var); \$this->$exprCounter=0; } if (!is_null(\$_foreach_var)) foreach(\$_foreach_var as $k){ \$this->$exprCounter++; " . self::PHP_CLOSE;
+			return self::PHP_OPEN . " \$_foreach_var = $expr; if (isset(\$_foreach_var)) { \$this->$exprNumber=count(\$_foreach_var); \$this->$exprCounter=0; } if (isset(\$_foreach_var)) foreach(\$_foreach_var as $k){ \$this->$exprCounter++; " . self::PHP_CLOSE;
 		}
 		if (substr($str, 0, 4) == '{if:') {
 			$expr = $this->flexyCondition(substr($str, 4));
@@ -853,7 +853,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
 
 	function getXliteFormIDText()
 	{
-		if (!isset($this->xlite->_xlite_form_id_text) || is_null($this->xlite->_xlite_form_id_text)) {
+		if (!isset($this->xlite->_xlite_form_id_text) || !isset($this->xlite->_xlite_form_id_text)) {
 			$this->xlite->_xlite_form_id_text = $this->flexyEcho("{session.getXliteFormID()}");
 		}
 
@@ -884,7 +884,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
 		if (($token["type"] == "tag") && ($token['name'] == "script")) {
 			$script_start = $token["end"];
 		}
-		if (($token["type"] == "close-tag") && ($token['name'] == "script") && (!is_null($script_start))) {
+		if (($token["type"] == "close-tag") && ($token['name'] == "script") && isset($script_start)) {
 			$script_end = $token["start"];
 			$script_body = substr($this->source, $script_start, $script_end-$script_start);
 			$this->_addFormIdToActions($script_body, $script_start);

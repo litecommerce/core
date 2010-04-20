@@ -194,16 +194,21 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
     {
         parent::defineFormFields();
 
-        $this->formFields['sepInfo'] = new XLite_View_FormField_Separator_Regular(
-            array(self::SCHEMA_LABEL => 'E-mail & Password')
-        );
-        $this->formFields += $this->getProfileFields();
+        // Login and password
+        if (!XLite_Core_CMSConnector::isCMSStarted()) {
+            $this->formFields['sepInfo'] = new XLite_View_FormField_Separator_Regular(
+                array(self::SCHEMA_LABEL => 'E-mail & Password')
+            );
+            $this->formFields += $this->getProfileFields();
+        }
 
+        // Billing info
         $this->formFields['sepBillAddr'] = new XLite_View_FormField_Separator_Regular(
             array(self::SCHEMA_LABEL => 'Billing Address')
         );
         $this->formFields += $this->getBillingAddressFields();
 
+        // Shipping info
         $this->formFields['sepShipAddr'] = new XLite_View_FormField_Separator_Regular(
             array(self::SCHEMA_LABEL => 'Shipping Address')
         );

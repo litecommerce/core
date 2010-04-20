@@ -1,6 +1,6 @@
-/* vim: set ts=2 sw=2 sts=2 et: */
+{* vim: set ts=2 sw=2 sts=2 et: *}
 
-/**
+{**
  * ____file_title____
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
@@ -9,17 +9,16 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- */
+ *}
 
-#register-form input, select {
-  width: 150px;
-}
+<div id="{getBlockId()}">
 
-.form_field_error {
-  border: 1px solid #ff0000;
-}
+  <a href="#" class="close" onclick="javascript: document.getElementById('{getBlockId()}').style.display = 'none';">&nbsp;</a>
 
-input[type="text"].form_field_error {
-  border: 1px solid #ff0000;
-}
+  <ul>
+    <li FOREACH="getTopMessages(),data" class="{getType(data)}">
+    {getText(data)}
+    </li>
+  </ul>
 
+</div>

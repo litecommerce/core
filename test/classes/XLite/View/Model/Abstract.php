@@ -63,7 +63,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
      * Session cell to store form data 
      */
 
-    const SAVED_FORM        = 'savedForm';
+    const SAVED_FORMS       = 'savedForms';
     const SAVED_FORM_PARAMS = 'savedFormParams';
     const SAVED_FORM_DATA   = 'savedFormData';
 
@@ -380,6 +380,18 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     }
 
     /**
+     * getSavedForms 
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getSavedForms()
+    {
+        return XLite_Model_Session::getInstance()->get(self::SAVED_FORMS);
+    }
+
+    /**
      * getSavedForm 
      * 
      * @param string $field data field to return
@@ -390,10 +402,16 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
      */
     protected function getSavedForm($field = null)
     {
-        $data = XLite_Model_Session::getInstance()->get(self::SAVED_FORM);
+        $data = $this->getSavedForms();
         $name = $this->getFormName();
 
-        return isset($data[$name][$field]) ? $data[$name][$field] : array();
+        $data = isset($data[$name]) ? $data[$name] : array();
+
+        if (isset($field) && isset($data[$field])) {
+            $data = $data[$field];
+        }
+
+        return $data;
     }
 
     /**
@@ -431,7 +449,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
      */
     protected function saveFormData($data)
     {
-        $savedData = $this->getFormSavedData();
+        $savedData = $this->getSavedForms();
 
         if (isset($data)) {
             $savedData[$this->getFormName()] = array(
@@ -442,7 +460,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
             unset($savedData[$this->getFormName()]);
         }
 
-        XLite_Model_Session::getInstance()->set(self::SAVED_FORM, empty($savedData) ? null : $savedData);
+        XLite_Model_Session::getInstance()->set(self::SAVED_FORMS, empty($savedData) ? null : $savedData);
     }
 
     /**
@@ -469,6 +487,11 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     protected function saveFormErrors(array $data)
     {
         $this->saveFormData($data);
+
+        XLite_Core_TopMessage::getInstance()->addBatch(
+            $this->getErrorMessages(),
+            XLite_Core_TopMessage::ERROR
+        );
     }
 
     /**
@@ -480,6 +503,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
      */
     protected function success()
     {
+        XLite_Core_TopMessage::getInstance()->add('Data have been saved successfully', XLite_Core_TopMessage::INFO);
     }
 
     /**

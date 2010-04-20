@@ -53,6 +53,15 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
 
 
     /**
+     * isCloned 
+     * 
+     * @var    bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $isCloned = false;
+
+    /**
      * Widgets resources collector
      * 
      * @var    array
@@ -561,9 +570,13 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
     public function display()
     {
         if ($this->isVisible()) {
-            $this->initView();
-            $this->includeCompiledFile();
-            $this->closeView();
+            if ($this->isCloned) {
+                $this->includeCompiledFile();
+            } else {
+                $this->initView();
+                $this->includeCompiledFile();
+                $this->closeView();
+            }
         }
     }
 
@@ -713,6 +726,8 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
         foreach ($this->getWidgetParams() as $name => $param) {
             $this->widgetParams[$name] = clone $param;
         }
+
+        $this->isCloned = true;
     }
 
    
