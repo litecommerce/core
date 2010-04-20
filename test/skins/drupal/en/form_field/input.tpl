@@ -11,5 +11,5 @@
  * @since     3.0.0
  *}
 
-<input type="{getFieldType()}" name="{getName()}" value="{getValue()}"{getAttributesCode():h} />
+<input type="{getFieldType()}" id="{getFieldId()}" name="{getName()}" value="{getValue()}"{getAttributesCode():h} />
 

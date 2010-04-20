@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<select name="{getName()}"{getAttributesCode():h} onchange="{onChange}" id="{fieldId}" size="1">
+<select id="{getFieldId()}" name="{getName()}"{getAttributesCode():h} onchange="{onChange}" id="{fieldId}" size="1">
   <option value="">Select one..</option>
   <option FOREACH="getOptions(),optionValue" value="{optionValue.code:r}" selected="{optionValue.code=getValue()}">{optionValue.country:h}</option>
 </select>

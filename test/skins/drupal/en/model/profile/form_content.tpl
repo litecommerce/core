@@ -10,24 +10,17 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-
-<div class="register-form">
-  <div class="address billing">
-    <h4>Billing address</h4>
-    <div class="details">
-      <table cellspacing="0" class="form-table">
-        <tr FOREACH="getBillingAddressFields(),field">{field.display()}</tr>
-      </table>
-    </div>
+<div class="user-addresses">
+  <div class="billing-address-form">
+    <h2>Billing address</h3>
+    <table class="user-address-form">
+      <tr FOREACH="getBillingAddressFields(),field">{field.display()}</tr>
+    </table>
   </div>
-
-  <div class="address shipping">
-    <h4>Shipping address</h4>
-    <div class="details">
-      <table cellspacing="0" class="form-table">
-        <tr FOREACH="getShippingAddressFields(),field">{field.display()}</tr>
-      </table>
-    </div>
+  <div class="shipping-address-form">
+    <h3>Shipping address</h3>
+    <table class="user-address-form">
+      <tr FOREACH="getShippingAddressFields(),field">{field.display()}</tr>
+    </table>
   </div>
 </div>
-<div class="clear">&nbsp;</div>

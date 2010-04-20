@@ -297,6 +297,19 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
     }
 
     /**
+     * Return a value for the "id" attribute of the field input tag
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getFieldId()
+    {
+        return strtolower(strtr($this->getName(), array('['=>'-', ']'=>'', '_'=>'-')));
+    }
+
+    /**
      * Wrapper; public function to retrieve widget params
      * 
      * @param string $name param name
