@@ -85,11 +85,11 @@ class XLite_Module_InventoryTracking_Model_Order extends XLite_Model_Order imple
      * @param XLite_Model_OrderItem $item Order item
      *  
      * @return void
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function updateInventory(XLite_Model_OrderItem $item)
+    public function updateInventory(XLite_Model_OrderItem $item)
     {
         $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
 

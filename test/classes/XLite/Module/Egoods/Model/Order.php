@@ -35,7 +35,7 @@
  */
 class XLite_Module_Egoods_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
 {
-    function processed() // {{{
+    protected function processed() // {{{
     {
 		$this->Egoods_processed();
 		parent::processed();
@@ -50,7 +50,7 @@ class XLite_Module_Egoods_Model_Order extends XLite_Model_Order implements XLite
 
     // assign pin codes to order items
 	
-	function checkedOut()
+	protected function checkedOut()
 	{
 		$this->Egoods_checkedOut();
 		parent::checkedOut();	
@@ -87,7 +87,7 @@ class XLite_Module_Egoods_Model_Order extends XLite_Model_Order implements XLite
 	}
     
     // free assigned pin codes in case of failure
-	function uncheckedOut()
+	protected function uncheckedOut()
 	{
 		$this->Egoods_uncheckedOut();
 		parent::uncheckedOut();	

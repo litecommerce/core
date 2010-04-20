@@ -64,7 +64,7 @@ class XLite_Module_Affiliate_Model_Order extends XLite_Model_Order implements XL
         }
 	} // }}}
 	
-    function processed() // {{{
+    protected function processed() // {{{
     {
         parent::processed();
 		$this->Affiliate_processed();

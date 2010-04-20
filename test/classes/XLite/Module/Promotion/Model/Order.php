@@ -162,7 +162,7 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
 	/**
 	* Order status change event {T,I,F,D} -> {Q,P,C}
 	*/
-	function checkedOut()
+	protected function checkedOut()
     {
         $this->promotionStatusChanged(-1);
 		parent::checkedOut();
@@ -175,7 +175,7 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
 	/**
 	* Order status change event  {Q,P,C} -> {T,I,F,D}
 	*/
-	function uncheckedOut()
+	protected function uncheckedOut()
 	{
 		$this->promotionStatusChanged(1);
 		parent::uncheckedOut();
@@ -204,7 +204,7 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
         }
     }
 
-	function processed()
+	protected function processed()
 	{
 		if ($this->config->getComplex('Promotion.earnBonusPointsRate')) {
 			$this->addBonusPoints((int)($this->get("subtotal") * $this->config->getComplex('Promotion.earnBonusPointsRate')));

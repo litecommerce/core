@@ -205,7 +205,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
         return $result;
     }
 	
-	function processed()
+	protected function processed()
 	{
 		$this->WholesaleTrading_processed();
 		parent::processed();	

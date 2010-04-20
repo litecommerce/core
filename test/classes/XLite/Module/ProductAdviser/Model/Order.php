@@ -43,7 +43,7 @@ class XLite_Module_ProductAdviser_Model_Order extends XLite_Model_Order implemen
 	 * @see    ____func_see____
 	 * @since  3.0.0
 	 */
-	public function checkedOut()
+	protected function checkedOut()
 	{
 		parent::checkedOut();
 
