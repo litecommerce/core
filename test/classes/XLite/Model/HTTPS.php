@@ -1005,6 +1005,16 @@ class XLite_Model_HTTPS extends XLite_Base
         return $result;
     }
 
+    /**
+     * Parse response headers 
+     * 
+     * @param string $rawHeaders Response headers
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function parseResponseHeaders($rawHeaders)
     {
         $responseHeaders = array_map('trim', explode("\n", $rawHeaders));
@@ -1021,6 +1031,16 @@ class XLite_Model_HTTPS extends XLite_Base
         }
     }
 
+    /**
+     * Get temporary file path
+     * 
+     * @param string $name File prefix
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function getTempFilename($name = 'temp')
     {
         if (function_exists('sys_get_temp_dir')) {
