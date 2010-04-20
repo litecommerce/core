@@ -53,10 +53,11 @@ while (($dir = readdir($modules)) !== false) {
 
 closedir($modules);
 
-_do_query_upload("sql/xlite_modules.sql", $connection, true);
 _do_query_upload("sql/xlite_demo.sql", $connection, true);
 
 if (isset($argv[1]) && $argv[1] == "demo") {
+
+    _do_query_upload("sql/xlite_demo_data.sql", $connection, true);
 	_do_query_upload("sql/xlite_demo_store.sql", $connection, true);
 
 	if (isset($argv[2]) && $argv[2] == 'all') {
