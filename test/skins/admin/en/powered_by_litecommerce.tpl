@@ -11,5 +11,6 @@
  * @since     3.0.0
  *}
 <div class="powered-by">
-Powered by LiteCommerce <a href="http://www.litecommerce.com" class="powered-by">{getPrNotice()}</a>
+  <p class="copyright">&copy; 2010 {config.Company.company_name}</p>
+  <p>{getMessage():h}</p>
 </div>
