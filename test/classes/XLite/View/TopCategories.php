@@ -115,10 +115,11 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
     {
         if (isset($categoryId)) {
             $category = XLite_Model_CachingFactory::getObject(
-                __METHOD__ . $this->getParam(self::PARAM_ROOT_ID),
+                __METHOD__ . $categoryId,
                 'XLite_Model_Category',
                 array($categoryId)
             );
+
         } else {
             $category = $this->getWidgetParams(self::PARAM_ROOT_ID)->getObject();
         }
