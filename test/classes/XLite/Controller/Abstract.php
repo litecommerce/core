@@ -425,18 +425,18 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     {
     }
 
-	/**
-	 * Get controlelr parameters
+    /**
+     * Get controlelr parameters
      * TODO - check this method
      * FIXME - backward compatibility
-	 * 
-	 * @param string $exeptions Parameter keys string
-	 *  
-	 * @return array
-	 * @access public
-	 * @since  3.0.0 EE
-	 */
-	public function getAllParams($exeptions = null)
+     * 
+     * @param string $exeptions Parameter keys string
+     *  
+     * @return array
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function getAllParams($exeptions = null)
     {
         $result = array();
         $exeptions = isset($exeptions) ? explode(",", $exeptions) : false;
@@ -451,34 +451,34 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         return $result;
     }
 
-	/**
-	 * Return current (or default) category object
+    /**
+     * Return current (or default) category object
      * FIXME - must be moved to the low-level controllers
-	 * 
-	 * @return XLite_Model_Category
-	 * @access public
-	 * @since  3.0.0 EE
-	 */
-	public function getCategory()
+     * 
+     * @return XLite_Model_Category
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function getCategory()
     {
-		return XLite_Model_CachingFactory::getObject(
+        return XLite_Model_CachingFactory::getObject(
             __METHOD__,
             'XLite_Model_Category',
             array($this->getCategoryId())
         );
     }
 
-	/**
-	 * Return current (or default) product object
+    /**
+     * Return current (or default) product object
      * FIXME - must be moved to the low-level controllers
-	 * 
-	 * @return XLite_Model_Product
-	 * @access public
-	 * @since  3.0.0 EE
-	 */
-	public function getProduct()
+     * 
+     * @return XLite_Model_Product
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function getProduct()
     {
-		return XLite_Model_CachingFactory::getObject(
+        return XLite_Model_CachingFactory::getObject(
             __METHOD__,
             'XLite_Model_Product',
             array($this->getProductId())
@@ -810,7 +810,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 
     function checkHtaccess()
     {
-        if($this->getComplex('config.Security.htaccess_protection') == "Y"){
+        if ('Y' == $this->config->Security->htaccess_protection) {
             $htaccess = new XLite_Model_Htaccess();
             $htaccess->checkFiles();
         }

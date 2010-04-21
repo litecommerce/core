@@ -27,11 +27,11 @@
  */
 
 /**
- * XLite_View_Checkout 
+ * Checkout
  * 
- * @package    XLite
- * @subpackage ____sub_package____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_View_Checkout extends XLite_View_Dialog
 {
@@ -142,6 +142,19 @@ class XLite_View_Checkout extends XLite_View_Dialog
     {
         return $this->getCart()->get('paymentMethod')
             && $this->getCart()->get('paymentMethod')->get('payment_method') == $paymentMethod->get('payment_method');
+    }
+
+    /**
+     * Billing and shipping addresses is equals 
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isSameAddress()
+    {
+        return $this->getCart()->getProfile()->isSameAddress();
     }
 }
 

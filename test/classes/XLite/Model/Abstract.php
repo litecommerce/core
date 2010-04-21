@@ -100,12 +100,6 @@ class XLite_Model_Abstract extends XLite_Base
     public $isPersistent = false;
     
     /**
-    * Contains SQL ORDER clause used by default by findAll() if no order
-    * is specified.
-    * @var string $defaultOrder
-    */
-
-    /**
      * Default order file name
      * 
      * @var    string

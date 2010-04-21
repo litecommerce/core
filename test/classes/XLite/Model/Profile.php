@@ -35,82 +35,121 @@
  */
 class XLite_Model_Profile extends XLite_Model_Abstract
 {
-    // properties {{{
-    
     /**
-    * @var array fields The profile properties
-    *
-    * Pay attention to using the "access_level", "status" and 
-    * "membership" fields. Prevent modifications with POST'ed data
-    */	
-    public $fields = array(
-              'profile_id' => 0,
-                'order_id' => '0',
-	               'login' => '',
-	            'password' => '',
-	       'password_hint' => '',
-	'password_hint_answer' => '',
-	        'access_level' => '0',
-          'cms_profile_id' => '0',
-                'cms_name' => '',
-	       'billing_title' => '',
-	   'billing_firstname' => '',
-	    'billing_lastname' => '',
-	     'billing_company' => '',
-	       'billing_phone' => '',
-	         'billing_fax' => '',
-	     'billing_address' => '',
-	        'billing_city' => '',
-	       'billing_state' => '',
-    'billing_custom_state' => '',
-	     'billing_country' => '',
-	     'billing_zipcode' => '',
-	      'shipping_title' => '',
-	  'shipping_firstname' => '',
-	   'shipping_lastname' => '',
-	    'shipping_company' => '',
-	      'shipping_phone' => '',
-	        'shipping_fax' => '',
-	    'shipping_address' => '',
-	       'shipping_city' => '',
-	      'shipping_state' => '',
-   'shipping_custom_state' => '',
-	    'shipping_country' => '',
-	    'shipping_zipcode' => '',
-	        'extra_fields' => '',
-	           'card_name' => '',
-	           'card_type' => '',
-	         'card_number' => '',
-	         'card_expire' => '',
-	           'card_cvv2' => '',
-	         'first_login' => '0',
-	          'last_login' => '0',
-	              'status' => '',
-	             'referer' => '',
-	          'membership' => '',
-	  'pending_membership' => '',
-           'sidebar_boxes' => ''
-    );	
+     * Object properties (table filed => default value)
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $fields = array(
+        'profile_id'            => 0,
+        'order_id'              => '0',
+        'login'                 => '',
+        'password'              => '',
+        'password_hint'         => '',
+        'password_hint_answer'  => '',
+        'access_level'          => '0',
+        'cms_profile_id'        => '0',
+        'cms_name'              => '',
+        'billing_title'         => '',
+        'billing_firstname'     => '',
+        'billing_lastname'      => '',
+        'billing_company'       => '',
+        'billing_phone'         => '',
+        'billing_fax'           => '',
+        'billing_address'       => '',
+        'billing_city'          => '',
+        'billing_state'         => '',
+        'billing_custom_state'  => '',
+        'billing_country'       => '',
+        'billing_zipcode'       => '',
+        'shipping_title'        => '',
+        'shipping_firstname'    => '',
+        'shipping_lastname'     => '',
+        'shipping_company'      => '',
+        'shipping_phone'        => '',
+        'shipping_fax'          => '',
+        'shipping_address'      => '',
+        'shipping_city'         => '',
+        'shipping_state'        => '',
+        'shipping_custom_state' => '',
+        'shipping_country'      => '',
+        'shipping_zipcode'      => '',
+        'extra_fields'          => '',
+        'card_name'             => '',
+        'card_type'             => '',
+        'card_number'           => '',
+        'card_expire'           => '',
+        'card_cvv2'             => '',
+        'first_login'           => '0',
+        'last_login'            => '0',
+        'status'                => '',
+        'referer'               => '',
+        'membership'            => '',
+        'pending_membership'    => '',
+        'sidebar_boxes'         => '',
+    );    
         
     public $_securefields = array(
-              'profile_id' => 0,
-	        'access_level' => '0',
-	         'first_login' => '0',
-	          'last_login' => '0',
-	          'membership' => ''
-            );	
+        'profile_id'   => 0,
+        'access_level' => '0',
+        'first_login'  => '0',
+        'last_login'   => '0',
+        'membership'   => '',
+    );    
 
     public $_adminSecurefields = array(
-              'last_login' => '0'
-            );	
+        'last_login' => '0'
+    );    
 
-    public $autoIncrement = "profile_id";	
-    public $alias = "profiles";	
-    public $defaultOrder = "login";	
-    public $_range = "order_id=0";
+    /**
+     * Auto-increment file name
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $autoIncrement = 'profile_id';
 
+    /**
+     * Table alias 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $alias = 'profiles';
 
-    
+    /**
+     * Default order file name
+     * 
+     * @var    string
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $defaultOrder = 'login';
+
+    public $_range = 'order_id = 0';
+
+    /**
+     * Address field names
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $addressFields = array(
+        'title',   'firstname', 'lastname', 'company', 'phone',
+        'fax',     'address',   'city',     'state',   'custom_state',
+        'country', 'zipcode',
+    );
+ 
     /**
     * Modifies safe properties (excluding adminSecurefields).
     * Useful when a admin edit(create) profile.
@@ -123,8 +162,8 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         if (is_array($properties)) {
             foreach ($properties as $key => $value) {
                 if (array_key_exists($key, $this->_adminSecurefields)) {
-					if (isset($properties[$key])) {
-                    	unset($properties[$key]);
+                    if (isset($properties[$key])) {
+                        unset($properties[$key]);
                     }
                 }
             }
@@ -144,9 +183,9 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         if (is_array($properties)) {
             foreach ($properties as $key => $value) {
                 if (array_key_exists($key, $this->_securefields)) {
-					if (isset($properties[$key])) {
-                		unset($properties[$key]);
-                	}
+                    if (isset($properties[$key])) {
+                        unset($properties[$key]);
+                    }
                 }
             }
             $this->setProperties($properties);
@@ -161,18 +200,18 @@ class XLite_Model_Profile extends XLite_Model_Abstract
     function getBillingState() // {{{
     {
         $state = new XLite_Model_State($this->get("billing_state"));
-		if ($state->get("state_id") == -1)
-			$state->set("state", $this->get("billing_custom_state"));
+        if ($state->get("state_id") == -1)
+            $state->set("state", $this->get("billing_custom_state"));
 
-		return $state;
+        return $state;
     } // }}}
     function getShippingState() // {{{
     {
         $state = new XLite_Model_State($this->get("shipping_state"));
-		if ($state->get("state_id") == -1)
-			$state->set("state", $this->get("shipping_custom_state"));
+        if ($state->get("state_id") == -1)
+            $state->set("state", $this->get("shipping_custom_state"));
 
-		return $state;
+        return $state;
     } // }}}
     function getBillingCountry() // {{{
     {
@@ -289,37 +328,37 @@ class XLite_Model_Profile extends XLite_Model_Abstract
                 $p["password"] = md5($p["password"]);
         }
         if (isset($p["billing_state"])) {
-        	$p["billing_state"] = $this->_convertState($p["billing_state"]);
+            $p["billing_state"] = $this->_convertState($p["billing_state"]);
         }
         if (isset($p["billing_country"])) {
-        	$p["billing_country"] = $this->_convertCountry($p["billing_country"]);
+            $p["billing_country"] = $this->_convertCountry($p["billing_country"]);
         }
         if (isset($p["shipping_state"])) {
-        	$p["shipping_state"] = $this->_convertState($p["shipping_state"]);
+            $p["shipping_state"] = $this->_convertState($p["shipping_state"]);
         }
         if (isset($p["shipping_country"])) {
-        	$p["shipping_country"] = $this->_convertCountry($p["shipping_country"]);
+            $p["shipping_country"] = $this->_convertCountry($p["shipping_country"]);
         }
     } // }}}
 
     function _convertState($value)
     {
-    	$state = new XLite_Model_State();
-    	$value = addslashes($value);
-    	if ($state->find("code='$value'") || $state->find("state='$value'") || $state->find("state_id='$value'")) {
-    		return $state->get("state_id");
-    	}
-    	return -1;
+        $state = new XLite_Model_State();
+        $value = addslashes($value);
+        if ($state->find("code='$value'") || $state->find("state='$value'") || $state->find("state_id='$value'")) {
+            return $state->get("state_id");
+        }
+        return -1;
     }
 
     function _convertCountry($value)
     {
-    	$country = new XLite_Model_Country();
-    	$value = addslashes($value);
-    	if ($country->find("code='$value'") || $country->find("country='$value'")) {
-    		return $country->get("code");
-    	}
-    	return "";
+        $country = new XLite_Model_Country();
+        $value = addslashes($value);
+        if ($country->find("code='$value'") || $country->find("country='$value'")) {
+            return $country->get("code");
+        }
+        return "";
     }
 
     function getImportFields($layout = null) // {{{
@@ -357,6 +396,29 @@ class XLite_Model_Profile extends XLite_Model_Abstract
     {
         $this->auth->_reReadProfiles(true);
         parent::_beforeSave();
+    }
+
+    /**
+     * Check - billing and shuipping addresses are equal or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isSameAddress()
+    {
+        $result = $this->isValid();
+        if ($result) {
+            foreach ($this->addressFields as $name) {
+                if ($this->get('billing_' . $name) != $this->get('shipping_' . $name)) {    
+                    $result = false;
+                    break;
+                }
+            }
+        }
+
+        return $result;
     }
 }
 

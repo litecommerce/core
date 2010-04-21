@@ -13,8 +13,7 @@
 <widget template="checkout/cart.tpl" />
 
 <widget class="XLite_View_Form_Checkout_Place" name="checkout" className="checkout-details" />
-  <span class="title">E-Mail:</span> {cart.profile.login}<br />
-  <br />
+  <span class="title">E-mail:</span>&nbsp;&nbsp;{cart.profile.login}<br />
 
   <div class="billing-address-form">
 
@@ -35,6 +34,10 @@
   <div class="shipping-address-form">
 
     <h2>Shipping address</h2>
+    <div class="same-address">
+      <input type="checkbox" id="same_address" disabled="disabled" checked="{isSameAddress()}" />
+      <label for="same_address">The same as billing</label>
+    </div>
 
     <div class="user-address-form">
       <strong>{cart.profile.shipping_firstname} {cart.profile.shipping_lastname}</strong><br />

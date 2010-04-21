@@ -44,6 +44,7 @@
 }
 
 div.ups-notice {
-  background: transparent url(../images/modules/UPSOnlineTools/ups_logo.gif) no-repeat 5px 5px;
-  padding-left: 100px;
+  background: transparent url(../images/modules/UPSOnlineTools/ups_logo.gif) no-repeat 12px 7px;
+  padding-left: 109px;
+  height: 75px;
 }

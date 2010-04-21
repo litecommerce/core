@@ -49,7 +49,7 @@ implements XLite_Base_IDecorator
     {
         $this->checkCertificatesExpiration();
 
-        parent::action_payment();
+        parent::doActionPayment();
     }
 
     /**

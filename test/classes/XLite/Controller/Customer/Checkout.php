@@ -542,7 +542,15 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 		}
     }
 
-    function action_shipping()
+    /**
+     * Change shipping method
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionShipping()
     {
         $this->checkHtaccess();
 

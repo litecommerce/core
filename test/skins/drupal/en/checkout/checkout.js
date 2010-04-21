@@ -43,23 +43,25 @@ function continueCheckout()
 $(document).ready(
   function() {
     $('form.payment-methods').submit(continueCheckout);
-    $('form.payment-methods li input').click(
-      function() {
-        if (!this._liList) {
-          this._liList = $('li', $(this).parents('ul').eq(0));
-        }
 
-        if (!this._li) {
-          this._li = $(this).parents('li').eq(0);
-        }
-
-        this._liList.removeClass('selected');
-
-        if (this.checked) {
-          this._li.addClass('selected');
-        }
+    var clickHandler = function () {
+      if (!this._liList) {
+        this._liList = $('li', $(this).parents('ul').eq(0));
       }
-    );
+
+      if (!this._li) {
+        this._li = $(this).parents('li').eq(0);
+      }
+
+      this._liList.removeClass('selected');
+
+      if (this.checked) {
+        this._li.addClass('selected');
+      }
+    }
+
+    $('form.payment-methods li input').click(clickHandler);
+    $('ul.deliveries li input').click(clickHandler);
   }
 );
 

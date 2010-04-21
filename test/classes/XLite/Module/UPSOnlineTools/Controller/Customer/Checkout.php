@@ -27,24 +27,24 @@
  */
 
 /**
- * Cart controller
+ * Checkout controller
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_UPSOnlineTools_Controller_Customer_Cart extends XLite_Controller_Customer_Cart
+class XLite_Module_UPSOnlineTools_Controller_Customer_Checkout extends XLite_Controller_Customer_Checkout
 implements XLite_Base_IDecorator
 {
     /**
-     * Update cart
+     * Change shipping method
      * 
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function doActionUpdate()
+    protected function doActionShipping()
     {
         $carrier = $this->getCart()->getCarrier();
 
@@ -65,8 +65,13 @@ implements XLite_Base_IDecorator
             }
             
             XLite_Core_Request::getInstance()->shipping = $shipping;
+
+            $this->set(
+                'returnUrl',
+                $this->buildUrl('checkout', '', array('mode' => 'paymentMethod'))
+            );
         }
 
-        parent::doActionUpdate();
+        parent::doActionShipping();
     }
 }
