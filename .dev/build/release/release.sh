@@ -322,6 +322,9 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 	# Patch file PoweredBy.php
 	insert_seo_phrases "$DRUPAL_SEO_PHRASES" "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}"
 
+	# Remove LiteCommerce (standalone) installator
+	rm -rf modules/lc_connector/${LITECOMMERCE_DIRNAME}/install.php
+
 	# Prepare permissions
 	find . -type d -exec chmod 755 {} \;
 	find . -type f -exec chmod 644 {} \;
