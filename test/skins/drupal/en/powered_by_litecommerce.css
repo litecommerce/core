@@ -10,8 +10,12 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  */
-div.powered-by {
-  padding-top: 5px;
-  text-align: center;
-  padding-bottom: 5px;
+.powered-by
+{
+  text-align: left;
+}
+
+.powered-by p
+{
+  margin: 0;
 }

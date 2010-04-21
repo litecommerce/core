@@ -9,7 +9,8 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- *}
+   *}
 <div class="powered-by">
-Powered by LiteCommerce {if:isLink()}<a href="http://litecommerce.com" class="powered-by">{end:}{getPrNotice()}{if:isLink()}</a>{end:}
+  <p class="copyright">&copy; 2010 {config.Company.company_name}<p>
+  <p>{getMessage():h}</p>
 </div>

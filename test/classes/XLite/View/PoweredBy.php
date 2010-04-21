@@ -87,16 +87,38 @@ class XLite_View_PoweredBy extends XLite_View_Abstract
     }
 
     /**
-     * Get promotion notice
+     * Return a Powered By message
      * 
      * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getPrNotice()
+    public function getMessage()
     {
-        $phrase = 'shopping cart';
+        $replace = $this->isLink()
+                 ? array('[' => '<a href="http://www.litecommerce.com/">', ']' => '</a>',)
+                 : array('[' => '', ']' => '');
+
+        return strtr($this->getPhrase(), $replace);
+    }
+
+
+    /**
+     * Get a Powered By phrase
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPhrase()
+    {
+        $phrase = 'LiteCommerce v3 [shopping cart software]';
+        
+        $this->phrases = array('Powered by LiteCommerce v3 [ecommerce software]', 'Powered by [Ecommerce CMS]: LiteCommerce v3 integrated with Drupal');
+
+        $this->config->Internal->prnotice_index = rand(1, count($this->phrases));
 
         if (isset($this->phrases) && is_array($this->phrases) && 0 < count($this->phrases)) {
 
