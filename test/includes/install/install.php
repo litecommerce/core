@@ -336,7 +336,7 @@ function checkPhpMemoryLimit(&$errorMsg = null, &$value = null)
     if (is_disabled_memory_limit()) {
         $value = 'Unlimited';
 
-    } elseif (!check_memory_limit($value, constant('LC_PHP_MEMORY_LIMIT_MIN'))) {
+    } else {
 
         $limit = convert_ini_str_to_int($value);
         $required = convert_ini_str_to_int(constant('LC_PHP_MEMORY_LIMIT_MIN'));
