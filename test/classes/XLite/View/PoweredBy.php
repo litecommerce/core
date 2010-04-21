@@ -116,10 +116,6 @@ class XLite_View_PoweredBy extends XLite_View_Abstract
     {
         $phrase = 'LiteCommerce v3 [shopping cart software]';
         
-        $this->phrases = array('Powered by LiteCommerce v3 [ecommerce software]', 'Powered by [Ecommerce CMS]: LiteCommerce v3 integrated with Drupal');
-
-        $this->config->Internal->prnotice_index = rand(1, count($this->phrases));
-
         if (isset($this->phrases) && is_array($this->phrases) && 0 < count($this->phrases)) {
 
             if (
