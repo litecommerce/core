@@ -225,7 +225,7 @@ if (!$is_original) {
 	module_check_cfg($_POST['params']);
 	ob_end_clean();
 
-	$report = make_check_report((array)$check_list);
+	$report = make_check_report($requirements);
 }
 
 if ($report) {

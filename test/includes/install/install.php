@@ -49,77 +49,85 @@ require_once constant('LC_ROOT_DIR') . 'includes/install/install_settings.php';
  * Checking requirements section
  */
 
+
 /**
  * Perform the requirements checking
  * 
- * @param bool
-
  * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
-function doCheckRequirements($returnAll = true)
+function doCheckRequirements()
 { 
     $checkRequirements = array();
 
     $checkRequirements['lc_loopback'] = array(
-           'title'    => 'Loopback test',
-           'critical' => true,
+        'title'    => 'Loopback test',
+        'critical' => true,
     );
 
     $checkRequirements['lc_php_version'] = array(
-           'title'    => 'PHP Version',
-           'critical' => true,
+        'title'    => 'PHP version',
+        'critical' => true,
     );
 
     $checkRequirements['lc_php_safe_mode'] = array(
-           'title'    => 'PHP safe_mode',
-           'critical' => true,
+        'title'    => 'PHP safe_mode',
+        'critical' => true,
     );
 
     $checkRequirements['lc_php_disable_functions'] = array(
-           'title'    => 'Disabled functions',
-           'critical' => true,
+        'title'    => 'Disabled functions',
+        'critical' => true,
     );
 
     $checkRequirements['lc_php_memory_limit'] = array(
-           'title'    => 'Memory limit',
-           'critical' => true,
+        'title'    => 'Memory limit',
+        'critical' => true,
     );
 
     $checkRequirements['lc_php_file_uploads'] = array(
-           'title'    => 'File uploads',
-           'critical' => true,
+        'title'    => 'File uploads',
+        'critical' => true,
     );
 
     $checkRequirements['lc_php_mysql_support'] = array(
-           'title'    => 'MySQL support',
-           'critical' => true,
+        'title'    => 'MySQL support',
+        'critical' => true,
     );
 
     $checkRequirements['lc_php_upload_max_filesize'] = array(
-           'title'    => 'Upload file size limit',
-           'critical' => false,
+        'title'    => 'Upload file size limit',
+        'critical' => false,
     );
 
     $checkRequirements['lc_php_allow_url_fopen'] = array(
-           'title'    => 'allow_url_fopen',
-           'critical' => false,
+        'title'    => 'allow_url_fopen',
+        'critical' => false,
     );
 
     $checkRequirements['lc_mem_allocation'] = array(
-           'title'    => 'Memory allocation',
+        'title'    => 'Memory allocation',
         'critical' => false,
         'depends'  => 'lc_loopback'
     );
 
     $checkRequirements['lc_recursion_test'] = array(
-           'title'    => 'Recursion test',
+        'title'    => 'Recursion test',
         'critical' => false,
         'depends'  => 'lc_loopback'
     );
 
     $checkRequirements['lc_file_permissions'] = array(
-           'title'    => 'File permissions',
-           'critical' => false,
+        'title'    => 'File permissions',
+        'critical' => false,
+    );
+
+    $checkRequirements['lc_mysql_version'] = array(
+        'title'    => 'MySQL version',
+        'critical' => false,
+        'depends'  => 'lc_php_mysql_support'
     );
 
     $passed = array();
@@ -178,10 +186,15 @@ function doCheckRequirements($returnAll = true)
 }
 
 /**
- * checkLoopback
+ * Check an ability to do HTTP requests to the server where LiteCommerce located
  * 
- * @param string
+ * @param string $errorMsg Error message if checking failed
+ * @param string $value    Actual value of the checked parameter
+ *  
  * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
 function checkLoopback(&$errorMsg = null, $value = null)
 {
@@ -198,10 +211,15 @@ function checkLoopback(&$errorMsg = null, $value = null)
 }
 
 /**
- * checkPhpVersion
+ * Check PHP version
  * 
- * @param string
+ * @param string $errorMsg Error message if checking failed
+ * @param string $value    Actual value of the checked parameter
+ *  
  * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
 function checkPhpVersion(&$errorMsg = null, &$value = null)
 {
@@ -244,10 +262,15 @@ function checkPhpVersion(&$errorMsg = null, &$value = null)
 }
 
 /**
- * checkPhpSafeMode
+ * Check if PHP option safe_mode is on/off
  * 
- * @param string
+ * @param string $errorMsg Error message if checking failed
+ * @param string $value    Actual value of the checked parameter
+ *  
  * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
 function checkPhpSafeMode(&$errorMsg = null, &$value = null)
 {
@@ -266,10 +289,15 @@ function checkPhpSafeMode(&$errorMsg = null, &$value = null)
 }
 
 /**
- * checkPhpDisableFunctions
+ * Check if php.ini file disabled some functions
  * 
- * @param string
+ * @param string $errorMsg Error message if checking failed
+ * @param string $value    Actual value of the checked parameter
+ *  
  * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
 function checkPhpDisableFunctions(&$errorMsg = null, &$value = null)
 {
@@ -289,10 +317,15 @@ function checkPhpDisableFunctions(&$errorMsg = null, &$value = null)
 }
 
 /**
- * checkPhpMemoryLimit
+ * Check PHP option memory_limit
  * 
- * @param string
+ * @param string $errorMsg Error message if checking failed
+ * @param string $value    Actual value of the checked parameter
+ *  
  * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
 function checkPhpMemoryLimit(&$errorMsg = null, &$value = null)
 {
@@ -304,18 +337,39 @@ function checkPhpMemoryLimit(&$errorMsg = null, &$value = null)
         $value = 'Unlimited';
 
     } elseif (!check_memory_limit($value, constant('LC_PHP_MEMORY_LIMIT_MIN'))) {
-        $result = false;
-        $errorMsg = 'PHP memory_limit option value should be ' . constant('LC_PHP_MEMORY_LIMIT_MIN') . ' as a minimum';
+
+        $limit = convert_ini_str_to_int($value);
+        $required = convert_ini_str_to_int(constant('LC_PHP_MEMORY_LIMIT_MIN'));
+
+        if ($limit < $required) {
+
+            // workaround for http://bugs.php.net/bug.php?id=36568
+            if (!(LC_OS_CODE == 'win' && func_version_compare(phpversion(), '5.1.0') < 0)) {
+                @ini_set('memory_limit', constant('LC_PHP_MEMORY_LIMIT_MIN'));
+                $limit = ini_get('memory_limit');
+            }
+
+            $result = (strcasecmp($limit, constant('LC_PHP_MEMORY_LIMIT_MIN')) == 0);
+        }
+
+        if (!$result) {
+            $errorMsg = 'PHP memory_limit option value should be ' . constant('LC_PHP_MEMORY_LIMIT_MIN') . ' as a minimum';
+        }
     }
 
     return $result;
 }
 
 /**
- * checkPhpFileUploads
+ * Check if PHP option file_uploads is on/off
  * 
- * @param string
+ * @param string $errorMsg Error message if checking failed
+ * @param string $value    Actual value of the checked parameter
+ *  
  * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
 function checkPhpFileUploads(&$errorMsg = null, &$value = null)
 {
@@ -332,10 +386,15 @@ function checkPhpFileUploads(&$errorMsg = null, &$value = null)
 }
 
 /**
- * checkPhpMysqlSupport
+ * Check if MySQL support is turned on in PHP settings
  * 
- * @param string
+ * @param string $errorMsg Error message if checking failed
+ * @param string $value    Actual value of the checked parameter
+ *  
  * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
 function checkPhpMysqlSupport(&$errorMsg = null, &$value = null)
 {
@@ -355,10 +414,15 @@ function checkPhpMysqlSupport(&$errorMsg = null, &$value = null)
 }
 
 /**
- * checkPhpUploadMaxFilesize
+ * Check if PHP option upload_max_filesize presented 
  * 
- * @param string
+ * @param string $errorMsg Error message if checking failed
+ * @param string $value    Actual value of the checked parameter
+ *  
  * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
 function checkPhpUploadMaxFilesize(&$errorMsg = null, &$value = null)
 {
@@ -375,10 +439,15 @@ function checkPhpUploadMaxFilesize(&$errorMsg = null, &$value = null)
 }
 
 /**
- * checkPhpAllowUrlFopen
+ * Check if PHP option allow_url_fopen is on/off
  * 
- * @param string
+ * @param string $errorMsg Error message if checking failed
+ * @param string $value    Actual value of the checked parameter
+ *  
  * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
 function checkPhpAllowUrlFopen(&$errorMsg = null, &$value = null)
 {
@@ -395,10 +464,15 @@ function checkPhpAllowUrlFopen(&$errorMsg = null, &$value = null)
 }
 
 /**
- * checkMemAllocation
+ * Check the memory allocation
  * 
- * @param string
+ * @param string $errorMsg Error message if checking failed
+ * @param string $value    Actual value of the checked parameter
+ *  
  * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
 function checkMemAllocation(&$errorMsg = null, &$value = null)
 {
@@ -428,10 +502,15 @@ function checkMemAllocation(&$errorMsg = null, &$value = null)
 }
 
 /**
- * checkRecursionTest
+ * Check the recursion depth 
  * 
- * @param string
+ * @param string $errorMsg Error message if checking failed
+ * @param string $value    Actual value of the checked parameter
+ *  
  * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
 function checkRecursionTest(&$errorMsg = null, &$value = null)
 {
@@ -449,10 +528,15 @@ function checkRecursionTest(&$errorMsg = null, &$value = null)
 }
 
 /**
- * checkFilePermissions
+ * Check file permissions
  * 
- * @param string
+ * @param string $errorMsg Error message if checking failed
+ * @param string $value    Actual value of the checked parameter
+ *  
  * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
 function checkFilePermissions(&$errorMsg = null, &$value = null)
 {
@@ -490,22 +574,75 @@ function checkFilePermissions(&$errorMsg = null, &$value = null)
     return $result;
 }
 
+/**
+ * Check MySQL version
+ * 
+ * @param string $errorMsg Error message if checking failed
+ * @param string $value    Actual value of the checked parameter
+ *  
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function checkMysqlVersion(&$errorMsg = null, &$value = null, $connection = null, $dbUrl = null)
+{
+    $result = true;
+    $value = 'unknown';
+
+    if (!is_resource($connection) && !is_null($dbUrl)) {
+
+        $url = parse_url(is_array($db_url) ? $db_url['default'] : $db_url);
+
+        $host = urldecode($url['host']);
+        $port = isset($url['port']) ? urldecode($url['port']) : '';
+        $user = urldecode($url['user']);
+        $pass = isset($url['pass']) ? urldecode($url['pass']) : NULL;
+
+        $connection = @mysql_connect($host . $port, $user, $pass);
+    }
+
+    if (is_resource($connection)) {
+
+        $version = @mysql_get_server_info($connection);
+
+        if (strpos($version, '-') !== false) {
+            $value = $version = substr($version, 0, strpos($version, "-"));
+        }
+
+        if (func_version_compare($version, constant('LC_MYSQL_VERSION_MIN')) < 0) {
+            $result = false;
+            $errorMsg = 'MySQL version must be ' . constant('LC_MYSQL_VERSION_MIN') . ' as a minimum';
+
+        } elseif ((func_version_compare($version, "5.0.50") >= 0 && func_version_compare($version, "5.0.52") < 0)) {
+            $result = false;
+            $errorMsg = 'The version of MySQL which is currently used contains known bugs, that is why LiteCommerce may operate incorrectly. It is recommended to update MySQL to a more stable version.';
+        }
+
+    } else {
+        $result = false;
+        $errorMsg = 'Cannot connect to MySQL server.';
+    }
+
+    return $result;
+}
+
 /*
  * End of Checking requirements section
  */
 
-/*
- * Database installation section
- */
 
 /**
- * Installs database
+ * Installing the database
  * 
- * @param $trigger    Flag: 'base', 'demo' or 'all'
- * @param $params     Database access data and other parameters
- * @param $selentMode Do not display any output during installing 
- *
+ * @param string $trigger    Flag: 'base', 'demo' or 'all'
+ * @param array  $params     Database access data and other parameters
+ * @param bool   $silentMode Do not display any output during installing
+ *  
  * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
 function doInstallDatabase($trigger, &$params, $silentMode = false)
 {
@@ -650,10 +787,14 @@ function doInstallDatabase($trigger, &$params, $silentMode = false)
     return $result;
 }
 
-/*
- * End of Database installation section
+/**
+ * Rebuild LiteCommerce cache 
+ * 
+ * @return void
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
-
 function doRebuildCache()
 {
     include_once constant('LC_ROOT_DIR') . 'includes/decoration.php';
@@ -661,10 +802,17 @@ function doRebuildCache()
     $decorator->rebuildCache(true, false);
 }
 
-/*
- * Skin installation section
+/**
+ * Create required directories and files
+ * 
+ * @param array  $params     Database access data and other parameters
+ * @param bool   $silentMode Do not display any output during installing
+ *  
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
-
 function doInstallDirs($params, $silentMode = false)
 {
     global $error, $lcSettings;
@@ -708,10 +856,17 @@ function doInstallDirs($params, $silentMode = false)
     return $result;
 }
 
-/*
- * End of Skin installation section
+/**
+ * Moving the images to file system (directory 'images')
+ * 
+ * @param array  $params     Database access data and other parameters
+ * @param bool   $silentMode Do not display any output during installing
+ *  
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
-
 function doMoveImagesToFs(&$params, $silentMode = false)
 {
     $result = true;
@@ -741,13 +896,16 @@ function doMoveImagesToFs(&$params, $silentMode = false)
     return $result;
 }
 
-/*
+/**
  * Create an administrator account
  *
- * @param array $params
- * @param bool  $silentMode
- *
- * return bool  true if success, false if failed
+ * @param array  $params     Database access data and other parameters
+ * @param bool   $silentMode Do not display any output during installing
+ *  
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
 function doCreateAdminAccount(&$params, $silentMode = false)
 {
@@ -842,10 +1000,173 @@ function doCreateAdminAccount(&$params, $silentMode = false)
     return $result;
 }
 
+/**
+ * Do some final actions
+ * 
+ * @param array  $params     Database access data and other parameters
+ * @param bool   $silentMode Do not display any output during installing
+ *  
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function doFinishInstallation(&$params, $silentMode = false)
+{
+    global $lcSettings, $error;
+
+    // Save authcode for the further install runs
+    $authcode = save_authcode($params);
+
+    // Rename install.php
+    if (!$silentMode) {
+
+        $install_name = rename_install_script();
+
+        if ($install_name ) {
+
+            // Text for email notification
+            $install_rename_email =<<<OUT
+To ensure the security of your LiteCommerce installation, the file "install.php" has been renamed to "{$install_name}".
+
+Now, if you choose to re-install LiteCommerce, you should rename the file "{$install_name}" back to "install.php" and open the following URL in your browser:
+     http://{$params['xlite_http_host']}{$params['xlite_web_dir']}/install.php
+OUT;
+
+            // Text for confirmation web page
+            $install_rename =<<<OUT
+<P>To ensure the security of your LiteCommerce installation, the file "install.php" has been renamed to "{$install_name}".</P>
+
+<P>Now, if you choose to re-install LiteCommerce, you should rename the file "{$install_name}" back to "install.php"</P>
+OUT;
+
+        } else {
+            $install_rename = '<P><font color="red"><b>WARNING!</b> The install.php script could not be renamed! To ensure the security of your LiteCommerce installation and prevent the unallowed use of this script, you should manually rename or delete it.</font></P>';
+            $install_rename_email = strip_tags($install_rename);
+        }
+
+    // Skip install.php renaming if $silentMode = true
+    // as silentMode is supposed to be used for non standalone installation proceeds
+    } else {
+        $install_rename = $install_rename_email = '';
+    }
+
+    // Prepare files permissions recommendation text
+    $perms = '';
+
+    if (!(LC_OS_CODE === 'win')) {
+
+        $_perms = array();
+
+        if (@is_writable(".")) {
+            $_perms[] = "&gt; chmod 755 .";
+        }
+
+        if (@is_writable(LC_CONFIG_DIF . constant('LC_CONFIG_FILE'))) {
+            $_perms[] = "&gt; chmod 644 " . constant('LC_CONFIG_FILE');
+        }
+
+        if (!@is_writable("cart.html")) {
+            $_perms[] = "&gt; chmod 666 cart.html";
+        }
+
+        if (!empty($_perms)) {
+            $perms = implode("<br />\n", $_perms);
+            $perms =<<<OUT
+<P>Before you proceed using LiteCommerce shopping system software, please set the following secure file permissions:<BR><BR>
+
+<FONT color="darkblue">$perms</FONT>
+OUT;
+        }
+    }
+
+    // Prepare email notification text
+    $perms_no_tags = preg_replace('/&gt;/', '>', strip_tags($perms));
+
+    $message =<<<EOF
+Congratulations!
+
+LiteCommerce software has been successfully installed and is now available at the following URLs:
+
+CUSTOMER ZONE (FRONT-END)
+     http://{$params['xlite_http_host']}{$params['xlite_web_dir']}/cart.php
+
+ADMINISTRATOR ZONE (BACKOFFICE)
+     http://{$params['xlite_http_host']}{$params['xlite_web_dir']}/admin.php
+     Login (e-mail): {$params['login']}
+     Password:       {$params['password']}
+
+{$perms_no_tags}
+
+{$install_rename_email}
+
+Auth code for running install.php script is: {$authcode}
+
+Thank you for choosing LiteCommerce shopping system!
+
+--
+LiteCommerce Installation Wizard
+
+
+EOF;
+
+    // Send email notification to the admin account email
+    @mail($params["login"], "LiteCommerce installation complete", $message,
+        "From: \"LiteCommerce software\" <" . $params["login"] . ">\r\n" .
+        "X-Mailer: PHP");
+
+    if (!$silentMode) {
+
+?>
+
+<CENTER>
+<H3><?php message('Installation complete.'); ?></H3>
+</CENTER>
+
+LiteCommerce software has been successfully installed and is now available at the following URLs:
+<BR />
+
+<OL>
+<LI><U><A href="cart.php" style="COLOR: #000055; TEXT-DECORATION: underline;" target="_blank"><b>CUSTOMER ZONE (FRONT-END): cart.php</b></A></U></LI>
+<P>
+<LI><U><A href="admin.php" style="COLOR: #000055; TEXT-DECORATION: underline;" target="_blank"><b>ADMINISTRATOR ZONE (BACKOFFICE): admin.php</b></A></U><BR></LI>
+<P>
+<LI><A href="quickstart/index.html" target="_blank" style="COLOR: #000055; TEXT-DECORATION: underline;"><b>QUICK START WIZARD</b></A>&nbsp;will help you prepare your store for going live by guiding you through the main steps LiteCommerce shipping system setup.<BR></LI>
+</OL>
+
+<br />
+
+<P>
+<?php echo $perms; ?>
+
+<br /><br />
+
+<?php echo $install_rename; ?>
+
+<P>Your auth code for running install.php in the future is: <B><?php print get_authcode(); ?></b><br />
+PLEASE WRITE THIS CODE DOWN UNLESS YOU ARE GOING TO REMOVE "<?php echo $install_name; ?>"</P>
+
+<?php
+
+    }
+}
+
+
 /*
  * Service functions section
  */
 
+
+/**
+ * Create directories 
+ * 
+ * @param array $dirs Array of directory names
+ *  
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
 function create_dirs($dirs)
 {
     $result = true;
@@ -879,18 +1200,38 @@ function create_dirs($dirs)
     return $result;
 }
 
+/**
+ * Set permissions on directories
+ * 
+ * @param array $dirs Array of directory names
+ *  
+ * @return void
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
 function chmod_others_directories($dirs)
 {
-    if(constant('LC_SUPHP_MODE') == 0) return;
+    if (constant('LC_SUPHP_MODE') != 0) {
+        $data = @parse_ini_file(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'));
+        $dir_permission = isset($data['privileged_permission_dir']) ? base_convert($data['privileged_permission_dir'], 8, 10) : 0711;
 
-    $data = @parse_ini_file(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'));
-    $dir_permission = isset($data['privileged_permission_dir']) ? base_convert($data['privileged_permission_dir'], 8, 10) : 0711;
-
-    foreach($dirs as $dir) {
-        @chmod(constant('LC_ROOT_DIR') . $dir, $dir_permission);
+        foreach($dirs as $dir) {
+            @chmod(constant('LC_ROOT_DIR') . $dir, $dir_permission);
+        }
     }
 }
 
+/**
+ * Create .htaccess files 
+ * 
+ * @param array $files_to_create Array of file names
+ *  
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
 function create_htaccess_files($files_to_create)
 {
     $result = true;
@@ -899,9 +1240,9 @@ function create_htaccess_files($files_to_create)
 
         foreach($files_to_create as $file=>$content) {
 
-            echo "Creating file: [$file] ... ";
+            echo 'Creating file: [' . $file . '] ... ';
 
-            if ($fd = @fopen(constant('LC_ROOT_DIR') . $file,"w")) {
+            if ($fd = @fopen(constant('LC_ROOT_DIR') . $file, 'w')) {
                 @fwrite($fd, $content);
                 @fclose($fd);
                 echo status(true);
@@ -912,15 +1253,26 @@ function create_htaccess_files($files_to_create)
                 $result = false;
             }
 
-            echo "<BR>\n"; flush();
+            echo "<BR>\n";
+            flush();
         }
     }
 
     return $result;
 }
 
-// Function to copy directory tree from skins_original to skins
-
+/**
+ * Function to copy directory tree from skins_original to skins 
+ * 
+ * @param string $source_dir      Source directory name
+ * @param string $parent_dir      Parent directory name
+ * @param string $destination_dir Destination directory name
+ *  
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
 function copy_files($source_dir, $parent_dir, $destination_dir)
 {
     $result = true;
@@ -984,6 +1336,16 @@ function copy_files($source_dir, $parent_dir, $destination_dir)
     return $result;
 }
 
+/**
+ * Prepare content for writing to the config.php file
+ * 
+ * @param array $params
+ *  
+ * @return void
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
 function change_config(&$params) {
     global $installation_auth_code;
 
@@ -1047,15 +1409,26 @@ function change_config(&$params) {
 
  }
 
-function save_config($content) {
-    // save config
+/**
+ * Save content to the config.php file
+ * 
+ * @param string $content
+ *  
+ * @return mixed
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function save_config($content)
+{
     $handle = fopen(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'), 'wb');
     fwrite($handle, $content);
     fclose($handle);
     return $handle ? true : $handle;
 }
 
-function get_info() { // {{{
+function get_info()
+{
     static $info;
 
     if (!isset($info)) {
@@ -1066,7 +1439,8 @@ function get_info() { // {{{
             'no_mem_limit'    => true,
             'commands_exists' => false,
             'php_ini_path_forbidden' => false
-            );
+        );
+
     } else {
         return $info;
     }
@@ -1079,34 +1453,51 @@ function get_info() { // {{{
     $dll_sfix = ((LC_OS_CODE === 'win') ? '.dll' : '.so');
 
     foreach (explode("\n",$php_info) as $line) {
+
         if (preg_match('/command/i',$line)) {
             $info['commands_exists'] = true;
+
             if (preg_match('/--enable-memory-limit/i', $line)) {
                 $info['no_mem_limit'] = false;
             }
             continue;
         }
+
         if (preg_match('/thread safety.*(enabled|yes)/i', $line)) {
             $info["thread_safe"] = true;
         }
+
         if (preg_match('/debug.*(enabled|yes)/i', $line)) {
             $info["debug_build"] = true;
         }
+
         if (preg_match("/configuration file.*(<\/B><\/td><TD ALIGN=\"left\">| => |v\">)([^ <]*)(.*<\/td.*)?/i",$line,$match)) {
             $info["php_ini_path"] = $match[2];
-            //
+
             // If we can't access the php.ini file then we probably lost on the match
-            //
             if (!@ini_get("safe_mode") && !@file_exists($info["php_ini_path"])) {
                 $info["php_ini_path_forbidden"] = true;
             }
         }
     }
+
     return $info;
-} // }}}
+}
 
-
-// Move images from required field to the filesystem
+/**
+ * Move images from required field to the filesystem 
+ * 
+ * @param string $table       
+ * @param string $id          
+ * @param string $prefix      
+ * @param string $file_prefix 
+ * @param string $path        
+ *  
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
 function move_images_to_fs($table, $id, $prefix, $file_prefix, $path = 'images/')
 {
     $result = true;
@@ -1167,6 +1558,16 @@ function move_images_to_fs($table, $id, $prefix, $file_prefix, $path = 'images/'
     return $result;
 }
 
+/**
+ * Get image extension
+ * 
+ * @param string $type
+ *  
+ * @return string
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
 function get_image_extension($type)
 {
     $image_type = "gif";
@@ -1196,6 +1597,16 @@ function get_image_extension($type)
     return $image_type;
 }
 
+/**
+ * Do an HTTP request to the install.php
+ * 
+ * @param string $action_str 
+ *  
+ * @return string
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
 function inst_http_request_install($action_str)
 {
     global $HTTP_SERVER_VARS;
@@ -1214,7 +1625,17 @@ function inst_http_request_install($action_str)
     return inst_http_request($url_request);
 }
 
-function inst_http_request($url_request) // {{{
+/**
+ * Do an HTTP request
+ * 
+ * @param string $url_request
+ *  
+ * @return string
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function inst_http_request($url_request)
 {
     @ini_get('allow_url_fopen') or @ini_set('allow_url_fopen', 1);
     $handle = @fopen ($url_request, "r");
@@ -1257,86 +1678,85 @@ function inst_http_request($url_request) // {{{
     }
 
     return $response;
-} // }}}
+}
 
+/**
+ * Check if memory_limit is disabled
+ * 
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
 function is_disabled_memory_limit()
 {
     $info = get_info();
     
-    return 
-        (
-            (
-                $info['no_mem_limit'] && $info['commands_exists'] &&
-                (!function_exists('memory_get_usage') && func_version_compare(phpversion(), '4.3.2') >= 0) &&
-                strlen(@ini_get('memory_limit')) == 0 
-            ) || 
-            @ini_get('memory_limit') == '-1'
-        );
-}
+    $result = (($info['no_mem_limit'] &&
+                $info['commands_exists'] &&
+                !function_exists('memory_get_usage') &&
+                func_version_compare(phpversion(), '4.3.2') >= 0 &&
+                strlen(@ini_get('memory_limit')) == 0 ) || 
+                @ini_get('memory_limit') == '-1');
 
-function is_php5()
-{
-    global $xlite_php5;
-
-    if (!isset($xlite_php5)) {
-        $xlite_php5 = func_version_compare(@phpversion(), '5.0.0') >= 0;
-    }
-    return $xlite_php5;
-} 
-
-function check_memory_limit($current_limit, $required_limit)
-{
-    $return = true;
-
-    $limit = convert_ini_str_to_int($current_limit);
-    $required = convert_ini_str_to_int($required_limit);
-
-    if ($limit < $required) {
-
-        // workaround for http://bugs.php.net/bug.php?id=36568
-        if ((LC_OS_CODE == 'win') && (func_version_compare(phpversion(), '5.1.0') < 0)) {
-            $return = true;
-        
-        } else {
-            @ini_set('memory_limit', $required_limit);
-            $limit = ini_get('memory_limit');
-        }
-
-        $return = (strcasecmp($limit, $required_limit) == 0);
-    }
-
-    return $return;
+    return $result;
 }
 
 /**
-* Convert php_ini int string to int
-*/
+ * Check if current PHP version is 5 or higher
+ * 
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function is_php5()
+{
+    return func_version_compare(@phpversion(), '5.0.0') >= 0;
+} 
+
+/**
+ * Convert php_ini int string to int
+ * 
+ * @param string $string 
+ *  
+ * @return string
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
 function convert_ini_str_to_int($string)
 {
     $string = trim($string);
 
     $last = strtolower(substr($string,strlen($string)-1));
     $number = intval($string);
+
     switch($last) {
         case 'k':
             $number *= 1024;
-        break;
+            break;
+
         case 'm':
             $number *= 1024*1024;
-        break;
+            break;
+
         case 'g':
             $number *= 1024*1024*1024;
-        break;
     }
 
     return $number;
 }
 
-/*
+/**
  * Do recursion depth testing
- *
- * @param int $index
- * return void
+ * 
+ * @param int $index 
+ *  
+ * @return void
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
 function recursion_depth_test($index)
 {
@@ -1345,12 +1765,15 @@ function recursion_depth_test($index)
     }
 }
 
-/*
+/**
  * Preparing text of the configuration checking report
- *
- * @param array $requirements
- *
- * return string
+ * 
+ * @param array $requirements 
+ *  
+ * @return string
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
 function make_check_report($requirements)
 {
@@ -1414,13 +1837,16 @@ function make_check_report($requirements)
     return $report;
 }
 
-/*
- * Dispaly status message
- *
+/**
+ * Return status message 
+ * 
  * @param bool   $status Status to display: true or false
  * @param string $code   Code of section with status details (<div id='$code'>)
- *
- * return void
+ *  
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
 function status($status, $code = null)
 {
@@ -1441,11 +1867,29 @@ function status($status, $code = null)
     return $return;
 }
 
+/**
+ * Return status 'skipped' message
+ * 
+ * @return string
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
 function status_skipped() 
 {
     return '<FONT color=blue>[SKIPPED]</FONT>';
 }
 
+/**
+ * Display fatal_error message
+ * 
+ * @param string $txt 
+ *  
+ * @return void
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
 function fatal_error($txt) {
 ?>
 <CENTER>
@@ -1456,6 +1900,16 @@ function fatal_error($txt) {
 <?php
 }
 
+/**
+ * Display warning_error message
+ * 
+ * @param string $txt 
+ *  
+ * @return void
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
 function warning_error($txt) {
 ?>
 <CENTER>
@@ -1466,84 +1920,101 @@ function warning_error($txt) {
 <?php
 }
 
+/**
+ * Display message 
+ * 
+ * @param string $txt 
+ *  
+ * @return void
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
 function message($txt) {
 ?>
 <B><FONT class=WelcomeTitle><?php echo $txt ?></FONT></B>
 <?php
 }
 
-/*
- * Replace install.php script to random filename
- *
+/**
+ * Replace install.php script to random filename 
+ * 
  * @return mixed
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
 function rename_install_script()
 {
-    $install_name = md5(uniqid(rand(),true)).".php";
-    @rename("install.php", $install_name);
+    $install_name = md5(uniqid(rand(), true)) . '.php';
+    @rename('install.php', $install_name);
     @clearstatcache();
 
     return (!@file_exists("install.php") && @file_exists($install_name) ? $install_name : false);
 }
 
-/*
- * End of Service functions section
+/**
+ * Check if current protocol is HTTPS 
+ * 
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
-
-
-return;
-
-////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
- // COMMON FUNCTIONS {{{
-
 function isHTTPS()
 {
-    if ((isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS'] == 'on') || $_SERVER['HTTPS'] == '1')) ||
-        (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443'))
-        {
-            return true;
-        }
-    return false;
+    $result = ((isset($_SERVER['HTTPS']) && 
+                (strtolower($_SERVER['HTTPS'] == 'on') || $_SERVER['HTTPS'] == '1')) ||
+                (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443'));
+
+    return $result;
 }
 
+/**
+ * Get number for StepBack button
+ * 
+ * @return void
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
 function getStepBackNumber()
 {
     global $current, $params;
+
     $back = 0;
+
     switch ($current) {
         case 4:
             $back = 2;
-        break;
+            break;
+
         case 6:
             $back = 4;
-        break;
+            break;
+
         default:
             $back = ($current > 0 ? $current - 1 : 0);
-        break;
+            break;
     }
-    if (isset($params['start_at'])) {
-        if ( ($params['start_at'] === '4' && $back < 4) || ($params['start_at'] === '6' && $back < 6) ) {
-            $back = 0;
-        }
+
+    if (isset($params['start_at']) && (($params['start_at'] === '4' && $back < 4) || ($params['start_at'] === '6' && $back < 6))) {
+        $back = 0;
     }
 
     return $back;
 }
 
-// default navigation button handlers {{{
-function default_js_back() {
+/**
+ * Default navigation button handler: default_js_back 
+ * 
+ * @return string
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function default_js_back()
+{
 ?>
     function step_back() {
         document.ifrm.current.value = "<?php echo getStepBackNumber(); ?>";
@@ -1553,7 +2024,16 @@ function default_js_back() {
 <?php
 }
 
-function default_js_next() {
+/**
+ * Default navigation button handler: default_js_next 
+ * 
+ * @return string
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function default_js_next()
+{
 ?>
     function step_next() {
         return true;
@@ -1561,14 +2041,29 @@ function default_js_next() {
 <?php
 }
 
-// }}}
-
-function generate_authcode() { // {{{
+/**
+ * Generate Auth code 
+ * 
+ * @return string
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function generate_authcode()
+{
+    // see include/functions.php
     return generate_code();
-} // }}}
+}
 
-/*
- * Check Auth code
+/**
+ * Check Auth code (exit if wrong)
+ * 
+ * @param array $params 
+ *  
+ * @return void
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
 function check_authcode(&$params)
 {
@@ -1586,9 +2081,13 @@ function check_authcode(&$params)
     }
 }
 
-
-/*
- * Read config file and get Auth code
+/**
+ * Read config file and get Auth code 
+ * 
+ * @return mixed
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
 function get_authcode()
 {
@@ -1599,11 +2098,21 @@ function get_authcode()
     return !empty($data['auth_code']) ? $data['auth_code'] : null;
 }
 
+/**
+ * Save Auth code 
+ * 
+ * @param array $params 
+ *  
+ * @return void
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
 function save_authcode(&$params) {
 
     // if authcode set in request, don't change the config file
-    if (isset($params["auth_code"]) && trim($params["auth_code"]) != "") {
-        return $params["auth_code"];
+    if (isset($params['auth_code']) && trim($params['auth_code']) != '') {
+        return $params['auth_code'];
     }
 
     // generate new authcode
@@ -1614,44 +2123,148 @@ function save_authcode(&$params) {
         exit();
     }
 
-    $new_config = "";
+    $new_config = '';
 
     foreach ($config as $num => $line) {
-        $new_config .= preg_replace("/^auth_code.*=.*/", 'auth_code = "'.$auth_code.'"', $line);
+        $new_config .= preg_replace('/^auth_code.*=.*/', 'auth_code = "'.$auth_code.'"', $line);
     }
 
     if (!save_config($new_config)) {
-        message("Config file constant('" . constant('LC_CONFIG_FILE') . "') write failed!");
+        message('Config file "' . constant('LC_CONFIG_FILE') . '" write failed!');
         exit();
     }
 
     return get_authcode();
 }
 
-function get_step($name) { // {{{
+/**
+ * Get step by module name
+ * 
+ * @param string $name
+ *  
+ * @return int
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function get_step($name)
+{
     global $modules;
 
+    $result = 0;
+
     foreach ($modules as $step => $module_data) {
-        if ($module_data["name"] == $name) {
-            return $step;
+
+        if ($module_data['name'] == $name) {
+            $result = $step;
+            break;
         }
     }
-    return 0;
-} // }}}
 
+    return $result;
+}
 
-// }}}
+/**
+ * Display form element
+ * 
+ * @param string $fieldName
+ * @param array  $fieldData
+ * @param int    $clrNumber
+ *  
+ * @return string
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function displayFormElement($fieldName, $fieldData, $clrNumber)
+{
+    $fieldType = (isset($fieldData['type']) ? $fieldData['type'] : 'text');
+    $fieldValue = (isset($fieldData['value']) ? $fieldData['value'] : $fieldData['def_value']);
 
-// END COMMON FUNCTIONS }}}
+    switch ($fieldType) {
 
-// MODULES {{{
+        // Drop down box
+        case 'select': {
+
+            $formElement =<<<OUT
+        <select name="params[{$fieldName}]">
+OUT;
+
+            if (is_array($fieldData['select_data'])) {
+                foreach ($fieldData['select_data'] as $key => $value) {
+                    $_selected = ($value == $fieldValue ? ' selected="selected"' : '');
+                    $formElement .=<<<OUT
+            <option value="{$key}"{$_selected}>{$value}</OPTION>
+OUT;
+                }
+            }
+
+            $formElement .=<<<OUT
+        </select>
+OUT;
+
+            break;
+        }
+
+        // Checkbox
+        case 'checkbox': {
+
+            $_checked = !empty($fieldValue) ? 'checked="checked" ' : '';
+            $formElement =<<<OUT
+        <input type="checkbox" name="params[{$fieldName}]" value="Y" {$_checked}/>
+OUT;
+            break;
+        }
+
+        // Static text (not for input)
+        case 'static': {
+            $formElement = $fieldValue;
+            break;
+        }
+
+        // Input text
+        case 'text':
+        case 'password' :
+        default: {
+
+            $fieldType = (in_array($fieldType, array('text', 'password')) ? $fieldType : 'text');
+            $formElement =<<<OUT
+        <input type="{$fieldType}" name="params[{$fieldName}]" size="30" value="{$fieldValue}" />
+OUT;
+        }
+    }
+
+    $output =<<<OUT
+    <tr class="Clr{$clrNumber}">
+        <td><b>{$fieldData['title']}</b><br />{$fieldData['description']}</td>
+        <td>{$formElement}</td>
+    </tr>
+OUT;
+
+    echo $output;
+}
+
 
 /*
+ * End of Service functions section 
+ */
+
+
+/*
+ * Modules section
+ */
+
+
+
+/**
  * Default module. Shows Terms & Conditions
- *
- * @param array $params
- *
- * return bool
+ * 
+ * @param array $params 
+ *  
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
 function module_default(&$params)
 {
@@ -1662,8 +2275,13 @@ function module_default(&$params)
     return false;
 }
 
-/*
- * 'Next' button handler. Checks if 'Agree' checkbox ticked
+/**
+ * 'Next' button handler. Checking if an 'Agree' checkbox was ticked
+ * 
+ * @return string
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
 function module_default_js_next()
 {
@@ -1679,12 +2297,14 @@ function module_default_js_next()
 <?php
 }
 
-// end default module
 
-
-
-/*
- * Configuration checking module
+/**
+ * Configuration checking module 
+ * 
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
 function module_check_cfg()
 {
@@ -1741,12 +2361,16 @@ function module_check_cfg()
     return false;
 }
 
-/*
+
+/**
  * Do step of gathering of the database configuration
- *
- * @param array $param
- *
+ * 
+ * @param array $params 
+ *  
  * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
 function module_cfg_install_db(&$params)
 {
@@ -1913,14 +2537,10 @@ OUT;
             if ($connection) {
 
                 // Check MySQL version
-                $version = @mysql_get_server_info($connection);
+                $mysqlVersionErr = $currentMysqlVersion = '';
 
-                if (strpos($version, '-') !== false) {
-                    $version = substr($version, 0, strpos($version, "-"));
-                }
-
-                if ((func_version_compare($version, "5.0.50") >= 0 && func_version_compare($version, "5.0.52") < 0)) {
-                    warning_error('The version of MySQL which is currently used contains known bugs, that is why LiteCommerce may operate incorrectly. We recommend to update MySQL to a more stable version.');
+                if (!checkMysqlVersion($mysqlVersionErr, $currentMysqlVersion, $connection)) {
+                    warning_error($mysqlVersionErr);
                 }
 
                 // Check if config.php file is writeable
@@ -2016,85 +2636,17 @@ OUT;
     return $displayConfigForm;
 }
 
-/*
- * Display form element
- *
- * @param string $fieldName Name of field
- * @param array  $fieldData Field element data
- * @param int    $clrNumber Number for CSS class suffix (for colouring the rows) 
- *
- * @return void
+
+/**
+ * Output Javascript handler: module_cfg_install_db_js_back 
+ * 
+ * @return string
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
-function displayFormElement($fieldName, $fieldData, $clrNumber)
+function module_cfg_install_db_js_back()
 {
-    $fieldType = (isset($fieldData['type']) ? $fieldData['type'] : 'text');
-    $fieldValue = (isset($fieldData['value']) ? $fieldData['value'] : $fieldData['def_value']);
-
-    switch ($fieldType) {
-
-        // Drop down box
-        case 'select': {
-
-            $formElement =<<<OUT
-        <select name="params[{$fieldName}]">
-OUT;
-
-            if (is_array($fieldData['select_data'])) {
-                foreach ($fieldData['select_data'] as $key => $value) {
-                    $_selected = ($value == $fieldValue ? ' selected="selected"' : '');
-                    $formElement .=<<<OUT
-            <option value="{$key}"{$_selected}>{$value}</OPTION>
-OUT;
-                }
-            }
-
-            $formElement .=<<<OUT
-        </select>
-OUT;
-
-            break;
-        }
-
-        // Checkbox
-        case 'checkbox': {
-
-            $_checked = !empty($fieldValue) ? 'checked="checked" ' : '';
-            $formElement =<<<OUT
-        <input type="checkbox" name="params[{$fieldName}]" value="Y" {$_checked}/>
-OUT;
-            break;
-        }
-
-        // Static text (not for input)
-        case 'static': {
-            $formElement = $fieldValue;
-            break;
-        }
-
-        // Input text
-        case 'text':
-        case 'password' :
-        default: {
-
-            $fieldType = (in_array($fieldType, array('text', 'password')) ? $fieldType : 'text');
-            $formElement =<<<OUT
-        <input type="{$fieldType}" name="params[{$fieldName}]" size="30" value="{$fieldValue}" />
-OUT;
-        }
-    }
-
-    $output =<<<OUT
-    <tr class="Clr{$clrNumber}">
-        <td><b>{$fieldData['title']}</b><br />{$fieldData['description']}</td>
-        <td>{$formElement}</td>
-    </tr>
-OUT;
-
-    echo $output;
-}
-
-
-function module_cfg_install_db_js_back() {
     global $params;
 ?>
     function step_back() {
@@ -2106,7 +2658,16 @@ function module_cfg_install_db_js_back() {
 <?php
 }
 
-function module_cfg_install_db_js_next() {
+/**
+ * Output Javascript handler: module_cfg_install_db_js_next 
+ * 
+ * @return string
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function module_cfg_install_db_js_next()
+{
 ?>
     function step_next() {
         for (var i = 0; i < document.ifrm.elements.length; i++) {
@@ -2144,15 +2705,16 @@ function module_cfg_install_db_js_next() {
 <?php
 }
 
-// end:  Cfg_install_db module
 
-
-/*
+/**
  * Database installing module
- *
- * @param array $params
- *
+ * 
+ * @param array $params 
+ *  
  * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
 function module_install_db(&$params)
 {
@@ -2210,7 +2772,17 @@ function module_install_db(&$params)
 
 } 
 
-// Install_dirs module
+
+/**
+ * Install_dirs module
+ * 
+ * @param array $params 
+ *  
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
 function module_install_dirs(&$params)
 {
     global $error, $lcSettings;
@@ -2296,11 +2868,15 @@ function module_install_dirs(&$params)
 }
 
 
-
-/*
- * Configure create_admin module
- *
- * @param array $params
+/**
+ * Output form for gathering admi account data
+ * 
+ * @param array $params 
+ *  
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
 function module_cfg_create_admin(&$params)
 {
@@ -2375,8 +2951,16 @@ function module_cfg_create_admin(&$params)
 <?php
 }
 
-// cfg_create_admin module "Next" button validator {{{
-function module_cfg_create_admin_js_next() {
+/**
+ * cfg_create_admin module "Next" button validator 
+ * 
+ * @return string
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function module_cfg_create_admin_js_next()
+{
 ?>
     function step_next() {
 
@@ -2420,21 +3004,19 @@ function module_cfg_create_admin_js_next() {
 <?php
 }
 
-// end cfg_create_admin module
 
-
-// Install_done module {{{
+/**
+ * Install_done module
+ * 
+ * @param array $params 
+ *  
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
 function module_install_done(&$params)
 {
-    doFinishInstallation($params);
-    return false;
-}
-
-
-function doFinishInstallation(&$params, $silentMode = false)
-{
-    global $lcSettings, $error;
-
     // if authcode IS NULL, then this is probably the first install, skip
     $checkParams = array('auth_code', 'login', 'password', 'confirm_password');
 
@@ -2450,134 +3032,12 @@ function doFinishInstallation(&$params, $silentMode = false)
         doCreateAdminAccount($params);
     }
 
-    // Save authcode for the further install runs
-    $authcode = save_authcode($params);
+    doFinishInstallation($params);
 
-    // Rename install.php
-    $install_name = rename_install_script();
-
-    if ($install_name) {
-
-        // Text for email notification
-        $install_rename_email =<<<OUT
-To ensure the security of your LiteCommerce installation, the file "install.php" has been renamed to "{$install_name}".
-
-Now, if you choose to re-install LiteCommerce, you should rename the file "{$install_name}" back to "install.php" and open the following URL in your browser:
-     http://{$params['xlite_http_host']}{$params['xlite_web_dir']}/install.php
-OUT;
-
-        // Text for confirmation web page
-        $install_rename =<<<OUT
-<P>To ensure the security of your LiteCommerce installation, the file "install.php" has been renamed to "{$install_name}".</P>
-
-<P>Now, if you choose to re-install LiteCommerce, you should rename the file "{$install_name}" back to "install.php"</P>
-OUT;
-
-    } else {
-        $install_rename = '<P><font color="red"><b>WARNING!</b> The install.php script could not be renamed! To ensure the security of your LiteCommerce installation and prevent the unallowed use of this script, you should manually rename or delete it.</font></P>';
-        $install_rename_email = strip_tags($install_rename);
-    }
-
-    // Prepare files permissions recommendation text
-    $perms = '';
-
-    if (!(LC_OS_CODE === 'win')) {
-
-        $_perms = array();
-
-        if (@is_writable(".")) {
-            $_perms[] = "&gt; chmod 755 .";
-        }
-
-        if (@is_writable(LC_CONFIG_DIF . constant('LC_CONFIG_FILE'))) {
-            $_perms[] = "&gt; chmod 644 " . constant('LC_CONFIG_FILE');
-        }
-
-        if (!@is_writable("cart.html")) {
-            $_perms[] = "&gt; chmod 666 cart.html";
-        }
-
-        if (!empty($_perms)) {
-            $perms = implode("<br />\n", $_perms);
-            $perms =<<<OUT
-<P>Before you proceed using LiteCommerce shopping system software, please set the following secure file permissions:<BR><BR>
-
-<FONT color="darkblue">$perms</FONT>
-OUT;
-        }
-    }
-
-    // Prepare email notification text
-    $perms_no_tags = preg_replace('/&gt;/', '>', strip_tags($perms));
-
-    $message =<<<EOF
-Congratulations!
-
-LiteCommerce software has been successfully installed and is now available at the following URLs:
-
-CUSTOMER ZONE (FRONT-END)
-     http://{$params['xlite_http_host']}{$params['xlite_web_dir']}/cart.php
-
-ADMINISTRATOR ZONE (BACKOFFICE)
-     http://{$params['xlite_http_host']}{$params['xlite_web_dir']}/admin.php
-     Login (e-mail): {$params['login']}
-     Password:       {$params['password']}
-
-{$perms_no_tags}
-
-{$install_rename_email}
-
-Auth code for running install.php script is: {$authcode}
-
-Thank you for choosing LiteCommerce shopping system!
-
---
-LiteCommerce Installation Wizard
-
-
-EOF;
-
-    // Send email notification to the admin account email
-    @mail($params["login"], "LiteCommerce installation complete", $message,
-        "From: \"LiteCommerce software\" <" . $params["login"] . ">\r\n" .
-        "X-Mailer: PHP");
-
-    if (!$silentMode) {
-
-?>
-
-<CENTER>
-<H3><?php message('Installation complete.'); ?></H3>
-</CENTER>
-
-LiteCommerce software has been successfully installed and is now available at the following URLs:
-<BR />
-
-<OL>
-<LI><U><A href="cart.php" style="COLOR: #000055; TEXT-DECORATION: underline;" target="_blank"><b>CUSTOMER ZONE (FRONT-END): cart.php</b></A></U></LI>
-<P>
-<LI><U><A href="admin.php" style="COLOR: #000055; TEXT-DECORATION: underline;" target="_blank"><b>ADMINISTRATOR ZONE (BACKOFFICE): admin.php</b></A></U><BR></LI>
-<P>
-<LI><A href="quickstart/index.html" target="_blank" style="COLOR: #000055; TEXT-DECORATION: underline;"><b>QUICK START WIZARD</b></A>&nbsp;will help you prepare your store for going live by guiding you through the main steps LiteCommerce shipping system setup.<BR></LI>
-</OL>
-
-<br />
-
-<P>
-<?php echo $perms; ?>
-
-<br /><br />
-
-<?php echo $install_rename; ?>
-
-<P>Your auth code for running install.php in the future is: <B><?php print get_authcode(); ?></b><br />
-PLEASE WRITE THIS CODE DOWN UNLESS YOU ARE GOING TO REMOVE "<?php echo $install_name; ?>"</P>
-
-<?php
-
-    }
+    return false;
 }
 
-// END MODULES }}}
-
+/*
+ * End of Modules section
+ */
 

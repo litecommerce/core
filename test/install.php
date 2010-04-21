@@ -42,18 +42,6 @@ if (!(basename(__FILE__) === 'install.php')) { // is not install.php
 
 define ('XLITE_INSTALL_MODE', 1);
 
-/*
-
-// Setting runtime configuration parameters
-if (func_version_compare(PHP_VERSION, '5.3.0') < 0) {
-    error_reporting (E_ALL ^ E_NOTICE);
-    set_magic_quotes_runtime(0);
-
-} else {
-    error_reporting (E_ALL ^ E_NOTICE ^ E_DEPRECATED);
-}
- */
-
 error_reporting (E_ALL);
 ini_set('display_errors', true);
 ini_set('display_startup_errors', true);
@@ -66,14 +54,7 @@ if (!file_exists($includeFuncsFile = realpath(dirname(__FILE__)) . '/includes/in
     die('Fatal error: Couldn\'t find file ' . $includeFuncsFile);
 }
 
-// fixes compatibility issues
 require_once $includeFuncsFile;
-
-//
-// In order to run installation script, installation auth code is required. 
-// The auth code is created authomatically and is stored in etc/config.php
-// file. See [installer_details] section
-//
 
 
 // Link auto-globals
@@ -95,10 +76,6 @@ if (isset($_REQUEST['ruid']) && $_REQUEST['ruid']) {
 	$report_uid = substr(md5(uniqid(time())), 0, 12);
 }
 
-define('REPORT_FILENAME', 'check_report_' . $report_uid . '.txt');
-
-define('DISABLE_FUNCTIONS_DELIMITER', ",");
-
 $upload_tmp_dir = @ini_get("upload_tmp_dir");
 
 if (isset($_ENV['TMPDIR'])) {
@@ -117,9 +94,9 @@ if (isset($_ENV['TMPDIR'])) {
 	$tmpdir = $upload_tmp_dir;
 }
 
-$reportFName = $tmpdir . DIRECTORY_SEPARATOR . REPORT_FILENAME;
+$reportFName = $tmpdir . LC_DS . 'check_report_' . $report_uid . '.txt';
 
-// Installation steps
+// Installation modules (steps)
 $modules = array (
 	array( // 0
 			"name"          => "default",
@@ -275,10 +252,6 @@ $first_error = null;
 // Error flag
 $error = false;
 
-// Check list array initialization
-$check_list = array();
-
-
 // Check copyright file
 define('COPYRIGHT_FILE', './LICENSE.txt');
 define('COPYRIGHT_EXISTS', @file_exists(COPYRIGHT_FILE));
@@ -345,6 +318,7 @@ if (isset($params['force_current']) && (isset($_POST['go_back']) && $_POST['go_b
 }
 
 // start html output
+
 ?>
 <HTML>
 <HEAD>
