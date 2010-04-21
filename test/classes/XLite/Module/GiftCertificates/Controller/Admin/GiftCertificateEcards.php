@@ -27,7 +27,7 @@
  */
 
 /**
- * ____description____
+ * E-cards
  * 
  * @package XLite
  * @see     ____class_see____
@@ -35,31 +35,56 @@
  */
 class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificateEcards extends XLite_Controller_Admin_Abstract
 {
-    function getECards()
+    /**
+     * Get e-cards 
+     * 
+     * @return array of XLite_Module_GiftCertificates_Model_ECard
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getECards()
     {
         $ecard = new XLite_Module_GiftCertificates_Model_ECard();
+
         return $ecard->findAll();
     }
 
-    function action_update()
+    /**
+     * Update list
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionUpdate()
     {
-        if (isset($_POST["pos"])) {
-            foreach ($_POST["pos"] as $ecard_id => $order_by) {
-                $ec = new XLite_Module_GiftCertificates_Model_ECard($ecard_id);
-                $ec->set("order_by", $order_by);
-                if (isset($_POST["enabled"][$ecard_id])) {
-                    $ec->set("enabled", 1);
-                } else {
-                    $ec->set("enabled", 0);
-                }
+        if (
+            isset(XLite_Core_Request::getInstance()->pos)
+            && is_array(XLite_Core_Request::getInstance()->pos)
+        ) {
+
+            foreach (XLite_Core_Request::getInstance()->pos as $ecardId => $orderBy) {
+                $ec = new XLite_Module_GiftCertificates_Model_ECard($ecardId);
+                $ec->set('order_by', $orderBy);
+                $ec->set('enabled', isset(XLite_Core_Request::getInstance()->enabled[$ecardId]) ? 1 : 0);
                 $ec->update();
             }
         }
     }
 
-    function action_delete()
+    /**
+     * Delete 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionDelete()
     {
-        $ec = new XLite_Module_GiftCertificates_Model_ECard($_REQUEST["ecard_id"]);
+        $ec = new XLite_Module_GiftCertificates_Model_ECard(XLite_Core_Request::getInstance()->ecard_id);
         $ec->delete();
     }
 

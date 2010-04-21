@@ -27,7 +27,7 @@
  */
 
 /**
- * ____description____
+ * Tax rates
  * 
  * @package XLite
  * @see     ____class_see____
@@ -35,31 +35,41 @@
  */
 class XLite_Module_Promotion_Model_TaxRates extends XLite_Model_TaxRates implements XLite_Base_IDecorator
 {
-    function setOrderItem($item)
+    /**
+     * Set order item 
+     * 
+     * @param XLite_Model_OrderItem $item Order item
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setOrderItem(XLite_Model_OrderItem $item)
     {
-    	parent::setOrderItem($item);
+        parent::setOrderItem($item);
 
-		if ($item->get("bonusItem") && !is_null($item->get("originalBonusPrice"))) {
-        	$this->_conditionValues["cost"] = $item->get("originalBonusPrice");
+        if ($item->get('bonusItem') && !is_null($item->get('originalBonusPrice'))) {
+            $this->_conditionValues['cost'] = $item->get('originalBonusPrice');
         }
     }
 
-	function saveSchema($name, $schema = "")
-	{
-		parent::saveSchema($name, $schema);
-		// update existing schemas repositary
-		if (!is_null($schema)) {
-			$c = new XLite_Model_Config();
-			if ($c->find("category='Taxes' AND name='schemas'")) {
-				$schemas = unserialize($c->get("value"));
-				if ($schema === "") {
-					$schemas[$name]['discounts_after_taxes'] = ($this->getComplex('config.Taxes.discounts_after_taxes'))?"Y":"N";
-				} elseif (!in_array($schemas[$name]['discounts_after_taxes'], array("Y","N"))) {
-					$schemas[$name]['discounts_after_taxes'] = "N";
-				}
-				$c->set("value", serialize($schemas));
-				$c->update();
-			}
-		}
-	}
+    function saveSchema($name, $schema = "")
+    {
+        parent::saveSchema($name, $schema);
+        // update existing schemas repositary
+        if (!is_null($schema)) {
+            $c = new XLite_Model_Config();
+            if ($c->find("category='Taxes' AND name='schemas'")) {
+                $schemas = unserialize($c->get("value"));
+                if ($schema === "") {
+                    $schemas[$name]['discounts_after_taxes'] = ($this->getComplex('config.Taxes.discounts_after_taxes'))?"Y":"N";
+                } elseif (!in_array($schemas[$name]['discounts_after_taxes'], array("Y","N"))) {
+                    $schemas[$name]['discounts_after_taxes'] = "N";
+                }
+                $c->set("value", serialize($schemas));
+                $c->update();
+            }
+        }
+    }
 }

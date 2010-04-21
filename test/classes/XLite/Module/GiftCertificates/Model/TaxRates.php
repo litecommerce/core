@@ -27,7 +27,7 @@
  */
 
 /**
- * ____description____
+ * Tax rates
  * 
  * @package XLite
  * @see     ____class_see____
@@ -35,12 +35,22 @@
  */
 class XLite_Module_GiftCertificates_Model_TaxRates extends XLite_Model_TaxRates implements XLite_Base_IDecorator
 {
-    function setOrderItem($item)
+    /**
+     * Set order item 
+     * 
+     * @param XLite_Model_OrderItem $item Order item
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setOrderItem(XLite_Model_OrderItem $item)
     {
-    	parent::setOrderItem($item);
+        parent::setOrderItem($item);
 
-		if (!is_null($item->get("gc"))) {
-        	$this->_conditionValues["cost"] = 0;
+        if (!is_null($item->get('gc'))) {
+            $this->_conditionValues['cost'] = 0;
         }
     }
 }

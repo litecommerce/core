@@ -27,57 +27,121 @@
  */
 
 /**
- * ____description____
+ * Gift certificate validator
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
 class XLite_Module_GiftCertificates_Validator_GCValidator extends XLite_Validator_Abstract
-{	
-    public $template = "modules/GiftCertificates/gc_validator.tpl";	
-    public $doesnotexist = false;	
-    public $expired = false;	
-    public $notactive = false;	
-    public $gcid = null;
+{
+    /**
+     * Validator template 
+     * 
+     * @var    string
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $template = 'modules/GiftCertificates/gc_validator.tpl';
+
+    /**
+     * Flag 'Gift ceritificate does not exists'
+     * 
+     * @var    boolean
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $doesnotexist = false;    
+
+    /**
+     * Flag 'Gift certificate expired'
+     * 
+     * @var    boolean
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $expired = false;    
+
+    /**
+     * Flag 'Gift certificate not active'
+     * 
+     * @var    boolean
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $notactive = false;    
+
+    /**
+     * Gift certificate id 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $gcid = null;
     
-    function isValid()
+    /**
+     * isValid 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isValid()
     {
+        $result = true;
+
+        $fieldName = $this->get('field');
+
         if (!parent::isValid()) {
-            return false;
-        }
-        if (isset($_POST[$this->get("field")])) {
-            $this->gcid = $_POST[$this->get("field")] = trim($_POST[$this->get("field")]);
+            $result = false;
 
-			// Pass validation if cert already related with current order
-			$cart = XLite_Model_Cart::getInstance();
-			if (is_object($cart) && !is_null($cart) && $cart->get("gcid") == $this->gcid) {
-				return true;
-			}
+        } elseif (isset(XLite_Core_Request::getInstance()->$fieldName)) {
 
-            // validate
-			$gc = new XLite_Module_GiftCertificates_Model_GiftCertificate($this->gcid);
-            if (strlen($this->gcid) == 0) {
-            	$gcStatus = GC_DOESNOTEXIST;
-            } else {
-				$gcStatus = $gc->validate();
+            XLite_Core_Request::getInstance()->$fieldName = trim(XLite_Core_Request::getInstance()->$fieldName); 
+            $this->gcid = XLite_Core_Request::getInstance()->$fieldName;
+
+            // Pass validation if cert already related with current order
+            $cart = XLite_Model_Cart::getInstance();
+            if (!is_object($cart) || is_null($cart) || $cart->get('gcid') != $this->gcid) {
+
+                // validate
+                $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate($this->gcid);
+                $gcStatus = 0 == strlen($this->gcid)
+                    ? XLite_Module_GiftCertificates_Model_GiftCertificate::GC_DOESNOTEXIST
+                    : $gc->validate();
+
+                $result = false;
+
+                switch ($gcStatus) {
+                    case XLite_Module_GiftCertificates_Model_GiftCertificate::GC_OK: 
+                        $result = true;
+                        break;
+
+                    case XLite_Module_GiftCertificates_Model_GiftCertificate::GC_DOESNOTEXIST: 
+                        $this->doesnotexist = true; 
+                        break;
+
+                    case XLite_Module_GiftCertificates_Model_GiftCertificate::GC_EXPIRED: 
+                        $this->expired = true; 
+                        break;
+
+                    case XLite_Module_GiftCertificates_Model_GiftCertificate::GC_DISABLED: 
+                        $this->notactive = true; 
+                        break;
+
+                    default:
+                }
             }
-            switch ($gcStatus) {
-            	case GC_OK: 
-            		return true;
-            	case GC_DOESNOTEXIST: 
-            		$this->doesnotexist = true; 
-            	break;
-            	case GC_EXPIRED: 
-            		$this->expired = true; 
-            	break;
-            	case GC_DISABLED: 
-            		$this->notactive = true; 
-            	break;
-            }
-            return false;
         }
-        return true;
+
+        return $result;
     }
 
 }

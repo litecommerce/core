@@ -29,20 +29,20 @@
 define('TAX_TOLOWERCASE', 1);
 
 /**
- * ____description____
+ * Tax rates
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
 class XLite_Model_TaxRates extends XLite_Base
-{	
+{    
     public $_rates;
     /**
     * "default tax schema name" => array of rate rules
-    */	
-    public $_predefinedSchemas = array();	
-    public $_taxValues = array();	
+    */    
+    public $_predefinedSchemas = array();    
+    public $_taxValues = array();    
     public $_conditionValues = array();
     
     public function __construct()
@@ -61,18 +61,18 @@ class XLite_Model_TaxRates extends XLite_Base
         } else {
             $this->_rates = array();
         }
-		if (!is_array($this->_rates)) {
+        if (!is_array($this->_rates)) {
             $this->_rates = array();
-		}
+        }
 
         if (strlen($this->config->getComplex('Taxes.taxes'))>0) {
             $this->_taxes = unserialize($this->config->getComplex('Taxes.taxes'));
         } else {
             $this->_taxes = array();
         }
-		if (!is_array($this->_taxes)) {
+        if (!is_array($this->_taxes)) {
             $this->_taxes = array();
-		}
+        }
     }
    
     function _createOneGlobalTax()
@@ -300,103 +300,103 @@ array("condition" => "state=District of Columbia", "action" => array(
     {
          $this->_predefinedSchemas["VAT system"] = array
          (
-			"taxes" => array
-			(
-				array
-				(
-					"name" => "VAT", 
-					"display_label" => "VAT"
-				),
-			),
-			"prices_include_tax" => "Y",
-			"include_tax_message" => ", including VAT",
-			"tax_rates" => array
-			(
-				"Tax:==VAT", 
-				"VAT:=0", 
-				array
-				(
-					"condition"=>"country=EU country", 
-					"action"=> array
-					(
-						"VAT:=17.5",  
-						array
-						(
-							"condition"=>"product class=shipping service", 
-							"action"=>"VAT:=17.5"
-						),
-  						array
-  						(
-  							"condition"=>"product class=5% VAT", 
-  							"action"=>"VAT:=5"
-  						),
-  						array
-  						(
-  							"condition"=>"product class=VAT exempt", 
-  							"action"=>"VAT:=0"
-  						),
-					), 
-					"open" => true
-				)
-			)
-		);
+            "taxes" => array
+            (
+                array
+                (
+                    "name" => "VAT", 
+                    "display_label" => "VAT"
+                ),
+            ),
+            "prices_include_tax" => "Y",
+            "include_tax_message" => ", including VAT",
+            "tax_rates" => array
+            (
+                "Tax:==VAT", 
+                "VAT:=0", 
+                array
+                (
+                    "condition"=>"country=EU country", 
+                    "action"=> array
+                    (
+                        "VAT:=17.5",  
+                        array
+                        (
+                            "condition"=>"product class=shipping service", 
+                            "action"=>"VAT:=17.5"
+                        ),
+                          array
+                          (
+                              "condition"=>"product class=5% VAT", 
+                              "action"=>"VAT:=5"
+                          ),
+                          array
+                          (
+                              "condition"=>"product class=VAT exempt", 
+                              "action"=>"VAT:=0"
+                          ),
+                    ), 
+                    "open" => true
+                )
+            )
+        );
          $this->_predefinedSchemas["VAT system (alternative)"] = array
          (
-			"taxes" => array
-			(
-				array
-				(
-					"name" => "VAT", 
-					"display_label" => "VAT (products)"
-				),
-				array
-				(
-					"name" => "SVAT", 
-					"display_label" => "VAT (shipping)"
-				),
-			),
-			"prices_include_tax" => "Y",
-			"include_tax_message" => ", including VAT",
-			"tax_rates" => array
-			(
-				"Tax:==VAT", 
-				"VAT:=0", 
-				array
-				(
-					"condition"=>"country=EU country", 
-					"action"=> array
-					(
-						"VAT:=17.5",  
-						array
-						(
-							"condition"=>"product class=shipping service", 
-							"action"=>"VAT:=0"
-						),
-  						array
-  						(
-  							"condition"=>"product class=5% VAT", 
-  							"action"=>"VAT:=5"
-  						),
-  						array
-  						(
-  							"condition"=>"product class=VAT exempt", 
-  							"action"=>"VAT:=0"
-  						),
-						array
-						(
-							"condition"=>"product class=shipping service", 
-							"action"=>"SVAT:=17.5"
-						),
-						array
-						(
-							"condition"=>"product class=shipping service", 
-							"action"=>"Tax:==SVAT"
-						),
-					), 
-					"open" => true
-				),
-			)
-		);
+            "taxes" => array
+            (
+                array
+                (
+                    "name" => "VAT", 
+                    "display_label" => "VAT (products)"
+                ),
+                array
+                (
+                    "name" => "SVAT", 
+                    "display_label" => "VAT (shipping)"
+                ),
+            ),
+            "prices_include_tax" => "Y",
+            "include_tax_message" => ", including VAT",
+            "tax_rates" => array
+            (
+                "Tax:==VAT", 
+                "VAT:=0", 
+                array
+                (
+                    "condition"=>"country=EU country", 
+                    "action"=> array
+                    (
+                        "VAT:=17.5",  
+                        array
+                        (
+                            "condition"=>"product class=shipping service", 
+                            "action"=>"VAT:=0"
+                        ),
+                          array
+                          (
+                              "condition"=>"product class=5% VAT", 
+                              "action"=>"VAT:=5"
+                          ),
+                          array
+                          (
+                              "condition"=>"product class=VAT exempt", 
+                              "action"=>"VAT:=0"
+                          ),
+                        array
+                        (
+                            "condition"=>"product class=shipping service", 
+                            "action"=>"SVAT:=17.5"
+                        ),
+                        array
+                        (
+                            "condition"=>"product class=shipping service", 
+                            "action"=>"Tax:==SVAT"
+                        ),
+                    ), 
+                    "open" => true
+                ),
+            )
+        );
     } // }}}
 
     function _createCanadianTax() // {{{
@@ -436,7 +436,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
 
     function setSchema($schema)
     {
-    	if (is_array($schema)) {
+        if (is_array($schema)) {
             $conf = new XLite_Model_Config();
             $conf->set("category", "Taxes");
             foreach ($schema as $name => $value) {
@@ -456,62 +456,76 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
     {
         $profile = $order->get("profile");
         if (!is_null($profile)) {
-			$this->set("profile", $profile);
+            $this->set("profile", $profile);
         } else {
-        	if ($this->config->getComplex('General.def_calc_shippings_taxes')) {
+            if ($this->config->getComplex('General.def_calc_shippings_taxes')) {
                 $default_country = new XLite_Model_Country($this->config->getComplex('General.default_country'));
-    			$this->_conditionValues["country"] = $default_country->get("country");
-        		if ($default_country->isEUMember()) {
-        			$this->_conditionValues["country"] .= ",EU country";
-        		}
-        	}
+                $this->_conditionValues["country"] = $default_country->get("country");
+                if ($default_country->isEUMember()) {
+                    $this->_conditionValues["country"] .= ",EU country";
+                }
+            }
         }
         if (!is_null($order->get("paymentMethod"))) {
             $this->_conditionValues["payment method"] = $order->getComplex('paymentMethod.name');
         }
     }
 
-	function setProfile($profile)
-	{
-		if ($this->config->getComplex('Taxes.use_billing_info')) {
-			$this->_conditionValues["state"] = $profile->getComplex('billingState.state');
-			$this->_conditionValues["country"] = $profile->getComplex('billingCountry.country');
-			$countryCode = $profile->get("billing_country");
-			$this->_conditionValues["city"] = $profile->get("billing_city");
-			$this->_conditionValues["zip"] = $profile->get("billing_zipcode");
-		} else { // shipping destination
-			$this->_conditionValues["state"] = $profile->getComplex('shippingState.state');
-			$this->_conditionValues["country"] = $profile->getComplex('shippingCountry.country');
-			$countryCode = $profile->get("shipping_country");
-			$this->_conditionValues["city"] = $profile->get("shipping_city");
-			$this->_conditionValues["zip"] = $profile->get("shipping_zipcode");
-		}
-		$c = new XLite_Model_Country($countryCode);
-		if ($c->isEUMember()) {
-			$this->_conditionValues["country"] .= ",EU country";
-		}
-		$this->_conditionValues["membership"] = $profile->get("membership");
-		if ($this->_conditionValues["membership"] == "") {
-			$this->_conditionValues["membership"] = "No membership";
-		}
-	}
-
-    function setOrderItem($item)
+    function setProfile($profile)
     {
-        if (!is_null($item->get("product"))) {
-            $this->_conditionValues["product class"] = $item->getComplex('product.tax_class');
+        if ($this->config->getComplex('Taxes.use_billing_info')) {
+            $this->_conditionValues["state"] = $profile->getComplex('billingState.state');
+            $this->_conditionValues["country"] = $profile->getComplex('billingCountry.country');
+            $countryCode = $profile->get("billing_country");
+            $this->_conditionValues["city"] = $profile->get("billing_city");
+            $this->_conditionValues["zip"] = $profile->get("billing_zipcode");
+        } else { // shipping destination
+            $this->_conditionValues["state"] = $profile->getComplex('shippingState.state');
+            $this->_conditionValues["country"] = $profile->getComplex('shippingCountry.country');
+            $countryCode = $profile->get("shipping_country");
+            $this->_conditionValues["city"] = $profile->get("shipping_city");
+            $this->_conditionValues["zip"] = $profile->get("shipping_zipcode");
+        }
+        $c = new XLite_Model_Country($countryCode);
+        if ($c->isEUMember()) {
+            $this->_conditionValues["country"] .= ",EU country";
+        }
+        $this->_conditionValues["membership"] = $profile->get("membership");
+        if ($this->_conditionValues["membership"] == "") {
+            $this->_conditionValues["membership"] = "No membership";
+        }
+    }
+
+    /**
+     * Set order item 
+     * 
+     * @param XLite_Model_OrderItem $item Order item
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setOrderItem(XLite_Model_OrderItem $item)
+    {
+        if (!is_null($item->getProduct())) {
+            $this->_conditionValues['product class'] = $item->getProduct()->get('tax_class');
+
             // categories
             $categories = array();
-            foreach ($item->getComplex('product.categories') as $category) {
-                $categories[] = $category->get("category_id");
+            foreach ($item->getProduct()->get('categories') as $category) {
+                $categories[] = $category->get('category_id');
             }
-            $this->_conditionValues["category"] = join(',', $categories);
+
+            $this->_conditionValues['category'] = implode(',', $categories);
         }
-		if (!$this->config->getComplex('Taxes.prices_include_tax')) {
-			$this->_conditionValues["cost"] = $item->get("taxableTotal");
-		} else {
-        	$this->_conditionValues["cost"] = $item->get("price");
-        	$this->_conditionValues["amount"] = $item->get("amount");
+
+        if ($this->config->Taxes->prices_include_tax) {
+            $this->_conditionValues['cost'] = $item->get('price');
+            $this->_conditionValues['amount'] = $item->get('amount');
+
+        } else {
+            $this->_conditionValues['cost'] = $item->get('taxableTotal');
         }
     }
 
@@ -563,7 +577,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
                 if ($maxName != "") {
                     $sortedValues[$maxName] = $values[$maxName];
                     if (isset($values[$maxName])) {
-                    	unset($values[$maxName]);
+                        unset($values[$maxName]);
                     }
                 }
             }
@@ -571,15 +585,15 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
                 $pattern = '/\b'.stripslashes($name).'\b/';
                 if (preg_match($pattern, stripslashes($expression))) {
 
-					// eternal recursion protection: 
-					// if the tax value depends on itself, then don't continue recursive calculation
-					static $searchingForNames;
-					if (!is_array($searchingForNames)) $searchingForNames = array();
-					if (isset($searchingForNames[$name])) return 0;
-					$searchingForNames[$name] = 1;
+                    // eternal recursion protection: 
+                    // if the tax value depends on itself, then don't continue recursive calculation
+                    static $searchingForNames;
+                    if (!is_array($searchingForNames)) $searchingForNames = array();
+                    if (isset($searchingForNames[$name])) return 0;
+                    $searchingForNames[$name] = 1;
 
                     $expression = preg_replace($pattern, $this->_calcFormula($value), $expression);
-					unset($searchingForNames[$name]);
+                    unset($searchingForNames[$name]);
                 }
             }
             $expression = preg_replace('/(?=\b\D)[ \w]+\b/', '0', $expression);
@@ -632,26 +646,26 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
 
     function getAllTaxes()
     {
-    	$this->_shippingTaxes = array();
+        $this->_shippingTaxes = array();
 
         $taxes = array();
         foreach ($this->_taxValues as $name => $percent) {
             $percent = $this->_calcFormula($percent);
-			if (isset($this->_conditionValues["cost"])) {
-				$tax = $this->_conditionValues["cost"] * $percent / 100.0;
-				if ($this->config->getComplex('Taxes.prices_include_tax')) {
-					$tax = $this->formatCurrency($tax);
-					if (isset($this->_conditionValues["amount"]) && $this->_conditionValues["product class"] != "shipping service") {
-						$tax = $this->formatCurrency($tax * $this->_conditionValues["amount"]);
-					}
-				} else {
-					$tax = $this->formatCurrency($tax);
-				}
-			} else {
+            if (isset($this->_conditionValues["cost"])) {
+                $tax = $this->_conditionValues["cost"] * $percent / 100.0;
+                if ($this->config->getComplex('Taxes.prices_include_tax')) {
+                    $tax = $this->formatCurrency($tax);
+                    if (isset($this->_conditionValues["amount"]) && $this->_conditionValues["product class"] != "shipping service") {
+                        $tax = $this->formatCurrency($tax * $this->_conditionValues["amount"]);
+                    }
+                } else {
+                    $tax = $this->formatCurrency($tax);
+                }
+            } else {
                 $tax = 0;
             }
             if (isset($this->_conditionValues["product class"]) && $this->_conditionValues["product class"] == "shipping service") {
-            	$this->_shippingTaxes[$name] = $tax;
+                $this->_shippingTaxes[$name] = $tax;
             }
             $taxes[$name] = $tax;
         }
@@ -660,22 +674,22 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
 
     function getShippingTaxes()
     {
-    	if (isset($this->_shippingTaxes)) {
-    		return $this->_shippingTaxes;
-    	}
+        if (isset($this->_shippingTaxes)) {
+            return $this->_shippingTaxes;
+        }
 
-    	$this->_shippingTaxes = array();
+        $this->_shippingTaxes = array();
 
         foreach ($this->_taxValues as $name => $percent) {
             $percent = $this->_calcFormula($percent);
-			if (isset($this->_conditionValues["cost"])) {
-				$tax = $this->_conditionValues["cost"] * $percent / 100.0;
-			} else {
+            if (isset($this->_conditionValues["cost"])) {
+                $tax = $this->_conditionValues["cost"] * $percent / 100.0;
+            } else {
                 $tax = 0;
             }
-			$tax = $this->formatCurrency($tax);
+            $tax = $this->formatCurrency($tax);
             if (isset($this->_conditionValues["product class"]) && $this->_conditionValues["product class"] == "shipping service" && $name != "Tax") {
-            	$this->_shippingTaxes[$name] = $tax;
+                $this->_shippingTaxes[$name] = $tax;
             }
         }
 
@@ -684,13 +698,13 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
 
     function getShippingDefined()
     {
-    	$productClasses = $this->getProductClasses();
-    	$isShippingDefined = array_search("shipping service", $productClasses);
-    	if (!($isShippingDefined === false || is_null($isShippingDefined))) {
-    		return true;
-    	} else {
-    		return false;
-    	}
+        $productClasses = $this->getProductClasses();
+        $isShippingDefined = array_search("shipping service", $productClasses);
+        if (!($isShippingDefined === false || is_null($isShippingDefined))) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     function getTaxLabel($name)
@@ -702,16 +716,16 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
         }
         return '';
     }
-	
-	function getRegistration($name)
-	{
+    
+    function getRegistration($name)
+    {
         foreach ($this->_taxes as $tax) {
             if ($tax["name"] == $name) {
                 return isset($tax["registration"]) ? $tax["registration"] : '';
             }
         }
         return '';
-	}
+    }
 
     function getTaxPosition($name)
     {
@@ -840,8 +854,8 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
     {
         $schemas = $this->_predefinedSchemas; // default set
         if (!is_null($this->getComplex('config.Taxes.schemas'))) {
-        	$savedSchemas = unserialize($this->getComplex('config.Taxes.schemas'));
-        	if (is_array($savedSchemas)) {
+            $savedSchemas = unserialize($this->getComplex('config.Taxes.schemas'));
+            if (is_array($savedSchemas)) {
                 foreach (unserialize($this->getComplex('config.Taxes.schemas')) as $k=>$v) {
                     $schemas[$k] = $v;
                 }
@@ -883,7 +897,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
             $schemas = unserialize($this->getComplex('config.Taxes.schemas'));
             if (is_null($schema)) {
                 if (isset($schemas[$name])) {
-                	unset($schemas[$name]);
+                    unset($schemas[$name]);
                 }
             } else {
                 $schemas[$name] = $schema;
@@ -895,9 +909,9 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
 
     function formatCurrency($price)
     {
-    	if (!isset($this->_BaseObj)) {
-    		$this->_BaseObj = new XLite_Model_Abstract();
-    	}
+        if (!isset($this->_BaseObj)) {
+            $this->_BaseObj = new XLite_Model_Abstract();
+        }
 
         return $this->_BaseObj->formatCurrency($price);
     }
@@ -917,12 +931,12 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
         }
         $exp   = ' '.stripslashes($exp).' '; 
         $taxes = $this->getTaxNames();
-		if (in_array($tax_name, $taxes)) {
-			$index = array_search($tax_name, $taxes);
-			unset($taxes[$index]);
-		}
+        if (in_array($tax_name, $taxes)) {
+            $index = array_search($tax_name, $taxes);
+            unset($taxes[$index]);
+        }
         $exp = preg_replace('/\b\d+\b/', '@', $exp); // remove all numbers
-		// remove all tax names
+        // remove all tax names
         foreach ($taxes as $t) {
             $exp = preg_replace('/\b'.stripslashes($t).'\b/', "@", $exp);
         }

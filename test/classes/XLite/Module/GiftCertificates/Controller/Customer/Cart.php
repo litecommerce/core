@@ -33,7 +33,8 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_Controller_Customer_Cart extends XLite_Controller_Customer_Cart implements XLite_Base_IDecorator
+class XLite_Module_GiftCertificates_Controller_Customer_Cart extends XLite_Controller_Customer_Cart
+implements XLite_Base_IDecorator
 {
     /**
      * Remove applied gift certificate
@@ -48,14 +49,14 @@ class XLite_Module_GiftCertificates_Controller_Customer_Cart extends XLite_Contr
         $this->getCart()->set('GC', null);
         $this->getCart()->update();
 
-		$returnTarget = XLite_Core_Request::getInstance()->return_target;
-		if (!$returnTarget) {
-			$returnTarget = 'cart';
-		}
+        $returnTarget = XLite_Core_Request::getInstance()->return_target;
+        if (!$returnTarget) {
+            $returnTarget = 'cart';
+        }
 
         $this->set(
-			'returnUrl',
-			$this->buildUrl($returnTarget)
-		);
+            'returnUrl',
+            $this->buildUrl($returnTarget)
+        );
     }
 }

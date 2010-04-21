@@ -42,15 +42,23 @@ $GLOBALS['TEXT_QUALIFIERS'] = array("double_quote"=>'"',"single_quote"=>"'");
 class XLite_Model_Abstract extends XLite_Base
 {
     /**
-    * The SQL database table alias for object
-    * @var string $alias
-    */
+     * Table alias 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected $alias;
 
     /**
-    * Object properties: field => default value
-    * @var array $fields
-    */
+     * Object properties (table filed => default value)
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected $fields = array();
 
     /**
@@ -60,15 +68,23 @@ class XLite_Model_Abstract extends XLite_Base
     protected $properties = array();
 
     /**
-    * Primary key field names
-    * @var array $primaryKey
-    */
+     * Primary keys names
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected $primaryKey = array(); 
 
     /**
-    * Auto-increment field name. Used as a primary key too.
-    * @var string $autoIncrement
-    */
+     * Auto-increment file name
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected $autoIncrement = null;
     
     /**
@@ -88,6 +104,15 @@ class XLite_Model_Abstract extends XLite_Base
     * is specified.
     * @var string $defaultOrder
     */
+
+    /**
+     * Default order file name
+     * 
+     * @var    string
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     public $defaultOrder;
 
     /**

@@ -220,7 +220,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
                 if (is_array($activeMethods) && count($activeMethods) == 1) {
                     $activeMethods = array_values($activeMethods);
                     $_POST["payment_id"] = $activeMethods[0]->get("payment_method");
-                    $this->action_payment();
+                    $this->doActionPayment();
                     $this->set("returnUrl", "cart.php?target=checkout");
                     $this->redirect();
                     return true;
@@ -230,7 +230,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
             break;
             case "zeroTotal":
                 $_POST["payment_id"] = $this->config->getComplex('Payments.default_offline_payment');
-                $this->action_payment();
+                $this->doActionPayment();
                 $this->getCart()->checkout();
                 $this->action_checkout();
                 return true;
@@ -520,17 +520,25 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
         return $paymentMethod->get("activeMethods");
     }*/
 
-    function action_payment()
+    /**
+     * Set payment method
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionPayment()
     {
         $this->checkHtaccess();
 
-		$pm = new XLite_Model_PaymentMethod($_POST["payment_id"]);
-        $this->getCart()->set("paymentMethod", $pm);
+		$pm = new XLite_Model_PaymentMethod(XLite_Core_Request::getInstance()->payment_id);
+        $this->getCart()->set('paymentMethod', $pm);
         $this->updateCart();
 
 		if ($this->isPaymentNeeded()) {
-			$this->params[] = "error";
-			$this->set("error", "pmSelect");
+			$this->params[] = 'error';
+			$this->set('error', 'pmSelect');
 		}
     }
 

@@ -27,125 +27,203 @@
  */
 
 /**
- * ____description____
+ * E-card
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
 class XLite_Module_GiftCertificates_Model_ECard extends XLite_Model_Abstract
-{	
-    public $alias = "ecards";	
-    public $fields = array(
+{
+    /**
+     * Table alias 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $alias = 'ecards';
+
+    /**
+     * Object properties (table filed => default value)
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $fields = array(
         'ecard_id' => '',
         'template' => '', // use this template as e-mail body
         'order_by' => 0,
-        'enabled' => 1
-	);	
-    public $autoIncrement = 'ecard_id';	
-    public $defaultOrder = 'order_by';	
-    public $thumbnail = null;	
-    public $image = null;
+        'enabled'  => 1
+    );
 
-    function getThumbnail()
+    /**
+     * Auto-increment file name
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $autoIncrement = 'ecard_id';    
+
+    /**
+     * Default order file name
+     * 
+     * @var    string
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $defaultOrder = 'order_by';    
+
+    /**
+     * E-card thumbnail (cache)
+     * 
+     * @var    XLite_Model_Image
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $thumbnail = null;    
+
+    /**
+     * E-card image (cache)
+     * 
+     * @var    XLite_Model_Image
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $image = null;
+
+    /**
+     * Get e-card thumbnail 
+     * 
+     * @return XLite_Model_Image
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getThumbnail()
     {
         if (is_null($this->thumbnail)) {
-            $this->thumbnail = new XLite_Model_Image("ecard_thumbnail", $this->get("ecard_id"));
+            $this->thumbnail = new XLite_Model_Image('ecard_thumbnail', $this->get('ecard_id'));
         }
 
         return $this->thumbnail;
     }
 
-    function getImage()
+    /**
+     * Get e-card image 
+     * 
+     * @return XLite_Model_Image
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getImage()
     {
         if (is_null($this->image)) {
-            $this->image = new XLite_Model_Image('ecard_image', $this->get("ecard_id"));
+            $this->image = new XLite_Model_Image('ecard_image', $this->get('ecard_id'));
         }
 
         return $this->image;
     }
 
-    function getAllTemplates()
+    /**
+     * Get all templates 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getAllTemplates()
     {
         $templates = array();
         $layout = XLite_Model_Layout::getInstance();
 
-        // "skins/mail/" . $layout->get("locale") .
-        // $layout->set("skin", "mail");
-        // $path = $layout->getPath() . DIRECTORY_SEPARATOR . "modules" . DIRECTORY_SEPARATOR . "GiftCertificates" . DIRECTORY_SEPARATOR . "ecards";
-
         $path = LC_ROOT_DIR . 'skins/mail/' . $layout->get('locale') . '/modules/GiftCertificates/ecards';
 
-		$dh = opendir($path);
-        if ($dh) { 
-            while (($file = readdir($dh)) !== false) { 
-                if (
-					is_file($path . DIRECTORY_SEPARATOR . $file)
-					&& substr($file, -4) == ".tpl"
-				) {
-                    $templates[] = substr($file, 0, strlen($file) - 4);
-                } 
-            } 
-            closedir($dh); 
+        $iterator = new RegexIterator(
+            new DirectoryIterator($path),
+            '/\.tpl$/'
+        );
 
-        } else {
-            $this->doDie("Cannot read directory $path");
+        foreach ($iterator as $f) {
+            $templates[] = $f->getBasename('.tpl');
         }
 
         return $templates;
     }
 
-    function getAllBorders()
+    /**
+     * Get all borders 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getAllBorders()
     {
         $borders = array();
         $layout = XLite_Model_Layout::getInstance();
 
-        // $layout->set("skin","mail");
-        // $path = $layout->getPath() . DIRECTORY_SEPARATOR . "modules" . DIRECTORY_SEPARATOR . "GiftCertificates" . DIRECTORY_SEPARATOR . "ecards" . DIRECTORY_SEPARATOR . "borders";
-
         $path = LC_ROOT_DIR . 'skins/mail/' . $layout->get('locale') . '/modules/GiftCertificates/ecards/borders';
 
-		$dh = opendir($path);
-        if ($dh) {
-            while (($file = readdir($dh)) !== false) {
-                if (
-					is_file($path . DIRECTORY_SEPARATOR . $file)
-					&& substr($file, -4) == ".gif"
-					&& substr($file, -11) != "_bottom.gif"
-				) {
-                    $borders[] = substr($file, 0, strlen($file) - 4);
-                }
-            }
-            closedir($dh);
+        $iterator = new RegexIterator(
+            new DirectoryIterator($path),
+            '/\.gif$/'
+        );
 
-        } else {
-            $this->doDie("Cannot read directory $path");
+        foreach ($iterator as $f) {
+            $fn = $f->getBasename('.gif');
+            if (!preg_match('/_bottom$/Ss', $fn)) {
+                $borders[] = $fn;
+            }
         }
 
         return $borders;
     }
 
-    function delete()
+    /**
+     * Delete e-card
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function delete()
     {
-        $thumbnail = $this->getThumbnail();
-        $thumbnail->delete();
-
-        $image = $this->getImage();
-        $image->delete();
+        $this->getThumbnail()->delete();
+        $this->getImage()->delete();
 
         parent::delete();
     }
 
     /**
-    * The border image must be chosen for this e-Card
-    */
-    function isNeedBorder()
+     * Check - e-card use border or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isNeedBorder()
     {
-        $layout = XLite_Model_Layout::getInstance();
-        $template = LC_ROOT_DIR . 'skins/mail/' . $layout->get('locale') . '/modules/GiftCertificates/ecards/' . $this->get('template') . '.tpl';
+        $template = LC_ROOT_DIR
+            . 'skins/mail/'
+            . XLite_Model_Layout::getInstance()->get('locale')
+            . '/modules/GiftCertificates/ecards/'
+            . $this->get('template') . '.tpl';
 
-        // does the e-Card template use the border?
-        return preg_match('/gc\.border/', file_get_contents($template));
+        return file_exists($template) && preg_match('/gc\.border/', file_get_contents($template));
     }
 
 }

@@ -27,53 +27,107 @@
  */
 
 /**
- * ____description____
+ * E-card
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
 class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificateEcard extends XLite_Controller_Admin_Abstract
-{	
-    public $params = array("target", "ecard_id");	
+{
+    /**
+     * Controller parameters
+     * 
+     * @var    array
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $params = array('target', 'ecard_id');
+
+    /**
+     * E-card 
+     * 
+     * @var    XLite_Module_GiftCertificates_Model_ECard
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected $ecard = null;	
-    public $returnUrl = "admin.php?target=gift_certificate_ecards";
-    
-    function getECard()
+
+    /**
+     * Get return URL
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getReturnUrl()
+    {
+        return $this->buildUrl(
+            'gift_certificate_ecards'
+        );
+    }
+
+    /**
+     * Get e-card 
+     * 
+     * @return XLite_Module_GiftCertificates_Model_ECard
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getECard()
     {
         if (is_null($this->ecard)) {
-            if (!$this->get("ecard_id")) {
-                $this->ecard = new XLite_Module_GiftCertificates_Model_ECard();
-                $this->ecard->set("enabled", 1);
+            if ($this->get('ecard_id')) {
+                $this->ecard = new XLite_Module_GiftCertificates_Model_ECard($this->get('ecard_id'));
+
             } else {
-                $this->ecard = new XLite_Module_GiftCertificates_Model_ECard($this->get("ecard_id"));
+                $this->ecard = new XLite_Module_GiftCertificates_Model_ECard();
+                $this->ecard->set('enabled', 1);
             }
         }
+
         return $this->ecard;
     }
     
-    function action_update()
+    /**
+     * Update e-card
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionUpdate()
     {
-        if (!isset($_POST["enabled"])) {
-            $_POST["enabled"] = 0; // checkbox
-        }
-        if (!empty($_POST["new_template"])) {
-            $_POST["template"] = $_POST["new_template"];
+        if (!isset(XLite_Core_Request::getInstance()->enabled)) {
+            XLite_Core_Request::getInstance()->enabled = 0; // checkbox
         }
 
-		$this->getECard()->set('properties', $_POST);
-		$this->getECard()->isPersistent ? $this->getECard()->update() : $this->getECard()->create();
+        if (!empty(XLite_Core_Request::getInstance()->new_template)) {
+            XLite_Core_Request::getInstance()->template = XLite_Core_Request::getInstance()->new_template;
+        }
 
-        $this->action_images();
+        $this->getECard()->set('properties', XLite_Core_Request::getInstance()->getData());
+        $this->getECard()->modify();
+
+        $this->doActionImages();
     }
 
-    function action_images()
+    /**
+     * Load thumbnail and image
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionImages()
     {
-        $tn = $this->getECard()->get('thumbnail');
-        $tn->handleRequest();
-            
-        $img = $this->getECard()->get('image');
-        $img->handleRequest();
+        $this->getECard()->get('thumbnail')->handleRequest();
+        $this->getECard()->get('image')->handleRequest();
     }
 
 }

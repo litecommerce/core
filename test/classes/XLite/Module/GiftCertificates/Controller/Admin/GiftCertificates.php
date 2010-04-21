@@ -27,50 +27,94 @@
  */
 
 /**
- * ____description____
+ * Gift certificates
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
 class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificates extends XLite_Controller_Admin_Abstract
-{	
-    public $giftCertificates = null;
+{
+    /**
+     * Gift certificates list
+     * 
+     * @var    array of XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $giftCertificates = null;
 
-    function getGiftCertificates()
+    /**
+     * Get gift certificates 
+     * 
+     * @return array of XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getGiftCertificates()
     {
         if (is_null($this->giftCertificates)) {
             $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate();
-            $this->giftCertificates = $gc->findAll("", "add_date desc");
-            for ($i=0; $i<count($this->giftCertificates); $i++) {
-                $this->giftCertificates[$i]->validate();
+            $this->giftCertificates = $gc->findAll('', 'add_date desc');
+            foreach ($this->giftCertificates as $gc) {
+                $gc->validate();
             }
         }
+
         return $this->giftCertificates;
     }
     
-    function action_update()
+    /**
+     * Update 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionUpdate()
     {
-        if (isset($_POST["status"])) {
-            foreach ($_POST["status"] as $gcid => $status) {
+        if (
+            isset(XLite_Core_Request::getInstance()->status)
+            && is_array(XLite_Core_Request::getInstance()->status)
+        ) {
+            foreach (XLite_Core_Request::getInstance()->status as $gcid => $status) {
                 $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate($gcid);
-                $gc->set("status", $status);
+                $gc->set('status', $status);
                 $gc->update();
             }
         }
     }
 
-    function action_delete()
+    /**
+     * Delete 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionDelete()
     {
-        $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate($_POST["gcid"]);
+        $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate(XLite_Core_Request::getInstance()->gcid);
         $gc->delete();
     }
 
-    function action_delete_all()
+    /**
+     * Delete all gift certificates
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionDeleteAll()
     {
         $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate();
-        $status = $_POST["deleteStatus"];
-        $toDelete = $gc->iterate("status='$status'");
+        $status = XLite_Core_Request::getInstance()->deleteStatus;
+        $toDelete = $gc->iterate('status = \'' . $status . '\'');
         while ($gc->next($toDelete)) {
             $gc->delete();
         }

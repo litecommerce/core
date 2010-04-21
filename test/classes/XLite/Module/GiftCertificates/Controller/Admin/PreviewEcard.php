@@ -33,8 +33,8 @@
  * @subpackage Controller
  * @since      3.0.0
  */
-class XLite_Module_GiftCertificates_Controller_Admin_PreviewEcard extends XLite_Module_GiftCertificates_Controller_Customer_PreviewEcard
+class XLite_Module_GiftCertificates_Controller_Admin_PreviewEcard
+extends XLite_Module_GiftCertificates_Controller_Customer_PreviewEcard
 {
-// This dialog shouldn't be secured
 }
 

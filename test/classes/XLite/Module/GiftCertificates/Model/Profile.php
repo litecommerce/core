@@ -27,23 +27,40 @@
  */
 
 /**
- * ____description____
+ * User profile
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
 class XLite_Module_GiftCertificates_Model_Profile extends XLite_Model_Profile implements XLite_Base_IDecorator
-{	
-	public $_active_gift_certs = null;
+{
+    /**
+     * Active gift certificates
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $_active_gift_certs = null;
 
-	function getActiveGiftCertificates()
-	{
-		if (is_null($this->_active_gift_certs)) {
-			$profile_id = $this->get("profile_id");
-			$gc = new XLite_Module_GiftCertificates_Model_GiftCertificate();
-			$this->_active_gift_certs = (array) $gc->findAll("profile_id='$profile_id' AND status='A'");
-		}
-		return $this->_active_gift_certs;
-	}
+    /**
+     * Get active gift certificates 
+     * 
+     * @return array of XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getActiveGiftCertificates()
+    {
+        if (is_null($this->_active_gift_certs)) {
+            $profileId = $this->get('profile_id');
+            $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate();
+            $this->_active_gift_certs = $gc->findAll('profile_id = \'' . $profileId . '\' AND status = \'A\'');
+        }
+
+        return $this->_active_gift_certs;
+    }
 }

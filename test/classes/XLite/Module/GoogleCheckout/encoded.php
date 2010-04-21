@@ -251,7 +251,7 @@ EOT;
 
 			$discounts[$id]["type"] = "cert";
 
-			if ($cert->validate() != GC_OK || $cert->get("debit") <= 0)
+			if ($cert->validate() != XLite_Module_GiftCertificates_Model_GiftCertificate::GC_OK || $cert->get("debit") <= 0)
 				continue;
 
 			if ($cert_applied) {
@@ -485,7 +485,7 @@ function GoogleCheckout_new_order_notification($_this, $xmlData)
 		$cert->find("gcid='".addslashes($gift_cert["CODE"])."'");
 		$result = $order->set("GC", $cert);
 
-		if ($result == GC_OK) {
+		if ($result == XLite_Module_GiftCertificates_Model_GiftCertificate::GC_OK) {
 			$order->set("payedByGC", $gift_cert["APPLIED-AMOUNT"]);
 		} else {
 			$_this->xlite->logger->log("NEW-ORDER-NOTIFICATION: Gift certificate #".$gift_cert["CODE"]." not applied.");

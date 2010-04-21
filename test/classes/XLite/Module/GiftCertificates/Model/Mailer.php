@@ -27,7 +27,7 @@
  */
 
 /**
- * ____description____
+ * Mailer
  * 
  * @package XLite
  * @see     ____class_see____
@@ -35,13 +35,26 @@
  */
 class XLite_Module_GiftCertificates_Model_Mailer extends XLite_Model_Mailer implements XLite_Base_IDecorator
 {
-    function compile($template, $switchLayout = true)
+    /**
+     * Compile template
+     * 
+     * @param string  $template     Template path
+     * @param boolean $switchLayout Switch laout flag
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function compile($template, $switchLayout = true)
     {
-        $this->set("mode", "invoice");
-        $this->set("mailMode", "GC");
-    	$text = parent::compile($template, $switchLayout);
-        $this->set("mode", null);
-        $this->set("mailMode", null);
+        $this->set('mode', 'invoice');
+        $this->set('mailMode', 'GC');
+
+        $text = parent::compile($template, $switchLayout);
+
+        $this->set('mode', null);
+        $this->set('mailMode', null);
 
         return $text;
     } 

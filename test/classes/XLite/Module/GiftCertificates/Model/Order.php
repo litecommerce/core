@@ -35,9 +35,6 @@
  */
 class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
 {
-    const GC_OK = 2;
-    const GC_DISABLED = 3;
-    
     /**
      * Gift certificate (cache)
      * 
@@ -189,22 +186,24 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
     {
         $result = 0;
 
-        $this->gc = $gc;
+        if (is_null($gc) || !($gc instanceof XLite_Module_GiftCertificates_Model_GiftCertificate)) {
 
-        if (is_null($gc)) {
+            $this->gc = null; 
             $this->set('gcid', '');
             $this->calcTotals();
-            $result = self::GC_OK;
+            $result = XLite_Module_GiftCertificates_Model_GiftCertificate::GC_OK;
 
         } elseif ($gc instanceof XLite_Module_GiftCertificates_Model_GiftCertificate) {
+
+            $this->gc = $gc;
 
             if ('A' == $gc->get('status') && 0 < $gc->get('debit')) {
                 $this->set('gcid', $gc->get('gcid'));
                 $this->calcTotals();
-                $result = self::GC_OK;
+                $result = XLite_Module_GiftCertificates_Model_GiftCertificate::GC_OK;
 
             } else {
-                $result = self::GC_DISABLED;
+                $result = XLite_Module_GiftCertificates_Model_GiftCertificate::GC_DISABLED;
             }
         }
 

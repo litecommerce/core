@@ -33,11 +33,22 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_Controller_Customer_Checkout extends XLite_Controller_Customer_Checkout implements XLite_Base_IDecorator
+class XLite_Module_GiftCertificates_Controller_Customer_Checkout extends XLite_Controller_Customer_Checkout
+implements XLite_Base_IDecorator
 {
-    function action_payment()
+
+    /**
+     * Set payment method
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionPayment()
     {
         $this->checkCertificatesExpiration();
+
         parent::action_payment();
     }
 
@@ -52,7 +63,9 @@ class XLite_Module_GiftCertificates_Controller_Customer_Checkout extends XLite_C
     protected function checkCertificatesExpiration()
     {
         if ($this->config->GiftCertificates->expiration_email) {
+
             $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate();
+
             $gcs = $gc->findAll(
                 implode(' AND ', $gc->getExpirationConditions()),
                 'expiration_date',

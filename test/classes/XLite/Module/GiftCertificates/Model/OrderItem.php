@@ -34,124 +34,262 @@
  * @since   3.0.0
  */
 class XLite_Module_GiftCertificates_Model_OrderItem extends XLite_Model_OrderItem implements XLite_Base_IDecorator
-{    
+{
+    /**
+     * Gift certificate (cache)
+     * 
+     * @var    XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected $gc = null;
 
+    /**
+     * Constructor
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function __construct()
     {
-        $this->fields["gcid"] = ""; // Gift Certificate unique ID
+        // Gift Certificate unique ID
+        $this->fields['gcid'] = '';
+
         parent::__construct();
     }
 
-    function getGC()
+    /**
+     * Get gift certificate
+     * 
+     * @return XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getGC()
     {
         if (is_null($this->gc)) {
-            if (parent::get("gcid")) {
-                $this->gc = new XLite_Module_GiftCertificates_Model_GiftCertificate(parent::get("gcid"));
-            } else {
-                $this->gc = null;
-            }
+            $gcId = parent::get('gcid');
+            $this->gc = $gcId ? new XLite_Module_GiftCertificates_Model_GiftCertificate($gcId) : null;
         }
+
         return $this->gc;
     }
 
-    function getKey()
+    /**
+     * Get item key 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getKey()
     {
-        if ($this->get("gcid")) {
-            return "GC".$this->get("gcid");
-        } else {
-            return parent::getKey();
-        }
+        $gcId = $this->get('gcid');
+
+        return $gcId ? ('GC' . $gcId) : parent::getKey();
     }
-    function getTaxableTotal()
+
+    /**
+     * Get taxable item total 
+     * 
+     * @return float
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTaxableTotal()
     {
-        if (!is_null($this->getGC())) {
-            return 0;
-        }
-        return parent::getTaxableTotal();
+        return is_null($this->getGC()) ? parent::getTaxableTotal() : 0;
     }
-    function isShipped()
+
+    /**
+     * Check - item is shipped or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isShipped()
     {
-        if (!is_null($this->getGC())) {
-            return false;
-        }
-        return parent::isShipped();
+        return is_null($this->getGC()) ? parent::isShipped() : false;
     }
-    function getDescription()
+
+    /**
+     * Get item description 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDescription()
     {
-        if (!is_null($this->getGC())) { 
-            return "Gift certificate # ".$this->get("gcid");
-        }
-        return parent::getDescription();
+        return is_null($this->getGC())
+            ? parent::getDescription()
+            : ('Gift certificate # ' . $this->get('gcid'));
     }
-    function getDiscountablePrice()
+
+    /**
+     * Get discountable price 
+     * 
+     * @return float
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDiscountablePrice()
     {
         return is_null($this->getGC()) ? parent::getDiscountablePrice() : 0;
     }
-    function getShortDescription($limit = 30)
+
+    /**
+     * Get item short description 
+     * 
+     * @param integer $limit Length limit
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getShortDescription($limit = 30)
     {
-        if (!is_null($this->getGC())) { 
-            return "GC #".$this->get("gcid");
-        }
-        return parent::getShortDescription($limit);
-    }
-    function get($name)
-    {
-        if (!is_null($this->getGC())) {
-            if ($name == 'name')   return $this->getDescription();
-            if ($name == 'brief_description') return $this->getDescription();
-            if ($name == 'description') return $this->getDescription();
-            if ($name == 'sku')   return "";
-            if ($name == 'amount') return 1;
-        }
-        return parent::get($name);
+        return is_null($this->getGC())
+            ? parent::getShortDescription($limit)
+            : substr('GC #' . $this->get('gcid'), 30);
     }
 
-    function delete()
+    /**
+     * getter
+     * 
+     * @param string $name Property name
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function get($name)
+    {
+        if (!is_null($this->getGC())) {
+
+            switch ($name) {
+                case 'name':
+                    $result = $this->getDescription();
+                    break;
+
+                case 'brief_description':
+                    $result = $this->getDescription();
+                    break;
+
+                case 'description':
+                    $result = $this->getDescription();
+                    break;
+
+                case 'sku':
+                    $result = '';
+                    break;
+
+                case 'amount':
+                    $result = 1;
+                    break;
+
+                default:
+            }
+        }
+
+        return isset($result) ? $result : parent::get($name);
+    }
+
+    /**
+     * Delete item
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function delete()
     {
         // remove disabled GCs
-        if (!is_null($this->getGC()) && $this->getGC()->get('status') == "D") {
+        if (!is_null($this->getGC()) && 'D' == $this->getGC()->get('status')) {
             $this->getGC()->delete();
         }
+
         parent::delete();
     }
 
-    function isValid()
+    /**
+     * Check - item is valid or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isValid()
     {
         $gc = $this->getGC();
-        if (!is_null($gc)) {
-            return $this->getGC()->is('exists');
-        }
-        return parent::isValid();
+
+        return is_null($gc) ? parent::isValid() : $gc->isExists();
     }
-                    
-    function setGC($gc)
+
+    /**
+     * Setter (for gift certificate) 
+     * 
+     * @param XLite_Module_GiftCertificates_Model_GiftCertificate $gc Gift certificate
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setGC($gc)
     {
-        $this->gc = $gc;
-        if (is_null($gc)) {
-            $this->set("gcid", "");
+        if (is_null($gc) || !($gc instanceof XLite_Module_GiftCertificates_Model_GiftCertificate)) {
+            $this->gc = null;
+            $this->set('gcid', '');
+
         } else {
-            $this->set("gcid", $gc->get("gcid"));
-            $this->set("product_id", "");
-            $this->set("price", $gc->get("amount"));
+            $this->gc = $gc;
+            $this->set('gcid', $gc->get('gcid'));
+            $this->set('product_id', '');
+            $this->set('price', $gc->get('amount'));
         }
     }
 
-    function hasOptions()
+    /**
+     * Check - has item options or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function hasOptions()
     {
-        // check if the ProductOptions module is on
-        if (is_null($this->xlite->getComplex('mm.activeModules.ProductOptions'))) {
-            return false;
-        }
-        if (is_null($this->get("product"))) {
-            return false;
-        }
-        return parent::hasOptions();
+        return (!$this->mm->getActiveModules('ProductOptions') || !$this->getProduct())
+            ? false
+            : parent::hasOptions();
     }
 
-    function isUseStandardTemplate()
+    /**
+     * Check - use standard template for item or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isUseStandardTemplate()
     {
-        return $this->get("gcid") == "" && parent::isUseStandardTemplate();
+        return !$this->get('gcid') && parent::isUseStandardTemplate();
     }
 
     /**
@@ -164,22 +302,11 @@ class XLite_Module_GiftCertificates_Model_OrderItem extends XLite_Model_OrderIte
      */
     public function getURL()
     {
-        $url = false;
+        $gcId = $this->get('gcid');
 
-        if ($this->get('gcid')) {
-            $url = XLite_Core_Converter::getInstance()->buildURL(
-                'gift_certificate',    
-                '',
-                array(
-                    'gcid' => $this->get('gcid'),
-                )
-            );
-
-        } else {
-            $url = parent::getURL();
-        }
-
-        return $url;
+        return $gcId
+            ? XLite_Core_Converter::buildURL('gift_certificate', '', array('gcid' => $gcId))
+            : parent::getURL();
     }
 
 }

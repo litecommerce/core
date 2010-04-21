@@ -27,15 +27,23 @@
  */
 
 /**
- * ____description____
+ * Select e-card
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
 class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificateSelectEcard extends XLite_Controller_Admin_Abstract
-{	
-    public $params = array("target", "gcid");
+{
+    /**
+     * Controller parameters 
+     * 
+     * @var    array
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $params = array('target', 'gcid');
 
     /**
      * Do action 'update'
@@ -47,9 +55,11 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificateSelectEcard 
      */
     protected function doActionUpdate()
     {
-	    $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate(XLite_Core_Request::getInstance()->gcid);
-	    $gc->set("ecard_id", XLite_Core_Request::getInstance()->ecard_id);
-	    $gc->update();
+        $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate(
+            XLite_Core_Request::getInstance()->gcid
+        );
+        $gc->set('ecard_id', XLite_Core_Request::getInstance()->ecard_id);
+        $gc->update();
     }
 
     /**
@@ -62,6 +72,10 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificateSelectEcard 
      */
     public function getReturnURL()
     {
-        return $this->buildUrl('gift_certificate', '', array('gcid' => XLite_Core_Request::getInstance()->gcid));
+        return $this->buildUrl(
+            'gift_certificate',
+            '',
+            array('gcid' => XLite_Core_Request::getInstance()->gcid)
+        );
     }
 }
