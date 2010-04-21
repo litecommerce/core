@@ -29,12 +29,15 @@
 	background-image: none;
 	display: -moz-inline-stack;		/* FF2 supports this instead of "inline-block" */
 	display: inline-block;
+  border-style: solid;          /* Weird but FF requires this in order to display "inline-blocks" properly */
+  border-color: transparent;    /* Hide the border in all browsers but IE6 */
 }
 
 /* IE6 requires this in order to correctly display li as "inline-blocks */
 * html .lc-subcategory-icons li
 {
   display: inline;
+  border-style: none;           /* Hide the border in IE6 */
 }
 
 /* IE7 requires this in order to correctly display li as "inline-blocks */
@@ -49,8 +52,9 @@
 	text-align: center;
 }
 
-.lc-subcategory-icons a,
-.lc-subcategory-icons img
+.lc-subcategory-icons a span
 {
+  display: block;
+  text-align: center;
   position: relative;       /* Hack for FF2: in FF2 static "inner-blocks" are non-clickable */
 }
