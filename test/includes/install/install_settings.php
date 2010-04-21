@@ -70,7 +70,7 @@ if (constant('LC_OS_CODE') === 'win') {
     define('MAX_RECURSION_DEPTH', 800);
 
 } else {
-	define('MAX_RECURSION_DEPTH', 10000);
+	define('MAX_RECURSION_DEPTH', 97); // TODO: define actual required value. It's 97 now
 }
 
 // Other LiteCommerce settings
