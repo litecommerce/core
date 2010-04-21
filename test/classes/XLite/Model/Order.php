@@ -1190,11 +1190,11 @@ class XLite_Model_Order extends XLite_Model_Abstract
      * Called when an order successfully placed by a client 
      * 
      * @return void
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function succeed()
+    public function succeed()
     {
         // save order ID#
         $this->session->set('last_order_id', $this->get('order_id'));
