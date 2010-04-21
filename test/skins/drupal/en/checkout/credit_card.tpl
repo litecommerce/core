@@ -35,7 +35,7 @@ $('.checkout-details').submit(CheckoutSubmit);
   <table cellspacing="0" class="form-table">
 
     <tr>
-      <td><label for="cc_type">Credit card type:<label></td>
+      <td><label for="cc_type">Credit card type:</label></td>
       <td class="marker">*</td>
       <td>
         <select id="cc_type" name="cc_info[cc_type]" onchange="javascript: return showSoloOrSwitch();">
@@ -65,7 +65,7 @@ $('.checkout-details').submit(CheckoutSubmit);
       <td class="marker"><span id="start_date_star">*</span></td>
       <td>
         <widget class="XLite_View_Date" field="cc_info_cc_start_date_" hide_days="1" higherYear="{getCurrentYear()}" showMonthsNumbers="1" /><br />
-        <input type="checkbox" name="no_start_date" id="start_date_box" onclick="javascript: showStar('start_date');">&nbsp;<label for="start_date_box">My card has no "Start date" information</label>
+        <input type="checkbox" name="no_start_date" id="start_date_box" onclick="javascript: showStar('start_date');" />&nbsp;<label for="start_date_box">My card has no "Start date" information</label>
         <input type="hidden" name="cc_info[cc_start_date]" value="MMYY" />
       </td>
     </tr>
@@ -84,7 +84,7 @@ $('.checkout-details').submit(CheckoutSubmit);
       <td class="marker"><span id="issue_number_star">*</span></td>
       <td>
         <input type="text" id="cc_issue" name="cc_info[cc_issue]" value="{cart.details.cc_issue:r}" size="4" maxlength="4" /><br />
-        <input type="checkbox" name="no_issue_number" id="issue_number_box" onclick="javascript: showStar('issue_number');">&nbsp;<label for="issue_number_box">My card has no "Issue no." information</label>
+        <input type="checkbox" name="no_issue_number" id="issue_number_box" onclick="javascript: showStar('issue_number');" />&nbsp;<label for="issue_number_box">My card has no "Issue no." information</label>
       </td>
     </tr>
 

@@ -66,7 +66,7 @@
   </div>
 
   <div class="agree">
-    <input type="checkbox" name="agree" id="agree" value="Y" />&nbsp;<label for="agree">I accept "<a href="{buildUrl(#help#,##,_ARRAY_(#mode#^#terms_conditions#))}">Terms &amp; Conditions</a>" and "<a href="{buildUrl(#help#,##,_ARRAY_(#mode#^#privacy_statement#))}">Privacy statement</a>".
+    <input type="checkbox" name="agree" id="agree" value="Y" />&nbsp;<label for="agree">I accept "<a href="{buildUrl(#help#,##,_ARRAY_(#mode#^#terms_conditions#))}">Terms &amp; Conditions</a>" and "<a href="{buildUrl(#help#,##,_ARRAY_(#mode#^#privacy_statement#))}">Privacy statement</a>".</label>
   </div>
 
   <div class="button-row">

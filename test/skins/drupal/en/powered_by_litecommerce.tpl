@@ -11,6 +11,6 @@
  * @since     3.0.0
    *}
 <div class="powered-by">
-  <p class="copyright">&copy; 2010 {config.Company.company_name}<p>
+  <p class="copyright">&copy; 2010 {config.Company.company_name}</p>
   <p>{getMessage():h}</p>
 </div>
