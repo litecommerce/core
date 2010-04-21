@@ -377,7 +377,9 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 
         $pm = $this->getCart()->get("paymentMethod");
         if (!is_null($pm)) {
-            $notes = isset(XLite_Core_Request::getInstance()->notes) ? XLite_Core_Request::getInstance()->notes : '';
+            $notes = isset(XLite_Core_Request::getInstance()->notes)
+                ? XLite_Core_Request::getInstance()->notes
+                : '';
             $this->getCart()->set('notes', $notes);
 
             switch ($pm->handleRequest($this->getCart())) {

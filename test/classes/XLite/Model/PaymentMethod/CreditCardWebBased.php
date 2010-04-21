@@ -43,7 +43,7 @@ abstract class XLite_Model_PaymentMethod_CreditCardWebBased extends XLite_Model_
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $formTemplate = 'checkout/credit_card_builder.tpl';
+    public $formTemplate = false;
 
     /**
      * Get form URL 
@@ -81,6 +81,26 @@ abstract class XLite_Model_PaymentMethod_CreditCardWebBased extends XLite_Model_
     abstract protected function getFields(XLite_Model_Cart $cart);
 
     /**
+     * Handle request
+     *
+     * @param XLite_Model_Cart $cart Cart
+     * @param string           $type Call type
+     *
+     * @return integer Operation status
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function handleRequest(XLite_Model_Cart $cart, $type = self::CALL_CHECKOUT)
+    {
+        if (self::CALL_CHECKOUT == $type) {
+            $this->displayRedirectPage($cart);
+        }
+
+        parent::handleRequest($cart, $type);
+    }
+
+    /**
      * Get default return URL 
      * 
      * @return string
@@ -90,7 +110,7 @@ abstract class XLite_Model_PaymentMethod_CreditCardWebBased extends XLite_Model_
      */
     public function getReturnURL()
     {
-        return $this->buildUrl('callback', 'callback', array('order_id_name' => 'cartId'));
+        return XLite_Core_Converter::buildUrl('callback', 'callback', array('order_id_name' => 'cartId'));
     }
 
     /**
@@ -179,6 +199,48 @@ abstract class XLite_Model_PaymentMethod_CreditCardWebBased extends XLite_Model_
     }
 
     /**
+     * Display redirect page
+     *
+     * @param XLite_Model_Cart $cart Cart
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function displayRedirectPage(XLite_Model_Cart $cart)
+    {
+        $method = $this->getFormMethod();
+        $url = $this->getFormURL();
+
+        $inputs = array();
+        foreach ($this->getFields($cart) as $name => $value) {
+            $inputs[] = '<input type="hidden" name="' . htmlspecialchars($name)
+                . '" value="' . htmlspecialchars($value) . '" />';
+        }
+
+        $body = implode("\n", $inputs);
+
+        $page = <<<HTML
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<body onload="javascript: document.getElementById('form').submit();">
+<form method="$method" id="form" name="payment_form" action="$url">
+$body
+<noscript>
+If you are not redirected within 3 seconds, please <input type="submit" value="press here" />.
+</noscript>
+</form>
+</body>
+</html>
+HTML;
+
+        echo ($page);
+
+        exit (0);
+    }
+
+    /**
      * Display return page 
      * 
      * @param XLite_Model_Cart $cart Cart_
@@ -204,7 +266,9 @@ abstract class XLite_Model_PaymentMethod_CreditCardWebBased extends XLite_Model_
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <body onload="javascript: document.location = '$backUrl;';">
+<noscript>
 If you are not redirected within 5 seconds, please <a href="$backUrl">click here to return to the shopping cart</a>.
+</noscript>
 </body>
 </html>
 HTML;

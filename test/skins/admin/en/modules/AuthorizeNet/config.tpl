@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Payment module configuration
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -90,24 +90,6 @@ Log into the Merchant Interface<br>
 2. Click on the <i>Card Code Verification</i> link from the Security section<br>
 3. Check the box(es) next to the Card Codes that the system should reject<br>
 4. Click <i>Submit</i> to save changes
-</td>
-</tr>
-
-<tr>
-<td>MD5 secure hash value:</td>
-<td>
-<input type="text" value="{pm.params.md5HashValue:r}" name="params[md5HashValue]" size="20">
-</td>
-</tr>
-
-<tr>
-<td colspan="2">Set the MD5 Hash Value to use the MD5 security checks. In this case, you will have to set the same  MD5 Hash Value in your Merchant Interface:<br>
-1. Log into the Merchant Interface<br>
-2. Select <i>Settings</i> from the Main Menu<br>
-3. Click on <i>MD5 Hash</i> in the Security section<br>
-4. Enter the MD5 Hash Value<br>
-5. Confirm the MD5 Hash Value entered<br>
-6. Click <i>Submit</i> to save changes
 </td>
 </tr>
 

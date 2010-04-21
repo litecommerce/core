@@ -33,7 +33,8 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AuthorizeNet_Model_PaymentMethod_AuthorizenetCc extends XLite_Model_PaymentMethod_CreditCardWebBased
+class XLite_Module_AuthorizeNet_Model_PaymentMethod_AuthorizenetCc
+extends XLite_Model_PaymentMethod_CreditCardWebBased
 {
     /**
      * AVS messages
@@ -318,14 +319,17 @@ class XLite_Module_AuthorizeNet_Model_PaymentMethod_AuthorizenetCc extends XLite
      * Handle request
      *
      * @param XLite_Model_Cart $cart Cart
+     * @param string           $type Call type
      *
      * @return integer Operation status
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function handleRequest(XLite_Model_Cart $cart)
+    public function handleRequest(XLite_Model_Cart $cart, $type = self::CALL_CHECKOUT)
     {
+        parent::handleRequest($cart, $type);
+
         $request = XLite_Core_Request::getInstance();
 
         $status = 1 == $request->x_response_code ? 'P' : 'F';
@@ -365,19 +369,6 @@ class XLite_Module_AuthorizeNet_Model_PaymentMethod_AuthorizenetCc extends XLite
     }
 
     /**
-     * Handle configuration request
-     *
-     * @return mixed Operation status
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function handleConfigRequest()
-    {
-        return $this->getProcessor()->handleConfigRequest();
-    }
-
-    /**
      * Get RFC 2104 HMAC (MD5)
      * 
      * @param string $key  Key
@@ -390,6 +381,10 @@ class XLite_Module_AuthorizeNet_Model_PaymentMethod_AuthorizenetCc extends XLite
      */
     protected function getHMAC($key, $data)
     {
+        if (function_exists('hash_hmac')) {
+            return hash_hmac('md5', $data, $key);
+        }
+
         /**
          * RFC 2104 HMAC implementation for php. Creates an md5 HMAC.
          * Eliminates the need to install mhash to compute a HMAC. Hacked by Lance Rushing

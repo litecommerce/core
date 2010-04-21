@@ -27,7 +27,7 @@
  */
 
 /**
- * ____description____
+ * Payment method callback
  * 
  * @package XLite
  * @see     ____class_see____
@@ -35,27 +35,47 @@
  */
 class XLite_Controller_Customer_Callback extends XLite_Controller_Customer_Abstract
 {
-    function action_callback()
+    /**
+     * Callback 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionCallback()
     {
-        if (isset($_REQUEST["order_id_name"])) {
-            // some of gateways can't accept return url on run-time and
-            // use the one set in merchant account, so we can't pass
-            // 'order_id' in run-time, instead pass the order id parameter name
-            $order_id_name = $_REQUEST["order_id_name"];
+        if (isset(XLite_Core_Request::getInstance()->order_id_name)) {
+            /**
+             * some of gateways can't accept return url on run-time and
+             * use the one set in merchant account, so we can't pass
+             * 'order_id' in run-time, instead pass the order id parameter name
+             */
+            $orderIdName = XLite_Core_Request::getInstance()->order_id_name;
+
         } else {
-            $order_id_name = "order_id";
-        }
-        if (!isset($_REQUEST[$order_id_name])) {
-            $this->doDie("The order ID variable '$order_id_name' is not found in request");
-        }
-        $cart = new XLite_Model_Order($_REQUEST[$order_id_name]);
-        if (!$cart->is("exists")) {
-            $this->doDie("Order #".$cart->get("order_id")." was not found. Please contact administrator.");
+            $orderIdName = 'order_id';
         }
 
-		// FIXME - orginal code; the "handleRequest" function is not exists for the "PaymentMethod" class
-        $cart->getPaymentMethod()->handleRequest($cart);
+        if (!isset(XLite_Core_Request::getInstance()->$orderIdName)) {
+            $this->doDie('The order ID variable \'' . $orderIdName . '\' is not found in request');
+        }
 
-        $this->set("silent", true);
+        $cart = new XLite_Model_Order(XLite_Core_Request::getInstance()->$orderIdName);
+        if (!$cart->isExists()) {
+            $this->doDie('Order #' . $cart->get('order_id') . ' was not found. Please contact administrator.');
+        }
+
+        $paymentMethod = $cart->getPaymentMethod();
+        if (!($paymentMethod instanceof XLite_Model_PaymentMethod_CreditCard)) {
+            $this->doDie(
+                'Order #' . $cart->get('order_id') . ' has not assigned online payment methods.'
+                . ' Please contact administrator.'
+            );
+        }
+
+        $cart->getPaymentMethod()->handleRequest($cart, XLite_Model_PaymentMethod_CreditCard::CALL_BACK);
+
+        $this->set('silent', true);
     }
 }

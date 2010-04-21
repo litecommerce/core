@@ -35,6 +35,9 @@
  */
 class XLite_Model_PaymentMethod_CreditCard extends XLite_Model_PaymentMethod
 {
+    const CALL_CHECKOUT = 'checkout';
+    const CALL_BACK     = 'callback';
+
     /**
      * Form template 
      * 
@@ -111,13 +114,14 @@ class XLite_Model_PaymentMethod_CreditCard extends XLite_Model_PaymentMethod
      * Handle request 
      * 
      * @param XLite_Model_Cart $cart Cart
+     * @param string           $type Call type
      *  
      * @return integer Operation status
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function handleRequest(XLite_Model_Cart $cart)
+    public function handleRequest(XLite_Model_Cart $cart, $type = self::CALL_CHECKOUT)
     {
         $this->cc_info = $this->getPaymentInfo();
         $this->process($cart);

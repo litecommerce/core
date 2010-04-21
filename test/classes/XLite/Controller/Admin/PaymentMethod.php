@@ -52,5 +52,9 @@ class XLite_Controller_Admin_PaymentMethod extends XLite_Controller_Admin_Abstra
     {
         $this->set("error", $this->getPM()->handleConfigRequest());
         $this->set("updated", 1);
+        $this->set(
+            'returnUrl',
+            $this->buildUrl('payment_methods')
+        );
     }
 }
