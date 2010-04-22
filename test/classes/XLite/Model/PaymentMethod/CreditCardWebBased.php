@@ -102,15 +102,20 @@ abstract class XLite_Model_PaymentMethod_CreditCardWebBased extends XLite_Model_
 
     /**
      * Get default return URL 
+     *
+     * @param string $fieldName Order id field name
      * 
      * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getReturnURL()
+    public function getReturnURL($fieldName = 'order_id')
     {
-        return XLite_Core_Converter::buildUrl('callback', 'callback', array('order_id_name' => 'cartId'));
+        return XLite::getInstance()->getShopUrl(
+            XLite_Core_Converter::buildUrl('callback', 'callback', array('order_id_name' => $fieldName)),
+            XLite_Core_Request::getInstance()->isHTTPS()
+        );
     }
 
     /**

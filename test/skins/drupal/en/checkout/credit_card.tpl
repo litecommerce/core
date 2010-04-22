@@ -29,7 +29,6 @@ $(document).ready(
 $('.checkout-details').submit(CheckoutSubmit);
 </script>
 
-<h2>Credit card information</h2>
 <div class="details">
 
   <table cellspacing="0" class="form-table">

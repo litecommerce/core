@@ -55,6 +55,7 @@
 
   <div class="payment-method">
     <widget class="XLite_View_Button_Link" label="Change payment method" style="change" location="{buildURL(#checkout#,##,_ARRAY_(#mode#^#paymentMethod#))}" />
+    <h2>{cart.paymentMethod.name}</h2>
     <widget template="checkout/payment_method_switcher.tpl" />
   </div>
 

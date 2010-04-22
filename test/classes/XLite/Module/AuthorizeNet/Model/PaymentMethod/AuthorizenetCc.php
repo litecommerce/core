@@ -73,7 +73,7 @@ extends XLite_Model_PaymentMethod_CreditCardWebBased
         'N' => 'No Match',
         'P' => 'Not Processed',
         'S' => 'Should have been present',
-        'U' => 'Issuer unable to process'
+        'U' => 'Issuer unable to process',
     );
 
     /**
@@ -244,7 +244,11 @@ extends XLite_Model_PaymentMethod_CreditCardWebBased
      */
     public function getFormURL()
     {
-        return 'https://secure.authorize.net/gateway/transact.dll';
+        $params = $this->get('params');
+
+        return 'TRUE' == $params['test']
+            ? 'https://test.authorize.net/gateway/transact.dll'
+            : 'https://secure.authorize.net/gateway/transact.dll';
     }
 
     /**
@@ -281,36 +285,36 @@ extends XLite_Model_PaymentMethod_CreditCardWebBased
             : 'n/a';
 
         return array(
-            'x_Test_Request'  => $params['test'],
-            'x_Login'         => $params['login'],
-            'x_Type'          => $params['type'],
+            'x_test_request'  => $params['test'],
+            'x_login'         => $params['login'],
+            'x_type'          => $params['type'],
             'x_fp_sequence'   => $sequence,
             'x_fp_timestamp'  => $tstamp,
             'x_fp_hash'       => $hash,
-            'x_Show_Form'     => 'PAYMENT_FORM',
-            'x_Amount'        => $cart->get('total'),
-            'x_Currency_Code' => $params['currency'],
-            'x_Method'        => 'CC',
-            'x_First_Name'    => $cart->getProfile()->get('billing_firstname'),
-            'x_Last_Name'     => $cart->getProfile()->get('billing_lastname'),
-            'x_Phone'         => $cart->getProfile()->get('billing_phone'),
-            'x_Email'         => $cart->getProfile()->get('login'),
-            'x_Cust_ID'       => $cart->getProfile()->get('login'),
-            'x_Address'       => $cart->getProfile()->get('billing_address'),
-            'x_City'          => $cart->getProfile()->get('billing_city'),
-            'x_State'         => $bState,
-            'x_Zip'           => $cart->getProfile()->get('billing_zipcode'),
-            'x_Country'       => $cart->getProfile()->getComplex('billingCountry.country'),
-            'x_ship_to_First_Name' => $cart->getProfile()->get('shipping_firstname'),
-            'x_ship_to_Last_Name'  => $cart->getProfile()->get('shipping_lastname'),
-            'x_ship_to_Address'    => $cart->getProfile()->get('shipping_address'),
-            'x_ship_to_City'       => $cart->getProfile()->get('shipping_city'),
-            'x_ship_to_State'      => $sState,
-            'x_ship_to_Zip'        => $cart->getProfile()->get('shipping_zipcode'),
-            'x_ship_to_Country'    => $cart->getProfile()->getComplex('shippingCountry.country'),
-            'x_Invoice_num'        => $params['prefix'] . $cart->get('order_id'),
-            'x_Relay_Response'     => 'TRUE',
-            'x_Relay_URL'          => $this->getReturnURL(),
+            'x_show_form'     => 'PAYMENT_FORM',
+            'x_amount'        => $cart->get('total'),
+            'x_currency_code' => $params['currency'],
+            'x_method'        => 'CC',
+            'x_first_name'    => $cart->getProfile()->get('billing_firstname'),
+            'x_last_name'     => $cart->getProfile()->get('billing_lastname'),
+            'x_phone'         => $cart->getProfile()->get('billing_phone'),
+            'x_email'         => $cart->getProfile()->get('login'),
+            'x_cust_id'       => $cart->getProfile()->get('login'),
+            'x_address'       => $cart->getProfile()->get('billing_address'),
+            'x_city'          => $cart->getProfile()->get('billing_city'),
+            'x_state'         => $bState,
+            'x_zip'           => $cart->getProfile()->get('billing_zipcode'),
+            'x_country'       => $cart->getProfile()->getComplex('billingCountry.country'),
+            'x_ship_to_first_name' => $cart->getProfile()->get('shipping_firstname'),
+            'x_ship_to_last_name'  => $cart->getProfile()->get('shipping_lastname'),
+            'x_ship_to_address'    => $cart->getProfile()->get('shipping_address'),
+            'x_ship_to_city'       => $cart->getProfile()->get('shipping_city'),
+            'x_ship_to_state'      => $sState,
+            'x_ship_to_zip'        => $cart->getProfile()->get('shipping_zipcode'),
+            'x_ship_to_country'    => $cart->getProfile()->getComplex('shippingCountry.country'),
+            'x_invoice_num'        => $cart->get('order_id'),
+            'x_relay_response'     => 'TRUE',
+            'x_relay_url'          => $this->getReturnURL('x_invoice_num'),
             'x_customer_ip'        => $this->getClientIP(),
         );
     }
@@ -330,42 +334,47 @@ extends XLite_Model_PaymentMethod_CreditCardWebBased
     {
         parent::handleRequest($cart, $type);
 
-        $request = XLite_Core_Request::getInstance();
+        if (self::CALL_BACK == $type) {
+            $request = XLite_Core_Request::getInstance();
 
-        $status = 1 == $request->x_response_code ? 'P' : 'F';
+            $status = 1 == $request->x_response_code ? 'P' : 'F';
 
-        if (isset($this->err[$request->x_response_reason_code])) {
-            $this->setDetailsField($cart, 'response', 'Response', $this->err[$request->x_response_reason_code]);
+            if (isset($request->x_response_reason_text)) {
+                $this->setDetailsField($cart, 'response', 'Response', $request->x_response_reason_text);
+
+            } elseif (isset($this->err[$request->x_response_reason_code])) {
+                $this->setDetailsField($cart, 'response', 'Response', $this->err[$request->x_response_reason_code]);
+            }
+
+            if ($request->x_auth_code) {
+                $this->setDetailsField($cart, 'authCode', 'Auth code', $request->x_auth_code);
+            }
+
+            if ($request->x_trans_id) {
+                $this->setDetailsField($cart, 'transId', 'Transaction ID', $request->x_trans_id);
+            }
+
+            if ($request->x_response_subcode) {
+                $this->setDetailsField($cart, 'responseSubcode', 'Response subcode', $request->x_response_subcode);
+            }
+
+            if (isset($request->x_avs_code) && isset($this->avserr[$request->x_avs_code])) {
+                $this->setDetailsField($cart, 'avs', 'AVS', $this->avserr[$request->x_avs_code]);
+            }
+
+            if (isset($request->x_CVV2_Resp_Code) && isset($this->cvverr[$request->x_CVV2_Resp_Code])) {
+                $this->setDetailsField($cart, 'cvv', 'CVV', $this->cvverr[$request->x_CVV2_Resp_Code]);
+            }
+
+            if (!$this->checkTotal($cart, $request->x_amount)) {
+                $status = 'F';
+            }
+
+            $cart->set('status', $status);
+            $cart->update();
+
+            $this->displayReturnPage($cart);
         }
-
-        if ($request->x_auth_code) {
-            $this->setDetailsField($cart, 'authCode', 'Auth code', $request->x_auth_code);
-        }
-
-        if ($request->x_trans_id) {
-            $this->setDetailsField($cart, 'transId', 'Transaction ID', $request->x_trans_id);
-        }
-
-        if ($request->x_response_subcode) {
-            $this->setDetailsField($cart, 'responseSubcode', 'Response subcode', $request->x_response_subcode);
-        }
-
-        if (isset($this->avserr[$request->x_avs_code])) {
-            $this->setDetailsField($cart, 'avs', 'AVS', $this->avserr[$request->x_avs_code]);
-        }
-
-        if (isset($this->cvverr[$request->x_CVV2_Resp_Code])) {
-            $this->setDetailsField($cart, 'cvv', 'CVV', $this->cvverr[$request->x_CVV2_Resp_Code]);
-        }
-
-        if (!$this->checkTotal($cart, $request->x_Amount)) {
-            $status = 'F';
-        }
-
-        $cart->set('status', $status);
-        $cart->update();
-
-        $this->displayReturnPage($cart);
     }
 
     /**
@@ -382,25 +391,47 @@ extends XLite_Model_PaymentMethod_CreditCardWebBased
     protected function getHMAC($key, $data)
     {
         if (function_exists('hash_hmac')) {
-            return hash_hmac('md5', $data, $key);
+            $result = hash_hmac('md5', $data, $key);
+
+        } else {
+
+            /**
+             * RFC 2104 HMAC implementation for php. Creates an md5 HMAC.
+             * Eliminates the need to install mhash to compute a HMAC. Hacked by Lance Rushing
+             */
+
+            $b = 64; // byte length for md5
+            if (strlen($key) > $b) {
+                $key = pack('H*', md5($key));
+            }
+
+            $key  = str_pad($key, $b, chr(0x00));
+            $ipad = str_pad('', $b, chr(0x36));
+            $opad = str_pad('', $b, chr(0x5c));
+            $kIpad = $key ^ $ipad ;
+            $kOpad = $key ^ $opad;
+
+            $result = md5($kOpad . pack('H*', md5($kIpad . $data)));
         }
 
-        /**
-         * RFC 2104 HMAC implementation for php. Creates an md5 HMAC.
-         * Eliminates the need to install mhash to compute a HMAC. Hacked by Lance Rushing
-         */
-
-        $b = 64; // byte length for md5
-        if (strlen($key) > $b) {
-            $key = pack('H*', md5($key));
-        }
-
-        $key  = str_pad($key, $b, chr(0x00));
-        $ipad = str_pad('', $b, chr(0x36));
-        $opad = str_pad('', $b, chr(0x5c));
-        $kIpad = $key ^ $ipad ;
-        $kOpad = $key ^ $opad;
-
-        return md5($kOpad . pack('H*', md5($kIpad . $data)));
+        return $result;
     }
+
+    /**
+     * Check - payment method is configured or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isConfigured()
+    {
+        $params = $this->get('params');
+
+        return parent::isConfigured()
+            && $params['login']
+            && $params['type'];
+    }
+
 }

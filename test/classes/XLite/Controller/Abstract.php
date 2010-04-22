@@ -605,15 +605,17 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         return $str;
     }
 
-    function isHTTPS()
+    /**
+     * Check - is secure connection or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isHTTPS()
     {
-        if ((isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS'] == 'on') || $_SERVER['HTTPS'] == '1')) ||
-            (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443') ||
-            (isset($_SERVER['REMOTE_ADDR']) && $this->xlite->getOptions(array('host_details', 'remote_addr')) == $_SERVER['REMOTE_ADDR']))
-        {
-            return true;
-        }
-        return false;
+        return XLite_Core_Request::getInstance()->isHTTPS();
     }
 
     function startDownload($filename, $contentType = "application/force-download")

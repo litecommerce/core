@@ -165,4 +165,17 @@ class XLite_Model_PaymentMethod_CreditCard extends XLite_Model_PaymentMethod
         $cart->setComplex('details.' . $code, $value);
         $cart->setComplex('detailLabels.' . $code, $name);
     }
+
+    /**
+     * Check - payment method is configured or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isConfigured()
+    {
+        return true;
+    }
 }

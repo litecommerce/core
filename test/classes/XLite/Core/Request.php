@@ -231,6 +231,24 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
     }
 
     /**
+     * Check - is secure connection or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isHTTPS()
+    {
+        return (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS'] == 'on') || $_SERVER['HTTPS'] == '1'))
+            || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443')
+            || (
+                isset($_SERVER['REMOTE_ADDR'])
+                && $this->xlite->getOptions(array('host_details', 'remote_addr')) == $_SERVER['REMOTE_ADDR']
+            );
+    }
+
+    /**
      * Getter
      * 
      * @param string $name property name
