@@ -44,6 +44,8 @@ require_once realpath(dirname(__FILE__) . '/../..') . '/includes/prepend.php';
 
 require_once constant('LC_ROOT_DIR') . 'includes/install/install_settings.php';
 
+error_reporting(E_ALL ^ E_DEPRECATED);
+ini_set('display_errors', true);
 
 /*
  * Checking requirements section
