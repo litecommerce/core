@@ -155,12 +155,31 @@ class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
      * @param string $delimeter Delimiter
      *
      * @return string
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    function strcat($val1, $val2, $delimeter)
+    public function strcat($val1, $val2, $delimeter)
     {
         return $val1 . $delimeter . $val2;
     }
+
+    /**
+     * Check widge visibility
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isVisible()
+    {
+        return parent::isVisible()
+            || (
+                !in_array(XLite_Core_Request::getInstance()->target, $this->allowedTargets)
+                && $this->getParam(self::PARAM_IS_EXPORTED)
+            );
+    }
+
 }
 
