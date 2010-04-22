@@ -55,24 +55,42 @@ includes/install.pgsql.inc
 "
 
 LC_SEO_PHRASES="
-shopping cart
-php shopping cart
-shopping cart software
-shopping cart system
-ecommerce shopping cart
-online shopping cart
-ecommerce software
-ecommerce solution
-e-commerce software
-e-commerce solution
+Powered by LiteCommerce [shopping cart]
+Powered by LiteCommerce [shopping cart]
+Powered by LiteCommerce [shopping cart software]
+Powered by LiteCommerce [shopping cart software]
+Powered by LiteCommerce [PHP shopping cart]
+Powered by LiteCommerce [PHP shopping cart system]
+Powered by LiteCommerce [eCommerce shopping cart]
+Powered by LiteCommerce [online shopping cart] 
+Powered by LiteCommerce [eCommerce software]
+Powered by LiteCommerce [eCommerce software]
+Powered by LiteCommerce [e-commerce software]
+Powered by LiteCommerce [e-commerce software]
+Powered by LiteCommerce [eCommerce solution]
+Powered by LiteCommerce [eCommerce solution]
+Powered by LiteCommerce [e-commerce solution]
+Powered by LiteCommerce [e-commerce solution]
 "
 
 DRUPAL_SEO_PHRASES="
-e-commerce cms software
-e-commerce cms solution
-php e-commerce cms software
-php e-commerce cms solution
-
+Powered by [e-commerce CMS]: LiteCommerce plus Drupal
+Powered by [e-commerce CMS]: LiteCommerce plus Drupal
+Powered by [e-commerce CMS]: LiteCommerce plus Drupal
+Powered by [eCommerce CMS]: LiteCommerce plus Drupal
+Powered by [eCommerce CMS]: LiteCommerce plus Drupal
+Powered by [eCommerce CMS]: LiteCommerce plus Drupal
+Powered by [e-commerce CMS software]: LiteCommerce plus Drupal
+Powered by [eCommerce CMS software]: LiteCommerce plus Drupal
+Powered by [e-commerce CMS solution]: LiteCommerce plus Drupal
+Powered by [eCommerce CMS solution]: LiteCommerce plus Drupal
+Powered by LiteCommerce [shopping cart] and Drupal CMS
+Powered by LiteCommerce [shopping cart software] and Drupal CMS
+Powered by LiteCommerce [eCommerce shopping cart] and Drupal CMS
+Powered by LiteCommerce [eCommerce software] and Drupal CMS
+Powered by LiteCommerce [eCommerce solution] and Drupal CMS
+Powered by LiteCommerce [e-commerce software] and Drupal CMS
+Powered by LiteCommerce [e-commerce solution] and Drupal CMS
 "
 
 
