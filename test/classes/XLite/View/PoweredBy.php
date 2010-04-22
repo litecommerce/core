@@ -114,7 +114,7 @@ class XLite_View_PoweredBy extends XLite_View_Abstract
      */
     protected function getPhrase()
     {
-        $phrase = 'LiteCommerce v3 [shopping cart software]';
+        $phrase = 'Powered by LiteCommerce v3 [shopping cart software]';
         
         if (isset($this->phrases) && is_array($this->phrases) && 0 < count($this->phrases)) {
 
