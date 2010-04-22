@@ -36,6 +36,19 @@
 class XLite_Module_GiftCertificates_Controller_Customer_Checkout extends XLite_Controller_Customer_Checkout
 implements XLite_Base_IDecorator
 {
+    /**
+     * Remove applied gift certificate
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionRemoveGc()
+    {
+        $this->getCart()->setGC(null);
+        $this->getCart()->update();
+    }
 
     /**
      * Set payment method

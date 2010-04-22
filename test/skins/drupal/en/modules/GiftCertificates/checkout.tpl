@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Checkout form
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,16 +10,18 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<form action="cart.php" method="POST" name="gccheckoutform">
-<input type="hidden" name="target" value="checkout">
-<input type="hidden" name="action" value="checkout">
-<input type="hidden" name="mode" value="details">
+<div class="details">
+  <table cellspacing="0" class="form-table">
 
-<widget class="XLite_Module_GiftCertificates_Validator_GCValidator" field="gcid">
-<br>
-Please enter the eight-character gift certificate code&nbsp;&nbsp; <font class="Star">*</font> <input type="text" size="20" name="gcid">
+    <tr>
+      <td><label for="gc_code">Gift certificate code:</label></td>
+      <td class="marker">*</td>
+      <td>
+        <input type="text" id="gc_code" name="gcid" />
+        <widget class="XLite_Module_GiftCertificates_Validator_GCValidator" field="gcid" />
+      </td>
+    </tr>
 
-<p>By clicking "SUBMIT" you agree with our "<a href='cart.php?target=help&mode=terms_conditions'><u>Terms &amp; Conditions</u></a>" and "<a href='cart.php?target=help&mode=privacy_statement'><u>Privacy statement</u></a>".<br>
-<br>
-<widget class="XLite_View_Button" label="Submit order" href="javascript: document.gccheckoutform.submit();">
-</form>
+  </table>
+
+</div>

@@ -42,11 +42,11 @@ CREATE TABLE xlite_ecards (
     order_by int not null default 0,
     enabled int not null default 1
 ) TYPE=MyISAM;
+
 ALTER TABLE xlite_order_items ADD gcid varchar(16);
 ALTER TABLE xlite_orders ADD payedByGC decimal(12,2);
 ALTER TABLE xlite_orders ADD gcid varchar(16);
 
-UPDATE xlite_config SET category='GiftCertificates' WHERE category='GC';
 INSERT INTO xlite_config(name,category,value,comment,type,orderby) VALUES ('enablePostGC','GiftCertificates','Y','Enable to post Gift Certificates by mail','checkbox',10);
 INSERT INTO xlite_config(name,category,value,comment,type,orderby) VALUES ('minAmount','GiftCertificates','10','Minimum amount for GC','text',20);
 INSERT INTO xlite_config(name,category,value,comment,type,orderby) VALUES ('maxAmount','GiftCertificates','999','Maximum amount for GC','text',30);

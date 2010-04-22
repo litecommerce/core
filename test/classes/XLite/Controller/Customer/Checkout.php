@@ -160,11 +160,18 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
         return 'Checkout';
     }
 
+    /**
+     * Get payment methods 
+     * 
+     * @return array of XLite_Model_PaymentMethod
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function getPaymentMethods()
     {
         return XLite_Model_CachingFactory::getObjectFromCallback(__METHOD__, 'XLite_Model_PaymentMethod', 'getActiveMethods');
     }
-
 
 
     /*protected function initCheckMode()

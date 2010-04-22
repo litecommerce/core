@@ -69,21 +69,25 @@ class XLite_Module_GiftCertificates_Model_PaymentMethod_GiftCertificate extends 
     {
         $gcid = trim(XLite_Core_Request::getInstance()->gcid);
         $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate($gcid);
-        $cart->set('GC', $gc);
-
-        // TODO - add GC checking
+        $setResult = $cart->setGC($gc);
 
         $result = self::PAYMENT_SILENT;
 
-        if ($cart->get('total') > 0) {
+        if ($setResult != XLite_Module_GiftCertificates_Model_GiftCertificate::GC_OK) {
+
+            // Failed
+            $result = self::PAYMENT_FAILURE;
+
+        } elseif ($cart->get('total') > 0) {
 
             // choose payment method once again
             $cart->set('payment_method', '');
             $cart->update();
 
-            header('Location: ' . $this->buildUrl('checkout'));
+            header('Location: ' . XLite_Core_Converter::buildUrl('checkout', '', array('mode' => 'paymentMethod')));
 
         } else {
+
             $cart->set('status', 'P');
             $cart->update();
             $result = self::PAYMENT_SUCCESS;

@@ -105,9 +105,17 @@ class XLite_Model_PaymentMethod_CreditCard extends XLite_Model_PaymentMethod
      */
     public function getPaymentInfo()
     {
-        return isset(XLite_Core_Request::getInstance()->cc_info)
-            ? XLite_Core_Request::getInstance()->cc_info
-            : array();
+        $info = array();
+
+        if (isset(XLite_Core_Request::getInstance()->cc_info) && is_array(XLite_Core_Request::getInstance()->cc_info)) {
+            $info = array_map('trim', XLite_Core_Request::getInstance()->cc_info);
+
+            if (isset($info['cc_number'])) {
+                $info['cc_number'] = preg_replace('/\D/Ss', '', $info['cc_number']);
+            }
+        }
+
+        return $info;
     }
 
     /**

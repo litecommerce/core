@@ -175,7 +175,7 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
     /**
      * Apply gift certificate
      * 
-     * @param mixed $gc Gift certificate
+     * @param XLite_Module_GiftCertificates_Model_GiftCertificate $gc Gift certificate
      *  
      * @return integer Operation status
      * @access public
@@ -184,27 +184,26 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
      */
     public function setGC($gc)
     {
-        $result = 0;
+        $result = XLite_Module_GiftCertificates_Model_GiftCertificate::GC_DISABLED;
 
-        if (is_null($gc) || !($gc instanceof XLite_Module_GiftCertificates_Model_GiftCertificate)) {
+        if (is_null($gc)) {
 
             $this->gc = null; 
             $this->set('gcid', '');
             $this->calcTotals();
             $result = XLite_Module_GiftCertificates_Model_GiftCertificate::GC_OK;
 
-        } elseif ($gc instanceof XLite_Module_GiftCertificates_Model_GiftCertificate) {
+        } elseif (
+            $gc instanceof XLite_Module_GiftCertificates_Model_GiftCertificate
+            && 'A' == $gc->get('status')
+            && 0 < $gc->get('debit')
+        ) {
 
             $this->gc = $gc;
+            $this->set('gcid', $gc->get('gcid'));
+            $this->calcTotals();
+            $result = XLite_Module_GiftCertificates_Model_GiftCertificate::GC_OK;
 
-            if ('A' == $gc->get('status') && 0 < $gc->get('debit')) {
-                $this->set('gcid', $gc->get('gcid'));
-                $this->calcTotals();
-                $result = XLite_Module_GiftCertificates_Model_GiftCertificate::GC_OK;
-
-            } else {
-                $result = XLite_Module_GiftCertificates_Model_GiftCertificate::GC_DISABLED;
-            }
         }
 
         return $result;
@@ -255,6 +254,7 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
     protected function declined()
     {
         parent::declined();
+
         $this->setGCStatus('P');
     }
 
@@ -269,6 +269,7 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
     protected function queued()
     {
         parent::queued();
+
         $this->setGCStatus('P');
     }
 
@@ -536,7 +537,6 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
         $has = false;
 
         if ($gcid) {
-            $items = $this->getItems();
             foreach ($this->getItems() as $item) {
                 if ($item->get('gcid') == $gcid) {
                     $has = true;
