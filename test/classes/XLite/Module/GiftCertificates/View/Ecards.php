@@ -27,7 +27,7 @@
  */
 
 /**
- * ____description____
+ * E-cards list
  * 
  * @package XLite
  * @see     ____class_see____

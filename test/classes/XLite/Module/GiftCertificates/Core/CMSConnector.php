@@ -33,21 +33,22 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Module_GiftCertificates_Core_CMSConnector extends XLite_Core_CMSConnector implements XLite_Base_IDecorator
+abstract class XLite_Module_GiftCertificates_Core_CMSConnector extends XLite_Core_CMSConnector
+implements XLite_Base_IDecorator
 {
-	/**
-	 * Constructor
-	 * 
-	 * @return void
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function __construct()
-	{
+    /**
+     * Constructor
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function __construct()
+    {
         parent::__construct();
 
         $this->pageTypes['gift_certificate']       = 'Add gift certificate';
         $this->pageTypes['check_gift_certificate'] = 'Check gift certificate';
-	}
+    }
 }

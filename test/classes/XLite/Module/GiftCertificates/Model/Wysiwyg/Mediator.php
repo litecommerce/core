@@ -33,24 +33,29 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_Model_Wysiwyg_Mediator extends XLite_Model_Wysiwyg_Mediator implements XLite_Base_IDecorator
+class XLite_Module_GiftCertificates_Model_Wysiwyg_Mediator extends XLite_Model_Wysiwyg_Mediator
+implements XLite_Base_IDecorator
 {
-    function export($templates)
+    public function export($templates)
     {
-		$this->xlite->GiftCertificates_wysiwyg_work = true;
-		$result = parent::export($templates);
-		$this->xlite->GiftCertificates_wysiwyg_work = false;
+        $this->xlite->GiftCertificates_wysiwyg_work = true;
 
-		return $result;
+        $result = parent::export($templates);
+
+        $this->xlite->GiftCertificates_wysiwyg_work = false;
+
+        return $result;
     }
 
 
-	function import()
-	{
-		$this->xlite->GiftCertificates_wysiwyg_work = true;
-		$result = parent::import();
-		$this->xlite->GiftCertificates_wysiwyg_work = false;
+    public function import()
+    {
+        $this->xlite->GiftCertificates_wysiwyg_work = true;
 
-		return $result;
-	}
+        $result = parent::import();
+
+        $this->xlite->GiftCertificates_wysiwyg_work = false;
+
+        return $result;
+    }
 }

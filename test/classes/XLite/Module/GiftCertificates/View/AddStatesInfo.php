@@ -47,18 +47,5 @@ class XLite_Module_GiftCertificates_View_AddStatesInfo extends XLite_View_Abstra
     {
         return 'js/select_states_begin_js.tpl';
     }
-
-    /**
-     * isIgnoreErrors 
-     * 
-     * @return bool
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isIgnoreErrors()
-    {
-        return file_exists($this->getTemplate()) ? parent::is("ignoreErrors") : true;
-    }
 }
 

@@ -27,15 +27,23 @@
  */
 
 /**
- * ____description____
+ * E-card (customer)
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
 class XLite_Module_GiftCertificates_View_CEcard extends XLite_View_Abstract
-{    
-    public $gc = null;
+{
+    /**
+     * Gift certificate (cache)
+     * 
+     * @var    XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $gc = null;
 
     /**
      * Return widget default template
@@ -49,12 +57,26 @@ class XLite_Module_GiftCertificates_View_CEcard extends XLite_View_Abstract
         return '';
     }
 
-    function getTemplate()
+    /**
+     * Return current template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getTemplate()
     {
         return 'modules/GiftCertificates/ecards/' . $this->getComplex('gc.ecard.template') . '.tpl';
     }
 
-    function getTemplateFile()
+    /**
+     * Return full template file name
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getTemplateFile()
     {
         $layout = XLite_Model_Layout::getInstance();
 

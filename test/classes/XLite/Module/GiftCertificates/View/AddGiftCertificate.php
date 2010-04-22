@@ -93,27 +93,46 @@ class XLite_Module_GiftCertificates_View_AddGiftCertificate extends XLite_View_D
             if (XLite_Core_Request::getInstance()->gcid) {
 
                 // Get from request
-                $this->gc = new XLite_Module_GiftCertificates_Model_GiftCertificate(XLite_Core_Request::getInstance()->gcid);
+                $this->gc = new XLite_Module_GiftCertificates_Model_GiftCertificate(
+                    XLite_Core_Request::getInstance()->gcid
+                );
 
             } else {
 
                 // Set default form values
-                $this->gc = new XLite_Module_GiftCertificates_Model_GiftCertificate();
-
-                $this->gc->set('send_via', 'E');
-                $this->gc->set('border', 'no_border');
-                if ($this->auth->isLogged()) {
-                    $profile = $this->auth->get('profile');
-                    $this->gc->set(
-                        'purchaser',
-                        $profile->get('billing_title') . ' ' . $profile->get('billing_firstname') . ' ' . $profile->get('billing_lastname')
-                    );
-                }
-                $this->gc->set('recipient_country', $this->config->General->default_country);
+                $tshi->setDefaultGiftCertificate();
             }
         }
 
         return $this->gc;
+    }
+
+    /**
+     * Set default gift certificate 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setDefaultGiftCertificate()
+    {
+        $this->gc = new XLite_Module_GiftCertificates_Model_GiftCertificate();
+
+        $this->gc->set('send_via', 'E');
+        $this->gc->set('border', 'no_border');
+        if ($this->auth->isLogged()) {
+            $profile = $this->auth->get('profile');
+            $this->gc->set(
+                'purchaser',
+                $profile->get('billing_title')
+                . ' '
+                . $profile->get('billing_firstname')
+                . ' '
+                . $profile->get('billing_lastname')
+            );
+        }
+        $this->gc->set('recipient_country', $this->config->General->default_country);
     }
 
     /**

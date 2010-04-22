@@ -27,14 +27,14 @@
  */
 
 /**
- * ____description____
+ * CAPTCHA
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
 class XLite_Module_GiftCertificates_View_SpambotArrest extends XLite_View_Abstract
-{    
+{
     /**
      * Return widget default template
      *
@@ -45,14 +45,5 @@ class XLite_Module_GiftCertificates_View_SpambotArrest extends XLite_View_Abstra
     protected function getDefaultTemplate()
     {
         return 'common/spambot_arrest.tpl';
-    }
-
-    function isIgnoreErrors()
-    {
-        if (!file_exists($this->get("template"))) {
-            return true;
-        }
-
-        return parent::is("ignoreErrors");
     }
 }

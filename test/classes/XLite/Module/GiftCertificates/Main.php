@@ -38,8 +38,8 @@ class XLite_Module_GiftCertificates_Main extends XLite_Module_Abstract
     /**
      * Module type
      *
-     * @var    int
-     * @access protected
+     * @return int
+     * @access public
      * @since  3.0.0
      */
     public static function getType()
@@ -50,8 +50,8 @@ class XLite_Module_GiftCertificates_Main extends XLite_Module_Abstract
     /**
      * Module version
      *
-     * @var    string
-     * @access protected
+     * @return string
+     * @access public
      * @since  3.0.0
      */
     public static function getVersion()
@@ -62,8 +62,8 @@ class XLite_Module_GiftCertificates_Main extends XLite_Module_Abstract
     /**
      * Module description
      *
-     * @var    string
-     * @access protected
+     * @return string
+     * @access public
      * @since  3.0.0
      */
     public static function getDescription()

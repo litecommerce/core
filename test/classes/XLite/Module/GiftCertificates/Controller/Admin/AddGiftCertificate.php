@@ -73,27 +73,42 @@ class XLite_Module_GiftCertificates_Controller_Admin_AddGiftCertificate extends 
                 );
 
             } else {
-                // set default form values
-                $this->gc = new XLite_Module_GiftCertificates_Model_GiftCertificate();
-                $this->gc->set('send_via', 'E');
-                $this->gc->set('border', 'no_border');
-                $auth = XLite_Model_Auth::getInstance();
-                if ($auth->isLogged()) {
-                    $profile = $auth->getProfile();
-                    $this->gc->set(
-                        'purchaser',
-                        $profile->get('billing_title')
-                        . ' '
-                        . $profile->get('billing_firstname')
-                        . ' '   
-                        . $profile->get('billing_lastname')
-                    );
-                }
-                $this->gc->set('recipient_country', $this->config->General->default_country);
+                $this->setDefaultGiftCertificate();
             }
         }
 
         return $this->gc;
+    }
+
+    /**
+     * Set default gift certificate 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setDefaultGiftCertificate()
+    {
+        $this->gc = new XLite_Module_GiftCertificates_Model_GiftCertificate();
+        $this->gc->set('send_via', 'E');
+        $this->gc->set('border', 'no_border');
+
+        $auth = XLite_Model_Auth::getInstance();
+
+        if ($auth->isLogged()) {
+            $profile = $auth->getProfile();
+            $this->gc->set(
+                'purchaser',
+                $profile->get('billing_title')
+                . ' '
+                . $profile->get('billing_firstname')
+                . ' '
+                . $profile->get('billing_lastname')
+            );
+        }
+
+        $this->gc->set('recipient_country', $this->config->General->default_country);
     }
 
     /**
@@ -269,18 +284,5 @@ class XLite_Module_GiftCertificates_Controller_Admin_AddGiftCertificate extends 
         }
 
         return $countriesArray;
-    }
-    
-    /**
-     * Check XLite version
-     * 
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isVersionUpper2_1()
-    {    
-        return true;
     }
 }
