@@ -62,9 +62,15 @@ function doCheckRequirements()
 { 
     $checkRequirements = array();
 
+    $checkRequirements['lc_install_script'] = array(
+        'title'    => 'Installation script',
+        'critical' => true,
+    );
+
     $checkRequirements['lc_loopback'] = array(
         'title'    => 'Loopback test',
         'critical' => true,
+        'depended' => 'lc_install_script'
     );
 
     $checkRequirements['lc_php_version'] = array(
@@ -183,6 +189,28 @@ function doCheckRequirements()
     }
 
     return $checkRequirements;
+}
+
+/**
+ * Check if install.php file exists
+ * 
+ * @param string $errorMsg Error message if checking failed
+ * @param string $value    Actual value of the checked parameter
+ *  
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function checkInstallScript(&$errorMsg = null, $value = null)
+{
+    $result = @file_exists(LC_ROOT_DIR . 'install.php');
+    
+    if (!$result) {
+        $errorMsg = 'Litecommerce installation script not found. Restore it  and try again';
+    }
+
+    return $result;
 }
 
 /**
@@ -338,19 +366,7 @@ function checkPhpMemoryLimit(&$errorMsg = null, &$value = null)
 
     } else {
 
-        $limit = convert_ini_str_to_int($value);
-        $required = convert_ini_str_to_int(constant('LC_PHP_MEMORY_LIMIT_MIN'));
-
-        if ($limit < $required) {
-
-            // workaround for http://bugs.php.net/bug.php?id=36568
-            if (!(LC_OS_CODE == 'win' && func_version_compare(phpversion(), '5.1.0') < 0)) {
-                @ini_set('memory_limit', constant('LC_PHP_MEMORY_LIMIT_MIN'));
-                $limit = ini_get('memory_limit');
-            }
-
-            $result = (strcasecmp($limit, constant('LC_PHP_MEMORY_LIMIT_MIN')) == 0);
-        }
+        $result = check_memory_limit($value, constant('LC_PHP_MEMORY_LIMIT_MIN'));
 
         if (!$result) {
             $errorMsg = 'PHP memory_limit option value should be ' . constant('LC_PHP_MEMORY_LIMIT_MIN') . ' as a minimum';
@@ -577,22 +593,23 @@ function checkFilePermissions(&$errorMsg = null, &$value = null)
 /**
  * Check MySQL version
  * 
- * @param string $errorMsg Error message if checking failed
- * @param string $value    Actual value of the checked parameter
+ * @param string   $errorMsg   Error message if checking failed
+ * @param string   $value      Actual value of the checked parameter
+ * @param resource $connection MySQL connection link
  *  
  * @return bool
  * @access public
  * @see    ____func_see____
  * @since  3.0.0
  */
-function checkMysqlVersion(&$errorMsg = null, &$value = null, $connection = null, $dbUrl = null)
+function checkMysqlVersion(&$errorMsg = null, &$value = null, $connection = null)
 {
     $result = true;
     $value = 'unknown';
 
-    if (!is_resource($connection) && !is_null($dbUrl)) {
+    if (!is_resource($connection) && defined('DB_URL')) {
 
-        $url = parse_url(is_array($db_url) ? $db_url['default'] : $db_url);
+        $url = parse_url(constant('DB_URL'));
 
         $host = urldecode($url['host']);
         $port = isset($url['port']) ? urldecode($url['port']) : '';
@@ -1015,40 +1032,33 @@ function doFinishInstallation(&$params, $silentMode = false)
 {
     global $lcSettings, $error;
 
+    $result = true;
+
     // Save authcode for the further install runs
     $authcode = save_authcode($params);
 
-    // Rename install.php
-    if (!$silentMode) {
+    $install_name = rename_install_script();
 
-        $install_name = rename_install_script();
+    if ($install_name ) {
 
-        if ($install_name ) {
-
-            // Text for email notification
-            $install_rename_email =<<<OUT
+        // Text for email notification
+        $install_rename_email =<<<OUT
 To ensure the security of your LiteCommerce installation, the file "install.php" has been renamed to "{$install_name}".
 
 Now, if you choose to re-install LiteCommerce, you should rename the file "{$install_name}" back to "install.php" and open the following URL in your browser:
      http://{$params['xlite_http_host']}{$params['xlite_web_dir']}/install.php
 OUT;
 
-            // Text for confirmation web page
-            $install_rename =<<<OUT
+        // Text for confirmation web page
+        $install_rename =<<<OUT
 <P>To ensure the security of your LiteCommerce installation, the file "install.php" has been renamed to "{$install_name}".</P>
 
 <P>Now, if you choose to re-install LiteCommerce, you should rename the file "{$install_name}" back to "install.php"</P>
 OUT;
 
-        } else {
-            $install_rename = '<P><font color="red"><b>WARNING!</b> The install.php script could not be renamed! To ensure the security of your LiteCommerce installation and prevent the unallowed use of this script, you should manually rename or delete it.</font></P>';
-            $install_rename_email = strip_tags($install_rename);
-        }
-
-    // Skip install.php renaming if $silentMode = true
-    // as silentMode is supposed to be used for non standalone installation proceeds
     } else {
-        $install_rename = $install_rename_email = '';
+        $install_rename = '<P><font color="red"><b>WARNING!</b> The install.php script could not be renamed! To ensure the security of your LiteCommerce installation and prevent the unallowed use of this script, you should manually rename or delete it.</font></P>';
+        $install_rename_email = strip_tags($install_rename);
     }
 
     // Prepare files permissions recommendation text
@@ -1058,7 +1068,7 @@ OUT;
 
         $_perms = array();
 
-        if (@is_writable(".")) {
+        if (@is_writable(LC_ROOT_DIR)) {
             $_perms[] = "&gt; chmod 755 .";
         }
 
@@ -1066,11 +1076,12 @@ OUT;
             $_perms[] = "&gt; chmod 644 " . constant('LC_CONFIG_FILE');
         }
 
-        if (!@is_writable("cart.html")) {
+        if (!@is_writable(LC_ROOT_DIR . 'cart.html')) {
             $_perms[] = "&gt; chmod 666 cart.html";
         }
 
         if (!empty($_perms)) {
+            array_unshift($_perms, '&gt; cd ' . LC_ROOT_DIR);
             $perms = implode("<br />\n", $_perms);
             $perms =<<<OUT
 <P>Before you proceed using LiteCommerce shopping system software, please set the following secure file permissions:<BR><BR>
@@ -1149,6 +1160,8 @@ PLEASE WRITE THIS CODE DOWN UNLESS YOU ARE GOING TO REMOVE "<?php echo $install_
 <?php
 
     }
+
+    return $result;
 }
 
 
@@ -1609,20 +1622,27 @@ function get_image_extension($type)
  */
 function inst_http_request_install($action_str)
 {
-    global $HTTP_SERVER_VARS;
-
-    $host = "http://".$HTTP_SERVER_VARS["HTTP_HOST"];
-    $len = strlen($host) - 1;
-    $host = ($host{$len} == "/") ? substr($host, 0, $len) : $host;
-
-    $web_dir = preg_replace("/\/install(\.php)*/", "", $HTTP_SERVER_VARS["PHP_SELF"]);
-    $len = strlen($web_dir) - 1;
-    $web_dir = ($web_dir{$len} == "/") ? substr($web_dir, 0, $len) : $web_dir;
-
-    $url = $web_dir . "/install.php?target=install".(($action_str) ? "&$action_str" : "");
-    $url_request = $host . $url;
+    $url = getLiteCommerceUrl();
+    $url_request = $url . '/install.php?target=install' . (($action_str) ? '&' . $action_str : '');
 
     return inst_http_request($url_request);
+}
+
+function getLiteCommerceUrl()
+{
+    global $HTTP_SERVER_VARS;
+
+    $host = 'http://' . $HTTP_SERVER_VARS['HTTP_HOST'];
+    $len = strlen($host) - 1;
+    $host = ($host{$len} == '/') ? substr($host, 0, $len) : $host;
+
+    $uri = (defined('LC_URI') ? constant('LC_URI') : $HTTP_SERVER_VARS['PHP_SELF']);
+
+    $web_dir = preg_replace('/\/install(\.php)*/', '', $uri);
+    $len = strlen($web_dir) - 1;
+    $url = $host . (($web_dir{$len} == '/') ? substr($web_dir, 0, $len) : $web_dir);
+
+    return $url;
 }
 
 /**
@@ -1638,42 +1658,43 @@ function inst_http_request_install($action_str)
 function inst_http_request($url_request)
 {
     @ini_get('allow_url_fopen') or @ini_set('allow_url_fopen', 1);
-    $handle = @fopen ($url_request, "r");
+    
+    $handle = @fopen($url_request, 'r');
 
-    $response = "";
+    $response = '';
+
     if ($handle) {
+
         while (!feof($handle)) {
             $response .= fread($handle, 8192);
         }
 
         @fclose($handle);
+
     } else {
-        global $php_errormsg;
+        $error = '';
 
-        if (is_php5()) {
-            $includes .= "." . DIRECTORY_SEPARATOR . "lib5" . PATH_SEPARATOR;
-        } else {
-            $includes .= "." . DIRECTORY_SEPARATOR . "lib" . PATH_SEPARATOR;
-        }
-        $includes .= "." . DIRECTORY_SEPARATOR . PATH_SEPARATOR;
-        @ini_set("include_path", $includes);
+        require_once LC_EXT_LIB_DIR . 'PEAR.php';
+        require_once LC_EXT_LIB_DIR . 'HTTP' . LC_DS . 'Request2.php';
 
-        $php_errormsg = "";
-        $_this->error = "";
-        require_once "PEAR.php";
-        require_once "HTTP/Request2.php";
-        $http = new HTTP_Request2($url_request);
-        $http->_timeout = 3;
         $track_errors = @ini_get("track_errors");
         @ini_set("track_errors", 1);
 
-        $result = @$http->sendRequest();
+
+        try {
+            $http = new HTTP_Request2($url_request, HTTP_Request2::METHOD_GET);
+            $http->setConfig('timeout', 3);
+
+            $response = $http->send()->getBody();
+
+        } catch (Exception $e) {
+            $error = $e->getMessage();
+        }
+
         @ini_set("track_errors", $track_errors);
 
-        if (!($php_errormsg || PEAR::isError($result))) {
-            $response = $http->getResponseBody();
-        } else {
-            return false;
+        if (!empty($error)) {
+            $response = $error . "\n" . $response;
         }
     }
 
@@ -1698,6 +1719,38 @@ function is_disabled_memory_limit()
                 func_version_compare(phpversion(), '4.3.2') >= 0 &&
                 strlen(@ini_get('memory_limit')) == 0 ) || 
                 @ini_get('memory_limit') == '-1');
+
+    return $result;
+}
+
+/**
+ * Check memory_limit option value
+ * 
+ * @param string $current_limit  
+ * @param string $required_limit 
+ *  
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function check_memory_limit($current_limit, $required_limit)
+{
+    $result = true;
+
+    $limit = convert_ini_str_to_int($current_limit);
+    $required = convert_ini_str_to_int($required_limit);
+
+    if ($limit < $required) {
+
+		// workaround for http://bugs.php.net/bug.php?id=36568
+        if (!(LC_OS_CODE == 'win' && func_version_compare(phpversion(), '5.1.0') < 0)) {
+            @ini_set('memory_limit', $required_limit);
+            $limit = ini_get('memory_limit');
+        }
+
+        $result = (strcasecmp($limit, $required_limit) == 0);
+    }
 
     return $result;
 }
@@ -1947,10 +2000,10 @@ function message($txt) {
 function rename_install_script()
 {
     $install_name = md5(uniqid(rand(), true)) . '.php';
-    @rename('install.php', $install_name);
+    @rename(LC_ROOT_DIR . 'install.php', LC_ROOT_DIR . $install_name);
     @clearstatcache();
 
-    return (!@file_exists("install.php") && @file_exists($install_name) ? $install_name : false);
+    return (!@file_exists(LC_ROOT_DIR . 'install.php') && @file_exists(LC_ROOT_DIR . $install_name) ? $install_name : false);
 }
 
 /**
