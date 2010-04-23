@@ -14,6 +14,8 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 		'CMS', 'GC', 'AJAX', 'URLAJAX', 'USPS', 'GD',
 	);
 
+	protected $twoWordsAbbrs = array('ECard', 'ECards');
+
 	protected $nouns = array(
 	);
 
@@ -31,7 +33,7 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 		'substitute', 'implode', 'has', 'expand', 'load', 'assemble', 'activate', 'restore', 'show', 'install', 'emulate',
 		'perform', 'notify', 'cancel', 'sort', 'sanitize', 'use', 'accept', 'regenerate', 'inner', 'make', 'count', 'build',
 		'refresh', 'postprocess', 'preprocess', 'include', 'truncate', 'inc', 'map', 'strip', 'calc', 'compile', 'request', 'modify',
-		'normalize', 'filter', 'sanitize', 'fill',
+		'normalize', 'filter', 'sanitize', 'fill', 'import', 'export',
 
 		// FIXME - rename later
 		'processed', 'checked', 'declined', 'queued', 'unchecked', 'checkout',

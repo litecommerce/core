@@ -160,13 +160,14 @@ class XLite_Sniffs_PHP_NamingConventions_ValidFunctionNameSniff extends XLite_Ab
 			$phpcsFile->addError($this->getReqPrefix('REQ.PHP.1.4.2') . $error, $stackPtr);
 		}
 
-		foreach ($words as $w) {
+		foreach ($words as $wk => $w) {
 			$res = $this->checkCamelWord($w);
 			if ($res == -2) {
 				$error = "Часть '" . $w. "' из слова '" .$methodName . "' не валидна и возможно является аббревиатурой, о которой валидатор не знает. Аббревиатура должна быть зарегестрирована в массиве abbrs.";
 				$phpcsFile->addError($this->getReqPrefix('REQ.PHP.1.2.1') . $error, $stackPtr);
 				
-			} elseif ($res < 0) {
+			} elseif ($res < 0 && (!isset($words[$wk + 1]) || !in_array($w . $words[$wk + 1], $this->twoWordsAbbrs))) {
+
 				$error = ucfirst($scope)." method name \"$className::$methodName\" is not in camel caps format";
 				$phpcsFile->addError($this->getReqPrefix('REQ.PHP.1.4.1') . $error, $stackPtr);
 
