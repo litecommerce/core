@@ -50,15 +50,6 @@ class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
 
 
     /**
-     * Targets this widget is allowed for
-     *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $allowedTargets = array('advanced_search');
-
-    /**
      *  Display modes
      *
      * @var    array
@@ -163,23 +154,5 @@ class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
     {
         return $val1 . $delimeter . $val2;
     }
-
-    /**
-     * Check widge visibility
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isVisible()
-    {
-        return parent::isVisible()
-            || (
-                !in_array(XLite_Core_Request::getInstance()->target, $this->allowedTargets)
-                && $this->getParam(self::PARAM_IS_EXPORTED)
-            );
-    }
-
 }
 
