@@ -542,6 +542,9 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
         // Set param values
         $widget->setWidgetParams($params);
 
+        // Initialize
+        $widget->init();
+
         return $widget;
     }
 

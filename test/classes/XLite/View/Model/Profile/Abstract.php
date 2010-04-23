@@ -235,6 +235,20 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
         return $result;
     }
 
+    /**
+     * logInProfile 
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function logInProfile()
+    {
+        if (!XLite_Model_Auth::getInstance()->isLogged()) {
+            XLite_Model_Auth::getInstance()->loginProfile($this->getModelObject());
+        }
+    }
+
 
     /**
      * getProfileFields 
@@ -286,6 +300,64 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
         $list[] = $this->getDir() . '/profile/profile.css';
 
         return $list;
+    }
+
+    /**
+     * performActionCreate
+     *
+     * @param array $data model properties
+     *
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function performActionCreate(array $data = array())
+    {
+        $result = parent::performActionCreate($data);
+
+        if ($result) {
+            $this->logInProfile();
+        }
+
+        return $result;
+    }
+
+    /**
+     * performActionModify
+     *
+     * @param array $data model properties
+     *
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function performActionModify(array $data = array())
+    {
+        $result = parent::performActionModify($data);
+
+        if ($result) {
+            $this->logInProfile();
+        }
+   
+        return $result; 
+    }
+
+    /**
+     * performActionDelete
+     *
+     * @param array $data model properties
+     *
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function performActionDelete(array $data = array())
+    {
+        $result = parent::performActionDelete($data);
+
+        if ($result) {
+            XLite_Model_Auth::getInstance()->logoff();
+        }
     }
 }
 

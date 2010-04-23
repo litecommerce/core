@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Model
+ * @subpackage ____sub_package____
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,30 +27,36 @@
  */
 
 /**
- * ____description____
+ * XLite_View_CheckoutStep_Pseudo_Error 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @since      3.0.0
  */
-class XLite_Model_CheckoutStep extends XLite_Model_ListNode
+class XLite_View_CheckoutStep_Pseudo_Error extends XLite_View_CheckoutStep_Pseudo_Abstract
 {
-    protected $isPassed = false;
-
-	public function __construct($key, $passCondition = false)
-	{
-        parent::__construct($key);
-
-        $this->isPassed = !$passCondition;
-	}
-
-    public function isPassed()
+	/**
+     * Return title
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getHead()
     {
-        return $this->isPassed;
+        return 'Checkout error';
     }
 
-    public function checkMode($mode)
+    /**
+     * Return top message text for error
+     * FIXME - should return the error description
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getErrorText()
     {
-        return $this->checkKey($mode) && $this->isPassed();
+        return 'An error has occured during the checkout. Please, contact administartor';
     }
 }

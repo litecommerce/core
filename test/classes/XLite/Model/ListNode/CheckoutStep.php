@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage Model
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,131 +27,123 @@
  */
 
 /**
- * Double-linked list 
+ * ____description____
  * 
- * @package    XLite
- * @subpackage ____sub_package____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
-class XLite_Model_ListNode extends XLite_Base
+class XLite_Model_ListNode_CheckoutStep extends XLite_Model_ListNode
 {
     /**
-     * Link to previous list element or null
+     * Is checkout step passed or not 
      * 
-     * @var    XLite_Model_ListNode|null
+     * @var    bool
      * @access protected
      * @since  3.0.0
      */
-    protected $prev = null;
+    protected $isPassed = false;
 
     /**
-     * Link to next list element or null
-     * 
-     * @var    XLite_Model_ListNode|null
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $next = null;
-
-    /**
-     * Node identifier 
+     * Name of the widget class for this checkout step 
      * 
      * @var    string
      * @access protected
      * @since  3.0.0
      */
-    protected $key = null;
+    protected $widgetClass = null;
 
 
     /**
-     * Set node identifier 
+     * __construct 
      * 
-     * @param string $key node key
+     * @param string $key         step mode
+     * @param string $widgetClass step widget class name
+     * @param bool   $isPassed    if step is passed or not
      *  
      * @return void
      * @access public
      * @since  3.0.0
      */
-    public function __construct($key)
-    {
-        $this->key = $key;
-    }
+	public function __construct($key, $widgetClass, $isPassed)
+	{
+        parent::__construct($key);
+
+        $this->isPassed    = $isPassed;
+        $this->widgetClass = $widgetClass;
+	}
 
     /**
-     * Return link to previous list element
+     * isPassed 
      * 
-     * @return XLite_Model_ListNode|null
+     * @return bool
      * @access public
      * @since  3.0.0
      */
-    public function getPrev()
+    public function isPassed()
     {
-        return $this->prev;
+        return $this->isPassed;
     }
 
     /**
-     * Return link to next list element
-     *
-     * @return XLite_Model_ListNode|null
-     * @access public
-     * @since  3.0.0
-     */
-    public function getNext()
-    {
-        return $this->next;
-    }
-
-    /**
-     * Set link to previous list element 
+     * checkMode 
      * 
-     * @param Xlite_Model_ListNode $node node link to set
-     *  
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function setPrev(Xlite_Model_ListNode $node = null)
-    {
-        $this->prev = $node;
-    }
-
-    /**
-     * Set link to next list element
-     *
-     * @param Xlite_Model_ListNode $node node link to set
-     *
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function setNext(Xlite_Model_ListNode $node = null)
-    {
-        $this->next = $node;
-    }
-
-    /**
-     * Return node identifier 
-     * 
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getKey()
-    {
-        return $this->key;
-    }
-
-    /**
-     * Callback to search node by its identifier 
-     * 
-     * @param string $key node key
+     * @param string $mode current mode
      *  
      * @return bool
      * @access public
      * @since  3.0.0
      */
-    public function checkKey($key)
+    public function checkMode($mode)
     {
-        return $key != $this->getKey();
+        return isset($mode) ? $this->checkKey($mode) : $this->isPassed();
+    }
+
+    /**
+     * getWidgetClass 
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getWidgetClass()
+    {
+        return $this->widgetClass;
+    }
+
+    /**
+     * isRegularStep 
+     * 
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function isRegularStep()
+    {
+        return call_user_func(array($this->getWidgetClass(), 'isRegularStep'));
+    }
+
+    /**
+     * getMode 
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getMode()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * getTopMessage 
+     * 
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTopMessage()
+    {
+        return XLite_Model_Factory::createObjectInstance($this->getWidgetClass())->getTopMessage($this->isPassed());
     }
 }

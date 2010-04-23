@@ -42,7 +42,8 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     const PARAM_TARGET = 'target';
     const PARAM_ACTION = 'action';
 
-    const PARAM_RETURN_URL = 'returnUrl';
+    const PARAM_RETURN_URL    = 'returnUrl';
+    const PARAM_REDIRECT_CODE = 'redirectCode';
 
     /**
      * Controller params
@@ -54,6 +55,15 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 
 
     /**
+     * Object to keep action status
+     * 
+     * @var    XLite_Model_ActionError_Abstract
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $actionStatus = null;
+
+    /**
      * Breadcrumbs 
      * 
      * @var    XLite_Model_LocationPath
@@ -62,43 +72,21 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
      */
     protected $locationPath = null;
 
+
     /**
-     * Internal redirect flag
+     * Return default redirect code 
      * 
-     * @var    boolean
+     * @return int
      * @access protected
-     * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $internalRedirect = false;
-
-    /**
-     * Pages array for tabber
-     * FIXME - must be protected
-     * 
-     * @var    array
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public $pages = array();
-
-
-    /**
-     * Check if current page is accessible
-     * 
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-    public function checkAccess()
+    protected function getDefaultRedirectCode()
     {
-        return XLite_Model_Auth::getInstance()->isAuthorized($this);
+        return XLite_Core_Request::getInstance()->isAJAX() ? 278 : 302;
     }
 
     /**
      * Perform redirect 
-     * FIXME - must be moved to XLite_Core_Operator
      * 
      * @param string $url redirect URL
      *  
@@ -110,28 +98,18 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     {
         $location = $this->getReturnUrl();
 
-        if (is_null($location)) {
-            $location = is_null($url) ? $this->getUrl() : $url;
+        if (!isset($location)) {
+            $location = isset($url) ? $url : $this->getUrl();
         }
 
         // filter xlite_form_id from redirect url
+        // FIXME - check if it's really needed
         $action = $this->get('action');
         if (empty($action)) {
             $location = $this->filterXliteFormID($location);
         }
 
-        XLite_Model_Profiler::getInstance()->enabled = false;
-
-        if ($this->returnUrlAbsolute) {
-            $location = $this->getShopUrl($location, $this->getSsecure());
-        }
-
-        $code = 302;
-        if (XLite_Core_Request::getInstance()->isAJAX()) {
-            $code = $this->internalRedirect ? 279 : 278;
-        }
-
-        XLite_Core_Operator::getInstance()->redirect($location, $code);
+        XLite_Core_Operator::getInstance()->redirect($location, $this->getParam(self::PARAM_REDIRECT_CODE));
     }
 
     /**
@@ -172,9 +150,9 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     }
 
     /**
-     * getRegularTemplate 
+     * Return template for standalone shop 
      * 
-     * @return void
+     * @return string
      * @access protected
      * @since  3.0.0
      */
@@ -184,7 +162,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     }
 
     /**
-     * getCMSTemplate 
+     * Return template to use in a CMS
      * 
      * @return string
      * @access protected
@@ -196,7 +174,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     }
 
     /**
-     * getViewerTemplate 
+     * Select template to use
      * 
      * @return string
      * @access protected
@@ -227,10 +205,15 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
             self::PARAM_CATEGORY_ID => new XLite_Model_WidgetParam_ObjectId_Category('Category Id', 0),
             self::PARAM_PRODUCT_ID  => new XLite_Model_WidgetParam_ObjectId_Product('Product Id', 0),
         );
+
+        $this->widgetParams += array(
+            self::PARAM_RETURN_URL    => new XLite_Model_WidgetParam_String('Return URL', null),
+            self::PARAM_REDIRECT_CODE => new XLite_Model_WidgetParam_Int('Redirect code', $this->getDefaultRedirectCode()),
+        );
     }
 
     /**
-     * getModelFormClass 
+     * Class name for the XLite_View_Model_ form (optional)
      * 
      * @return string|null
      * @access protected
@@ -242,7 +225,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     }
 
     /**
-     * getModelForm 
+     * Return model form object 
      * 
      * @return XLite_View_Model_Abstract|null
      * @access protected
@@ -256,7 +239,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     }
 
     /**
-     * getCategoryId
+     * Return current category Id
      * FIXME - must be moved to the low-level controllers
      *
      * @return int
@@ -269,7 +252,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     }
 
     /**
-     * getProductId
+     * Return current product Id
      * FIXME - must be moved to the low-level controllers
      *
      * @return int
@@ -281,6 +264,29 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         return $this->getParam(self::PARAM_PRODUCT_ID);
     }
 
+    /**
+     * Perform some actions before redirect
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function actionPostprocess()
+    {
+    }
+
+
+    /**
+     * isRedirectNeeded
+     *
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function isRedirectNeeded()
+    {
+        return (XLite_Core_Request::getInstance()->isPost() || $this->getReturnUrl()) && !$this->silent;
+    }
 
     /**
      * Get target
@@ -345,7 +351,38 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     }
 
     /**
-     * Handles the request. Parses the request variables if necessary. Attempts to call the specified action function 
+     * Get return URL
+     * FIXME - backward compatibility
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getReturnUrl()
+    {
+        return $this->getParam(self::PARAM_RETURN_URL) ? $this->getParam(self::PARAM_RETURN_URL) : $this->returnUrl;
+    }
+
+    /**
+     * Set return URL
+     * FIXME - backward compatibility
+     *
+     * @param mixed $url URL to set
+     *
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function setReturnUrl($url)
+    {
+        $this->getWidgetParams(self::PARAM_RETURN_URL)->setValue($url);
+        $this->returnUrl = $url;
+    }
+
+    /**
+     * Handles the request.
+     * Parses the request variables if necessary. Attempts to call the specified action function 
+     * FIXME - simplify
      * 
      * @return void
      * @access public
@@ -359,13 +396,10 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 
         } elseif (!empty(XLite_Core_Request::getInstance()->action) && $this->isValid()) {
 
-            $oldMethodName = 'action_' . XLite_Core_Request::getInstance()->action;
-            $newMethodName = 'doAction'
-                . preg_replace(
-                    '/_([a-z])/Sse',
-                    'strtoupper("\1")',
-                    '_' . XLite_Core_Request::getInstance()->action
-                );
+            $action = XLite_Core_Request::getInstance()->action;
+
+            $oldMethodName = 'action_' . $action;
+            $newMethodName = 'doAction' . XLite_Core_Converter::convertToCamelCase($action);
 
             if (method_exists($this, $oldMethodName)) {
                 $this->$oldMethodName();
@@ -373,26 +407,13 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
             } elseif (method_exists($this, $newMethodName)) {
                 $this->$newMethodName();
             }
+
+            $this->actionPostprocess();
         }
 
-        if (XLite_Core_Request::getInstance()->isPost() && $this->isValid() && !$this->silent) {
+        if ($this->isRedirectNeeded()) {
             $this->redirect();
         }
-    }
-
-    /**
-     * Mark controller run thread as access denied
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function markAsAccessDenied()
-    {
-        $this->params = array('target');
-        $this->set('target', 'access_denied');
-        XLite_Core_Request::getInstance()->target = 'access_denied';
     }
 
     /**
@@ -423,32 +444,6 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
      */
     public function postprocess()
     {
-    }
-
-    /**
-     * Get controlelr parameters
-     * TODO - check this method
-     * FIXME - backward compatibility
-     * 
-     * @param string $exeptions Parameter keys string
-     *  
-     * @return array
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function getAllParams($exeptions = null)
-    {
-        $result = array();
-        $exeptions = isset($exeptions) ? explode(",", $exeptions) : false;
-
-        foreach ($this->get('params') as $name) {
-            $value = $this->get($name);
-            if (isset($value) && (!$exeptions || in_array($name, $exeptions))) {
-                $result[$name] = $value;
-            }
-        }
-
-        return $result;
     }
 
     /**
@@ -498,7 +493,78 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     }
 
 
-    // TODO - all of the above should be revised
+    /**
+     * Check if an error occured
+     *
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function isActionError()
+    {
+        return isset($this->actionStatus) && $this->actionStatus->isError();
+    }
+
+    /**
+     * setActionStatus 
+     * 
+     * @param int    $status  error/success
+     * @param string $message status info
+     * @param int    $code    status code
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function setActionStatus($status, $message = '', $code = 0)
+    {
+        $this->actionStatus = new XLite_Model_ActionStatus($status, $message, $code);
+    }
+
+    /**
+     * setActionError 
+     * 
+     * @param string $message status info 
+     * @param int    $code    status code
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function setActionError($message = '', $code = 0)
+    {
+        $this->setActionStatus(XLite_Model_ActionStatus::STATUS_ERROR, $message, $code);
+    }
+
+    /**
+     * setActionSuccess
+     *
+     * @param string $message status info
+     * @param int    $code    status code
+     *
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function setActionSuccess($message = '', $code = 0)
+    {
+        $this->setActionStatus(XLite_Model_ActionStatus::STATUS_SUCCESS, $message, $code);
+    }
+
+
+
+    // TODO - should be revised
+
+    /**
+     * Pages array for tabber
+     * FIXME - must be protected
+     *
+     * @var    array
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $pages = array();
 
 
     protected $params = array('target');    
@@ -516,6 +582,59 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
      * @since  3.0.0
      */
     protected $valid = true;
+
+    /**
+     * Check if current page is accessible
+     *
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function checkAccess()
+    {
+        return XLite_Model_Auth::getInstance()->isAuthorized($this);
+    }
+
+    /**
+     * Get controlelr parameters
+     * TODO - check this method
+     * FIXME - backward compatibility
+     *
+     * @param string $exeptions Parameter keys string
+     *
+     * @return array
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function getAllParams($exeptions = null)
+    {
+        $result = array();
+        $exeptions = isset($exeptions) ? explode(",", $exeptions) : false;
+
+        foreach ($this->get('params') as $name) {
+            $value = $this->get($name);
+            if (isset($value) && (!$exeptions || in_array($name, $exeptions))) {
+                $result[$name] = $value;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Mark controller run thread as access denied
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function markAsAccessDenied()
+    {
+        $this->params = array('target');
+        $this->set('target', 'access_denied');
+        XLite_Core_Request::getInstance()->target = 'access_denied';
+    }
 
     /**
      * Check if handler is valid 
@@ -567,18 +686,6 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
      */
     public function fillForm()
     {
-    }
-
-    /**
-     * Get return URL
-     * 
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getReturnUrl()
-    {
-        return $this->returnUrl;
     }
 
     function _clear_xsid_data()

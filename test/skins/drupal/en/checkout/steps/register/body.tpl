@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Register step
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -11,6 +11,10 @@
  * @since     3.0.0
  *}
 
-<p /><h3>There are no payment methods available</h3>
-<p />You cannot proceed! Please contact administrator. 
-<p /><widget class="XLite_View_Button_GoBack" />
+<div class="checkout-profile">
+  {if:isExported()}
+    {getRegisterFormPlaceholder():r}
+  {else:}
+    <widget mode="register" class="XLite_View_Model_Profile" />
+  {end:}
+</div>

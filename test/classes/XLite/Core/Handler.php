@@ -127,17 +127,6 @@ abstract class XLite_Core_Handler extends XLite_Base
         return $result;
     }
 
-    /**
-     * Initialize handler
-     *
-     * @return void
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function init()
-    {
-    }
-
 
     /**
      * Define and set handler attributes; initialize handler 
@@ -151,7 +140,17 @@ abstract class XLite_Core_Handler extends XLite_Base
     public function __construct(array $params = array())
     {
         $this->setWidgetParams($params);
-        $this->init();
+    }
+
+    /**
+     * Initialize handler
+     *
+     * @return void
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function init()
+    {
     }
 
     /**

@@ -327,6 +327,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
         if (!isset(self::$controller)) {
             $class = self::getControllerClass();
             self::$controller = new $class(XLite_Core_Request::getInstance()->getData());
+            self::$controller->init();
         }
 
         return self::$controller;
@@ -365,19 +366,19 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Perform an action and redirect
      * 
-     * @return void
+     * @return bool
      * @access public
      * @since  3.0.0
      */
     public function runController()
     {
-        $this->getController()->handleRequest();
+        return $this->getController()->handleRequest();
     }
 
     /**
      * Return viewer object
      * 
-     * @return XLite_View_Controller
+     * @return XLite_View_Controller|null
      * @access public
      * @since  3.0.0
      */
@@ -385,7 +386,10 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     {
         $this->runController();
 
-        return $this->getController()->getViewer();
+        $viewer = $this->getController()->getViewer();
+        $viewer->init();
+
+        return $viewer;
     }
 
     /**

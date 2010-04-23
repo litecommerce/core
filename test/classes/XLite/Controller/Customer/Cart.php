@@ -44,6 +44,7 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
      */
     protected $currentItem = null;
 
+
     /**
      * Common method to determine current location 
      * 
@@ -100,7 +101,6 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
             }
 
             // switch back to product catalog or to shopping cart
-            $this->set('returnUrlAbsolute', false);
             $productListUrl = ($this->config->General->add_on_mode && isset($_SERVER['HTTP_REFERER']))
                 ? $_SERVER['HTTP_REFERER']
                 : $this->session->get('productListURL');
@@ -110,7 +110,6 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
 
             } else {
                 $this->set('returnUrl', $productListUrl);
-                $this->set('returnUrlAbsolute', $this->config->General->add_on_mode && isset($_SERVER['HTTP_REFERER']));
             }
         }
 

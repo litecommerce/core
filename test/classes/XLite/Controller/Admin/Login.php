@@ -35,8 +35,6 @@
  */
 class XLite_Controller_Admin_Login extends XLite_Controller_Admin_Abstract
 {	
-    public $returnUrl = "admin.php";
-
 	/**
      * getRegularTemplate
      *

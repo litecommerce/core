@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Core
+ * @subpackage ____sub_package____
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,51 +27,48 @@
  */
 
 /**
- * Widget data transport
+ * XLite_View_CheckoutStep_Regular_Register 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @since      3.0.0
  */
-class XLite_Core_WidgetDataTransport extends XLite_Base
+class XLite_View_CheckoutStep_Regular_Register extends XLite_View_CheckoutStep_Regular_Abstract
 {
     /**
-     * Handler to use
-     * 
-     * @var    mixed
+     * Return step templates directory name
+     *
+     * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected $handler = null;
-
-
-    /**
-     * Save passed handler
-     * 
-     * @param mixed $handler passed handler
-     *  
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function __construct($handler)
+    protected function getStepDir()
     {
-        $this->handler = $handler;
+        return 'register';
     }
 
     /**
-     * Call handler methods
-     * 
-     * @param string $method method to call
-     * @param array  $args   call arguments
-     *  
-     * @return mixed
+     * Return title
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getHead()
+    {
+        return 'Create new account';
+    }
+
+
+    /**
+     * Return the placeholder - some kind of mark to dertemine the register form position
+     *
+     * @return string
      * @access public
      * @since  3.0.0
      */
-    public function __call($method, array $args = array())
+    public static function getRegisterFormPlaceholder()
     {
-        return isset($this->handler) ? call_user_func_array(array($this->handler, $method), $args) : null;
+        return '<!-- ____REGISTER_FORM_PLACEHOLDER____ -->';
     }
 }
-

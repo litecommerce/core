@@ -47,14 +47,9 @@
 
 <!-- [checkout] {{{ -->
 <widget class="XLite_View_Checkout" />
+
 <widget target="checkoutSuccess" template="checkout/success.tpl" />
 <widget module="GoogleCheckout" template="common/dialog.tpl" body="modules/GoogleCheckout/google_checkout_dialog.tpl" head="Google Checkout payment module" visible="{target=#googlecheckout#&!valid}" />
-{*
-<widget target="checkout" mode="register" class="XLite_View_Model_Profile" IF="!isExported()" />
-<widget target="checkout" mode="register,paymentMethod,details" template="common/dialog.tpl" body="checkout/checkout.tpl" head="Shopping cart" IF="!showAV"/>
-<widget module="PayPalPro" target="checkout" mode="register" template="common/dialog.tpl" body="modules/PayPalPro/retrieve_profile.tpl" head="Make checkout easier with PayPal Website Pro" visible="{xlite.PayPalProExpressEnabled}">
-<widget target="checkout" mode="register" class="XLite_View_RegisterForm" head="Customer Information" name="registerForm" allowAnonymous="{config.General.enable_anon_checkout}" IF="!showAV"/>
-*}
 <!-- [/checkout] }}} -->
 
 <!-- [order] {{{ -->

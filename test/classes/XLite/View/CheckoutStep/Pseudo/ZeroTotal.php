@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Core
+ * @subpackage ____sub_package____
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,51 +27,47 @@
  */
 
 /**
- * Widget data transport
+ * XLite_View_CheckoutStep_Pseudo_ZeroTotal
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @since      3.0.0
  */
-class XLite_Core_WidgetDataTransport extends XLite_Base
+class XLite_View_CheckoutStep_Pseudo_ZeroTotal extends XLite_View_CheckoutStep_Pseudo_Abstract
 {
-    /**
-     * Handler to use
-     * 
-     * @var    mixed
+	/**
+     * Return title
+     *
+     * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected $handler = null;
-
-
-    /**
-     * Save passed handler
-     * 
-     * @param mixed $handler passed handler
-     *  
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function __construct($handler)
+    protected function getHead()
     {
-        $this->handler = $handler;
+        return 'Your order will be placed automatically';
     }
 
     /**
-     * Call handler methods
-     * 
-     * @param string $method method to call
-     * @param array  $args   call arguments
-     *  
-     * @return mixed
-     * @access public
+     * Return top message text for error
+     *
+     * @return string
+     * @access protected
      * @since  3.0.0
      */
-    public function __call($method, array $args = array())
+    protected function getErrorText()
     {
-        return isset($this->handler) ? call_user_func_array(array($this->handler, $method), $args) : null;
+        return null;
+    }
+
+    /**
+     * Return top message text for success
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getSuccessText()
+    {
+        return 'Your order has been placed automatically';
     }
 }
-

@@ -116,7 +116,8 @@ class XLite_Module_ProductOptions_Controller_Customer_ChangeOptions extends XLit
             } else {
 
                 XLite_Core_TopMessage::getInstance()->add('Invalid options', XLite_Core_TopMessage::ERROR);
-                $this->internalRedirect = true;
+                $this->getWidgetParams(self::PARAM_REDIRECT_CODE)->setValue(279);
+
                 $this->set(
                     'returnUrl',
                     $this->buildUrl(

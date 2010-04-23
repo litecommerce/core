@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Core
+ * @subpackage ____sub_package____
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,51 +27,51 @@
  */
 
 /**
- * Widget data transport
+ * XLite_View_CheckoutStep_Regular_PaymentMethod 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @since      3.0.0
  */
-class XLite_Core_WidgetDataTransport extends XLite_Base
+class XLite_View_CheckoutStep_Regular_PaymentMethod extends XLite_View_CheckoutStep_Regular_Abstract
 {
     /**
-     * Handler to use
-     * 
-     * @var    mixed
+     * Return step templates directory name
+     *
+     * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected $handler = null;
-
-
-    /**
-     * Save passed handler
-     * 
-     * @param mixed $handler passed handler
-     *  
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function __construct($handler)
+    protected function getStepDir()
     {
-        $this->handler = $handler;
+        return 'paymentMethod';
     }
 
     /**
-     * Call handler methods
-     * 
-     * @param string $method method to call
-     * @param array  $args   call arguments
-     *  
-     * @return mixed
-     * @access public
+     * Return title
+     *
+     * @return string
+     * @access protected
      * @since  3.0.0
      */
-    public function __call($method, array $args = array())
+    protected function getHead()
     {
-        return isset($this->handler) ? call_user_func_array(array($this->handler, $method), $args) : null;
+        return 'Select payment method';
+    }
+
+    /**
+     * Check - specified payment method is selected or not
+     *
+     * @param XLite_Model_PaymentMethod $paymentMethod Payment method
+     *
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isPaymentSelected(XLite_Model_PaymentMethod $paymentMethod)
+    {
+        return $this->getCart()->get('paymentMethod')
+            && $this->getCart()->get('paymentMethod')->get('payment_method') == $paymentMethod->get('payment_method');
     }
 }
-

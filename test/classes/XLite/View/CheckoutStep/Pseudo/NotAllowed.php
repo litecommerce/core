@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Core
+ * @subpackage ____sub_package____
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,51 +27,47 @@
  */
 
 /**
- * Widget data transport
+ * XLite_View_CheckoutStep_Pseudo_NotAllowed 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @since      3.0.0
  */
-class XLite_Core_WidgetDataTransport extends XLite_Base
+class XLite_View_CheckoutStep_Pseudo_NotAllowed extends XLite_View_CheckoutStep_Pseudo_Abstract
 {
-    /**
-     * Handler to use
-     * 
-     * @var    mixed
+	/**
+     * Return title
+     *
+     * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected $handler = null;
-
-
-    /**
-     * Save passed handler
-     * 
-     * @param mixed $handler passed handler
-     *  
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function __construct($handler)
+    protected function getHead()
     {
-        $this->handler = $handler;
+        return 'Checkout is not allowed';
     }
 
     /**
-     * Call handler methods
+     * Return top message text for error
      * 
-     * @param string $method method to call
-     * @param array  $args   call arguments
-     *  
-     * @return mixed
-     * @access public
+     * @return string
+     * @access protected
      * @since  3.0.0
      */
-    public function __call($method, array $args = array())
+    protected function getErrorText()
     {
-        return isset($this->handler) ? call_user_func_array(array($this->handler, $method), $args) : null;
+        $text = 'In order to perform checkout your order subtotal must be ';
+
+        if ($this->getCart()->isMinOrderAmountError()) {
+            $text .= 'more than ' . $this->price_format($this->config->General->minimal_order_amount);
+
+        } elseif ($this->getCart()->isMaxOrderAmountError()) {
+            $text .= 'less than ' . $this->price_format($this->config->General->maximal_order_amount);
+
+        } else {
+            $this->doDie('XLite_View_CheckoutStep_Pseudo_NotAllowed::getErrorText(): unexpected error');
+        }
+
+        return $text;
     }
 }
-

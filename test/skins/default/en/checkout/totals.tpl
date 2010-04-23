@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Register step
+ * Cart totals box
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,12 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget template="checkout/cart.tpl" />
-
-<div class="checkout-profile">
-  {if:isExported()}
-    {getRegisterFormPlaceholder():r}
-  {else:}
-    <widget mode="register" class="XLite_View_Model_Profile" />
-  {end:}
+<div class="cart-totals checkout-totals">
+  <h2>Summary</h2>
+  <widget template="shopping_cart/totals.tpl" />
 </div>

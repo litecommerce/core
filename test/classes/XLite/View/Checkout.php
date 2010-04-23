@@ -36,6 +36,14 @@
 class XLite_View_Checkout extends XLite_View_Dialog
 {
     /**
+     * Indexes in step data array 
+     */
+
+    const STEP_TEMPLATE  = 'template';
+    const STEP_SHOW_CART = 'showCart';
+
+
+    /**
      * Targets this widget is allowed for
      *
      * @var    array
@@ -43,6 +51,7 @@ class XLite_View_Checkout extends XLite_View_Dialog
      * @since  3.0.0
      */
     protected $allowedTargets = array('checkout');
+
 
     /**
      * Return title
@@ -68,21 +77,36 @@ class XLite_View_Checkout extends XLite_View_Dialog
         return 'checkout';
     }
 
-
     /**
-     * getRegisterFormPlaceholder 
+     * Return widget class name for current step 
      * 
      * @return string
-     * @access public
+     * @access protected
      * @since  3.0.0
      */
-    public static function getRegisterFormPlaceholder()
+    protected function getStepWidgetClass()
     {
-        return '<!-- ____REGISTER_FORM_PLACEHOLDER____ -->';
+        return $this->getCurrentStep()->getWidgetClass();
     }
 
     /**
+     * Get current year
+     * FIXME - must be moved to a separate widget
+     *
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCurrentYear()
+    {
+        return intval(date('Y'));
+    }
+
+
+    /**
      * Get a list of CSS files required to display the widget properly
+     * FIXME - decompose these files
      *
      * @return array
      * @access public
@@ -100,6 +124,7 @@ class XLite_View_Checkout extends XLite_View_Dialog
 
     /**
      * Get a list of JS files required to display the widget properly
+     * FIXME - decompose these files
      *
      * @return array
      * @access public
@@ -113,48 +138,6 @@ class XLite_View_Checkout extends XLite_View_Dialog
         $list[] = 'checkout/checkout.js';
 
         return $list;
-    }
-
-    /**
-     * Get current Year 
-     * 
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCurrentYear()
-    {
-        return intval(date('Y'));
-    }
-
-    /**
-     * Check - specified payment method is selected or not
-     * 
-     * @param XLite_Model_PaymentMethod $paymentMethod Payment method
-     *  
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isPaymentSelected(XLite_Model_PaymentMethod $paymentMethod)
-    {
-        return $this->getCart()->get('paymentMethod')
-            && $this->getCart()->get('paymentMethod')->get('payment_method') == $paymentMethod->get('payment_method');
-    }
-
-    /**
-     * Billing and shipping addresses is equals 
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isSameAddress()
-    {
-        return $this->getCart()->getProfile()->isSameAddress();
     }
 }
 
