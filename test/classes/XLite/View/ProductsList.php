@@ -54,6 +54,9 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
     const PARAM_SHOW_DISPLAY_MODE_SELECTOR = 'showDisplayModeSelector';
     const PARAM_SHOW_SORT_BY_SELECTOR      = 'showSortBySelector';
 
+    const PARAM_ICON_MAX_WIDTH = 'iconWidth';
+    const PARAM_ICON_MAX_HEIGHT = 'iconHeight';
+
     /*
      * The maximum number of items (products) displayed in the sidebar widget
      */
@@ -74,6 +77,12 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
     const DISPLAY_MODE_LIST  = 'list';
     const DISPLAY_MODE_GRID  = 'grid';
     const DISPLAY_MODE_TABLE = 'table';
+
+    /**
+     * A special option meaning that a CSS layout is to be used
+     */
+
+    const DISPLAY_GRID_CSS_LAYOUT = 'css-defined';
 
     /**
      * Allowed sort criterions
@@ -327,6 +336,33 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
     }
 
     /**
+     * Return products split into rows
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getProductRows()
+    {
+        $rows = array_chunk($this->getPageData(), $this->getParam(self::PARAM_GRID_COLUMNS));
+        $last = count($rows)-1;
+        $rows[$last] = array_pad($rows[$last], $this->getParam(self::PARAM_GRID_COLUMNS), false);
+        return $rows;
+    }
+
+    /**
+     * Check whether a CSS layout should be used for "Grid" mode
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isCSSLayout()
+    {
+        return ($this->getParam(self::PARAM_GRID_COLUMNS) == self::DISPLAY_GRID_CSS_LAYOUT);
+    }
+
+    /**
      * Get products list for sidebar widget 
      * 
      * @return void
@@ -401,7 +437,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
     protected function getGridColumnsRange()
     {
         $range = array_merge(
-            array('css-defined' => 'css-defined'),
+            array(self::DISPLAY_GRID_CSS_LAYOUT => self::DISPLAY_GRID_CSS_LAYOUT),
             range(self::GRID_COLUMNS_MIN, self::GRID_COLUMNS_MAX)
         );
 
@@ -444,6 +480,12 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
             self::PARAM_SIDEBAR_MAX_ITEMS => new XLite_Model_WidgetParam_Int(
                 'The maximum number of products displayed in sidebar', 5, true
             ),
+            self::PARAM_ICON_MAX_WIDTH => new XLite_Model_WidgetParam_Int(
+                'Maximal icon width', 90, true
+            ),
+            self::PARAM_ICON_MAX_HEIGHT => new XLite_Model_WidgetParam_Int(
+                'Maximal icon height', 90, true
+            ),
             self::PARAM_SORT_BY => new XLite_Model_WidgetParam_List(
                 'Sort by', 'price', false, $this->sortByModes
             ),
@@ -459,6 +501,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
             self::PARAM_SHOW_SORT_BY_SELECTOR => new XLite_Model_WidgetParam_Checkbox(
                 'Show "Sort by" selector', true, true
             ),
+
         );
 
         $this->requestParams[] = self::PARAM_DISPLAY_MODE;
@@ -857,4 +900,34 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
     { 
         return floor(100 / $this->getParam(self::PARAM_GRID_COLUMNS)) - 6; 
     } 
+
+    /**
+     * Return the maximal icon width
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getIconWidth()
+    {
+        return $this->getParam(self::PARAM_ICON_MAX_WIDTH);
+    }
+
+    /**
+     * Return the maximal icon height
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getIconHeight()
+    {
+        return $this->getParam(self::PARAM_ICON_MAX_HEIGHT);
+    }
+
+
+
+
 }

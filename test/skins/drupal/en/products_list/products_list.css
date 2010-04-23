@@ -57,84 +57,6 @@
   background: transparent url(../images/added2cart.gif) no-repeat left top;
 }
 
-/* List type : Grid */
-.list-body-grid
-{
-	list-style: none;
-}
-
-/*
- * Information on hacks used below is available at:
- * - http://blog.mozilla.com/webdev/2009/02/20/cross-browser-inline-block/
- * - http://foohack.com/2007/11/cross-browser-support-for-inline-block-styling/
- */
-.list-body-grid li
-{
-  padding: 0;
-  margin: 0 1em 1em 0;
-	vertical-align: top;
-	background-image: none;
-	display: -moz-inline-stack;		/* FF2 supports this instead of "inline-block" */
-	display: inline-block;
-}
-
-/* IE6 requires this in order to correctly display li as "inline-blocks */
-* html .list-body-grid li
-{
-  display: inline;
-}
-
-.list-body-grid a.product-thumbnail
-{
-  display: block;
-}
-
-.list-body-grid a.product-thumbnail,
-.list-body-grid a.product-thumbnail img
-{
-  position: relative;       /* Hack for FF2: in FF2 static "inner-blocks" are non-clickable */
-}
-
-.list-body-grid li div {
-  position: relative;
-}
-
-.list-body-grid .product-name {
-  display: block;
-}
-
-
-.list-body-grid-1-columns li.item
-{
-  width: 100%;
-  margin-right: 0;
-}
-
-.list-body-grid-2-columns li.item
-{
-  width: 47%;
-  margin-right: 2.9%;
-}
-
-.list-body-grid-3-columns li.item
-{
-  width: 30%;
-  margin-right: 2.9%;
-}
-
-.list-body-grid-4-columns li.item
-{
-  width: 23%;
-  margin-right: 1.9%;
-}
-
-.list-body-grid-5-columns li.item
-{
-  width: 19%;
-  margin-right: 0.9%;
-}
-
-
 /* List type : List */
 .list-body-list {
   list-style: none;
@@ -171,4 +93,135 @@
 
 .list-body-table tr td.product-name-column {
   width: 100%;
+}
+
+/*
+ * GRID layout based on CSS and lists
+ */
+
+/*
+ * Information on hacks used below is available at:
+ * - http://blog.mozilla.com/webdev/2009/02/20/cross-browser-inline-block/
+ * - http://foohack.com/2007/11/cross-browser-support-for-inline-block-styling/
+ */
+
+ul.list-body-grid li
+{
+  padding: 0;
+  margin: 0 0.5em 1em;
+	vertical-align: top;
+	background-image: none;
+	display: -moz-inline-stack;		/* FF2 supports this instead of "inline-block" */
+	display: inline-block;
+}
+
+/* IE6 requires this in order to correctly display li as "inline-blocks */
+* html ul.list-body-grid li
+{
+  display: inline;
+}
+
+ul.list-body-grid a.product-thumbnail
+{
+  display: block;
+}
+
+ul.list-body-grid a.product-thumbnail,
+ul.list-body-grid a.product-thumbnail img
+{
+  position: relative;       /* Hack for FF2: in FF2 static "inner-blocks" are non-clickable */
+}
+
+ul.list-body-grid li div {
+  position: relative;
+}
+
+ul.list-body-grid .product-name {
+  display: block;
+}
+
+
+ul.list-body-grid-1-columns li.item
+{
+  width: 100%;
+  margin-right: 0;
+}
+
+ul.list-body-grid-2-columns li.item
+{
+  width: 47%;
+  margin-right: 2.9%;
+}
+
+ul.list-body-grid-3-columns li.item
+{
+  width: 30%;
+  margin-right: 2.9%;
+}
+
+ul.list-body-grid-4-columns li.item
+{
+  width: 23%;
+  margin-right: 1.9%;
+}
+
+ul.list-body-grid-5-columns li.item
+{
+  width: 19%;
+  margin-right: 0.9%;
+}
+
+/*
+ * GRID layout based on tables
+ */
+
+table.list-body-grid,
+table.list-body-grid td
+{
+  border-style: none;
+  padding: 0.5em;
+}
+
+table.list-body-grid-1-columns td
+{
+  width: 100%;
+}
+table.list-body-grid-2-columns td
+{
+  width: 50%;
+}
+table.list-body-grid-3-columns td
+{
+  width: 33.3%;
+}
+table.list-body-grid-5-columns td
+{
+  width: 25%;
+}
+table.list-body-grid-6-columns td
+{
+  width: 16.75%;
+}
+
+table.list-body-grid a
+{
+  display: block;
+  text-align: center;
+}
+
+table.list-body-grid a span
+{
+  display: block;
+}
+
+table.list-body-grid .buttons td
+{
+  text-align: center;
+  padding: 0.5em 0 1.5em;
+}
+
+table.list-body-grid .buttons form
+{
+  display: inline;
+  margin-left: 1em;
 }
