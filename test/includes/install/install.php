@@ -609,7 +609,9 @@ function checkMysqlVersion(&$errorMsg = null, &$value = null, $connection = null
     $result = true;
     $value = 'unknown';
 
-    if (!is_resource($connection) && defined('DB_URL')) {
+    $_connection = $connection;
+
+    if (!is_resource($_connection) && defined('DB_URL') && constant('DB_URL')) {
 
         $url = parse_url(constant('DB_URL'));
 
@@ -618,12 +620,12 @@ function checkMysqlVersion(&$errorMsg = null, &$value = null, $connection = null
         $user = urldecode($url['user']);
         $pass = isset($url['pass']) ? urldecode($url['pass']) : NULL;
 
-        $connection = @mysql_connect($host . $port, $user, $pass);
+        $_connection = @mysql_connect($host . $port, $user, $pass);
     }
 
-    if (is_resource($connection)) {
+    if (is_resource($_connection)) {
 
-        $version = @mysql_get_server_info($connection);
+        $version = @mysql_get_server_info($_connection);
 
         if (strpos($version, '-') !== false) {
             $value = $version = substr($version, 0, strpos($version, "-"));
@@ -638,7 +640,7 @@ function checkMysqlVersion(&$errorMsg = null, &$value = null, $connection = null
             $errorMsg = 'The version of MySQL which is currently used contains known bugs, that is why LiteCommerce may operate incorrectly. It is recommended to update MySQL to a more stable version.';
         }
 
-    } else {
+    } elseif (is_resource($connection)) {
         $result = false;
         $errorMsg = 'Cannot connect to MySQL server.';
     }
