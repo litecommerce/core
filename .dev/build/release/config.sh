@@ -3,8 +3,8 @@
 # Data definition for LiteCommerce release script
 #
 
-# LiteCommerce version
-XLITE_VERSION="3.0"
+# LiteCommerce version (no spaces allowed as it's used as part of distributive name)
+XLITE_VERSION="3.0.0-alpha"
 
 # LiteCommerce SVN repository
 XLITE_SVN="svn://svn.crtdev.local/repo/xlite/main/test"
@@ -51,6 +51,7 @@ sql/xlite_modules.sql
 # Drupal files that must be removed from all distributives
 DRUPAL_FILES_TODELETE="
 profiles/default
+profiles/litecommerce_site
 includes/install.pgsql.inc
 "
 
