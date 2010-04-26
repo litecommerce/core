@@ -156,9 +156,8 @@ abstract class XLite_Model_PaymentMethod_CreditCardWebBased extends XLite_Model_
         $result = true;
 
         if ($total && $this->getComplex('params.check_total') && $cart->get('total') != $total) {
-            $this->setDetailsField($cart, 'error', 'Error', 'Hacking attempt!');
-            $this->setDetailsField(
-                $cart,
+            $cart->setDetailsCell('error', 'Error', 'Hacking attempt!');
+            $cart->setDetailsCell(
                 'errorDescription',
                 'Hacking attempt details',
                 'Total amount doesn\'t match. Order total: ' . $cart->get('total')
@@ -188,9 +187,8 @@ abstract class XLite_Model_PaymentMethod_CreditCardWebBased extends XLite_Model_
         $paymentCurrency = $this->getComplex('params.currency');
 
         if ($currency && $this->getComplex('params.check_currency') && $paymentCurrency != $currency) {
-            $this->setDetailsField($cart, 'error', 'Error', 'Hacking attempt!');
-            $this->setDetailsField(
-                $cart,
+            $cart->setDetailsCell('error', 'Error', 'Hacking attempt!');
+            $cart->setDetailsCell(
                 'errorDescription',
                 'Hacking attempt details',
                 'Currency code doesn\'t match. Order currency: ' . $paymentCurrency

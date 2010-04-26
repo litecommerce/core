@@ -340,30 +340,30 @@ extends XLite_Model_PaymentMethod_CreditCardWebBased
             $status = 1 == $request->x_response_code ? 'P' : 'F';
 
             if (isset($request->x_response_reason_text)) {
-                $this->setDetailsField($cart, 'response', 'Response', $request->x_response_reason_text);
+                $cart->setDetailsCell('response', 'Response', $request->x_response_reason_text);
 
             } elseif (isset($this->err[$request->x_response_reason_code])) {
-                $this->setDetailsField($cart, 'response', 'Response', $this->err[$request->x_response_reason_code]);
+                $cart->setDetailsCell('response', 'Response', $this->err[$request->x_response_reason_code]);
             }
 
             if ($request->x_auth_code) {
-                $this->setDetailsField($cart, 'authCode', 'Auth code', $request->x_auth_code);
+                $cart->setDetailsCell('authCode', 'Auth code', $request->x_auth_code);
             }
 
             if ($request->x_trans_id) {
-                $this->setDetailsField($cart, 'transId', 'Transaction ID', $request->x_trans_id);
+                $cart->setDetailsCell('transId', 'Transaction ID', $request->x_trans_id);
             }
 
             if ($request->x_response_subcode) {
-                $this->setDetailsField($cart, 'responseSubcode', 'Response subcode', $request->x_response_subcode);
+                $cart->setDetailsCell('responseSubcode', 'Response subcode', $request->x_response_subcode);
             }
 
             if (isset($request->x_avs_code) && isset($this->avserr[$request->x_avs_code])) {
-                $this->setDetailsField($cart, 'avs', 'AVS', $this->avserr[$request->x_avs_code]);
+                $cart->setDetailsCell('avs', 'AVS', $this->avserr[$request->x_avs_code]);
             }
 
             if (isset($request->x_CVV2_Resp_Code) && isset($this->cvverr[$request->x_CVV2_Resp_Code])) {
-                $this->setDetailsField($cart, 'cvv', 'CVV', $this->cvverr[$request->x_CVV2_Resp_Code]);
+                $cart->setDetailsCell('cvv', 'CVV', $this->cvverr[$request->x_CVV2_Resp_Code]);
             }
 
             if (!$this->checkTotal($cart, $request->x_amount)) {

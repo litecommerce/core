@@ -27,13 +27,13 @@
  */
 
 /**
- * ____description____
+ * Google button
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GoogleCheckout_View_ButtonAltCheckout extends XLite_View_Button implements XLite_Base_IDecorator
+class XLite_Module_GoogleCheckout_View_ButtonAltCheckout extends XLite_View_Button
 	{	
 
 	/**

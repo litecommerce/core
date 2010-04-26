@@ -27,31 +27,67 @@
  */
 
 /**
- * ____description____
+ * Payment method configure
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
 class XLite_Controller_Admin_PaymentMethod extends XLite_Controller_Admin_Abstract
-{	
-    public $params = array("target", "payment_method", "updated", "error");	
-    public $pm = null;	
-    public $error = '';	
+{    
+    /**
+     * Controller parameters 
+     * 
+     * @var    array
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $params = array('target', 'payment_method', 'updated', 'error');    
+
+    /**
+     * Payment methods (cache) 
+     * 
+     * @var    XLite_Model_PaymentMethod
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $pm = null;    
+
+    public $error = '';    
+
     public $updated = false;
 
-    function getPM()
+    /**
+     * Get payment method 
+     * 
+     * @return XLite_Model_PaymentMethod
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPM()
     {
         if (is_null($this->pm)) {
             $this->pm = XLite_Model_PaymentMethod::factory(XLite_Core_Request::getInstance()->payment_method);
         }
+
         return $this->pm;
     }    
 
-    function action_update()
+    /**
+     * Update payment method
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionUpdate()
     {
-        $this->set("error", $this->getPM()->handleConfigRequest());
-        $this->set("updated", 1);
+        $this->set('error', $this->getPM()->handleConfigRequest());
+        $this->set('updated', 1);
         $this->set(
             'returnUrl',
             $this->buildUrl('payment_methods')

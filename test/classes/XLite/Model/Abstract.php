@@ -109,11 +109,21 @@ class XLite_Model_Abstract extends XLite_Base
      */
     public $defaultOrder;
 
+
     /**
     * Contains SQL WHERE clause used by default by findAll()
     * @var string $_range
     */    
-    public $_range;
+
+    /**
+     * Default SQL filter (WHERE block) for findAll() method
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $_range;
 
     /**
     * If set to true, findAll will fetch only primary keys (isRead=false)

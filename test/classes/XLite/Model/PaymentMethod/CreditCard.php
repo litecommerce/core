@@ -156,25 +156,6 @@ class XLite_Model_PaymentMethod_CreditCard extends XLite_Model_PaymentMethod
     }
 
     /**
-     * Set cart details dield 
-     * 
-     * @param XLite_Model_Cart $cart  Cart
-     * @param string           $code  Field code
-     * @param string           $name  Field name
-     * @param mixed            $value Field value
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function setDetailsField(XLite_Model_Cart $cart, $code, $name, $value)
-    {
-        $cart->setComplex('details.' . $code, $value);
-        $cart->setComplex('detailLabels.' . $code, $name);
-    }
-
-    /**
      * Check - payment method is configured or not
      * 
      * @return boolean

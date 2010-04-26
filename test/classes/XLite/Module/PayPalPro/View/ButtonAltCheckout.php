@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Controller
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,34 +26,31 @@
  * @since      3.0.0
  */
 
-/**
- * Payment method configure
- * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
- */
-class XLite_Module_PayPalPro_Controller_Admin_PaymentMethod extends XLite_Controller_Admin_PaymentMethod
-implements XLite_Base_IDecorator
+class XLite_Module_PayPalPro_View_ButtonAltCheckout extends XLite_View_Button_Image
 {
     /**
-     * Get payment method 
-     * 
-     * @return XLite_Model_PaymentMethod
-     * @access public
-     * @see    ____func_see____
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
      * @since  3.0.0
      */
-    public function getPM()
+    protected function getDefaultTemplate()
     {
-        if ('paypalpro' == XLite_Core_Request::getInstance()->payment_method) {
-            $pm = new XLite_Model_PaymentMethod('paypalpro');
+        return 'modules/PayPalPro/button.tpl';
+    }
 
-            if ('express' == $pm->getComplex('params.solution')) {
-                XLite_Core_Request::getInstance()->payment_method = 'paypalpro_express';
-            }
-        }
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
 
-        return parent::getPM();
+        $this->widgetParams[self::PARAM_ACTION]->setValue('express_checkout');
     }
 }

@@ -27,21 +27,33 @@
  */
 
 /**
- * ____description____
+ * Profile
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_PayPalPro_Controller_Customer_Profile extends XLite_Controller_Customer_Profile implements XLite_Base_IDecorator
+class XLite_Module_PayPalPro_Controller_Customer_Profile extends XLite_Controller_Customer_Profile
+implements XLite_Base_IDecorator
 {
-	function handleRequest() // {{{  
-	{
-		if ($this->get("mode") == "modify" && $this->cart->getComplex('PaymentMethod.payment_method') == "paypalpro_express") {
-			$express_checkout = new XLite_Module_PayPalPro_Controller_Customer_ExpressCheckout();
-			$express_checkout->action_profile();
-		} 
-		parent::handleRequest();
-	} //  }}} 
-	
-} // }}}
+    /**
+     * Handles the request. Parses the request variables if necessary. Attempts to call the specified action function 
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function handleRequest()
+    {
+        if (
+            'modify' == XLite_Core_Request::getInstance()->mode
+            && 'paypalpro_express' == $this->getCart()->getComplex('PaymentMethod.payment_method')
+        ) {
+            $expressCheckout = new XLite_Module_PayPalPro_Controller_Customer_ExpressCheckout();
+            $expressCheckout->callActionProfile();
+        } 
+
+        parent::handleRequest();
+    }
+    
+}

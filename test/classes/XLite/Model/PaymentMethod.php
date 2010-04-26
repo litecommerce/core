@@ -320,7 +320,7 @@ class XLite_Model_PaymentMethod extends XLite_Model_Abstract
     public static function factory($name)
     {
         if (empty(self::$registeredPaymentMethods[$name])) {
-            $this->doDie('Payment method "' . $name . '" is not registered');
+            die ('Payment method "' . $name . '" is not registered');
         }
 
         $className = 'XLite_' . self::$registeredPaymentMethods[$name];

@@ -27,91 +27,232 @@
  */
 
 /**
- * ____description____
+ * Express checkout landing controller
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_PayPalPro_Controller_Customer_ExpressCheckout extends XLite_Controller_Abstract
+class XLite_Module_PayPalPro_Controller_Customer_ExpressCheckout extends XLite_Controller_Customer_Abstract
 {
-	function getSecure()
-	{
-		return $this->config->getComplex('Security.customer_security');
-	}
-	
-	function action_profile()
-	{
-		$pm = XLite_Model_PaymentMethod::factory('paypalpro_express');
-		$response = $pm->sendExpressCheckoutRequest($this->cart); 
-		if ($response["ACK"] == "Success" && !empty($response["TOKEN"])) {
-			$pmpro = XLite_Model_PaymentMethod::factory('paypalpro');
-			$redirect = $pmpro->getComplex('params.pro.mode') ? "https://www.paypal.com" : "https://www.sandbox.paypal.com";
-			header("Location: ". $redirect."/webscr?cmd=_express-checkout&token=".$response["TOKEN"]);
-			die();
-		} else {
-			$this->set("returnUrl","cart.php?target=checkout");
-		}
-	}
+    /**
+     * Get secure controller status
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSecure()
+    {
+        return $this->config->Security->customer_security;
+    }
 
-	function action_retrieve_profile()
-	{
-		if (!empty($_GET["token"])) {
-			$profile = new XLite_Model_Profile();
-			$pm = XLite_Model_PaymentMethod::factory('paypalpro_express');
-			$response = $pm->sendExpressCheckoutDetailsRequest($_GET["token"]);
-  			$details = $response["GETEXPRESSCHECKOUTDETAILSRESPONSEDETAILS"]["PAYERINFO"];
-        if ($response["ACK"] == "Success") {
-			$state = new XLite_Model_State();
-			$countryCode = $details["ADDRESS"]["COUNTRY"];
-			$stateCode = addslashes($details["ADDRESS"]["STATEORPROVINCE"]);
-			$stateCondition = ($countryCode == "US") ? "code='$stateCode'" : "(code='$stateCode' OR state='$stateCode')";
-			$state->find("country_code='$countryCode' AND $stateCondition");
-			if ($this->cart->get("profile")) {
-				$profile = $this->cart->get("profile");
-                $profile->set("shipping_firstname",$details["PAYERNAME"]["FIRSTNAME"]);
-                $profile->set("shipping_lastname",$details["PAYERNAME"]["LASTNAME"]);
-                $profile->set("shipping_company","");
-                $profile->set("shipping_fax","");
-                $profile->set("shipping_phone",$response["CONTACTPHONE"]);
-                $profile->set("shipping_address",$details["ADDRESS"]["STREET1"]." ".$details["ADDRESS"]["STREET2"]);
-                $profile->set("shipping_city",$details["ADDRESS"]["CITYNAME"]);
-				$profile->set("shipping_state",$state->get("state_id"));
-                $profile->set("shipping_country",$details["ADDRESS"]["COUNTRY"]);
-                $profile->set("shipping_zipcode",$details["ADDRESS"]["POSTALCODE"]);
-				$profile->update();
-			} else if ($profile->find("login = '".$details["PAYER"]."' AND order_id = 0")) {
-				$this->set("valid",false);
-				$this->redirect("cart.php?target=profile&mode=login");
-			} else {
-	            $profile = new XLite_Model_Profile();
-    	        $profile->set("login",$details["PAYER"]);
-        	    $profile->set("billing_firstname",$details["PAYERNAME"]["FIRSTNAME"]);
-            	$profile->set("billing_lastname",$details["PAYERNAME"]["LASTNAME"]);
-	            $profile->set("billing_company","");
-    	        $profile->set("billing_fax","");
-        	    $profile->set("billing_phone",$response["CONTACTPHONE"]);
-	        	$profile->set("billing_address",$details["ADDRESS"]["STREET1"]." ".$details["ADDRESS"]["STREET2"]);
-		        $profile->set("billing_city",$details["ADDRESS"]["CITYNAME"]);
-				$profile->set("billing_state",$state->get("state_id"));
-	    	    $profile->set("billing_country",$details["ADDRESS"]["COUNTRY"]);
-	        	$profile->set("billing_zipcode",$details["ADDRESS"]["POSTALCODE"]);
-                $this->auth->register($profile);
-                $this->auth->loginProfile($profile);
-                $this->auth->setComplex("profile.order_id", $this->cart->get("order_id"));
-	     	}
-														
-			XLite_Model_Auth::getInstance()->getProfile()->update();
+    /**
+     * Call 'profile' action
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function callActionProfile()
+    {
+        $this->doActionProfile();
+    }
+    
+    /**
+     * Profile 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionProfile()
+    {
+        $pm = XLite_Model_PaymentMethod::factory('paypalpro_express');
 
-			$this->cart->set("paymentMethod",$pm);
-            $this->cart->setComplex("details.token", $response["GETEXPRESSCHECKOUTDETAILSRESPONSEDETAILS"]["TOKEN"]);
-            $this->cart->setComplex("details.payer_id", $details["PAYERID"]);
-			$this->updateCart();
+        $response = $pm->sendExpressCheckoutRequest($this->getCart()); 
 
-			$this->set("returnUrl","cart.php?target=checkout");
-				
-			} 
-		} 
-		$this->set("returnUrl","cart.php?target=checkout");
-	}
+        if ($response['ACK'] == 'Success' && !empty($response['TOKEN'])) {
+
+            $pmpro = XLite_Model_PaymentMethod::factory('paypalpro');
+
+            $redirect = $pmpro->getComplex('params.pro.mode')
+                ? 'https://www.paypal.com'
+                : 'https://www.sandbox.paypal.com';
+
+            header('Location: ' . $redirect . '/webscr?cmd=_express-checkout&token=' . $response['TOKEN']);
+            $this->doDie();
+
+        } else {
+            $this->set('returnUrl', $this->buildUrl('checkout'));
+        }
+    }
+
+    /**
+     * Retrieve profile from PayPal
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionRetrieveProfile()
+    {
+        $request = XLite_Core_Request::getInstance();
+
+        $pm = new XLite_Model_PaymentMethod('paypalpro');
+
+        if (
+            in_array($pm->getComplex('params.solution'), array('pro', 'express'))
+            && isset($request->token)
+            && !empty($request->token)
+        ) {
+
+            $profile = new XLite_Model_Profile();
+            $pm = XLite_Model_PaymentMethod::factory('paypalpro_express');
+            $response = $pm->sendExpressCheckoutDetailsRequest($request->token);
+
+            if (
+                $response
+                && 'Success' == $pm->getXMLResponseValue('base:Ack', $response)
+            ) {
+
+                $details = $pm->xpath->query('base:GetExpressCheckoutDetailsResponseDetails/base:PayerInfo', $response)->item(0);
+
+                $state = new XLite_Model_State();
+                $countryCode = $pm->getXMLResponseValue('base:Address/base:Country', $details);
+                $stateCode = addslashes($pm->getXMLResponseValue('base:Address/base:StateOrProvince', $details));
+                $stateCondition = 'US' == $countryCode
+                    ? 'code = \'' . $stateCode . '\''
+                    : '(code = \'' . $stateCode . '\ OR state = \'' . $stateCode . '\')';
+
+                $state->find('country_code = \'' . $countryCode . '\' AND ' . $stateCondition);
+
+                $payer = $pm->getXMLResponseValue('base:Payer', $details);
+
+                if ($this->getCart()->getProfile()) {
+
+                    // User is present
+
+                    $profile = $this->getCart()->getProfile();
+
+                    $profile->set(
+                        'shipping_firstname',
+                        $pm->getXMLResponseValue('base:PayerName/base:FirstName', $details)
+                    );
+                    $profile->set(
+                        'shipping_lastname',
+                        $pm->getXMLResponseValue('base:PayerName/base:LastName', $details)
+                    );
+                    $profile->set('shipping_company', '');
+                    $profile->set('shipping_fax', '');
+                    $profile->set(
+                        'shipping_phone',
+                        $pm->getXMLResponseValue('base:Address/base:Phone', $details)
+                    );
+                    $profile->set(
+                        'shipping_address', 
+                        $pm->getXMLResponseValue('base:Address/base:Street1', $details)
+                        . ' '
+                        . $pm->getXMLResponseValue('base:Address/base:Street2', $details)
+                    );
+                    $profile->set(
+                        'shipping_city',
+                        $pm->getXMLResponseValue('base:Address/base:CityName', $details)
+                    );
+                    $profile->set(
+                        'shipping_state',
+                        $state->get('state_id')
+                    );
+                    $profile->set(
+                        'shipping_country',
+                        $pm->getXMLResponseValue('base:Address/base:Country', $details)
+                    );
+                    $profile->set(
+                        'shipping_zipcode',
+                        $pm->getXMLResponseValue('base:Address/base:PostalCode', $details)
+                    );
+
+                    $profile->update();
+
+                } elseif ($profile->find('login = \'' . addslashes($payer) . '\' AND order_id = 0')) {
+
+                    // Profile is found but this is nor current cart profile
+                    $this->set('valid', false);
+                    $this->redirect($ths->buldUrl('profile', 'login'));
+
+                } else {
+
+                    // New profile
+
+                    $profile = new XLite_Model_Profile();
+
+                    $profile->set('login', $payer);
+
+                    $profile->set(
+                        'billing_firstname',
+                        $pm->getXMLResponseValue('base:PayerName/base:FirstName', $details)
+                    );
+                    $profile->set(
+                        'billing_lastname',
+                        $pm->getXMLResponseValue('base:PayerName/base:LastName', $details)
+                    );
+                    $profile->set('billing_company', '');
+                    $profile->set('billing_fax', '');
+                    $profile->set(
+                        'billing_phone',
+                        $pm->getXMLResponseValue('base:Address/base:Phone', $details)
+                    );
+                    $profile->set(
+                        'billing_address', 
+                        $pm->getXMLResponseValue('base:Address/base:Street1', $details)
+                        . ' '
+                        . $pm->getXMLResponseValue('base:Address/base:Street2', $details)
+                    );
+                    $profile->set(
+                        'billing_city',
+                        $pm->getXMLResponseValue('base:Address/base:CityName', $details)
+                    );
+                    $profile->set(
+                        'billing_state',
+                        $state->get('state_id')
+                    );
+                    $profile->set(
+                        'billing_country',
+                        $pm->getXMLResponseValue('base:Address/base:Country', $details)
+                    );
+                    $profile->set(
+                        'billing_zipcode',
+                        $pm->getXMLResponseValue('base:Address/base:PostalCode', $details)
+                    );
+
+                    $this->auth->register($profile);
+                    $this->auth->loginProfile($profile);
+                    $this->auth->getProfile()->set('order_id', $this->getCart()->get('order_id'));
+                    $this->auth->getProfile()->update();
+                }
+                                                        
+                XLite_Model_Auth::getInstance()->getProfile()->read();
+
+                $this->getCart()->set('paymentMethod', $pm);
+
+                $this->getCart()->setDetail(
+                    'token',
+                    $pm->getXMLResponseValue('base:GetExpressCheckoutDetailsResponseDetails/base:Token', $response)
+                );
+                $this->getCart()->setDetail(
+                    'payer_id',
+                    $pm->getXMLResponseValue('base:PayerID', $details)
+                );
+
+                $this->updateCart();
+
+            } 
+        }
+
+        $this->set('returnUrl', $this->buildUrl('checkout'));
+    }
 }

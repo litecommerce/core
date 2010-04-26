@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Model
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,50 +27,48 @@
  */
 
 /**
- * Order
+ * Express checkout form
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_PayPalPro_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
+class XLite_Module_PayPalPro_View_Form_ExpressCheckout extends XLite_View_Form_Abstract
 {
     /**
-     * Get order details 
+     * Current form name 
      * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
+     * @return string
+     * @access protected
      * @since  3.0.0
      */
-    public function getDetails()
+    protected function getFormName()
     {
-        $details = parent::getDetails();
-
-        if (
-            !XLite::isAdminZone()
-            && in_array($this->get('payment_method'), array('paypalpro', 'paypalpro_express'))
-            && isset($details['error'])
-            && isset($details['errorDescription'])
-        ) {
-            $details['error'] .= ' (' . $details['errorDescription'] . ')';
-        }
-        
-        return $details;
+        return 'express_checkout_form';
     }
 
     /**
-     * Check - has order paypal token or not
+     * getDefaultTarget 
      * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
+     * @return string
+     * @access protected
      * @since  3.0.0
      */
-    public function isPayPalProfileRetrieved()
+    protected function getDefaultTarget()
     {
-        $details = $this->getDetails();
+        return 'express_checkout';
+    }
 
-        return isset($details['token']) && $details['token'];
+    /**
+     * getDefaultAction 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultAction()
+    {
+        return 'profile';
     }
 }
+

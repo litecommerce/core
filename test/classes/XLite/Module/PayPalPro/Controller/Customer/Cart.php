@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Model
+ * @subpackage Controller
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,50 +27,44 @@
  */
 
 /**
- * Order
+ * Cart
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_PayPalPro_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
+class XLite_Module_PayPalPro_Controller_Customer_Cart extends XLite_Controller_Customer_Cart
+implements XLite_Base_IDecorator
 {
     /**
-     * Get order details 
+     * Call 'ExpressCheckout' action
      * 
-     * @return array
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getDetails()
+    public function callActionExpressCheckout()
     {
-        $details = parent::getDetails();
-
-        if (
-            !XLite::isAdminZone()
-            && in_array($this->get('payment_method'), array('paypalpro', 'paypalpro_express'))
-            && isset($details['error'])
-            && isset($details['errorDescription'])
-        ) {
-            $details['error'] .= ' (' . $details['errorDescription'] . ')';
-        }
-        
-        return $details;
+        $this->doActionExpressCheckout();
     }
 
     /**
-     * Check - has order paypal token or not
+     * Redirect to PayPal Express Checkout 
      * 
-     * @return boolean
-     * @access public
+     * @return void
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isPayPalProfileRetrieved()
+    protected function doActionExpressCheckout()
     {
-        $details = $this->getDetails();
+        $pm = XLite_Model_PaymentMethod::factory('paypalpro_express');
 
-        return isset($details['token']) && $details['token'];
+        if (!$pm->startExpressCheckout($this->getCart())) {
+
+            // TODO - add top message
+            $this->set('returnUrl', $this->buildUrl('cart'));
+        }
     }
 }
