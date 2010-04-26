@@ -120,10 +120,10 @@
 <widget target="wysiwyg" template="common/dialog.tpl" head="HTML design import/export" body="wysiwyg.tpl" />
 
 
-<widget class="XLite_View_Model_Profile" />
+{*<widget class="XLite_View_Model_Profile" />*}
 
-{*<widget target="profile" class="XLite_View_RegisterForm" head="Modify profile" name="profileForm" IF="{getRequestParamValue(#mode#)=#modify#|getRequestParamValue(#mode#)=##}" />
-<widget target="profile" class="XLite_View_RegisterForm" head="Add new user" name="registerForm" IF="{getRequestParamValue(#mode#)=#register#}" />*}
+<widget target="profile" class="XLite_View_RegisterForm" head="Modify profile" name="profileForm" IF="{getRequestParamValue(#mode#)=#modify#|getRequestParamValue(#mode#)=##}" />
+<widget target="profile" class="XLite_View_RegisterForm" head="Add new user" name="registerForm" IF="{getRequestParamValue(#mode#)=#register#}" />
 
 <widget target="order_list,order,advanced_security" module="AdvancedSecurity" template="modules/AdvancedSecurity/advanced_security.tpl">
 <widget module="AntiFraud" target='order'  visible="{mode}" mode="{mode}" template="common/dialog.tpl" body="modules/AntiFraud/tracking/message.tpl" head="AntiFraud Service Notification">
