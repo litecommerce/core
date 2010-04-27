@@ -76,21 +76,6 @@ function showStdServUrl(mode)
 
     <tr>
       <td align="center">
-        <input type="radio" id="solution_p" name="params[solution]" value="pro" onclick="javascript: this.blur(); showSettings('pro')" checked="{isSelected(#pro#,pm.params.solution)}" />
-      </td>
-      <td><label for="solution_p"><strong>Website Payments Pro</strong></label></td>
-    </tr>
-
-    <tr>
-      <td>&nbsp;</td>
-      <td>
-        Customers shop and pay on your website.&nbsp;<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_wp-pro-overview-outside"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle">Solution overview</a><br />
-        At present PayPal Website Payments Pro is only available to US merchants.
-      </td>
-    </tr>
-
-    <tr>
-      <td align="center">
         <input type="radio" id="solution_e" name="params[solution]" value="express" onclick="javascript: this.blur(); showSettings('express')" checked="{isSelected(#express#,pm.params.solution)}" />
       </td>
       <td><label for="solution_e"><strong>Express Checkout</strong></label></td>
@@ -123,9 +108,15 @@ function showStdServUrl(mode)
         <td><input type="text" size="30" name="params[standard][login]" value="{pm.params.standard.login:h}"></td>
     </tr>
 
+
     <tr>
-        <td>Logo URL:</td>
-        <td><input type="text" size="60" name="params[standard][logo]" value="{pm.params.standard.logo:h}"></td>
+      <td>Transaction Type:</td>
+      <td>
+        <select class="FixedSelect" name="params[standard][auth]">
+          <option value="0" selected="{isSelected(#0#,pm.params.pro.type)}">Sale</option>
+          <option value="1" selected="{isSelected(#1#,pm.params.pro.type)}">Authorization</option>
+        </select>
+      </td>
     </tr>
 
     <tr>
@@ -150,7 +141,7 @@ function showStdServUrl(mode)
     <tr>
       <td>Transaction Mode:</td>
       <td>
-        <select class="FixedSelect" name="params[standard][mode]" onChange="showStdServUrl(this.value)">
+        <select class="FixedSelect" name="params[standard][mode]" onchange="javascript: showStdServUrl(this.value);">
           <option value="1" selected="{isSelected(#1#,pm.params.standard.mode)}">Live</option>
           <option value="0" selected="{isSelected(#0#,pm.params.standard.mode)}">Test</option>
         </select>  
@@ -181,7 +172,7 @@ showStdServUrl('{pm.params.standard.mode:h}');
   <table id="pro" style="display: none;" cellpadding="3">
 
     <tr>
-      <td colspan="2" class="DialogTitle">Website Payments Pro and Express Checkout settings:</td>
+      <td colspan="2" class="DialogTitle">Express Checkout settings:</td>
     </tr>
 
     <tr>

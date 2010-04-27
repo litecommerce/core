@@ -1340,7 +1340,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
         if (
             !in_array($status, array("P", "C", "I"))
             && ($this->config->Email->enable_init_order_notif || $this->config->Email->enable_init_order_notif_customer)
-        ) {    
+        ) {
             $mail = new XLite_Model_Mailer();
 
             // for compatibility with dialog.order syntax in mail templates

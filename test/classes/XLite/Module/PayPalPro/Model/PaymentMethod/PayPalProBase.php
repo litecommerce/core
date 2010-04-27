@@ -112,8 +112,8 @@ abstract class XLite_Module_PayPalPro_Model_PaymentMethod_PayPalProBase extends 
     protected function getCancelUrl()
     {
         $url = $this->xlite->getShopUrl(
-            XLite_Core_Converter::buildUrl('checkout'),
-            $this->getComplex('config.Security.customer_security')
+            XLite_Core_Converter::buildUrl('checkout', 'paypal_cancel'),
+            $this->config->Security->customer_security
         );
 
         return $this->prepareUrl($url);

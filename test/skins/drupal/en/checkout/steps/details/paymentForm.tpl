@@ -12,5 +12,4 @@
  *}
 <widget template="{cart.paymentMethod.formTemplate}" IF="cart.paymentMethod.formTemplate" />
 
-<widget module="PayPalPro" template="modules/PayPalPro/standard_checkout.tpl" visible="{cart.paymentMethod.params.solution=#standard#}">
 <widget module="GoogleCheckout" template="modules/GoogleCheckout/google_checkout.tpl" visible="{cart.paymentMethod.payment_method=#google_checkout#}">

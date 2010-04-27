@@ -60,7 +60,6 @@
 <widget module="GiftCertificates" template="modules/GiftCertificates/checkout.tpl" visible="{cart.paymentMethod.formTemplate=#modules/GiftCertificates/checkout.tpl#}">
 <widget module="Promotion" template="modules/Promotion/checkout.tpl" visible="{cart.paymentMethod.formTemplate=#modules/Promotion/checkout.tpl#}">
 <widget module="2CheckoutCom" template="modules/2CheckoutCom/checkout.tpl" visible="{cart.paymentMethod.formTemplate=#modules/2CheckoutCom/checkout.tpl#}">
-<widget module="PayPal" template="modules/PayPal/checkout.tpl" visible="{cart.paymentMethod.formTemplate=#modules/PayPal/checkout.tpl#}">
 <widget module="Nochex" template="modules/Nochex/checkout.tpl" visible="{cart.paymentMethod.formTemplate=#modules/Nochex/checkout.tpl#}">
 <widget module="PayPalPro" template="modules/PayPalPro/standard_checkout.tpl" visible="{cart.paymentMethod.params.solution=#standard#}">
 <widget module="PayPalPro" template="modules/PayPalPro/express_checkout.tpl" visible="{cart.paymentMethod.payment_method=#paypalpro_express#}">

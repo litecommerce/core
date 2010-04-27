@@ -31,7 +31,7 @@ define('MM_ARCHIVE_CORRUPTED', 1);
 define('MM_BROKEN_DEPENDENCIES', 2);
 
 /**
- * ____description____
+ * Modules manager
  * 
  * @package XLite
  * @see     ____class_see____

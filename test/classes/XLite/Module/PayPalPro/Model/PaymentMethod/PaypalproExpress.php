@@ -45,7 +45,42 @@ extends XLite_Module_PayPalPro_Model_PaymentMethod_PayPalProBase
      * @since  3.0.0
      */
     public $configurationTemplate = 'modules/PayPalPro/config.tpl';
-    
+
+    /**
+     * Configuration request handler (controller part)
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function handleConfigRequest()
+    {
+        $pm = new XLite_Model_PaymentMethod('paypalpro');
+        $pm->handleConfigRequest();
+    }
+
+    /**
+     * Getter
+     * 
+     * @param string $name property name
+     *  
+     * @return mixed
+     * @access public
+     * @since  3.0.0
+     */
+    public function get($name)
+    {
+        if ('params' == $name) {
+            $pm = new XLite_Model_PaymentMethod('paypalpro');
+            $result = $pm->get('params');
+
+        } else {
+            $result = parent::get($name);
+        }
+
+        return $result;
+    }
+ 
     /**
      * Handle request 
      * 

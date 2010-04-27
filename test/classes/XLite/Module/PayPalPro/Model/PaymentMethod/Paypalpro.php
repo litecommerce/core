@@ -27,233 +27,546 @@
  */
 
 /**
- * ____description____
+ * PayPal Direct payment / Standart
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_PayPalPro_Model_PaymentMethod_Paypalpro extends XLite_Model_PaymentMethod_CreditCard
+class XLite_Module_PayPalPro_Model_PaymentMethod_Paypalpro extends XLite_Model_PaymentMethod_CreditCardWebBased
 {
-	// Pending reasons array // {{{	 
-	 public $pendingReasons = array(
-		'echeck' => 'The payment is pending because it was made by an eCheck, which has not yet cleared',
-		'multi_currency' => 'You do not have a balance in the currency sent, and you do not have your Payment Receiving Preferences set to automatically convert and accept this payment. You must manually accept or deny this payment',
-		'intl' => 'The payment is pending because you, the merchant, hold an international account and do not have a withdrawal method.  You must manually accept or deny this payment from your Account Overview',
-		'verify' => 'The payment is pending because you, the merchant, are not yet verified. You must verify your account before you can accept this payment',
-		'address' => 'The payment is pending because your customer did not include a confirmed shipping address and you, the merchant, have your Payment Receiving Preferences set such that you want to manually accept or deny each of these payments.  To change your preference, go to the Preferences section of your Profile',
-		'upgrade' => 'The payment is pending because it was made via credit card and you, the merchant, must upgrade your account to Business or Premier status in order to receive the funds',
-		'unilateral' => 'The payment is pending because it was made to an email address that is not yet registered or confirmed',
-		'other' => 'The payment is pending for some reason. For more information, contact PayPal customer service'
-	 	); // }}}
+    /**
+     * Pending reasons 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $pendingReasons = array(
+        'echeck'     => 'The payment is pending because it was made by an eCheck, which has not yet cleared',
+        'multi_currency' => 'You do not have a balance in the currency sent, and you do not have your Payment Receiving Preferences set to automatically convert and accept this payment. You must manually accept or deny this payment',
+        'intl'       => 'The payment is pending because you, the merchant, hold an international account and do not have a withdrawal method.  You must manually accept or deny this payment from your Account Overview',
+        'verify'     => 'The payment is pending because you, the merchant, are not yet verified. You must verify your account before you can accept this payment',
+        'address'    => 'The payment is pending because your customer did not include a confirmed shipping address and you, the merchant, have your Payment Receiving Preferences set such that you want to manually accept or deny each of these payments.  To change your preference, go to the Preferences section of your Profile',
+        'upgrade'    => 'The payment is pending because it was made via credit card and you, the merchant, must upgrade your account to Business or Premier status in order to receive the funds',
+        'unilateral' => 'The payment is pending because it was made to an email address that is not yet registered or confirmed',
+        'other'      => 'The payment is pending for some reason. For more information, contact PayPal customer service',
+    );
 
-		// avsResponses and cvvResponses // {{{	
-	public $avsResponses = array(
-		"A"	=> "Address only (no ZIP)",
-		"B" => "Address only (no ZIP)",
-		"C" => "None",
-		"D" => "Address and Postal Code",
-		"E" => "Not allowed for MOTO (Internet/Phone) transactions",
-		"F" => "Address and Postal Code",
-		"G" => "Global Unavailable",
-		"I" => "International Unavailable", 
-		"N" => "No", 
-		"P" => "Postal Code only (no Address)",
-		"R" => "Retry",
-		"S" => "Service not supported",
-		"U" => "Unavailable",
-		"W" => "Whole ZIP",
-	   	"X" => "Exact match",
-		"Y"	=> "Yes",
-		"Z" => "ZIP");			
-	public $cvvResponses = array ( 
-		"M" => "Match",
-		"N" => "Not match",
-		"P" => "Not processed",
-		"S" => "Service not supported",
-		"U" => "Unavailable",
-		"X" => "No response");	
-	// }}} 																			 
+    /**
+     * AVS response codes
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $avsResponses = array(
+        'A' => 'Address only (no ZIP)',
+        'B' => 'Address only (no ZIP)',
+        'C' => 'None',
+        'D' => 'Address and Postal Code',
+        'E' => 'Not allowed for MOTO (Internet/Phone) transactions',
+        'F' => 'Address and Postal Code',
+        'G' => 'Global Unavailable',
+        'I' => 'International Unavailable', 
+        'N' => 'No', 
+        'P' => 'Postal Code only (no Address)',
+        'R' => 'Retry',
+        'S' => 'Service not supported',
+        'U' => 'Unavailable',
+        'W' => 'Whole ZIP',
+        'X' => 'Exact match',
+        'Y' => 'Yes',
+        'Z' => 'ZIP',
+    );
 
-  	// properties // {{{	  
-   	public $configurationTemplate = "modules/PayPalPro/config.tpl";	
-	public $processorName = "PayPal Pro";	
-	public $phone = array(); // }}}
+    /**
+     * CVV response codes
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $cvvResponses = array(
+        'M' => 'Match',
+        'N' => 'Not match',
+        'P' => 'Not processed',
+        'S' => 'Service not supported',
+        'U' => 'Unavailable',
+        'X' => 'No response',
+    );
 
-	function checkServiceURL()
-	{
-		require_once LC_MODULES_DIR . 'PayPalPro' . LC_DS . 'encoded.php';
-		Payment_method_paypalpro_checkServiceURL($this);
-	}
+    /**
+     * Configuration template 
+     * 
+     * @var    string
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $configurationTemplate = 'modules/PayPalPro/config.tpl';
 
-	function process($order) // {{{ 
-	{
-		require_once LC_MODULES_DIR . 'PayPalPro' . LC_DS . 'encoded.php';
-		Payment_method_paypalpro_process($this,$order);
-	} // }}} 
+    /**
+     * Processor name 
+     * 
+     * @var    string
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $processorName = 'PayPal Standard';
 
-	function getFormTemplate() // {{{ 
-	{
-		return ($this->getComplex('params.solution') == 'standard') ? "modules/PayPalPro/standard_checkout.tpl" : $this->formTemplate;
-	} // }}}
-		
-	function getPhone($cart, $type = "a") // {{{  
-	{
-		if (empty($this->phone)) {
-			$phone = preg_replace('/[ ()-]/',"",$cart->getComplex('profile.billing_phone'));
-            $isUS = ($cart->getComplex('profile.billing_country') == "US");
-            $this->phone['a'] = $isUS ? substr($phone, -10, -7) : "";
-            $this->phone['b'] = $isUS ? substr($phone, -7, -4) : $phone;
-            $this->phone['c'] = $isUS ? substr($phone, -4) : "";
-		}
-		return $this->phone[$type];		
-	} // }}}
+    /**
+     * Phone parts
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $phone = null;
 
-	function getItemName($cart) // {{{ 
-	{
-		return $this->config->getComplex('Company.company_name'). " order #".$cart->get("order_id");
-	} // }}}
+    /**
+     * Configuration request handler (controller part)
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function handleConfigRequest()
+    {
+        $pm = new XLite_Model_PaymentMethod('paypalpro');
+        $pm->handleConfigRequest();
+    }
 
-	function getIpAddress() // {{{
-	{
-		 return !empty($_ENV['REMOTE_ADDR']) ? $_ENV['REMOTE_ADDR'] : "127.0.0.1";
+    /**
+     * Check service URL 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function checkServiceURL()
+    {
+        $params = $this->get('params');
+        if ('standard' == $params['solution']) {
+            $sUrls = array(
+                'live_url' => 'https://www.paypal.com/cgi-bin/webscr',
+                'test_url' => 'https://www.sandbox.paypal.com/cgi-bin/webscr',
+            );
 
-	} // }}}
+            $paramsUpdated = false;
 
-	function getCreditCardType() // {{{ 
-	{
-		switch ($this->cc_info['cc_type']) {
-			case "VISA" : return 'Visa';
-			case "MC" 	: return 'MasterCard';
-			case "AMEX" : return 'Amex';
-			case "DISC"	: return 'Discover';
+            foreach ($sUrls as $sUrlParam => $sUrl) {
+                if (
+                    !isset($params['standard'][$sUrlParam])
+                    || (isset($params['standard'][$sUrlParam]) && strlen(trim($params['standard'][$sUrlParam])) == 0)
+                ) {
+                    $paramsUpdated = true;
+                    $params['standard'][$sUrlParam] = $sUrl;
+                }
+            }
+
+            if ($paramsUpdated) {
+                $this->set('params', $params);
+                $this->update();
+            }
         }
-	} // }}}	
-	
-	function getBillingState($order)
-	{
-		$billingState = $order->getComplex('profile.billingState.code');
-		if (empty($billingState)) {
-			return "International";
-		}
+    }
 
-		$country = $order->getComplex('profile.billing_country');
-		$billingState = ($country == "US" || $country == "CA") ? "code" : "state";
-		return $order->get("profile.billingState." . $billingState);
-	}
+    /**
+     * Get form URL 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getFormURL()
+    {
+        return '1' == $this->getComplex('params.standard.mode')
+            ? 'https://www.paypal.com/cgi-bin/webscr'
+            : 'https://www.sandbox.paypal.com/cgi-bin/webscr';
+    }
 
-	function getShippingState($order)
-	{
-		$shippingState = $order->getComplex('profile.shippingState.code');
-		if (empty($shippingState)) {
-			return "International";
-		}
+    /**
+     * Get form fields 
+     *
+     * @param XLite_Model_Cart $cart $cart
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getFields(XLite_Model_Cart $cart)
+    {
+        $params = $this->get('params');
 
-		$country = $order->getComplex('profile.shipping_country');
-		$shippingState = ($country == "US" || $country == "CA") ? "code" : "state";
-		return $order->get("profile.shippingState." . $shippingState);
-	}
+        $fields = array(
+            'charset'       => 'ISO-8859-1',
+            'cmd'           => '_ext-enter',
+            'invoice'       => $params['standard']['prefix'] . $cart->get('order_id'),
+            'redirect_cmd'  => '_xclick',
+            'mrb'           => 'R-2JR83330TB370181P',
+            'pal'           => 'RDGQCFJTT6Y6A',
+            'rm'            => 2,
+            'email'         => $cart->getProfile()->get('login'),
+            'first_name'    => $cart->getProfile()->get('billing_firstname'),
+            'last_name'     => $cart->getProfile()->get('billing_lastname'),
+            'address1'      => $cart->getProfile()->get('billing_address'),
+            'city'          => $cart->getProfile()->get('billing_city'),
+            'state'         => $this->getBillingState($cart),
+            'country'       => $cart->getProfile()->get('billing_country'),
+            'zip'           => $cart->getProfile()->get('billing_zipcode'),
+            'business'      => $params['standard']['login'],
+            'item_name'     => $this->getItemName($cart),
+            'amount'        => sprintf('%0.2f', $cart->get('total')),
+            'currency_code' => $params['standard']['currency'],
+            'bn'            => 'x-cart',
+            'return'        => $this->getCartReturnURL($cart),
+            'cancel_return' => $this->getCancelUrl(),
+            'notify_url'    => $this->getNotifyUrl($cart),
+            'tax_cart'      => 0,
+            'shipping'      => 0,
+            'handling'      => 0,
+            'weight_cart'   => 0,
+            'upload'        => 1,
+            'address_override' => 1,
+            'night_phone_a'    => $this->getPhone($cart, 'a'),
+            'night_phone_b'    => $this->getPhone($cart, 'b'),
+            'night_phone_c'    => $this->getPhone($cart, 'c'),
+        );
 
-	function getDirectPaymentRequest($order) // {{{
-	{
-		$profile 	= $order->getComplex('profile.properties');
-		$card	 	= $this->cc_info;
-		$cart	 	= $order->get("properties");
-		$payment	= $this->get("params");
-		$payment	= $payment['pro'];	
-		$notifyUrl	= $this->xlite->getShopUrl("cart.php?target=callback&action=callback");
-		$invoiceId	= $payment['prefix'].$cart['order_id'];
-		
-		$paymentAction 		= ($payment['type']) ? 'Sale' : 'Authorization';
-		$ipAddress			= $this->get("ipAddress");
-		$billingState       = $this->getBillingState($order);
-		$shippingState       = $this->getShippingState($order);
-		$card['cc_month'] 	= substr($card['cc_date'],0,2);
-        $card['cc_year']  	= 2000 + substr($card['cc_date'],2,2);
-		$card['cc_type']	= $this->getCreditCardType();
+        if ('1' == $params['standard']['auth']) {
+            $fields['paymentaction'] = 'authorization';
+        }
 
-		$s_name = "";
-		if (!empty($profile['shipping_firstname'])) {
-			$s_name = $profile['shipping_firstname'];
-		} elseif (!empty($profile['billing_firstname'])) {
-			$s_name = $profile['billing_firstname'];
-		}
+        if (!$cart->get('shipping_cost')) {
+            $fields['no_shipping'] = 1;
+        }
 
-		if (!empty($profile['shipping_lastname'])) {
-			$s_name .= (empty($s_name) ? "" : " ").$profile['shipping_lastname'];
-		} elseif (!empty($profile['billing_lastname'])) {
-			$s_name .= (empty($s_name) ? "" : " ").$profile['billing_lastname'];
-		}
+        return $fields;
+    }
 
-		if (!empty($s_name)) {
-			$s_name = substr($s_name, 0, 32);
-		}
+    /**
+     * Handle request
+     *
+     * @param XLite_Model_Cart $cart Cart
+     * @param string           $type Call type
+     *
+     * @return integer Operation status
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function handleRequest(XLite_Model_Cart $cart, $type = self::CALL_CHECKOUT)
+    {
+        parent::handleRequest($cart, $type);
 
-		return <<<EOT
-<?xml version="1.0" encoding="utf-8"?>
-<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <soap:Header>
-    <RequesterCredentials xmlns="urn:ebay:api:PayPalAPI">
-      <Credentials xmlns="urn:ebay:apis:eBLBaseComponents">
-        <Username>$payment[login]</Username>
-        <ebl:Password xmlns:ebl="urn:ebay:apis:eBLBaseComponents">$payment[password]</ebl:Password>
-      </Credentials>
-    </RequesterCredentials>
-  </soap:Header>
-  <soap:Body>
-    <DoDirectPaymentReq xmlns="urn:ebay:api:PayPalAPI">
-      <DoDirectPaymentRequest>
-        <Version xmlns="urn:ebay:apis:eBLBaseComponents">1.00</Version>
-        <DoDirectPaymentRequestDetails xmlns="urn:ebay:apis:eBLBaseComponents">
-          <PaymentAction>$paymentAction</PaymentAction>
-          <PaymentDetails>
-            <OrderTotal currencyID="$payment[currency]">$cart[total]</OrderTotal>
-            <ButtonSource>Litecommerce PayPalPro Payment</ButtonSource>
-            <NotifyURL>$notifyUrl</NotifyURL>
-            <InvoiceID>$invoiceId</InvoiceID>
-			<ShipToAddress>
-              <Name>$s_name</Name>
-              <Street1>$profile[shipping_address]</Street1>
-              <CityName>$profile[shipping_city]</CityName>
-              <StateOrProvince>$shippingState</StateOrProvince>
-              <Country>$profile[shipping_country]</Country>
-              <PostalCode>$profile[shipping_zipcode]</PostalCode>
-            </ShipToAddress>
-          </PaymentDetails>
-          <CreditCard>
-            <CreditCardType>$card[cc_type]</CreditCardType>
-            <CreditCardNumber>$card[cc_number]</CreditCardNumber>
-            <ExpMonth>$card[cc_month]</ExpMonth>
-            <ExpYear>$card[cc_year]</ExpYear>
-            <CardOwner>
-              <PayerStatus>verified</PayerStatus>
-              <Payer>$profile[login]</Payer>
-              <PayerName>
-                <FirstName>$profile[billing_firstname]</FirstName>
-                <LastName>$profile[billing_lastname]</LastName>
-              </PayerName>
-              <PayerCountry>$profile[billing_country]</PayerCountry>
-              <Address>
-                <Street1>$profile[billing_address]</Street1>
-                <CityName>$profile[billing_city]</CityName>
-                <StateOrProvince>$billingState</StateOrProvince>
-                <Country>$profile[billing_country]</Country>
-                <PostalCode>$profile[billing_zipcode]</PostalCode>
-              </Address>
-            </CardOwner>
-            <CVV2>$card[cc_cvv2]</CVV2>
-          </CreditCard>
-          <IPAddress>$ipAddress</IPAddress>
-        </DoDirectPaymentRequestDetails>
-      </DoDirectPaymentRequest>
-    </DoDirectPaymentReq>
-  </soap:Body>
-</soap:Envelope>
-EOT;
-	} // }}} 
+        if (self::CALL_BACK == $type) {
 
-	function getStandardUrl() // {{{ 
-	{
-		return	$this->getComplex('params.standard.mode') ? "https://www.paypal.com/cgi-bin/webscr" : "https://www.sandbox.paypal.com/cgi-bin/webscr";
-	} // }}} 	
-} // }}}
+            $params = $this->get('params');
+            $request = XLite_Core_Request::getInstance();
+
+            if (strcasecmp($params['standard']['login'], $request->business) != 0) {
+                $this->doDie(
+                    'IPN validation error: PayPal account doesn\'t match: '
+                    . $request->business
+                    . '. Please contact administrator.'
+                );
+            }
+
+            if (is_null($cart->getDetail('reason'))) { 
+
+                $r = new XLite_Model_HTTPS();
+                $r->url = '1' == $params['standard']['mode']
+                    ? $params['standard']['live_url']
+                    : $params['standard']['test_url'];
+
+                $r->data = $request->getData();
+                $r->data['cmd'] = '_notify-validate';
+                $r->request();
+            
+                if ($r->error) {
+
+                    $cart->setDetailsCell('error', 'HTTPS Error', $r->error);
+                    $cart->set('status', 'F');
+                    $cart->update();
+
+                    return self::PAYMENT_FAILURE; 
+
+                } elseif (preg_match('/VERIFIED/i', $r->response)) {
+
+                    $txnId = $cart->getDetail('reason')
+                        ? ''
+                        : $cart->getDetail('txn_id');
+                }    
+
+                $paymentStatus = $request->payment_status;
+
+                if (
+                    0 == strcasecmp($paymentStatus, 'Completed')
+                    || 0 == strcasecmp($paymentStatus, 'Pending')
+                ) {
+
+                    if ($request->txn_id == $txnId) {
+
+                        $total = sprintf('%.2f', $cart->get('total'));
+                        $postTotal = sprintf('%.2f', $request->mc_gross);
+
+                        if (
+                            0 != strcasecmp($paymentStatus, 'Completed')
+                            || $total != $postTotal
+                            || $params['standard']['currency'] != $request->mc_currency
+                        ) {
+                            $cart->setDetailsCell('error', 'Error', 'Duplicate transaction - ' . $request->txn_id);
+                            $cart->set('status', 'F');
+                            $cart->update();
+
+                            return self::PAYMENT_FAILURE;
+                        }
+
+                    } else {
+
+                        $cart->setDetailsCell('txn_id', 'Transaction ID', $request->txn_id);
+                        $cart->setDetailsCell('payment_status', 'Payment Status', $paymentStatus);
+                        if (isset($request->memo)) {
+                            $cart->setDetailsCell('memo', 'Customer notes entered on the PayPal page', $request->memo);
+                        }
+
+                        $total = sprintf('%.2f', $cart->get('total'));
+                        $postTotal = sprintf('%.2f', $request->mc_gross);
+
+                        if ($total != $postTotal) {
+                            $cart->setDetailsCell('error', 'Error', 'Hacking attempt!');
+                            $cart->setDetailsCell(
+                                'errorDescription',
+                                'Hacking attempt details',
+                                'Total amount doesn\'t match: Order total = ' . $total
+                                . ', PayPal amount = ' . $postTotal
+                            );
+                            $cart->set('status', 'F');
+                            $cart->update();
+
+                            $this->doDie(
+                                'IPN validation error: PayPal amount doesn\'t match. Please contact administrator.'
+                            );
+                        }
+
+                        $currency = $this->getComplex('params.standard.currency');
+                        if ($currency != $request->mc_currency) {
+                            $cart->setDetailsCell('error', 'Error', 'Hacking attempt!');
+                            $cart->setDetailsCell(
+                                'errorDescription',
+                                'Hacking attempt details',
+                                'Currency code doesn\'t match: Order currency = ' . $currency
+                                . ', PayPal currency = ' . $request->mc_currency
+                            );
+                            $cart->set('status', 'F');
+                            $cart->update();
+
+                            $this->doDie(
+                                'IPN validation error: PayPal currency code doesn\'t match.'
+                                . ' Please contact administrator.'
+                            );
+                        }
+
+                        if (0 == strcasecmp($paymentStatus, 'Pending')) {
+
+                            $cart->set('status', $params['standard']['use_queued'] ? 'Q' : 'I');
+                            $cart->setDetailsCell(
+                                'reason',
+                                'Pending Reason',
+                                $this->pendingReasons[$request->pending_reason]
+                            );
+
+                        } else {
+
+                            $cart->set('status', 'P');
+
+                        }     
+
+                        $cart->unsetDetailsCell('error');
+                        $cart->unsetDetailsCell('errorDescription');
+
+                        $cart->update();
+                    }
+                }
+
+            } else {
+
+                $cartPaymentStatus = $cart->getDetail('payment_status');
+                $cartTxnId = $cart->getDetail('txn_id');
+                $cartReason = $cart->getDetail('reason');
+                $paymentStatus = $request->payment_status;
+
+                if (
+                    $cartPaymentStatus == 'Pending'
+                    && $cartTxnId == $request->txn_id
+                    && $cartReason == $this->pendingReasons[$request->payment_type]
+                ) {
+
+                    $cart->setDetailsCell('payment_status', 'Payment Status', $paymentStatus);
+
+                    if (isset($request->memo)) {
+                        $cart->setDetailsCell('memo', 'Customer notes entered on the PayPal page', $request->memo);
+                    }
+
+                    if (0 == strcasecmp($paymentStatus, 'Pending')) {
+
+                        $cart->set('status', $params['standard']['use_queued'] ? 'Q' : 'I');
+                        $cart->setDetailsCell(
+                            'reason',
+                            'Pending Reason',
+                            $this->pendingReasons[$request->pending_reason]
+                        );
+
+                    } elseif (0 == strcasecmp($paymentStatus, 'Completed')) {
+
+                        $cart->set('status', 'P');
+
+                    }
+
+                    $cart->unsetDetailsCell('error');
+                    $cart->unsetDetailsCell('errorDescription');
+                    
+                    $cart->update();
+                }
+            }
+        
+            return self::PAYMENT_SUCCESS; 
+        }
+    }
+
+    /**
+     * Get phone part
+     * 
+     * @param XLite_Model_Cart $cart Cart
+     * @param string           $type Phone part
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPhone(XLite_Model_Cart $cart, $type = 'a')
+    {
+        if (empty($this->phone)) {
+
+            $phone = preg_replace('/[ ()-]/', '', $cart->getProfile()->get('billing_phone'));
+            if ('US' == $cart->getProfile()->get('billing_country')) {
+                $this->phone = array(
+                    'a' => substr($phone, -10, -7),
+                    'b' => substr($phone, -7, -4),
+                    'c' => substr($phone, -4),
+                );
+
+            } else {
+                $this->phone = array(
+                    'a' => '',
+                    'b' => $phone,
+                    'c' => '',
+                );
+            }
+        }
+
+        return $this->phone[$type];        
+    }
+
+    /**
+     * Get item name 
+     * 
+     * @param XLite_Model_Cart $cart Cart
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getItemName(XLite_Model_Cart $cart)
+    {
+        return $this->config->Company->company_name . ' order #' . $cart->get('order_id');
+    }
+
+    /**
+     * Get billing state 
+     * 
+     * @param XLite_Model_Cart $cart Cart
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getBillingState(XLite_Model_Cart $cart)
+    {
+        $profile = $cart->getProfile();
+
+        $billingState = $profile->getComplex('billingState.code');
+        if (empty($billingState)) {
+            return 'International';
+        }
+
+        $country = $profile->get('billing_country');
+        $billingState = ('US' == $country || 'CA' == $country) ? 'code' : 'state';
+
+        return $profile->getComplex('billingState.' . $billingState);
+    }
+
+    /**
+     * Get cancel URL
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCancelUrl()
+    {
+        return $this->xlite->getShopUrl(
+            XLite_Core_Converter::buildUrl('checkout', 'paypal_cancel'),
+            $this->config->Security->customer_security
+        );
+    }
+
+    /**
+     * Get notify (callback) URL 
+     *
+     * @param XLite_Model_Cart $cart Cart
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getNotifyUrl(XLite_Model_Cart $cart)
+    {
+        return $this->xlite->getShopUrl(
+            XLite_Core_Converter::buildUrl('callback', 'callback', array('order_id' => $cart->get('order_id')))
+        );
+    }
+
+    /**
+     * Get return URL
+     *
+     * @param XLite_Model_Cart $cart Cart
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCartReturnURL(XLite_Model_Cart $cart)
+    {
+        return $this->xlite->getShopUrl(
+            XLite_Core_Converter::buildUrl('checkout', 'paypal_return'),
+            XLite_Core_Request::getInstance()->isHTTPS()
+        );
+    }
+
+}

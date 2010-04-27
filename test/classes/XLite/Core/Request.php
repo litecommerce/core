@@ -244,7 +244,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
             || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443')
             || (
                 isset($_SERVER['REMOTE_ADDR'])
-                && $this->xlite->getOptions(array('host_details', 'remote_addr')) == $_SERVER['REMOTE_ADDR']
+                && XLite::getInstance()->getOptions(array('host_details', 'remote_addr')) == $_SERVER['REMOTE_ADDR']
             );
     }
 

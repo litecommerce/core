@@ -204,38 +204,38 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
     protected function getCheckoutStepDescriptions()
     {
         return array(
-			self::CHECKOUT_MODE_ERROR => array(
-				self::STEP_WIDGET_CLASS  => 'XLite_View_CheckoutStep_Pseudo_Error',
-				self::STEP_IS_NOT_PASSED => $this->isCheckoutError(),
-			),
-			self::CHECKOUT_MODE_NOT_ALLOWED => array(
-				self::STEP_WIDGET_CLASS  => 'XLite_View_CheckoutStep_Pseudo_NotAllowed',
-				self::STEP_IS_NOT_PASSED => $this->isCheckoutNotAllowed(),
-			),
-			self::CHECKOUT_MODE_REGISTER => array(
-				self::STEP_WIDGET_CLASS  => 'XLite_View_CheckoutStep_Regular_Register',
-				self::STEP_IS_NOT_PASSED => $this->isRegistrationNeeded(),
-			),
-			self::CHECKOUT_MODE_ZERO_TOTAL => array(
-				self::STEP_WIDGET_CLASS  => 'XLite_View_CheckoutStep_Pseudo_ZeroTotal',
-				self::STEP_IS_NOT_PASSED => $this->isZeroOrderTotal(),
-			),
-			self::CHECKOUT_MODE_NO_SHIPPING => array(
-				self::STEP_WIDGET_CLASS  => 'XLite_View_CheckoutStep_Pseudo_NoShipping',
-				self::STEP_IS_NOT_PASSED => $this->isNoShipping(),
-			),
-			self::CHECKOUT_MODE_NO_PAYMENT => array(
-				self::STEP_WIDGET_CLASS  => 'XLite_View_CheckoutStep_Pseudo_NoPayment',
-				self::STEP_IS_NOT_PASSED => $this->isNoPayment(),
-			),
-			self::CHECKOUT_MODE_PAYMENT_METHOD => array(
-				self::STEP_WIDGET_CLASS  => 'XLite_View_CheckoutStep_Regular_PaymentMethod',
-				self::STEP_IS_NOT_PASSED => $this->isPaymentNeeded(),
-			),
-			self::CHECKOUT_MODE_DETAILS => array(
-				self::STEP_WIDGET_CLASS  => 'XLite_View_CheckoutStep_Regular_Details',
-				self::STEP_IS_NOT_PASSED => $this->isFinalStep(),
-			),
+            self::CHECKOUT_MODE_ERROR => array(
+                self::STEP_WIDGET_CLASS  => 'XLite_View_CheckoutStep_Pseudo_Error',
+                self::STEP_IS_NOT_PASSED => $this->isCheckoutError(),
+            ),
+            self::CHECKOUT_MODE_NOT_ALLOWED => array(
+                self::STEP_WIDGET_CLASS  => 'XLite_View_CheckoutStep_Pseudo_NotAllowed',
+                self::STEP_IS_NOT_PASSED => $this->isCheckoutNotAllowed(),
+            ),
+            self::CHECKOUT_MODE_REGISTER => array(
+                self::STEP_WIDGET_CLASS  => 'XLite_View_CheckoutStep_Regular_Register',
+                self::STEP_IS_NOT_PASSED => $this->isRegistrationNeeded(),
+            ),
+            self::CHECKOUT_MODE_ZERO_TOTAL => array(
+                self::STEP_WIDGET_CLASS  => 'XLite_View_CheckoutStep_Pseudo_ZeroTotal',
+                self::STEP_IS_NOT_PASSED => $this->isZeroOrderTotal(),
+            ),
+            self::CHECKOUT_MODE_NO_SHIPPING => array(
+                self::STEP_WIDGET_CLASS  => 'XLite_View_CheckoutStep_Pseudo_NoShipping',
+                self::STEP_IS_NOT_PASSED => $this->isNoShipping(),
+            ),
+            self::CHECKOUT_MODE_NO_PAYMENT => array(
+                self::STEP_WIDGET_CLASS  => 'XLite_View_CheckoutStep_Pseudo_NoPayment',
+                self::STEP_IS_NOT_PASSED => $this->isNoPayment(),
+            ),
+            self::CHECKOUT_MODE_PAYMENT_METHOD => array(
+                self::STEP_WIDGET_CLASS  => 'XLite_View_CheckoutStep_Regular_PaymentMethod',
+                self::STEP_IS_NOT_PASSED => $this->isPaymentNeeded(),
+            ),
+            self::CHECKOUT_MODE_DETAILS => array(
+                self::STEP_WIDGET_CLASS  => 'XLite_View_CheckoutStep_Regular_Details',
+                self::STEP_IS_NOT_PASSED => $this->isFinalStep(),
+            ),
         );
     }
 
@@ -275,7 +275,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
         return $this->checkoutSteps;
     }
 
-	/**
+    /**
      * Common method to determine current location 
      *  
      * @return string
@@ -481,10 +481,10 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
      * @access public
      * @since  3.0.0
      */
-	public function handleRequest()
+    public function handleRequest()
     {
         if ($this->getCart()->isEmpty()) {
-		    $this->setReturnUrl($this->buildURL('cart'));
+            $this->setReturnUrl($this->buildURL('cart'));
         }
 
         parent::handleRequest();
@@ -584,8 +584,8 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 
 
 
-    // mode ::= null | register | notAllowed | noShipping | paymentMethod | details | success | error	
-    /*public $params = array("target");	
+    // mode ::= null | register | notAllowed | noShipping | paymentMethod | details | success | error    
+    /*public $params = array("target");    
     public $mode = null;*/
 
 
@@ -593,16 +593,16 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
     function _initCCInfo()
     {
         if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "checkout") { 
-			if (isset($_REQUEST["cc_info"]) && is_array($_REQUEST["cc_info"])) {
-        		if (isset($_REQUEST["cc_info_cc_date_Month"]) && isset($_REQUEST["cc_info_cc_date_Year"])) {
-        			$_REQUEST["cc_info"]["cc_date"] = sprintf("%02d%s", intval($_REQUEST["cc_info_cc_date_Month"]), substr($_REQUEST["cc_info_cc_date_Year"],2));
-        			unset($_REQUEST["cc_info_cc_date_Month"]);
-        			unset($_REQUEST["cc_info_cc_date_Year"]);
-        			if (isset($_POST["cc_info"]) && is_array($_POST["cc_info"])) {
-        				$_POST["cc_info"]["cc_date"] = $_REQUEST["cc_info"]["cc_date"];
-        			}
-        		}
-				if (isset($_REQUEST["cc_info_cc_start_date_Month"]) && isset($_REQUEST["cc_info_cc_start_date_Year"])) {
+            if (isset($_REQUEST["cc_info"]) && is_array($_REQUEST["cc_info"])) {
+                if (isset($_REQUEST["cc_info_cc_date_Month"]) && isset($_REQUEST["cc_info_cc_date_Year"])) {
+                    $_REQUEST["cc_info"]["cc_date"] = sprintf("%02d%s", intval($_REQUEST["cc_info_cc_date_Month"]), substr($_REQUEST["cc_info_cc_date_Year"],2));
+                    unset($_REQUEST["cc_info_cc_date_Month"]);
+                    unset($_REQUEST["cc_info_cc_date_Year"]);
+                    if (isset($_POST["cc_info"]) && is_array($_POST["cc_info"])) {
+                        $_POST["cc_info"]["cc_date"] = $_REQUEST["cc_info"]["cc_date"];
+                    }
+                }
+                if (isset($_REQUEST["cc_info_cc_start_date_Month"]) && isset($_REQUEST["cc_info_cc_start_date_Year"])) {
                     $_REQUEST["cc_info"]["cc_start_date"] = sprintf("%02d%s", intval($_REQUEST["cc_info_cc_start_date_Month"]), substr($_REQUEST["cc_info_cc_start_date_Year"],2));
                     unset($_REQUEST["cc_info_cc_start_date_Month"]);
                     unset($_REQUEST["cc_info_cc_start_date_Year"]);
@@ -611,38 +611,55 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
                     }
                 }
 
-        	}
+            }
         }
     }
 
     function _initCHInfo()
     {
-		if (isset($_REQUEST['ch_info']))
-			$this->getCart()->set("details", $_REQUEST['ch_info']);
-	}
+        if (isset($_REQUEST['ch_info']))
+            $this->getCart()->set("details", $_REQUEST['ch_info']);
+    }
 
     /**
     * Returns return URL for checkout/login
     */
     function getBackUrl()
     {
-        return $this->get("url");
+        return $this->get('url');
     }
     
-    function success()
+    /**
+     * Order placement is success 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function success()
     {
         $this->getCart()->succeed();
-        $this->session->set("last_order_id", $this->getCart()->get("order_id"));
+        $this->session->set('last_order_id', $this->getCart()->get('order_id'));
         $this->getCart()->clear();
+
         // anonymous checkout: logoff
-        if ($this->auth->getComplex('profile.order_id')) {
+        if ($this->auth->getProfile() && $this->auth->getProfile()->get('order_id')) {
             $this->auth->logoff();
         }
     }
 
-    function isSecure()
+    /**
+     * Check - controller must work in secure zone or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isSecure()
     {
-        return $this->getComplex('config.Security.customer_security');
+        return $this->config->Security->customer_security;
     }
 
     function getCountriesStates()
