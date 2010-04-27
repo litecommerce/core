@@ -149,9 +149,9 @@ if [ -d $OUTPUT_DIR -a ! $CLEAR_OUTPUT_DIR ]; then
 	fi
 fi
 
-[ "x${XLITE_BUILD_NUMBER}" = "x" ] && BUILD_SUFFIX='' || BUILD_SUFIX="-build${XLITE_BUILD_NUMBER}"
+[ "x${XLITE_BUILD_NUMBER}" = "x" ] && BUILD_SUFFIX='' || BUILD_SUFFIX="-build${XLITE_BUILD_NUMBER}"
 
-VERSION=${XLITE_VERSION}${BUILD_SUFIX}
+VERSION=${XLITE_VERSION}${BUILD_SUFFIX}
 
 # Display input parameters
 echo "Input data:"
@@ -283,6 +283,11 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 	mkdir skins
 	cp skins_original/.htaccess skins/.htaccess
 
+	# Modify version of release
+	sed -i "" "s/'version','','[^']*'/'version','','${XLITE_VERSION}'/" sql/xlite_data.sql
+	sed -i "" "s/define('LC_VERSION', '[^']*'/define('LC_VERSION', '${XLITE_VERSION}'/" includes/install/install_settings.php
+
+
 	# Save copy of original file PoweredBy.php
 	cp ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/classes/XLite/View/PoweredBy.php ${OUTPUT_DIR}/tmp
 	cp ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/includes/install/install_settings.php ${OUTPUT_DIR}/tmp
@@ -369,4 +374,6 @@ _php_code='$s=mktime()-'$START_TIME'; echo sprintf("%d:%02d:%02d", ($s1=intval($
 _elapsed_time=`eval $PHP" -qr '"$_php_code"'"`
 
 echo -e "\nTime elapsed: ${_elapsed_time}"
+
+ls -al
 
