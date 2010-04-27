@@ -48,7 +48,7 @@ define('LC_PHP_VERSION_MIN', '5.2.0');
 define('LC_PHP_VERSION_MAX', '');
 
 // Minimum memory_limit option value (php.ini)
-define('LC_PHP_MEMORY_LIMIT_MIN', '512M');
+define('LC_PHP_MEMORY_LIMIT_MIN', '64M');
 
 // Minimum MySQL version supported
 define('LC_MYSQL_VERSION_MIN', '5.0.3');
