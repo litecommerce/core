@@ -100,7 +100,7 @@ class XLite_Module_GiftCertificates_View_AddGiftCertificate extends XLite_View_D
             } else {
 
                 // Set default form values
-                $tshi->setDefaultGiftCertificate();
+                $this->setDefaultGiftCertificate();
             }
         }
 
