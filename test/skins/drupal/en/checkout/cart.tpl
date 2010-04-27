@@ -20,8 +20,6 @@
     <span>Subtotal: {price_format(cart,#subtotal#):h}</span>
   </div>
 
-  <widget module="ProductAdviser" template="modules/ProductAdviser/OutOfStock/notify_form.tpl" visible="{xlite.PA_InventorySupport}" />
-
 </div>
 
 <div class="clear">&nbsp;</div>

@@ -11,11 +11,11 @@
  * @since     3.0.0
  */
 $(document).ready(
-    function() {
-        $('.notify-me.product-notify a').click(
-            function() {
-                return notifyMe(this, 'notify_product', $('form.product-details'));
-            }
-        );
-    }
+  function() {
+    $('.notify-me.product-notify a').click(
+      function() {
+        return notifyMe(this, $('form.product-details'));
+      }
+    );
+  }
 );

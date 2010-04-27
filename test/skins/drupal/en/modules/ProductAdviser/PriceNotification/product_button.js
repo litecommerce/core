@@ -14,7 +14,7 @@ $(document).ready(
     function() {
         $('.notify-me.price-notify a').click(
             function() {
-                return notifyMe(this, 'notify_price', $('form.product-details'));
+                return notifyMe(this, $('form.product-details'));
             }
         );
     }

@@ -34,11 +34,30 @@
  * @since   3.0.0
  */
 class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Controller_Customer_Abstract
-{	
+{
+    /**
+     * Product 
+     * 
+     * @var    XLite_Model_product
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     public $product = null;
 
+    /**
+     * Return current page title
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Notify me';
+    }
 
-	/**
+    /**
      * Common method to determine current location 
      * 
      * @return array 
@@ -50,208 +69,228 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
         return 'Notify me';
     }
 
-	/**
-	 * Initialization 
-	 * 
-	 * @return void
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function init()
-	{
-		parent::init();
-
-		if (
-			$this->session->isRegistered("NotifyMeReturn")
-			&& $this->session->isRegistered("NotifyMeInfo")
-		) {
-			$_REQUEST = $this->session->get("NotifyMeInfo");
-			$this->mapRequest($_REQUEST);
-			$this->session->set("NotifyMeInfo", null);
-			$this->session->set("NotifyMeReturn", null);
-		}
-
-		$this->product = $this->getProduct();
-
-		if (!$this->product->isExists()) {
-			$this->redirect($this->buildURL('main', '', array('mode' => 'accessDenied')));
-			return;
-		}
-
-		if ($this->xlite->get("ProductOptionsEnabled") && isset($this->product_options)) {
-			$poArr = array();
-			foreach ($this->product_options as $class => $po) {
-				$poArr[] = array("class" => $class, "option" => $po["option"], "option_id" => $po["option_id"]);
-			}
-			$this->set("productOptions", $poArr);
-			$poStr = array();
-			foreach ($this->product_options as $class => $po) {
-				$poStr[] = $class . ": " . $po["option"];
-			}
-			$this->set("productOptionsStr", implode(", ", $poStr));
-		}
-		$this->set("prevUrl", urlencode($this->url));
-
-		$this->session->set("NotifyMeInfo", XLite_Core_Request::getInstance()->getData());
-
-		if (!$this->auth->is("logged")) {
-			$this->set("email", $this->session->get("customerEmail"));
-		}
-	}
-
-	/**
-	 * notify_product action
-	 * 
-	 * @return void
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function action_notify_product()
-	{
-		if (!$this->isProductNotificationEnabled()) {
-			return;
-		}
-
-		$request = XLite_Core_Request::getInstance();
+    /**
+     * Initialization 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function init()
+    {
+        parent::init();
 
         if (
-			!isset($request->email)
-			|| (isset($request->email) && strlen(trim($request->email)) == 0)
-		) {
-			$this->set("valid", false);
-			return;
-		}
-		$email = trim($request->email);
+            $this->session->isRegistered('NotifyMeReturn')
+            && $this->session->isRegistered('NotifyMeInfo')
+        ) {
+            $_REQUEST = $this->session->get('NotifyMeInfo');
+            $this->mapRequest($_REQUEST);
+            $this->session->set('NotifyMeInfo', null);
+            $this->session->set('NotifyMeReturn', null);
+        }
 
-		$notification = new XLite_Module_ProductAdviser_Model_Notification();
-    	$check = array();
-		$notification->set("type", CUSTOMER_NOTIFICATION_PRODUCT);
-        $check[] = "type='" . CUSTOMER_NOTIFICATION_PRODUCT . "'";
+        $this->product = $this->getProduct();
 
-		if ($this->auth->is("logged")) {
-			$profile = $this->auth->get("profile");
-    		$notification->set("profile_id", $profile->get("profile_id"));
-    		$notification->set("person_info", $profile->get("billing_title") . " " . $profile->get("billing_firstname") . " " . $profile->get("billing_lastname"));
-			$notification->set("email", $profile->get("login"));
+        if (!$this->product->isExists()) {
+            $this->redirect($this->buildURL('main', '', array('mode' => 'accessDenied')));
 
-		} else {
-			$notification->set("email", $email);
-    		$this->session->set("customerEmail", $email);
-    		$notification->set("person_info", $this->person_info);
-		}
+            return;
+        }
 
-        $check[] = "profile_id='" . $notification->get("profile_id") . "'";
-        $check[] = "email='" . $notification->get("email") . "'";
+        if ($this->xlite->get('ProductOptionsEnabled') && isset($this->product_options)) {
+            $poArr = array();
+            foreach ($this->product_options as $class => $po) {
+                $poArr[] = array('class' => $class, 'option' => $po['option'], 'option_id' => $po['option_id']);
+            }
+            $this->set('productOptions', $poArr);
+            $poStr = array();
+            foreach ($this->product_options as $class => $po) {
+                $poStr[] = $class . ': ' . $po['option'];
+            }
+            $this->set('productOptionsStr', implode(', ', $poStr));
+        }
+        $this->set('prevUrl', urlencode($this->url));
 
-    	$notification->set("product_id", $this->product_id);
+        $this->session->set('NotifyMeInfo', XLite_Core_Request::getInstance()->getData());
+
+        if (!$this->auth->is('logged')) {
+            $this->set('email', $this->session->get('customerEmail'));
+        }
+    }
+
+    /**
+     * notify_product action
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionNotifyProduct()
+    {
+        if (!$this->isProductNotificationEnabled()) {
+            return;
+        }
+
+        $request = XLite_Core_Request::getInstance();
+
+        if (
+            !isset($request->email)
+            || (isset($request->email) && strlen(trim($request->email)) == 0)
+        ) {
+            $this->set('valid', false);
+
+            return;
+        }
+
+        $email = trim($request->email);
+
+        $notification = new XLite_Module_ProductAdviser_Model_Notification();
+        $check = array();
+        $notification->set('type', CUSTOMER_NOTIFICATION_PRODUCT);
+        $check[] = 'type = \'' . CUSTOMER_NOTIFICATION_PRODUCT . '\'';
+
+        if ($this->auth->is('logged')) {
+            $profile = $this->auth->get('profile');
+            $notification->set('profile_id', $profile->get('profile_id'));
+            $notification->set(
+                'person_info',
+                $profile->get('billing_title')
+                . ' '
+                . $profile->get('billing_firstname')
+                . ' '
+                . $profile->get('billing_lastname')
+            );
+            $notification->set('email', $profile->get('login'));
+
+        } else {
+            $notification->set('email', $email);
+            $this->session->set('customerEmail', $email);
+            $notification->set('person_info', $this->person_info);
+        }
+
+        $check[] = 'profile_id = \'' . $notification->get('profile_id') . '\'';
+        $check[] = 'email = \'' . $notification->get('email') . '\'';
+
+        $notification->set('product_id', $this->product_id);
         /* TODO - it must affected with xlite_inventories.inventory_id and rejectedItemInfo 
             from XLite_Module_ProductAdviser_Controller_Customer_Product but ... it's not work correctly
 
-    	if (isset($request->product_options)) {
-    		$notification->set("product_options", $request->product_options);
-    	}
+        if (isset($request->product_options)) {
+            $notification->set('product_options', $request->product_options);
+        }
         */
 
-    	if (isset($request->amount)) {
-    		$notification->set("quantity", $request->amount);
-    	}
+        if (isset($request->amount)) {
+            $notification->set('quantity', $request->amount);
+        }
 
-        $check[] = "notify_key='" . addslashes($notification->get("productKey")) . "'";
+        $check[] = 'notify_key = \'' . addslashes($notification->get('productKey')) . '\'';
 
-    	if (!$notification->find(implode(' AND ', $check))) {
-    		$notification->set("notify_key", addslashes($notification->get("productKey")));
-    		$notification->set("date", time());
-    		$notification->create();
-    	}
+        if (!$notification->find(implode(' AND ', $check))) {
+            $notification->set('notify_key', addslashes($notification->get('productKey')));
+            $notification->set('date', time());
+            $notification->create();
+        }
 
-		$this->session->set("rejectedItem", null);
+        $this->session->set('rejectedItem', null);
 
-		$this->set("returnUrl", urldecode($this->url));
-	}
+        $this->set('returnUrl', urldecode($this->url));
+    }
 
-	/**
-	 * notify_price action
-	 * 
-	 * @return void
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function action_notify_price()
-	{
-		if (!$this->isPriceNotificationEnabled() || !$this->isComplex('product.priceNotificationAllowed')) {
-			return;
-		}
+    /**
+     * notify_price action
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionNotifyPrice()
+    {
+        if (!$this->isPriceNotificationEnabled() || !$this->isComplex('product.priceNotificationAllowed')) {
+            return;
+        }
 
-		$request = XLite_Core_Request::getInstance();
+        $request = XLite_Core_Request::getInstance();
 
         if (
-			!isset($request->email)
-			|| (isset($request->email) && strlen(trim($request->email)) == 0)
-		) {
-			$this->set("valid", false);
-			return;
-		}
-		$email = trim($request->email);
+            !isset($request->email)
+            || (isset($request->email) && strlen(trim($request->email)) == 0)
+        ) {
+            $this->set('valid', false);
 
-		$notification = new XLite_Module_ProductAdviser_Model_Notification();
-    	$check = array();
-		$notification->set("type", CUSTOMER_NOTIFICATION_PRICE);
-        $check[] = "type='" . CUSTOMER_NOTIFICATION_PRICE . "'";
+            return;
+        }
+        $email = trim($request->email);
 
-		if ($this->auth->is("logged")) {
-			$profile = $this->auth->get("profile");
-    		$notification->set("profile_id", $profile->get("profile_id"));
-    		$notification->set("email", $profile->get("login"));
-    		$notification->set("person_info", $profile->get("billing_title") . " " . $profile->get("billing_firstname") . " " . $profile->get("billing_lastname"));
+        $notification = new XLite_Module_ProductAdviser_Model_Notification();
+        $check = array();
+        $notification->set('type', CUSTOMER_NOTIFICATION_PRICE);
+        $check[] = 'type = \'' . CUSTOMER_NOTIFICATION_PRICE . '\'';
 
-		} else {
-    		$notification->set("email", $email);
-    		$this->session->set("customerEmail", $email);
-    		$notification->set("person_info", $this->person_info);
-		}
+        if ($this->auth->isLogged()) {
+            $profile = $this->auth->getProfile();
+            $notification->set('profile_id', $profile->get('profile_id'));
+            $notification->set('email', $profile->get('login'));
+            $notification->set(
+                'person_info',
+                $profile->get('billing_title')
+                . ' '
+                . $profile->get('billing_firstname')
+                . ' '
+                . $profile->get('billing_lastname')
+            );
 
-        $check[] = "profile_id='" . $notification->get("profile_id") . "'";
-        $check[] = "email='" . $notification->get("email") . "'";
+        } else {
+            $notification->set('email', $email);
+            $this->session->set('customerEmail', $email);
+            $notification->set('person_info', $this->person_info);
+        }
 
-    	$notification->set("product_id", $this->product_id);
-        $check[] = "notify_key='" . addslashes($notification->get("productKey")) . "'";
+        $check[] = 'profile_id = \'' . $notification->get('profile_id') . '\'';
+        $check[] = 'email = \'' . $notification->get('email') . '\'';
+
+        $notification->set('product_id', $this->product_id);
+        $check[] = 'notify_key = \'' . addslashes($notification->get('productKey')) . '\'';
 
         $check = implode(' AND ', $check);
-    	if (!$notification->find($check)) {
-    		$notification->set("notify_key", addslashes($notification->get("productKey")));
-    		$notification->set("price", $request->product_price);
-    		$notification->set("date", time());
+        if (!$notification->find($check)) {
+            $notification->set('notify_key', addslashes($notification->get('productKey')));
+            $notification->set('price', $request->product_price);
+            $notification->set('date', time());
 
-    		$notification->create();
-    	}
+            $notification->create();
+        }
 
-		$this->set("returnUrl", urldecode($this->url));
-	}
+        $this->set('returnUrl', urldecode($this->url));
+    }
 
-	/**
-	 * Check - price notification enabled or not 
-	 * 
-	 * @return boolean
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	function isPriceNotificationEnabled()
-	{
-		return ($this->config->ProductAdviser->customer_notifications_mode & 1) != 0;
-	}
+    /**
+     * Check - price notification enabled or not 
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isPriceNotificationEnabled()
+    {
+        return ($this->config->ProductAdviser->customer_notifications_mode & 1) != 0;
+    }
 
-	/**
-	 * Check - product notification enabled or not
-	 * 
-	 * @return boolean
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	function isProductNotificationEnabled()
-	{
-		return ($this->config->ProductAdviser->customer_notifications_mode & 2) != 0;
-	}
+    /**
+     * Check - product notification enabled or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isProductNotificationEnabled()
+    {
+        return ($this->config->ProductAdviser->customer_notifications_mode & 2) != 0;
+    }
 }

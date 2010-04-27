@@ -10,4 +10,4 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<span class="notify-me product-notify"><a href="javascript:void(0);" class="product-{product.product_id}">Notify me</a> when the quantity rises</span>
+<span class="notify-me product-notify"><a href="{buildUrl(#notify_me#,#notify_product#,_ARRAY_(#product_id#^product.product_id))}">Notify me</a> when the quantity rises</span>
