@@ -131,7 +131,7 @@ $lcSettings = array(
 
     // The list of modules that must be enabled by installation script
     'enable_modules' => array(
-        'DrupalConnector',
+        'DrupalConnector', // Allows to use Drupal CMS as a storefront
         'AdvancedSearch',
         'Bestsellers',
         'DetailedImages',
