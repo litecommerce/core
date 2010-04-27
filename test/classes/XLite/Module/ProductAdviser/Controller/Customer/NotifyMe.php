@@ -54,19 +54,29 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
      */
     public function getTitle()
     {
-        return 'Notify me';
-    }
+        $title = 'Notify me';
 
-    /**
-     * Common method to determine current location 
-     * 
-     * @return array 
-     * @access protected 
-     * @since  3.0.0
-     */      
-    protected function getLocation()
-    {
-        return 'Notify me';
+        if (
+            'notify_product' == XLite_Core_Request::getInstance()->action
+            && $this->getProduct()->isOutOfStock()
+        ) {
+
+            $title = 'Notify me when the product is in stock';
+
+        } elseif (
+            'notify_product' == XLite_Core_Request::getInstance()->action
+            && $this->getProduct()->isInStock()
+        ) {
+
+            $title = 'Notify me when the stock quantity of a product increases';
+
+        } elseif ('notify_price' == XLite_Core_Request::getInstance()->action) {
+
+            $title = 'Notify me when the price drops';
+
+        }
+
+        return $title;
     }
 
     /**

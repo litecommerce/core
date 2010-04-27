@@ -12,10 +12,6 @@
  *}
 <widget class="XLite_Module_ProductAdviser_View_Form_Product_NotifyMe" name="notify_me" product="{getProduct()}" className="notify-me" />
 
-  <h1 IF="isOutOfStock()">Notify me when the product is in stock</h1>
-  <h1 IF="isSmallQuantity()">Notify me when the stock quantity of a product increases</h1>
-  <h1 IF="isBigPrice()">Notify me when the price drops</h1>
-
   <table cellspacing="0" class="form-table">
 
     <tr>
@@ -29,7 +25,7 @@
     <tr>
       <td>Your name:</td>
       <td>
-        <input type="text" size="50" name="person_info" value="{xlite.auth.profile.billing_title} {xlite.auth.profile.billing_firstname} {xlite.auth.profile.billing_lastname}" />
+        <input type="text" size="50" name="person_info" value="{auth.profile.billing_title} {auth.profile.billing_firstname} {auth.profile.billing_lastname}" />
         <span class="optional-label">optional</span>
       </td>
     </tr>
