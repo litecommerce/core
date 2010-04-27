@@ -13,6 +13,24 @@ function _do_query_upload($sqlfile, $connection = null, $ignoreErrors = false) {
 	}
 }
 
+if (isset($argv[1]) && $argv[1] == 'help') {
+	echo <<<OUT
+Usage: $argv[0] [option1] [option2]
+
+where:
+  option1 - one of the following: demo (install all demo data), standalone (only demo data for LC standalone distributive), drupal (install only demo data for distributive and enable DrupalConnector module; uses by default).
+  option2 - if has a value 'all' then all modules will be enabled (only if option1=demo)
+
+Examples:
+  $argv[0]
+  $argv[0] demo
+  $argv[0] demo all
+  $argv[0] standalone
+
+OUT;
+	exit;
+}
+
 chdir(dirname(__FILE__));
 
 include "includes/functions.php";
@@ -54,6 +72,7 @@ while (($dir = readdir($modules)) !== false) {
 closedir($modules);
 
 _do_query_upload("sql/xlite_demo.sql", $connection, true);
+_do_query_upload("sql/xlite_demo_user.sql", $connection, true);
 
 if (isset($argv[1]) && $argv[1] == "demo") {
 
@@ -64,13 +83,17 @@ if (isset($argv[1]) && $argv[1] == "demo") {
 		_do_query_upload("sql/xlite_all_modules.sql", $connection, true);
 	}
 
+} elseif (isset($argv[1]) && in_array($argv[1], array('standalone', 'st', 's', 'stand'))) {
+	_do_query_upload("sql/xlite_modules_standalone.sql", $connection, true);
 } else {
-    mysql_query("REPLACE INTO xlite_profiles (profile_id, login, password, access_level, billing_title, billing_firstname, billing_lastname, billing_phone, billing_address, billing_city, billing_state, billing_country, billing_zipcode, shipping_title, shipping_firstname, shipping_lastname, shipping_phone, shipping_address, shipping_city, shipping_state, shipping_country, shipping_zipcode, first_login, last_login, status) VALUES (1,'vvs@cdev.ru','eb0a191797624dd3a48fa681d3061212',100,'Mr.','Bit','Bucket','0123456789','Billing street, 1','Edmond',38,'US','73003','Mr.','Bit','Bucket','9876543210','Shipping street, 1','Edmond',38,'US','73003',1053689339,1058449247,'E')");
+	_do_query_upload("sql/xlite_modules_drupal.sql", $connection, true);
 }
 
 if (file_exists('sql/xlite_local_demo.sql')) {
 	_do_query_upload('sql/xlite_local_demo.sql', $connection, true);
 }
+
+echo "Remove directory var/run\n\n";
 
 unlinkRecursive('var/run');
 
