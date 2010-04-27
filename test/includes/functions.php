@@ -1200,7 +1200,12 @@ function isLiteCommerceInstalled()
             if ($checkResult) {
                 $checkResult = (mysql_connect($data['hostspec'], $data['username'], $data['password']) && mysql_select_db($data['database']));
                 if ($checkResult) {
-                    $checkResult = (@mysql_query('SELECT name from xlite_modules LIMIT 1') != false);
+					if ($res = @mysql_query('SELECT login from xlite_profiles LIMIT 1')) {
+						$data = mysql_fetch_row($res);
+						$checkResult = !empty($data[0]);
+					} else {
+						$checkResult = false;
+					}
                 }
             }
         }
