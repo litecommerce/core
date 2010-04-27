@@ -44,14 +44,15 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_Paypalpro extends XLite_Model_P
      * @since  3.0.0
      */
     protected $pendingReasons = array(
-        'echeck'     => 'The payment is pending because it was made by an eCheck, which has not yet cleared',
+        'echeck'         => 'The payment is pending because it was made by an eCheck, which has not yet cleared',
         'multi_currency' => 'You do not have a balance in the currency sent, and you do not have your Payment Receiving Preferences set to automatically convert and accept this payment. You must manually accept or deny this payment',
-        'intl'       => 'The payment is pending because you, the merchant, hold an international account and do not have a withdrawal method.  You must manually accept or deny this payment from your Account Overview',
-        'verify'     => 'The payment is pending because you, the merchant, are not yet verified. You must verify your account before you can accept this payment',
-        'address'    => 'The payment is pending because your customer did not include a confirmed shipping address and you, the merchant, have your Payment Receiving Preferences set such that you want to manually accept or deny each of these payments.  To change your preference, go to the Preferences section of your Profile',
-        'upgrade'    => 'The payment is pending because it was made via credit card and you, the merchant, must upgrade your account to Business or Premier status in order to receive the funds',
-        'unilateral' => 'The payment is pending because it was made to an email address that is not yet registered or confirmed',
-        'other'      => 'The payment is pending for some reason. For more information, contact PayPal customer service',
+        'intl'           => 'The payment is pending because you, the merchant, hold an international account and do not have a withdrawal method.  You must manually accept or deny this payment from your Account Overview',
+        'verify'         => 'The payment is pending because you, the merchant, are not yet verified. You must verify your account before you can accept this payment',
+        'address'        => 'The payment is pending because your customer did not include a confirmed shipping address and you, the merchant, have your Payment Receiving Preferences set such that you want to manually accept or deny each of these payments.  To change your preference, go to the Preferences section of your Profile',
+        'upgrade'        => 'The payment is pending because it was made via credit card and you, the merchant, must upgrade your account to Business or Premier status in order to receive the funds',
+        'unilateral'     => 'The payment is pending because it was made to an email address that is not yet registered or confirmed',
+        'other'          => 'The payment is pending for some reason. For more information, contact PayPal customer service',
+        'authorization'  => 'Payment is pre-authorized',
     );
 
     /**
@@ -266,181 +267,233 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_Paypalpro extends XLite_Model_P
      */
     public function handleRequest(XLite_Model_Cart $cart, $type = self::CALL_CHECKOUT)
     {
-        parent::handleRequest($cart, $type);
+        $result = parent::handleRequest($cart, $type);
 
         if (self::CALL_BACK == $type) {
-
-            $params = $this->get('params');
-            $request = XLite_Core_Request::getInstance();
-
-            if (strcasecmp($params['standard']['login'], $request->business) != 0) {
-                $this->doDie(
-                    'IPN validation error: PayPal account doesn\'t match: '
-                    . $request->business
-                    . '. Please contact administrator.'
-                );
-            }
-
-            if (is_null($cart->getDetail('reason'))) { 
-
-                $r = new XLite_Model_HTTPS();
-                $r->url = '1' == $params['standard']['mode']
-                    ? $params['standard']['live_url']
-                    : $params['standard']['test_url'];
-
-                $r->data = $request->getData();
-                $r->data['cmd'] = '_notify-validate';
-                $r->request();
-            
-                if ($r->error) {
-
-                    $cart->setDetailsCell('error', 'HTTPS Error', $r->error);
-                    $cart->set('status', 'F');
-                    $cart->update();
-
-                    return self::PAYMENT_FAILURE; 
-
-                } elseif (preg_match('/VERIFIED/i', $r->response)) {
-
-                    $txnId = $cart->getDetail('reason')
-                        ? ''
-                        : $cart->getDetail('txn_id');
-                }    
-
-                $paymentStatus = $request->payment_status;
-
-                if (
-                    0 == strcasecmp($paymentStatus, 'Completed')
-                    || 0 == strcasecmp($paymentStatus, 'Pending')
-                ) {
-
-                    if ($request->txn_id == $txnId) {
-
-                        $total = sprintf('%.2f', $cart->get('total'));
-                        $postTotal = sprintf('%.2f', $request->mc_gross);
-
-                        if (
-                            0 != strcasecmp($paymentStatus, 'Completed')
-                            || $total != $postTotal
-                            || $params['standard']['currency'] != $request->mc_currency
-                        ) {
-                            $cart->setDetailsCell('error', 'Error', 'Duplicate transaction - ' . $request->txn_id);
-                            $cart->set('status', 'F');
-                            $cart->update();
-
-                            return self::PAYMENT_FAILURE;
-                        }
-
-                    } else {
-
-                        $cart->setDetailsCell('txn_id', 'Transaction ID', $request->txn_id);
-                        $cart->setDetailsCell('payment_status', 'Payment Status', $paymentStatus);
-                        if (isset($request->memo)) {
-                            $cart->setDetailsCell('memo', 'Customer notes entered on the PayPal page', $request->memo);
-                        }
-
-                        $total = sprintf('%.2f', $cart->get('total'));
-                        $postTotal = sprintf('%.2f', $request->mc_gross);
-
-                        if ($total != $postTotal) {
-                            $cart->setDetailsCell('error', 'Error', 'Hacking attempt!');
-                            $cart->setDetailsCell(
-                                'errorDescription',
-                                'Hacking attempt details',
-                                'Total amount doesn\'t match: Order total = ' . $total
-                                . ', PayPal amount = ' . $postTotal
-                            );
-                            $cart->set('status', 'F');
-                            $cart->update();
-
-                            $this->doDie(
-                                'IPN validation error: PayPal amount doesn\'t match. Please contact administrator.'
-                            );
-                        }
-
-                        $currency = $this->getComplex('params.standard.currency');
-                        if ($currency != $request->mc_currency) {
-                            $cart->setDetailsCell('error', 'Error', 'Hacking attempt!');
-                            $cart->setDetailsCell(
-                                'errorDescription',
-                                'Hacking attempt details',
-                                'Currency code doesn\'t match: Order currency = ' . $currency
-                                . ', PayPal currency = ' . $request->mc_currency
-                            );
-                            $cart->set('status', 'F');
-                            $cart->update();
-
-                            $this->doDie(
-                                'IPN validation error: PayPal currency code doesn\'t match.'
-                                . ' Please contact administrator.'
-                            );
-                        }
-
-                        if (0 == strcasecmp($paymentStatus, 'Pending')) {
-
-                            $cart->set('status', $params['standard']['use_queued'] ? 'Q' : 'I');
-                            $cart->setDetailsCell(
-                                'reason',
-                                'Pending Reason',
-                                $this->pendingReasons[$request->pending_reason]
-                            );
-
-                        } else {
-
-                            $cart->set('status', 'P');
-
-                        }     
-
-                        $cart->unsetDetailsCell('error');
-                        $cart->unsetDetailsCell('errorDescription');
-
-                        $cart->update();
-                    }
-                }
-
-            } else {
-
-                $cartPaymentStatus = $cart->getDetail('payment_status');
-                $cartTxnId = $cart->getDetail('txn_id');
-                $cartReason = $cart->getDetail('reason');
-                $paymentStatus = $request->payment_status;
-
-                if (
-                    $cartPaymentStatus == 'Pending'
-                    && $cartTxnId == $request->txn_id
-                    && $cartReason == $this->pendingReasons[$request->payment_type]
-                ) {
-
-                    $cart->setDetailsCell('payment_status', 'Payment Status', $paymentStatus);
-
-                    if (isset($request->memo)) {
-                        $cart->setDetailsCell('memo', 'Customer notes entered on the PayPal page', $request->memo);
-                    }
-
-                    if (0 == strcasecmp($paymentStatus, 'Pending')) {
-
-                        $cart->set('status', $params['standard']['use_queued'] ? 'Q' : 'I');
-                        $cart->setDetailsCell(
-                            'reason',
-                            'Pending Reason',
-                            $this->pendingReasons[$request->pending_reason]
-                        );
-
-                    } elseif (0 == strcasecmp($paymentStatus, 'Completed')) {
-
-                        $cart->set('status', 'P');
-
-                    }
-
-                    $cart->unsetDetailsCell('error');
-                    $cart->unsetDetailsCell('errorDescription');
-                    
-                    $cart->update();
-                }
-            }
-        
-            return self::PAYMENT_SUCCESS; 
+            $result = $this->processCallback($cart);
         }
+
+        return $result;
+    }
+
+    /**
+     * Process callback 
+     * 
+     * @param XLite_Model_Cart $cart Cart
+     *  
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function processCallback(XLite_Model_Cart $cart)
+    {
+        $result = self::PAYMENT_SUCCESS;
+
+        $params = $this->get('params');
+        $request = XLite_Core_Request::getInstance();
+
+        // Check callback account
+        if (strcasecmp($params['standard']['login'], $request->business) != 0) {
+            $this->doDie(
+                'IPN validation error: PayPal account doesn\'t match: '
+                . $request->business
+                . '. Please contact administrator.'
+            );
+        }
+
+        if (is_null($cart->getDetail('txn_id'))) {
+
+            // First callback
+
+            // Callback verification request
+            if (!$this->sendCallbackVerificationRequest($params, $cart)) {
+                $cart->set('status', 'F');
+                $cart->update();
+
+                $result = self::PAYMENT_FAILURE; 
+
+            } elseif (
+                0 == strcasecmp($request->payment_status, 'Completed')
+                || 0 == strcasecmp($request->payment_status, 'Pending')
+            ) {
+
+                $cart->setDetailsCell('txn_id', 'Transaction ID', $request->txn_id);
+
+                // Check original total and callback total
+                $this->checkTotal($cart, $request);
+
+                // Check original currency code and callback currency code
+                $this->checkCurrency($cart, $request, $params);
+
+                $this->updateCartData($cart, $request);
+            }
+
+        } else {
+
+            // Secondary callback
+
+            if (
+                'Pending' == $cart->getDetail('payment_status')
+                && in_array($cart->getDetail('txn_id'), array($request->txn_id, $request->parent_txn_id))
+            ) {
+
+                // Previous transaction is queued
+                $this->updateCartData($cart, $request);
+            }
+        }
+        
+        return $result;
+    }
+
+    /**
+     * Send callback verification request 
+     * 
+     * @param array            $params Payment module parameters
+     * @param XLite_Model_Cart $cart   Cart
+     *  
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function sendCallbackVerificationRequest(array $params, XLite_Model_Cart $cart)
+    {
+        $result = true;
+
+        $r = new XLite_Model_HTTPS();
+        $r->url = '1' == $params['standard']['mode']
+            ? $params['standard']['live_url']
+            : $params['standard']['test_url'];
+
+        // TODO - move to XLite_Core_Request
+        $data = $_POST;
+        $data['cmd'] = '_notify-validate';
+
+        $r->data = $data;
+        $r->request();
+            
+        if ($r->error) {
+
+            // HTTPS error
+            $cart->setDetailsCell('error', 'HTTPS Error', $r->error);
+
+            $result = false;
+
+        } elseif (!preg_match('/VERIFIED/i', $r->response)) {
+
+            // Callback verification failed
+            $cart->setDetailsCell('error', 'Error', 'Invalid callback verification');
+
+            $result = false;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Check initial callback total 
+     * 
+     * @param XLite_Model_Cart   $cart    Cart
+     * @param XLite_Core_Request $request Request
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkTotal(XLite_Model_Cart $cart, XLite_Core_Request $request)
+    {
+        $total = sprintf('%.2f', $cart->get('total'));
+        $postTotal = sprintf('%.2f', $request->mc_gross);
+
+        if ($total != $postTotal) {
+            $cart->setDetailsCell('error', 'Error', 'Hacking attempt!');
+            $cart->setDetailsCell(
+                'errorDescription',
+                'Hacking attempt details',
+                'Total amount doesn\'t match: Order total = ' . $total
+                . ', PayPal amount = ' . $postTotal
+            );
+            $cart->set('status', 'F');
+            $cart->update();
+
+            $this->doDie(
+                'IPN validation error: PayPal amount doesn\'t match. Please contact administrator.'
+            );
+        }
+    }
+
+    /**
+     * Check currency 
+     * 
+     * @param XLite_Model_Cart   $cart    Cart
+     * @param XLite_Core_Request $request Request
+     * @param array              $params  Payment module parameters
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkCurrency(XLite_Model_Cart $cart, XLite_Core_Request $request, array $params)
+    {
+        $currency = $params['standard']['currency'];
+        if ($currency != $request->mc_currency) {
+            $cart->setDetailsCell('error', 'Error', 'Hacking attempt!');
+            $cart->setDetailsCell(
+                'errorDescription',
+                'Hacking attempt details',
+                'Currency code doesn\'t match: Order currency = ' . $currency
+                . ', PayPal currency = ' . $request->mc_currency
+            );
+            $cart->set('status', 'F');
+            $cart->update();
+
+            $this->doDie(
+                'IPN validation error: PayPal currency code doesn\'t match.'
+                . ' Please contact administrator.'
+            );
+        }
+    }
+
+    /**
+     * Update cart
+     * 
+     * @param XLite_Model_Cart   $cart    Cart
+     * @param XLite_Core_Request $request Request
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function updateCartData(XLite_Model_Cart $cart, XLite_Core_Request $request)
+    {
+        $cart->setDetailsCell('payment_status', 'Payment Status', $request->payment_status);
+
+        if (isset($request->memo)) {
+            $cart->setDetailsCell('memo', 'Customer notes entered on the PayPal page', $request->memo);
+        }
+
+        if (0 == strcasecmp($request->payment_status, 'Pending')) {
+
+            $cart->set('status', $params['standard']['use_queued'] ? 'Q' : 'I');
+            $pendingReason = isset($this->pendingReasons[$request->pending_reason])
+                ? $this->pendingReasons[$request->pending_reason]
+                : $request->pending_reason;
+            $cart->setDetailsCell('reason', 'Pending Reason', $pendingReason);
+
+        } elseif (0 == strcasecmp($request->payment_status, 'Completed')) {
+
+            $cart->set('status', 'P');
+
+        }
+
+        $cart->unsetDetailsCell('error');
+        $cart->unsetDetailsCell('errorDescription');
+
+        $cart->update();
     }
 
     /**
@@ -509,13 +562,17 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_Paypalpro extends XLite_Model_P
 
         $billingState = $profile->getComplex('billingState.code');
         if (empty($billingState)) {
-            return 'International';
+            $result = 'International';
+
+        } else {
+
+            $country = $profile->get('billing_country');
+            $billingState = ('US' == $country || 'CA' == $country) ? 'code' : 'state';
+
+            $result = $profile->getComplex('billingState.' . $billingState);
         }
 
-        $country = $profile->get('billing_country');
-        $billingState = ('US' == $country || 'CA' == $country) ? 'code' : 'state';
-
-        return $profile->getComplex('billingState.' . $billingState);
+        return $result;
     }
 
     /**

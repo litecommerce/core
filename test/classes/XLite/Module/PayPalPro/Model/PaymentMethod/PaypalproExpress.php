@@ -33,9 +33,28 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_PayPalPro_Model_PaymentMethod_PaypalproExpress
-extends XLite_Module_PayPalPro_Model_PaymentMethod_PayPalProBase
+class XLite_Module_PayPalPro_Model_PaymentMethod_PaypalproExpress extends XLite_Model_PaymentMethod_CreditCard
 {
+    /**
+     * XPath response object
+     *
+     * @var    DOMXPath
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $xpath = null;
+
+    /**
+     * Last HTTPS request error
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $lastRequestError = false;
+
     /**
      * Configuration template 
      * 
@@ -45,6 +64,16 @@ extends XLite_Module_PayPalPro_Model_PaymentMethod_PayPalProBase
      * @since  3.0.0
      */
     public $configurationTemplate = 'modules/PayPalPro/config.tpl';
+
+    /**
+     * Form template 
+     * 
+     * @var    string
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $formTemplate = false;
 
     /**
      * Configuration request handler (controller part)
@@ -85,20 +114,42 @@ extends XLite_Module_PayPalPro_Model_PaymentMethod_PayPalProBase
      * Handle request 
      * 
      * @param XLite_Model_Cart $cart Cart
+     * @param string           $type Call type
      *  
      * @return integer Operation status
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0.0
+     * @since  3.0.0
      */
-    public function handleRequest(XLite_Model_Cart $cart)
+    public function handleRequest(XLite_Model_Cart $cart, $type = self::CALL_CHECKOUT)
     {
-        $request = new XLite_Model_HTTPS();
+        if (self::CALL_BACK == $type) {
+            $pm = new XLite_Module_PayPalPro_Model_PaymentMethod_Paypalpro('paypalpro');
+            $result = $pm->processCallback($cart);
 
+        } else {
+            $result = parent::handleRequest($cart, $type);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Process cart
+     * 
+     * @param XLite_Model_Cart $cart Cart
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function process(XLite_Model_Cart $cart)
+    {
         if (!$cart->isPayPalProfileRetrieved()) {
             $expressCheckout = new XLite_Controller_Customer_Cart();
             $expressCheckout->callActionExpressCheckout();
-            die();
+            die ();
         }
 
         $pm = new XLite_Model_PaymentMethod('paypalpro');
@@ -139,69 +190,92 @@ extends XLite_Module_PayPalPro_Model_PaymentMethod_PayPalProBase
                 $this->getXMLResponseValue('base:Detail', $responseFault)
             );
 
-        } elseif (
-            'Success' !== $this->getXMLResponseValue('//SOAP-ENV:Envelope/SOAP-ENV:Body/api:DoExpressCheckoutPaymentResponse/base:Ack')
-        ) {
-
-            $response = $this->xpath->query('//SOAP-ENV:Envelope/SOAP-ENV:Body/api:DoExpressCheckoutPaymentResponse')->item(0);
-
-            $cart->set('status', 'F');
-            $cart->setDetailsCell(
-                'error',
-                'Error',
-                $this->getXMLResponseValue('base:Errors/base:ErrorCode', $response)
-                . ': '
-                . $this->getXMLResponseValue('base:Errors/base:ShortMessage', $response)
-            );
-            $cart->setDetailsCell(
-                'errorDescription',
-                'Description',
-                $this->getXMLResponseValue('base:Errors/base:LongMessage', $response)
-            );
-
         } else {
 
-            $response = $this->xpath->query('//SOAP-ENV:Envelope/SOAP-ENV:Body/api:DoExpressCheckoutPaymentResponse')->item(0);
-            $details = $this->xpath->query('base:DoExpressCheckoutPaymentResponseDetails', $response)->item(0);
-    
-            switch ($this->getXMLResponseValue('base:PaymentInfo/base:PaymentStatus', $details)) {
-                case 'Completed':
-                case 'Processed': 
-                    $cart->set('status', 'P');
-                    break;
+            $response = $this->xpath->query('//SOAP-ENV:Envelope/SOAP-ENV:Body/api:DoExpressCheckoutPaymentResponse')
+                ->item(0);
 
-                case 'Pending': 
-                    $cart->set('status', 'Q');
-                    $cart->setDetailsCell(
-                        'pending_reason',
-                        'Pending reason',
-                        $this->getXMLResponseValue('base:PaymentInfo/base:PendingReason', $details)
-                    );
-                    break;
+            if (
+                !in_array($this->getXMLResponseValue('base:Ack', $response), array('Success', 'SuccessWithWarning'))
+            ) {
 
-                default:
+                $cart->set('status', 'F');
+                $cart->setDetailsCell(
+                    'error',
+                    'Error',
+                    $this->getXMLResponseValue('base:Errors/base:ErrorCode', $response)
+                    . ': '
+                    . $this->getXMLResponseValue('base:Errors/base:ShortMessage', $response)
+                );
+                $cart->setDetailsCell(
+                    'errorDescription',
+                    'Description',
+                    $this->getXMLResponseValue('base:Errors/base:LongMessage', $response)
+                );  
+
+            } else {
+
+                $this->processFinalizeResponse($response, $cart);
+
             }
-
-            $cart->setDetailsCell(
-                'txn_id',
-                'Transaction ID',
-                $this->getXMLResponseValue('base:PaymentInfo/base:TransactionID', $details)
-            );
-            $cart->setDetailsCell(
-                'payment_date',
-                'Payment date',
-                $this->getXMLResponseValue('base:PaymentInfo/base:PaymentDate', $details)
-            );
-
-            $cart->unsetDetailsCell('error');
-            $cart->unsetDetailsCell('errorDescription');
         }
 
         $cart->update();
+    }
 
-        return in_array($cart->get('status'), array('Q', 'P'))
-            ? self::PAYMENT_SUCCESS
-            : self::PAYMENT_FAILURE; 
+    /**
+     * Process transaction finalize response 
+     * 
+     * @param DOMNode          $response Response body node
+     * @param XLite_Model_Cart $cart     Cart
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function processFinalizeResponse(DOMNode $response, XLite_Model_Cart $cart)
+    {
+        $details = $this->xpath->query('base:DoExpressCheckoutPaymentResponseDetails', $response)->item(0);
+
+        $paymentStatus = $this->getXMLResponseValue('base:PaymentInfo/base:PaymentStatus', $details);
+
+        if ('Completed' == $paymentStatus || 'Processed' == $paymentStatus) {
+
+            $cart->set('status', 'P');
+
+        } elseif ('Pending' == $paymentStatus) {
+
+            $cart->set('status', 'Q');
+            $cart->setDetailsCell(
+                'pending_reason',
+                'Pending reason',
+                $this->getXMLResponseValue('base:PaymentInfo/base:PendingReason', $details)
+            );
+
+        } elseif ('SuccessWithWarning' == $this->getXMLResponseValue('base:Ack', $response)) {
+            $cart->set('status', 'Q');
+            $cart->setDetailsCell(
+                'pending_reason',
+                'Pending reason',
+                'The transaction is pending.'
+                . ' To continue working with the transaction, either accept or decline it'
+            );
+        }
+
+        $cart->setDetailsCell(
+            'txn_id',
+            'Transaction ID',
+            $this->getXMLResponseValue('base:PaymentInfo/base:TransactionID', $details)
+        );
+        $cart->setDetailsCell(
+            'payment_date',
+            'Payment date',
+            $this->getXMLResponseValue('base:PaymentInfo/base:PaymentDate', $details)
+        );
+
+        $cart->unsetDetailsCell('error');
+        $cart->unsetDetailsCell('errorDescription');
     }
 
     /**
@@ -236,7 +310,7 @@ extends XLite_Module_PayPalPro_Model_PaymentMethod_PayPalProBase
                 . '/webscr?cmd=_express-checkout&token='
                 . $this->getXMLResponseValue('api:Token', $response)
             );
-            die();
+            die ();
         }
 
         return false;
@@ -404,7 +478,7 @@ EOT;
         $cart          = $order->get('properties');
         $invoiceId     = $payment['prefix'] . $cart['order_id'];
         $paymentAction = '1' == $payment['type'] ? 'Sale' : 'Authorization';
-        $notifyUrl     = $this->getNotifyUrl();
+        $notifyUrl     = $this->getNotifyUrl($order);
         $token         = $order->getDetail('token');
         $payerId       = $order->getDetail('payer_id');
 
@@ -461,4 +535,178 @@ EOT;
 
         return $this->prepareUrl($url);
     }
+
+    /**
+     * Send request 
+     * 
+     * @param array  $payment Payment module parameters
+     * @param string $data    XML data
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function sendRequest(array $payment, $data)
+    {
+        $this->lastRequestError = false;
+
+        $request = new XLite_Model_HTTPS();
+
+        $request->data       = $data;
+        if ('C' == $payment['auth_method']) {
+            $request->cert = $payment['certificate'];
+        }
+        $request->method     = 'POST';
+        $request->conttype   = 'text/xml';
+        $request->urlencoded = true;
+
+        if ($payment['mode']) {
+            $request->url = 'C' == $payment['auth_method']
+                ? 'https://api.paypal.com:443/2.0/'
+                : 'https://api-3t.paypal.com:443/2.0/';
+
+        } else {
+            $request->url = 'C' == $payment['auth_method']
+                ? 'https://api.sandbox.paypal.com:443/2.0/'
+                : 'https://api-aa.sandbox.paypal.com:443/2.0/';
+        }
+
+        $request->request();
+
+        if ($request->error) {
+            $this->lastRequestError = $request->error;
+        }
+
+        return $request->error ? $request->error : $request->response;
+    }
+
+    /**
+     * Get cancel URL
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCancelUrl()
+    {
+        $url = $this->xlite->getShopUrl(
+            XLite_Core_Converter::buildUrl('checkout', 'paypal_cancel'),
+            $this->config->Security->customer_security
+        );
+
+        return $this->prepareUrl($url);
+    }
+
+    /**
+     * Get notify (callback) URL 
+     *
+     * @param XLite_Model_Cart $cart Cart
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getNotifyUrl(XLite_Model_Cart $cart)
+    {
+        $url = $this->xlite->getShopUrl(
+            XLite_Core_Converter::buildUrl(
+                'callback',
+                'callback',
+                array('order_id' => $cart->get('order_id'))
+            )
+        );
+
+        return $this->prepareUrl($url);
+    }
+
+    /**
+     * Prepare URL 
+     * 
+     * @param string $url URL
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareUrl($url)
+    {
+        return htmlspecialchars($url);
+    }
+
+    /**
+     * Get request signature XML tag
+     * 
+     * @param array $payment Payment module data
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getRequestSignature(array $payment)
+    {
+        return 'C' != $payment['auth_method'] ? ('<Signature>' . $payment['signature'] . '</Signature>') : '';
+    }
+
+    /**
+     * Parse response 
+     * 
+     * @param string $response Response
+     *  
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function parseResponse($response)
+    {
+        $dom = new DOMDocument();
+        $result = @$dom->loadXML($response, LIBXML_NOERROR | LIBXML_NOWARNING | LIBXML_ERR_NONE);
+        if ($result) {
+            $this->xpath = new DOMXPath($dom);
+
+            $this->xpath->registerNamespace('api', 'urn:ebay:api:PayPalAPI');
+            $this->xpath->registerNamespace('base', 'urn:ebay:apis:eBLBaseComponents');
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get response XML node value 
+     * 
+     * @param string  $query  XPath query
+     * @param DOMNode $parent Parent query node
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getXMLResponseValue($query, $parent = null)
+    {
+        return $parent
+            ? $this->xpath->query($query, $parent)->item(0)->nodeValue
+            : $this->xpath->query($query)->item(0)->nodeValue;
+    }
+
+    /**
+     * Getter
+     * 
+     * @param string $name Property name
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __get($name)
+    {
+        return 'xpath' == $name ? $this->xpath : parent::__get($name);
+    }
+
 }
