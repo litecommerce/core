@@ -27,92 +27,157 @@
  */
 
 /**
- * ____description____
+ * Register form
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
 class XLite_Module_UPSOnlineTools_View_RegisterForm extends XLite_View_RegisterForm implements XLite_Base_IDecorator
-{	
+{
+    /**
+     * UPS address validation error 
+     * 
+     * @var    mixed
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     public $upsError = false;
 
-    function checkAddress() {
-        if ($this->xlite->get("adminZone"))
-			return true;
+    /**
+     * Check address 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkAddress()
+    {
 
-        $action_type = $_REQUEST['action_type'];
+        // TODO - temporary disabled
+        return true;
 
-        if ($action_type == 1) { // Use suggestion
+        if (XLite::isAdminZone()) {
+            return true;
+        }
+
+        $actionType = XLite_Core_Request::getInstance()->action_type;
+
+        if ($actionType == 1) {
+
+            // Use suggestion
             $suggest = $this->get('suggest');
             $value = $this->session->get('ups_av_result');
             $value = $value[$suggest];
 
-            $_REQUEST['shipping_country'] = 'US';
+            XLite_Core_Request::getInstance()->shipping_country = 'US';
             $obj = new XLite_Model_State();
-            if ($obj->find("country_code='US' and code='$value[state]'")) {
-                $_REQUEST['shipping_state'] = $obj->get("state_id");
-				$_REQUEST['shipping_custom_state'] = "";
-            } else {
-                $_REQUEST['shipping_state'] = -1;
-				$_REQUEST['shipping_custom_state'] = $value["state"];
-			}
+            if ($obj->find('country_code = \'US\' and code = \'' . $value['state'] . '\'')) {
+                XLite_Core_Request::getInstance()->shipping_state = $obj->get('state_id');
+                XLite_Core_Request::getInstance()->shipping_custom_state = '';
 
-            $_REQUEST['shipping_city'] = $value['city'];
-            $_REQUEST['shipping_zipcode'] = $value['zipcode'];
+            } else {
+                XLite_Core_Request::getInstance()->shipping_state = -1;
+                XLite_Core_Request::getInstance()->shipping_custom_state = $value['state'];
+            }
+
+            XLite_Core_Request::getInstance()->shipping_city = $value['city'];
+            XLite_Core_Request::getInstance()->shipping_zipcode = $value['zipcode'];
 
             $this->session->set('ups_av_result', null);
+
             return true;
         }
+
         $this->session->set('ups_av_result', null);
-		$this->session->set('ups_av_error', null);
-        if($action_type == 2) { // Keep current address
+        $this->session->set('ups_av_error', null);
+
+        if ($actionType == 2) {
+
+            // Keep current address
             return true;
-        }
-        elseif($action_type == 3) { // Re-enter address
+
+        } elseif ($actionType == 3) {
+
+            // Re-enter address
             return false;
-        }
-        else {
+
+        } else {
+
             $obj = new XLite_Module_UPSOnlineTools_Model_Shipping_Ups();
-            $av_result = array();
+            $avResult = array();
 
-			# copy billing to shipping
-            $arr = array('billing_country' => 'shipping_country', 'billing_state' => 'shipping_state', 'billing_city'=>'shipping_city', 'billing_zipcode'=>'shipping_zipcode', 'billing_custom_state'=>'shipping_custom_state');
-            foreach($arr as $bil=>$ship) {
-                if (empty($_REQUEST[$ship]) || ($ship == 'shipping_state' && $_REQUEST[$ship] == -1))
-					$ups_used[$ship] = $_REQUEST[$bil];
-                else $ups_used[$ship] = $_REQUEST[$ship];
-		            $this->session->set('ups_used', $ups_used);
-			}
+            # copy billing to shipping
+            $arr = array(
+                'billing_country'      => 'shipping_country',
+                'billing_state'        => 'shipping_state',
+                'billing_city'         => 'shipping_city',
+                'billing_zipcode'      => 'shipping_zipcode',
+                'billing_custom_state' => 'shipping_custom_state',
+            );
+            foreach ($arr as $bil => $ship) {
+                if (
+                    empty(XLite_Core_Request::getInstance()->$ship)
+                    || ($ship == 'shipping_state' && XLite_Core_Request::getInstance()->$ship == -1)
+                ) {
+                    $upsUsed[$ship] = XLite_Core_Request::getInstance()->$bil;
 
-            $result = $obj->checkAddress($ups_used["shipping_country"], $ups_used['shipping_state'], $ups_used["shipping_custom_state"], $ups_used['shipping_city'], $ups_used['shipping_zipcode'], $av_result, $request_result);
-            $this->session->set('ups_av_result', $av_result);
-            unset($_REQUEST['action_type']);
-            $this->session->set('ups_av_profile', $_REQUEST);
+                } else {
+                    $upsUsed[$ship] = XLite_Core_Request::getInstance()->$ship;
+                    $this->session->set('ups_used', $upsUsed);
+                }
+            }
 
-			if ($result !== true && count($av_result) <= 0) { // AV return error
-				$this->session->set('ups_av_error', 1);
-				$this->session->set('ups_av_errorcode', $request_result["errorcode"]);
-				$this->session->set('ups_av_errordescr', $request_result["errordescr"]);
-			} else {
-				$this->session->set('ups_av_error', 0);
-				$this->session->set('ups_av_errorcode', "");
-				$this->session->set('ups_av_errordescr', "");
-			}
+            $requestResult = array();
+            $result = $obj->checkAddress(
+                $upsUsed['shipping_country'],
+                $upsUsed['shipping_state'],
+                $upsUsed['shipping_custom_state'],
+                $upsUsed['shipping_city'],
+                $upsUsed['shipping_zipcode'],
+                $avResult,
+                $requestResult
+            );
+            $this->session->set('ups_av_result', $avResult);
+            XLite_Core_Request::getInstance()->action_type = null;
+            $this->session->set('ups_av_profile', XLite_Core_Request::getInstance()->getData());
+
+            if (
+                true !== $result
+                && 0 >= count($avResult)
+            ) {
+                // AV return error
+                $this->session->set('ups_av_error', 1);
+                $this->session->set('ups_av_errorcode', $requestResult['errorcode']);
+                $this->session->set('ups_av_errordescr', $requestResult['errordescr']);
+
+            } else {
+                $this->session->set('ups_av_error', 0);
+                $this->session->set('ups_av_errorcode', '');
+                $this->session->set('ups_av_errordescr', '');
+            }
 
             return $result;
         }
     }
 
     function action_register() {
-        if ($this->checkAddress()) return parent::action_register();
-        $this->set("valid", false);
+        if ($this->checkAddress()) {
+            return parent::action_register();
+        }
+
+        $this->set('valid', false);
         $this->set('upsError', true);
     }
 
     function action_modify() {
-        if ($this->checkAddress()) return parent::action_modify();
-        $this->set("valid", false);
+        if ($this->checkAddress()) {
+            return parent::action_modify();
+        }
+
+        $this->set('valid', false);
         $this->set('upsError', true);
     }
 
