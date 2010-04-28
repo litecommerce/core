@@ -131,6 +131,30 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
     protected $points = array();
 
     /**
+     * Profiler should not start on these targets 
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $disallowedTargets = array(
+        'image',
+    );
+
+
+    /**
+     * There are some targets which are not require profiler
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isTargetAllowed()
+    {
+        return !in_array(XLite_Core_Request::getInstance()->target, $this->disallowedTargets);
+    }
+
+    /**
      * Getter
      * 
      * @param string $name Peroperty name
@@ -168,6 +192,7 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
     protected function getStartupFlag()
     {
         return XLite::getInstance()->getOptions(array('profiler_details', 'enabled'))
+            && $this->isTargetAllowed()
             && !XLite_Core_Request::getInstance()->isPost()
             && !XLite_Core_Request::getInstance()->isPopup
             && !XLite_Core_Request::getInstance()->isCLI();
