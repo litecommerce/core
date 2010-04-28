@@ -70,7 +70,7 @@ class XLite_Module_ProductOptions_View_SelectedOptions extends XLite_View_Abstra
 
         $this->widgetParams += array(
             self::PARAM_ITEM       => new XLite_Model_WidgetParam_Object('Item', null, false, 'XLite_Model_OrderItem'),
-            self::PARAM_SOURCE     => new XLite_Model_WidgetParam_String('Source', 'cart'),
+            self::PARAM_SOURCE     => new XLite_Model_WidgetParam_String('Source', ''),
             self::PARAM_STORAGE_ID => new XLite_Model_WidgetParam_Int('Storage id', null),
             self::PARAM_ITEM_ID    => new XLite_Model_WidgetParam_Int('Item id', null),
         );

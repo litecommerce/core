@@ -27,4 +27,4 @@
 </tr>
 </form>
 </table>
-<widget class="XLite_View_Submit" href="cart.php?target=add_gift_certificate&gcid={gcid}" label="Cancel">
+<widget class="XLite_View_Submit" href="cart.php?target=gift_certificate&gcid={gcid}" label="Cancel">

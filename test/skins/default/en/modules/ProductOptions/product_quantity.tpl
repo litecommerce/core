@@ -1,9 +1,9 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
- *
- * @author    Creative Development LLC <info@cdev.ru>
+ * Product options-based quantity box
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   SVN: $Id$
@@ -18,7 +18,7 @@
     <td IF="{!product.inventory.amount}" class="ErrorMessage" nowrap>- out of stock -</td>
   </tr>
 
-  <widget module="ProductAdviser" template="modules/ProductAdviser/OutOfStock/product_quantity.tpl" visible="{xlite.PA_InventorySupport}">
+  <widget module="ProductAdviser"  class="XLite_Module_ProductAdviser_View_NotifyLink">
 
 </tbody>
 

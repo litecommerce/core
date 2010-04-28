@@ -10,4 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<tr IF="!cart.global_discount=#0#"><td><b>Global discount:</b></td><td align="right">{price_format(invertSign(cart.global_discount)):h}</td></tr>
+<li IF="!cart.global_discount=#0#"><em>Global discount:</em>
+  {price_format(invertSign(cart.global_discount)):h}
+</li>

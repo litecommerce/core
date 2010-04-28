@@ -21,7 +21,7 @@
       <br />
       <div IF="isShowDescription()" class="product-description">{truncate(product,#brief_description#,#300#):h}</div>
       <widget class="XLite_View_Price" product="{product}" displayOnlyPrice="true" IF="isShowPrice()" />
-      <widget class="XLite_View_BuyNow" product="{product}" IF="isShowAdd2Cart()" />
+      <widget class="XLite_View_BuyNow" product="{product}" IF="isShowAdd2Cart(product)" />
     </div>
 
   </li>

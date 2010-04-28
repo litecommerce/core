@@ -1,7 +1,7 @@
 /* vim: set ts=2 sw=2 sts=2 et: */
 
 /**
- * ____file_title____
+ * Common styles
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -33,6 +33,12 @@ TABLE, IMG {
 
 fieldset {
   display: none;
+}
+
+ul, li {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
 }
 
 /*
@@ -143,6 +149,12 @@ Menu items located in sidebar boxes: active
 */
 .SidebarItems:active {
 	COLOR: #75838D; TEXT-DECORATION: none
+}
+
+.SidebarItems,
+  .SidebarItems img
+{
+  vertical-align: middle;
 }
 
 /*
@@ -634,4 +646,305 @@ TABLE.Container {
 
 A.captcha {
 	FONT-SIZE: 11px; TEXT-DECORATION: underline;
+}
+
+.draggable-mark {
+  display: none;
+}
+
+/* Product details */
+.product-details {
+  margin-top: 3px;
+}
+
+.product-details .sibliding-links {
+  margin-bottom: 10px;
+}
+
+.product-details .sibliding-links a {
+  font-size: 0.92em;
+}
+
+.product-details div.product-thumbnail {
+  width: 200px;
+  float: left;
+}
+
+.product-details div.product-thumbnail-box {
+  position: relative;
+  margin: 0px auto;
+}
+
+.product-details a.product-thumbnail {
+  text-align: center;
+  margin: 0px auto;
+}
+
+.product-details img.product-thumbnail {
+  margin: 0px auto;
+}
+
+.save-mark {
+  display: block;
+  position: absolute;
+  background: transparent url(images/discount_star.png) no-repeat left top;
+  width: 36px;
+  height: 36px;
+}
+
+.product-details .save-mark {
+  right: 0px;
+  top: 0px;
+}
+
+/* Detailed images : gallery */
+.di-gallery {
+  list-style: none;
+}
+
+.di-gallery li
+{
+  padding: 0;
+  margin: 0 15px 15px 0;
+  vertical-align: top;
+  background-image: none;
+  display: -moz-inline-stack;   /* FF2 supports this instead of "inline-block" */
+  display: inline-block;
+  background-color: #ebebeb;
+  vertical-align: middle;
+}
+
+.di-gallery div {
+  line-height: 0px;
+}
+
+.di-gallery img {
+  position: relative;       /* Hack for FF2: in FF2 static "inner-blocks" are non-clickable */
+  margin: auto;
+}
+
+/* IE6 requires this in order to correctly display li as "inline-blocks */
+* html .di-gallery li
+{
+  display: inline;
+}
+
+/* IE7 requires this in order to correctly display li as "inline-blocks */
+*:first-child+html .di-gallery li
+{
+  display: inline;
+}
+
+.di-gallery a
+{
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  width: 50px;
+  position: relative;       /* Hack for FF2: in FF2 static "inner-blocks" are non-clickable */
+}
+
+/* Product details : body */
+.product-details .product-body {
+  margin-left: 220px;
+  padding-top: 2px;
+}
+
+.product-details .product-stock-label {
+  font-weight: bold;
+  padding-top: 4px;
+  white-space: nowrap;
+}
+
+.product-details .product-in-stock {
+  color: #368726;
+}
+
+.product-details .product-out-stock {
+  color: #a81126;
+}
+
+.product-details .product-price {
+  color: #ff6c00;
+  font-size: 2.2em;
+  padding-top: 11px;
+  line-height: normal;
+}
+
+.product-details .subtitle {
+  display: block;
+  padding-top: 13px;
+  font-weight: bold;
+}
+
+.product-details .notify-me {
+  font-size: 0.9em;
+}
+
+.product-details h3 {
+  padding-top: 21px;
+  margin-bottom: 8px;
+}
+
+/* Product market price */
+.product-market-price .price {
+  text-decoration: line-through;
+}
+
+.product-market-price .save,
+  table.wholesale-prices td.price
+{
+  color: #e65a00;
+}
+
+/* Wholesale prices */
+table.wholesale-prices {
+  border: 0px none;
+  width: auto;
+  margin: 2px 0px 8px 0px;
+}
+
+table.wholesale-prices td {
+  background: transparent none;
+  border: 0px none;
+  padding: 2px 3px 2px 0px;
+}
+
+/* Product option */
+.product-options {
+  margin: 10px 0px;
+  padding: 0px;
+  list-style: none;
+}
+
+.product-option {
+  list-style: none;
+  margin: 0px 0px 10px 0px;
+  padding: 0px;
+}
+
+.product-option ul {
+  list-style: none;
+  margin: 2px 0px 0px 0px;
+  padding: 0px;
+}
+
+.product-option ul li {
+  list-style: none;
+  margin: 0px;
+  padding: 2px 0px 0px 6px;
+  vertical-align: middle;
+}
+
+.product-option ul li input,
+  .product-option ul li label
+{
+  vertical-align: middle;
+  margin: 0px;
+}
+
+.product-option ul li input {
+  margin-right: 3px;
+}
+
+/* Product quantity block */
+.product-details div.product-quantity {
+  padding: 9px 0px;
+}
+
+div.product-quantity label {
+  padding-right: 12px;
+}
+
+div.product-quantity a {
+  text-decoration: none;
+}
+
+div.product-quantity a.disabled {
+  cursor: text;
+}
+
+div.product-quantity a img {
+  width: 13px;
+  height: 13px;
+  background: transparent url(images/plus_minus.gif) no-repeat left top;
+}
+
+div.product-quantity a.quantity-upper img {
+  background-position: left -13px;
+}
+
+div.product-quantity input {
+  text-align: right;
+  width: 2.5em;
+}
+
+div.product-quantity span {
+  padding-left: 8px;
+  color: #7a7a7a;
+}
+
+/* Buttons */
+.product-details .buttons-row {
+  padding-top: 5px;
+}
+
+/* Extra fields */
+table.product-extra-fields {
+  border: 0px none;
+  width: auto;
+  margin: 0px 0px 10px 0px;
+}
+
+table.product-extra-fields th,
+  table.product-extra-fields td
+{
+  background: transparent none;
+  border: 0px none;
+  padding: 2px;
+}
+
+table.product-extra-fields th {
+  color: #111;
+  padding-right: 6px;
+}
+
+/* Common form table */
+.form-table {
+  border: 0px none;
+  width: auto;
+  margin: 0px 0px 10px 0px;
+
+}
+
+.form-table td {
+  border: 0px none;
+}
+
+.form-table .optional-label {
+  padding-left: 10px;
+}
+
+.form-table td.required {
+  color: #0c94f1;
+  padding-right: 0px;
+}
+
+/* Notify me / Send to friend popup */
+form.notify-me table,
+  form.send-to-friend table
+{
+  margin-bottom: 10px;
+}
+
+form.notify-me input,
+  form.send-to-friend input
+{
+  width: 280px;
+}
+
+form.notify-me .button-row,
+  form.send-to-friend .button-row
+{
+  text-align: center;
 }

@@ -137,5 +137,32 @@ class XLite_Module_WholesaleTrading_View_Amount extends XLite_View_Abstract
 
         return ($purchaseLimit && $purchaseLimit->get('min') > 1) ? $purchaseLimit->get('min') : 1;
     }
+
+    /**
+     * Check - product has amount region (min and max) or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function hasAmountRegion()
+    {
+        return 0 < $this->getMaxAmount();
+    }
+
+    /**
+     * Check - product has min limit bigger 1 or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function hasMinAmount()
+    {
+        return 1 < $this->getMinAmount();
+    }
+
 }
 

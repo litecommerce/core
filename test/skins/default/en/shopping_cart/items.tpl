@@ -14,8 +14,10 @@
 <table class="selected-products">
   <tbody>
     <tr class="selected-product" FOREACH="cart.getItems(),cart_id,item">
-      <widget template="shopping_cart/item.tpl" IF="item.isUseStandardTemplate()" />
-      <widget module="GiftCertificates" template="modules/GiftCertificates/item.tpl" IF="item.gcid" />
+      <td>
+        <widget template="shopping_cart/item.tpl" IF="item.isUseStandardTemplate()" />
+        <widget module="GiftCertificates" template="modules/GiftCertificates/item.tpl" IF="item.gcid" />
+      </td>
     </tr>
   </tbody>
 </table>

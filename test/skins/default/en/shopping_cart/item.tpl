@@ -25,8 +25,8 @@
 		  {truncate(item.brief_description,#300#):h}<br />
       <br />
         
-      <widget module="ProductOptions" template="modules/ProductOptions/selected_options.tpl" visible="{item.hasOptions()}" item="{item}">
-		
+      <widget module="ProductOptions" class="XLite_Module_ProductOptions_View_SelectedOptions" item="{item}" item_id="{cart_id}" />
+      <br />	
 		  <span IF="{item.weight}">
 		    Weight: {item.weight} {config.General.weight_symbol}<br />
 		  </span>

@@ -19,7 +19,7 @@
 	<link href="skins/default/en/style.css"  rel="stylesheet" type="text/css">
 </head>
 <body>
-<widget name="returnButton" class="XLite_View_Button" href="cart.php?target=add_gift_certificate&gcid={gc.gcid}" label="Return">
+<widget name="returnButton" class="XLite_View_Button" href="cart.php?target=gift_certificate&gcid={gc.gcid}" label="Return">
 <hr size="1">
 {gc.showECardBody()}
 <hr size="1">

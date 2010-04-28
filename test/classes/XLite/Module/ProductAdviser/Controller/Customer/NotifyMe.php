@@ -140,6 +140,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
      */
     protected function doActionNotifyProduct()
     {
+        $this->assignReturnUrl();
         if (!$this->isProductNotificationEnabled()) {
             return;
         }
@@ -206,8 +207,6 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
         }
 
         $this->session->set('rejectedItem', null);
-
-        $this->set('returnUrl', urldecode($this->url));
     }
 
     /**
@@ -220,6 +219,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
      */
     protected function doActionNotifyPrice()
     {
+        $this->assignReturnUrl();
         if (!$this->isPriceNotificationEnabled() || !$this->isComplex('product.priceNotificationAllowed')) {
             return;
         }
@@ -274,8 +274,29 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
 
             $notification->create();
         }
+    }
 
-        $this->set('returnUrl', urldecode($this->url));
+    /**
+     * Assign return URL
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function assignReturnUrl()
+    {
+        if (XLite_Core_Request::getInstance()->isPost()) {
+            if ($this->url) {
+                $this->set('returnUrl', urldecode($this->url));
+
+            } else {
+                $this->set(
+                    'returnUrl',
+                    $this->buildUrl('product', '', array('product_id' => $this->product->get('product_id')))
+                );
+            }
+        }
     }
 
     /**

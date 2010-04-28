@@ -78,7 +78,7 @@ Gift certificates are the perfect solution when you just can't  find the right g
 </td></tr>
 </table>
 <form name="gccreate" action="cart.php" method="POST">
-<input type="hidden" name="target" value="add_gift_certificate">
+<input type="hidden" name="target" value="gift_certificate">
 <input type="hidden" name="action" value="add">
 <input type="hidden" name="gcid" value="{gcid:r}">
 <table border="0" width="100%" cellpadding="0">

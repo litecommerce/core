@@ -21,7 +21,7 @@
       <a IF="isShowThumbnails()&product.hasThumbnail()" class="product-thumbnail" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}"><img src="{product.getThumbnailURL()}" alt="" /></a>
       <a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" class="product-name">{product.name:h}</a>
       <widget class="XLite_View_Price" product="{product}" displayOnlyPrice="true" IF="isShowPrice()" />
-      <widget class="XLite_View_BuyNow" product="{product}" IF="isShowAdd2Cart()" />
+      <widget class="XLite_View_BuyNow" product="{product}" IF="isShowAdd2Cart(product)" />
     </div>
 
   </li>

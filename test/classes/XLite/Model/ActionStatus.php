@@ -176,7 +176,7 @@ class XLite_Model_ActionStatus extends XLite_Base
 
         if ($this->checkStatus($status)) {
             $this->status  = $status;
-            $this->message = $mesage;
+            $this->message = $message;
             $this->code    = $code;
         } else {
             $this->doDie('XLite_Model_ActionStatus::__construct(): unallowed status - "' . strval($status) . '"');

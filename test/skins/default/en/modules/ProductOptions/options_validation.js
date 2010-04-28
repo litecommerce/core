@@ -1,7 +1,7 @@
-{* vim: set ts=2 sw=2 sts=2 et: *}
+/* vim: set ts=2 sw=2 sts=2 et: */
 
-{**
- * Checkout widget body
+/**
+ * Product options functions
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,8 +9,16 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- *}
+ */
 
-<widget template="checkout/cart.tpl" />
-<widget class="{getStepWidgetClass()}" />
+// Get product option element by name
+function product_option(name_of_option)
+{
+  var e = $('form[name="add_to_cart"] :input').filter(
+    function() {
+      return this.name && this.name.search(name_of_option) != -1;
+    }
+  );
 
+  return e.get(0);
+}

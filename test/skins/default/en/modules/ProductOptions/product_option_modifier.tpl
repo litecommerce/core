@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Price modifier for option
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,23 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<span IF="opt.modifyParams">(
-<span IF="!hidePrice">
-<span IF="config.ProductOptions.absolute_price_format"> 
-Price: {price_format(option.modifiedPrice(opt)):h}
-</span>
-<span IF="!config.ProductOptions.absolute_price_format">
-<span IF="!opt.isZero">
-<span IF="opt.absolute">Price: {opt.surcharge_sign} {price_format(option.modifiedPrice(opt,1)):h}</span>
-<span IF="opt.percent">Price: {opt.surcharge_sign}{opt.surcharge_abs}%</span>
-</span>
-</span>
-</span> {* hidePrice *}
-<span IF="config.ProductOptions.absolute_weight_format&!option.modifiedWeight(opt)=#0#">
-Weight: {option.modifiedWeight(opt)} {config.General.weight_symbol}
-</span>
-<span IF="!config.ProductOptions.absolute_weight_format">
-<span IF="opt.weight_percent">Weight: {opt.weight_modifier_sign}{opt.weight_modifier_abs}%</span>
-<span IF="opt.weight_absolute">Weight: {opt.weight_modifier_sign}{opt.weight_modifier_abs} {config.General.weight_symbol}</span>
-</span>
-)</span>
+({if:isShowPrice()}{if:option.absolute}{option.surcharge_sign} {price_format(optionGroup.modifiedPrice(option,1)):h}{else:}{option.surcharge_sign}{option.surcharge_abs}%{end:}{if:option.weight_percent|option.weight_absolute}, {end:}{end:}
+{if:option.weight_percent}{option.weight_modifier_sign}{option.weight_modifier_abs}%{end:}
+{if:option.weight_absolute}{option.weight_modifier_sign}{option.weight_modifier_abs} {config.General.weight_symbol}{end:})

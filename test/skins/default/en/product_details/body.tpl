@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Product
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -19,90 +19,63 @@ function isValid()
 -->
 </script>
 
-<widget class="XLite_View_Form_Product_AddToCart" name="add_to_cart" product="{product}" />
+<widget class="XLite_View_Form_Product_AddToCart" name="add_to_cart" product="{product}" className="product-details" />
 
   <table cellpadding="5" cellspacing="0" width="100%">
     <tr>
       <td IF="product.hasImage()" valign="top" align="left" width="100">
-        <img src="{product.imageURL}" border=0 alt="">
+        <widget class="XLite_View_Image" image="{product.getImage()}" className="product-thumbnail" id="product_image_{product.product_id}" maxWidth="100" />
       </td>
       <td valign="top">
-    
-        <widget module="InventoryTracking" mode="out_of_stock" template="modules/InventoryTracking/out_of_stock.tpl" IF="product.productOptions"/>
 
-        <!-- product details -->
-        <table id="productDetailsTable" cellpadding="0" cellspacing="0" width="100%">
+        <div IF="{product.sku}" class="product-sku">
+          <span>SKU:</span>
+          <span>{product.sku}</span>
+        </div>
 
-          <tr id="descriptionTitle">
-            <td colspan="2" class="ProductDetailsTitle">Description</td>
-          </tr>
+        <widget module="InventoryTracking" template="modules/InventoryTracking/stock_label.tpl" visible="{product.inventory.found}" />
 
-          <tr>
-            <td class="Line" height="1" colspan="2"><img src="images/spacer.gif" width="1" height="1" alt=""></td>
-          </tr>
+        <widget class="XLite_View_Price" product="{product}" />
 
-          <tr>
-            <td colspan="2">&nbsp;</td>
-          </tr>
+        <widget module="WholesaleTrading" class="XLite_Module_WholesaleTrading_View_Prices" product="{product}" />
 
-          <tr id="description">
-            <td colspan="2">{description:h}</td>
-          </tr>
+        <widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_PriceNotifyLink" product="{product}" />
 
-          <tr>
-            <td colspan="2">&nbsp;</td>
-          </tr>
-        
-          <tr id="detailsTitle">
-            <td colspan="2" class="ProductDetailsTitle">Details</td>
-          </tr>
+        <widget module="ProductOptions" class="XLite_Module_ProductOptions_View_ProductOptions" product="{product}" />
 
-          <tr>
-            <td class="Line" height="1" colspan="2"><img src="images/spacer.gif" width="1" height="1" alt=""></td>
-          </tr>
+        <widget module="WholesaleTrading" class="XLite_Module_WholesaleTrading_View_Amount" product="{product}" IF="isAvailableForSale()" />
 
-          <tr>
-            <td colspan="2">&nbsp;</td>
-          </tr>
+      <div IF="availableForSale" class="buttons-row">
+        <widget class="XLite_View_Button_Submit" label="Add to Cart" />
+        <widget module="WishList" class="XLite_Module_WishList_View_Button_AddToWishlist" product="{product}" />
+      </div>
 
-          <tr IF="{product.sku}">
-            <td width="30%" class="ProductDetails">SKU:</td>
-            <td class="ProductDetails" nowrap>{product.sku}</td>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+
+        <h3>Description</h3>
+
+        <table IF="{product.getExtraFields(true)|product.weight}" class="product-extra-fields">
+
+          <tr IF="{!product.weight=0}">
+            <th>Weight:</th>
+            <td>{product.weight} {config.General.weight_symbol}</td>
           </tr>
-        
-          <widget module="InventoryTracking" template="modules/InventoryTracking/product_quantity.tpl" IF="!product.productOptions" visible="{product.inventory.found}"/>
-          <widget module="ProductOptions" template="modules/ProductOptions/product_quantity.tpl">
 
           <widget class="XLite_View_ExtraFields" product="{product}" />
 
-          <tbody>
-
-            <tr IF="{!product.weight=0}">
-              <td width="30%" class="ProductDetails">Weight:</td>
-              <td class="ProductDetails" nowrap>{product.weight} {config.General.weight_symbol}</td>
-            </tr>
-
-            <widget class="XLite_View_Price" product="{product}" template="common/price_table.tpl">
-            <widget module="ProductAdviser" template="modules/ProductAdviser/PriceNotification/product_button.tpl" visible="{!priceNotificationSaved}">
-            <widget module="ProductOptions" class="XLite_Module_ProductOptions_View_ProductOptions" product="{product}" IF="!product.showExpandedOptions" />
-            <widget module="WholesaleTrading" template="modules/WholesaleTrading/expanded_options.tpl" IF="product.hasOptions()&product.showExpandedOptions"/>
-        		<widget module="WholesaleTrading" template="modules/WholesaleTrading/extra.tpl">
-
-            <tr>
-              <td colspan="2">&nbsp;</td>
-            </tr>
-
-            <tr IF="availableForSale" id="addToCartButton">
-              <td><widget class="XLite_View_Button_Submit" label="Add to Cart" /></td>
-        			<td IF="!config.General.add_on_mode">
-        				<widget module="WishList" class="XLite_Module_WishList_View_Button_AddToWishlist" product="{product}" />
-              </td>
-            </tr>
-
-          </tbody>
         </table>
+
+        <div class="product-description">{description:h}</div>
+
+        <widget module="WholesaleTrading" class="XLite_Module_WholesaleTrading_View_ExtendedOptions" product="{product}" />
+
       </td>
-    </tr>    
+    </tr>
+    
   </table>
 
 <widget name="add_to_cart" end />

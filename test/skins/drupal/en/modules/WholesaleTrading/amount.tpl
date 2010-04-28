@@ -23,5 +23,9 @@ $(document).ready(
   <a href="javascript:void(0);" class="quantity-lower"><img src="images/spacer.gif" alt="-" /></a>
   <input id="product_quantity_{product.product_id}" name="amount" value="{getMinAmount()}" />
   <a href="javascript:void(0);" class="quantity-upper"><img src="images/spacer.gif" alt="+" /></a>
-  <span>({getMinAmount()}&ndash;{getMaxAmount()})</span>
+  {if:hasAmountRegion()}
+    <span>({getMinAmount()}&ndash;{getMaxAmount()})</span>
+  {else:}
+    <span IF="hasMinAmount()">(min. {getMinAmount()})</span>
+  {end:}
 </div>

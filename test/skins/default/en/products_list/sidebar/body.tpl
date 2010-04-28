@@ -22,7 +22,7 @@
         <br />
 
         <widget class="XLite_View_Price" product="{product}" displayOnlyPrice="true" IF="isShowPrice()" />
-        <widget class="XLite_View_BuyNow" product="{product}" IF="isShowAdd2Cart()" />
+        <widget class="XLite_View_BuyNow" product="{product}" IF="isShowAdd2Cart(product)" />
 
     </div>
 

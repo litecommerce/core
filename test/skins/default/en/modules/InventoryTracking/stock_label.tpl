@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Checkout widget body
+ * Product quantity label
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,7 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-
-<widget template="checkout/cart.tpl" />
-<widget class="{getStepWidgetClass()}" />
-
+<div IF="{product.isInStock()}" class="product-stock-label product-in-stock">In stock</div>
+<div IF="{product.isOutOfStock()}" class="product-stock-label product-out-stock">Out of stock</div>
+<widget module="ProductAdviser"  class="XLite_Module_ProductAdviser_View_NotifyLink" />

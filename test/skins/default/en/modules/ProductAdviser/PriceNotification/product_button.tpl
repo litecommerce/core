@@ -1,16 +1,13 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
- *
- * @author    Creative Development LLC <info@cdev.ru>
+ * Product price notify link
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<tr IF="priceNotificationEnabled&product.priceNotificationAllowed">
-  <td>&nbsp;</td>
-  <td>(<a href="javascript: PriceNotifyMe()"><u>Notify me</u></a> when the price drops)</td>
-</tr>
+<span class="notify-me price-notify"><a href="{buildUrl(#notify_me#,#notify_price#,_ARRAY_(#product_id#^product.product_id))}">Notify me</a> when the price drops</span>
