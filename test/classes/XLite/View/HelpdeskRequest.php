@@ -27,24 +27,14 @@
  */
 
 /**
- * Advertise widget
+ * Helpdesk request
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_AdvBlock extends XLite_View_Abstract
+class XLite_View_HelpdeskRequest extends XLite_View_Abstract
 {
-    /**
-     * Show widget (for internal block)
-     * 
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $forceShow = false;
-
     /**
      * Return widget default template
      *
@@ -54,61 +44,7 @@ class XLite_View_AdvBlock extends XLite_View_Abstract
      */
     protected function getDefaultTemplate()
     {
-        return 'advertise/body.tpl';
-    }
-
-    /**
-     * Check widget visibility
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isVisible()
-    {
-        return parent::isVisible()
-            && XLite::isAdminZone()
-            && $this->auth->isLogged()
-            && ($this->forceShow || !$this->session->get('advertise_show'));
-    }
-
-    /**
-     * Get block template name 
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getBlockName()
-    {
-        $idx = mt_rand(1, 3);
-        $this->session->set('advertise_show', $idx);
-        $this->forceShow = true;
-
-        return 'advertise/block_' . $idx . '.tpl';
-    }
-
-    /**
-     * Register JS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getJSFiles()
-    {
-        // TODO - add to admin area widget system from drupal skin
-        //$list = parent::getJSFiles();
-
-        $list = array();
-        $list[] = 'popup/jquery.blockUI.js';
-        $list[] = 'popup/popup.js';
-        $list[] = 'advertise/helpdesk.js';
-
-        return $list;
+        return 'helpdesk/body.tpl';
     }
 
     /**
@@ -125,8 +61,9 @@ class XLite_View_AdvBlock extends XLite_View_Abstract
         //$list = parent::getCSSFiles();
 
         $list = array();
-        $list[] = 'popup/popup.css';
+        $list[] = 'helpdesk/helpdesk.css';
 
         return $list;
     }
+
 }

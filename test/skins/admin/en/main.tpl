@@ -18,12 +18,15 @@
 	  if (document.getElementById("rebuild_cache_block")) document.getElementById("rebuild_cache_block").style.display = "none";
 	</script>
 
-    <title>LiteCommerce online store builder{if:getTitle()} - {getTitle()}{end:}</title>
-	<meta http-equiv="Content-Type" content="text/html; charset={charset}">
-    <meta name="ROBOTS" content="NOINDEX">
-    <meta name="ROBOTS" content="NOFOLLOW">
-    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-    <LINK href="skins/admin/en/style.css"  rel=stylesheet type=text/css>
+  <title>LiteCommerce online store builder{if:getTitle()} - {getTitle()}{end:}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset={charset}" />
+  <meta name="ROBOTS" content="NOINDEX" />
+  <meta name="ROBOTS" content="NOFOLLOW" />
+  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+  <link href="skins/admin/en/style.css"  rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="skins/admin/en/js/common.js"></script>
+  <script type="text/javascript" src="{getSkinURL(#js/jquery-1.3.2.js#)}"></script>
+  <script type="text/javascript" src="{getSkinURL(#js/jquery-ui.1.7.2.js#)}"></script>
 </head>
 <body LEFTMARGIN=0 TOPMARGIN=0 RIGHTMARGIN=0 BOTTOMMARGIN=0 MARGINWIDTH=0 MARGINHEIGHT=0>
 <!-- [/begin] -->
@@ -118,7 +121,6 @@
 
 <widget target="profile" template="common/dialog.tpl" head="Delete profile - Confirmation" body="profile/confirm_delete.tpl" IF="{getRequestParamValue(#mode#)=#delete#}" />
 <widget target="wysiwyg" template="common/dialog.tpl" head="HTML design import/export" body="wysiwyg.tpl" />
-
 
 {*<widget class="XLite_View_Model_Profile" />*}
 

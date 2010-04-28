@@ -25,3 +25,11 @@
     </table>
   </div>
 </div>
+{foreach:getJSFiles(),src}
+<script type="text/javascript" src="skins/admin/en/{src}"></script>
+{end:}
+{foreach:getCSSFiles(),src}
+<link rel="stylesheet" type="text/css" href="skins/admin/en/{src}" />
+{end:}
+<widget class="XLite_View_HelpdeskRequest" />
+

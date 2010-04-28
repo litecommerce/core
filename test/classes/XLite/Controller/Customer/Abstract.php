@@ -187,5 +187,24 @@ abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstr
             $this->getParamsHash(array_keys($this->getWidgetSettings()))
         );
     }
+
+    /**
+     * Get controller charset 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCharset()
+    {
+        $charset = false;
+
+        if ($this->getCart() && $this->getCart()->getProfile()) {
+            $charset = $this->getCart()->getProfile()->getComplex('billingCountry.charset');
+        }
+
+        return $charset ? $charset : parent::getCharset();
+    }
 }
 

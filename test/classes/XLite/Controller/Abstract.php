@@ -859,18 +859,20 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
      */
     public function getCharset()
     {
-        $charset = $this->getComplex('cart.profile.billingCountry.charset');
-        if ($charset)
-            return $charset;
+        $charset = 'iso-8859-1';
 
         if ($this->auth->isLogged()) {
-            $profile = $this->auth->get("profile");
-            return $profile->getComplex('billingCountry.charset');
+            $profile = $this->auth->getProfile();
+            $charset = $profile->getComplex('billingCountry.charset');
+
         } else {
-            $country = $this->config->getComplex('General.default_country');
-            $obj = new XLite_Model_Country($country);
-            return ($obj->get("charset")) ? $obj->get("charset") : "iso-8859-1";
+            $obj = new XLite_Model_Country($this->config->General->default_country);
+            if ($obj->get('charset')) {
+                $charset = $obj->get('charset');
+            }
         }
+
+        return $charset;
     }
 
     function getEmailValidatorRegExp()
