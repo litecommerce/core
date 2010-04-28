@@ -45,6 +45,49 @@ $_reReadProfiles = false;
  */
 class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
 {
+    /**
+     * Integer codes for action results
+     */
+
+    const RESULT_ACCESS_DENIED = ACCESS_DENIED;
+
+
+    /**
+     * Updates the specified profile on login. Saves profile to session 
+     * 
+     * @param XLite_Model_Profile $profile profile object
+     *  
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function loginProfile(XLite_Model_Profile $profile)
+    {
+        if ($result = $profile->isPersistent) {
+
+            $this->sessionRestart();
+
+            // check for the fisrt time login
+            if (!$profile->get('first_login')) {
+                // set first login date
+                $profile->set('first_login', time());
+            }
+            // set last login date
+            $profile->set('last_login', time());
+
+            // update profile
+            $profile->update();
+
+            // save to session
+            $this->session->set('profile_id', $profile->get('profile_id'));
+
+            $this->rememberLogin($profile->get('login'));
+        }
+
+        return $result;
+    }
+
+
 	/**
 	 * getInstance 
 	 * 
@@ -71,6 +114,35 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         return md5($password);
     }
 
+
+    /**
+     * Logs in user to cart
+     * 
+     * @param string $login    user's login
+     * @param string $password user's password
+     *  
+     * @return mixed
+     * @access public
+     * @since  3.0.0
+     */
+    public function login($login, $password)
+    {
+        // Check for the valid parameters
+        if (!empty($login) && !empty($password)) {
+
+            $password = self::encryptPassword($password);
+            $profile = new XLite_Model_Profile();
+
+            // Deny login if user not found
+            if ($profile->findByLogin($login, $password)) {
+                $this->loginProfile($profile);
+
+                return $profile;
+            }
+        }
+
+        return self::RESULT_ACCESS_DENIED;
+    }
 
     /**
      * Checks whether user is logged 
@@ -111,39 +183,22 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
 		return $result;
     }
 
-	/**
-     * Updates the specified profile on login. Saves profile to session 
+    /**
+     * Check if passed profile is currently logged in
      * 
-     * @param XLite_Model_Profile $profile profile object
+     * @param XLite_Model_Profile $profile profile to check
      *  
      * @return bool
      * @access public
      * @since  3.0.0
      */
-    public function loginProfile(XLite_Model_Profile $profile)
+    public function checkProfile(XLite_Model_Profile $profile)
     {
-        if ($result = $profile->isPersistent) {
-
-			$this->sessionRestart();
-
-            // check for the fisrt time login
-            if (!$profile->get('first_login')) {
-                // set first login date
-                $profile->set('first_login', time());
-            }
-            // set last login date
-            $profile->set('last_login', time());
-
-            // update profile
-            $profile->update();
-
-            // save to session
-            $this->session->set('profile_id', $profile->get('profile_id'));
-
-            $this->rememberLogin($profile->get('login'));
-        }
-
-        return $result;
+        return $this->isLogged()
+            && (
+                $this->isAdmin($this->getProfile())
+                || $this->getProfile()->get('profile_id') == $profile->get('profile_id')
+            );
     }
 
 
@@ -410,40 +465,6 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     function remindLogin() // {{{
     {
         return isset($_COOKIE["last_login"]) ? $_COOKIE["last_login"] : "";
-    } // }}}
-
-    /**
-    * Logs in user to cart. 
-    *
-    * @access public
-    * @param string $login The user"s login
-    * @param  string $password The user"s password
-    */
-    function login($login, $password) // {{{
-    {
-        $password = self::encryptPassword($password);
-        // check for the valid parameters
-        if (empty($login) || empty($password)) {
-            return ACCESS_DENIED;
-        }
-        // read profile data
-        $profile = new XLite_Model_Profile();
-        // deny login if user not found
-        if (!$profile->find("login='".addslashes($login)."' AND ". "password='".addslashes($password)."'")) {
-        	if ($profile->find("login='".addslashes($login)."'")) {
-        		$this->set("forgotten_profile", $profile);
-        	}
-            return ACCESS_DENIED;
-        }
-        // check whether the user account is enabled or not
-        if (!$profile->get("enabled")) {
-            return ACCESS_DENIED;
-        }
-
-        // log in
-        $this->loginProfile($profile);
-
-        return $profile; 
     } // }}}
 
 	/**

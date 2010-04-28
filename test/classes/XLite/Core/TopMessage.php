@@ -116,7 +116,7 @@ class XLite_Core_TopMessage extends XLite_Base implements XLite_Base_ISingleton
     {
         $result = false;
 
-        if (is_scalar($text)) {
+        if (!empty($text)) {
             $text = strval($text);
             if (0 < strlen($text)) {
                 if (!in_array($type, $this->types)) {
@@ -128,12 +128,55 @@ class XLite_Core_TopMessage extends XLite_Base implements XLite_Base_ISingleton
                     self::FIELD_TEXT => $text,
                     self::FIELD_TYPE => $type,
                 );
+                $this->messages = $messages;
                 $this->session->set('topMessages', $messages);
                 $result = true;
             }
         }
 
         return $result;
+    }
+
+    /**
+     * Add message of the certain type 
+     * 
+     * @param string $text message text
+     *  
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function addError($text)
+    {
+        return $this->add($text, self::ERROR);
+    }
+
+    /**
+     * Add message of the certain type 
+     * 
+     * @param string $text message text
+     *  
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function addWarning($text)
+    {
+        return $this->add($text, self::WARNING);
+    }
+
+    /**
+     * Add message of the certain type 
+     * 
+     * @param string $text message text
+     *  
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function addInfo($text)
+    {
+        return $this->add($text, self::INFO);
     }
 
     /**

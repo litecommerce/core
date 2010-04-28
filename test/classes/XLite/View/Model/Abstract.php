@@ -45,6 +45,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     /**
      * Fieldset default name 
      */
+
     const FIELDSET_DEFAULT_NAME = 'postedData';
 
     /**
@@ -73,7 +74,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
 
 
     /**
-     * currentForm 
+     * Current form object
      * 
      * @var    XLite_View_Model_Abstract
      * @access protected
@@ -92,7 +93,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     protected $formFields = null;
 
     /**
-     * errorMessages 
+     * Form error messages cache 
      * 
      * @var    array
      * @access protected
@@ -101,7 +102,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     protected $errorMessages = null;
 
     /**
-     * savedData 
+     * Form saved data cache
      * 
      * @var    array
      * @access protected
@@ -111,7 +112,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
 
 
     /**
-     * getDefaultModelObjectClass 
+     * Model class associated with the form 
      * 
      * @return string
      * @access protected
@@ -120,7 +121,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     abstract protected function getDefaultModelObjectClass();
 
     /**
-     * getDefaultModelObjectKeys 
+     * List of model primary keys 
      * 
      * @return string
      * @access protected
@@ -139,7 +140,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
 
    
     /**
-     * composeFieldName 
+     * Add (if required) an additional part to the form name
      * 
      * @param string $name name to prepare
      *  
@@ -159,7 +160,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     }
 
     /**
-     * getDefaultFieldsetName 
+     * Base part of the field name (default value)
      * 
      * @return string
      * @access protected
@@ -171,7 +172,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     }
 
     /**
-     * getFieldsetName 
+     * Base part of the field name
      * 
      * @return string
      * @access protected
@@ -183,7 +184,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     }
 
     /**
-     * getDefaultModelObjectSignature 
+     * Index in global cache for the model object
      * 
      * @return string
      * @access protected
@@ -259,7 +260,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     }
 
     /**
-     * getFormName
+     * Return name of the current form
      * 
      * @return string
      * @access protected
@@ -271,7 +272,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     }
 
     /**
-     * Ret urn list of web form widget params
+     * Return list of web form widget params
      *
      * @return array
      * @access protected
@@ -318,7 +319,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     }
 
     /**
-     * getFieldSchemaArgs 
+     * Perform some operations when creating fiels list by schema
      * 
      * @param string $name node name
      * @param array  $data field description
@@ -343,7 +344,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     }
 
     /**
-     * setModelProperties 
+     * Populate model object properties by the passed data 
      * 
      * @param array $data data to set
      *  
@@ -357,7 +358,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     }
 
     /**
-     * prepareFormDataToSave 
+     * Transform multi-dimensional data array into the "flat" one
      * 
      * @param array $data data to save
      *  
@@ -367,11 +368,11 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
      */
     protected function prepareFormDataToSave(array $data)
     {
-        return XLite_Core_Converter::getInstance()->flatArray($data);
+        return XLite_Core_Converter::flatArray($data);
     }
 
     /**
-     * getSavedForms 
+     * Fetch saved forms data from session
      * 
      * @return array
      * @access protected
@@ -383,7 +384,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     }
 
     /**
-     * getSavedForm 
+     * Return saved data for current form (all or certain field(s))
      * 
      * @param string $field data field to return
      *  
@@ -406,7 +407,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     }
 
     /**
-     * getFormSavedData 
+     * Return fields' saved values for current form (saved data itself)
      * 
      * @return array
      * @access protected
@@ -418,7 +419,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     }
 
     /**
-     * saveFormData 
+     * Save form fields in session 
      * 
      * @param mixed $data data to save
      *  
@@ -442,7 +443,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     }
 
     /**
-     * clearFormData 
+     * Clear form fields in session
      * 
      * @return void
      * @access protected
@@ -450,9 +451,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
      */
     protected function clearFormData()
     {
-        if (!$this->isRedirectNeeded()) {
-            $this->saveFormData(null);
-        }
+        $this->saveFormData(null);
     }
 
     /**
@@ -484,7 +483,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     }
 
     /**
-     * startCurrentForm 
+     * Save reference to the current form 
      * 
      * @return void
      * @access protected
@@ -510,7 +509,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     }
 
     /**
-     * getFieldsBySchema
+     * Return list of form fields objects by schema
      *
      * @param array $schema field descriptions
      *
@@ -547,7 +546,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     }
 
     /**
-     * getErrorMessages
+     * Return list of form error messages
      *
      * @return array
      * @access protected
@@ -570,9 +569,65 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
         return $this->errorMessages;
     }
 
+    /**
+     * Perform certain action for the model object
+     * 
+     * @param array $data model properties
+     *  
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function performActionCreate(array $data = array())
+    {
+        return $this->getModelObject()->create();
+    }
 
     /**
-     * getCurrentForm 
+     * Perform certain action for the model object
+     * 
+     * @param array $data model properties
+     *  
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function performActionUpdate(array $data = array())
+    {
+        return $this->getModelObject()->update();
+    }
+
+    /**
+     * Perform certain action for the model object 
+     * 
+     * @param array $data model properties
+     *  
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function performActionModify(array $data = array())
+    {
+        return $this->getModelObject()->modify();
+    }
+
+    /**
+     * Perform certain action for the model object
+     * 
+     * @param array $data model properties
+     *  
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function performActionDelete(array $data = array())
+    {
+        return $this->getModelObject()->delete();
+    }
+
+
+    /**
+     * Return reference to the current form object
      * 
      * @return XLite_View_Model_Abstract
      * @access public
@@ -585,7 +640,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
 
 
     /**
-     * isValid
+     * Check for the form errors
      *
      * @return bool
      * @access public
@@ -597,10 +652,20 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     }
 
     /**
-     * getSavedFieldValue 
-     * 
-     * NOTE: do not use the getFormSavedData() function:
-     * it will decrease the perfomance
+     * Check if widget is visible
+     *
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function isVisible()
+    {
+        return parent::isVisible() || $this->isExported();
+    }
+
+    /**
+     * Return saved value fior the certain form field
+     * NOTE: do not use the getFormSavedData() function: it will decrease the perfomance
      * 
      * @param string $name field name
      *  
@@ -614,8 +679,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     }
 
     /**
-     * performAction 
-     * FIXME - simplify
+     * Perform some action for the model object
      * 
      * @param string $action action to perform
      * @param array  $data   form data
@@ -640,7 +704,8 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
         $this->setModelProperties($properties);
 
         if ($result = $this->isValid()) {
-            call_user_func_array(array($this, 'performAction' . ucfirst($action)), array($properties));
+            $action = 'performAction' . ucfirst($action);
+            $this->$action($properties);
             $this->success();
         } else {
             $this->saveFormData($data);
@@ -651,63 +716,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     }
 
     /**
-     * performActionCreate 
-     * 
-     * @param array $data model properties
-     *  
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-    public function performActionCreate(array $data = array())
-    {
-        return $this->getModelObject()->create();
-    }
-
-    /**
-     * performActionUpdate 
-     * 
-     * @param array $data model properties
-     *  
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-    public function performActionUpdate(array $data = array())
-    {
-        return $this->getModelObject()->update();
-    }
-
-    /**
-     * performActionModify 
-     * 
-     * @param array $data model properties
-     *  
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-    public function performActionModify(array $data = array())
-    {
-        return $this->getModelObject()->modify();
-    }
-
-    /**
-     * performActionDelete 
-     * 
-     * @param array $data model properties
-     *  
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-    public function performActionDelete(array $data = array())
-    {
-        return $this->getModelObject()->delete();
-    }
-
-    /**
-     * __construct
+     * Save current form reference and initialize the cache
      *
      * @param array $params widget params
      *

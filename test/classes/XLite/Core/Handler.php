@@ -154,18 +154,6 @@ abstract class XLite_Core_Handler extends XLite_Base
     }
 
     /**
-     * isVisible 
-     * 
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-    public function isVisible()
-    {
-        return true;
-    }
-
-    /**
      * setWidgetParams
      *
      * @param array $params handler params

@@ -240,7 +240,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
     }
 
     /**
-     * getApplication 
+     * Return application instance 
      * 
      * @return XLite
      * @access public
@@ -350,7 +350,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
     }
 
     /**
-     * prepareProfileData 
+     * Add CMS-specific fields to profile data 
      * 
      * @param int   $cmsUserId CMS user Id
      * @param array $data      data to prepare
@@ -365,7 +365,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
     }
 
     /**
-     * getProfile
+     * Check and return (if allowed) current user profile
      * 
      * @param int $cmsUserId internal user ID in CMS
      *  
@@ -377,24 +377,18 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
     {
         $profile = XLite_Model_CachingFactory::getObject(__METHOD__ . $cmsUserId, 'XLite_Model_Profile');
 
+        // Not initialized
         if (!$profile->isRead) {
-            $profile->find($this->getProfileWhereCondition($cmsUserId));
+            // Profile exists
+            if ($profile->find($this->getProfileWhereCondition($cmsUserId))) {
+                // Exists, but not logged in - access denied
+                if (!XLite_Model_Auth::getInstance()->checkProfile($profile)) {
+                    $profile = null;
+                }
+            }
         }
 
         return $profile;
-    }
-
-    /**
-     * Get previous messages
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getTopMessages()
-    {
-        return XLite_Core_TopMessage::getInstance()->getPreviousMessages();
     }
 
 

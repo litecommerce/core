@@ -163,30 +163,6 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
     }
 
     /**
-     * Return field value
-     * 
-     * @return mixed
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getValue()
-    {
-        return $this->checkSavedValue() ? $this->getSavedValue() : $this->getParam(self::PARAM_VALUE);
-    }
-
-    /**
-     * getLabel 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getLabel()
-    {
-        return $this->getParam(self::PARAM_LABEL);
-    }
-
-    /**
      * Check if field is required
      * 
      * @return bool
@@ -297,6 +273,44 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
     }
 
     /**
+     * Return field value
+     * 
+     * @return mixed
+     * @access public
+     * @since  3.0.0
+     */
+    public function getValue()
+    {
+        return $this->checkSavedValue() ? $this->getSavedValue() : $this->getParam(self::PARAM_VALUE);
+    }
+
+    /**
+     * setValue 
+     * 
+     * @param mixed $value value to set
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function setValue($value)
+    {
+        $this->getWidgetParams(self::PARAM_VALUE)->setValue($value);
+    }
+
+    /**
+     * getLabel 
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getLabel()
+    {
+        return $this->getParam(self::PARAM_LABEL);
+    }
+
+    /**
      * Return a value for the "id" attribute of the field input tag
      * 
      * @return string
@@ -307,20 +321,6 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
     public function getFieldId()
     {
         return strtolower(strtr($this->getName(), array('['=>'-', ']'=>'', '_'=>'-')));
-    }
-
-    /**
-     * Wrapper; public function to retrieve widget params
-     * 
-     * @param string $name param name
-     *  
-     * @return mixed
-     * @access public
-     * @since  3.0.0
-     */
-    public function getFieldAttribute($name)
-    {
-        return $this->getParam($name);
     }
 
     /**

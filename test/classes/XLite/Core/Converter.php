@@ -180,15 +180,30 @@ class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
      * @access public
      * @since  3.0.0
      */
-    public function flatArray(array $data, $currKey = '')
+    public static function flatArray(array $data, $currKey = '')
     {
         $result = array();
 
         foreach ($data as $key => $value) {
             $key = $currKey . (empty($currKey) ? $key : '[' . $key . ']');
-            $result += is_array($value) ? $this->flatArray($value, $key) : array($key => $value);
+            $result += is_array($value) ? self::flatArray($value, $key) : array($key => $value);
         }
 
         return $result;
+    }
+
+    /**
+     * Return array elements having the corresponded keys 
+     * 
+     * @param array $data array to filter
+     * @param array $keys keys (filter rule)
+     *  
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public static function filterArrayByKeys(array $data, array $keys)
+    {
+        return array_intersect_key($data, array_fill_keys($keys, true));
     }
 }

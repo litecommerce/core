@@ -85,7 +85,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         'card_cvv2'             => '',
         'first_login'           => '0',
         'last_login'            => '0',
-        'status'                => '',
+        'status'                => 'E',
         'referer'               => '',
         'membership'            => '',
         'pending_membership'    => '',
@@ -149,7 +149,37 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         'fax',     'address',   'city',     'state',   'custom_state',
         'country', 'zipcode',
     );
+
+
+    /**
+     * Check if profile is enabled
+     * 
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function isEnabled()
+    {
+        return 'E' == strtoupper($this->get('status'));
+    }
+
+    /**
+     * Search profile by login and password
+     *
+     * @param string $login    user's login
+     * @param string $password user's password
+     *
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function findByLogin($login, $password)
+    {
+        return $this->find('login = \'' . addslashes($login) . '\' AND password = \'' . addslashes($password) .'\'')
+            && $this->isEnabled();
+    }
  
+
     /**
     * Modifies safe properties (excluding adminSecurefields).
     * Useful when a admin edit(create) profile.
@@ -190,11 +220,6 @@ class XLite_Model_Profile extends XLite_Model_Abstract
             }
             $this->setProperties($properties);
         }
-    } // }}}
-
-    function isEnabled() // {{{
-    {
-        return strtoupper($this->get("status")) == "E" ? true : false;
     } // }}}
 
     function getBillingState() // {{{

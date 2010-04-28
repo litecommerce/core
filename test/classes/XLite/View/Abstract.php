@@ -257,6 +257,18 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
     }
 
     /**
+     * Return list of the modes allowed by default
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultModes()
+    {
+        return array();
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -270,7 +282,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
         $this->widgetParams += array(
             self::PARAM_TEMPLATE     => new XLite_Model_WidgetParam_File('Template', $this->getDefaultTemplate()),
             self::PARAM_VISIBLE      => new XLite_Model_WidgetParam_Bool('Visible', true),
-            self::PARAM_MODE         => new XLite_Model_WidgetParam_Array('Modes', array()),
+            self::PARAM_MODE         => new XLite_Model_WidgetParam_Array('Modes', $this->getDefaultModes()),
             self::PARAM_SESSION_CELL => new XLite_Model_WidgetParam_String('Session cell', $this->getSessionCell()),
         );
     }
@@ -557,10 +569,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      */
     public function isVisible()
     {
-        return parent::isVisible()
-            && $this->getParam(self::PARAM_VISIBLE)
-            && $this->checkTarget()
-            && $this->checkMode(); 
+        return $this->getParam(self::PARAM_VISIBLE) && $this->checkTarget() && $this->checkMode(); 
     }
 
     /**

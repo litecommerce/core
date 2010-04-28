@@ -36,13 +36,47 @@
 abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstract
 {
     /**
-     * profileSchema 
+     * Form sections 
+     */
+    
+    const SECTION_MAIN     = 'main';
+    const SECTION_ACCESS   = 'access';
+    const SECTION_BILLING  = 'billing';
+    const SECTION_SHIPPING = 'shipping';
+
+
+    /**
+     * Targets this widget is allowed for
+     *
+     * @var    array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $allowedTargets = array('profile', 'checkout');
+
+    /**
+     * Available form sections 
      * 
      * @var    array
      * @access protected
      * @since  3.0.0
      */
-    protected $profileSchema = array(
+    protected $sections = array(
+        self::SECTION_MAIN     => 'E-mail & Password',
+        self::SECTION_ACCESS   => 'User access',
+        self::SECTION_BILLING  => 'Billing address',
+        self::SECTION_SHIPPING => 'Shipping address',
+    );
+
+
+    /**
+     * Schema of the "E-mail & Password" section
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $mainSchema = array(
         'login' => array(
             self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
             self::SCHEMA_LABEL    => 'E-mail',
@@ -53,7 +87,7 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
             self::SCHEMA_LABEL    => 'Password',
             self::SCHEMA_REQUIRED => true,
         ),
-        'passwordConfirm' => array(
+        'password_conf' => array(
             self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Password',
             self::SCHEMA_LABEL    => 'Confirm password',
             self::SCHEMA_REQUIRED => true,
@@ -61,7 +95,17 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
     );
 
     /**
-     * addressSchema 
+     * Schema of the "User access" section
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $accessSchema = array(
+    );
+
+    /**
+     * Schema of the "Billing/Shipping address" sections
      * 
      * @var    array
      * @access protected
@@ -148,7 +192,7 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
     }
 
     /**
-     * getDefaultModelObjectClass
+     * Model class associated with the form
      *
      * @return string
      * @access protected
@@ -160,7 +204,7 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
     }
 
     /**
-     * getDefaultModelObjectKeys
+     * List of model primary keys
      *
      * @return string
      * @access protected
@@ -184,6 +228,24 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
     }
 
     /**
+     * Return list of the modes allowed by default
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultModes()
+    {
+        $result = parent::getDefaultModes(); 
+
+        if ('checkout' == XLite_Core_Request::getInstance()->target) {
+            $result[] = 'register';
+        }
+
+        return $result;
+    }
+
+    /**
      * Define form field classes and values
      *
      * @return void
@@ -194,29 +256,36 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
     {
         parent::defineFormFields();
 
-        // Login and password
-        if (!XLite_Core_CMSConnector::isCMSStarted()) {
-            $this->formFields['sepInfo'] = new XLite_View_FormField_Separator_Regular(
-                array(self::SCHEMA_LABEL => 'E-mail & Password')
+        foreach ($this->sections as $section => $label) {
+
+            $this->formFields[$section] = new XLite_View_FormField_Separator_Regular(
+                array(self::SCHEMA_LABEL => $label)
             );
-            $this->formFields += $this->getProfileFields();
+
+            switch ($section) {
+
+                case self::SECTION_MAIN:
+                    $this->formFields += $this->getMainFields();
+                    $this->formFields['password_conf']->setValue($this->formFields['password']->getValue());
+                    break;
+
+                case self::SECTION_ACCESS:
+                    $this->formFields += $this->getAccessFields();
+                    break;
+
+                case self::SECTION_BILLING:
+                    $this->formFields += $this->getBillingAddressFields();
+                    break;
+
+                case self::SECTION_SHIPPING:
+                    $this->formFields += $this->getShippingAddressFields();
+                    break;
+            }
         }
-
-        // Billing info
-        $this->formFields['sepBillAddr'] = new XLite_View_FormField_Separator_Regular(
-            array(self::SCHEMA_LABEL => 'Billing Address')
-        );
-        $this->formFields += $this->getBillingAddressFields();
-
-        // Shipping info
-        $this->formFields['sepShipAddr'] = new XLite_View_FormField_Separator_Regular(
-            array(self::SCHEMA_LABEL => 'Shipping Address')
-        );
-        $this->formFields += $this->getShippingAddressFields();
     }
 
     /**
-     * getAddressSchema 
+     * Modify address field schema for certain address type (billing or shipping) 
      * 
      * @param string $type address type
      *  
@@ -236,34 +305,72 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
     }
 
     /**
-     * logInProfile 
+     * Populate model object properties by the passed data
      * 
+     * @param array $data data to set
+     *  
      * @return void
      * @access protected
      * @since  3.0.0
      */
-    protected function logInProfile()
+    protected function setModelProperties(array $data)
     {
-        if (!XLite_Model_Auth::getInstance()->isLogged()) {
-            XLite_Model_Auth::getInstance()->loginProfile($this->getModelObject());
+        if (isset($data['password'])) {
+            $data['password'] = XLite_Model_Auth::encryptPassword($data['password']);
         }
+
+        parent::setModelProperties($data);
+    }
+
+    /**
+     * Create profile 
+     * 
+     * @param array $data model properties
+     *  
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function performActionCreate(array $data = array())
+    {
+        $result = false;
+
+        if ($data['password'] != $data['password_conf']) {
+            XLite_Core_TopMessage::getInstance()->addError('Password and its confirmation do not match');
+        } else {
+            $result = parent::performActionCreate($data);;
+        }
+
+        return $result;
     }
 
 
     /**
-     * getProfileFields 
+     * Return fields list by the corresponding schema
      * 
      * @return array
      * @access public
      * @since  3.0.0
      */
-    public function getProfileFields()
+    public function getMainFields()
     {
-        return $this->getFieldsBySchema($this->profileSchema);
+        return $this->getFieldsBySchema($this->mainSchema);
     }
 
     /**
-     * getBillingAddressFields 
+     * Return fields list by the corresponding schema
+     * 
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getAccessFields()
+    {
+        return $this->getFieldsBySchema($this->accessSchema);
+    }
+
+    /**
+     * Return fields list by the corresponding schema
      * 
      * @return array
      * @access public
@@ -275,7 +382,7 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
     }
 
     /**
-     * getShippingAddressFields 
+     * Return fields list by the corresponding schema
      *  
      * @return array
      * @access public
@@ -303,60 +410,20 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
     }
 
     /**
-     * performActionCreate
+     * Save form sections list
      *
-     * @param array $data model properties
-     *
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function performActionCreate(array $data = array())
-    {
-        $result = parent::performActionCreate($data);
-
-        if ($result) {
-            $this->logInProfile();
-        }
-
-        return $result;
-    }
-
-    /**
-     * performActionModify
-     *
-     * @param array $data model properties
+     * @param array $params widget params
      *
      * @return void
      * @access public
      * @since  3.0.0
      */
-    public function performActionModify(array $data = array())
+    public function __construct(array $params = array(), array $sections = array())
     {
-        $result = parent::performActionModify($data);
+        parent::__construct($params);
 
-        if ($result) {
-            $this->logInProfile();
-        }
-   
-        return $result; 
-    }
-
-    /**
-     * performActionDelete
-     *
-     * @param array $data model properties
-     *
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-    public function performActionDelete(array $data = array())
-    {
-        $result = parent::performActionDelete($data);
-
-        if ($result) {
-            XLite_Model_Auth::getInstance()->logoff();
+        if (!empty($sections)) {
+            $this->sections = XLite_Core_Converter::filterArrayByKeys($this->sections, $sections);
         }
     }
 }
