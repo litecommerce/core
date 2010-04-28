@@ -1,7 +1,7 @@
 /* vim: set ts=2 sw=2 sts=2 et: */
 
 /**
- * ____file_title____
+ * Drupal connector functions
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -14,15 +14,18 @@
 // FIXME - must be improved and synchronized with the "default" skin
 
 // Drupal-specific URLs
-URLHandler.baseURLPart = '?q=store/';
-URLHandler.argSeparator = '/';
-URLHandler.nameValueSeparator = '-';
+$(document).ready(
+  function() {
+    URLHandler.baseURLPart = '?q=store/';
+    URLHandler.argSeparator = '/';
+    URLHandler.nameValueSeparator = '-';
 
-URLHandler.getMainParamValue = function(name, params)
-{
-  return params[name];
-}
-
+    URLHandler.getMainParamValue = function(name, params)
+    {
+      return params[name];
+    }
+  }
+);
 
 /**
  * List of all "get"-forms 
