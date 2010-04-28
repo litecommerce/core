@@ -36,6 +36,15 @@
 class XLite_View_Category extends XLite_View_Abstract
 {
     /**
+     * Targets this widget is allowed for
+     *
+     * @var    array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $allowedTargets = array('category');
+
+    /**
      * Return widget default template
      *
      * @return string
