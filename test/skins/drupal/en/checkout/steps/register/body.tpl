@@ -15,6 +15,6 @@
   {if:isExported()}
     {getRegisterFormPlaceholder():r}
   {else:}
-    <widget mode="register" class="XLite_View_Model_Profile" />
+    <widget class="XLite_View_Model_Profile_Checkout" />
   {end:}
 </div>

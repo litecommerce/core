@@ -27,13 +27,36 @@
  */
 
 /**
- * XLite_View_Model_Profile 
+ * XLite_View_Form_Profile_Abstract 
  * 
  * @package    XLite
  * @subpackage ____sub_package____
  * @since      3.0.0
  */
-class XLite_View_Model_Profile extends XLite_View_Model_Profile_Abstract
+abstract class XLite_View_Form_Profile_Abstract extends XLite_View_Form_Abstract
 {
+    /**
+     * Current form name
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getFormName()
+    {
+        return 'register_form';
+    }
+
+    /**
+     * getDefaultTarget 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTarget()
+    {
+        return 'profile';
+    }
 }
 

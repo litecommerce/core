@@ -52,7 +52,7 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
      * @access protected
      * @since  3.0.0
      */
-    protected $allowedTargets = array('profile', 'checkout');
+    protected $allowedTargets = array('profile');
 
     /**
      * Available form sections 
@@ -213,36 +213,6 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
     protected function getDefaultModelObjectKeys()
     {
         return array(XLite_Model_Session::getInstance()->get('profile_id'));
-    }
-
-    /**
-     * Return name of web form widget class
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getFormClass()
-    {
-        return 'XLite_View_Form_Checkout_Register';
-    }
-
-    /**
-     * Return list of the modes allowed by default
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultModes()
-    {
-        $result = parent::getDefaultModes(); 
-
-        if ('checkout' == XLite_Core_Request::getInstance()->target) {
-            $result[] = 'register';
-        }
-
-        return $result;
     }
 
     /**

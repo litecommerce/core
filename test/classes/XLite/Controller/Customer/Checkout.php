@@ -75,7 +75,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
      */
     protected function getModelFormClass()
     {
-        return 'XLite_View_Model_Profile';
+        return 'XLite_View_Model_Profile_Checkout';
     }
 
     /**
@@ -87,7 +87,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
      */
     protected function checkProfile()
     {
-        return XLite_Model_CachingFactory::getObject(__METHOD__, 'XLite_View_Model_Profile')->isValid();
+        return XLite_Model_CachingFactory::getObject(__METHOD__, $this->getModelFormClass())->isValid();
     }
 
     /**

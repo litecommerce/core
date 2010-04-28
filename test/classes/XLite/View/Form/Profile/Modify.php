@@ -27,13 +27,13 @@
  */
 
 /**
- * XLite_View_Form_Profile_Register 
+ * XLite_View_Form_Profile_Modify 
  * 
  * @package    XLite
  * @subpackage ____sub_package____
  * @since      3.0.0
  */
-class XLite_View_Form_Profile_Register extends XLite_View_Form_Profile_Abstract
+class XLite_View_Form_Profile_Modify extends XLite_View_Form_Profile_Abstract
 {
     /**
      * getDefaultAction 
@@ -44,7 +44,7 @@ class XLite_View_Form_Profile_Register extends XLite_View_Form_Profile_Abstract
      */
     protected function getDefaultAction()
     {
-        return 'register';
+        return 'update';
     }
 }
 

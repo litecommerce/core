@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage View
+ * @subpackage ____sub_package____
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,25 +26,25 @@
  * @since      3.0.0
  */
 
+
 /**
- * XLite_View_Form_Profile_Register 
+ * XLite_View_Model_Profile_Register 
  * 
  * @package    XLite
  * @subpackage ____sub_package____
  * @since      3.0.0
  */
-class XLite_View_Form_Profile_Register extends XLite_View_Form_Profile_Abstract
+class XLite_View_Model_Profile_Register extends XLite_View_Model_Profile_Abstract
 {
-    /**
-     * getDefaultAction 
-     * 
+	/**
+     * Return name of web form widget class
+     *
      * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected function getDefaultAction()
+    protected function getFormClass()
     {
-        return 'register';
+        return 'XLite_View_Form_Profile_Register';
     }
 }
-
