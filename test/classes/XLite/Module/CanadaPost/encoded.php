@@ -53,8 +53,7 @@ function Shipping_cps_getRates($_this, $order)
 			"length"			=> sprintf("%.02f", $options->length));
 
 	if (($cached = $_this->_checkCache("cps_cache", $fields)) != false) {
-    	//$profiler->log("cps_cache");
-        //echo sprintf("<hr>cps_cache: %.03f<hr>", $profiler->cps_cache);
+    	//XLite_Model_Profiler::getInstance()->log('cps_cache');
 		return $cached;
 	}
 	$rates = $_this->filterEnabled($_this->queryRates($options,$originalZipcode,$originalCountry,$itemsPrice,$weight,$description,$packed,$destinationCity,$destinationZipcode,$destinationState, $destinationCountry));
@@ -63,8 +62,7 @@ function Shipping_cps_getRates($_this, $order)
 	$rates = $_this->serializeCacheRates($rates);
 	$rates = $_this->unserializeCacheRates($rates);
 
-	//$profiler->log("cps_data");
-	//echo sprintf("<hr>cps_data: %.03f<hr>", $profiler->cps_data);
+	//XLite_Model_Profiler::getInstance()->log('cps_data');
 
 	return $rates;
 

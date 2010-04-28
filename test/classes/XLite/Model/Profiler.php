@@ -27,14 +27,20 @@
  */
 
 /**
- * ____description____
+ * Profiler
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton 
+class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
 {
+    const QUERY_LIMIT_TIMES = 2;
+    const QUERY_LIMIT_DURATION = 0.05;
+
+    const TRACE_BEGIN = 3;
+    const TRACE_LENGTH = 8;
+
     /**
      * List of executed queries 
      * 
@@ -44,16 +50,113 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
      */
     protected static $queries = array();
 
-
     /**
-     * Determines if profiler is switched on/off
+     * Enabled flag
      * 
-     * @var    bool
-     * @access public
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
      */
-    public $enabled = false;
+    protected $enabled = false;
 
+    /**
+     * Start time
+     * 
+     * @var    float
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $start_time = null;
+
+    /**
+     * Stop time 
+     * 
+     * @var    float
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $stop_time = null;
+
+    /**
+     * Included files list
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $includedFiles = array();
+
+    /**
+     * Included files total size
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $includedFilesTotal = 0;
+
+    /**
+     * Included files count 
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $includedFilesCount = 0;
+
+    /**
+     * Last time 
+     * 
+     * @var    float
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $lastTime = 0;
+
+    /**
+     * Time points 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $points = array();
+
+    /**
+     * Getter
+     * 
+     * @param string $name Peroperty name
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __get($name)
+    {
+        if ('enabled' == $name) {
+            $result = $this->enabled;
+
+        } elseif (isset($this->points[$name])) {
+
+            $result = isset($this->points[$name]['end'])
+                ? ($this->points[$name]['end'] - $this->points[$name]['start'])
+                : 0;
+
+        } else {
+            $result = parent::__get($name);
+        }
+
+        return $result;
+    }
 
     /**
      * getStartupFlag 
@@ -64,17 +167,20 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
      */
     protected function getStartupFlag()
     {
-        return XLite::getInstance()->getOptions(array('profiler_details', 'enabled')) && !XLite_Core_Request::getInstance()->isPopup;
+        return XLite::getInstance()->getOptions(array('profiler_details', 'enabled'))
+            && !XLite_Core_Request::getInstance()->isPost()
+            && !XLite_Core_Request::getInstance()->isPopup
+            && !XLite_Core_Request::getInstance()->isCLI();
     }
 
-	/**
-	 * Use this function to get a reference to this class object 
-	 * 
-	 * @return XLite_Model_Profiler
-	 * @access public
-	 * @since  3.0.0
-	 */
-	public static function getInstance()
+    /**
+     * Use this function to get a reference to this class object 
+     * 
+     * @return XLite_Model_Profiler
+     * @access public
+     * @since  3.0.0
+     */
+    public static function getInstance()
     {
         return self::getInternalInstance(__CLASS__);
     }
@@ -91,7 +197,7 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
         $this->start($this->getStartupFlag());
     }
 
-	/**
+    /**
      * Destructor
      *
      * @return void
@@ -100,160 +206,313 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
      */
     public function __destruct()
     {
-		$this->stop();
+        $this->stop();
     }
 
-
-
-
-
-
-
-
-    public $query_time = array();	
-
-    function log($timePoint)
+    /**
+     * Log same time range
+     * 
+     * @param string $timePoint Time range name
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function log($timePoint, $additional = false)
     {
-    	if (!isset($this->latest_point)) {
-        	$this->latest_point = $this->start_time;
-    	} else {
-        	$this->latest_point = $this->new_latest_point;
-    	}
-        $this->new_latest_point = microtime(true);
-        $this->$timePoint = number_format($this->new_latest_point - $this->start_time, 4);
-        $timePointDelta = $timePoint . "_delta";
-        $this->$timePointDelta = number_format($this->new_latest_point - $this->latest_point, 4);
+        if (!isset($this->points[$timePoint])) {
+            $this->points[$timePoint] = array(
+                'start' => microtime(true),
+                'open'  => true,
+                'time'  => 0,
+            );
+
+        } elseif ($this->points[$timePoint]['open']) {
+
+            $range = microtime(true) - $this->points[$timePoint]['start'];
+            if ($additional) {
+                $this->points[$timePoint]['time'] += $range;
+            } else {
+                $this->points[$timePoint]['time'] = $range;
+            }
+            $this->points[$timePoint]['open'] = false;
+
+        } else {
+
+            $this->points[$timePoint]['start'] = microtime(true);
+            $this->points[$timePoint]['open'] = true;
+
+        }
     }
     
-    function start($start)
+    /**
+     * Start profiler
+     * 
+     * @param boolean $start Enable flag
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function start($start)
     {
         $this->enabled = !empty($start);
         $this->start_time = microtime(true);
     }
     
-    function stop()
+    /**
+     * Stop profiler
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function stop()
     {
-        if (!$this->enabled) return;
+        if ($this->enabled) {
 
-        $this->stop_time = microtime(true);
-        global $parserTime;
-        $this->parserTime = $parserTime;
-        $this->includedFilesCount = count(get_included_files());
-        $this->includedFiles = array();
-        $this->includedFileSizes = array();
-        $this->includedFilesTotal = 0;
-        foreach (get_included_files() as $file) {
-            $this->includedFiles[] = $file;
-            $size = @filesize($file);
-            $this->includedFileSizes[] = $size;
-            $this->includedFilesTotal += $size;
-        }
-		$this->includedFilesTotal /= 1000;
-        array_multisort($this->includedFileSizes,SORT_DESC, $this->includedFiles);
-        for ($i=0; $i<count($this->includedFiles); $i++) {
-            $a = new StdClass();
-            $a->name = $this->includedFiles[$i];
-            $a->size = $this->includedFileSizes[$i];
-            $this->includedFiles[$i] = $a;
-        }
+            $this->stop_time = microtime(true);
 
-        $this->display();
+            $this->includedFiles = array();
+            $this->includedFilesTotal = 0;
+
+            foreach (get_included_files() as $file) {
+                $size = intval(@filesize($file));
+                $this->includedFiles[] = array(
+                    'name' => $file,
+                    'size' => $size
+                );
+                $this->includedFilesTotal += $size;
+            }
+            $this->includedFilesCount = count($this->includedFiles);
+
+            usort($this->includedFiles, array($this, 'sortCallback'));
+
+            $this->display();
+        }
     }
     
-    function display()
+    /**
+     * Display profiler report
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function display()
     {
-    	$this->total_time_sum = 0;
-?>
-<p align=left>
-<table border=0>
-<tr><td style="FONT-WEIGHT: bold; COLOR: red ">EXECUTION TIME</td><td><?php print number_format($this->stop_time - $this->start_time, 4); ?></td></tr>
-<tr><td style="FONT-WEIGHT: bold; COLOR: red ">MEMORY PEAK USAGE</td><td><?php printf("%.2f Mb", memory_get_peak_usage() / 1024 / 1024); ?></td></tr>
-<tr><td colspan=2>&nbsp;</td></tr>
-<tr><td style="FONT-WEIGHT: bold;">TOTAL QUERIES</td><td><?php print $this->getTotalQueries(); ?></td></tr>
-<tr><td style="FONT-WEIGHT: bold;">TOTAL QUERIES TIME</td><td><?php print $this->getTotalQueriesTime(); ?></td></tr>
+        $totalQueriesTime = 0;
+        foreach (self::$queries as $q => $d) {
+            $cnt = count($d['time']);
+            $sum = array_sum($d['time']);
+            self::$queries[$q] = array(
+                'count' => $cnt,
+                'max'   => max($d['time']),
+                'min'   => min($d['time']),
+                'avg'   => $sum / $cnt,
+                'trace' => $d['trace'],
+            );
+            $totalQueriesTime += $sum;
+        }
+
+        $execTime = number_format($this->stop_time - $this->start_time, 4);
+        $memoryPeak = round(memory_get_peak_usage() / 1024 / 1024, 3);
+        $totalQueries = count(self::$queries);
+        $totalQueriesTime = number_format($totalQueriesTime, 4);
+        $dbConnectTime = number_format($this->dbConnectTime, 4);
+
+        $this->includedFilesTotal = round($this->includedFilesTotal / 1024, 3);
+
+        $html = <<<HTML
+<table cellspacing="0" cellpadding="3" style="width: auto;">
+    <tr>
+        <td><strong>EXECUTION TIME</strong></td>
+        <td>$execTime</td>
+    </tr>
+    <tr>
+        <td><strong>MEMORY PEAK USAGE</strong></td>
+        <td>$memoryPeak Mb</td>
+    </tr>
+    <tr>
+        <td><strong>TOTAL QUERIES</strong></td>
+        <td>$totalQueries</td>
+    </tr>
+    <tr>
+        <td><strong>TOTAL QUERIES TIME</strong></td>
+        <td>$totalQueriesTime</td>
+    </tr>
+
+    <tr>
+        <td><strong>Included files</strong></td>
+        <td>$this->includedFilesCount</td>
+    </tr>
+
+    <tr> 
+        <td><strong>Included files total size</strong></td>
+        <td>$this->includedFilesTotal Kb.</td>
+    </tr>
+
+    <tr>
+        <td><strong>Database connect time</strong></td>
+        <td>$dbConnectTime sec.</td>
+    </tr>
+
 </table>
 
-<p>Queries log:
-<p>
-<?php
-foreach (self::$queries as $query => $count) {
-    echo "[" . ($count>2?"<font color=red>$count</font>":$count)."] $query<br>\n";
-}
-?>
-<!--
-<b>Total time:</b> <?php print $this->getTotalTime(); ?> sec.<br>
-<br>
-<b>XLite startup time:</b>
-PHP parser time: {profiler.parserTime} sec.,
-Included files: {profiler.includedFilesCount},
-Included files total size: {profiler.includedFilesTotal},
-Database connect time: {profiler.dbConnectTime} sec.
-<br>
-<b>XLite init time:</b><br>
-read config: <?php print $this->read_cfg_time; ?> sec.,<br>
-modules manager: <?php print $this->mm_init_time; ?> sec.,<br>
-session: <?php print $this->ss_time; ?> sec.<br>
-<br>
-<b>Xlite init total time:</b> <?php print $this->init_time; ?> sec.<br>
-<b>Run time:</b> <?php print $this->exec_time - $this->start_time; ?> sec.<br>
-<b>Display time:</b> <?php print $this->run_time; ?> sec.<br>
-<br>
-<b>SQL total queries:</b> {profiler.getTotalQueries()}<br>
-<b>SQL total queries time:</b> {profiler.getTotalQueriesTime()} sec.<br>
-<b>SQL queries statistics:</b><br>
-<span FOREACH="profiler.queries,query,count">
-<b>Total:</b> {count}, <b>Time:</b> {profiler.getQueryTime(query)}, <b>Query:</b> {query:h}<br>
-</span>
-<b>.</b>
+<table cellspacing="0" cellpadding="3" border="1" style="width: auto;">
+    <caption>Queries log</caption>
+    <tr>
+        <th>Times</th>
+        <th>Max. duration, sec.</th>
+        <th>Query</th>
+    </tr>
+HTML;
 
-Included file sizes: <table>{foreach:profiler.includedFiles,file} <tr><td>{file.name}</td><td>{file.size}</td></tr>{end:} </table>
-</p>
--->
-<?php
+        echo ($html);
+
+        $warnStyle = ' background-color: red; font-weight: bold;';
+
+        foreach (self::$queries as $query => $d) {
+            $timesLimit = (self::QUERY_LIMIT_TIMES < $d['count'] ? $warnStyle : '');
+            $durationLimit = (self::QUERY_LIMIT_DURATION < $d['max'] ? $warnStyle : '');
+
+            echo (
+                '<tr>' . "\n"
+                . '<td style="vertical-align: top;' . $timesLimit . '">'
+                . $d['count']
+                . '</td>'
+                . '<td style="vertical-align: top;' . $durationLimit . '">'
+                . number_format($d['max'], 4)
+                . '</td><td style="white-space: nowrap;">'
+                . $query . '<br />'
+                . implode(' << ', $d['trace'])
+                . '</td></tr>' . "\n"
+            );
+        }
+
+        if ($this->points) {
+            $html = <<<HTML
+</table>
+<table cellspacing="0" cellpadding="3" border="1" style="width: auto;">
+    <caption>Log points</caption>
+    <tr>
+        <th>Duration, sec.</th>
+        <th>Point name</th>
+    </tr>
+HTML;
+            echo ($html);
+
+            foreach ($this->points as $name => $d) {
+                echo (
+                    '<tr><td>'
+                    . number_format($d['end'] - $d['start'], 4)
+                    . '</td><td>'
+                    . $name
+                    . '</td></tr>'
+                );
+            }
+
+        }
+
+        echo ('</table>');
     }
 
-    function displayTime()
+    /**
+     * Included files statistics sorting callback
+     * 
+     * @param array $a File info 1
+     * @param array $b File info 2
+     *  
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function sortCallback($a, $b)
     {
-        return microtime(true) - $this->displayTime;
-    }
-    
-    function getTotalTime()
-    {
-        return sprintf("%.03f", $this->stop_time - $this->start_time);
+        $result = 0;
+
+        if ($a['size'] != $b['size']) {
+            $result = $a['size'] < $b['size'] ? 1 : -1;
+        }
+
+        return $result;
     }
 
-    function addQuery($query)
+    /**
+     * Add query to log
+     * 
+     * @param string $query Query
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function addQuery($query)
     {
+        $this->lastTime = microtime(true);
+
         // Uncomment if you want to truncate queries
         /*if (strlen($query)>300) {
             $query = substr($query, 0, 300) . ' ...';
             
         }*/
 
-        if (isset(self::$queries[$query])) {
-            self::$queries[$query]++;
-        } else {
-            self::$queries[$query] = 1;
+        if (!isset(self::$queries[$query])) {
+            self::$queries[$query] = array(
+                'time' => array(),
+                'trace' => $this->getBackTrace(),
+            );
         }
     }
 
-    function getTotalQueries()
+    /**
+     * Set query time 
+     * 
+     * @param string $query Query
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setQueryTime($query)
     {
-        return array_sum(self::$queries);
+        if (isset(self::$queries[$query])) {
+            self::$queries[$query]['time'][] = microtime(true) - $this->lastTime;
+        }
     }
 
-    function getTotalQueriesTime()
+    /**
+     * Get back trace 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getBackTrace()
     {
-        return sprintf("%.03f", array_sum($this->query_time));
-    }
-    
-    function setQueryTime($query, $time)
-    {
-        $this->query_time[$query] = $time;
-    }
-    
-    function getQueryTime($query)
-    {
-        return sprintf("%.03f", $this->query_time[$query]);
+        $trace = array();
+
+        foreach (debug_backtrace(false) as $l) {
+            if (isset($l['file']) && isset($l['line'])) {
+                $trace[] = str_replace(
+                    array(LC_COMPILE_DIR, LC_ROOT_DIR),
+                    array('', ''),
+                    $l['file']
+                ) . ':' . $l['line'];
+
+            } elseif (isset($l['function']) && isset($l['line'])) {
+                $trace[] = $l['function'] . '():' . $l['line'];
+            }
+        }
+
+        return array_slice($trace, self::TRACE_BEGIN, self::TRACE_LENGTH);
     }
 }

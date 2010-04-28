@@ -210,13 +210,12 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
 
         if ($this->profilerEnabled) {
 	        $this->profiler->addQuery($sql);
-    	    $start = microtime(true);
 		}
 
 		($res = @mysql_query($sql, $this->connection)) || $this->doDie(mysql_errno() . ': ' . mysql_error() .  ' in ' . $sql);
 
 		if ($this->profilerEnabled) {
-	        $this->profiler->setQueryTime($sql, microtime(true) - $start);
+	        $this->profiler->setQueryTime($sql);
 		}
 
         return $res;
