@@ -46,6 +46,18 @@ abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstr
 
 
     /**
+     * Stub for the CMS connectors
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function checkStorefrontAccessability()
+    {
+        return true;
+    }
+
+    /**
      * Recalculates the shopping cart
      * 
      * @return void
@@ -205,6 +217,23 @@ abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstr
         }
 
         return $charset ? $charset : parent::getCharset();
+    }
+
+    /**
+     * Handles the request 
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function handleRequest()
+    {
+        if (!$this->checkStorefrontAccessability()) {
+            include LC_SKINS_DIR . '/storefront_closed.html';
+            exit (0);
+        }
+
+        return parent::handleRequest();
     }
 }
 

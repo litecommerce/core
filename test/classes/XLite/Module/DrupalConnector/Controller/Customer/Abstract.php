@@ -33,9 +33,20 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_DrupalConnector_Controller_Customer_Abstract extends XLite_Controller_Customer_Abstract
-implements XLite_Base_IDecorator
+class XLite_Module_DrupalConnector_Controller_Customer_Abstract extends XLite_Controller_Customer_Abstract implements XLite_Base_IDecorator
 {
+    /**
+     * Die if trying to access storefront and DrupalConnector module is enabled 
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function checkStorefrontAccessability()
+    {
+        return parent::checkStorefrontAccessability() &&
+            XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS();
+    }
 
     /**
      * Get external link 

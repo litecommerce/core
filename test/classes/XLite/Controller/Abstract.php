@@ -74,6 +74,18 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 
 
     /**
+     * Check if current page is accessible
+     *
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function checkAccess()
+    {
+        return XLite_Model_Auth::getInstance()->isAuthorized($this);
+    }
+
+    /**
      * Return default redirect code 
      * 
      * @return int
@@ -582,18 +594,6 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
      * @since  3.0.0
      */
     protected $valid = true;
-
-    /**
-     * Check if current page is accessible
-     *
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-    public function checkAccess()
-    {
-        return XLite_Model_Auth::getInstance()->isAuthorized($this);
-    }
 
     /**
      * Get controlelr parameters
