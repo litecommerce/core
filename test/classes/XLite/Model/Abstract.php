@@ -109,12 +109,6 @@ class XLite_Model_Abstract extends XLite_Base
      */
     public $defaultOrder;
 
-
-    /**
-    * Contains SQL WHERE clause used by default by findAll()
-    * @var string $_range
-    */    
-
     /**
      * Default SQL filter (WHERE block) for findAll() method
      * 
@@ -134,7 +128,6 @@ class XLite_Model_Abstract extends XLite_Base
     * If set to true, findAll will fetch only object' indexes
     */    
     public $fetchObjIdxOnly = false;
-
 
     /**
      * Update or create model object (DB record)

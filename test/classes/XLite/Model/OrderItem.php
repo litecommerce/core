@@ -44,7 +44,11 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
 	 */
 	public function getOrder()
 	{
-		return XLite_Model_CachingFactory::getObject(__METHOD__ . $this->_uniqueKey, 'XLite_Model_Order', array($this->get('order_id')));
+		return XLite_Model_CachingFactory::getObject(
+            __METHOD__ . $this->_uniqueKey,
+            'XLite_Model_Order',
+            array($this->get('order_id'))
+        );
 	}
 
 	/**

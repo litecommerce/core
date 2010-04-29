@@ -53,7 +53,6 @@ abstract class XLite_View_Container extends XLite_View_Abstract
      */
     abstract protected function getDir();
 
-
     /**
      * isWrapper 
      * 
