@@ -60,6 +60,18 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
 
         return $this->product;    
     } // }}}
+
+    /**
+     * Return the Thumbnai image instance for this product 
+     * 
+     * @return XLite_Model_Image
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    function getThumbnail()
+    {
+        return ($product = $this->getProduct()) ? $product->getThumbnail() : null;
+    }
     
     function getOrderItem() // {{{
     {
