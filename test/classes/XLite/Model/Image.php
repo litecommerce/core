@@ -36,22 +36,80 @@
 class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISingleton
 {
     const IMAGES_DIR = 'images';
+    const IMAGES_CACHE_DIR = 'cache';
+
     const IMAGE_FILE_EXISTS = 1;
     const IMAGE_OK = 0;
     const IMAGE_NOT_OK = 2;
 
+    /**
+     * Image data field name
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected $dataField   = '';
 
+    /**
+     * Image source field name
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected $sourceField = '';
 
+    /**
+     * Image type field name
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected $typeField   = '';
 
-    protected $widthField   = '';
+    /**
+     * Width field name
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $widthField  = '';
 
-    protected $heightField   = '';
+    /**
+     * Height field name
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $heightField = '';
 
+    /**
+     * Image size field name
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected $sizeField   = '';
 
+    /**
+     * Registered image classes 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected static $registeredImageClasses = null;
 
     /**
@@ -100,6 +158,14 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
         );
     }
 
+    /**
+     * Get registered image classes 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function getImageClasses()
     {
         if (is_null(self::$registeredImageClasses)) {
@@ -109,10 +175,16 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
         return self::$registeredImageClasses;
     }
 
+    /**
+     * Get default image classes for registering
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function getDefaultImageClasses()
     {
-        $result = array();
-
         $list = array(
             'product_thumbnail' => array(
                 'comment'     => 'Product thumbnails',
@@ -133,6 +205,8 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
                 'idField'     => 'category_id'
             ),
         );
+
+        $result = array();
 
         foreach ($list as $key => $value) {
             $result[$key] = new XLite_Model_ImageClass();
@@ -159,8 +233,10 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
         parent::__construct();
 
         if (!is_null($class)) {
-            $imageClasses = $this->get("imageClasses");
+
+            $imageClasses = $this->get('imageClasses');
             $this->imageClass = $class;
+
             if (isset($imageClasses[$class])) {
                 $imageClass = $imageClasses[$class];
 
@@ -253,6 +329,106 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
         }
 
         exit();
+    }
+
+    /**
+     * Get resized thumbnail URL 
+     * 
+     * @param integer $width  Crop width
+     * @param integer $height Crop height
+     *  
+     * @return array New width + new height + URL
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getResizedThumbnailURL($width, $height)
+    {
+        list($neww, $newh) = $this->getCroppedDimensions($width, $height);
+
+        if (!$this->isResizeEnabled() || ($neww == $this->get('width') && $newh == $this->get('height'))) {
+            $url = array($neww, $newh, $this->getURL());
+
+        } else {
+            $images_directory = $this->config->Images->images_directory;
+
+            if (!(isset($images_directory) && strlen(trim($images_directory)) > 0)) {
+                $images_directory = self::IMAGES_DIR;
+            }
+
+            $fileName = $this->fieldPrefix . '.' . $this->get('id')
+                . '.' . $neww . '.' . $newh
+                . '.' . preg_replace('/^image\//Ss', '', $this->get('type'));
+            $dirName = LC_ROOT_DIR . $images_directory . LC_DS . self::IMAGES_CACHE_DIR;
+
+            $path = $dirName . LC_DS . $fileName;
+            $webPath = $images_directory . '/' . self::IMAGES_CACHE_DIR . '/' . $fileName;
+
+            if (!file_exists($path)) {
+                if (!file_exists($dirName)) {
+                    mkdirRecursive($dirName);
+                }
+                file_put_contents($path, $this->resize($neww, $newh));
+            }
+
+            $url = array($neww, $newh, XLite::getInstance()->getShopUrl($webPath));
+
+        }
+
+        return $url;
+    }
+
+    /**
+     * Check - resize functionality is enabled or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isResizeEnabled()
+    {
+        return function_exists('imagecreatefromjpeg')
+            && function_exists('imagecreatetruecolor')
+            && function_exists('imagealphablending')
+            && function_exists('imagesavealpha')
+            && function_exists('imagecopyresampled');
+    }
+
+    /**
+     * Get cached files 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCachedFiles()
+    {
+        $images_directory = $this->config->Images->images_directory;
+
+        if (!(isset($images_directory) && strlen(trim($images_directory)) > 0)) {
+            $images_directory = self::IMAGES_DIR;
+        }
+
+        $path = LC_ROOT_DIR . $images_directory . LC_DS . self::IMAGES_CACHE_DIR . LC_DS . $this->fieldPrefix . '.' . $this->get('id') . '.*';
+
+        return glob($path);
+    }
+
+    /**
+     * Clear resized cached images
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function clearCache()
+    {
+        foreach ($this->getCachedFiles() as $file) {
+            @unlink($file);
+        }
     }
 
     /**
@@ -512,6 +688,8 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
             $this->set('data', $filename);
         }
 
+        $this->clearCache();
+
         $this->update();
 
         return self::IMAGE_OK;
@@ -567,11 +745,20 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
         );
     }
 
-    function delete()
+    /**
+     * Delete image
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function delete()
     {
-        $source = $this->get("source");
-        $data = $this->get("data");
-        if ($source == "F") {
+        $source = $this->get('source');
+        $data = $this->get('data');
+        if ('F' == $source) {
+
             $sql = "SELECT COUNT(*) AS number FROM " . $this->db->getTableByAlias($this->alias) . " WHERE " . $this->sourceField . "='$source' AND " . $this->dataField . "='$data'";
             $images_number = $this->db->getOne($sql);
             if ($images_number == 1) {
@@ -580,6 +767,8 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
                 @unlink($fn);
             }
         }
+
+        $this->clearCache();
 
         $this->set('type', '');
         $this->set('source', '');
@@ -850,7 +1039,7 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
             $data = $this->get($this->dataField);
 
         } elseif ('F' == $source) {
-            $data = file_get_contents($this->get($this->dataField));
+            $data = file_get_contents($this->getFilePath($this->get($this->dataField)));
         }
 
         if (!$data) {

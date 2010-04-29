@@ -22,7 +22,8 @@ $(document).ready(
         title: false,
         showPreload: false,
         zoomWidth: 200,
-        zoomHeight: 240
+        zoomHeight: 240,
+        zoomType: 'reverse'
       }
     );
   }

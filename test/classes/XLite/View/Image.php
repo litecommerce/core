@@ -43,6 +43,7 @@ class XLite_View_Image extends XLite_View_Abstract
     const PARAM_MAX_WIDTH    = 'maxWidth';
     const PARAM_MAX_HEIGHT   = 'maxHeight';
     const PARAM_CENTER_IMAGE = 'centerImage';
+    const PARAM_USE_CACHE    = 'useCache';
 
 
     /**
@@ -76,6 +77,16 @@ class XLite_View_Image extends XLite_View_Abstract
     protected $properties = array();
 
     /**
+     * Resized thumbnail URL 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $resizedURL = null;
+
+    /**
      * Return widget default template
      *
      * @return string
@@ -104,6 +115,7 @@ class XLite_View_Image extends XLite_View_Abstract
             self::PARAM_MAX_WIDTH    => new XLite_Model_WidgetParam_Int('Max. width', 0),
             self::PARAM_MAX_HEIGHT   => new XLite_Model_WidgetParam_Int('Max. height', 0),
             self::PARAM_CENTER_IMAGE => new XLite_Model_WidgetParam_Checkbox('Center the image after resizing', true),
+            self::PARAM_USE_CACHE    => new XLite_Model_WidgetParam_Bool('Use cache', 1),
         );
     }
 
@@ -129,13 +141,20 @@ class XLite_View_Image extends XLite_View_Abstract
 
         // Calculate new image dimensions
         if (isset($params[self::PARAM_IMAGE])) {
-            $this->calculateDimensions();
+
+            $maxw = max(0, $this->getParam(self::PARAM_MAX_WIDTH));
+            $maxh = max(0, $this->getParam(self::PARAM_MAX_HEIGHT));
+            
+            list(
+                $this->properties['width'],
+                $this->properties['height'],
+                $this->resizedURL
+            ) = $params[self::PARAM_IMAGE]->getResizedThumbnailURL($maxw, $maxh);
 
             // Center the image vertically and horizontally
             if ($this->getParam(self::PARAM_CENTER_IMAGE)) {
-                $this->centerImage();
+                $this->setImagePaddings();
             }
-
         }
 
     }
@@ -164,7 +183,9 @@ class XLite_View_Image extends XLite_View_Abstract
      */
     public function getURL()
     {
-        return $this->getParam(self::PARAM_IMAGE)->getURL();
+        return $this->getParam(self::PARAM_USE_CACHE)
+            ? $this->resizedURL
+            : $this->getParam(self::PARAM_IMAGE)->getURL();
     }
 
     /**
@@ -194,71 +215,26 @@ class XLite_View_Image extends XLite_View_Abstract
     }
 
     /**
-     * Calculate image dimensions 
+     * Return a CSS style centering the image vertically and horizontally
      * 
-     * @return void
+     * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function calculateDimensions()
+    protected function setImagePaddings()
     {
-        $w = $this->getParam(self::PARAM_IMAGE)->get('width');
-        $h = $this->getParam(self::PARAM_IMAGE)->get('height');
-
-        $maxw = max(0, $this->getParam(self::PARAM_MAX_WIDTH));
-        $maxh = max(0, $this->getParam(self::PARAM_MAX_HEIGHT));
-
-        $this->properties['width'] = 0 < $w ? $w : $maxw;
-        $this->properties['height'] = 0 < $h ? $h : $maxh;
-
-        if (0 < $w && 0 < $h && (0 < $maxw || 0 < $maxh)) {
-
-            if (0 < $maxw && 0 < $maxh) {
-                $kw = $w > $maxw ? $maxw / $w : 1;
-                $kh = $h > $maxh ? $maxh / $h : 1;
-                $k = $kw < $kh ? $kw : $kh;
-
-            } elseif (0 < $maxw) {
-                $k = $w > $maxw ? $maxw / $w : 1;
-
-            } elseif (0 < $maxh) {
-                $k = $h > $maxh ? $maxh / $h : 1;
-
-            }
-
-            $this->properties['width'] = max(1, round($k * $w, 0));
-            $this->properties['height'] = max(1, round($k * $h, 0));
-        }
-
-        if (0 == $this->properties['width']) {
-            unset($this->properties['width']);
-        }
-
-        if (0 == $this->properties['height']) {
-            unset($this->properties['height']);
-        }
-    }
-
-    /**
-     * Return a CSS style centering the image vertically and horizontally
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function centerImage()
-    {
-        $vertical = ($this->getParam(self::PARAM_MAX_HEIGHT) - $this->properties['height']) / 2;
-        $horizontal = ($this->getParam(self::PARAM_MAX_WIDTH) - $this->properties['width']) / 2;
+        $vertical = round(($this->getParam(self::PARAM_MAX_HEIGHT) - $this->properties['height']) / 2, 0);
+        $horizontal = round(($this->getParam(self::PARAM_MAX_WIDTH) - $this->properties['width']) / 2, 0);
 
         $top = ceil($vertical);
         $bottom = floor($vertical);
         $left = ceil($horizontal);
         $right = floor($horizontal);
 
-        $this->addInlineStyle('padding: '.$top.'px '.$right.'px '.$bottom.'px '.$left.'px;');
+        $this->addInlineStyle(
+            'padding: ' . $top . 'px ' . $right . 'px ' . $bottom . 'px ' . $left . 'px;'
+        );
     }
 
     /**
@@ -273,10 +249,11 @@ class XLite_View_Image extends XLite_View_Abstract
      */
     protected function addInlineStyle($style)
     {
-        if (!isset($this->properties['style']))
-            $this->properties['style'] = '';
-
-        $this->properties['style'] .= $style;
+        if (!isset($this->properties['style'])) {
+            $this->properties['style'] = $style;
+        } else {
+            $this->properties['style'] .= ' ' . $style;
+        }
     }
 
 }
