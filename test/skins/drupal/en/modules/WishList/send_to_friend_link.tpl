@@ -11,5 +11,5 @@
  * @since     3.0.0
  *}
 <div class="send-to-friend">
-  <a class="send-to-friend product-{product.product_id}" href="{buildURL(#send_friend#,##,_ARRAY_(#product_id#^product.product_id,#isPopup#^#1#))}">Send to friend</a>
+  <a class="send-to-friend product-{product.product_id}" href="{buildURL(#send_friend#,##,_ARRAY_(#product_id#^product.product_id,#isPopup#^#1#))}"><span>Tell a friend</span></a>
 </div>

@@ -37,6 +37,9 @@ $(document).ready(
 
     <widget module="DetailedImages" class="XLite_Module_DetailedImages_View_Zoom" product="{product}" />
     <widget module="DetailedImages" class="XLite_Module_DetailedImages_View_Gallery" product="{product}" />
+
+    <hr class="line" />
+
     <widget module="WishList" class="XLite_Module_WishList_View_SendToFriendLink" product="{product}" />
   </div>
 
@@ -60,8 +63,9 @@ $(document).ready(
     <widget module="WholesaleTrading" class="XLite_Module_WholesaleTrading_View_Amount" product="{product}" IF="isAvailableForSale()" />
 
     <div IF="availableForSale" class="buttons-row">
-      <widget class="XLite_View_Button_Submit" label="Add to Cart" />
-      <widget module="WishList" class="XLite_Module_WishList_View_Button_AddToWishlist" product="{product}" />
+      <widget class="XLite_View_Button_Submit" label="Add to Cart" style="bright-button big-button add2cart-button" />
+      <span class="separator">or</span>
+      <widget module="WishList" class="XLite_Module_WishList_View_Button_AddToWishlist" product="{product}" style="link-button" />
     </div>
 
   </div>

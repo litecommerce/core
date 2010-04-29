@@ -21,11 +21,14 @@ function blockUIPopup(data)
   );
 
   // Reposition
-  $('.blockMsg').css('left', Math.round(($(window).width() - $('.blockMsg').width()) / 2) + 'px');
+  $('.blockMsg')
+    .css('left', Math.round(($(window).width() - $('.blockMsg').width()) / 2) + 'px')
+    .css('z-index', '1200000');
 
   // Modify overlay
   $('.blockOverlay')
     .attr('title', 'Click to unblock')
+    .css('z-index', '1100000')
     .click(blockUIPopupClose); 
 }
 
