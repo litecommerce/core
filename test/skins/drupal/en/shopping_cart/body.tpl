@@ -32,7 +32,7 @@
         </div>
 
       </td>
-      <td class="cart-totals">
+      <td class="cart-summary">
 
         <div class="cart-totals">
           <widget template="shopping_cart/totals.tpl" />
