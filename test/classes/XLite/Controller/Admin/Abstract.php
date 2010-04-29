@@ -44,8 +44,7 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
      */
     public function checkAccess()
     {
-        return parent::checkAccess()
-            && $this->checkXliteForm();
+        return parent::checkAccess() && $this->checkXliteForm();
     }
 
 	/**

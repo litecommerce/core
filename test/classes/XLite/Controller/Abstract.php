@@ -392,6 +392,20 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     }
 
     /**
+     * Get current URL with additional params
+     * 
+     * @param array $params query params to use
+     *  
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function setReturnUrlParams(array $params)
+    {
+        return $this->setReturnUrl($this->buildURL($this->getTarget(), '', $params));
+    }
+
+    /**
      * Handles the request.
      * Parses the request variables if necessary. Attempts to call the specified action function 
      * FIXME - simplify

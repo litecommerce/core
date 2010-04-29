@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+// FIXME - must be completely revised
+
 /**
  * Profile management controller
  * 
@@ -43,7 +45,7 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Profile extends XLite_Contr
      * @see    ____func_see____
      * @since  3.0.0
      */
-	public function isShowWholesalerFields()
+/*	public function isShowWholesalerFields()
     {
         $obj = new XLite_Module_WholesaleTrading_Model_Profile();
         return $obj->isShowWholesalerFields();
@@ -57,7 +59,7 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Profile extends XLite_Contr
      * @see    ____func_see____
      * @since  3.0.0
      */
-	protected function doActionRegister()
+/*	protected function doActionRegister()
 	{
 		parent::doActionRegister();
 
@@ -92,7 +94,7 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Profile extends XLite_Contr
      * @see    ____func_see____
      * @since  3.0.0
      */
-	protected function doActionModify()
+/*	protected function doActionModify()
 	{
 		$oldProfile = $this->getProfile();
 		$oldMembership = $oldProfile->get('membership');
@@ -159,7 +161,7 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Profile extends XLite_Contr
      * @see    ____func_see____
      * @since  3.0.0
      */
-	protected function getMembershipHistory()
+/*	protected function getMembershipHistory()
 	{
         $profile = $this->getProfile();
 
@@ -173,6 +175,6 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Profile extends XLite_Contr
 		}
 
 		return $history;
-	}
+	}*/
 }
 

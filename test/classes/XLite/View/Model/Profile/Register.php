@@ -47,4 +47,17 @@ class XLite_View_Model_Profile_Register extends XLite_View_Model_Profile_Abstrac
     {
         return 'XLite_View_Form_Profile_Register';
     }
+
+
+    /**
+     * Return ID of current profile
+     * 
+     * @return int 
+     * @access public
+     * @since  3.0.0
+     */
+    public function getProfileId()
+    {
+        return null;
+    }
 }

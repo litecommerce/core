@@ -979,6 +979,20 @@ class XLite_Model_Abstract extends XLite_Base
     }
 
     /**
+     * Unsets the specified property 
+     * 
+     * @param string $property field name
+     *  
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function unsetProperty($property)
+    {
+        unset($this->properties[$property]);
+    }
+
+    /**
      * Reads the database data for this object. Dies for non-persistens objects (object which are not exist in database) 
      * 
      * @return bool true if data found / false otherwise

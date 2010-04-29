@@ -26,59 +26,29 @@
  * @since      3.0.0
  */
 
-
 /**
- * XLite_View_Model_Profile_Modify 
+ * XLite_View_FormField_Select_Membership 
  * 
  * @package    XLite
  * @subpackage ____sub_package____
  * @since      3.0.0
  */
-class XLite_View_Model_Profile_Modify extends XLite_View_Model_Profile_Abstract
+class XLite_View_FormField_Select_Membership extends XLite_View_FormField_Select_Regular
 {
-	/**
-     * Return name of web form widget class
+    /**
+     * getDefaultOptions
      *
-     * @return string
+     * @return array
      * @access protected
      * @since  3.0.0
      */
-    protected function getFormClass()
+    protected function getDefaultOptions()
     {
-        return 'XLite_View_Form_Profile_Modify';
-    }
-
-
-    /**
-     * Return ID of current profile
-     * 
-     * @return int 
-     * @access public
-     * @since  3.0.0
-     */
-    public function getProfileId()
-    {
-        $profileId = XLite_Core_Request::getInstance()->profile_id;
-
-        return empty($profileId) ? XLite_Model_Session::getInstance()->get('profile_id') : $profileId;
-    }
-
-    /**
-     * Perform some action for the model object
-     * 
-     * @param string $action action to perform
-     * @param array  $data   form data
-     *  
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-    public function performAction($action, array $data = array())
-    {
-        $result = parent::performAction($action, $data);
-
-        $this->setReturnUrlParams(array('profile_id' => $this->getProfileId()));
-
-        return $result;
+        return array('' => 'No membership') 
+            + array_combine(
+                $this->config->Memberships->memberships,
+                $this->config->Memberships->memberships
+            );
     }
 }
+

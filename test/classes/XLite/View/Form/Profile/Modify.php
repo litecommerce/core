@@ -36,6 +36,18 @@
 class XLite_View_Form_Profile_Modify extends XLite_View_Form_Profile_Abstract
 {
     /**
+     * Return ID for current profile
+     * 
+     * @return int|null
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getProfileId()
+    {
+        return XLite_View_Model_Abstract::getCurrentForm()->getProfileId();
+    }
+
+    /**
      * getDefaultAction 
      * 
      * @return string
@@ -44,7 +56,19 @@ class XLite_View_Form_Profile_Modify extends XLite_View_Form_Profile_Abstract
      */
     protected function getDefaultAction()
     {
-        return 'update';
+        return 'modify';
+    }
+
+    /**
+     * getDefaultParams 
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultParams()
+    {
+        return parent::getDefaultParams() + array('profile_id' => $this->getProfileId());
     }
 }
 

@@ -344,6 +344,26 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     }
 
     /**
+     * Check data and return only ones for the current fieldset 
+     * 
+     * @param array $data data to check
+     *  
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getFieldsetData(array $data)
+    {
+        $fieldset = $this->getFieldsetName();
+
+        if (isset($data[$fieldset]) && is_array($data[$fieldset])) {
+            $data = $data[$fieldset];
+        }
+
+        return $data;
+    }
+
+    /**
      * Populate model object properties by the passed data 
      * 
      * @param array $data data to set
@@ -457,27 +477,41 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     /**
      * Perform some actions on success 
      * 
+     * @param bool $setTopMessages set or not top messages
+     *  
      * @return void
      * @access protected
      * @since  3.0.0
      */
-    protected function success()
+    protected function success($setTopMessages = true)
     {
-        XLite_Core_TopMessage::getInstance()->add('Data have been saved successfully', XLite_Core_TopMessage::INFO);
+        if ($setTopMessages) {
+            XLite_Core_TopMessage::getInstance()->add(
+                'Data have been saved successfully',
+                XLite_Core_TopMessage::INFO
+            );
+        }
 
         $this->setActionSuccess();
     }
 
     /**
      * Perform some action on error
-     *
+     * 
+     * @param bool $setTopMessages set or not top messages
+     *  
      * @return void
      * @access protected
      * @since  3.0.0
      */
-    protected function error()
+    protected function error($setTopMessages = true)
     {
-        XLite_Core_TopMessage::getInstance()->addBatch($this->getErrorMessages(), XLite_Core_TopMessage::ERROR);
+        if ($setTopMessages) {
+            XLite_Core_TopMessage::getInstance()->addBatch(
+                $this->getErrorMessages(),
+                XLite_Core_TopMessage::ERROR
+            );
+        }
 
         $this->setActionError();
     }
@@ -567,6 +601,23 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
         }
 
         return $this->errorMessages;
+    }
+
+    /**
+     * Call the corresponded method for current action
+     * 
+     * @param string $action action name
+     * @param array  $data   data passed
+     *  
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function callActionHandler($action, array $data = array())
+    {
+        $action = 'performAction' . ucfirst($action);
+
+        return $this->$action($data);
     }
 
     /**
@@ -694,20 +745,17 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
             $data = XLite_Core_Request::getInstance()->getData();
         }
 
-        $fieldset   = $this->getFieldsetName();
-        $properties = $data;
-
-        if (isset($data[$fieldset]) && is_array($data[$fieldset])) {
-            $properties = $data[$fieldset];
-        }
-
+        $properties = $this->getFieldsetData($data);
         $this->setModelProperties($properties);
 
         if ($result = $this->isValid()) {
-            $action = 'performAction' . ucfirst($action);
-            $this->$action($properties);
-            $this->success();
+
+            if ($result = $this->callActionHandler($action, $properties)) {
+                $this->success();
+            }
+
         } else {
+
             $this->saveFormData($data);
             $this->error();
         }

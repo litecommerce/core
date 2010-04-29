@@ -24,11 +24,18 @@
   <meta name="ROBOTS" content="NOFOLLOW" />
   <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
   <link href="skins/admin/en/style.css"  rel="stylesheet" type="text/css" />
+
+  {* TODO - apply the same approach as in the customer area *}
+  <link href="skins/admin/en/top_message/style.css"  rel="stylesheet" type="text/css" />
+
   <script type="text/javascript" src="skins/admin/en/js/common.js"></script>
   <script type="text/javascript" src="{getSkinURL(#js/jquery-1.3.2.js#)}"></script>
   <script type="text/javascript" src="{getSkinURL(#js/jquery-ui.1.7.2.js#)}"></script>
 </head>
 <body LEFTMARGIN=0 TOPMARGIN=0 RIGHTMARGIN=0 BOTTOMMARGIN=0 MARGINWIDTH=0 MARGINHEIGHT=0>
+
+<widget class="XLite_View_TopMessage" />
+
 <!-- [/begin] -->
 <table border=0 width="100%" height="100%">
 <tr>

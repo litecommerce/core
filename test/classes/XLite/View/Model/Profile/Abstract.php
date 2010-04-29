@@ -63,7 +63,7 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
      */
     protected $sections = array(
         self::SECTION_MAIN     => 'E-mail & Password',
-        self::SECTION_ACCESS   => 'User access',
+        self::SECTION_ACCESS   => 'Access information',
         self::SECTION_BILLING  => 'Billing address',
         self::SECTION_SHIPPING => 'Shipping address',
     );
@@ -85,12 +85,14 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
         'password' => array(
             self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Password',
             self::SCHEMA_LABEL    => 'Password',
-            self::SCHEMA_REQUIRED => true,
+            self::SCHEMA_REQUIRED => false,
+            self::SCHEMA_VALUE    => '',
         ),
         'password_conf' => array(
             self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Password',
             self::SCHEMA_LABEL    => 'Confirm password',
-            self::SCHEMA_REQUIRED => true,
+            self::SCHEMA_REQUIRED => false,
+            self::SCHEMA_VALUE    => '',
         ),
     );
 
@@ -102,6 +104,21 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
      * @since  3.0.0
      */
     protected $accessSchema = array(
+        'access_level' => array(
+            self::SCHEMA_CLASS    => 'XLite_View_FormField_Select_AccessLevel',
+            self::SCHEMA_LABEL    => 'Access level',
+            self::SCHEMA_REQUIRED => true,
+        ),
+        'status' => array(
+            self::SCHEMA_CLASS    => 'XLite_View_FormField_Select_AccountStatus',
+            self::SCHEMA_LABEL    => 'Account status',
+            self::SCHEMA_REQUIRED => true,
+        ),
+        'membership' => array(
+            self::SCHEMA_CLASS    => 'XLite_View_FormField_Select_Membership',
+            self::SCHEMA_LABEL    => 'Membership',
+            self::SCHEMA_REQUIRED => false,
+        ),
     );
 
     /**
@@ -212,7 +229,7 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
      */
     protected function getDefaultModelObjectKeys()
     {
-        return array(XLite_Model_Session::getInstance()->get('profile_id'));
+        return array($this->getProfileId());
     }
 
     /**
@@ -293,6 +310,37 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
     }
 
     /**
+     * Check password and its confirmation
+     * 
+     * @param array $data passed data
+     *  
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function checkPassword(array $data)
+    {
+        $result = !isset($this->sections[self::SECTION_MAIN]);
+
+        if (!$result) {
+            if (!empty($data['password']) || !empty($data['password_conf'])) {
+                $result = $data['password'] == $data['password_conf'];
+                
+                if (!$result) {
+                    XLite_Core_TopMessage::getInstance()->addError(
+                        'Password and its confirmation do not match'
+                    );
+                }
+            } else {
+                $this->getModelObject()->unsetProperty('password');
+                $this->getModelObject()->unsetProperty('password_conf');
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Create profile 
      * 
      * @param array $data model properties
@@ -302,17 +350,46 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
      * @since  3.0.0
      */
     protected function performActionCreate(array $data = array())
-    {
-        $result = false;
-
-        if ($data['password'] != $data['password_conf']) {
-            XLite_Core_TopMessage::getInstance()->addError('Password and its confirmation do not match');
-        } else {
-            $result = parent::performActionCreate($data);;
-        }
-
-        return $result;
+    {   
+        return $this->checkPassword($data) ? parent::performActionCreate($data) : false;
     }
+
+    /* Update profile 
+     * 
+     * @param array $data model properties
+     *  
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function performActionUpdate(array $data = array())
+    {   
+        return $this->checkPassword($data) ? parent::performActionUpdate($data) : false;
+    }
+
+    /**
+     * Modify profile 
+     * 
+     * @param array $data model properties
+     *  
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function performActionModify(array $data = array())
+    {
+        return $this->checkPassword($data) ? parent::performActionModify($data) : false;
+    }
+
+
+    /**
+     * Return ID of current profile
+     * 
+     * @return int 
+     * @access protected
+     * @since  3.0.0
+     */
+    abstract public function getProfileId();
 
 
     /**
@@ -324,6 +401,13 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
      */
     public function getMainFields()
     {
+        if (!$this->getModelObject()->isPersistent) {
+            foreach (array('password', 'password_conf') as $field) {
+                $this->mainSchema[$field][self::SCHEMA_REQUIRED] = true;
+                unset($this->mainSchema[$field][self::SCHEMA_VALUE]);
+            }
+        }
+
         return $this->getFieldsBySchema($this->mainSchema);
     }
 

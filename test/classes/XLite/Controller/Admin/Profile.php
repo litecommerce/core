@@ -36,26 +36,6 @@
 class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
 {
     /**
-     * params 
-     * 
-     * @var    array
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public $params = array("target", "mode", "profile_id", "backUrl");
-
-	/**
-	 * Default mode value (register | modify | success | delete)
-	 * 
-	 * @var    string
-	 * @access public
-	 * @see    ____var_see____
-	 * @since  3.0.0
-	 */
-	protected $defaultMode = "modify";
-
-    /**
      * alowedModes 
      * 
      * @var    array
@@ -65,6 +45,65 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
      */
     protected $allowedModes = array('modify', 'register');
 
+
+    /**
+     * Class name for the XLite_View_Model_ form (optional)
+     * 
+     * @return string|null
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getModelFormClass()
+    {
+        return 'XLite_View_Model_Profile_Modify';
+    }
+
+    /**
+     * Modify profile
+     *
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function doActionModify()
+    {
+        return $this->getModelForm()->performAction('modify');
+    }
+
+
+
+
+
+    /**
+     * params 
+     * 
+     * @var    array
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+/*    public $params = array("target", "mode", "profile_id", "backUrl");
+
+	/**
+	 * Default mode value (register | modify | success | delete)
+	 * 
+	 * @var    string
+	 * @access public
+	 * @see    ____var_see____
+	 * @since  3.0.0
+	 */
+/*	protected $defaultMode = "modify";
+
+    /**
+     * alowedModes 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+/*    protected $allowedModes = array('modify', 'register');
+
 	/**
 	 * backUrl 
 	 * 
@@ -73,7 +112,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
 	 * @see    ____var_see____
 	 * @since  3.0.0
 	 */
-	public $backUrl = "admin.php?target=users";
+/*	public $backUrl = "admin.php?target=users";
 
 	/**
 	 * User profile
@@ -83,7 +122,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
 	 * @see    ____var_see____
 	 * @since  3.0.0
 	 */
-	protected $profile = null;
+/*	protected $profile = null;
 
     /**
      * Create/modify profile status data 
@@ -93,7 +132,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $statusData = array(
+/*    protected $statusData = array(
         'userExists' => null,
         'userAdmin' => null,
         'valid' => null,
@@ -108,7 +147,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getMode() {
+  /*  public function getMode() {
         $_mode = XLite_Core_Request::getInstance()->mode;
 
         if (empty($_mode) || !in_array($_mode, $this->allowedModes))
@@ -136,7 +175,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function handleRequest()
+/*    public function handleRequest()
     {
         if ('delete' == $this->getMode()) {
 
@@ -159,7 +198,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getProfile()
+/*    public function getProfile()
     {
         if (is_null($this->profile)) {
             $this->profile = new XLite_Model_Profile(XLite_Core_Request::getInstance()->profile_id);
@@ -176,7 +215,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCountriesStates()
+/*    public function getCountriesStates()
     {
         $countriesArray = array();
 
@@ -208,7 +247,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function doActionRegister()
+/*    protected function doActionRegister()
     {
 /* TODO: remove - do not need to reinitialize sesion when admin creates user 
 
@@ -224,7 +263,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
 		$this->xlite->session->setID(SESSION_DEFAULT_ID);
 		$this->xlite->session->_initialize();
  */
-        $this->profile = new XLite_Model_Profile();
+/*        $this->profile = new XLite_Model_Profile();
 
         if ($this->xlite->is('adminZone')) {
             $this->profile->modifyAdminProperties(XLite_Core_Request::getInstance()->getData());
@@ -266,7 +305,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function doActionModify()
+/*    protected function doActionModify()
     {
         if ($this->xlite->is('adminZone')) {
             $this->profile->modifyAdminProperties(XLite_Core_Request::getInstance()->getData());
@@ -311,7 +350,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function doActionDelete()
+/*    protected function doActionDelete()
     {
         // unregister and delete profile
         $this->auth->unregister($this->get("profile"));
@@ -324,6 +363,6 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
     {
         return (strpos($this->returnUrl, 'target=checkout') !== false) ? true : false;
     }
-
+*/
 }
 

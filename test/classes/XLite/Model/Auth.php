@@ -602,6 +602,19 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     } // }}}
 
     /**
+     * getUserTypesRaw 
+     * TODO - functions above (and this one too) should be refactored
+     * 
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getUserTypesRaw()
+    {
+        return array_combine(array_map(array($this, 'getAccessLevel'), $this->getUserTypes()), $this->getUserTypes());
+    }
+
+    /**
     * Checks whether user has enough permissions to access specified resource.
     * Resource should provide access to "getAccessLevel()" method in order
     * to check authority.
