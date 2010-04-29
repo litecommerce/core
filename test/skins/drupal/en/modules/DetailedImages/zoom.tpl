@@ -20,7 +20,9 @@ $(document).ready(
     $('#product_image_{product.product_id}').parents('a').eq(0).jqzoom(
       {
         title: false,
-        showPreload: false
+        showPreload: false,
+        zoomWidth: 200,
+        zoomHeight: 240
       }
     );
   }
