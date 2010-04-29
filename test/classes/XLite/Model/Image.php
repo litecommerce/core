@@ -346,7 +346,10 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
     {
         list($neww, $newh) = $this->getCroppedDimensions($width, $height);
 
-        if (!$this->isResizeEnabled() || ($neww == $this->get('width') && $newh == $this->get('height'))) {
+        if (
+            !$this->isResizeEnabled()
+            || ($neww == $this->get('width') && $newh == $this->get('height'))
+        ) {
             $url = array($neww, $newh, $this->getURL());
 
         } else {
@@ -364,7 +367,7 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
             $path = $dirName . LC_DS . $fileName;
             $webPath = $images_directory . '/' . self::IMAGES_CACHE_DIR . '/' . $fileName;
 
-            if (!file_exists($path)) {
+            if (!file_exists($path) || 0 == filesize($path)) {
                 if (!file_exists($dirName)) {
                     mkdirRecursive($dirName);
                 }
@@ -1039,7 +1042,7 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
             $data = $this->get($this->dataField);
 
         } elseif ('F' == $source) {
-            $data = file_get_contents($this->getFilePath($this->get($this->dataField)));
+            $data = file_get_contents(LC_ROOT_DIR . $this->getFilePath($this->get($this->dataField)));
         }
 
         if (!$data) {
