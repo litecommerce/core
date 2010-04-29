@@ -27,7 +27,7 @@
  */
 
 /**
- * ____description____
+ * Category
  * 
  * @package XLite
  * @see     ____class_see____
