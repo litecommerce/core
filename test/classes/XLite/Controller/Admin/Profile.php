@@ -71,7 +71,36 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
     }
 
 
+    /**
+     * Get countries/states arrays
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCountriesStates()
+    {
+        $countriesArray = array();
 
+        $country = new XLite_Model_Country();
+        $countries = $country->findAll("enabled='1'");
+        foreach($countries as $country) {
+            $countriesArray[$country->get("code")]["number"] = 0;
+            $countriesArray[$country->get("code")]["data"] = array();
+
+            $state = new XLite_Model_State();
+            $states = $state->findAll("country_code='".$country->get("code")."'");
+            if (is_array($states) && count($states) > 0) {
+                $countriesArray[$country->get("code")]["number"] = count($states);
+                foreach($states as $state) {
+                    $countriesArray[$country->get("code")]["data"][$state->get("state_id")] = $state->get("state");
+                }
+            }
+        }
+
+        return $countriesArray;
+    }
 
 
     /**
