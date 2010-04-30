@@ -38,6 +38,18 @@ class XLite_Module_DrupalConnector_Controller_Customer_Cmsconnector extends XLit
     public $params = array('target', 'id');
 
     /**
+     * Must be accessible
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function checkStorefrontAccessability()
+    {
+        return true;
+    }
+
+    /**
      * Landing from another system action 
      * 
      * @return void
