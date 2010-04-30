@@ -36,6 +36,20 @@
 class XLite_View_FormField_Select_Membership extends XLite_View_FormField_Select_Regular
 {
     /**
+     * getMembershipsList 
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getMembershipsList()
+    {
+        $list = $this->config->Memberships->memberships;
+
+        return empty($list) ? array() : array_combine($list, $list);
+    }
+
+    /**
      * getDefaultOptions
      *
      * @return array
@@ -44,11 +58,7 @@ class XLite_View_FormField_Select_Membership extends XLite_View_FormField_Select
      */
     protected function getDefaultOptions()
     {
-        return array('' => 'No membership') 
-            + array_combine(
-                $this->config->Memberships->memberships,
-                $this->config->Memberships->memberships
-            );
+        return array('' => 'No membership') + $this->getMembershipsList();
     }
 }
 
