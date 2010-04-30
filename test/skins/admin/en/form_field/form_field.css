@@ -23,3 +23,6 @@ input[type="text"].form_field_error {
   border: 1px solid #ff0000;
 }
 
+.star {
+  color: #e00;
+}

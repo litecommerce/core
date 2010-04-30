@@ -45,6 +45,7 @@ class XLite_View_AdvBlock extends XLite_View_Abstract
      */
     protected $forceShow = false;
 
+
     /**
      * Return widget default template
      *
@@ -100,10 +101,8 @@ class XLite_View_AdvBlock extends XLite_View_Abstract
      */
     public function getJSFiles()
     {
-        // TODO - add to admin area widget system from drupal skin
-        //$list = parent::getJSFiles();
+        $list = parent::getJSFiles();
 
-        $list = array();
         $list[] = 'popup/jquery.blockUI.js';
         $list[] = 'popup/popup.js';
         $list[] = 'advertise/helpdesk.js';
@@ -121,10 +120,8 @@ class XLite_View_AdvBlock extends XLite_View_Abstract
      */
     public function getCSSFiles()
     {
-        // TODO - add to admin area widget system from drupal skin
-        //$list = parent::getCSSFiles();
+        $list = parent::getCSSFiles();
 
-        $list = array();
         $list[] = 'popup/popup.css';
 
         return $list;

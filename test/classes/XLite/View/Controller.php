@@ -150,7 +150,7 @@ class XLite_View_Controller extends XLite_View_Abstract
      */
     protected function useDefaultDisplayMode()
     {
-        return $this->isExported() || XLite::isAdminZone();
+        return $this->isExported();
     }
 
     /**

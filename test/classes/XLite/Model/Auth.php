@@ -53,6 +53,20 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
 
 
     /**
+     * These session vars will be cleared on logoff
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $sessionVarsToClear = array(
+        'profile_id',
+        'anonymous',
+        // Uncomment if needed
+        // 'advertise_show',
+    );
+
+    /**
      * Updates the specified profile on login. Saves profile to session 
      * 
      * @param XLite_Model_Profile $profile profile object
@@ -145,6 +159,23 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     }
 
     /**
+     * Logs off the currently logged profile
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function logoff()
+    {
+        $session = XLite_Model_Session::getInstance();
+        $session->set('last_profile_id', $session->get('profile_id'));
+
+        foreach ($this->sessionVarsToClear as $name) {
+            $session->set($name, null);
+        }
+    }
+
+    /**
      * Checks whether user is logged 
      * 
      * @return bool
@@ -199,6 +230,20 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
                 $this->isAdmin($this->getProfile())
                 || $this->getProfile()->get('profile_id') == $profile->get('profile_id')
             );
+    }
+
+    /**
+     * Add variable to the "clear on logoff" list
+     * 
+     * @param string $name session variable name
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function addSessionVarToClear($name)
+    {
+        $this->sessionVarsToClear[] = $name;
     }
 
 
@@ -548,18 +593,6 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         $mailer->send();
     } // }}}
 
-    /**
-    * Logs off the currently logged profile.
-    * 
-    * @access public
-    */
-    function logoff() // {{{
-    {
-        $this->setComplex("session.last_profile_id", $this->getComplex('session.profile_id'));
-        $this->setComplex("session.profile_id", null);
-        $this->setComplex("session.anonymous", null);
-    } // }}}
-   
     /**
     * Checks whether the currently logged user is an administrator
     *
