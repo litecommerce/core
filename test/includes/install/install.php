@@ -85,7 +85,7 @@ function doCheckRequirements()
     $checkRequirements['lc_loopback'] = array(
         'title'    => 'Loopback test',
         'critical' => true,
-        'depended' => 'lc_install_script'
+        'depends' => 'lc_install_script'
     );
 
     $checkRequirements['lc_php_version'] = array(
@@ -129,7 +129,7 @@ function doCheckRequirements()
     );
 
     $checkRequirements['lc_mem_allocation'] = array(
-        'title'    => 'Memory allocation',
+        'title'    => 'Memory allocation test',
         'critical' => false,
         'depends'  => 'lc_loopback'
     );
@@ -169,11 +169,11 @@ function doCheckRequirements()
                     continue;
 
                 // Skip checking if requirement depends on failed requirement
-                } elseif ($checkRequirements[$reqData['depends']]['status'] === false) {
-                    $checkRequirements[$reqName]['status'] = !$checkRequirements[$reqName]['critical'];
+                } elseif ($checkRequirements[$reqData['depends']]['status'] === false || isset($checkRequirements[$reqData['depends']]['skipped'])) {
+                    $checkRequirements[$reqName]['status'] = ($checkRequirements[$reqData['depends']]['critical'] && $checkRequirements[$reqData['depends']]['status'] === false) || !$checkRequirements[$reqName]['critical'];
                     $checkRequirements[$reqName]['skipped'] = true;
                     $checkRequirements[$reqName]['value'] = '';
-                    $checkRequirements[$reqName]['description'] = '';
+                    $checkRequirements[$reqName]['description'] = $checkRequirements[$reqName]['title'] . ' failed';
                     $passed[] = $reqName;
                     continue;
                 }
@@ -222,7 +222,7 @@ function checkInstallScript(&$errorMsg, $value = null)
     $result = @file_exists(LC_ROOT_DIR . 'install.php');
     
     if (!$result) {
-        $errorMsg = 'Litecommerce installation script not found. Restore it  and try again';
+        $errorMsg = 'LiteCommerce installation script not found. Restore it  and try again';
     }
 
     return $result;
@@ -247,7 +247,7 @@ function checkLoopback(&$errorMsg, $value = null)
 
     if (strpos($response, "LOOPBACK-TEST-OK") === false) {
         $result = false;
-        $errorMsg = "Response:\n" . $response;
+        $errorMsg = "Loopback test failed. Response:\n" . $response;
     }
 
     return $result;
@@ -440,7 +440,6 @@ function checkPhpMysqlSupport(&$errorMsg, &$value)
         $value = 'On';
     }
 
-
     return $result;
 }
 
@@ -522,7 +521,7 @@ function checkMemAllocation(&$errorMsg, &$value)
         
         if (strpos($response, "MEMORY-TEST-OK") === false) {
             $status = false;
-            $errorMsg = "Response:\n" . $response;
+            $errorMsg = "Memory allocation test failed. Response:\n" . $response;
             break;
         }
         
@@ -551,7 +550,7 @@ function checkRecursionTest(&$errorMsg, &$value)
 
     if (strpos($response, "RECURSION-TEST-OK") === false) {
         $result = false;
-        $errorMsg = "Response:\n" . $response;
+        $errorMsg = "Recursion test failed. Response:\n" . $response;
         $value = constant('MAX_RECURSION_DEPTH');
     }
 
