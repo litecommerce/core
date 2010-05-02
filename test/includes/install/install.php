@@ -1719,13 +1719,11 @@ function inst_http_request_install($action_str)
  */
 function getLiteCommerceUrl()
 {
-    global $HTTP_SERVER_VARS;
-
-    $host = 'http://' . $HTTP_SERVER_VARS['HTTP_HOST'];
+    $host = 'http://' . $_SERVER['HTTP_HOST'];
     $len = strlen($host) - 1;
     $host = ($host{$len} == '/') ? substr($host, 0, $len) : $host;
 
-    $uri = (defined('LC_URI') ? constant('LC_URI') : $HTTP_SERVER_VARS['PHP_SELF']);
+    $uri = (defined('LC_URI') ? constant('LC_URI') : $_SERVER['PHP_SELF']);
 
     $web_dir = preg_replace('/\/install(\.php)*/', '', $uri);
     $len = strlen($web_dir) - 1;
@@ -2432,7 +2430,6 @@ function module_default_js_next()
 function module_check_cfg()
 {
     global $first_error, $error, $report_uid, $reportFName;
-    global $HTTP_SERVER_VARS;
 
     $requirements = doCheckRequirements();
 
@@ -2497,7 +2494,7 @@ function module_check_cfg()
  */
 function module_cfg_install_db(&$params)
 {
-    global $HTTP_SERVER_VARS, $error, $lcSettings; 
+    global $error, $lcSettings; 
     global $report_uid, $reportFName;
 
     $clrNumber = 2;
@@ -2512,19 +2509,19 @@ function module_cfg_install_db(&$params)
         'xlite_http_host'  => array(
             'title'       => 'Web server name',
             'description' => 'Hostname of your web server (E.g.: www.example.com).',
-            'def_value'   => $HTTP_SERVER_VARS['HTTP_HOST'],
+            'def_value'   => $_SERVER['HTTP_HOST'],
             'required'    => true
         ),
         'xlite_http_hosts' => array(
             'title'       => 'Secure web server name',
             'description' => 'Hostname of your secure (HTTPS-enabled) web server (E.g.: secure.example.com). If omitted, it is assumed to be the same as the web server name.',
-            'def_value'   => $HTTP_SERVER_VARS['HTTP_HOST'],
+            'def_value'   => $_SERVER['HTTP_HOST'],
             'required'    => true
         ),
         'xlite_web_dir'    => array(
             'title'       => 'LiteCommerce web directory',
             'description' => 'Path to LiteCommerce files within the web space of your web server (E.g.: /shop).',
-            'def_value'   => preg_replace('/\/install(\.php)*/', '', $HTTP_SERVER_VARS['PHP_SELF']),
+            'def_value'   => preg_replace('/\/install(\.php)*/', '', $_SERVER['PHP_SELF']),
             'required'    => false
         ),
         'mysqlhost'        => array(
