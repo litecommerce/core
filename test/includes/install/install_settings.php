@@ -83,7 +83,6 @@ $lcSettings = array(
         'images',
         'files',
         constant('LC_TEMPLATES_DIRECTORY'),
-        constant('LC_TEMPLATES_DIRECTORY') . '/.htaccess',
         'etc/config.php'
     ),
 

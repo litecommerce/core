@@ -1377,7 +1377,8 @@ function copy_files($source_dir, $parent_dir, $destination_dir)
             $sourceFile = constant('LC_ROOT_DIR') . $source_dir . '/' . $file;
             $destinationFile = constant('LC_ROOT_DIR') . $destination_dir . '/' . $parent_dir . '/' . $file;
 
-            if (@is_file($sourceFile)) {
+            // .htaccess files must be already presented in the destination directory and they should't have writable permissions for web server user
+            if (@is_file($sourceFile) && $file != '.htaccess') {
 
                 if (!@copy($sourceFile, $destinationFile)) {
                     echo "Copying $source_dir$parent_dir/$file to $destination_dir$parent_dir/$file ... " . status(false) . "<BR>\n";
