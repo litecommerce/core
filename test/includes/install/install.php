@@ -1006,7 +1006,7 @@ function doCreateAdminAccount(&$params, $silentMode = false)
 
             // Register default admin account
             } else {
-                $query = "INSERT INTO xlite_profiles (login, password, access_level, status, cms_profile_id, cms_name) VALUES ('$login', '$password', 100, 'E', 1, '____DRUPAL____')";
+                $query = "INSERT INTO xlite_profiles (login, password, access_level, status) VALUES ('$login', '$password', 100, 'E')";
                 echo "<BR><B>Registering primary administrator profile...</B><BR>";
             }
         
