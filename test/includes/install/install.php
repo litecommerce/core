@@ -1295,7 +1295,16 @@ function create_htaccess_files($files_to_create)
     return $result;
 }
 
-
+/**
+ * Check writable permissions for specified object (file or directory) recusrively
+ * 
+ * @param string Object path
+ *  
+ * @return array
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
 function checkPermissionsRecursive($object)
 {
     $dirPermissions = '777';
@@ -1504,6 +1513,14 @@ function save_config($content)
     return $handle ? true : $handle;
 }
 
+/**
+ * Returns some information from phpinfo()
+ * 
+ * @return array
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
 function get_info()
 {
     static $info;
@@ -1692,6 +1709,14 @@ function inst_http_request_install($action_str)
     return inst_http_request($url_request);
 }
 
+/**
+ * Returns LiteCommerce URL
+ * 
+ * @return string
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
 function getLiteCommerceUrl()
 {
     global $HTTP_SERVER_VARS;
@@ -1721,45 +1746,26 @@ function getLiteCommerceUrl()
  */
 function inst_http_request($url_request)
 {
-    @ini_get('allow_url_fopen') or @ini_set('allow_url_fopen', 1);
-    
-    $handle = @fopen($url_request, 'r');
-
     $response = '';
 
-    if ($handle) {
+    $error = '';
 
-        while (!feof($handle)) {
-            $response .= fread($handle, 8192);
+    $url = parse_url($url_request);
+    $errno = null;
+    if ($fp = fsockopen($url['host'], (!empty($url['port']) ? $url['port'] : 80), $errno, $error, 3)) {
+        fputs($fp, "GET ".$url_request." HTTP/1.0\r\n");
+        fputs($fp, "Host: ".$url['host']."\r\n");
+        fputs($fp, "User-Agent: Mozilla/4.5 [en]\r\n");
+
+        fputs($fp,"\r\n");
+
+        while (!feof($fp)) {
+            $response .= fgets($fp, 4096);
         }
-
-        @fclose($handle);
-
-    } else {
-        $error = '';
-
-        require_once LC_EXT_LIB_DIR . 'PEAR.php';
-        require_once LC_EXT_LIB_DIR . 'HTTP' . LC_DS . 'Request2.php';
-
-        $track_errors = @ini_get("track_errors");
-        @ini_set("track_errors", 1);
-
-
-        try {
-            $http = new HTTP_Request2($url_request, HTTP_Request2::METHOD_GET);
-            $http->setConfig('timeout', 3);
-
-            $response = $http->send()->getBody();
-
-        } catch (Exception $e) {
-            $error = $e->getMessage();
-        }
-
-        @ini_set("track_errors", $track_errors);
-
-        if (!empty($error)) {
-            $response = $error . "\n" . $response;
-        }
+    }
+    
+    if (!empty($error)) {
+        $response = $error . "\n" . $response;
     }
 
     return $response;
