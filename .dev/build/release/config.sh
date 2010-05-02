@@ -11,6 +11,7 @@ XLITE_SVN="svn://svn.crtdev.local/repo/xlite/main/test"
 
 # Drupal SVN repository
 DRUPAL_SVN="svn://svn.crtdev.local/repo/xlite_cms/main/src"
+DRUPAL_DEV_SVN="svn://svn.crtdev.local/repo/xlite_cms/main/.dev"
 
 # Output directory name
 OUTPUT_DIR="output"
@@ -56,6 +57,7 @@ DRUPAL_FILES_TODELETE="
 profiles/default
 profiles/litecommerce_site
 includes/install.pgsql.inc
+sites/all/modules/litecommerce_com
 "
 
 LC_SEO_PHRASES="

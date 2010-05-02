@@ -227,6 +227,26 @@ if [ ! $SAFE_MODE ]; then
 		exit 2
 	fi
 
+	# Do Drupal .dev checkout...
+
+	echo -n "Drupal .dev checkout..."
+
+	if svn export ${DRUPAL_DEV_SVN} drupal_dev >>LOG_OUT 2>>LOG_ERR; then
+
+		rm -f LOG_ERR LOG_OUT
+		echo " [success]"
+
+	else
+		SVN_ERROR="Drupal"
+		echo " [failed]"
+	    echo "Failed: Unable to checkout Drupal .dev directory. Logs are below:"
+	    echo "** stderr:"
+	    cat LOG_ERR
+	    echo "** stdout:"
+		cat LOG_OUT
+		exit 2
+	fi
+
 fi # / if [ ! $SAFE_MODE ]
 
 
@@ -253,7 +273,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 
 	# Generate the list of modules that must be removed
 	MODULES_TODELETE=""
-	LIST_FOR_SEARCH=`ls classes/XLite/Module | grep -v '\.php'`" "`ls skins/admin/en/modules`" "`ls skins/default/en/modules`" "`ls skins/drupal/en/modules`" "`ls skins/mail/en/modules`
+	LIST_FOR_SEARCH=`ls classes/XLite/Module | grep -v '\.php'`" "`ls skins/admin/en/modules`" "`ls skins/default/en/modules`" "`ls skins/drupal/en/modules`" "`ls skins/mail/en/modules`" "`ls skins/admin/en/images/modules`
 	for i in ${LIST_FOR_SEARCH}; do
 		found=0
 		for j in ${XLITE_MODULES}; do
@@ -271,12 +291,15 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 	for dn in $MODULES_TODELETE; do
 		rm -rf classes/XLite/Module/${dn}
 		rm -rf skins/admin/en/modules/${dn}
+		rm -rf skins/admin/en/images/modules/${dn}
 		rm -rf skins/default/en/modules/${dn}
+		rm -rf skins/default/en/images/modules/${dn}
 		rm -rf skins/drupal/en/modules/${dn}
+		rm -rf skins/drupal/en/images/modules/${dn}
 		rm -rf skins/mail/en/modules/${dn}
 	done
 
-	rm -f images/*
+	find ./images/* -type f -name "demo_store_*" -exec rm -rf {} \;
 
 	mv skins skins_original
 
@@ -322,6 +345,15 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 
 	fi
 
+	LOGO_IMAGE=${OUTPUT_DIR}/drupal_dev/images/lc_logo-${XLITE_VERSION}.png
+
+	if [ -f $LOGO_IMAGE ]; then
+		cp $LOGO_IMAGE ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/profiles/litecommerce/lc_logo.png
+		cp $LOGO_IMAGE ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/themes/lccms/logo.png
+	else
+		echo "Warning! Logo image file $LOGO_IMAGE not found"
+	fi
+
 	sed -i '' -E 's/lc_path = .*/lc_path = .\/litecommerce/' modules/lc_connector/lc_connector.info
 
 	# Restore orininal file PoweredBy.php from temporary directory
@@ -335,31 +367,49 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 	find . -type d -exec chmod 755 {} \;
 	find . -type f -exec chmod 644 {} \;
 
-	tar -czf ${OUTPUT_DIR}/lc_connector-${VERSION}.tgz modules/lc_connector
+	# Pack LC Connector module disctributive
+	cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/modules
+	tar -czf ${OUTPUT_DIR}/lc_connector-${VERSION}.tgz lc_connector
 
 	echo "  + LC Connector v.$VERSION module for Drupal is completed"
 
-	tar -czf ${OUTPUT_DIR}/lccms_theme-${VERSION}.tgz themes/lccms
+	# Pack Bettercrumbs module distributive
+	cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/sites/all/modules
+	tar -czf ${OUTPUT_DIR}/bettercrumbs-${VERSION}.tgz bettercrumbs
+
+	echo "  + Bettercrumbs v.$VERSION module for Drupal is completed"
+
+	# Pack LCCMS theme
+	cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/themes
+	tar -czf ${OUTPUT_DIR}/lccms_theme-${VERSION}.tgz lccms
 
 	echo "  + LCCMS v.$VERSION theme for Drupal is completed"
 
+	# Return to the Drupal root directory
+	cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}
+
+	# Move LiteCommerce into LC Connector module directory
 	mv ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME} modules/lc_connector/
 
 	cd modules/lc_connector/${LITECOMMERCE_DIRNAME}
 
+	# Replace default skin with drupal skin
 	rm -rf skins_original/default
 	mv skins_original/drupal skins_original/default
 
 	cd $OUTPUT_DIR
 
+	# Pack Drupal+LC distributive
 	tar -czf drupal-lc-${VERSION}.tgz ${DRUPAL_DIRNAME}
 
 	# Remove obsolete directories
 	rm -rf ${OUTPUT_DIR}/${DRUPAL_DIRNAME}
 	rm -rf ${OUTPUT_DIR}/tmp
+	rm -rf ${OUTPUT_DIR}/drupal_dev
 
-	echo "  + Drupal+LiteCommerce v.$VERSION distributive is completed"
+	echo -e "  + Drupal+LiteCommerce v.$VERSION distributive is completed\n"
 
+	ls -al
 
 else # / if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DIRNAME}" ]
 
@@ -373,7 +423,5 @@ fi
 _php_code='$s=mktime()-'$START_TIME'; echo sprintf("%d:%02d:%02d", ($s1=intval($s/3600)), ($s2=intval(($s-$s1*3600)/60)), ($s-$s1*3600-$s2*60));'
 _elapsed_time=`eval $PHP" -qr '"$_php_code"'"`
 
-echo -e "\nTime elapsed: ${_elapsed_time}"
-
-ls -al
+echo -e "\nTime elapsed: ${_elapsed_time}\n"
 
