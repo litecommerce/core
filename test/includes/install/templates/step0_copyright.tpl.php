@@ -66,20 +66,10 @@ if (COPYRIGHT_EXISTS) {
 
 ?>
 
+<input type="hidden" name="params[force_current]" value="<?php print get_step("check_cfg") ?>" />
+
 <TABLE border=0>
-<TR>
- <TD><input type=radio name="params[force_current]" value="<?php print get_step("check_cfg") ?>">
- <TD><b>Perform new installation</b></TD>
-</TR>
-<TR>
- <TD><input type=radio name="params[force_current]" value="<?php print get_step("cfg_install_dirs") ?>" checked></TD>
- <TD><b>Re-install skin files</b></TD>
-</TR>
-<TR>
- <TD><input type=radio name="params[force_current]" value="<?php print get_step("cfg_create_admin") ?>"></TD>
- <TD><b>Configure primary administrator account</b></TD>
-</TR>
-<TR><TD colspan=2><b>Auth code: </b><INPUT type=text name="params[auth_code]" size=20><BR><FONT size=1>( required for protection from unauthorized<BR> use of installation script )</FONT></TD></TR>
+<TR><TD colspan=2><b>Auth code: </b><INPUT type=text name="params[auth_code]" size=20><BR><FONT size=1>(required for protection from unauthorized<BR> use of installation script)</FONT></TD></TR>
 </TABLE>
 <P>
 

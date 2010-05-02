@@ -355,6 +355,14 @@ The configuration of the server where LiteCommerce will be installed meets the S
 The configuration of the server where LiteCommerce will be installed makes sending POST requests to external servers impossible. Please contact the support services of your hosting provider to adjust this parameter.
 </div>
 
+<div id="lc_file_permissions" style="display : none">
+<font class="ErrorTitle">Critical dependency failed</font>
+<br><br>
+<?php
+echo $requirements['lc_file_permissions']['description'];
+?>
+</div>
+
 <div id="detailsElement">
 
 </div>

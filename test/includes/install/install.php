@@ -39,13 +39,26 @@ if (!defined('XLITE_INSTALL_MODE')) {
     die('Incorrect call of the script. Stopping.');
 }
 
+if (!function_exists('version_compare') || version_compare(phpversion(), '5.0.0') < 0) {
+    die('LiteCommerce cannot start on PHP version earlier than 5.0.0 (' . phpversion(). ' is currently used)');
+}
 
 require_once realpath(dirname(__FILE__) . '/../..') . '/includes/prepend.php';
 
 require_once constant('LC_ROOT_DIR') . 'includes/install/install_settings.php';
 
-error_reporting(E_ALL ^ E_DEPRECATED);
+if (version_compare(phpversion(), '5.3.0') >= 0) {
+    error_reporting(E_ALL ^ E_DEPRECATED);
+
+} else {
+    error_reporting(E_ALL);
+}
+
 ini_set('display_errors', true);
+
+// suphp mode
+define('LC_SUPHP_MODE', get_php_execution_mode());
+
 
 /*
  * Checking requirements section
@@ -129,12 +142,12 @@ function doCheckRequirements()
 
     $checkRequirements['lc_file_permissions'] = array(
         'title'    => 'File permissions',
-        'critical' => false,
+        'critical' => true,
     );
 
     $checkRequirements['lc_mysql_version'] = array(
         'title'    => 'MySQL version',
-        'critical' => false,
+        'critical' => true,
         'depends'  => 'lc_php_mysql_support'
     );
 
@@ -204,7 +217,7 @@ function doCheckRequirements()
  * @see    ____func_see____
  * @since  3.0.0
  */
-function checkInstallScript(&$errorMsg = null, $value = null)
+function checkInstallScript(&$errorMsg, $value = null)
 {
     $result = @file_exists(LC_ROOT_DIR . 'install.php');
     
@@ -226,7 +239,7 @@ function checkInstallScript(&$errorMsg = null, $value = null)
  * @see    ____func_see____
  * @since  3.0.0
  */
-function checkLoopback(&$errorMsg = null, $value = null)
+function checkLoopback(&$errorMsg, $value = null)
 {
     $result = true;
 
@@ -251,7 +264,7 @@ function checkLoopback(&$errorMsg = null, $value = null)
  * @see    ____func_see____
  * @since  3.0.0
  */
-function checkPhpVersion(&$errorMsg = null, &$value = null)
+function checkPhpVersion(&$errorMsg, &$value)
 {
     global $lcSettings;
 
@@ -302,7 +315,7 @@ function checkPhpVersion(&$errorMsg = null, &$value = null)
  * @see    ____func_see____
  * @since  3.0.0
  */
-function checkPhpSafeMode(&$errorMsg = null, &$value = null)
+function checkPhpSafeMode(&$errorMsg, &$value)
 {
     $result = true;
 
@@ -329,7 +342,7 @@ function checkPhpSafeMode(&$errorMsg = null, &$value = null)
  * @see    ____func_see____
  * @since  3.0.0
  */
-function checkPhpDisableFunctions(&$errorMsg = null, &$value = null)
+function checkPhpDisableFunctions(&$errorMsg, &$value)
 {
     $result = true;
 
@@ -357,7 +370,7 @@ function checkPhpDisableFunctions(&$errorMsg = null, &$value = null)
  * @see    ____func_see____
  * @since  3.0.0
  */
-function checkPhpMemoryLimit(&$errorMsg = null, &$value = null)
+function checkPhpMemoryLimit(&$errorMsg, &$value)
 {
     $result = true;
     
@@ -389,7 +402,7 @@ function checkPhpMemoryLimit(&$errorMsg = null, &$value = null)
  * @see    ____func_see____
  * @since  3.0.0
  */
-function checkPhpFileUploads(&$errorMsg = null, &$value = null)
+function checkPhpFileUploads(&$errorMsg, &$value)
 {
     $result = true;
 
@@ -414,7 +427,7 @@ function checkPhpFileUploads(&$errorMsg = null, &$value = null)
  * @see    ____func_see____
  * @since  3.0.0
  */
-function checkPhpMysqlSupport(&$errorMsg = null, &$value = null)
+function checkPhpMysqlSupport(&$errorMsg, &$value)
 {
     $result = true;
 
@@ -442,7 +455,7 @@ function checkPhpMysqlSupport(&$errorMsg = null, &$value = null)
  * @see    ____func_see____
  * @since  3.0.0
  */
-function checkPhpUploadMaxFilesize(&$errorMsg = null, &$value = null)
+function checkPhpUploadMaxFilesize(&$errorMsg, &$value)
 {
     $result = true;
 
@@ -467,7 +480,7 @@ function checkPhpUploadMaxFilesize(&$errorMsg = null, &$value = null)
  * @see    ____func_see____
  * @since  3.0.0
  */
-function checkPhpAllowUrlFopen(&$errorMsg = null, &$value = null)
+function checkPhpAllowUrlFopen(&$errorMsg, &$value)
 {
     $result = true;
 
@@ -492,7 +505,7 @@ function checkPhpAllowUrlFopen(&$errorMsg = null, &$value = null)
  * @see    ____func_see____
  * @since  3.0.0
  */
-function checkMemAllocation(&$errorMsg = null, &$value = null)
+function checkMemAllocation(&$errorMsg, &$value)
 {
     $result = true;
     
@@ -530,7 +543,7 @@ function checkMemAllocation(&$errorMsg = null, &$value = null)
  * @see    ____func_see____
  * @since  3.0.0
  */
-function checkRecursionTest(&$errorMsg = null, &$value = null)
+function checkRecursionTest(&$errorMsg, &$value)
 {
     $result = true;
 
@@ -556,7 +569,7 @@ function checkRecursionTest(&$errorMsg = null, &$value = null)
  * @see    ____func_see____
  * @since  3.0.0
  */
-function checkFilePermissions(&$errorMsg = null, &$value = null)
+function checkFilePermissions(&$errorMsg, &$value)
 {
     global $lcSettings;
 
@@ -566,19 +579,23 @@ function checkFilePermissions(&$errorMsg = null, &$value = null)
 
     if (substr(PHP_OS, 0, 3) != 'WIN') {
 
-        if(constant('LC_SUPHP_MODE') == "0") {
-            
+        if (constant('LC_SUPHP_MODE') == "0") {
+
             if (!@is_writable(constant('LC_ROOT_DIR'))) {
-                $perms[] = '&gt; chmod 0777 ' . constant('LC_ROOT_DIR');
+                $perms[] = 'chmod 0777 ' . constant('LC_ROOT_DIR');
             }
 
-            if (!@is_writable(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'))) {
-                $perms[] = '&gt; chmod 0666 ' . LC_CONFIG_DIR . constant('LC_CONFIG_FILE');
+            $array = array();
+            foreach ($lcSettings['mustBeWritable'] as $object) {
+                $array = array_merge($array, checkPermissionsRecursive(constant('LC_ROOT_DIR') . $object));
             }
 
-            foreach($lcSettings['writable_directories'] as $dir) {
-                if (!@is_writable(constant('LC_ROOT_DIR') . $dir)) {
-                    $perms[] = '&gt; chmod 0777 ' . constant('LC_ROOT_DIR') . $dir;
+            if (!empty($array)) {
+                foreach ($array as $file => $perm) {
+                    $perms[] = 'chmod ' . $perm . ' ' . $file;
+                    if (count($perms) > 25) {
+                        break;
+                    }
                 }
             }
         }
@@ -586,7 +603,7 @@ function checkFilePermissions(&$errorMsg = null, &$value = null)
 
     if (count($perms) > 0) {
         $result = false;
-        $errorMsg = 'Permissions checking failed. Please make sure that the following file permissions are assigned (UNIX only):<br/>' . implode("<br />", $perms);
+        $errorMsg = 'Permissions checking failed. Please make sure that the following file permissions are assigned (UNIX only):<br /><br /><i>' . implode("<br />", $perms) . '</i>';
     }
 
     return $result;
@@ -604,7 +621,7 @@ function checkFilePermissions(&$errorMsg = null, &$value = null)
  * @see    ____func_see____
  * @since  3.0.0
  */
-function checkMysqlVersion(&$errorMsg = null, &$value = null, $connection = null)
+function checkMysqlVersion(&$errorMsg, &$value, $connection = null)
 {
     $result = true;
     $value = 'unknown';
@@ -1073,19 +1090,19 @@ OUT;
         $_perms = array();
 
         if (@is_writable(LC_ROOT_DIR)) {
-            $_perms[] = "&gt; chmod 755 .";
+            $_perms[] = "chmod 755 .";
         }
 
-        if (@is_writable(LC_CONFIG_DIF . constant('LC_CONFIG_FILE'))) {
-            $_perms[] = "&gt; chmod 644 " . constant('LC_CONFIG_FILE');
+        if (@is_writable(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'))) {
+            $_perms[] = "chmod 644 " . constant('LC_CONFIG_FILE');
         }
 
         if (!@is_writable(LC_ROOT_DIR . 'cart.html')) {
-            $_perms[] = "&gt; chmod 666 cart.html";
+            $_perms[] = "chmod 666 cart.html";
         }
 
         if (!empty($_perms)) {
-            array_unshift($_perms, '&gt; cd ' . LC_ROOT_DIR);
+            array_unshift($_perms, 'cd ' . LC_ROOT_DIR);
             $perms = implode("<br />\n", $_perms);
             $perms =<<<OUT
 <P>Before you proceed using LiteCommerce shopping system software, please set the following secure file permissions:<BR><BR>
@@ -1096,7 +1113,7 @@ OUT;
     }
 
     // Prepare email notification text
-    $perms_no_tags = preg_replace('/&gt;/', '>', strip_tags($perms));
+    $perms_no_tags = strip_tags($perms);
 
     $message =<<<EOF
 Congratulations!
@@ -1275,6 +1292,49 @@ function create_htaccess_files($files_to_create)
         }
     }
 
+    return $result;
+}
+
+
+function checkPermissionsRecursive($object)
+{
+    $dirPermissions = '777';
+    $filePermissions = '666';
+
+    $result = array();
+
+    if (is_dir($object)) {
+
+        if (!is_writable($object)) {
+            $result[$object] = $dirPermissions;
+
+        } else {
+
+            if ($handle = @opendir($object)) {
+
+                while (($file = readdir($handle)) !== false) {
+
+                    if (in_array($file, array('.', '..', '.htaccess'))) {
+                        continue;
+                    }
+
+                    $fileRealPath = $object . '/' . $file;
+
+                    if (!is_writable($fileRealPath)) {
+                        $result[$fileRealPath] = (is_dir($fileRealPath) ? $dirPermissions : $filePermissions);
+
+                    } elseif (is_dir($fileRealPath)) {
+                        $result = array_merge($result, checkPermissionsRecursive($fileRealPath));
+                    }
+            
+                }
+            }
+        }
+
+    } elseif (!is_writable($object)) {
+        $result[$object] = $filePermissions;
+    }
+    
     return $result;
 }
 
@@ -2502,22 +2562,6 @@ function module_cfg_install_db(&$params)
             'step'        => 2,
             'type'        => 'select',
             'select_data' => array(1 => 'Yes', 0 => 'No')
-        ),
-        'install_data'     => array(
-            'title'       => 'Initialize LiteCommerce database',
-            'description' => 'Populate LiteCommerce database with initial data. Uncheck this field if you want to leave LiteCommerce database untouched (your database must contain valid LiteCommerce data tables in order for your online store to operate properly).',
-            'def_value'   => '1',
-            'required'    => false,
-            'step'        => 2,
-            'type'        => 'checkbox'
-        ),
-        'images_to_fs'     => array(
-            'title'       => 'Move all images to the file system',
-            'description' => 'Image files can either be placed in the \'images\' sub-directory of your LiteCommerce installation or stored in the database. Storing images in the database makes it easier to backup them, while leaving them as files helps to keep the database more compact.',
-            'def_value'   => '1',
-            'required'    => false,
-            'step'        => 2,
-            'type'        => 'checkbox'
         )
     );
 

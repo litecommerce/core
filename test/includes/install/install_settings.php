@@ -62,9 +62,6 @@ define('LC_TEMPLATES_DIRECTORY', 'skins');
 // Config file name
 define('LC_CONFIG_FILE', 'config.php');
 
-// suphp mode
-define('LC_SUPHP_MODE', get_php_execution_mode());
-
 // Maximum recursion depth for checking
 if (constant('LC_OS_CODE') === 'win') {
     define('MAX_RECURSION_DEPTH', 800);
@@ -79,9 +76,15 @@ global $lcSettings;
 $lcSettings = array(
 
     // PHP versions that are not supported
-    'forbidden_php_versions' => array(
-        array('min' => '4.2.2', 'max' => '4.2.3'),
-        array('min' => '5.0.0', 'max' => '5.0.9'),
+    'forbidden_php_versions' => array(),
+
+    'mustBeWritable' => array(
+        'var',
+        'images',
+        'files',
+        constant('LC_TEMPLATES_DIRECTORY'),
+        constant('LC_TEMPLATES_DIRECTORY') . '/.htaccess',
+        'etc/config.php'
     ),
 
     // The list of directories that should have writeble permissions
@@ -89,7 +92,7 @@ $lcSettings = array(
         'var',
         'images',
         'files',
-        constant('LC_TEMPLATES_DIRECTORY')
+        constant('LC_TEMPLATES_DIRECTORY'),
     ),
 
     // The list of directories that should be created by installation script
