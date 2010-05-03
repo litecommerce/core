@@ -195,6 +195,65 @@ Please contact the support services of your hosting provider to adjust this para
 <br><br>
 </div>
 
+ <div id="lc_php_sql_safe_mode" style="display : none">
+    <font class="ErrorTitle">Dependency failed: sql.safe_mode is ON</font>
+    <br><br>
+	sql.safe_mode option must be turned off for correct operation of LiteCommerce application.
+
+    <p>To disable sql.safe_mode: 
+    
+    <p><b>1. If you have access to php.ini file</b>
+    <br><br>
+    Locate the
+    <br><br>
+    <font style="background-color: #E3EAEF;"><?php print $info["php_ini_path"] ?></font>
+    <br><br>
+    file, find and edit the following line within the file:
+    <br><br>
+    <font style="background-color: #E3EAEF;">sql.safe_mode = "On"</font>
+    <br><br>
+    change to:
+    <br><br>
+    <font style="background-color: #E3EAEF;">sql.safe_mode = "Off"</font>
+    <br><br>
+    Save the file, then restart your web server application for the changes to take effect.
+
+    <p><b>2. If you do not have access to php.ini file</b>
+    <br><br>
+    Please contact the support services of your hosting provider to adjust this parameter.
+    <br><br>
+</div>
+
+
+<div id="lc_php_magic_quotes_sybase" style="display : none">
+    <font class="ErrorTitle">Dependency failed: magic_quotes_sybase is ON</font>
+    <br><br>
+	magic_quotes_sybase option must be turned off for correct operation of LiteCommerce application.
+
+    <p>To disable magic_quotes_sybase: 
+    
+    <p><b>1. If you have access to php.ini file</b>
+    <br><br>
+    Locate the
+    <br><br>
+    <font style="background-color: #E3EAEF;"><?php print $info["php_ini_path"] ?></font>
+    <br><br>
+    file, find and edit the following line within the file:
+    <br><br>
+    <font style="background-color: #E3EAEF;">magic_quotes_sybase = "On"</font>
+    <br><br>
+    change to:
+    <br><br>
+    <font style="background-color: #E3EAEF;">magic_quotes_sybase = "Off"</font>
+    <br><br>
+    Save the file, then restart your web server application for the changes to take effect.
+
+    <p><b>2. If you do not have access to php.ini file</b>
+    <br><br>
+    Please contact the support services of your hosting provider to adjust this parameter.
+    <br><br>
+</div>
+
 <div id="lc_php_allow_url_fopen" style="display : none">
     <font class="ErrorTitle">Non-critical dependency failed</font>
     <br><br>
@@ -365,6 +424,24 @@ echo $requirements['lc_file_permissions']['description'];
 
 <div id="detailsElement">
 
+</div>
+
+<div id="lc_php_gdlib" style="display : none">
+<font class="ErrorTitle">Non-critical dependency failed</font>
+<br><br>
+GDLib 2.0 or better required for automatic generation of product thumbnails form product images and for some other modules. GDLib must be compiled with libJpeg (ensure that PHP is configured with the option --with-jpeg-dir=DIR, where DIR is the directory where libJpeg is installed). Please contact the support services of your hosting provider to adjust this parameter.
+</div>
+
+<div id="lc_https_bouncer" style="display : none">
+<font class="ErrorTitle">Non-critical dependency failed</font>
+<br><br>
+CURL executable module, libCURL module or OpenSSL external application, and an SSL certificate required, if you want to process credit cards using Authorize.NET, PayPal or other payment gateways, or use real time shipping calculation services (these services require that your site accepts secure connections via HTTPS/SSL protocol). Please contact the support services of your hosting provider to adjust this parameter.
+</div>
+
+<div id="lc_xml_support" style="display : none">
+<font class="ErrorTitle">Non-critical dependency failed</font>
+<br><br>
+Xml/EXPAT and DOMDocument extensions for PHP are required for real-time shipping modules as well as for a payment modules. Please contact the support services of your hosting provider to adjust this parameter.
 </div>
 
 

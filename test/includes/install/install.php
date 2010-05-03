@@ -98,6 +98,16 @@ function doCheckRequirements()
         'critical' => true,
     );
 
+    $checkRequirements['lc_php_magic_quotes_sybase'] = array(
+        'title'    => 'magic_quotes_sybase',
+        'critical' => true,
+    );
+
+    $checkRequirements['lc_php_sql_safe_mode'] = array(
+        'title'    => 'sql.safe_mode',
+        'critical' => true,
+    );
+
     $checkRequirements['lc_php_disable_functions'] = array(
         'title'    => 'Disabled functions',
         'critical' => true,
@@ -149,6 +159,21 @@ function doCheckRequirements()
         'title'    => 'MySQL version',
         'critical' => true,
         'depends'  => 'lc_php_mysql_support'
+    );
+
+    $checkRequirements['lc_php_gdlib'] = array(
+        'title'    => 'GDlib extension',
+        'critical' => false,
+    );
+
+    $checkRequirements['lc_https_bouncer'] = array(
+        'title'    => 'HTTPS bouncers',
+        'critical' => false,
+    );
+
+    $checkRequirements['lc_xml_support'] = array(
+        'title'    => 'XML extensions support',
+        'critical' => false,
     );
 
     $passed = array();
@@ -326,6 +351,60 @@ function checkPhpSafeMode(&$errorMsg, &$value)
     if (func_version_compare(phpversion(), '5.3.0') <= 0 && 'off' != strtolower($value)) {
         $result = false;
         $errorMsg = 'PHP safe_mode option value should be Off if PHP is earlier 5.3.0';
+    }
+
+    return $result;
+}
+
+/**
+ * Check if PHP option magic_quotes_sybase is on/off
+ * 
+ * @param string $errorMsg Error message if checking failed
+ * @param string $value    Actual value of the checked parameter
+ *  
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function checkPhpMagicQuotesSybase(&$errorMsg, &$value)
+{
+    $result = true;
+
+    $value = (ini_get('magic_quotes_sybase') ? 'On' : 'Off');
+
+    // PHP Safe mode must be Off if PHP is earlier 5.3
+
+    if (func_version_compare(phpversion(), '5.3.0') < 0 && 'off' != strtolower($value)) {
+        $result = false;
+        $errorMsg = 'PHP option magic_quotes_sybase value should be Off if PHP is earlier 5.3.0';
+    }
+
+    return $result;
+}
+
+/**
+ * Check if PHP option sql.safe_mode is on/off
+ * 
+ * @param string $errorMsg Error message if checking failed
+ * @param string $value    Actual value of the checked parameter
+ *  
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function checkPhpSqlSafeMode(&$errorMsg, &$value)
+{
+    $result = true;
+
+    $value = (ini_get('sql.safe_mode') ? 'On' : 'Off');
+
+    // PHP Safe mode must be Off if PHP is earlier 5.3
+
+    if ('off' != strtolower($value)) {
+        $result = false;
+        $errorMsg = 'PHP option sql.safe_mode value should be Off';
     }
 
     return $result;
@@ -659,6 +738,102 @@ function checkMysqlVersion(&$errorMsg, &$value, $connection = null)
     } elseif (is_resource($connection)) {
         $result = false;
         $errorMsg = 'Cannot connect to MySQL server.';
+    }
+
+    return $result;
+}
+
+/**
+ * Check GDlib extension
+ * 
+ * @param string   $errorMsg   Error message if checking failed
+ * @param string   $value      Actual value of the checked parameter
+ *  
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function checkPhpGdlib(&$errorMsg, &$value)
+{
+    $result = false;
+
+    if (extension_loaded('gd') && function_exists("gd_info")) {
+        $gdConfig = gd_info();
+        $value = $gdConfig['GD Version'];
+        $result = preg_match('/[^0-9]*2\./',$gdConfig['GD Version']);
+    }
+
+    if (!$result) {
+        $errorMsg = 'GDlib extension v.2.0 or later required for some modules.';
+    }
+
+    return $result;
+}
+
+/**
+ * Check https bouncers presence
+ * 
+ * @param string   $errorMsg   Error message if checking failed
+ * @param string   $value      Actual value of the checked parameter
+ *  
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function checkHttpsBouncer(&$errorMsg, &$value)
+{
+    $result = false;
+
+    $https = new XLite_Model_HTTPS();
+    $httpsBouncer = $https->detectSoftware();
+
+    if ($httpsBouncer !== false) {
+        $result = true;
+        $value = $httpsBouncer;
+    }
+
+    if (!$result) {
+        $errorMsg = 'No HTTPS bouncers found. It\'s required for some modules.';
+    }
+
+    return $result;
+}
+
+/**
+ * Check GDlib extension
+ * 
+ * @param string   $errorMsg   Error message if checking failed
+ * @param string   $value      Actual value of the checked parameter
+ *  
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function checkXmlSupport(&$errorMsg, &$value)
+{
+    $result = false;
+    $ext = array();
+
+    if (function_exists('xml_parse')) {
+        $ext[] = 'XML Parser';
+    }
+
+    if (function_exists('dom_import_simplexml')) {
+        $ext[] = 'DOM/XML';
+    }
+
+    if (!empty($ext)) {
+        $value = implode(', ', $ext);
+        if (count($ext) > 1) {
+            $result = true;
+        }
+    }
+
+    if (!$result) {
+        $errorMsg = 'XML/Expat and DOM extensions are required for some modules.';
     }
 
     return $result;
@@ -2455,6 +2630,8 @@ function module_check_cfg()
             'requirements' => array(
                 'lc_php_version',
                 'lc_php_safe_mode',
+                'lc_php_magic_quotes_sybase',
+                'lc_php_sql_safe_mode',
                 'lc_php_disable_functions',
                 'lc_php_memory_limit',
                 'lc_php_mysql_support',
@@ -2470,6 +2647,9 @@ function module_check_cfg()
                 'lc_php_allow_url_fopen', 
                 'lc_mem_allocation',
                 'lc_recursion_test',
+                'lc_php_gdlib',
+                'lc_https_bouncer',
+                'lc_xml_support'
             )
         )
     );
