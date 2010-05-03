@@ -58,6 +58,19 @@ abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstr
     }
 
     /**
+     * Perform some actions to prohibit access to storefornt 
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function closeStorefront()
+    {
+        include LC_SKINS_DIR . '/storefront_closed.html';
+        exit (0);
+    }
+
+    /**
      * Recalculates the shopping cart
      * 
      * @return void
@@ -229,8 +242,7 @@ abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstr
     public function handleRequest()
     {
         if (!$this->checkStorefrontAccessability()) {
-            include LC_SKINS_DIR . '/storefront_closed.html';
-            exit (0);
+            $this->closeStorefront();
         }
 
         return parent::handleRequest();

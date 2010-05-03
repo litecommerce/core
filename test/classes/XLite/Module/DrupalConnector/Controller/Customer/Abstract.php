@@ -49,6 +49,32 @@ class XLite_Module_DrupalConnector_Controller_Customer_Abstract extends XLite_Co
     }
 
     /**
+     * Return Drupal URL
+     * 
+     * @return string|null
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDrupalLink()
+    {
+        return $this->config->DrupalConnector->drupal_root_url;
+    }
+
+    /**
+     * Perform some actions to prohibit access to storefornt
+     *
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function closeStorefront()
+    {
+        $this->getDrupalLink() 
+            ? XLite_Core_Operator::getInstance()->redirect($this->getDrupalLink()) 
+            : parent::closeStorefront();
+    }
+
+    /**
      * Get external link 
      * 
      * @return string
@@ -70,6 +96,5 @@ class XLite_Module_DrupalConnector_Controller_Customer_Abstract extends XLite_Co
 
         return $result;
     }
-
 }
 

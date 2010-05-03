@@ -69,5 +69,17 @@ class XLite_Module_DrupalConnector_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'Integration with the Drupal CMS';
-    }	
+    }
+
+    /**
+     * Determines if we need to show settings form link
+     *
+     * @return bool
+     * @access public
+     * @since  3.0
+     */
+    public static function showSettingsForm()
+    {
+        return true;
+    }
 }
