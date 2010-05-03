@@ -6,3 +6,5 @@ CREATE TABLE xlite_landing_links (
   PRIMARY KEY (link_id),
   KEY expiry(expiry)
 );
+
+INSERT INTO xlite_config SET name = 'drupal_root_url', category = 'DrupalConnector', type = 'text', value = '', comment = 'Root URL of the Drupal installation', orderby = '10';
