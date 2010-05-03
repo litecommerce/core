@@ -113,11 +113,11 @@ class XLite_Model_Abstract extends XLite_Base
      * Default SQL filter (WHERE block) for findAll() method
      * 
      * @var    string
-     * @access protected
+     * @access public
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $_range;
+    public $_range;
 
     /**
     * If set to true, findAll will fetch only primary keys (isRead=false)

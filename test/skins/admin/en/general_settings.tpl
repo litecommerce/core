@@ -170,7 +170,7 @@
     {end:}
     {end:}
 
-    <widget target="module" template="modules/{page}/settings.tpl" ignoreErrors>
+    <widget class="XLite_View_ModuleSettings" module="{page}" />
 
     </TD>
 {else:}

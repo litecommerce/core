@@ -48,21 +48,10 @@ class XLite_Model_Template extends XLite_Model_FileNode
         $this->comment = $comment;
     }
 
-    function setFile($file)
-    {
-        $this->file = $file;
-        global $options;
-        $this->path = str_replace("skins/". $options["skin_details"]["skin"] . "/" . $options["skin_details"]["locale"], $file);
-    }
-
     function setPath($path)
     {
         $this->path = $path;
-        $l = new XLite_Model_Layout();
-        global $options;
-        $l->set("skin", $options["skin_details"]["skin"]);
-        $l->set("locale", $options["skin_details"]["locale"]);
-        $this->file = $l->getPath() . $path;
+        $this->file = XLite_Model_Layout::getInstance()->getPath(true) . $path;
     }
 
     function setContent($content)

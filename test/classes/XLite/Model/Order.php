@@ -109,11 +109,11 @@ class XLite_Model_Order extends XLite_Model_Abstract
      * Default SQL filter (WHERE block) for findAll() method
      * 
      * @var    string
-     * @access protected
+     * @access public
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $_range = 'status != \'T\'';
+    public $_range = 'status != \'T\'';
 
     /**
      * Cart items cache 

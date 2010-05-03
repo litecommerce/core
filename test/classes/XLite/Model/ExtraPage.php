@@ -148,6 +148,7 @@ class XLite_Model_ExtraPage extends XLite_Base
             case "menu":
                 $this->getCustomerLayout();
                 $template = new XLite_Base();
+                $template->set("templateFile", $this->menuTemplateDef);
                 $template->set("template", $this->getRelativeTemplatePath($this->menuTemplateDef));
                 $template->set("skinPath", $this->customerLayout->getPath());
                 $template->set("page_link", "cart.php?page=" . $this->page);
@@ -305,38 +306,40 @@ class XLite_Model_ExtraPage extends XLite_Base
 		}
 
         $this->customerLayout = new XLite_Model_Layout();
-		$this->xlite->set("adminZone", false);
+
+        // FIXME - to delete
+		/*$this->xlite->set("adminZone", false);
         $this->customerLayout->initFromGlobals();
-		$this->xlite->set("adminZone", true);
+		$this->xlite->set("adminZone", true);*/
 
 		return $this->customerLayout;
     }
 
+    // FIXME
     function compile($template)
     {
         // replace layout with customer layout
-     	$layout = XLite_Model_Layout::getInstance();
+     	/*$layout = XLite_Model_Layout::getInstance();
         $skin = $layout->get("skin");
-        $layout->set("skin", $this->customerLayout->get("skin"));
+        $layout->set("skin", $this->customerLayout->get("skin"));*/
 
-        $component = new XLite_View();
-        
-        $component->template = $template->get("template");
+        $component = new XLite_View_ExtraPage(
+            array(
+                XLite_View_ExtraPage::PARAM_TEMPLATE => $template->get("templateFile"),
+                XLite_View_ExtraPage::PARAM_DATA     => $template,
+            )
+        );
         $component->init();
-        $component->set("data", $template);
 
         $attributes = $this->getPageLinkAttributes();
         foreach ($attributes as $attr) {
-			$component->setComplex($attr, $template->get($attr));
+			$component->set($attr, $template->get($attr));
         }
 
-        ob_start();
-        $component->display();
-        $text = trim(ob_get_contents());
-        ob_end_clean();
+        $text = $component->getContent();
 
         // restore old skin
-        $layout->set("skin", $skin);
+        // $layout->set("skin", $skin);
             
         return $text;
     }

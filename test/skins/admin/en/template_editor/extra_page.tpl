@@ -58,11 +58,7 @@
 <p><i>Only letters, numbers and symbol "_" are allowed in a page name.</i></p>
 {end:}
 <b>Page text:</b><br>
-{if:extraPage.page}
-<textarea name="content" cols="81" rows="20">{extraPage.template.content}</textarea>
-{else:}
-<textarea name="content" cols="81" rows="20">{content}</textarea>
-{end:}
+<textarea name="content" cols="81" rows="20">{getExtraPageContent()}</textarea>
 <p>
 
 <table border="0" cellpadding=2 cellspacing=2 width="430">

@@ -71,6 +71,18 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
 			"checkout/success_message.tpl"
 			);
 
+    /**
+     * getExtraPageContent 
+     * 
+     * @return string|null
+     * @access public
+     * @since  3.0.0
+     */
+    public function getExtraPageContent()
+    {
+        return $this->getExtraPage()->template ? $this->getExtraPage()->template->getContent() : $this->get('content');
+    }
+
     function getLocale() // {{{
     {
         if (is_null($this->locale)) {
