@@ -111,6 +111,8 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
 		$this->profiler->dbConnectTime = microtime(true) - $time;
 
 		$this->options = array_merge($this->options, $options);
+
+        $this->query('SET sql_mode = "MYSQL40"');
     }
 
     protected function getCachedResult($sql)
