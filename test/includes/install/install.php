@@ -1175,7 +1175,7 @@ function doCreateAdminAccount(&$params, $silentMode = false)
 
     $data = @parse_ini_file(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'));
 
-    if ($result && ($mylink = @mysql_connect($data['hostspec'], $data['username'], $data['password'])) && mysql_select_db($data['database'])) {
+    if ($result && ($mylink = @mysql_connect($data['hostspec'] . (!empty($data['port']) ? ':' . $data['port'] : ''), $data['username'], $data['password'])) && mysql_select_db($data['database'])) {
 
         @mysql_query("SET sql_mode='MYSQL40'");
 
@@ -1816,7 +1816,7 @@ function move_images_to_fs($table, $id, $prefix, $file_prefix, $path = 'images/'
 
         $data = @parse_ini_file(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'));
 
-        if (@mysql_connect($data['hostspec'], $data['username'], $data['password']) && mysql_select_db($data['database'])) {
+        if (@mysql_connect($data['hostspec'] . (!empty($data['port']) ? ':' . $data['port'] : ''), $data['username'], $data['password']) && mysql_select_db($data['database'])) {
 
             @mysql_query("SET sql_mode='MYSQL40'");
             $my_query = mysql_query("SELECT $id, {$prefix}_type, $prefix FROM $table WHERE {$prefix}_source = 'D'");
@@ -2854,7 +2854,7 @@ OUT;
         // Check if database settings provided are valid
         } else {
  
-            $connection = @mysql_connect($params['mysqlhost'], $params['mysqluser'], $params['mysqlpass']);
+            $connection = @mysql_connect($params['mysqlhost'] . (!empty($params['mysqlport']) ? ':' . $params['mysqlport'] : ''), $params['mysqluser'], $params['mysqlpass']);
 
             if ($connection) {
 
