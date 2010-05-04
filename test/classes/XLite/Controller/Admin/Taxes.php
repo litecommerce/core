@@ -171,7 +171,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
     	}
 
 		// find the corresponding cell in the rates tree
-		$ptr = $this->locateNode($this->taxes->_rates, $this->_levels[$ind_rate]);
+		$ptr =& $this->locateNode($this->taxes->_rates, $this->_levels[$ind_rate]);
 		$tax_name = $this->getNoteTaxName($ptr);
 
         // check expression {{{
@@ -222,7 +222,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
                 $levels = $this->_levels[$ind];
                 array_pop($levels);
                 // locate the corresponding pos array in the pos tree
-                $ptr = $this->locateNode($posTree, $levels);
+                $ptr =& $this->locateNode($posTree, $levels);
                 if (!isset($ptr["orderbys"])) {
                     $ptr["orderbys"] = array();
                 }
@@ -238,7 +238,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
     function action_open()
     {
         $ind = XLite_Core_Request::getInstance()->ind;
-        $node = $this->locateNode($this->taxes->_rates, $this->_levels[$ind]);
+        $node =& $this->locateNode($this->taxes->_rates, $this->_levels[$ind]);
         $node["open"] = true;
         // store
         $this->taxes->setSchema(array("tax_rates" => $this->taxes->_rates));
@@ -272,7 +272,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
     function action_close()
     {
         $ind = XLite_Core_Request::getInstance()->ind;
-        $node = $this->locateNode($this->taxes->_rates, $this->_levels[$ind]);
+        $node =& $this->locateNode($this->taxes->_rates, $this->_levels[$ind]);
         if (isset($node["open"])) {
             unset($node["open"]);
         }    
@@ -396,7 +396,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
             $this->valid = false;
             $this->action_add(); // show errors and the form again
         } else {
-            $subTree = $this->locateNode($this->taxes->_rates, $this->indexes);
+            $subTree =& $this->locateNode($this->taxes->_rates, $this->indexes);
             if (isset($subTree["action"])) {
                 $subTree["action"][] = $node;
             } else {
@@ -420,7 +420,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
             $this->valid = false;
             $this->action_edit(); // show errors and the form again
         } else {
-	        $subTree = $this->locateNode($this->taxes->_rates, $this->indexes);
+	        $subTree =& $this->locateNode($this->taxes->_rates, $this->indexes);
 			if (empty($node['action']))	
 				$action = $subTree['action'];
             $subTree = $node;
@@ -437,7 +437,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
         $ind = $this->_levels[XLite_Core_Request::getInstance()->ind];
         $subTreeIndex = $ind;
         $lastIndex = array_pop($subTreeIndex); // remove last
-        $subTree = $this->locateNode($this->taxes->_rates, $subTreeIndex);
+        $subTree =& $this->locateNode($this->taxes->_rates, $subTreeIndex);
         if (isset($subTree[$lastIndex])) {
             unset($subTree[$lastIndex]);
         }
@@ -448,6 +448,8 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
         $this->taxes->setSchema(array("tax_rates" => $this->taxes->_rates));
 
         $this->set("mode", "");
+
+        $this->setReturnUrl($this->buildUrl('taxes', '', array('page' => 'rates')));
     }
 
     function getTaxCondParam($node, $param)
@@ -557,7 +559,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
                 $this->_sortRates($rateTree[$i]["action"], $pos[$i]);
             }  
         }
-        if (!is_array($pos["orderbys"])) {
+        if (!isset($pos["orderbys"]) || !is_array($pos["orderbys"])) {
             print "pos = "; print_r($pos);
             $this->doDie("pos['orderbys'] must be an array");
         }
@@ -566,18 +568,18 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
         $rateTree = $ratesToSort;
     }
     
-    function locateNode(&$tree, $path)
+    function &locateNode(&$tree, $path)
     {
-        $ptr = $tree;
+        $ptr =& $tree;
         foreach ($path as $index) {
             if (isset($ptr["action"])) {
-                $ptr = $ptr["action"];
+                $ptr =& $ptr["action"];
             }
             if (!isset($ptr[$index])) {
                 // create a node 
                 $ptr[$index] = array();
             }
-            $ptr = $ptr[$index];
+            $ptr =& $ptr[$index];
         }
         return $ptr;
     }
