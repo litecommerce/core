@@ -467,7 +467,7 @@ class Decorator
     protected function getConnectionString(array $options)
     {
         $dsnFields = array(
-            'server'      => 'hostspec',
+            'host'        => 'hostspec',
             'port'        => 'port',
             'unix_socket' => 'socket',
             'dbname'      => 'database',
