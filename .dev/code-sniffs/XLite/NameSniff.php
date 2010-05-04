@@ -11,7 +11,7 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 		'AES', 'RSA', 'PGP', 'XSLT', 'IV', 'DN', 'URL', 'IP', 'MIME', 'CRC', 'CRC32', 'MD4', 'MD5', 'API',
 		'NVP', 'PHP', 'CURL', 'VS', 'PC', 'UTF8', 'TTL', 'SMTP', 'IP4', 'CC', 'CVV2', 'UK', 'FMF', 'CSSURL',
 		'HMACMD5', 'HMAC', 'URI', 'ID', 'JS', 'SSL', 'AVS', 'CVV', 'DB', 'HSBC', 'SOAP', 'GMT', 'HTTPS', 'CLI',
-		'CMS', 'GC', 'AJAX', 'URLAJAX', 'USPS', 'GD',
+		'CMS', 'GC', 'AJAX', 'URLAJAX', 'USPS', 'GD', 'PM', 'XPC',
 	);
 
 	protected $twoWordsAbbrs = array('ECard', 'ECards');
@@ -33,7 +33,7 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 		'substitute', 'implode', 'has', 'expand', 'load', 'assemble', 'activate', 'restore', 'show', 'install', 'emulate',
 		'perform', 'notify', 'cancel', 'sort', 'sanitize', 'use', 'accept', 'regenerate', 'inner', 'make', 'count', 'build',
 		'refresh', 'postprocess', 'preprocess', 'include', 'truncate', 'inc', 'map', 'strip', 'calc', 'compile', 'request', 'modify',
-		'normalize', 'filter', 'sanitize', 'fill', 'import', 'export',
+		'normalize', 'filter', 'sanitize', 'fill', 'import', 'export', 'stop', 'start',
 
 		// FIXME - rename later
 		'processed', 'checked', 'declined', 'queued', 'unchecked', 'checkout',
