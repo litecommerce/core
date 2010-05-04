@@ -129,7 +129,7 @@ function doCheckRequirements()
     );
 
     $checkRequirements['lc_php_pdo_mysql'] = array(
-        'title'    => 'PDO',
+        'title'    => 'PDO extension',
         'critical' => true,
         'depends'  => 'lc_php_mysql_support'
     );
