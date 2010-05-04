@@ -1297,19 +1297,18 @@ OUT;
         $_perms = array();
 
         if (@is_writable(LC_ROOT_DIR)) {
-            $_perms[] = "chmod 755 .";
+            $_perms[] = 'chmod 755 ' . LC_ROOT_DIR;
         }
 
         if (@is_writable(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'))) {
-            $_perms[] = "chmod 644 " . constant('LC_CONFIG_FILE');
+            $_perms[] = "chmod 644 " . LC_CONFIG_DIR . constant('LC_CONFIG_FILE');
         }
 
         if (!@is_writable(LC_ROOT_DIR . 'cart.html')) {
-            $_perms[] = "chmod 666 cart.html";
+            $_perms[] = 'chmod 666 ' . LC_ROOT_DIR . 'cart.html';
         }
 
         if (!empty($_perms)) {
-            array_unshift($_perms, 'cd ' . LC_ROOT_DIR);
             $perms = implode("<br />\n", $_perms);
             $perms =<<<OUT
 <P>Before you proceed using LiteCommerce shopping system software, please set the following secure file permissions:<BR><BR>
