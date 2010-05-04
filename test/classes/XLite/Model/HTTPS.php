@@ -435,22 +435,26 @@ class XLite_Model_HTTPS extends XLite_Base
     
     /**
      * Do request 
+     *
+     * @param string $software HTTPS engine name
      * 
      * @return mixed
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function request()
+    public function request($software = null)
     {
         $this->rawHeaders = '';
         $this->responseCode = null;
         $this->responseHeaders = array();
         $this->response = null;
 
-        $software = 'autodetect' == $this->config->Security->httpsClient
-            ? $this->detectSoftware()
-            : $this->config->Security->httpsClient;
+        if (is_null($software)) {
+            $software = 'autodetect' == $this->config->Security->httpsClient
+                ? $this->detectSoftware()
+                : $this->config->Security->httpsClient;
+        }
 
         switch ($software) {
             case 'libcurl':
