@@ -128,6 +128,12 @@ function doCheckRequirements()
         'critical' => true,
     );
 
+    $checkRequirements['lc_php_pdo_mysql'] = array(
+        'title'    => 'PDO',
+        'critical' => true,
+        'depends'  => 'lc_php_mysql_support'
+    );
+
     $checkRequirements['lc_php_upload_max_filesize'] = array(
         'title'    => 'Upload file size limit',
         'critical' => false,
@@ -517,6 +523,33 @@ function checkPhpMysqlSupport(&$errorMsg, &$value)
 
     } else {
         $value = 'On';
+    }
+
+    return $result;
+}
+
+/**
+ * Check if PDO extension and PDO MySQL driver installed
+ * 
+ * @param string $errorMsg Error message if checking failed
+ * @param string $value    Actual value of the checked parameter
+ *  
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function checkPhpPdoMysql(&$errorMsg, &$value)
+{
+    $result = true;
+
+    $info = get_info();
+
+    $value = $info['pdo_drivers'];
+
+    if (!preg_match('/mysql/', $info['pdo_drivers']) || !class_exists('PDO')) {
+        $result = false;
+        $errorMsg = 'PDO extension with MySQL support must be installed.';
     }
 
     return $result;
@@ -1707,7 +1740,8 @@ function get_info()
             "php_ini_path"    => '',
             'no_mem_limit'    => true,
             'commands_exists' => false,
-            'php_ini_path_forbidden' => false
+            'php_ini_path_forbidden' => false,
+            'pdo_drivers'     => false
         );
 
     } else {
@@ -1715,7 +1749,7 @@ function get_info()
     }
 
     ob_start();
-    phpinfo(INFO_GENERAL);
+    phpinfo();
     $php_info = ob_get_contents();
     ob_end_clean();
 
@@ -1747,6 +1781,10 @@ function get_info()
             if (!@ini_get("safe_mode") && !@file_exists($info["php_ini_path"])) {
                 $info["php_ini_path_forbidden"] = true;
             }
+        }
+
+        if (preg_match("/PDO drivers.*<\/td><td([^>]*)>([^<]*)/i", $line, $match)) {
+            $info['pdo_drivers'] = $match[2];
         }
     }
 
@@ -2635,6 +2673,7 @@ function module_check_cfg()
                 'lc_php_disable_functions',
                 'lc_php_memory_limit',
                 'lc_php_mysql_support',
+                'lc_php_pdo_mysql',
                 'lc_file_permissions'
             )
         ),
