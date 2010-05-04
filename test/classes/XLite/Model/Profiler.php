@@ -194,7 +194,6 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
         return XLite::getInstance()->getOptions(array('profiler_details', 'enabled'))
             && $this->isTargetAllowed()
             && !XLite_Core_Request::getInstance()->isPost()
-            && !XLite_Core_Request::getInstance()->isPopup
             && !XLite_Core_Request::getInstance()->isCLI();
     }
 
@@ -297,7 +296,7 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
      */
     protected function stop()
     {
-        if ($this->enabled) {
+        if ($this->enabled && !XLite_Core_Request::getInstance()->isPopup) {
 
             $this->stop_time = microtime(true);
 

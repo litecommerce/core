@@ -68,11 +68,21 @@ class XLite_Module_ProductOptions_Controller_Customer_ChangeOptions extends XLit
     {
         parent::init();
 
-        $this->assembleReturnUrl();
-
         if (!$this->getItem()) {
             $this->redirect();
         }
+    }
+
+    /**
+     * Perform some actions before redirect
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function actionPostprocess()
+    {
+        $this->assembleReturnUrl();
     }
 
     /**
