@@ -138,7 +138,7 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
     protected function getValidityFlag()
     {
         if (!isset($this->validityFlag)) {
-            $this->validityFlag = !$this->checkForRequiredFieldError();
+            $this->validityFlag = $this->checkFieldValidity();
         }
 
         return $this->validityFlag;
@@ -226,15 +226,27 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
     }
 
     /**
-     * checkForRequiredFieldError 
+     * Check field value validity
      * 
      * @return bool
      * @access protected
      * @since  3.0.0
      */
-    protected function checkForRequiredFieldError()
+    protected function checkFieldValue()
     {
-        return '' == $this->getValue() && $this->isRequired();
+        return '' != $this->getValue();
+    }
+
+    /**
+     * checkFieldValidity 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function checkFieldValidity()
+    {
+        return !$this->isRequired() || $this->checkFieldValue();
     }
 
     /**

@@ -132,19 +132,23 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Logs in user to cart
      * 
-     * @param string $login    user's login
-     * @param string $password user's password
+     * @param string $login       user's login
+     * @param string $password    user's password
+     * @param bool   $isEncrypted is password already encrypted
      *  
      * @return mixed
      * @access public
      * @since  3.0.0
      */
-    public function login($login, $password)
+    public function login($login, $password, $isEncrypted = false)
     {
         // Check for the valid parameters
         if (!empty($login) && !empty($password)) {
 
-            $password = self::encryptPassword($password);
+            if (!$isEncrypted) {
+                $password = self::encryptPassword($password);
+            }
+
             $profile = new XLite_Model_Profile();
 
             // Deny login if user not found
@@ -245,6 +249,99 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     {
         $this->sessionVarsToClear[] = $name;
     }
+
+    /**
+     * Checks whether the currently logged user is an administrator
+     * 
+     * @param XLite_Model_Profile $profile user profile
+     *  
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function isAdmin(XLite_Model_Profile $profile)
+    {
+        return $profile->get('access_level') >= $this->getAdminAccessLevel();
+    }
+
+    /**
+     * Return access level for the passed user type
+     * 
+     * @param string $type profile type
+     *  
+     * @return int
+     * @access public
+     * @since  3.0.0
+     */
+    public function getAccessLevel($type)
+    {
+        return in_array($type, $this->getUserTypes()) ? call_user_func(array($this, 'get' . $type . 'Accesslevel')) : null;
+    }
+
+    /**
+     * Gets the access level for administrator
+     * 
+     * @return int
+     * @access public
+     * @since  3.0.0
+     */
+    public function getAdminAccessLevel()
+    {
+        return 100;
+    }
+
+    /**
+     * Gets the access level for a customer
+     * 
+     * @return int
+     * @access public
+     * @since  3.0.0
+     */
+    public function getCustomerAccessLevel()
+    {
+        return 0;
+    }
+
+    /**
+     * Returns all user types configured for this system
+     * 
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getUserTypes()
+    {
+        return array('customer' => 'Customer', 'admin' => 'Admin');
+    }
+
+    /**
+     * Return list of all allowed access level values (by default - array(0, 100))
+     * 
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getAccessLevelsList()
+    {
+        return array_map(array($this, 'getAccessLevel'), $this->getUserTypes());
+    }
+
+    /**
+     * getUserTypesRaw
+     *
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getUserTypesRaw()
+    {
+        return array_combine($this->getAccessLevelsList(), $this->getUserTypes());
+    }
+
+
+
+
+
 
 
     function _reReadProfiles($newValue = null)  // {{{
@@ -592,60 +689,6 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
                             );
         $mailer->send();
     } // }}}
-
-    /**
-    * Checks whether the currently logged user is an administrator
-    *
-    * @access public
-    * @param Profile $profile The user profile
-    */
-    function isAdmin($profile) // {{{
-    {
-        return $profile->get("access_level") >= $this->getAdminAccessLevel();
-    } // }}}
-
-    function getAccessLevel($user) // {{{
-    {
-        $method = "get{$user}accesslevel";
-        return method_exists($this, $method) ? $this->$method() : null;
-    } // }}}
-
-    /**
-    * Gets the access level for administrator.
-    */
-    function getAdminAccessLevel() // {{{
-    {
-        return 100;
-    } // }}}
-    
-    /**
-    * Gets the access level for a customer.
-    */
-    function getCustomerAccessLevel() // {{{
-    {
-        return 0;
-    } // }}}
-    
-    /**
-    * Returns all user types configured for this system.
-    */
-    function getUserTypes() // {{{
-    {
-        return array("customer" => "Customer", "admin" => "Admin");
-    } // }}}
-
-    /**
-     * getUserTypesRaw 
-     * TODO - functions above (and this one too) should be refactored
-     * 
-     * @return array
-     * @access public
-     * @since  3.0.0
-     */
-    public function getUserTypesRaw()
-    {
-        return array_combine(array_map(array($this, 'getAccessLevel'), $this->getUserTypes()), $this->getUserTypes());
-    }
 
     /**
     * Checks whether user has enough permissions to access specified resource.

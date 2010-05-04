@@ -320,21 +320,19 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
      */
     protected function checkPassword(array $data)
     {
-        $result = !isset($this->sections[self::SECTION_MAIN]);
+        $result = true;
 
-        if (!$result) {
-            if (!empty($data['password']) || !empty($data['password_conf'])) {
-                $result = $data['password'] == $data['password_conf'];
-                
-                if (!$result) {
-                    XLite_Core_TopMessage::getInstance()->addError(
-                        'Password and its confirmation do not match'
-                    );
-                }
-            } else {
-                $this->getModelObject()->unsetProperty('password');
-                $this->getModelObject()->unsetProperty('password_conf');
+        if (isset($this->sections[self::SECTION_MAIN]) && (!empty($data['password']) || !empty($data['password_conf']))) {
+
+            $result = $data['password'] == $data['password_conf'];
+
+            if (!$result) {
+                XLite_Core_TopMessage::getInstance()->addError('Password and its confirmation do not match');
             }
+        } else {
+
+            $this->getModelObject()->unsetProperty('password');
+            $this->getModelObject()->unsetProperty('password_conf');
         }
 
         return $result;

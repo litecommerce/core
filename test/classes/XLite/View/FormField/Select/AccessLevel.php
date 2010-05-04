@@ -46,5 +46,17 @@ class XLite_View_FormField_Select_AccessLevel extends XLite_View_FormField_Selec
     {
         return XLite_Model_Auth::getInstance()->getUserTypesRaw();
     }
+
+    /**
+     * Check field value validity
+     *
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function checkFieldValue()
+    {
+        return in_array($this->getValue(), XLite_Model_Auth::getInstance()->getAccessLevelsList());
+    }
 }
 

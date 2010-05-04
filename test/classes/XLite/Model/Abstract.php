@@ -921,7 +921,9 @@ class XLite_Model_Abstract extends XLite_Base
     public function setProperties(array $properties)
     {
         foreach ($properties as $field => $value) {
-            isset($this->fields[$field]) && $this->setComplex($field, $properties[$field]);
+            if (isset($this->fields[$field])) {
+                $this->set($field, $properties[$field]);
+            }
         }
     }
 
