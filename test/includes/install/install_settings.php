@@ -63,12 +63,7 @@ define('LC_TEMPLATES_DIRECTORY', 'skins');
 define('LC_CONFIG_FILE', 'config.php');
 
 // Maximum recursion depth for checking
-if (constant('LC_OS_CODE') === 'win') {
-    define('MAX_RECURSION_DEPTH', 800);
-
-} else {
-	define('MAX_RECURSION_DEPTH', 97); // TODO: define actual required value. It's 97 now
-}
+define('MAX_RECURSION_DEPTH', 97);
 
 // Other LiteCommerce settings
 global $lcSettings;
