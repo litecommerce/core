@@ -1199,7 +1199,17 @@ function isLiteCommerceInstalled()
 
             if ($checkResult) {
 
-                $checkResult = @mysql_connect($data['hostspec'], $data['username'], $data['password']) 
+				if (!empty($data['socket'])) {
+					$host = $data['hostspec'] . ':' . $data['socket'];
+
+				} elseif (!empty($data['port'])) {
+					$host = $data['hostspec'] . ':' . $data['port'];
+
+				} else {
+					$host = $data['hostspec'];
+				}
+
+                $checkResult = @mysql_connect($host, $data['username'], $data['password']) 
 					&& @mysql_select_db($data['database']);
 
                 if ($checkResult) {
