@@ -27,7 +27,7 @@
  */
 
 /**
- * ____description____
+ * Payment methods
  * 
  * @package XLite
  * @see     ____class_see____

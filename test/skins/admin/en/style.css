@@ -182,6 +182,19 @@ HR {
 .TableHead {
     BACKGROUND-COLOR: #E5EBEF
 }
+
+table.plain-table {
+  background-color: #000000;
+}
+
+table.plain-table th {
+  background-color: #e5ebef;
+}
+
+table.plain-table td {
+  background-color: #ffffff;
+}
+
 .AomTableHead {
     BACKGROUND-COLOR: #E5EBEF;
 	FONT-SIZE: 12px;

@@ -69,6 +69,8 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
      */
     public function __construct()
     {
+        require_once LC_EXT_LIB_DIR . 'Log.php';
+
         $this->options = array_merge(
             $this->options,
             XLite::getInstance()->getOptions('log_details')
@@ -101,8 +103,6 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
      */
     public function log($message, $level = null)
     {
-        require_once LC_EXT_LIB_DIR . 'Log.php';
-
         $dir = getcwd();
         chdir(LC_DIR);
 
