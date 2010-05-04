@@ -1529,7 +1529,8 @@ function checkPermissionsRecursive($object)
 
                 while (($file = readdir($handle)) !== false) {
 
-                    if (in_array($file, array('.', '..', '.htaccess'))) {
+                    // Skip '.', '..', '.htaccess' and other files those names starts from '.'
+                    if (preg_match('/^\./', $file)) {
                         continue;
                     }
 
