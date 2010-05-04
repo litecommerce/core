@@ -46,6 +46,6 @@ implements XLite_Base_IDecorator
             }
         }
 
-        parent::action_checkout();
+        parent::doActionCheckout();
     }
 }

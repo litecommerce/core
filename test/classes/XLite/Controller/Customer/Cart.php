@@ -189,7 +189,7 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function action_checkout()
+    protected function doActionCheckout()
     {
         $this->doActionUpdate();
         // switch to checkout dialog 
