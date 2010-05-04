@@ -749,20 +749,43 @@ class XLite_Model_Order extends XLite_Model_Abstract
         }
     } // }}}
 
-    function getPaymentMethod() // {{{
+    /**
+     * Get payment method 
+     * 
+     * @return XLite_Model_PaymentMethod
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPaymentMethod()
     {
-        if (is_null($this->_paymentMethod) && $this->get("payment_method")) {
-            $this->_paymentMethod = XLite_Model_PaymentMethod::factory($this->get("payment_method"));
+        if (is_null($this->_paymentMethod) && $this->get('payment_method')) {
+            $this->_paymentMethod = XLite_Model_PaymentMethod::factory($this->get('payment_method'));
         }
 
         return $this->_paymentMethod;
-    } // }}}
+    }
     
-    function setPaymentMethod($paymentMethod) // {{{
+    /**
+     * Set payment method 
+     * 
+     * @param XLite_Model_PaymentMethod $paymentMethod Payment method
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setPaymentMethod($paymentMethod)
     {
         $this->_paymentMethod = $paymentMethod;
-        $this->set("payment_method", is_null($paymentMethod) ? 0 : $paymentMethod->get("payment_method"));
-    } // }}}
+        $this->set(
+            'payment_method',
+            is_null($paymentMethod)
+                ? 0
+                : $paymentMethod->get('payment_method')
+        );
+    }
 
     function getProfile() // {{{
     {

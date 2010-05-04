@@ -465,7 +465,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
                     XLite_Core_Request::getInstance()->payment_id = $this->config->Payments->default_offline_payment;
                     $this->doActionPayment();
                     $this->getCart()->checkout();
-                    $this->action_checkout();
+                    $this->doActionCheckout();
                     break;
 
                 default:
@@ -506,13 +506,13 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
     // TODO - all of the methods below must be revised
 
     /**
-     * action_checkout
+     * Checkout
      * 
      * @return void
-     * @access public
+     * @access protected
      * @since  3.0.0
      */
-    public function action_checkout()
+    protected function doActionCheckout()
     {
         $itemsBeforeUpdate = $this->getCart()->getItemsFingerprint();
         $this->updateCart();
@@ -628,7 +628,20 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
     {
         return $this->get('url');
     }
-    
+
+    /**
+     * External call success() method
+     * 
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function callSuccess()
+    {
+        return $this->success();
+    }
+ 
     /**
      * Order placement is success 
      * 

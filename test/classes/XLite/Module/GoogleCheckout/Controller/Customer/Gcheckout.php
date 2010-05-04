@@ -54,7 +54,7 @@ class XLite_Module_GoogleCheckout_Controller_Customer_Gcheckout extends XLite_Co
     }
 
 
-    function action_checkout()
+    protected function doActionCheckout()
     {
 		// redirect to cart if not allowed for GoogleCheckout
 		if (!$this->cart->is("googleAllowPay")) {

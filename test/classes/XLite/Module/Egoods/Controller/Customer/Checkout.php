@@ -33,16 +33,17 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Egoods_Controller_Customer_Checkout extends XLite_Controller_Customer_Checkout implements XLite_Base_IDecorator
+class XLite_Module_Egoods_Controller_Customer_Checkout extends XLite_Controller_Customer_Checkout
+implements XLite_Base_IDecorator
 {
-    function action_checkout()
+    protected function doActionCheckout()
     {
         $items = $this->cart->get("items");
         foreach ($items as $key => $i) {
             if(!$i->isValid()) {
-				$this->redirect("cart.php?target=checkout");
+                $this->redirect("cart.php?target=checkout");
                 return;
-        	}
+            }
         }
 
         parent::action_checkout();

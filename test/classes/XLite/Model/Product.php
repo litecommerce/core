@@ -51,7 +51,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
         'brief_description' => '',
         'meta_tags'         => '',
         'meta_title'        => '',
-        'meta_desc'            => '',
+        'meta_desc'         => '',
         'price'             => 0.00,
         'sale_price'        => 0.00,
         'enabled'           => '1',
@@ -60,7 +60,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
         'weight'            => 0,
         'image_type'        => '',
         'tax_class'         => '',
-        'free_shipping'        => 0,
+        'free_shipping'     => 0,
     );    
 
     /**
@@ -91,7 +91,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $defaultOrder = "order_by, name";    
+    public $defaultOrder = 'order_by, name';    
 
     /**
      * Product image 
