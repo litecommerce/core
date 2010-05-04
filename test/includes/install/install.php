@@ -633,7 +633,7 @@ function checkMemAllocation(&$errorMsg, &$value)
         
         if (strpos($response, "MEMORY-TEST-OK") === false) {
             $status = false;
-            $errorMsg = "Memory allocation test failed. Response:\n" . $response;
+            $errorMsg = "Memory allocation test failed. Response:\n" . substr($response, 0, 255);
             break;
         }
         
@@ -662,7 +662,7 @@ function checkRecursionTest(&$errorMsg, &$value)
 
     if (strpos($response, "RECURSION-TEST-OK") === false) {
         $result = false;
-        $errorMsg = "Recursion test failed. Response:\n" . $response;
+        $errorMsg = 'Recursion test failed.';
         $value = constant('MAX_RECURSION_DEPTH');
     }
 
