@@ -135,22 +135,26 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
     protected function definePortals()
     {
         $this->portals = array(
-            'user/%/orders' => array(
+            'user/%user_category/orders' => array(
                 'menu'   => array(
                     'title'            => 'Orders history',
                     'description'      => 'Orders history',
-                    'access arguments' => array('access user profiles'),
+                    'access callback'  => 'user_edit_access',
+                    'access arguments' => array(1, 2),
+                    'load arguments'   => array('%map', '%index'),
                     'weight'           => 100,
                 ),
                 'target' => 'order_list',
                 'prefix' => array($this, 'getOrdersURLPrefix'),
                 'argumentsPreprocessor' => array($this, 'getOrdersArgPreprocess'),
             ),
-            'user/%/orders/%' => array(
+            'user/%user_category/orders/%' => array(
                 'menu'   => array(
                     'title'            => 'Order',
                     'description'      => 'Order',
-                    'access arguments' => array('access user profiles'),
+                    'access callback'  => 'user_edit_access',
+                    'access arguments' => array(1, 2),
+                    'load arguments'   => array('%map', '%index'),
                     'weight'           => 100,
                     'type'             => MENU_CALLBACK,
                 ),
@@ -158,11 +162,13 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
                 'prefix' => array($this, 'getOrderURLPrefix'),
                 'argumentsPreprocessor' => array($this, 'getOrderArgPreprocess'),
             ),
-            'user/%/orders/%/invoice' => array(
+            'user/%user_category/orders/%/invoice' => array(
                 'menu'   => array(
                     'title'            => 'Invoice',
                     'description'      => 'Invoice',
-                    'access arguments' => array('access user profiles'),
+                    'access callback'  => 'user_edit_access',
+                    'access arguments' => array(1, 2),
+                    'load arguments'   => array('%map', '%index'),
                     'weight'           => 100,
                     'type'             => MENU_CALLBACK,
                 ),
@@ -174,11 +180,13 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
         );
 
         if (XLite_Model_ModulesManager::getInstance()->isActiveModule('WishList')) {
-            $this->portals['user/%/wishlist'] = array(
+            $this->portals['user/%user_category/wishlist'] = array(
                 'menu'   => array(
                     'title'            => 'Wish list',
                     'description'      => 'Wish list',
-                    'access arguments' => array('access user profiles'),
+                    'access callback'  => 'user_edit_access',
+                    'access arguments' => array(1, 2),
+                    'load arguments'   => array('%map', '%index'),
                     'weight'           => 110,
                 ),
                 'target' => 'wishlist',
