@@ -222,6 +222,33 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         }
     } // }}}
 
+    /**
+     * Returns the specified property of this object. Read the object data from dataase if necessary 
+     * 
+     * @param string $property field name
+     *  
+     * @return mixed
+     * @access public
+     * @since  3.0
+     */
+    public function get($property)
+    {
+        switch ($property) {
+            case 'billing_name':
+                $result = trim($this->get('billing_firstname') . ' ' . $this->get('billing_lastname'));
+                break;
+
+            case 'shipping_name':
+                $result = trim($this->get('shipping_firstname') . ' ' . $this->get('shipping_lastname'));
+                break;
+
+            default:
+                $result = parent::get($property);
+        }
+
+        return $result;
+    }
+
     function getBillingState() // {{{
     {
         $state = new XLite_Model_State($this->get("billing_state"));
