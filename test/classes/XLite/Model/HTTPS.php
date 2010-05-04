@@ -616,7 +616,12 @@ class XLite_Model_HTTPS extends XLite_Base
         curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
 
         if ($post) {
-            curl_setopt($c, CURLOPT_POSTFIELDS, $this->getPost());
+            if (is_array($this->data)) {
+                curl_setopt($c, CURLOPT_POSTFIELDS, $this->data);
+
+            } else {
+                curl_setopt($c, CURLOPT_POSTFIELDS, $this->getPost());
+            }
         }
 
         curl_setopt($c, CURLOPT_SSL_VERIFYPEER, 0);
