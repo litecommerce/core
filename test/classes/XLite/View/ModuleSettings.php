@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,11 +27,11 @@
  */
 
 /**
- * XLite_View_ModuleSettings 
+ * Module settings 
  * 
- * @package    XLite
- * @subpackage ____sub_package____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_View_ModuleSettings extends XLite_View_Abstract
 {
@@ -39,7 +39,7 @@ class XLite_View_ModuleSettings extends XLite_View_Abstract
      * Widget param names 
      */
     
-    const PARAM_MODULE = 'module';
+    const PARAM_SECTION = 'section';
 
 
     /**
@@ -73,7 +73,7 @@ class XLite_View_ModuleSettings extends XLite_View_Abstract
      */
     protected function getModule()
     {
-        return $this->getParam(self::PARAM_MODULE);
+        return $this->getParam(self::PARAM_SECTION);
     }
 
     /**
@@ -118,7 +118,7 @@ class XLite_View_ModuleSettings extends XLite_View_Abstract
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_MODULE => new XLite_Model_WidgetParam_String('Module', null),
+            self::PARAM_SECTION => new XLite_Model_WidgetParam_String('Module name', null),
         );
     }
 
