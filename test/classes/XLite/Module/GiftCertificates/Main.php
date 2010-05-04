@@ -96,9 +96,10 @@ class XLite_Module_GiftCertificates_Main extends XLite_Module_Abstract
 
         $this->registerPaymentMethod('gift_certificate');
 
-        $img = XLite_Model_Image::getInstance();
-        $img->registerImageClass('ecard_thumbnail', 'e-Card thumbnails', 'ecards', 'thumbnail', 'ecard_id');
-        $img->registerImageClass('ecard_image', 'e-Card images', 'ecards', 'image', 'ecard_id');
+        // TODO - review in next verion
+        //$img = XLite_Model_Image::getInstance();
+        //$img->registerImageClass('ecard_thumbnail', 'e-Card thumbnails', 'ecards', 'thumbnail', 'ecard_id');
+        //$img->registerImageClass('ecard_image', 'e-Card images', 'ecards', 'image', 'ecard_id');
 
         $this->xlite->set('GiftCertificatesEnabled', true);
     }

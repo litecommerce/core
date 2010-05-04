@@ -44,8 +44,6 @@ From this page, you can build and maintain the store in a very easy way!
             <td colspan=5>&nbsp;</td>
         </tr>
         <tr>
-            <widget template="menu_item.tpl" href="admin.php?target=wysiwyg" icon="menu/icon_design.gif" text="<span class='MainMenuItemHeader'>Design Import/Export</span><br>Make the design of your store appealing and unique.<br><br><a href='admin.php?target=template_editor' style='color:blue;'><u>Template editor</u></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='admin.php?target=css_edit' style='color:blue;'><u>CSS editor</u></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='admin.php?target=image_edit' style='color:blue;'><u>Image editor</u></a>">
-            <td width="1%">&nbsp;&nbsp;</td>
             <widget template="menu_item.tpl" href="admin.php?target=modules" icon="menu/icon_modules.gif" text="<span class='MainMenuItemHeader'>Modules</span><br>Expand the functionality of your store by installing and using add-on modules">
         </tr>
         <tr>

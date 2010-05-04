@@ -103,7 +103,9 @@
 <widget target="add_product" mode="notification" template="common/dialog.tpl" body="product/add_notification.tpl" head="Notification">
 
 <widget target="profile" template="common/dialog.tpl" head="Delete profile - Confirmation" body="profile/confirm_delete.tpl" IF="{getRequestParamValue(#mode#)=#delete#}" />
+{*
 <widget target="wysiwyg" template="common/dialog.tpl" head="HTML design import/export" body="wysiwyg.tpl" />
+*}
 
 <widget class="XLite_View_Model_Profile_Modify" />
 
@@ -141,7 +143,9 @@
 
 <widget target="css_edit" template="common/dialog.tpl" body="css_editor/css_edit.tpl" head="CSS Editor">
 <widget target="image_edit" template="common/dialog.tpl" body="image_editor/edit.tpl" head="Image Editor">
+{*
 <widget target="change_skin" template="common/dialog.tpl" body="change_skin.tpl" head="Change Current Skin">
+*}
 <widget target="countries" template="common/dialog.tpl" body="countries.tpl" head="Countries">
 <widget target="states" template="common/dialog.tpl" body="states.tpl" head="States">
 <widget class="XLite_View_Tabber" target="taxes" body="{pageTemplate}" switch="page">
@@ -160,9 +164,11 @@
 <widget module="GiftCertificates" target="gift_certificates" template="common/dialog.tpl" body="modules/GiftCertificates/list.tpl" head="Gift certificates" />
 <widget module="GiftCertificates" target="add_gift_certificate" template="common/dialog.tpl" body="modules/GiftCertificates/add_gift_certificate.tpl" head="Add gift certificate" />
 <widget module="GiftCertificates" target="gift_certificate" template="common/dialog.tpl" body="modules/GiftCertificates/gift_certificate.tpl" head="Gift certificate" />
+{*
 <widget module="GiftCertificates" target="gift_certificate_ecards" template="common/dialog.tpl" body="modules/GiftCertificates/ecards.tpl" head="Gift certificate e-Cards" />
 <widget module="GiftCertificates" target="gift_certificate_ecard" template="common/dialog.tpl" body="modules/GiftCertificates/ecard.tpl" head="Gift certificate e-Card" />
 <widget module="GiftCertificates" target="gift_certificate_select_ecard" template="common/dialog.tpl" body="modules/GiftCertificates/select_ecard.tpl" head="Select e-Card" />
+*}
 
 <widget module="Promotion" target="SpecialOffers" template="common/dialog.tpl" body="modules/Promotion/special_offers.tpl" head="Special Offers">
 <widget module="Promotion" target="SpecialOffer" mode="" template="common/dialog.tpl" body="modules/Promotion/special_offer1.tpl" head="Special Offer Type">

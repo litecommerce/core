@@ -40,7 +40,6 @@
 <span IF="target=#shipping_rates#">&nbsp;::&nbsp;<a href="admin.php?target=shipping_rates" class="NavigationPath">Shipping settings :: Shipping charges</a></span>
 <span IF="target=#payment_method#">&nbsp;::&nbsp;<a href="admin.php?target=payment_methods" class="NavigationPath">Payment methods</a>&nbsp;::&nbsp;{pm.processorName} configuration</span>
 </font>
-<span IF="target=#wysiwyg#">&nbsp;::&nbsp;<a href="admin.php?target=wysiwyg" class="NavigationPath">HTML design import/export</a></span>
 <span IF="target=#countries#">&nbsp;::&nbsp;<a href="admin.php?target=countries" class="NavigationPath">Countries</a></span>
 <span IF="target=#states#">&nbsp;::&nbsp;<a href="admin.php?target=states" class="NavigationPath">States</a></span>
 <span IF="target=#usps#">&nbsp;::&nbsp;<a href="admin.php?target=usps" class="NavigationPath">Shipping settings :: USPS Settings</a></span>
@@ -48,7 +47,6 @@
 <span IF="target=#intershipper#">&nbsp;::&nbsp;<a href="admin.php?target=intershipper" class="NavigationPath">Shipping settings :: Intershipper Settings</a></span>
 <span IF="target=#css_edit#">&nbsp;::&nbsp;<a href="admin.php?target=css_edit" class="NavigationPath">CSS Editor</a></span>
 <span IF="target=#image_edit#">&nbsp;::&nbsp;<a href="admin.php?target=image_edit" class="NavigationPath">Image Editor</a></span>
-<span IF="target=#change_skin#">&nbsp;::&nbsp;<a href="admin.php?target=change_skin" class="NavigationPath">Change Current Skin</a></span>
 <span IF="target=#db#">&nbsp;::&nbsp;<a href="admin.php?target=db" class="NavigationPath">Database Backup/Restore</a></span>
 <span IF="target=#update_inventory#">&nbsp;::&nbsp;<a href="admin.php?target=update_inventory" class="NavigationPath">Inventory management</a></span>
 <span IF="target=#taxes#">&nbsp;::&nbsp;<a href="admin.php?target=taxes" class="NavigationPath">Taxes</a></span>
