@@ -531,6 +531,8 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
                 : '';
             $this->getCart()->set('notes', $notes);
 
+            $this->getCart()->checkout();
+
             switch ($pm->handleRequest($this->getCart())) {
 
                 case XLite_Model_PaymentMethod::PAYMENT_SILENT:
