@@ -131,7 +131,7 @@ class XLite_View_Pager extends XLite_View_Abstract
     protected function getItemsPerPage()
     {
         if (!isset($this->itemsPerPage)) {
-            $current = $this->getParam(self::PARAM_ITEMS_PER_PAGE);
+            $current = intval($this->getParam(self::PARAM_ITEMS_PER_PAGE));
             $this->itemsPerPage = max(
                 min(self::ITEMS_PER_PAGE_MAX, $current),
                 max(self::ITEMS_PER_PAGE_MIN, $current)
