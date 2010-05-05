@@ -214,12 +214,6 @@ Please leave the password fields empty<br> if you don't want to change the passw
 <tr valign="middle">
     <td colspan="4">
       <b>Shipping Address (leave empty if same as billing address)</b><br><hr size="1" noshade>
-	  	<div id="btn_copy_billing">
-        <widget class="XLite_View_Button_Regular" label="Copy Billing Info" jsCode="copyBillingInfo(document.register_form);">
-      </div>
-  		<div id="btn_modify_shipping" style="display: none;">
-        <widget class="XLite_View_Button_Regular" label="Modify Shipping address" jsCode="OnModifyShippingAddress(document.register_form);">
-      </div>
 	</td>
 </tr>
 <tbody id="shipping_body">

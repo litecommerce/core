@@ -222,7 +222,7 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
     <b>Shipping Address (leave empty if same as billing address)</b>
     <br />
     <hr size="1" noshade>
-    <widget class="XLite_View_Button_Regular" label="Copy Billing Info" jsCode="copyBillingInfo(document.registration_form);" /></td>
+    </td>
 </tr>
 <tr valign="middle">
     <td align="right">Title</td>
