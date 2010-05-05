@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage Controller
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,11 +27,11 @@
  */
 
 /**
- * Checkout
+ * Checkout 
  * 
- * @package    XLite
- * @subpackage ____sub_package____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 {
@@ -250,7 +250,11 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
     {
         foreach ($this->getCheckoutStepDescriptions() as $mode => $data) {
             $this->checkoutSteps->add(
-                new XLite_Model_ListNode_CheckoutStep($mode, $data[self::STEP_WIDGET_CLASS], !$data[self::STEP_IS_NOT_PASSED])
+                new XLite_Model_ListNode_CheckoutStep(
+                    $mode,  
+                    $data[self::STEP_WIDGET_CLASS],
+                    !$data[self::STEP_IS_NOT_PASSED]
+                )
             );
         }
 
@@ -296,7 +300,11 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
      */
     protected function getOrder()
     {
-        return XLite_Model_CachingFactory::getObject(__METHOD__, 'XLite_Model_Order', XLite_Core_Request::getInstance()->order_id);
+        return XLite_Model_CachingFactory::getObject(
+            __METHOD__,
+            'XLite_Model_Order',
+            XLite_Core_Request::getInstance()->order_id
+        );
     }
 
     /**
@@ -308,7 +316,11 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
      */
     protected function getPaymentMethods()
     {
-        return XLite_Model_CachingFactory::getObjectFromCallback(__METHOD__, 'XLite_Model_PaymentMethod', 'getActiveMethods');
+        return XLite_Model_CachingFactory::getObjectFromCallback(
+            __METHOD__,
+            'XLite_Model_PaymentMethod',
+            'getActiveMethods'
+        );
     }
 
     /**
@@ -373,13 +385,23 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
         $this->checkHtaccess();
 
         $pm = new XLite_Model_PaymentMethod(XLite_Core_Request::getInstance()->payment_id);
-        $this->getCart()->set('paymentMethod', $pm);
-        $this->updateCart();
+        if (!$pm->isRead) {
+            XLite_Core_TopMessage::getInstance()->add(
+                'No payment method selected',
+                XLite_Core_TopMessage::ERROR
+            );
+    
+        } else {
 
-        // FIXME - must be corrected according to the checkout/steps/failure.tpl template
-        if ($this->isPaymentNeeded()) {
-            $this->params[] = 'error';
-            $this->set('error', 'pmSelect');
+            $this->getCart()->set('paymentMethod', $pm);
+            $this->updateCart();
+
+            if ($this->isPaymentNeeded()) {
+                XLite_Core_TopMessage::getInstance()->add(
+                    'The selected payment method is obsolete or invalid. Select another payment method.',
+                    XLite_Core_TopMessage::ERROR
+                );
+            }
         }
     }
 
@@ -448,11 +470,12 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
         if ($this->getCheckoutSteps()->isCorrectedStep()) {
 
             $this->actionPostprocess();
-            $this->setReturnUrl(
-                isset($step) 
-                    ? $this->buildURL('checkout', '', array(XLite_View_Abstract::PARAM_MODE => $step->getMode()))
-                    : $this->buildURL('cart')
-            );
+            $url = isset($step)
+                ? $this->buildURL('checkout', '', array(XLite_View_Abstract::PARAM_MODE => $step->getMode()))
+                : $this->buildURL('cart');
+
+            $this->setReturnUrl($utl);
+
         } else {
 
             if (!isset(XLite_Core_Request::getInstance()->mode)) {
@@ -466,10 +489,10 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
                     $this->doActionPayment();
                     $this->getCart()->checkout();
                     $this->doActionCheckout();
+
                     break;
 
                 default:
-                    // ...
             }
         }
     }
@@ -518,13 +541,17 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
         $this->updateCart();
         $itemsAfterUpdate = $this->getCart()->getItemsFingerprint();
 
-        if ($this->get("absence_of_product") || $this->getCart()->isEmpty() || $itemsAfterUpdate != $itemsBeforeUpdate) {
-            $this->set("absence_of_product", true);
+        if (
+            $this->get('absence_of_product')
+            || $this->getCart()->isEmpty()
+            || $itemsAfterUpdate != $itemsBeforeUpdate
+        ) {
+            $this->set('absence_of_product', true);
             $this->redirect($this->buildURL('cart'));
             return;
         }
 
-        $pm = $this->getCart()->get("paymentMethod");
+        $pm = $this->getCart()->get('paymentMethod');
         if (!is_null($pm)) {
             $notes = isset(XLite_Core_Request::getInstance()->notes)
                 ? XLite_Core_Request::getInstance()->notes
@@ -682,12 +709,13 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
         if (!isset($this->_profileDialog)) {
             $this->_profileDialog = new XLite_Controller_Customer_Profile();
         }
+
         return $this->_profileDialog->getCountriesStates();
     }
 
     function isDisplayNumber()
     {
-        return $this->getComplex('xlite.config.General.display_check_number');
+        return $this->config->General->display_check_number;
     }
 }
 
