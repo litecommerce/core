@@ -375,7 +375,10 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
     public function getProfile($cmsUserId)
     {
-        $profile = XLite_Model_CachingFactory::getObject(__METHOD__ . $cmsUserId, 'XLite_Model_Profile');
+        $profile = XLite_Model_CachingFactory::getObject(
+            __METHOD__ . $cmsUserId,
+            'XLite_Model_Profile'
+        );
 
         // Not initialized
         if (!$profile->isRead) {

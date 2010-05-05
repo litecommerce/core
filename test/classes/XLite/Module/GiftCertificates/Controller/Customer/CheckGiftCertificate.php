@@ -56,13 +56,13 @@ class XLite_Module_GiftCertificates_Controller_Customer_CheckGiftCertificate ext
     protected $foundgc = null;
 
     /**
-     * Common method to determine current location 
+     * Return current page title
      * 
-     * @return array
-     * @access protected 
+     * @return string
+     * @access public
      * @since  3.0.0
      */
-    protected function getLocation()
+    public function getTitle()
     {
         return 'Verify gift certificate';
     }

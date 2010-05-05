@@ -27,28 +27,15 @@
  */
 
 /**
- * ____description____
+ * Abstract form widget
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Module_DrupalConnector_View_Form_Abstract extends XLite_View_Form_Abstract implements XLite_Base_IDecorator
+abstract class XLite_Module_DrupalConnector_View_Form_Abstract extends XLite_View_Form_Abstract
+implements XLite_Base_IDecorator
 {
-    /**
-     * Return widget template 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getTemplate()
-    {
-        return ($this->isDrupalGetForm() && !$this->getParam(self::PARAM_END))
-            ? 'modules/DrupalConnector/form.start.tpl' 
-            : parent::getTemplate();
-    }
-
     /**
      * Chech if widget is exported into Drupal and current form has its method = "GET"
      * 
@@ -59,7 +46,7 @@ abstract class XLite_Module_DrupalConnector_View_Form_Abstract extends XLite_Vie
     protected function isDrupalGetForm()
     {
         return XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS() 
-               && 'GET' == $this->getParam(self::PARAM_FORM_METHOD);
+               && 'get' == strtolower($this->getParam(self::PARAM_FORM_METHOD));
     }
 
     /**
@@ -71,7 +58,8 @@ abstract class XLite_Module_DrupalConnector_View_Form_Abstract extends XLite_Vie
      */
     protected function getJSOnSubmitCode()
     {
-        return ($this->isDrupalGetForm() ? 'drupalOnSubmitGetForm(this); ' : '') . parent::getJSOnSubmitCode();
+        return ($this->isDrupalGetForm() ? 'drupalOnSubmitGetForm(this); ' : '')
+            . parent::getJSOnSubmitCode();
     }
 
     /**
@@ -98,6 +86,43 @@ abstract class XLite_Module_DrupalConnector_View_Form_Abstract extends XLite_Vie
         parent::defineWidgetParams();
 
         $this->widgetParams[self::PARAM_FORM_PARAMS]->appendValue(array('q' => ''));
+    }
 
+    /**
+     * Return list of additional params 
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getFormParamsAsPlainList()
+    {
+        if (is_null($this->plainList)) {
+
+            if ('post' == $this->getParam(self::PARAM_FORM_METHOD)) {
+
+                $this->plainList = parent::getFormParamsAsPlainList();
+
+            } elseif ($this->isDrupalGetForm()) {
+
+                $params = $this->getFormParams();
+
+                $this->plainList = array();
+
+                $url = $this->buildUrl(
+                    $this->getParam(self::PARAM_FORM_TARGET),
+                    $this->getParam(self::PARAM_FORM_ACTION)
+                );
+                $parsedUrl = parse_url($url);
+                if (isset($parsedUrl['query'])) {
+                    $query = array();
+                    parse_str($parsedUrl['query'], $this->plainList);
+                }
+
+            }
+
+        }
+
+        return $this->plainList;
     }
 }

@@ -10,8 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<h3 class="verify-gc">Verify gift certificate</h3>
-
 <widget template="modules/GiftCertificates/verify.tpl" />
 
 {if:gcid&isFound()}
