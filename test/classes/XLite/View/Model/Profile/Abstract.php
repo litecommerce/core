@@ -462,6 +462,45 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
     }
 
     /**
+     * Check - billing and shuipping addresses are equal or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isSameAddress()
+    {
+        return $this->getModelObject()->isSameAddress();
+    }
+
+    /**
+     * Check data and return only ones for the current fieldset 
+     * 
+     * @param array $data data to check
+     *  
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getFieldsetData(array $data)
+    {
+        $data = parent::getFieldsetData($data);
+
+        if (isset($data['ship_as_bill'])) {
+            if ('Y' == $data['ship_as_bill']) {
+                foreach (array_keys($this->addressSchema) as $k) {
+                    $data['shipping_' . $k] = $data['billing_' . $k];
+                }
+            }
+
+            unset($data['ship_as_bill']);
+        }
+
+        return $data;
+    }
+
+    /**
      * Save form sections list
      *
      * @param array $params widget params
@@ -478,5 +517,6 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
             $this->sections = XLite_Core_Converter::filterArrayByKeys($this->sections, $sections);
         }
     }
+
 }
 

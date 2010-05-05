@@ -748,9 +748,11 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
         $properties = $this->getFieldsetData($data);
         $this->setModelProperties($properties);
 
-        if ($result = $this->isValid()) {
+        $result = $this->isValid();
+        if ($result) {
 
-            if ($result = $this->callActionHandler($action, $properties)) {
+            $result = $this->callActionHandler($action, $properties);
+            if ($result) {
                 $this->success();
             }
 

@@ -385,7 +385,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
         $this->checkHtaccess();
 
         $pm = new XLite_Model_PaymentMethod(XLite_Core_Request::getInstance()->payment_id);
-        if (!$pm->isRead) {
+        if (!$pm->isExists()) {
             XLite_Core_TopMessage::getInstance()->add(
                 'No payment method selected',
                 XLite_Core_TopMessage::ERROR
