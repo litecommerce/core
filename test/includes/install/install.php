@@ -954,10 +954,11 @@ function doInstallDatabase($trigger, &$params, $silentMode = false)
 
                 $configUpdated = change_config($params);
 
-                $result = (true === $configUpdated);
+            } else {
+                $configUpdated = false;
             }
             
-            if (!$result && !$silentMode) {
+            if ($configUpdated !== true && !$silentMode) {
                 fatal_error('Cannot open configuration file "' . constant('LC_CONFIG_FILE') . '" for writing. This unexpected error has canceled the installation. To install the software, please correct the problem and start the installation again.');
             }
 
@@ -976,7 +977,7 @@ function doInstallDatabase($trigger, &$params, $silentMode = false)
             $_sql = array_merge($_sql, $lcSettings['sql_files']['demo']);
         }
 
-        if ($result) {
+        if (true === $configUpdated) {
 
             if (!$silentMode) {
                echo "<br /><b>Updating database... </b><br />\n"; flush();
@@ -2892,7 +2893,7 @@ OUT;
 
                 // Check if config.php file is writeable
                 if (!@is_writable(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'))) {
-                    fatal_error('Cannot open file "' . constant('LC_CONFIG_FILE') . '" for writing. UNIX permissions for this file need to be set to 0666');
+                    fatal_error('Cannot open file "' . constant('LC_CONFIG_FILE') . '" for writing. To install the software, please correct the problem and start the installation again...');
                     $checkError = true;
 
                 } else {
@@ -2935,27 +2936,33 @@ OUT;
             }
         } 
 
-        ob_start();
+        if (!$checkError) {
 
-        foreach ($paramFields as $fieldName => $fieldData) {
+            ob_start();
 
-            if (!isset($fieldData['step']) || $fieldData['step'] != 2) {
-                $fieldData['type'] = 'static';
-                $fieldData['value'] = (isset($params[$fieldName]) ? $params[$fieldName] : '');
+            foreach ($paramFields as $fieldName => $fieldData) {
+
+                if (!isset($fieldData['step']) || $fieldData['step'] != 2) {
+                    $fieldData['type'] = 'static';
+                    $fieldData['value'] = (isset($params[$fieldName]) ? $params[$fieldName] : '');
+                }
+
+                displayFormElement($fieldName, $fieldData, $clrNumber);
+                $clrNumber = ($clrNumber == 2) ? 1 : 2;
             }
 
-            displayFormElement($fieldName, $fieldData, $clrNumber);
-            $clrNumber = ($clrNumber == 2) ? 1 : 2;
-        }
+            $output = ob_get_contents();
+            ob_end_clean();
 
-        $output = ob_get_contents();
-        ob_end_clean();
+        } else {
+            $output = '';
+        }
 
         if (!$checkError) {
             $bottomMessage = 'Push the "Next" button below to begin the installation';
 
         } else {
-            $error = false;
+            $error = true;
         }
 
     }
