@@ -43,7 +43,7 @@
 <widget target="profile" mode="success" template="common/dialog.tpl" head="Registration complete" body="register_success.tpl">
 
 {* It's only the test *}
-<widget target="profile" mode="modify" class="XLite_View_Model_Profile" IF="!showAV" />
+<widget target="profile" mode="modify" class="XLite_View_Model_Profile_Modify" IF="!showAV" />
 {*<widget target="profile" mode="modify" class="XLite_View_RegisterForm" head="Modify profile" name="profileForm" IF="!showAV" />*}
 
 
