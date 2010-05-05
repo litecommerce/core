@@ -2745,7 +2745,7 @@ function module_cfg_install_db(&$params)
             'def_value'   => $_SERVER['HTTP_HOST'],
             'required'    => true
         ),
-        'xlite_http_hosts' => array(
+        'xlite_https_host' => array(
             'title'       => 'Secure web server name',
             'description' => 'Hostname of your secure (HTTPS-enabled) web server (E.g.: secure.example.com). If omitted, it is assumed to be the same as the web server name.',
             'def_value'   => $_SERVER['HTTP_HOST'],
@@ -2843,6 +2843,12 @@ function module_cfg_install_db(&$params)
             displayFormElement($fieldName, $fieldData, $clrNumber);
             $clrNumber = ($clrNumber == 2) ? 1 : 2;
         }
+
+?>
+
+<input type="hidden" name="cfg_install_db_step" value="1" />
+
+<?php
 
         $output = ob_get_contents();
         ob_end_clean();
@@ -2989,9 +2995,13 @@ OUT;
 function module_cfg_install_db_js_back()
 {
     global $params;
+
+    // 1 - step back; 2 - step 2/initial form
+    $goBack = (!isset($_POST['cfg_install_db_step']) ? '1' : '2');
+
 ?>
     function step_back() {
-        document.ifrm.current.value = "<?php echo ((!isset($params['mysqlhost']) || $params['mysqlhost'] == '') ? '1' : '2'); ?>";
+        document.ifrm.current.value = "<?php echo $goBack; ?>";
         document.ifrm.submit();
 
         return true;
