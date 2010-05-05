@@ -688,25 +688,31 @@ function checkFilePermissions(&$errorMsg, &$value)
 
     $perms = array(); 
 
-    if (substr(PHP_OS, 0, 3) != 'WIN') {
+    if (constant('LC_SUPHP_MODE') == "0") {
 
-        if (constant('LC_SUPHP_MODE') == "0") {
+        $array = array();
 
-            if (!@is_writable(constant('LC_ROOT_DIR'))) {
-                $perms[] = 'chmod 0777 ' . constant('LC_ROOT_DIR');
-            }
+        if (!@is_writable(constant('LC_ROOT_DIR'))) {
+            $array[constant('LC_ROOT_DIR')] = '0777';
+        }
 
-            $array = array();
-            foreach ($lcSettings['mustBeWritable'] as $object) {
-                $array = array_merge($array, checkPermissionsRecursive(constant('LC_ROOT_DIR') . $object));
-            }
+        foreach ($lcSettings['mustBeWritable'] as $object) {
+            $array = array_merge($array, checkPermissionsRecursive(constant('LC_ROOT_DIR') . $object));
+        }
 
-            if (!empty($array)) {
-                foreach ($array as $file => $perm) {
+        if (!empty($array)) {
+
+            foreach ($array as $file => $perm) {
+
+                if (LC_OS_CODE === 'win') {
+                    $perms[] = $file;
+
+                } else {
                     $perms[] = 'chmod ' . $perm . ' ' . $file;
-                    if (count($perms) > 25) {
-                        break;
-                    }
+                }
+
+                if (count($perms) > 25) {
+                    break;
                 }
             }
         }
@@ -714,7 +720,12 @@ function checkFilePermissions(&$errorMsg, &$value)
 
     if (count($perms) > 0) {
         $result = false;
-        $errorMsg = 'Permissions checking failed. Please make sure that the following file permissions are assigned (UNIX only):<br /><br /><i>' . implode("<br />", $perms) . '</i>';
+        if (LC_OS_CODE === 'win') {
+            $errorMsg = "Permissions checking failed. Please make sure that the following files have writable permissions:\n<br /><br /><i>" . implode("<br />\n", $perms) . '</i>';
+
+        } else {
+            $errorMsg = "Permissions checking failed. Please make sure that the following file permissions are assigned (UNIX only):\n<br /><br /><i>" . implode("<br />\n", $perms) . '</i>';
+        }
     }
 
     return $result;
@@ -943,7 +954,10 @@ function doInstallDatabase($trigger, &$params, $silentMode = false)
 
                 $configUpdated = change_config($params);
 
-            } elseif (!$silentMode) {
+                $result = (true === $configUpdated);
+            }
+            
+            if (!$result && !$silentMode) {
                 fatal_error('Cannot open configuration file "' . constant('LC_CONFIG_FILE') . '" for writing. This unexpected error has canceled the installation. To install the software, please correct the problem and start the installation again.');
             }
 
@@ -962,7 +976,7 @@ function doInstallDatabase($trigger, &$params, $silentMode = false)
             $_sql = array_merge($_sql, $lcSettings['sql_files']['demo']);
         }
 
-        if ($configUpdated) {
+        if ($result) {
 
             if (!$silentMode) {
                echo "<br /><b>Updating database... </b><br />\n"; flush();
@@ -1534,7 +1548,7 @@ function checkPermissionsRecursive($object)
                         continue;
                     }
 
-                    $fileRealPath = $object . '/' . $file;
+                    $fileRealPath = $object . LC_DS . $file;
 
                     if (!is_writable($fileRealPath)) {
                         $result[$fileRealPath] = (is_dir($fileRealPath) ? $dirPermissions : $filePermissions);

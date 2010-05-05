@@ -78,7 +78,7 @@ $lcSettings = array(
         'images',
         'files',
         constant('LC_TEMPLATES_DIRECTORY'),
-        'etc/config.php'
+        'etc' . LC_DS . 'config.php'
     ),
 
     // The list of directories that should have writeble permissions
