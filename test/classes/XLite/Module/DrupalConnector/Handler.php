@@ -135,26 +135,24 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
     protected function definePortals()
     {
         $this->portals = array(
-            'user/%user_category/orders' => array(
+            'user/%/orders' => array(
                 'menu'   => array(
                     'title'            => 'Orders history',
                     'description'      => 'Orders history',
-                    'access callback'  => 'user_edit_access',
-                    'access arguments' => array(1, 2),
-                    'load arguments'   => array('%map', '%index'),
+                    'access callback'  => 'lc_connector_user_access',
+                    'access arguments' => array(1),
                     'weight'           => 100,
                 ),
                 'target' => 'order_list',
                 'prefix' => array($this, 'getOrdersURLPrefix'),
                 'argumentsPreprocessor' => array($this, 'getOrdersArgPreprocess'),
             ),
-            'user/%user_category/orders/%' => array(
+            'user/%/orders/%' => array(
                 'menu'   => array(
                     'title'            => 'Order',
                     'description'      => 'Order',
-                    'access callback'  => 'user_edit_access',
-                    'access arguments' => array(1, 2),
-                    'load arguments'   => array('%map', '%index'),
+                    'access callback'  => 'lc_connector_order_access',
+                    'access arguments' => array(1, 3),
                     'weight'           => 100,
                     'type'             => MENU_CALLBACK,
                 ),
@@ -162,13 +160,12 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
                 'prefix' => array($this, 'getOrderURLPrefix'),
                 'argumentsPreprocessor' => array($this, 'getOrderArgPreprocess'),
             ),
-            'user/%user_category/orders/%/invoice' => array(
+            'user/%/orders/%/invoice' => array(
                 'menu'   => array(
                     'title'            => 'Invoice',
                     'description'      => 'Invoice',
-                    'access callback'  => 'user_edit_access',
-                    'access arguments' => array(1, 2),
-                    'load arguments'   => array('%map', '%index'),
+                    'access callback'  => 'lc_connector_order_access',
+                    'access arguments' => array(1, 3),
                     'weight'           => 100,
                     'type'             => MENU_CALLBACK,
                 ),
@@ -180,13 +177,12 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
         );
 
         if (XLite_Model_ModulesManager::getInstance()->isActiveModule('WishList')) {
-            $this->portals['user/%user_category/wishlist'] = array(
+            $this->portals['user/%/wishlist'] = array(
                 'menu'   => array(
                     'title'            => 'Wish list',
                     'description'      => 'Wish list',
-                    'access callback'  => 'user_edit_access',
-                    'access arguments' => array(1, 2),
-                    'load arguments'   => array('%map', '%index'),
+                    'access callback'  => 'lc_connector_user_access',
+                    'access arguments' => array(1),
                     'weight'           => 110,
                 ),
                 'target' => 'wishlist',
@@ -214,9 +210,9 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
     /**
      * Get portal prefix 
      * 
-     * @param string $target Target code
-     * @param string $action Action code
-     * @param array  $params Parameters
+     * @param string $target  Target code
+     * @param string $action  Action code
+     * @param array  &$params Parameters
      *  
      * @return string
      * @access public
@@ -319,7 +315,9 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
      */
     public function getOrdersURLPrefix()
     {
-        $uid = user_uid_optional_to_arg('%');
+        $uid = lc_connector_get_display_user_id()
+            ? lc_connector_get_display_user_id()
+            : user_uid_optional_to_arg('%');
 
         return array(
             'user',

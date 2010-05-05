@@ -91,12 +91,23 @@ class XLite_Controller_Customer_Order extends XLite_Controller_Customer_Abstract
     public function checkAccess()
     {
         return parent::checkAccess()
-            && (
-                $this->session->get('last_order_id') == XLite_Core_Request::getInstance()->order_id
-                || (
-                    $this->auth->isLogged()
-                    && $this->auth->getProfile()->get('profile_id') == $this->getOrder()->get('orig_profile_id')
-                )
+            && $this->checkOrderAccess();
+    }
+
+    /**
+     * Check order access 
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkOrderAccess()
+    {
+        return $this->session->get('last_order_id') == XLite_Core_Request::getInstance()->order_id
+            || (
+                $this->auth->isLogged()
+                && $this->auth->getProfile()->get('profile_id') == $this->getOrder()->get('orig_profile_id')
             );
     }
 

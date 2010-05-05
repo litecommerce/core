@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Controller
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,39 +27,30 @@
  */
 
 /**
- * Order controller
+ * Orders search widget
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_DrupalConnector_Controller_Customer_Order extends XLite_Controller_Customer_Order implements XLite_Base_IDecorator
+class XLite_Module_DrupalConnector_View_OrderSearch extends XLite_View_OrderSearch
+implements XLite_Base_IDecorator
 {
-	/**
-	 * Get additional bread crumbs list
-	 * 
-	 * @return array
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function getAdditionalBreadcrumbs()
-	{
-		return array(
-			array('Orders history', $this->buildUrl('order_list')),
-		);
-	}
-
     /**
-     * Check order access 
-     * 
-     * @return boolean
+     * Get profile
+     *
+     * @return XLite_Model_Profile
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function checkOrderAccess()
+    protected function getProfile()
     {
-        return user_access('administer users') || parent::checkOrderAccess(); 
+        $pid = lc_connector_get_display_profile_id();
+
+        return $pid
+            ? new XLite_Model_Profile($pid)
+            : parent::getProfile();
     }
 }
+

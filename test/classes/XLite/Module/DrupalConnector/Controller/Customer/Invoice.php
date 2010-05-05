@@ -50,4 +50,18 @@ class XLite_Module_DrupalConnector_Controller_Customer_Invoice extends XLite_Con
             array('Order', $this->buildUrl('order', '', array('order_id' => XLite_Core_Request::getInstance()->order_id))),
 		);
 	}
+
+    /**
+     * Check order access 
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkOrderAccess()
+    {
+        return user_access('administer users') || parent::checkOrderAccess();
+    }
+
 }
