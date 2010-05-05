@@ -118,11 +118,6 @@ $modules = array (
 			"js_back"       => 0,
 			"js_next"       => 0,
             "remove_params" => array(
-                'ftp_enabled',
-                'ftp_host',
-                'ftp_username',
-                'ftp_password',
-                'ftp_dir',
                 'xlite_http_host',
                 'xlite_https_host',
                 'xlite_web_dir',
@@ -586,7 +581,7 @@ if ($current < count($modules)) {
 
 <?php
 
-    if (!empty($params) && (!isset($_POST['go_back']) || $_POST['go_back'] !== '1')) {
+    if (!empty($params)) {
 
 	    foreach ($params as $key => $val) {
 
@@ -597,15 +592,6 @@ if ($current < count($modules)) {
 <?php
     
         }
-    
-    } elseif (isset($_POST['go_back']) && $_POST['go_back'] === '1' && isset($params['new_installation']) && $params['new_installation'] === '1') {
-
-?>
-
-  <INPUT type=hidden name="params[new_installation]" value="1" />
-
-<?php
-    
     }
 
     if ($report_uid) {

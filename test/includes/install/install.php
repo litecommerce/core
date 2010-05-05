@@ -2808,19 +2808,23 @@ function module_cfg_install_db(&$params)
 
     foreach ($paramFields as $fieldName => $fieldData) {
 
+        // Prepare first step data if we came from the second step back
+        if (isset($_POST['go_back']) && $_POST['go_back'] === '1') {
+            if (empty($fieldData['step']) && isset($params[$fieldName])) {
+                $paramFields[$fieldName]['def_value'] = $params[$fieldName];
+                unset($params[$fieldName]);
+            }
+        }
+
+        // Unset parameter if its empty
         if (isset($params[$fieldName]) && strlen(trim($params[$fieldName])) == 0) {
             unset($params[$fieldName]);
         }
 
+        // Check if all required parameters presented
         if (!isset($params[$fieldName])) {
             $displayConfigForm = $displayConfigForm || $fieldData['required'];
         }
-    }
-
-    if (!isset($params['auth_code'])) {
-?>
-<input type="hidden" name="params[auth_code]" value="<?php echo get_authcode(); ?>">
-<?php
     }
 
     // Display form to enter host data and database settings
@@ -2834,7 +2838,7 @@ function module_cfg_install_db(&$params)
                 continue;
             }
 
-            $fieldData['value'] = (empty($_POST['go_back']) ? $fieldData['def_value'] : (isset($params[$fieldName]) ? $params[$fieldName] : $fieldData['def_value']));
+            $fieldData['value'] = (isset($params[$fieldName]) ? $params[$fieldName] : $fieldData['def_value']);
 
             displayFormElement($fieldName, $fieldData, $clrNumber);
             $clrNumber = ($clrNumber == 2) ? 1 : 2;
@@ -2931,7 +2935,7 @@ OUT;
 
             if (!isset($fieldData['step']) || $fieldData['step'] != 2) {
                 $fieldData['type'] = 'static';
-                $fieldData['value'] = $params[$fieldName];
+                $fieldData['value'] = (isset($params[$fieldName]) ? $params[$fieldName] : '');
             }
 
             displayFormElement($fieldName, $fieldData, $clrNumber);
