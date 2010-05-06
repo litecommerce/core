@@ -75,14 +75,13 @@ web_dir = ""
 ; -----------------
 ;
 [log_details]
-;type = file
+type = file
 ;type = client
-type = "null"
+;type = "null"
 name = "var/log/xlite.log.php"
 level = PEAR_LOG_DEBUG
 ident = "XLite"
-suppress_errors = Off
-suppress_logging_errors = Off
+suppress_errors = On
 
 ;
 ; Skin details

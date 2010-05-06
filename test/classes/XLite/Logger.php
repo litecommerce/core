@@ -45,6 +45,19 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
 
 
     /**
+     * Files repositories paths
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $filesRepositories = array(
+        LC_COMPILE_DIR => 'compiled classes repository',
+        LC_ROOT_DIR    => 'lc root',
+    );
+
+    /**
      * Options 
      * 
      * @var    array
@@ -119,7 +132,28 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
             }
         }
 
-        $logger->log($message, is_null($level) ? PEAR_LOG_DEBUG : $level);
+        if (is_null($level)) {
+            $level = PEAR_LOG_DEBUG;
+        }
+
+        // Add additional info
+        $parts = array(
+            'Server API: ' . php_sapi_name(),
+        );
+
+        if (isset($_SERVER) && isset($_SERVER['REQUEST_METHOD'])) {
+            $parts[] = 'Request method: ' . $_SERVER['REQUEST_METHOD'];
+            $parts[] = 'URI: ' . $_SERVER['REQUEST_URI'];
+        }
+
+        $message .= "\n" . implode('; ', $parts) . ';';
+
+        // Add debug backtrace
+        if (PEAR_LOG_ERR >= $level) {
+            $message .= "\n" . 'Backtrace:' . "\n\t" . implode("\n\t", $this->getBackTrace());
+        }
+
+        $logger->log(trim($message) . "\n", $level);
 
         chdir($dir);
     }
@@ -147,7 +181,17 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
      */
     protected function getName()
     {
-        return $this->options['name'];
+        $result = $this->options['name'];
+
+        if ('file' == $this->getType()) {
+            $dir = dirname($result);
+            $file = basename($result);
+            $parts = explode('.', $file);
+            array_splice($parts, count($parts) - 1, 0, date('Y-m-d'));
+            $result = $dir . LC_DS . implode('.', $parts);
+        }
+
+        return $result;
     }
 
     /**
@@ -161,5 +205,140 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
     protected function getIdent()
     {
         return $this->options['ident'];
+    }
+
+    /**
+     * Get back trace list
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getBackTrace()
+    {
+        $patterns = array_keys($this->filesRepositories);
+        $placeholders = preg_replace('/^(.+)$/Ss', '<\1>/', array_values($this->filesRepositories));
+
+        $trace = array();
+        foreach (debug_backtrace(false) as $l) {
+            $parts = array();
+            if (isset($l['file'])) {
+
+                $parts[] = 'file ' . str_replace($patterns, $placeholders, $l['file']);
+
+            } elseif (isset($l['class']) && isset($l['function'])) {
+
+                $parts[] = 'method ' . $l['class'] . '::' . $l['function'] . $this->getBackTraceArgs($l);
+
+            } elseif (isset($l['function'])) {
+
+                $parts[] = 'function ' . $l['function'] . $this->getBackTraceArgs($l);
+
+            }
+
+            if (isset($l['line'])) {
+                $parts[] = $l['line'];
+            }
+
+            if ($parts) {
+                $trace[] = implode(' : ', $parts);
+            }
+        }
+
+        return array_slice($trace, 3);
+    }
+
+    /**
+     * Get back trace function or method arguments 
+     * 
+     * @param array $l Back trace record
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getBackTraceArgs(array $l)
+    {
+        $args = array();
+        if (isset($l['args'])) {
+            foreach ($l['args'] as $arg) {
+                switch (gettype($arg)) {
+                    case 'boolean':
+                        $args[] = $arg ? 'true' : 'false';
+                        break;
+
+                    case 'integer':
+                    case 'double':
+                        $args[] = $arg;
+                        break;
+
+                    case 'string':
+                        if (is_callable($arg)) {
+                            $args[] = 'lambda function';
+
+                        } else {
+                            $args[] = '\'' . addslashes($arg) . '\'';
+                        }
+                        break;
+
+                    case 'unicode':
+                        $args[] = '\'' . addslashes($arg) . '\' (unicode)';
+                        break;
+
+                    case 'resource':
+                        $args[] = strval($arg);
+                        break;
+
+                    case 'array':
+                        if (is_callable($arg)) {
+                            $args[] = 'callback ' . $this->detectClassName($arg[0]) . '::' . $arg[1];
+
+                        } else {
+                            $args[] = 'array{' . count($arg) . '}'; 
+                        }
+                        break;
+
+                    case 'object':
+                        if (
+                            is_callable($arg)
+                            && class_exists('Closure')
+                            && $arg instanceof Closure
+                        ) {
+                            $args[] = 'anonymous function';
+
+                        } else {
+                            $args[] = 'object of ' . $this->detectClassName($arg);
+                        }
+                        break;
+
+                    case 'NULL';
+                    case 'null';
+                        $args[] = 'null';
+                        break;
+
+                    default:
+                        $args[] = 'variable of ' . gettype($arg);
+                }
+            }
+        }
+
+        return '(' . implode(', ', $args) . ')';
+    }
+
+    /**
+     * Detect class name by object
+     * 
+     * @param object $obj Object
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function detectClassName($obj)
+    {
+        return function_exists('get_called_class') ? get_called_class($obj) : get_class($obj);
     }
 }

@@ -151,9 +151,9 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     }
 
     /**
-     * getControllerClass 
+     * Assemble and get controller class name
      * 
-     * @return void
+     * @return string
      * @access protected
      * @since  3.0.0
      */
@@ -326,6 +326,10 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     {
         if (!isset(self::$controller)) {
             $class = self::getControllerClass();
+            if (!class_exists($class)) {
+                XLite::getInstance()->doGlobalDie('Controller class ' . $class . ' not found!');
+            }
+
             self::$controller = new $class(XLite_Core_Request::getInstance()->getData());
             self::$controller->init();
         }
@@ -349,6 +353,21 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
         if (is_null($controller) || $controller instanceof XLite_Controller_Abstract) {
             self::$controller = $controller;
         }
+    }
+
+    /**
+     * Call application die (general routine) 
+     * 
+     * @param string $message Error message
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function doGlobalDie($message)
+    {
+        $this->doDie($message);
     }
 
     /**

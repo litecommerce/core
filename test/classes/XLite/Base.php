@@ -88,9 +88,22 @@ class XLite_Base
      */
     protected function doDie($message)
     {
-        // TODO - add logging
+        if (!($this instanceof XLite_Logger)) {
+            XLite_Logger::getInstance()->log($message, PEAR_LOG_ERR);
+        }
 
-        debug_print_backtrace();
+        if ($this instanceof XLite) {
+
+            $message = 'Internal error';
+
+        } else {
+
+            $options = XLite::getInstance()->getOptions('log_details');
+            if (
+                (isset($options['suppress_errors']) && $options['suppress_errors'])) {
+                $message = 'Internal error';
+            }
+        }
 
         die ($message);
     }
