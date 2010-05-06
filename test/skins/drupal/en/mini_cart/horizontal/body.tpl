@@ -30,7 +30,7 @@
           <span class="item-price">{price_format(item,#price#):h}</span><span class="delimiter">x</span><span class="item-qty">{item.amount}</span>
         </li>
       </ul>
-      <p IF="isTruncated()" class="other-items"><a href="{buildURL(#cart#)}">Other items</a></p>
+      <p class="other-items"><a href="{buildURL(#cart#)}">View cart</a></p>
     </div>
   </div>
 
