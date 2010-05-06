@@ -82,6 +82,7 @@ name = "var/log/xlite.log.php"
 level = PEAR_LOG_DEBUG
 ident = "XLite"
 suppress_errors = On
+suppress_log_errors = Off
 
 ;
 ; Skin details

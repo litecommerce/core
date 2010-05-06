@@ -103,8 +103,13 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
 
 		$function = 'mysql_' . ((isset($options['persistent']) && 'on' == strtolower($options['persistent'])) ? 'p' : '') . 'connect';
 
-		($this->connection = @$function($options['hostspec'], $options['username'], $options['password'])) || $this->doDie(mysql_error());
-        @mysql_select_db($options['database'], $this->connection) || $this->doDie(mysql_error()); 
+        $this->connection = @$function($options['hostspec'], $options['username'], $options['password']);
+        if (!$this->connection) {
+            $this->doSQLDie();
+        }
+        if (!@mysql_select_db($options['database'], $this->connection)) {
+            $this->doSQLDie();
+        } 
 
         $this->connected = true;
 
@@ -214,7 +219,10 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
 	        $this->profiler->addQuery($sql);
 		}
 
-		($res = @mysql_query($sql, $this->connection)) || $this->doDie(mysql_errno() . ': ' . mysql_error() .  ' in ' . $sql);
+		$res = @mysql_query($sql, $this->connection);
+        if (!$res) {
+            $this->doSQLDie($sql);
+        }
 
 		if ($this->profilerEnabled) {
 	        $this->profiler->setQueryTime($sql);
@@ -222,6 +230,34 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
 
         return $res;
 	}
+
+    /**
+     * SQL error report
+     * 
+     * @param string $query SQL query
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doSQLDie($query = null)
+    {
+        $message = 'SQL error';
+        if (mysql_errno()) {
+            $message .= ' #' . mysql_errno();
+        }
+
+        if (mysql_error()) {
+            $message .= ': ' . mysql_error();
+        }
+
+        if ($query) {
+            $message .= ' in ' . $query;
+        }
+
+        $this->doDie($message);
+    }
 
     /**
     * Returns the SQL Database table name for specified alias.
@@ -336,7 +372,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
         // open backup file if necessary
         if (!is_null($file)) {
             if (!$handle = fopen($file, 'w')) {
-                $this->doDie("Failed to open backup file $file for writing");
+                $this->doDie('Failed to open backup file $file for writing');
             }
         }    
         // do not cache backup queries
@@ -497,8 +533,10 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
         $res   = array();
 
         if (is_string($table)) {
-            $id = mysql_list_fields($this->options['database'],
-                    $table, $this->connection);
+            $id = mysql_list_fields(
+                $this->options['database'],
+                $table, $this->connection
+            );
             if (empty($id)) {
                 $this->doDie('Cannot get information about the table ' . $table . " (database " . $this->options['database'] . ") ");
             }
@@ -535,8 +573,9 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
     {
         if (is_null($handle)) {
             echo $content;
-        } else {
-            fwrite($handle, $content, strlen($content)) or $this->doDie('<font color="red">Backup file write failed</font>');
+
+        } elseif (!fwrite($handle, $content, strlen($content))) {
+            $this->doDie('<font color="red">Backup file write failed</font>');
         }
     } // }}}
 

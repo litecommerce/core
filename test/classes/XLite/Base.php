@@ -99,8 +99,7 @@ class XLite_Base
         } else {
 
             $options = XLite::getInstance()->getOptions('log_details');
-            if (
-                (isset($options['suppress_errors']) && $options['suppress_errors'])) {
+            if (isset($options['suppress_errors']) && $options['suppress_errors']) {
                 $message = 'Internal error';
             }
         }

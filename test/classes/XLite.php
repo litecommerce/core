@@ -425,6 +425,9 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
         // Set current area
         self::$adminZone = $adminZone;
 
+        // Initialize logger
+        $this->logger;
+
         // Initialize modules
         $this->initModules();
 

@@ -45,6 +45,46 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
 
 
     /**
+     * Security file header 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $securityHeader = '<?php die(1); ?>';
+
+    /**
+     * Hash errors 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $hashErrors = array();
+
+    /**
+     * Errors translate table (PHP -> PEAR)
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $errorsTranslate = null;
+
+    /**
+     * PHP error names 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $errorTypes = null;
+
+    /**
      * Files repositories paths
      * 
      * @var    array
@@ -88,6 +128,30 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
             $this->options,
             XLite::getInstance()->getOptions('log_details')
         );
+
+        set_error_handler(array($this, 'registerPHPError'));
+
+        // Default log path
+        $path = $this->getErrorLogPath();
+        ini_set('error_log', $path);
+        $this->checkLogSecurityHeader($path);
+
+        if (isset($this->options['suppress_errors']) && $this->options['suppress_errors']) {
+            ini_set('display_errors', 0);
+            ini_set('display_startup_errors', 0);
+
+        } else {
+            ini_set('display_errors', 1);
+            ini_set('display_startup_errors', 1);
+        }
+
+        if (isset($this->options['suppress_log_errors']) && $this->options['suppress_log_errors']) {
+            ini_set('log_errors', 0);
+
+        } else {
+            ini_set('log_errors', 1);
+        }
+
     }
     
     /**
@@ -189,6 +253,11 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
             $parts = explode('.', $file);
             array_splice($parts, count($parts) - 1, 0, date('Y-m-d'));
             $result = $dir . LC_DS . implode('.', $parts);
+            if (!preg_match('/\.php$/Ss', $result)) {
+                $result .= '.php';
+            }
+
+            $this->checkLogSecurityHeader($result);
         }
 
         return $result;
@@ -340,5 +409,165 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
     protected function detectClassName($obj)
     {
         return function_exists('get_called_class') ? get_called_class($obj) : get_class($obj);
+    }
+
+    public function registerPHPError($errno, $errstr, $errfile, $errline)
+    {
+        $hash = $errfile . ':' . $errline;
+
+        if (
+            ini_get('error_reporting') & $errno
+            && 0 != ini_get('display_errors')
+            && 0 != ini_get('log_errors')
+            && 0 != error_reporting()
+            && (1 != ini_get('ignore_repeated_errors') || !isset(self::$hashErrors[$errno]) || !isset(self::$hashErrors[$errno][$hash]))
+        ) {
+
+            $errortype = $this->getPHPErrorName($errno);
+
+            $message = $errortype . ': ' . $errstr . ' in ' . $errfile . ' on line ' . $errline;
+
+            // Display error
+            if (0 != ini_get('display_errors')) {
+
+                if (!isset($_SERVER['REQUEST_METHOD'])) {
+                    echo ($message . "\n");
+
+                } else {
+                    echo (
+                        '<strong>' . $errortype . '</strong>: ' . $errstr
+                        . ' in <strong>' . $errfile . '</strong> on line <strong>' . $errline . '</strong><br />'
+                        . "\n"
+                    );
+                }
+            }
+
+            // Save to log
+            if (1 == ini_get('log_errors')) {
+                $this->log($message, $this->convertPHPErrorToLogError($errno));
+            }
+
+            // Save to cache
+            if (1 == ini_get('ignore_repeated_errors')) {
+                if (!isset(self::$hashErrors[$errno])) {
+                    self::$hashErrors[$errno] = array($hash => true);
+
+                } else {
+                    self::$hashErrors[$errno][$hash] = true;
+                }
+            }
+
+        }
+    }
+
+    /**
+     * Convert PHP error code to PEAR error code
+     * 
+     * @param integer $errno PHP error code
+     *  
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function convertPHPErrorToLogError($errno)
+    {
+        if (is_null($this->errorsTranslate)) {
+
+            $this->errorsTranslate = array(
+                E_ERROR             => PEAR_LOG_ERR,
+                E_WARNING           => PEAR_LOG_WARNING,
+                E_PARSE             => PEAR_LOG_CRIT,
+                E_NOTICE            => PEAR_LOG_NOTICE,
+                E_CORE_ERROR        => PEAR_LOG_ERR,
+                E_CORE_WARNING      => PEAR_LOG_WARNING,
+                E_COMPILE_ERROR     => PEAR_LOG_ERR,
+                E_COMPILE_WARNING   => PEAR_LOG_WARNING,
+                E_USER_ERROR        => PEAR_LOG_ERR,
+                E_USER_WARNING      => PEAR_LOG_WARNING,
+                E_USER_NOTICE       => PEAR_LOG_NOTICE,
+                E_STRICT            => PEAR_LOG_NOTICE,
+                E_RECOVERABLE_ERROR => PEAR_LOG_ERR,
+            );
+
+            if (defined('E_DEPRECATED')) {
+                $this->errorsTranslate[E_DEPRECATED] = PEAR_LOG_WARNING;
+                $this->errorsTranslate[E_USER_DEPRECATED] = PEAR_LOG_WARNING;
+            }
+        }
+
+        return isset($this->errorsTranslate[$errno]) ? $this->errorsTranslate[$errno] : PEAR_LOG_INFO;
+    }
+
+    /**
+     * Get PHP error name 
+     * 
+     * @param integer $errno PHP error code
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPHPErrorName($errno)
+    {
+        if (is_null($this->errorTypes)) {
+            $this->errorTypes = array(
+                E_ERROR             => 'Error',
+                E_WARNING           => 'Warning',
+                E_PARSE             => 'Parsing Error',
+                E_NOTICE            => 'Notice',
+                E_CORE_ERROR        => 'Error',
+                E_CORE_WARNING      => 'Warning',
+                E_COMPILE_ERROR     => 'Error',
+                E_COMPILE_WARNING   => 'Warning',
+                E_USER_ERROR        => 'Error',
+                E_USER_WARNING      => 'Warning',
+                E_USER_NOTICE       => 'Notice',
+                E_STRICT            => 'Runtime Notice',
+                E_RECOVERABLE_ERROR => 'Catchable fatal error',
+            );
+
+            if (defined('E_DEPRECATED')) {
+                $this->errorTypes[E_DEPRECATED] = 'Warning (deprecated)';
+                $this->errorTypes[E_USER_DEPRECATED] = 'Warning (deprecated)';
+            }
+        }
+
+        return isset($this->errorTypes[$errno]) ? $this->errorTypes[$errno] : 'Unknown Error';
+    }
+
+    /**
+     * Get rrror log path 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getErrorLogPath()
+    {
+        return LC_VAR_DIR . 'log' . LC_DS . 'php_errors.log.php';
+    }
+
+    /**
+     * Check security header for specified file
+     * 
+     * @param string $path File path
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkLogSecurityHeader($path)
+    {
+        if (!file_exists(dirname($path))) {
+            mkdirRecursive(dirname($path));
+        }
+
+        if (!file_exists($path) || $this->securityHeader > filesize($path)) {
+            file_put_contents($path, $this->securityHeader . "\n");
+        }
     }
 }
