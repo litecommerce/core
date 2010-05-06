@@ -92,16 +92,11 @@ class XLite_Base
             XLite_Logger::getInstance()->log($message, PEAR_LOG_ERR);
         }
 
-        if ($this instanceof XLite) {
-
-            $message = 'Internal error';
-
-        } else {
-
-            $options = XLite::getInstance()->getOptions('log_details');
-            if (isset($options['suppress_errors']) && $options['suppress_errors']) {
-                $message = 'Internal error';
-            }
+        if (
+            $this instanceof XLite
+            || XLite::getInstance()->getOptions(array('log_details', 'suppress_errors'))
+        ) {
+            $message = 'Internal error. Contact the site administrator.';
         }
 
         die ($message);

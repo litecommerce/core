@@ -331,65 +331,54 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
     protected function getBackTraceArgs(array $l)
     {
         $args = array();
-        if (isset($l['args'])) {
-            foreach ($l['args'] as $arg) {
-                switch (gettype($arg)) {
-                    case 'boolean':
-                        $args[] = $arg ? 'true' : 'false';
-                        break;
+        if (!isset($l['args'])) {
+            $l['args'] = array();
+        }
+        foreach ($l['args'] as $arg) {
 
-                    case 'integer':
-                    case 'double':
-                        $args[] = $arg;
-                        break;
+            if (is_bool($arg)) {
+                $args[] = $arg ? 'true' : 'false';
 
-                    case 'string':
-                        if (is_callable($arg)) {
-                            $args[] = 'lambda function';
+            } elseif (is_int($arg) || is_float($arg)) {
+                $args[] = $arg;
 
-                        } else {
-                            $args[] = '\'' . addslashes($arg) . '\'';
-                        }
-                        break;
+            } elseif (is_string($arg)) {
+                if (is_callable($arg)) {
+                    $args[] = 'lambda function';
 
-                    case 'unicode':
-                        $args[] = '\'' . addslashes($arg) . '\' (unicode)';
-                        break;
-
-                    case 'resource':
-                        $args[] = strval($arg);
-                        break;
-
-                    case 'array':
-                        if (is_callable($arg)) {
-                            $args[] = 'callback ' . $this->detectClassName($arg[0]) . '::' . $arg[1];
-
-                        } else {
-                            $args[] = 'array{' . count($arg) . '}'; 
-                        }
-                        break;
-
-                    case 'object':
-                        if (
-                            is_callable($arg)
-                            && class_exists('Closure')
-                            && $arg instanceof Closure
-                        ) {
-                            $args[] = 'anonymous function';
-
-                        } else {
-                            $args[] = 'object of ' . $this->detectClassName($arg);
-                        }
-                        break;
-
-                    case 'NULL';
-                    case 'null';
-                        $args[] = 'null';
-                        break;
-
-                    default:
-                        $args[] = 'variable of ' . gettype($arg);
+                } else {
+                    $args[] = '\'' . $arg . '\'';
                 }
+
+            } elseif (is_resource($arg)) {
+
+                $args[] = strval($arg);
+
+            } elseif (is_array($arg)) {
+                if (is_callable($arg)) {
+                    $args[] = 'callback ' . $this->detectClassName($arg[0]) . '::' . $arg[1];
+
+                } else {
+                    $args[] = 'array{' . count($arg) . '}'; 
+                }
+
+            } elseif (is_object($arg)) {
+                if (
+                    is_callable($arg)
+                    && class_exists('Closure')
+                    && $arg instanceof Closure
+                ) {
+                    $args[] = 'anonymous function';
+
+                } else {
+                    $args[] = 'object of ' . $this->detectClassName($arg);
+                }
+
+            } elseif (is_null($arg)) {
+                $args[] = 'null';
+
+            } else {
+                $args[] = 'variable of ' . gettype($arg);
             }
         }
 
@@ -408,19 +397,36 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
      */
     protected function detectClassName($obj)
     {
-        return function_exists('get_called_class') ? get_called_class($obj) : get_class($obj);
+        if (is_object($obj)) {
+            $obj = function_exists('get_called_class') ? get_called_class($obj) : get_class($obj);
+        }
+
+        return $obj;
     }
 
+    /**
+     * Register PHP error 
+     * 
+     * @param integer $errno   Error code
+     * @param string  $errstr  Error message
+     * @param string  $errfile File path
+     * @param integer $errline Line number
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function registerPHPError($errno, $errstr, $errfile, $errline)
     {
-        $hash = $errfile . ':' . $errline;
+        $hash = $errno . ':' . $errfile . ':' . $errline;
 
         if (
             ini_get('error_reporting') & $errno
             && 0 != ini_get('display_errors')
             && 0 != ini_get('log_errors')
             && 0 != error_reporting()
-            && (1 != ini_get('ignore_repeated_errors') || !isset(self::$hashErrors[$errno]) || !isset(self::$hashErrors[$errno][$hash]))
+            && (1 != ini_get('ignore_repeated_errors') || !isset(self::$hashErrors[$hash]))
         ) {
 
             $errortype = $this->getPHPErrorName($errno);
@@ -429,17 +435,14 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
 
             // Display error
             if (0 != ini_get('display_errors')) {
+                $displayMessage = $message;
 
-                if (!isset($_SERVER['REQUEST_METHOD'])) {
-                    echo ($message . "\n");
-
-                } else {
-                    echo (
-                        '<strong>' . $errortype . '</strong>: ' . $errstr
-                        . ' in <strong>' . $errfile . '</strong> on line <strong>' . $errline . '</strong><br />'
-                        . "\n"
-                    );
+                if (isset($_SERVER['REQUEST_METHOD'])) {
+                    $displayMessage = '<strong>' . $errortype . '</strong>: ' . $errstr
+                        . ' in <strong>' . $errfile . '</strong> on line <strong>' . $errline . '</strong><br />';
                 }
+
+                echo ($displayMessage . "\n");
             }
 
             // Save to log
@@ -449,15 +452,11 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
 
             // Save to cache
             if (1 == ini_get('ignore_repeated_errors')) {
-                if (!isset(self::$hashErrors[$errno])) {
-                    self::$hashErrors[$errno] = array($hash => true);
-
-                } else {
-                    self::$hashErrors[$errno][$hash] = true;
-                }
+                self::$hashErrors[$hash] = true;
             }
-
         }
+
+        return true;
     }
 
     /**
