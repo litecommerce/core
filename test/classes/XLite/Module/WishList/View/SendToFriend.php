@@ -53,7 +53,7 @@ class XLite_Module_WishList_View_SendToFriend extends XLite_View_Dialog
      */
     protected function getHead()
     {
-        return 'Send to friend';
+        return 'Tell a friend';
     }
 
     /**

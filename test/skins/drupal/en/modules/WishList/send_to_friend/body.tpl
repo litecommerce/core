@@ -12,8 +12,6 @@
  *}
 <widget class="XLite_Module_WishList_View_Form_Product_SendToFriend" name="send_to_friend" product="{product}" className="send-to-friend" />
 
-  <h1>Send to friend</h1>
-
   <table cellspacing="0" class="form-table">
 
   	<tr>
@@ -37,7 +35,7 @@
   </table>
 
   <div class="button-row">
-    <widget class="XLite_View_Button_Submit" label="Send to friend" />
+    <widget class="XLite_View_Button_Submit" label="Submit" />
   </div>
 
 <widget name="send_to_friend" end />

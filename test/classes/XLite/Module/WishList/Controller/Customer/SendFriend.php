@@ -27,13 +27,13 @@
  */
 
 /**
- * ____description____
+ * Send to friend product info
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WishList_Controller_Customer_SendFriend extends XLite_Controller_Customer_Abstract
+class XLite_Module_WishList_Controller_Customer_SendFriend extends XLite_Controller_Customer_Catalog
 {
     /**
      * Get page title 
@@ -43,39 +43,45 @@ class XLite_Module_WishList_Controller_Customer_SendFriend extends XLite_Control
      * @see    ____func_see____
      * @since  3.0.0
      */
-	public function getTitle()
-	{
-        return 'Send to friend';
-	}
+    public function getTitle()
+    {
+        return 'Tell a friend';
+    }
 
     /**
-     * 'send_friend' action 
+     * Send info
      * 
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function action_send_friend()
+    protected function doActionSendFriend()
     {
         if ($this->getProduct()) {
-            $Mailer = new XLite_Model_Mailer();
-            $Mailer->sender_name  = $this->getSenderName();
-            $Mailer->sender_email = $this->getSenderEmail();
-            $Mailer->recipient_email = XLite_Core_Request::getInstance()->recipient_email;
-            $Mailer->product = $this->getProduct();
-            $Mailer->url = $this->buildURL('product', '', array('product_id' => $this->getProduct()->get('product_id')));
-            $Mailer->compose(
+            $mailer = new XLite_Model_Mailer();
+            $mailer->sender_name  = $this->getSenderName();
+            $mailer->sender_email = $this->getSenderEmail();
+            $mailer->recipient_email = XLite_Core_Request::getInstance()->recipient_email;
+            $mailer->product = $this->getProduct();
+            $mailer->url = $this->buildURL(
+                'product',
+                '',
+                array('product_id' => $this->getProduct()->get('product_id'))
+            );
+            $mailer->compose(
                 $this->getSenderEmail,
                 XLite_Core_Request::getInstance()->recipient_email,
-                "modules/WishList/send_friend"
+                'modules/WishList/send_friend'
             );
-            $Mailer->send();
+            $mailer->send();
 
-            $this->set('returnUrl', $this->buildURL('product', '', array('product_id' => $this->getProduct()->get('product_id'))));
+            $this->setReturnUrl(
+                $this->buildURL('product', '', array('product_id' => $this->getProduct()->get('product_id')))
+            );
 
         } else {
-            $this->set('returnUrl', $this->buildURL('main'));
+            $this->setReturnUrl($this->buildURL('main'));
         }
     }
 
@@ -89,9 +95,20 @@ class XLite_Module_WishList_Controller_Customer_SendFriend extends XLite_Control
      */
     protected function getSenderName()
     {
-        return isset(XLite_Core_Request::getInstance()->sender_name)
-            ? XLite_Core_Request::getInstance()->sender_name
-            : $this->auth->getComplex('profile.billing_firstname') . ' ' . $this->auth->getComplex('profile.billing_lastname');
+        $result = '';
+
+        if (
+            isset(XLite_Core_Request::getInstance()->sender_name)
+            && XLite_Core_Request::getInstance()->sender_name
+        ) {
+            $result = XLite_Core_Request::getInstance()->sender_name;
+
+        } elseif ($this->auth->isLogged()) {
+            $profile = $this->auth->getProfile();
+            $resut = $profile->get('billing_firstname') . ' ' . $profile->get('billing_lastname');
+        }
+
+        return $result;
     }
 
     /**
@@ -107,6 +124,84 @@ class XLite_Module_WishList_Controller_Customer_SendFriend extends XLite_Control
         return isset(XLite_Core_Request::getInstance()->sender_email)
             ? XLite_Core_Request::getInstance()->sender_email
             : $this->auth->getComplex('profile.login');
+    }
+
+    /**
+     * Add the base part of the location path
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function addBaseLocation($includeCurrent = false)
+    {
+        parent::addBaseLocation(true);
+
+        $this->locationPath->addNode(
+            new XLite_Model_Location(
+                $this->getProduct()->get('name'),
+                $this->buildURL('product', '', array('product_id' => $this->getProduct()->get('product_id')))
+            )
+        );
+    }
+
+    /**
+     * getModelObject
+     *
+     * @return XLite_Model_Abstract
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getModelObject()
+    {
+        return $this->getProduct();
+    }
+
+    /**
+     * Get product category id
+     *
+     * @return int
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getCategoryId()
+    {
+        $categoryId = parent::getCategoryId();
+
+        if (!$categoryId) {
+            $productCategory = $this->getProductCategory();
+            if ($productCategory) {
+                $categoryId = $productCategory->get('category_id');
+            }
+        }
+
+        return $categoryId;
+    }
+
+    /**
+     * Return random product category 
+     * 
+     * @return XLite_Model_Category
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getProductCategory()
+    {
+        $list = $this->getProduct()->getCategories();
+
+        return array_shift($list);
+    }
+
+    /**
+     * Common method to determine current location 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return $this->getTitle();
     }
 
 }
