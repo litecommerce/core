@@ -2657,7 +2657,7 @@ function module_default_js_next()
  */
 function module_check_cfg()
 {
-    global $first_error, $error, $report_uid, $reportFName;
+    global $first_error, $error, $report_uid, $reportFName, $tryAgain;
 
     $requirements = doCheckRequirements();
 
@@ -2710,7 +2710,7 @@ function module_check_cfg()
 
     require_once LC_ROOT_DIR . 'includes/install/templates/step1_chkconfig.tpl.php';
 
-    $error = $errorsFound || $warningsFound;
+    $error = $tryAgain = $errorsFound || $warningsFound;
 
     return false;
 }

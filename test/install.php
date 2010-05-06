@@ -604,10 +604,26 @@ if ($current < count($modules)) {
     }
 ?>
 
-  <INPUT type="hidden" name="go_back" value="0">
-  <INPUT type=hidden name="current" value="<?php echo $current ?>">
-  <INPUT type=button value="&lt; Back"<?php echo ($prev > 0 ? '' : ' disabled') ?> onClick="javascript:document.ifrm.go_back.value='1'; return step_back();">
-  <INPUT name="next_button" type=button value="Next &gt;"<?php echo ($error || $current == get_step('check_cfg') ? ' disabled' : ''); ?> onClick="javascript: if (step_next()) { ifrm.submit(); return true; } else { return false; }">
+  <INPUT type="hidden" name="go_back" value="0" />
+  <INPUT type=hidden name="current" value="<?php echo $current ?>" />
+  <INPUT type=button value="&lt; Back"<?php echo ($prev > 0 ? '' : ' disabled') ?> onClick="javascript:document.ifrm.go_back.value='1'; return step_back();" />
+
+<?php
+
+    if (isset($tryAgain) && true == $tryAgain) {
+
+ ?>
+
+  <INPUT name="try_again" type="button" value="Try again" onClick="javascript:document.ifrm.go_back.value='1'; document.ifrm.current.value='1'; document.ifrm.submit();" />
+
+<?php
+       
+    }
+
+?>
+
+  <INPUT name="next_button" type="button" value="Next &gt;"<?php echo ($error || $current == get_step('check_cfg') ? ' disabled="disabled"' : ''); ?> onClick="javascript: if (step_next()) { ifrm.submit(); return true; } else { return false; }" />
+
  </td>
 </TR>
 
