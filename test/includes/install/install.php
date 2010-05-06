@@ -1190,6 +1190,10 @@ function doCreateAdminAccount(&$params, $silentMode = false)
 
     $data = @parse_ini_file(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'));
 
+    if (empty($data['port']) {
+        $data['port'] = (!empty($data['socket']) ? $data['socket'] : '');
+    }
+
     if ($result && ($mylink = @mysql_connect($data['hostspec'] . (!empty($data['port']) ? ':' . $data['port'] : ''), $data['username'], $data['password'])) && mysql_select_db($data['database'])) {
 
         @mysql_query("SET sql_mode='MYSQL40'");
@@ -1847,6 +1851,10 @@ function move_images_to_fs($table, $id, $prefix, $file_prefix, $path = 'images/'
     if ($result) {
 
         $data = @parse_ini_file(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'));
+
+        if (empty($data['port']) {
+            $data['port'] = (!empty($data['socket']) ? $data['socket'] : '');
+        }
 
         if (@mysql_connect($data['hostspec'] . (!empty($data['port']) ? ':' . $data['port'] : ''), $data['username'], $data['password']) && mysql_select_db($data['database'])) {
 
