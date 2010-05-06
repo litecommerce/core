@@ -123,6 +123,14 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
      */
     protected function prepare($data)
     {
+        if (isset($data['target'])) {
+            $this->checkControlArgument($data['target'], 'Target');
+        }
+
+        if (isset($data['action'])) {
+            $this->checkControlArgument($data['action'], 'Action');
+        }
+
         return XLite::isAdminZone() ? $data : $this->sanitize($data);
     }
 
@@ -303,5 +311,26 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
     public function __isset($name)
     {
         return isset($this->data[$name]);
+    }
+
+    /**
+     * Check control argument (like target)
+     * 
+     * @param mixed  $value Argument value
+     * @param string $name  Argument name
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkControlArgument($value, $name)
+    {
+        if (!is_string($value)) {
+            $this->doDie($name . ' has wrong type');
+
+        } elseif (!preg_match('/^[a-z0-9_]*$/Ssi', $value)) {
+            $this->doDie($name . ' has wrong format');
+        }
     }
 }
