@@ -53,4 +53,26 @@ class XLite_Module_PayPalPro_View_ButtonAltCheckout extends XLite_View_Button_Im
 
         $this->widgetParams[self::PARAM_ACTION]->setValue('express_checkout');
     }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function isVisible()
+    {
+        $result = parent::isVisible();
+
+        if ($result) {
+            $pm = new XLite_Model_PaymentMethod('paypalpro');
+
+            $result = $pm->isExists()
+                && 1 == $pm->get('enabled')
+                && in_array($pm->getComplex('params.solution'), array('pro', 'express'));
+        }
+
+        return $result;
+    }
 }
