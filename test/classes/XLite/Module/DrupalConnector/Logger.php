@@ -61,8 +61,9 @@ implements XLite_Base_ISingleton, XLite_Base_IDecorator
     {
         parent::__construct();
 
-        $path = realpath(LC_CONNECTOR_ROOT . '/../..') . LC_DS;
-
-        $this->filesRepositories[$path] = 'drupal root';
+        if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
+            $path = realpath(LC_CONNECTOR_ROOT . '/../..') . LC_DS;
+            $this->filesRepositories[$path] = 'drupal root';
+        }
     }
 }
