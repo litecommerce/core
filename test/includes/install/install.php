@@ -1672,8 +1672,22 @@ function change_config(&$params) {
         $params['xlite_https_host'] = $params['xlite_http_host'];
     }
 
-    if (!isset($params['mysqlport'])) {
-        $params['mysqlport'] = '';
+    $_params = $params;
+
+    if (!isset($_params['mysqlport'])) {
+        $_params['mysqlport'] = '';
+
+    } elseif (!is_numeric($_params['mysqlport']) && empty($_params['mysqlsock'])) {
+        $_params['mysqlsock'] = $_params['mysqlport'];
+        $_params['mysqlport'] = '';
+    }
+
+    if (!isset($_params['mysqlsock'])) {
+        $_params['mysqlsock'] = '';
+
+    } elseif (is_numeric($_params['mysqlsock']) && empty($_params['mysqlport'])) {
+        $_params['mysqlport'] = $_params['mysqlsock'];
+        $_params['mysqlsock'] = '';
     }
 
     // check whether the authcode is set in params. 
@@ -1689,24 +1703,26 @@ function change_config(&$params) {
             '/^username.*=.*/',
             '/^password.*=.*/',
             '/^port.*=.*/',
+            '/^socket.*=.*/',
             '/^http_host.*=.*/',
             '/^https_host.*=.*/',
             '/^web_dir.*=.*/'
         );
 
         $replacements = array(
-            'hostspec = "' . $params['mysqlhost'] . '"',
-            'database = "' . $params['mysqlbase'] . '"',
-            'username = "' . $params['mysqluser'] . '"',
-            'password = "' . $params['mysqlpass'] . '"',
-            'port     = "' . $params['mysqlport'] . '"',
-            'http_host = "' . $params['xlite_http_host'] . '"',
-            'https_host = "' . $params['xlite_https_host'] . '"',
-            'web_dir = "' . $params['xlite_web_dir'] . '"'
+            'hostspec = "' . $_params['mysqlhost'] . '"',
+            'database = "' . $_params['mysqlbase'] . '"',
+            'username = "' . $_params['mysqluser'] . '"',
+            'password = "' . $_params['mysqlpass'] . '"',
+            'port     = "' . $_params['mysqlport'] . '"',
+            'socket   = "' . $_params['mysqlsock'] . '"',
+            'http_host = "' . $_params['xlite_http_host'] . '"',
+            'https_host = "' . $_params['xlite_https_host'] . '"',
+            'web_dir = "' . $_params['xlite_web_dir'] . '"'
         );
 
         // check whether skin param is specified: not used at present
-        if (isset($params['skin'])) {
+        if (isset($_params['skin'])) {
             $patterns[] = '/^skin.*=.*/';
             $replacements[] = 'skin = "' . $params['skin'] . '"';
         }
