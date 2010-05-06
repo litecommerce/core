@@ -37,10 +37,10 @@ class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_
 {
     /**
     * @var string $sql_table The database sql table to store session to
-    */	
+    */    
     public $sql_table;
 
-	public static function getInstance()
+    public static function getInstance()
     {
         return self::getInternalInstance(__CLASS__);
     }
@@ -56,19 +56,19 @@ class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_
     {
         parent::__construct($options);
 
-        $this->sql_table = $this->db->getTableByAlias("sessions");
+        $this->sql_table = $this->db->getTableByAlias('sessions');
         $this->gc();
 
         $sname = $this->getName();
         $sid = null;
         if (isset($_POST[$sname])) {
-        	$sid = $_POST[$sname];
+            $sid = $_POST[$sname];
 
         } elseif (isset($_GET[$sname])) {
-        	$sid = $_GET[$sname];
+            $sid = $_GET[$sname];
 
         } elseif (isset($_REQUEST[$sname])) {
-        	$sid = $_REQUEST[$sname];
+            $sid = $_REQUEST[$sname];
         }
         
         if (isset($sid)) {
@@ -89,18 +89,18 @@ class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_
 
         $sname = $this->getName();
         if (isset($_POST[$sname])) {
-        	$sid = $_POST[$sname];
+            $sid = $_POST[$sname];
 
         } elseif (isset($_GET[$sname])) {
-        	$sid = $_GET[$sname];
+            $sid = $_GET[$sname];
 
         } elseif (isset($_REQUEST[$sname])) {
-        	$sid = $_REQUEST[$sname];
+            $sid = $_REQUEST[$sname];
         }
 
         if (isset($sid)) {
-        	$this->setID($sid);
-        	$this->_fetchData();
+            $this->setID($sid);
+            $this->_fetchData();
         }
     }
 
@@ -121,21 +121,28 @@ class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_
     {
         if ($this->isExists()) {
             $this->_sendHeaders();
-            return $this->retrieve();
+            $result = $this->retrieve();
 
         } else {
-        	$sname = $this->getName();
+            $sname = $this->getName();
             if (!isset($_POST[$sname]) && !isset($_GET[$sname]) && isset($_REQUEST[$sname])) {
-                $sql = "SELECT id FROM $this->sql_table WHERE data LIKE '%\"XSID=".$_REQUEST[$sname]."\"%'";
+                $sid = addslashes($_REQUEST[$sname]);
+
+                $sql = 'SELECT id FROM ' . $this->sql_table . ' WHERE data LIKE \'%"XSID=' . $sid . '"%\'';
                 $result = $this->db->getOne($sql);
-        		if ($result) {
-        			$this->setID($result);
+                if ($result) {
+                    $this->setID($result);
                     $this->_sendHeaders();
-                    return $this->retrieve();
-        		}
-        	}
-            return $this->_initialize();
+                    $result = $this->retrieve();
+                }
+            }
+
+            if (!isset($result)) {
+                $result = $this->_initialize();
+            }
         }
+
+        return $result;
     }
     
     /**
@@ -147,8 +154,8 @@ class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_
     public function set($name, $value)
     {
         if (is_null($value)) {
-        	if (isset($this->_data[$name])) {
-            	unset($this->_data[$name]);
+            if (isset($this->_data[$name])) {
+                unset($this->_data[$name]);
             }
 
         } else {
@@ -166,12 +173,12 @@ class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_
     */
     public function get($name)
     {
-		return $this->isRegistered($name) ? unserialize($this->_data[$name]) : null;
+        return $this->isRegistered($name) ? unserialize($this->_data[$name]) : null;
     }
 
     public function isRegistered($name)
     {
-	    return is_array($this->_data) && isset($this->_data[$name]);
+        return is_array($this->_data) && isset($this->_data[$name]);
     }
     
     /**
@@ -196,24 +203,25 @@ class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_
     function _sendHeaders()
     {
         $error_reporting = error_reporting(0); // suppress warning messages
-		
+        
         $url = parse_url($this->getShopURL());
         $this->setPath($url['path']);
 
-        if ($url['host'] == "localhost" || $url['host'] == "127.0.0.1" || !strpos($url['host'], ".")) {
+        if ($url['host'] == 'localhost' || $url['host'] == '127.0.0.1' || !strpos($url['host'], '.')) {
             setcookie($this->getName(), $this->getID(), 0, $this->getPath());
+
         } else {
             setcookie($this->getName(), $this->getID(), 0, $this->getPath(), $url['host'], 0);
-		}
+        }
 
         $url = parse_url($this->getShopURL(true));
         $this->setPath($url['path']);
 
-        if ($url['host'] == "localhost" || $url['host'] == "127.0.0.1" || !strpos($url['host'], ".")) {
+        if ($url['host'] == 'localhost' || $url['host'] == '127.0.0.1' || !strpos($url['host'], '.')) {
             setcookie($this->getName(), $this->getID(), 0, $this->getPath());
         } else {
             setcookie($this->getName(), $this->getID(), 0, $this->getPath(), $url['host'], 0);
-		}
+        }
 
         error_reporting($error_reporting);
     }
@@ -229,7 +237,10 @@ class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_
     */
     function create()
     {
-        $sql = "REPLACE INTO $this->sql_table (id, expiry, data) VALUES ('".$this->getID()."', ".(time() + $this->getTtl()).", '".addslashes($this->getData())."')";
+        $sql = 'REPLACE INTO ' . $this->sql_table . ' (id, expiry, data) VALUES (\''
+            . $this->getID() . '\', ' . (time() + $this->getTtl())
+            . ', \'' . addslashes($this->getData()) . '\')';
+
         return $this->db->query($sql);
     }
 
@@ -241,15 +252,18 @@ class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_
     */
     function retrieve()
     {
-        $sql = "SELECT data FROM $this->sql_table WHERE id = '".$this->getID()."'";
+        $sql = 'SELECT data FROM ' . $this->sql_table . ' WHERE id = \'' . $this->getID() . '\'';
         $result = $this->db->getOne($sql);
-		if ($result) {
-	        $this->setData($result);
-		} else {
-			$this->setData(array());
-		}
+        if (!$result) {
+            $result = array();
+        }
+
+        $this->setData($result);
+
         // touch session
-        $sql = "UPDATE $this->sql_table SET expiry = ".(time() + $this->getTtl())." WHERE id = '".$this->getID()."'";
+        $sql = 'UPDATE ' . $this->sql_table
+            . ' SET expiry = ' . (time() + $this->getTtl()) . ' WHERE id = \'' . $this->getID() . '\'';
+
         return $this->db->query($sql);
     }
 
@@ -262,7 +276,10 @@ class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_
     */
     function update()
     {
-        $sql = "UPDATE $this->sql_table SET expiry = ".(time() + $this->getTtl()).", data = '".addslashes($this->getData())."' WHERE id = '".$this->getID()."' AND expiry >= ".time();
+        $sql = 'UPDATE ' . $this->sql_table . ' SET expiry = ' . (time() + $this->getTtl())
+            . ', data = \'' . addslashes($this->getData())
+            . '\' WHERE id = \'' . $this->getID() . '\' AND expiry >= ' . time();
+
         return $this->db->query($sql);
     }
 
@@ -275,7 +292,8 @@ class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_
     */
     function delete()
     {
-        $sql = "DELETE FROM $this->sql_table WHERE id = '".$this->getID()."'";
+        $sql = 'DELETE FROM ' . $this->sql_table . ' WHERE id = \'' . $this->getID() . '\'';
+
         return $this->db->query($sql);
     }
 
@@ -288,7 +306,8 @@ class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_
     */
     function gc()
     {
-        $sql = "DELETE FROM $this->sql_table WHERE expiry < ". time();
+        $sql = 'DELETE FROM ' . $this->sql_table . ' WHERE expiry < ' . time();
+
         return $this->db->query($sql);
     }
 
@@ -300,7 +319,8 @@ class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_
     */
     function isExists()
     {
-        $sql = "SELECT COUNT(*) FROM $this->sql_table WHERE id = '".$this->getID()."'";
+        $sql = 'SELECT COUNT(*) FROM ' . $this->sql_table . ' WHERE id = \'' . $this->getID() . '\'';
+
         return (bool) $this->db->getOne($sql);
     }
 }

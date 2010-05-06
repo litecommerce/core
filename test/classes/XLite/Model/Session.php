@@ -29,7 +29,7 @@
 define('SESSION_DEFAULT_ID', md5(uniqid(rand(), true)));
 
 /**
- * ____description____
+ * Session
  * 
  * @package XLite
  * @see     ____class_see____
@@ -72,8 +72,8 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
         return $formId;
     }
 
-	/**
-     * It's not possible to instantiate this class using the "new" operator
+    /**
+     * It's not possible to instantiate this class using the 'new' operator
      *
      * @return void
      * @access protected
@@ -178,16 +178,16 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
 
 
 
-	const SESSION_DEFAULT_TYPE = 'Sql';
-	const SESSION_DEFAULT_NAME = 'xid';
-	const SESSION_DEFAULT_PATH = '/';
-	const SESSION_DEFAULT_TTL  = 7200;
+    const SESSION_DEFAULT_TYPE = 'Sql';
+    const SESSION_DEFAULT_NAME = 'xid';
+    const SESSION_DEFAULT_PATH = '/';
+    const SESSION_DEFAULT_TTL  = 7200;
 
     /**
     * Session data containter.
     * @var array $_data
     * @access private
-    */	
+    */    
     public $_data = array();
 
     /**
@@ -197,12 +197,12 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
     * @access private
     */
     protected $options = array(
-		'type' => self::SESSION_DEFAULT_TYPE,
-		'name' => self::SESSION_DEFAULT_NAME,
-		'id'   => SESSION_DEFAULT_ID,
-		'path' => self::SESSION_DEFAULT_PATH,
-		'ttl'  => self::SESSION_DEFAULT_TTL
-	);
+        'type' => self::SESSION_DEFAULT_TYPE,
+        'name' => self::SESSION_DEFAULT_NAME,
+        'id'   => SESSION_DEFAULT_ID,
+        'path' => self::SESSION_DEFAULT_PATH,
+        'ttl'  => self::SESSION_DEFAULT_TTL
+    );
 
 
     /**
@@ -235,7 +235,7 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
     */
     function setType($type = self::SESSION_DEFAULT_TYPE)
     {
-        $this->options["type"] = $type;
+        $this->options['type'] = $type;
     }
     
     /**
@@ -246,7 +246,7 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
     */
     function getType()
     {
-        return $this->options["type"];
+        return $this->options['type'];
     }
 
     /**
@@ -257,65 +257,65 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
     */
     function setName($name = self::SESSION_DEFAULT_NAME)
     {
-        $this->options["name"] = $name;
+        $this->options['name'] = $name;
     }
     
     function getName()
     {
-        return $this->options["name"];
+        return $this->options['name'];
     }
 
     function setID($id)
     {
-		if (!preg_match('/^[0-9a-fA-F]{31,32}$/', $id)) {
-			$this->doDie('Session::setID(): Incorrect session ID has been detected: ' . $id);
-		}      
-        $this->options["id"] = $id;
+        if (!preg_match('/^[0-9a-f]{31,32}$/Sis', $id)) {
+            $this->doDie('Session::setID(): Incorrect session ID has been detected: ' . $id);
+        }      
+        $this->options['id'] = $id;
     }
     
     function getID()
     {
-        return $this->options["id"];
+        return $this->options['id'];
     }
 
     function setPath($path = self::SESSION_DEFAULT_PATH)
     {
-        $this->options["path"] = $path;
+        $this->options['path'] = $path;
     }
     
     function getPath()
     {
-        return $this->options["path"];
+        return $this->options['path'];
     }
 
     function setTtl($ttl = self::SESSION_DEFAULT_TTL)
     {
-        $this->options["ttl"] = $ttl;
+        $this->options['ttl'] = $ttl;
     }
     
     function getTtl()
     {
-        return $this->options["ttl"];
+        return $this->options['ttl'];
     }
 
     function getHttpHost()
     {
-        return $this->options["http_host"];
+        return $this->options['http_host'];
     }
     
     function getHttpsHost()
     {
-        return $this->options["https_host"];
+        return $this->options['https_host'];
     }
 
     function getShopURL($secure = false)
     {   
-        $proto   = $secure ? "https://" : "http://";
+        $proto   = $secure ? 'https://' : 'http://';
         $host    = $secure ? $this->options['https_host'] :
                              $this->options['http_host'];
         $web_dir = $this->options['web_dir'];
         $last    = strlen($web_dir) - 1;
-        $web_dir.= ($web_dir{$last} == "/") ? "" : "/";
+        $web_dir.= ($web_dir{$last} == '/') ? '' : '/';
     
         return $proto . $host . $web_dir;
     }
