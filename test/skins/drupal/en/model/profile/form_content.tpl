@@ -26,7 +26,7 @@
 
     <h2>Shipping address</h2>
 
-    <div class="same-address"><input type="checkbox" id="ship_as_bill" name="postedData[ship_as_bill]" value="Y" checked="{isSameAddress()}" onclick="javascript: this.checked ? $('.shipping-address-form .user-address-form').hide() : $('.shipping-address-form .user-address-form').show();" /><label for="ship_as_bill">The same as billing</label></div>
+    <div class="same-address"><input type="checkbox" id="ship_as_bill" name="postedData[ship_as_bill]" value="Y" checked="{isSameAddress()}" onclick="javascript: addressBlocksController();" /><label for="ship_as_bill">The same as billing</label></div>
 
     <table class="user-address-form" cellspacing="0" id="shipping_address_block">
       <tr FOREACH="getShippingAddressFields(),field">{field.display()}</tr>
@@ -36,10 +36,28 @@
 
 </div>
 <div class="clear">&nbsp;</div>
-{if:isSameAddress()}
 <script type="text/javascript">
 <!--
-document.getElementById('shipping_address_block').style.display = 'none';
+function addressBlocksController()
+{
+  var inp = document.getElementById('ship_as_bill');
+  var box = document.getElementById('shipping_address_block');
+
+  if (inp && box) {
+
+    var list = [
+      box.getElementsByTagName('input'),
+      box.getElementsByTagName('select'),
+      box.getElementsByTagName('textarea')
+    ];
+
+    for (var i = 0; i < list.length; i++) {
+      for (var j = 0; j < list[i].length; j++) {
+        list[i].item(j).disabled = inp.checked;
+      }
+    }
+  }
+}
+addressBlocksController();
 -->
 </script>
-{end:}
