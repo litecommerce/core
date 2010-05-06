@@ -108,7 +108,7 @@ class XLite_Controller_Customer_Invoice extends XLite_Controller_Customer_Abstra
     public function getOrder()
     {
         if (is_null($this->order)) {
-            $this->order = new XLite_Model_Order(XLite_Core_Request::getInstance()->order_id);
+            $this->order = new XLite_Model_Order(intval(XLite_Core_Request::getInstance()->order_id));
         }
 
         return $this->order;

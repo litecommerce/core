@@ -89,7 +89,7 @@ class XLite_View_Order extends XLite_View_Dialog
     public function getOrder()
     {
         if (is_null($this->order)) {
-            $this->order = new XLite_Model_Order(XLite_Core_Request::getInstance()->order_id);
+            $this->order = new XLite_Model_Order(intval(XLite_Core_Request::getInstance()->order_id));
         }
 
         return $this->order;

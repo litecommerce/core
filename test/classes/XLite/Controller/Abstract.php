@@ -485,7 +485,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         return XLite_Model_CachingFactory::getObject(
             __METHOD__,
             'XLite_Model_Category',
-            array($this->getCategoryId())
+            array(intval($this->getCategoryId()))
         );
     }
 
@@ -502,7 +502,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         return XLite_Model_CachingFactory::getObject(
             __METHOD__,
             'XLite_Model_Product',
-            array($this->getProductId())
+            array(intval($this->getProductId()))
         );
     }
 

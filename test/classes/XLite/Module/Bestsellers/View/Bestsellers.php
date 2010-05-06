@@ -142,7 +142,7 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_ProductsList
     protected function getRootId()
     {
         return $this->getParam(self::PARAM_USE_NODE) 
-            ? XLite_Core_Request::getInstance()->category_id 
+            ? intval(XLite_Core_Request::getInstance()->category_id) 
             : $this->getParam(self::PARAM_ROOT_ID);
     }
 
