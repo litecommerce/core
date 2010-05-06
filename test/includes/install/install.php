@@ -776,7 +776,7 @@ function checkMysqlVersion(&$errorMsg, &$value, $connection = null)
 
         } elseif ((func_version_compare($version, "5.0.50") >= 0 && func_version_compare($version, "5.0.52") < 0)) {
             $result = false;
-            $errorMsg = 'The version of MySQL which is currently used contains known bugs, that is why LiteCommerce may operate incorrectly. It is recommended to update MySQL to a more stable version.';
+            $errorMsg = 'The version of MySQL which is currently used (' . $version . ') contains known bugs, that is why LiteCommerce may operate incorrectly. It is recommended to update MySQL to a more stable version.';
         }
 
     } elseif (is_resource($connection)) {
@@ -2764,6 +2764,12 @@ function module_cfg_install_db(&$params)
             'def_value'   => 'localhost',
             'required'    => true
         ),
+        'mysqlport'        => array(
+            'title'       => 'MySQL server port',
+            'description' => 'If your database server is listening to a non-standard port, specify its number.',
+            'def_value'   => '',
+            'required'    => false
+        ),
         'mysqlbase'        => array(
             'title'       => 'MySQL database name',
             'description' => 'The name of the existing database to use (if the database does not exist on the server, you should create it to continue the installation).',
@@ -2879,6 +2885,16 @@ OUT;
 
         // Check if database settings provided are valid
         } else {
+
+            // Check if port specified in the host name
+            if (preg_match('/^([^:]+):(.*)$/', $params['mysqlhost'], $match)) {
+
+                $params['mysqlhost'] = $match[1];
+
+                if (empty($params['mysqlport'])) {
+                    $params['mysqlport'] = $match[2];
+                }
+            }
  
             $connection = @mysql_connect($params['mysqlhost'] . (!empty($params['mysqlport']) ? ':' . $params['mysqlport'] : ''), $params['mysqluser'], $params['mysqlpass']);
 
