@@ -33,6 +33,7 @@ CREATE TABLE xlite_categories (
   enabled int(1) NOT NULL default '1',
   meta_desc text NOT NULL default '',
   meta_title varchar(255) NOT NULL default '',
+  clean_url varchar(255) NOT NULL default '',
   PRIMARY KEY  (category_id),
   KEY order_by (order_by),
   KEY name (name),
@@ -46,7 +47,8 @@ CREATE TABLE xlite_categories (
   KEY enabled (enabled),
   KEY meta_title (meta_title),
   FULLTEXT KEY meta_desc (meta_desc),
-  FULLTEXT KEY description (description)
+  FULLTEXT KEY description (description),
+  KEY clean_url(clean_url)
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS xlite_config;
@@ -242,6 +244,7 @@ CREATE TABLE xlite_products (
   free_shipping int(11) NOT NULL default '0',
   meta_desc text NOT NULL default '',
   meta_title varchar(255) NOT NULL default '',
+  clean_url varchar(255) NOT NULL default '',
   PRIMARY KEY  (product_id),
   KEY order_by (order_by),
   KEY name (name),
@@ -259,7 +262,8 @@ CREATE TABLE xlite_products (
   KEY tax_class (tax_class),
   KEY free_shipping (free_shipping),
   FULLTEXT KEY meta_desc (meta_desc),
-  KEY meta_title (meta_title)
+  KEY meta_title (meta_title),
+  KEY clean_url(clean_url)
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS xlite_extra_fields;

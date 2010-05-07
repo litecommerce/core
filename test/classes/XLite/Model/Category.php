@@ -27,7 +27,7 @@
  */
 
 /**
- * ____description____
+ * Category
  * 
  * @package XLite
  * @see     ____class_see____
@@ -35,6 +35,69 @@
  */
 class XLite_Model_Category extends XLite_Model_Abstract
 {
+    /**
+     * Object properties (table filed => default value)
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $fields = array(
+        'category_id'           => 0,
+        'image_width'           => 0,
+        'image_height'          => 0,
+        'name'                  => '',
+        'description'           => '',
+        'meta_tags'             => '',
+        'meta_title'            => '',
+        'meta_desc'              => '',
+        'enabled'               => 1,
+        'views_stats'           => 0,
+        'order_by'              => 0,
+        'membership'            => '%',
+        'threshold_bestsellers' => 1,
+        'parent'                => 0,
+        'image_type'            => '',
+        'clean_url'             => '',
+    );
+
+    /**
+     * Auto-increment file name
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $autoIncrement = 'category_id';
+
+    /**
+     * Default order file name
+     * 
+     * @var    string
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $defaultOrder = 'order_by, name';
+
+    /**
+     * Table alias 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $alias = 'categories';
+
+    public $parent = null;    
+
+    public $image = null;    
+
+    public $_string_path = null;
+
     /**
      * Returns the subcategories list for the current category 
      * 
@@ -72,19 +135,20 @@ class XLite_Model_Category extends XLite_Model_Abstract
             'XLite_Model_Image',
             array('category', $categoryId)
         );
-	}
+    }
 
-	/**
-	 * Checks whether image for this category is set 
-	 * 
-	 * @return bool
-	 * @access public
-	 * @since  3.0.0
-	 */
-	public function hasImage()
+    /**
+     * Checks whether image for this category is set 
+     * 
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function hasImage()
     {
-		return (0 == $this->get('category_id')) ? false : !is_null($this->getImage()->get('data'));
-	}
+        return 0 != $this->get('category_id')
+            && !is_null($this->getImage()->get('data'));
+    }
 
     /**
      * Return image URL
@@ -98,64 +162,18 @@ class XLite_Model_Category extends XLite_Model_Abstract
         return $this->getImage()->getURL();
     }
 
-	/**
-	 * Check if category has neither products nor subcategories 
-	 * 
-	 * @return bool
-	 * @access public
-	 * @since  3.0.0
-	 */
-	public function isEmpty()
+    /**
+     * Check if category has neither products nor subcategories 
+     * 
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function isEmpty()
     {
         return !$this->getProducts() && !$this->getSubcategories();
     } 
 
-
-
-
-    /**
-    * @var array $fields The category properties
-    * @access private
-    */
-    protected $fields = array(
-                    "category_id"           => 0,
-                    "image_width"           => 0,
-                    "image_height"          => 0,
-                    "name"                  => "",
-                    "description"           => "",
-                    "meta_tags"             => "",
-					"meta_title"			=> "",
-					"meta_desc"				=> "",
-                    "enabled"               => 1,
-                    "views_stats"           => 0,
-                    "order_by"              => 0,
-                    "membership"            => "%",
-                    "threshold_bestsellers" => 1,
-                    "parent"                => 0,
-                    "image_type"            => ""
-                    );
-                    
-    /**
-    * @var string $autoIncrement The category database table primary key
-    * @access private
-    */	
-    public $autoIncrement = "category_id";
-
-    /**
-    * @var string $defaultOrder The category database records default order
-    * @access private
-    */	
-    public $defaultOrder = "order_by,name";
-
-    /**
-    * @var string $alias The category database table alias
-    * @access public
-    */	
-    public $alias = "categories";	
-    public $parent = null;	
-    public $image = null;	
-	public $_string_path = null;
-    
     function cloneObject()
     {       
         $c = parent::cloneObject();
@@ -240,7 +258,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
         $id = $this->get("category_id");
         if ($this->xlite->is("adminZone") || !$useCache) {
             if (isset($products[$id][$where][$orderby])) {
-            	unset($products[$id][$where][$orderby]);
+                unset($products[$id][$where][$orderby]);
             }
         }
         if (!isset($products[$id][$where][$orderby])) {
@@ -283,8 +301,8 @@ class XLite_Model_Category extends XLite_Model_Abstract
         }
         $product = new XLite_Model_Product();
         $product->collectGarbage();
-		$image = $this->get("image");
-		$image->delete();
+        $image = $this->get("image");
+        $image->delete();
         parent::delete();
     } // }}}
 
@@ -342,9 +360,9 @@ class XLite_Model_Category extends XLite_Model_Abstract
                     $state = "S";
                 } else if ($state == "|" || $char == "") {
                     $path[] = $word;
-        			if ($allowMiltyCategories) {
-                    	$list[] = $path;
-                    	$path = array();
+                    if ($allowMiltyCategories) {
+                        $list[] = $path;
+                        $path = array();
                     }
                     $word = $char;
                     $state = "S";
@@ -420,20 +438,36 @@ class XLite_Model_Category extends XLite_Model_Abstract
         return new XLite_Model_Category($category_id);
     } // }}}
 
+    /**
+     * Find category by clean URL
+     * 
+     * @param string $url Clean URL
+     *  
+     * @return XLite_Model_Category
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */ 
+    public function findByCleanUrl($url)
+    {
+        return $this->find('clean_url = \'' . $url . '\'');
+    }
+
+
     function filterRule()
     {
-    	$result = true;
+        $result = true;
 
         if ($this->auth->is("logged")) {
             $membership = $this->auth->getComplex('profile.membership');
         } else {
             $membership = '';
         }
-		if (!$this->is("enabled") || trim($this->get("name")) == "" || !$this->_compareMembership($this->get("membership"), $membership)) {
-			$result = false;
-		}
+        if (!$this->is("enabled") || trim($this->get("name")) == "" || !$this->_compareMembership($this->get("membership"), $membership)) {
+            $result = false;
+        }
 
-		return $result;
+        return $result;
     }
 
     function filter() // {{{
@@ -443,18 +477,18 @@ class XLite_Model_Category extends XLite_Model_Abstract
             if ($this->db->cacheEnabled) {
                 global $categoriesFiltered;
                 if (!isset($categoriesFiltered) || (isset($categoriesFiltered) && !is_array($categoriesFiltered))) {
-                	$categoriesFiltered = array();
+                    $categoriesFiltered = array();
                 }
 
                 $cid = $this->get("category_id");
                 if (isset($categoriesFiltered[$cid])) {
-                	return $categoriesFiltered[$cid];
+                    return $categoriesFiltered[$cid];
                 }
             }
 
             $result = $this->filterRule();
-			if ($result) {
-				// check parent categories
+            if ($result) {
+                // check parent categories
                 $parent = $this->getParentCategory();
                 if (isset($parent)) {
                     $result = $result && XLite_Model_CachingFactory::getObjectFromCallback(
@@ -464,8 +498,8 @@ class XLite_Model_Category extends XLite_Model_Abstract
             }
 
             if ($this->db->cacheEnabled) {
-        		$categoriesFiltered[$cid] = $result;
-        	}
+                $categoriesFiltered[$cid] = $result;
+            }
         }
         return $result;
     } // }}}

@@ -106,6 +106,12 @@
       <td><input name="meta_desc" value="{meta_desc}" size=50 /></td>
     </tr>
 
+    <tr>
+      <td class="FormButton">Clean URL </td>
+      <td>&nbsp;</td>
+      <td><input name="clean_url" value="{clean_url}" size="50" /></td>
+    </tr>
+
   	<tr>
 	  	<td class="FormButton">Pos.</td>
       <td>&nbsp;</td>

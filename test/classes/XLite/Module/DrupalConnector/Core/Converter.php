@@ -99,17 +99,18 @@ class XLite_Module_DrupalConnector_Core_Converter extends XLite_Core_Converter i
     }
 
     /**
-     * Compose URL from target, action and additional params
-     *
-     * @param string $target page identifier
-     * @param string $action action to perform
-     * @param array  $params additional params
-     *
+     * Build Drupal path string
+     * 
+     * @param string $target Target
+     * @param string $action Action
+     * @param array  $params Parameters list
+     *  
      * @return string
      * @access public
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
-    public static function buildDrupalURL($target = '', $action = '', array $params = array())
+    public static function buildDrupalPath($target = '', $action = '', array $params = array())
     {
         $parts = array(self::DRUPAL_ROOT_NODE, $target, $action);
 
@@ -124,6 +125,22 @@ class XLite_Module_DrupalConnector_Core_Converter extends XLite_Core_Converter i
             $url .= '/' . XLite_Core_Converter::buildQuery($params, '-', '/');
         }
 
-        return url($url);
+        return $url;
+    }
+
+    /**
+     * Compose URL from target, action and additional params
+     *
+     * @param string $target page identifier
+     * @param string $action action to perform
+     * @param array  $params additional params
+     *
+     * @return string
+     * @access public
+     * @since  3.0
+     */
+    public static function buildDrupalURL($target = '', $action = '', array $params = array())
+    {
+        return url(self::buildDrupalPath($target, $action, $params));
     }
 }

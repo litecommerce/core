@@ -377,5 +377,20 @@ EOT;
     {
         return strtoupper(md5(strval($string)));
     }
+
+    /**
+     * Sanitize Clean URL 
+     * 
+     * @param string $cleanUrl Clean URL
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function sanitizeCleanURL($cleanUrl)
+    {
+        return substr(trim(preg_replace('/[^a-z0-9 \/\.]+/Sis', '', $cleanUrl)), 0, 200);
+    }
 }
 

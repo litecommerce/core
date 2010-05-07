@@ -36,6 +36,16 @@
 class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
 {
     /**
+     * Forbid URL rewrite routine
+     * 
+     * @var    boolean
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public static $forbidURLRewrite = false;
+
+    /**
      * Portals (cache)
      * 
      * @var    array
@@ -421,5 +431,25 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
         );
     }
 
+    /**
+     * Get canonical URL by clean URL 
+     * 
+     * @param string $path Clean url
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getURLByCleanURL($path)
+    {
+        self::$forbidURLRewrite = true;
+
+        $result = parent::getURLByCleanURL($path);
+
+        self::$forbidURLRewrite = false;
+
+        return $result;
+    }
 }
 

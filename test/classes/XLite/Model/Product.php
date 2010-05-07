@@ -61,6 +61,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
         'image_type'        => '',
         'tax_class'         => '',
         'free_shipping'     => 0,
+        'clean_url'         => '',
     );    
 
     /**
@@ -859,6 +860,21 @@ class XLite_Model_Product extends XLite_Model_Abstract
         }
         return null;
     } // }}}
+
+    /**
+     * Find product by clean URL
+     * 
+     * @param string $url Clean URL
+     *  
+     * @return XLite_Model_Product
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findByCleanUrl($url)
+    {
+        return $this->find('clean_url = \'' . $url . '\'');
+    }
 
     function _import(array $options) // {{{
     {

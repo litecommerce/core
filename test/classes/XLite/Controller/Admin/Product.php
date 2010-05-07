@@ -106,7 +106,20 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_Abstract
     {
         // update product properties
         $product = new XLite_Model_Product($this->product_id);
-        $product->set("properties", XLite_Core_Request::getInstance()->getData());
+        $properties = XLite_Core_Request::getInstance()->getData();
+
+        // Sanitize
+        if (isset($properties['clean_url'])) {
+            $properties['clean_url'] = $this->sanitizeCleanURL($properties['clean_url']);
+            if (!$this->checkCleanURLUnique($properties['clean_url'])) {
+
+                // TODO - add top message
+                $this->set('valid', false);
+                return;
+            }
+        }
+
+        $product->set("properties", $properties);
         $product->update();
         
         // update product image and thumbnail
@@ -162,4 +175,22 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_Abstract
 		$product->update();
 		$this->set('returnUrl', 'admin.php?target=product&product_id=' . $product->get('product_id'));
 	}
+
+    /**
+     * Check - specified clean URL unique or not
+     * 
+     * @param string $cleanURL Clean URL
+     *  
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkCleanURLUnique($cleanURL)
+    {
+        $product = new XLite_Model_Product();
+
+        return !$product->find('clean_url = \'' . $cleanURL . '\'');
+    }
+
 }

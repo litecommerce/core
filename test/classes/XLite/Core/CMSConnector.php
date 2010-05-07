@@ -394,6 +394,86 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         return $profile;
     }
 
+    /**
+     * Get Clean URL 
+     * 
+     * @param array $args Arguments
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCleanURL(array $args)
+    {
+        $url = null;
+
+        if ('category' == $args['target'] && isset($args['category_id']) && $args['category_id']) {
+
+            // Category
+            $category = new XLite_Model_Category(intval($args['category_id']));
+            if ($category->isExists() && $category->get('clean_url')) {
+                $url = preg_replace('/\/+$/Ss', '', $category->get('clean_url')) . '/';
+            }
+
+        } elseif ('product' == $args['target'] && isset($args['product_id']) && $args['product_id']) {
+
+            // Product
+            $product = new XLite_Model_Product(intval($args['product_id']));
+            if ($product->isExists() && $product->get('clean_url')) {
+                $url = $product->get('clean_url');
+                if (!preg_match('/(\.html|\/htm)$/Ss', $url)) {
+                    $url .= '.html';
+                }
+            }
+
+        }
+
+        return $url;
+    }
+
+    /**
+     * Get canonical URL by clean URL 
+     * 
+     * @param string $path Clean url
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getURLByCleanURL($path)
+    {
+        $cleanUrl = null;
+
+        // By product
+
+        $product = new XLite_Model_Product();
+        if ($product->findByCleanUrl(preg_replace('/(?:\.html|\.htm)$/Ss', '', $path))) {
+            $cleanUrl = XLite_Core_Converter::buildURL(
+                'product',
+                '',
+                array('product_id' => $product->get('product_id'))
+            );
+        }
+
+        // By category
+
+        if (!$cleanUrl) {
+
+            $category = new XLite_Model_Category();
+            if ($category->findByCleanUrl(preg_replace('/\/+$/Ss', '', $path))) {
+                $cleanUrl = XLite_Core_Converter::buildURL(
+                    'category',
+                    '',
+                    array('category_id' => $category->get('category_id'))
+                );
+            }
+
+        }
+
+        return $cleanUrl;
+    }
 
     // -----> FIXME - to revise
 

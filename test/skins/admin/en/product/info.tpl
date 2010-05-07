@@ -185,6 +185,10 @@
     <td><input name="meta_desc" value="{product.meta_desc}" size=50></td>
 </tr>
 <tr>
+    <td class="FormButton">Clean URL</td>
+    <td><input name="clean_url" value="{product.clean_url}" size="50" /></td>
+</tr>
+<tr>
   <td valign=middle class="FormButton">Pos.</td>
   <td valign="middle"><input type="text" name="order_by" size="5" value="{product.order_by}"></td>
 </tr>
