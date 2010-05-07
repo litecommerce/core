@@ -255,24 +255,30 @@ class XLite_Model_Abstract extends XLite_Base
     } // }}}
 
     /**
-    * Updated the database record for this object.
-    *
-    * @access public
-    */
-    function update() // {{{
+     * Update object
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function update()
     {
         $this->_beforeSave();
+
         // updated data for the persistent object
-        if ($this->isPersistent) {
-            $this->sql = $this->_buildUpdate();
-            if ($this->sql !== false) {
-                return $this->db->query($this->sql);
-            }
-            return false;
+        if (!$this->isPersistent) {
+            $this->doDie('Unable to update unspecified row for ' . $this->alias);
         }
-        // die otherwise
-        $this->doDie("Unable to update unspecified row for " . $this->alias);
-    } // }}}
+
+        $this->sql = $this->_buildUpdate();
+        $result = false;
+        if ($this->sql !== false) {
+            $result = $this->db->query($this->sql);
+        }
+
+        return $result;
+    }
 
     /**
     * Creates the database record for this object.

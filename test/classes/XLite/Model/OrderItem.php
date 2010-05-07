@@ -142,6 +142,48 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
         }
     }
 
+    /**
+     * Update object
+     *
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function update()
+    {
+        $result = parent::update();
+
+        if ($result) {
+            $key = $this->getKey();
+            if ($key != $this->get('item_id')) {
+                $item = new XLite_Model_OrderItem();
+                $sql = 'order_id = \'' . $this->get('order_id')
+                    . ' \' AND item_id = \'' . addslashes($key) . '\'';
+
+                if ($item->find($sql)) {
+
+                    // Unite items
+                    $item->updateAmount($this->get('amount') + $item->get('amount'));
+                    $this->getOrder()->deleteItem($this);
+
+                } else {
+
+                    // Update item id
+                    $sql = 'UPDATE ' . $this->getTable()
+                        . ' SET item_id = \'' . $key . '\''
+                        . ' WHERE order_id = \'' . $this->get('order_id')
+                        . ' \' AND item_id = \'' . addslashes($this->get('item_id')) . '\'';
+                    $this->db->query($sql);
+                    $this->set('item_id', $key);
+                    $this->getOrder()->updateItem($this);
+                }
+            }
+        }
+
+        return $result;
+    }
+
     function getOrderby()
     {
         $sql = "SELECT MAX(orderby)+1 FROM %s WHERE order_id=%d";
