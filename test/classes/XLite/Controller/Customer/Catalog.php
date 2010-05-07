@@ -109,7 +109,7 @@ abstract class XLite_Controller_Customer_Catalog extends XLite_Controller_Custom
      */
     protected function isCategoryAvailable()
     {
-        return $this->getCategory()->is('exists') && $this->getCategory()->is('enabled');
+        return $this->getCategory()->isExists() && $this->getCategory()->is('enabled');
     }
 
 

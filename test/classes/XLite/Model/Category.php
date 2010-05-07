@@ -450,7 +450,12 @@ class XLite_Model_Category extends XLite_Model_Abstract
      */ 
     public function findByCleanUrl($url)
     {
-        return $this->find('clean_url = \'' . $url . '\'');
+        return XLite_Model_CachingFactory::getObjectFromCallback(
+            __METHOD__ . $url,
+            $this,
+            'find',
+            array('clean_url = \'' . $url . '\'')
+        );
     }
 
 
