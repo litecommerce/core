@@ -43,7 +43,7 @@ class XLite_View_OrderList_Search extends XLite_View_OrderList_Abstract
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $widgetClass = __CLASS__;
+    protected $widgetClass = 'XLite_View_OrderList_Search';
 
     /**
      * Search conditions (cache)
