@@ -43,7 +43,7 @@ class XLite_Controller_Admin_Helpdesk extends XLite_Controller_Admin_Abstract
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $url = 'https://zoo-xb-kai.crtdev.local/customer.php?area=center&target=customer_info&create_topic=1';
+    protected $url = 'https://secure.qtmsoft.com/customer.php?area=center&target=customer_info&create_topic=1';
 
     /**
      * Send request
