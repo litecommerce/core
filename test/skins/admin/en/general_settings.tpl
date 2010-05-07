@@ -351,4 +351,4 @@ if (!httpsEnabled) {
   <widget page="AdminIP" template="waiting_ips.tpl" />
 {end:}
 
-<widget target="module" template="modules/{page}/settings_footer.tpl" ignoreErrors />
+<widget class="XLite_View_ModuleSettingsFooter" section="{page}" />
