@@ -225,14 +225,20 @@ class Decorator
      * @see    ____func_see____
      * @since  3.0.0 EE
      */
-    protected function showJavaScriptBlock()
+    protected function showJavaScriptBlock($redirectUrl = null)
     {
-        $code = '<table id="rebuild_cache_block"><tr>'
+        if (is_null($redirectUrl)) {
+            $code = '<table id="rebuild_cache_block"><tr>'
                 . '<td><img src="skins/progress_indicator.gif" /></td>'
                 . '<td>Re-building cache, please wait...</td>'
                 . '</tr></table>';
+            func_flush('<script type="text/javascript">document.write(\'' . $code . '\');</script>' . "\n");
 
-        func_flush('<script language="javascript">document.write(\'' . $code . '\');</script>' . "\n");
+        } else {
+            $code = '<script type="text/javascript">self.location=\'' . $redirectUrl . '\';</script>'
+                . '<noscript><a href="' . $redirectUrl . '">Click here to redirect</a></noscript>';
+            func_flush($code);
+        }
     }
 
     /**
@@ -1060,6 +1066,18 @@ class Decorator
             }
 
             $this->restoreMaxExecutionTime();
+
+            if (!defined('SILENT_CACHE_REBUILD')) {
+
+                $isHttps = (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS'] == 'on') || $_SERVER['HTTPS'] == '1'))
+                            || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443');
+                $redirectUrl = ($isHttps ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+                if (@parse_url($redirectUrl) && 'cli' != php_sapi_name() && empty($_REQUEST['action'])) {
+                    $this->showJavaScriptBlock($redirectUrl);
+                    die();
+                }
+            }
         }
     }
 
