@@ -97,13 +97,24 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
                 XLite_Core_TopMessage::getInstance()->add('Product has been added to cart');
 
             } else {
-                XLite_Core_TopMessage::getInstance()->add('Product has not been added to cart', XLite_Core_TopMessage::ERROR);
+                XLite_Core_TopMessage::getInstance()->add(
+                    'Product has not been added to cart',
+                    XLite_Core_TopMessage::ERROR
+                );
             }
 
             // switch back to product catalog or to shopping cart
             $productListUrl = ($this->config->General->add_on_mode && isset($_SERVER['HTTP_REFERER']))
                 ? $_SERVER['HTTP_REFERER']
                 : $this->session->get('productListURL');
+
+            if (!$productListUrl && $this->getProduct()) {
+                $productListUrl = $this->buildUrl(
+                    'product',
+                    '',
+                    array('product_id' => $this->getProduct()->get('product_id'))
+                );
+            }
 
             if ($this->config->General->redirect_to_cart) {
                 $this->session->set('continueURL', $productListUrl);

@@ -22,7 +22,7 @@
           <widget class="XLite_View_Form_Cart_Clear" name="clear_form" className="plain" />
             <widget class="XLite_View_Button_Submit" label="Clear cart" />
           <widget name="clear_form" end >
-          <widget class="XLite_View_Button_Link" label="Continue shopping" location="{session.continueURL}" />
+          <widget class="XLite_View_Button_Link" label="Continue shopping" location="{getContinueURL()}" IF="getContinueURL()" />
         </div>
 
         <div class="shipping-estimator">

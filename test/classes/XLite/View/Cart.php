@@ -82,6 +82,19 @@ class XLite_View_Cart extends XLite_View_Dialog
     }
 
     /**
+     * Get continue URL 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getContinueURL()
+    {
+        return $this->session->get('continueURL');
+    }
+
+    /**
      * Get a list of CSS files required to display the widget properly
      *
      * @return array
