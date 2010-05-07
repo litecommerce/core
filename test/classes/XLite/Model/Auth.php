@@ -30,14 +30,12 @@ define('USER_EXISTS', 1);
 define('REGISTER_SUCCESS', 2);
 define('ACCESS_DENIED', 3);
 define('LAST_ADMIN_ACCOUNT', 4);
-define('IP_VALID', 1);
-define('IP_INVALID', 0);
 
 global $_reReadProfiles;
 $_reReadProfiles = false;
 
 /**
- * ____description____
+ * Authorization routine
  * 
  * @package XLite
  * @see     ____class_see____
@@ -50,6 +48,10 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
      */
 
     const RESULT_ACCESS_DENIED = ACCESS_DENIED;
+
+
+    const IP_VALID = 1;
+    const IP_INVALID = 0;
 
 
     /**
@@ -102,14 +104,14 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     }
 
 
-	/**
-	 * getInstance 
-	 * 
-	 * @return XLite_Model_Auth
-	 * @access public
-	 * @since  3.0.0
-	 */
-	public static function getInstance()
+    /**
+     * getInstance 
+     * 
+     * @return XLite_Model_Auth
+     * @access public
+     * @since  3.0.0
+     */
+    public static function getInstance()
     {
         return self::getInternalInstance(__CLASS__);
     }
@@ -188,34 +190,34 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
      */
     public function isLogged()
     {
-		return !is_null($this->getProfile());
+        return !is_null($this->getProfile());
     }
 
-	/**
-	 * Get profile 
-	 * 
-	 * @param int $profileId internal profile ID
-	 *  
-	 * @return mixed
-	 * @access public
-	 * @since  3.0.0
-	 */
-	public function getProfile($profileId = null)
+    /**
+     * Get profile 
+     * 
+     * @param int $profileId internal profile ID
+     *  
+     * @return mixed
+     * @access public
+     * @since  3.0.0
+     */
+    public function getProfile($profileId = null)
     {
-		$result = null;
+        $result = null;
 
-		if (!isset($profileId)) {
-			$profileId = XLite_Model_Session::getInstance()->get('profile_id');
-		}
+        if (!isset($profileId)) {
+            $profileId = XLite_Model_Session::getInstance()->get('profile_id');
+        }
 
-		if (isset($profileId)) {
-			$profile = XLite_Model_CachingFactory::getObject(__METHOD__ . $profileId, 'XLite_Model_Profile', array($profileId));
-			if ($profile->isValid()) {
-				$result = $profile;
-			}
-		}
+        if (isset($profileId)) {
+            $profile = XLite_Model_CachingFactory::getObject(__METHOD__ . $profileId, 'XLite_Model_Profile', array($profileId));
+            if ($profile->isValid()) {
+                $result = $profile;
+            }
+        }
 
-		return $result;
+        return $result;
     }
 
     /**
@@ -295,6 +297,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
      * 
      * @return int
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getCustomerAccessLevel()
@@ -355,12 +358,12 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
 
     function isEmptySippingInfoField(&$properties, $name)
     {
-    	switch($name) {
-    		case "shipping_state":
-    			return ((intval($properties[$name]) <= 0) && empty($properties["shipping_custom_state"]));
-    		default:
-    			return (empty($properties[$name]));
-    	}
+        switch($name) {
+            case "shipping_state":
+                return ((intval($properties[$name]) <= 0) && empty($properties["shipping_custom_state"]));
+            default:
+                return (empty($properties[$name]));
+        }
     }
     
     /**
@@ -417,10 +420,10 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         // get referer
         if (isset($_SERVER["HTTP_REFERER"])) {
             if (!isset($_COOKIE["LCReferrerCookie"])) {
-            	$referer = $_SERVER["HTTP_REFERER"];
+                $referer = $_SERVER["HTTP_REFERER"];
                 setcookie("LCReferrerCookie", $referer, time() + 3600 * 24 * 180, "/", XLite::getInstance()->getOptions(array('host_details', 'http_host')));
             } else {
-            	$referer = $_COOKIE["LCReferrerCookie"];
+                $referer = $_COOKIE["LCReferrerCookie"];
             }
             // save referer
             $profile->set("referer", $referer);
@@ -432,7 +435,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
             $mailer = new XLite_Model_Mailer();
             // pass this data to the mailer
             $mailer->profile = $profile; 
-			$mailer->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
+            $mailer->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
             $mailer->compose($this->getComplex('config.Company.site_administrator'),
                              $profile->get("login"),
                              "signin_notification"
@@ -468,9 +471,9 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         if ($this->session->get("anonymous")) {
             $this->clearAnonymousPassword($profile);
         } else {
-    		$another = new XLite_Model_Profile($profile->get("profile_id"));
+            $another = new XLite_Model_Profile($profile->get("profile_id"));
             if (strlen($another->get("password")) == 0) {
-            	$this->clearAnonymousPassword($profile);
+                $this->clearAnonymousPassword($profile);
             }
         }
         if (strlen($profile->get("password")) > 0) {
@@ -486,9 +489,9 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         // update current shopping cart/order data
         $cartProfile = XLite_Model_Cart::getInstance()->getProfile();
         if ($cartProfile->get('order_id')) {
-			$cartProfile->modifyProperties(XLite_Core_Request::getInstance()->getData());
-			$this->copyBillingInfo($cartProfile);
-			$cartProfile->update();
+            $cartProfile->modifyProperties(XLite_Core_Request::getInstance()->getData());
+            $this->copyBillingInfo($cartProfile);
+            $cartProfile->update();
         }
 
         // modify and update profile
@@ -500,7 +503,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         // send mail notification to customer
         $mailer = new XLite_Model_Mailer();
         $mailer->set("profile", $profile);
-		$mailer->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
+        $mailer->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
         $mailer->compose(
                 $this->getComplex('config.Company.users_department'),
                 $profile->get("login"),
@@ -520,10 +523,10 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
 
     function clearAnonymousPassword($profile)
     {
-		$profile->set("password", null);
-		if (isset($_REQUEST["password"])) {
-			unset($_REQUEST["password"]);
-		}
+        $profile->set("password", null);
+        if (isset($_REQUEST["password"])) {
+            unset($_REQUEST["password"]);
+        }
     }
 
     /**
@@ -571,7 +574,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         // send mail notification about deleted profile to customer
         $mailer = new XLite_Model_Mailer();
         $mailer->set("profile", $profile);
-		$mailer->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
+        $mailer->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
         $mailer->compose(
                 $this->getComplex('config.Company.users_department'),
                 $profile->get("login"),
@@ -594,7 +597,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     */
     function rememberLogin($login) // {{{
     {
-		$options = XLite::getInstance()->getOptions('host_details');
+        $options = XLite::getInstance()->getOptions('host_details');
 
         foreach (array($options['http_host'], $options['https_host']) as $host) {
             @setcookie('last_login', $login, time() + 3600 * 24 * $this->config->General->login_lifetime, '/', func_parse_host($host));
@@ -609,16 +612,16 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         return isset($_COOKIE["last_login"]) ? $_COOKIE["last_login"] : "";
     } // }}}
 
-	/**
-	 * Session restart after log-in
-	 * 
-	 * @return void
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function sessionRestart()
-	{
+    /**
+     * Session restart after log-in
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function sessionRestart()
+    {
         if (
             isset($_REQUEST[XLite_Model_Session::SESSION_DEFAULT_NAME])
             && !(isset($_GET[XLite_Model_Session::SESSION_DEFAULT_NAME]) || isset($_POST[XLite_Model_Session::SESSION_DEFAULT_NAME]))
@@ -626,14 +629,14 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
 
             unset($_REQUEST[XLite_Model_Session::SESSION_DEFAULT_NAME]);
             $this->xlite->session->set(
-				'_' . XLite_Model_Session::SESSION_DEFAULT_NAME,
-				XLite_Model_Session::SESSION_DEFAULT_NAME . '=' . $this->xlite->session->getID()
-			);
+                '_' . XLite_Model_Session::SESSION_DEFAULT_NAME,
+                XLite_Model_Session::SESSION_DEFAULT_NAME . '=' . $this->xlite->session->getID()
+            );
             $this->xlite->session->destroy();
             $this->xlite->session->setID(SESSION_DEFAULT_ID);
             $this->xlite->session->_initialize();
         }
-	}
+    }
 
     /**
     * Logs in admin to cart.
@@ -646,17 +649,17 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     {
         $profile = $this->login($login, $password);
 
-		if (
-			(is_int($profile) && ACCESS_DENIED === $profile)
-			|| ($profile instanceof Profile && !$profile->is("admin"))
-		) {
+        if (
+            (is_int($profile) && ACCESS_DENIED === $profile)
+            || ($profile instanceof Profile && !$profile->is("admin"))
+        ) {
 
-			$this->sendFailedAdminLogin($profile);
+            $this->sendFailedAdminLogin($profile);
 
-		} else {
+        } else {
 
-			$this->initHtaccessFiles();
-		}
+            $this->initHtaccessFiles();
+        }
 
         return $profile; 
     } // }}}
@@ -681,7 +684,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         $mailer->set("login", isset($_POST["login"]) ? $_POST["login"] : "unknown");
         $mailer->set("REMOTE_ADDR", isset($_SERVER["REMOTE_ADDR"]) ? $_SERVER["REMOTE_ADDR"] : "unknown");
         $mailer->set("HTTP_X_FORWARDED_FOR", isset($_SERVER["HTTP_X_FORWARDED_FOR"]) ? $_SERVER["HTTP_X_FORWARDED_FOR"] : "unknown");
-		$mailer->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
+        $mailer->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
         $mailer->compose(
                             $this->getComplex('config.Company.site_administrator'),
                             $this->getComplex('config.Company.site_administrator'),
@@ -691,103 +694,118 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     } // }}}
 
     /**
-    * Checks whether user has enough permissions to access specified resource.
-    * Resource should provide access to "getAccessLevel()" method in order
-    * to check authority.
-    *
-    * @param  mixed $resource
-    * @access public
-    * @return boolean
-    * @static
-    */
-    function isAuthorized(&$resource) // {{{
+     * Checks whether user has enough permissions to access specified resource.
+     * Resource should provide access to "getAccessLevel()" method in order
+     * to check authority.
+     * 
+     * @param XLite_Base $resource Resource
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isAuthorized(XLite_Base $resource)
     {
         // check whether resource is valid (has getAccessLevel() method)
-        if (!is_object($resource) || !method_exists($resource, "getAccessLevel"))
+        if (!method_exists($resource, 'getAccessLevel'))
         {
-            $this->doDie("Auth::isAuthorized(): Authorization failed: resource invalid");
+            $this->doDie('Auth::isAuthorized(): Authorization failed: resource invalid');
         }
-        return $this->getComplex('profile.access_level') >= $resource->get("accessLevel");
-    } // }}}
 
+        $profile = $this->getProfile();
 
-    function isValidAdminIP(&$resource, $checkOnly=false) // {{{
+        $currentLevel = $profile ? $profile->get('access_level') : 0;
+
+        return $currentLevel >= $resource->getAccessLevel();
+    }
+
+    public function isValidAdminIP(XLite_Base $resource, $checkOnly = false)
     {
-        if (!is_object($resource)){
-            $this->doDie("Auth::isValidAdminIP(): Validation Admin IP failed: resource invalid");
+        $ip_v4_regexp_wildcard = '/^(25[0-5]|2[0-4][0-9]|\*|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|\*|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|\*|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|\*|[01]?[0-9][0-9]?)$/';
+
+        $ip_v4_regexp = '/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/';
+
+        $admin_ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
+        if(!preg_match($ip_v4_regexp, $admin_ip, $admin_ip_bytes)) {
+            return self::IP_INVALID;
         }
 
-        $ip_v4_regexp_wildcard = "/^(25[0-5]|2[0-4][0-9]|\*|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|\*|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|\*|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|\*|[01]?[0-9][0-9]?)$/";
+        $valid_ips = $this->config->SecurityIP->allow_admin_ip;
 
-        $ip_v4_regexp = "/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/";        
-
-        $admin_ip = isset($_SERVER["REMOTE_ADDR"]) ? $_SERVER["REMOTE_ADDR"] : "";
-        if(!preg_match($ip_v4_regexp,$admin_ip, $admin_ip_bytes)){
-            return IP_INVALID;
-        }
-
-        $valid_ips = $this->xlite->config->SecurityIP->allow_admin_ip;
-
-        if((!is_array($valid_ips) || count($valid_ips) < 1) && !$checkOnly){
+        if (
+            (!is_array($valid_ips) || 1 > count($valid_ips))
+            && !$checkOnly
+        ) {
             $valid_ips_object = new XLite_Model_Config();
-			$admin_ip = serialize(array(array("ip" => $admin_ip, "comment" => "Default admin IP")));
-            if($valid_ips_object->find("category = 'SecurityIP' AND name = 'allow_admin_ip'")){
-                $valid_ips_object->set("value", $admin_ip);
-                $valid_ips_object->set("type", "serialized");
+            $admin_ip = serialize(array(array('ip' => $admin_ip, 'comment' => 'Default admin IP')));
+
+            if ($valid_ips_object->find('category = \'SecurityIP\' AND name = \'allow_admin_ip\'')) {
+                $valid_ips_object->set('value', $admin_ip);
+                $valid_ips_object->set('type', 'serialized');
                 $valid_ips_object->update();
+
             } else {
-            	$valid_ips_object->createOption("SecurityIP", "allow_admin_ip", $admin_ip, "serialized");
+                $valid_ips_object->createOption('SecurityIP', 'allow_admin_ip', $admin_ip, 'serialized');
             }
+
         } else {
+
             $is_valid = false;
-            if (is_array($valid_list = $valid_ips)) {
-	            foreach($valid_list as $ip_array){
-    	            $ip = $ip_array["ip"];
-        	        if(!preg_match($ip_v4_regexp_wildcard, $ip, $ip_bytes)) break;
 
-    	            $allow = true;
-	                for($i = 1; $i <=4; $i++){
-        	            if($ip_bytes[$i] != "*" && ($ip_bytes[$i] != $admin_ip_bytes[$i])){
-            	            $allow = false;
-                	        break;
-	                    }
-    	            }
-
-        	        if($allow){
-            	        $is_valid = true;
-                	    break;
-	                }
-    	        }
-			}
-
-            if(!$is_valid){
-                if ($checkOnly) return IP_INVALID;
-                $waiting_list = new XLite_Model_WaitingIP();
-                preg_match($ip_v4_regexp,$admin_ip, $admin_ip_bytes);
-                $admin_ip = isset($admin_ip_bytes[0]) ? $admin_ip_bytes[0] : '';
-                if(!$waiting_list->find("ip = '$admin_ip'")){
-                    $admin_ip = $admin_ip_bytes[0];
-                    $waiting_list->addNew($admin_ip);
-                    $waiting_list->notifyAdmin();
-                } else { 
-                    if($waiting_list->canNotify()){
-                        $waiting_list->notifyAdmin();
+            if (is_array($valid_ips)) {
+                foreach ($valid_list as $ip_array){
+                    $ip = $ip_array['ip'];
+                    if (!preg_match($ip_v4_regexp_wildcard, $ip, $ip_bytes)) {
+                        break;
                     }
-                    $waiting_list->set("count", (int)$waiting_list->get("count") + 1);
-                    $waiting_list->set("last_date", time());
-                    $waiting_list->update();
+
+                    $allow = true;
+                    for ($i = 1; $i <= 4; $i++) {
+                        if ($ip_bytes[$i] != "*" && ($ip_bytes[$i] != $admin_ip_bytes[$i])) {
+                            $allow = false;
+                            break;
+                        }
+                    }
+
+                    if ($allow){
+                        $is_valid = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!$is_valid) {
+                if (!$checkOnly) {
+                    $waiting_list = new XLite_Model_WaitingIP();
+                    preg_match($ip_v4_regexp,$admin_ip, $admin_ip_bytes);
+                    $admin_ip = isset($admin_ip_bytes[0]) ? $admin_ip_bytes[0] : '';
+
+                    if (!$waiting_list->find('ip = \'' . $admin_ip . '\'')) {
+                        $admin_ip = $admin_ip_bytes[0];
+                        $waiting_list->addNew($admin_ip);
+                        $waiting_list->notifyAdmin();
+
+                    } else { 
+                        if ($waiting_list->canNotify()){
+                            $waiting_list->notifyAdmin();
+                        }
+                        $waiting_list->set('count', intval($waiting_list->get('count') + 1));
+                        $waiting_list->set('last_date', time());
+                        $waiting_list->update();
+                    }
+
+                    // logoff action
+                    $this->logoff();
+                    $this->session->set('sidebar_box_statuses', null);
+                    $this->session->writeClose();
                 }
 
-                //logoff action
-                $this->logoff();
-                $this->session->set("sidebar_box_statuses", null);
-                $this->session->writeClose();
-                
-                return IP_INVALID;
+                return self::IP_INVALID;
             }
         }
 
-        return IP_VALID;
+        return self::IP_VALID;
     } //}}}
 
     function requestRecoverPassword($email) // {{{
@@ -798,7 +816,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         }
         $mailer = new XLite_Model_Mailer();
         $mailer->url = $this->xlite->getShopUrl("cart.php?target=recover_password&action=confirm&email=".urlencode($profile->get("login"))."&request_id=".$profile->get("password"));
-		$mailer->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
+        $mailer->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
         $mailer->compose($this->config->getComplex('Company.users_department'),
                          $profile->get("login"),
                          "recover_request"
@@ -821,7 +839,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         $profile->set("password", md5($pass));
         $profile->update();
         $mailer->set("profile", $profile);
-		$mailer->set("charset", $profile->getComplex('billingCountry.charset'));
+        $mailer->set("charset", $profile->getComplex('billingCountry.charset'));
         $mailer->compose(
                 $this->getComplex('config.Company.users_department'),
                 $profile->get("login"),

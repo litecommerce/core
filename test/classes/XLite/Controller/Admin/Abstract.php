@@ -35,7 +35,7 @@
  */
 abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
 {
-	/**
+    /**
      * Check if current page is accessible
      *
      * @return bool
@@ -44,17 +44,18 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
      */
     public function checkAccess()
     {
-        return parent::checkAccess() && $this->checkXliteForm();
+        return (parent::checkAccess() || $this->isPublicZone())
+            && $this->checkXliteForm();
     }
 
-	/**
-	 * isXliteFormValid 
-	 * 
-	 * @return bool
-	 * @access protected
-	 * @since  3.0.0
-	 */
-	protected function isXliteFormValid()
+    /**
+     * isXliteFormValid 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isXliteFormValid()
     {
         if (!$this->xlite->config->Security->form_id_protection) {
             return true;
@@ -64,25 +65,25 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
             return true;
         }
 
-		$form = new XLite_Model_XliteForm();
-		$result = $form->find('form_id = \'' . addslashes($this->xlite_form_id) . '\' AND session_id = \'' . XLite_Model_Session::getInstance()->getID() . '\'');
+        $form = new XLite_Model_XliteForm();
+        $result = $form->find('form_id = \'' . addslashes($this->xlite_form_id) . '\' AND session_id = \'' . XLite_Model_Session::getInstance()->getID() . '\'');
 
-		if (!$result) {
-			$form->collectGarbage();
-		}
+        if (!$result) {
+            $form->collectGarbage();
+        }
 
-		return $result;
+        return $result;
     }
 
 
-	/**
+    /**
      * This function called after template output
      *
      * @return void
      * @access public
      * @since  3.0.0
      */
-	public function postprocess()
+    public function postprocess()
     {
         parent::postprocess();
 
@@ -91,14 +92,14 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
         }
     }
 
-	/**
-	 * checkXliteForm 
-	 * 
-	 * @return bool
-	 * @access public
-	 * @since  3.0.0
-	 */
-	public function checkXliteForm()
+    /**
+     * checkXliteForm 
+     * 
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function checkXliteForm()
     {
         return $this->getTarget() || $this->isIgnoredTarget() || $this->isXliteFormValid();
     }
@@ -107,16 +108,24 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
 
 
 
-	protected $recentAdmins = null;
+    protected $recentAdmins = null;
 
     function getCustomerZoneWarning()
     {
         return ('Y' == XLite::getInstance()->config->General->shop_closed) ? 'maintenance_mode' : null;
     }
 
-    function getAccessLevel()
+    /**
+     * Get access level 
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getAccessLevel()
     {
-        return $this->auth->get("adminAccessLevel");
+        return $this->auth->getAdminAccessLevel();
     }    
 
     function handleRequest()
@@ -124,27 +133,61 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
         $this->checkHtaccess();
 
         // auto-login request
+/*
         if (!$this->auth->is("logged") && isset(XLite_Core_Request::getInstance()->login) && isset(XLite_Core_Request::getInstance()->password)) {
             if($this->auth->adminLogin(XLite_Core_Request::getInstance()->login, XLite_Core_Request::getInstance()->password) === ACCESS_DENIED) {
                 die("ACCESS DENIED");
             }
         }
-        if (!$this->auth->isAuthorized($this)) {
-			$this->xlite->session->set("lastWorkingURL", $this->get("url"));
-            $this->redirect("admin.php?target=login");
-            return;
-        }
+*/
+        if (
+            !$this->auth->isAuthorized($this)
+            && !$this->isPublicZone()
+        ) {
 
-        if(!$this->isIgnoredTarget() && $this->getComplex('xlite.config.Security.admin_ip_protection') == "Y" && !$this->auth->isValidAdminIP($this) && !(XLite_Core_Request::getInstance()->target == 'payment_method' && XLite_Core_Request::getInstance()->action == 'callback')){
-            $this->redirect("admin.php?target=login&mode=access_denied");
-            return;
-        }
+            // Check - current user is logged and has right access level
 
-		if (isset(XLite_Core_Request::getInstance()->no_https)) {
-            $this->session->set("no_https", true);
-        }
+            $this->session->set('lastWorkingURL', $this->get('url'));
+            $this->redirect(
+                $this->buildUrl('login')
+            );
 
-        parent::handleRequest();
+        } elseif (
+            !$this->isIgnoredTarget()
+            && 'Y' == $this->config->Security->admin_ip_protection
+            && !$this->auth->isValidAdminIP($this)
+            && !(XLite_Core_Request::getInstance()->target == 'payment_method' && XLite_Core_Request::getInstance()->action == 'callback')
+        ) {
+
+            // IP check
+
+            $this->redirect(
+                $this->buildUrl('login', '', array('mode' => 'access_denied'))
+            );
+
+        } else {
+
+            if (isset(XLite_Core_Request::getInstance()->no_https)) {
+                $this->session->set('no_https', true);
+            }
+
+            parent::handleRequest();
+        }
+    }
+
+    /**
+     * Check - current place is public or not
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isPublicZone()
+    {
+        $request = XLite_Core_Request::getInstance();
+
+        return 'login' == $request->target;
     }
 
     function getSecure()
@@ -164,18 +207,18 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
         return $this->recentAdmins;
     }
 
-	function getCharset()
-	{
-		return $this->xlite->config->Company->locationCountry->get("charset");
-	}
+    function getCharset()
+    {
+        return $this->xlite->config->Company->locationCountry->get("charset");
+    }
 
-	function startDump()
-	{
-		parent::startDump();
-		if (!isset(XLite_Core_Request::getInstance()->mode) || XLite_Core_Request::getInstance()->mode != "cp") {
-			$this->displayPageHeader();
-		}
-	}
+    function startDump()
+    {
+        parent::startDump();
+        if (!isset(XLite_Core_Request::getInstance()->mode) || XLite_Core_Request::getInstance()->mode != "cp") {
+            $this->displayPageHeader();
+        }
+    }
 
     function displayPageHeader($title="", $scroll_down=false)
     {
@@ -221,23 +264,23 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
 </div>
 <div style='FONT-SIZE: 10pt;'>
 <?php
-	}
+    }
 
     function hidePageHeader()
     {
-		$this->silent = false;
+        $this->silent = false;
 
-    	$code =<<<EOT
+        $code =<<<EOT
 <script language="javascript">
 loaded = true;
 window.scroll(0, 0);
 var Element = document.getElementById("ActionPageHeader");
 if (Element) {
-	Element.style.display = "none";
+    Element.style.display = "none";
 }
 </script>
 EOT;
-		echo $code;
+        echo $code;
     }
 
     function displayPageFooter()
@@ -260,25 +303,25 @@ EOT;
         return array();
     }
 
-	// FIXME - check this function carefully
-	function isIgnoredTarget()
+    // FIXME - check this function carefully
+    function isIgnoredTarget()
     {
-		$ignoreTargets = array
-		(
-        	"image" => array("*"),
+        $ignoreTargets = array
+        (
+            "image" => array("*"),
             "callback" => array("*"),
-			"upgrade" => array("version", "upgrade")
-		);
+            "upgrade" => array("version", "upgrade")
+        );
 
-		
+        
                             
         if (
-			isset($ignoreTargets[XLite_Core_Request::getInstance()->target]) 
-			&& (
-				in_array("*", $ignoreTargets[XLite_Core_Request::getInstance()->target]) 
-				|| (isset(XLite_Core_Request::getInstance()->action) && in_array(XLite_Core_Request::getInstance()->action, $ignoreTargets[XLite_Core_Request::getInstance()->target]))
-			)
-		) { 
+            isset($ignoreTargets[XLite_Core_Request::getInstance()->target]) 
+            && (
+                in_array("*", $ignoreTargets[XLite_Core_Request::getInstance()->target]) 
+                || (isset(XLite_Core_Request::getInstance()->action) && in_array(XLite_Core_Request::getInstance()->action, $ignoreTargets[XLite_Core_Request::getInstance()->target]))
+            )
+        ) { 
             return true;
         }
 
@@ -290,15 +333,15 @@ EOT;
         );
 
         if(
-			isset($specialIgnoreTargets[XLite_Core_Request::getInstance()->target]) 
-			&& (
-				in_array("*", $specialIgnoreTargets[XLite_Core_Request::getInstance()->target]) 
-				|| (isset(XLite_Core_Request::getInstance()->action) && in_array(XLite_Core_Request::getInstance()->action, $specialIgnoreTargets[XLite_Core_Request::getInstance()->target]))
-			) 
-			&& (
-				isset(XLite_Core_Request::getInstance()->login) && isset(XLite_Core_Request::getInstance()->password)
-			)
-		) {
+            isset($specialIgnoreTargets[XLite_Core_Request::getInstance()->target]) 
+            && (
+                in_array("*", $specialIgnoreTargets[XLite_Core_Request::getInstance()->target]) 
+                || (isset(XLite_Core_Request::getInstance()->action) && in_array(XLite_Core_Request::getInstance()->action, $specialIgnoreTargets[XLite_Core_Request::getInstance()->target]))
+            ) 
+            && (
+                isset(XLite_Core_Request::getInstance()->login) && isset(XLite_Core_Request::getInstance()->password)
+            )
+        ) {
             $login = $this->xlite->auth->getComplex('profile.login');
             $post_login = XLite_Core_Request::getInstance()->login;
             $post_password = XLite_Core_Request::getInstance()->password;
@@ -320,8 +363,8 @@ EOT;
         return false;
     } 
 
-	// FIXME - check if it's needed
-	function getSidebarBoxStatus($boxHead = null)
+    // FIXME - check if it's needed
+    function getSidebarBoxStatus($boxHead = null)
     {
         $dialog = new XLite_Controller_Admin_Sbjs();
         $dialog->sidebar_box_id = $this->strMD5($boxHead);
@@ -329,8 +372,8 @@ EOT;
         return $dialog->getSidebarBoxStatus();
     }
 
-	// FIXME - move it to the appropriate class (or remove)
-	function strMD5($string)
+    // FIXME - move it to the appropriate class (or remove)
+    function strMD5($string)
     {
         return strtoupper(md5(strval($string)));
     }

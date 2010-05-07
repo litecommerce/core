@@ -27,27 +27,38 @@
  */
 
 /**
- * ____description____
+ * Authorization
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_DemoMode_Controller_Admin_Login extends XLite_Controller_Admin_Login implements XLite_Base_IDecorator
-{	
-    public $login = "demo@litecommerce.com";	
-    public $password = "demo";
+class XLite_Module_DemoMode_Controller_Admin_Login extends XLite_Controller_Admin_Login
+implements XLite_Base_IDecorator
+{    
+    public $login = 'demo@litecommerce.com';
 
-    function action_login()
+    public $password = 'master';
+
+    /**
+     * Login 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionLogin()
     {
-    	parent::action_login();
+        parent::doActionLogin();
 
-        if ($this->auth->is("logged")) {
-            $forward = $this->xlite->session->get("forwardUrl");
+        if ($this->auth->isLogged()) {
+            $forward = $this->session->get('forwardUrl');
+
             if (isset($forward)) {
-                $this->xlite->session->set("forwardUrl", null);
-                $this->xlite->session->writeClose();
-                $this->set("returnUrl", $forward);
+                $this->session->set('forwardUrl', null);
+                $this->session->writeClose();
+                $this->setReturnUrl($forward);
             }
         }
     }

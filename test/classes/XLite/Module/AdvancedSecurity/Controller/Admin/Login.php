@@ -35,23 +35,31 @@
  */
 class XLite_Module_AdvancedSecurity_Controller_Admin_Login extends XLite_Controller_Admin_Login implements XLite_Base_IDecorator
 {
-	function action_clear_password()
-	{
-		if ($this->xlite->getComplex('config.AdvancedSecurity.clr_mp_logoff')) {
-    		$orderDialog = new XLite_Controller_Admin_Order();
-    		$orderDialog->action_clear_password();
-    	}
-	}
-
-    function action_login()
+    function action_clear_password()
     {
-    	parent::action_login();
-    	$this->action_clear_password();
+        if ($this->xlite->getComplex('config.AdvancedSecurity.clr_mp_logoff')) {
+            $orderDialog = new XLite_Controller_Admin_Order();
+            $orderDialog->action_clear_password();
+        }
+    }
+
+    /**
+     * Login 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionLogin()
+    {
+        parent::doActionLogin();
+        $this->action_clear_password();
     }
 
     function action_logoff()
     {
-    	parent::action_logoff();
-    	$this->action_clear_password();
+        parent::action_logoff();
+        $this->action_clear_password();
     }
 }

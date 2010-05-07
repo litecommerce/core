@@ -34,8 +34,8 @@
  * @since   3.0.0
  */
 class XLite_Controller_Admin_Login extends XLite_Controller_Admin_Abstract
-{	
-	/**
+{    
+    /**
      * getRegularTemplate
      *
      * @return void
@@ -48,34 +48,49 @@ class XLite_Controller_Admin_Login extends XLite_Controller_Admin_Abstract
     }
 
 
-	public function getAccessLevel()
+    public function getAccessLevel()
     {
         return XLite_Model_Auth::getInstance()->getCustomerAccessLevel();
     }
 
-	function fillForm()
-	{
-		parent::fillForm();
-		$login = $this->get("login");
-		if ( empty($login) )
-			$this->set("login", $this->auth->remindLogin());
-	}
-
-    function action_login()
+    function fillForm()
     {
-        $profile = $this->auth->adminLogin(XLite_Core_Request::getInstance()->login, XLite_Core_Request::getInstance()->password);
+        parent::fillForm();
+        $login = $this->get("login");
+        if ( empty($login) )
+            $this->set("login", $this->auth->remindLogin());
+    }
+
+    /**
+     * Login 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionLogin()
+    {
+        $profile = $this->auth->adminLogin(
+            XLite_Core_Request::getInstance()->login,
+            XLite_Core_Request::getInstance()->password
+        );
 
         if (is_int($profile) && ACCESS_DENIED === $profile) {
-            $this->set("valid", false);
-            $this->set("mode", "access_denied");
+
+            $this->set('valid', false);
+            XLite_Core_TopMessage::getInstance()->add('Invalid login or password', XLite_Core_TopMessage::ERROR);
+            $returnUrl = $this->buildUrl('login');
+
+        } elseif ($this->xlite->session->isRegistered('lastWorkingURL')) {
+            $returnUrl = $this->xlite->session->get('lastWorkingURL');
+            $this->xlite->session->set('lastWorkingURL', null);
+
         } else {
-        	$returnUrl = "admin.php";
-        	if ($this->xlite->session->isRegistered("lastWorkingURL")) {
-        		$returnUrl = $this->xlite->session->get("lastWorkingURL");
-        		$this->xlite->session->set("lastWorkingURL", null);
-        	}
-            $this->set("returnUrl", $returnUrl);
+            $returnUrl = $this->buildUrl();
         }
+
+        $this->setReturnUrl($returnUrl);
 
         $this->initSBStatuses();
     }
@@ -86,35 +101,28 @@ class XLite_Controller_Admin_Login extends XLite_Controller_Admin_Abstract
         $this->clearSBStatuses();
     }
 
-    function initSBStatuses()
+    protected function initSBStatuses()
     {
-		if ($this->auth->is("logged")) 
-		{
-        	$profile = $this->auth->get("profile");
-        	if (!is_object($profile)) {
-        		return;
-        	}
-
+        if ($this->auth->isLogged()) {
+            $profile = $this->auth->getProfile();
             $sidebar_box_statuses = $profile->get("sidebar_boxes");
 
-        	if (strlen($sidebar_box_statuses) > 0)
-        	{
-        		$sidebar_box_statuses = unserialize($sidebar_box_statuses);
-            	$this->session->set("sidebar_box_statuses", $sidebar_box_statuses);
-            	$this->session->writeClose();
-        	}
-        	else
-        	{
-        		$profile->set("sidebar_boxes", serialize($this->session->get("sidebar_box_statuses")));
-        		$profile->update();
-        	}
+            if (strlen($sidebar_box_statuses) > 0) {
+                $sidebar_box_statuses = unserialize($sidebar_box_statuses);
+                $this->session->set('sidebar_box_statuses', $sidebar_box_statuses);
+                $this->session->writeClose();
+
+            } else {
+                $profile->set('sidebar_boxes', serialize($this->session->get('sidebar_box_statuses')));
+                $profile->update();
+            }
         }
     }
     
     function clearSBStatuses()
     {
-    	$this->session->set("sidebar_box_statuses", null);
-    	$this->session->writeClose();
+        $this->session->set("sidebar_box_statuses", null);
+        $this->session->writeClose();
     }
     
     function getSecure()

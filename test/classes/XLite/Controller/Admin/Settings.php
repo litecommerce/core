@@ -540,7 +540,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
 
     function isCurrentIpValid()
     {
-        return $this->auth->isValidAdminIP($this, true) == IP_VALID;
+        return $this->auth->isValidAdminIP($this, true) == XLite_Model_Auth::IP_VALID;
     }
 
     function action_approve_ip()

@@ -770,14 +770,16 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     }
 
     /**
-    * Returns the access level value required to access this dialog.
-    *
-    * @access public
-    * @return integer The access level value
-    */
-    function getAccessLevel()
-    {
-        return $this->getComplex('auth.customerAccessLevel');
+     * Get access level 
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getAccessLevel()
+    { 
+        return $this->auth->getCustomerAccessLevel(); 
     }
 
     function getProperties()
