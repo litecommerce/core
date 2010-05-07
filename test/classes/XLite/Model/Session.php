@@ -160,6 +160,31 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
     }
 
     /**
+     * restart 
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function restart()
+    {
+        if (
+            XLite_Core_Request::getInstance()->__get(self::SESSION_DEFAULT_NAME)
+            && !(isset($GET[self::SESSION_DEFAULT_NAME]) || isset($POST[self::SESSION_DEFAULT_NAME]))
+        ) {
+
+            XLite_Core_Request::getInstance()->__set(self::SESSION_DEFAULT_NAME, null);
+
+            // TODO - uncomment if it's really needed
+            // $this->set('_' . self::SESSION_DEFAULT_NAME, self::SESSION_DEFAULT_NAME . '=' . $this->getID());
+
+            $this->destroy();
+            $this->setID(SESSION_DEFAULT_ID);
+            $this->_initialize();
+        }
+    }
+
+    /**
      * Return current form ID 
      * 
      * @return string

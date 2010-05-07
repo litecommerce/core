@@ -81,7 +81,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     {
         if ($result = $profile->isPersistent) {
 
-            $this->sessionRestart();
+            XLite_Model_Session::getInstance()->restart();
 
             // check for the fisrt time login
             if (!$profile->get('first_login')) {
@@ -95,12 +95,26 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
             $profile->update();
 
             // save to session
-            $this->session->set('profile_id', $profile->get('profile_id'));
+            XLite_Model_Session::getInstance()->set('profile_id', $profile->get('profile_id'));
 
             $this->rememberLogin($profile->get('login'));
         }
 
         return $result;
+    }
+
+    /**
+     * checkProfileAccessibility 
+     * 
+     * @param XLite_Model_Profile $profile profile to check
+     *  
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function checkProfileAccessibility(XLite_Model_Profile $profile)
+    {
+        return $this->isAdmin($this->getProfile()) || $this->getProfile()->get('profile_id') == $profile->get('profile_id');
     }
 
 
@@ -231,11 +245,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
      */
     public function checkProfile(XLite_Model_Profile $profile)
     {
-        return $this->isLogged()
-            && (
-                $this->isAdmin($this->getProfile())
-                || $this->getProfile()->get('profile_id') == $profile->get('profile_id')
-            );
+        return $this->isLogged() && $this->checkProfileAccessibility($profile);
     }
 
     /**
@@ -611,32 +621,6 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     {
         return isset($_COOKIE["last_login"]) ? $_COOKIE["last_login"] : "";
     } // }}}
-
-    /**
-     * Session restart after log-in
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function sessionRestart()
-    {
-        if (
-            isset($_REQUEST[XLite_Model_Session::SESSION_DEFAULT_NAME])
-            && !(isset($_GET[XLite_Model_Session::SESSION_DEFAULT_NAME]) || isset($_POST[XLite_Model_Session::SESSION_DEFAULT_NAME]))
-        ) {
-
-            unset($_REQUEST[XLite_Model_Session::SESSION_DEFAULT_NAME]);
-            $this->xlite->session->set(
-                '_' . XLite_Model_Session::SESSION_DEFAULT_NAME,
-                XLite_Model_Session::SESSION_DEFAULT_NAME . '=' . $this->xlite->session->getID()
-            );
-            $this->xlite->session->destroy();
-            $this->xlite->session->setID(SESSION_DEFAULT_ID);
-            $this->xlite->session->_initialize();
-        }
-    }
 
     /**
     * Logs in admin to cart.
