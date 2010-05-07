@@ -22,5 +22,5 @@
 <a href="admin.php?target=states">States</a><br>
 <widget module="AOM" template="modules/AOM/menu.tpl">
 <a href="admin.php?target=memberships">Membership levels</a><br>
-<hr>
-<a href="quickstart/index.html">Quick Start Wizard</a><br>
+{*<hr>
+<a href="quickstart/index.html">Quick Start Wizard</a><br>*}
