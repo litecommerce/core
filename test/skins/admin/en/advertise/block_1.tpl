@@ -12,4 +12,4 @@
  *}
 <h2 class="custom">Custom development</h2>
 <span>Do you know that Qualitem Software not just develops LiteCommerce shopping cart software but also provides professional <a href="http://www.litecommerce.com/web-design.html">web design</a> and <a href="http://www.litecommerce.com/custom-development.html">custom development</a> services? We would be glad to help you to design and customize your web site and your online store to your business needs.</span>
-<p>Need custom work? <a href="http://www.litecommerce.com/request-quote.html">Request to quote</a></p>
+<p>Need custom work? <a href="http://www.litecommerce.com/request-quote.html">Request a quote</a></p>
