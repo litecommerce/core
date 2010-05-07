@@ -146,11 +146,11 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
      * Update object
      *
      * @return boolean
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function update()
+    public function update()
     {
         $result = parent::update();
 

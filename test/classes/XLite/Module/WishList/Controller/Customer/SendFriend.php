@@ -58,30 +58,77 @@ class XLite_Module_WishList_Controller_Customer_SendFriend extends XLite_Control
      */
     protected function doActionSendFriend()
     {
-        if ($this->getProduct()) {
+        if (!$this->getProduct()) {
+            $this->setReturnUrl($this->buildURL('main'));
+
+        } elseif (!XLite_Core_Request::getInstance()->sender_name) {
+
+            XLite_Core_TopMessage::getInstance()->add(
+                '\'Your name\' field is empty',
+                XLite_Core_TopMessage::ERROR
+            );
+            $this->set('valid', false);
+
+        } elseif (!XLite_Core_Request::getInstance()->sender_email) {
+
+            XLite_Core_TopMessage::getInstance()->add(
+                '\'Your e-mail\' field is empty',
+                XLite_Core_TopMessage::ERROR
+            );
+            $this->set('valid', false);
+
+        } elseif (!preg_match('/^' . EMAIL_REGEXP . '$/Ss', XLite_Core_Request::getInstance()->sender_email)) {
+
+            XLite_Core_TopMessage::getInstance()->add(
+                '\'Your e-mail\' has wrong format',
+                XLite_Core_TopMessage::ERROR
+            );
+            $this->set('valid', false);
+
+        } elseif (!XLite_Core_Request::getInstance()->recipient_email) {
+
+            XLite_Core_TopMessage::getInstance()->add(
+                '\'Friend\'s e-mail\' field is empty',
+                XLite_Core_TopMessage::ERROR
+            );
+            $this->set('valid', false);
+
+        } elseif (!preg_match('/^' . EMAIL_REGEXP . '$/Ss', XLite_Core_Request::getInstance()->recipient_email)) {
+
+            XLite_Core_TopMessage::getInstance()->add(
+                '\'Friend\'s e-mail\' has wrong format',
+                XLite_Core_TopMessage::ERROR
+            );
+            $this->set('valid', false);
+
+        } else {
+
             $mailer = new XLite_Model_Mailer();
-            $mailer->sender_name  = $this->getSenderName();
-            $mailer->sender_email = $this->getSenderEmail();
+            $mailer->sender_name = XLite_Core_Request::getInstance()->sender_name;
+            $mailer->sender_email = XLite_Core_Request::getInstance()->sender_email;
             $mailer->recipient_email = XLite_Core_Request::getInstance()->recipient_email;
             $mailer->product = $this->getProduct();
-            $mailer->url = $this->buildURL(
-                'product',
-                '',
-                array('product_id' => $this->getProduct()->get('product_id'))
+            $mailer->url = $this->getShopUrl(
+                $this->buildURL(
+                    'product',
+                    '',
+                    array('product_id' => $this->getProduct()->get('product_id'))
+                )
             );
             $mailer->compose(
-                $this->getSenderEmail,
+                XLite_Core_Request::getInstance()->sender_email,
                 XLite_Core_Request::getInstance()->recipient_email,
                 'modules/WishList/send_friend'
             );
             $mailer->send();
 
             $this->setReturnUrl(
-                $this->buildURL('product', '', array('product_id' => $this->getProduct()->get('product_id')))
+                $this->buildURL(
+                    'product',
+                    '',
+                    array('product_id' => $this->getProduct()->get('product_id'))
+                )
             );
-
-        } else {
-            $this->setReturnUrl($this->buildURL('main'));
         }
     }
 
@@ -105,7 +152,7 @@ class XLite_Module_WishList_Controller_Customer_SendFriend extends XLite_Control
 
         } elseif ($this->auth->isLogged()) {
             $profile = $this->auth->getProfile();
-            $resut = $profile->get('billing_firstname') . ' ' . $profile->get('billing_lastname');
+            $result = $profile->get('billing_name');
         }
 
         return $result;
@@ -121,9 +168,16 @@ class XLite_Module_WishList_Controller_Customer_SendFriend extends XLite_Control
      */
     protected function getSenderEmail()
     {
-        return isset(XLite_Core_Request::getInstance()->sender_email)
-            ? XLite_Core_Request::getInstance()->sender_email
-            : $this->auth->getComplex('profile.login');
+        $result = '';
+
+        if (isset(XLite_Core_Request::getInstance()->sender_email)) {
+            $result = XLite_Core_Request::getInstance()->sender_email;
+
+        } elseif ($this->auth->isLogged()) {
+            $result = $this->auth->getProfile()->get('login');
+        }
+
+        return $result;
     }
 
     /**
@@ -140,7 +194,11 @@ class XLite_Module_WishList_Controller_Customer_SendFriend extends XLite_Control
         $this->locationPath->addNode(
             new XLite_Model_Location(
                 $this->getProduct()->get('name'),
-                $this->buildURL('product', '', array('product_id' => $this->getProduct()->get('product_id')))
+                $this->buildURL(
+                    'product',
+                    '',
+                    array('product_id' => $this->getProduct()->get('product_id'))
+                )
             )
         );
     }
