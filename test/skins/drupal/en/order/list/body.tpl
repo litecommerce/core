@@ -12,7 +12,7 @@
  *}
 <div class="orders-list {getClassIdentifier()}">
   <div class="panel orders-panel">
-    <widget class="XLite_View_Pager_Common" data="{getOrders()}" name="pager" pageId="{getPageId()}" />
+    <widget class="XLite_View_Pager_OrdersList" data="{getOrders()}" name="pager" pageId="{getPageId()}" />
     <widget class="XLite_View_Sort_Order" />
   </div>
 
