@@ -440,6 +440,11 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         }
 
         if ($this->isRedirectNeeded()) {
+            if (XLite_Core_Request::getInstance()->isAJAX() && !$this->isValid()) {
+                // Internal redirect
+                $this->widgetParams[self::PARAM_REDIRECT_CODE]->setValue(279);
+            }
+
             $this->redirect();
         }
     }
@@ -896,7 +901,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     function getEmailValidatorRegExp()
     {
         $values = array();
-        $domains = split(",| |;|\||\/", $this->config->getComplex('Email.valid_email_domains'));
+        $domains = split(",| |;|\||\/", $this->config->Email->valid_email_domains);
         foreach ((array)$domains as $key=>$val) {
             if (!trim($val))
                 continue;

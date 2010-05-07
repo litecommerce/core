@@ -36,6 +36,16 @@
 class XLite_Module_WishList_Controller_Customer_SendFriend extends XLite_Controller_Customer_Catalog
 {
     /**
+     * Controller parameters
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $params = array('target', 'product_id');
+
+    /**
      * Get page title 
      * 
      * @return string
