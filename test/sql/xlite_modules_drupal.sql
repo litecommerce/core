@@ -16,5 +16,6 @@ UPDATE xlite_modules SET enabled=1 WHERE name IN (
 'UPSOnlineTools',
 'USPS',
 'WishList',
-'WholesaleTrading'
+'WholesaleTrading',
+'XPaymentsConnector'
 );
