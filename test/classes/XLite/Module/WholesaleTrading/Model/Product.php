@@ -35,7 +35,59 @@
  */
 class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product implements XLite_Base_IDecorator
 {    
-    public $_checkExistanceRequired = false; // perform direct sale check if the product does not exist
+    /**
+     * Perform direct sale check if the product does not exist
+     * TODO - check if it's really needed or make it protected
+     * 
+     * @var    bool
+     * @access public
+     * @since  3.0.0
+     */
+    public $_checkExistanceRequired = false;
+
+
+    /**
+     * Return value of min/max purchase limit 
+     * 
+     * @param string $type  "min" or "max"
+     * @param int    $value value to use if the purchase limit is not set
+     *  
+     * @return int
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getPurchaseLimitValue($type, $value)
+    {
+        $limit = $this->getPurchaseLimit();
+
+        return ($limit && 0 < $limit->get($type)) ? $limit->get($type) : $value;
+    }
+
+
+    /**
+     * Minimal available amount
+     *
+     * @return int
+     * @access public
+     * @since  3.0.0
+     */
+    public function getMinPurchaseLimit()
+    {
+        return $this->getPurchaseLimitValue('min', parent::getMinPurchaseLimit());
+    }
+
+    /**
+     * Maximal available amount
+     *
+     * @return int
+     * @access public
+     * @since  3.0.0
+     */
+    public function getMaxPurchaseLimit()
+    {
+        return $this->getPurchaseLimitValue('max', parent::getMaxPurchaseLimit());
+    }
+
 
     public function __construct($id = null)
     {

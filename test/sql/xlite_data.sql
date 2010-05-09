@@ -65,6 +65,7 @@ INSERT INTO xlite_config VALUES ('minimal_order_amount','Minimum allowed order t
 -- UPDATE xlite_config SET orderby = 280 WHERE category = 'General' AND name = 'minimal_order_amount';
 INSERT INTO xlite_config VALUES ('maximal_order_amount','Maximum allowed order total','99999','General',290,'text');
 -- UPDATE xlite_config SET orderby = 290 WHERE category = 'General' AND name = 'maximal_order_amount';
+INSERT INTO xlite_config VALUES ('default_purchase_limit','Default purchase limit','9999','General',293,'text');
 INSERT INTO xlite_config VALUES ('enable_sale_price','Enable \"Market price\" feature','N','General',295,'checkbox');
 INSERT INTO xlite_config VALUES ('you_save','Enable \"save\" label (for Market Price)','N','General',296,'select');
 -- UPDATE xlite_config SET orderby = 295 WHERE category = 'General' AND name = 'enable_sale_price';

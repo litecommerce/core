@@ -35,6 +35,54 @@
  */
 class XLite_Model_OrderItem extends XLite_Model_Abstract
 {
+    /**
+     * Check for purchase limits 
+     * 
+     * @param int $value product amount
+     *  
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function correctAmount(&$value)
+    {
+        $product   = $this->getProduct();
+        $origValue = $value;
+
+        $min = $product->getMinPurchaseLimit();
+        $max = $product->getMaxPurchaseLimit();
+
+        $value = max($value, $min);
+        $value = min($value, $max);
+
+        if ($origValue != $value) {
+            XLite_Core_TopMessage::getInstance()->add(
+                'Amount of the "' . $product->get('name') . '" product '
+                . 'has been corrected: it must be between ' . $min . ' and ' . $max
+            );
+        }
+    }
+
+
+    /**
+     * Sets the specified property value 
+     *                                   
+     * @param string $property field name
+     * @param mixed  $value    field value
+     *                                    
+     * @return void                       
+     * @access public                     
+     * @since  3.0                        
+     */                                   
+    public function set($property, $value)
+    {
+        if ('amount' == $property) {
+            $this->correctAmount($value);
+        }
+
+        return parent::set($property, $value);
+    }
+
 	/**
 	 * Return reference to the associated order object
 	 * 

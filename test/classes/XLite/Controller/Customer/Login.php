@@ -58,7 +58,7 @@ class XLite_Controller_Customer_Login extends XLite_Controller_Customer_Abstract
      */
     protected function actionPostprocess($action)
     {
-        parent::actionPostprocess();
+        parent::actionPostprocess($action);
 
         if ('login' == $action) {
             $this->redirectFromLogin();

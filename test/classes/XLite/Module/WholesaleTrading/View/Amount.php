@@ -71,6 +71,57 @@ class XLite_Module_WholesaleTrading_View_Amount extends XLite_View_Abstract
     }
 
     /**
+     * Get minimum quantity
+     *
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getMinAmount()
+    {
+        return $this->getParam(self::PARAM_PRODUCT)->getMinPurchaseLimit();
+    }
+
+    /**
+     * Get maximum quantity
+     *
+     * @return int
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getMaxAmount()
+    {
+        return $this->getParam(self::PARAM_PRODUCT)->getMaxPurchaseLimit();
+    }
+
+    /**
+     * Check - product has amount region (min and max) or not
+     *
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function hasAmountRegion()
+    {
+        return 0 < $this->getMaxAmount();
+    }
+
+    /**
+     * Check - product has min limit bigger 1 or not
+     *
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function hasMinAmount()
+    {
+        return 1 < $this->getMinAmount();
+    }
+
+    /**
      * Check visibility 
      * 
      * @return boolean
@@ -100,69 +151,5 @@ class XLite_Module_WholesaleTrading_View_Amount extends XLite_View_Abstract
 
         return $list;
     }
-
-    /**
-     * Get maximum quantity 
-     * 
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getMaxAmount()
-    {
-        $purchaseLimit = $this->getParam(self::PARAM_PRODUCT)->get('purchaseLimit');
-        $inventory = $this->getParam(self::PARAM_PRODUCT)->get('inventory');
-
-        $purchaseLimit = ($purchaseLimit && $purchaseLimit->get('max') > 0) ? $purchaseLimit->get('max') : 0;
-        $amount = ($inventory && $inventory->get('amount') > 0) ? $inventory->get('amount') : 0;
-        if ($amount > $purchaseLimit && $purchaseLimit > 0) {
-            $amount = $purchaseLimit;
-        }
-
-        return $amount;
-    }
-
-    /**
-     * Get minimum quantity 
-     * 
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getMinAmount()
-    {
-        $purchaseLimit = $this->getParam(self::PARAM_PRODUCT)->get('purchaseLimit');
-
-        return ($purchaseLimit && $purchaseLimit->get('min') > 1) ? $purchaseLimit->get('min') : 1;
-    }
-
-    /**
-     * Check - product has amount region (min and max) or not
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function hasAmountRegion()
-    {
-        return 0 < $this->getMaxAmount();
-    }
-
-    /**
-     * Check - product has min limit bigger 1 or not
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function hasMinAmount()
-    {
-        return 1 < $this->getMinAmount();
-    }
-
 }
 

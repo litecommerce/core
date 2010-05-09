@@ -35,7 +35,36 @@
  */
 class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product implements XLite_Base_IDecorator
 {
+    /**
+     * inventory 
+     * 
+     * @var    XLite_Module_InventoryTracking_Model_Inventory
+     * @access protected
+     * @since  3.0.0
+     */
     protected $inventory = null;
+
+
+    /**
+     * Maximal available amount
+     *
+     * @return int
+     * @access public
+     * @since  3.0.0
+     */
+    public function getMaxPurchaseLimit()
+    {
+        $result = parent::getMaxPurchaseLimit();
+
+        $inventory = $this->getInventory();
+        if ($inventory->is('found') && 0 < $inventory->get('amount')) {
+            $result = min($result, $inventory->get('amount'));
+        }
+
+        return $result;
+    }
+
+
 
     public function __construct($id = null)
     {

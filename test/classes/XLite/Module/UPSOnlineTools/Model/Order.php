@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
+
 /**
  * Order
  * 
@@ -252,13 +254,9 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
         $items = array();
         $global_id = 1;
         foreach ((array)$this->get("items") as $item) {
-            for ($i = 0; $i < $item->get("amount"); $i++) {
-                $obj = $item->get("packItem");
-                $obj->set("GlobalId", $global_id);
-
-                $items[] = $obj;
-            }
-
+            $obj = $item->getPackItem();
+            $obj->GlobalId = $global_id;
+            $items = array_merge($items, array_fill(0, $item->get("amount"), $obj));
             $global_id++;
         }
 
@@ -276,9 +274,8 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
         }
         $packaging_ids = array_unique($packaging_ids);
 
-
         // process order items
-        $items = $this->get("packItems");
+        $items = $this->getPackItems();
 
         $itemsProcess = array();
         $itemsSkip = array();
@@ -385,8 +382,6 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
 
     function _packOrderItems(&$items, $ptype=null, $packaging_type=null, $extra=array())
     {
-        require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
-
         $ups_containers = array();
 
         if (is_null($ptype)) {
@@ -403,8 +398,8 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
         $declared_value = 0;
 
         foreach ($items as $item) {
-            $declared_value += $item->get("declaredValue");
-            $total_weight += $item->get("weight");
+            $declared_value += $item->declaredValue;
+            $total_weight += $item->weight;
         }
 
         // process with containers...
@@ -420,9 +415,9 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
                     $_height = 0;
 
                     foreach ($items as $item) {
-                        $_width = max($_width, $item->get("width"));
-                        $_length = max($_length, $item->get("length"));
-                        $_height = max($_height, $item->get("height"));
+                        $_width = max($_width, $item->width);
+                        $_length = max($_length, $item->length);
+                        $_height = max($_height, $item->height);
                     }
                 } else {
                     // fixed-size container or unknown
@@ -441,10 +436,11 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
                 $ups_containers[] = $container;
 
                 // pack items in containers
-                for ($iid = 0; $iid < count($items);) {
+                $itemsCount = count($items);
+                for ($iid = 0; $iid < $itemsCount;) {
 
                     $item = $items[$iid];
-                    $item_weight = $item->get("weight");
+                    $item_weight = $item->weight;
 
                     if ($item_weight > $weight_limit)
                         return false;
@@ -455,11 +451,11 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
                         $declared_value = $cont->getDeclaredValue();
 
                         if ($c_weight + $item_weight <= $weight_limit) {
-                            $ups_containers[$i]->addExtraItemIds($item->get("OrderItemId"));
+                            $ups_containers[$i]->addExtraItemIds($item->OrderItemId);
                             $ups_containers[$i]->setWeight($c_weight + $item_weight);
-                            $ups_containers[$i]->setDeclaredValue($declared_value + $item->get("declaredValue"));
+                            $ups_containers[$i]->setDeclaredValue($declared_value + $item->declaredValue);
 
-                            if ($item->get("additional_handling")) {
+                            if ($item->additional_handling) {
                                 $ups_containers[$i]->setAdditionalHandling(true);
                             }
 
@@ -496,9 +492,9 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
                 if ($ups_containers === false || count($ups_containers) != 1 || count($items) > 0) {
                     $summ = 0;
                     foreach ($const_items as $item) {
-                        $summ += $item->get("width");
-                        $summ += $item->get("length");
-                        $summ += $item->get("height");
+                        $summ += $item->width;
+                        $summ += $item->length;
+                        $summ += $item->height;
                     }
 
                     // calc average container size

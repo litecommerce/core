@@ -76,12 +76,16 @@ class XLite_Module_ProductOptions_Controller_Customer_ChangeOptions extends XLit
     /**
      * Perform some actions before redirect
      * 
+     * @param string $action current action
+     *  
      * @return void
      * @access protected
      * @since  3.0.0
      */
-    protected function actionPostprocess()
+    protected function actionPostprocess($action)
     {
+        parent::actionPostprocess($action);
+
         $this->assembleReturnUrl();
     }
 

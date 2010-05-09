@@ -151,11 +151,35 @@ class XLite_Model_Product extends XLite_Model_Abstract
      */
     public function getImage()
     {
-        if (is_null($this->image)) {
+        if (!isset($this->image)) {
             $this->image = new XLite_Model_Image('product_image', $this->get('product_id'));
         }
 
         return $this->image;
+    }
+
+    /**
+     * Minimal available amount
+     * 
+     * @return int
+     * @access public
+     * @since  3.0.0
+     */
+    public function getMinPurchaseLimit()
+    {
+        return 1;
+    }
+
+    /**
+     * Maximal available amount
+     *
+     * @return int
+     * @access public
+     * @since  3.0.0
+     */
+    public function getMaxPurchaseLimit()
+    {
+        return $this->config->General->default_purchase_limit;
     }
 
     /**

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
+
 /**
  * ____description____
  * 
@@ -35,6 +37,7 @@
  */
 class XLite_Module_UPSOnlineTools_Model_OrderItem extends XLite_Model_OrderItem implements XLite_Base_IDecorator
 {
+    protected $packItem = null;
 
 	function getDeclaredValue()
 	{
@@ -43,34 +46,36 @@ class XLite_Module_UPSOnlineTools_Model_OrderItem extends XLite_Model_OrderItem 
 
 	function getPackItem()
 	{
-		require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
+        if (isset($this->packItem)) {
+            return $this->packItem;
+        }
 
 		$p = $this->get("product"); 
 
 		// dimension
-		$item = new XLite_Module_UPSOnlineTools_Model_PackItem();
+		$this->packItem = new XLite_Module_UPSOnlineTools_Model_PackItem();
 		foreach (array("width", "height", "length") as $field) {
-			$item->setComplex($field, $p->get("ups_".$field));
+			$this->packItem->setComplex($field, $p->get("ups_".$field));
 		}
 
 		// weight
 		$weight = UPSOnlineTools_convertWeight($p->get("weight"), $this->config->getComplex('General.weight_unit'), "lbs", 2);
 		if ($weight === false) {
-			$weight = $item->getComplex('product.weight');
+			$weight = $this->packItem->getComplex('product.weight');
 		}
-		$item->set("weight", $weight);
+		$this->packItem->set("weight", $weight);
 
 		// declared_value
 		$declared_value = $p->get("declaredValue");
 
 		// misc
-		$item->set("handle_care", $p->get("ups_handle_care"));
-		$item->set("OrderItemId", $this->get("item_id"));
-		$item->set("packaging", $p->get("ups_packaging"));
-		$item->set("declaredValue", $declared_value);
-		$item->set("additional_handling", $p->get("ups_add_handling"));
+		$this->packItem->set("handle_care", $p->get("ups_handle_care"));
+		$this->packItem->set("OrderItemId", $this->get("item_id"));
+		$this->packItem->set("packaging", $p->get("ups_packaging"));
+		$this->packItem->set("declaredValue", $declared_value);
+		$this->packItem->set("additional_handling", $p->get("ups_add_handling"));
 
-		return $item;
+		return $this->packItem;
 	}
 
 }

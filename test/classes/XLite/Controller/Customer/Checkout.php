@@ -355,7 +355,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
      */
     protected function actionPostprocess($action)
     {
-        parent::actionPostprocess();
+        parent::actionPostprocess($action);
 
         $this->setStepTopMessage();
     }
@@ -471,7 +471,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 
         if ($this->getCheckoutSteps()->isCorrectedStep()) {
 
-            $this->actionPostprocess();
+            $this->actionPostprocess(null);
             $url = isset($step)
                 ? $this->buildURL('checkout', '', array(XLite_View_Abstract::PARAM_MODE => $step->getMode()))
                 : $this->buildURL('cart');
