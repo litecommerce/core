@@ -194,7 +194,8 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
         return XLite::getInstance()->getOptions(array('profiler_details', 'enabled'))
             && $this->isTargetAllowed()
             && !XLite_Core_Request::getInstance()->isPost()
-            && !XLite_Core_Request::getInstance()->isCLI();
+            && !XLite_Core_Request::getInstance()->isCLI()
+            && !XLite_Core_Request::getInstance()->isAJAX();
     }
 
     /**
