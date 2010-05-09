@@ -44,6 +44,7 @@ class XLite_View_Pager_Common extends XLite_View_Pager
     const PAGE_NEXT     = 'next';
     const PAGE_LAST     = 'last';
 
+
     /**
      * pagesPerFrame 
      * 
@@ -198,8 +199,9 @@ class XLite_View_Pager_Common extends XLite_View_Pager
         return min($this->getBeginRecordNumber() + $this->getItemsPerPage() - 1, $this->getItemsTotal());
     }
 
+
     /**
-     * Check - pages row is visible or not
+     * Check if pages row is visible or not
      * 
      * @return boolean
      * @access public
