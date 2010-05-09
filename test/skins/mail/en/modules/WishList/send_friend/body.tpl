@@ -21,7 +21,7 @@ in the following product:
 <tr>
 	<td colspan="2" align="left"> {product.name} </td>
 </tr>
-<tr>
+<tr IF="product.brief_description">
 	<td align="left">Description:</td>
 	<td>{product.brief_description:h}</td>
 </tr>

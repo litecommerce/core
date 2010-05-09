@@ -26,7 +26,7 @@ These are the items {customer:h} is interested in:
 <tr>
 	<td colspan="2" align="left">{product.name}</td>
 </tr>
-<tr>
+<tr IF="product.brief_description">
 	<td align="left">Description:</td>
 	<td>{product.brief_description:h}</td>
 </tr>
@@ -35,12 +35,11 @@ These are the items {customer:h} is interested in:
 	<td>{price_format(product,#price#):h}</td>
 </tr>
 <tr>
-	<td colspan="2">Please click the link provided below to see the detailed information 
-on "{product.name}":</td>
+	<td colspan="2">
+    Please click the link below to see the detailed information about "{product.name}":
+    <a href="{getWishListProductURL(product)}">{getWishListProductURL(product):h}</a> 
+  </td>
 </tr>
-<tr>
-	<td colspan="2"><a href="{xlite.getShopUrl(product.url):h}">{xlite.getShopUrl(product.url):h}</a></td>
-</tr>	
 </table>
 {signature:h}
 </body>
