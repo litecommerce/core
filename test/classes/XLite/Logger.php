@@ -397,11 +397,7 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
      */
     protected function detectClassName($obj)
     {
-        if (is_object($obj)) {
-            $obj = function_exists('get_called_class') ? get_called_class($obj) : get_class($obj);
-        }
-
-        return $obj;
+        return is_object($obj) ? get_class($obj) : strval($obj);
     }
 
     /**
