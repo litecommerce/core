@@ -345,13 +345,15 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
     }
 
     /**
-     * Perform some actions before redirect
-     *
+     * Perform some actions before redirect 
+     * 
+     * @param mixed $action performed action
+     *  
      * @return void
      * @access protected
      * @since  3.0.0
      */
-    protected function actionPostprocess()
+    protected function actionPostprocess($action)
     {
         parent::actionPostprocess();
 

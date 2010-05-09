@@ -1013,7 +1013,10 @@ class XLite_Model_Abstract extends XLite_Base
         if ($this->isPersistent) {
 
             // build select query
-            if (!is_null($result = $this->db->getRow($this->sql = $this->_buildRead()))) {
+            $this->sql = $this->_buildRead();
+            $result = $this->db->getRow($this->sql);
+
+            if (isset($result)) {
 
                 $this->_updateProperties($result);
 

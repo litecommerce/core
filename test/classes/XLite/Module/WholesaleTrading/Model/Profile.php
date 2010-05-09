@@ -72,7 +72,9 @@ class XLite_Module_WholesaleTrading_Model_Profile extends XLite_Model_Profile im
 	{
 		$readStatus = parent::read();
 
-		$this->properties["membership_history"] = $this->_initMembershipHistory($this->properties["membership_history"]);
+        if (isset($this->properties["membership_history"])) {
+    		$this->properties["membership_history"] = $this->_initMembershipHistory($this->properties["membership_history"]);
+        }
 
 		if ($readStatus && ($this->get('membership_exp_date') > 0) && (time() > $this->get('membership_exp_date')) ) {
 			$mail = new XLite_Model_Mailer();

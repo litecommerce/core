@@ -327,10 +327,10 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
     protected function checkControlArgument($value, $name)
     {
         if (!is_string($value)) {
-            $this->doDie($name . ' has wrong type');
+            $this->doDie($name . ' has a wrong type');
 
         } elseif (!preg_match('/^[a-z0-9_]*$/Ssi', $value)) {
-            $this->doDie($name . ' has wrong format');
+            $this->doDie($name . ' has a wrong format');
         }
     }
 }

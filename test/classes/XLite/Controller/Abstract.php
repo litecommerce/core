@@ -280,12 +280,14 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 
     /**
      * Perform some actions before redirect
-     * 
+     *
+     * @param mixed $action performed action
+     *
      * @return void
      * @access protected
      * @since  3.0.0
      */
-    protected function actionPostprocess()
+    protected function actionPostprocess($action)
     {
     }
 
@@ -436,7 +438,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
                 $this->$newMethodName();
             }
 
-            $this->actionPostprocess();
+            $this->actionPostprocess($action);
         }
 
         if ($this->isRedirectNeeded()) {

@@ -222,11 +222,12 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
 
         if (!isset($profileId)) {
             $profileId = XLite_Model_Session::getInstance()->get('profile_id');
+            $isCurrent = true;
         }
 
         if (isset($profileId)) {
             $profile = XLite_Model_CachingFactory::getObject(__METHOD__ . $profileId, 'XLite_Model_Profile', array($profileId));
-            if ($profile->isValid()) {
+            if ($profile->isValid() && (!empty($isCurrent) || $this->checkProfile($profile))) {
                 $result = $profile;
             }
         }

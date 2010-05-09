@@ -35,10 +35,23 @@
  */
 class XLite_Module_WishList_Controller_Customer_Login extends XLite_Controller_Customer_Login implements XLite_Base_IDecorator
 {
-	function action_login() // {{{
+    /**
+     * Return URL to redirect from login
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getRedirectFromLoginURL()
     {
-		parent::action_login();
-		if (!is_null($this->session->get("wishlist_url")))
-			$this->set("returnUrl",$this->session->get("wishlist_url"));
-	} // }}}
+        $result = null;
+        $productId = XLite_Model_Session::getInstance()->get(self::SESSION_CELL_WL_PRODUCT_TO_ADD);
+
+        if (isset($productId)) {
+            XLite_Model_Session::getInstance()->set(self::SESSION_CELL_WL_PRODUCT_TO_ADD, null);
+            $result = $this->buildURL('wishlist', 'add', array('product_id' => $productId));
+        }
+
+        return $result;
+    }
 }

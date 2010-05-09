@@ -36,14 +36,11 @@
 class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controller_Customer_Abstract
 {
     /**
-     * Controller parameters
-     * 
-     * @var    array
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
+     * Controller params
      */
-    public $params = array('target', 'mode');
+
+    const PARAM_AMOUNT = 'amount';
+
 
     /**
      * Common method to determine current location 
@@ -58,6 +55,52 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controlle
     }
 
     /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_AMOUNT => new XLite_Model_WidgetParam_Int('Amount', 1),
+        );
+    }
+
+    /**
+     * getWishListProduct 
+     * 
+     * @return XLite_Module_WishList_Model_WishListProduct
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getWishListProduct()
+    {
+        $product = new XLite_Module_WishList_Model_WishListProduct();
+        $product->set('product_id', $this->getProductId());
+
+        return $product;
+    }
+
+    /**
+     * prepareWishListItem 
+     * 
+     * @param XLite_Module_WishList_Model_WishListProduct $product item to prepare
+     * @param bool                                        $status  if item exists or not
+     *  
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function prepareWishListItem(XLite_Module_WishList_Model_WishListProduct $product, $status)
+    {
+        $product->set('amount', $product->get('amount') + $this->getParam(self::PARAM_AMOUNT));
+    }
+
+    /**
      * Add item to wishlist
      * 
      * @return void
@@ -67,66 +110,49 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controlle
      */
     protected function doActionAdd()
     {
-        if (!$this->auth->is('logged')) {
-            $this->set('returnUrl', $this->buildURL('login', '', array('mode' => 'wishlist')));
-            $this->session->set(
-                'wishlist_url',
-                $this->buildURL('wishlist', 'add', array('product_id' => $this->product_id))
+        // Only logged in user can use the wishlist
+        if (XLite_Model_Auth::getInstance()->isLogged()) {
+
+            // Search if product is already in wishlist
+            list($status, $product) = $this->getWishListProduct()->searchWishListItem(
+                $this->getWishList()->get('wishlist_id'),
+                $this->getProductId()
             );
 
-            return;
-        }
-        
-        $product = new XLite_Model_Product($this->product_id);
-        
-        // alternative way to set product options
-        if ($this->xlite->get('ProductOptionsEnabled') && isset($this->OptionSetIndex[$product->get('product_id')])) {
-            $optionsSet = $product->get('expandedItems');
-            foreach ($optionsSet[$this->OptionSetIndex[$product->get('product_id')]] as $opt) {
-                $this->product_options[$opt->class] = $opt->option_id;    
-            }
-        }
-        
-        if (
-            $this->xlite->get('ProductOptionsEnabled')
-            && $product->hasOptions()
-            && !isset($this->product_options)
-        ) {
-            $this->set('returnUrl', $this->buildURL('product', '', array('product_id' => $this->product_id)));
+            // Prepare product before save
+            $this->prepareWishListItem($product, $status);
 
-            return;
-        }
+            // Save changes in DB
+            $status ? $product->update() : $product->create();
 
-        $wishlist = $this->get('wishList');
-        $wishlistProduct = new XLite_Module_WishList_Model_WishListProduct();
-        
-        $wishlistProduct->set('product_id', $this->get('product_id'));
+            // Return to wishlist page
+            $this->setReturnUrl($this->buildURL('wishlist'));
 
-        $wishlistProduct->set('wishlist_id', $wishlist->get('wishlist_id'));
-        $orderItem  = $wishlistProduct->get('orderItem');
-        if (isset($this->product_options)) {
-            $wishlistProduct->setProductOptions($this->product_options);
-            if (version_compare(PHP_VERSION, '5.0.0')===-1) {
-                $orderItem->setProductOptions($this->product_options);
-            }
-        }
-
-        $wishlistProduct->set('item_id', $orderItem->get('key'));
-        $found = $wishlistProduct->find(
-            'item_id = \'' . addslashes($wishlistProduct->get('item_id')) . '\''
-            . ' AND wishlist_id = \'' . $wishlist->get('wishlist_id') . '\''
-        );
-
-        $amount = $wishlistProduct->get('amount');
-        $amount += isset($this->amount) ? $this->amount : 1;
-
-        $wishlistProduct->set('amount', $amount);
-
-        if ($found) {
-            $wishlistProduct->update();
         } else {
-            $wishlistProduct->create();
+
+            // Redirect to login page if not logged in
+            $this->setReturnUrl($this->buildURL('login'));
+
+            // Product to add after login
+            XLite_Model_Session::getInstance()->set(self::SESSION_CELL_WL_PRODUCT_TO_ADD, $this->getProductId());
         }
+    }
+
+    /**
+     * Delete wishlist item
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionDelete()
+    {
+        $wishlistProduct = new XLite_Module_WishList_Model_WishListProduct(
+            XLite_Core_Request::getInstance()->item_id,
+            XLite_Core_Request::getInstance()->wishlist_id
+        );
+        $wishlistProduct->delete();
     }
 
     /**
@@ -241,23 +267,6 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controlle
     } 
     
     /**
-     * Delete wishlist item
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function doActionDelete()
-    {
-        $wishlistProduct = new XLite_Module_WishList_Model_WishListProduct(
-            XLite_Core_Request::getInstance()->item_id,
-            XLite_Core_Request::getInstance()->wishlist_id
-        );
-        $wishlistProduct->delete();
-    }
-
-    /**
      * Update wishlist item 
      * 
      * @return void
@@ -273,8 +282,8 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controlle
         );
 
         $amount = XLite_Core_Request::getInstance()->wishlist_amount;
-        if (0 <= $amount) {
-            $this->action_delete();
+        if (0 >= $amount) {
+            $this->doActionDelete();
 
         } else {
             $wishlistProduct->set('amount', $amount);

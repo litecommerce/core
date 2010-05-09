@@ -47,6 +47,54 @@ class XLite_Controller_Customer_Login extends XLite_Controller_Customer_Abstract
         return 'Authentication';
     }
 
+    /**
+     * Perform some actions before redirect
+     *
+     * @param mixed $action performed action
+     *
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function actionPostprocess($action)
+    {
+        parent::actionPostprocess();
+
+        if ('login' == $action) {
+            $this->redirectFromLogin();
+        }
+    }
+
+    /**
+     * Return URL to redirect from login
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getRedirectFromLoginURL()
+    {
+        return null;
+    }
+
+
+    /**
+     * Perform some actions after the "login" action
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function redirectFromLogin()
+    {
+        $url = $this->getRedirectFromLoginURL();
+
+        if (isset($url)) {
+            XLite_Core_CMSConnector::isCMSStarted() ? XLite_Core_Operator::getInstance()->redirect($url) : $this->setReturnUrl($url);
+        }
+    }
+
+
 
     public $params = array("target", "mode");
 

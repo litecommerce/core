@@ -52,9 +52,38 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
     public $defaultOrder = "order_by";    
     public $primaryKey   = array("item_id","wishlist_id");
 
+
+    /**
+     * Search wishlist item by product id 
+     * 
+     * @param int $wishlistId ID of current wishlist
+     *  
+     * @return self
+     * @access public
+     * @since  3.0.0
+     */
+    public function searchWishListItem($wishlistId)
+    {
+        // Primary keys
+        $properties = array(
+            'wishlist_id' => $wishlistId,
+            'item_id'     => $this->getOrderItem()->getKey(),
+        );
+
+        // Search in current wishlist by item ID
+        $result = $this->find(XLite_Core_Converter::buildQuery(array_map('addslashes', $properties), '=', ' AND ', '\''));
+
+        if (!$result) {
+            // Assign object properties manually, since they were not assigned in "find()"
+            $this->setProperties($properties);
+        }
+
+        return array($result, $this);
+    }
+
     function getProduct() // {{{ 
     {
-        if (is_null($this->product)) {
+        if (!isset($this->product)) {
             $this->product = new XLite_Model_Product($this->get("product_id"));
         }    
 
@@ -75,7 +104,7 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
     
     function getOrderItem() // {{{
     {
-        if (is_null($this->orderItem)) {
+        if (!isset($this->orderItem)) {
             $this->orderItem = new XLite_Model_OrderItem();
             $this->orderItem->set("product", $this->getProduct());
         }                                                
