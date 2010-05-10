@@ -71,4 +71,17 @@ class XLite_View_CheckoutStep_Regular_Details extends XLite_View_CheckoutStep_Re
     {
         return $this->getCart()->getProfile()->isSameAddress();
     }
+
+    /**
+     * Get current year
+     *
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCurrentYear()
+    {
+        return intval(date('Y'));
+    }
 }

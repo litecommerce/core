@@ -89,20 +89,6 @@ class XLite_View_Checkout extends XLite_View_Dialog
         return $this->getCurrentStep()->getWidgetClass();
     }
 
-    /**
-     * Get current year
-     * FIXME - must be moved to a separate widget
-     *
-     * @return integer
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getCurrentYear()
-    {
-        return intval(date('Y'));
-    }
-
 
     /**
      * Get a list of CSS files required to display the widget properly
