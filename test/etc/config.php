@@ -102,6 +102,11 @@ eta = On
 [recorder]
 record_queries = off
 
+[images]
+default_image = "images/no_image.gif"
+default_image_width = 70
+default_image_height = 90
+
 ;
 ; ----------------------
 ;  PHP settings

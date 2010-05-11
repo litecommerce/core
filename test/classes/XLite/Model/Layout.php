@@ -27,7 +27,7 @@
  */
 
 /**
- * ____description____
+ * Layoue manager
  * 
  * @package XLite
  * @see     ____class_see____
@@ -44,23 +44,24 @@ class XLite_Model_Layout extends XLite_Base implements XLite_Base_ISingleton
      */
     protected $customerAreaSkin = null;
 
-	public $skin = null;
-	public $locale = null;
+    public $skin = null;
+
+    public $locale = null;
 
     /**
     * Skin templates list.
     *
     * @var Elements $elements Skin templates list.
     * @access private
-    */	
-    public $list = array();	
+    */    
+    public $list = array();    
 
-	public static function getInstance()
+    public static function getInstance()
     {
         return self::getInternalInstance(__CLASS__);
     }
 
-	public function __construct()
+    public function __construct()
     {
         foreach (array('skin', 'locale') as $name) {
             if (!isset($this->$name)) {
@@ -69,9 +70,9 @@ class XLite_Model_Layout extends XLite_Base implements XLite_Base_ISingleton
         }
 
         $this->customerAreaSkin = XLite::getInstance()->getOptions(array('skin_details', 'skin'));
-	}
+    }
 
-	/**
+    /**
      * Return full URL by the skindir-related one
      *
      * @param string $url relative URL
@@ -106,10 +107,11 @@ class XLite_Model_Layout extends XLite_Base implements XLite_Base_ISingleton
     */
     function getLayout($templateName)
     {
-        if (!isset($this->list[$templateName])) {
-			return $this->get("path") . $templateName;
+        if (isset($this->list[$templateName])) {
+            $templateName = $this->list[$templateName];
         }
-        return $this->get("path") . $this->list[$templateName];
+
+        return $this->get('path') . $templateName;
     }
 
     function hasLayout($widgetName)
@@ -128,36 +130,58 @@ class XLite_Model_Layout extends XLite_Base implements XLite_Base_ISingleton
      */
     public function getPath($forCustomerArea = false)
     {
-        return sprintf("skins/%s/%s/", $forCustomerArea ? $this->customerAreaSkin : $this->skin, $this->locale);
+        return sprintf(
+            'skins/%s/%s/',
+            $forCustomerArea ? $this->customerAreaSkin : $this->skin,
+            $this->locale
+        );
     }
-	
-	function getSkins($includeAdmin = false)
-	{
-		$list = array();
-		$dir = "skins";
-		if ($dh = opendir($dir)) {
-			while (($file = readdir($dh)) !== false) {
-				if (is_dir($dir . '/'. $file) && $file{0} != '.' && ($file != 'admin' || $includeAdmin) && $file != 'mail' && $file != 'CVS') {
-					$list[] = $file;
-				}
-			}
-		}
-        closedir($dh);
-		return $list;
-	}
+    
+    function getSkins($includeAdmin = false)
+    {
+        $list = array();
+        $dir = 'skins';
+        $dh = opendir($dir);
 
-	function getLocales($skin)
-	{
-		$list = array();
-		$dir = "skins/$skin/";
-		if ($dh = opendir($dir)) {
-			while (($file = readdir($dh)) !== false) {
-				if (is_dir($dir . $file) && $file{0} != '.' && $file != 'CVS') {
-					$list[] = $file;
-				}
-			}
-		}
-		return $list;
-	}
+        if ($dh) {
+            while (($file = readdir($dh)) !== false) {
+                if (
+                    is_dir($dir . LC_DS . $file)
+                    && substr($file, 0, 1) != '.'
+                    && ($file != 'admin' || $includeAdmin)
+                    && $file != 'mail'
+                    && $file != 'CVS'
+                ) {
+                    $list[] = $file;
+                }
+            }
+
+            closedir($dh);
+        }
+
+        return $list;
+    }
+
+    function getLocales($skin)
+    {
+        $list = array();
+        $dir = 'skins/' . $skin . '/';
+        $dh = @opendir($dir);
+        if ($dh) {
+            while (($file = readdir($dh)) !== false) {
+                if (
+                    is_dir($dir . $file)
+                    && substr($file, 0, 1) != '.'
+                    && $file != 'CVS'
+                ) {
+                    $list[] = $file;
+                }
+            }
+
+            closedir($dh);
+        }
+
+        return $list;
+    }
 
 }

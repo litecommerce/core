@@ -1119,44 +1119,11 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
      */
     public function getCroppedDimensions($maxw, $maxh)
     {
-        $w = $this->get('width');
-        $h = $this->get('height');
-
-        $maxw = max(0, intval($maxw));
-        $maxh = max(0, intval($maxh));
-
-        $properties = array(
-            'width'  => 0 < $w ? $w : $maxw,
-            'height' => 0 < $h ? $h : $maxh,
+        return XLite_Core_Converter::getCroppedDimensions(
+            $this->get('width'),
+            $this->get('height'),
+            $maxw,
+            $maxh
         );
-
-        if (0 < $w && 0 < $h && (0 < $maxw || 0 < $maxh)) {
-
-            if (0 < $maxw && 0 < $maxh) {
-                $kw = $w > $maxw ? $maxw / $w : 1;
-                $kh = $h > $maxh ? $maxh / $h : 1;
-                $k = $kw < $kh ? $kw : $kh;
-
-            } elseif (0 < $maxw) {
-                $k = $w > $maxw ? $maxw / $w : 1;
-
-            } elseif (0 < $maxh) {
-                $k = $h > $maxh ? $maxh / $h : 1;
-
-            }
-
-            $properties['width'] = max(1, round($k * $w, 0));
-            $properties['height'] = max(1, round($k * $h, 0));
-        }
-
-        if (0 == $properties['width']) {
-            $properties['width'] = null;
-        }
-
-        if (0 == $properties['height']) {
-            $properties['height'] = null;
-        }
-
-        return array($properties['width'], $properties['height']);
     }
 }

@@ -38,12 +38,13 @@ class XLite_View_Image extends XLite_View_Abstract
     /**
      * Widget arguments names 
      */
-    const PARAM_IMAGE        = 'image';
-    const PARAM_ALT          = 'alt';
-    const PARAM_MAX_WIDTH    = 'maxWidth';
-    const PARAM_MAX_HEIGHT   = 'maxHeight';
-    const PARAM_CENTER_IMAGE = 'centerImage';
-    const PARAM_USE_CACHE    = 'useCache';
+    const PARAM_IMAGE             = 'image';
+    const PARAM_ALT               = 'alt';
+    const PARAM_MAX_WIDTH         = 'maxWidth';
+    const PARAM_MAX_HEIGHT        = 'maxHeight';
+    const PARAM_CENTER_IMAGE      = 'centerImage';
+    const PARAM_USE_CACHE         = 'useCache';
+    const PARAM_USE_DEFAULT_IMAGE = 'useDefaultImage';
 
 
     /**
@@ -110,12 +111,13 @@ class XLite_View_Image extends XLite_View_Abstract
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_IMAGE        => new XLite_Model_WidgetParam_Object('Image', null, false, 'XLite_Model_Image'),
-            self::PARAM_ALT          => new XLite_Model_WidgetParam_String('Alt. text', '', false),
-            self::PARAM_MAX_WIDTH    => new XLite_Model_WidgetParam_Int('Max. width', 0),
-            self::PARAM_MAX_HEIGHT   => new XLite_Model_WidgetParam_Int('Max. height', 0),
-            self::PARAM_CENTER_IMAGE => new XLite_Model_WidgetParam_Checkbox('Center the image after resizing', true),
-            self::PARAM_USE_CACHE    => new XLite_Model_WidgetParam_Bool('Use cache', 1),
+            self::PARAM_IMAGE             => new XLite_Model_WidgetParam_Object('Image', null, false, 'XLite_Model_Image'),
+            self::PARAM_ALT               => new XLite_Model_WidgetParam_String('Alt. text', '', false),
+            self::PARAM_MAX_WIDTH         => new XLite_Model_WidgetParam_Int('Max. width', 0),
+            self::PARAM_MAX_HEIGHT        => new XLite_Model_WidgetParam_Int('Max. height', 0),
+            self::PARAM_CENTER_IMAGE      => new XLite_Model_WidgetParam_Checkbox('Center the image after resizing', true),
+            self::PARAM_USE_CACHE         => new XLite_Model_WidgetParam_Bool('Use cache', 1),
+            self::PARAM_USE_DEFAULT_IMAGE => new XLite_Model_WidgetParam_Bool('Use default image', 1),
         );
     }
 
@@ -138,25 +140,6 @@ class XLite_View_Image extends XLite_View_Abstract
                 $this->properties[$this->allowedProperties[$name]] = $value;
             }
         }
-
-        // Calculate new image dimensions
-        if (isset($params[self::PARAM_IMAGE])) {
-
-            $maxw = max(0, $this->getParam(self::PARAM_MAX_WIDTH));
-            $maxh = max(0, $this->getParam(self::PARAM_MAX_HEIGHT));
-            
-            list(
-                $this->properties['width'],
-                $this->properties['height'],
-                $this->resizedURL
-            ) = $params[self::PARAM_IMAGE]->getResizedThumbnailURL($maxw, $maxh);
-
-            // Center the image vertically and horizontally
-            if ($this->getParam(self::PARAM_CENTER_IMAGE)) {
-                $this->setImagePaddings();
-            }
-        }
-
     }
 
     /**
@@ -169,8 +152,28 @@ class XLite_View_Image extends XLite_View_Abstract
      */
     public function isVisible()
     {
-        return parent::isVisible()
-            && $this->getParam(self::PARAM_IMAGE);
+        $result = parent::isVisible()
+            && (
+                ($this->getParam(self::PARAM_IMAGE) && $this->getParam(self::PARAM_IMAGE)->isExists())
+                || (
+                    $this->getParam(self::PARAM_USE_DEFAULT_IMAGE)
+                    && XLite::getInstance()->getOptions(array('images', 'default_image'))
+                )
+            );
+
+        if ($result) {
+            if ($this->getParam(self::PARAM_IMAGE) && $this->getParam(self::PARAM_IMAGE)->isExists()) {
+
+                $this->processImage();
+
+            } else {
+
+                $this->processDefaultImage();
+
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -183,9 +186,30 @@ class XLite_View_Image extends XLite_View_Abstract
      */
     public function getURL()
     {
-        return $this->getParam(self::PARAM_USE_CACHE)
-            ? $this->resizedURL
-            : $this->getParam(self::PARAM_IMAGE)->getURL();
+        $url = false;
+
+        if ($this->getParam(self::PARAM_IMAGE) && $this->getParam(self::PARAM_IMAGE)->isExists()) {
+
+            // Specified image
+
+            $url = $this->getParam(self::PARAM_USE_CACHE)
+                ? $this->resizedURL
+                : $this->getParam(self::PARAM_IMAGE)->getURL();
+
+        } elseif ($this->getParam(self::PARAM_USE_DEFAULT_IMAGE)) {
+
+            // Defualt image
+
+            $url = XLite::getInstance()->getOptions(array('images', 'default_image'));
+
+            if (!XLite_Core_Converter::isURL($url)) {
+                $url = XLite::getInstance()->getShopUrl(
+                    XLite_Model_Layout::getInstance()->getSkinURL($url)
+                );
+            }
+        }
+
+        return $url;
     }
 
     /**
@@ -251,8 +275,57 @@ class XLite_View_Image extends XLite_View_Abstract
     {
         if (!isset($this->properties['style'])) {
             $this->properties['style'] = $style;
+
         } else {
             $this->properties['style'] .= ' ' . $style;
+        }
+    }
+
+    /**
+     * Preprocess image 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function processImage()
+    {
+        $maxw = max(0, $this->getParam(self::PARAM_MAX_WIDTH));
+        $maxh = max(0, $this->getParam(self::PARAM_MAX_HEIGHT));
+
+        list(
+            $this->properties['width'],
+            $this->properties['height'],
+            $this->resizedURL
+        ) = $this->getParam(self::PARAM_IMAGE)->getResizedThumbnailURL($maxw, $maxh);
+
+        // Center the image vertically and horizontally
+        if ($this->getParam(self::PARAM_CENTER_IMAGE)) {
+            $this->setImagePaddings();
+        }
+    }
+
+    /**
+     * Preprocess default image 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function processDefaultImage()
+    {
+        list($this->properties['width'], $this->properties['height']) = XLite_Core_Converter::getCroppedDimensions(
+            XLite::getInstance()->getOptions(array('images', 'default_image_width')),
+            XLite::getInstance()->getOptions(array('images', 'default_image_height')),
+            max(0, $this->getParam(self::PARAM_MAX_WIDTH)),
+            max(0, $this->getParam(self::PARAM_MAX_HEIGHT))
+        );
+
+        // Center the image vertically and horizontally
+        if ($this->getParam(self::PARAM_CENTER_IMAGE)) {
+            $this->setImagePaddings();
         }
     }
 
