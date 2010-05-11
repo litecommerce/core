@@ -35,18 +35,18 @@
  */
 class XLite_Controller_Admin_CssEdit extends XLite_Controller_Admin_Abstract
 {
-	protected $locale = null;
+    protected $locale = null;
 
-	protected $zone = null;
-	
+    protected $zone = null;
+    
     public $params = array('target', 'mode', 'style_id', 'status');
 
-	protected function getStyleAttribute($attr, $index)
-	{
-		$style = $this->getEditor()->getStyle();
+    protected function getStyleAttribute($attr, $index)
+    {
+        $style = $this->getEditor()->getStyle();
 
-		return isset($style[$attr][$index]) ? $style[$attr][$index] : null;
-	}
+        return isset($style[$attr][$index]) ? $style[$attr][$index] : null;
+    }
 
     function getLocale() 
     {
@@ -80,7 +80,15 @@ class XLite_Controller_Admin_CssEdit extends XLite_Controller_Admin_Abstract
         return "skins/$skin/$locale/style.css";
     }
 
-    function action_save()
+    /**
+     * Save CSS
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionSave()
     {
         $editor = $this->get("editor");
         $editor->setComplex("style.style.$this->style_id", $this->style);
@@ -89,7 +97,15 @@ class XLite_Controller_Admin_CssEdit extends XLite_Controller_Admin_Abstract
         $this->set("status", "updated");
     }
     
-    function action_restore_default()
+    /**
+     * Restore default CSS
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionRestoreDefault()
     {
         $editor = $this->get("editor");
         $editor->restoreDefault();
@@ -97,17 +113,17 @@ class XLite_Controller_Admin_CssEdit extends XLite_Controller_Admin_Abstract
 
     function css_style($index)
     {
-		return $this->getStyleAttribute('style', $index);
+        return $this->getStyleAttribute('style', $index);
     }
 
     function css_class($index)
     {
-		return $this->getStyleAttribute('element', $index);
+        return $this->getStyleAttribute('element', $index);
     }
 
     function css_comment($index)
     {
-		return $this->getStyleAttribute('comment', $index);
+        return $this->getStyleAttribute('comment', $index);
     }
 
 }

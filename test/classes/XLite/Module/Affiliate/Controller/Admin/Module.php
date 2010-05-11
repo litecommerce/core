@@ -35,7 +35,14 @@
  */
 class XLite_Module_Affiliate_Controller_Admin_Module extends XLite_Controller_Admin_Module implements XLite_Base_IDecorator
 {
-    function action_update()
+    /**
+     * Update module settings 
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function doActionUpdate()
     {
         // this is a fixing for the default module config handler
         // NOTE: LC v2.0.0 only

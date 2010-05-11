@@ -27,7 +27,7 @@
  */
 
 /**
- * ____description____
+ * Module settings
  * 
  * @package XLite
  * @see     ____class_see____
@@ -61,15 +61,14 @@ class XLite_Controller_Admin_Module extends XLite_Controller_Admin_Abstract
         return $config->getByCategory($this->page);
     }
 
-
     /**
      * Update module settings 
      * 
      * @return void
-     * @access public
+     * @access protected
      * @since  3.0.0
      */
-    public function action_update()
+    protected function doActionUpdate()
     {
         foreach ($this->getOptions() as $option) {
 

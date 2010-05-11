@@ -27,7 +27,7 @@
  */
 
 /**
- * ____description____
+ * Image edit
  * 
  * @package XLite
  * @see     ____class_see____
@@ -35,7 +35,7 @@
  */
 class XLite_Controller_Admin_ImageEdit extends XLite_Controller_Admin_Abstract
 {
-	protected $locale = null;
+    protected $locale = null;
 
     protected $zone = null;
 
@@ -65,14 +65,21 @@ class XLite_Controller_Admin_ImageEdit extends XLite_Controller_Admin_Abstract
         return $this->editor;
     }
     
-    function action_change()
+    /**
+     * Change image
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionChange()
     {
-        $image_field_name = "new_image_" . $this->current_image;
-        $editor = $this->get("editor");
+        $image_field_name = 'new_image_' . $this->current_image;
+        $editor = $this->get('editor');
         $code = $editor->uploadImage($image_field_name, $this->current_image);
         if($code !== LC_UPLOAD_OK) {
             $this->set('valid', false);
         }
-
     }
 }
