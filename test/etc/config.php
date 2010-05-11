@@ -103,9 +103,9 @@ eta = On
 record_queries = off
 
 [images]
-default_image = "images/no_image.gif"
-default_image_width = 70
-default_image_height = 90
+default_image = "images/no_image.png"
+default_image_width = 140
+default_image_height = 140
 
 ;
 ; ----------------------
