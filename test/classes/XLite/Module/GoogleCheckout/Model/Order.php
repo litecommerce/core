@@ -27,7 +27,7 @@
  */
 
 /**
- * ____description____
+ * Order
  * 
  * @package XLite
  * @see     ____class_see____
@@ -206,17 +206,14 @@ EOT;
     function getGoogleCheckoutXML_Calculation($address, $shipping, $discounts)
     {
         require_once LC_MODULES_DIR . 'GoogleCheckout' . LC_DS . 'encoded.php';
+
         return GoogleCheckout_getGoogleCheckoutXML_Calculation($this, $address, $shipping, $discounts);
     }
 
 
     function getProfile()
     {
-        if (is_null($this->GoogleCheckout_profile)) {
-            return parent::getProfile();
-        }
-
-        return $this->GoogleCheckout_profile;
+        return is_null($this->GoogleCheckout_profile) ? parent::getProfile() : $this->GoogleCheckout_profile;
     }
 
     function google_checkout_setDC($dc)
@@ -242,6 +239,7 @@ EOT;
             $clone->update();
             $this->set("discountCoupon", $dc->get("coupon_id"));
             $this->DC = $clone;
+
         } else {
             $this->set("discountCoupon", "");
             return false;
@@ -250,14 +248,27 @@ EOT;
         return true;
     }
 
-    function isGoogleAllowPay()
+    /**
+     * Check - allow pay this order with Google checkout or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isGoogleAllowPay()
     {
-        foreach ($this->get("items") as $item) {
-            if ($item->getComplex('product.google_disabled'))
-                return false;
+        $result = true;
+
+        foreach ($this->getItems() as $item) {
+            $product = $item->getProduct();
+            if ($product && $product->get('google_disabled')) {
+                $result = false;
+                break;
+            }
         }
 
-        return true;
+        return $result;
     }
 
     function google_getItemsFingerprint()
@@ -300,20 +311,24 @@ EOT;
 
     function getGoogleShippingCarrirer()
     {
-        if ($this->get("google_carrier"))
-            return $this->get("google_carrier");
+        if ($this->get('google_carrier')) {
+            return $this->get('google_carrier');
+        }
 
-        $sm = $this->get("shippingMethod");
-        switch ($sm->get("class")) {
-            case "ups":
-                return "UPS";
+        switch ($this->get("shippingMethod")->get('class')) {
+            case 'ups':
+                $result = 'UPS';
+                break;
 
-            case "usps":
-                return "USPS";
+            case 'usps':
+                $result = 'USPS';
+                break;
 
             default:
-                return "Other";
+                $result = 'Other';
         }
+
+        return $result;
     }
 
     function getGoogleRemainRefund()
@@ -323,7 +338,7 @@ EOT;
 
     function getGoogleRemainCharge()
     {
-        return max(0, $this->get("google_total") - $this->getComplex('google_details.total_charge_amount'));
+        return max(0, $this->get('google_total') - $this->getComplex('google_details.total_charge_amount'));
     }
 
     function setGoogleDetails($value)
@@ -333,27 +348,49 @@ EOT;
 
     function getGoogleDetails()
     {
-        $details = parent::get("google_details");
-        if ($details) {
-            return unserialize($details);
-        } else {
-            return array();
-        }
+        $details = parent::get('google_details');
+
+        return $details ? unserialize($details) : array();
     }
 
-    function get($name)
+    /**
+     * Returns property value named $name. If no property found, returns null 
+     * 
+     * @param string $name property name
+     *  
+     * @return mixed
+     * @access public
+     * @since  3.0
+     */
+    public function get($name)
     {
-        if ($name == "google_details") {
-            return $this->getGoogleDetails();
+        $result = null;
+
+        if ($name == 'google_details') {
+            $result = $this->getGoogleDetails();
+
         } else {
-            return parent::get($name);
+            $result = parent::get($name);
         }
+
+        return $result;
     }
 
-    function set($name, $value)
+    /**
+     * Set object property 
+     * 
+     * @param string $name  property name
+     * @param mixed  $value property value
+     *  
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function set($name, $value)
     {
         if ($name == "google_details") {
             $this->setGoogleDetails($value);
+
         } else {
             parent::set($name, $value);
         }
@@ -377,25 +414,18 @@ EOT;
 
     function isGoogleMeetDiscount()
     {
-        if (!$this->xlite->get("PromotionEnabled")) {
+        if (!$this->xlite->get('PromotionEnabled')) {
             return true;
         }
 
         $dc = $this->getDC();
-        if (!$dc || $dc->get("applyTo") == "total" || $dc->get("type") == "freeship") {
-            return true;
-        }
 
-        return false;
+        return !$dc || $dc->get('applyTo') == 'total' || $dc->get('type') == 'freeship';
     }
 
     function isGoogleGiftCertificatesAvailable()
     {
-        if ($this->xlite->get("GiftCertificatesEnabled")) {
-            if (!is_null($this->getGC())) {
-                return false;
-            }
-
+        if ($this->xlite->get("GiftCertificatesEnabled") && is_null($this->getGC())) {
             $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate();
             $certs = $gc->findAll();
             foreach ($certs as $cert) {
@@ -414,8 +444,9 @@ EOT;
     function isShowGoogleCheckoutNotes()
     {
         if ($this->xlite->get("gcheckout_remove_discounts")) {
-            if ($this->isShowRemoveDiscountsNote())
+            if ($this->isShowRemoveDiscountsNote()) {
                 return true;
+            }
         }
 
         return $this->IsShowNotValidDiscountNote();
@@ -427,20 +458,15 @@ EOT;
             return false;
         }
 
-        if ($this->xlite->get("PromotionEnabled")) {
-            if (!is_null($this->getDC())) {
-                return true;
-            }
-
-            if ($this->get("payedByPoints") > 0) {
-                return true;
-            }
+        if (
+            $this->xlite->get("PromotionEnabled")
+            && (!is_null($this->getDC()) || $this->get("payedByPoints") > 0)
+        ) {
+            return true;
         }
 
-        if ($this->xlite->get("GiftCertificatesEnabled")) {
-            if (!is_null($this->getGC())) {
-                return true;
-            }
+        if ($this->xlite->get("GiftCertificatesEnabled") && !is_null($this->getGC())) {
+            return true;
         }
 
         return false;
@@ -448,12 +474,13 @@ EOT;
 
     function IsShowNotValidDiscountNote()
     {
-        if ($this->xlite->get("gcheckout_remove_discounts")) {
-            if ($this->isShowRemoveDiscountsNote())
+        if ($this->xlite->get('gcheckout_remove_discounts')) {
+            if ($this->isShowRemoveDiscountsNote()) {
                 return false;
+            }
         }
 
-        return (!$this->is("googleMeetDiscount"));
+        return !$this->is('googleMeetDiscount');
     }
 
     function update()
