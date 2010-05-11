@@ -168,15 +168,10 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
      */
     public function restart()
     {
-        if (
-            XLite_Core_Request::getInstance()->__get(self::SESSION_DEFAULT_NAME)
-            && !(isset($GET[self::SESSION_DEFAULT_NAME]) || isset($POST[self::SESSION_DEFAULT_NAME]))
-        ) {
+        if (XLite_Core_Request::getInstance()->__get(self::SESSION_DEFAULT_NAME)) {
 
             XLite_Core_Request::getInstance()->__set(self::SESSION_DEFAULT_NAME, null);
-
-            // TODO - uncomment if it's really needed
-            // $this->set('_' . self::SESSION_DEFAULT_NAME, self::SESSION_DEFAULT_NAME . '=' . $this->getID());
+            $this->set('_' . self::SESSION_DEFAULT_NAME, self::SESSION_DEFAULT_NAME . '=' . $this->getID());
 
             $this->destroy();
             $this->setID(SESSION_DEFAULT_ID);
@@ -303,14 +298,16 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
         return $this->options['id'];
     }
 
-    function setPath($path = self::SESSION_DEFAULT_PATH)
+    /**
+     * Return path for cookies
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getPath()
     {
-        $this->options['path'] = $path;
-    }
-    
-    function getPath()
-    {
-        return $this->options['path'];
+        return XLite::getInstance()->getOptions(array('host_details', 'web_dir'));
     }
 
     function setTtl($ttl = self::SESSION_DEFAULT_TTL)

@@ -260,13 +260,15 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
     }
 
     /**
-    * Returns the SQL Database table name for specified alias.
-    *
-    * @param string $alias  The sql table alias.
-    * @return mixed         The table name
-    * @static
-    */
-    function getTableByAlias($alias = '') 
+     * Returns the SQL Database table name for specified alias
+     * 
+     * @param string $alias sql table alias
+     *  
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTableByAlias($alias) 
     {
         return self::DBTABLE_PREFIX . $alias;
     } 

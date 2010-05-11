@@ -60,7 +60,7 @@ class XLite_Module_ProductAdviser_Model_ProductRecentlyViewed extends XLite_Mode
 			return;
 		}
 		$t1 = $this->db->getTableByAlias($this->alias);
-		$t2 = $this->session->sql_table;
+		$t2 = $this->db->getTableByAlias("sessions");
 		$sql = "SELECT $t1.sid FROM $t1 LEFT JOIN $t2 ON $t1.sid=$t2.id WHERE $t2.id IS NULL";
         $expired = $this->db->getAll($sql);
         if (is_array($expired) && count($expired) > 0) {

@@ -36,6 +36,20 @@
 abstract class XLite_Module_DrupalConnector_Model_Session extends XLite_Model_Session implements XLite_Base_IDecorator
 {
     /**
+     * Return path for cookies
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getPath()
+    {
+        return XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()
+            ? base_path() 
+            : parent::getPath();
+    }
+
+    /**
      * Constructor
      * 
      * @return void
