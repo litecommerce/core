@@ -66,7 +66,7 @@ class XLite_Model_Config extends XLite_Model_Abstract implements XLite_Base_ISin
     {
         return $this->findAll("category='$category'", "orderby");
     }
-    // }}}
+    
 
     // IS methods {{{
     function isText()
@@ -119,7 +119,7 @@ class XLite_Model_Config extends XLite_Model_Abstract implements XLite_Base_ISin
         return $this->get("type") == "separator";
     }
     
-    // }}}
+    
 
     /**
     * Read config variables
@@ -167,9 +167,9 @@ class XLite_Model_Config extends XLite_Model_Abstract implements XLite_Base_ISin
 		}
 
         return ($this->parsedData = $config); 
-    } // }}}
+    } 
 
-    function createOption($category, $name, $value, $type = null, $comment = null, $orderby = null) // {{{
+    function createOption($category, $name, $value, $type = null, $comment = null, $orderby = null) 
     {
         $config = new $this->configClass;
         if ($config->find("name='$name' AND category='$category'")) {
@@ -199,7 +199,7 @@ class XLite_Model_Config extends XLite_Model_Abstract implements XLite_Base_ISin
             }
             $config->create();
         }
-    } // }}}
+    } 
 
 
 	public function update()

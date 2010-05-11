@@ -35,10 +35,10 @@
  */
 class XLite_Module_WishList_Controller_Customer_Product extends XLite_Controller_Customer_Product implements XLite_Base_IDecorator
 {
-	function getSenderName() // {{{
+	function getSenderName() 
 	{
 		return isset($this->sender_name) ? $this->sender_name : $this->auth->getComplex('profile.billing_firstname')." ".$this->auth->getComplex('profile.billing_lastname');
-	} // }}} 
+	}  
 
   	function getSenderEmail() 
     {
@@ -46,7 +46,7 @@ class XLite_Module_WishList_Controller_Customer_Product extends XLite_Controller
     }
 
 
-	function action_send_friend() // {{{
+	function action_send_friend() 
     {
         $Mailer = new XLite_Model_Mailer();
 	    $Mailer->sender_name  = $this->sender_name;
@@ -60,5 +60,5 @@ class XLite_Module_WishList_Controller_Customer_Product extends XLite_Controller
 
         $this->params[] = "mode";
 		$this->set("mode","MessageSent");
-	  } // }}}
+	  } 
 }

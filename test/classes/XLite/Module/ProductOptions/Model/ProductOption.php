@@ -68,29 +68,29 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
 		"NULL" => -1,
 	);
 
-    function hasOptions($product_id) // {{{
+    function hasOptions($product_id) 
     {
         $sql = "SELECT COUNT(*) FROM %s WHERE product_id=%d";
         $sql = sprintf($sql, $this->getTable(), $product_id);
         return (bool) $this->db->getOne($sql);
-    } // }}}
+    } 
 
-    function isEmpty() // {{{
+    function isEmpty() 
     {
         $options = $this->get("options");
         return (strlen(trim($options)) == 0) ? true : false;
-    } // }}}
+    } 
 
-    function getProductOptions() // {{{
+    function getProductOptions() 
     {
         require_once LC_MODULES_DIR . 'ProductOptions' . LC_DS . 'encoded.php';
         if (is_null($this->productOptions)) {
             $this->productOptions = func_get_product_options($this);
         }    
         return $this->productOptions;
-    } // }}}
+    } 
 
-    function _import(array $options) // {{{
+    function _import(array $options) 
     {
         static $line;
         if (!isset($line)) $line = 1; else $line++;
@@ -165,9 +165,9 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
 			print "<font color=red>Product not found:</font>".(!empty($properties["sku"]) ? " SKU: ".$properties["sku"] : "") . (!empty($properties["name"]) ? " NAME: ".$properties["name"] : "");
 		}	
 		print "<br>";
-    } // }}}
+    } 
 
-    function _export($layout, $delimiter) // {{{
+    function _export($layout, $delimiter) 
     {
         $data = array();
         
@@ -200,9 +200,9 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
             }
         }
         return $data;
-    } // }}} 
+    }  
 
-    function _modifiedPrice($opt, $ignoreProductPrice=false, $newProductPrice = null) // {{{ 
+    function _modifiedPrice($opt, $ignoreProductPrice=false, $newProductPrice = null)  
     {
         $product = new XLite_Model_Product($this->get("product_id"));
         if (!$ignoreProductPrice) {
@@ -238,19 +238,19 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
         }
 
 		return max(0, $price);
-    } // }}}
+    } 
 
-    function modifiedPrice($opt, $ignoreProductPrice=false) // {{{
+    function modifiedPrice($opt, $ignoreProductPrice=false) 
     {
 		return abs($opt->surcharge);
-    } // }}}
+    } 
 
-    function modifiedWeight($opt) // {{{
+    function modifiedWeight($opt) 
     {
       	return $opt->weight_modifier;
-    } // }}} 
+    }  
 
-	function update() // {{{ 
+	function update()  
 	{
 		if ($this->xlite->get("InventoryTrackingEnabled")) {
             $product = new XLite_Model_Product();
@@ -258,9 +258,9 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
         }
 		parent::update();
 
-	} // }}} 
+	}  
 
-	function delete() // {{{ 
+	function delete()  
 	{
     	if ($this->xlite->get("InventoryTrackingEnabled")) {
 			$product = new XLite_Model_Product();
@@ -269,9 +269,9 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
 		parent::delete();
 		
 		
-	} // }}} 
+	}  
 
-	function setCategoriesList($categories) // {{{
+	function setCategoriesList($categories) 
 	{
 		$this->categories = null;
 		$oldCategories = $this->getCategories();
@@ -312,9 +312,9 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
         		}
     		}
 		}
-	} // }}} 
+	}  
 
-	function getCategories() // {{{ 
+	function getCategories()  
 	{
 		if (!isset($this->categories)) {
 			$categories = $this->get("categories");
@@ -324,26 +324,26 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
 			}
 		}
 		return $this->categories;
-	} // }}}
+	} 
 
-	function isCategorySelected($category_id)// {{{
+	function isCategorySelected($category_id)
 	{
 		$this->getCategories();
 		if (count($this->categories) == 0)
 			return false;
 		return in_array($category_id, $this->categories);
-	} // }}}
+	} 
 	
-	function isGlobal() // {{{ 
+	function isGlobal()  
 	{
 		return ($this->get("product_id") == 0 && !$this->get("categories")) ? true : false;
-	} // }}} 
+	}  
 
-	function getGlobalOptions() // {{{
+	function getGlobalOptions() 
 	{
 		$po = new XLite_Module_ProductOptions_Model_ProductOption();
 		return $po->findAll("product_id = 0");
-	} // }}}
+	} 
 
 	function getProductsList($categories=null)
 	{

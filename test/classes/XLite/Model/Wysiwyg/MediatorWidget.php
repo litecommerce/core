@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Wysiwyg_MediatorWidget extends XLite_View_Abstract // {{{
+class XLite_Model_Wysiwyg_MediatorWidget extends XLite_View_Abstract 
 {	
     public $attributes = array();	
     public $attributesEvaled = array();	

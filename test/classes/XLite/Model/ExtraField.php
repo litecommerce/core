@@ -62,10 +62,10 @@ class XLite_Model_ExtraField extends XLite_Model_Abstract
         "order_by" => false
     );
     
-    function getProduct() // {{{
+    function getProduct() 
     {
         return new XLite_Model_Product($this->get("product_id"));
-    } // }}}
+    } 
     
     function delete()
     {
@@ -164,7 +164,7 @@ class XLite_Model_ExtraField extends XLite_Model_Abstract
         return parent::getImportFields("fields_layout");
     }
     
-    function _export($layout, $delimiter) // {{{
+    function _export($layout, $delimiter) 
     {
         $data = array();
         // export field descriptions
@@ -206,9 +206,9 @@ class XLite_Model_ExtraField extends XLite_Model_Abstract
             }
         }
         return $data;
-    } // }}}
+    } 
 
-    function _import(array $options) // {{{
+    function _import(array $options) 
     {
         $properties = $options["properties"];
 		//import global extra fields 
@@ -300,7 +300,7 @@ class XLite_Model_ExtraField extends XLite_Model_Abstract
 				}
 			}	
 		}	
-    } // }}}
+    } 
 	
 	function isGlobal()
 	{
@@ -389,10 +389,10 @@ class XLite_Model_ExtraField extends XLite_Model_Abstract
             $ef = new XLite_Model_ExtraField($info["field_id"]);
             $ef->_collectGarbage();
         }
-    } // }}}
+    } 
 
-    function _collectGarbage() // {{{
+    function _collectGarbage() 
     {
         $this->delete();
-    } // }}}
+    } 
 }

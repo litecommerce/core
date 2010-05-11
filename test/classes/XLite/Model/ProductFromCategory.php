@@ -62,7 +62,7 @@ class XLite_Model_ProductFromCategory extends XLite_Model_Product
         return $sql;
     }
 
-    function _buildRead() // {{{
+    function _buildRead() 
     {       
         $condition = array();
         foreach ($this->primaryKey as $field) {
@@ -74,7 +74,7 @@ class XLite_Model_ProductFromCategory extends XLite_Model_Product
         $sql = parent::_buildSelect($condition);
         $this->fetchKeysOnly = true;
         return $sql;
-    } // }}} 
+    }  
 
     function getProductsNumber($enabled=true, $where="")
     {

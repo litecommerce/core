@@ -81,7 +81,7 @@ class XLite_Module_AntiFraud_Model_Order extends XLite_Model_Order implements XL
 		}
 	}
 	
-	function statusChanged($oldStatus, $newStatus) // {{{
+	function statusChanged($oldStatus, $newStatus) 
 	{
 		$this->xlite->logger->log("->AntiFraud_Order::statusChanged[".$oldStatus."][".$newStatus."]");
 		if ($this->xlite->is("adminZone")) {
@@ -102,7 +102,7 @@ class XLite_Module_AntiFraud_Model_Order extends XLite_Model_Order implements XL
 		}
 
 		parent::statusChanged($oldStatus, $newStatus);
-	} // }}}
+	} 
 
 	function getAddress()
 	{
@@ -194,7 +194,7 @@ class XLite_Module_AntiFraud_Model_Order extends XLite_Model_Order implements XL
 		return $result;
 	}
 	
-	function getProxyIP() // {{{
+	function getProxyIP() 
 	{
 		
 		if (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])) {
@@ -213,12 +213,12 @@ class XLite_Module_AntiFraud_Model_Order extends XLite_Model_Order implements XL
 		    return $_SERVER["HTTP_COMING_FROM"];
 		} else 
 			return '';	
-	} // }}}
+	} 
 	
-	function getCustomerIP() // {{{
+	function getCustomerIP() 
 	{
 		return $_SERVER["REMOTE_ADDR"];	
-	} // }}}
+	} 
 
 	function isAFServiceValue($value)
 	{

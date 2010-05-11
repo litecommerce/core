@@ -90,7 +90,7 @@ class XLite_Module_PayPalPro_Main extends XLite_Module_Abstract
      * @access public
      * @since  3.0
      */
-    public static function getSettingsForm() // {{{
+    public static function getSettingsForm() 
     {
         return XLite_Core_Converter::buildURL(
             'payment_method',   
@@ -107,7 +107,7 @@ class XLite_Module_PayPalPro_Main extends XLite_Module_Abstract
      * @access public
      * @since  3.0
      */
-    public function init() // {{{
+    public function init() 
     {
         parent::init();
 

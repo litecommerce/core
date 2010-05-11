@@ -41,4 +41,4 @@ class XLite_Module_AdvancedSearch_Model_Profile extends XLite_Model_Profile impl
 		parent::__construct($id);
 	}
 
-} // }}}
+} 

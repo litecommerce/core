@@ -35,9 +35,9 @@
  */
 class XLite_Module_ProductOptions_Model_Category extends XLite_Model_Category implements XLite_Base_IDecorator
 {
-    function getStringPath() // {{{
+    function getStringPath() 
 	{
 		$path = parent::getStringPath();
 		return (string) $path; 
-	} // }}}
+	} 
 }

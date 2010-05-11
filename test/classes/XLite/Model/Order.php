@@ -372,7 +372,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
     /**
     * Calculates the Order taxes. 
     */
-    function calcAllTaxes() // {{{
+    function calcAllTaxes() 
     {
         $taxRates = new XLite_Model_TaxRates();
         $taxRates->set("order", $this);
@@ -411,9 +411,9 @@ class XLite_Model_Order extends XLite_Model_Abstract
         $this->set("allTaxes", $result);
 
         return $result;
-    } // }}}
+    } 
 
-    function _addTaxes($acc, $taxes) // {{{
+    function _addTaxes($acc, $taxes) 
     {
         foreach ($taxes as $tax => $value) {
             if (!isset($acc[$tax])) {
@@ -423,12 +423,12 @@ class XLite_Model_Order extends XLite_Model_Abstract
         }
 
         return $acc;
-    } // }}}
+    } 
 
     /**
     * Returns the total tax value (in currency) or null if no taxes applicable.
     */
-    function calcTax() // {{{
+    function calcTax() 
     {
         $this->calcAllTaxes();
         $taxes = $this->get("allTaxes");
@@ -459,12 +459,12 @@ class XLite_Model_Order extends XLite_Model_Abstract
         $this->set("shippingTax", $shippingTax);
 
         return $tax;
-    } // }}}
+    } 
 
     /**
     * Returns the Order SubTotal (as the order items Total sum).
     */
-    function calcSubtotal($shippedOnly=false) // {{{
+    function calcSubtotal($shippedOnly=false) 
     {
         $subtotal = 0;
 
@@ -484,12 +484,12 @@ class XLite_Model_Order extends XLite_Model_Abstract
         }
 
         return $subtotal;
-    } // }}}
+    } 
 
     /**
     * Returns the Order total (as the order SubTotal + Taxes)
     */
-    function calcTotal() // {{{
+    function calcTotal() 
     {
         if ($this->getItemsCount() <= 0) {
             return;
@@ -512,17 +512,17 @@ class XLite_Model_Order extends XLite_Model_Abstract
         }
 
         $this->set("total", $this->formatCurrency($total));
-    } // }}}
+    } 
 
-    function getShippingCost() // {{{
+    function getShippingCost() 
     {
         return $this->get("shipping_cost");
-    } // }}}
+    } 
 
-    function setShippingCost($cost)  // {{{
+    function setShippingCost($cost)  
     {
         $this->set("shipping_cost", $cost);
-    } // }}}
+    } 
 
     /** 
     * Returns True if any of order items are shipped.
@@ -531,7 +531,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
     /**
     * Returns an array of order items to be shipped.
     */
-    function getShippedItems() // {{{
+    function getShippedItems() 
     {
         $result = array();
 
@@ -542,12 +542,12 @@ class XLite_Model_Order extends XLite_Model_Abstract
         }
 
         return $result;
-    } // }}}
+    } 
 
     /**
     * Returns the count of shipped order items.
     */
-    function getShippedItemsCount() // {{{
+    function getShippedItemsCount() 
     {
         $result = 0;
         foreach ($this->get("shippedItems") as $item) {
@@ -555,12 +555,12 @@ class XLite_Model_Order extends XLite_Model_Abstract
         }
 
         return $result;
-    } // }}}
+    } 
 
     /**
     * Returns the Total shipping weight, ounces.
     */
-    function getWeight() // {{{
+    function getWeight() 
     {
         $weight = 0;
         foreach ($this->get("items") as $item) {
@@ -570,13 +570,13 @@ class XLite_Model_Order extends XLite_Model_Abstract
         }
 
         return $weight;
-    } // }}}
+    } 
 
     /**
     * Calculates the Shiping cost for the selected shipping method.
     * If no method selected, calculates it on the Shipping rates basis.
     */
-    function calcShippingCost() // {{{
+    function calcShippingCost() 
     {
         $cost = 0;
         if (!$this->get("shipped")) {
@@ -604,13 +604,13 @@ class XLite_Model_Order extends XLite_Model_Abstract
         $this->set("shipping_cost", $this->formatCurrency($cost));
 
         return $cost;
-    } // }}}
+    } 
 
     /**
     * Returns the Shipping rates available. 
     * Note: rates are cached after the first calculation.
     */
-    function calcShippingRates() // {{{
+    function calcShippingRates() 
     {
         if (is_null($this->_shippingRates)) {
 
@@ -626,12 +626,12 @@ class XLite_Model_Order extends XLite_Model_Abstract
         }
 
         return $this->_shippingRates;
-    } // }}}
+    } 
 
     /**
     * Sorts the Shipping rates array by the Position specified in admin zone
     */
-    function _sortRates(&$rates) { // {{{
+    function _sortRates(&$rates) { 
         $sorted = array();
         $i = count($rates);
         while ($i--) {
@@ -663,23 +663,23 @@ class XLite_Model_Order extends XLite_Model_Abstract
         }
 
         $rates = $sorted;
-    } // }}}
+    } 
    
     /////////////// Order validation functions /////////////////
 
-    function isTaxDefined() // {{{
+    function isTaxDefined() 
     {
         return true;
-    } // }}}
+    } 
     
-    function isShippingDefined() // {{{
+    function isShippingDefined() 
     {
         return $this->get("shipping_id");
-    } // }}}
+    } 
 
     /////////////// Order data access functions ////////////////
 
-    function refresh($name) // {{{
+    function refresh($name) 
     {
         $name = "_" . $name;
 
@@ -688,9 +688,9 @@ class XLite_Model_Order extends XLite_Model_Abstract
         }
 
         $this->$name = null;
-    } // }}}
+    } 
 
-    function set($name, $value) // {{{
+    function set($name, $value) 
     {
         if ($name == 'details') {
             $this->setDetails($value);
@@ -707,9 +707,9 @@ class XLite_Model_Order extends XLite_Model_Abstract
             // re-calculate shipping rates on next call to get("shippingRates")
             $this->refresh("shippingRates"); 
         }
-    } // }}}
+    } 
 
-    function get($name) // {{{
+    function get($name) 
     {
         $result = null;
         switch ($name) {
@@ -726,18 +726,18 @@ class XLite_Model_Order extends XLite_Model_Abstract
         }
 
         return $result;
-    } // }}}
+    } 
 
-    function getShippingMethod() // {{{
+    function getShippingMethod() 
     {
         if (is_null($this->_shippingMethod) && $this->get("shipping_id")) {
             $this->_shippingMethod = new XLite_Model_Shipping($this->get("shipping_id"));
         }
 
         return $this->_shippingMethod;
-    } // }}}
+    } 
 
-    function setShippingMethod($shippingMethod) // {{{
+    function setShippingMethod($shippingMethod) 
     {
         if (!is_null($shippingMethod)) {
             $this->_shippingMethod = $shippingMethod;
@@ -747,7 +747,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
             $this->_shippingMethod = false;
             $this->set("shipping_id", 0);
         }
-    } // }}}
+    } 
 
     /**
      * Get payment method 
@@ -787,7 +787,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
         );
     }
 
-    function getProfile() // {{{
+    function getProfile() 
     {
         if (is_null($this->_profile)) {
             $pid = $this->get("profile_id");
@@ -797,15 +797,15 @@ class XLite_Model_Order extends XLite_Model_Abstract
         }
 
         return $this->_profile;
-    } // }}}
+    } 
 
-    function setProfile($profile) // {{{
+    function setProfile($profile) 
     {
         $this->_profile = $profile;
         $this->set("profile_id", is_null($profile) ? 0 : $profile->get("profile_id"));
-    } // }}}
+    } 
     
-    function getOrigProfile() // {{{
+    function getOrigProfile() 
     {
         if (is_null($this->_origProfile)) {
             if ($pid = $this->get("orig_profile_id")) {
@@ -817,15 +817,15 @@ class XLite_Model_Order extends XLite_Model_Abstract
         }
 
         return $this->_origProfile;
-    } // }}}
+    } 
 
-    function setOrigProfile($profile) // {{{
+    function setOrigProfile($profile) 
     {
         $this->_origProfile = $profile;
         $this->set("orig_profile_id", is_null($profile) ? 0 : $profile->get("profile_id"));
-    } // }}}
+    } 
 
-    function setProfileCopy($prof) // {{{
+    function setProfileCopy($prof) 
     {
         $this->set("origProfile", $prof);
 
@@ -834,37 +834,37 @@ class XLite_Model_Order extends XLite_Model_Abstract
         $p->update();
 
         $this->set("profile", $p);
-    } // }}}
+    } 
 
     /**
     * Returns all tax values as an associative Array.
     */
-    function getAllTaxes() // {{{
+    function getAllTaxes() 
     {
         if (is_null($this->_taxes)) {
             $this->_taxes = $this->get("taxes") == '' ? array() : unserialize($this->get("taxes"));
         }
 
         return $this->_taxes;
-    } // }}}
+    } 
 
-    function setAllTaxes($taxes) // {{{
+    function setAllTaxes($taxes) 
     {
         $this->_taxes = $taxes;
         $this->set("taxes", serialize($taxes));
-    } // }}}
+    } 
 
     /**
     * Returns the named tax label.
     */
-    function getTaxLabel($name) // {{{
+    function getTaxLabel($name) 
     {
         $tax = new XLite_Model_TaxRates();
 
         return $tax->getTaxLabel($name);
-    } // }}}
+    } 
 
-    function getRegistration($name) // {{{
+    function getRegistration($name) 
     {
         $tax = new XLite_Model_TaxRates();
 
@@ -884,7 +884,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
     /**
     * Selects taxes to be shown in cart totals.
     */
-    function getDisplayTaxes() // {{{
+    function getDisplayTaxes() 
     {
         if (is_null($this->get("profile")) && !$this->config->getComplex('General.def_calc_shippings_taxes')) {
             return null;
@@ -911,9 +911,9 @@ class XLite_Model_Order extends XLite_Model_Abstract
         }
 
         return $taxes;
-    } // }}}
+    } 
 
-    function getItemsFingerprint() // {{{
+    function getItemsFingerprint() 
     {
         if ($this->isEmpty()) {
             return false;
@@ -931,13 +931,13 @@ class XLite_Model_Order extends XLite_Model_Abstract
         }
 
         return serialize($result);
-    } // }}}
+    } 
 
-    function deleteItem($item) // {{{
+    function deleteItem($item) 
     {
         $item->delete();
         $this->refresh("items");
-    } // }}}
+    } 
 
     /**
     * Updates the specified item.
@@ -945,7 +945,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
     * @param OrderItem $item The order item to update
     * @access public
     */
-    function updateItem($item) // {{{
+    function updateItem($item) 
     {
         if (!is_null($this->_items)) {
             $len = count($this->_items);
@@ -955,7 +955,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
                 }
             }
         }
-    } // }}}
+    } 
 
     /**
      * Check - item exist in order or not 
@@ -1004,7 +1004,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
     * Generate a string representation of the order
     * to send to a payment service.
     */
-    function getDescription() // {{{
+    function getDescription() 
     {
         $result = array();
 
@@ -1019,7 +1019,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
         $result[] = '';
 
         return implode("\n", $result);
-    } // }}}
+    } 
 
     /**
      * Get order details 
@@ -1101,7 +1101,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
         $this->setDetails($details);
     }
 
-    function getDetailLabels() // {{{
+    function getDetailLabels() 
     {
         if (is_null($this->_detailLabels)) {
             $d = parent::get("detail_labels");
@@ -1109,21 +1109,21 @@ class XLite_Model_Order extends XLite_Model_Abstract
         }
 
         return $this->_detailLabels;
-    } // }}}
+    } 
 
-    function getDetailLabel($name) // {{{
+    function getDetailLabel($name) 
     {
         $d = $this->getDetailLabels();
 
         return $d[$name];
-    } // }}}
+    } 
 
-    function setDetailLabels($value) // {{{
+    function setDetailLabels($value) 
     {
         parent::set("detail_labels", serialize($value));
 
         $this->_detailLabels = $value;
-    } // }}}
+    } 
 
     /**
      * Set details cell
@@ -1261,7 +1261,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
     * Calls one of the following function: declined, processed, failed, queued
     * when order status is changed. See share/doc/developmentdocs/status.gif
     */
-    function statusChanged($oldStatus, $newStatus) // {{{
+    function statusChanged($oldStatus, $newStatus) 
     {
         if (
             !in_array($oldStatus, array('P', 'C', 'Q'))
@@ -1307,7 +1307,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
             $this->failed();
         }
 
-    } // }}}
+    } 
 
     /**
      * Order 'complete' event
@@ -1479,7 +1479,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
     /**
     * Changes were made to the order
     */
-    function _beforeSave() // {{{
+    function _beforeSave() 
     {
         if ($this->_statusChanged) {
             $this->statusChanged($this->_oldStatus, $this->get("status"));
@@ -1487,9 +1487,9 @@ class XLite_Model_Order extends XLite_Model_Abstract
         }
 
         parent::_beforeSave();
-    } // }}}
+    } 
 
-    function create() // {{{
+    function create() 
     {
         parent::create();
 
@@ -1501,7 +1501,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
             $table = $this->db->getTableByAlias($this->get("alias"));
             $this->db->query("UPDATE $table SET order_id = $orderStartID WHERE order_id = $order_id");
         }
-    } // }}}
+    } 
 
     function remove()
     {
@@ -1530,7 +1530,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
     /**
     * Removes expired 'T' orders (carts)
     */
-    function collectGarbage($limit = null) // {{{
+    function collectGarbage($limit = null) 
     {
         $order = new XLite_Model_Order();
         $order->_range = "status = 'T'";
@@ -1538,7 +1538,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
         foreach($orders as $o) {
             $o->delete();
         }
-    } // }}}
+    } 
 
     function isShowCCInfo()
     {

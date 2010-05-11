@@ -89,11 +89,11 @@ class XLite_Module_AustraliaPost_Main extends XLite_Module_Abstract
      * @access public
      * @since  3.0
      */
-    public static function getSettingsForm() // {{{
+    public static function getSettingsForm() 
     {
         return "admin.php?target=aupost";
 
-    } // }}}
+    } 
 
     /**
      * Perform some actions at startup
@@ -102,7 +102,7 @@ class XLite_Module_AustraliaPost_Main extends XLite_Module_Abstract
      * @access public
      * @since  3.0
      */
-    public function init() // {{{
+    public function init() 
     {
         parent::init();
 

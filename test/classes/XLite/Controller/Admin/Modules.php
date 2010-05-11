@@ -27,7 +27,7 @@
  */
 
 /**
- * ____description____
+ * Modules
  * 
  * @package XLite
  * @see     ____class_see____
@@ -35,30 +35,38 @@
  */
 class XLite_Controller_Admin_Modules extends XLite_Controller_Admin_Abstract
 {
-	protected $modules = null;
+    protected $modules = null;
 
-	protected $currentModuleType = null;
+    protected $currentModuleType = null;
 
     function getModules($type = null)
     {
-		if (is_null($this->modules) || $type !== $this->currentModuleType) {
-			$this->currentModuleType = $type;
-			$this->modules = XLite_Model_ModulesManager::getInstance()->getModules($type);
-		}
+        if (is_null($this->modules) || $type !== $this->currentModuleType) {
+            $this->currentModuleType = $type;
+            $this->modules = XLite_Model_ModulesManager::getInstance()->getModules($type);
+        }
 
-		return $this->modules;
+        return $this->modules;
     }
 
-    function action_update()
+    /**
+     * Update modules list
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionUpdate()
     {
-		$activeModules = isset(XLite_Core_Request::getInstance()->active_modules) ? XLite_Core_Request::getInstance()->active_modules : array();
-		$moduleType = isset(XLite_Core_Request::getInstance()->module_type) ? XLite_Core_Request::getInstance()->module_type : null;
+        $activeModules = isset(XLite_Core_Request::getInstance()->active_modules) ? XLite_Core_Request::getInstance()->active_modules : array();
+        $moduleType = isset(XLite_Core_Request::getInstance()->module_type) ? XLite_Core_Request::getInstance()->module_type : null;
 
-		$this->set('returnUrl', $this->buildUrl('modules'));
+        $this->set('returnUrl', $this->buildUrl('modules'));
 
-		if (!XLite_Model_ModulesManager::getInstance()->updateModules($activeModules, $moduleType)) {
-			$this->valid = false;
+        if (!XLite_Model_ModulesManager::getInstance()->updateModules($activeModules, $moduleType)) {
+            $this->valid = false;
             $this->hidePageHeader();
-		}
+        }
     }
 }

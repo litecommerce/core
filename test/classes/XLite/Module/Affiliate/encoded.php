@@ -37,7 +37,7 @@
 
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
-function func_Affiliate_charge(&$payment, $order) // {{{
+function func_Affiliate_charge(&$payment, $order) 
 {
     $commissions = 0;
     // process current partner
@@ -80,9 +80,9 @@ function func_Affiliate_charge(&$payment, $order) // {{{
         }
     }
     return $commissions;
-} // }}}
+} 
 
-function func_Affiliate_calc_order_commissions(&$planCommission) // {{{
+function func_Affiliate_calc_order_commissions(&$planCommission) 
 {
     $orderCommissions = 0;
     foreach ($planCommission->getComplex('order.items') as $item) {
@@ -107,9 +107,9 @@ function func_Affiliate_calc_order_commissions(&$planCommission) // {{{
         }
     }
     return round((double)$orderCommissions + 0.00000000001, 2);
-} // }}}
+} 
 
-function func_Affiliate_calc_commission_rate($pc, $item) // {{{
+function func_Affiliate_calc_commission_rate($pc, $item) 
 {
     $result = 0;
     if ($pc->get("commission_type") == "$") {
@@ -126,7 +126,7 @@ function func_Affiliate_calc_commission_rate($pc, $item) // {{{
         $item->update();
     }
     return $result;
-} // }}}
+} 
 
 // WARNING :
 // Please ensure that you have no whitespaces / empty lines below this message.

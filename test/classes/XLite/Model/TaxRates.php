@@ -88,7 +88,7 @@ class XLite_Model_TaxRates extends XLite_Base
         );
     }
     
-    function _createUSStateRates() // {{{
+    function _createUSStateRates() 
     {
         // create pre-defined tax rules
         $this->_predefinedSchemas["US state sales tax rates"] = array(
@@ -294,9 +294,9 @@ array("condition" => "state=District of Columbia", "action" => array(
     array("condition"=>"product class=shipping service", "action"=>"Tax:=0"),
     array("condition"=>"product class=Tax free", "action"=>"Tax:=0")
     ));
-    } // }}}
+    } 
 
-    function _createVatTax() // {{{
+    function _createVatTax() 
     {
          $this->_predefinedSchemas["VAT system"] = array
          (
@@ -397,9 +397,9 @@ array("condition" => "state=District of Columbia", "action" => array(
                 ),
             )
         );
-    } // }}}
+    } 
 
-    function _createCanadianTax() // {{{
+    function _createCanadianTax() 
     {
         $this->_predefinedSchemas["Canadian GST/PST system"] = array(
 "taxes" => array(
@@ -425,7 +425,7 @@ array("condition" => "country=Canada", "open" => true, "action" => array(
 array("condition" => "country=New Zealand", "action" => array("Tax:==GST", "GST:=12.5")),
 array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=10")))
     );
-    } // }}}
+    } 
 
     function setPredefinedSchema($name)
     {

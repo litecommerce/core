@@ -102,20 +102,20 @@ class XLite_Module_ChronoPay_Main extends XLite_Module_Abstract
      * @access public
      * @since  3.0
      */
-    public function init() // {{{
+    public function init() 
 	{
 		parent::init();
 
         
         $this->registerPaymentMethod('chronopay');
-	} // }}}
+	} 
 
-	function uninstall() // {{{
+	function uninstall() 
 	{
 		func_cleanup_cache('skins');
 		func_cleanup_cache('classes');
 
 		parent::uninstall();
-	} // }}}
+	} 
 	
 }

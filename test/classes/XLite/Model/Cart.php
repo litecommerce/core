@@ -129,7 +129,7 @@ class XLite_Model_Cart extends XLite_Model_Order implements XLite_Base_ISingleto
     * The default implementation
     * copies the current user profile into the order and sets checkout date. 
     */
-    function checkout() // {{{
+    function checkout() 
     {
         if ($this->get("status") == "T") {
             $this->set("date", time());
@@ -145,6 +145,6 @@ class XLite_Model_Cart extends XLite_Model_Order implements XLite_Base_ISingleto
 
             $this->update();
         }
-    } // }}}
+    } 
 }
 

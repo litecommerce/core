@@ -37,7 +37,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
 {	
     public $crlf = "\r\n";
 
-    function getProfiles() // {{{
+    function getProfiles() 
     {
         if (is_null($this->profiles)) {
             $this->profiles = array();
@@ -62,18 +62,18 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
 			}
         }
         return $this->profiles;
-    } // }}}
+    } 
     
-    function action_profiles() // {{{
+    function action_profiles() 
     {
         if ($this->get("send_newsletter")) {
             $this->send_newsletter();
         } elseif ($this->get("export_profiles")) {
             $this->export_profiles();
         }
-    } // }}}
+    } 
     
-    function send_newsletter() // {{{
+    function send_newsletter() 
     {
         $recipients = array();
         foreach ($this->get("targetProfiles") as $profile) {
@@ -89,9 +89,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
         $this->set("silent", true); // do not redirect
         $url = $this->get("url");
         echo "<a href=\"$url\">New search..</a>";
-    } // }}}
+    } 
 
-    function export_profiles() // {{{
+    function export_profiles() 
     {
         $w = new XLite_View_Abstract();
         $w->component = $this;
@@ -100,9 +100,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
         $w->init();
         $w->display();
         $this->set("silent", true);
-    } // }}}
+    } 
 
-    function getTargetProfiles() // {{{
+    function getTargetProfiles() 
     {
         if (is_null($this->targetProfiles)) {
             $this->targetProfiles = array();
@@ -112,9 +112,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
             }
         }
         return $this->targetProfiles;
-    } // }}}
+    } 
     
-    function getOrders() // {{{
+    function getOrders() 
     {
         if (is_null($this->orders)) {
             $this->orders = array();
@@ -124,24 +124,24 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
             }
         }
         return $this->orders;
-    } // }}}
+    } 
     
-    function getDelimiter() // {{{
+    function getDelimiter() 
     {
         global $DATA_DELIMITERS;
         return $DATA_DELIMITERS[$this->delimiter];
-    } // }}}
+    } 
 
-    function isDefaultField($field) // {{{
+    function isDefaultField($field) 
     {
         $defaultFields = array(
                 "name",
                 "email",
                 );
         return in_array($field, $defaultFields);
-    } // }}}
+    } 
     
-    function getExportFields() // {{{
+    function getExportFields() 
     {
         return array(
                 "profile_id" => "Profile #",
@@ -150,14 +150,14 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
                 "billing_info" => "Billing address details",
                 "shipping_info" => "Shipping address details",
                 );
-    } // }}}
+    } 
 
-    function getQueryString() // {{{
+    function getQueryString() 
     {
         return $_SERVER["QUERY_STRING"];
-    } // }}}
+    } 
 
-    function getFocusedSales() // {{{
+    function getFocusedSales() 
     {
 		if (is_null($this->focusedSales)) {
 			$this->focusedSales = array();
@@ -187,16 +187,16 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
 
 		}
         return $this->focusedSales;
-    } // }}}
+    } 
 
-    function collectFocusedSales($order) // {{{
+    function collectFocusedSales($order) 
     {
         if ($order["passed"]) {
             $this->focusedSales[] = new XLite_Model_Order($order["order_id"]);
         }
-    } // }}}
+    } 
 
-    function filterOrders($order) // {{{
+    function filterOrders($order) 
     {
         // apply products filter
         foreach ($order["products"] as $pidx => $product) {
@@ -222,9 +222,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
             $order["passed"] = false;
             return;
         }
-    } // }}}
+    } 
 
-    function cmp($mod, $val1, $val2) // {{{
+    function cmp($mod, $val1, $val2) 
     {
         if ( ($mod == "less"  && $val1 >= $val2) ||
              ($mod == "more"  && $val1 <= $val2) ||
@@ -233,9 +233,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
             return false;
         }
         return true;
-    } // }}}
+    } 
     
-    function filterProduct($product) // {{{
+    function filterProduct($product) 
     {
         // 3 filters available
         for ($i = 1; $i <= 3; $i++) {
@@ -248,9 +248,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
         }
         // no filter found, assume as passed
         return true;
-    } // }}}
+    } 
 
-    function sumOrders($item) // {{{
+    function sumOrders($item) 
     {
         $orderID = $item["order_id"];
 		$created = false;
@@ -301,9 +301,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
             $this->totals[$profileID]["total"] += $this->orders[$orderID]["total"];
             if ($created) $this->totals[$profileID]["number"]++;
         }
-    } // }}}
+    } 
 
-    function getInMembership($table) // {{{
+    function getInMembership($table) 
     {
         $ms = $this->get("membership");
         if (!is_null($ms)) {
@@ -314,9 +314,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
             }    
         }
         return "";
-    } // }}}
+    } 
 
-    function getInCities($table) // {{{
+    function getInCities($table) 
     {
         $city = $this->get("city");
         if (empty($city)) {
@@ -332,9 +332,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
             $cities .= " AND $table.shipping_city='$city' ";
         }
         return $cities; 
-    } // }}}
+    } 
     
-    function getInCountries($table) // {{{
+    function getInCountries($table) 
     {
         $countries = "";
         $cc = $this->get("country");
@@ -349,9 +349,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
             }
         }
         return $countries;
-    } // }}}
+    } 
     
-    function getInStates($table) // {{{
+    function getInStates($table) 
     {
         $states = "";
         $sc = $this->get("state");
@@ -365,7 +365,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
             }
         }
         return $states;
-    } // }}}
+    } 
     
     // SELECT extra fields {{{
     function getSelect($ot, $it, $pt)
@@ -396,9 +396,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
             $where .= " AND $ot.gcid='".$gcid."' ";
         }
         return $where;
-    } // }}}
+    } 
 
-    function getProductIDs() // {{{
+    function getProductIDs() 
     {
         $ids = array();
         $res = array();
@@ -411,9 +411,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
             }
         }
         return $ids;
-    } // }}}
+    } 
 
-	function hasProduct($user_id, $product_id) // {{{
+	function hasProduct($user_id, $product_id) 
 	{
 		$product = new XLite_Model_Product();
 		$fromDate = $this->getComplex('period.fromDate');
@@ -436,9 +436,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
 		
 		$product_ids = array_unique($products);
 		return in_array($product_id, $product_ids);
-	} // }}}
+	} 
 
-	function hasCategory($user_id, $category_id) // {{{
+	function hasCategory($user_id, $category_id) 
 	{
 		$product = new XLite_Model_Product();
 		$fromDate = $this->getComplex('period.fromDate');
@@ -463,9 +463,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
 		$categories = array_unique($category_ids);
 		
 		return (in_array($category_id, $categories));
-	} // }}}
+	} 
 
-	function hasProducts($u_id, $product_ids) // {{{
+	function hasProducts($u_id, $product_ids) 
 	{
 		foreach($product_ids as $pid) {
 			if (!$this->hasProduct($u_id, $pid)) {
@@ -473,9 +473,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
 			}
 		}
 		return true;
-	} // }}}
+	} 
 
-	function hasCategories($u_id, $category_ids) // {{{
+	function hasCategories($u_id, $category_ids) 
 	{
 		if (!is_array($category_ids)) {
 			return true;
@@ -486,9 +486,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
 			}
 		}
 		return true;
-	} // }}}
+	} 
 
-	function getFullOwners($uids) // {{{
+	function getFullOwners($uids) 
 	{
 		$result = array();
 		foreach ($uids as $uid) {
@@ -498,6 +498,6 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
 			}
 		}
 		return $result;
-	} // }}}
+	} 
 
 }

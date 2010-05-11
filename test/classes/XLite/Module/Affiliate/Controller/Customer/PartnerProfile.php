@@ -68,7 +68,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerProfile extends XLite_Mo
     }
 
 
-    function getTemplate() // {{{
+    function getTemplate() 
     {
         if ($this->get("mode") == "sent") {
             return "modules/Affiliate/login.tpl";
@@ -82,16 +82,16 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerProfile extends XLite_Mo
             }
         }
         return parent::getTemplate();
-    } // }}}
+    } 
     
-    function getAccessLevel() // {{{
+    function getAccessLevel() 
     {
         if ($this->get("mode") == "register" || $this->get("mode") == "sent" || ($this->get("mode") == "delete" && $this->get("submode") == "confirmed")) {
             return 0;
         } else {
             return parent::getAccessLevel();
         }
-    } // }}}
+    } 
 
     function action_register()
     {

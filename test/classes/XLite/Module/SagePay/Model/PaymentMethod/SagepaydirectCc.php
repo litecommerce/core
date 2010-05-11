@@ -50,11 +50,11 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepaydirectCc extends XLite_Mod
 		return htmlspecialchars($url);
 	}
 
-	function getReturnUrl() // {{{ 
+	function getReturnUrl()  
 	{
 		$url = $this->xlite->getShopUrl("cart.php?target=sagepaydirect_checkout&action=return", $this->getComplex('config.Security.customer_security'));
 		return $this->prepareUrl($url);
-	}   // }}}
+	}   
 
 	function getServiceUrl($type="purchase", $is_simulator=false)
 	{
@@ -99,32 +99,32 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepaydirectCc extends XLite_Mod
                     $params['sub' . $param] : (isset($params[$param]) ? $params[$param] : $default);
     }
 
-	function getOrderAuthStatus() // {{{
+	function getOrderAuthStatus() 
 	{
 		return $this->getOrderStatus('auth');
-	} // }}}
+	} 
 
-	function getOrderRejectStatus() // {{{
+	function getOrderRejectStatus() 
 	{
 		return $this->getOrderStatus('reject', 'F');
-	} // }}}
+	} 
 
-	function getOrderSuccessNo3dStatus() // {{{
+	function getOrderSuccessNo3dStatus() 
 	{
 		return $this->getOrderStatus('success_no3d', 'P');
-	} // }}}
+	} 
 
-	function getOrderSuccess3dOkStatus() // {{{
+	function getOrderSuccess3dOkStatus() 
 	{
 		return $this->getOrderStatus('success_3dok', 'P');
-	} // }}}
+	} 
 
-	function getOrderSuccess3dFailStatus() // {{{
+	function getOrderSuccess3dFailStatus() 
 	{
 		return $this->getOrderStatus('success_3dfail');
-	} // }}}
+	} 
 
-	function handleConfigRequest() // {{{
+	function handleConfigRequest() 
 	{
 		$params = $_POST["params"];
 
@@ -147,7 +147,7 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepaydirectCc extends XLite_Mod
 		$pm = XLite_Model_PaymentMethod::factory('sagepaydirect_cc');
 		$pm->set("params", $params);
 		$pm->update();
-	} // }}}
+	} 
 
     function getCCDetails()
     {

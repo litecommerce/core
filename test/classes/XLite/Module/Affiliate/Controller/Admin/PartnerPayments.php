@@ -49,7 +49,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Cont
         parent::handleRequest();
     }    
     
-    function action_export_payments() // {{{
+    function action_export_payments() 
     {
         $w = new XLite_View_Abstract();
         $w->component = $this;
@@ -60,15 +60,15 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Cont
 
         // do not output anything
         $this->set("silent", true);
-    } // }}}
+    } 
 
-    function getDelimiter() // {{{
+    function getDelimiter() 
     {
         global $DATA_DELIMITERS;
         return $DATA_DELIMITERS[$this->delimiter];
-    } // }}}
+    } 
 
-    function action_payment_upload() // {{{
+    function action_payment_upload() 
     {
         $this->startDump();
         $options = array(
@@ -87,17 +87,17 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Cont
 
 		echo $text;
 		func_refresh_end();
-    } // }}}
+    } 
 
-    function action_mark_paid() // {{{
+    function action_mark_paid() 
     {
         foreach ((array)$this->get("payment_paid") as $id) {
             $p = new XLite_Module_Affiliate_Model_PartnerPayment();
             $p->pay($id);
         }
-    } // }}}
+    } 
 
-    function getPayments() // {{{
+    function getPayments() 
     {
         if (is_null($this->payments)) {
             $this->payments = array();
@@ -117,9 +117,9 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Cont
             $this->found = count($this->payments);
         }
         return $this->payments;
-    } // }}}
+    } 
     
-    function summarize($payment) // {{{
+    function summarize($payment) 
     {
         $id = $payment->get("partner_id");
         if (!isset($this->payments[$id])) {
@@ -142,5 +142,5 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Cont
                 $this->hasReady = true;
             }
         }
-    } // }}}
+    } 
 }

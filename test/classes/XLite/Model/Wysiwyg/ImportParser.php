@@ -39,7 +39,7 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
     public $template = null;	
     public $templateName = null;
 
-    function postprocess() // {{{
+    function postprocess() 
     {
         // page ::= .* edit_area_start edit_area edit_area_end .*
         // edit_area ::= .* (widget_start .* param_edit_area_start param_value  param_edit_area_end .* widget_end .*)*
@@ -101,7 +101,7 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
         $editAreaEndOffset = $this->tokens[$editAreaEndPos]['start'];
         $this->source = substr($this->source, 0, $editAreaEndOffset);
         $this->template = $this->translateTemplate(substr($this->substitute(), $editAreaStartOffset));
-    } // }}}
+    } 
 
     function translateTemplate($src)
     {
@@ -109,7 +109,7 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
         return str_replace(array('<!--*', '*-->', 'style.css'), array('{*', '*}', 'skins/' . $lay->get("skin") . '/' . $lay->get("locale") . '/style.css'), $src);
     }
 
-    function compileWidgetCall($params) // {{{
+    function compileWidgetCall($params) 
     {
         $call = "<widget";
         if (isset($params["open-close-tag"])) {
@@ -126,18 +126,18 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
             }
         }
         return $call . $close;
-    } // }}}
+    } 
 
-    function reverseModifier($str, $modifier) // {{{
+    function reverseModifier($str, $modifier) 
     {
         switch ($modifier) {
         case '': $str = func_htmldecode($str); break;
         case ':u': $str = urldecode($str); break;
         }
         return $str;
-    } // }}}
+    } 
 
-    function equalTokenArrays(&$i, $tokens, &$endOffset) // {{{
+    function equalTokenArrays(&$i, $tokens, &$endOffset) 
     {
         $old = $i;
         $endOffset = 0;
@@ -153,9 +153,9 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
             $i++;
         }
         return true;
-    } // }}}
+    } 
     
-    function equalTokens($token1, $token2) // {{{
+    function equalTokens($token1, $token2) 
     {
         foreach ($token2 as $name=>$value) {
             if ($name == 'value') {
@@ -170,9 +170,9 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
             }
         }
         return true;
-    } // }}}
+    } 
    
-    function isEditAreaStart(&$i, &$template, &$endOffset) // {{{
+    function isEditAreaStart(&$i, &$template, &$endOffset) 
     {
         $old = $i;
         if ($this->equalTokenArrays($i, array(
@@ -208,9 +208,9 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
             return true;
         }
         return false;
-    } // }}}
+    } 
 
-    function isEditAreaEnd(&$i, &$endOffset) // {{{
+    function isEditAreaEnd(&$i, &$endOffset) 
     {
         return $this->equalTokenArrays($i, array(
                 array('type'=>'close-tag','name'=>'td'),
@@ -249,9 +249,9 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
                 array('type'=>'attribute'), array('type'=>'attribute-value', 'value'=>$this->imagesDir . '/' . EDIT_END_SHORT_IMG),
             ), $endOffset);
 
-    } // }}}
+    } 
 
-    function isParamEditAreaStart(&$i, &$name, &$modifier, &$endOffset) // {{{
+    function isParamEditAreaStart(&$i, &$name, &$modifier, &$endOffset) 
     {
         $old = $i;
         $match = false; 
@@ -267,14 +267,14 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
              $match = true;
          }
          return $match;
-    } // }}}
+    } 
     
-    function isParamEditAreaEnd(&$i, &$endOffset)  // {{{
+    function isParamEditAreaEnd(&$i, &$endOffset)  
     {
         return $this->isEditAreaEnd($i, $endOffset);
-    } // }}}
+    } 
     
-    function isWidgetStart(&$i, &$params, &$endOffset) // {{{
+    function isWidgetStart(&$i, &$params, &$endOffset) 
     {
         $old = $i;
         $match = false; 
@@ -327,9 +327,9 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
             }
         }
         return $match;
-    } // }}}
+    } 
 
-    function isWidgetEnd(&$i, &$endOffset) // {{{
+    function isWidgetEnd(&$i, &$endOffset) 
     {
         return $this->equalTokenArrays($i, array(
             array('type'=>'close-tag', 'name'=>'td'),
@@ -353,9 +353,9 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
             array('type'=>'close-tag','name'=>'td'),
             array('type'=>'close-tag','name'=>'tr'),
              ), $endOffset);
-    } // }}}
+    } 
 
-    function isWidgetCall(&$i, &$params, &$endOffset) // {{{
+    function isWidgetCall(&$i, &$params, &$endOffset) 
     {
         $old = $i;
         $match = false; 
@@ -423,9 +423,9 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
             }
         }
         return $match;
-    } // }}}
+    } 
 
-    function parseTag(&$i, &$endOffset) // {{{
+    function parseTag(&$i, &$endOffset) 
     {
         if ($i >= count($this->tokens)) {
             return false;
@@ -455,11 +455,11 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
             return $tag;
         }
         return false;
-    } // }}}
+    } 
 
-    function error($msg) // {{{
+    function error($msg) 
     {
         $this->error = $msg;
         return false;
-    } // }}}
+    } 
 }

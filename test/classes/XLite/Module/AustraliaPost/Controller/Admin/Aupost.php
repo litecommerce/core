@@ -42,15 +42,15 @@ class XLite_Module_AustraliaPost_Controller_Admin_Aupost extends XLite_Controlle
 	public $settings;		
 	public $rates 		= array();
 
-	public function __construct(array $params) // {{{ 
+	public function __construct(array $params)  
 	{
 		parent::__construct($params);
 
 		$aupost = new XLite_Module_AustraliaPost_Model_Shipping_Aupost();
 		$this->settings = $aupost->get("options");
-	} // }}}
+	} 
 	
-	function action_update() // {{{ 
+	function action_update()  
 	{
 		$aupost = new XLite_Module_AustraliaPost_Model_Shipping_Aupost();
 		$currency_rate = $_POST["currency_rate"];
@@ -60,9 +60,9 @@ class XLite_Module_AustraliaPost_Controller_Admin_Aupost extends XLite_Controlle
 		$aupost->set("options", (object)$_POST);
 		$this->set("updated", true);
 
-	} // }}}
+	} 
 	
-	function action_test() // {{{ 
+	function action_test()  
 	{
 		if (empty($this->weight)) 
 			$this->weight = 1; 
@@ -87,6 +87,6 @@ class XLite_Module_AustraliaPost_Controller_Admin_Aupost extends XLite_Controlle
 		);
 		$this->testResult = true;	
 		$this->valid	  = false;
-	} // }}}
+	} 
 
-} // }}}
+} 

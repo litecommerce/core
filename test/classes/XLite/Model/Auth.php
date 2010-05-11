@@ -358,14 +358,14 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
 
 
 
-    function _reReadProfiles($newValue = null)  // {{{
+    function _reReadProfiles($newValue = null)  
     {
         global $_reReadProfiles;
         if (is_null($newValue)) {
             return $_reReadProfiles;
         }
         $_reReadProfiles = $newValue;
-    } // }}}
+    } 
 
     function isEmptySippingInfoField(&$properties, $name)
     {
@@ -382,7 +382,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     *
     * @param Profile $profile The Profile instance
     */
-    function copyBillingInfo($profile) // {{{
+    function copyBillingInfo($profile) 
     {
         $properties = $profile->get("properties");
         if (empty($properties["shipping_firstname"])) {
@@ -397,7 +397,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
                 }
             }
         }    
-    } // }}}
+    } 
 
     /**
     * Registers new profile to cart.
@@ -406,7 +406,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     * @access public
     * @return mixed Result constant
     */
-    function register($profile) // {{{
+    function register($profile) 
     {
         // check whether the user is registered
         if ($profile->isExists($profile->get("login"))) {
@@ -461,7 +461,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         }
 
         return REGISTER_SUCCESS;
-    } // }}}
+    } 
 
     /**
     * Modifies the specified profile data.
@@ -470,7 +470,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     * @param Profile $profile The profile instance
     * @return mixed Result constant
     */
-    function modify($profile) // {{{
+    function modify($profile) 
     {
         // check whether another user exists with the same login
         $another = new XLite_Model_Profile();
@@ -530,7 +530,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         $mailer->send();
         
         return REGISTER_SUCCESS;
-    } // }}}
+    } 
 
     function clearAnonymousPassword($profile)
     {
@@ -543,10 +543,10 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     /**
     * Handles membership signup.
     */
-    function membershipSignup($profile) // {{{
+    function membershipSignup($profile) 
     {
         // membership signup requested 
-    } // }}}
+    } 
 
     /**
     * Checks whtether the only one available and enabled admin exists in cart.
@@ -554,7 +554,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     * @access public
     * @return boolean
     */
-    function isLastAdmin($profile) // {{{
+    function isLastAdmin($profile) 
     {
         // check whether this admin profile is not the latest available
         $where = "access_level >= %d AND status = 'E'";
@@ -564,7 +564,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
             return true;
         }
         return false;
-    } // }}}
+    } 
 
     /**
     * Deletes and unregisters the profile in cart.
@@ -572,7 +572,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     * @access public
     * @param Profile $profile The profile instance to unregister
     */
-    function unregister($profile) // {{{
+    function unregister($profile) 
     {
         // read profile data
         $profile->read();
@@ -601,27 +601,27 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         $mailer->send();        
         // delete profile data
         $profile->delete();
-    } // }}}
+    } 
 
     /**
     * Remember login $login in cookie
     */
-    function rememberLogin($login) // {{{
+    function rememberLogin($login) 
     {
         $options = XLite::getInstance()->getOptions('host_details');
 
         foreach (array($options['http_host'], $options['https_host']) as $host) {
             @setcookie('last_login', $login, time() + 3600 * 24 * $this->config->General->login_lifetime, '/', func_parse_host($host));
         }
-    } // }}}
+    } 
 
     /**
     * Remind last login for this host
     */
-    function remindLogin() // {{{
+    function remindLogin() 
     {
         return isset($_COOKIE["last_login"]) ? $_COOKIE["last_login"] : "";
-    } // }}}
+    } 
 
     /**
     * Logs in admin to cart.
@@ -630,7 +630,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     * @param string $login The admin"s login
     * @param string $password The admin"s password
     */
-    function adminLogin($login, $password) // {{{
+    function adminLogin($login, $password) 
     {
         $profile = $this->login($login, $password);
 
@@ -647,7 +647,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         }
 
         return $profile; 
-    } // }}}
+    } 
 
     function initHtaccessFiles()
     {
@@ -662,7 +662,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     *
     * @param Profile $profile The profile instance
     */
-    function sendFailedAdminLogin($profile) // {{{
+    function sendFailedAdminLogin($profile) 
     {
         // send mail notification about failed login to administrator
         $mailer = new XLite_Model_Mailer();
@@ -676,7 +676,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
                             "login_error"
                             );
         $mailer->send();
-    } // }}}
+    } 
 
     /**
      * Checks whether user has enough permissions to access specified resource.
@@ -793,7 +793,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         return self::IP_VALID;
     } //}}}
 
-    function requestRecoverPassword($email) // {{{
+    function requestRecoverPassword($email) 
     {
         $profile = new XLite_Model_Profile();
         if (!$profile->find("login='$email'")) {
@@ -808,9 +808,9 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
                          );
         $mailer->send();
         return true;
-    } // }}}
+    } 
     
-    function recoverPassword($email, $requestID) // {{{
+    function recoverPassword($email, $requestID) 
     {
         $profile = new XLite_Model_Profile();
         if (!$profile->find("login='$email'") || $profile->get("password") != $requestID) {
@@ -832,5 +832,5 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
                 );
         $mailer->send();
         return true;
-    } // }}}
+    } 
 }

@@ -39,4 +39,4 @@ class XLite_Module_AOM_View_Abstract extends XLite_View_Abstract implements XLit
 	{
 		return sprintf("%02f", (-($value)));
 	}
-} // }}}
+} 

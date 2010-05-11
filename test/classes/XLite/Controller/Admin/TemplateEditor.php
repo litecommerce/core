@@ -83,23 +83,23 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
         return $this->getExtraPage()->template ? $this->getExtraPage()->template->getContent() : $this->get('content');
     }
 
-    function getLocale() // {{{
+    function getLocale() 
     {
         if (is_null($this->locale)) {
             $this->locale = XLite::getInstance()->getOptions(array('skin_details', 'locale'));
         }
         return $this->locale;
-    } // }}}
+    } 
 
-    function getZone() // {{{
+    function getZone() 
     {
         if (is_null($this->zone)) {
             $this->zone = XLite::getInstance()->getOptions(array('skin_details', 'skin'));
         }
         return $this->zone;
-    } // }}}
+    } 
     
-    function getTreePages() // {{{
+    function getTreePages() 
     {
         $zone = XLite::getInstance()->getOptions(array('skin_details', 'skin'));
         if (is_null($this->treePages)) {
@@ -110,27 +110,27 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
                     );
         }
         return $this->treePages;
-    } // }}}
+    } 
 
     function getPageTemplate()
     {
         return isset($this->pageTemplates[$this->get("editor")]) ? $this->pageTemplates[$this->get("editor")] : null;
     }
     
-    function getUrl(array $params = array()) // {{{
+    function getUrl(array $params = array()) 
     {
         if ($this->get("editor") != "advanced") {
             $this->set("zone", null);
             $this->set("locale", null);
         }
         return parent::getUrl($params);
-    } // }}}
+    } 
 
     // BASIC templates editor methods {{{
 
     /**
     */
-    function getBasicTemplates() // {{{
+    function getBasicTemplates() 
     {
         $zone   = $this->get("zone");
         $locale = $this->get("locale");
@@ -160,9 +160,9 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
 		}
 
 		return $pages;
-    } // }}}
+    } 
 
-    function getShortcuts() // {{{
+    function getShortcuts() 
     {
         $shortcuts = array();
         $zone   = $this->get("zone");
@@ -185,12 +185,12 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
 			);
         }    
         return $shortcuts;
-    } // }}}
+    } 
 
     /**
     * Updates basic templates from the "Basic templates" tab
     */
-    function action_update_templates() // {{{
+    function action_update_templates() 
     {
         foreach (XLite_Core_Request::getInstance()->template as $path => $content) {
             $t = new XLite_Model_FileNode($path);
@@ -201,9 +201,9 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
 				$this->basicTemplatesRO[$path] = true;
         	}
         }
-    } // }}}
+    } 
 
-    // }}}
+    
 
     // MAIL templates editor methods {{{
 
@@ -249,11 +249,11 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
 			$this->set("valid", false);
 		}
     }
-    // }}}
+    
     
     // USER-DEFINED pages editor methods {{{
 
-    function getExtraPage() // {{{
+    function getExtraPage() 
     {
         if (is_null($this->extraPage)) {
             $this->extraPage = new XLite_Model_ExtraPage();
@@ -262,15 +262,15 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
             }    
         }
         return $this->extraPage;
-    } // }}}
+    } 
     
-    function getExtraPages() // {{{
+    function getExtraPages() 
     {
         if (is_null($this->extraPages)) {
             $this->extraPages = $this->getComplex('extraPage.pages');
         }    
         return $this->extraPages;
-    } // }}}
+    } 
 
     function action_reupdate_pages() 
     {
@@ -296,7 +296,7 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
     	}
     }
 
-    function action_update_page() // {{{
+    function action_update_page() 
         {
         $page = trim(XLite_Core_Request::getInstance()->page);
         $this->extraPage = new XLite_Model_ExtraPage();
@@ -320,21 +320,21 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
 			}
 			$this->extraPages = null;
 		}
-    } // }}}
+    } 
 
-    function action_page_remove() // {{{
+    function action_page_remove() 
     {
         $extraPage = $this->get("extraPage");
         if (!is_null($extraPage) && is_object($extraPage)) {
             $extraPage->remove();
         }
-    } // }}}
+    } 
 
-    // }}}
+    
 
-    // ADVANCED templates editor methods // {{{
+    // ADVANCED templates editor methods 
 
-    function getFile() // {{{
+    function getFile() 
     {
         $path = isset(XLite_Core_Request::getInstance()->file) ? XLite_Core_Request::getInstance()->file : null;
         $file = new XLite_Model_FileNode($path);
@@ -342,9 +342,9 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
             $file->set("content", XLite_Core_Request::getInstance()->content);
         }
         return $file;
-    } // }}}
+    } 
 
-    function action_advanced_update() // {{{
+    function action_advanced_update() 
     {
         $file = $this->get("file");
 		$file->update();
@@ -355,34 +355,34 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
 			$this->set("mode", "edit");
 			$this->set("error", "writePermitted");
 		}
-    } // }}}
+    } 
     
-    function action_remove() // {{{
+    function action_remove() 
     {
         $file = new XLite_Model_FileNode(XLite_Core_Request::getInstance()->selected_file);
         $file->remove();
         $this->afterAdvanced();
-    } // }}}
+    } 
 
-    function action_copy() // {{{
+    function action_copy() 
     {   
         $file = new XLite_Model_FileNode(XLite_Core_Request::getInstance()->selected_file);
         $basename = dirname($file->path);
         $file->set("newPath", $basename . "/" . XLite_Core_Request::getInstance()->new_name);
         $file->copy();
         $this->afterAdvanced();
-    } // }}}
+    } 
 
-    function action_rename() // {{{
+    function action_rename() 
     {   
         $file = new XLite_Model_FileNode(XLite_Core_Request::getInstance()->selected_file);
         $basename = dirname($file->path);
         $file->set("newPath", $basename . "/" . XLite_Core_Request::getInstance()->new_name);
         $file->rename();
         $this->afterAdvanced();
-    } // }}}
+    } 
 
-    function action_new_file() // {{{
+    function action_new_file() 
     {
         $file = $this->get("file");
         $path   = $file->get("path");
@@ -396,9 +396,9 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
         }
         $file->create();
         $this->set("returnUrl", $this->get("url") . "&mode=edit&file=" . $path);
-    } // }}}
+    } 
 
-    function action_new_dir() // {{{
+    function action_new_dir() 
     {   
         $file = $this->get("file");
         $path   = $file->get("path");
@@ -412,9 +412,9 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
         }
         $file->createDir();
         $this->afterAdvanced();
-    } // }}}
+    } 
 
-    function action_restore_all() // {{{
+    function action_restore_all() 
     {
         $file = $this->get("file");
         $file->set("path", "skins_original");
@@ -424,9 +424,9 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
         $file->set("newPath", "skins");
         $file->copy();
         $this->afterAdvanced();
-    } // }}}
+    } 
 
-    function action_restore() // {{{
+    function action_restore() 
     {
         $file = $this->get("file");
         $to = XLite_Core_Request::getInstance()->selected_file;
@@ -434,14 +434,14 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
 		$from = (file_exists($schema_file) ? $schema_file : preg_replace("/^(skins)/", "skins_original", $to));
         copyRecursive($from, $to);
         $this->afterAdvanced();
-    } // }}}
+    } 
 
-    function afterAdvanced() // {{{
+    function afterAdvanced() 
     {
         if (!is_null($this->node) && trim($this->node) != "") {
             $this->set("returnUrl", $this->get("url") . "&node=$this->node");
         }
-    } // }}} 
+    }  
 
-    // }}}
+    
 }

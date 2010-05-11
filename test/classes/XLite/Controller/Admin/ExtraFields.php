@@ -51,7 +51,7 @@ class XLite_Controller_Admin_ExtraFields extends XLite_Controller_Admin_Abstract
         return (isset(XLite_Core_Request::getInstance()->$name) && is_array(XLite_Core_Request::getInstance()->$name)) ? in_array($categoryID, XLite_Core_Request::getInstance()->$name) : false;
     }
     
-    function getCategories() // {{{
+    function getCategories() 
     {
         if (is_null($this->_categories)) {
             $c = new XLite_Model_Category();
@@ -69,7 +69,7 @@ class XLite_Controller_Admin_ExtraFields extends XLite_Controller_Admin_Abstract
             array_multisort($names, $this->_categories);
         }
         return $this->_categories;
-    } // }}}
+    } 
 
     function getExtraFields()
     {

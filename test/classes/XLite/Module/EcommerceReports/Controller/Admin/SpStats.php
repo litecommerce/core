@@ -35,7 +35,7 @@
  */
 class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports
 {
-    function getShippingMethods() // {{{
+    function getShippingMethods() 
     {
         if (is_null($this->shippingMethods)) {
             $this->shippingMethods = array();
@@ -47,9 +47,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Modul
             }
         }
         return $this->shippingMethods;
-    } // }}}
+    } 
 
-    function getShippingMethod($sid) // {{{
+    function getShippingMethod($sid) 
     {
         $sm = new XLite_Model_Shipping();
         if (!$sm->find("shipping_id=$sid")) {
@@ -58,9 +58,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Modul
 			$sm->set("name", $name);
         }
         return $sm;
-    } // }}}
+    } 
     
-    function getPaymentMethods() // {{{
+    function getPaymentMethods() 
     {
         if (is_null($this->paymentMethods)) {
             $this->paymentMethods = array();
@@ -72,9 +72,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Modul
             }
         }
         return $this->paymentMethods;
-    } // }}}
+    } 
 
-    function getPaymentMethod($pn) // {{{
+    function getPaymentMethod($pn) 
     {
         
         if (!$pm->find("payment_method='$pn'")) {
@@ -82,9 +82,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Modul
             $pm->set("name", $pn);
         }
         return $pm;
-    } // }}}
+    } 
 
-    function getOrders() // {{{
+    function getOrders() 
     {
         if (is_null($this->orders)) {
             $this->orders = array();
@@ -97,9 +97,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Modul
             array_map(array($this, 'sumOrders'), $rawOrders);
         }
         return $this->orders;
-    } // }}}
+    } 
 
-    function sumOrders($row) // {{{
+    function sumOrders($row) 
     {
         $sid = $row["shipping_id"];
         $pid = $row["payment_method"];
@@ -122,22 +122,22 @@ class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Modul
                 $od["percent"] = round($od["orders"] * 100 / $this->totalOrders, 2);
             }
         }
-    } // }}}
+    } 
 
-    function getOrder() // {{{
+    function getOrder() 
     {
         if (is_null($this->order)) {
             $this->order = new XLite_Model_Order();
         }
         return $this->order;
-    } // }}}
+    } 
 
-    function countOrders($od) // {{{
+    function countOrders($od) 
     {
         $total = 0;
         foreach($od as $o) {
             $total += $o["orders"];
         }
         return $total;
-    } // }}}
+    } 
 }

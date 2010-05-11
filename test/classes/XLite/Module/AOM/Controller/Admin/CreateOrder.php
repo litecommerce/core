@@ -43,7 +43,7 @@ class XLite_Module_AOM_Controller_Admin_CreateOrder extends XLite_Controller_Adm
 		"order_preview" => "modules/AOM/order_edit/preview.tpl"
 	);
 
-	function init() // {{{
+	function init() 
 	{
 	    $ordersUpdated = $this->session->get("ordersUpdated") ? $this->session->get("ordersUpdated") : array();
 		parent::init();
@@ -57,22 +57,22 @@ class XLite_Module_AOM_Controller_Admin_CreateOrder extends XLite_Controller_Adm
 				}
 			}
 	    }
-	} // }}}
+	} 
 
-	function getCloneOrder() // {{{
+	function getCloneOrder() 
 	{
 		return parent::getOrder();
-	} // }}}
+	} 
 
-	function getCloneProfile() // {{{
+	function getCloneProfile() 
 	{
 		if (!$this->get("order_id")) {
 			return null;
 		}
 		return parent::getProfile();
-	} // }}}
+	} 
 
-    function action_create_order() // {{{
+    function action_create_order() 
     {
         $order = new XLite_Model_Order();
         $order->set("date",time());
@@ -83,9 +83,9 @@ class XLite_Module_AOM_Controller_Admin_CreateOrder extends XLite_Controller_Adm
 	    $orderHistory->log($order, null, null,"create_order");
 						
         $this->set("returnUrl","admin.php?target=create_order&page=order_edit&mode=products&order_id=".$order->get("order_id"));
-    } // }}}
+    } 
 
-	function action_save_changes() // {{{
+	function action_save_changes() 
 	{
         $order = new XLite_Model_Order($this->get("order_id"));
         $order->set("orderStatus",$_POST['substatus']);
@@ -95,7 +95,7 @@ class XLite_Module_AOM_Controller_Admin_CreateOrder extends XLite_Controller_Adm
 		$order->update();
         $this->cloneUpdated(true);
         $this->set("returnUrl","admin.php?target=order&order_id=".$this->get("order_id")."&page=order_info");
-	} // }}}	
+	} 	
 	
 
 	function preUpdateProducts()

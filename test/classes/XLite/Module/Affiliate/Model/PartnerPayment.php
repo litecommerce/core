@@ -55,13 +55,13 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
     public $order;	
     public $affiliates;
 
-    function charge($order) // {{{
+    function charge($order) 
     {
         require_once LC_MODULES_DIR . 'Affiliate' . LC_DS . 'encoded.php';
         return func_Affiliate_charge($this, $order);
-    } // }}}
+    } 
 
-    function set($name, $value) // {{{
+    function set($name, $value) 
     {
         if ($name == "order_id") {
             $this->set("add_date", time());
@@ -70,10 +70,10 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
             $this->set("paid_date", time());
         }
         parent::set($name, $value);
-    } // }}}
+    } 
 
     // sends payment nofitication
-    function notifyPartner() // {{{
+    function notifyPartner() 
     {
         $mail = new XLite_Model_Mailer();
         $mail->payment = $this;
@@ -83,9 +83,9 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
                 $mail->getComplex('partner.login'),
                 "modules/Affiliate/partner_order_processed");
         $mail->send();
-    } // }}}
+    } 
 
-    function filter() // {{{
+    function filter() 
     {
         /*
          * NOTE: possible limitation for 1-tier affiliates
@@ -95,17 +95,17 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
         }
         */
         return parent::filter();
-    } // }}}
+    } 
 
-    function getPartner() // {{{
+    function getPartner() 
     {
         if (is_null($this->partner)) {
             $this->partner = new XLite_Model_Profile($this->get("partner_id"));
         }
         return $this->partner;
-    } // }}}
+    } 
 
-    function getAffiliates() // {{{
+    function getAffiliates() 
     {
         if (is_null($this->affiliates)) {
             $this->affiliates = array();
@@ -116,25 +116,25 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
             }
         }
         return $this->affiliates;
-    } // }}}
+    } 
     
-    function getParent() // {{{
+    function getParent() 
     {
         if (is_null($this->parent)) {
             $this->parent = new XLite_Model_Profile($this->get("affiliate"));
         }
         return $this->parent;
-    } // }}}
+    } 
 
-    function getOrder() // {{{
+    function getOrder() 
     {
         if (is_null($this->order)) {
             $this->order = new XLite_Model_Order($this->get("order_id"));
         }
         return $this->order;
-    } // }}}
+    } 
     
-    function searchSales($startDate, $endDate, $productID, $partnerID, $paymentStatus, $orderStatus = null, $id1 = null, $id2 = null, $searchAffiliates = false)  // {{{
+    function searchSales($startDate, $endDate, $productID, $partnerID, $paymentStatus, $orderStatus = null, $id1 = null, $id2 = null, $searchAffiliates = false)  
     {
         $where = array();
         if ($startDate) {
@@ -181,9 +181,9 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
             $result = $result2;
         }
         return $result;
-    } // }}}
+    } 
 
-    function pay($partnerID) // {{{
+    function pay($partnerID) 
     {
         foreach ((array)$this->findAll("partner_id=$partnerID") as $payment) {
             if ($payment->isComplex('order.processed')) { // process all order payments
@@ -196,9 +196,9 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
                 }
             }    
         }
-    } // }}}
+    } 
 
-    function _import(array $options) // {{{
+    function _import(array $options) 
     {
         $data = $options["properties"];
         $w = new XLite_View_Abstract();
@@ -223,5 +223,5 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
         } else {
             echo "<font color=red>Error:</font> order #ID is invalid (not numeric value)<br>";
         }
-    } // }}}
+    } 
 }

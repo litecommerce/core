@@ -41,19 +41,19 @@ class XLite_Module_AOM_Controller_Admin_OrderList extends XLite_Controller_Admin
 	protected $_paymentMethods = null;
 	protected $_shippingRates  = null;
 	
-	function getOrders() // {{{
+	function getOrders() 
 	{
 		if(is_null($this->orders)) {
 			$order = new XLite_Model_Order();
 			$order->collectGarbage();
 
-// search dates // {{{ 
+// search dates  
 		if ($this->get("period") != 6) {
 			list($startDate, $endDate) = $this->getPeriodDates($this->get("period"));
 			$this->set("startDate", $startDate);
 			$this->set("endDate", $endDate);
 		}
- // }}}
+ 
 
 			$orders = $order->search(
 					null,
@@ -68,7 +68,7 @@ class XLite_Module_AOM_Controller_Admin_OrderList extends XLite_Controller_Admin
 					$this->get("payment_method"));
 			$this->orders = $orders;
 
-// search by profiles // {{{
+// search by profiles 
 
 		if ($this->get("login")||$this->get("person_info"))	{
 			$profile = new XLite_Model_Profile();
@@ -101,9 +101,9 @@ class XLite_Module_AOM_Controller_Admin_OrderList extends XLite_Controller_Admin
 				}
 			}
 		}
-		// }}}
+		
 
-// search products // {{{
+// search products 
 
 			$products = array();
 			if ($this->get("product_name")) {
@@ -131,7 +131,7 @@ class XLite_Module_AOM_Controller_Admin_OrderList extends XLite_Controller_Admin
 				}
 				
 			}
-// }}} 
+ 
 
 			if ($this->action == "export_xls") {
                 foreach($this->orders as $ord_idx => $order) {
@@ -146,9 +146,9 @@ class XLite_Module_AOM_Controller_Admin_OrderList extends XLite_Controller_Admin
 	}
 		return $this->orders;
 
-	} // }}}
+	} 
 
-    function getPaymentMethods() // {{{ 
+    function getPaymentMethods()  
     {
 		if (!is_null($this->_paymentMethods)) {
 	        $paymentMethod = new XLite_Model_PaymentMethod();
@@ -156,9 +156,9 @@ class XLite_Module_AOM_Controller_Admin_OrderList extends XLite_Controller_Admin
 		}
 
         return $this->_paymentMethods;
-    } // }}}
+    } 
 
-    function getShippingRates() // {{{
+    function getShippingRates() 
     {
     	if (!is_null($this->_shippingRates)) {
     		return $this->_shippingRates;
@@ -206,9 +206,9 @@ class XLite_Module_AOM_Controller_Admin_OrderList extends XLite_Controller_Admin
 
         $this->_shippingRates = $shipping_rates;
         return $shipping_rates;
-    } // }}}
+    } 
 
-	function getPeriodDates($period) // {{{ 
+	function getPeriodDates($period)  
 	{
 		$ct = getdate(time());
 		switch($period) {
@@ -245,6 +245,6 @@ class XLite_Module_AOM_Controller_Admin_OrderList extends XLite_Controller_Admin
 		}
 		 
 		return array($startDate, $endDate);
-	} // }}}
+	} 
 
 }

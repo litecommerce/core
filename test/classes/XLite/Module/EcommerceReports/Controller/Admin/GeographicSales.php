@@ -35,7 +35,7 @@
  */
 class XLite_Module_EcommerceReports_Controller_Admin_GeographicSales extends XLite_Module_EcommerceReports_Controller_Admin_ProductSales
 {
-    function getGeoSales() // {{{
+    function getGeoSales() 
     {
         if (is_null($this->geoSales)) {
             $this->geoSales = array();
@@ -51,9 +51,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeographicSales extends XLi
             }    
         }
         return $this->geoSales;
-    } // }}}
+    } 
 
-    function getInCountries($table) // {{{
+    function getInCountries($table) 
     {
         $countryCodes = (array) $this->get("country_codes");
         if (!count($countryCodes)) {
@@ -65,9 +65,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeographicSales extends XLi
         $codes = implode(',', $countryCodes);
         $prefix = $this->get("group_by");
         return " AND {$table}.{$prefix}_country IN ($codes) ";
-    } // }}}
+    } 
 
-    function getInStates($table) // {{{
+    function getInStates($table) 
     {
         $stateIds = (array) $this->get("state_ids");
         if (!count($stateIds)) {
@@ -79,9 +79,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeographicSales extends XLi
         $ids = implode(',', $stateIds);
         $prefix = $this->get("group_by");
         return " AND {$table}.{$prefix}_state IN ($ids) ";
-    } // }}}
+    } 
     
-    function sumProductSales($item) // {{{
+    function sumProductSales($item) 
     {
         $gid = $this->getGeoIndex($item);        
         if (!isset($this->geoSales[$gid])) {
@@ -103,9 +103,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeographicSales extends XLi
         }
         $productSales[$id]["total"] += $item["amount"] * $item["price"];
         $productSales[$id]["avg_price"] = $productSales[$id]["total"] / $productSales[$id]["amount"];
-    } // }}}
+    } 
     
-    function getGeoIndex($item) // {{{
+    function getGeoIndex($item) 
     {
         $prefix = $this->get("group_by");
         if (!is_null($this->get("state_ids"))) { // has selected states
@@ -121,33 +121,33 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeographicSales extends XLi
             $country = "All";
         }
         return $country . " / " . $state;
-    } // }}}
+    } 
     
-    function getProductsFound() // {{{
+    function getProductsFound() 
     {
         $found = 0;
         foreach ((array)$this->get("geoSales") as $gl => $gs) {
             $found += count($gs);
         }
         return $found;
-    } // }}}
+    } 
     
-    function getCountries() // {{{
+    function getCountries() 
     {
         if (is_null($this->countries)) {
             $country = new XLite_Model_Country();
             $this->countries = $country->findAll();
         }
         return $this->countries;
-    } // }}}
+    } 
 
-    function getStates() // {{{
+    function getStates() 
     {
         if (is_null($this->states)) {
             $state = new XLite_Model_State();
             $this->states = $state->findAll();
         }
         return $this->states;
-    } // }}}
+    } 
     
 }

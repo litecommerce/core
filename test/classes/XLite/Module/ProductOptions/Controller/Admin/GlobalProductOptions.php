@@ -37,7 +37,7 @@ class XLite_Module_ProductOptions_Controller_Admin_GlobalProductOptions extends 
 {	
 	public $_categories = null;
 
-    function getCategories() // {{{
+    function getCategories() 
     {
         if (is_null($this->_categories)) {
             $c = new XLite_Model_Category();
@@ -55,7 +55,7 @@ class XLite_Module_ProductOptions_Controller_Admin_GlobalProductOptions extends 
             array_multisort($names, $this->_categories);
         }
         return $this->_categories;
-    } // }}}
+    } 
 
     function action_add()
     {

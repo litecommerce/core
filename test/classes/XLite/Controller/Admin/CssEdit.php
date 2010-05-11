@@ -48,21 +48,21 @@ class XLite_Controller_Admin_CssEdit extends XLite_Controller_Admin_Abstract
 		return isset($style[$attr][$index]) ? $style[$attr][$index] : null;
 	}
 
-    function getLocale() // {{{
+    function getLocale() 
     {
         if (is_null($this->locale)) {
             $this->locale = XLite::getInstance()->getOptions(array('skin_details', 'locale'));
         }
         return $this->locale;
-    } // }}}
+    } 
 
-    function getZone() // {{{
+    function getZone() 
     {
         if (is_null($this->zone)) {
             $this->zone = XLite::getInstance()->getOptions(array('skin_details', 'skin'));
         }
         return $this->zone;
-    } // }}}
+    } 
 
     function getEditor()
     {

@@ -35,11 +35,11 @@
  */
 class XLite_Module_WholesaleTrading_Controller_Customer_Search extends XLite_Controller_Customer_Search implements XLite_Base_IDecorator
 {
-    function init() // {{{
+    function init() 
     {
 	    if ($this->config->getComplex('WholesaleTrading.direct_addition')) {
 			$this->session->set("DirectSaleAvailable", null);
 		}
         parent::init();
-    } // }}}
+    } 
 }

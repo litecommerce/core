@@ -58,7 +58,7 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
 		parent::init();
 	}
 
-	function fillForm() // {{{
+	function fillForm() 
     {
     	if (!isset($this->sort_mode)) {
 			$this->sort_mode = array(0=>true);
@@ -77,7 +77,7 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
         parent::fillForm();
 		// save current filter
 		$this->session->set("coupon_search_mode", $this->sort_mode);
-    } // }}}
+    } 
 
 	function isSortSelected($sortMode)
 	{
@@ -120,7 +120,7 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
 		return $couponsNumber;
     }
 
-    function getCoupons() // {{{
+    function getCoupons() 
     {
     	if (isset($this->_couponsArray)) {
     		return $this->_couponsArray;
@@ -144,11 +144,11 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
 
 		$this->_couponsArray = $coupons;
 		return $coupons;
-	} // }}}
+	} 
 
-	function generateCouponCode() { // {{{
+	function generateCouponCode() { 
 		return generate_code();
-	} // }}}
+	} 
 
 	function _action_postprocess()
 	{
@@ -168,7 +168,7 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
 		}
 	}
 
-	function action_add() // {{{
+	function action_add() 
     {
         $dc = new XLite_Module_Promotion_Model_DiscountCoupon();
         if ($dc->find("coupon='" . $this->get("coupon") . "' AND order_id='0'")) {
@@ -182,9 +182,9 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
         }
 
 		$this->_action_postprocess();
-    } // }}}
+    } 
 
-	function action_update() // {{{
+	function action_update() 
 	{
 		if (isset($_POST["status"])) {
 			foreach ($_POST["status"] as $coupon_id => $status) {
@@ -195,15 +195,15 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
 		}
 
 		$this->_action_postprocess();
-	} // }}}
+	} 
 
-	function action_delete() // {{{
+	function action_delete() 
 	{
 		$dc = new XLite_Module_Promotion_Model_DiscountCoupon($this->get("coupon_id"));
 		$dc->delete();
 
 		$this->_action_postprocess();
-	} // }}}
+	} 
 
 	function isOddRow($row)
 	{

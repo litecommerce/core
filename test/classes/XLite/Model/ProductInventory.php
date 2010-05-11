@@ -47,7 +47,7 @@ class XLite_Model_ProductInventory extends XLite_Model_Product implements XLite_
         return self::getInternalInstance(__CLASS__);
     }
 
-    function _export($layout, $delimiter) // {{{
+    function _export($layout, $delimiter) 
     {
         $data = array();
         $values = $this->getProperties();
@@ -57,9 +57,9 @@ class XLite_Model_ProductInventory extends XLite_Model_Product implements XLite_
             }
         }
         return $data;
-    } // }}}
+    } 
 
-    function _import(array $options) // {{{
+    function _import(array $options) 
     {
         static $line;
         if (!isset($line)) $line = 1; else $line++;
@@ -87,7 +87,7 @@ class XLite_Model_ProductInventory extends XLite_Model_Product implements XLite_
             echo '<br><a href="admin.php?target=update_inventory&page=pricing"><u>Click here to return to admin interface</u></a>';
             die();
         }
-    } // }}}
+    } 
 
     function updateProductInventory($line, $product, $properties)
     {

@@ -95,7 +95,6 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      */
     protected $_xlite_form_id = null;
 
-
     /**
      * It's not possible to instantiate this class using the "new" operator 
      * 

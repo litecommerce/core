@@ -342,15 +342,15 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
         }
     }
 
-    function advancedSearch($substring, $sku = null, $category_id = null, $subcategory_search = false, $fulltext = false, $onlyindexes = false) // {{{
+    function advancedSearch($substring, $sku = null, $category_id = null, $subcategory_search = false, $fulltext = false, $onlyindexes = false) 
     {
         if ($this->xlite->get("ProductOptionsEnabled")) {
             return $this->advancedSearchWithSku($substring, $sku, $category_id, $subcategory_search, $fulltext, $onlyindexes);
         }
         return parent::advancedSearch($substring, $sku, $category_id, $subcategory_search, $fulltext, $onlyindexes);
-    } // }}}
+    } 
 
-    function advancedSearchWithSku($substring, $sku = null, $category_id = null, $subcategory_search = false, $fulltext = false, $onlyindexes = false) // {{{
+    function advancedSearchWithSku($substring, $sku = null, $category_id = null, $subcategory_search = false, $fulltext = false, $onlyindexes = false) 
     {
         // compatibility check:
         if (method_exists($this, "_beforeAdvancedSearch")) {
@@ -405,16 +405,16 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
             $result = $p->findAll($query);
         }
         return $result;
-    } // }}}
+    } 
  
-    function getProductSkuCondition($substring, $where = null) // {{{
+    function getProductSkuCondition($substring, $where = null) 
     {
         $condition = "sku_variants LIKE '%$substring%'";
         return $condition;
-    } // }}}
+    } 
 
 /**
-    function changeInventorySku($old_sku, $new_sku) // {{{
+    function changeInventorySku($old_sku, $new_sku) 
     {
         $skus = $this->get("sku_variants");
         $sku_array = explode("|", $skus);
@@ -448,10 +448,10 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
         $skus = implode("|", $sku_array);
         $this->set("sku_variants", "|$skus|");
         return true;
-    } // }}}
+    } 
 /**/
 
-    function updateInventorySku() // {{{
+    function updateInventorySku() 
     {
         $product_id = addslashes($this->get("product_id"));
         $inv = new XLite_Module_InventoryTracking_Model_Inventory();
@@ -465,9 +465,9 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
         }
         $this->set("sku_variants", $sku_variants);
         $this->update();
-    } // }}}
+    } 
 
-    function _constructSearchArray($start_price, $end_price, $start_weight, $end_weight, $sku) // {{{
+    function _constructSearchArray($start_price, $end_price, $start_weight, $end_weight, $sku) 
     {
         // check for AdvancedSearch module version compatibility:
         $parent_class = get_parent_class($this);
@@ -493,6 +493,6 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
         }
 
         return $result;
-    } // }}}
+    } 
 
 }

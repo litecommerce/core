@@ -41,7 +41,7 @@ class XLite_Module_CanadaPost_Model_Shipping_Cps extends XLite_Model_Shipping_On
     public $error = "";	
     public $xmlError = false;
 
-    function getKgs($order) // {{{
+    function getKgs($order) 
     {
         $w = $order->get("weight");
         switch ($this->config->getComplex('General.weight_unit')) {
@@ -51,25 +51,25 @@ class XLite_Module_CanadaPost_Model_Shipping_Cps extends XLite_Model_Shipping_On
         case 'g':   return $w*0.001;
         }
         return 0;
-    } // }}}
+    } 
 
-	function cleanCache() // {{{ 
+	function cleanCache()  
 	{
 		$this->_cleanCache("cps_cache");
-	} // }}}
+	} 
 
-    function getModuleName() // {{{ 
+    function getModuleName()  
     {
         return "Canada Post";
-    } // }}} 
+    }  
 
-	function getRates(XLite_Model_Order $order) // {{{
+	function getRates(XLite_Model_Order $order) 
 	{
 		include_once LC_MODULES_DIR . 'CanadaPost' . LC_DS . 'encoded.php';
 		return Shipping_cps_getRates($this,$order);
-	} // }}}
+	} 
 	
-	function queryRates($options,$originalZipcode,$originalCountry,$itemsPrice,$weight,$description,$packed,$destinationCity,$destinationZipcode,$destinationState, $destinationCountry) // {{{
+	function queryRates($options,$originalZipcode,$originalCountry,$itemsPrice,$weight,$description,$packed,$destinationCity,$destinationZipcode,$destinationState, $destinationCountry) 
 	{
 		$request = new XLite_Model_HTTPS();
 		$request->url = "sellonline.canadapost.ca:30000";
@@ -85,9 +85,9 @@ class XLite_Module_CanadaPost_Model_Shipping_Cps extends XLite_Model_Shipping_On
 												: $destination = "I";
 
 		return $this->parseResponse($request->response,$destination);
-	} // }}}
+	} 
 
-	function createRequest($options,$originalZipCode,$originalCountry,$itemsPrice,$weight,$description,$packed,$destinationCity,$destinationZipcode,$destinationState, $destinationCountry) // {{{ 
+	function createRequest($options,$originalZipCode,$originalCountry,$itemsPrice,$weight,$description,$packed,$destinationCity,$destinationZipcode,$destinationState, $destinationCountry)  
 	{
 		$description = htmlspecialchars($description); 
 		$options->test_server ? $merchant_id = "CPC_DEMO_XML" 
@@ -118,12 +118,12 @@ class XLite_Module_CanadaPost_Model_Shipping_Cps extends XLite_Model_Shipping_On
 </ratesAndServicesRequest>	
 </eparcel>
 EOT;
-	} // }}}
+	} 
 
-	function parseResponse($response,$destination) // {{{
+	function parseResponse($response,$destination) 
 	{
 		include_once LC_MODULES_DIR . 'CanadaPost' . LC_DS . 'encoded.php';
 		return Shipping_cps_parseResponse($this, $response,$destination);
-	} // }}} 
+	}  
 
-} // }}}
+} 

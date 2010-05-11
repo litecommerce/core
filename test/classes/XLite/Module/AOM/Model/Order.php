@@ -47,24 +47,24 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 	public $doNotChangeShippingCost = false;	
 	public $doNotChangeGlobalDiscount = false;
 
-	public function __construct($id = null) // {{{
+	public function __construct($id = null) 
     {
 		$this->fields["substatus"] = '';
 		$this->fields['admin_notes'] = '';
 		$this->fields['manual_edit'] = 0;
 		parent::__construct($id);
-    } // }}}
+    } 
 	
-	function statusChanged($oldStatus, $newStatus) // {{{
+	function statusChanged($oldStatus, $newStatus) 
 	{
 		if ($this->xlite->is("adminZone")) {
 			return;
 		}
 
 		parent::statusChanged($oldStatus, $newStatus);	
-	 } // }}}	
+	 } 	
 
-	function internalStatusChanged($oldStatus, $newStatus) // {{{
+	function internalStatusChanged($oldStatus, $newStatus) 
 	{
         if ($this->xlite->is("adminZone") && $oldStatus != $newStatus && strlen($newStatus . $oldStatus) == 2) {
         
@@ -92,25 +92,25 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
             $this->modulesFailed();
         }	
 	}	
-} // }}}
+} 
 
 	function modulesFailed()
 	{
 		
 	}
 
-    function getLocationCountry() // {{{
+    function getLocationCountry() 
     {
         $country = new XLite_Model_Country();
         $country->find("code = '".$this->config->getComplex('Company.location_country')."'");
         return $country;
-    }   // }}} 
+    }    
 
-    function getLocationState() // {{{
+    function getLocationState() 
     {
         $state = new XLite_Model_State($this->config->getComplex('Company.location_state'));
         return $state;
-    }   // }}} 
+    }    
 	
 	function modulesUncheckedOut()
 	{
@@ -306,11 +306,11 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 		}
 	}	
 	
-	function getOrderHistory() // {{{ 
+	function getOrderHistory()  
 	{
 		$orderHistory = new XLite_Module_AOM_Model_OrderHistory();
 		return array_reverse($orderHistory->findAll("order_id = " . $this->get("order_id"),"date"));
-	} // }}}	
+	} 	
 	
     function setDetails($value)
     {
@@ -331,7 +331,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 		return aom_order_clone($this, $clone);	
 	} //  }}}
 
-	function getProductItems() // {{{ 
+	function getProductItems()  
 	{
 		$orderItem = new XLite_Model_OrderItem();
 		$this->_productItems = $orderItem->findAll("order_id='" .$this->get("order_id"). "' AND product_id <> 0");
@@ -341,17 +341,17 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 		return $this->_productItems;	
 	} //   }}} 
 
-	function getProductItemsCount() // {{{
+	function getProductItemsCount() 
 	{
 		return count($this->get("productItems"));		
-	} // }}}
+	} 
 	
-	function isSplit() // {{{
+	function isSplit() 
 	{
 		return $this->get("productItemsCount") > 1;
-	} // }}}
+	} 
 	
- 	function getItems() // {{{
+ 	function getItems() 
 	{
 		if($this->xlite->is("adminZone")) {
 			$checkTaxesInside = $this->xlite->get("AOMcalcAllTaxesInside");
@@ -384,18 +384,18 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 		}
 
 		return $this->_items;
-	} // }}}
+	} 
 
-	function getAppliedGC() // {{{
+	function getAppliedGC() 
 	{
 		$gcid = $this->get("gcid");
 		if (!empty($gcid)) {
 			$gc = new XLite_Module_GiftCertificates_Model_GiftCertificate($gcid);
 		}
 		return $gc;
-	} // }}}
+	} 
 	
- 	function getOrderGC() // {{{ 
+ 	function getOrderGC()  
 	{
 		$items = parent::getItems();
 		foreach($items as $key => $item) {
@@ -406,14 +406,14 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 				$gc[$item->get("item_id")] = new XLite_Module_GiftCertificates_Model_GiftCertificate($gcid);
 		}
         return is_array($gc) ? $gc : false;
-	} // }}}	
+	} 	
 
 	function getGCCopy()
 	{
 		return method_exists($this, 'getGC') ? $this->getGC() : null;
 	}
 
-	function getOrderDC() // {{{
+	function getOrderDC() 
 	{
         if (is_null($this->DC) && $this->get("order_id")) {
             $dc = new XLite_Module_Promotion_Model_DiscountCoupon();
@@ -424,7 +424,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
         }
         return $this->DC;
 		
-	} // }}}
+	} 
 	
 	function _getDiscountableSubtotal()
 	{
@@ -435,7 +435,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 		return $subtotal;
 	}
 
-	function _calcSubTotal()  // {{{
+	function _calcSubTotal()  
 	{
 		$subtotal = $this->_getDiscountableSubtotal();
 		$global_discount = $this->_getAppliedGlobalDiscount();
@@ -445,7 +445,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 
         $this->set("subtotal", $this->formatCurrency($subtotal));
         return $subtotal;
-	} // }}}
+	} 
 
 	function _getAppliedGlobalDiscount()
 	{
@@ -570,7 +570,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
         }
     }
 
-	function setOrderStatus($value) // {{{ 
+	function setOrderStatus($value)  
 	{
         $substatus = new XLite_Module_AOM_Model_OrderStatus();
 	    $substatus->find("status = '$value'");
@@ -588,15 +588,15 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 			$_POST['substatus'] = $substatus->get("status");
 	    }
 
-	} // }}}
+	} 
 	
-	function getOrderStatus() // {{{ 
+	function getOrderStatus()  
 	{
 		$status = ($this->get("substatus") == '') ? $this->get("status") : $this->get("substatus");
 		$this->orderStatus = new XLite_Module_AOM_Model_OrderStatus();
 		$this->orderStatus->find("status = '$status'");
 	   	return $this->orderStatus;	
- 	} // }}} 
+ 	}  
 
 	public function search(
 		$profile = null,
@@ -649,15 +649,15 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
             $where[] = "date<=$endDate";
         }
         return $this->findAll(implode(" AND ", $where), "date DESC");
-    } // }}}
+    } 
 
-	function isShipped() // {{{ 
+	function isShipped()  
 	{
 		if ($this->xlite->is("adminZone")&&!$this->get("shipping_id")) {
 			return false;
 		}	
 		return parent::isShipped();
-	} // }}}
+	} 
 
 	function calcAllItemsTaxedPrice()
 	{
@@ -697,7 +697,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
         $this->_items = null;
 	}
 
-    function get($name) // {{{
+    function get($name) 
     {
         switch($name) {
             case "detail_labels":
@@ -706,7 +706,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
             default:
                 return parent::get($name);
         }
-    } // }}}
+    } 
 
 	function updateInventory($item)
 	{

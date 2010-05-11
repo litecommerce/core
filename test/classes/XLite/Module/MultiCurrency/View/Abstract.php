@@ -38,7 +38,7 @@ class XLite_Module_MultiCurrency_View_Abstract extends XLite_View_Abstract imple
 	public $currencies 		= null;	
 	public $defaultCurrency 	= null;
 
-	function getCurrencies() // {{{
+	function getCurrencies() 
 	{
 		if(is_null($this->currencies)) {
 			$currency = new XLite_Module_MultiCurrency_Model_CurrencyCountries();
@@ -46,18 +46,18 @@ class XLite_Module_MultiCurrency_View_Abstract extends XLite_View_Abstract imple
 		}
 		return $this->currencies;
 
-	} // }}}
+	} 
 	
-	function getDefaultCurrency() // {{{ 
+	function getDefaultCurrency()  
 	{
 		if (is_null($this->defaultCurrency)) { 
 			$this->defaultCurrency = new XLite_Module_MultiCurrency_Model_CurrencyCountries();
 			$this->defaultCurrency->find("base = 1");
 		}	
 		return $this->defaultCurrency;
-	} // }}}
+	} 
 
-	function price_format($base, $field = "", $thousand_delim = null, $decimal_delim = null) // {{{
+	function price_format($base, $field = "", $thousand_delim = null, $decimal_delim = null) 
 	{
         $price_format 	= $this->config->getComplex('General.price_format');
         $price		 	= is_Object($base) ? $base->get($field) : $base;
@@ -83,9 +83,9 @@ class XLite_Module_MultiCurrency_View_Abstract extends XLite_View_Abstract imple
 		}
 
 		return $result;
-	} // }}}
+	} 
 	
-	function isTargetAllowed() // {{{
+	function isTargetAllowed() 
 	{
 		$result = true;
 		$target = $this->get("target");
@@ -99,6 +99,6 @@ class XLite_Module_MultiCurrency_View_Abstract extends XLite_View_Abstract imple
 			$result = !in_array($target, $exceptionTargets);
 		}
 		return $result;
-	}  // }}}
+	}  
 
-} // }}}
+} 

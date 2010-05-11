@@ -189,7 +189,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
     * @access public
     * @return array The array with category path.
     */
-    function getPath() // {{{
+    function getPath() 
     {
         $path = array();
         $parent = $this;
@@ -198,7 +198,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
             $parent = $parent->getParentCategory();
         } while (!is_null($parent));
         return array_reverse($path);
-    } // }}}
+    } 
 
     /**
     * Gets full path to the category in form 
@@ -207,7 +207,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
     * @access public
     * @return string The category path.
     */
-    function getStringPath() // {{{
+    function getStringPath() 
     {
         if (is_null($this->_string_path)) {
             $path = $this->getPath();
@@ -221,7 +221,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
             $this->_string_path = $location;
         }
         return (string) $this->_string_path;
-    } // }}}
+    } 
     
     /**
     * Returns the parent category instance for the current category
@@ -229,19 +229,19 @@ class XLite_Model_Category extends XLite_Model_Abstract
     * @access public
     * @return Category The parent category instance.
     */
-    function getParentCategory() // {{{
+    function getParentCategory() 
     {
         $parent = $this->get('parent');
 
         return ($this->get('category_id') && $parent)
             ? XLite_Model_CachingFactory::getObject(__METHOD__ . $parent, 'XLite_Model_Category', array($parent))
             : null;
-    } // }}}
+    } 
     
-    function setParentCategory($v) // {{{
+    function setParentCategory($v) 
     {
         $this->set("parent", $v->get("category_id"));
-    } // }}}
+    } 
 
     /**
     * Returns the product list for the current category.
@@ -249,7 +249,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
     * @access public
     * @return array The array of Product instances.
     */
-    function getProducts($where = null, $orderby = null, $useCache = true) // {{{
+    function getProducts($where = null, $orderby = null, $useCache = true) 
     {
         if (empty($orderby)) {
             $orderby = $this->defaultOrder;
@@ -270,7 +270,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
             }    
         }
         return $products[$id][$where][$orderby];
-    } // }}}
+    } 
 
     function getProductsNumber()
     {
@@ -287,7 +287,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
     *
     * @access public
     */
-    function delete() // {{{
+    function delete() 
     {
         // remove all products from the category
         $products = $this->get("products");
@@ -304,12 +304,12 @@ class XLite_Model_Category extends XLite_Model_Abstract
         $image = $this->get("image");
         $image->delete();
         parent::delete();
-    } // }}}
+    } 
 
-    function getTopCategory() // {{{
+    function getTopCategory() 
     {
         return new XLite_Model_Category(0);
-    } // }}}
+    } 
 
     /* 
         Parse $data due to the following grammar:
@@ -327,7 +327,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
             DATA ::= CATEGORY_PATH
 
     */
-    function parseCategoryField($data, $allowMiltyCategories) // {{{
+    function parseCategoryField($data, $allowMiltyCategories) 
     {
         $i = 0;
         $state = "S";
@@ -375,13 +375,13 @@ class XLite_Model_Category extends XLite_Model_Abstract
             return $list;
         else
             return $path;
-    } // }}}
+    } 
 
     /* if $categorySet is an array, creates the string in c1|c2|...|cn format
     due to the specification given above. If $categorySet is a single category,
     creates an export string for the single category in format component1/...
     */
-    function createCategoryField($categorySet) // {{{
+    function createCategoryField($categorySet) 
     {
         if (is_array($categorySet)) {
             $paths = array();
@@ -395,9 +395,9 @@ class XLite_Model_Category extends XLite_Model_Abstract
             $path[$i] = str_replace("/", "//", str_replace("|", "||", $path[$i]->get("name")));
         }
         return implode("/", $path);
-    } // }}}
+    } 
     
-    function createRecursive($name) // {{{
+    function createRecursive($name) 
     {
         if (!is_array($name)) {
             $path = $this->parseCategoryField($name, false);
@@ -418,9 +418,9 @@ class XLite_Model_Category extends XLite_Model_Abstract
             $category_id = $category->get("category_id");
         }
         return new XLite_Model_Category($category_id);
-    } // }}}
+    } 
 
-    function findCategory($path) // {{{
+    function findCategory($path) 
     {
         if (!is_array($path)) {
             $path = $this->parseCategoryField($path, false);
@@ -436,7 +436,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
             return null;
         }
         return new XLite_Model_Category($category_id);
-    } // }}}
+    } 
 
     /**
      * Find category by clean URL
@@ -475,7 +475,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
         return $result;
     }
 
-    function filter() // {{{
+    function filter() 
     {
         $result = parent::filter(); // default
         if ($result && !$this->xlite->is("adminZone")) {
@@ -507,21 +507,21 @@ class XLite_Model_Category extends XLite_Model_Abstract
             }
         }
         return $result;
-    } // }}}
+    } 
     
-    function _compareMembership($categoryMembership, $userMembership) // {{{
+    function _compareMembership($categoryMembership, $userMembership) 
     {
         return $categoryMembership == 'all' || $categoryMembership == '%' || $categoryMembership == '_%' && $userMembership || $categoryMembership == $userMembership;
-    } // }}}
+    } 
 
-    function toXML() // {{{
+    function toXML() 
     {
         $id = "category_" . $this->get("category_id");
         $xml = parent::toXML();
         return "<category id=\"$id\">\n$xml\n</category>\n";
-    } // }}}
+    } 
     
-    function fieldsToXML() // {{{
+    function fieldsToXML() 
     {
         $xml = "";
         if ($this->hasImage()) {
@@ -533,5 +533,5 @@ class XLite_Model_Category extends XLite_Model_Abstract
             }
         }
         return parent::fieldsToXML() . $xml;
-    } // }}}
+    } 
 }

@@ -46,21 +46,21 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
             'endDateYear'
             );
 
-    public function __construct(array $params) // {{{
+    public function __construct(array $params) 
     {
         parent::__construct($params);
         $this->params = array_merge($this->params, $this->dateParams);
-    } // }}}
+    } 
 
-    function initView() // {{{
+    function initView() 
     {
         parent::initView();
         if ($this->get("mode") == "export_myob" || $this->get("mode") == "export_pt") {
             $this->setComplex("searchOrdersForm.visible", false);
         }
-    } // }}}
+    } 
     
-    function updateConfig() // {{{
+    function updateConfig() 
     {
         foreach (func_get_args() as $name) {
             if (isset($this->$name)) {
@@ -77,7 +77,7 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
                 }
             }
         }
-    } // }}}
+    } 
     
     function isQuickSearch()
     {
@@ -88,13 +88,13 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
     	return parent::isQuickSearch();
     }
 
-    function action_export_qb() // {{{
+    function action_export_qb() 
     {
         require_once LC_MODULES_DIR . 'AccountingPackage' . LC_DS . 'encoded.php';
         AccountingPackage_export_qb($this);
-    } // }}}
+    } 
     
-    function action_export_myob() // {{{
+    function action_export_myob() 
     {
         if (is_null($this->get("export_result"))) {
             // redirect to export dialog
@@ -104,9 +104,9 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
             $this->updateConfig("income_account", "deposit_account");
             $this->export("myob");
         }
-    } // }}}
+    } 
 
-    function action_export_pt() // {{{
+    function action_export_pt() 
     {
         if (is_null($this->get("export_result"))) {
             // redirect to export dialog
@@ -116,9 +116,9 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
             $this->updateConfig("receivable_account", "sales_account", "cash_account");
             $this->export("pt");
         }
-    } // }}}
+    } 
     
-    function addDistribution($order, $itemType = "item") // {{{
+    function addDistribution($order, $itemType = "item") 
     {
         $orderID = $order->get("order_id");
         if (isset($this->distributions[$orderID])) {
@@ -126,23 +126,23 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
         } else {
             $this->distributions[$orderID] = 1;
         }
-    } // }}}
+    } 
 
-    function getTotalDistribution($order) // {{{
+    function getTotalDistribution($order) 
     {
         $orderID = $order->get("order_id");
         return isset($this->distributions[$orderID]) ? $this->distributions[$orderID] : 0;
-    } // }}}
+    } 
     
-    function getDateDue($date, $format = null) // {{{
+    function getDateDue($date, $format = null) 
     {
         if (is_null($format)) {
             $format = $this->getComplex('config.General.date_format');
         }
         return strftime($format, $date);
-    } // }}}
+    } 
 
-    function getCurrentDistribution($order) // {{{
+    function getCurrentDistribution($order) 
     {
         static $lines;
 
@@ -155,30 +155,30 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
             $lines[$orderID] = 1;
         }
         return $lines[$orderID];
-    } // }}}
+    } 
     
-    function export($format) // {{{
+    function export($format) 
     {
 		$price_format = $this->config->getComplex('General.price_format');
         $this->config->setComplex("General.price_format", "%s");
         require_once LC_MODULES_DIR . 'AccountingPackage' . LC_DS . 'encoded.php';
         AccountingPackage_export($this, $format);
 		$this->config->setComplex("General.price_format", $price_format);
-    } // }}}
+    } 
 
-    function found($order, $name) // {{{
+    function found($order, $name) 
     {
         return !is_null($order->get($name)) && $order->get($name) > 0;
-    } // }}}
+    } 
 
-    function getExportFormats() // {{{
+    function getExportFormats() 
     {
         $formats = parent::getExportFormats();
         $formats["export_qb"] = "QuickBooks 2003";
         $formats["export_myob"] = "MYOB Accounting 2005 (v14)";
         $formats["export_pt"] = "Peachtree Complete Accounting 2004";
         return $formats;
-    } // }}}
+    } 
 
     function CSVQuoting($string)
     {

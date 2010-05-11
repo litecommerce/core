@@ -63,7 +63,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReportsData extend
         exit();
     }
 
-    function genOrders() // {{{
+    function genOrders() 
     {
         set_time_limit(0);
         ini_set("memory_limit", "64M");
@@ -187,5 +187,5 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReportsData extend
         func_refresh_end();
 
         exit();
-    } // }}}
+    } 
 }

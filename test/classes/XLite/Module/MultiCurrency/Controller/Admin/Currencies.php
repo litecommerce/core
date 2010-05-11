@@ -41,7 +41,7 @@ class XLite_Module_MultiCurrency_Controller_Admin_Currencies extends XLite_Contr
 	public $allCurrencies = null;	
 	public $defaultCurrency = null;
 
-	function getDefaultCurrency() // {{{
+	function getDefaultCurrency() 
 	{
 		if (is_null($this->defaultCurrency)) {
 	        $this->defaultCurrency = new XLite_Module_MultiCurrency_Model_CurrencyCountries();
@@ -59,9 +59,9 @@ class XLite_Module_MultiCurrency_Controller_Admin_Currencies extends XLite_Contr
 			}
 		}
 		return $this->defaultCurrency;
-	} // }}}
+	} 
 
-	function getAllCurrencies() // {{{ 
+	function getAllCurrencies()  
 	{
         if (is_null($this->allCurrencies)) {
             $currency = new XLite_Module_MultiCurrency_Model_CurrencyCountries();
@@ -70,7 +70,7 @@ class XLite_Module_MultiCurrency_Controller_Admin_Currencies extends XLite_Contr
         return $this->allCurrencies;
 	} // }}
 
-	function action_update_default() // {{{ 
+	function action_update_default()  
 	{
 		$currency = $this->get("defaultCurrency");
 		$properties = $this->currency;
@@ -79,18 +79,18 @@ class XLite_Module_MultiCurrency_Controller_Admin_Currencies extends XLite_Contr
     	$currency->set("price_format",$properties['price_format']);
 		$currency->update();
 
-	} // }}}
+	} 
 	
-	function getCountries() // {{{ 
+	function getCountries()  
 	{
 		if (is_null($this->countries)) {
 			$country = new XLite_Model_Country();
 			$this->countries = $country->findAll("enabled = 1");	
 		}		
 		return $this->countries;
-	} // }}}
+	} 
 	
-	function action_add() // {{{ 
+	function action_add()  
 	{
 		$currency = new XLite_Module_MultiCurrency_Model_CurrencyCountries();
 		$properties = $this->currency;
@@ -99,9 +99,9 @@ class XLite_Module_MultiCurrency_Controller_Admin_Currencies extends XLite_Contr
 		$currency->set("properties",$properties);
 		$currency->create();
 
-	} // }}}
+	} 
 	
-	function action_update() // {{{ 
+	function action_update()  
 	{
 		foreach($this->currencies as $currency_) {
 			$currency = new XLite_Module_MultiCurrency_Model_CurrencyCountries($currency_["currency_id"]);
@@ -111,9 +111,9 @@ class XLite_Module_MultiCurrency_Controller_Admin_Currencies extends XLite_Contr
 			$currency->update();
 		}
 
-	} // }}}
+	} 
 
-	function action_delete() // {{{
+	function action_delete() 
 	{
 		if (isset($this->deleted)) { 
 			foreach($this->deleted as $currency_id) {
@@ -121,6 +121,6 @@ class XLite_Module_MultiCurrency_Controller_Admin_Currencies extends XLite_Contr
 				$currency->delete();
 			}
 		}
-	} // }}}
+	} 
 
-} // }}}
+} 

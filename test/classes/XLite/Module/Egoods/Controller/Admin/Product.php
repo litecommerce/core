@@ -35,7 +35,7 @@
  */
 class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admin_Product implements XLite_Base_IDecorator
 {
-    public function __construct(array $params) // {{{
+    public function __construct(array $params) 
     {
         parent::__construct($params);
         $this->pages["downloadable_files"] = "Egoods";
@@ -43,18 +43,18 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
         $this->pages["pin_codes"] = "PIN codes";
         $this->pageTemplates["pin_codes"] = "modules/Egoods/pin_codes.tpl";
 		$this->params[] = "pin_enabled";
-    } // }}}
+    } 
 
-    function fillForm() // {{{
+    function fillForm() 
     {
         $nowPlusExp = time()+24*3600*$this->config->getComplex('Egoods.exp_days');
         $this->set("new_exp_date", $nowPlusExp);
         parent::fillForm();
-    } // }}}
+    } 
 
     function prepare_egood(&$df) { }
 
-	function action_add_egood() // {{{
+	function action_add_egood() 
 	{
 		if 
 		(
@@ -82,9 +82,9 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
     		}
     		$df->update();
 		}
-	} // }}}
+	} 
 
-	function action_update_egood() // {{{
+	function action_update_egood() 
 	{
 		$df = new XLite_Module_Egoods_Model_DownloadableFile($_POST["file_id"]);
 		$df->set("delivery", $_POST["delivery"]);
@@ -113,9 +113,9 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 
 		$this->prepare_egood($df);
 		$df->update();
-	} // }}}
+	} 
 
-	function action_delete_egood() // {{{
+	function action_delete_egood() 
 	{
 		if (!isset($_POST['file_id']) || empty($_POST['file_id'])) {
 			return;
@@ -130,14 +130,14 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 		for ($i = 0; $i < count($links); $i++) {
 			$links[$i]->delete();
 		}
-	} // }}}
+	} 
 
-	function getNewLinkAccessKey() // {{{
+	function getNewLinkAccessKey() 
 	{
 		return md5(microtime(true));
-	} // }}}
+	} 
 
-	function action_add_link() // {{{
+	function action_add_link() 
 	{
 		$dl = new XLite_Module_Egoods_Model_DownloadableLink($_POST['new_acc']);
 		$dl->set('file_id', $_POST['file_id']);
@@ -146,9 +146,9 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 		$dl->set('expire_on', $_POST['new_expires']);
 		$dl->set('link_type', 'M');
 		$dl->create();
-	} // }}}
+	} 
 
-	function action_delete_links() // {{{
+	function action_delete_links() 
 	{
 		if (!isset($_POST['selected_links']) || !is_array($_POST['selected_links'])) {
 			return;
@@ -159,9 +159,9 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 				$dl->delete();
 			}
 		}
-	} // }}}
+	} 
 
-	function action_update_free_charge() // {{{
+	function action_update_free_charge() 
 	{
 		$product = $this->get('product');
 		if (isset($_POST['free_charge']) && is_array($_POST['free_charge'])) {
@@ -170,18 +170,18 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 			$product->set('egood_free_for_memberships', '');
 		}
 		$product->update();
-	} // }}}
+	} 
 
-	function action_add_pincode() // {{{
+	function action_add_pincode() 
 	{
 		$pin = new XLite_Module_Egoods_Model_PinCode();
 		$pin->set('product_id', $this->get('product_id'));
 		$pin->set('pin', $_POST['new_pin']);
 		$pin->set('enabled', (int)$_POST['new_pin_enabled']);
 		$pin->create();
-	} // }}}
+	} 
 
-	function action_delete_pin_codes() // {{{
+	function action_delete_pin_codes() 
 	{
 		if (!isset($_POST['selected_pins']) || !is_array($_POST['selected_pins'])) {
 			return;
@@ -190,9 +190,9 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 			$p = new XLite_Module_Egoods_Model_PinCode($pin_id);
 			$p->delete();
 		}
-	} // }}}
+	} 
 	
-	function action_disable_pin_codes() // {{{
+	function action_disable_pin_codes() 
 	{
 		if (!isset($_POST['selected_pins']) || !is_array($_POST['selected_pins'])) {
 			return;
@@ -202,9 +202,9 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 			$p->set('enabled', false);
 			$p->update();
 		}
-	} // }}}
+	} 
 
-	function action_enable_pin_codes() // {{{
+	function action_enable_pin_codes() 
 	{
 		if (!isset($_POST['selected_pins']) || !is_array($_POST['selected_pins'])) {
 			return;
@@ -214,9 +214,9 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 			$p->set('enabled', true);
 			$p->update();
 		}
-	} // }}}
+	} 
 
-	function action_free_pin_codes() // {{{
+	function action_free_pin_codes() 
 	{
 		if (!isset($_POST['selected_pins']) || !is_array($_POST['selected_pins'])) {
 			return;
@@ -227,9 +227,9 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 			$p->set('item_id', '');
 			$p->update();
 		}
-	} // }}}
+	} 
 
-	function getPinCodes() // {{{
+	function getPinCodes() 
 	{
 		if (!isset($this->pin_codes)) {
 			$p = new XLite_Module_Egoods_Model_PinCode();
@@ -239,9 +239,9 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 												''));
 		}
 		return $this->pin_codes;
-	} // }}}
+	} 
 
-	function action_update_pin_src() // {{{
+	function action_update_pin_src() 
 	{
 		$pin_settings = new XLite_Module_Egoods_Model_PinSettings();
 		$action = "";
@@ -254,9 +254,9 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 		$pin_settings->set('pin_type', $_POST['pin_src']);
 		isset($this->low_available_limit) ? $pin_settings->set('low_available_limit',$this->low_available_limit) : $pin_settings->set('low_available_limit',0);	
 		$pin_settings->$action();
-	} // }}}
+	} 
 
-	function action_update_pin_cmd_line() // {{{
+	function action_update_pin_cmd_line() 
 	{
 		$pin_settings = new XLite_Module_Egoods_Model_PinSettings();
 		$action = '';
@@ -268,14 +268,14 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 		}
 		$pin_settings->set('gen_cmd_line', $_POST['gen_cmd_line']);
 		$pin_settings->$action();
-	} // }}}	
+	} 	
 
-	function isValidEgoodsStoreDir() // {{{
+	function isValidEgoodsStoreDir() 
 	{
 		$store_dir = $this->getComplex('xlite.config.Egoods.egoods_store_dir');
 		if (!is_dir($store_dir) || !is_writable($store_dir)) {
 			return false;
 		}
 		return true;
-	} // }}}
+	} 
 }

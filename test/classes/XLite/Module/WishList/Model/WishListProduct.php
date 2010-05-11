@@ -81,14 +81,14 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
         return array($result, $this);
     }
 
-    function getProduct() // {{{ 
+    function getProduct()  
     {
         if (!isset($this->product)) {
             $this->product = new XLite_Model_Product($this->get("product_id"));
         }    
 
         return $this->product;    
-    } // }}}
+    } 
 
     /**
      * Return the Thumbnai image instance for this product 
@@ -102,7 +102,7 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
         return ($product = $this->getProduct()) ? $product->getThumbnail() : null;
     }
     
-    function getOrderItem() // {{{
+    function getOrderItem() 
     {
         if (!isset($this->orderItem)) {
             $this->orderItem = new XLite_Model_OrderItem();
@@ -110,9 +110,9 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
         }                                                
         
         return $this->orderItem;                                        
-    } // }}}
+    } 
 
-    function changeOrderItem(&$orderItem) // {{{
+    function changeOrderItem(&$orderItem) 
     {
         $isChanged = false;
         if ($this->xlite->get("WholesaleTradingEnabled")) {
@@ -126,9 +126,9 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
         }
 
         return $isChanged;
-    } // }}}
+    } 
 
-    function get($name) // {{{
+    function get($name) 
     {
         $value = null;
 
@@ -154,36 +154,36 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
         }
 
         return $value;
-    } // }}}
+    } 
 
-    function getImageURL() // {{{
+    function getImageURL() 
     {
         return $this->getProduct()->getImageURL();
-    } // }}}
+    } 
 
-    function getUrl() // {{{
+    function getUrl() 
     {
         return array(
 			'target' => 'product',
 			'action' => '',
 			'arguments' => array('product_id' => $this->get("product_id"))
 		);
-    } // }}}
+    } 
 
-    function getTotal() // {{{
+    function getTotal() 
     {
         return $this->get("price") * $this->get("amount");
-    } // }}}
+    } 
     
-    function hasImage() // {{{
+    function hasImage() 
     {
         return $this->getProduct()->hasImage();
-     } // }}}
+     } 
     
-    function hasOptions() // {{{ 
+    function hasOptions()  
     {
         return $this->get("options");
-    } // }}}
+    } 
     
     /* returns two-dimensional array like this
         ( 
@@ -274,18 +274,18 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
         return $result;
     }
     
-       function getProductOptions() // {{{
+       function getProductOptions() 
     {
         $options = $this->get("options");
 
         return empty($options) ? array() : unserialize($options);
-    } // }}}
+    } 
 
-    function setProductOptions(&$options) // {{{ 
+    function setProductOptions(&$options)  
     {
         $orderItem = $this->get("orderItem");
         $orderItem->setProductOptions($options);
         $this->set("options", $orderItem->get("options"));
-    } // }}}
+    } 
 
-} // }}}
+} 

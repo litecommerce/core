@@ -50,11 +50,11 @@ class XLite_Module_MultiCurrency_Model_CurrencyCountries extends XLite_Model_Abs
     public $alias = "country_currencies";	
     public $defaultOrder = "base,order_by,code";
 
-	function inCurrencyCountries($country_code) // {{{
+	function inCurrencyCountries($country_code) 
 	{
 		$countries = unserialize($this->get("countries"));
 		if (empty($countries)) return false;	
 		return in_array($country_code, $countries);
-	} // }}} 
+	}  
 
-} // }}}
+} 

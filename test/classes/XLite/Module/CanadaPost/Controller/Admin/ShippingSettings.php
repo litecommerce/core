@@ -41,4 +41,4 @@ class XLite_Module_CanadaPost_Controller_Admin_ShippingSettings extends XLite_Co
 		$this->pages["cps"]	= "Canada Post settings";
 		$this->pageTemplates["cps"] = "modules/CanadaPost/config.tpl";
 	}
-} // }}}
+} 

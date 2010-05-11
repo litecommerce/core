@@ -37,15 +37,15 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupon extends XLite_Contr
 {	
 	public $params = array("target", "coupon_id");
 
-	function getDC() // {{{
+	function getDC() 
 	{
 		if (is_null($this->_dc)) {
 			$this->_dc = new XLite_Module_Promotion_Model_DiscountCoupon($this->get("coupon_id"));
 		}
 		return $this->_dc;
-	} // }}}
+	} 
 
-	function action_update() // {{{
+	function action_update() 
 	{
 		$dc = new XLite_Module_Promotion_Model_DiscountCoupon();
 		if ($dc->find("coupon='" . addslashes($_POST['coupon']) . "' AND order_id='0' AND coupon_id<>'".addslashes($this->get("coupon_id"))."'")) {
@@ -61,5 +61,5 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupon extends XLite_Contr
 			$dc->update();
 			$this->set("returnUrl", $this->get("url")."&couponUpdated=1");
 		}
-	} // }}}
+	} 
 }

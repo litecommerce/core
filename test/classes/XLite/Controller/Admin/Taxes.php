@@ -191,7 +191,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
         } else {
             unset($this->invalidExpressions[$ind_rate]);
         }
-        // }}}
+        
 
         if (is_array($ptr)) {
             // conditional
@@ -369,7 +369,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
                     $this->set('error', 'Tax name "' . $currentName . '" is used in another formula.');
                     return null;
                 }
-                // }}}
+                
             } else {
                 $this->error = "Tax value must be a number or contain '=' at its start: '$taxValue'";
                 return null;

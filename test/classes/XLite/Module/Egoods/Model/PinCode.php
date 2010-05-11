@@ -59,7 +59,7 @@ class XLite_Module_Egoods_Model_PinCode extends XLite_Model_Abstract
 		"category"		=> false
 	);
 
-	function getFreePinCount($product_id) // {{{
+	function getFreePinCount($product_id) 
 	{
 		$product = new XLite_Model_Product($product_id);
 		if ($product->get('pin_type') == 'D') {
@@ -67,17 +67,17 @@ class XLite_Module_Egoods_Model_PinCode extends XLite_Model_Abstract
 		} else if ($product->get('pin_type') == 'E') {
 			return 99999999;
 		}	
-	} // }}}
+	} 
 
-	function isFree() // {{{
+	function isFree() 
 	{
 		if ($this->get('item_id') == '' && $this->get('order_id') == 0) {
 			return true;
 		}
 		return false;
-	} // }}}
+	} 
 
-	function _export($layout, $delimiter) // {{{
+	function _export($layout, $delimiter) 
 	{
 		$data = array();
 		$values = $this->get("properties");
@@ -97,9 +97,9 @@ class XLite_Module_Egoods_Model_PinCode extends XLite_Model_Abstract
 			}
 		}
 		return $data;
-	} // }}}
+	} 
 
-    public function import(array $options) // {{{
+    public function import(array $options) 
     {
         $properties = $options["properties"];
 		
@@ -136,5 +136,5 @@ class XLite_Module_Egoods_Model_PinCode extends XLite_Model_Abstract
 
 		echo " for product <a href=\"admin.php?target=product&product_id=".$product->get("product_id")."\">\"" . $product->get("name") . "\"</a><br>";
 
-    } // }}} 
+    }  
 }

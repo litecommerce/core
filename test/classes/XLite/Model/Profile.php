@@ -187,7 +187,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
     * @access public
     * @param array $data The properties data to modify
     **/
-    function modifyAdminProperties($properties) // {{{
+    function modifyAdminProperties($properties) 
     {
         if (is_array($properties)) {
             foreach ($properties as $key => $value) {
@@ -208,7 +208,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
     * @access public
     * @param array $data The properties data to modify
     **/
-    function modifyProperties($properties) // {{{
+    function modifyProperties($properties) 
     {
         if (is_array($properties)) {
             foreach ($properties as $key => $value) {
@@ -220,7 +220,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
             }
             $this->setProperties($properties);
         }
-    } // }}}
+    } 
 
     /**
      * Returns the specified property of this object. Read the object data from dataase if necessary 
@@ -249,66 +249,66 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         return $result;
     }
 
-    function getBillingState() // {{{
+    function getBillingState() 
     {
         $state = new XLite_Model_State($this->get("billing_state"));
         if ($state->get("state_id") == -1)
             $state->set("state", $this->get("billing_custom_state"));
 
         return $state;
-    } // }}}
-    function getShippingState() // {{{
+    } 
+    function getShippingState() 
     {
         $state = new XLite_Model_State($this->get("shipping_state"));
         if ($state->get("state_id") == -1)
             $state->set("state", $this->get("shipping_custom_state"));
 
         return $state;
-    } // }}}
-    function getBillingCountry() // {{{
+    } 
+    function getBillingCountry() 
     {
         return new XLite_Model_Country($this->get("billing_country"));
-    } // }}}
-    function getShippingCountry() // {{{
+    } 
+    function getShippingCountry() 
     {
         return new XLite_Model_Country($this->get("shipping_country"));
-    } // }}}
+    } 
 
-    function enable() // {{{
+    function enable() 
     {
         $this->set("status", "E");
-    } // }}}
+    } 
 
-    function disable() // {{{
+    function disable() 
     {
         $this->set("status", "D");
-    } // }}}
+    } 
 
-    function isExists($login = '') // {{{
+    function isExists($login = '') 
     {
         $p = new XLite_Model_Profile();
 
         return $p->find('login = \'' . addslashes($login) . '\'');
-    } // }}}
+    } 
 
     function isValid()
     {
         return parent::isExists();
     }
 
-    function isAdmin() // {{{
+    function isAdmin() 
     {
         return XLite_Model_Auth::getInstance()->isAdmin($this);
-    } // }}}
+    } 
 
-    function toXML() // {{{
+    function toXML() 
     {
         $id = "profile_" . $this->get("profile_id");
         $xml = parent::toXML();
         return "<profile id=\"$id\">\n$xml</profile>\n";
-    } // }}}
+    } 
 
-    function import(array $options) // {{{
+    function import(array $options) 
     {
         parent::import($options);
         // save memberships
@@ -318,14 +318,14 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         $c->set("name", "memberships");
         $c->set("value", serialize($this->config->getComplex('Memberships.memberships')));
         $c->update();
-    } // }}}
+    } 
 
     /**
     * Import a row from outside. 
     * It will modify the $this->config->Memberships->memberships variable
     * SO you need to save it after all.
     */
-    function _import(array $options) // {{{
+    function _import(array $options) 
     {
         static $line;
         if (!isset($line)) $line = 1; else $line++;
@@ -360,9 +360,9 @@ class XLite_Model_Profile extends XLite_Model_Abstract
                 $this->config->setComplex("Memberships.memberships", $memberships);
             }
         }
-    } // }}}
+    } 
 
-    function _convertProperties(array &$p, $md5_import = '') // {{{
+    function _convertProperties(array &$p, $md5_import = '') 
     {
         // X-CART Gold/Pro compatibility check for profile import
         if (!empty($p["status"])) {
@@ -390,7 +390,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         if (isset($p["shipping_country"])) {
             $p["shipping_country"] = $this->_convertCountry($p["shipping_country"]);
         }
-    } // }}}
+    } 
 
     function _convertState($value)
     {
@@ -412,7 +412,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         return "";
     }
 
-    function getImportFields($layout = null) // {{{
+    function getImportFields($layout = null) 
     {
         $layout = array();
         if (!is_null($this->config->getComplex('ImportExport.user_layout'))) {
@@ -441,7 +441,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
             }    
         }
         return $result;
-    } // }}}
+    } 
     
     function _beforeSave()
     {

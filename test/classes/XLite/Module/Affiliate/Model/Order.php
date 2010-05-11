@@ -35,22 +35,22 @@
  */
 class XLite_Module_Affiliate_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
 {
-    public function __construct($id = null) // {{{
+    public function __construct($id = null) 
     {
         $this->fields["partnerClick"] = 0;
         parent::__construct($id);
-    } // }}}
+    } 
     
     /**
     * handles partner click, if present
     */
-    function queued() // {{{
+    function queued() 
     {
         parent::queued();
         $this->chargePartnerCommissions();
-    } // }}}
+    } 
 
-	function Affiliate_processed() // {{{
+	function Affiliate_processed() 
 	{
 		if ($this->_oldStatus != 'Q') {
             $this->chargePartnerCommissions();
@@ -62,13 +62,13 @@ class XLite_Module_Affiliate_Model_Order extends XLite_Model_Order implements XL
                 $pp->notifyPartner();
             }
         }
-	} // }}}
+	} 
 	
-    protected function processed() // {{{
+    protected function processed() 
     {
         parent::processed();
 		$this->Affiliate_processed();
-    } // }}}
+    } 
 
     function storePartnerClick()
     {
@@ -101,7 +101,7 @@ class XLite_Module_Affiliate_Model_Order extends XLite_Model_Order implements XL
         }
     }
 
-    function chargePartnerCommissions() // {{{
+    function chargePartnerCommissions() 
     {
 		$this->storePartnerClick();
 
@@ -115,9 +115,9 @@ class XLite_Module_Affiliate_Model_Order extends XLite_Model_Order implements XL
                 $pp->charge($this);
             }
         }
-    } // }}}
+    } 
 
-    function delete() // {{{
+    function delete() 
     {
         parent::delete();
         $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
@@ -125,5 +125,5 @@ class XLite_Module_Affiliate_Model_Order extends XLite_Model_Order implements XL
         foreach ($payments as $p) {
             $p->delete();
         }
-    } // }}}
+    } 
 }

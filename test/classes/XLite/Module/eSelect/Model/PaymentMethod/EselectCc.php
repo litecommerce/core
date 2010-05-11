@@ -52,11 +52,11 @@ class XLite_Module_eSelect_Model_PaymentMethod_EselectCc extends XLite_Model_Pay
 		return $url;
 	}
 
-	function getReturnUrl() // {{{ 
+	function getReturnUrl()  
 	{
 		$url = $this->xlite->getShopUrl("cart.php?target=eselect_checkout&action=return", $this->getComplex('config.Security.customer_security'));
 		return $this->prepareUrl($url);
-	}   // }}}
+	}   
 
 	function getAVSMessageText($code)
 	{

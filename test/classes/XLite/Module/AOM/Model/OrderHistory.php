@@ -57,7 +57,7 @@ class XLite_Module_AOM_Model_OrderHistory extends XLite_Model_Abstract
 		return parent::get($name);
 	}
 	
-	function getChanges() // {{{
+	function getChanges() 
 	{
         if (is_null($this->_changes)) {
 			$this->_changes = unserialize(parent::get("changes"));
@@ -74,7 +74,7 @@ class XLite_Module_AOM_Model_OrderHistory extends XLite_Model_Abstract
 		}
 
 		return $this->_changes;
-	} // }}}
+	} 
 
 	function set($name, $value)
 	{
@@ -133,7 +133,7 @@ class XLite_Module_AOM_Model_OrderHistory extends XLite_Model_Abstract
 		return false;
 	}
 
-	function log($order, $cloneOrder = null, $ordersItems = null, $action = null) // {{{ 
+	function log($order, $cloneOrder = null, $ordersItems = null, $action = null)  
 	{
 		$history = array();
 		if ($action == "create_order")
@@ -256,5 +256,5 @@ class XLite_Module_AOM_Model_OrderHistory extends XLite_Model_Abstract
 			$orderHistory->set("date",time());
 			$orderHistory->create();
 		}	
-	} // }}}
+	} 
 }

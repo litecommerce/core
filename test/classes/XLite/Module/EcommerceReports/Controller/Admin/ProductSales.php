@@ -35,7 +35,7 @@
  */
 class XLite_Module_EcommerceReports_Controller_Admin_ProductSales extends XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports
 {
-    function getProductSales() // {{{
+    function getProductSales() 
     {
         if (is_null($this->productSales)) {
             $this->productSales = array();
@@ -46,18 +46,18 @@ class XLite_Module_EcommerceReports_Controller_Admin_ProductSales extends XLite_
             $this->productSales = $productSales;
         }
         return $this->productSales;
-    } // }}}
+    } 
 
-    function cmpProducts($p1, $p2) // {{{
+    function cmpProducts($p1, $p2) 
     {
         $key = $this->sort_by;
         if ($p1[$key] == $p2[$key]) {
             return 0;
         }
         return ($p1[$key] < $p2[$key]) ? -1 : 1;
-    } // }}}
+    } 
 
-    function sumProductSales($item) // {{{
+    function sumProductSales($item) 
     {
         $id = $item["product_id"] . (strlen($item["options"]) ? md5($item["options"]) : "");
         $orderItem = new XLite_Model_OrderItem();
@@ -76,16 +76,16 @@ class XLite_Module_EcommerceReports_Controller_Admin_ProductSales extends XLite_
 
         $this->productSales[$id]["total"] += $item["amount"] * $item["price"];
         $this->productSales[$id]["avg_price"] = $this->productSales[$id]["total"] / $this->productSales[$id]["amount"];
-    } // }}}
+    } 
     
-    function sumTotal($field) // {{{
+    function sumTotal($field) 
     {
         $total = 0;
         foreach ($this->get("productSales") as $sale) {
             $total += $sale[$field];
         }
         return $total;
-    } // }}}
+    } 
 
 	function getAveragePrice($total, $amount)
 	{

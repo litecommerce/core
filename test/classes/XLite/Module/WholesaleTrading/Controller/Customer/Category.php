@@ -42,7 +42,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
 	public $calculate = false;
 	
 	// FIXME - correct the "bulk categories" functionality and this code too
-    /*function init() // {{{
+    /*function init() 
     {
 		if (in_array($_REQUEST["category_id"], explode(";", $this->getComplex('config.WholesaleTrading.bulk_categories')))) {
 			$layout = XLite_Model_Layout::getInstance();
@@ -52,9 +52,9 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
 			$this->session->set("DirectSaleAvailable", null);
 		}
         parent::init();
-    }*/ // }}}
+    }*/ 
 
-	function action_bulk() // {{{
+	function action_bulk() 
 	{
 		$products = $_REQUEST["product_qty"];
 		$opt_products = $_REQUEST["opt_product_qty"];
@@ -103,9 +103,9 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
 			$this->action_calculate_price();
 			return;
 		}
-	} // }}}
+	} 
 
-	function add_products($products) // {{{
+	function add_products($products) 
 	{
 		if (empty($products)) {
 			return;
@@ -144,9 +144,9 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
     		$this->cart->_items = null;
         	$this->updateCart(); // recalculate shopping cart
     	}
-	} // }}}
+	} 
 
-	function action_calculate_price() // {{{
+	function action_calculate_price() 
 	{
 		$products = $_REQUEST["product_qty"];
 		$opt_products = $_REQUEST["opt_product_qty"];
@@ -186,9 +186,9 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
 		}
 		$this->valid = false;
 		$this->calculate = true;
-	} // }}}
+	} 
 
-	function total_price($product_id, $idx = null) // {{{
+	function total_price($product_id, $idx = null) 
 	{
 		if ($idx !== null) {
 			if (isset($this->totals[$product_id][$idx])) {
@@ -197,9 +197,9 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
 			return 0;
 		}
 		return $this->totals[$product_id];
-	} // }}}
+	} 
 
-	function wholesale_prices($product_id, $idx = null) // {{{
+	function wholesale_prices($product_id, $idx = null) 
 	{
 		if ($idx !== null) {
 			if (isset($this->wholesale_prices[$product_id][$idx])) {
@@ -208,9 +208,9 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
 			return 0;
 		}
 		return $this->wholesale_prices[$product_id];
-	} // }}}
+	} 
 
-	function quantity($product_id, $key=null) // {{{
+	function quantity($product_id, $key=null) 
 	{
 		if ($key !== null) {
 			if (isset($_POST["opt_product_qty"][$product_id][$key])) {
@@ -222,14 +222,14 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
 			}
 		}	
 		return 1;
-	} // }}}
+	} 
 
-	function option_selected($p_id, $key) // {{{
+	function option_selected($p_id, $key) 
 	{
 		return ($key == $_POST["OptionSetIndex"][$p_id]);
-	} // }}}
+	} 
 
-	function _check_product($product_id, $qty, $option_idx) // {{{
+	function _check_product($product_id, $qty, $option_idx) 
 	{
 		// check for quantity
 		$items = $this->cart->get('items');
@@ -300,14 +300,14 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
 			}	
 		}
 		return "";
-	} // }}} 
+	}  
 
-	function getErrors() // {{{
+	function getErrors() 
 	{
 		return $this->errors;
-	} // }}}
+	} 
 
-	function isProductError($product_id, $o_idx = null) // {{{
+	function isProductError($product_id, $o_idx = null) 
 	{
 		if ($o_idx !== null) {
 			foreach($this->errors as $err) {
@@ -323,15 +323,15 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
 			}	
 		}
 		return false;
-	} // }}}
+	} 
 
-	function productSelected($product_id, $key=null) // {{{
+	function productSelected($product_id, $key=null) 
 	{
 		if ($key !== null) {
 			return isset($_POST["opt_product_qty"][$product_id][$key]);
 		}	
 		return isset($_POST["product_selected"][$product_id]);
-	} // }}}
+	} 
 
 	function isProductOutOfStock($product_id, $option_idx = null)
 	{

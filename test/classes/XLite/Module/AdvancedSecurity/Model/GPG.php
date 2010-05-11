@@ -45,7 +45,7 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
 	protected $_secretKey = null;
     protected $_secretKeyInfo = null;
 
-    public function __construct() // {{{
+    public function __construct() 
     {
         //
         // GnuPG binary
@@ -106,16 +106,16 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
         } elseif (!empty($upload_tmp_dir) && is_dir($upload_tmp_dir)) {
 			$this->tmpdir = $upload_tmp_dir;
         }    
-    } // }}}
+    } 
 
-    function cleanup() // {{{
+    function cleanup() 
     {
         // remove GnuPG keyring files
         @unlink($this->homedir . "/pubring.gpg~");
         @unlink($this->homedir . "/secring.gpg~");
         @unlink($this->homedir . "/trustdb.gpg~");
         return;
-    } // }}}
+    } 
     
 	function validatePath($cmd_file, $isFolder = false)
 	{
@@ -199,7 +199,7 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
 		return $written;
 	}
 
-	function encrypt($content) // {{{
+	function encrypt($content) 
 	{
 		// file to encrypt data to
 		$dst = tempnam($this->tmpdir, "dst");
@@ -215,9 +215,9 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
 		}
 		@unlink($dst);
 		return $result;
-	} // }}}
+	} 
 
-	function decrypt($content, $password = null) // {{{
+	function decrypt($content, $password = null) 
 	{
 		$passphrase = is_null($password) ? $this->session->get("masterPassword") : $password;
 		$src = tempnam($this->homedir, "src"); // encrypted data
@@ -242,23 +242,23 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
 		@unlink($src);
 		@unlink($dst);
 		return $result;
-	} // }}}
+	} 
 
-    function isEncoded($data) // {{{
+    function isEncoded($data) 
     {
         return is_scalar($data) && func_starts_with($data, "-----BEGIN PGP MESSAGE-----");
-    } // }}}
+    } 
 
-    function deleteKeys() // {{{
+    function deleteKeys() 
     {
         // remove GnuPG keyring files
         @unlink($this->homedir . "/pubring.gpg");
         @unlink($this->homedir . "/secring.gpg");
         @unlink($this->homedir . "/trustdb.gpg");
         $this->cleanup();
-    } // }}}
+    } 
 
-	function uploadKeys() // {{{
+	function uploadKeys() 
 	{
 		// import keys to keyring
 		if (is_uploaded_file($_FILES["gpg_public_file"]["tmp_name"]) && is_uploaded_file($_FILES["gpg_secret_file"]["tmp_name"])) {
@@ -270,32 +270,32 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
 			return $this->getPublicKey() && $this->getSecretKey();
 		}
 		return false;
-	} // }}}
+	} 
 
-    function deleteKey($key) // {{{
+    function deleteKey($key) 
     {
         $file = $this->homedir . '/' . $key . '.gpg';
         @unlink($file);
         $this->cleanup();
-    } // }}}
+    } 
 
-    function getPublicKey() // {{{
+    function getPublicKey() 
     {
         if (is_null($this->_publicKey)) {
             $this->_publicKey = $this->_getKeyData("public");
         }
         return $this->_publicKey;
-    } // }}}
+    } 
 
-    function getSecretKey() // {{{
+    function getSecretKey() 
     {
         if (is_null($this->_secretKey)) {
             $this->_secretKey = $this->_getKeyData("secret");
         }
         return $this->_secretKey;
-    } // }}}
+    } 
 
-    function _getKeyData($key = "public") // {{{
+    function _getKeyData($key = "public") 
     {
         if ($key == "public") {
             $target = " --export ";
@@ -307,25 +307,25 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
 		$cmd = $this->exe . " --armor --yes --no-tty --disable-mdc --no-random-seed-file --no-verbose --no-greeting --no-secmem-warning --no-permission-warning --no-options --no-random-seed-file --homedir " . $this->homedir . $target . "\"" . $this->getComplex('config.AdvancedSecurity.gpg_user_id') . "\"";
 		$data = $this->execGPG($cmd);
         return $data;
-    } // }}}
+    } 
 
-    function getPublicKeyInfo() // {{{
+    function getPublicKeyInfo() 
     {
         if (is_null($this->_publicKeyInfo)) {
             $this->_publicKeyInfo = $this->_getKeyInfo("public");
         }
         return $this->_publicKeyInfo;
-    } // }}}
+    } 
 
-    function getSecretKeyInfo() // {{{
+    function getSecretKeyInfo() 
     {
         if (is_null($this->_secretKeyInfo)) {
             $this->_secretKeyInfo = $this->_getKeyInfo("secret");
         }
         return $this->_secretKeyInfo;
-    } // }}}
+    } 
 
-    function _getKeyInfo($key = "public") // {{{
+    function _getKeyInfo($key = "public") 
     {
         if ($key == "public") {
             $target = " --list-keys";
@@ -337,19 +337,19 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
         $cmd = $this->exe . " --armor --yes --no-tty --disable-mdc --no-random-seed-file --no-verbose --no-greeting --no-secmem-warning --no-permission-warning --no-options --no-random-seed-file --homedir " . $this->homedir . $target;
 		$data = $this->execGPG($cmd);
         return $data;
-    } // }}}
+    } 
 
-    function isKeyValid($key, $type) // {{{
+    function isKeyValid($key, $type) 
     {
         $type = strtoupper($type);
         return strlen($key) && strpos($key, "-----BEGIN PGP $type KEY BLOCK-----") !== false;
-    } // }}}
+    } 
 
-    function isPasswordValid($pass = null) // {{{
+    function isPasswordValid($pass = null) 
     {
         $password = is_null($pass) ? $this->getComplex('session.masterPassword') : $pass;
         return $this->decrypt($this->encrypt("test"), $password) == "test";
-    } // }}}
+    } 
 
 	function isConfigurationValid()
 	{

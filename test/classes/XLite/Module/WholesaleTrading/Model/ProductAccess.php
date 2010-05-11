@@ -85,7 +85,7 @@ class XLite_Module_WholesaleTrading_Model_ProductAccess extends XLite_Model_Abst
 		return $result;
 	}
 
-	function _export($layout, $delimiter) // {{{
+	function _export($layout, $delimiter) 
 	{
 		$data = array();
 		$values = $this->get("properties");
@@ -104,9 +104,9 @@ class XLite_Module_WholesaleTrading_Model_ProductAccess extends XLite_Model_Abst
 			}
 		}
         return $data;
-	} // }}} 
+	}  
 
-    function _import(array $options) // {{{
+    function _import(array $options) 
     {
         static $line_no;
         if (!isset($line_no)) $line_no = 1; else $line_no++;
@@ -137,7 +137,7 @@ class XLite_Module_WholesaleTrading_Model_ProductAccess extends XLite_Model_Abst
             $this->importError = "Product not found. CSV file line # $line_no";
             echo $this->importError;
 		}
-    } // }}} 
+    }  
 
     function collectGarbage()
     {

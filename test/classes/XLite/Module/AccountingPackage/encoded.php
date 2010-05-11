@@ -37,7 +37,7 @@
 
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
-function AccountingPackage_export_qb(&$dialog) // {{{
+function AccountingPackage_export_qb(&$dialog) 
 {
     $qb = new XLite_View_Abstract();
     $qb->component = $dialog;
@@ -46,9 +46,9 @@ function AccountingPackage_export_qb(&$dialog) // {{{
     $qb->init();
     $qb->display();
     $dialog->set("silent", true); // suppress output
-} // }}}
+} 
 
-function AccountingPackage_export(&$dialog, $format) // {{{
+function AccountingPackage_export(&$dialog, $format) 
 {
     $qb = new XLite_View_Abstract();
     $qb->component = $dialog;
@@ -60,7 +60,7 @@ function AccountingPackage_export(&$dialog, $format) // {{{
     $qb->display();
     $dialog->set("silent", true); // suppress output
 
-} // }}}
+} 
 
 // WARNING :
 // Please ensure that you have no whitespaces / empty lines below this message.

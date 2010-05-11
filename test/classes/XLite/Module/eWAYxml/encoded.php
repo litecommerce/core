@@ -118,7 +118,7 @@ $pp_test = ($module_params["testmode"]=="N")?(""):("TRUE");
 $test_server = $module_params["param09"];
 $live_server = $module_params["param08"];
 $pay_server = ($module_params["testmode"]=="N")?($live_server):($test_server);
-// }}}
+
 
 $post = "";
 $post .= "<ewaygateway>";
@@ -144,7 +144,7 @@ $post .= "</ewaygateway>";
 // LiteCommerce code {{{
 //list($a,$return)=func_https_request("POST","https://www.eway.com.au:443/".$script,$post,"","","text/xml");
 list($a,$return)=ewx_func_https_request("POST", $pay_server, $post);
-// }}}
+
 
 #<ewayResponse>
 #	<ewayTrxnError>A9,INVALID CARD NUMBER. Data Sent:4111111111111111</ewayTrxnError>
@@ -175,7 +175,7 @@ $bill_output[billmes].= " (TrnxNum=".$out[1].")";
 
 ?><?php
 
-// }}}
+
         //
         // *********************** POST PROCESS ***********************
         //

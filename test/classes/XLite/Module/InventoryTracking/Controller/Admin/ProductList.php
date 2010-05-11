@@ -35,13 +35,13 @@
  */
 class XLite_Module_InventoryTracking_Controller_Admin_ProductList extends XLite_Controller_Admin_ProductList implements XLite_Base_IDecorator
 {
-    function init() // {{{
+    function init() 
     {
         $this->params[] = "inventory";
         parent::init();
-    } // }}}
+    } 
 
-    function getProducts() // {{{
+    function getProducts() 
     {
         if (is_null($this->productsList)) {
             $this->productsList = parent::getProducts();
@@ -74,5 +74,5 @@ class XLite_Module_InventoryTracking_Controller_Admin_ProductList extends XLite_
             $this->productsFound = count($this->productsList);
         }
         return $this->productsList;
-    } // }}}
+    } 
 }

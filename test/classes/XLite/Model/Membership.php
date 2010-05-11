@@ -46,7 +46,7 @@ class XLite_Model_Membership extends XLite_Model_Abstract
     public $countRequested = null;	
     public $countGranted   = null;
 
-	function getMemberships() // {{{
+	function getMemberships() 
 	{
         if (!is_null($this->memberships)) {
 			return $this->memberships;
@@ -89,9 +89,9 @@ class XLite_Model_Membership extends XLite_Model_Abstract
 		}
 		
 		return $this->memberships;
-	} // }}} 
+	}  
 	
-	public function __construct() // {{{
+	public function __construct() 
 	{
 		parent::__construct();
 		$memberships = $this->get("memberships");
@@ -101,9 +101,9 @@ class XLite_Model_Membership extends XLite_Model_Abstract
 				$this->set("properties", $memberships[$args[0]]);
 			}
 		}
-	} // }}}
+	} 
 
-	function create() // {{{
+	function create() 
 	{
 		$max = 1; 
         $memberships = $this->get("memberships");
@@ -124,9 +124,9 @@ class XLite_Model_Membership extends XLite_Model_Abstract
 		$memberships = (array) $this->sortMemberships($memberships);
         $config = new XLite_Model_Config();
 		$config->createOption("Memberships","membershipsCollection", serialize($memberships));    
-	} // }}}
+	} 
 
-	function update() // {{{
+	function update() 
 	{
 	    $config = new XLite_Model_Config();
         $memberships = $this->get("memberships");
@@ -138,18 +138,18 @@ class XLite_Model_Membership extends XLite_Model_Abstract
 		$memberships[$this->get("membership_id")] = $membershipData;
 		$memberships = (array) $this->sortMemberships($memberships);
 		$config->createOption("Memberships","membershipsCollection", serialize($memberships));
-    } // }}}
+    } 
 
-	function delete() // {{{
+	function delete() 
 	{
 		$config = new XLite_Model_Config();
         $memberships = $this->get("memberships");
 		unset($memberships[$this->get("membership_id")]);
 		$memberships = (array) $this->sortMemberships($memberships);
 		$config->createOption("Memberships","membershipsCollection", serialize($memberships));    
-	} // }}}
+	} 
 
- 	function findAll($where = null, $orderby = null, $groupby = null, $limit = null) // {{{
+ 	function findAll($where = null, $orderby = null, $groupby = null, $limit = null) 
 	{
 		$result = array();
 		$memberships = (array) $this->sortMemberships();
@@ -158,7 +158,7 @@ class XLite_Model_Membership extends XLite_Model_Abstract
 			$result[$membership_id] = $membership;	
 		}
 		return $result;
-	} // }}}	
+	} 	
 
 	function sortMemberships($memberships = null)
 	{
@@ -168,13 +168,13 @@ class XLite_Model_Membership extends XLite_Model_Abstract
 		return $memberships;
 	}
 
-	function cmp($a, $b) // {{{
+	function cmp($a, $b) 
 	{
 		if  ($a['orderby'] == $b['orderby']) return 0;
 		return ($a['orderby'] > $b['orderby']) ? 1 : -1;
-	} // }}}
+	} 
 
-    function getRequestedCount() // {{{
+    function getRequestedCount() 
     {
         $count = 0;
         if (is_null($this->countRequested)) {
@@ -190,9 +190,9 @@ class XLite_Model_Membership extends XLite_Model_Abstract
         }
 
         return $count;
-    } // }}}
+    } 
 
-    function getGrantedCount() // {{{
+    function getGrantedCount() 
     {
         $count = 0;
         if (is_null($this->countGranted)) {
@@ -208,7 +208,7 @@ class XLite_Model_Membership extends XLite_Model_Abstract
         }
 
         return $count;
-    } // }}}
+    } 
 
 	/*
 	 * remove from the $value characters, that are slashed by mysql_real_escape_string()
@@ -228,4 +228,4 @@ class XLite_Model_Membership extends XLite_Model_Abstract
 		return $expression;
 	}
 
-} // }}}
+} 

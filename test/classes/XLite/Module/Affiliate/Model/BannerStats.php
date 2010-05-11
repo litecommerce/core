@@ -54,7 +54,7 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
     /**
     * Logs view banner request
     */
-    function logView() // {{{
+    function logView() 
     {
         $this->set("stat_type", "V");
         $this->set("partner_id", $_GET["partner"]);
@@ -63,9 +63,9 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
         $this->set("referrer",   $_SERVER["HTTP_REFERER"]);
         $this->set("date",       time());
         $this->create();
-    } // }}}
+    } 
 
-    function logClick() // {{{
+    function logClick() 
     {
         $this->set("stat_type", "C");
         $this->set("partner_id", $_GET["partner"]);
@@ -75,9 +75,9 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
         $this->set("referrer", $referrer);
         $this->set("date", time());
         $this->create();
-    } // }}}
+    } 
 
-    function searchTopPerformers($startDate, $endDate, $reportBy) // {{{
+    function searchTopPerformers($startDate, $endDate, $reportBy) 
     {
 		$startDate = intval($startDate);
         $endDate = intval($endDate);
@@ -164,9 +164,9 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
             }
             return $clicks;
         }
-    } // }}}
+    } 
 
-    function search($partner_id, $startDate, $endDate, $sort_by, $homeBanner, $productBanner, $directLink) // {{{
+    function search($partner_id, $startDate, $endDate, $sort_by, $homeBanner, $productBanner, $directLink) 
     {
         $where = array();
         if (!empty($partner_id)) {
@@ -264,9 +264,9 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
         $result = $result2;
         sort($result);
         return array_reverse($result);
-    } // }}}
+    } 
 
-    function getPartner() // {{{
+    function getPartner() 
     {
         if (is_null($this->partner)) {
             $profile = new XLite_Model_Profile($this->get("partner_id"));
@@ -275,5 +275,5 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
             }
         }
         return $this->partner;
-    } // }}}
+    } 
 }

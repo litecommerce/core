@@ -41,7 +41,7 @@ class XLite_Module_AustraliaPost_Model_Shipping_Aupost extends XLite_Model_Shipp
     public $error = "";	
     public $xmlError = false;
 
-    function getWeightInGrams($order, $weight_unit=null) // {{{
+    function getWeightInGrams($order, $weight_unit=null) 
     {
         $weight = (is_object($order)) ? $order->get("weight") : $order;
         $weight_unit = (isset($weight_unit)) ? $weight_unit : $this->config->getComplex('General.weight_unit');
@@ -57,36 +57,36 @@ class XLite_Module_AustraliaPost_Model_Shipping_Aupost extends XLite_Model_Shipp
         		return $weight;
         }
         return 0;
-    } // }}}
+    } 
 
-	function cleanCache() // {{{ 
+	function cleanCache()  
 	{
 		$this->_cleanCache("aupost_cache");
-	} // }}}
+	} 
 
-    function getModuleName() // {{{ 
+    function getModuleName()  
     {
         return "Australia Post";
-    } // }}} 
+    }  
 
-	function getRates(XLite_Model_Order $order) // {{{
+	function getRates(XLite_Model_Order $order) 
 	{
 		include_once LC_MODULES_DIR . 'AustraliaPost' . LC_DS . 'encoded.php';
 		return Shipping_aupost_getRates($this,$order);
-	} // }}}
+	} 
 	
-	function queryRates($options, $originalZipcode, $destinationZipcode, $destinationCountry, $weight, $weight_unit=null) // {{{
+	function queryRates($options, $originalZipcode, $destinationZipcode, $destinationCountry, $weight, $weight_unit=null) 
 	{
 		include_once LC_MODULES_DIR . 'AustraliaPost' . LC_DS . 'encoded.php';
 		return Shipping_aupost_queryRates($this, $options, $originalZipcode, $destinationZipcode, $destinationCountry, $weight, $weight_unit);
-	} // }}}
+	} 
 
-	function parseResponse($rates_data, $destination) // {{{
+	function parseResponse($rates_data, $destination) 
 	{
 		include_once LC_MODULES_DIR . 'AustraliaPost' . LC_DS . 'encoded.php';
 		return Shipping_aupost_parseResponse($this, $rates_data, $destination);
 
-	} // }}} 
+	}  
 
     function get($property)
 	{
@@ -145,4 +145,4 @@ class XLite_Module_AustraliaPost_Model_Shipping_Aupost extends XLite_Model_Shipp
 
     	return $result;
     }
-} // }}}
+} 

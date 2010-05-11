@@ -38,7 +38,7 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XL
     public $params = array("target", "mode");	
     public $sample = "The quick brown fox jumps over the lazy dog.";
     
-    function action_orders() // {{{
+    function action_orders() 
     {
         $gpg = $this->get("gpg");
         $pubkey = $gpg->getPublicKey();
@@ -71,27 +71,27 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XL
 ?>
 <br><br>Order(s) processed successfully. <a href="admin.php?target=advanced_security#order_management"><u>Click here to return to admin interface</u></a>
 <?php
-    } // }}}
+    } 
     
-    function testEncrypt() // {{{
+    function testEncrypt() 
     {
         $gpg = $this->get("gpg");
         $this->encryptResult = $gpg->encrypt($this->sample);
-    } // }}}
+    } 
 
-    function testDecrypt() // {{{
+    function testDecrypt() 
     {
         $gpg = $this->get("gpg");
         $this->decryptResult = $gpg->decrypt($this->encryptResult, $this->get("passphrase"));
-    } // }}}
+    } 
     
-    function action_test() // {{{
+    function action_test() 
     {
         // see template for testing details
         $this->set("valid", false); // no NOT redirect after test
-    } // }}}
+    } 
 
-    function action_download_secret_key() // {{{
+    function action_download_secret_key() 
     {
         $gpg = $this->get("gpg");
         $downloadPass = $this->get("download_password");
@@ -103,16 +103,16 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XL
             $this->set("invalidPassword", true);
             $this->set("valid", false);
         }
-    } // }}}
+    } 
 
-    function getSecurityOptions() // {{{
+    function getSecurityOptions() 
     {
         $config = new XLite_Model_Config();
         $options = $config->getByCategory("AdvancedSecurity");
         return $options;
-    } // }}}
+    } 
     
-    function action_options() // {{{
+    function action_options() 
     {
         $config = new XLite_Model_Config();
         $options = $config->getByCategory("AdvancedSecurity");
@@ -136,7 +136,7 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XL
             $options[$i]->set("value", $val);
             $options[$i]->update();
         }
-    } // }}}
+    } 
 
     function action_delete_keys()
     {
@@ -150,11 +150,11 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XL
         $this->set("valid", $gpg->uploadKeys());
     }
 
-    function getGPG() // {{{
+    function getGPG() 
     {
         if (is_null($this->gpg)) {
             $this->gpg = new XLite_Module_AdvancedSecurity_Model_GPG();
         }
         return $this->gpg;
-    } // }}}
+    } 
 }

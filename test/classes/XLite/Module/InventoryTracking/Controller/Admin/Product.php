@@ -139,14 +139,14 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
         return $productOptions;
     }
 
-	function updateProductInventorySku() // {{{
+	function updateProductInventorySku() 
 	{
 		$product_id = addslashes($this->get("product_id"));
 		$p = new XLite_Model_Product();
 		if ($p->find("product_id='$product_id'")) {
 			$p->updateInventorySku();
 		}
-	} // }}}
+	} 
 
     function action_delete_tracking_option()
     {

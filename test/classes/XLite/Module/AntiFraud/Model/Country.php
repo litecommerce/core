@@ -37,13 +37,13 @@ class XLite_Module_AntiFraud_Model_Country extends XLite_Model_Country implement
 {	
 	public $riskCountry = null;
 
-	public function __construct($id = null) // {{{ 
+	public function __construct($id = null)  
 	{
 		$this->fields["risk_country"] = 0; 
 		parent::__construct($id);
-	} // }}}
+	} 
 
-	function isRiskCountry($check=null) // {{{
+	function isRiskCountry($check=null) 
 	{
 		if (isset($this->riskCountry)) {
 			if (!isset($check)) {
@@ -73,6 +73,6 @@ class XLite_Module_AntiFraud_Model_Country extends XLite_Model_Country implement
 		} else {
 			return (($this->riskCountry & $check) > 0) ? true : false;
 		}
-	} // }}}
+	} 
 	
-} // }}}
+} 

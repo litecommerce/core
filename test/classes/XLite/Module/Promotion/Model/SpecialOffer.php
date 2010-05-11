@@ -979,14 +979,14 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_Abstract
 		return false;
 	}
 	
-	function collectGarbage() // {{{ 
+	function collectGarbage()  
 	{
 		$specialOffer = new XLite_Module_Promotion_Model_SpecialOffer();
 		$specialOffers = $specialOffer->findAll("status = 'Trash'");
 		foreach($specialOffers as $specialOffer_) {
 			$specialOffer_->delete();
 		}
-	} // }}}
+	} 
 
 	function markInvalid()
 	{

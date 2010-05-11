@@ -42,7 +42,7 @@ function Shipping_aupost_getRates($_this, $order)
 
 }
 
-function Shipping_aupost_queryRates($_this, $options, $originalZipcode, $destinationZipcode, $destinationCountry, $weight, $weight_unit=null) // {{{
+function Shipping_aupost_queryRates($_this, $options, $originalZipcode, $destinationZipcode, $destinationCountry, $weight, $weight_unit=null) 
 {
 	$ap_host = "http://drc.edeliver.com.au";
 	$ap_url = "/ratecalc.asp";
@@ -121,7 +121,7 @@ function Shipping_aupost_queryRates($_this, $options, $originalZipcode, $destina
 	} else {
 		return array();
 	}
-} // }}}
+} 
 
 function Shipping_aupost_parseResponse($_this, $response, $destination) 
 {

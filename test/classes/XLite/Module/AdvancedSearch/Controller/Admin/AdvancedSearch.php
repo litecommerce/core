@@ -35,17 +35,17 @@
  */
 class XLite_Module_AdvancedSearch_Controller_Admin_AdvancedSearch extends XLite_Controller_Admin_Abstract
 {
-	function getAllPrices() // {{{ 
+	function getAllPrices()  
 	{
 		return unserialize($this->config->getComplex('AdvancedSearch.prices'));
-	} // }}}
+	} 
 
-	function getAllWeights() // {{{ 
+	function getAllWeights()  
 	{
         return unserialize($this->config->getComplex('AdvancedSearch.weights'));
-	} // }}}	
+	} 	
 	
-	function action_update() // {{{ 
+	function action_update()  
 	{	
 	    $config = new XLite_Model_Config();
 		$config->set('category','AdvancedSearch');
@@ -60,9 +60,9 @@ class XLite_Module_AdvancedSearch_Controller_Admin_AdvancedSearch extends XLite_
         }
 
 		$config->update();
-	} // }}}
+	} 
 	
-	function action_delete() // {{{ 
+	function action_delete()  
 	{
 		if (isset($this->deleted_prices)) {
 		    $prices = unserialize($this->config->getComplex('AdvancedSearch.prices'));
@@ -86,9 +86,9 @@ class XLite_Module_AdvancedSearch_Controller_Admin_AdvancedSearch extends XLite_
             $config->set('value',serialize($weights));
             $config->update();
         }
-	} // }}}
+	} 
 
-	function action_add() // {{{ 
+	function action_add()  
 	{
 		if (isset($this->new_price) && is_array($this->new_price) && strlen($this->new_price["start"]) > 0 && strlen($this->new_price["end"]) > 0) { 
 			$prices = unserialize($this->config->getComplex('AdvancedSearch.prices'));
@@ -108,5 +108,5 @@ class XLite_Module_AdvancedSearch_Controller_Admin_AdvancedSearch extends XLite_
             $config->set('value',serialize($weights));
             $config->update();
         }
-	} // }}}
+	} 
 }

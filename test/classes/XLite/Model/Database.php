@@ -266,12 +266,12 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
     * @return mixed         The table name
     * @static
     */
-    function getTableByAlias($alias = '') // {{{
+    function getTableByAlias($alias = '') 
     {
         return self::DBTABLE_PREFIX . $alias;
-    } // }}}
+    } 
 
-    function isTableExists($table) // {{{
+    function isTableExists($table) 
     {
         $tables = $this->getAll("SHOW TABLES");
         foreach ($tables as $key => $tab) {
@@ -280,9 +280,9 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
             }
         }
         return false;
-    } // }}}
+    } 
     
-    function isIndexExists($index, $table) // {{{
+    function isIndexExists($index, $table) 
     {
         $i = $this->getAll("SHOW INDEX FROM $table");
         foreach ($i as $row) {
@@ -291,9 +291,9 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
             }
         }
         return false;
-    } // }}}
+    } 
 
-    function isFieldExists($table, $field) // {{{
+    function isFieldExists($table, $field) 
     {
         $fields = $this->getAll("SHOW FIELDS FROM $table");
         foreach ($fields as $fieldDescription) {
@@ -302,11 +302,11 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
             }
         }
         return false;
-    } // }}}
+    } 
 
     // CREATE / ALTER / DROP functions {{{
 
-    function createTable($table, $sql, $v = true) // {{{
+    function createTable($table, $sql, $v = true) 
     {
         if ($v) echo "Creating table $table ... ";
         if ($this->isTableExists($table)) {
@@ -320,9 +320,9 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
 			}
         }
 		return true;
-    } // }}}
+    } 
 
-    function createIndex($index, $table, $sql, $v = true) // {{{
+    function createIndex($index, $table, $sql, $v = true) 
     {
         if ($v) echo "Creating index $index in $table ... ";
         if ($this->isIndexExists($index, $table)) {
@@ -336,15 +336,15 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
 			}
         }
 		return true;
-    } // }}}
+    } 
 
-    function dropTable($table, $v = true) // {{{
+    function dropTable($table, $v = true) 
     {
         mysql_query("DROP TABLE IF EXISTS $table", $this->connection);
         if ($v) echo "Delete table $table ... [OK]\n";
-    } // }}}
+    } 
     
-    function alterTable($table, $sql, $v = true) // {{{
+    function alterTable($table, $sql, $v = true) 
     {
         if ($v) echo "Modifying table $table ... ";
         if (preg_match("/ALTER +TABLE +([^ ]*) +ADD ([^ ]*)/i", $sql, $matches)) {
@@ -360,13 +360,13 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
             }
         }
         return true;
-    } // }}}
+    } 
 
-    // }}}
+    
 
     // BACKUP / RESTORE functions {{{
 
-    function backup($file, $verbose = false) // {{{
+    function backup($file, $verbose = false) 
     {
         $handle = null;
         // open backup file if necessary
@@ -399,9 +399,9 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
         // write backup file ending comments
         $this->_write($handle, "-- WARNING: Do not change this line */ ?>\n");
         is_null($handle) or fclose($handle) && chmod($file, get_filesystem_permissions(0666));
-    } // }}}
+    } 
 
-    function restore($file) // {{{
+    function restore($file) 
     {
         echo "Please wait...<br>\n";
         $error = query_upload($file, $this->db->connection, true, true);
@@ -409,9 +409,9 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
 		echo "<br>\n";
 		XLite_Model_ModulesManager::getInstance()->cleanupCache();
         return $error;
-    } // }}}
+    } 
 
-    function getTableSchema($table) // {{{
+    function getTableSchema($table) 
     {
         // do not cache queries
         $cacheEnabled = $this->get("cacheEnabled");
@@ -472,19 +472,19 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
 
         $this->set("cacheEnabled", $cacheEnabled);
         return $schema;
-    } // }}}
+    } 
 
-    function getTableKeys($table) // {{{
+    function getTableKeys($table) 
     {
         return $this->getAll("SHOW KEYS FROM $table");
-    } // }}}
+    } 
     
-    function getTableFields($table) // {{{
+    function getTableFields($table) 
     {
         return $this->getAll("SHOW FIELDS FROM $table");
-    } // }}}
+    } 
 
-    function getTableContent($table) // {{{
+    function getTableContent($table) 
     {
         static $stat;
         if (!isset($stat)) $stat = array();
@@ -524,9 +524,9 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
             $content .= $schema . implode(', ', $values) . ')' . ";\n";
         }
         return empty($content) ? false : $content;
-    } // }}}
+    } 
 
-    function getTableInfo($table) // {{{
+    function getTableInfo($table) 
     {
         $count = 0;
         $id    = 0;
@@ -555,9 +555,9 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
         }
         @mysql_free_result($id);
         return $res;
-    } // }}}
+    } 
 
-    function getTables() // {{{
+    function getTables() 
     {
         $tables = array();
         foreach ($this->getAll("SHOW TABLES") as $table) {
@@ -567,9 +567,9 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
             }    
         }
         return $tables;
-    } // }}}
+    } 
 
-    function _write($handle, $content) // {{{
+    function _write($handle, $content) 
     {
         if (is_null($handle)) {
             echo $content;
@@ -577,12 +577,12 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
         } elseif (!fwrite($handle, $content, strlen($content))) {
             $this->doDie('<font color="red">Backup file write failed</font>');
         }
-    } // }}}
+    } 
 
-    function _isNumber($type) // {{{
+    function _isNumber($type) 
     {
         return ($type == 'tinyint' || $type == 'smallint' || $type == 'mediumint' || $type == 'int' || $type == 'bigint'  ||$type == 'timestamp') ? true : false;
-    } // }}}
+    } 
     
-    // }}}
+    
 }

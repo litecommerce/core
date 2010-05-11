@@ -180,7 +180,7 @@ class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_Abstract
 		return $this->product;
 	}
 
-	function getChildren($coupon = null) // {{{
+	function getChildren($coupon = null) 
 	{
 		if (is_null($this->_children)) {
 			if (empty($coupon)) $coupon = $this->get('coupon');
@@ -196,7 +196,7 @@ class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_Abstract
 			}
 		}
 		return $this->_children;
-	} // }}}
+	} 
 
 	function getChildrenCount()
 	{
@@ -223,7 +223,7 @@ EOT;
 		return $this->_children_count;
 	}
 
-	function set($name, $value) // {{{
+	function set($name, $value) 
 	{
 		if (($name == "coupon") && (is_null($this->_oldCouponCode))) {
 			if ($value != $this->get($name)) {
@@ -231,9 +231,9 @@ EOT;
 			}
 		}
 		parent::set($name, $value);
-	} // }}}
+	} 
 
-	function update() // {{{
+	function update() 
 	{
 		if (($this->get("order_id") == 0) && (!$this->get("new_link_mode")) && 
 			($this->_oldCouponCode != $this->get('coupon')) &&
@@ -242,19 +242,19 @@ EOT;
 			$this->set("new_link_mode", 1);
 		}
 		parent::update();
-	} // }}}
+	} 
 
-	function create() // {{{
+	function create() 
 	{
 		// all new coupons must be in the new link mode by default
 		$this->set("new_link_mode", 1);
 		parent::create();
-	} // }}}
+	} 
 
 	/*
 	 * Reattach children to to new link mode
 	 */
-	function reattachChildren($coupon) // {{{
+	function reattachChildren($coupon) 
 	{
 		$children = $this->getChildren($coupon);
 		foreach ((array)$children as $child) {
@@ -262,7 +262,7 @@ EOT;
 			$child->set("parent_id", $this->get("coupon_id"));
 			$child->update();
 		}
-	} // }}}
+	} 
     
     function isExpired() {
         return $this->get("expire") < time();

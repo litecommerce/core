@@ -35,7 +35,7 @@
  */
 class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implements XLite_Base_IDecorator
 {
-    public function __construct($id = null) // {{{
+    public function __construct($id = null) 
     {
         $this->fields["parent"] = 0;
         $this->fields["partner_fields"] = "";
@@ -47,17 +47,17 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
         $this->_securefields["plan"] = "";
         $this->_securefields["reason"] = "";
         parent::__construct($id);
-    } // }}}
+    } 
 
-    function set($name, $value) // {{{
+    function set($name, $value) 
     {
         if ($name == "partner_fields" && is_array($value)) {
             $value = serialize($value);
         }
         parent::set($name, $value);
-    } // }}}
+    } 
 
-    function get($name) // {{{
+    function get($name) 
     {
         $value = parent::get($name);
         if ($name == "partner_fields") {
@@ -67,9 +67,9 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
             }
         }
         return $value;
-    } // }}}
+    } 
 
-    function getParentProfile() // {{{
+    function getParentProfile() 
     {
         if (is_null($this->parentProfile)) {
             $pp = new XLite_Model_Profile();
@@ -78,7 +78,7 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
             }
         }
         return $this->parentProfile;
-    } // }}}
+    } 
 
     // IS_A methods {{{
     function isDeclinedPartner()
@@ -93,17 +93,17 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
     {
         return $this->auth->isPartner($this);
     }
-    // }}}
+    
 
-    function getPartnerPlan() // {{{
+    function getPartnerPlan() 
     {
         if (is_null($this->partnerPlan)) {
             $this->partnerPlan = new XLite_Module_Affiliate_Model_AffiliatePlan($this->get("plan"));
         }
         return $this->partnerPlan;
-    } // }}}
+    } 
 
-    function getParents() // {{{
+    function getParents() 
     {
         $parents = array();
         $tiers = intval($this->getComplex('config.Affiliate.tiers_number'));
@@ -121,9 +121,9 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
             } while ($found && $level++ < $tiers);
         }
         return $parents;
-    } // }}}
+    } 
 
-    function getAffiliates() // {{{
+    function getAffiliates() 
     {
         if (is_null($this->affiliates)) {
             $this->affiliates = array();
@@ -131,9 +131,9 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
             $this->buildAffiliatesTree($this->affiliates, $level);
         }    
         return $this->affiliates;
-   } // }}}
+   } 
 
-    function buildAffiliatesTree(&$affiliates, $level) // {{{
+    function buildAffiliatesTree(&$affiliates, $level) 
     {
         $tiers = intval($this->getComplex('config.Affiliate.tiers_number'));
         $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
@@ -143,9 +143,9 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
             $affiliates[] = $child;
             $child->buildAffiliatesTree($affiliates, $level + 1);
         }
-    } // }}}
+    } 
 
-    function getPartnerCommissions() // {{{
+    function getPartnerCommissions() 
     {
         if (is_null($this->partnerCommissions)) {
             $this->partnerCommissions = 0.00;
@@ -156,9 +156,9 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
             }
         }
         return $this->partnerCommissions;
-    } // }}}
+    } 
 
-    function getAffiliateCommissions() // {{{
+    function getAffiliateCommissions() 
     {
         if (is_null($this->affiliateCommissions)) {
             $this->affiliateCommissions = 0.00;
@@ -169,9 +169,9 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
             }
         }
         return $this->affiliateCommissions;
-    } // }}}
+    } 
 
-    function getBranchCommissions() // {{{
+    function getBranchCommissions() 
     {
         if (is_null($this->branchCommissions)) {
             $this->branchCommissions = 0.00;
@@ -184,5 +184,5 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
 
         }
         return $this->branchCommissions;
-    } // }}}
+    } 
 }

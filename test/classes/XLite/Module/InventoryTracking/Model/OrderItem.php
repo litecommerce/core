@@ -35,13 +35,13 @@
  */
 class XLite_Module_InventoryTracking_Model_OrderItem extends XLite_Model_OrderItem implements XLite_Base_IDecorator
 {
-	public function __construct() // {{{
+	public function __construct() 
 	{
 		parent::__construct();
 		$this->fields["product_sku"] = "";
-	} // }}}
+	} 
 
-	function set($name, $value) // {{{
+	function set($name, $value) 
 	{
 		$result = parent::set($name, $value);
 		if (!$this->xlite->get("ProductOptionsEnabled")) return $result;
@@ -49,9 +49,9 @@ class XLite_Module_InventoryTracking_Model_OrderItem extends XLite_Model_OrderIt
 			$this->assignProductSku();
 		}
 		return $result;
-	} // }}}
+	} 
 
-	function assignProductSku() // {{{
+	function assignProductSku() 
 	{
 		$this->set("product_sku", parent::get('sku'));
 		if (!$this->xlite->get("ProductOptionsEnabled")) return false;
@@ -73,9 +73,9 @@ class XLite_Module_InventoryTracking_Model_OrderItem extends XLite_Model_OrderIt
 			}
 		}
 		return false;
-	} // }}}
+	} 
 
-	function get($name) // {{{
+	function get($name) 
 	{
 		$value = parent::get($name);
 		if ($name == 'sku') {
@@ -83,5 +83,5 @@ class XLite_Module_InventoryTracking_Model_OrderItem extends XLite_Model_OrderIt
 			if (!empty($sku)) $value = $sku;
 		}
 		return $value;
-	} // }}}
+	} 
 }

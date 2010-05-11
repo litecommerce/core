@@ -43,7 +43,7 @@ class XLite_Module_AdvancedSearch_Controller_Customer_Search extends XLite_Contr
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getProducts() // {{{ 
+    public function getProducts()  
     {
         if (is_null($this->products)) {
 

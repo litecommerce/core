@@ -57,7 +57,7 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
         $this->xlite->set("GlobalQuickCategoriesNumber", false);
     }
     
-    function _advancedSearch // {{{
+    function _advancedSearch 
       (    $substring            = "", 
         $orderby             = "name",
         $sku                 = null, 
@@ -214,9 +214,9 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
         return $products;
         
 
-    } // }}}
+    } 
 
-    function _constructSearchArray($start_price, $end_price, $start_weight, $end_weight, $sku) // {{{
+    function _constructSearchArray($start_price, $end_price, $start_weight, $end_weight, $sku) 
     {
         $search = array();
         if (!is_null($start_price))     $search[] = "price >= '".addslashes($start_price)."'";
@@ -226,9 +226,9 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
         if (!is_null($sku))             $search[] = "sku LIKE '%".addslashes($sku)."%'";
 
         return $search;
-    } // }}}
+    } 
 
-    function getIds($items) // {{{
+    function getIds($items) 
     {
         $ids = array();
         if (is_array($items)) {
@@ -237,9 +237,9 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
             }
         }
         return !empty($ids) ? $ids : array();
-    } // }}}
+    } 
     
-    function getSearchQuery($field_values, $keywords, $logic) // {{{ 
+    function getSearchQuery($field_values, $keywords, $logic)  
     {
         $search = array();
         foreach($field_values as $field_value => $condition) {
@@ -252,9 +252,9 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
         }    
         $search_query = implode(" OR ", $search);
         return $search_query;
-    } // }}} 
+    }  
 
-    function getCategoryProducts(&$category_id, $search_query,  $subcategory_search = false) // {{{
+    function getCategoryProducts(&$category_id, $search_query,  $subcategory_search = false) 
     {
         $category = new XLite_Model_Category($category_id);
         $products = $category->getProducts(!empty($search_query) ? "($search_query)" : "", null, true);
@@ -266,6 +266,6 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
                 }    
         }
         return $products;    
-    } // }}}
+    } 
 
 }

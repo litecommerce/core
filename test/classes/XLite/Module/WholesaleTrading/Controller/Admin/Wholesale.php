@@ -37,7 +37,7 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Wholesale extends XLite_Con
 {	
     public $params = array("target"); 
     
-    function action_options() // {{{
+    function action_options() 
     {
         $config = new XLite_Model_Config();
         $options = $config->getByCategory("WholesaleTrading");
@@ -69,6 +69,6 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Wholesale extends XLite_Con
         for ($i=0; $i<count($options); $i++) {
             $options[$i]->update();
         }
-    } // }}}
+    } 
 
 }

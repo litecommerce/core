@@ -35,15 +35,15 @@
  */
 class XLite_Module_AOM_Model_OrderItem extends XLite_Model_OrderItem implements XLite_Base_IDecorator
 {
-	public function __construct($id = null) // {{{
+	public function __construct($id = null) 
 	{
 		$this->fields["product_name"] = '';
 		$this->fields["product_sku"] = '';
 		$this->fields["aom_extra"] = '';
 		parent::__construct($id);
-	} // }}} 
+	}  
 
-	function get($name) // {{{ 
+	function get($name)  
 	{
 		if($this->xlite->is("adminZone")) {
 			$value = parent::get($name);
@@ -81,7 +81,7 @@ class XLite_Module_AOM_Model_OrderItem extends XLite_Model_OrderItem implements 
 			return $value;
 		}	
 		return parent::get($name);
-	} // }}} 
+	}  
 
     function set($name, $value)
     {
@@ -118,7 +118,7 @@ class XLite_Module_AOM_Model_OrderItem extends XLite_Model_OrderItem implements 
         $this->set("aom_extra", $val);
     }
 
-	function getKey() // {{{
+	function getKey() 
 	{
 		$keyValue = parent::getKey();
 		if ($this->xlite->get("ProductOptionsEnabled") && strlen($keyValue) > 250) {
@@ -126,7 +126,7 @@ class XLite_Module_AOM_Model_OrderItem extends XLite_Model_OrderItem implements 
 		}
 
 		return $keyValue;
-	} // }}}
+	} 
 
 	function getUniqueKey()
 	{
@@ -135,7 +135,7 @@ class XLite_Module_AOM_Model_OrderItem extends XLite_Model_OrderItem implements 
 		return urlencode($key);
 	}
 
-	function setProduct($product) // {{{ 
+	function setProduct($product)  
 	{
 		parent::setProduct($product);
 
@@ -145,9 +145,9 @@ class XLite_Module_AOM_Model_OrderItem extends XLite_Model_OrderItem implements 
 			$this->set("originalPrice", $product->get("price"));
 		}
 		
- 	} // }}}
+ 	} 
 
-	function hasWholesalePricing() // {{{
+	function hasWholesalePricing() 
 	{
 		if ($this->xlite->getComplex('mm.activeModules.WholesaleTrading')) {
 			$wholesale = new XLite_Module_WholesaleTrading_Model_WholesalePricing() 	;
@@ -155,7 +155,7 @@ class XLite_Module_AOM_Model_OrderItem extends XLite_Model_OrderItem implements 
 		} else {
 			return false;
 		}
-	} // }}}
+	} 
 
 	function getProductOptionValue($optclass)
 	{

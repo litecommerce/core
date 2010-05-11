@@ -209,7 +209,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
                 }
             } while ($found != false);
         }
-// }}}
+
 
         $this->expandedProductOptions = $found_options;
         return $this->expandedProductOptions;

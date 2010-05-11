@@ -58,13 +58,13 @@ class XLite_Model_ExtraPage extends XLite_Base
         $this->linksTemplate = $this->get("templatePrefix") . "pages_links.tpl";
     }
 
-    function getLocale() // {{{
+    function getLocale() 
     {
         if (is_null($this->locale)) {
             $this->locale = XLite::getInstance()->getOptions(array('skin_details', 'locale'));
         }
         return $this->locale;
-    } // }}}
+    } 
 
     function getZone()
     {

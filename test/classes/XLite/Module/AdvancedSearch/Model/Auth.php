@@ -35,9 +35,9 @@
  */
 class XLite_Module_AdvancedSearch_Model_Auth extends XLite_Model_Auth implements XLite_Base_IDecorator
 {
-    function loginProfile(XLite_Model_Profile $profile) // {{{
+    function loginProfile(XLite_Model_Profile $profile) 
     {
     	parent::loginProfile($profile);
     	$this->session->set("search", null);
     }
-} // }}}
+} 

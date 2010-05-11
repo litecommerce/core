@@ -40,16 +40,16 @@ class XLite_Module_AOM_Controller_Admin_OrderStatuses extends XLite_Controller_A
 	public $parent		= null;	
 	public $deleted	= false;
 
-	function getParentStatuses() // {{{
+	function getParentStatuses() 
 	{
 		if (is_null($this->parent)) {
 			$status = new XLite_Module_AOM_Model_OrderStatus();
 			$this->parent = $status->findAll("parent = ''");
 		}
 		return $this->parent;
-	} // }}} 
+	}  
 	
-	function getOrderStatuses() // {{{  
+	function getOrderStatuses()   
     {
         if (is_null($this->statuses)) {
             $status = new XLite_Module_AOM_Model_OrderStatus();
@@ -74,9 +74,9 @@ class XLite_Module_AOM_Controller_Admin_OrderStatuses extends XLite_Controller_A
             }
         }   
         return $this->statuses;
-    } // }}}  
+    }   
 
-	function getLetters() // {{{ 
+	function getLetters()  
 	{
 		if (is_null($this->letters)) {
 			foreach($this->get("orderStatuses") as $key => $status) {
@@ -92,9 +92,9 @@ class XLite_Module_AOM_Controller_Admin_OrderStatuses extends XLite_Controller_A
 			$this->letters = array_diff($free, $used);
 		}		
 		return $this->letters;
-	} // }}} 
+	}  
 
-	function action_add_status() // {{{ 
+	function action_add_status()  
 	{
 		if (!isset($this->add_status)) {
 			return;
@@ -121,9 +121,9 @@ class XLite_Module_AOM_Controller_Admin_OrderStatuses extends XLite_Controller_A
 		}
 		$status->set("properties",$this->add_status);
 		$status->create();
-	} // }}} 	
+	}  	
 
-	function action_update() // {{{ 
+	function action_update()  
 	{
         if ($this->get("update_status")) {
             foreach($this->get("update_status") as $status_id => $properties) {
@@ -135,9 +135,9 @@ class XLite_Module_AOM_Controller_Admin_OrderStatuses extends XLite_Controller_A
 				$orderStatus->update();
             }
         }
-	} // }}} 
+	}  
 	
-	function action_delete() // {{{
+	function action_delete() 
 	{
 		if ($this->get("delete_status")) {
 			foreach($this->get("delete_status") as $status_id) {
@@ -145,6 +145,6 @@ class XLite_Module_AOM_Controller_Admin_OrderStatuses extends XLite_Controller_A
 				$orderStatus->delete();
 			}
 		}
-	} // }}} 
+	}  
 	
 }

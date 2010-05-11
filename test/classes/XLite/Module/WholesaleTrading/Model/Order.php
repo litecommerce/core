@@ -41,14 +41,14 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
 		parent::__construct($oid);
 	}
 	
-    function calcSubTotal($shippedOnly=false) // {{{
+    function calcSubTotal($shippedOnly=false) 
     {
         $subtotal = parent::calcSubTotal($shippedOnly);
 		$global_discount = $this->calcGlobalDiscount($subtotal);
 		$this->set("global_discount", $global_discount);
 		$subtotal = $this->reduceSubTotal($subtotal);
 		return $subtotal;
-    } // }}}
+    } 
 
 	function calcGlobalDiscount($subtotal)
 	{

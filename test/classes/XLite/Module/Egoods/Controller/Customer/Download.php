@@ -46,7 +46,7 @@ class XLite_Module_Egoods_Controller_Customer_Download extends XLite_Controller_
 		}
 	}
 
-	function downloadByAccessKey() // {{{
+	function downloadByAccessKey() 
 	{
 		$access_key = $_REQUEST['acc'];
 		$dl = new XLite_Module_Egoods_Model_DownloadableLink();
@@ -91,9 +91,9 @@ class XLite_Module_Egoods_Controller_Customer_Download extends XLite_Controller_
 		} else {
 			$this->set('returnUrl', 'cart.php?target=download&mode=file_access_denied');
 		}
-	} // }}}
+	} 
 
-	function downloadByFileId() // {{{
+	function downloadByFileId() 
 	{
 		$file_id = $_REQUEST['file_id'];
 		$time = time();
@@ -128,7 +128,7 @@ class XLite_Module_Egoods_Controller_Customer_Download extends XLite_Controller_
 		$ds->set('headers', "HTTP_REFERER=" . $_SERVER["HTTP_REFERER"] . ", REMOTE_ADDR=" . $_SERVER["REMOTE_ADDR"]);
 		$ds->create();
 		exit();
-	} // }}}
+	} 
 
 	function readFile($name)
 	{

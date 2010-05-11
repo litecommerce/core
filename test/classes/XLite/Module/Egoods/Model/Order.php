@@ -35,11 +35,11 @@
  */
 class XLite_Module_Egoods_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
 {
-    protected function processed() // {{{
+    protected function processed() 
     {
 		$this->Egoods_processed();
 		parent::processed();
-    } // }}} 
+    }  
 
 	function Egoods_processed()
 	{

@@ -72,16 +72,16 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
         return self::getInternalInstance(__CLASS__);
     }
 
-    public function __construct($id = null) // {{{
+    public function __construct($id = null) 
     {
         parent::__construct($id);
 		if ($this->xlite->get("ProductOptionsEnabled")) {
             $this->importFields["product_options"] = false;
             $this->importFields["inventory_sku"] = false;
         }
-    } // }}}
+    } 
     
-    function _import(array $options) // {{{
+    function _import(array $options) 
     {
         $properties = $options["properties"];
         // search for the product first
@@ -122,9 +122,9 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
             die;
             
         }
-    } // }}}
+    } 
 
-    function _export($layout, $delimiter) // {{{
+    function _export($layout, $delimiter) 
     {
         $data = array();
         $inventory_id = $this->get("inventory_id");
@@ -153,9 +153,9 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
         }
 
         return $data;
-    } // }}}
+    } 
     
-    function keyMatch($key) // {{{
+    function keyMatch($key) 
     {
         // get the class:value pairs array
         $cardOptions = $this->parseOptions($this->get("inventory_id"));
@@ -163,9 +163,9 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
         $intersect = array_intersect($cardOptions, $keyOptions);
         $diff = array_diff($cardOptions, $intersect);
         return empty($diff);
-    } // }}}
+    } 
 
-    function parseOptions($id) // {{{
+    function parseOptions($id) 
     {
         $options = array();
         if (strpos($id, "|") !== false) {
@@ -175,9 +175,9 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
             }
         }
         return $options;
-    } // }}}
+    } 
 
-    function checkLowLimit($item) // {{{
+    function checkLowLimit($item) 
     {
         if ($this->get("amount") < $this->get("low_avail_limit")) {
             $inventory_id = $this->get("inventory_id");
@@ -195,7 +195,7 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
                     "lowlimit_warning_notification");
             $mailer->send();
         }
-    } // }}}
+    } 
 
     function get($property)
     {

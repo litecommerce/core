@@ -149,10 +149,10 @@ class XLite_Model_Abstract extends XLite_Base
     * @access public
     * @return string The SQL database table name
     */
-    function getTable() // {{{
+    function getTable() 
     {
         return $this->db->getTableByAlias($this->alias);
-    } // }}}
+    } 
 
     function filter()
     {
@@ -174,7 +174,7 @@ class XLite_Model_Abstract extends XLite_Base
         return $object;
     }
 
-    function iterate($where = null, $orderby = null, $groupby = null, $limit = null) // {{{
+    function iterate($where = null, $orderby = null, $groupby = null, $limit = null) 
     {
         // apply the default order
         if (empty($orderby)) {
@@ -208,36 +208,36 @@ class XLite_Model_Abstract extends XLite_Base
             }
         } while (!$this->filter());
         return true;
-    } // }}}
+    } 
 
-    function _aggregate($field, $aggregate, $where = null) // {{{
+    function _aggregate($field, $aggregate, $where = null) 
     {
         $sql = "SELECT $aggregate($field) FROM " . $this->getTable();
         if ($where) {
             $sql .= " WHERE $where";
         }
         return $this->db->getOne($sql);
-    } // }}}
+    } 
 
-    function count($where = null, $field = "*") // {{{
+    function count($where = null, $field = "*") 
     {
         return $this->_aggregate($field, "COUNT", $where);
-    } // }}}
+    } 
 
-    function min($field, $where = null) // {{{
+    function min($field, $where = null) 
     {
         return $this->_aggregate($field, "MIN", $where);
-    } // }}}
+    } 
 
-    function max($field, $where = null) // {{{
+    function max($field, $where = null) 
     {
         return $this->_aggregate($field, "MAX", $where);
-    } // }}}
+    } 
 
-    function avg($field, $where = null) // {{{
+    function avg($field, $where = null) 
     {
         return $this->_aggregate($field, "AVG", $where);
-    } // }}}
+    } 
 
     /**
     * Checks whether the database record exists for this object
@@ -245,14 +245,14 @@ class XLite_Model_Abstract extends XLite_Base
     * @access public
     * @return boolean True if record exists for object / false otherwise
     */
-    function isExists() // {{{
+    function isExists() 
     {
         if (!$this->isRead) {
             $this->isRead = $this->isPersistent ? $this->read() : false;
             return $this->isRead;
         }
         return true;
-    } // }}}
+    } 
 
     /**
      * Update object
@@ -285,7 +285,7 @@ class XLite_Model_Abstract extends XLite_Base
     *
     * @access public
     */
-    function create() // {{{
+    function create() 
     {
         $this->_beforeSave();
         // create record
@@ -309,13 +309,13 @@ class XLite_Model_Abstract extends XLite_Base
         }    
         // die otherwise
         $this->doDie("Unable to insert duplicate row for " . $this->alias . " " . join(',', $this->primaryKey));
-    } // }}}
+    } 
     
     /**
     * Clones an existing record. Only available on 
     * auto-incremented primary keys.
     */
-    function cloneObject() // {{{
+    function cloneObject() 
     {
         if ($this->autoIncrement) {
             $this->isRead = $this->read();
@@ -334,7 +334,7 @@ class XLite_Model_Abstract extends XLite_Base
         } else {
             $this->doDie("Can't clone non-autoincremented object");
         }
-    } // }}}
+    } 
 
     /**
     * A function called at the start of each create() and update()
@@ -348,7 +348,7 @@ class XLite_Model_Abstract extends XLite_Base
     *
     * @access public
     */
-    function delete() // {{{
+    function delete() 
     {
         // delete if object is persistent
         if ($this->isPersistent) {
@@ -360,7 +360,7 @@ class XLite_Model_Abstract extends XLite_Base
         }
         // die otherwise
         $this->doDie("Unable to delete unspecified row from " . $this->alias);
-    } // }}}
+    } 
 
     /**
     * Builds the SQL INSERT statement query for this object properties.
@@ -368,7 +368,7 @@ class XLite_Model_Abstract extends XLite_Base
     * @access private
     * @return string The INSERT sql statement
     */
-    function _buildInsert() // {{{
+    function _buildInsert() 
     {
         $properties = $this->properties;
         if (!empty($this->autoIncrement)) {
@@ -385,7 +385,7 @@ class XLite_Model_Abstract extends XLite_Base
         $values = implode(',', $values);
         $table = $this->getTable();
         return "INSERT INTO $table ($fields) VALUES ($values)";
-    } // }}}
+    } 
     
     /**
     * Builds the SQL DELETE statement to delete this object database record.
@@ -393,7 +393,7 @@ class XLite_Model_Abstract extends XLite_Base
     * @access private
     * @return string The SQL DELETE statement
     */
-    function _buildDelete() // {{{
+    function _buildDelete() 
     {
         $condition = array();
         foreach ($this->primaryKey as $field) {
@@ -403,7 +403,7 @@ class XLite_Model_Abstract extends XLite_Base
 
         $table = $this->getTable();
         return "DELETE FROM $table WHERE $condition";
-    } // }}}
+    } 
 
     /**
     * Builds the SQL UPDATE statement for updating this object database record.
@@ -411,7 +411,7 @@ class XLite_Model_Abstract extends XLite_Base
     * @access private
     * @return string The SQL DELETE statement
     */
-    function _buildUpdate() // {{{
+    function _buildUpdate() 
     {
         $properties = $this->properties;
         $condition = array();
@@ -435,25 +435,25 @@ class XLite_Model_Abstract extends XLite_Base
         $values = implode(',', $values);
         $table = $this->getTable();
         return 'UPDATE ' . $table . ' SET ' . $values . ' WHERE ' . $condition;
-    } // }}}
+    } 
     
     /**
     * Enables the object - sets "enabled' property to 1.
     * @access public
     */
-    function enable() // {{{
+    function enable() 
     {
         $this->set("enabled", 1);
-    } // }}}
+    } 
 
     /**
     * Disables the object - sets "enabled' property to 0.
     * @access public
     */
-    function disable() // {{{
+    function disable() 
     {
         $this->set("enabled", 0);
-    } // }}}
+    } 
 
     /**
     * Compares the property name specified by $prop with $val and
@@ -461,38 +461,38 @@ class XLite_Model_Abstract extends XLite_Base
     *
     * @access public
     */
-    function isSelected($property, $value = null, $prop = null) // {{{
+    function isSelected($property, $value = null, $prop = null) 
     {
         if (is_object($value)) {
             return $this->get($property) == $value->get($prop);
         }
         return $this->get($property) == $value; 
-    } // }}}
+    } 
 
     /**
     * Calculates MD5 hash based on the object properties.
     *
     * @access public
     */
-    function md5() // {{{
+    function md5() 
     {
         return md5(implode('', $this->getProperties()));
-    } // }}}
+    } 
 
     /**
     * Prints HTML dump of object properties. Useful for debug.
     */
-    function dump() // {{{
+    function dump() 
     {
         echo "<p><pre>"; print_r($this->getProperties()); echo "</pre></p>";
-    } // }}}
+    } 
 
-    function toXML() // {{{
+    function toXML() 
     {
         return $this->fieldsToXML();
-    } // }}}
+    } 
 
-    function fieldsToXML() // {{{
+    function fieldsToXML() 
     {
         $xml = "";
         $values = $this->getProperties();
@@ -506,15 +506,15 @@ class XLite_Model_Abstract extends XLite_Base
             $xml .= "<$name>$value</$name>\n";
         }
         return $xml;
-    } // }}}
+    } 
 
-    function toCSV() // {{{
+    function toCSV() 
     {
-    } // }}}
+    } 
 
-    function toString() // {{{
+    function toString() 
     {
-    } // }}}
+    } 
 
     // IMPORT/EXPORT methods {{{
 
@@ -677,17 +677,17 @@ class XLite_Model_Abstract extends XLite_Base
         return $result;
     }
 
-    function _import(array $options) // {{{
+    function _import(array $options) 
     {
         $this->doDie("Base::_import() method should be overridden");
-    } // }}}
+    } 
     
-    function _export($layout, $delimiter) // {{{
+    function _export($layout, $delimiter) 
     {
         $this->doDie("Base::_export() method should be overridden");
-    } // }}}
+    } 
     
-    function export($layout, $delimiter, $where = null, $orderby = null, $groupby = null) // {{{
+    function export($layout, $delimiter, $where = null, $orderby = null, $groupby = null) 
     {
         $count = $this->count() or die("There is nothing to export (empty data)");
         $processed = 0;
@@ -706,14 +706,14 @@ class XLite_Model_Abstract extends XLite_Base
             $items = array();
         } while($processed < $count);
         return true;
-    } // }}}
+    } 
 
-    function _stripSpecials($value) // {{{
+    function _stripSpecials($value) 
     {
         return $value;
-    } // }}}
+    } 
 
-    function _unslashProperties(&$properties, $qualifier = null) // {{{
+    function _unslashProperties(&$properties, $qualifier = null) 
     {
         foreach ($properties as $name => $value) {
             if (!is_null($qualifier)) {
@@ -723,7 +723,7 @@ class XLite_Model_Abstract extends XLite_Base
             // remove double quotes
             $properties[$name] = str_replace("\"\"", "\"", $value);
         }
-    } // }}}
+    } 
 
     // END IMPORT/EXPORT methods }}}
 

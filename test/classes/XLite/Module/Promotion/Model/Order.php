@@ -128,11 +128,11 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
 		return parent::isShipped();
 	}
 
-    function isShippingAvailable() // {{{
+    function isShippingAvailable() 
     {   
         return count($this->get("shippingRates")) > 0;
 
-    } // }}}
+    } 
 
 	function calcShippingCost()
 	{

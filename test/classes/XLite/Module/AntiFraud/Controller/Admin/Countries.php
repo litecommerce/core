@@ -43,4 +43,4 @@ class XLite_Module_AntiFraud_Controller_Admin_Countries extends XLite_Controller
 		parent::action_update();
 	}
 
-} // }}}
+} 

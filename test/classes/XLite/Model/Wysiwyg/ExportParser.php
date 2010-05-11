@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Wysiwyg_ExportParser extends XLite_Core_FlexyCompiler // {{{
+class XLite_Model_Wysiwyg_ExportParser extends XLite_Core_FlexyCompiler 
 {	
     public $widgetClass = null;	
     public $wysiwygMediator = null;	
@@ -154,4 +154,4 @@ class XLite_Model_Wysiwyg_ExportParser extends XLite_Core_FlexyCompiler // {{{
         $this->errorMessage = "File $this->file, line $line, col $col: $message";
         return false;
     }
-} // }}}
+} 

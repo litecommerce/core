@@ -72,7 +72,7 @@ class XLite_Module_WholesaleTrading_Model_WholesalePricing extends XLite_Model_A
 		return $this->findAll("product_id='" . intval($product_id) . "' AND amount<='" . intval($amount) . "' AND (membership='all' $membership_condition)");
 	}
 
-	function _export($layout, $delimiter) // {{{
+	function _export($layout, $delimiter) 
 	{
 		$data = array();
 
@@ -92,9 +92,9 @@ class XLite_Module_WholesaleTrading_Model_WholesalePricing extends XLite_Model_A
 			}
 		}
 		return $data;
-	} // }}}
+	} 
 
-    function _import(array $options) // {{{
+    function _import(array $options) 
     {
         static $line_no;
         if (!isset($line_no)) $line_no = 1; else $line_no++;
@@ -126,7 +126,7 @@ class XLite_Module_WholesaleTrading_Model_WholesalePricing extends XLite_Model_A
 			echo $this->importError;
 		}
 
-    } // }}} 
+    }  
 
     function collectGarbage()
     {

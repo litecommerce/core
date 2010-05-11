@@ -43,7 +43,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerStats extends XLite_Control
                        'partners_tree' => 'Affiliate tree',
                        );
 
-    function fillForm() // {{{
+    function fillForm() 
     {
         if (!isset($this->startDate)) {
             $date = getdate(time());
@@ -53,5 +53,5 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerStats extends XLite_Control
             $this->set("partner_id", "");
         }
         parent::fillForm();
-    } // }}}
+    } 
 }

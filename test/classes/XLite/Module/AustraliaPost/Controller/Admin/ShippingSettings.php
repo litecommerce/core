@@ -41,4 +41,4 @@ class XLite_Module_AustraliaPost_Controller_Admin_ShippingSettings extends XLite
 		$this->pages["aupost"]	= "Australia Post settings";
 		$this->pageTemplates["aupost"] = "modules/AustraliaPost/config.tpl";
 	}
-} // }}}
+} 

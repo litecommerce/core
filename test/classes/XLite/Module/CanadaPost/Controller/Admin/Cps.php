@@ -42,15 +42,15 @@ class XLite_Module_CanadaPost_Controller_Admin_Cps extends XLite_Controller_Admi
 	public $settings;		
 	public $rates 		= array();
 
-	public function __construct(array $params) // {{{ 
+	public function __construct(array $params)  
 	{
 		parent::__construct($params);
 
 		$cps = new XLite_Module_CanadaPost_Model_Shipping_Cps();
 		$this->settings = $cps->get("options");
-	} // }}}
+	} 
 	
-	function action_update() // {{{ 
+	function action_update()  
 	{
 		$cps = new XLite_Module_CanadaPost_Model_Shipping_Cps();
 		if (!isset($_POST['test_server'])) {
@@ -59,9 +59,9 @@ class XLite_Module_CanadaPost_Controller_Admin_Cps extends XLite_Controller_Admi
 		$cps->set("options",(object)$_POST);
 		$this->set("updated", true);
 
-	} // }}}
+	} 
 	
-	function action_test() // {{{ 
+	function action_test()  
 	{
 		if (empty($this->weight)) 
 			$this->weight = 1; 
@@ -91,6 +91,6 @@ class XLite_Module_CanadaPost_Controller_Admin_Cps extends XLite_Controller_Admi
 				$this->destinationCountry);
 		$this->testResult = true;	
 		$this->valid	  = false;
-	} // }}}
+	} 
 
-} // }}}
+} 

@@ -52,7 +52,7 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
 
     // PRODUCT OPTION METHODS {{{
 
-    function getProductOption() // {{{
+    function getProductOption() 
     {
         if (is_null($this->option)) {
             $this->option = new XLite_Module_ProductOptions_Model_ProductOption();
@@ -76,18 +76,18 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
             }
         }
         return $this->option;
-    } // }}}
+    } 
     
-    function action_update_product_option() // {{{
+    function action_update_product_option() 
     {
         $option = $this->get("productOption");
         $option->update();
 
         $this->params["option_id"] = $option->get("option_id");
         $this->option_id = $option->get("option_id");
-    } // }}}
+    } 
 
-    function action_delete_product_option() // {{{
+    function action_delete_product_option() 
     {
         $option = $this->get("productOption");
         $option->delete();
@@ -95,9 +95,9 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
 		if (isset($this->option_id)) {
 			unset($this->option_id);
 		}
-    } // }}}
+    } 
 
-    function action_add_product_option() // {{{
+    function action_add_product_option() 
     {
     	if (isset($this->option_id)) {
     		unset($this->option_id);
@@ -108,13 +108,13 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
 
         $this->params["option_id"] = $option->get("option_id");
         $this->option_id = $option->get("option_id");
-    } // }}}
+    } 
     
-    // }}}
+    
 
     // OPTION EXCEPTION METHODS {{{
 
-    function getOptionException() // {{{
+    function getOptionException() 
     {
         if (is_null($this->optionException)) {
             $this->optionException = new XLite_Module_ProductOptions_Model_OptionException();
@@ -129,21 +129,21 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
             }
         }
         return $this->optionException;
-    } // }}}
+    } 
 
-    function action_update_option_exception() // {{{
+    function action_update_option_exception() 
     {
         $exception = $this->get("optionException");
         $exception->update();
-    } // }}}
+    } 
 
-    function action_delete_option_exception() // {{{
+    function action_delete_option_exception() 
     {
         $exception = $this->get("optionException");
         $exception->delete();
-    } // }}}
+    } 
 
-    function action_add_option_exception() // {{{
+    function action_add_option_exception() 
     {
     	if (isset($this->option_id)) {
     		unset($this->option_id);
@@ -153,9 +153,9 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
         if (!$exception->find("product_id='".$exception->get("product_id")."' AND exception='".addslashes($exception->get("exception"))."'")) {
         	$exception->create();
         }
-    } // }}}
+    } 
     
-    // }}}
+    
 
     // OPTION VALIDATOR METHOD {{{
     
@@ -179,7 +179,7 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
         }
     }
 
-    // }}}
+    
 
 	function isOddRow($row)
 	{

@@ -185,7 +185,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
     /**
     * Removes all products that have no corresponding link to category(ies).
     */
-    function collectGarbage() // {{{
+    function collectGarbage() 
     {
         $products_table = $this->db->getTableByAlias("products");
         $product_links_table = $this->db->getTableByAlias("product_links");
@@ -202,12 +202,12 @@ class XLite_Model_Product extends XLite_Model_Abstract
 
         $ef = new XLite_Model_ExtraField();
         $ef->collectGarbage();
-    } // }}}
+    } 
 
-    function _collectGarbage() // {{{
+    function _collectGarbage() 
     {
         $this->delete();
-    } // }}}
+    } 
 
     /**
      * Delete product
@@ -265,7 +265,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
     /**
     * Returns the product clone copy.
     */
-    function cloneObject() // {{{
+    function cloneObject() 
     {
         $p = parent::cloneObject();
         $id = $p->get("product_id");
@@ -290,7 +290,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
             }
         } 
         return $p;
-    } // }}}
+    } 
 
     function _beforeAdvancedSearch($substring, $sku = null, $category_id = null, $subcategory_search = false, $fulltext = false, $onlyindexes = false)
     {
@@ -422,7 +422,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
         return $result;
     }
 
-    function getCategory($where = null, $orderby = null, $useCache = true) // {{{
+    function getCategory($where = null, $orderby = null, $useCache = true) 
     {
         if (empty($orderby)) {
             $orderby = $this->defaultOrder;
@@ -440,12 +440,12 @@ class XLite_Model_Product extends XLite_Model_Abstract
             $this->getCategories($where, $orderby, $useCache);
         }
         return $categories[$id][$where][$orderby][0];
-    } // }}}
+    } 
 
     /**
     * Checks that the product belongs to the given category directly (no subcategories).
     */
-    function inCategory($c) // {{{
+    function inCategory($c) 
     {
         if ($this->isPersistent && is_object($c)) {
             $p = new XLite_Model_CategoriesFromProducts();
@@ -455,56 +455,56 @@ class XLite_Model_Product extends XLite_Model_Abstract
             }
         }
         return false;
-    } // }}}
+    } 
 
     /**
     * Includes the product into the specified category.
     */
-    function addCategory($category) // {{{
+    function addCategory($category) 
     {
         $link_table = $this->db->getTableByAlias("product_links");
         if (!$this->db->getOne("SELECT COUNT(*) FROM $link_table WHERE product_id=".$this->get("product_id")." AND category_id=".$category->get("category_id"))) {
             $this->db->query("INSERT INTO $link_table (product_id,category_id) VALUES ('".$this->get("product_id")."', '".$category->get("category_id")."')");
         }
-    } // }}}
+    } 
 
     /**
     * Sets the product category.
     */
-    function setCategory($category) // {{{
+    function setCategory($category) 
     {
         $categories = $this->get("categories");
         for ($i = 0; $i < count($categories); $i++) {
             $this->deleteCategory($categories[$i]);
         }
         $this->addCategory($category);
-    } // }}}
+    } 
 
     /**
     * Removes the category <-> product link for the specified category.
     */
-    function deleteCategory($category) // {{{
+    function deleteCategory($category) 
     {
         $link_table = $this->db->getTableByAlias("product_links");
         $this->db->query("DELETE FROM $link_table WHERE product_id='".$this->get("product_id")."' AND category_id='".$category->get("category_id")."'");
-    } // }}}
+    } 
 
-    function hasImage() // {{{
+    function hasImage() 
     {
         return $this->get("image_type")!="";
-    } // }}}
+    } 
 
-    function getThumbnailURL() // {{{
+    function getThumbnailURL() 
     {
         return $this->getComplex('thumbnail.url');
-    } // }}}
+    } 
 
-    function getImageURL() // {{{
+    function getImageURL() 
     {
         return $this->getComplex('image.url');
-    } // }}}
+    } 
 
-    function getTaxedPrice() // {{{
+    function getTaxedPrice() 
     {
         if (!$this->config->Taxes->prices_include_tax) {
             return parent::get("price");
@@ -540,14 +540,14 @@ class XLite_Model_Product extends XLite_Model_Abstract
         $this->_taxRates->calculateTaxes();
         $this->_taxes = $this->_taxRates->getAllTaxes();
         return $price + (isset($this->_taxes["Tax"]) ? $this->_taxes["Tax"] : 0);
-    } // }}}
+    } 
 
-    function getListPrice() // {{{
+    function getListPrice() 
     {
         return $this->getTaxedPrice();
-    } // }}}
+    } 
 
-    function getPriceMessage() // {{{
+    function getPriceMessage() 
     {
         if ($this->config->Taxes->prices_include_tax) {
             if (!isset($this->_taxes)) {
@@ -558,12 +558,12 @@ class XLite_Model_Product extends XLite_Model_Abstract
             }
         }
         return "";
-    } // }}}
+    } 
 
-    function isAvailable() // {{{
+    function isAvailable() 
     {
         return $this->is("exists") && $this->filter();
-    } // }}}
+    } 
 
     function populateExtraFields()
     {
@@ -629,7 +629,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
         }
     }
 
-    function getExtraFields($enabledOnly=null) // {{{
+    function getExtraFields($enabledOnly=null) 
     {
         if (is_null($enabledOnly)) {
             $enabledOnly = !$this->xlite->is("adminZone");
@@ -682,16 +682,16 @@ class XLite_Model_Product extends XLite_Model_Abstract
             }
         }
         return $extraFields;
-    } // }}}
+    } 
         
-    function toXML() // {{{
+    function toXML() 
     {
         $id = "product_" . $this->get("product_id");
         $xml = parent::toXML();
         return "<product id=\"$id\">\n$xml</product>\n";
-    } // }}}
+    } 
     
-    function fieldsToXML() // {{{
+    function fieldsToXML() 
     {
         $xml = "";
 
@@ -719,11 +719,11 @@ class XLite_Model_Product extends XLite_Model_Abstract
             }
         }
         return parent::fieldsToXML() . $xml;
-    } // }}}
+    } 
 
     // PRODUCT EXPORT functions {{{
 
-    function getImportFields($layout = null) // {{{
+    function getImportFields($layout = null) 
     {
         if (isset($layout)) return parent::getImportFields($layout);
 
@@ -758,9 +758,9 @@ class XLite_Model_Product extends XLite_Model_Abstract
         }
 
         return $result;
-    } // }}}
+    } 
 
-    function _export($layout, $delimiter) // {{{
+    function _export($layout, $delimiter) 
     {
         $data = array();
         $values = $this->getProperties();
@@ -775,9 +775,9 @@ class XLite_Model_Product extends XLite_Model_Abstract
             }
         }
         return $data;
-    } // }}}
+    } 
 
-    function _exportThumbnail() // {{{
+    function _exportThumbnail() 
     {
         $thumbnail = "";
         if ($this->hasThumbnail()) {
@@ -788,9 +788,9 @@ class XLite_Model_Product extends XLite_Model_Abstract
             }
         }
         return $thumbnail;
-    } // }}}
+    } 
     
-    function _exportImage() // {{{
+    function _exportImage() 
     {
         $image = "";
         if ($this->hasImage()) {
@@ -801,29 +801,29 @@ class XLite_Model_Product extends XLite_Model_Abstract
             }
         }
         return $image;
-    } // }}}
+    } 
 
-    function _exportCategory($layout=null, $delimiter=null) // {{{
+    function _exportCategory($layout=null, $delimiter=null) 
     {
         if (!isset($this->_CategoriesFromProducts)) {
             $this->_CategoriesFromProducts = new XLite_Model_CategoriesFromProducts();
         }
         return $this->_CategoriesFromProducts->createCategoryField($this->get("categories"));
-    } // }}}
+    } 
 
     // END PRODUCT EXPORT functions }}}
 
     // PRODUCT IMPORT functions {{{
 
-    function import(array $options) // {{{
+    function import(array $options) 
     {
         if (isset($options["delete_products"]) && $options["delete_products"] === true) {
             $this->deleteAll();
         }
         parent::import($options);
-    } // }}}
+    } 
 
-    function findImportedProduct($_sku, $categoryString, $_productName, $createCategories, $field="") // {{{
+    function findImportedProduct($_sku, $categoryString, $_productName, $createCategories, $field="") 
     {
         $sku = $_sku;
         $productName = $_productName;
@@ -883,7 +883,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
             return $product;
         }
         return null;
-    } // }}}
+    } 
 
     /**
      * Find product by clean URL
@@ -905,7 +905,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
         );
     }
 
-    function _import(array $options) // {{{
+    function _import(array $options) 
     {
         $properties       = $options["properties"];
         $default_category = $options["default_category"];
@@ -962,17 +962,17 @@ class XLite_Model_Product extends XLite_Model_Abstract
         // Update create product categories
         $this->_importCategory($product, $properties, $default_category);
         $product->populateExtraFields();
-    } // }}}
+    } 
 
-    function _convertProperties(&$p) // {{{
+    function _convertProperties(&$p) 
     {
         // X-CART Gold/Pro compatibility check for product import
         if (!empty($p["enabled"]) && ($p["enabled"] == "Y" || $p["enabled"] == "N")) {
             $p["enabled"] = $p["enabled"] == "Y" ? 1 : 0;
         }
-    } // }}}
+    } 
 
-    function _importImage($product, $type, $name, $save_images) // {{{
+    function _importImage($product, $type, $name, $save_images) 
     {
         $i = new XLite_Model_Image();
         $name = trim($name);
@@ -990,9 +990,9 @@ class XLite_Model_Product extends XLite_Model_Abstract
             $image->set("type", $image->getImageType($image_path));
             $image->update();
         }
-    } // }}}
+    } 
     
-    function _importCategory($product, $properties, $default_category) // {{{
+    function _importCategory($product, $properties, $default_category) 
     {
         $category_id = null;
         $category = new XLite_Model_Category();
@@ -1018,7 +1018,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
             $product->addCategory($c);
             echo ">> Product category set to " . $c->get("name") . "<br>\n";
         }
-    } // }}}
+    } 
 
     // END PRODUCT IMPORT functions }}}
 

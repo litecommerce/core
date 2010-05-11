@@ -70,7 +70,7 @@ class XLite_Module_MultiCurrency_Main extends XLite_Module_Abstract
     {
         return 'This module introduces support for multiple currencies';
     }
- // {{{	
+ 	
 
 	public $isFree = true;	
     /**
@@ -92,7 +92,7 @@ class XLite_Module_MultiCurrency_Main extends XLite_Module_Abstract
      * @access public
      * @since  3.0
      */
-    public function init() // {{{ 
+    public function init()  
 	{
 		parent::init();
 		$this->xlite->set("MultiCurrencyEnabled",true);
@@ -110,14 +110,14 @@ class XLite_Module_MultiCurrency_Main extends XLite_Module_Abstract
 			$this->defaultCurrency->set("countries",serialize(array()));
 			$this->defaultCurrency->create();
 		}
-	} // }}}
+	} 
 	
-    function uninstall() // {{{ 
+    function uninstall()  
     {
         func_cleanup_cache("classes");
         func_cleanup_cache("skins");
 
         parent::uninstall();
-    } // }}}
+    } 
 
-} // }}}
+} 

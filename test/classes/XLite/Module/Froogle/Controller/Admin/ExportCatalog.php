@@ -136,7 +136,7 @@ class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controll
         return function_exists("ftp_connect");
     }
 
-	function goCustomer() // {{{
+	function goCustomer() 
 	{
 		$this->xlite->set("adminZone", false);
 
@@ -171,12 +171,12 @@ class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controll
 		// empty cart
 		$cart = XLite_Model_Cart::getInstance();
 		$cart = null;
-	} // }}}
+	} 
 
-	function goAdmin() // {{{
+	function goAdmin() 
 	{
 		// switch XLite back to admin's zone
 		$this->xlite->set("adminZone", true);
 		$this->session->_data = $this->_sessionData;
-	} // }}}
+	} 
 }

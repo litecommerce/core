@@ -37,7 +37,7 @@ class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_Abstract
 {	
 	public $params = array("target", "mode");
 	
-    function action_update() // {{{
+    function action_update() 
     {
 	    if ($this->get("update_memberships")) {
             $profilesData = array(
@@ -74,9 +74,9 @@ class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_Abstract
                 }
             }
         }
-    } // }}} 
+    }  
 
-    function action_delete() // {{{
+    function action_delete() 
     {
 		if ($this->get("deleted_memberships")) {
 			@set_time_limit(0);
@@ -88,9 +88,9 @@ class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_Abstract
                 $membership->delete();
             }
 		}
-    } // }}}
+    } 
 
-	function action_add() // {{{
+	function action_add() 
 	{
 		if ($this->get("new_membership")) {
 			$new_membership = $this->get("new_membership");
@@ -118,24 +118,24 @@ class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_Abstract
 			$membership->create();
 			$this->set("actionProcessed", true);
 		}	
-	} // }}}
+	} 
 	
-	function getMemberships() // {{{
+	function getMemberships() 
 	{
 		$membership = new XLite_Model_Membership();
 		return $membership->findAll();
-	} // }}}
+	} 
 
-    function getMembershipProfiles($membership) // {{{
+    function getMembershipProfiles($membership) 
     {
         $profile = new XLite_Model_Profile();
         return $profile->findAll("membership = '".$membership."' OR pending_membership='".$membership."'");
-    } // }}}
+    } 
 
     /**
     * Update all profiles 
     */
-    function updateProfilesMembership(&$profiles, $old, $new, $sendNotification=false) // {{{
+    function updateProfilesMembership(&$profiles, $old, $new, $sendNotification=false) 
     {
         if (!is_array($profiles) || count($profiles) === 0 || $old === $new) {
             return;
@@ -154,6 +154,6 @@ class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_Abstract
                 $profile->update();
             }
         }
-    } // }}}
+    } 
 
-} // }}}
+} 

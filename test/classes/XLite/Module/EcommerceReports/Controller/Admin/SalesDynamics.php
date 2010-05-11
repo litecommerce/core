@@ -45,7 +45,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
         parent::handleRequest();
     }
 
-    function getLabel($date) // {{{
+    function getLabel($date) 
     {
         switch ($this->get("stat_step")) {
             case "day":
@@ -61,9 +61,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
                 break;
         }
         return $label;
-    } // }}}
+    } 
 
-    function sumSale($items, $range) // {{{
+    function sumSale($items, $range) 
     {
         $sum = 0;
         foreach ($items as $item) {
@@ -72,9 +72,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
             }
         }
         return $sum;
-    } // }}}
+    } 
 
-    function sumSaleQuantity($items, $range) // {{{
+    function sumSaleQuantity($items, $range) 
     {
         $qty = 0;
         foreach ($items as $item) {
@@ -83,9 +83,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
             }
         }
         return $qty;
-    } // }}}
+    } 
 
-    function sumSaleNumber($items, $range) // {{{
+    function sumSaleNumber($items, $range) 
     {
         $number = array();
         foreach ($items as $item) {
@@ -94,9 +94,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
             }
         }
         return count($number);
-    } // }}}
+    } 
 
-    function getSales() // {{{
+    function getSales() 
     {
         if (is_null($this->sales)) {
             $this->sales = array(
@@ -122,9 +122,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
             $this->sales["labels"] = $labels;
         }
 		return $this->sales;
-    } // }}}
+    } 
 
-    function exportSales() // {{{
+    function exportSales() 
     {
         $this->salesData = array();
         $sales = $this->get("sales");
@@ -148,18 +148,18 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
 
         // do not output anything
         $this->set("silent", true);
-    } // }}}
+    } 
 
-    function action_get_data() // {{{
+    function action_get_data() 
     {
         if ($this->get("export")) {
             $this->exportSales();
         }
         parent::action_get_data();
-    } // }}}
+    } 
 
-    function getStartXML() // {{{
+    function getStartXML() 
     {       
         return '<?xml version="1.0"?>'."\n";;
-    } // }}}
+    } 
 }
