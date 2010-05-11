@@ -144,7 +144,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
      */
     protected function __construct()
     {
-        $this->requestMethod = $_SERVER['REQUEST_METHOD'];
+        $this->requestMethod = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'cli';
         $this->mapRequest();
     }
 
