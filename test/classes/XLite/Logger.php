@@ -542,7 +542,7 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
      */
     protected function getErrorLogPath()
     {
-        return LC_VAR_DIR . 'log' . LC_DS . 'php_errors.log.php';
+        return LC_VAR_DIR . 'log' . LC_DS . 'php_errors.log.' . date('Y-m-d') . '.php';
     }
 
     /**
