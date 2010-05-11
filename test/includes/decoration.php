@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage Core
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,13 +26,12 @@
  * @since      3.0.0
  */
 
-
 /**
- * Decorator - classes cache builder 
+ * Decorator - classes cache builder
  * 
- * @package    XLite
- * @subpackage Includes
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class Decorator
 {
@@ -1067,13 +1066,18 @@ class Decorator
 
             $this->restoreMaxExecutionTime();
 
-            if (!defined('SILENT_CACHE_REBUILD')) {
+            if (
+                !defined('SILENT_CACHE_REBUILD')
+                && 'cli' != php_sapi_name()
+                && isset($_SERVER['HTTP_HOST'])
+                && isset($_SERVER['REQUEST_URI'])
+            ) {
 
                 $isHttps = (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS'] == 'on') || $_SERVER['HTTPS'] == '1'))
                             || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443');
                 $redirectUrl = ($isHttps ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
-                if (@parse_url($redirectUrl) && 'cli' != php_sapi_name() && empty($_REQUEST['action'])) {
+                if (@parse_url($redirectUrl) && empty($_REQUEST['action'])) {
                     $this->showJavaScriptBlock($redirectUrl);
                     die();
                 }
