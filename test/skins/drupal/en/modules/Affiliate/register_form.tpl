@@ -193,7 +193,7 @@ The form below allows you to create a partner profile. Do not forget that this i
     <td align="right">State</td>
     <td>{if:config.Miscellaneous.partner_profile.billing_state}<font color="red">*</font>{else:}&nbsp;{end:}</td>
     <td>
-		<widget class="XLite_View_StateSelect" field="billing_state" value="{billing_state}" fieldId="billing_state_id">
+		<widget class="XLite_View_StateSelect" field="billing_state" state="{billing_state}" isLinked=1 />
     </td>
     <td>
         &nbsp;
@@ -209,7 +209,7 @@ The form below allows you to create a partner profile. Do not forget that this i
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="billing_country" visible="{config.Miscellaneous.partner_profile.billing_country}">
+        <widget class="XLite_Validator_RequiredValidator" field="billing_country" IF="{config.Miscellaneous.partner_profile.billing_country}" country="{billing_country}" />
     </td>
 </tr>
 <tr valign="middle">

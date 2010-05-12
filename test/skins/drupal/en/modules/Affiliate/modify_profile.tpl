@@ -185,7 +185,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
     <td align="right">State</td>
     <td>{if:config.Miscellaneous.partner_profile.billing_state}<font color="red">*</font>{else:}&nbsp;{end:}</td>
     <td>
-		<widget class="XLite_View_StateSelect" field="billing_state" value="{billing_state}">
+		<widget class="XLite_View_StateSelect" field="billing_state" state="{billing_state}" isLinked=1 />
     </td>
     <td>
         &nbsp;
@@ -197,7 +197,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
     <td align="right">Country</td>
     <td>{if:config.Miscellaneous.partner_profile.billing_country}<font color="red">*</font>{else:}&nbsp;{end:}</td>
     <td>
-		<widget class="XLite_View_CountrySelect" field="billing_country">
+		<widget class="XLite_View_CountrySelect" field="billing_country" country="{billing_country}" />
     </td>
     <td>
         &nbsp;

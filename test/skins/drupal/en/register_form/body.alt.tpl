@@ -10,8 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget template="js/select_states_begin_js.tpl">
-
 <script type="text/javascript" language="JavaScript 1.2" src="skins/default/en/js/billing_shipping.js"></script>
 
 Use this form to update the information stored in your customer profile.<br>
@@ -168,7 +166,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
     <td align="right">State</td>
     <td><font class="Star">*</font></td>
     <td>
-		<widget class="XLite_View_StateSelect" field="billing_state" onChange="javascript: changeState(this, 'billing');" fieldId="billing_state_select">
+		<widget class="XLite_View_StateSelect" field="billing_state" fieldId="billing_state_select" state="{billing_state}" isLinked=1 />
     </td>
     <td>
         <widget class="XLite_Validator_RequiredValidator" field="billing_state">
@@ -188,7 +186,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
     <td align="right">Country</td>
     <td><font class="Star">*</font></td>
     <td>
-		<widget class="XLite_View_CountrySelect" field="billing_country" onChange="javascript: populateStates(this,'billing');" fieldId="billing_country_select">
+		<widget class="XLite_View_CountrySelect" field="billing_country" fieldId="billing_country_select" country="{billing_country}" />
     </td>
     <td>
         <widget class="XLite_Validator_RequiredValidator" field="billing_country">
@@ -298,7 +296,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
     <td align="right">State</td>
     <td><font class="Star">*</font></td>
     <td>
-		<widget class="XLite_View_StateSelect" field="shipping_state" value="{shipping_state}" onChange="javascript: changeState(this, 'shipping');" fieldId="shipping_state_select">
+		<widget class="XLite_View_StateSelect" field="shipping_state" state="{shipping_state}" fieldId="shipping_state_select" isLinked=1 />
     </td>
     <td>
         <widget class="XLite_Validator_StateValidator" field="shipping_state" countryField="shipping_country">
@@ -317,7 +315,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
     <td align="right">Country</td>
     <td><font class="Star">*</font></td>
     <td>
-		<widget class="XLite_View_CountrySelect" field="shipping_country" onChange="javascript: populateStates(this,'shipping');" fieldId="shipping_country_select">
+		<widget class="XLite_View_CountrySelect" field="shipping_country" fieldId="shipping_country_select" country="{shipping_country}" />
     </td>
     <td>&nbsp;</td>
 </tr>
@@ -376,8 +374,8 @@ Please leave the password fields empty<br> if you don't want to change the passw
 
 <widget name="registration_form" end />
 
-<widget template="js/select_states_end_js.tpl">
-
-<script type="text/javascript" language="JavaScript 1.2">
-	CheckBillingShipping(document.register_form);
+<script type="text/javascript">
+<!--
+CheckBillingShipping(document.register_form);
+-->
 </script>

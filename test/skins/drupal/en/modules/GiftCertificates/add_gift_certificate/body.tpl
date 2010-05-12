@@ -181,11 +181,11 @@ var bordersDir = '{gc.bordersDir}';
     <tr>
       <td class="label"><label for="recipient_state">State:</label></td>
       <td class="required">*</td>
-      <td><widget class="XLite_View_StateSelect" field="recipient_state" onchange="javascript: changeState(this, 'recipient');" fieldId="recipient_state_select" /></td>
+      <td><widget class="XLite_View_StateSelect" field="recipient_state" state="{gc.recipient_state}" isLinked=1 /></td>
       <td><widget class="XLite_Validator_StateValidator" field="recipient_state" countryField="recipient_country" /></td>
     </tr>
 
-    <tr id="recipient_custom_state_body">
+    <tr>
       <td class="label"><label for="recipient_custom_state">Other state:</label></td>
       <td>&nbsp;</td>
       <td><input type="text" id="recipient_custom_state" name="recipient_custom_state" value="{gc.recipient_custom_state:r}" /></td>
@@ -194,7 +194,7 @@ var bordersDir = '{gc.bordersDir}';
     <tr>
       <td class="label"><label for="recipient_country">Country:</label></td>
       <td class="required">*</td>
-      <td><widget class="XLite_View_CountrySelect" field="recipient_country" onchange="javascript: populateStates(this,'recipient');" fieldId="recipient_country_select" /></td>
+      <td><widget class="XLite_View_CountrySelect" field="recipient_country" country="{gc.recipient_country}" /></td>
       <td><widget class="XLite_Validator_RequiredValidator" field="recipient_country" /></td>
     </tr>
 
@@ -211,9 +211,6 @@ var bordersDir = '{gc.bordersDir}';
     </tr>
 
   </table>
-
-  <widget template="js/select_states_begin_js.tpl" />
-  <widget template="js/select_states_end_js.tpl" />
 <script type="text/javascript">
 <!--
 $(document).ready(

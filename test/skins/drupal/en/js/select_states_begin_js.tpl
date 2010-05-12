@@ -12,7 +12,7 @@
  *}
 <script type="text/javascript">
 var CountriesStates = [];
-{foreach:countriesStates,country_code,val}
+{foreach:getCountriesStates(),country_code,val}
 CountriesStates.{country_code} = [
 {if:val.number}
 {foreach:val.data,state_code,v}

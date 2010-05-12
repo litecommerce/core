@@ -10,4 +10,4 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<script type="text/javascript" language="JavaScript 1.2" src="skins/default/en/js/select_states_end.js"></script>
+<script type="text/javascript" src="skins/drupal/en/js/select_states_end.js"></script>

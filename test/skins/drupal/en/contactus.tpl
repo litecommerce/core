@@ -10,8 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget template="js/select_states_begin_js.tpl">
-
 <p align=justify>You can send a message to us using the form below. We will reply as soon as possible!</p>
 
 
@@ -94,7 +92,7 @@ if (goodEmail) {
 <td class=FormButton>State</td>
 <td><font class=Star>*</font></td>
 <td nowrap>
-<widget class="XLite_View_StateSelect" field="contactus_state" onChange="javascript: changeState(this, 'contactus');" fieldId="contactus_state_select">
+<widget class="XLite_View_StateSelect" field="contactus_state" fieldId="contactus_state_select" state="{contactus_state}" isLinked=1 />
 <widget class="XLite_Validator_StateValidator" field="contactus_state" countryField="contactus_country">
 <widget class="XLite_Validator_RequiredValidator" field="contactus_state">
 </td>
@@ -112,7 +110,7 @@ if (goodEmail) {
 <td class=FormButton>Country</td>
 <td><font class=Star>*</font></td>
 <td nowrap>
-<widget class="XLite_View_CountrySelect" field="contactus_country" onChange="javascript: populateStates(this,'contactus');" fieldId="contactus_country_select">
+<widget class="XLite_View_CountrySelect" field="contactus_country" fieldId="contactus_country_select" country="{contactus_country}" >
 <widget class="XLite_Validator_RequiredValidator" field="contactus_country">
 </td>
 </tr>
@@ -182,5 +180,3 @@ if (goodEmail) {
 </table>
 
 </form>
-
-<widget template="js/select_states_end_js.tpl">

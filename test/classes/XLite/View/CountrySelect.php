@@ -43,7 +43,7 @@ class XLite_View_CountrySelect extends XLite_View_FormField
 
     const PARAM_ALL        = 'all';
     const PARAM_FIELD_NAME = 'field';
-    const PARAM_VALUE      = 'value';
+    const PARAM_COUNTRY    = 'country';
     const PARAM_FIELD_ID   = 'fieldId';
 
 
@@ -74,7 +74,7 @@ class XLite_View_CountrySelect extends XLite_View_FormField
             self::PARAM_ALL        => new XLite_Model_WidgetParam_Bool('All', false),
             self::PARAM_FIELD_NAME => new XLite_Model_WidgetParam_String('Field name', ''),
             self::PARAM_FIELD_ID   => new XLite_Model_WidgetParam_String('Field ID', ''),
-            self::PARAM_VALUE      => new XLite_Model_WidgetParam_String('Value', '')
+            self::PARAM_COUNTRY    => new XLite_Model_WidgetParam_String('Value', '')
         );
     }
 
