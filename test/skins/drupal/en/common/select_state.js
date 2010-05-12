@@ -45,7 +45,7 @@ function StateSelectorController(obj)
     this.otherStateInput = null;
 
   } else {
-    this.otherStateBox = this.otherStateInput.parents('tr,div');
+    this.otherStateBox = this.otherStateInput.parents('tr');
     
     if (!this.otherStateBox.length) {
       this.otherStateBox = null;
@@ -53,6 +53,7 @@ function StateSelectorController(obj)
 
     } else {
       this.otherStateBox = this.otherStateBox.eq(this.otherStateBox.length - 1);
+
     }
   }
 

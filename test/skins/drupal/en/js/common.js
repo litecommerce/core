@@ -440,13 +440,21 @@ InputValidator.prototype.assignValidator = function(elm)
     if (elm.validators.length) {
       elm.validator = this;
       var o = this;
+
+      elm.labelName = null;
+      if (elm.id) {
+        var lbl = $('label[for="' + elm.id + '"]').eq(0);
+        if (lbl.length) {
+          elm.labelName = $.trim(lbl.html()).replace(/:$/, '');
+        }
+      }
       elm.validate = function(silent) {
         return o.checkElement.call(this, null, silent);
       }
 
       $(elm).change(
         function(event) {
-          this.validate();
+          return this.validate();
         }
       );
 
@@ -493,8 +501,17 @@ InputValidator.prototype.checkElement = function(event, silent)
     if (!result.status) {
       $(this).addClass('validation-error');
       if (!silent) {
+        if (this.labelName) {
+          result.message = result.message.replace(/Field/, '\'' + this.labelName + '\' field');
+        }
         alert(result.message);
-        $(this).focus();
+        var o = $(this);
+        setTimeout(
+          function() {
+            o.focus();
+          },
+          200
+        );
       }
 
     } else {
@@ -526,11 +543,14 @@ InputValidator.prototype.checkForm = function()
 
 InputValidator.prototype.validateEmail = function()
 {
-  var re = new RegExp("^[a-z0-9!#$%&\'*+\\/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+\\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z](?:[a-z0-9-]*[a-z0-9])?$", 'gi');
+  var re = new RegExp(
+    "^[a-z0-9!#$%&\'*+\\/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+\\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z](?:[a-z0-9-]*[a-z0-9])?$",
+    'gi'
+  );
 
   return {
     status: !this.value.length || this.value.search(re) !== -1,
-    message: 'E-mail address is invalid! Please correct'
+    message: 'Field is not e-mail address! Please correct'
   };
 }
 
