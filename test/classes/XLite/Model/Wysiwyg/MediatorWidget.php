@@ -34,14 +34,19 @@
  * @since   3.0.0
  */
 class XLite_Model_Wysiwyg_MediatorWidget extends XLite_View_Abstract 
-{	
-    public $attributes = array();	
-    public $attributesEvaled = array();	
-    public $code = "";	
-    public $parent = false;	
-    public $editing = false;	
-    public $parentWidget = null;	
+{    
+    public $attributes = array();    
+    public $attributesEvaled = array();    
+    public $code = "";    
+    public $parent = false;    
+    public $editing = false;    
+    public $parentWidget = null;    
     public $templateType = null;
+
+    protected function getDefaultTemplate()
+    {
+        return null;
+    }
 
     function setAttributesEvaled($params)
     {
@@ -80,7 +85,7 @@ class XLite_Model_Wysiwyg_MediatorWidget extends XLite_View_Abstract
         return $result;
     }
 
-	function getTemplateType()
+    function getTemplateType()
     {
         if (is_null($this->templateType)) {
             $t = $this->get("templateFile");
