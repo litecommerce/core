@@ -48,6 +48,8 @@ mysql_select_db($config["database"]);
 _do_query_upload("sql/xlite_tables.sql", $connection, true);
 _do_query_upload("sql/xlite_data.sql", $connection, true);
 _do_query_upload("sql/states_US.sql", $connection, true);
+_do_query_upload("sql/states_GB.sql", $connection, true);
+_do_query_upload("sql/states_CA.sql", $connection, true);
 
 require_once 'classes/XLite/Base.php';
 require_once 'classes/XLite/Model/Abstract.php';
