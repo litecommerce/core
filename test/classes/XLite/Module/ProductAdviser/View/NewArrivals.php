@@ -493,18 +493,19 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsLi
         }
 
         $maxViewed = $this->getParam(self::PARAM_SIDEBAR_MAX_ITEMS);
+        $infinityRange = 0 >= $maxViewed;
         $products = array();
         $productsStats = array();
         $statsOffset = 0;
         $stats = new XLite_Module_ProductAdviser_Model_ProductNewArrivals();
         $timeCondition = $this->config->ProductAdviser->period_new_arrivals * 3600;
         $timeLimit = time();
-        $maxSteps = $this->isContentDialog()
+        $maxSteps = ($this->isContentDialog() || $infinityRange)
             ? 1
             : ceil($stats->count('new = \'Y\' OR ((updated + \'' . $timeCondition . '\') > \'' . $timeLimit . '\')') / $maxViewed);
 
         for ($i = 0; $i < $maxSteps; $i++) {
-            $limit = ($this->isContentDialog())
+            $limit = ($this->isContentDialog() || $infinityRange)
                 ? null
                 : $statsOffset . ', ' . $maxViewed;
 
@@ -514,7 +515,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsLi
 
                 if ($this->checkArrivalCondition($category, $ps)) {
                     $product->checkSafetyMode();
-                    if (count($products) == $maxViewed && !$this->isContentDialog()) {
+                    if (!$infinityRange && count($products) == $maxViewed && !$this->isContentDialog()) {
                         $this->additionalPresent = true;
                         break;
                     }
