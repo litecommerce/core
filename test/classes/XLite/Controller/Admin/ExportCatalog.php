@@ -75,7 +75,7 @@ class XLite_Controller_Admin_ExportCatalog extends XLite_Controller_Admin_Abstra
 
         global $DATA_DELIMITERS;
 
-        $this->startDownload("products.csv");
+        $this->startDownload('products.csv');
         $product = new XLite_Model_Product();
         $product->export($this->product_layout, $DATA_DELIMITERS[$this->delimiter]);
         exit();
@@ -93,7 +93,7 @@ class XLite_Controller_Admin_ExportCatalog extends XLite_Controller_Admin_Abstra
 
         global $DATA_DELIMITERS;
 
-        $this->startDownload("extra_fields.csv");
+        $this->startDownload('extra_fields.csv');
 
      	$p = new XLite_Model_Product();
      	$products = $p->findAll();

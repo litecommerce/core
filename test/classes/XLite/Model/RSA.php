@@ -44,7 +44,7 @@ class XLite_Model_RSA {
         $randomText = rand() . microtime() . $randomText;
         $rand = gmp_init(0);
         $base = gmp_init(333);
-        if (!extension_loaded("gmp")) {
+        if (!extension_loaded('gmp')) {
             $nn = (int)(($bits-1)/GMP_LIMB_BITS)+1;
             $mask = (1<<($nn*GMP_LIMB_BITS-$bits)) - 1;
         } else {
@@ -53,7 +53,7 @@ class XLite_Model_RSA {
         for ($i=0; $i < strlen($randomText); $i++) {
             $byte = ord($randomText{$i});
             $rand = gmp_add(gmp_mul($rand, $base), $byte);
-            if (!extension_loaded("gmp")) {
+            if (!extension_loaded('gmp')) {
                 array_splice($rand, $nn);
                 if (isset($rand[$nn-1])) {
                     $rand[$nn-1] &= $mask;
@@ -62,8 +62,8 @@ class XLite_Model_RSA {
                 $rand = gmp_mod($rand, $pow2);
             }
         }
-        $rand = gmp_mul($rand, gmp_init("34737725553190012365348768633636637738837376363636637638178646564116161616173738645646467465"));
-        if (!extension_loaded("gmp")) {
+        $rand = gmp_mul($rand, gmp_init('34737725553190012365348768633636637738837376363636637638178646564116161616173738645646467465'));
+        if (!extension_loaded('gmp')) {
             array_splice($rand, $nn);
             if (isset($rand[$nn-1])) {
                 $rand[$nn-1] &= $mask;
@@ -104,7 +104,7 @@ class XLite_Model_RSA {
         $phi = gmp_mul(gmp_sub($p, $one), gmp_sub($q, $one));
         do {
             $v = $this->random($bits, $randomText);
-            if (!extension_loaded("gmp")) {
+            if (!extension_loaded('gmp')) {
                 list ($gcd, $e) = gmp_gcdext($v, $phi);
             } else {
                 $result = gmp_gcdext($v, $phi);

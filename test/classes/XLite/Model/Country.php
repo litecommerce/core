@@ -69,7 +69,7 @@ class XLite_Model_Country extends XLite_Model_Abstract
             'eu_member' => 'N',
             'shipping_zone' => 0
         );
-    public $primaryKey = array("code");
+    public $primaryKey = array('code');
     public $alias = "countries";
     public $defaultOrder = "country";
 
@@ -93,7 +93,7 @@ class XLite_Model_Country extends XLite_Model_Abstract
 
     function isEuMember()
     {
-        return $this->get("eu_member") == 'Y' ? true : false;
+        return $this->get('eu_member') == 'Y' ? true : false;
     }
 }
 

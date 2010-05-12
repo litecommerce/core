@@ -38,7 +38,7 @@ class XLite_Module_AustraliaPost_Controller_Admin_ShippingSettings extends XLite
     public function __construct(array $params) 
     {
         parent::__construct($params);
-        $this->pages["aupost"]	= "Australia Post settings";
-        $this->pageTemplates["aupost"] = "modules/AustraliaPost/config.tpl";
+        $this->pages['aupost']	= "Australia Post settings";
+        $this->pageTemplates['aupost'] = "modules/AustraliaPost/config.tpl";
     }
 }

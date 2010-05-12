@@ -96,12 +96,12 @@ function ewx_func_https_request ($method, $url, $vars) {
     $request->data = $vars;
     $request->urlencoded = true;
 
-    if ($GLOBALS["debug"]) {
+    if ($GLOBALS['debug']) {
         echo "request->data:<pre>"; print_r($request->data); echo "</pre><br>";
     }
     $request->request ();
 
-    if ($GLOBALS["debug"]) {
+    if ($GLOBALS['debug']) {
         echo "request->response:<pre>"; print_r($request->response); echo "</pre><br>";
     }
     return array ("", $request->response);

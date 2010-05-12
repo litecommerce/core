@@ -16,7 +16,7 @@ if (!defined('SAGEPAY_FORM_DEBUG_LOG')) {
 function func_SagePay_getTxCode($pm, $order)
 {
     $stamp = substr(md5(uniqid(time())), 0, 4);
-    $vendorTxCode = substr($pm->getComplex('params.order_prefix'), 0, 20)."_".$order->get("order_id")."_".$stamp;
+    $vendorTxCode = substr($pm->getComplex('params.order_prefix'), 0, 20)."_".$order->get('order_id')."_".$stamp;
     $vendorTxCode = substr($vendorTxCode, 0, 40);
     $vendorTxCode = preg_replace("/[^\d\w_]/", "_", $vendorTxCode);
     return $vendorTxCode;
@@ -29,7 +29,7 @@ function func_SagePayDirect_process($_this, $order)
     $vendorTxCode = func_SagePay_getTxCode($_this, $order);
     $currency = (($_this->getComplex('params.currency')) ? $_this->getComplex('params.currency') : "USD");
 
-    $profile = $order->get("profile");
+    $profile = $order->get('profile');
 
     $TxType = $_this->getComplex('params.trans_type');
     if (!in_array($TxType, array("AUTHENTICATE", "PAYMENT", "PAYMENT"))) {
@@ -41,55 +41,55 @@ function func_SagePayDirect_process($_this, $order)
         "TxType"           => $TxType,
         "Vendor"           => $vendor,
         "VendorTxCode"     => $vendorTxCode,
-        "Amount"           => sprintf("%.02f", $order->get("total")),
+        "Amount"           => sprintf("%.02f", $order->get('total')),
         "Currency"         => $currency,
-        "Description"      => "Shopping cart #".$order->get("order_id")
+        "Description"      => "Shopping cart #".$order->get('order_id')
     );
-    $trxData["BillingSurname"] = $profile->get("billing_lastname");
-    $trxData["BillingFirstnames"] = $profile->get("billing_firstname");
-    $trxData["BillingAddress1"] = $profile->get("billing_address");
-    $trxData["BillingCity"] = $profile->get("billing_city");
-    $trxData["BillingPostCode"] = $profile->get("billing_zipcode");
-    $trxData["BillingCountry"] = $profile->get("billing_country");
-    $trxData["BillingState"] = func_SagePay_getState($profile, "billing_state", "billing_custom_state");
-    $trxData["DeliverySurname"] = $profile->get("shipping_lastname");
-    $trxData["DeliveryFirstnames"] = $profile->get("shipping_firstname");
-    $trxData["DeliveryAddress1"] = $profile->get("shipping_address");
-    $trxData["DeliveryCity"] = $profile->get("shipping_city");
-    $trxData["DeliveryPostCode"] = $profile->get("shipping_zipcode");
-    $trxData["DeliveryCountry"] = $profile->get("shipping_country");
-    $trxData["DeliveryState"] = func_SagePay_getState($profile, "shipping_state", "shipping_custom_state");
-    $trxData["CustomerName"] = $profile->get("billing_firstname")." ".$profile->get("billing_lastname");
-    $trxData["ContactNumber"] = $profile->get("billing_phone");
-    $trxData["ContactFax"] = $profile->get("billing_fax");
-    $trxData["CustomerEMail"] = $profile->get("login");
-    $trxData["Basket"] = func_SagePay_getBasket($order);
-    $trxData["GiftAidPayment"] = 0;
-    $trxData["ClientIPAddress"] = $_this->get("clientIP");
-    $trxData["Apply3DSecure"] = $_this->getComplex('params.Apply3DSecure');
-    $trxData["ApplyAVSCV2"] = $_this->getComplex('params.ApplyAVSCV2');
+    $trxData['BillingSurname'] = $profile->get('billing_lastname');
+    $trxData['BillingFirstnames'] = $profile->get('billing_firstname');
+    $trxData['BillingAddress1'] = $profile->get('billing_address');
+    $trxData['BillingCity'] = $profile->get('billing_city');
+    $trxData['BillingPostCode'] = $profile->get('billing_zipcode');
+    $trxData['BillingCountry'] = $profile->get('billing_country');
+    $trxData['BillingState'] = func_SagePay_getState($profile, "billing_state", "billing_custom_state");
+    $trxData['DeliverySurname'] = $profile->get('shipping_lastname');
+    $trxData['DeliveryFirstnames'] = $profile->get('shipping_firstname');
+    $trxData['DeliveryAddress1'] = $profile->get('shipping_address');
+    $trxData['DeliveryCity'] = $profile->get('shipping_city');
+    $trxData['DeliveryPostCode'] = $profile->get('shipping_zipcode');
+    $trxData['DeliveryCountry'] = $profile->get('shipping_country');
+    $trxData['DeliveryState'] = func_SagePay_getState($profile, "shipping_state", "shipping_custom_state");
+    $trxData['CustomerName'] = $profile->get('billing_firstname')." ".$profile->get('billing_lastname');
+    $trxData['ContactNumber'] = $profile->get('billing_phone');
+    $trxData['ContactFax'] = $profile->get('billing_fax');
+    $trxData['CustomerEMail'] = $profile->get('login');
+    $trxData['Basket'] = func_SagePay_getBasket($order);
+    $trxData['GiftAidPayment'] = 0;
+    $trxData['ClientIPAddress'] = $_this->get('clientIP');
+    $trxData['Apply3DSecure'] = $_this->getComplex('params.Apply3DSecure');
+    $trxData['ApplyAVSCV2'] = $_this->getComplex('params.ApplyAVSCV2');
 
-    $trxData = array_merge($trxData, $_this->get("ccDetails"));
+    $trxData = array_merge($trxData, $_this->get('ccDetails'));
 
     $request = func_SagePay_clean_inputs($trxData);
     $request = func_SagePayDirect_prepareTrxData($trxData);
     $response = func_SagePayDirect_sendRequestDirect($_this, $request);
 
-    if ($response["Status"] == "3DAUTH") {
+    if ($response['Status'] == "3DAUTH") {
         // goto Visa/MasterCard
-        $_this->session->set("SagePayDirectQueued", $order->get("order_id"));
+        $_this->session->set("SagePayDirectQueued", $order->get('order_id'));
 
         $order->set("details.3DSecureStatus", "NOT CHECKED");
         $order->set("detailLabels.3DSecureStatus", "3D Secure Status");
         $order->update();
 
-        $response["termUrl"] = $_this->get("returnUrl");
+        $response['termUrl'] = $_this->get('returnUrl');
         echo func_SagePayDirect_getRedirectForm($response);
 
         $_this->session->writeClose();
 
         exit;
-    } else { //if ($response["Status"] == "OK") {
+    } else { //if ($response['Status'] == "OK") {
         func_SagePay_response_handling($response, $order, $_this);
     }
 }
@@ -97,11 +97,11 @@ function func_SagePayDirect_process($_this, $order)
 function func_SagePayDirect_action_return($_this, $order, $payment)
 {
     $trxData = array(
-        "MD"	=> $_this->get("MD"),
-        "PaRes"	=> $_this->get("PaRes")
+        "MD"	=> $_this->get('MD'),
+        "PaRes"	=> $_this->get('PaRes')
     );
 
-    $url = $payment->getServiceUrl("callback");
+    $url = $payment->getServiceUrl('callback');
     $request = func_SagePayDirect_prepareTrxData($trxData);
     $response = func_SagePayDirect_sendRequestDirect($_this, $request, $url);
 
@@ -114,16 +114,16 @@ function func_SagePay_response_handling($response, $order, &$payment)
     $detailLabels = array();
 
     // Process response
-    switch ($response["Status"]) {
+    switch ($response['Status']) {
         case "OK":
             // success
-            $order->setComplex("details.status", $response["Status"]);
-            $order->setComplex("details.statusDetail", $response["StatusDetail"]);
-            $order->setComplex("details.VPSTxId", $response["VPSTxId"]);
-            $order->setComplex("details.avscv2", $response["AVSCV2"]);
-            $order->setComplex("details.addressResult", $response["AddressResult"]);
-            $order->setComplex("details.posCodeResult", $response["PostCodeResult"]);
-            $order->setComplex("details.cv2Result", $response["CV2Result"]);
+            $order->setComplex("details.status", $response['Status']);
+            $order->setComplex("details.statusDetail", $response['StatusDetail']);
+            $order->setComplex("details.VPSTxId", $response['VPSTxId']);
+            $order->setComplex("details.avscv2", $response['AVSCV2']);
+            $order->setComplex("details.addressResult", $response['AddressResult']);
+            $order->setComplex("details.posCodeResult", $response['PostCodeResult']);
+            $order->setComplex("details.cv2Result", $response['CV2Result']);
 
             $detailLabels = array(
                 "status"		=> "Status",
@@ -135,40 +135,40 @@ function func_SagePay_response_handling($response, $order, &$payment)
                 "cv2Result"		=> "CV2 Result",
             );
 
-            if (isset($response["SecurityKey"])) {
-                $order->setComplex("details.securityKey", $response["SecurityKey"]);
-                $detailLabels["securityKey"] = "Security Key";
+            if (isset($response['SecurityKey'])) {
+                $order->setComplex("details.securityKey", $response['SecurityKey']);
+                $detailLabels['securityKey'] = "Security Key";
             }
 
-            if (isset($response["TxAuthNo"])) {
-                $order->setComplex("details.TxAuthNo", $response["TxAuthNo"]);
-                $detailLabels["TxAuthNo"] = "TxAuthNo";
+            if (isset($response['TxAuthNo'])) {
+                $order->setComplex("details.TxAuthNo", $response['TxAuthNo']);
+                $detailLabels['TxAuthNo'] = "TxAuthNo";
             }
 
-            if (isset($response["CAVV"])) {
-                $order->setComplex("details.cavv", $response["CAVV"]);
-                $detailLabels["cavv"] = "CAVV";
+            if (isset($response['CAVV'])) {
+                $order->setComplex("details.cavv", $response['CAVV']);
+                $detailLabels['cavv'] = "CAVV";
             }
 
-            if (isset($response["Amount"])) {
-                $order->setComplex("details.amount", $response["Amount"]);
-                $detailLabels["amount"] = "Amount";
+            if (isset($response['Amount'])) {
+                $order->setComplex("details.amount", $response['Amount']);
+                $detailLabels['amount'] = "Amount";
             }
 
             $status = $order->get('status');
-            if (isset($response["3DSecureStatus"])) {
-                $order->setComplex("details.3DSecureStatus", $response["3DSecureStatus"]);
-                $detailLabels["3DSecureStatus"] = "3DSecureStatus";
+            if (isset($response['3DSecureStatus'])) {
+                $order->setComplex("details.3DSecureStatus", $response['3DSecureStatus']);
+                $detailLabels['3DSecureStatus'] = "3DSecureStatus";
 
-                if ($response["3DSecureStatus"] == "OK") {
-                    $status = $payment->get("orderSuccess3dOkStatus");
-                } elseif ($response["3DSecureStatus"] == "NOTCHECKED") {
-                    $status = $payment->get("orderSuccessNo3dStatus");
+                if ($response['3DSecureStatus'] == "OK") {
+                    $status = $payment->get('orderSuccess3dOkStatus');
+                } elseif ($response['3DSecureStatus'] == "NOTCHECKED") {
+                    $status = $payment->get('orderSuccessNo3dStatus');
                 } else {
-                    $status = $payment->get("orderSuccess3dFailStatus");
+                    $status = $payment->get('orderSuccess3dFailStatus');
                 }
             } else {
-                $status = $payment->get("orderSuccessNo3dStatus");
+                $status = $payment->get('orderSuccessNo3dStatus');
             }
             if ($order->xlite->AOMEnabled) {
                 $order->set("orderStatus", $status);
@@ -179,9 +179,9 @@ function func_SagePay_response_handling($response, $order, &$payment)
 
         case "AUTHENTICATED":
         case "REGISTERED":
-            $order->setComplex("details.status", $response["Status"]);
-            $order->setComplex("details.statusDetail", $response["StatusDetail"]);
-            $order->setComplex("details.VPSTxId", $response["VPSTxId"]);
+            $order->setComplex("details.status", $response['Status']);
+            $order->setComplex("details.statusDetail", $response['StatusDetail']);
+            $order->setComplex("details.VPSTxId", $response['VPSTxId']);
 
             $detailLabels = array(
                 "status"		=> "Status",
@@ -189,40 +189,40 @@ function func_SagePay_response_handling($response, $order, &$payment)
                 "VPSTxId"		=> "VPSTxId",
             );
 
-            if (isset($response["3DSecureStatus"])) {
-                $order->setComplex("details.3DSecureStatus", $response["3DSecureStatus"]);
-                $detailLabels["3DSecureStatus"] = "3DSecureStatus";
+            if (isset($response['3DSecureStatus'])) {
+                $order->setComplex("details.3DSecureStatus", $response['3DSecureStatus']);
+                $detailLabels['3DSecureStatus'] = "3DSecureStatus";
             }
 
-            if (isset($response["SecurityKey"])) {
-                $order->setComplex("details.securityKey", $response["SecurityKey"]);
-                $detailLabels["securityKey"] = "Security Key";
+            if (isset($response['SecurityKey'])) {
+                $order->setComplex("details.securityKey", $response['SecurityKey']);
+                $detailLabels['securityKey'] = "Security Key";
             }
 
-            if (isset($response["TxAuthNo"])) {
-                $order->setComplex("details.TxAuthNo", $response["TxAuthNo"]);
-                $detailLabels["TxAuthNo"] = "TxAuthNo";
+            if (isset($response['TxAuthNo'])) {
+                $order->setComplex("details.TxAuthNo", $response['TxAuthNo']);
+                $detailLabels['TxAuthNo'] = "TxAuthNo";
             }
 
-            if (isset($response["Amount"])) {
-                $order->setComplex("details.amount", $response["Amount"]);
-                $detailLabels["amount"] = "Amount";
+            if (isset($response['Amount'])) {
+                $order->setComplex("details.amount", $response['Amount']);
+                $detailLabels['amount'] = "Amount";
             }
 
             if ($order->xlite->AOMEnabled) {
-                $order->set("orderStatus", $payment->get("orderAuthStatus"));
+                $order->set("orderStatus", $payment->get('orderAuthStatus'));
             } else {
-                $order->set("status", $payment->get("orderAuthStatus"));
+                $order->set("status", $payment->get('orderAuthStatus'));
             }
         break;
 
         default:
         case "NOTAUTHED":
         case "REJECTED":
-            $order->setComplex("details.status", $response["Status"]);
-            $order->setComplex("details.statusDetail", $response["StatusDetail"]);
-            $order->setComplex("details.VPSTxId", $response["VPSTxId"]);
-            $order->setComplex("details.securityKey", $response["SecurityKey"]);
+            $order->setComplex("details.status", $response['Status']);
+            $order->setComplex("details.statusDetail", $response['StatusDetail']);
+            $order->setComplex("details.VPSTxId", $response['VPSTxId']);
+            $order->setComplex("details.securityKey", $response['SecurityKey']);
 
             $detailLabels = array(
                 "status"		=> "Status",
@@ -230,11 +230,11 @@ function func_SagePay_response_handling($response, $order, &$payment)
                 "VPSTxId"		=> "VPSTxId",
                 "securityKey"	=> "Security Key"
             );
-            $order->setComplex("details.error", "(".$response["Status"].") ".$response["StatusDetail"]);
+            $order->setComplex("details.error", "(".$response['Status'].") ".$response['StatusDetail']);
             if ($order->xlite->AOMEnabled) {
-                $order->set("orderStatus", $payment->get("orderRejectStatus"));
+                $order->set("orderStatus", $payment->get('orderRejectStatus'));
             } else {
-                $order->set("status", $payment->get("orderRejectStatus"));
+                $order->set("status", $payment->get('orderRejectStatus'));
             }
         break;
 
@@ -251,37 +251,37 @@ function func_SagePayForm_compileInfoCrypt($_this, $order)
     $vendorTxCode = func_SagePay_getTxCode($_this, $order);
     $currency = (($_this->getComplex('params.currency')) ? $_this->getComplex('params.currency') : "USD");
 
-    $profile = $order->get("profile");
+    $profile = $order->get('profile');
 
     $trxData = array(
         "VendorTxCode"	=> $vendorTxCode,
-        "Amount"		=> sprintf("%.02f", $order->get("total")),
+        "Amount"		=> sprintf("%.02f", $order->get('total')),
         "Currency"		=> $currency,
-        "Description"		=> "Shopping cart #".$order->get("order_id"),
-        "SuccessURL"		=> $_this->getSuccessUrl($order->get("order_id")),
-        "BillingSurname" 	=> $profile->get("billing_lastname"),
-        "BillingFirstnames" 	=> $profile->get("billing_firstname"),
-        "BillingAddress1" 	=> $profile->get("billing_address"),
-        "BillingCity" 		=> $profile->get("billing_city"),
-        "BillingPostCode" 	=> $profile->get("billing_zipcode"),
-        "BillingCountry" 	=> $profile->get("billing_country"),
+        "Description"		=> "Shopping cart #".$order->get('order_id'),
+        "SuccessURL"		=> $_this->getSuccessUrl($order->get('order_id')),
+        "BillingSurname" 	=> $profile->get('billing_lastname'),
+        "BillingFirstnames" 	=> $profile->get('billing_firstname'),
+        "BillingAddress1" 	=> $profile->get('billing_address'),
+        "BillingCity" 		=> $profile->get('billing_city'),
+        "BillingPostCode" 	=> $profile->get('billing_zipcode'),
+        "BillingCountry" 	=> $profile->get('billing_country'),
         "BillingState" 		=> func_SagePay_getState($profile, "billing_state", "billing_custom_state"),
-        "DeliverySurname" 	=> $profile->get("shipping_lastname"),
-        "DeliveryFirstnames" 	=> $profile->get("shipping_firstname"),
-        "DeliveryAddress1" 	=> $profile->get("shipping_address"),
-        "DeliveryCity" 		=> $profile->get("shipping_city"),
-        "DeliveryPostCode" 	=> $profile->get("shipping_zipcode"),
-        "DeliveryCountry" 	=> $profile->get("shipping_country"),
+        "DeliverySurname" 	=> $profile->get('shipping_lastname'),
+        "DeliveryFirstnames" 	=> $profile->get('shipping_firstname'),
+        "DeliveryAddress1" 	=> $profile->get('shipping_address'),
+        "DeliveryCity" 		=> $profile->get('shipping_city'),
+        "DeliveryPostCode" 	=> $profile->get('shipping_zipcode'),
+        "DeliveryCountry" 	=> $profile->get('shipping_country'),
         "DeliveryState" 	=> func_SagePay_getState($profile, "shipping_state", "shipping_custom_state"),
-        "CustomerName" 		=> $profile->get("billing_firstname")." ".$profile->get("billing_lastname"),
-        "ContactNumber" 	=> $profile->get("billing_phone"),
-        "ContactFax" 		=> $profile->get("billing_fax"),
-        "CustomerEMail" 	=> $profile->get("login"),
+        "CustomerName" 		=> $profile->get('billing_firstname')." ".$profile->get('billing_lastname'),
+        "ContactNumber" 	=> $profile->get('billing_phone'),
+        "ContactFax" 		=> $profile->get('billing_fax'),
+        "CustomerEMail" 	=> $profile->get('login'),
         "Basket" 		=> func_SagePay_getBasket($order, true),
         "eMailMessage" 		=> $_this->getComplex('params.eMailMessage'),
-        "FailureURL"		=> $_this->getFailureUrl($order->get("order_id")),
+        "FailureURL"		=> $_this->getFailureUrl($order->get('order_id')),
         	"GiftAidPayment"    	=> 0,
-        	"ClientIPAddress"   	=> $_this->get("clientIP"),
+        	"ClientIPAddress"   	=> $_this->get('clientIP'),
         "Apply3DSecure"     	=> $_this->getComplex('params.Apply3DSecure'),
         "ApplyAVSCV2"           => $_this->getComplex('params.ApplyAVSCV2')
     );
@@ -330,7 +330,7 @@ $_this->xlite->logger->log("SagePay VSP Form response:".var_export($responseArra
 }
 
     // extract order_id
-    preg_match("/_([\d]+)_[a-f0-9]{4}$/", $responseArray["VendorTxCode"], $out);
+    preg_match("/_([\d]+)_[a-f0-9]{4}$/", $responseArray['VendorTxCode'], $out);
     $order_id = $out[1];
 
     // check order exists
@@ -344,13 +344,13 @@ $_this->xlite->logger->log("SagePay VSP Form response Error: Order #$order_id no
 
     // set checkout dialog order
     $_this->order = null;
-    $_REQUEST["order_id"] = $order_id;
+    $_REQUEST['order_id'] = $order_id;
 
-    if ($responseArray["Status"] == "ABORT") {
+    if ($responseArray['Status'] == "ABORT") {
         return false;
     }
 
-    $order = $_this->get("order");
+    $order = $_this->get('order');
 
     func_SagePay_response_handling($responseArray, $order, $paymentMethod);
 
@@ -361,7 +361,7 @@ $_this->xlite->logger->log("SagePay VSP Form response Error: Order #$order_id no
 function func_SagePayDirect_sendRequestDirect(&$payment, $post, $url=null)
 {
     if (is_null($url)) {
-        $url = $payment->get("serviceUrl");
+        $url = $payment->get('serviceUrl');
     }
 
     $https = new XLite_Model_HTTPS();
@@ -411,10 +411,10 @@ $payment->xlite->logger->log("RESPONSE ARRAY: ".var_export($responseArray, true)
 function func_SagePay_getState($profile, $field, $customField)
 {
     if (preg_match("/billing/", $field)) {
-        if ($profile->get("billing_country") != "US")
+        if ($profile->get('billing_country') != "US")
             return "";
     } elseif(preg_match("/shipping/", $field)) {
-        if ($profile->get("shipping_country") != "US")
+        if ($profile->get('shipping_country') != "US")
             return "";
     }
     $stateName = "";
@@ -430,10 +430,10 @@ function func_SagePay_getState($profile, $field, $customField)
 
 function func_SagePay_getBasket($order, $is_form=false)
 {
-    $basket = array(count($order->get("items")));
+    $basket = array(count($order->get('items')));
 
-    foreach ($order->get("items") as $item) {
-        $basket[] = func_SagePay_encodeTrxValue($item->get("name"), $is_form).":".sprintf("%.02f", $item->get("amount")).":".sprintf("%.02f", $item->get("price")).":-:-:".sprintf("%.02f", $item->get("taxableTotal"));
+    foreach ($order->get('items') as $item) {
+        $basket[] = func_SagePay_encodeTrxValue($item->get('name'), $is_form).":".sprintf("%.02f", $item->get('amount')).":".sprintf("%.02f", $item->get('price')).":-:-:".sprintf("%.02f", $item->get('taxableTotal'));
     }
 
     return implode(":", $basket);
@@ -514,10 +514,10 @@ function func_SagePayDirect_getRedirectForm($params)
     </script>
 </head>
 <body onLoad="OnLoadEvent();">
-    <form name="protx_vbv_form" action="${params["ACSURL"]}" method="POST" />
-        <input type="hidden" name="PaReq" value="${params["PAReq"]}" />
-        <input type="hidden" name="TermUrl" value="${params["termUrl"]}" />
-        <input type="hidden" name="MD" value="${params["MD"]}" />
+    <form name="protx_vbv_form" action="${params['ACSURL']}" method="POST" />
+        <input type="hidden" name="PaReq" value="${params['PAReq']}" />
+        <input type="hidden" name="TermUrl" value="${params['termUrl']}" />
+        <input type="hidden" name="MD" value="${params['MD']}" />
         <noscript>
             <center><p>Please click button below to Authenticate your card</p><input type="submit" value="Go" /></p></center>
             <input type="submit" value="Go" />
@@ -535,17 +535,17 @@ function func_SagePay_clean_inputs($data)
     $fields_specs = func_SagePay_get_allowed_fields();
     
     foreach ($fields_specs as $field => $spec) {
-        if (!isset($data[$field]) || isset($spec["skip"]))
+        if (!isset($data[$field]) || isset($spec['skip']))
             continue;
-        if (isset($fields_specs[$field]["allowed_values"])) {
-            if ( !in_array($data[$field], $spec["allowed_values"])) {
+        if (isset($fields_specs[$field]['allowed_values'])) {
+            if ( !in_array($data[$field], $spec['allowed_values'])) {
                 if (isset($data[$field])) 
                     unset($data[$field]);
             }
             continue;
         }
-        $pattern = ($spec["filter"] == "Custom") ? $spec["pattern"] : false;
-        $data[$field] = cleanInput($data[$field], $spec["filter"], $spec["max"], $pattern);
+        $pattern = ($spec['filter'] == "Custom") ? $spec['pattern'] : false;
+        $data[$field] = cleanInput($data[$field], $spec['filter'], $spec['max'], $pattern);
     }
     return $data;
 }

@@ -38,6 +38,6 @@ class XLite_Module_GoogleCheckout_Model_Product extends XLite_Model_Product impl
     public function __construct($id=null)
     {
         parent::__construct($id);
-        $this->fields["google_disabled"] = 0;
+        $this->fields['google_disabled'] = 0;
     }
 }

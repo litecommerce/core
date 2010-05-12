@@ -79,25 +79,25 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 
         // Set cart instance for correct tax calculation
         // on order info & preview pages
-        if ($this->get("order") && $this->get("action") == "" && in_array($this->get("page"), array("order_info", "order_preview"))) {
-            $this->_cart = $this->get("order");
+        if ($this->get('order') && $this->get('action') == "" && in_array($this->get('page'), array("order_info", "order_preview"))) {
+            $this->_cart = $this->get('order');
         }
 
-        $ordersUpdated = $this->session->get("ordersUpdated") ? $this->session->get("ordersUpdated") : array();
+        $ordersUpdated = $this->session->get('ordersUpdated') ? $this->session->get('ordersUpdated') : array();
 
-        if ($this->get("page") == "order_preview" && !isset($ordersUpdated[$this->get("order_id")])) {
-            $this->redirect("admin.php?target=order&order_id=".$this->get("order_id")."&page=order_info");
+        if ($this->get('page') == "order_preview" && !isset($ordersUpdated[$this->get('order_id')])) {
+            $this->redirect("admin.php?target=order&order_id=".$this->get('order_id')."&page=order_info");
         }
-        if(isset($ordersUpdated[$this->get("order_id")])) {
-            $order = $this->get("cloneOrder");
+        if(isset($ordersUpdated[$this->get('order_id')])) {
+            $order = $this->get('cloneOrder');
             if (!$order->isEmpty()) {
-            	$this->pages["order_preview"] = "Review and Save Order";
-        		if ($this->xlite->getComplex('mm.activeModules.AdvancedSecurity') && is_null($this->session->get("masterPassword")) && $order->getComplex('paymentMethod.payment_method') == "CreditCard") {
+            	$this->pages['order_preview'] = "Review and Save Order";
+        		if ($this->xlite->getComplex('mm.activeModules.AdvancedSecurity') && is_null($this->session->get('masterPassword')) && $order->getComplex('paymentMethod.payment_method') == "CreditCard") {
         		    $this->set("unsecureCC", true);
         		}
             } else {
                 if ($this->page == "order_preview") {
-                    $this->redirect("admin.php?target=order&order_id=".$this->get("order_id")."&page=order_edit");
+                    $this->redirect("admin.php?target=order&order_id=".$this->get('order_id')."&page=order_edit");
                 }
             }
         }
@@ -128,13 +128,13 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
     
     function getCloneProfile()  
     {
-        $order = $this->get("cloneOrder");
-        $this->clone_profile = $order->get("profile");
+        $order = $this->get('cloneOrder');
+        $this->clone_profile = $order->get('profile');
         if (is_null($this->clone_profile)) {
                 $this->clone_profile = new XLite_Model_Profile();
-                $this->clone_profile->set("order_id",$order->get("order_id"));
+                $this->clone_profile->set("order_id",$order->get('order_id'));
                 $this->clone_profile->create();
-                $order->set("profile_id",$this->clone_profile->get("profile_id"));
+                $order->set("profile_id",$this->clone_profile->get('profile_id'));
                 $order->update();
         }
         return $this->clone_profile;
@@ -146,35 +146,35 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
         $items = array();
     
         // Set cart instance for correct tax calculation
-        $this->_cart = $this->get("order");
+        $this->_cart = $this->get('order');
 
         $orderItems = $this->getComplex('order.productItems');
         $cloneItems = $this->getComplex('cloneOrder.productItems');
         foreach($orderItems as $item) {
-            $items[$item->get("uniqueKey")]['orderItem'] = $item;
-            $items[$item->get("uniqueKey")]['cloneItem'] = null;
+            $items[$item->get('uniqueKey')]['orderItem'] = $item;
+            $items[$item->get('uniqueKey')]['cloneItem'] = null;
             }
         foreach($cloneItems as $item) {
-            if (!isset($items[$item->get("uniqueKey")]['orderItem'])) 
-                $items[$item->get("uniqueKey")]['orderItem'] = null;
-            $items[$item->get("uniqueKey")]['cloneItem'] = $item;
+            if (!isset($items[$item->get('uniqueKey')]['orderItem'])) 
+                $items[$item->get('uniqueKey')]['orderItem'] = null;
+            $items[$item->get('uniqueKey')]['cloneItem'] = $item;
         }
         return $items;
     }
 
     function getOrdersTaxes() 
     {
-        $order = $this->get("order");
-        $clone = $this->get("cloneOrder");
+        $order = $this->get('order');
+        $clone = $this->get('cloneOrder');
         
         foreach($order->getDisplayTaxes() as $name => $tax) {
-            $ordersTaxes[$name]["order"] = $tax;
-            $ordersTaxes[$name]["clone"] = null;
+            $ordersTaxes[$name]['order'] = $tax;
+            $ordersTaxes[$name]['clone'] = null;
         }
         foreach($clone->getDisplayTaxes() as $name => $tax) {
-            if (!isset($ordersTaxes[$name]["order"]))
-                $ordersTaxes[$name]["order"] = null;
-            $ordersTaxes[$name]["clone"] = $tax;
+            if (!isset($ordersTaxes[$name]['order']))
+                $ordersTaxes[$name]['order'] = null;
+            $ordersTaxes[$name]['clone'] = $tax;
         }
         return $ordersTaxes;
     }
@@ -188,7 +188,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
     {
         $originalValues = $order->getComplex('details.originalValues');
         if (is_null($originalValues)) {
-            $fields = $this->get("originalValuesFields");
+            $fields = $this->get('originalValuesFields');
             foreach ($fields as $field)
                 $originalValues[$field] = $order->get($field);
         }
@@ -200,12 +200,12 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
         // Set cart instance for correct tax calculation
         $this->_cart = $order;
 
-        $fields = $this->get("originalValuesFields");
+        $fields = $this->get('originalValuesFields');
         $originalValues = $order->getComplex('details.originalValues');
         if ($calculate) {
             $order->calcAllItemsTaxedPrice();
             $order->calcTotal();
-            $properties = $order->get("properties");
+            $properties = $order->get('properties');
             $currentValues = $order->getComplex('details.currentValues');
             foreach ($fields as $field) {
                 if ($properties[$field] != $originalValues[$field]) $originalValues[$field] = $properties[$field];
@@ -234,7 +234,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
     function action_send()
     {
     	$mail = new XLite_Model_Mailer();
-        $order = $this->get("order");
+        $order = $this->get('order');
         $mail->order = $order;
         $mail->compose(
         		$this->config->getComplex('Company.site_administrator'),
@@ -244,7 +244,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 
         // Switch layout to castomer area
         $layout = XLite_Model_Layout::getInstance();
-        $active_skin = $layout->get("skin");
+        $active_skin = $layout->get('skin');
         $layout->set("skin", XLite::getInstance()->getOptions(array('skin_details', 'skin')));
 
         $mail->compose(
@@ -259,12 +259,12 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
     
     function action_calculate_totals()  
     {
-        $order = $this->get("cloneOrder");
-        if ($this->xlite->get("PromotionEnabled")) {
-            $order->get("orderDC");
+        $order = $this->get('cloneOrder');
+        if ($this->xlite->get('PromotionEnabled')) {
+            $order->get('orderDC');
         }
-        if ($this->clone["shipping_id"] == 0 && !isset($this->clone["shipping_cost"])) {
-            $this->clone["shipping_cost"] = 0;
+        if ($this->clone['shipping_id'] == 0 && !isset($this->clone['shipping_cost'])) {
+            $this->clone['shipping_cost'] = 0;
         }
         $order->set("properties", $this->clone);
         $this->saveCurrentValues($order);
@@ -272,23 +272,23 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
         
     function action_update_totals() 
     {
-        $order = $this->get("cloneOrder");
+        $order = $this->get('cloneOrder');
         $this->saveOriginalValues($order);
-        if ($this->clone["shipping_id"] == 0 && !isset($this->clone["shipping_cost"])) {
-            $this->clone["shipping_cost"] = 0;
+        if ($this->clone['shipping_id'] == 0 && !isset($this->clone['shipping_cost'])) {
+            $this->clone['shipping_cost'] = 0;
         }
 
         $edit_mode_changed = false;
-        if ( $order->get("manual_edit") == 1 && $this->clone["manual_edit"] != 1 ) {
+        if ( $order->get('manual_edit') == 1 && $this->clone['manual_edit'] != 1 ) {
             $edit_mode_changed = true;
         }
-        $this->clone["manual_edit"] = ( $this->clone["manual_edit"] == 1 ) ? 1 : 0;
+        $this->clone['manual_edit'] = ( $this->clone['manual_edit'] == 1 ) ? 1 : 0;
 
         $order->set("properties", $this->clone);
 
         // Update taxes
-        if ( $this->clone["manual_edit"] == 1 ) {
-            $taxes = unserialize($order->get("taxes"));
+        if ( $this->clone['manual_edit'] == 1 ) {
+            $taxes = unserialize($order->get('taxes'));
             if ( is_array($taxes) && is_array($this->taxes) ) {
                 foreach ($this->taxes as $k=>$v) {
                     $taxes[$k] = $v;
@@ -312,13 +312,13 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
     
     function action_update_profile()  
     {
-        $profile = $this->get("cloneProfile");
+        $profile = $this->get('cloneProfile');
         $profile->_AOMIgnoreMembershipChanged = true;
         $profile->set("properties",$this->cloned_profile);
         $profile->update();
         $profile->_AOMIgnoreMembershipChanged = false;
 
-        $order = $this->get("cloneOrder");
+        $order = $this->get('cloneOrder');
         $order->calcTotal();
         $this->saveCurrentValues($order);
         $this->cloneUpdated(false);
@@ -332,10 +332,10 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 
     function action_fill_user() 
     {
-        if ($this->get("profile_id")) {
-            $selectedProfile = new XLite_Model_Profile($this->get("profile_id"));
-            $properties = $selectedProfile->get("properties");
-            $cloneProfile = $this->get("cloneProfile");
+        if ($this->get('profile_id')) {
+            $selectedProfile = new XLite_Model_Profile($this->get('profile_id'));
+            $properties = $selectedProfile->get('properties');
+            $cloneProfile = $this->get('cloneProfile');
             $field_values = $this->getUserProfileFields();
             $cloneProfile->_AOMIgnoreMembershipChanged = true;
             foreach($field_values as $value) {
@@ -344,42 +344,42 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
             $cloneProfile->update();
             $cloneProfile->_AOMIgnoreMembershipChanged = false;
 
-    		$order = $this->get("cloneOrder");
-            $order->set("orig_profile_id", $selectedProfile->get("profile_id"));
+    		$order = $this->get('cloneOrder');
+            $order->set("orig_profile_id", $selectedProfile->get('profile_id'));
             $order->calcTotal();
             $this->saveCurrentValues($order);
             $this->cloneUpdated(false);
         }
-        $this->set("returnUrl","admin.php?target=".$this->get("target")."&mode=show_users&order_id=".$this->getComplex('order.order_id')."&reloaded=1");
+        $this->set("returnUrl","admin.php?target=".$this->get('target')."&mode=show_users&order_id=".$this->getComplex('order.order_id')."&reloaded=1");
     }
     
     function action_update_products()  
     {
         // Set cart instance for correct tax calculation
-        $this->_cart = $this->get("order");
+        $this->_cart = $this->get('order');
 
-        $order = $this->get("cloneOrder");
-        $items = $order->get("items");
-        foreach($order->get("items") as $item)
+        $order = $this->get('cloneOrder');
+        $items = $order->get('items');
+        foreach($order->get('items') as $item)
             $order->deleteItem($item);
-        if ($this->get("clone_products")) {
-            foreach($this->get("clone_products") as $key => $product) {
+        if ($this->get('clone_products')) {
+            foreach($this->get('clone_products') as $key => $product) {
                 foreach($items as $item) {
-                    if ($item->get("uniqueKey") == stripslashes($key)) {
-                        if (!empty($product["product_options"])) {
-                            $item->set("productOptions", $product["product_options"]);
+                    if ($item->get('uniqueKey') == stripslashes($key)) {
+                        if (!empty($product['product_options'])) {
+                            $item->set("productOptions", $product['product_options']);
                         }
-                        $pitem = $item->get("product");
+                        $pitem = $item->get('product');
                         if ($this->config->getComplex('Taxes.prices_include_tax')) {
                             $prod = new XLite_Model_Product();
-                            $prod->set("price", $product["price"]);
-                            $item->set("price", $prod->get("listPrice"));
+                            $prod->set("price", $product['price']);
+                            $item->set("price", $prod->get('listPrice'));
                         } else {
-                            $item->set("price",$product["price"]);
+                            $item->set("price",$product['price']);
                         }
-                        $item->set("originalPrice", $product["price"]);
-                        $item->set("amount",$product["amount"]);
-                        if ( $pitem->is("available") ) {
+                        $item->set("originalPrice", $product['price']);
+                        $item->set("amount",$product['amount']);
+                        if ( $pitem->is('available') ) {
                             $order->addItem($item);
                         } else {
                             $order->_createItem($item);
@@ -400,9 +400,9 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
      */
     function updateOrderAsCart($order)
     {
-        $orig_properties = $order->get("properties");
-        $orig_details = $order->get("details");
-        $profile = $order->get("profile");
+        $orig_properties = $order->get('properties');
+        $orig_details = $order->get('details');
+        $profile = $order->get('profile');
         
         // the following lines are required for proper tax calculation:
         // profile-dependent taxes should apply to order's owner, but not to current admin profile
@@ -410,11 +410,11 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
         $this->_cart->setProfile($profile);
 
         $cart = new XLite_Model_Cart();
-        $cart->set("order_id", $order->get("order_id"));
+        $cart->set("order_id", $order->get('order_id'));
         $cart->setProfile(null);
         $cart->setProfile($profile);
 
-        foreach ($order->get("items") as $k=>$item) {
+        foreach ($order->get('items') as $k=>$item) {
             $cart->_items[$k] = $item;
             $cart->_items[$k]->order = $cart;
         }
@@ -422,7 +422,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
         $cart->set("properties", $orig_properties); // prevent data loss during updating the cart
         $cart->set("details", $orig_details); // prevent CC data loss
 
-        if ($this->xlite->get("PromotionEnabled")) {
+        if ($this->xlite->get('PromotionEnabled')) {
             $cart->_appliedBonuses = null; // clear applied bonuses cache before cart recalculation
             $cart->doNotChangeGlobalDiscount = true; // don't recalculate global discount
             $cart->doNotChangeShippingCost = true; // don't recalculate shipping cost
@@ -458,18 +458,18 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
         $order->isRead = false;
         $order->getProperties(); // in order to read properties from database
 
-        $order->set("date", $orig_properties["date"]);
-        $order->set("discount", $orig_properties["discount"]);
+        $order->set("date", $orig_properties['date']);
+        $order->set("discount", $orig_properties['discount']);
         $order->update();
     }
 
  	function action_delete_products()  
     {
-        if (!is_null($this->get("delete_items"))) {
-            $order = $this->get("cloneOrder");
-            foreach($order->get("items") as $item) 
-                foreach($this->get("delete_items") as $item_id) 
-                    if ($item->get("uniqueKey") == $item_id) {
+        if (!is_null($this->get('delete_items'))) {
+            $order = $this->get('cloneOrder');
+            foreach($order->get('items') as $item) 
+                foreach($this->get('delete_items') as $item_id) 
+                    if ($item->get('uniqueKey') == $item_id) {
                         $order->deleteItem($item);
                     }
             $this->updateOrderAsCart($order);
@@ -481,18 +481,18 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
     function action_add_products()  
     {
         $this->cloneUpdated(false);
- 	    $order = $this->get("cloneOrder");
-        if (!is_null($this->get("add_products"))) {
-            foreach($this->get("add_products") as $product_id) {
+ 	    $order = $this->get('cloneOrder');
+        if (!is_null($this->get('add_products'))) {
+            foreach($this->get('add_products') as $product_id) {
                 $product = new XLite_Model_Product($product_id);
                 $item = new XLite_Model_OrderItem();
            		$item->set("product",$product);
                 $item->set("amount",1);
-                if ($this->xlite->get("ProductOptionsEnabled")) {
-                    $options = $product->get("productOptions");
+                if ($this->xlite->get('ProductOptionsEnabled')) {
+                    $options = $product->get('productOptions');
                     if ($options) {
                         foreach($options as $option) {
-                            $_options = $option->get("productOptions");
+                            $_options = $option->get('productOptions');
                             $default_options[] = $_options[0];
                         }
                         $item->set("options",serialize($default_options));
@@ -504,13 +504,13 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
             $this->updateOrderAsCart($order);
             $this->saveCurrentValues($order);
         }
-        $this->set("returnUrl","admin.php?target=".$this->get("target")."&mode=search&order_id=".$this->getComplex('order.order_id')."&reloaded=1&substring=$this->substring&search_productsku=$this->search_productsku&search_category=$this->search_category&subcategory_search=$this->subcategory_search&pageID=$this->pageID&outOfStock=".$order->get("outOfStock"));
+        $this->set("returnUrl","admin.php?target=".$this->get('target')."&mode=search&order_id=".$this->getComplex('order.order_id')."&reloaded=1&substring=$this->substring&search_productsku=$this->search_productsku&search_category=$this->search_category&subcategory_search=$this->subcategory_search&pageID=$this->pageID&outOfStock=".$order->get('outOfStock'));
     } //   }}}
 
     function action_add_gc()  
     {
-        $cloneOrder = $this->get("cloneOrder");
-        $giftCertificate = new XLite_Module_GiftCertificates_Model_GiftCertificate($this->get("add_gcid"));
+        $cloneOrder = $this->get('cloneOrder');
+        $giftCertificate = new XLite_Module_GiftCertificates_Model_GiftCertificate($this->get('add_gcid'));
         $item = new XLite_Model_OrderItem();
         $item->set("GC",$giftCertificate);
         $cloneOrder->addItem($item);
@@ -520,11 +520,11 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 
     function action_delete_gc()  
     {
-        if (!is_null($this->get("delete_gc"))) {
-            $order = $this->get("cloneOrder");
-            foreach($this->get("delete_gc") as $gcid) {
-                foreach($order->get("items") as $item)
-                    if ($item->get("item_id") == $gcid)	$order->deleteItem($item);
+        if (!is_null($this->get('delete_gc'))) {
+            $order = $this->get('cloneOrder');
+            foreach($this->get('delete_gc') as $gcid) {
+                foreach($order->get('items') as $item)
+                    if ($item->get('item_id') == $gcid)	$order->deleteItem($item);
             }
             $this->saveCurrentValues($order);
             $this->cloneUpdated(false);
@@ -533,8 +533,8 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
     
     function action_pay_gc() 
     {
-        $cloneOrder = $this->get("cloneOrder");
-        $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate($this->get("add_gcid"));
+        $cloneOrder = $this->get('cloneOrder');
+        $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate($this->get('add_gcid'));
         $cloneOrder->set("GC", $gc);
         $this->saveCurrentValues($cloneOrder);
         $this->cloneUpdated(false);
@@ -542,7 +542,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 
     function action_clean_gc() 
     {
-        $cloneOrder = $this->get("cloneOrder");
+        $cloneOrder = $this->get('cloneOrder');
         $cloneOrder->set("GC", null);
         $this->saveCurrentValues($cloneOrder);
         $this->cloneUpdated(false);
@@ -550,64 +550,64 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
     
     function action_undo_changes()  
     {
-        $order = new XLite_Model_Order($this->get("order_id"));
-        $orderGC = $order->get("GC");
-        $cloneOrder = $this->get("cloneOrder");
-        $cloneOrderGC = $cloneOrder->get("GC");
+        $order = new XLite_Model_Order($this->get('order_id'));
+        $orderGC = $order->get('GC');
+        $cloneOrder = $this->get('cloneOrder');
+        $cloneOrderGC = $cloneOrder->get('GC');
         $this->data_exchange($cloneOrder, $order);
 
-        if ($this->xlite->get("PromotionEnabled")) {
-            $dc = $cloneOrder->get("DC");
+        if ($this->xlite->get('PromotionEnabled')) {
+            $dc = $cloneOrder->get('DC');
     		if ($dc) {
     			$this->action_del_dc();
     		}
-            $dc = $order->get("DC");
+            $dc = $order->get('DC');
             if ($dc) {
-    			$this->add_dc = $dc->get("coupon_id");
+    			$this->add_dc = $dc->get('coupon_id');
     			$this->action_add_dc();
     		}
         }
-        if ($this->xlite->get("GiftCertificatesEnabled")) {
+        if ($this->xlite->get('GiftCertificatesEnabled')) {
     		if (is_object($cloneOrderGC)) {
                 $this->action_clean_gc();
             }
     		if (is_object($orderGC)) {
-    			$this->set("add_gcid", $orderGC->get("gcid"));
+    			$this->set("add_gcid", $orderGC->get('gcid'));
                 $this->action_pay_gc();
             }
         }
 
         $this->cloneUpdated(true);
-        $this->set("returnUrl","admin.php?target=".$this->get("target")."&order_id=".$this->get("order_id")."&page=order_edit&mode=".$this->get("mode"));
+        $this->set("returnUrl","admin.php?target=".$this->get('target')."&order_id=".$this->get('order_id')."&page=order_edit&mode=".$this->get('mode'));
     }
     
     function action_save_changes()  
     {
-        $order = new XLite_Model_Order($this->get("order_id"));
-        $cloneOrder = $this->get("cloneOrder");
+        $order = new XLite_Model_Order($this->get('order_id'));
+        $cloneOrder = $this->get('cloneOrder');
         $orderHistory = new XLite_Module_AOM_Model_OrderHistory();
-        $ordersItems = $this->get("ordersItems");
+        $ordersItems = $this->get('ordersItems');
         $orderHistory->log($order, $cloneOrder, $ordersItems);
 
-        if ($this->xlite->get("GiftCertificatesEnabled")) {
-            $old_gcid = $order->get("gcid");
-            $old_payedByGC = $order->get("payedByGC");
+        if ($this->xlite->get('GiftCertificatesEnabled')) {
+            $old_gcid = $order->get('gcid');
+            $old_payedByGC = $order->get('payedByGC');
         }
 
         $this->data_exchange($order,$cloneOrder);
 
-        if ($this->xlite->get("PromotionEnabled")) {
-            $status = $order->get("status");
+        if ($this->xlite->get('PromotionEnabled')) {
+            $status = $order->get('status');
             if ($status == "Q" || $status == "P" || $status == "C") {
                 $order->promotionStatusChanged(1);
             }
             $dc = new XLite_Module_Promotion_Model_DiscountCoupon();
-            if ($dc->find("order_id = " .$order->get("order_id"))) {
+            if ($dc->find("order_id = " .$order->get('order_id'))) {
                 $dc->delete();
             }
             $dc = new XLite_Module_Promotion_Model_DiscountCoupon();
-            if ($dc->find("order_id = ". $cloneOrder->get("order_id"))) {
-                $dc->set("order_id",$order->get("order_id"));
+            if ($dc->find("order_id = ". $cloneOrder->get('order_id'))) {
+                $dc->set("order_id",$order->get('order_id'));
                 $dc->set("coupon_id",null);
                 $dc->create();
             }
@@ -615,15 +615,15 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
                 $order->promotionStatusChanged(-1);
             }
         }
-        if ($this->xlite->get("GiftCertificatesEnabled")) {
-            $gc_changed = (($old_gcid != $order->get("gcid")) || ($old_payedByGC != $order->get("payedByGC")));
+        if ($this->xlite->get('GiftCertificatesEnabled')) {
+            $gc_changed = (($old_gcid != $order->get('gcid')) || ($old_payedByGC != $order->get('payedByGC')));
             if ($gc_changed) {
                 if ($old_payedByGC > 0) {
                     $cloneOrder->set("gcid", $old_gcid);
                     $cloneOrder->set("payedByGC", $old_payedByGC);
                     $cloneOrder->changeGCDebit(1);
                 }
-                if ($order->get("payedByGC") > 0) {
+                if ($order->get('payedByGC') > 0) {
                     $order->changeGCDebit(-1);
                 }
             }
@@ -649,13 +649,13 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
             }
         }
 
-        $this->set("returnUrl","admin.php?target=order&order_id=".$this->get("order_id"));
+        $this->set("returnUrl","admin.php?target=order&order_id=".$this->get('order_id'));
  	}
 
     function action_clone_order()  
     {
-        $order = new XLite_Model_Order($this->get("order_id"));
-        if ( function_exists("func_is_clone_deprecated") && func_is_clone_deprecated() ) {
+        $order = new XLite_Model_Order($this->get('order_id'));
+        if ( function_exists('func_is_clone_deprecated') && func_is_clone_deprecated() ) {
             $clone = $order->cloneObject();
         } else {
             $clone = $order->clone();
@@ -665,14 +665,14 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
             $clone->_disable_all_notifications = true;
         }
 
-        $clone->set("status", $order->get("status"));
+        $clone->set("status", $order->get('status'));
         $clone->set("date", time());
-        $clone->set("orig_profile_id", $order->get("orig_profile_id"));
+        $clone->set("orig_profile_id", $order->get('orig_profile_id'));
         $clone->update();
         $this->updateOrderAsCart($clone);
         $orderHistory = new XLite_Module_AOM_Model_OrderHistory();
         $orderHistory->log($clone, $order, null,"clone_order");
-        $this->set("returnUrl","admin.php?target=order&order_id=".$clone->get("order_id"));
+        $this->set("returnUrl","admin.php?target=order&order_id=".$clone->get('order_id'));
      }
 
     function action_split_order()  
@@ -686,9 +686,9 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
         $cart->set("DC", $dc);
         $cart->calcTotal();
         
-        $orderDate = $cart->get("date");
+        $orderDate = $cart->get('date');
         $cart->update();
-        $order = new XLite_Model_Order($cart->get("order_id"));
+        $order = new XLite_Model_Order($cart->get('order_id'));
         $order->set("date", $orderDate);
         $order->update();
     }
@@ -698,22 +698,22 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
         $this->add_dc = addSlashes(trim($this->add_dc));
         $dc = new XLite_Module_Promotion_Model_DiscountCoupon($this->add_dc);
 
-        $order = $this->get("cloneOrder");
-        $profile = $order->get("profile");
+        $order = $this->get('cloneOrder');
+        $profile = $order->get('profile');
 
         $cart = XLite_Model_Cart::getInstance();
         $cart->clear();
-        $cart->set("order_id", $order->get("order_id"));
+        $cart->set("order_id", $order->get('order_id'));
 
         $cart->setProfile(null);
         $cart->setProfile($profile);
 
-        foreach($order->get("items") as $item) {
+        foreach($order->get('items') as $item) {
             $cart->_items[] = $item;
         }
 
         if ($dc->checkCondition($order)) {
-            if ($order->get("orderDC")) {
+            if ($order->get('orderDC')) {
                 $order->DC->delete();
                 $order->DC = null;
             }
@@ -722,7 +722,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
         } else {
             $this->set("valid", false);
             $this->set("wrongDC", $dc);
-            if ($dc->get("applyTo") == "total") {
+            if ($dc->get('applyTo') == "total") {
                 $pm = $this->getComplex('cloneOrder.paymentMethod');
                 if (!is_object($pm) || $this->getComplex('cloneOrder.shipping_id') < 0) {
                     $this->set("wrongDCtotal", true);
@@ -734,23 +734,23 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 
     function action_del_dc()  
     {
-        $order = $this->get("cloneOrder");
+        $order = $this->get('cloneOrder');
         if ($order->DC) {
             $order->DC->delete();
         }
         $order->DC = null;
-        $status = $order->get("status");
+        $status = $order->get('status');
         $order->set("discountCoupon", "");
-        $profile = $order->get("profile");
+        $profile = $order->get('profile');
 
         $cart = XLite_Model_Cart::getInstance();
         $cart->clear();
-        $cart->set("order_id", $order->get("order_id"));
+        $cart->set("order_id", $order->get('order_id'));
 
         $cart->setProfile(null);
         $cart->setProfile($profile);
 
-        foreach($order->get("items") as $item) {
+        foreach($order->get('items') as $item) {
             $cart->_items[] = $item;
         }
 
@@ -760,7 +760,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
    
     function action_update()  
     {
-        $order = new XLite_Model_Order($this->get("order_id"));
+        $order = new XLite_Model_Order($this->get('order_id'));
         $orderHistory = new XLite_Module_AOM_Model_OrderHistory();
         $orderHistory->log($order);
         $order->set("orderStatus",$_POST['substatus']);
@@ -774,10 +774,10 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 
     function action_clear_history_cc_info() 
     {
-        $order = new XLite_Model_Order($this->get("order_id"));
-        $history = $order->get("orderHistory");
+        $order = new XLite_Model_Order($this->get('order_id'));
+        $history = $order->get('orderHistory');
         foreach ($history as $obj) {
-            $changes = $obj->get("changes");
+            $changes = $obj->get('changes');
             foreach ($changes as $key=>$val) {
                 if (is_array($val)) {
                     foreach ($val as $k=>$v) {
@@ -810,12 +810,12 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
     function getPaymentMethods()  
     {
         
-        return $paymentMethod->get("activeMethods");
+        return $paymentMethod->get('activeMethods');
     }
 
     function getShippingRates() 
     {
-        $order = $this->get("cloneOrder");
+        $order = $this->get('cloneOrder');
         $order->doNotChangeGlobalDiscount = true; // don't recalculate global discount
         $rates = $order->getShippingRates();
         $order->doNotChangeGlobalDiscount = false;
@@ -833,7 +833,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
     function getOutOfStockProduct($id) 
     {
          $product = new XLite_Model_Product($id);
-         return $product->get("name");
+         return $product->get('name');
     }
     
     function getProducts()  
@@ -861,7 +861,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
             return null;
         }
         $dc = new XLite_Module_Promotion_Model_DiscountCoupon();
-        return $dc->findAll("coupon LIKE '%".$this->get("coupon")."%' AND status = 'A' AND order_id = 0 AND expire > ". time());
+        return $dc->findAll("coupon LIKE '%".$this->get('coupon')."%' AND status = 'A' AND order_id = 0 AND expire > ". time());
     }
 
     function getGiftCertificates()  
@@ -870,7 +870,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
             return null;
         }
         $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate();
-        return $gc->findAll("gcid LIKE '%".$this->get("gcid")."%' AND status = 'A'");
+        return $gc->findAll("gcid LIKE '%".$this->get('gcid')."%' AND status = 'A'");
 
     }
 
@@ -878,7 +878,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
     
     function optionSelected($item, $option)  
     {
-        $itemOptions = $item->get("productOptions");
+        $itemOptions = $item->get('productOptions');
         foreach($itemOptions as $opt)
         {
             if ($opt->class == $option->class && $opt->option == $option->option)
@@ -889,8 +889,8 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 
     function data_exchange(&$order1, &$order2)  
     {
-        $properties = $order1->get("properties");
-        $orderProfile = $order1->get("profile");
+        $properties = $order1->get('properties');
+        $orderProfile = $order1->get('profile');
         $cloneProfile = $order2->getComplex('profile.properties');
         $orderProfile->_AOMIgnoreMembershipChanged = true;
         $field_values = $this->getUserProfileFields();
@@ -900,12 +900,12 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
         $orderProfile->update();
         $orderProfile->_AOMIgnoreMembershipChanged = false;
         
-        $details = $order1->get("details");
-        $detailLabels = $order1->get("detailLabels");
-        if ($this->xlite->getComplex('mm.activeModules.AdvancedSecurity') && !is_null($this->session->get("masterPassword"))) {
+        $details = $order1->get('details');
+        $detailLabels = $order1->get('detailLabels');
+        if ($this->xlite->getComplex('mm.activeModules.AdvancedSecurity') && !is_null($this->session->get('masterPassword'))) {
             $details = $order1->getSecureDetails();
         }
-        $order1->set("properties",$order2->get("properties"));
+        $order1->set("properties",$order2->get('properties'));
         $order1->set("details", $details);
         $order1->set("detailLabels", $detailLabels);
         $substatus = (!empty($properties['substatus']) ? $properties['substatus']: $properties['status']);
@@ -913,15 +913,15 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
         $order1->_substatusChanged = false;
         $order1->_statusChanged = false;
 
-        if ($order2->get("payment_method") == "CreditCard") {
+        if ($order2->get('payment_method') == "CreditCard") {
             $this->addDetails($order1);
         }
         $order1->set("order_id",$properties['order_id']);
-        foreach($order1->get("items") as $item)
+        foreach($order1->get('items') as $item)
             $order1->deleteItem($item);
 
-        foreach($order2->get("items") as $item) {
-            $price = $item->get("originalPrice");
+        foreach($order2->get('items') as $item) {
+            $price = $item->get('originalPrice');
             $item->set("originalPrice", $price);
             if ( $item->getComplex('product.available') ) {
                 $order1->addItem($item);
@@ -932,8 +932,8 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
         
         $order1->set("profile_id",$properties['profile_id']);
         $order1->set("orig_profile_id",$properties['orig_profile_id']);
-        $order1->refresh("profile");
-        $order1->refresh("orig_profile");
+        $order1->refresh('profile');
+        $order1->refresh('orig_profile');
         $order1->update();
         $this->updateOrderAsCart($order1);
     } //  }}}
@@ -964,14 +964,14 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 
     function addDetails($order)
     {
-        if ($this->xlite->getComplex('mm.activeModules.AdvancedSecurity') && is_null($this->session->get("masterPassword"))) {
+        if ($this->xlite->getComplex('mm.activeModules.AdvancedSecurity') && is_null($this->session->get('masterPassword'))) {
             return;
         }
 
-        $details = $order->get("details");
-        $detailLabels = $order->get("detailLabels");
+        $details = $order->get('details');
+        $detailLabels = $order->get('detailLabels');
 
-        if (!empty($detailLabels["cc_type"])) {
+        if (!empty($detailLabels['cc_type'])) {
             return;
         }
 
@@ -997,38 +997,38 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
 
     function isLast($key) 
     {
-        $item = end(array_keys($this->get("ordersItems")));
+        $item = end(array_keys($this->get('ordersItems')));
         return $key == $item;
     }
 
     function cloneUpdated($update = false)  
     {
-        $ordersUpdated = ($this->session->get("ordersUpdated") ? $this->session->get("ordersUpdated") : array());
+        $ordersUpdated = ($this->session->get('ordersUpdated') ? $this->session->get('ordersUpdated') : array());
         if ($update) {
-            unset($ordersUpdated[$this->get("order_id")]);
+            unset($ordersUpdated[$this->get('order_id')]);
         } else {
-            $ordersUpdated[$this->get("order_id")] = 1;
+            $ordersUpdated[$this->get('order_id')] = 1;
         }
        $this->session->set("ordersUpdated",$ordersUpdated);
     }
 
     function isCloneUpdated()  
     {
-        $ordersUpdated = ($this->session->get("ordersUpdated") ? $this->session->get("ordersUpdated") : array());
-        return isset($ordersUpdated[$this->get("order_id")]);
+        $ordersUpdated = ($this->session->get('ordersUpdated') ? $this->session->get('ordersUpdated') : array());
+        return isset($ordersUpdated[$this->get('order_id')]);
                 
     }
 
     function isUpdateAvailable()
     {
-        $order = $this->get("cloneOrder");
+        $order = $this->get('cloneOrder');
         $login = $order->getComplex('profile.login');
-        $paymentMethod = $order->get("paymentMethod");
-        $shipping_id = $order->get("shipping_id");
+        $paymentMethod = $order->get('paymentMethod');
+        $shipping_id = $order->get('shipping_id');
         if (!isset($login) || empty($login) || !isset($paymentMethod) || $shipping_id < 0) {
             return false;
         }
-        if ($this->get("unsecureCC")) {
+        if ($this->get('unsecureCC')) {
             return false;
         }
 
@@ -1039,11 +1039,11 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
     {
     	$allParams = parent::getAllParams($exeptions);
     	if ($this->mode == "search_users") {
-    		$allParams["substring"] = $this->substring;
-    		$allParams["membership"] = $this->membership;
-    		$allParams["user_type"] = $this->user_type;
-    		$allParams["mode"] = $this->mode;
-    		$allParams["search"] = $this->search;
+    		$allParams['substring'] = $this->substring;
+    		$allParams['membership'] = $this->membership;
+    		$allParams['user_type'] = $this->user_type;
+    		$allParams['mode'] = $this->mode;
+    		$allParams['search'] = $this->search;
     	}
 
     	return $allParams;

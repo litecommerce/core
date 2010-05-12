@@ -89,17 +89,17 @@ class XLite_Module_GoogleCheckout_Controller_Admin_PaymentMethod extends XLite_C
     function checkCallbackAuthorization()
     {
         $this->set("silent", true);
-        $this->xlite->logger->log("Received callback from GoogleCheckout");
+        $this->xlite->logger->log('Received callback from GoogleCheckout');
 
-        $this->pm = new XLite_Model_PaymentMethod("google_checkout");
-        $params = $this->pm->get("params");
+        $this->pm = new XLite_Model_PaymentMethod('google_checkout');
+        $params = $this->pm->get('params');
 
-        $this->phpAuthUser = $GLOBALS["_SERVER"]["PHP_AUTH_USER"];
-        $this->phpAuthPW = $GLOBALS["_SERVER"]["PHP_AUTH_PW"];
-        $this->httpRawPostData = $GLOBALS["HTTP_RAW_POST_DATA"];
+        $this->phpAuthUser = $GLOBALS['_SERVER']["PHP_AUTH_USER"];
+        $this->phpAuthPW = $GLOBALS['_SERVER']["PHP_AUTH_PW"];
+        $this->httpRawPostData = $GLOBALS['HTTP_RAW_POST_DATA'];
         // workaround for a bug in PHP 5.2.2 - see http://bugs.php.net/bug.php?id=41293
         if (empty($this->httpRawPostData)) {
-    		$this->httpRawPostData = $GLOBALS["HTTP_RAW_POST_DATA"] = @file_get_contents("php://input");
+    		$this->httpRawPostData = $GLOBALS['HTTP_RAW_POST_DATA'] = @file_get_contents("php://input");
         }
 
         if (empty($this->httpRawPostData)) {
@@ -110,10 +110,10 @@ class XLite_Module_GoogleCheckout_Controller_Admin_PaymentMethod extends XLite_C
         $this->xlite->logger->log("RawPostData:\n" . $this->httpRawPostData);
 
         // check if callback-request has been successfully authorized
-        if ($this->phpAuthUser != $params["merchant_id"] || $this->phpAuthPW != $params["merchant_key"]) {
+        if ($this->phpAuthUser != $params['merchant_id'] || $this->phpAuthPW != $params['merchant_key']) {
             $this->xlite->logger->log("ERROR: Unauthorized access to callback script.");
             header("WWW-Authenticate: Basic");
-            header("HTTP/1.0 401 Unauthorized");
+            header('HTTP/1.0 401 Unauthorized');
             die;
         }
     }
@@ -140,7 +140,7 @@ class XLite_Module_GoogleCheckout_Controller_Admin_PaymentMethod extends XLite_C
         $parsedData = ob_get_contents();
         ob_end_clean();
         $this->xlite->logger->log("Parsed XML callback data:\n" . $parsedData);
-        $this->xlite->logger->log("Callback from IP: ".$GLOBALS["REMOTE_ADDR"]."\n");
+        $this->xlite->logger->log("Callback from IP: ".$GLOBALS['REMOTE_ADDR']."\n");
 
         // processing callback
         $this->pm->handleCallback($parsed);

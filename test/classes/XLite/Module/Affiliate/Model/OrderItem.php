@@ -37,13 +37,13 @@ class XLite_Module_Affiliate_Model_OrderItem extends XLite_Model_OrderItem imple
 {
     public function __construct()
     {
-        $this->fields["commissions"] = 0;
+        $this->fields['commissions'] = 0;
         parent::__construct();
     }
 
     // FIXME - check it (see old version)
     function getAffiliateProduct()
     {
-        return new XLite_Model_Product($this->get("product_id"));
+        return new XLite_Model_Product($this->get('product_id'));
     }
 }

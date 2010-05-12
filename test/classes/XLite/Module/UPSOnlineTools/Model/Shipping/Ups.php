@@ -1157,7 +1157,7 @@ EOT;
             }
         }
 
-        $address_is_valid = $quality_factors[$quality]["rank"] >= $quality_factors[$required_quality]["rank"];
+        $address_is_valid = $quality_factors[$quality]['rank'] >= $quality_factors[$required_quality]['rank'];
 
         if ($address_is_valid) {
             return true;

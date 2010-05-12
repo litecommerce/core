@@ -73,7 +73,7 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_Abstract
 
         if (is_null($this->extraFields)) {
             $ef = new XLite_Model_ExtraField();
-            $this->extraFields = $ef->findAll("product_id=".$this->get("product_id"));
+            $this->extraFields = $ef->findAll("product_id=".$this->get('product_id'));
         }
         return $this->extraFields;
     }
@@ -88,13 +88,13 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_Abstract
 
     function action_update_fields()
     {
-        if (!is_null($this->get("delete")) && !is_null($this->get("delete_fields"))) {
-            foreach ((array)$this->get("delete_fields") as $id) {
+        if (!is_null($this->get('delete')) && !is_null($this->get('delete_fields'))) {
+            foreach ((array)$this->get('delete_fields') as $id) {
                 $ef = new XLite_Model_ExtraField($id);
                 $ef->delete();
             }
-        } elseif (!is_null($this->get("update"))) {
-            foreach ((array)$this->get("extra_fields") as $id => $data) {
+        } elseif (!is_null($this->get('update'))) {
+            foreach ((array)$this->get('extra_fields') as $id => $data) {
                 $ef = new XLite_Model_ExtraField($id);
                 $ef->set("properties", $data);
                 $ef->update();
@@ -132,7 +132,7 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_Abstract
         }
 
         // update/create extra fields
-        $extraFields = (array)$this->get("extra_fields");
+        $extraFields = (array)$this->get('extra_fields');
         if (!empty($extraFields)) {
             foreach ($extraFields as $id => $value) {
                 $fv = new XLite_Model_FieldValue();

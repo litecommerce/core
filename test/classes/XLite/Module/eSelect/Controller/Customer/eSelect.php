@@ -43,26 +43,26 @@ class XLite_Module_eSelect_Controller_Customer_eSelect extends XLite_Controller_
 
         parent::init();
 
-        if ($this->action == "return" && !$this->auth->is("logged")) {
+        if ($this->action == "return" && !$this->auth->is('logged')) {
             // not logged - redirect to the cart
-            $this->redirect("cart.php");
+            $this->redirect('cart.php');
         }
     }
 
     function action_return()
     {
-        $oid = $this->session->get("eSelectQueued");
+        $oid = $this->session->get('eSelectQueued');
 
-        if ($this->session->get("eSelectQueued") && isset($oid) && $this->get("PaRes")) {
+        if ($this->session->get('eSelectQueued') && isset($oid) && $this->get('PaRes')) {
             $this->order = null;
-            $_REQUEST["order_id"] = $oid;
+            $_REQUEST['order_id'] = $oid;
 
             $this->session->set("eSelectQueued", null);
             $this->session->set("last_order_id", $oid);
             $this->session->set("order_id", $oid);
             $this->session->writeClose();
 
-            $order = $this->get("order");
+            $order = $this->get('order');
             $payment = XLite_Model_PaymentMethod::factory('eselect_cc');
 
             require_once LC_MODULES_DIR . 'eSelect' . LC_DS . 'encoded.php';

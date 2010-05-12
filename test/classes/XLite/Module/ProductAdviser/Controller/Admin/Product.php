@@ -42,9 +42,9 @@ class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Control
     public function __construct(array $params)
     {
         parent::__construct($params);
-        if ($this->is("relatedProductsEnabled")) {
-            $this->pages["related_products"] = "Related products";
-            $this->pageTemplates["related_products"] = "modules/ProductAdviser/RelatedProducts.tpl";
+        if ($this->is('relatedProductsEnabled')) {
+            $this->pages['related_products'] = "Related products";
+            $this->pageTemplates['related_products'] = "modules/ProductAdviser/RelatedProducts.tpl";
         }
     }
 
@@ -57,7 +57,7 @@ class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Control
 
     function getProducts()
     {
-        if ($this->get("mode") != "search") {
+        if ($this->get('mode') != "search") {
             return array();
         }
 
@@ -72,7 +72,7 @@ class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Control
         if (is_array($result)) {
             $removedItems = array();
             foreach($result as $p_key => $product) {
-                if ($product->get("product_id") == $this->product_id) {
+                if ($product->get('product_id') == $this->product_id) {
                     $removedItems[$p_key] = true;
                 }
                 if (!is_object($this->product)) {
@@ -82,7 +82,7 @@ class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Control
                     $rp = $this->product->getRelatedProducts();
                     if (is_array($rp) && count($rp) > 0) {
                         foreach($rp as $rp_item) {
-                            if ($rp_item->getComplex('product.product_id') == $product->get("product_id")) {
+                            if ($rp_item->getComplex('product.product_id') == $product->get('product_id')) {
                         		$removedItems[$p_key] = true;
                             }
                         }
@@ -109,7 +109,7 @@ class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Control
 
     function action_add_related_products()
     {
-        if (!$this->is("relatedProductsEnabled")) {
+        if (!$this->is('relatedProductsEnabled')) {
             return;
         }
 
@@ -125,7 +125,7 @@ class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Control
 
     function action_update_related_products()
     {
-        if (!$this->is("relatedProductsEnabled")) {
+        if (!$this->is('relatedProductsEnabled')) {
             return;
         }
 
@@ -142,7 +142,7 @@ class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Control
 
     function action_delete_related_products()
     {
-        if (!$this->is("relatedProductsEnabled")) {
+        if (!$this->is('relatedProductsEnabled')) {
             return;
         }
 
@@ -166,8 +166,8 @@ class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Control
 
         $stats = new XLite_Module_ProductAdviser_Model_ProductNewArrivals();
         $timeStamp = time();
-        if (!$stats->find("product_id='".$this->get("product_id")."'")) {
-        	$stats->set("product_id", $this->get("product_id"));
+        if (!$stats->find("product_id='".$this->get('product_id')."'")) {
+        	$stats->set("product_id", $this->get('product_id'));
         	$stats->set("added", $timeStamp);
         	$stats->set("updated", $timeStamp);
             $stats->create();
@@ -183,7 +183,7 @@ class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Control
             break;
             case 1:		// Default period
                 // (Forever || Unmark) --> Default period
-                if ($stats->get("new") == "Y" || ($stats->get("new") == "N" && $stats->get("updated") == 0)) {
+                if ($stats->get('new') == "Y" || ($stats->get('new') == "N" && $stats->get('updated') == 0)) {
                     $stats->set("new", "N");
                     $stats->set("updated", $timeStamp);
                 	$statusUpdated = true;
@@ -216,7 +216,7 @@ class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Control
 
     function checkNotification()
     {
-    	$inventoryChangedAmount = $this->xlite->get("inventoryChangedAmount");
+    	$inventoryChangedAmount = $this->xlite->get('inventoryChangedAmount');
         $this->session->set("inventoryNotify", null);
         
         $notification = new XLite_Module_ProductAdviser_Model_Notification();

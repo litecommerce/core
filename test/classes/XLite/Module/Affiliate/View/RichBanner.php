@@ -50,10 +50,10 @@ class XLite_Module_Affiliate_View_RichBanner extends XLite_View_Abstract
     function display()
     {
         // display banner.body HTML code
-        if (!is_null($this->get("banner"))) {
+        if (!is_null($this->get('banner'))) {
             $body = $this->getComplex('banner.body');
             // rewrite A HREF
-            $body = str_replace("[url]", "<a href=\"" . $this->get("href") . "\" target=\"".$this->getComplex('banner.link_target'). "\">", $body);
+            $body = str_replace("[url]", "<a href=\"" . $this->get('href') . "\" target=\"".$this->getComplex('banner.link_target'). "\">", $body);
             $body = str_replace("[/url]", "</a>", $body);
             // rewrite object
             $type = $this->getComplex('banner.image.banner_type');
@@ -61,7 +61,7 @@ class XLite_Module_Affiliate_View_RichBanner extends XLite_View_Abstract
                 // rewrite FLASH movie
                 $width = $this->getComplex('banner.width');
                 $height = $this->getComplex('banner.height');
-                $src = $this->get("src");
+                $src = $this->get('src');
                 $obj =<<<EOT
 <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0" width="$width" height="$height" id="banner" align="middle">
 <param name="allowScriptAccess" value="sameDomain" />
@@ -72,7 +72,7 @@ class XLite_Module_Affiliate_View_RichBanner extends XLite_View_Abstract
 EOT;
             } else {
                 // rewrite image
-                $obj = "<img src=".$this->get("src")." border=0>";
+                $obj = "<img src=".$this->get('src')." border=0>";
             }
             $body = str_replace("[obj]", $obj, $body);
             $body = str_replace("\r", "", $body);

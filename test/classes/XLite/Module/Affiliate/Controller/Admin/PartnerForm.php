@@ -38,15 +38,15 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerForm extends XLite_Controll
     function init()
     {
         parent::init();
-        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+        if ($_SERVER['REQUEST_METHOD'] == "GET") {
             $this->mapRequest($this->getComplex('xlite.factory.PartnerField.fields'));
         }
     }
     
     function action_update_field()
     {
-        $pf = new XLite_Module_Affiliate_Model_PartnerField($_POST["field_id"]);
-        if (!is_null($this->get("delete"))) {
+        $pf = new XLite_Module_Affiliate_Model_PartnerField($_POST['field_id']);
+        if (!is_null($this->get('delete'))) {
             $pf->delete();
         } else {
             $pf->set("properties", $_POST);
@@ -63,7 +63,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerForm extends XLite_Controll
 
     function action_default_fields()
     {
-        $fields = $this->get("default_fields");
+        $fields = $this->get('default_fields');
         if (is_array($fields)) {
             $config = new XLite_Model_Config();
             if ($config->find("category='Miscellaneous' AND name='partner_profile'")) {

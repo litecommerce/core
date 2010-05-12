@@ -38,9 +38,9 @@ class XLite_Module_DemoMode_Controller_Abstract extends XLite_Controller_Abstrac
     // FIXME
     function init()
     {
-        $target = isset($_REQUEST["target"]) ? strtolower($_REQUEST["target"]) : "main";
-        $action = isset($_REQUEST["action"]) ? strtolower($_REQUEST["action"]) : "default";
-        if ($this->isDeniedAction($target, $action) && !$this->session->get("superUser")) {
+        $target = isset($_REQUEST['target']) ? strtolower($_REQUEST['target']) : "main";
+        $action = isset($_REQUEST['action']) ? strtolower($_REQUEST['action']) : "default";
+        if ($this->isDeniedAction($target, $action) && !$this->session->get('superUser')) {
             $this->redirect(XLite::ADMIN_SELF . "?target=demo_mode");
             die();
         }
@@ -57,7 +57,7 @@ class XLite_Module_DemoMode_Controller_Abstract extends XLite_Controller_Abstrac
             $target == "users" && $action == "delete" ||
             (($target == "category" || $target == "categories") && ($action == "delete" || $action == "delete_all")) ||
             $target == "wysiwyg" && $action != "default" ||
-            $target == "import_catalog" && $action == "import_products" && isset($_REQUEST["delete_products"]) ||
+            $target == "import_catalog" && $action == "import_products" && isset($_REQUEST['delete_products']) ||
             $target == "profile" && $action == "delete" ||
             $target == "db" && $action != "default" ||
             $target == "image_files" && $action != "default" ||
@@ -69,16 +69,16 @@ class XLite_Module_DemoMode_Controller_Abstract extends XLite_Controller_Abstrac
             $target == "advanced_security" && $action != "default" ||
             $target == "template_editor" && $action != "default" && $action != "extra_pages" && $action != "advanced" && $action != "advanced_edit" && $action != "page_edit" ||
             ($target == "modules" && ($action == "install" || $action == "uninstall")) ||
-            ($target == "module" && $action == "update" && $_REQUEST["page"] == "Egoods") ||
+            ($target == "module" && $action == "update" && $_REQUEST['page'] == "Egoods") ||
             ($target == "settings" && $action == "phpinfo") ||
-            ($target == "ups_online_tool" && $action == "next" && $this->session->get("ups_step") == 2)
+            ($target == "ups_online_tool" && $action == "next" && $this->session->get('ups_step') == 2)
     	);
     }
 
     protected function redirect($url = null)
     {
-        if (!$this->xlite->is("adminZone")) {
-            $forward = $this->xlite->session->get("forwardUrl");
+        if (!$this->xlite->is('adminZone')) {
+            $forward = $this->xlite->session->get('forwardUrl');
             if (isset($forward)) {
         		$currentUrl = $this->getUrl();
         		if (strpos($currentUrl, $forward) === false) {

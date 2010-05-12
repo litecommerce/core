@@ -39,7 +39,7 @@ class XLite_Controller_Admin_Upgrade extends XLite_Controller_Admin_Abstract
     function init()
     {
         parent::init();
-        if (!$this->get("action")) {
+        if (!$this->get('action')) {
             $this->redirect("admin.php?target=login");
         }
     }

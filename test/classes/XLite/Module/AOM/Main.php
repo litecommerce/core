@@ -97,7 +97,7 @@ class XLite_Module_AOM_Main extends XLite_Module_Abstract
         $this->addLayout("common/invoice.tpl","modules/AOM/order_info.tpl");
         $this->addLayout("common/print_invoice.tpl","modules/AOM/order_info.tpl");
 
-        if($this->xlite->is("adminZone")) {
+        if($this->xlite->is('adminZone')) {
             $this->addLayout("common/select_status.tpl","modules/AOM/common/select_status.tpl");
             $this->addLayout("order/search_form.tpl","modules/AOM/search_form.tpl");
             $this->addLayout("order/order.tpl","modules/AOM/order.tpl");

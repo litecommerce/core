@@ -38,10 +38,10 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
     public function __construct(array $params) 
     {
         parent::__construct($params);
-        $this->pages["downloadable_files"] = "Egoods";
-        $this->pageTemplates["downloadable_files"] = "modules/Egoods/downloadable_files.tpl";
-        $this->pages["pin_codes"] = "PIN codes";
-        $this->pageTemplates["pin_codes"] = "modules/Egoods/pin_codes.tpl";
+        $this->pages['downloadable_files'] = "Egoods";
+        $this->pageTemplates['downloadable_files'] = "modules/Egoods/downloadable_files.tpl";
+        $this->pages['pin_codes'] = "PIN codes";
+        $this->pageTemplates['pin_codes'] = "modules/Egoods/pin_codes.tpl";
         $this->params[] = "pin_enabled";
     }
 
@@ -58,9 +58,9 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
     {
         if 
         (
-            ($_POST["new_remote"] == "Y" && isset($_FILES["new_remote_file"]["name"]) && strlen($_FILES["new_remote_file"]["name"]) > 0)
+            ($_POST['new_remote'] == "Y" && isset($_FILES['new_remote_file']["name"]) && strlen($_FILES['new_remote_file']["name"]) > 0)
             ||
-            ($_POST["new_remote"] == "N" && !empty($_POST["new_local_file"]))
+            ($_POST['new_remote'] == "N" && !empty($_POST['new_local_file']))
         ) {
     		$df = new XLite_Module_Egoods_Model_DownloadableFile();
     		$df->set('product_id', $_POST['product_id']);
@@ -69,7 +69,7 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
     		$this->prepare_egood($df);
     		$df->create();
     		
-    		if ($_POST["new_remote"] == "Y") {
+    		if ($_POST['new_remote'] == "Y") {
     			$path = $this->getComplex('xlite.config.Egoods.egoods_store_dir') . '/' . $df->get('file_id');
     			mkdirRecursive($path);
     			$file_name = $path . '/' . $_FILES['new_remote_file']['name'];
@@ -86,14 +86,14 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 
     function action_update_egood() 
     {
-        $df = new XLite_Module_Egoods_Model_DownloadableFile($_POST["file_id"]);
-        $df->set("delivery", $_POST["delivery"]);
+        $df = new XLite_Module_Egoods_Model_DownloadableFile($_POST['file_id']);
+        $df->set("delivery", $_POST['delivery']);
 
         if 
         (
-            ($_POST["remote"] == "Y" && isset($_FILES["remote_file"]["name"]) && strlen($_FILES["remote_file"]["name"]) > 0)
+            ($_POST['remote'] == "Y" && isset($_FILES['remote_file']["name"]) && strlen($_FILES['remote_file']["name"]) > 0)
             ||
-            ($_POST["remote"] == "N" && !empty($_POST["local_file"]))
+            ($_POST['remote'] == "N" && !empty($_POST['local_file']))
         ) {
     		
     		if ($_POST['remote'] == 'Y') {
@@ -234,7 +234,7 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
         if (!isset($this->pin_codes)) {
             $p = new XLite_Module_Egoods_Model_PinCode();
             $this->pin_codes = $p->findAll('product_id=' . $this->get('product_id') . 
-                                                ($this->get("pin_enabled") != null ? 
+                                                ($this->get('pin_enabled') != null ? 
                                                 ' AND enabled=' . intval($this->get('pin_enabled')) : 
                                                 ''));
         }

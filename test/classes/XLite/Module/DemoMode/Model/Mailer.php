@@ -37,7 +37,7 @@ class XLite_Module_DemoMode_Model_Mailer extends XLite_Model_Mailer implements X
 {
     function send()
     {
-        if ($this->xlite->get("ignoreSendMail")) {
+        if ($this->xlite->get('ignoreSendMail')) {
         	echo " <font color=blue>- Skipped, demo restriction - </font><br>";
         	return;
         }

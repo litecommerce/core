@@ -50,8 +50,8 @@ class XLite_Model_ShippingZone extends XLite_Model_Abstract
     
     function findAll($where = null, $orderby = null, $groupby = null, $limit = null)
     {
-        $states = $this->db->getTableByAlias("states");
-        $countries = $this->db->getTableByAlias("countries");
+        $states = $this->db->getTableByAlias('states');
+        $countries = $this->db->getTableByAlias('countries');
         $array1 = $this->db->getAll("SELECT DISTINCT shipping_zone from $states order by shipping_zone");
         $array2 = $this->db->getAll("SELECT DISTINCT shipping_zone from $countries order by shipping_zone");
         $array = array_merge($array1, $array2); // state zones first
@@ -60,14 +60,14 @@ class XLite_Model_ShippingZone extends XLite_Model_Abstract
 
     function findCountryZones()
     {
-        $countries = $this->db->getTableByAlias("countries");
+        $countries = $this->db->getTableByAlias('countries');
         $array = $this->db->getAll("SELECT DISTINCT shipping_zone from $countries order by shipping_zone");
         return $this->_zonesArray($array);
     }
 
     function findStateZones()
     {
-        $states = $this->db->getTableByAlias("states");
+        $states = $this->db->getTableByAlias('states');
         $array = $this->db->getAll("SELECT DISTINCT shipping_zone from $states order by shipping_zone");
         return $this->_zonesArray($array);
     }
@@ -78,7 +78,7 @@ class XLite_Model_ShippingZone extends XLite_Model_Abstract
         foreach ($array as $zone) {
             $zone_object = new XLite_Model_ShippingZone();
             $zone_object->_updateProperties($zone);
-            $zones[$zone["shipping_zone"]] = $zone_object;
+            $zones[$zone['shipping_zone']] = $zone_object;
         }
         if (!isset($zones[0])) {
             $z = new XLite_Model_ShippingZone();
@@ -100,13 +100,13 @@ class XLite_Model_ShippingZone extends XLite_Model_Abstract
 
     function delete()
     {
-        $this->doDie("Not implemented");
+        $this->doDie('Not implemented');
     }
 
     function create()
     {
-        $states = $this->db->getTableByAlias("states");
-        $countries = $this->db->getTableByAlias("countries");
+        $states = $this->db->getTableByAlias('states');
+        $countries = $this->db->getTableByAlias('countries');
         $max1 = $this->db->getOne("SELECT MAX(shipping_zone) from $states");
         $max2 = $this->db->getOne("SELECT MAX(shipping_zone) from $countries");
         $this->set("shipping_zone", max($max1, $max2)+1);
@@ -116,7 +116,7 @@ class XLite_Model_ShippingZone extends XLite_Model_Abstract
     {
         if (!isset($this->countries)) {
             $c = new XLite_Model_Country();
-            $this->countries = $c->findAll("shipping_zone='".$this->get("shipping_zone")."'");
+            $this->countries = $c->findAll("shipping_zone='".$this->get('shipping_zone')."'");
         }
         return $this->countries;
     }
@@ -125,14 +125,14 @@ class XLite_Model_ShippingZone extends XLite_Model_Abstract
     {
         if (!isset($this->states)) {
             $c = new XLite_Model_State();
-            $this->states = $c->findAll("shipping_zone='".$this->get("shipping_zone")."'", "country_code, state");
+            $this->states = $c->findAll("shipping_zone='".$this->get('shipping_zone')."'", "country_code, state");
         }
         return $this->states;
     }
 
     function hasCountries()
     {
-        $countries = $this->get("countries");
+        $countries = $this->get('countries');
         return count($countries)>0;
     }
 
@@ -148,7 +148,7 @@ class XLite_Model_ShippingZone extends XLite_Model_Abstract
         foreach ($countries as $country)
         {
             $c->set("code", $country);
-            $c->set("shipping_zone", $this->get("shipping_zone"));
+            $c->set("shipping_zone", $this->get('shipping_zone'));
             $c->update();
         }
         if (isset($this->countries)) {
@@ -162,7 +162,7 @@ class XLite_Model_ShippingZone extends XLite_Model_Abstract
         foreach ($states as $state)
         {
             $c->set("state_id", $state);
-            $c->set("shipping_zone", $this->get("shipping_zone"));
+            $c->set("shipping_zone", $this->get('shipping_zone'));
             $c->update();
         }
         if (isset($this->states)) {
@@ -173,10 +173,10 @@ class XLite_Model_ShippingZone extends XLite_Model_Abstract
     function get($name)
     {
         if ($name == "name") {
-            if ($this->get("shipping_zone") == 0) {
+            if ($this->get('shipping_zone') == 0) {
                 return "Default zone";
             } else {
-                return "Zone ".$this->get("shipping_zone");
+                return "Zone ".$this->get('shipping_zone');
             }
         }
         return parent::get($name);

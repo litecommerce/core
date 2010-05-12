@@ -38,14 +38,14 @@ class XLite_Module_ProductAdviser_Model_Inventory extends XLite_Module_Inventory
     function set($property, $value)
     {
     	if ($property == "properties") {
-    		$oldAmount = $this->get("amount");
+    		$oldAmount = $this->get('amount');
     	}
 
         parent::set($property, $value);
 
     	if ($property == "properties") {
     		$inventory = $this->properties;
-            $inventory["oldAmount"] = $oldAmount;
+            $inventory['oldAmount'] = $oldAmount;
     		$this->xlite->set("inventoryChangedAmount", $inventory);
     	}
     }
@@ -57,11 +57,11 @@ class XLite_Module_ProductAdviser_Model_Inventory extends XLite_Module_Inventory
 
     	parent::import($options);
 
-    	if ($this->xlite->get("inventoryChangedAfterImport") > 0) {
-    		$inventoryCAI = $this->xlite->get("inventoryChangedAfterImport");
+    	if ($this->xlite->get('inventoryChangedAfterImport') > 0) {
+    		$inventoryCAI = $this->xlite->get('inventoryChangedAfterImport');
 ?>
 <br>
-There <?php echo ($inventoryCAI == 1) ? "is" : "are"; ?> <b><font color=blue><?php echo $this->xlite->get("inventoryChangedAfterImport"); ?></font> Customer Notification<?php echo ($inventoryCAI == 1) ? "s" : ""; ?></b> awaiting.
+There <?php echo ($inventoryCAI == 1) ? "is" : "are"; ?> <b><font color=blue><?php echo $this->xlite->get('inventoryChangedAfterImport'); ?></font> Customer Notification<?php echo ($inventoryCAI == 1) ? "s" : ""; ?></b> awaiting.
 &nbsp;<a href="admin.php?target=CustomerNotifications&type=product&status=U&period=-1" onClick="this.blur()"><b><u>Click here to view request<?php echo ($inventoryCAI == 1) ? "s" : ""; ?></u></b></a>
 <br>
 <?php
@@ -70,16 +70,16 @@ There <?php echo ($inventoryCAI == 1) ? "is" : "are"; ?> <b><font color=blue><?p
 
     function update()
     {
-    	if ($this->xlite->get("checkInventoryChangedAfterImport")) {
-            $inventory = new XLite_Module_InventoryTracking_Model_Inventory($this->get("inventory_id"));
-            $oldAmount = $inventory->get("amount");
+    	if ($this->xlite->get('checkInventoryChangedAfterImport')) {
+            $inventory = new XLite_Module_InventoryTracking_Model_Inventory($this->get('inventory_id'));
+            $oldAmount = $inventory->get('amount');
 
     		$inventoryChangedAmount = $this->properties;
-            $inventoryChangedAmount["oldAmount"] = $oldAmount;
+            $inventoryChangedAmount['oldAmount'] = $oldAmount;
 
     		$notification = new XLite_Module_ProductAdviser_Model_Notification();
     		if ($notification->createInventoryChangedNotification($inventoryChangedAmount)) {
-        		$this->xlite->set("inventoryChangedAfterImport", $this->xlite->get("inventoryChangedAfterImport") + 1);
+        		$this->xlite->set("inventoryChangedAfterImport", $this->xlite->get('inventoryChangedAfterImport') + 1);
     		}
     	}
 

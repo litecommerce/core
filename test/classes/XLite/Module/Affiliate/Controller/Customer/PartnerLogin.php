@@ -40,7 +40,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerLogin extends XLite_Cont
     
     function handleRequest()
     {
-        if ($this->auth->is("logged") && $this->auth->isPartner($this->auth->get("profile")) && $this->get("action") != "logoff") {
+        if ($this->auth->is('logged') && $this->auth->isPartner($this->auth->get('profile')) && $this->get('action') != "logoff") {
             $this->returnUrl = $this->partnerZoneUrl;
             $this->redirect();
         } else {

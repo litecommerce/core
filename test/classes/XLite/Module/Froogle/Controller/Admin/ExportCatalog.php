@@ -40,8 +40,8 @@ class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controll
     public function __construct(array $params)
     {
         parent::__construct($params);
-        $this->pages["export_froogle"] = "Froogle";
-        $this->pageTemplates["export_froogle"] = "modules/Froogle/export_froogle.tpl";
+        $this->pages['export_froogle'] = "Froogle";
+        $this->pageTemplates['export_froogle'] = "modules/Froogle/export_froogle.tpl";
     }
 
     function action_export_froogle()
@@ -61,7 +61,7 @@ class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controll
         $uname = $this->getComplex('config.Froogle.froogle_username') ?
                  $this->getComplex('config.Froogle.froogle_username') : "froogle";
         $fname = $this->getComplex('config.Froogle.froogle_file_name') ? $this->getComplex('config.Froogle.froogle_file_name') : $uname . ".txt";
-        if ($this->get("mod") == "download") {
+        if ($this->get('mod') == "download") {
             $this->startDownload($fname);
         } else {
             set_time_limit(3600);
@@ -76,7 +76,7 @@ class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controll
         $p->export("froogle", $delimiter = "\t", $where = 'price > 0', $orderby = "product_id", null);
         $this->goAdmin();
 
-        if ($this->get("mod") == "download") {
+        if ($this->get('mod') == "download") {
             exit(); // nothing to do
         }
 
@@ -133,7 +133,7 @@ class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controll
 
     function hasFTP()
     {
-        return function_exists("ftp_connect");
+        return function_exists('ftp_connect');
     }
 
     function goCustomer() 
@@ -153,7 +153,7 @@ class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controll
         $_POST    = array();
         $_COOKIE  = array();
 
-        $_SERVER["REQUEST_METHOD"] = "GET";
+        $_SERVER['REQUEST_METHOD'] = "GET";
         // fake http
         if (isset($_SERVER['HTTPS'])) {
             unset($_SERVER['HTTPS']);

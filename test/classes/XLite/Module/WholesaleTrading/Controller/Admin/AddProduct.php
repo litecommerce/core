@@ -47,7 +47,7 @@ class XLite_Module_WholesaleTrading_Controller_Admin_AddProduct extends XLite_Co
     
     function action_add()
     {
-        $_POST["validaty_period"] = $_POST["vp_modifier"] . $_POST["vperiod"];
+        $_POST['validaty_period'] = $_POST['vp_modifier'] . $_POST['vperiod'];
         parent::action_add();
     }
 }

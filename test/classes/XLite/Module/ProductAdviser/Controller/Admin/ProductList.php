@@ -91,11 +91,11 @@ class XLite_Module_ProductAdviser_Controller_Admin_ProductList extends XLite_Con
     	if (is_array($this->productsList) && $this->new_arrivals_search) {
     		$removedItems = array();
     		for($i=0; $i<count($this->productsList); $i++) {
-        		if (is_array($this->productsList[$i]) && isset($this->productsList[$i]["class"]) && isset($this->productsList[$i]["data"])) {
-            		$object = new $this->productsList[$i]["class"];
+        		if (is_array($this->productsList[$i]) && isset($this->productsList[$i]['class']) && isset($this->productsList[$i]['data'])) {
+            		$object = new $this->productsList[$i]['class'];
                     $object->isPersistent = true;
                     $object->isRead = false;
-                    $object->properties = $this->productsList[$i]["data"];
+                    $object->properties = $this->productsList[$i]['data'];
                     if ($object->getNewArrival() == 0) {
                     	$removedItems[] = $i;
                     }

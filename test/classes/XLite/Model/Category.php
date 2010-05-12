@@ -177,8 +177,8 @@ class XLite_Model_Category extends XLite_Model_Abstract
     function cloneObject()
     {
         $c = parent::cloneObject();
-        $id = $c->get("category_id");
-        $image = $this->get("image");
+        $id = $c->get('category_id');
+        $image = $this->get('image');
         $image->copyTo($id);
         return $c;
     }
@@ -216,7 +216,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
                 if ($i) {
                     $location .= "/";
                 }
-                $location .= $path[$i]->get("name");
+                $location .= $path[$i]->get('name');
             }
             $this->_string_path = $location;
         }
@@ -240,7 +240,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
     
     function setParentCategory($v) 
     {
-        $this->set("parent", $v->get("category_id"));
+        $this->set("parent", $v->get('category_id'));
     }
 
     /**
@@ -255,8 +255,8 @@ class XLite_Model_Category extends XLite_Model_Abstract
             $orderby = $this->defaultOrder;
         }
         global $products;
-        $id = $this->get("category_id");
-        if ($this->xlite->is("adminZone") || !$useCache) {
+        $id = $this->get('category_id');
+        if ($this->xlite->is('adminZone') || !$useCache) {
             if (isset($products[$id][$where][$orderby])) {
                 unset($products[$id][$where][$orderby]);
             }
@@ -274,7 +274,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
 
     function getProductsNumber()
     {
-        $id = $this->get("category_id");
+        $id = $this->get('category_id');
         if ($this->isPersistent) {
             $p = new XLite_Model_ProductFromCategory($id);
             return $p->getProductsNumber(false);
@@ -290,18 +290,18 @@ class XLite_Model_Category extends XLite_Model_Abstract
     function delete() 
     {
         // remove all products from the category
-        $products = $this->get("products");
+        $products = $this->get('products');
         for ($i=0; $i<count($products); $i++) {
             $products[$i]->deleteCategory($this);
         }
-        $subcategories = $this->get("subcategories");
+        $subcategories = $this->get('subcategories');
         for ($i = 0; $i < count($subcategories); $i++) {
             $category = $subcategories[$i];
             $category->delete();
         }
         $product = new XLite_Model_Product();
         $product->collectGarbage();
-        $image = $this->get("image");
+        $image = $this->get('image');
         $image->delete();
         parent::delete();
     }
@@ -390,9 +390,9 @@ class XLite_Model_Category extends XLite_Model_Abstract
             }
             return implode("|", $paths);
         }
-        $path = $categorySet->get("path");
+        $path = $categorySet->get('path');
         for($i = 0; $i<count($path); $i++) {
-            $path[$i] = str_replace("/", "//", str_replace("|", "||", $path[$i]->get("name")));
+            $path[$i] = str_replace("/", "//", str_replace("|", "||", $path[$i]->get('name')));
         }
         return implode("/", $path);
     }
@@ -409,13 +409,13 @@ class XLite_Model_Category extends XLite_Model_Abstract
         foreach ($path as $n) {
             $category = new XLite_Model_Category();
             if ($category->find("name='".addslashes($n)."' AND parent=$category_id")) {
-                $category_id = $category->get("category_id");
+                $category_id = $category->get('category_id');
                 continue;
             }
             $category->set("name", $n);
             $category->set("parent", $category_id);
             $category->create();
-            $category_id = $category->get("category_id");
+            $category_id = $category->get('category_id');
         }
         return new XLite_Model_Category($category_id);
     }
@@ -430,7 +430,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
         foreach ($path as $n) {
             $category = new XLite_Model_Category();
             if ($category->find("name='".addslashes($n)."' AND parent=$category_id")) {
-                $category_id = $category->get("category_id");
+                $category_id = $category->get('category_id');
                 continue;
             }
             return null;
@@ -463,12 +463,12 @@ class XLite_Model_Category extends XLite_Model_Abstract
     {
         $result = true;
 
-        if ($this->auth->is("logged")) {
+        if ($this->auth->is('logged')) {
             $membership = $this->auth->getComplex('profile.membership');
         } else {
             $membership = '';
         }
-        if (!$this->is("enabled") || trim($this->get("name")) == "" || !$this->_compareMembership($this->get("membership"), $membership)) {
+        if (!$this->is('enabled') || trim($this->get('name')) == "" || !$this->_compareMembership($this->get('membership'), $membership)) {
             $result = false;
         }
 
@@ -478,14 +478,14 @@ class XLite_Model_Category extends XLite_Model_Abstract
     function filter() 
     {
         $result = parent::filter(); // default
-        if ($result && !$this->xlite->is("adminZone")) {
+        if ($result && !$this->xlite->is('adminZone')) {
             if ($this->db->cacheEnabled) {
                 global $categoriesFiltered;
                 if (!isset($categoriesFiltered) || (isset($categoriesFiltered) && !is_array($categoriesFiltered))) {
                     $categoriesFiltered = array();
                 }
 
-                $cid = $this->get("category_id");
+                $cid = $this->get('category_id');
                 if (isset($categoriesFiltered[$cid])) {
                     return $categoriesFiltered[$cid];
                 }
@@ -516,7 +516,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
 
     function toXML() 
     {
-        $id = "category_" . $this->get("category_id");
+        $id = "category_" . $this->get('category_id');
         $xml = parent::toXML();
         return "<category id=\"$id\">\n$xml\n</category>\n";
     }
@@ -527,8 +527,8 @@ class XLite_Model_Category extends XLite_Model_Abstract
         if ($this->hasImage()) {
             // include image in XML dump
             $image = $this->getImage();
-            if ($image->get("source") == "D") {
-                $xml .= "<image><![CDATA[".base64_encode($image->get("data"))."]]></image>";
+            if ($image->get('source') == "D") {
+                $xml .= "<image><![CDATA[".base64_encode($image->get('data'))."]]></image>";
                 
             }
         }

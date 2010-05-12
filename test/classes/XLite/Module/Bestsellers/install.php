@@ -2,7 +2,7 @@
 
 // module installation code
 
-if (!function_exists("file_put_contents")) 
+if (!function_exists('file_put_contents')) 
 {
     function file_put_contents($file, $content) 
     {
@@ -17,7 +17,7 @@ if (!function_exists("file_put_contents"))
     }
 }
 
-if (!function_exists("file_get_contents")) 
+if (!function_exists('file_get_contents')) 
 {
     function file_get_contents($f) 
     {
@@ -33,7 +33,7 @@ if (!function_exists("file_get_contents"))
     }
 }
 
-if (!function_exists("start_patching"))
+if (!function_exists('start_patching'))
 {
     function start_patching($title)
     {
@@ -65,7 +65,7 @@ PRE {FONT-FAMILY: Courier, "Courier New"; COLOR: #000000; FONT-SIZE: 12px;}
     }
 }
 
-if (!function_exists("end_patching"))
+if (!function_exists('end_patching'))
 {
     function end_patching()
     {
@@ -79,7 +79,7 @@ if (!function_exists("end_patching"))
     }
 }
 
-if (!function_exists("copy_schema_template"))
+if (!function_exists('copy_schema_template'))
 {
     function copy_schema_template($template, $schema, $module, $zone = "default", $locale = "en")
     {

@@ -38,7 +38,7 @@ class XLite_Module_Egoods_Model_DownloadableFile extends XLite_Model_Abstract
     public $alias = "downloadable_files";
     public $autoIncrement = "file_id";
 
-    public $primaryKey = array("file_id");
+    public $primaryKey = array('file_id');
     public $defaultOrder = "file_id";
 
     /**

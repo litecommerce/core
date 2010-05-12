@@ -49,7 +49,7 @@ abstract class XLite_Module_WholesaleTrading_View_Abstract extends XLite_View_Ab
     function disabled($disabled)
     {
         if ($disabled) {
-            print("disabled");
+            print('disabled');
         }
     }
 

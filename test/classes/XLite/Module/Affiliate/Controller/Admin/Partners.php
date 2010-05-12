@@ -48,15 +48,15 @@ class XLite_Module_Affiliate_Controller_Admin_Partners extends XLite_Controller_
 
     function action_update_partners()
     {
-        $partners = $this->get("ids");
+        $partners = $this->get('ids');
         if (!is_null($partners) && is_array($partners)) {
             foreach ($partners as $pid) {
                 $partner = new XLite_Model_Profile($pid);
-                if (!is_null($this->get("delete"))) {
+                if (!is_null($this->get('delete'))) {
                     $this->auth->deletePartner($partner);
-                } else if (!is_null($this->get("update"))) {
-                    $plan = $this->get("new_plan");
-                    $status = $this->get("status");
+                } else if (!is_null($this->get('update'))) {
+                    $plan = $this->get('new_plan');
+                    $status = $this->get('status');
                     if (!empty($status)) {
                         $action = $status . "Partner";
                         if (method_exists($this->auth, $action)) {
@@ -80,30 +80,30 @@ class XLite_Module_Affiliate_Controller_Admin_Partners extends XLite_Controller_
             $this->partners = array();
             $where = array();
             // build WHERE condition for profile info
-            if (!is_null($this->get("filter")) && trim($this->get("filter")) != "") {
-                $filter = "'%".trim($this->get("filter"))."%'";
+            if (!is_null($this->get('filter')) && trim($this->get('filter')) != "") {
+                $filter = "'%".trim($this->get('filter'))."%'";
                 $where[] = "(login LIKE $filter".
                     "  OR billing_firstname LIKE $filter".
                     "  OR billing_lastname LIKE $filter)";
             }
-            if (!is_null($this->get("partnerStatus")) && trim($this->get("partnerStatus")) != "") {
-                $where[] = " access_level = ". trim($this->get("partnerStatus"));
+            if (!is_null($this->get('partnerStatus')) && trim($this->get('partnerStatus')) != "") {
+                $where[] = " access_level = ". trim($this->get('partnerStatus'));
             } else {
                 $where[] = " (access_level = ".   $this->getComplex('auth.partnerAccessLevel') .
                            " OR access_level = ". $this->getComplex('auth.pendingPartnerAccessLevel') . 
                            " OR access_level = ". $this->getComplex('auth.declinedPartnerAccessLevel') . ")";
             }
-            if (!is_null($this->get("pending_plan")) && trim($this->get("pending_plan")) != "") {
-                $where[] = " pending_plan = ".$this->get("pending_plan");
+            if (!is_null($this->get('pending_plan')) && trim($this->get('pending_plan')) != "") {
+                $where[] = " pending_plan = ".$this->get('pending_plan');
             }
-            if (!is_null($this->get("plan_id")) && trim($this->get("plan_id")) != "") {
-                $where[] = " ".$this->get("plan") . " = " . $this->get("plan_id");
+            if (!is_null($this->get('plan_id')) && trim($this->get('plan_id')) != "") {
+                $where[] = " ".$this->get('plan') . " = " . $this->get('plan_id');
             }
-            if (!is_null($this->get("startDate"))) {
-                $where[] = " partner_signup >= " . $this->get("startDate");
+            if (!is_null($this->get('startDate'))) {
+                $where[] = " partner_signup >= " . $this->get('startDate');
             }
-            if (!is_null($this->get("endDate"))) {
-                $where[] = " partner_signup <= " . ($this->get("endDate") + 24 * 3600);
+            if (!is_null($this->get('endDate'))) {
+                $where[] = " partner_signup <= " . ($this->get('endDate') + 24 * 3600);
             }
             $and = join(' AND ',$where);
             $profile = new XLite_Model_Profile();

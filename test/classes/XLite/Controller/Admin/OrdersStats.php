@@ -55,7 +55,7 @@ class XLite_Controller_Admin_OrdersStats extends XLite_Controller_Admin_Stats
                 "paid" => $statRec);
 
         $order = new XLite_Model_Order();
-        $date = $this->get("monthDate");
+        $date = $this->get('monthDate');
         // fetch orders for this month
         array_map(array($this, "summarize"), $order->findAll("date>=$date"));
 
@@ -64,29 +64,29 @@ class XLite_Controller_Admin_OrdersStats extends XLite_Controller_Admin_Stats
 
     function save($index, $order, $paid = false)
     {
-        if ($order->get("date") >= $this->get("todayDate")) {
-            $this->sum($index, "today", $order->get("total"), $paid);
+        if ($order->get('date') >= $this->get('todayDate')) {
+            $this->sum($index, "today", $order->get('total'), $paid);
         }
-        if ($order->get("date") >= $this->get("weekDate")) {
-            $this->sum($index, "week", $order->get("total"), $paid);
+        if ($order->get('date') >= $this->get('weekDate')) {
+            $this->sum($index, "week", $order->get('total'), $paid);
         }
-        if ($order->get("date") >= $this->get("monthDate")) {
-            $this->sum($index, "month", $order->get("total"), $paid);
+        if ($order->get('date') >= $this->get('monthDate')) {
+            $this->sum($index, "month", $order->get('total'), $paid);
         }
     }
 
     function sum($index, $period, $amount, $paid)
     {
         $this->stat[$index][$period]++;
-        $this->stat["total"][$period] += $amount;
+        $this->stat['total'][$period] += $amount;
         if ($paid) {
-            $this->stat["paid"][$period] += $amount;
+            $this->stat['paid'][$period] += $amount;
         }
     }
     
     function summarize($order)
     {
-        switch ($order->get("status")) {
+        switch ($order->get('status')) {
             case "P":
             case "C":
                 $this->save("processed", $order, true);

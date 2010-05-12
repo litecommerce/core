@@ -60,7 +60,7 @@ class XLite_Module_Froogle_Controller_Admin_Module extends XLite_Controller_Admi
     {
         $options = array();
         foreach ($this->getOptions() as $opt) {
-            $options[$opt->get("name")] = $opt;
+            $options[$opt->get('name')] = $opt;
         }
 
         return $options;

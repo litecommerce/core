@@ -111,7 +111,7 @@ class XLite_View_ExtraFields extends XLite_View_Abstract
 
     	    /* TODO - rework
             if ($this->config->General->enable_extra_fields_inherit == "Y") {
-    	        $isAdminZone = $this->xlite->get("adminZone");
+    	        $isAdminZone = $this->xlite->get('adminZone');
         	    $this->xlite->set("adminZone", true);
             }
     	    */

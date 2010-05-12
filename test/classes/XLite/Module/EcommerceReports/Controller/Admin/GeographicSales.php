@@ -39,7 +39,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeographicSales extends XLi
     {
         if (is_null($this->geoSales)) {
             $this->geoSales = array();
-            $items = $this->get("rawItems");
+            $items = $this->get('rawItems');
             // summarize
             array_map(array($this, 'sumProductSales'), $items);
             // sort
@@ -55,7 +55,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeographicSales extends XLi
 
     function getInCountries($table) 
     {
-        $countryCodes = (array) $this->get("country_codes");
+        $countryCodes = (array) $this->get('country_codes');
         if (!count($countryCodes)) {
             return parent::getInCountries($table);
         }
@@ -63,13 +63,13 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeographicSales extends XLi
             $countryCodes[$idx] = "'".$code."'";
         }
         $codes = implode(',', $countryCodes);
-        $prefix = $this->get("group_by");
+        $prefix = $this->get('group_by');
         return " AND {$table}.{$prefix}_country IN ($codes) ";
     }
 
     function getInStates($table) 
     {
-        $stateIds = (array) $this->get("state_ids");
+        $stateIds = (array) $this->get('state_ids');
         if (!count($stateIds)) {
             return parent::getInStates($table);
         }
@@ -77,7 +77,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeographicSales extends XLi
             array_push($stateIds, 0);
         }
         $ids = implode(',', $stateIds);
-        $prefix = $this->get("group_by");
+        $prefix = $this->get('group_by');
         return " AND {$table}.{$prefix}_state IN ($ids) ";
     }
     
@@ -88,35 +88,35 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeographicSales extends XLi
             $this->geoSales[$gid] = array();
         }
         $productSales = $this->geoSales[$gid];
-        $id = $item["product_id"] . (strlen($item["options"]) ? md5($item["options"]) : "");
+        $id = $item['product_id'] . (strlen($item['options']) ? md5($item['options']) : "");
         $orderItem = new XLite_Model_OrderItem();
-        $orderItem->find("order_id=".$item["order_id"]." AND item_id='".addslashes($item["item_id"])."'");
-        $order = new XLite_Model_Order($item["order_id"]);
+        $orderItem->find("order_id=".$item['order_id']." AND item_id='".addslashes($item['item_id'])."'");
+        $order = new XLite_Model_Order($item['order_id']);
         $orderItem->set("order", $order);
-        $item["price"] = $orderItem->get("price");
+        $item['price'] = $orderItem->get('price');
         if (!isset($productSales[$id])) {
             $productSales[$id] = $item;
-            $productSales[$id]["total"] = 0;
-            $productSales[$id]["order_item"] = $orderItem;
+            $productSales[$id]['total'] = 0;
+            $productSales[$id]['order_item'] = $orderItem;
         } else {
-            $productSales[$id]["amount"] += $item["amount"];
+            $productSales[$id]['amount'] += $item['amount'];
         }
-        $productSales[$id]["total"] += $item["amount"] * $item["price"];
-        $productSales[$id]["avg_price"] = $productSales[$id]["total"] / $productSales[$id]["amount"];
+        $productSales[$id]['total'] += $item['amount'] * $item['price'];
+        $productSales[$id]['avg_price'] = $productSales[$id]['total'] / $productSales[$id]['amount'];
     }
     
     function getGeoIndex($item) 
     {
-        $prefix = $this->get("group_by");
-        if (!is_null($this->get("state_ids"))) { // has selected states
+        $prefix = $this->get('group_by');
+        if (!is_null($this->get('state_ids'))) { // has selected states
             $st = new XLite_Model_State($item[$prefix . "_state"]);
-            $state = $st->get("state");
+            $state = $st->get('state');
         } else {
             $state = "All";
         }
-        if (!is_null($this->get("country_codes"))) { // has selected country
+        if (!is_null($this->get('country_codes'))) { // has selected country
             $cnt = new XLite_Model_Country($item[$prefix . "_country"]);
-            $country = $cnt->get("country");
+            $country = $cnt->get('country');
         } else {
             $country = "All";
         }
@@ -126,7 +126,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeographicSales extends XLi
     function getProductsFound() 
     {
         $found = 0;
-        foreach ((array)$this->get("geoSales") as $gl => $gs) {
+        foreach ((array)$this->get('geoSales') as $gl => $gs) {
             $found += count($gs);
         }
         return $found;

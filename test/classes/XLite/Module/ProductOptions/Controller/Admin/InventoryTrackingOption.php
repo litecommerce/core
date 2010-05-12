@@ -41,7 +41,7 @@ class XLite_Module_ProductOptions_Controller_Admin_InventoryTrackingOption exten
     {
         $this->set("properties", $_POST);
         parent::handleRequest();
-        $url = "admin.php?target=product&product_id=" . $_REQUEST["product_id"] . "&page=inventory_tracking";
+        $url = "admin.php?target=product&product_id=" . $_REQUEST['product_id'] . "&page=inventory_tracking";
         return Header::location($url);
     }
 
@@ -52,8 +52,8 @@ class XLite_Module_ProductOptions_Controller_Admin_InventoryTrackingOption exten
         }
         $options[] = $this->product_id;
         foreach ($this->optdata as $class => $optdata) {
-            if (isset($optdata["used"])) {
-                $options[] = isset($optdata["option"]) ?  "$class:" . $optdata["option"] : $class;
+            if (isset($optdata['used'])) {
+                $options[] = isset($optdata['option']) ?  "$class:" . $optdata['option'] : $class;
             }
         }
         $inventory = new XLite_Module_InventoryTracking_Model_Inventory();

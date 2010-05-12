@@ -67,7 +67,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerProduct extends XLite_Mo
     function initView()
     {
         parent::initView();
-        if (is_null($this->get("update"))) {
+        if (is_null($this->get('update'))) {
             $schema = $this->getComplex('config.Miscellaneous.partner_product_banner');
             foreach ($schema as $param => $value) {
                 $this->$param = $value;

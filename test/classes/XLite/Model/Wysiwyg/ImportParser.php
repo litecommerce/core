@@ -106,7 +106,7 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
     function translateTemplate($src)
     {
         $lay = XLite_Model_Layout::getInstance();
-        return str_replace(array('<!--*', '*-->', 'style.css'), array('{*', '*}', 'skins/' . $lay->get("skin") . '/' . $lay->get("locale") . '/style.css'), $src);
+        return str_replace(array('<!--*', '*-->', 'style.css'), array('{*', '*}', 'skins/' . $lay->get('skin') . '/' . $lay->get('locale') . '/style.css'), $src);
     }
 
     function compileWidgetCall($params) 

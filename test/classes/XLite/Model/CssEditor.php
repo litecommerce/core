@@ -50,9 +50,9 @@ class XLite_Model_CssEditor extends XLite_Base
     function getItems()
     {
         $items = array();
-        $style = $this->get("style");
-        if (isset($style["style"])) {
-            $items = array_keys($style["style"]);
+        $style = $this->get('style');
+        if (isset($style['style'])) {
+            $items = array_keys($style['style']);
         }
         return $items;
     }
@@ -69,15 +69,15 @@ class XLite_Model_CssEditor extends XLite_Base
     function parseContent()
     {
         $found = array();
-        $content = @file_get_contents($this->get("cssFile"));
+        $content = @file_get_contents($this->get('cssFile'));
         $elements = explode("}", $content);
 
         for ($i = 0; $i < count($elements); $i ++) {
             $result = $this->_parseClass($elements[$i]);
             if ($result !== null) {
-                $this->style["comment"][] = $result["comment"];
-                $this->style["element"][] = $result["element"];
-                $this->style["style"][] = $result["style"];
+                $this->style['comment'][] = $result['comment'];
+                $this->style['element'][] = $result['element'];
+                $this->style['style'][] = $result['style'];
             }
         }
     }
@@ -86,15 +86,15 @@ class XLite_Model_CssEditor extends XLite_Base
     {
         $style = "";
         // update style
-        for ($i = 0; $i < count($this->style["element"]); $i ++) {
-            if (!empty($this->style["comment"][$i])) {
-                $style .= "/*\n" . $this->style["comment"][$i] ."\n*/\n";
+        for ($i = 0; $i < count($this->style['element']); $i ++) {
+            if (!empty($this->style['comment'][$i])) {
+                $style .= "/*\n" . $this->style['comment'][$i] ."\n*/\n";
             }
-            $style .= $this->style["element"][$i] .
-            " {\n\t" . $this->style["style"][$i] . "\n}\n\n";
+            $style .= $this->style['element'][$i] .
+            " {\n\t" . $this->style['style'][$i] . "\n}\n\n";
         }
         // save CSS file
-        $file = $this->get("cssFile");
+        $file = $this->get('cssFile');
         $fp = fopen($file, "wb") or die("Write failed for file $file".
                                         ": permission denied");
         fwrite($fp, $style);
@@ -107,30 +107,30 @@ class XLite_Model_CssEditor extends XLite_Base
     function _parseClass($class) 
     {
         $result = array();
-        $result["comment"] = "";
-        $result["element"] = "";
-        $result["style"] = "";
+        $result['comment'] = "";
+        $result['element'] = "";
+        $result['style'] = "";
         preg_match("/\/\*(.*)\*\//s", $class, $found);
         
         if (!empty($found)) {
             $comment = trim($found[COMMENT]);
             $comment = preg_replace("/\/\*/s", "", $comment);
             $comment = preg_replace("/\*\//s", "", $comment);
-            $result["comment"] = $comment;
+            $result['comment'] = $comment;
             $class = preg_replace("/\/\*(.*)\*\//s", "", $class);
         }
         preg_match("/([^\{]+)\{([^\}]+)/i", $class, $found);
         if (!isset($found[CLASS_NAME]) || !isset($found[STYLE])) {
             return null;
         }
-        $result["element"] = trim($found[CLASS_NAME]);
-        $result["style"] = $this->removeSpaces(trim(strtr($found[STYLE], "\n", " ")));
+        $result['element'] = trim($found[CLASS_NAME]);
+        $result['style'] = $this->removeSpaces(trim(strtr($found[STYLE], "\n", " ")));
         return $result;
     }
 
     function restoreDefault()
     {
-        $file = $this->get("cssFile");
+        $file = $this->get('cssFile');
         $orig = preg_replace("/^(skins)/", "schemas/templates/" . $this->config->getComplex('Skin.skin'), $file);
         is_readable($orig) or die("$orig: file not found");
         if (is_writeable($file)) {

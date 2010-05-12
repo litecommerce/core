@@ -93,7 +93,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerBanners extends XLite_Mo
     function getCategory()
     {
         if (is_null($this->category)) {
-            $this->category = new XLite_Model_Category($this->get("category_id"));
+            $this->category = new XLite_Model_Category($this->get('category_id'));
         }
         return $this->category;
     }

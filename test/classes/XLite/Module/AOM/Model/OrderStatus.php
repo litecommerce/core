@@ -51,11 +51,11 @@ class XLite_Module_AOM_Model_OrderStatus extends XLite_Model_Abstract
 
     function getParentStatus()
     {
-        if ($this->get("parent") == '')	{
+        if ($this->get('parent') == '')	{
             return null;
         } else {
             $parent = new XLite_Module_AOM_Model_OrderStatus();
-            $parent->find("status = '". $this->get("parent") ."'");
+            $parent->find("status = '". $this->get('parent') ."'");
             return $parent;
         }
     }

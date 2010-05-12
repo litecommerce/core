@@ -911,7 +911,7 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
             $imagesHash = array();
             foreach ($imagesArray as $row) {
                 $image = new XLite_Model_Image($this->imageClass, $row[$this->autoIncrement]);
-                $fn = $image->getFilePath($image->get("data"));
+                $fn = $image->getFilePath($image->get('data'));
                 if (!isset($imagesHash[$fn])) {
                     $imagesHash[$fn] = 1;
                 } else {
@@ -927,7 +927,7 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
 
             if ($from) {
                 // from filesystem to database
-                $fn = $image->getFilePath($image->get("data"));
+                $fn = $image->getFilePath($image->get('data'));
                 $image->importImage($fn, 'D');
                 $m ++;
                 // remove file from filesystem
@@ -941,10 +941,10 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
                 // create filename for the image
                 $fn = $image->createFileName();
                 $filePath = $image->getFilePath($fn);
-                //if (is_writable($image->getFilePath(".")) && !file_exists($filePath) || is_writable($filePath)) {
-                if (is_writable($image->getFilePath("."))) {
+                //if (is_writable($image->getFilePath('.')) && !file_exists($filePath) || is_writable($filePath)) {
+                if (is_writable($image->getFilePath('.'))) {
                     if (($fd = fopen($filePath, "wb"))) {
-                        fwrite($fd, $image->get("data"));
+                        fwrite($fd, $image->get('data'));
                         fclose($fd);
                         @chmod($filePath, get_filesystem_permissions(0644));
                         $image->set("data", $fn);
@@ -952,7 +952,7 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
                         $image->update();
                         $m ++;
                     } else {
-                        print "<span class=ErrorMessage>Error: directory '".$image->getFilePath("."). "' is not writable!</span><br>\n";
+                        print "<span class=ErrorMessage>Error: directory '".$image->getFilePath('.'). "' is not writable!</span><br>\n";
                         func_flush();
                     }
                 } else {

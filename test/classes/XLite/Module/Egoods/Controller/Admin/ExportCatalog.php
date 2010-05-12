@@ -38,8 +38,8 @@ class XLite_Module_Egoods_Controller_Admin_ExportCatalog extends XLite_Controlle
     public function __construct(array $params)
     {
         parent::__construct($params);
-        $this->pages["export_pin_codes"] = "Export PIN codes";
-        $this->pageTemplates["export_pin_codes"] = "modules/Egoods/export_pin_codes.tpl";
+        $this->pages['export_pin_codes'] = "Export PIN codes";
+        $this->pageTemplates['export_pin_codes'] = "modules/Egoods/export_pin_codes.tpl";
     }
 
     function action_export_pin_codes()
@@ -48,8 +48,8 @@ class XLite_Module_Egoods_Controller_Admin_ExportCatalog extends XLite_Controlle
 
         // save layout & export
         $dlg = new XLite_Controller_Admin_ImportCatalog();
-        $dlg->action_layout("pin_codes_layout");
-        $this->startDownload("pin_codes.csv");
+        $dlg->action_layout('pin_codes_layout');
+        $this->startDownload('pin_codes.csv');
         $wp = new XLite_Module_Egoods_Model_PinCode();
         $wp->export($this->pin_codes_layout, $DATA_DELIMITERS[$this->delimiter], $where = null, $orderby = "product_id,pin_id");
         exit();

@@ -43,7 +43,7 @@ class XLite_Module_Affiliate_Controller_Customer_Banner extends XLite_Controller
     function getBanner()
     {
         if (is_null($this->banner)) {
-            $this->banner = new XLite_Module_Affiliate_Model_Banner($this->get("banner_id"));
+            $this->banner = new XLite_Module_Affiliate_Model_Banner($this->get('banner_id'));
             $stats = new XLite_Module_Affiliate_Model_BannerStats();
             $stats->logView();
         }
@@ -52,6 +52,6 @@ class XLite_Module_Affiliate_Controller_Customer_Banner extends XLite_Controller
 
     function getReferrer()
     {
-        return isset($_SERVER["HTTP_REFERER"]) ? $_SERVER["HTTP_REFERER"] : "";
+        return isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : "";
     }
 }

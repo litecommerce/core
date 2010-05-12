@@ -113,13 +113,13 @@ class XLite_Controller_Admin_Db extends XLite_Controller_Admin_Abstract
             $verbose  = true;
             (isset($this->mode) && $this->mode == "cp") or $this->startDump();
         } else {
-            $this->startDownload("db_backup.sql.php");
+            $this->startDownload('db_backup.sql.php');
         }
         $this->db->backup($destfile, $verbose);
         if (isset(XLite_Core_Request::getInstance()->write_to_file)) {
             if (isset($this->mode) && $this->mode == "cp") {
                 // Windows Control Panel mode. suppress "back" message.
-                die("OK");
+                die('OK');
             } else {
         		if (XLite_Core_Request::getInstance()->write_to_file) {
             		echo "<br><b>Database backup created successfully</b><br>";
@@ -135,7 +135,7 @@ class XLite_Controller_Admin_Db extends XLite_Controller_Admin_Abstract
     {
         if (file_exists($this->sqldump_file)) unlink($this->sqldump_file) or die("Unable to delete file $this->sqldump_file");
         if (isset($this->mode) && $this->mode == "cp") {
-            die("OK");
+            die('OK');
         }
     }
 
@@ -158,7 +158,7 @@ class XLite_Controller_Admin_Db extends XLite_Controller_Admin_Abstract
             }
             $mode = "upload";
         }
-        if ($this->get("mode") != "cp") {
+        if ($this->get('mode') != "cp") {
             $this->startDump();
         }
         $error = $this->db->restore($srcfile);

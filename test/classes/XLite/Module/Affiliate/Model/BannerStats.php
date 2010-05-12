@@ -57,10 +57,10 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
     function logView() 
     {
         $this->set("stat_type", "V");
-        $this->set("partner_id", $_GET["partner"]);
-        $this->set("product_id", $_GET["product_id"]);
-        $this->set("banner_id",  $_GET["banner_id"]);
-        $this->set("referrer",   $_SERVER["HTTP_REFERER"]);
+        $this->set("partner_id", $_GET['partner']);
+        $this->set("product_id", $_GET['product_id']);
+        $this->set("banner_id",  $_GET['banner_id']);
+        $this->set("referrer",   $_SERVER['HTTP_REFERER']);
         $this->set("date",       time());
         $this->create();
     }
@@ -68,10 +68,10 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
     function logClick() 
     {
         $this->set("stat_type", "C");
-        $this->set("partner_id", $_GET["partner"]);
-        $this->set("product_id", $_GET["product_id"]);
-        $this->set("banner_id",  $_GET["banner_id"]);
-        $referrer = isset($_GET["referrer"]) ? $_GET["referrer"] : $_SERVER["HTTP_REFERER"];
+        $this->set("partner_id", $_GET['partner']);
+        $this->set("product_id", $_GET['product_id']);
+        $this->set("banner_id",  $_GET['banner_id']);
+        $referrer = isset($_GET['referrer']) ? $_GET['referrer'] : $_SERVER['HTTP_REFERER'];
         $this->set("referrer", $referrer);
         $this->set("date", time());
         $this->create();
@@ -97,8 +97,8 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
             $referrers = $this->db->getAll($sql);
             // fill empty referrers
             foreach ($referrers as $rid => $referrer) {
-                if (empty($referrers[$rid]["referrer"])) {
-                    $referrers[$rid]["referrer"] = "Unknown";
+                if (empty($referrers[$rid]['referrer'])) {
+                    $referrers[$rid]['referrer'] = "Unknown";
                 }
             }
 
@@ -107,24 +107,24 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
             $stats = $this->db->getAll($sql);
             // fill empty referrers
             foreach ($stats as $sid => $stat) {
-                if (empty($stats[$sid]["referrer"])) {
-                    $stats[$sid]["referrer"] = "Unknown";
+                if (empty($stats[$sid]['referrer'])) {
+                    $stats[$sid]['referrer'] = "Unknown";
                 }
             }
 
             foreach ($referrers as $rid => $referrer) {
                 // add referrer
-                $referrers[$rid]["sales"] = 0;    // initial value
-                $referrers[$rid]["total"] = 0.00; // initial value
-                $referrerID = $referrer["referrer"];
+                $referrers[$rid]['sales'] = 0;    // initial value
+                $referrers[$rid]['total'] = 0.00; // initial value
+                $referrerID = $referrer['referrer'];
                 foreach ($stats as $sid => $stat) {
-                    if ($stat["referrer"] == $referrerID) {
-                        $statID = $stat["stat_id"];
+                    if ($stat['referrer'] == $referrerID) {
+                        $statID = $stat['stat_id'];
                         // search subtotals for every referrer click
                         foreach ($orders as $oid => $order) {
-                            if ($order["stat_id"] == $statID) {
-                                $referrers[$rid]["sales"]++;
-                                $referrers[$rid]["total"] += $order["subtotal"];
+                            if ($order['stat_id'] == $statID) {
+                                $referrers[$rid]['sales']++;
+                                $referrers[$rid]['total'] += $order['subtotal'];
                             }
                         }
                     }
@@ -145,18 +145,18 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
             // calculate sales statistics for partners
             foreach ($clicks as $cid => $click) {
                 // add partner
-                $clicks[$cid]["sales"] = 0;    // initial value
-                $clicks[$cid]["total"] = 0.00; // initial value
-                $partnerID = $click["partner_id"];
+                $clicks[$cid]['sales'] = 0;    // initial value
+                $clicks[$cid]['total'] = 0.00; // initial value
+                $partnerID = $click['partner_id'];
                 // use click ids to find processed orders
                 foreach ($stats as $sid => $stat) {
-                    if ($stat["partner_id"] == $partnerID) {
-                        $statID = $stat["stat_id"];
+                    if ($stat['partner_id'] == $partnerID) {
+                        $statID = $stat['stat_id'];
                         // search subtotals for every partner click
                         foreach ($orders as $oid => $order) {
-                            if ($order["stat_id"] == $statID) {
-                                $clicks[$cid]["sales"]++;
-                                $clicks[$cid]["total"] += $order["subtotal"];
+                            if ($order['stat_id'] == $statID) {
+                                $clicks[$cid]['sales']++;
+                                $clicks[$cid]['total'] += $order['subtotal'];
                             }
                         }
                     }
@@ -207,8 +207,8 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
         // add views..
         foreach ($views as $vid => $view) {
             foreach ($result as $rid => $row) {
-                if ($row["banner_id"] == $view["banner_id"] && $row["product_id"] == $view["product_id"]) {
-                    $result[$rid]["views"] += $view["views"];
+                if ($row['banner_id'] == $view['banner_id'] && $row['product_id'] == $view['product_id']) {
+                    $result[$rid]['views'] += $view['views'];
                     continue 2;
                 }
             }
@@ -216,8 +216,8 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
         }
         // fill empty sockets
         foreach ($result as $rid => $row) {
-            if (!isset($row["views"])) $result[$rid]["views"] = 0;
-            if (!isset($row["clicks"])) $result[$rid]["clicks"] = 0;
+            if (!isset($row['views'])) $result[$rid]['views'] = 0;
+            if (!isset($row['clicks'])) $result[$rid]['clicks'] = 0;
         }
         // pre-sorting
         if ($sort_by == "clicks") {
@@ -231,32 +231,32 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
         }
         // calculate rates and create banner and product instances
         foreach ($result as $i => $row) {
-            $result[$i]["rate"] = "0.00";
-            if ($result[$i]["views"] != 0) {
-                $result[$i]["rate"] =  sprintf("%.02f", doubleval($result[$i]["clicks"] / $result[$i]["views"]));
+            $result[$i]['rate'] = "0.00";
+            if ($result[$i]['views'] != 0) {
+                $result[$i]['rate'] =  sprintf("%.02f", doubleval($result[$i]['clicks'] / $result[$i]['views']));
             }
-            if (isset($result[$i]["banner_id"])) {
+            if (isset($result[$i]['banner_id'])) {
                 $banner = new XLite_Module_Affiliate_Model_Banner();
-                $banner->set("deleted", !$banner->find("banner_id=".$result[$i]["banner_id"]));
-                $result[$i]["banner"] = $banner;
+                $banner->set("deleted", !$banner->find("banner_id=".$result[$i]['banner_id']));
+                $result[$i]['banner'] = $banner;
             }
             // create product instance
-            else if (isset($result[$i]["product_id"])) {
+            else if (isset($result[$i]['product_id'])) {
                 $product = new XLite_Model_Product();
-                $product->set("deleted", !$product->find("product_id=".$result[$i]["product_id"]));
-                $result[$i]["product"] = $product;
+                $product->set("deleted", !$product->find("product_id=".$result[$i]['product_id']));
+                $result[$i]['product'] = $product;
             }
             // direct link
             else {
-                $result[$i]["direct_link"] = true;
+                $result[$i]['direct_link'] = true;
             }
         }
         // filter by banner category
         $result2 = array();
         foreach ($result as $k => $r) {
-            if (isset($r["banner"]) && isset($homeBanner) ||
-                isset($r["product"]) && isset($productBanner) ||
-                $r["direct_link"] && isset($directLink))
+            if (isset($r['banner']) && isset($homeBanner) ||
+                isset($r['product']) && isset($productBanner) ||
+                $r['direct_link'] && isset($directLink))
             {
                 $result2[$k] = $r;
             }
@@ -269,8 +269,8 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
     function getPartner() 
     {
         if (is_null($this->partner)) {
-            $profile = new XLite_Model_Profile($this->get("partner_id"));
-            if ($profile->is("partner") && $profile->is("enabled")) {
+            $profile = new XLite_Model_Profile($this->get('partner_id'));
+            if ($profile->is('partner') && $profile->is('enabled')) {
                 $this->partner = $profile;
             }
         }

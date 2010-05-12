@@ -92,20 +92,20 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
     public function __construct($id = null)
     {
         parent::__construct($id);
-        $this->fields["selling_membership"] = "";
-        $this->fields["validaty_period"] = "";
+        $this->fields['selling_membership'] = "";
+        $this->fields['validaty_period'] = "";
     }
     
     function getShowExpandedOptions()
     {
-        return $this->xlite->get("ProductOptionsEnabled")
+        return $this->xlite->get('ProductOptionsEnabled')
             && $this->hasOptions()
-            && (bool)$this->get("expansion_limit");
+            && (bool)$this->get('expansion_limit');
     }
 
     function hasExpandedOptions()
     {
-        return (count($this->get("expandedItems")) > 0);
+        return (count($this->get('expandedItems')) > 0);
     }
     
     function getExpandedOptionsNames()
@@ -115,11 +115,11 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
         }
         
         $this->_expandedOptionsNames = array();
-        $options = $this->get("productOptions");
+        $options = $this->get('productOptions');
         foreach ($options as $opt) {
-            $type = strtolower($opt->get("opttype"));
+            $type = strtolower($opt->get('opttype'));
             if ($type == "radio button" || $type == "selectbox") {
-                $this->_expandedOptionsNames []= $opt->get("opttext");
+                $this->_expandedOptionsNames []= $opt->get('opttext');
             }
         }
         return $this->_expandedOptionsNames;
@@ -132,9 +132,9 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
         }
         
         $this->_flatOptions = array();
-        $options = $this->get("productOptions");
+        $options = $this->get('productOptions');
         foreach ($options as $opt) {
-            $type = strtolower($opt->get("opttype"));
+            $type = strtolower($opt->get('opttype'));
             if ($type != "radio button" && $type != "selectbox") {
                 $this->_flatOptions []= $opt;
             }
@@ -150,16 +150,16 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
         
         $found_options = array();
         
-        if (!$this->xlite->get("ProductOptionsEnabled") || !$this->hasOptions()) {
+        if (!$this->xlite->get('ProductOptionsEnabled') || !$this->hasOptions()) {
             $this->expandedProductOptions = $found_options;
             return $found_options;
         }
-        $options = $this->get("productOptions");
+        $options = $this->get('productOptions');
         $dst = array();
         foreach($options as $option) {
-            $type = strtolower($option->get("opttype"));
+            $type = strtolower($option->get('opttype'));
             if ($type == "radio button" || $type == "selectbox") {
-                $dst []= $option->get("productOptions");
+                $dst []= $option->get('productOptions');
             }
         }
 
@@ -171,11 +171,11 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
         $this->getSelections($dst, $found_options);
 
         // remove options marked as exceptions {{{
-        $exceptions_list = $this->get("optionExceptions");
+        $exceptions_list = $this->get('optionExceptions');
         if (!empty($exceptions_list)) {
             foreach ($exceptions_list as $k => $v) {
                 $exceptions = array();
-                $exception = $v->get("exception");
+                $exception = $v->get('exception');
                 $columns = explode(";", $exception);
                 // Trim exceptions
                 foreach ($columns as $subvalue) {
@@ -217,30 +217,30 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 
     function getFullPrice($amount, $optionIndex = null, $use_wholesale_price = true)
     {
-        if (!$this->is("priceAvailable") && !$this->xlite->is("adminZone")) {
+        if (!$this->is('priceAvailable') && !$this->xlite->is('adminZone')) {
             return $this->config->WholesaleTrading->price_denied_message;
         }
 
         $wholesale_price = false;
         if ($use_wholesale_price) {
             $wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
-            $profile = $this->auth->get("profile");
-            $membership = (is_object($profile)) ? " OR membership='" . $profile->get("membership") . "'" : "";
-            $wholesale_prices = $wp->getProductPrices($this->get("product_id"), $amount, $membership);
+            $profile = $this->auth->get('profile');
+            $membership = (is_object($profile)) ? " OR membership='" . $profile->get('membership') . "'" : "";
+            $wholesale_prices = $wp->getProductPrices($this->get('product_id'), $amount, $membership);
             if (count($wholesale_prices) != 0) {
-                $wholesale_price = $wholesale_prices[count($wholesale_prices) - 1]->get("price");
+                $wholesale_price = $wholesale_prices[count($wholesale_prices) - 1]->get('price');
                 $this->set("price", $wholesale_price);
             }
         }
-        $price = $this->get("listPrice");
+        $price = $this->get('listPrice');
         if (!is_null($optionIndex)) {
             $surcharge = 0;
             $originalPrice = $price;
 
-            $opts = $this->get("expandedItems");
+            $opts = $this->get('expandedItems');
             foreach ($opts[$optionIndex] as $option) {
                 $po = new XLite_Module_ProductOptions_Model_ProductOption();
-                $po->set("product_id", $this->get("product_id"));
+                $po->set("product_id", $this->get('product_id'));
 
                 $modifiedPrice = ($wholesale_price === false)?($po->_modifiedPrice($option)):($po->_modifiedPrice($option, false, $wholesale_price));
                 $surcharge += $modifiedPrice - $originalPrice;
@@ -258,7 +258,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
             return -1; // -1 means infinity
         }
 
-        $options_arr = $this->get("expandedItems");
+        $options_arr = $this->get('expandedItems');
 
         if (!(isset($options_arr[$optionsIndex]) && is_array($options_arr[$optionsIndex]))) {
             return -1; // -1 means infinity
@@ -270,7 +270,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 
         $key = $this->get('key')."|".implode("|", $option_keys);
         $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
-        $inventories = $inventory->findAll("inventory_id LIKE '".$this->get("product_id")."|%' AND enabled=1", "order_by");
+        $inventories = $inventory->findAll("inventory_id LIKE '".$this->get('product_id')."|%' AND enabled=1", "order_by");
         foreach ($inventories as $i) {
             if ($i->keyMatch($key)) {
                 return $i->get('amount');
@@ -306,7 +306,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
     
     function isShowAvailable()
     {
-        return $this->checkDirectSaleAvailable() ? true : $this->_available_action("show");
+        return $this->checkDirectSaleAvailable() ? true : $this->_available_action('show');
     }
     
     function isPriceAvailable()
@@ -315,7 +315,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
             return true;
         }
 
-        return $this->is("showAvailable") ? $this->_available_action("show_price") : false;
+        return $this->is('showAvailable') ? $this->_available_action('show_price') : false;
     }
 
     function isSaleAvailable()
@@ -324,35 +324,35 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
             return true;
         }
 
-        return $this->is("priceAvailable") ? $this->_available_action("sell") : false;
+        return $this->is('priceAvailable') ? $this->_available_action('sell') : false;
     }
 
     function assignDirectSaleAvailable($assign=true)
     {
-        $access = $this->session->get("DirectSaleAvailable");
+        $access = $this->session->get('DirectSaleAvailable');
         if (!is_array($access)) {
             $access = array();
         }
-        $access[$this->get("product_id")] = $assign;
+        $access[$this->get('product_id')] = $assign;
         $this->session->set("DirectSaleAvailable", $access);
     }
 
     function checkDirectSaleAvailable()
     {
-        $access = $this->session->get("DirectSaleAvailable");
+        $access = $this->session->get('DirectSaleAvailable');
         if (!is_array($access)) {
             $access = array();
         }
 
-        return (isset($access[$this->get("product_id")]) ? $access[$this->get("product_id")] : false);
+        return (isset($access[$this->get('product_id')]) ? $access[$this->get('product_id')] : false);
     }
 
     function isDirectSaleAvailable()
     {
         if ($this->config->WholesaleTrading->direct_addition) {
-            $this->assignDirectSaleAvailable($this->_available_action("sell"));
+            $this->assignDirectSaleAvailable($this->_available_action('sell'));
 
-            return $this->_available_action("sell");
+            return $this->_available_action('sell');
 
         }
 
@@ -361,12 +361,12 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 
     function filter()
     {
-        if ($this->xlite->is("adminZone")) {
+        if ($this->xlite->is('adminZone')) {
             return parent::filter();
         }
 
         if (parent::filter()) {
-            return $this->is("showAvailable");
+            return $this->is('showAvailable');
 
         }
 
@@ -377,12 +377,12 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
     {
         $exists = parent::isExists();
 
-        return ((!$exists) && $this->_checkExistanceRequired && $this->_available_action("sell")) ?  true : $exists;
+        return ((!$exists) && $this->_checkExistanceRequired && $this->_available_action('sell')) ?  true : $exists;
     }
 
     function get($name)
     {
-        if ($name == "price" && !$this->is("priceAvailable") && !$this->xlite->is("adminZone")) {
+        if ($name == "price" && !$this->is('priceAvailable') && !$this->xlite->is('adminZone')) {
             return $this->getComplex('config.WholesaleTrading.price_denied_message');
         }
         return parent::get($name);
@@ -390,14 +390,14 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 
     function getListPrice()
     {
-        return (!$this->is("priceAvailable") && !$this->xlite->is("adminZone"))
+        return (!$this->is('priceAvailable') && !$this->xlite->is('adminZone'))
             ? $this->config->WholesaleTrading->price_denied_message
             : parent::getListPrice();
     }
 
     function hasWholesalePricing()
     {
-        $this->_avail_wholesale_pricing = $this->get("wholesalePricing");
+        $this->_avail_wholesale_pricing = $this->get('wholesalePricing');
 
         return count($this->_avail_wholesale_pricing) > 0;
     }
@@ -408,20 +408,20 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
             $wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
 
             $sqlStr = "product_id = " . $this->get('product_id');
-            $sqlStr .= ( $this->auth->is("logged") ) ? " AND (membership='all' OR membership='" . $this->auth->getComplex('profile.membership') . "')" : " AND membership='all'";
+            $sqlStr .= ( $this->auth->is('logged') ) ? " AND (membership='all' OR membership='" . $this->auth->getComplex('profile.membership') . "')" : " AND membership='all'";
             $wholesale_pricing = $wp->findAll($sqlStr);
 
             $wholesale_pricing_hash = array();
             foreach ($wholesale_pricing as $wpIdx => $wp) {
-                if (!isset($wholesale_pricing_hash[$wp->get("amount")])) {
-                    $wholesale_pricing_hash[$wp->get("amount")] = $wpIdx;
+                if (!isset($wholesale_pricing_hash[$wp->get('amount')])) {
+                    $wholesale_pricing_hash[$wp->get('amount')] = $wpIdx;
 
                 } elseif (
-                    $this->auth->is("logged")
-                    && $this->auth->getComplex('profile.membership') == $wp->get("membership")
-                    && $wholesale_pricing[$wholesale_pricing_hash[$wp->get("amount")]]->get("membership") == "all"
+                    $this->auth->is('logged')
+                    && $this->auth->getComplex('profile.membership') == $wp->get('membership')
+                    && $wholesale_pricing[$wholesale_pricing_hash[$wp->get('amount')]]->get('membership') == "all"
                 ) {
-                    $wholesale_pricing_hash[$wp->get("amount")] = $wpIdx;
+                    $wholesale_pricing_hash[$wp->get('amount')] = $wpIdx;
                 }
             }
 
@@ -432,11 +432,11 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
         }
 
         if ($this->config->Taxes->prices_include_tax) {
-            $oldPrice = $this->get("price");
+            $oldPrice = $this->get('price');
 
             foreach ($this->wholesale_pricing as $wp_idx => $wp) {
-                $this->set("price", $wp->get("price"));
-                $this->wholesale_pricing[$wp_idx]->set("price", $this->get("listPrice"));
+                $this->set("price", $wp->get('price'));
+                $this->wholesale_pricing[$wp_idx]->set("price", $this->get('listPrice'));
             }
 
             $this->set("price", $oldPrice);
@@ -454,7 +454,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
     {
         $purchase_limit = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
 
-        return $purchase_limit->find("product_id =" . $this->get("product_id")) ? $purchase_limit : false;
+        return $purchase_limit->find("product_id =" . $this->get('product_id')) ? $purchase_limit : false;
     }
 
     function delete()
@@ -463,9 +463,9 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
         $pa = new XLite_Module_WholesaleTrading_Model_ProductAccess();
         $pl = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
         $wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
-        $this->db->query("DELETE FROM ".$pa->getTable(). " WHERE product_id=".$this->get("product_id"));
-        $this->db->query("DELETE FROM ".$pl->getTable(). " WHERE product_id=".$this->get("product_id"));
-        $this->db->query("DELETE FROM ".$wp->getTable(). " WHERE product_id=".$this->get("product_id"));
+        $this->db->query("DELETE FROM ".$pa->getTable(). " WHERE product_id=".$this->get('product_id'));
+        $this->db->query("DELETE FROM ".$pl->getTable(). " WHERE product_id=".$this->get('product_id'));
+        $this->db->query("DELETE FROM ".$wp->getTable(). " WHERE product_id=".$this->get('product_id'));
 
         // delete product
         parent::delete();
@@ -478,7 +478,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
     {
         parent::collectGarbage();
 
-        $products_table = $this->db->getTableByAlias("products");
+        $products_table = $this->db->getTableByAlias('products');
         $classes = array("ProductAccess", "PurchaseLimit", "WholesalePricing");
         foreach ($classes as $class) {
 
@@ -491,7 +491,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 
             if (is_array($result) && count($result) > 0) {
                 foreach ($result as $info) {
-                    $this->db->query("DELETE FROM ".$class_table. " WHERE product_id='".$info["product_id"]."'");
+                    $this->db->query("DELETE FROM ".$class_table. " WHERE product_id='".$info['product_id']."'");
                 }
             }
         }
@@ -501,17 +501,17 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
     {
         $p = parent::cloneObject();
 
-        $originalId = $this->get("product_id");
-        $newId = $p->get("product_id");
+        $originalId = $this->get('product_id');
+        $newId = $p->get('product_id');
         
         if ($this->config->getComplex('WholesaleTrading.clone_wholesale_productaccess')) {
             $productAccess = new XLite_Module_WholesaleTrading_Model_ProductAccess();
             foreach ($productAccess->findAll("product_id=$originalId") as $access) {
                 $foo = new XLite_Module_WholesaleTrading_Model_ProductAccess();
                 $foo->set("product_id", $newId);
-                $foo->set("show_group", $access->get("show_group"));
-                $foo->set("show_price_group", $access->get("show_price_group"));
-                $foo->set("sell_group", $access->get("sell_group"));
+                $foo->set("show_group", $access->get('show_group'));
+                $foo->set("show_price_group", $access->get('show_price_group'));
+                $foo->set("sell_group", $access->get('sell_group'));
                 $foo->create();
             }
         }
@@ -521,8 +521,8 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
             foreach ($purchaseLimit->findAll("product_id=$originalId") as $limit) {
                 $foo = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
                 $foo->set("product_id", $newId);
-                $foo->set("min", $limit->get("min"));
-                $foo->set("max", $limit->get("max"));
+                $foo->set("min", $limit->get('min'));
+                $foo->set("max", $limit->get('max'));
                 $foo->create();
             }
         }
@@ -532,9 +532,9 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
             foreach ($wholesalePricing->findAll("product_id=$originalId") as $pricing) {
                 $foo = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
                 $foo->set("product_id", $newId);
-                $foo->set("amount", $pricing->get("amount"));
-                $foo->set("price", $pricing->get("price"));
-                $foo->set("membership", $pricing->get("membership"));
+                $foo->set("amount", $pricing->get('amount'));
+                $foo->set("price", $pricing->get('price'));
+                $foo->set("membership", $pricing->get('membership'));
                 $foo->create();
             }
         }

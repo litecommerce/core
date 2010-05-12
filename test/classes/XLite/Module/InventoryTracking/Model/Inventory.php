@@ -41,7 +41,7 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
     */	
     public $alias = "inventories";
 
-    public $primaryKey = array("inventory_id");
+    public $primaryKey = array('inventory_id');
     public $defaultOrder = "inventory_id";
 
     /**
@@ -75,25 +75,25 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
     public function __construct($id = null) 
     {
         parent::__construct($id);
-        if ($this->xlite->get("ProductOptionsEnabled")) {
-            $this->importFields["product_options"] = false;
-            $this->importFields["inventory_sku"] = false;
+        if ($this->xlite->get('ProductOptionsEnabled')) {
+            $this->importFields['product_options'] = false;
+            $this->importFields['inventory_sku'] = false;
         }
     }
     
     function _import(array $options) 
     {
-        $properties = $options["properties"];
+        $properties = $options['properties'];
         // search for the product first
         $product = new XLite_Model_Product();
         $found = false;
 
         // search product by SKU
-        if (!empty($properties["sku"]) && $product->find("sku='".addslashes($properties["sku"])."'")) {
+        if (!empty($properties['sku']) && $product->find("sku='".addslashes($properties['sku'])."'")) {
             $found = true;
         }
         // .. or by NAME
-        elseif (empty($properties["sku"]) && !empty($properties["name"]) && $product->find("name='".addslashes($properties["name"])."'")) {
+        elseif (empty($properties['sku']) && !empty($properties['name']) && $product->find("name='".addslashes($properties['name'])."'")) {
             $found = true;
         }
 
@@ -103,21 +103,21 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
 
         if ($found) {
             // product found
-            $inventory_id = $product->get("product_id") . (!empty($properties["product_options"]) ? "|".$properties["product_options"] : "");
+            $inventory_id = $product->get('product_id') . (!empty($properties['product_options']) ? "|".$properties['product_options'] : "");
             $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
             $inventory->set("properties", $properties);
 
             if ($inventory->find("inventory_id='$inventory_id'")) {
-                echo "updating amount for product " . $product->get("name") . "<br>\n";
+                echo "updating amount for product " . $product->get('name') . "<br>\n";
     	        $inventory->update();
             } else {
-                echo "creating amount for product " . $product->get("name") . "<br>\n";
-                $inventory->set("inventory_id",!empty($properties['product_options']) ? $product->get("product_id")."|".$properties['product_options'] :  $product->get("product_id"));
+                echo "creating amount for product " . $product->get('name') . "<br>\n";
+                $inventory->set("inventory_id",!empty($properties['product_options']) ? $product->get('product_id')."|".$properties['product_options'] :  $product->get('product_id'));
                 $inventory->create();
             }
             $product->updateInventorySku();
         } else {
-            echo "<font color=red>product not found:</font>".(!empty($properties["sku"]) ? " SKU: ".$properties["sku"] : "") . (!empty($properties["name"]) ? " NAME: ".$properties["name"] : "");
+            echo "<font color=red>product not found:</font>".(!empty($properties['sku']) ? " SKU: ".$properties['sku'] : "") . (!empty($properties['name']) ? " NAME: ".$properties['name'] : "");
             echo '<br /><br /><a href="admin.php?target=update_inventory&page=amount"><u>Click here to return to admin interface</u></a>';
             die;
             
@@ -127,9 +127,9 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
     function _export($layout, $delimiter) 
     {
         $data = array();
-        $inventory_id = $this->get("inventory_id");
+        $inventory_id = $this->get('inventory_id');
         $pos = strpos($inventory_id, '|');
-        if ($pos&&(!$this->xlite->get("ProductOptionsEnabled")||($this->xlite->get("ProductOptionsEnabled")&&!in_array("product_options",$layout))))
+        if ($pos&&(!$this->xlite->get('ProductOptionsEnabled')||($this->xlite->get('ProductOptionsEnabled')&&!in_array("product_options",$layout))))
             return array();
         $product_id = $pos === false ? $inventory_id : substr($inventory_id, 0, $pos);
         $product = new XLite_Model_Product($product_id);
@@ -158,7 +158,7 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
     function keyMatch($key) 
     {
         // get the class:value pairs array
-        $cardOptions = $this->parseOptions($this->get("inventory_id"));
+        $cardOptions = $this->parseOptions($this->get('inventory_id'));
         $keyOptions = $this->parseOptions($key);
         $intersect = array_intersect($cardOptions, $keyOptions);
         $diff = array_diff($cardOptions, $intersect);
@@ -179,8 +179,8 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
 
     function checkLowLimit($item) 
     {
-        if ($this->get("amount") < $this->get("low_avail_limit")) {
-            $inventory_id = $this->get("inventory_id");
+        if ($this->get('amount') < $this->get('low_avail_limit')) {
+            $inventory_id = $this->get('inventory_id');
             $pos = strpos($inventory_id, '|');
             $product_id = $pos === false ? $inventory_id : substr($inventory_id, 0, $pos);
 
@@ -188,7 +188,7 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
             $mailer = new XLite_Model_Mailer();
             $mailer->set("product", new XLite_Model_Product($product_id));
             $mailer->set("item", $item);
-            $mailer->set("amount", $this->get("amount"));
+            $mailer->set("amount", $this->get('amount'));
             $mailer->compose(
                     $this->config->getComplex('Company.site_administrator'),
                     $this->config->getComplex('Company.site_administrator'),
@@ -209,8 +209,8 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
 
     function getAmount()
     {
-    	$amount = parent::get("amount");
-        if (!$this->xlite->is("adminZone")) {
+    	$amount = parent::get('amount');
+        if (!$this->xlite->is('adminZone')) {
         	return ($amount < 0) ? 0 : $amount;
         } else {
         	return $amount;

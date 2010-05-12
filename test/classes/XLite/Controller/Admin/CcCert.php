@@ -40,9 +40,9 @@ class XLite_Controller_Admin_CcCert extends XLite_Controller_Admin_Abstract
     
     function action_update()
     {
-        $tf_name = $_FILES["cert_file"]['tmp_name'];
+        $tf_name = $_FILES['cert_file']['tmp_name'];
         if (is_uploaded_file($tf_name)) {
-            $filename = $_FILES["cert_file"]["name"];
+            $filename = $_FILES['cert_file']["name"];
             $content = file_get_contents($tf_name);
             @unlink($tf_name);
             $this->saveParam("file_name", $filename);

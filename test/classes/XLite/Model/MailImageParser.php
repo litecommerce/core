@@ -48,17 +48,17 @@ class XLite_Model_MailImageParser extends XLite_Core_FlexyCompiler
         // find images, e.g. background=..., src=..., style="...url('...')"
         for ($i=0; $i<count($this->tokens); $i++) {
             $token = $this->tokens[$i];
-            if ($token["type"] == "attribute") {
-                $name = strtolower($token["name"]);
-            } else if ($token["type"] == "attribute-value") {
+            if ($token['type'] == "attribute") {
+                $name = strtolower($token['name']);
+            } else if ($token['type'] == "attribute-value") {
                 $val = $this->getTokenText($i);
                 if ($name == 'style') {
                     $pos = strpos($val, 'url(');
                     if ($pos!==false) {
-                        $this->substImage($pos+5+$token["start"], strpos($val, ')')+$token["start"] -1 /* closing quote */);
+                        $this->substImage($pos+5+$token['start'], strpos($val, ')')+$token['start'] -1 /* closing quote */);
                     }
                 } else if ($name == 'background' || $name == 'src') {
-                    $this->substImage($token["start"], $token["end"]);
+                    $this->substImage($token['start'], $token['end']);
                 }
                 $name = '';
             } else {

@@ -37,8 +37,8 @@ class XLite_Module_AntiFraud_Controller_Admin_Countries extends XLite_Controller
 {
     function action_update()
     {
-        foreach ((array)$_POST["countries"] as $code=>$value) {
-            $_POST["countries"][$code]["risk_country"] = isset($value["risk_country"]) ? 1 : 0;
+        foreach ((array)$_POST['countries'] as $code=>$value) {
+            $_POST['countries'][$code]['risk_country'] = isset($value['risk_country']) ? 1 : 0;
         }
         parent::action_update();
     }

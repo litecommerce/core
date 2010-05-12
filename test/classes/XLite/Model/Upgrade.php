@@ -70,8 +70,8 @@ class XLite_Model_Upgrade extends XLite_Model_Abstract
     */
     function doUpgrade() 
     {
-        $from_ver = $this->get("from_ver");
-        $to_ver = $this->get("to_ver");
+        $from_ver = $this->get('from_ver');
+        $to_ver = $this->get('to_ver');
         $from_ver = str_replace(" build ", ".", $from_ver);
         $configVersion = $this->config->Version->version;
         $configVersion = str_replace(" build ", ".", $configVersion);
@@ -97,11 +97,11 @@ class XLite_Model_Upgrade extends XLite_Model_Abstract
         if ($this->getInteractive()) {
             if ($this->failed) {
 ?>
-<font color=red>Could not upgrade LiteCommerce from version <?php echo $this->get("from_ver"); ?> to <?php echo $this->get("to_ver"); ?>.</font><br><br>
-Please correct errors above and click reload or click the button below to force upgrade to <?php echo $this->get("to_ver"); ?>.<br><br>
+<font color=red>Could not upgrade LiteCommerce from version <?php echo $this->get('from_ver'); ?> to <?php echo $this->get('to_ver'); ?>.</font><br><br>
+Please correct errors above and click reload or click the button below to force upgrade to <?php echo $this->get('to_ver'); ?>.<br><br>
 <b>Note:</b> you will not be able to repeat this procedure after you click 'Force upgrade'.
 </pre>
-<center><input type="button" value=" Force upgrade " onclick="document.location='admin.php?target=upgrade&action=upgrade_force&from_ver=<?php echo $this->get("from_ver"); ?>&to_ver=<?php echo $this->get("to_ver"); ?>'"></center>
+<center><input type="button" value=" Force upgrade " onclick="document.location='admin.php?target=upgrade&action=upgrade_force&from_ver=<?php echo $this->get('from_ver'); ?>&to_ver=<?php echo $this->get('to_ver'); ?>'"></center>
 <?php
             }
         }
@@ -109,16 +109,16 @@ Please correct errors above and click reload or click the button below to force 
 
     function success()
     {
-        $from_ver = $this->get("from_ver");
+        $from_ver = $this->get('from_ver');
         $from_ver = str_replace(" build ", ".", $from_ver);
         $configVersion = $this->config->Version->version;
         $configVersion = str_replace(" build ", ".", $configVersion);
 
-        echo "\n\n<br><br><font color=blue><b>LiteCommerce has been successfully upgraded to version " . $this->get("to_ver") . "</b></font>";
+        echo "\n\n<br><br><font color=blue><b>LiteCommerce has been successfully upgraded to version " . $this->get('to_ver') . "</b></font>";
         
         if ($from_ver == $configVersion) {
             $this->set("date", time());
-            if ($this->find("from_ver='" . $this->get("from_ver") . "' AND to_ver='" . $this->get("to_ver") . "'")) {
+            if ($this->find("from_ver='" . $this->get('from_ver') . "' AND to_ver='" . $this->get('to_ver') . "'")) {
                 $this->update();
             } else {
                 $this->create();
@@ -127,7 +127,7 @@ Please correct errors above and click reload or click the button below to force 
             $c = new XLite_Model_Config();
             $c->set("category", "Version");
             $c->set("name", "version");
-            $c->set("value", $this->get("to_ver"));
+            $c->set("value", $this->get('to_ver'));
             $c->update();
         }
     }
@@ -271,7 +271,7 @@ Please correct errors above and click reload or click the button below to force 
     function createConfig($name, $comment, $value, $category, $orderby, $type) 
     {
         echo "Creating config option $name ($category) ... ";
-        $this->config_table = $this->connection->getTableByAlias("config");
+        $this->config_table = $this->connection->getTableByAlias('config');
         // delete old config value
         $sql = "DELETE FROM $this->config_table WHERE name='$name' AND category='$category'";
         if (mysql_query($sql, $this->connection->connection) === false) {
@@ -294,7 +294,7 @@ Please correct errors above and click reload or click the button below to force 
     function dropConfig($name, $category) 
     {
         echo "Deleting config option $name ($category) ...";
-        $this->config_table = $this->connection->getTableByAlias("config");
+        $this->config_table = $this->connection->getTableByAlias('config');
         // delete option
 
         $sql = "DELETE FROM $this->config_table WHERE name='$name' AND category='$category'";

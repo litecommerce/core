@@ -40,15 +40,15 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XL
     
     function action_orders() 
     {
-        $gpg = $this->get("gpg");
+        $gpg = $this->get('gpg');
         $pubkey = $gpg->getPublicKey();
         $seckey = $gpg->getSecretKey();
         $this->set("valid", !empty($pubkey) && $gpg->isKeyValid($pubkey, "PUBLIC") && !empty($seckey) && $gpg->isKeyValid($seckey, "PRIVATE"));
-        if (!$this->is("valid")) {
+        if (!$this->is('valid')) {
             $this->set("invalidKeyring", true);
             return;
         }
-        if ($this->get("decrypt_orders") && !$gpg->isPasswordValid($this->get("passphrase"))) {
+        if ($this->get('decrypt_orders') && !$gpg->isPasswordValid($this->get('passphrase'))) {
             $this->set("valid", false);
             $this->set("invalidOrderPassword", true);
             return;
@@ -58,12 +58,12 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XL
         $orders = $order->findAll("payment_method='CreditCard'");
         $this->startDump();
         for ($i = 0; $i < count($orders); $i++) {
-            if ($this->get("decrypt_orders")) {
-                print "Decrypting order #" . $orders[$i]->get("order_id") . " ... ";
-                $orders[$i]->decrypt($this->get("passphrase"));
+            if ($this->get('decrypt_orders')) {
+                print "Decrypting order #" . $orders[$i]->get('order_id') . " ... ";
+                $orders[$i]->decrypt($this->get('passphrase'));
                 print "[OK]<br>\n";
-            } elseif ($this->get("encrypt_orders")) {
-                print "Encrypting order #" . $orders[$i]->get("order_id") . " ... ";
+            } elseif ($this->get('encrypt_orders')) {
+                print "Encrypting order #" . $orders[$i]->get('order_id') . " ... ";
                 $orders[$i]->encrypt();
                 print "[OK]<br>\n";
             }
@@ -75,14 +75,14 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XL
     
     function testEncrypt() 
     {
-        $gpg = $this->get("gpg");
+        $gpg = $this->get('gpg');
         $this->encryptResult = $gpg->encrypt($this->sample);
     }
 
     function testDecrypt() 
     {
-        $gpg = $this->get("gpg");
-        $this->decryptResult = $gpg->decrypt($this->encryptResult, $this->get("passphrase"));
+        $gpg = $this->get('gpg');
+        $this->decryptResult = $gpg->decrypt($this->encryptResult, $this->get('passphrase'));
     }
     
     function action_test() 
@@ -93,12 +93,12 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XL
 
     function action_download_secret_key() 
     {
-        $gpg = $this->get("gpg");
-        $downloadPass = $this->get("download_password");
+        $gpg = $this->get('gpg');
+        $downloadPass = $this->get('download_password');
         if (!is_null($downloadPass) && $gpg->isPasswordValid($downloadPass)) {
             $this->set("silent", true);
-            $this->startDownload("secring.asc");
-            print $gpg->get("secretKey");
+            $this->startDownload('secring.asc');
+            print $gpg->get('secretKey');
         } else {
             $this->set("invalidPassword", true);
             $this->set("valid", false);
@@ -108,17 +108,17 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XL
     function getSecurityOptions() 
     {
         $config = new XLite_Model_Config();
-        $options = $config->getByCategory("AdvancedSecurity");
+        $options = $config->getByCategory('AdvancedSecurity');
         return $options;
     }
     
     function action_options() 
     {
         $config = new XLite_Model_Config();
-        $options = $config->getByCategory("AdvancedSecurity");
+        $options = $config->getByCategory('AdvancedSecurity');
         for ($i=0; $i<count($options); $i++) {
-            $name = $options[$i]->get("name");
-            $type = $options[$i]->get("type");
+            $name = $options[$i]->get('name');
+            $type = $options[$i]->get('type');
             if ($type=='checkbox') {
                 if (empty($_POST[$name])) {
                     $val = 'N';

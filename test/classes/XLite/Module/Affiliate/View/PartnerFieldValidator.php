@@ -39,12 +39,12 @@ class XLite_Module_Affiliate_View_PartnerFieldValidator extends XLite_Validator_
     
     function isVisible()
     {
-        if (is_null($this->get("field_id"))) {
+        if (is_null($this->get('field_id'))) {
             return true;
         }
-        foreach ($this->get("fields") as $pf) {
-            if ($pf->get("field_id") == $this->get("field_id")) {
-                return $pf->get("required");
+        foreach ($this->get('fields') as $pf) {
+            if ($pf->get('field_id') == $this->get('field_id')) {
+                return $pf->get('required');
             }
         }
         return false;
@@ -58,10 +58,10 @@ class XLite_Module_Affiliate_View_PartnerFieldValidator extends XLite_Validator_
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             return true;
         }
-        foreach ($this->get("fields") as $pf) {
-            if ($pf->get("required")) {
-                if (isset($_POST[$this->get("field")][$pf->get("field_id")]) &&
-                        empty($_POST[$this->get("field")][$pf->get("field_id")])) {
+        foreach ($this->get('fields') as $pf) {
+            if ($pf->get('required')) {
+                if (isset($_POST[$this->get('field')][$pf->get('field_id')]) &&
+                        empty($_POST[$this->get('field')][$pf->get('field_id')])) {
                     return false;
                 }
             }

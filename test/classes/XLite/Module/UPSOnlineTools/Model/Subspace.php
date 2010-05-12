@@ -89,10 +89,10 @@ class XLite_Module_UPSOnlineTools_Model_Subspace extends XLite_Base
     function export()
     {
         $vars = array();
-        $vars["left"] = $this->left;
-        $vars["top"] = $this->top;
-        $vars["width"] = $this->width;
-        $vars["length"] = $this->length;
+        $vars['left'] = $this->left;
+        $vars['top'] = $this->top;
+        $vars['width'] = $this->width;
+        $vars['length'] = $this->length;
 
         return $vars;
     }

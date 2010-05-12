@@ -43,20 +43,20 @@ class XLite_Validator_MembershipValidator extends XLite_Validator_Abstract
             return false;
         }
         
-        if (!isset($_POST["action"])) {
+        if (!isset($_POST['action'])) {
             return true;
         }
         
-        if ($_POST["action"] != $this->action) {
+        if ($_POST['action'] != $this->action) {
             return true;
         }
 
-        $dialog = $this->get("dialog");
-        if (is_object($dialog) && $dialog->get("actionProcessed")) {
+        $dialog = $this->get('dialog');
+        if (is_object($dialog) && $dialog->get('actionProcessed')) {
             return true;
         }
 
-        preg_match('/^(.+)\[(.+)\]$/',$this->get("field"),$field);
+        preg_match('/^(.+)\[(.+)\]$/',$this->get('field'),$field);
         $result = !empty($_POST[$field[1]][$field[2]]) || !isset($_POST[$field[1]][$field[2]]);
         if ($result && isset($_POST[$field[1]][$field[2]])) {
             $membershipData = $_POST[$field[1]][$field[2]];
@@ -75,7 +75,7 @@ class XLite_Validator_MembershipValidator extends XLite_Validator_Abstract
     		}
     		$memberships = $membership->findAll();
     		foreach($memberships as $membership_)
-    		if ($membership_->get("membership") == $membershipData) {
+    		if ($membership_->get('membership') == $membershipData) {
     			return false;
     		}
     		$result = true;

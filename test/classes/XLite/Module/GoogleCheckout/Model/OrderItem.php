@@ -37,17 +37,17 @@ class XLite_Module_GoogleCheckout_Model_OrderItem extends XLite_Model_OrderItem 
 {
     function getGoogleCheckoutCurrency()
     {
-        return $this->xlite->get("gcheckout_currency");
+        return $this->xlite->get('gcheckout_currency');
     }
 
     function getGoogleCheckoutXML()
     {
-        $name = $this->get("name");
-        $descr = $this->get("brief_description");
+        $name = $this->get('name');
+        $descr = $this->get('brief_description');
 
         // Product options
-        if ($this->xlite->get("ProductOptionsEnabled") && $this->hasOptions()) {
-            $options = (array)$this->get("productOptions");
+        if ($this->xlite->get('ProductOptionsEnabled') && $this->hasOptions()) {
+            $options = (array)$this->get('productOptions');
 
             $opt_short = array();
             $opt_long = array();
@@ -64,12 +64,12 @@ class XLite_Module_GoogleCheckout_Model_OrderItem extends XLite_Model_OrderItem 
         $itemNname = $this->GoogleCheckout_encode_string($name);
         $itemDescription = $this->GoogleCheckout_encode_string($descr);
         if (strlen($itemDescription) == 0) {
-            $itemDescription = $this->GoogleCheckout_encode_string($this->get("description"));
+            $itemDescription = $this->GoogleCheckout_encode_string($this->get('description'));
         }
-        $unitPrice = sprintf("%.02f", doubleval($this->get("price")));
-        $quantity = $this->get("amount");
+        $unitPrice = sprintf("%.02f", doubleval($this->get('price')));
+        $quantity = $this->get('amount');
         $currency = $this->getGoogleCheckoutCurrency();
-        $itemSKU = $this->GoogleCheckout_encode_string($this->get("sku"));
+        $itemSKU = $this->GoogleCheckout_encode_string($this->get('sku'));
 
         return <<<EOT
                 <item>

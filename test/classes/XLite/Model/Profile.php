@@ -251,27 +251,27 @@ class XLite_Model_Profile extends XLite_Model_Abstract
 
     function getBillingState() 
     {
-        $state = new XLite_Model_State($this->get("billing_state"));
-        if ($state->get("state_id") == -1)
-            $state->set("state", $this->get("billing_custom_state"));
+        $state = new XLite_Model_State($this->get('billing_state'));
+        if ($state->get('state_id') == -1)
+            $state->set("state", $this->get('billing_custom_state'));
 
         return $state;
     }
     function getShippingState() 
     {
-        $state = new XLite_Model_State($this->get("shipping_state"));
-        if ($state->get("state_id") == -1)
-            $state->set("state", $this->get("shipping_custom_state"));
+        $state = new XLite_Model_State($this->get('shipping_state'));
+        if ($state->get('state_id') == -1)
+            $state->set("state", $this->get('shipping_custom_state'));
 
         return $state;
     }
     function getBillingCountry() 
     {
-        return new XLite_Model_Country($this->get("billing_country"));
+        return new XLite_Model_Country($this->get('billing_country'));
     }
     function getShippingCountry() 
     {
-        return new XLite_Model_Country($this->get("shipping_country"));
+        return new XLite_Model_Country($this->get('shipping_country'));
     }
 
     function enable() 
@@ -303,7 +303,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
 
     function toXML() 
     {
-        $id = "profile_" . $this->get("profile_id");
+        $id = "profile_" . $this->get('profile_id');
         $xml = parent::toXML();
         return "<profile id=\"$id\">\n$xml</profile>\n";
     }
@@ -331,12 +331,12 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         if (!isset($line)) $line = 1; else $line++;
         echo "<b>line# $line:</b> ";
 
-        $properties = $options["properties"];
+        $properties = $options['properties'];
 
         $this->_convertProperties($properties, $options['md5_import']);
         $existent = false;
         $profile = new XLite_Model_Profile();
-        $login =  $properties["login"];
+        $login =  $properties['login'];
         if (empty($login)) {
             echo "<font color=red>WARNING!</font> Ignoring import row: \"login\" property not found<br>\n";
             return;
@@ -352,11 +352,11 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         }
         echo  $login . "<br>\n";
         func_flush();
-        if (!empty($properties["membership"])) {
-            $found = array_search($properties["membership"], $this->config->getComplex('Memberships.memberships'));
+        if (!empty($properties['membership'])) {
+            $found = array_search($properties['membership'], $this->config->getComplex('Memberships.memberships'));
             if ($found === false || $found === null) {
                 $memberships = $this->config->getComplex('Memberships.memberships');
-                $memberships[] = $properties["membership"];
+                $memberships[] = $properties['membership'];
                 $this->config->setComplex("Memberships.memberships", $memberships);
             }
         }
@@ -365,30 +365,30 @@ class XLite_Model_Profile extends XLite_Model_Abstract
     function _convertProperties(array &$p, $md5_import = '') 
     {
         // X-CART Gold/Pro compatibility check for profile import
-        if (!empty($p["status"])) {
-            if ($p["status"] == 1 || $p["status"] == 'Y' || $p["status"] == 'y' || $p["status"] == 'E') {
-                $p["status"] = 'E';
+        if (!empty($p['status'])) {
+            if ($p['status'] == 1 || $p['status'] == 'Y' || $p['status'] == 'y' || $p['status'] == 'E') {
+                $p['status'] = 'E';
             } else {
-                $p["status"] = 'D';
+                $p['status'] = 'D';
             }
         }
-        if (isset($p["password"])) {
+        if (isset($p['password'])) {
             if($md5_import == "yes")
-                $p["password"] = $p["password"];
+                $p['password'] = $p['password'];
             else
-                $p["password"] = md5($p["password"]);
+                $p['password'] = md5($p['password']);
         }
-        if (isset($p["billing_state"])) {
-            $p["billing_state"] = $this->_convertState($p["billing_state"]);
+        if (isset($p['billing_state'])) {
+            $p['billing_state'] = $this->_convertState($p['billing_state']);
         }
-        if (isset($p["billing_country"])) {
-            $p["billing_country"] = $this->_convertCountry($p["billing_country"]);
+        if (isset($p['billing_country'])) {
+            $p['billing_country'] = $this->_convertCountry($p['billing_country']);
         }
-        if (isset($p["shipping_state"])) {
-            $p["shipping_state"] = $this->_convertState($p["shipping_state"]);
+        if (isset($p['shipping_state'])) {
+            $p['shipping_state'] = $this->_convertState($p['shipping_state']);
         }
-        if (isset($p["shipping_country"])) {
-            $p["shipping_country"] = $this->_convertCountry($p["shipping_country"]);
+        if (isset($p['shipping_country'])) {
+            $p['shipping_country'] = $this->_convertCountry($p['shipping_country']);
         }
     }
 
@@ -397,7 +397,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         $state = new XLite_Model_State();
         $value = addslashes($value);
         if ($state->find("code='$value'") || $state->find("state='$value'") || $state->find("state_id='$value'")) {
-            return $state->get("state_id");
+            return $state->get('state_id');
         }
         return -1;
     }
@@ -407,7 +407,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         $country = new XLite_Model_Country();
         $value = addslashes($value);
         if ($country->find("code='$value'") || $country->find("country='$value'")) {
-            return $country->get("code");
+            return $country->get('code');
         }
         return "";
     }
@@ -420,7 +420,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         }
         // build import fields list
         $fields = array();
-        $fields["NULL"] = false;
+        $fields['NULL'] = false;
         $result = array();
         // get object properties ad prepare import fields list
         foreach ($this->fields as $name => $value) {

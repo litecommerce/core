@@ -37,8 +37,8 @@ class XLite_Module_Egoods_Model_OrderItem extends XLite_Model_OrderItem implemen
 {
     public function __construct()
     {
-        $this->fields["pincodes"] = "";
-        $this->fields["egoods"] = "";
+        $this->fields['pincodes'] = "";
+        $this->fields['egoods'] = "";
         parent::__construct();
     }
     
@@ -111,7 +111,7 @@ class XLite_Module_Egoods_Model_OrderItem extends XLite_Model_OrderItem implemen
 
     function unStoreLinks()
     {
-        $ids = explode(",", $this->get("egoods"));
+        $ids = explode(",", $this->get('egoods'));
         $link = new XLite_Module_Egoods_Model_DownloadableLink();
         foreach ($ids as $link_id) {
             $egoods_links = $link->findAll("access_key='$link_id'");

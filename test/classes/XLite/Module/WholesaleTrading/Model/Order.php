@@ -60,7 +60,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
 
     function reduceSubTotal($subtotal)
     {
-        $global_discount = $this->get("global_discount");
+        $global_discount = $this->get('global_discount');
         if ($global_discount > 0) {
             if ($this->config->getComplex('Taxes.prices_include_tax') && !$this->getComplex('config.Taxes.discounts_after_taxes')) {
                 $taxed_global_discount = $this->getTaxedGlobalDiscount();
@@ -76,7 +76,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
 
     function getTaxedGlobalDiscount()
     {
-        $discount = $this->get("global_discount");
+        $discount = $this->get('global_discount');
         if ($discount == 0) return $discount;
 
         $is_percent_discount = ($this->getComplex('appliedGlobalDiscount.discount_type') == "p");
@@ -88,7 +88,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
             $taxes = (array) $this->getTaxedGlobalDiscountRates();
             $tax = (isset($taxes['Tax']))?$taxes['Tax']:0;
             $taxed_discount = $discount + abs($tax);
-            $taxed_discount = min($this->get("subtotal"), $taxed_discount);
+            $taxed_discount = min($this->get('subtotal'), $taxed_discount);
         }
         return $taxed_discount;
     }
@@ -99,7 +99,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
             $taxRates = new XLite_Model_TaxRates();
             $taxRates->set("order", $this);
 
-            $items = (array) $this->get("items");
+            $items = (array) $this->get('items');
             $tax_items = array();
             $tax_values = array();
             foreach ($items as $k=>$i) {
@@ -111,8 +111,8 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
                 $taxRates->setOrderItem($i);
                 $i->_skipTaxingWholesalePrice = $skip_flag;
   				$taxRates->calculateTaxes();
-                $_taxes = $taxRates->get("allTaxes");
-                $_tax = (isset($_taxes["Tax"]))?$_taxes["Tax"]:0;
+                $_taxes = $taxRates->get('allTaxes');
+                $_tax = (isset($_taxes['Tax']))?$_taxes['Tax']:0;
                 $tax_items[$k] = $i;
                 $tax_values[$k] = sprintf("%010.2f_%010d", $_tax, rand());
             }
@@ -124,7 +124,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
 
     function getTaxedGlobalDiscountRates()
     {
-        $discount = $this->get("global_discount");
+        $discount = $this->get('global_discount');
         $is_percent_discount = ($this->getComplex('appliedGlobalDiscount.discount_type') == "p");
 
         $result = array();
@@ -140,24 +140,24 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
             if ($discount <= 0) break;
             $taxRates->setOrderItem($i);
             if (!$this->config->getComplex('Taxes.prices_include_tax')) {
-                $item_cost = $i->get("taxableTotal");
+                $item_cost = $i->get('taxableTotal');
             } else {
                 $skip_flag = $i->_skipTaxingWholesalePrice;
                 $i->_skipTaxingWholesalePrice = true;
-                $item_cost = $i->get("price") * $i->get("amount");
+                $item_cost = $i->get('price') * $i->get('amount');
                 $i->_skipTaxingWholesalePrice = $skip_flag;
             }
 
             $taxable_discount = ($is_percent_discount)?$this->formatCurrency($item_cost * $this->getComplex('appliedGlobalDiscount.discount') / 100):$discount;
             $cost = min(abs($item_cost), abs($taxable_discount));
-            $taxRates->_conditionValues["cost"] = abs($cost) * -1;
-            $taxRates->_conditionValues["amount"] = 1;
+            $taxRates->_conditionValues['cost'] = abs($cost) * -1;
+            $taxRates->_conditionValues['amount'] = 1;
 
             // omit extra rounding
-            $taxRates->_conditionValues["cost"] *= 100;
+            $taxRates->_conditionValues['cost'] *= 100;
             $taxRates->calculateTaxes();
 
-            $discount_taxes = $taxRates->get("allTaxes");
+            $discount_taxes = $taxRates->get('allTaxes');
             foreach ($discount_taxes as $tax_name => $tax_value) {
                 $discount_taxes[$tax_name] = ($tax_value) / 100;
             }
@@ -187,7 +187,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
     {
     	$result = parent::calcAllTaxes();
 
-        if (floatval($this->get("global_discount")) > 0) {
+        if (floatval($this->get('global_discount')) > 0) {
             if (!($this->getComplex('config.Taxes.prices_include_tax') && $this->getComplex('config.Taxes.discounts_after_taxes'))) {
                 $rates = $this->getTaxedGlobalDiscountRates();
                 $result = $this->_addTaxes($result, $rates);
@@ -219,8 +219,8 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
                 $profile = $this->get('origProfile');
                 $product = $item->get('product');
 
-                $membership = $profile->get("membership");
-                $membership_exp_date = $profile->get("membership_exp_date");
+                $membership = $profile->get('membership');
+                $membership_exp_date = $profile->get('membership_exp_date');
 
                 if (
                     !empty($membership)
@@ -240,7 +240,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
                 $p_time = substr($val_period, 1);
 
                 // Store membership in history
-                $history = $profile->get("membership_history");
+                $history = $profile->get('membership_history');
                 foreach ($history as $hn_idx => $hn) {
                     if (isset($hn['current']) && $hn['current']) {
                         unset($history[$hn_idx]);
@@ -258,8 +258,8 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
                 $history[] = $history_node;
                 $profile->set("membership_history", $history);
 
-                if ($membership != $product->get("selling_membership")) {
-                    $profile->set("membership", $product->get("selling_membership"));
+                if ($membership != $product->get('selling_membership')) {
+                    $profile->set("membership", $product->get('selling_membership'));
                     $c_time = time();
                     $period['d'] = date('d', $c_time);
                     $period['m'] = date('m', $c_time);
@@ -300,7 +300,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
                 $profile->set("membership_exp_date", $exp_date);
 
                 $history_node = array(
-                    'membership'          => $profile->get("membership"),
+                    'membership'          => $profile->get('membership'),
                     'membership_exp_date' => $exp_date,
                     'date'                => time(),
                     'current'             => true,
@@ -321,8 +321,8 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
 
         $gd = new XLite_Module_WholesaleTrading_Model_GlobalDiscount();
         $gd->set('defaultOrder', 'subtotal');
-        $profile = $this->get("profile");
-        $membership = (is_object($profile)) ? $profile->get("membership") : "";
+        $profile = $this->get('profile');
+        $membership = (is_object($profile)) ? $profile->get('membership') : "";
         $discounts = $gd->findAll('subtotal < ' . $subtotal . ' AND (membership = \'all\' OR membership = \'' . $membership . '\')');
 
         if (count($discounts) != 0) {

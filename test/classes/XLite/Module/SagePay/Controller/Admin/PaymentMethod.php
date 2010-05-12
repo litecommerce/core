@@ -37,8 +37,8 @@ class XLite_Module_SagePay_Controller_Admin_PaymentMethod extends XLite_Controll
 {
     function getPM()
     {
-        if ($_REQUEST["payment_method"] == "sagepayform_cc")	
-            $_REQUEST["payment_method"] = "sagepaydirect_cc";
+        if ($_REQUEST['payment_method'] == "sagepayform_cc")	
+            $_REQUEST['payment_method'] = "sagepaydirect_cc";
         return parent::getPM();
     }
 }

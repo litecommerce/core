@@ -55,7 +55,7 @@ class XLite_Module_WishList_Controller_Customer_Product extends XLite_Controller
         $product = new XLite_Model_Product($this->product_id);
  		$Mailer->product = $product;
         $Mailer->url = $this->getShopUrl("cart.php?target=product&product_id=".$this->product_id);
-        $Mailer->compose($this->get("sender_email"),$this->get("recipient_email"),"modules/WishList/send_friend");
+        $Mailer->compose($this->get('sender_email'),$this->get('recipient_email'),"modules/WishList/send_friend");
         $Mailer->send();
 
         $this->params[] = "mode";

@@ -43,7 +43,7 @@ class XLite_Controller_Customer_Captcha extends XLite_Controller_Customer_Abstra
         $length = ((int) $this->getComplex('config.Captcha.captcha_length') > 0) ? (int) $this->getComplex('config.Captcha.captcha_length') : 5;
         $code = $captcha->generateCode($length);
 
-        $this->session->set("captcha_".$this->get("id"), $code);
+        $this->session->set("captcha_".$this->get('id'), $code);
 
         $im = $captcha->generate($code);
 

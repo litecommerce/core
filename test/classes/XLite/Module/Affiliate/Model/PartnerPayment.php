@@ -77,7 +77,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
     {
         $mail = new XLite_Model_Mailer();
         $mail->payment = $this;
-        $mail->partner = new XLite_Model_Profile($this->get("partner_id"));
+        $mail->partner = new XLite_Model_Profile($this->get('partner_id'));
         $mail->compose(
                 $this->config->getComplex('Company.orders_department'),
                 $mail->getComplex('partner.login'),
@@ -90,8 +90,8 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
         /*
          * NOTE: possible limitation for 1-tier affiliates
          *
-        if (!$this->xlite->is("adminZone")) {
-            return $this->get("partner_id") == $this->getComplex('auth.profile.profile_id');
+        if (!$this->xlite->is('adminZone')) {
+            return $this->get('partner_id') == $this->getComplex('auth.profile.profile_id');
         }
         */
         return parent::filter();
@@ -100,7 +100,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
     function getPartner() 
     {
         if (is_null($this->partner)) {
-            $this->partner = new XLite_Model_Profile($this->get("partner_id"));
+            $this->partner = new XLite_Model_Profile($this->get('partner_id'));
         }
         return $this->partner;
     }
@@ -110,8 +110,8 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
         if (is_null($this->affiliates)) {
             $this->affiliates = array();
             $level = 1;
-            foreach ($this->findAll("order_id=".$this->get("order_id"), "affiliate") as $p) {
-                $this->affiliates[$level] = $p->get("partner");
+            foreach ($this->findAll("order_id=".$this->get('order_id'), "affiliate") as $p) {
+                $this->affiliates[$level] = $p->get('partner');
                 $level++;
             }
         }
@@ -121,7 +121,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
     function getParent() 
     {
         if (is_null($this->parent)) {
-            $this->parent = new XLite_Model_Profile($this->get("affiliate"));
+            $this->parent = new XLite_Model_Profile($this->get('affiliate'));
         }
         return $this->parent;
     }
@@ -129,7 +129,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
     function getOrder() 
     {
         if (is_null($this->order)) {
-            $this->order = new XLite_Model_Order($this->get("order_id"));
+            $this->order = new XLite_Model_Order($this->get('order_id'));
         }
         return $this->order;
     }
@@ -173,7 +173,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
             $result2 = array();
             foreach ($result as $pp) {
                 foreach ($pp->getComplex('order.items') as $item) {
-                    if (empty($productID) || $item->get("product_id") == $productID) {
+                    if (empty($productID) || $item->get('product_id') == $productID) {
                         $result2[] = $pp;
                     }
                 }
@@ -189,7 +189,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
             if ($payment->isComplex('order.processed')) { // process all order payments
                 foreach ((array)$payment->findAll("order_id=".$payment->getComplex('order.order_id')) as $pp)
                 {
-                    if (!$pp->get("paid") && $pp->get("partner_id") == $partnerID) {
+                    if (!$pp->get('paid') && $pp->get('partner_id') == $partnerID) {
                     	$pp->set("paid", 1);
                     	$pp->update();
                     }
@@ -200,24 +200,24 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
 
     function _import(array $options) 
     {
-        $data = $options["properties"];
+        $data = $options['properties'];
         $w = new XLite_View_Abstract();
 
         static $line_no;
         if (!isset($line_no)) $line_no = 1; else $line_no++;
         echo "<b>Importing CSV file line# $line_no: </b><br>";
         
-        $orderId = $data["order_id"];
+        $orderId = $data['order_id'];
         
         if (is_numeric($orderId)) {
             echo "Updating order ID# ".$orderId." payment status ... <br>";
             
             echo "<table border=0 cellpadding=5>";
             foreach ((array)$this->findAll("order_id=".$orderId, "commissions") as $p) {
-                $paid = ($data["paid"] == "Y" || $data["paid"] == "y");
+                $paid = ($data['paid'] == "Y" || $data['paid'] == "y");
                 $p->set("paid", $paid);
                 $p->update();
-                echo "<tr><td>Partner: ".$p->getComplex('partner.billing_firstname')." ".$p->getComplex('partner.billing_lastname')." &lt;".$p->getComplex('partner.login')."&gt;</td><td>Commissions: ".$w->price_format($p->get("commissions"))."</td><td>Status: " . ($paid ? "PAID" : "CANCELLED")."</td></tr>";
+                echo "<tr><td>Partner: ".$p->getComplex('partner.billing_firstname')." ".$p->getComplex('partner.billing_lastname')." &lt;".$p->getComplex('partner.login')."&gt;</td><td>Commissions: ".$w->price_format($p->get('commissions'))."</td><td>Status: " . ($paid ? "PAID" : "CANCELLED")."</td></tr>";
             }
             echo "</table>";
         } else {

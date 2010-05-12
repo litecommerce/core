@@ -42,7 +42,7 @@ class XLite_Model_SearchStat extends XLite_Model_Abstract
         "product_count" => "0",
         "count" => "0");
     public $alias = "search_stat";
-    public $primaryKey = array("query");
+    public $primaryKey = array('query');
     
     function add($query, $foundCount) {
     	$query = strtolower($query);
@@ -51,8 +51,8 @@ class XLite_Model_SearchStat extends XLite_Model_Abstract
     	}
         $this->set("query", $query);
         $this->set("product_count", $foundCount);
-        if ($this->is("exists")) {
-            $this->set("count", $this->get("count")+1);
+        if ($this->is('exists')) {
+            $this->set("count", $this->get('count')+1);
             $this->update();
         } else {
             $this->set("count", 1);

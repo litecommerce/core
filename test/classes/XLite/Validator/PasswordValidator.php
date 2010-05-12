@@ -43,11 +43,11 @@ class XLite_Validator_PasswordValidator extends XLite_Validator_Abstract
             return false;
         }
 
-        if ($this->session->get("anonymous")) {
+        if ($this->session->get('anonymous')) {
         	return true;
         }
 
-        return !(isset($_POST[$this->get("field")]) && isset($_POST[$this->get("passwordField")]) && $_POST[$this->get("field")] != $_POST[$this->get("passwordField")]);
+        return !(isset($_POST[$this->get('field')]) && isset($_POST[$this->get('passwordField')]) && $_POST[$this->get('field')] != $_POST[$this->get('passwordField')]);
     }
 
 }

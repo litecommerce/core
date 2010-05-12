@@ -84,7 +84,7 @@ class XLite_Module_MultiCategories_Main extends XLite_Module_Abstract
     {
         parent::init();
 
-        if ($this->xlite->is("adminZone")) {
+        if ($this->xlite->is('adminZone')) {
         }
         
     }

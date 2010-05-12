@@ -188,11 +188,11 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
                 while($this->space() && $this->attribute_definition()) {
                 }
                 if ($this->char('/')) {
-                    $this->tokens[$n]["type"] = "open-close-tag";
+                    $this->tokens[$n]['type'] = "open-close-tag";
                 }
                 if (!$this->char('>')) return $this->rollback();
             }
-            $this->tokens[$n]["end"] = $this->offset;
+            $this->tokens[$n]['end'] = $this->offset;
             return $this->commit();
         }
     }
@@ -212,24 +212,24 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
                     while (!$this->char('\'') && !$this->isEos()) {
                         $this->attribute_text();
                     }
-                    $this->tokens[$n]["end"] = $this->offset-1;
+                    $this->tokens[$n]['end'] = $this->offset-1;
                 } else if ($this->char('"')) {
                     $this->tokens[] = array("type" => "attribute-value", "start" => $this->offset);
                     while (!$this->char('"') && !$this->isEos()) {
                         $this->attribute_text();
                     }
-                    $this->tokens[$n]["end"] = $this->offset-1;
+                    $this->tokens[$n]['end'] = $this->offset-1;
                 } else {
                     $this->tokens[] = array("type" => "attribute-value", "start" => $this->offset);
                     while ($this->notChars(" \t\n\r/>") && !$this->isEos()) {
                     }
-                    $this->tokens[$n]["end"] = $this->offset;
+                    $this->tokens[$n]['end'] = $this->offset;
                 }
                 if ($this->isEos()) { // unexpected end of file
-                    return $this->error("unexpected end of file");
+                    return $this->error('unexpected end of file');
                 }
             }
-            $this->tokens[$i]["end"] = $this->offset;
+            $this->tokens[$i]['end'] = $this->offset;
             return $this->commit();
         } else {
             return $this->rollback();
@@ -285,7 +285,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
                         $this->error("No closing }");
                     }
                 }
-                $this->tokens[count($this->tokens)-1]["end"] = $this->offset;
+                $this->tokens[count($this->tokens)-1]['end'] = $this->offset;
                 return $this->commit();
             } else {
                 return $this->rollback();
@@ -303,7 +303,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
                     return $this->error("Comment is not closed with *}");
                 }
                 $this->offset = $pos + 2;
-                $this->tokens[count($this->tokens)-1]["end"] = $this->offset;
+                $this->tokens[count($this->tokens)-1]['end'] = $this->offset;
                 return true;
             }
         }
@@ -351,7 +351,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
         } while ($c >= 'a' && $c <= 'z' || $c >= 'A' && $c <= 'Z' || $c >= '0' && $c <= '9' || $c == '_' || $c == ':' || $c=='-');
         $this->offset--;
         if (strlen($tagname)) {
-            $this->tokens[count($this->tokens)-1]["name"] = $tagname;
+            $this->tokens[count($this->tokens)-1]['name'] = $tagname;
             return true;
         }
         return false;
@@ -369,7 +369,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
 
             $this->attachFormID($i);
 
-            if ($token["type"] == "tag" || $token["type"] == "open-close-tag") {
+            if ($token['type'] == "tag" || $token['type'] == "open-close-tag") {
 
                 if ($this->findAttr($i + 1, 'if', $pos) && (0 !== strcasecmp($token['name'], 'widget'))) {
                     if ($this->findClosingTag($i, $pos1)) {
@@ -381,49 +381,49 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
 
                 } elseif ($this->findAttr($i+1, "iff", $pos)) {
                     $expr = $this->flexyCondition($this->getTokenText($pos + 1));
-                    $this->subst($token["start"], 0, self::PHP_OPEN . " if($expr){" . self::PHP_CLOSE);
-                    $this->subst($this->tokens[$pos]["start"], $this->tokens[$pos]["end"], '');
-                    $this->subst($this->tokens[$i]["end"]-1, $this->tokens[$i]["end"], '>' . self::PHP_OPEN . ' }' . self::PHP_CLOSE);
+                    $this->subst($token['start'], 0, self::PHP_OPEN . " if($expr){" . self::PHP_CLOSE);
+                    $this->subst($this->tokens[$pos]['start'], $this->tokens[$pos]['end'], '');
+                    $this->subst($this->tokens[$i]['end']-1, $this->tokens[$i]['end'], '>' . self::PHP_OPEN . ' }' . self::PHP_CLOSE);
 
                 } elseif ($this->findAttr($i + 1, "foreach", $pos)) {
                     if ($this->findClosingTag($i, $pos1)) {
                         list($expr,$k,$forvar) = $this->flexyForeach($this->getTokenText($pos+1));
                         $exprNumber = $forvar . 'ArraySize';
                         $exprCounter = $forvar . 'ArrayPointer';
-                        $this->subst($token["start"], 0, self::PHP_OPEN . " \$$forvar = isset(\$this->$forvar) ? \$this->$forvar : null; \$_foreach_var = $expr; if (isset(\$_foreach_var)) { \$this->$exprNumber=count(\$_foreach_var); \$this->$exprCounter=0; } if (isset(\$_foreach_var)) foreach(\$_foreach_var as $k){ \$this->$exprCounter++; " . self::PHP_CLOSE);
-                        $this->subst($this->tokens[$pos]["start"], $this->tokens[$pos]["end"], '');
-                        $this->subst($this->tokens[$pos1]["end"]-1, $this->tokens[$pos1]["end"], ">\n" . self::PHP_OPEN . " } \$this->$forvar = \$$forvar; " . self::PHP_CLOSE);
+                        $this->subst($token['start'], 0, self::PHP_OPEN . " \$$forvar = isset(\$this->$forvar) ? \$this->$forvar : null; \$_foreach_var = $expr; if (isset(\$_foreach_var)) { \$this->$exprNumber=count(\$_foreach_var); \$this->$exprCounter=0; } if (isset(\$_foreach_var)) foreach(\$_foreach_var as $k){ \$this->$exprCounter++; " . self::PHP_CLOSE);
+                        $this->subst($this->tokens[$pos]['start'], $this->tokens[$pos]['end'], '');
+                        $this->subst($this->tokens[$pos1]['end']-1, $this->tokens[$pos1]['end'], ">\n" . self::PHP_OPEN . " } \$this->$forvar = \$$forvar; " . self::PHP_CLOSE);
 
                     } else {
-                        $this->error("No closing tag for foreach");
+                        $this->error('No closing tag for foreach');
                     }
                 }
 
                 if ($this->findAttr($i + 1, "selected", $pos)) {
-                    if (isset($this->tokens[$pos+1]["type"]) && $this->tokens[$pos+1]["type"] == "attribute-value") {
+                    if (isset($this->tokens[$pos+1]['type']) && $this->tokens[$pos+1]['type'] == "attribute-value") {
                         $expr = $this->flexyCondition($this->getTokenText($pos+1));
                         $this->subst(
-                            $this->tokens[$pos]["start"], 
-                            $this->tokens[$pos]["end"], 
+                            $this->tokens[$pos]['start'], 
+                            $this->tokens[$pos]['end'], 
                             self::PHP_OPEN . " if($expr) echo 'selected';" . self::PHP_CLOSE);
                     }
                 }
                 if ($this->findAttr($i+1, "checked", $pos)) {
-                    if (isset($this->tokens[$pos+1]["type"]) && $this->tokens[$pos+1]["type"] == "attribute-value") {
+                    if (isset($this->tokens[$pos+1]['type']) && $this->tokens[$pos+1]['type'] == "attribute-value") {
                         $expr = $this->flexyCondition($this->getTokenText($pos+1));
-                        $this->subst($this->tokens[$pos]["start"], $this->tokens[$pos]["end"], self::PHP_OPEN . " if($expr) echo 'checked';" . self::PHP_CLOSE);
+                        $this->subst($this->tokens[$pos]['start'], $this->tokens[$pos]['end'], self::PHP_OPEN . " if($expr) echo 'checked';" . self::PHP_CLOSE);
                     }
                 }
 
-                if (!strcasecmp($token["name"], "widget")) {
+                if (!strcasecmp($token['name'], "widget")) {
                     $attrs = array();
                     // widget display code
                     while(++$i<count($this->tokens)) {
                         $token1 = $this->tokens[$i];
-                        if ($token1["type"] == "attribute") {
-                            $attr = $token1["name"];
+                        if ($token1['type'] == "attribute") {
+                            $attr = $token1['name'];
                             $attrs[$attr] = true;
-                        } else if ($token1["type"] == "attribute-value") {
+                        } else if ($token1['type'] == "attribute-value") {
                             $attrs[$attr] = $this->getTokenText($i);
                         } else {
                             $i--;
@@ -441,11 +441,11 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
                 }
             }
 
-            if ($token["type"] == "flexy") {
+            if ($token['type'] == "flexy") {
                 $expr = $this->flexyEcho($this->getTokenText($i));
-                $this->subst($token["start"], $token["end"], $expr);
+                $this->subst($token['start'], $token['end'], $expr);
 
-            } elseif ($token["type"] == "attribute") {
+            } elseif ($token['type'] == "attribute") {
 
                 if (!strcasecmp($token['name'], 'src') || !strcasecmp($token['name'], 'background')) {
                     $rewriteData = $this->urlRewrite($this->getTokenText($i + 1));
@@ -459,7 +459,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
                     }
                 }
 
-            } elseif ($token["type"] == "attribute-value") {
+            } elseif ($token['type'] == "attribute-value") {
                 $str = $this->getTokenText($i);
                 // find all {...}
                 $pos = 0;
@@ -467,7 +467,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
                     $pos1 = strpos($str, "}", $pos);
                     if ($pos1 !== false) {
                         $echo = $this->flexyEcho(substr($str, $pos, $pos1-$pos));
-                        $this->subst($token["start"]+$pos, $token["start"]+$pos1+1, $echo);
+                        $this->subst($token['start']+$pos, $token['start']+$pos1+1, $echo);
                     } else {
                         break;
                     }
@@ -595,8 +595,8 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
     function findAttr($offset, $attr, &$pos)
     {
         $pos = $offset;
-        while($pos<count($this->tokens) && ($this->tokens[$pos]["type"] == "attribute" ||$this->tokens[$pos]["type"] == "attribute-value")) {
-            if ($this->tokens[$pos]["type"] == "attribute"  && !strcasecmp($this->tokens[$pos]["name"], $attr)) {
+        while($pos<count($this->tokens) && ($this->tokens[$pos]['type'] == "attribute" ||$this->tokens[$pos]['type'] == "attribute-value")) {
+            if ($this->tokens[$pos]['type'] == "attribute"  && !strcasecmp($this->tokens[$pos]['name'], $attr)) {
                 return true;
             }
             $pos ++;
@@ -608,12 +608,12 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
         $pos = $i;
         $stack = array();
         while ($pos<count($this->tokens)) {
-            if ($this->tokens[$pos]["type"] == "tag" || $this->tokens[$pos]["type"] == "open-close-tag") {
-                array_push($stack,$this->tokens[$pos]["name"]);
+            if ($this->tokens[$pos]['type'] == "tag" || $this->tokens[$pos]['type'] == "open-close-tag") {
+                array_push($stack,$this->tokens[$pos]['name']);
             }
-            if ($this->tokens[$pos]["type"] == "close-tag" || $this->tokens[$pos]["type"] == "open-close-tag") {
+            if ($this->tokens[$pos]['type'] == "close-tag" || $this->tokens[$pos]['type'] == "open-close-tag") {
                 $k = count($stack)-1;
-                while ($k >= 0 && strcasecmp($stack[$k], $this->tokens[$pos]["name"])) {
+                while ($k >= 0 && strcasecmp($stack[$k], $this->tokens[$pos]['name'])) {
                     $k--;
                 }
                 if ($k == 0) return true;
@@ -629,8 +629,8 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
     function getTokenText($n)
     {
         $t = $this->tokens[$n];
-        $this->offset = $t["start"];
-        return substr($this->source, $t["start"], $t["end"] - $t["start"]);
+        $this->offset = $t['start'];
+        return substr($this->source, $t['start'], $t['end'] - $t['start']);
     }
     function flexyCondition($str)
     {
@@ -825,7 +825,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
     {
         $expr = $this->flexyExpression($str);
         if (substr($str, 0, 1) != ',') {
-            $this->error("No comma in foreach expression");
+            $this->error('No comma in foreach expression');
         }
         $str = substr($str, 1);
         $list = explode(",", $str);
@@ -862,30 +862,30 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
 
     function attachFormID($token_index)
     {
-        if (!$this->xlite->is("adminZone")) return;
+        if (!$this->xlite->is('adminZone')) return;
 
         $token = $this->tokens[$token_index];
         $token['name'] = empty($token['name']) ? '' : strtolower($token['name']);
 
         // sign each form with generated form_id
-        if (($token["type"] == "tag") && ($token['name'] == 'form')) {
+        if (($token['type'] == "tag") && ($token['name'] == 'form')) {
             $gen_form_id = $this->getXliteFormIDText();
-            $this->subst($token["end"], 0, "<input type='hidden' name='xlite_form_id' value=\"$gen_form_id\" />");
+            $this->subst($token['end'], 0, "<input type='hidden' name='xlite_form_id' value=\"$gen_form_id\" />");
         }
 
         // attach form_id to all links inside attributes (in case they contain javascript links)
-        if ($token["type"] == "attribute-value") {
+        if ($token['type'] == "attribute-value") {
             $str = $this->getTokenText($token_index);
-            $this->_addFormIdToActions($str, $token["start"]);
+            $this->_addFormIdToActions($str, $token['start']);
         }
 
         // attach form_id to all links inside scripts
         static $script_start = null;
-        if (($token["type"] == "tag") && ($token['name'] == "script")) {
-            $script_start = $token["end"];
+        if (($token['type'] == "tag") && ($token['name'] == "script")) {
+            $script_start = $token['end'];
         }
-        if (($token["type"] == "close-tag") && ($token['name'] == "script") && isset($script_start)) {
-            $script_end = $token["start"];
+        if (($token['type'] == "close-tag") && ($token['name'] == "script") && isset($script_start)) {
+            $script_end = $token['start'];
             $script_body = substr($this->source, $script_start, $script_end-$script_start);
             $this->_addFormIdToActions($script_body, $script_start);
             $script_start = null;
@@ -908,16 +908,16 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
 
         foreach ($blocks as $block) {
             // exclude links to customer zone
-            if (preg_match("/cart\.php/", $block["body"])) continue;
+            if (preg_match("/cart\.php/", $block['body'])) continue;
 
-            if (!preg_match("/(\?|&)action=/", $block["body"], $matches)) continue;
+            if (!preg_match("/(\?|&)action=/", $block['body'], $matches)) continue;
             $action_text = $matches[0];
             $link_symbol = $matches[1];
-            $pos = strpos($block["body"], $action_text);
+            $pos = strpos($block['body'], $action_text);
             if ($pos !== false) {
                 $gen_form_id = $this->getXliteFormIDText();
                 $echo = $link_symbol."xlite_form_id=$gen_form_id&action=";
-                $this->subst($text_start+$block["start"]+$pos, $text_start+$block["start"]+$pos+strlen($action_text), $echo);
+                $this->subst($text_start+$block['start']+$pos, $text_start+$block['start']+$pos+strlen($action_text), $echo);
             }
         }
     }

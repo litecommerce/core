@@ -616,29 +616,29 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 
 
     // mode ::= null | register | notAllowed | noShipping | paymentMethod | details | success | error    
-    /*public $params = array("target");
+    /*public $params = array('target');
     public $mode = null;*/
 
 
 
     function _initCCInfo()
     {
-        if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "checkout") {
-            if (isset($_REQUEST["cc_info"]) && is_array($_REQUEST["cc_info"])) {
-                if (isset($_REQUEST["cc_info_cc_date_Month"]) && isset($_REQUEST["cc_info_cc_date_Year"])) {
-                    $_REQUEST["cc_info"]["cc_date"] = sprintf("%02d%s", intval($_REQUEST["cc_info_cc_date_Month"]), substr($_REQUEST["cc_info_cc_date_Year"],2));
-                    unset($_REQUEST["cc_info_cc_date_Month"]);
-                    unset($_REQUEST["cc_info_cc_date_Year"]);
-                    if (isset($_POST["cc_info"]) && is_array($_POST["cc_info"])) {
-                        $_POST["cc_info"]["cc_date"] = $_REQUEST["cc_info"]["cc_date"];
+        if (isset($_REQUEST['action']) && $_REQUEST['action'] == "checkout") {
+            if (isset($_REQUEST['cc_info']) && is_array($_REQUEST['cc_info'])) {
+                if (isset($_REQUEST['cc_info_cc_date_Month']) && isset($_REQUEST['cc_info_cc_date_Year'])) {
+                    $_REQUEST['cc_info']["cc_date"] = sprintf("%02d%s", intval($_REQUEST['cc_info_cc_date_Month']), substr($_REQUEST['cc_info_cc_date_Year'],2));
+                    unset($_REQUEST['cc_info_cc_date_Month']);
+                    unset($_REQUEST['cc_info_cc_date_Year']);
+                    if (isset($_POST['cc_info']) && is_array($_POST['cc_info'])) {
+                        $_POST['cc_info']["cc_date"] = $_REQUEST['cc_info']["cc_date"];
                     }
                 }
-                if (isset($_REQUEST["cc_info_cc_start_date_Month"]) && isset($_REQUEST["cc_info_cc_start_date_Year"])) {
-                    $_REQUEST["cc_info"]["cc_start_date"] = sprintf("%02d%s", intval($_REQUEST["cc_info_cc_start_date_Month"]), substr($_REQUEST["cc_info_cc_start_date_Year"],2));
-                    unset($_REQUEST["cc_info_cc_start_date_Month"]);
-                    unset($_REQUEST["cc_info_cc_start_date_Year"]);
-                    if (isset($_POST["cc_info"]) && is_array($_POST["cc_info"])) {
-                        $_POST["cc_info"]["cc_start_date"] = $_REQUEST["cc_info"]["cc_start_date"];
+                if (isset($_REQUEST['cc_info_cc_start_date_Month']) && isset($_REQUEST['cc_info_cc_start_date_Year'])) {
+                    $_REQUEST['cc_info']["cc_start_date"] = sprintf("%02d%s", intval($_REQUEST['cc_info_cc_start_date_Month']), substr($_REQUEST['cc_info_cc_start_date_Year'],2));
+                    unset($_REQUEST['cc_info_cc_start_date_Month']);
+                    unset($_REQUEST['cc_info_cc_start_date_Year']);
+                    if (isset($_POST['cc_info']) && is_array($_POST['cc_info'])) {
+                        $_POST['cc_info']["cc_start_date"] = $_REQUEST['cc_info']["cc_start_date"];
                     }
                 }
 

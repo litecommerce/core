@@ -77,10 +77,10 @@ class XLite_Module_Promotion_Controller_Customer_Checkout extends XLite_Controll
 
     function _handleCouponFailed()
     {
-        if ($this->session->isRegistered("couponFailed")) {
-        	if (isset($_REQUEST["mode"]) && $_REQUEST["mode"] == "couponFailed") {
+        if ($this->session->isRegistered('couponFailed')) {
+        	if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == "couponFailed") {
                 $dc = new XLite_Module_Promotion_Model_DiscountCoupon();
-                $found = $dc->find("coupon='".$this->session->get("couponFailed")."'");
+                $found = $dc->find("coupon='".$this->session->get('couponFailed')."'");
                 if ($found) {
                     $this->set("discountCoupon", $dc);
                 }
@@ -92,32 +92,32 @@ class XLite_Module_Promotion_Controller_Customer_Checkout extends XLite_Controll
     
     function handleRequest()
     {
-        if ($this->cart->validateDiscountCoupon() == 'used' && !$this->get("skipValidateDiscountCoupon") && (!isset($_REQUEST["action"]) || $_REQUEST["action"] != "return")) {
-            //$this->session->set("couponFailed", $this->cart->get("DC"));
-            $dc = $this->cart->get("DC");
-        	$this->session->set("couponFailed", $dc->get("coupon"));
+        if ($this->cart->validateDiscountCoupon() == 'used' && !$this->get('skipValidateDiscountCoupon') && (!isset($_REQUEST['action']) || $_REQUEST['action'] != "return")) {
+            //$this->session->set("couponFailed", $this->cart->get('DC'));
+            $dc = $this->cart->get('DC');
+        	$this->session->set("couponFailed", $dc->get('coupon'));
             $this->cart->set("DC", null); // remove coupon
             $this->updateCart();
             $this->redirect("cart.php?target=checkout&mode=couponFailed");
             return;
         }
-        if (!isset($_REQUEST["action"]) && !isset($_REQUEST["mode"])) {
-            if (!$this->session->isRegistered("bonusListDisplayed") && $this->config->getComplex('Promotion.showBonusList')) {
+        if (!isset($_REQUEST['action']) && !isset($_REQUEST['mode'])) {
+            if (!$this->session->isRegistered('bonusListDisplayed') && $this->config->getComplex('Promotion.showBonusList')) {
                 if ($this->cart->getBonusList()) {
                 	$needRedirect = false;
-                    $bonusList = $this->cart->get("bonusList");
+                    $bonusList = $this->cart->get('bonusList');
                 	foreach ($bonusList as $bonus) {
-                		$products = $bonus->get("allBonusProducts");
+                		$products = $bonus->get('allBonusProducts');
                 		if (is_array($products) && count($products) > 0) {
                 			$needRedirect = true;
                 			break;
                 		}
-                		$categories = $bonus->get("allBonusCategories");
+                		$categories = $bonus->get('allBonusCategories');
                 		if (is_array($categories) && count($categories) > 0) {
                 			$needRedirect = true;
                 			break;
                 		}
-                		if ($bonus->get("bonusType") == "bonusPoints") {
+                		if ($bonus->get('bonusType') == "bonusPoints") {
                 			$needRedirect = true;
                 			break;
                 		}
@@ -166,7 +166,7 @@ class XLite_Module_Promotion_Controller_Customer_Checkout extends XLite_Controll
         return ((bool) $bonus->get('allBonusProducts')
             || (bool) $bonus->get('allBonusCategories')
             || (bool) $bonus->get('bonusAllProducts')
-            || $bonus->get("bonusType") == "bonusPoints"
+            || $bonus->get('bonusType') == "bonusPoints"
         );
     }
 }

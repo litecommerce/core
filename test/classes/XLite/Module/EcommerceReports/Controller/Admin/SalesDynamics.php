@@ -37,7 +37,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
 {
     function handleRequest()
     {
-        if ($this->get("search")) {
+        if ($this->get('search')) {
             $this->setComplex("session.salesDynamics", $_POST);
         } else {
             $this->setComplex("session.salesDynamics", null);
@@ -47,7 +47,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
 
     function getLabel($date) 
     {
-        switch ($this->get("stat_step")) {
+        switch ($this->get('stat_step')) {
             case "day":
             case "week":
                 $label = @date("M",$date) . " " . @date("j", $date);
@@ -67,8 +67,8 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
     {
         $sum = 0;
         foreach ($items as $item) {
-            if ($item["date"] >= $range[0] && $item["date"] < $range[1]) {
-                $sum = $sum + $item["price"] * $item["amount"];
+            if ($item['date'] >= $range[0] && $item['date'] < $range[1]) {
+                $sum = $sum + $item['price'] * $item['amount'];
             }
         }
         return $sum;
@@ -78,8 +78,8 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
     {
         $qty = 0;
         foreach ($items as $item) {
-            if ($item["date"] >= $range[0] && $item["date"] <= $range[1]) {
-                $qty = $qty + $item["amount"];
+            if ($item['date'] >= $range[0] && $item['date'] <= $range[1]) {
+                $qty = $qty + $item['amount'];
             }
         }
         return $qty;
@@ -89,8 +89,8 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
     {
         $number = array();
         foreach ($items as $item) {
-            if ($item["date"] >= $range[0] && $item["date"] <= $range[1]) {
-                $number[$item["order_id"]] = 1;
+            if ($item['date'] >= $range[0] && $item['date'] <= $range[1]) {
+                $number[$item['order_id']] = 1;
             }
         }
         return count($number);
@@ -104,22 +104,22 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
                     "y" => array(),
                     "labels" => array(),
                     );
-            $func = "sumSale" . $this->get("show");
+            $func = "sumSale" . $this->get('show');
             $startDate = $this->getComplex('period.fromDate');
-            $items = $this->get("rawItems");
+            $items = $this->get('rawItems');
             $x = array();
             $y = array();
             $labels = array();
-            while (($nextDate = $this->get("nextDate")) !== false) {
+            while (($nextDate = $this->get('nextDate')) !== false) {
                 $x[] = $startDate;
                 $range = array($startDate, $nextDate);
                 $y[] = $this->$func($items, $range);
                 $labels[] = $this->getLabel($startDate);
                 $startDate = $nextDate;
             }
-            $this->sales["x"] = $x;
-            $this->sales["y"] = $y;
-            $this->sales["labels"] = $labels;
+            $this->sales['x'] = $x;
+            $this->sales['y'] = $y;
+            $this->sales['labels'] = $labels;
         }
         return $this->sales;
     }
@@ -127,22 +127,22 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
     function exportSales() 
     {
         $this->salesData = array();
-        $sales = $this->get("sales");
-        foreach ($sales["x"] as $xid => $x) {
-            $this->salesData[$x] = $sales["y"][$xid];
+        $sales = $this->get('sales');
+        foreach ($sales['x'] as $xid => $x) {
+            $this->salesData[$x] = $sales['y'][$xid];
         }
         $w = new XLite_View_Abstract();
         $w->component = $this;
         $w->set("template", "modules/EcommerceReports/export_xls.tpl");
-        $this->startDownload("sales.xls");
+        $this->startDownload('sales.xls');
         $this->ColumnCount = 2;
         $this->RowCount = count($this->salesData) + 2;
         $this->endRow = count($this->salesData) + 1;
-        $profile = $this->auth->get("profile");
+        $profile = $this->auth->get('profile');
         $time = time();
         $this->create_date = strftime("%Y-%m-%d", $time);
         $this->create_time = strftime("%H:%M:%S", $time);
-        $this->author = $profile->get("billing_firstname") . " " . $profile->get("billing_lastname");
+        $this->author = $profile->get('billing_firstname') . " " . $profile->get('billing_lastname');
         $w->init();
         $w->display();
 
@@ -152,7 +152,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
 
     function action_get_data() 
     {
-        if ($this->get("export")) {
+        if ($this->get('export')) {
             $this->exportSales();
         }
         parent::action_get_data();

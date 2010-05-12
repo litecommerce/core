@@ -37,15 +37,15 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
 {
     public function __construct($id = null) 
     {
-        $this->fields["parent"] = 0;
-        $this->fields["partner_fields"] = "";
-        $this->fields["plan"] = 0;
-        $this->fields["pending_plan"] = 0;
-        $this->fields["reason"] = ""; // approval / not approval reason
-        $this->fields["partner_signup"] = time();
+        $this->fields['parent'] = 0;
+        $this->fields['partner_fields'] = "";
+        $this->fields['plan'] = 0;
+        $this->fields['pending_plan'] = 0;
+        $this->fields['reason'] = ""; // approval / not approval reason
+        $this->fields['partner_signup'] = time();
         // fields available only for core
-        $this->_securefields["plan"] = "";
-        $this->_securefields["reason"] = "";
+        $this->_securefields['plan'] = "";
+        $this->_securefields['reason'] = "";
         parent::__construct($id);
     }
 
@@ -73,7 +73,7 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
     {
         if (is_null($this->parentProfile)) {
             $pp = new XLite_Model_Profile();
-            if ($pp->find("profile_id=".$this->get("parent"))) {
+            if ($pp->find("profile_id=".$this->get('parent'))) {
                 $this->parentProfile = $pp;
             }
         }
@@ -98,7 +98,7 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
     function getPartnerPlan() 
     {
         if (is_null($this->partnerPlan)) {
-            $this->partnerPlan = new XLite_Module_Affiliate_Model_AffiliatePlan($this->get("plan"));
+            $this->partnerPlan = new XLite_Module_Affiliate_Model_AffiliatePlan($this->get('plan'));
         }
         return $this->partnerPlan;
     }
@@ -108,7 +108,7 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
         $parents = array();
         $tiers = intval($this->getComplex('config.Affiliate.tiers_number'));
         if ($tiers > 1) {
-            $parent = $this->get("parent");
+            $parent = $this->get('parent');
             $level = 2; // start from level 2 affiliate
             // search for parents chain
             do {
@@ -116,7 +116,7 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
                 $found = $p->find("profile_id=".$parent);
                 if ($found) {
                     $parents[$level] = $p;
-                    $parent = $p->get("parent");
+                    $parent = $p->get('parent');
                 }
             } while ($found && $level++ < $tiers);
         }
@@ -137,7 +137,7 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
     {
         $tiers = intval($this->getComplex('config.Affiliate.tiers_number'));
         $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
-        foreach ($this->findAll("parent=".$this->get("profile_id")) as $cid => $child) {
+        foreach ($this->findAll("parent=".$this->get('profile_id')) as $cid => $child) {
             $child->set("level", $level);
             $child->set("relative", $level <= $tiers); // parent gets commissions from this child
             $affiliates[] = $child;
@@ -151,8 +151,8 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
             $this->partnerCommissions = 0.00;
             $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
             // own commissions
-            foreach ((array)$pp->findAll("partner_id=".$this->get("profile_id")." AND affiliate=0") as $payment) {
-                $this->partnerCommissions += $payment->get("commissions");
+            foreach ((array)$pp->findAll("partner_id=".$this->get('profile_id')." AND affiliate=0") as $payment) {
+                $this->partnerCommissions += $payment->get('commissions');
             }
         }
         return $this->partnerCommissions;
@@ -164,8 +164,8 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
             $this->affiliateCommissions = 0.00;
             $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
             // own commissions
-            foreach ((array)$pp->findAll("partner_id=".$this->get("profile_id")." AND affiliate<>0") as $payment) {
-                $this->affiliateCommissions += $payment->get("commissions");
+            foreach ((array)$pp->findAll("partner_id=".$this->get('profile_id')." AND affiliate<>0") as $payment) {
+                $this->affiliateCommissions += $payment->get('commissions');
             }
         }
         return $this->affiliateCommissions;
@@ -175,10 +175,10 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
     {
         if (is_null($this->branchCommissions)) {
             $this->branchCommissions = 0.00;
-            foreach ((array)$this->get("affiliates") as $partner) {
+            foreach ((array)$this->get('affiliates') as $partner) {
                 $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
-                foreach ((array)$pp->findAll("partner_id=".$partner->get("profile_id")) as $payment) {
-                    $this->branchCommissions += $payment->get("commissions");
+                foreach ((array)$pp->findAll("partner_id=".$partner->get('profile_id')) as $payment) {
+                    $this->branchCommissions += $payment->get('commissions');
                 }
             }
 

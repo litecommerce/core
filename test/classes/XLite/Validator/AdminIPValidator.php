@@ -44,8 +44,8 @@ class XLite_Validator_AdminIPValidator extends XLite_Validator_Abstract
 
     function isValid()
     {
-        if (isset($_REQUEST[$this->get("field")]) && isset($_REQUEST[$this->get("field2")]) && isset($_REQUEST[$this->get("field3")]) && isset($_REQUEST[$this->get("field4")])) {
-            $ip = $_REQUEST[$this->get("field")] . "." . $_REQUEST[$this->get("field2")] . "." . $_REQUEST[$this->get("field3")] . "." . $_REQUEST[$this->get("field4")];
+        if (isset($_REQUEST[$this->get('field')]) && isset($_REQUEST[$this->get('field2')]) && isset($_REQUEST[$this->get('field3')]) && isset($_REQUEST[$this->get('field4')])) {
+            $ip = $_REQUEST[$this->get('field')] . "." . $_REQUEST[$this->get('field2')] . "." . $_REQUEST[$this->get('field3')] . "." . $_REQUEST[$this->get('field4')];
 
             // validate
             return preg_match(IPV4_REGEXP_WILDCARD, $ip);

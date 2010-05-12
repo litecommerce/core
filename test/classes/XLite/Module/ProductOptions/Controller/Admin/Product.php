@@ -38,8 +38,8 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
     public function __construct(array $params)
     {
         parent::__construct($params);
-        $this->pages["product_options"] = "Product options";
-        $this->pageTemplates["product_options"] = "modules/ProductOptions/product_options.tpl";
+        $this->pages['product_options'] = "Product options";
+        $this->pageTemplates['product_options'] = "modules/ProductOptions/product_options.tpl";
     }
 
     function action_update_limit()
@@ -80,16 +80,16 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
     
     function action_update_product_option() 
     {
-        $option = $this->get("productOption");
+        $option = $this->get('productOption');
         $option->update();
 
-        $this->params["option_id"] = $option->get("option_id");
-        $this->option_id = $option->get("option_id");
+        $this->params['option_id'] = $option->get('option_id');
+        $this->option_id = $option->get('option_id');
     }
 
     function action_delete_product_option() 
     {
-        $option = $this->get("productOption");
+        $option = $this->get('productOption');
         $option->delete();
 
         if (isset($this->option_id)) {
@@ -103,11 +103,11 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
     		unset($this->option_id);
     	}
 
-        $option = $this->get("productOption");
+        $option = $this->get('productOption');
         $option->create();
 
-        $this->params["option_id"] = $option->get("option_id");
-        $this->option_id = $option->get("option_id");
+        $this->params['option_id'] = $option->get('option_id');
+        $this->option_id = $option->get('option_id');
     }
     
     
@@ -133,13 +133,13 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
 
     function action_update_option_exception() 
     {
-        $exception = $this->get("optionException");
+        $exception = $this->get('optionException');
         $exception->update();
     }
 
     function action_delete_option_exception() 
     {
-        $exception = $this->get("optionException");
+        $exception = $this->get('optionException');
         $exception->delete();
     }
 
@@ -149,8 +149,8 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
     		unset($this->option_id);
     	}
 
-        $exception = $this->get("optionException");
-        if (!$exception->find("product_id='".$exception->get("product_id")."' AND exception='".addslashes($exception->get("exception"))."'")) {
+        $exception = $this->get('optionException');
+        if (!$exception->find("product_id='".$exception->get('product_id')."' AND exception='".addslashes($exception->get('exception'))."'")) {
         	$exception->create();
         }
     }
@@ -174,7 +174,7 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
             } else {
                 $validator->update();
             }
-        } elseif (strlen(trim($validator->get("javascript_code")))) {
+        } elseif (strlen(trim($validator->get('javascript_code')))) {
             $validator->create();
         }
     }
@@ -195,10 +195,10 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
     {
         $product = new XLite_Model_Product($this->product_id);
         $oldCategories = array();
-        $categories = $product->get("categories");
+        $categories = $product->get('categories');
         if (is_array($categories)) {
         	foreach($categories as $cat) {
-        		$oldCategories[] = $cat->get("category_id");
+        		$oldCategories[] = $cat->get('category_id');
         	}
         }
 
@@ -211,11 +211,11 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
     {
         $result = parent::getAllParams();
         if (isset($this->action)) {
-        	if (!isset($this->option_id) && isset($result["option_id"])) {
-        		unset($result["option_id"]);
+        	if (!isset($this->option_id) && isset($result['option_id'])) {
+        		unset($result['option_id']);
         	}
         	if (isset($this->option_id)) {
-        		$result["option_id"] = $this->option_id;
+        		$result['option_id'] = $this->option_id;
         	}
         }
        	return $result;

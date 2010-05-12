@@ -59,7 +59,7 @@ class XLite_Controller_Admin_ExtraFields extends XLite_Controller_Admin_Abstract
             $names = array();
             $names_hash = array();
             for ($i = 0; $i < count($this->_categories); $i++) {
-                $name = $this->_categories[$i]->get("stringPath");
+                $name = $this->_categories[$i]->get('stringPath');
                 while (isset($names_hash[$name])) {
                     $name .= " ";
                 }
@@ -82,21 +82,21 @@ class XLite_Controller_Admin_ExtraFields extends XLite_Controller_Admin_Abstract
     
     function action_update_fields()
     {
-        if (!is_null($this->get("delete")) && !is_null($this->get("delete_fields")) && $this->get("delete") == "delete") {
-            foreach ((array)$this->get("delete_fields") as $id) {
+        if (!is_null($this->get('delete')) && !is_null($this->get('delete_fields')) && $this->get('delete') == "delete") {
+            foreach ((array)$this->get('delete_fields') as $id) {
                 $ef = new XLite_Model_ExtraField($id);
                 $ef->delete();
             }
-        } elseif (!is_null($this->get("update"))) {
-            foreach ((array)$this->get("extra_fields") as $id => $data) 
+        } elseif (!is_null($this->get('update'))) {
+            foreach ((array)$this->get('extra_fields') as $id => $data) 
             {
                 $rewrite = !(isset($data['rewrite']) && $data['rewrite'] == "yes");
                 $ef = new XLite_Model_ExtraField($id);
-                $ef->set("categories_old", $ef->get("categories"));
+                $ef->set("categories_old", $ef->get('categories'));
 
                 if($data['global'] == 0){
                     $data['categories'] = '';
-                    if($ef->get("categories") != ""){
+                    if($ef->get('categories') != ""){
                         if($rewrite){
                             
                         } else {
@@ -108,7 +108,7 @@ class XLite_Controller_Admin_ExtraFields extends XLite_Controller_Admin_Abstract
                             $category = new XLite_Model_Category();
                             $categories = $category->findAll();
                             foreach ($categories as $category) {
-                                $old[] = $category->get("category_id");
+                                $old[] = $category->get('category_id');
                             }
                             $old = implode("|", $old);
                             $ef->set("categories_old", $old);
@@ -117,7 +117,7 @@ class XLite_Controller_Admin_ExtraFields extends XLite_Controller_Admin_Abstract
                         }
                     }
                 } else {
-                    if($ef->get("categories") != ""){
+                    if($ef->get('categories') != ""){
                         if($rewrite){
                             $ef->set("categories_old", "");
                         } else {
@@ -130,7 +130,7 @@ class XLite_Controller_Admin_ExtraFields extends XLite_Controller_Admin_Abstract
                             $category = new XLite_Model_Category();
                             $categories = $category->findAll();
                             foreach ($categories as $category) {
-                                $old[] = $category->get("category_id");
+                                $old[] = $category->get('category_id');
                             }
                             $old = implode("|", $old);
                             $ef->set("categories_old", $old);
@@ -146,8 +146,8 @@ class XLite_Controller_Admin_ExtraFields extends XLite_Controller_Admin_Abstract
     
     function action_add_field()
     {
-        if (!is_null($this->get("add_field"))) {
-            $categories = (array)$this->get("add_categories");
+        if (!is_null($this->get('add_field'))) {
+            $categories = (array)$this->get('add_categories');
 
             $ef = new XLite_Model_ExtraField();
             $ef->set("properties", XLite_Core_Request::getInstance()->getData());

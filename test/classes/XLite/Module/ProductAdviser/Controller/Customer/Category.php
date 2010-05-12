@@ -49,14 +49,14 @@ class XLite_Module_ProductAdviser_Controller_Customer_Category extends XLite_Con
 
             $email = '';
 
-    		if ($this->auth->is("logged")) {
-    			$profile = $this->auth->get("profile");
-        		$profile_id = $profile->get("profile_id");
-        		$email = $profile->get("login");
+    		if ($this->auth->is('logged')) {
+    			$profile = $this->auth->get('profile');
+        		$profile_id = $profile->get('profile_id');
+        		$email = $profile->get('login');
     		} else {
         		$profile_id = 0;
-        		if ($this->session->isRegistered("customerEmail")) {
-        			$email = $this->session->get("customerEmail");
+        		if ($this->session->isRegistered('customerEmail')) {
+        			$email = $this->session->get('customerEmail');
         		}
     		}
             $check[] = "profile_id='$profile_id'";
@@ -65,7 +65,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Category extends XLite_Con
     		$notification = new XLite_Module_ProductAdviser_Model_Notification();
     		$notification->set("type", CUSTOMER_NOTIFICATION_PRICE);
         	$notification->set("product_id", $product_id);
-            $check[] = "notify_key='" . addslashes($notification->get("productKey")) . "'";
+            $check[] = "notify_key='" . addslashes($notification->get('productKey')) . "'";
 
             $check = implode(" AND ", $check);
             $this->priceNotified[$product_id] = $notification->find($check);

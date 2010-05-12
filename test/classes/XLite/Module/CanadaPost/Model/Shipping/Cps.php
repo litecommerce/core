@@ -43,7 +43,7 @@ class XLite_Module_CanadaPost_Model_Shipping_Cps extends XLite_Model_Shipping_On
 
     function getKgs($order) 
     {
-        $w = $order->get("weight");
+        $w = $order->get('weight');
         switch ($this->config->getComplex('General.weight_unit')) {
         case 'lbs': return $w*0.453;
         case 'oz':  return $w*0.02831;
@@ -55,7 +55,7 @@ class XLite_Module_CanadaPost_Model_Shipping_Cps extends XLite_Model_Shipping_On
 
     function cleanCache()  
     {
-        $this->_cleanCache("cps_cache");
+        $this->_cleanCache('cps_cache');
     }
 
     function getModuleName()  

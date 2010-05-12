@@ -77,7 +77,7 @@ class XLite_Model_TaxRates extends XLite_Base
    
     function _createOneGlobalTax()
     {
-        $this->_predefinedSchemas["One global tax value"] = array(
+        $this->_predefinedSchemas['One global tax value'] = array(
 "taxes" => array(array("name" => "Tax", "display_label" => "Tax")),
 "prices_include_tax" => "",
 "include_tax_message" => "",
@@ -91,7 +91,7 @@ class XLite_Model_TaxRates extends XLite_Base
     function _createUSStateRates() 
     {
         // create pre-defined tax rules
-        $this->_predefinedSchemas["US state sales tax rates"] = array(
+        $this->_predefinedSchemas['US state sales tax rates'] = array(
 "use_billing_info" => "N", 
 "taxes" => array(array("name" => "Tax", "display_label" => "Tax")),
 "prices_include_tax" => "",
@@ -298,7 +298,7 @@ array("condition" => "state=District of Columbia", "action" => array(
 
     function _createVatTax() 
     {
-         $this->_predefinedSchemas["VAT system"] = array
+         $this->_predefinedSchemas['VAT system'] = array
          (
             "taxes" => array
             (
@@ -401,7 +401,7 @@ array("condition" => "state=District of Columbia", "action" => array(
 
     function _createCanadianTax() 
     {
-        $this->_predefinedSchemas["Canadian GST/PST system"] = array(
+        $this->_predefinedSchemas['Canadian GST/PST system'] = array(
 "taxes" => array(
     array("name" => "GST", "display_label" => "GST"),
     array("name" => "HST", "display_label" => "HST"),
@@ -429,7 +429,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
 
     function setPredefinedSchema($name)
     {
-        $schemas = $this->get("predefinedSchemas");
+        $schemas = $this->get('predefinedSchemas');
         $schema = $schemas[$name];
         $this->setSchema($schema);
     }
@@ -454,45 +454,45 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
     
     function setOrder($order)
     {
-        $profile = $order->get("profile");
+        $profile = $order->get('profile');
         if (!is_null($profile)) {
             $this->set("profile", $profile);
         } else {
             if ($this->config->getComplex('General.def_calc_shippings_taxes')) {
                 $default_country = new XLite_Model_Country($this->config->getComplex('General.default_country'));
-                $this->_conditionValues["country"] = $default_country->get("country");
+                $this->_conditionValues['country'] = $default_country->get('country');
                 if ($default_country->isEUMember()) {
-                    $this->_conditionValues["country"] .= ",EU country";
+                    $this->_conditionValues['country'] .= ",EU country";
                 }
             }
         }
-        if (!is_null($order->get("paymentMethod"))) {
-            $this->_conditionValues["payment method"] = $order->getComplex('paymentMethod.name');
+        if (!is_null($order->get('paymentMethod'))) {
+            $this->_conditionValues['payment method'] = $order->getComplex('paymentMethod.name');
         }
     }
 
     function setProfile($profile)
     {
         if ($this->config->getComplex('Taxes.use_billing_info')) {
-            $this->_conditionValues["state"] = $profile->getComplex('billingState.state');
-            $this->_conditionValues["country"] = $profile->getComplex('billingCountry.country');
-            $countryCode = $profile->get("billing_country");
-            $this->_conditionValues["city"] = $profile->get("billing_city");
-            $this->_conditionValues["zip"] = $profile->get("billing_zipcode");
+            $this->_conditionValues['state'] = $profile->getComplex('billingState.state');
+            $this->_conditionValues['country'] = $profile->getComplex('billingCountry.country');
+            $countryCode = $profile->get('billing_country');
+            $this->_conditionValues['city'] = $profile->get('billing_city');
+            $this->_conditionValues['zip'] = $profile->get('billing_zipcode');
         } else { // shipping destination
-            $this->_conditionValues["state"] = $profile->getComplex('shippingState.state');
-            $this->_conditionValues["country"] = $profile->getComplex('shippingCountry.country');
-            $countryCode = $profile->get("shipping_country");
-            $this->_conditionValues["city"] = $profile->get("shipping_city");
-            $this->_conditionValues["zip"] = $profile->get("shipping_zipcode");
+            $this->_conditionValues['state'] = $profile->getComplex('shippingState.state');
+            $this->_conditionValues['country'] = $profile->getComplex('shippingCountry.country');
+            $countryCode = $profile->get('shipping_country');
+            $this->_conditionValues['city'] = $profile->get('shipping_city');
+            $this->_conditionValues['zip'] = $profile->get('shipping_zipcode');
         }
         $c = new XLite_Model_Country($countryCode);
         if ($c->isEUMember()) {
-            $this->_conditionValues["country"] .= ",EU country";
+            $this->_conditionValues['country'] .= ",EU country";
         }
-        $this->_conditionValues["membership"] = $profile->get("membership");
-        if ($this->_conditionValues["membership"] == "") {
-            $this->_conditionValues["membership"] = "No membership";
+        $this->_conditionValues['membership'] = $profile->get('membership');
+        if ($this->_conditionValues['membership'] == "") {
+            $this->_conditionValues['membership'] = "No membership";
         }
     }
 
@@ -543,10 +543,10 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
     function _interpretAction($action)
     {
         if (is_array($action)) {
-            if (isset($action["condition"])) {
+            if (isset($action['condition'])) {
                 // interpret conditional taxes
-                if ($this->_interpretCondition($action["condition"])) {
-                    $this->_interpretAction($action["action"]);
+                if ($this->_interpretCondition($action['condition'])) {
+                    $this->_interpretAction($action['action']);
                 }
             } else {
                 foreach ($action as $rate) {
@@ -651,12 +651,12 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
         $taxes = array();
         foreach ($this->_taxValues as $name => $percent) {
             $percent = $this->_calcFormula($percent);
-            if (isset($this->_conditionValues["cost"])) {
-                $tax = $this->_conditionValues["cost"] * $percent / 100.0;
+            if (isset($this->_conditionValues['cost'])) {
+                $tax = $this->_conditionValues['cost'] * $percent / 100.0;
                 if ($this->config->getComplex('Taxes.prices_include_tax')) {
                     $tax = $this->formatCurrency($tax);
-                    if (isset($this->_conditionValues["amount"]) && $this->_conditionValues["product class"] != "shipping service") {
-                        $tax = $this->formatCurrency($tax * $this->_conditionValues["amount"]);
+                    if (isset($this->_conditionValues['amount']) && $this->_conditionValues['product class'] != "shipping service") {
+                        $tax = $this->formatCurrency($tax * $this->_conditionValues['amount']);
                     }
                 } else {
                     $tax = $this->formatCurrency($tax);
@@ -664,7 +664,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
             } else {
                 $tax = 0;
             }
-            if (isset($this->_conditionValues["product class"]) && $this->_conditionValues["product class"] == "shipping service") {
+            if (isset($this->_conditionValues['product class']) && $this->_conditionValues['product class'] == "shipping service") {
                 $this->_shippingTaxes[$name] = $tax;
             }
             $taxes[$name] = $tax;
@@ -682,13 +682,13 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
 
         foreach ($this->_taxValues as $name => $percent) {
             $percent = $this->_calcFormula($percent);
-            if (isset($this->_conditionValues["cost"])) {
-                $tax = $this->_conditionValues["cost"] * $percent / 100.0;
+            if (isset($this->_conditionValues['cost'])) {
+                $tax = $this->_conditionValues['cost'] * $percent / 100.0;
             } else {
                 $tax = 0;
             }
             $tax = $this->formatCurrency($tax);
-            if (isset($this->_conditionValues["product class"]) && $this->_conditionValues["product class"] == "shipping service" && $name != "Tax") {
+            if (isset($this->_conditionValues['product class']) && $this->_conditionValues['product class'] == "shipping service" && $name != "Tax") {
                 $this->_shippingTaxes[$name] = $tax;
             }
         }
@@ -710,8 +710,8 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
     function getTaxLabel($name)
     {
         foreach ($this->_taxes as $tax) {
-            if ($tax["name"] == $name) {
-                return $tax["display_label"];
+            if ($tax['name'] == $name) {
+                return $tax['display_label'];
             }
         }
         return '';
@@ -720,8 +720,8 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
     function getRegistration($name)
     {
         foreach ($this->_taxes as $tax) {
-            if ($tax["name"] == $name) {
-                return isset($tax["registration"]) ? $tax["registration"] : '';
+            if ($tax['name'] == $name) {
+                return isset($tax['registration']) ? $tax['registration'] : '';
             }
         }
         return '';
@@ -730,7 +730,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
     function getTaxPosition($name)
     {
         foreach ($this->_taxes as $pos => $tax) {
-            if ($tax["name"] == $name) {
+            if ($tax['name'] == $name) {
                 return $pos;
             }
         }
@@ -749,11 +749,11 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
     {
         foreach ($tree as $node) {
             if (is_array($node)) {
-                $cond = $this->_parseCondition($node["condition"]);
+                $cond = $this->_parseCondition($node['condition']);
                 if (isset($cond['product class'])) {
                     $classes = array_merge($classes, $cond['product class']);
                 }
-                $node = $node["action"];
+                $node = $node['action'];
                 if (is_array($node)) {
                     $this->_collectClasses($node, $classes);
                 }
@@ -772,10 +772,10 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
     {
         foreach ($tree as $node) {
             if (is_array($node)) {
-                if (!isset($node["action"])) {
+                if (!isset($node['action'])) {
                     continue;
                 }
-                $action = $node["action"];
+                $action = $node['action'];
                 if (is_array($action)) {
                     $this->_collectActions($action, $actions);
                     continue;
@@ -811,11 +811,11 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
     {
         foreach ($tree as $node) {
             if (is_array($node)) {
-                if (!isset($node["action"])) {
+                if (!isset($node['action'])) {
                     print_r($tree);
                     $this->doDie("Must contain 'action' key");
                 }
-                $action = $node["action"];
+                $action = $node['action'];
                 if (is_array($action)) {
                     $this->_collectNames($action, $names);
                     continue;

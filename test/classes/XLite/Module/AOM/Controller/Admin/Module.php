@@ -55,7 +55,7 @@ class XLite_Module_AOM_Controller_Admin_Module extends XLite_Controller_Admin_Mo
     protected function doActionUpdate()
     {
         if ($this->page == "AOM") {
-            $value = (is_array($_REQUEST["order_update_notification"])) ? $_REQUEST["order_update_notification"] : array();
+            $value = (is_array($_REQUEST['order_update_notification'])) ? $_REQUEST['order_update_notification'] : array();
 
             $config = new XLite_Model_Config();
             $config->createOption("AOM", "order_update_notification", serialize($value));

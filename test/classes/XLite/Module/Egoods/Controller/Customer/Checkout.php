@@ -38,7 +38,7 @@ implements XLite_Base_IDecorator
 {
     protected function doActionCheckout()
     {
-        $items = $this->cart->get("items");
+        $items = $this->cart->get('items');
         foreach ($items as $key => $i) {
             if(!$i->isValid()) {
                 $this->redirect("cart.php?target=checkout");

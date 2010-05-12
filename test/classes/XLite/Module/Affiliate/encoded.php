@@ -45,11 +45,11 @@ function func_Affiliate_charge(&$payment, $order)
     $commissions = $planCommission->calculate($order);
     if ($commissions >= 0.01) {
         // check for existing partner payment
-        $update = $payment->find("partner_id=".$order->getComplex('partner.profile_id')." AND order_id=".$order->get("order_id"));
+        $update = $payment->find("partner_id=".$order->getComplex('partner.profile_id')." AND order_id=".$order->get('order_id'));
         // save partner commissions
         $payment->set("commissions", $commissions);
         $payment->set("partner_id",  $order->getComplex('partner.profile_id'));
-        $payment->set("order_id",    $order->get("order_id"));
+        $payment->set("order_id",    $order->get('order_id'));
         // save payment
         if ($update) {
             $payment->update();
@@ -62,12 +62,12 @@ function func_Affiliate_charge(&$payment, $order)
             $rate = $payment->get("config.Affiliate.tier_commission_rates.$level");
             if ($rate > 0) {
                 $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
-                $update = $pp->find("partner_id=".$parent->get("profile_id")." AND order_id=".$order->get("order_id")." AND affiliate=".$affiliate);
+                $update = $pp->find("partner_id=".$parent->get('profile_id')." AND order_id=".$order->get('order_id')." AND affiliate=".$affiliate);
                 $pc =  round((double)($commissions / 100 * $rate + 0.00000000001), 2);
                 if ($pc >= 0.01) {
                     $pp->set("commissions", $pc);
-                    $pp->set("partner_id",  $parent->get("profile_id"));
-                    $pp->set("order_id",    $order->get("order_id"));
+                    $pp->set("partner_id",  $parent->get('profile_id'));
+                    $pp->set("order_id",    $order->get('order_id'));
                     $pp->set("affiliate",   $affiliate);
                     if ($update) {
                         $pp->update();
@@ -76,7 +76,7 @@ function func_Affiliate_charge(&$payment, $order)
                     }
                 }
             }
-            $affiliate = $parent->get("profile_id");
+            $affiliate = $parent->get('profile_id');
         }
     }
     return $commissions;
@@ -87,14 +87,14 @@ function func_Affiliate_calc_order_commissions(&$planCommission)
     $orderCommissions = 0;
     foreach ($planCommission->getComplex('order.items') as $item) {
         // search for iitem product commission
-        $pc = $planCommission->getProductCommission($item->get("product_id"));
+        $pc = $planCommission->getProductCommission($item->get('product_id'));
         if (!is_null($pc)) {
             $orderCommissions += func_Affiliate_calc_commission_rate($pc, $item);
             continue;
         }
         // search for item category commission 
         foreach ((array)$item->getComplex('product.categories') as $category) {
-            $cc = $planCommission->getCategoryCommission($category->get("category_id"));
+            $cc = $planCommission->getCategoryCommission($category->get('category_id'));
             if (!is_null($cc)) {
                 $orderCommissions += func_Affiliate_calc_commission_rate($cc, $item);
                 continue 2;  // next order item
@@ -112,12 +112,12 @@ function func_Affiliate_calc_order_commissions(&$planCommission)
 function func_Affiliate_calc_commission_rate($pc, $item) 
 {
     $result = 0;
-    if ($pc->get("commission_type") == "$") {
+    if ($pc->get('commission_type') == "$") {
         // absolute commission type, return value
-        $result = $pc->get("commission");
-    } elseif ($pc->get("commission_type") == "%") {
+        $result = $pc->get('commission');
+    } elseif ($pc->get('commission_type') == "%") {
         // percentage rate
-        $result = ($item->get("price") * $item->get("amount")) / 100 * $pc->get("commission");
+        $result = ($item->get('price') * $item->get('amount')) / 100 * $pc->get('commission');
     }
     $result = round((double)$result + 0.00000000001, 2);
     if ($result > 0.01) {

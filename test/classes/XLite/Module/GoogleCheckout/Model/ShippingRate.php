@@ -37,7 +37,7 @@ class XLite_Module_GoogleCheckout_Model_ShippingRate extends XLite_Model_Shippin
 {
     function getGoogleCheckoutCurrency()
     {
-        return $this->xlite->get("gcheckout_currency");
+        return $this->xlite->get('gcheckout_currency');
     }
 
     function getGoogleCheckoutXML()

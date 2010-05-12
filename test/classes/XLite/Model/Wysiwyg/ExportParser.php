@@ -51,7 +51,7 @@ class XLite_Model_Wysiwyg_ExportParser extends XLite_Core_FlexyCompiler
     function translateTemplate($src)
     {
         $lay = XLite_Model_Layout::getInstance();
-        return str_replace(array('{*', '*}', 'skins/' . $lay->get("skin") . '/' . $lay->get("locale") . '/style.css'), array('<!--*', '*-->', 'style.css'), $src);
+        return str_replace(array('{*', '*}', 'skins/' . $lay->get('skin') . '/' . $lay->get('locale') . '/style.css'), array('<!--*', '*-->', 'style.css'), $src);
     }
 
     function postprocess()
@@ -70,9 +70,9 @@ class XLite_Model_Wysiwyg_ExportParser extends XLite_Core_FlexyCompiler
             } else {
                 $token = array("type"=>"eof");
             }
-            if ($token["type"] == "attribute" && $insideWidget) {
-                $attr = $token["name"];
-                if (isset($this->tokens[$i+1]) && $this->tokens[$i+1]["type"] == "attribute-value") {
+            if ($token['type'] == "attribute" && $insideWidget) {
+                $attr = $token['name'];
+                if (isset($this->tokens[$i+1]) && $this->tokens[$i+1]['type'] == "attribute-value") {
                     $i++;
                     $val = $this->getTokenText($i);
                     $attributes[$attr] = $val;
@@ -82,36 +82,36 @@ class XLite_Model_Wysiwyg_ExportParser extends XLite_Core_FlexyCompiler
                     $attributesEvaled[$attr] = null;
                 }
             }
-            if ($token["type"] != "attribute" && $token["type"] != "attribute-value" && $attributes && $insideWidget) {
-////                if (isset($attributes["name"]) && !isset($attributes["class"]) && !isset($attributes["template"])) {
+            if ($token['type'] != "attribute" && $token['type'] != "attribute-value" && $attributes && $insideWidget) {
+////                if (isset($attributes['name']) && !isset($attributes['class']) && !isset($attributes['template'])) {
                     // fetch by name
-////                    $w = $namedWidgets[$attributes["name"]];
+////                    $w = $namedWidgets[$attributes['name']];
 ////                } else {
                     $w = new $this->widgetClass;
                     $w->set("attributes", $attributes);
                     $w->set("attributesEvaled", $attributesEvaled);
-                    if (isset($attributes["name"])) {
-                        if (!$w->get("template")) {
-                            $tw = $namedWidgets[$attributes["name"]];
+                    if (isset($attributes['name'])) {
+                        if (!$w->get('template')) {
+                            $tw = $namedWidgets[$attributes['name']];
                             if ($tw) {
-                                $w->set("template", $tw->get("template"));
+                                $w->set("template", $tw->get('template'));
                             }
                         }
 
-                        $namedWidgets[$attributes["name"]] = $w;
+                        $namedWidgets[$attributes['name']] = $w;
                     }
 ////                }
-                $w->set("startOffset", $this->tokens[$widgetInd]["start"]);
-                $w->set("endOffset", $this->tokens[$widgetInd]["end"]);
+                $w->set("startOffset", $this->tokens[$widgetInd]['start']);
+                $w->set("endOffset", $this->tokens[$widgetInd]['end']);
                 $this->addWidget($w);
             }
-            if ($token["type"] != "attribute" && $token["type"] != "attribute-value") {
+            if ($token['type'] != "attribute" && $token['type'] != "attribute-value") {
                 $insideWidget = false;
             }
-            if ($token["type"] == "tag" || $token["type"] == "open-close-tag") {
-                if (!strcasecmp($token["name"], "widget")) {
+            if ($token['type'] == "tag" || $token['type'] == "open-close-tag") {
+                if (!strcasecmp($token['name'], "widget")) {
                     $attributes = $attributesEvaled = array();
-                    if ($token["type"] == "open-close-tag") {
+                    if ($token['type'] == "open-close-tag") {
                         $attributes["open-close-tag"] = null;
                     }
                     $widgetInd = $i;
@@ -128,7 +128,7 @@ class XLite_Model_Wysiwyg_ExportParser extends XLite_Core_FlexyCompiler
             $config = new XLite_Model_Config();
             foreach ($config->findAll() as $c)
             {
-                $result['config.'.$c->get("category").'.'.$c->get("name")] = $c->get("value");
+                $result['config.'.$c->get('category').'.'.$c->get('name')] = $c->get('value');
             }
             $this->configVars = $result;
         }

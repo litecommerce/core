@@ -39,7 +39,7 @@ class XLite_Module_Promotion_Controller_Admin_SpecialOffers extends XLite_Contro
 
     function getSpecialOffers()
     {
-        switch ($this->get("sort")) {
+        switch ($this->get('sort')) {
             case "date_asc":
                 $s_order = "date ASC";
                 break;
@@ -80,9 +80,9 @@ class XLite_Module_Promotion_Controller_Admin_SpecialOffers extends XLite_Contro
             $this->specialOffers = $sp->findAll("status <> 'Trash'", $s_order);
         }
         foreach($this->specialOffers as $key => $offer) {
-            if ($this->specialOffers[$key]->get("end_date") < time())
+            if ($this->specialOffers[$key]->get('end_date') < time())
                 $this->specialOffers[$key]->set("status","Expired");
-            if ($this->specialOffers[$key]->get("status") == "Expired")
+            if ($this->specialOffers[$key]->get('status') == "Expired")
                 $this->specialOffers[$key]->set("enabled",0);
                 $this->specialOffers[$key]->update();
         }
@@ -94,7 +94,7 @@ class XLite_Module_Promotion_Controller_Admin_SpecialOffers extends XLite_Contro
         // set 'active' fields
         $so = new XLite_Module_Promotion_Model_SpecialOffer();
         foreach ($so->findAll() as $specialOffer) {
-            if (isset($_POST["active"]) && $_POST["active"][$specialOffer->get("offer_id")]) {
+            if (isset($_POST['active']) && $_POST['active'][$specialOffer->get('offer_id')]) {
                 $specialOffer->set("enabled", 1);
             } else {
                 $specialOffer->set("enabled", 0);
@@ -118,12 +118,12 @@ class XLite_Module_Promotion_Controller_Admin_SpecialOffers extends XLite_Contro
         if (!empty($this->offer_ids)) {
             foreach($this->offer_ids as $key => $value) {
                	$so = new XLite_Module_Promotion_Model_SpecialOffer($key);
-                if ( function_exists("func_is_clone_deprecated") && func_is_clone_deprecated() ) {
+                if ( function_exists('func_is_clone_deprecated') && func_is_clone_deprecated() ) {
                    	$clone = $so->cloneObject();
                 } else {
                     $clone = $so->clone();
                 }
-             	$clone->set("title",$so->get("title")." (CLONE)");
+             	$clone->set("title",$so->get('title')." (CLONE)");
                 $clone->update();
             }
         }

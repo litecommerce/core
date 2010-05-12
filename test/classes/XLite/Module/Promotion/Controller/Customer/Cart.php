@@ -39,18 +39,18 @@ class XLite_Module_Promotion_Controller_Customer_Cart extends XLite_Controller_C
 
     function handleRequest()
     {
-        $discountCoupon = $this->cart->get("DC");
+        $discountCoupon = $this->cart->get('DC');
         if ($discountCoupon)
             if (!$discountCoupon->checkCondition($this->cart)) {
-                $dc = $this->cart->get("DC");
-            	$this->session->set("couponFailed", $dc->get("coupon"));
+                $dc = $this->cart->get('DC');
+            	$this->session->set("couponFailed", $dc->get('coupon'));
                 $this->cart->set("DC", null); // remove coupon
                 $this->updateCart();
                 $this->redirect("cart.php?target=checkout&mode=couponFailed");
                 return;
             }
         
-        if ($this->get("target") == 'cart') {
+        if ($this->get('target') == 'cart') {
             $this->session->set("bonusListDisplayed", null);
         }
         parent::handleRequest();
@@ -71,7 +71,7 @@ class XLite_Module_Promotion_Controller_Customer_Cart extends XLite_Controller_C
         if ($this->discountCouponResult||!$dc->checkCondition($this->cart)) {
             $this->valid = false;
             // show error message
-            $this->session->set("couponFailed", $dc->get("coupon"));
+            $this->session->set("couponFailed", $dc->get('coupon'));
             $this->redirect("cart.php?target=checkout&mode=couponFailed");
             return;
         }
@@ -86,7 +86,7 @@ class XLite_Module_Promotion_Controller_Customer_Cart extends XLite_Controller_C
     
     function isShowDCForm()
     {
-        return is_null($this->cart->get("DC")) && !$this->cart->is("empty") && $this->config->getComplex('Promotion.allowDC');
+        return is_null($this->cart->get('DC')) && !$this->cart->is('empty') && $this->config->getComplex('Promotion.allowDC');
     }
 
 }

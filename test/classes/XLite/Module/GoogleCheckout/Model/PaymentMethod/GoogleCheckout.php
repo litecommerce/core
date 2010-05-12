@@ -60,12 +60,12 @@ class XLite_Module_GoogleCheckout_Model_PaymentMethod_GoogleCheckout extends XLi
 
     function get($name)
     {
-        if ($name == "enabled" && !$this->xlite->is("adminZone")) {
+        if ($name == "enabled" && !$this->xlite->is('adminZone')) {
             return false;
         }
 
         if ($name == "parent_enabled") {
-            return parent::get("enabled");
+            return parent::get('enabled');
         }
 
         return parent::get($name);
@@ -118,7 +118,7 @@ class XLite_Module_GoogleCheckout_Model_PaymentMethod_GoogleCheckout extends XLi
 
     function getOrderFromCallback(&$xmlData, $method, $fatal=true)
     {
-        $paymentParams = $this->get("params");
+        $paymentParams = $this->get('params');
 
         $merchantNote = $this->getXMLDataByPath($xmlData, "$method/SHOPPING-CART/MERCHANT-PRIVATE-DATA/MERCHANT-NOTE");
         if (!isset($merchantNote)) {
@@ -131,13 +131,13 @@ class XLite_Module_GoogleCheckout_Model_PaymentMethod_GoogleCheckout extends XLi
             $this->_errorHandleCallback(CALLBACK_ERROR_BAD_ORDER_ID, $fatal);
             return null;
         }
-        if (strlen($paymentParams["order_prefix"]) > 0) {
-            if (substr($orderID[0], 0, strlen($paymentParams["order_prefix"])) != $paymentParams["order_prefix"]) {
+        if (strlen($paymentParams['order_prefix']) > 0) {
+            if (substr($orderID[0], 0, strlen($paymentParams['order_prefix'])) != $paymentParams['order_prefix']) {
                 $this->_errorHandleCallback(CALLBACK_ERROR_BAD_ORDER_ID, $fatal);
                 return null;
             }
 
-            $orderID[0] = intval(substr($orderID[0], strlen($paymentParams["order_prefix"])));
+            $orderID[0] = intval(substr($orderID[0], strlen($paymentParams['order_prefix'])));
             if ($orderID[0] <= 0) {
                 $this->_errorHandleCallback(CALLBACK_ERROR_BAD_ORDER_ID, $fatal);
                 return null;
@@ -164,7 +164,7 @@ class XLite_Module_GoogleCheckout_Model_PaymentMethod_GoogleCheckout extends XLi
         $method = key($xmlData);
 
         if (trim($method) == "") {
-            $this->xlite->logger->log("Callback method not set. Possible incorrect XML data.");
+            $this->xlite->logger->log('Callback method not set. Possible incorrect XML data.');
             exit;
         }
 
@@ -247,7 +247,7 @@ EOT;
             $google_id = $this->getXMLDataByPath($xmlData, "NEW-ORDER-NOTIFICATION/GOOGLE-ORDER-NUMBER");
             $order = $this->getOrderFromCallback($xmlData, "NEW-ORDER-NOTIFICATION", false);
             if ($order != null) {
-                $order_num = $this->getComplex('params.order_prefix').$order->get("order_id");
+                $order_num = $this->getComplex('params.order_prefix').$order->get('order_id');
                 GoogleCheckout_OrderMerchantOrderNumber($this, $google_id, $order_num);
             }
         }
@@ -278,7 +278,7 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
 
             return self::PAYMENT_SILENT;
         } else {
-            $error = $response["ERROR"]["ERROR-MESSAGE"];
+            $error = $response['ERROR']["ERROR-MESSAGE"];
             $order->setComplex("details.error", (($error) ? $error : "Unknown"));
             $order->setComplex("detailLabels.error", "Error");
             $order->update();
@@ -296,8 +296,8 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
 
     function handleConfigRequest()
     {
-        $params = $_POST["params"];
-        $subparams = $this->get("params");
+        $params = $_POST['params'];
+        $subparams = $this->get('params');
 
         $statuses = array("chargeable", "charged", "failed");
         foreach ($statuses as $name) {
@@ -306,9 +306,9 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
             if ($this->xlite->AOMEnabled) {
                 $status = new XLite_Module_AOM_Model_OrderStatus();
                 if ($status->find("status='".$params[$field]."'")) {
-                    if ($status->get("parent")) {
-                        $params[$field] = $status->get("parent");
-                        $result = $status->get("status");
+                    if ($status->get('parent')) {
+                        $params[$field] = $status->get('parent');
+                        $result = $status->get('status');
                     }
                 }
             }
@@ -321,37 +321,37 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
 
         // dublicate "default_shipping_cost" in config
         $config = new XLite_Model_Config();
-        $config->createOption("GoogleCheckout", "default_shipping_cost", $params["default_shipping_cost"]);
+        $config->createOption("GoogleCheckout", "default_shipping_cost", $params['default_shipping_cost']);
     }
 
     function isCheckAvs($value)
     {
-        if (!isset($this->params["check_avs"]) || (isset($this->params["check_avs"]) && !is_array($this->params["check_avs"]))) {
+        if (!isset($this->params['check_avs']) || (isset($this->params['check_avs']) && !is_array($this->params['check_avs']))) {
             return false;
         }
 
-        return in_array($value, $this->params["check_avs"]);
+        return in_array($value, $this->params['check_avs']);
     }
 
     function isCheckCvn($value)
     {
-        if (!isset($this->params["check_cvn"]) || (isset($this->params["check_cvn"]) && !is_array($this->params["check_cvn"]))) {
+        if (!isset($this->params['check_cvn']) || (isset($this->params['check_cvn']) && !is_array($this->params['check_cvn']))) {
             return false;
         }
 
-        return in_array($value, $this->params["check_cvn"]);
+        return in_array($value, $this->params['check_cvn']);
     }
 
     function getDefaultShippingCost()
     {
-        $origValue = $this->params["default_shipping_cost"];
+        $origValue = $this->params['default_shipping_cost'];
         $value = doubleval($origValue);
         if ($value < 0) {
             $value = 0;
         }
 
         if ($origValue != $value) {
-            $this->params["default_shipping_cost"] = $value;
+            $this->params['default_shipping_cost'] = $value;
             $this->set("params", $this->params);
             $this->update();
         }
@@ -361,24 +361,24 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
 
     function getChargeableStatus()
     {
-        return ($this->params["substatus_chargeable"] && $this->xlite->AOMEnabled) ? $this->params["substatus_chargeable"] : $this->params["status_chargeable"];
+        return ($this->params['substatus_chargeable'] && $this->xlite->AOMEnabled) ? $this->params['substatus_chargeable'] : $this->params['status_chargeable'];
     }
 
     function getChargedStatus()
     {
-        return ($this->params["substatus_charged"] && $this->xlite->AOMEnabled) ? $this->params["substatus_charged"] : $this->params["status_charged"];
+        return ($this->params['substatus_charged'] && $this->xlite->AOMEnabled) ? $this->params['substatus_charged'] : $this->params['status_charged'];
     }
 
     function getFailedStatus()
     {
-        return ($this->params["substatus_failed"] && $this->xlite->AOMEnabled) ? $this->params["substatus_failed"] : $this->params["status_failed"];
+        return ($this->params['substatus_failed'] && $this->xlite->AOMEnabled) ? $this->params['substatus_failed'] : $this->params['status_failed'];
     }
 
     function isOnlineShippingsActive()
     {
         $so = new XLite_Model_Shipping();
-        foreach ($so->get("modules") as $module) {
-            $class_name = $module->get("class");
+        foreach ($so->get('modules') as $module) {
+            $class_name = $module->get('class');
             if ($class_name == "offline") {
                 continue;
             }
@@ -421,7 +421,7 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
     function getOrderMerchantNote($order, $paymentParams)
     {
         // switch to customer area for correct order items fingerprint calc.
-        $is_admin = $this->xlite->is("adminZone");
+        $is_admin = $this->xlite->is('adminZone');
         $this->xlite->set("adminZone", false);
 
         $fingerprint = "";
@@ -431,12 +431,12 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
             $fingerprint = $order->getItemsFingerprint();
         }
 
-        $id = $order->get("order_id");
-        $idText = $paymentParams["order_prefix"] . $id;
+        $id = $order->get('order_id');
+        $idText = $paymentParams['order_prefix'] . $id;
         $idKey = array();
         $idKey[] = "OrderID=" . $id;
-        $idKey[] = "OrderPrefix=" . $paymentParams["order_prefix"];
-        $idKey[] = "OrderDate=" . $order->get("date");
+        $idKey[] = "OrderPrefix=" . $paymentParams['order_prefix'];
+        $idKey[] = "OrderDate=" . $order->get('date');
         $idKey[] = "OrderItems=" . $fingerprint;
         $idKey = strrev(md5(implode("|", $idKey)));
         $idText .= " ($idKey)";
@@ -448,19 +448,19 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
 
     function getOrderCheckoutRequest($order, $paymentParams)
     {
-        $shop_url = htmlentities($this->xlite->getShopUrl("cart.php"));
+        $shop_url = htmlentities($this->xlite->getShopUrl('cart.php'));
         $merchantNote = $this->getOrderMerchantNote($order, $paymentParams);
         
-        $order_total = $order->get("total");
+        $order_total = $order->get('total');
 
-        $items = $order->getGoogleCheckoutXML("items");
-        $shippings = $order->getGoogleCheckoutXML("shippings");
-        $tax = $order->getGoogleCheckoutXML("tax");
+        $items = $order->getGoogleCheckoutXML('items');
+        $shippings = $order->getGoogleCheckoutXML('shippings');
+        $tax = $order->getGoogleCheckoutXML('tax');
 
         $callbackURL = htmlentities($this->getCallbackURL());
 
-        $discount_coupon = (($order->is("googleDiscountCouponsAvailable")) ? "true" : "false");
-        $gift_certificate = (($order->is("googleGiftCertificatesAvailable")) ? "true" : "false");
+        $discount_coupon = (($order->is('googleDiscountCouponsAvailable')) ? "true" : "false");
+        $gift_certificate = (($order->is('googleGiftCertificatesAvailable')) ? "true" : "false");
 
         return <<<EOT
 <?xml version="1.0" encoding="UTF-8"?>

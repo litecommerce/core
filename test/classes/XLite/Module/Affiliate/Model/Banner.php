@@ -60,7 +60,7 @@ class XLite_Module_Affiliate_Model_Banner extends XLite_Model_Abstract
     function getImage()
     {
         if (is_null($this->image)) {
-            $this->image = new XLite_Model_Image("banner_image", $this->get("banner_id"));
+            $this->image = new XLite_Model_Image("banner_image", $this->get('banner_id'));
         }
         return $this->image;
     }
@@ -72,8 +72,8 @@ class XLite_Module_Affiliate_Model_Banner extends XLite_Model_Abstract
 
     function filter()
     {
-        if (!$this->xlite->is("adminZone")) {
-            return (boolean) $this->get("enabled");
+        if (!$this->xlite->is('adminZone')) {
+            return (boolean) $this->get('enabled');
         }
         return parent::filter();
     }

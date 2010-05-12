@@ -122,8 +122,8 @@ class XLite_Controller_Admin_Wysiwyg extends XLite_Controller_Admin_Abstract
         global $options;
         // reset Layout settings to customer default
         $layout = XLite_Model_Layout::getInstance(); //::getInstance();
-        $layout->set("skin", $options["skin_details"]["skin"]);
-        $layout->set("locale", $options["skin_details"]["locale"]);
+        $layout->set("skin", $options['skin_details']["skin"]);
+        $layout->set("locale", $options['skin_details']["locale"]);
     }
 
     function _showBackLink()
@@ -143,6 +143,6 @@ class XLite_Controller_Admin_Wysiwyg extends XLite_Controller_Admin_Abstract
 
     function getMemoryLimit()
     {
-        return @ini_get("memory_limit");
+        return @ini_get('memory_limit');
     }
 }

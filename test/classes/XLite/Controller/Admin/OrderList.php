@@ -356,15 +356,15 @@ class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_Abstract
     {
         $w = new XLite_View_ExportXLS();
         $w->component = $this;
-        $this->startDownload("orders.xls");
+        $this->startDownload('orders.xls');
         $this->ColumnCount = 9;
-        $this->RowCount = $this->get("count") + 2;
-        $this->endRow = $this->get("count") + 1;
-        $profile = $this->auth->get("profile");
+        $this->RowCount = $this->get('count') + 2;
+        $this->endRow = $this->get('count') + 1;
+        $profile = $this->auth->get('profile');
         $time = time();
         $this->create_date = strftime("%Y-%m-%d", $time);
         $this->create_time = strftime("%H:%M:%S", $time);
-        $this->author = $profile->get("billing_firstname") . " " . $profile->get("billing_lastname");
+        $this->author = $profile->get('billing_firstname') . " " . $profile->get('billing_lastname');
         $w->init();
         $w->display();
 
@@ -399,7 +399,7 @@ class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_Abstract
      */
     public function rowCount($order)
     {
-        return 38 + count($order->get("items"));
+        return 38 + count($order->get('items'));
     }
 
     /**

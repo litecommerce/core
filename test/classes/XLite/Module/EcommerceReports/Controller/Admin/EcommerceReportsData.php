@@ -54,9 +54,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReportsData extend
         // $this->genOrders();
 
         set_time_limit(180);
-        $data = $this->get("sales");
-        $data["signature"] = $this->signature;
-        $data["type"]      = count($data["x"]) > $this->limit? "lines" : $this->type;
+        $data = $this->get('sales');
+        $data['signature'] = $this->signature;
+        $data['type']      = count($data['x']) > $this->limit? "lines" : $this->type;
         $result = array();
         $result[] = (object)$data;
         print "&falshData=" . urlencode(serialize($result)) . "&";
@@ -88,7 +88,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReportsData extend
         // build cloud of product IDs
         $p = new XLite_Model_Product();
         // get min price and total products cost
-        $table = $this->db->getTableByAlias("products");
+        $table = $this->db->getTableByAlias('products');
         $minPrice = ceil($p->db->getOne("SELECT MIN(price) FROM $table"));
         $maxPrice = ceil($p->db->getOne("SELECT MAX(price) FROM $table"));
         $sumPrice = ceil($p->db->getOne("SELECT SUM(price) FROM $table"));
@@ -99,9 +99,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReportsData extend
         $maxIndex = 0;
         $minIndex = 99999999999;
         foreach ($products as $id => $info) {
-            $products[$id]["index"] = $maxIndex + ceil($maxPrice / $products[$id]["price"]);
-            $maxIndex = max($maxIndex, $products[$id]["index"]);
-            $minIndex = min($minIndex, $products[$id]["index"]);
+            $products[$id]['index'] = $maxIndex + ceil($maxPrice / $products[$id]['price']);
+            $maxIndex = max($maxIndex, $products[$id]['index']);
+            $minIndex = min($minIndex, $products[$id]['index']);
         }
         do {
             // seed with microseconds
@@ -129,10 +129,10 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReportsData extend
                     srand((float) $sec + ((float) $usec * 100000));
                     $index = mt_rand($minIndex, $maxIndex);
                     foreach ($products as $info) {
-                        if ($index > $info["index"]) {
+                        if ($index > $info['index']) {
                             continue;
                         } else {
-                            $product_id = $info["product_id"];
+                            $product_id = $info['product_id'];
                             break;
                         }
                     }
@@ -143,7 +143,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReportsData extend
                     list($usec, $sec) = explode(' ', microtime());
                     srand((float) $sec + ((float) $usec * 100000));
                     $amount = mt_rand(1, $maxAmount);
-                    if ($product->get("price") > 100) {
+                    if ($product->get('price') > 100) {
                         $amount = 1; // no more that 1 expensive product
                     }
                     // create order item
@@ -163,17 +163,17 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReportsData extend
                 // default profile
                 $profile = new XLite_Model_Profile(1);
                 $op = new XLite_Model_Profile();
-                $properties = $profile->get("properties");
-                if (isset($properties["profile_id"])) {
-                	unset($properties["profile_id"]);
+                $properties = $profile->get('properties');
+                if (isset($properties['profile_id'])) {
+                	unset($properties['profile_id']);
                 }
                 $op->set("properties", $properties);
-                $op->set("order_id", $order->get("order_id"));
+                $op->set("order_id", $order->get('order_id'));
                 $op->create();
 
                 // link order to profile
-                $order->set("profile_id", $op->get("profile_id"));
-                $order->set("orig_profile_id", $profile->get("profile_id"));
+                $order->set("profile_id", $op->get('profile_id'));
+                $order->set("orig_profile_id", $profile->get('profile_id'));
                 $order->update();
 
                 echo " finished<br>";

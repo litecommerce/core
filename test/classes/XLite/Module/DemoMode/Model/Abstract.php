@@ -80,7 +80,7 @@ class XLite_Module_DemoMode_Model_Abstract extends XLite_Model_Abstract implemen
 
     function _updateProperties(array $properties = array())
     {
-        if (!XLite_Model_Session::getInstance()->get("superUser")) {
+        if (!XLite_Model_Session::getInstance()->get('superUser')) {
             $path = array($this->alias, '');
             foreach ($this->primaryKey as $pkey) {
                 $path[] = $properties[$pkey];
@@ -98,7 +98,7 @@ class XLite_Module_DemoMode_Model_Abstract extends XLite_Model_Abstract implemen
 
     function update()
     {
-        if (!XLite_Model_Session::getInstance()->get("superUser")) {
+        if (!XLite_Model_Session::getInstance()->get('superUser')) {
             $path = array($this->alias, '');
             foreach ($this->primaryKey as $pkey) {
                 $path[] = $this->properties[$pkey];
@@ -106,7 +106,7 @@ class XLite_Module_DemoMode_Model_Abstract extends XLite_Model_Abstract implemen
             if ($this->alias == "config" ||
                 $this->alias == "modules" ||
                 $this->alias == "payment_methods" ||
-                $this->alias == "profiles" && $this->get("profile_id") == 1) {
+                $this->alias == "profiles" && $this->get('profile_id') == 1) {
                 $this->_beforeSave();
                 foreach ($this->properties as $key => $value) {
                     if ($this->alias == "payment_methods" && ($key != "orderby" ) || $this->alias != "payment_methods") {

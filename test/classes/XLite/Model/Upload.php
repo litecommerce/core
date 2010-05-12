@@ -173,10 +173,10 @@ class XLite_Model_Upload extends XLite_Base
                 return "The file has not been uploaded.";
             break;
             case LC_UPLOAD_TMPDIR_NO:
-                return "The \"" . ini_get("upload_tmp_dir") . "\" directory does not exist, that is why it is impossible to upload files to your server. This is due to incorrect web server configuration, please contact your hosting provider in order to correct the settings.";
+                return "The \"" . ini_get('upload_tmp_dir') . "\" directory does not exist, that is why it is impossible to upload files to your server. This is due to incorrect web server configuration, please contact your hosting provider in order to correct the settings.";
             break;
             case LC_UPLOAD_TMPDIR_RO:
-                return "The \"" . ini_get("upload_tmp_dir") . "\" directory is not writable, that is why it is impossible to upload files to your server. This is due to incorrect web server configuration, please contact your hosting provider in order to correct the settings.";
+                return "The \"" . ini_get('upload_tmp_dir') . "\" directory is not writable, that is why it is impossible to upload files to your server. This is due to incorrect web server configuration, please contact your hosting provider in order to correct the settings.";
             break;
             case LC_UPLOAD_TARGET_NO:
                 return "The \"" . $this->_dir . "\" directory does not exist.";

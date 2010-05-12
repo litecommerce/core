@@ -38,8 +38,8 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_Order extends XLite_Control
     function action_submit_password()
     {
         $gpg = new XLite_Module_AdvancedSecurity_Model_GPG();
-        if ($gpg->isPasswordValid($this->get("master_password"))) {
-            $this->session->set("masterPassword", $this->get("master_password"));
+        if ($gpg->isPasswordValid($this->get('master_password'))) {
+            $this->session->set("masterPassword", $this->get('master_password'));
         } else {
             $this->set("valid", false);
             $this->set("invalidMasterPassword", true);

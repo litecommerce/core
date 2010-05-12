@@ -22,8 +22,8 @@ define("PACKING_EXECUTION_TIME", 3600);
 ///////////////////////////////////////////////////////////////////////////////////////////
 function UPSOnlineTools_rotateItem($item)
 {
-    $temp = $item->get("width");
-    $item->set("width", $item->get("length"));
+    $temp = $item->get('width');
+    $item->set("width", $item->get('length'));
     $item->set("length", $temp);
 
     return $item;
@@ -32,24 +32,24 @@ function UPSOnlineTools_rotateItem($item)
 function UPSOnlineTools_dropItems(&$items)
 {
     foreach ($items as $k=>$item) {
-        if ($item->get("handle_care"))
+        if ($item->get('handle_care'))
             continue;
 
-        $temp = $item->get("height");
-        $items[$k]->set("height", $item->get("length"));
+        $temp = $item->get('height');
+        $items[$k]->set("height", $item->get('length'));
         $items[$k]->set("length", $temp);
     }
 }
 
 function UPSOnlineTools_sort_by_width($a, $b)
 {
-    if ($a->get("width") == $b->get("width")) {
-        if ($a->get("length") < $b->get("length")) {
+    if ($a->get('width') == $b->get('width')) {
+        if ($a->get('length') < $b->get('length')) {
             return true;
         }
     }
 
-    if ($a->get("width") < $b->get("width")) {
+    if ($a->get('width') < $b->get('width')) {
         return true;
     }
 
@@ -58,7 +58,7 @@ function UPSOnlineTools_sort_by_width($a, $b)
 
 function UPSOnlineTools_sort_by_height($a, $b)
 {
-    if ($a->get("height") < $b->get("height")) {
+    if ($a->get('height') < $b->get('height')) {
         return true;
     }
 
@@ -82,20 +82,20 @@ function UPSOnlineTools_orientItems($width, $length, $height, &$items)
     // Check for problem is solveable
     foreach ($items as $k=>$item) {
         $skipped = false;
-        if ($item->get("handle_care")) {
-            if (($item->get("height") > $height) || 
-                ($item->get("width") > $width || $item->get("length") > $length) &&
-                ($item->get("width") > $length || $item->get("length") > $width)) {
+        if ($item->get('handle_care')) {
+            if (($item->get('height') > $height) || 
+                ($item->get('width') > $width || $item->get('length') > $length) &&
+                ($item->get('width') > $length || $item->get('length') > $width)) {
                 $skipped_items[] = $item;
                 $skipped = true;
             }
         } else {
-            if (($item->get("height") > $height || $item->get("width") > $width || $item->get("length") > $length) &&
-                ($item->get("height") > $height || $item->get("width") > $length || $item->get("length") > $width) &&
-                ($item->get("height") > $width || $item->get("width") > $height || $item->get("length") > $length) &&
-                ($item->get("height") > $length || $item->get("width") > $width || $item->get("length") > $height) &&
-                ($item->get("height") > $width || $item->get("width") > $length || $item->get("length") > $height) &&
-                ($item->get("height") > $length || $item->get("width") > $height || $item->get("length") > $width)) {
+            if (($item->get('height') > $height || $item->get('width') > $width || $item->get('length') > $length) &&
+                ($item->get('height') > $height || $item->get('width') > $length || $item->get('length') > $width) &&
+                ($item->get('height') > $width || $item->get('width') > $height || $item->get('length') > $length) &&
+                ($item->get('height') > $length || $item->get('width') > $width || $item->get('length') > $height) &&
+                ($item->get('height') > $width || $item->get('width') > $length || $item->get('length') > $height) &&
+                ($item->get('height') > $length || $item->get('width') > $height || $item->get('length') > $width)) {
                 $skipped_items[] = $item;
                 $skipped = true;
             }
@@ -111,30 +111,30 @@ function UPSOnlineTools_orientItems($width, $length, $height, &$items)
 
     // "Drop" items on "best" side
     foreach ($items as $k=>$item) {
-        if ($item->get("handle_care"))
+        if ($item->get('handle_care'))
             continue;
 
         $plane = 1;
-        $s1 = $item->get("width") * $item->get("length");
-        $s2 = $item->get("width") * $item->get("height");
-        $s3 = $item->get("length") * $item->get("height");
+        $s1 = $item->get('width') * $item->get('length');
+        $s2 = $item->get('width') * $item->get('height');
+        $s3 = $item->get('length') * $item->get('height');
 
-        if (($s2 >= $s1 && $s2 >= $s3) && (($width >= $item->get("width") && $length >= $item->get("height")) || ($length >= $item->get("width") && $width >= $item->get("height")))) {
+        if (($s2 >= $s1 && $s2 >= $s3) && (($width >= $item->get('width') && $length >= $item->get('height')) || ($length >= $item->get('width') && $width >= $item->get('height')))) {
             $plane = 2;
-        } elseif (($s3 > $s1 && $s3 > $s2) && (($width >= $item->get("length") && $length >= $item->get("height")) || ($width >= $item->get("height") && $length >= $item->get("length")))) {
+        } elseif (($s3 > $s1 && $s3 > $s2) && (($width >= $item->get('length') && $length >= $item->get('height')) || ($width >= $item->get('height') && $length >= $item->get('length')))) {
             $plane = 3;
         }
 
         switch ($plane) {
             case 2:    // by width
-                $temp = $item->get("length");
-                $item->set("length", $item->get("height"));
+                $temp = $item->get('length');
+                $item->set("length", $item->get('height'));
                 $item->set("height", $temp);
             break;
 
             case 3:    // by height
-                $temp = $item->get("width");
-                $item->set("width", $item->get("height"));
+                $temp = $item->get('width');
+                $item->set("width", $item->get('height'));
                 $item->set("height", $temp);
             break;
 
@@ -149,14 +149,14 @@ function UPSOnlineTools_orientItems($width, $length, $height, &$items)
     // Rotate items belong Z (vertical) axis
     $max_width = 0;
     foreach ($items as $k=>$item) {
-        if ($items[$k]->get("length") > $items[$k]->get("width")) {
-            $temp = $items[$k]->get("width");
-            $items[$k]->set("width", $items[$k]->get("length"));
+        if ($items[$k]->get('length') > $items[$k]->get('width')) {
+            $temp = $items[$k]->get('width');
+            $items[$k]->set("width", $items[$k]->get('length'));
             $items[$k]->set("length", $temp);
         }
 
-        if ($items[$k]->get("width") > $max_width)
-            $max_width = $items[$k]->get("width");
+        if ($items[$k]->get('width') > $max_width)
+            $max_width = $items[$k]->get('width');
     }
 
     return $skipped_items;
@@ -689,7 +689,7 @@ function UPSOnlineTools_packItems($width, $length, $height, $weight, &$items, $o
     if ($weight > 0) {
         $items_next = array();
         foreach ($items as $item) {
-            if ($weight < $item->get("weight")) {
+            if ($weight < $item->get('weight')) {
                 $skiped_items[] = $item;
             } else {
                 $items_next[] = $item;
@@ -731,7 +731,7 @@ function UPSOnlineTools_solve_binpack($width, $length, $height, $weight, &$items
 {
     $back_items = $items;
 
-    $_max_execution_time = ini_get("max_execution_time");
+    $_max_execution_time = ini_get('max_execution_time');
     ini_set("max_execution_time", PACKING_EXECUTION_TIME);
 
     if (count($items) > PACKING_SIMPLIFY_AFTER) {
@@ -851,7 +851,7 @@ function UPSOnlineTools_progressive_placeItem($_this, &$level, &$items, $item_we
 
     $a = $b = array();
     foreach ($items as $item) {
-        if ($item->get("height") > $avg_height) {
+        if ($item->get('height') > $avg_height) {
             $a[] = $item;
         } else {
             $b[] = $item;
@@ -871,18 +871,18 @@ function UPSOnlineTools_progressive_placeItem($_this, &$level, &$items, $item_we
     $spaces = $level->getSubspaces();
 
     foreach ($items as $key=>$item) {
-        if ($item->get("weight") > $item_weight_limit && $_this->getWeightLimit() > 0) {
+        if ($item->get('weight') > $item_weight_limit && $_this->getWeightLimit() > 0) {
             continue;
         }
 
-        if ($item->get("height") > $level->getHeight()) {
+        if ($item->get('height') > $level->getHeight()) {
             continue;
         }
 
         // Try to place item in equal dimensions with "+/-" threshold
         foreach ($spaces as $k=>$space) {
-            $dw = $space->width - $item->get("width");
-            $dh = $space->length - $item->get("length");
+            $dw = $space->width - $item->get('width');
+            $dh = $space->length - $item->get('length');
             if ($dw >= 0 && $dw < $_this->threshold && $dh >= 0 && $dh < $_this->threshold) {
                 $space_id = $k;
                 $place_item = true;
@@ -890,8 +890,8 @@ function UPSOnlineTools_progressive_placeItem($_this, &$level, &$items, $item_we
             }
 
             // check 'rotated' item
-            $dw = $space->width - $item->get("length");
-            $dh = $space->length - $item->get("width");
+            $dw = $space->width - $item->get('length');
+            $dh = $space->length - $item->get('width');
             if ($dw >= 0 && $dw < $_this->threshold && $dh >= 0 && $dh < $_this->threshold) {
                 $space_id = $k;
                 $item = UPSOnlineTools_rotateItem($item);
@@ -906,20 +906,20 @@ function UPSOnlineTools_progressive_placeItem($_this, &$level, &$items, $item_we
 //        $_this->threshold2 = 0;
         if (!$place_item) {
             foreach ($spaces as $k=>$space) {
-                $dw = $space->width - $item->get("width");
-                $dh = $space->length - $item->get("length");
-                if (($dw >= 0 && $dw < $_this->threshold2 && $space->length > $item->get("length")) ||
-                    ($dh >= 0 && $dh < $_this->threshold && $space->width > $item->get("width"))) {
+                $dw = $space->width - $item->get('width');
+                $dh = $space->length - $item->get('length');
+                if (($dw >= 0 && $dw < $_this->threshold2 && $space->length > $item->get('length')) ||
+                    ($dh >= 0 && $dh < $_this->threshold && $space->width > $item->get('width'))) {
                     $space_id = $k;
                     $place_item = true;
                     $place_method = "one_size_A";
                 }
 
                 // check 'rotated' item
-                $dw = $space->width - $item->get("length");
-                $dh = $space->length - $item->get("width");
-                if (($dw >= 0 && $dw < $_this->threshold2 && $space->length > $item->get("width")) ||
-                    ($dh >= 0 && $dh < $_this->threshold && $space->width > $item->get("length"))) {
+                $dw = $space->width - $item->get('length');
+                $dh = $space->length - $item->get('width');
+                if (($dw >= 0 && $dw < $_this->threshold2 && $space->length > $item->get('width')) ||
+                    ($dh >= 0 && $dh < $_this->threshold && $space->width > $item->get('length'))) {
                     $space_id = $k;
                     $item = UPSOnlineTools_rotateItem($item);
                     $place_item = true;
@@ -934,11 +934,11 @@ function UPSOnlineTools_progressive_placeItem($_this, &$level, &$items, $item_we
         // if item is bigger than space, try to rotate
         if (!$place_item) {
             foreach ($spaces as $k=>$space) {
-                if (!$space->isPlaceable($item->get("width"), $item->get("length"))) {
+                if (!$space->isPlaceable($item->get('width'), $item->get('length'))) {
                     // if item not placeable, try to rotate it
                     $item = UPSOnlineTools_rotateItem($item);
 
-                    if (!$space->isPlaceable($item->get("width"), $item->get("length"))) {
+                    if (!$space->isPlaceable($item->get('width'), $item->get('length'))) {
                         $item = UPSOnlineTools_rotateItem($item);
                         continue;
                     }
@@ -955,12 +955,12 @@ function UPSOnlineTools_progressive_placeItem($_this, &$level, &$items, $item_we
         if ($place_item) {
             $space = $spaces[$space_id];
 
-            $sub = $space->placeBox($item->get("width"), $item->get("length"));
+            $sub = $space->placeBox($item->get('width'), $item->get('length'));
 
             // add subspace as used
             $used_space = new XLite_Module_UPSOnlineTools_Model_Subspace();
-            $used_space->init($item->get("width"), $item->get("length"), $space->left, $space->top);
-            $used_space->setUpperLimit($level->getBottomHeight() + $item->get("height"));
+            $used_space->init($item->get('width'), $item->get('length'), $space->left, $space->top);
+            $used_space->setUpperLimit($level->getBottomHeight() + $item->get('height'));
             $level->addUsedSpace($used_space);
 
             unset($items[$key]);
@@ -973,11 +973,11 @@ function UPSOnlineTools_progressive_placeItem($_this, &$level, &$items, $item_we
             // create new container item
             $cont_item = new XLite_Module_UPSOnlineTools_Model_ContainerItem();
 
-            $cont_item->item_id = $item->get("OrderItemId");
-            $cont_item->global_id = $item->get("GlobalId");
+            $cont_item->item_id = $item->get('OrderItemId');
+            $cont_item->global_id = $item->get('GlobalId');
             $cont_item->setPosition($space->left, $space->top);
-            $cont_item->setDimensions($item->get("width"), $item->get("length"), $item->get("height"));
-            $cont_item->setWeight($item->get("weight"));
+            $cont_item->setDimensions($item->get('width'), $item->get('length'), $item->get('height'));
+            $cont_item->setWeight($item->get('weight'));
 
             $level->addItem($cont_item);
 
@@ -1050,7 +1050,7 @@ function UPSOnlineTools_getLayoutSkinPath()
 {
     // get layout path
     $layout = XLite_Model_Layout::getInstance();
-    return $layout->get("path");
+    return $layout->get('path');
 }
 
 function UPSOnlineTools_displayLevel_gdlib($width, $length, $items, $dirt_regions, $_width)
@@ -1085,22 +1085,22 @@ function UPSOnlineTools_displayLevel_gdlib($width, $length, $items, $dirt_region
             $color = array_shift($colors);
             $colors[] = $color;
 
-            $left = $item["left"] * $scale;
-            $right = ($item["left"] + $item["width"]) * $scale;
-            $top = $item["top"] * $scale;
-            $bottom = ($item["top"] + $item["length"]) * $scale;
+            $left = $item['left'] * $scale;
+            $right = ($item['left'] + $item['width']) * $scale;
+            $top = $item['top'] * $scale;
+            $bottom = ($item['top'] + $item['length']) * $scale;
             imagefilledrectangle($image, $left, $top, $right, $bottom, $color);
             imagerectangle($image, $left, $top, $right, $bottom, $dirt);
-            imagestring($image, 5, $left+2, $top, $item["global_id"], $font_color);
+            imagestring($image, 5, $left+2, $top, $item['global_id'], $font_color);
         }
     }
 
     if (is_array($dirt_regions) && count($dirt_regions) > 0) {
         foreach ($dirt_regions as $region) {
-            $left = $region["left"] * $scale;
-            $right = $region["top"] * $scale;
-            $top = ($region["left"] + $region["width"]) * $scale;
-            $bottom = ($region["top"] + $region["length"]) * $scale;
+            $left = $region['left'] * $scale;
+            $right = $region['top'] * $scale;
+            $top = ($region['left'] + $region['width']) * $scale;
+            $bottom = ($region['top'] + $region['length']) * $scale;
 
             imagefilledrectangle($image, $left, $right, $top, $bottom, $dirt);
         }
@@ -1116,7 +1116,7 @@ function UPSOnlineTools_displayLevel_gdlib($width, $length, $items, $dirt_region
 
 function UPSOnlineTools_displayContainer_div($_this, $container, $_left, $_top, $_width, $_height)
 {
-    if (!isset($container["levels"]) || count($container["levels"]) <= 0 || $_this->xlite->config->getComplex('UPSOnlineTools.display_gdlib')) {
+    if (!isset($container['levels']) || count($container['levels']) <= 0 || $_this->xlite->config->getComplex('UPSOnlineTools.display_gdlib')) {
         return;
     }
 
@@ -1128,17 +1128,17 @@ function UPSOnlineTools_displayContainer_div($_this, $container, $_left, $_top, 
     $html .= '<div style="POSITION: relative; PADDING: 0px; MARGIN: 0px; border: 0px groove black;">';
     $html .= '<img src="'.$layout_path.'/images/modules/UPSOnlineTools/ups_box.gif">';
 
-    $deltaH = $_height / $container["height"];
-    $deltaW = $_width / $container["width"];
+    $deltaH = $_height / $container['height'];
+    $deltaW = $_width / $container['width'];
 
-    $med_height = $_height / count($container["levels"]);
+    $med_height = $_height / count($container['levels']);
 
     $level_index = 0;
-    foreach ($container["levels"] as $level) {
+    foreach ($container['levels'] as $level) {
         if ($_this->xlite->config->getComplex('UPSOnlineTools.level_display_method') == 1) {
             // proportional
-            $height = ceil($level["height"] * $deltaH);
-            $top = - floor($level["bottom"] * $deltaH) + $_top + $_height - $height;
+            $height = ceil($level['height'] * $deltaH);
+            $top = - floor($level['bottom'] * $deltaH) + $_top + $_height - $height;
         } else {
             // actual
             $height = ceil($med_height);
@@ -1146,7 +1146,7 @@ function UPSOnlineTools_displayContainer_div($_this, $container, $_left, $_top, 
         }
 
         $color = UPSOnlineTools_getColorByIndex($level_index);
-        $html .= '<img style="POSITION: absolute; BACKGROUND-COLOR: '.$color.'; LEFT: '.$_left.'; TOP: '.$top.'; WIDTH: '.$_width.'; HEIGHT: '.$height.'px; MARGIN: 0px;" src="'.$layout_path.'/images/spacer.gif" title="Layer: #'.($level["level_id"]+1).'" />';
+        $html .= '<img style="POSITION: absolute; BACKGROUND-COLOR: '.$color.'; LEFT: '.$_left.'; TOP: '.$top.'; WIDTH: '.$_width.'; HEIGHT: '.$height.'px; MARGIN: 0px;" src="'.$layout_path.'/images/spacer.gif" title="Layer: #'.($level['level_id']+1).'" />';
 
         $level_index++;
     }
@@ -1173,25 +1173,25 @@ function UPSOnlineTools_displayLevel_div($width, $length, $items, $dirt_regions,
     // display level's boxes
     if (is_array($items) && count($items) > 0) {
         foreach ($items as $item) {
-            $left = ($item["left"] * $scale) + 1;
-            $top = ($item["top"] * $scale) + 1;
-            $width = ($item["width"] * $scale) - 1;
-            $height = ($item["length"] * $scale) - 1;
+            $left = ($item['left'] * $scale) + 1;
+            $top = ($item['top'] * $scale) + 1;
+            $width = ($item['width'] * $scale) - 1;
+            $height = ($item['length'] * $scale) - 1;
 
             if ($height > 10 && $width > 10) {
-                $html .= '<div style="POSITION: absolute; BACKGROUND-IMAGE: url('.$layout_path.'/images/modules/UPSOnlineTools/white_bg.gif); BACKGROUND-REPEAT: repeat-x; BACKGROUND-POSITION: bottom; BACKGROUND-COLOR: white; LEFT: '.$left.'; TOP: '.$top.'; WIDTH: '.$width.'; HEIGHT: '.$height.'; border: 1px groove black;"'.(($item["title"]) ? ' title="'.$item["title"].'"' : "").'>'.$item["global_id"].'</div>'."\n";
+                $html .= '<div style="POSITION: absolute; BACKGROUND-IMAGE: url('.$layout_path.'/images/modules/UPSOnlineTools/white_bg.gif); BACKGROUND-REPEAT: repeat-x; BACKGROUND-POSITION: bottom; BACKGROUND-COLOR: white; LEFT: '.$left.'; TOP: '.$top.'; WIDTH: '.$width.'; HEIGHT: '.$height.'; border: 1px groove black;"'.(($item['title']) ? ' title="'.$item['title'].'"' : "").'>'.$item['global_id'].'</div>'."\n";
             } else {
-                $html .= '<img src="'.$layout_path.'/images/spacer.gif" style="POSITION: absolute; BACKGROUND-IMAGE: url('.$layout_path.'/images/modules/UPSOnlineTools/white_bg.gif); BACKGROUND-REPEAT: repeat-x; BACKGROUND-POSITION: bottom; BACKGROUND-COLOR: white; LEFT: '.$left.'; TOP: '.$top.'; WIDTH: '.$width.'; HEIGHT: '.$height.'; border: 1px groove black;"'.(($item["title"]) ? ' title="'.$item["title"].'"' : "").'>'."\n";
+                $html .= '<img src="'.$layout_path.'/images/spacer.gif" style="POSITION: absolute; BACKGROUND-IMAGE: url('.$layout_path.'/images/modules/UPSOnlineTools/white_bg.gif); BACKGROUND-REPEAT: repeat-x; BACKGROUND-POSITION: bottom; BACKGROUND-COLOR: white; LEFT: '.$left.'; TOP: '.$top.'; WIDTH: '.$width.'; HEIGHT: '.$height.'; border: 1px groove black;"'.(($item['title']) ? ' title="'.$item['title'].'"' : "").'>'."\n";
             }
         }
 
         // display dirt/used regions
         if (is_array($dirt_regions) && count($dirt_regions) > 0) {
             foreach ($dirt_regions as $region) {
-                $left = ($region["left"] * $scale) + 1;
-                $top = ($region["top"] * $scale) + 1;
-                $width = ($region["width"] * $scale) - 1;
-                $height = ($region["length"] * $scale) - 1;
+                $left = ($region['left'] * $scale) + 1;
+                $top = ($region['top'] * $scale) + 1;
+                $width = ($region['width'] * $scale) - 1;
+                $height = ($region['length'] * $scale) - 1;
 
                 $html .= '<img src="'.$layout_path.'/images/spacer.gif" style="POSITION: absolute; BACKGROUND-IMAGE: url('.$layout_path.'/images/modules/UPSOnlineTools/shading.gif); LEFT: '.$left.'; TOP: '.$top.'; WIDTH: '.$width.'; HEIGHT: '.$height.'; border: 1px groove black;" title="Filled area">'."\n";
             }

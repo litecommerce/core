@@ -38,7 +38,7 @@ class XLite_Module_GreetVisitor_Controller_Admin_TemplateEditor extends XLite_Co
     function getBasicTemplates()
     {
         $templates = parent::getBasicTemplates();
-        $zone = $this->get("zone");
+        $zone = $this->get('zone');
         array_unshift($templates, new XLite_Model_FileNode("skins/$zone/en/modules/GreetVisitor/greet_visitor.tpl", null, SHOW_FULL_PATH));
         return $templates;
     }

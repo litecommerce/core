@@ -41,7 +41,7 @@ class XLite_Module_WholesaleTrading_Model_GlobalDiscount extends XLite_Model_Abs
     */	
     public $alias = "global_discount";
 
-    public $primaryKey = array("discount_id");
+    public $primaryKey = array('discount_id');
 
     /**
     * @var array $fields product access properties.

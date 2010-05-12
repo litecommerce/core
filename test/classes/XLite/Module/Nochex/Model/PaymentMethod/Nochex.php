@@ -47,16 +47,16 @@ class XLite_Module_Nochex_Model_PaymentMethod_Nochex extends XLite_Model_Payment
     
     function getReturnURL($cart)
     {
-        return $this->xlite->getShopUrl("cart.php?target=checkout&action=return&order_id=".$cart->get("order_id"));
+        return $this->xlite->getShopUrl("cart.php?target=checkout&action=return&order_id=".$cart->get('order_id'));
     }
 
     function getResponderURL($cart)
     {
-        return $this->xlite->getShopUrl("classes/modules/Nochex/callback.php?order_id=".$cart->get("order_id"));
+        return $this->xlite->getShopUrl("classes/modules/Nochex/callback.php?order_id=".$cart->get('order_id'));
     }
 
     function getTotal($cart)
     {
-        return sprintf("%.02f", doubleval($cart->get("total")));
+        return sprintf("%.02f", doubleval($cart->get('total')));
     }
 }

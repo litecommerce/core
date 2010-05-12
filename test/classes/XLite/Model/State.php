@@ -69,10 +69,10 @@ class XLite_Model_State extends XLite_Model_Abstract
     function get($name)
     {
         if ($name != 'state_id') {
-            $id = $this->get("state_id");
+            $id = $this->get('state_id');
             if ($id == -1) {
                 switch ($name) {
-                case 'state': return (parent::get("state")) ? parent::get("state") : 'Other';
+                case 'state': return (parent::get('state')) ? parent::get('state') : 'Other';
                 case 'country_code': return '';
                 case 'code': return '';
                 case 'shipping_zone': return 0;

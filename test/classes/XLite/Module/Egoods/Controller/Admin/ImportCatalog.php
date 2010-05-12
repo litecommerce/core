@@ -38,8 +38,8 @@ class XLite_Module_Egoods_Controller_Admin_ImportCatalog extends XLite_Controlle
     public function __construct(array $params = array())
     {
         parent::__construct($params);
-        $this->pages["import_pin_codes"] = "Import PIN codes";
-        $this->pageTemplates["import_pin_codes"] = "modules/Egoods/import_pin_codes.tpl";
+        $this->pages['import_pin_codes'] = "Import PIN codes";
+        $this->pageTemplates['import_pin_codes'] = "modules/Egoods/import_pin_codes.tpl";
     }
 
     function action_import_pin_codes()

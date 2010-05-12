@@ -41,7 +41,7 @@ class XLite_Module_WholesaleTrading_Model_WholesalePricing extends XLite_Model_A
      */	
     public $alias = "wholesale_pricing";
 
-    public $primaryKey = array("price_id");
+    public $primaryKey = array('price_id');
     public $defaultOrder = "amount";
     
     public $importError = "";
@@ -76,17 +76,17 @@ class XLite_Module_WholesaleTrading_Model_WholesalePricing extends XLite_Model_A
     {
         $data = array();
 
-        $values = $this->get("properties");
+        $values = $this->get('properties');
 
         foreach ($layout as $field) {
             if ($field == "NULL") {
                 $data[] = "";
             } elseif ($field == "product") {
-                $product = new XLite_Model_Product($values["product_id"]);
-                $data[] = $product->get("name");
+                $product = new XLite_Model_Product($values['product_id']);
+                $data[] = $product->get('name');
             } elseif ($field == "sku") {
-                $product = new XLite_Model_Product($values["product_id"]);
-                $data[] = $product->get("sku");
+                $product = new XLite_Model_Product($values['product_id']);
+                $data[] = $product->get('sku');
             } elseif (isset($values[$field])) {
                 $data[] =  $this->_stripSpecials($values[$field]);
             }
@@ -99,26 +99,26 @@ class XLite_Module_WholesaleTrading_Model_WholesalePricing extends XLite_Model_A
         static $line_no;
         if (!isset($line_no)) $line_no = 1; else $line_no++;
         
-        $properties       = $options["properties"];
+        $properties       = $options['properties'];
         $wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
         $product = new XLite_Model_Product();
 
-        $product = $product->findImportedProduct($properties['sku'], '',$properties['product'], false, $options["unique_identifier"]);
+        $product = $product->findImportedProduct($properties['sku'], '',$properties['product'], false, $options['unique_identifier']);
         if (!is_null($product)) {
-            $found = $wp->find("product_id = " . $product->get("product_id") . " AND amount=" . $properties["amount"] . " AND membership = '" . $properties['membership']. "'");
-            $wp->set("product_id", $product->get("product_id"));
-            $wp->set("amount",$properties["amount"]);
-            $wp->set("price",$properties["price"]);
-            $wp->set("membership",$properties["membership"]);
+            $found = $wp->find("product_id = " . $product->get('product_id') . " AND amount=" . $properties['amount'] . " AND membership = '" . $properties['membership']. "'");
+            $wp->set("product_id", $product->get('product_id'));
+            $wp->set("amount",$properties['amount']);
+            $wp->set("price",$properties['price']);
+            $wp->set("membership",$properties['membership']);
     
             echo "<b>Importing CSV file line# $line_no: </b>";
     
             if ($found) {
-                echo "Update wholesale price for '".$product->get("name")."' product";
+                echo "Update wholesale price for '".$product->get('name')."' product";
                 $wp->update();
             } else {
                 $wp->create();
-                echo "Create wholesale price for '".$product->get("name")."' product";
+                echo "Create wholesale price for '".$product->get('name')."' product";
             }
             echo "<br>\n";
         } else {
@@ -145,7 +145,7 @@ EOSQL;
         $collection = $this->db->getAll($sql);
         foreach ($collection as $item) {
             $wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
-            if ($wp->find("product_id='".$item["product_id"]."'")) {
+            if ($wp->find("product_id='".$item['product_id']."'")) {
             	$wp->delete();
             }
         }

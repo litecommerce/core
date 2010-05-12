@@ -37,7 +37,7 @@ class XLite_Module_GoogleCheckout_Model_Mailer extends XLite_Model_Mailer implem
 {
     function send()
     {
-        if ($this->xlite->get("GoogleCheckoutDCNMailer")) {
+        if ($this->xlite->get('GoogleCheckoutDCNMailer')) {
         	return;
         }
 

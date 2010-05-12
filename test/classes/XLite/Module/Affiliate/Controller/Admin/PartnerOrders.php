@@ -43,7 +43,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerOrders extends XLite_Contro
         $w = new XLite_View_Abstract();
         $w->component = $this;
         $w->set("template", "modules/Affiliate/orders.tpl");
-        $this->startDownload("orders.csv");
+        $this->startDownload('orders.csv');
         $w->init();
         $w->display();
 
@@ -62,14 +62,14 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerOrders extends XLite_Contro
         if (is_null($this->sales)) {
             $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
             $this->sales = $pp->searchSales(
-                    $this->get("startDate"),
-                    $this->get("endDate") + 24 * 3600,
+                    $this->get('startDate'),
+                    $this->get('endDate') + 24 * 3600,
                     null,
-                    $this->get("partner_id"),
-                    $this->get("payment_status"),
-                    $this->get("status"),
-                    $this->get("order_id1"),
-                    $this->get("order_id2"),
+                    $this->get('partner_id'),
+                    $this->get('payment_status'),
+                    $this->get('status'),
+                    $this->get('order_id1'),
+                    $this->get('order_id2'),
                     true // show affiliate sales
                     );
             $this->salesCount = count($this->sales);
@@ -79,7 +79,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerOrders extends XLite_Contro
 
     function getSalesCount() 
     {
-        return count($this->get("sales"));
+        return count($this->get('sales'));
     }
     
     function getOrder() 

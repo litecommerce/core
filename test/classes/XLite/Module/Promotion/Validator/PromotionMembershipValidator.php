@@ -45,9 +45,9 @@ class XLite_Module_Promotion_Validator_PromotionMembershipValidator extends XLit
 
         if($_POST['action']=="update2") {
                 $specialOffer = new XLite_Module_Promotion_Model_SpecialOffer($_POST['offer_id']);
-                if ($specialOffer->get("conditionType") == "hasMembership")
+                if ($specialOffer->get('conditionType') == "hasMembership")
                 {
-                     $result =  !empty($_POST[$this->get("field")]);
+                     $result =  !empty($_POST[$this->get('field')]);
                 } else $result = true;
         } else $result = true;
         return $result;

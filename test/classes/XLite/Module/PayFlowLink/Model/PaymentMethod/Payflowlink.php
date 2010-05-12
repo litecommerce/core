@@ -43,7 +43,7 @@ class XLite_Module_PayFlowLink_Model_PaymentMethod_Payflowlink extends XLite_Mod
     {
         parent::__construct($id);
         if ($id) {
-            if (!$this->get("params")) {
+            if (!$this->get('params')) {
                 $this->set("params", array());
             }
             if (!$this->getComplex('params.gateway_url')) {
@@ -60,7 +60,7 @@ class XLite_Module_PayFlowLink_Model_PaymentMethod_Payflowlink extends XLite_Mod
 
     function getOrderId($cart)
     {
-        return $cart->get("order_id");
+        return $cart->get('order_id');
     }
 
     function getPaymentURL($cart)

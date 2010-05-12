@@ -38,8 +38,8 @@ class XLite_Module_Intershipper_Controller_Admin_ShippingSettings extends XLite_
     public function __construct(array $params)
     {
         parent::__construct($params);
-        $this->pages["intershipper"] = "Intershipper settings";
-        $this->pageTemplates["intershipper"] = "modules/Intershipper/config.tpl";
+        $this->pages['intershipper'] = "Intershipper settings";
+        $this->pageTemplates['intershipper'] = "modules/Intershipper/config.tpl";
     }
 
 }

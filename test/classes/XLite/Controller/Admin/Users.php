@@ -256,7 +256,7 @@ class XLite_Controller_Admin_Users extends XLite_Controller_Admin_Abstract
      */
     protected function getCount()
     {
-        return count($this->get("users"));
+        return count($this->get('users'));
     }
 
     /**

@@ -38,8 +38,8 @@ class XLite_Module_USPS_Controller_Admin_ShippingSettings extends XLite_Controll
     public function __construct(array $params)
     {
         parent::__construct($params);
-        $this->pages["usps"] = "USPS settings"; // add a page
-        $this->pageTemplates["usps"] = "modules/USPS/config.tpl";
+        $this->pages['usps'] = "USPS settings"; // add a page
+        $this->pageTemplates['usps'] = "modules/USPS/config.tpl";
     }
 
     function action_clear_cache()

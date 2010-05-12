@@ -38,7 +38,7 @@ class XLite_Model_ImageClass extends XLite_Base
     /**
     * Create an image object based on the image class.
     * Syntax: 
-    *   $img = $iClass->get("image");
+    *   $img = $iClass->get('image');
     *   $img->set("
     */
     function getImage()

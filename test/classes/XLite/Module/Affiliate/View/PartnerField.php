@@ -42,7 +42,7 @@ class XLite_Module_Affiliate_View_PartnerField extends XLite_View_Abstract
     function getValue()
     {
         // form submitted
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
             return isset($_POST[$this->formField][$this->getComplex('field.field_id')]) ?
                           $_POST[$this->formField][$this->getComplex('field.field_id')] : null;
         }
@@ -66,6 +66,6 @@ class XLite_Module_Affiliate_View_PartnerField extends XLite_View_Abstract
 
     function isGet()
     {
-        return $_SERVER["REQUEST_METHOD"] == "GET";
+        return $_SERVER['REQUEST_METHOD'] == "GET";
     }
 }

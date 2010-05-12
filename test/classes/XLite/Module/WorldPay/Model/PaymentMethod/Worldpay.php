@@ -77,7 +77,7 @@ class XLite_Module_WorldPay_Model_PaymentMethod_Worldpay extends XLite_Model_Pay
                 $result = 'CAPTURED';
                 break;
             default:
-                $result = $cart->profile->get("billing_firstname") . " " . $cart->profile->get("billing_lastname");
+                $result = $cart->profile->get('billing_firstname') . " " . $cart->profile->get('billing_lastname');
                 break;
         }
         return $result;

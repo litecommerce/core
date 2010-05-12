@@ -47,7 +47,7 @@ class XLite_Module_CanadaPost_Controller_Admin_Cps extends XLite_Controller_Admi
         parent::__construct($params);
 
         $cps = new XLite_Module_CanadaPost_Model_Shipping_Cps();
-        $this->settings = $cps->get("options");
+        $this->settings = $cps->get('options');
     }
     
     function action_update()  
@@ -70,11 +70,11 @@ class XLite_Module_CanadaPost_Controller_Admin_Cps extends XLite_Controller_Admi
         if (empty($this->destinationCountry)) 
             $this->destinationCountry = $this->config->getComplex('Company.location_country');
         $state = new XLite_Model_State($this->destinationState);
-        $state = $state->get("code");
+        $state = $state->get('code');
         if (empty($state)) $state = "Other";
  
         $this->cps = new XLite_Module_CanadaPost_Model_Shipping_Cps();
-        $options = $this->cps->get("options");
+        $options = $this->cps->get('options');
         $options->packed == 'Y' ? $packed = "<readyToShip/>" : $packed = "";
 
         $this->rates = $this->cps->queryRates(

@@ -65,7 +65,7 @@ class XLite_Module_Affiliate_View_PartnerSelect extends XLite_View_Abstract
     {
         if (is_null($this->partners)) {
             $profile = new XLite_Model_Profile();
-            $this->partners = $profile->findAll('access_level='.$this->auth->get("partnerAccessLevel"));
+            $this->partners = $profile->findAll('access_level='.$this->auth->get('partnerAccessLevel'));
         }
         return $this->partners;
     }

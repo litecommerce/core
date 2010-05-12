@@ -113,8 +113,8 @@ class XLite_Module_GoogleCheckout_Main extends XLite_Module_Abstract
             $this->xlite->set("gcheckout_disable_customer_notif", true);
         }
 
-        if (!$this->xlite->is("adminZone")) {
-            if ($payment_method->getComplex('params.display_product_note') && $payment_method->is("parent_enabled")) {
+        if (!$this->xlite->is('adminZone')) {
+            if ($payment_method->getComplex('params.display_product_note') && $payment_method->is('parent_enabled')) {
                 $this->xlite->set("gcheckout_display_product_note", true);
             }
 
@@ -130,7 +130,7 @@ class XLite_Module_GoogleCheckout_Main extends XLite_Module_Abstract
             $this->xlite->set("gcheckout_currency", $currency);
             $this->xlite->set("gcheckout_remove_discounts", $payment_method->getComplex('params.remove_discounts'));
         }
-        if ($this->xlite->is("adminZone")) {
+        if ($this->xlite->is('adminZone')) {
         } else {
         }
 

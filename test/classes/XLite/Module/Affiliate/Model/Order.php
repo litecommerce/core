@@ -37,7 +37,7 @@ class XLite_Module_Affiliate_Model_Order extends XLite_Model_Order implements XL
 {
     public function __construct($id = null) 
     {
-        $this->fields["partnerClick"] = 0;
+        $this->fields['partnerClick'] = 0;
         parent::__construct($id);
     }
     
@@ -55,9 +55,9 @@ class XLite_Module_Affiliate_Model_Order extends XLite_Model_Order implements XL
         if ($this->_oldStatus != 'Q') {
             $this->chargePartnerCommissions();
         }
-        if ($this->get("partnerClick") != 0) {
+        if ($this->get('partnerClick') != 0) {
             $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
-            if ($pp->find("order_id=".$this->get("order_id")." AND affiliate=0")) {
+            if ($pp->find("order_id=".$this->get('order_id')." AND affiliate=0")) {
                 // found commission payment for this order, notify partner
                 $pp->notifyPartner();
             }
@@ -72,20 +72,20 @@ class XLite_Module_Affiliate_Model_Order extends XLite_Model_Order implements XL
 
     function storePartnerClick()
     {
-        if ($this->get("partnerClick") == 0) { // first time order's placed 
+        if ($this->get('partnerClick') == 0) { // first time order's placed 
 
             $partnerClick = false;
 
-            if ($this->session->isRegistered("PartnerClick")) {
-                $partnerClick = $this->session->get("PartnerClick");
-            } elseif (isset($_COOKIE["PartnerClick"])) {
-                $partnerClick = $_COOKIE["PartnerClick"];
+            if ($this->session->isRegistered('PartnerClick')) {
+                $partnerClick = $this->session->get('PartnerClick');
+            } elseif (isset($_COOKIE['PartnerClick'])) {
+                $partnerClick = $_COOKIE['PartnerClick'];
             }
             // update order with partner click ID
             if ($partnerClick) {
                 $stat = new XLite_Module_Affiliate_Model_BannerStats($partnerClick);
-                $partner = $stat->get("partner");
-                if (!is_null($stat->get("partner"))) {
+                $partner = $stat->get('partner');
+                if (!is_null($stat->get('partner'))) {
                     $this->set("partnerClick", $partnerClick);
                 }
             }
@@ -105,10 +105,10 @@ class XLite_Module_Affiliate_Model_Order extends XLite_Model_Order implements XL
     {
         $this->storePartnerClick();
 
-        if ($this->get("partnerClick") != 0) { // click found for this order
+        if ($this->get('partnerClick') != 0) { // click found for this order
             // charge and save partner's commissions
-            $stat = new XLite_Module_Affiliate_Model_BannerStats($this->get("partnerClick"));
-            $partner = $stat->get("partner");
+            $stat = new XLite_Module_Affiliate_Model_BannerStats($this->get('partnerClick'));
+            $partner = $stat->get('partner');
             if (!is_null($partner)) {
                 $this->set("partner", $partner);
                 $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
@@ -121,7 +121,7 @@ class XLite_Module_Affiliate_Model_Order extends XLite_Model_Order implements XL
     {
         parent::delete();
         $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
-        $payments = $pp->findAll("order_id=".$this->get("order_id"));
+        $payments = $pp->findAll("order_id=".$this->get('order_id'));
         foreach ($payments as $p) {
             $p->delete();
         }

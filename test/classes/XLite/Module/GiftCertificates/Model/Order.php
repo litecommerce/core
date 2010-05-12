@@ -387,7 +387,7 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
 
             /* TODO - check this
             // LiteCommerce 1.2.2 bug fix
-            if (!$this->is("shipped")) {
+            if (!$this->is('shipped')) {
                 $this->shippingCost = 0;
                 return false;
             }

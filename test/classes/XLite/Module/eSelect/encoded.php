@@ -21,26 +21,26 @@ function func_eSelect_getXID()
 function func_eSelect_process($cart, $_this)
 {
     // get eSelect params
-    $params = $_this->get("params");
+    $params = $_this->get('params');
 
     $crypt_type='7';
-    $purchase_amount = sprintf("%.02f", $cart->get("total"));
+    $purchase_amount = sprintf("%.02f", $cart->get('total'));
 
     // do transaction w/o VBV checking
-    if ($params["vbv_check"] != "1") {
+    if ($params['vbv_check'] != "1") {
         return func_eSelect_performAuthPurchase($cart, $_this->cc_info, $_this, $purchase_amount, $crypt_type);
     }
 
     $xid = func_eSelect_getXID();
-    $custid = $params["order_prefix"].$cart->get("order_id");
+    $custid = $params['order_prefix'].$cart->get('order_id');
 
-    $HTTP_ACCEPT = getenv("HTTP_ACCEPT");
-    $HTTP_USER_AGENT = getenv("HTTP_USER_AGENT");
+    $HTTP_ACCEPT = getenv('HTTP_ACCEPT');
+    $HTTP_USER_AGENT = getenv('HTTP_USER_AGENT');
 
-    $merchant_url = $_this->get("returnUrl");
-    $pan = $_this->cc_info["cc_number"];
-    $expiry = $_this->cc_info["cc_date"];
-    $cvv2 = $_this->cc_info["cc_cvv2"];
+    $merchant_url = $_this->get('returnUrl');
+    $pan = $_this->cc_info['cc_number'];
+    $expiry = $_this->cc_info['cc_date'];
+    $cvv2 = $_this->cc_info['cc_cvv2'];
 
     // reverse MM/YY to YY/MM format
     $expiry = substr($expiry, 2, 2) . substr($expiry, 0, 2);
@@ -64,14 +64,14 @@ function func_eSelect_process($cart, $_this)
     // send MPI request
     $response = func_eSelect_mpiSendRequest($_this, $request);
 
-    $mpi_response = $response["MPIRESPONSE"];
-    $response_msg = strtoupper($mpi_response["MESSAGE"]);
+    $mpi_response = $response['MPIRESPONSE'];
+    $response_msg = strtoupper($mpi_response['MESSAGE']);
 
     // payment not configured or error
     if (!in_array($response_msg, array("Y", "U", "N"))) {
-        $cart->setComplex("details.error", _replace_security_info($mpi_response["MESSAGE"]));
+        $cart->setComplex("details.error", _replace_security_info($mpi_response['MESSAGE']));
         $cart->setComplex("detailLabels.error", "Error");
-        $status = $_this->get("orderFailStatus");
+        $status = $_this->get('orderFailStatus');
         if ($cart->xlite->AOMEnabled) {
             $cart->set("orderStatus", $status);
         } else {
@@ -85,7 +85,7 @@ function func_eSelect_process($cart, $_this)
     // parse response
     if ($response_msg == "Y") {
         // VBV
-        $_this->session->set("eSelectQueued", $cart->get("order_id"));
+        $_this->session->set("eSelectQueued", $cart->get('order_id'));
         $_this->session->writeClose();
 
         $redirectForm = func_eSelect_getMpiInLineForm($mpi_response);
@@ -114,31 +114,31 @@ function func_eSelect_process($cart, $_this)
 
 function func_eSelect_action_return($_this, $order, &$payment)
 {
-    parse_str($_this->get("MD"), $data);
+    parse_str($_this->get('MD'), $data);
 
     $cc_info = array(
-        "cc_number" => $data["pan"],
-        "cc_date"   => $data["expiry"],
-        "cc_cvv2"   => $data["cvv2"]
+        "cc_number" => $data['pan'],
+        "cc_date"   => $data['expiry'],
+        "cc_cvv2"   => $data['cvv2']
     );
-    $purchase_amount = $data["amount"];
+    $purchase_amount = $data['amount'];
 
     $txnArray=array(
         "type"  => 'acs',
-        "PaRes" => $_this->get("PaRes"),
-        "MD"    => $_this->get("MD")
+        "PaRes" => $_this->get('PaRes'),
+        "MD"    => $_this->get('MD')
     );
 
     $request = func_eSelect_mpiTransactionXML($txnArray);
     $response = func_eSelect_mpiSendRequest($payment, $request);
 
-    $mpi_response = $response["MPIRESPONSE"];
-    if (strtolower($mpi_response["SUCCESS"]) == "true") {
-        func_eSelect_performAuthPurchase($order, $cc_info, $payment, $purchase_amount, null, $mpi_response["CAVV"]);
+    $mpi_response = $response['MPIRESPONSE'];
+    if (strtolower($mpi_response['SUCCESS']) == "true") {
+        func_eSelect_performAuthPurchase($order, $cc_info, $payment, $purchase_amount, null, $mpi_response['CAVV']);
     } else {
-        $order->setComplex("details.error", _replace_security_info($mpi_response["MESSAGE"]));
+        $order->setComplex("details.error", _replace_security_info($mpi_response['MESSAGE']));
         $order->setComplex("detailLabels.error", "Error");
-        $status = $payment->get("orderFailStatus");
+        $status = $payment->get('orderFailStatus');
         if ($order->xlite->AOMEnabled) {
             $order->set("orderStatus", $status);
         } else {
@@ -153,27 +153,27 @@ function func_eSelect_action_return($_this, $order, &$payment)
 function func_eSelect_performAuthPurchase($order, $cc_info, &$payment, $amount, $crypt_type=null, $cavv=null)
 {
     // get eSelect params
-    $params = $payment->get("params");
+    $params = $payment->get('params');
 
-    $orderid = substr($params["order_prefix"].$order->get("order_id")."-ord-".date("dmy-G:i:s"), 0, 50);
-    $custid = $params["order_prefix"].$order->get("order_id");
+    $orderid = substr($params['order_prefix'].$order->get('order_id')."-ord-".date("dmy-G:i:s"), 0, 50);
+    $custid = $params['order_prefix'].$order->get('order_id');
 
     $purchase_amount = sprintf("%.02f", $amount);
-    $pan = $cc_info["cc_number"];
-    $expiry = $cc_info["cc_date"];
+    $pan = $cc_info['cc_number'];
+    $expiry = $cc_info['cc_date'];
 
     // build transaction type string
 
     $area_prefix = "";
     if ($payment->getComplex('params.account_type') != "CA") {
         $area_prefix = "us_";
-        $transaction_type = array("us");
+        $transaction_type = array('us');
     }
 
     if (!is_null($cavv)) {
         $transaction_type[] = "cavv";
     }
-    $transaction_type[] = (($params["trans_type"] == "purch") ? "purchase" : "preauth");
+    $transaction_type[] = (($params['trans_type'] == "purch") ? "purchase" : "preauth");
     $transaction_type = implode("_", $transaction_type);
 
     // reverse MM/YY to YY/MM format
@@ -191,88 +191,88 @@ function func_eSelect_performAuthPurchase($order, $cc_info, &$payment, $amount, 
     );
 
     if (!is_null($crypt_type)) {
-        $txnArray["crypt_type"] = $crypt_type;
+        $txnArray['crypt_type'] = $crypt_type;
     }
 
     if (!is_null($cavv)) {
-        $txnArray["cavv"] = $cavv;
+        $txnArray['cavv'] = $cavv;
     }
 
 
     // get order profile and fill transaction customer details
-    $profile = $order->get("profile");
+    $profile = $order->get('profile');
 
     // Make customer info
     $customerInfo = array();
     $cust_info = array(
-        "email"			=> $profile->get("login"),
+        "email"			=> $profile->get('login'),
         "instructions"	=> "",
     );
     $billing = array(
-        "first_name"	=> $profile->get("billing_firstname"),
-        "last_name"		=> $profile->get("billing_lastname"),
-        "company_name"	=> $profile->get("billing_company"),
-        "address"		=> $profile->get("billing_address"),
-        "city"			=> $profile->get("billing_city"),
+        "first_name"	=> $profile->get('billing_firstname'),
+        "last_name"		=> $profile->get('billing_lastname'),
+        "company_name"	=> $profile->get('billing_company'),
+        "address"		=> $profile->get('billing_address'),
+        "city"			=> $profile->get('billing_city'),
         "province"		=> func_eSelect_getState($profile, "billing_state", "billing_custom_state"),
-        "postal_code"	=> $profile->get("billing_zipcode"),
-        "country"		=> $profile->get("billing_country"),
-        "phone_number"	=> $profile->get("billing_phone"),
-        "fax"		=> $profile->get("billing_fax"),
+        "postal_code"	=> $profile->get('billing_zipcode'),
+        "country"		=> $profile->get('billing_country'),
+        "phone_number"	=> $profile->get('billing_phone'),
+        "fax"		=> $profile->get('billing_fax'),
         "tax1"		=> "",
         "tax2"		=> "",
         "tax3"		=> "",
-        "shipping_cost"	=> sprintf("%.02f", $order->get("shipping_cost"))
+        "shipping_cost"	=> sprintf("%.02f", $order->get('shipping_cost'))
     );
     $shipping = array(
-        "first_name"	=> $profile->get("shipping_firstname"),
-        "last_name"		=> $profile->get("shipping_lastname"),
-        "company_name"	=> $profile->get("shipping_company"),
-        "address"		=> $profile->get("shipping_address"),
-        "city"			=> $profile->get("shipping_city"),
+        "first_name"	=> $profile->get('shipping_firstname'),
+        "last_name"		=> $profile->get('shipping_lastname'),
+        "company_name"	=> $profile->get('shipping_company'),
+        "address"		=> $profile->get('shipping_address'),
+        "city"			=> $profile->get('shipping_city'),
         "province"		=> func_eSelect_getState($profile, "shipping_state", "shipping_custom_state"),
-        "postal_code"	=> $profile->get("shipping_zipcode"),
-        "country"		=> $profile->get("shipping_country"),
-        "phone_number"	=> $profile->get("shipping_phone"),
-        "fax"		=> $profile->get("shipping_fax"),
+        "postal_code"	=> $profile->get('shipping_zipcode'),
+        "country"		=> $profile->get('shipping_country'),
+        "phone_number"	=> $profile->get('shipping_phone'),
+        "fax"		=> $profile->get('shipping_fax'),
         "tax1"		=> "",
         "tax2"		=> "",
         "tax3"		=> "",
-        "shipping_cost"	=> sprintf("%.02f", $order->get("shipping_cost"))
+        "shipping_cost"	=> sprintf("%.02f", $order->get('shipping_cost'))
     );
 
     $customerInfo = array();
-    $customerInfo["cust_info"][] = $cust_info;
-    $customerInfo["billing"][] = $billing;
-    $customerInfo["shipping"][] = $shipping;
+    $customerInfo['cust_info'][] = $cust_info;
+    $customerInfo['billing'][] = $billing;
+    $customerInfo['shipping'][] = $shipping;
 
     // order items
     $items = array();
-    foreach ($order->get("items") as $item) {
-        $product = $item->get("product");
+    foreach ($order->get('items') as $item) {
+        $product = $item->get('product');
         $node = array(
-            "name"				=> $product->get("name"),
-            "quantity"			=> $item->get("amount"),
-            "product_code"		=> $product->get("sku"),
-            "extended_amount"	=> $item->get("price")
+            "name"				=> $product->get('name'),
+            "quantity"			=> $item->get('amount'),
+            "product_code"		=> $product->get('sku'),
+            "extended_amount"	=> $item->get('price')
         );
 
-        $customerInfo["item"][] = $node;
+        $customerInfo['item'][] = $node;
     }
 
 
-    if ($params["avs_cvd_check"] == "1") {
+    if ($params['avs_cvd_check'] == "1") {
         // Make AVS info
         $avsInfo = array(
             "avs_street_number"	=> "",
-            "avs_street_name"	=> $profile->get("billing_address"),
-            "avs_zipcode"		=> $profile->get("billing_zipcode")
+            "avs_street_name"	=> $profile->get('billing_address'),
+            "avs_zipcode"		=> $profile->get('billing_zipcode')
         );
 
         // Make CVD info
         $cvdInfo = array(
-            "cvd_value"	=> $cc_info["cc_cvv2"],
-            "cvd_indicator"	=> (($cc_info["cc_cvv2"]) ? 1 : 9)
+            "cvd_value"	=> $cc_info['cc_cvv2'],
+            "cvd_indicator"	=> (($cc_info['cc_cvv2']) ? 1 : 9)
         );
     }
 
@@ -285,22 +285,22 @@ function func_eSelect_performAuthPurchase($order, $cc_info, &$payment, $amount, 
     $response = func_eSelect_mpgSendRequest($payment, $request);
 
     // parse response
-    $receipt = $response["RESPONSE"]["RECEIPT"];
-    if ($receipt["RESPONSECODE"] < 50 && strtolower($receipt["COMPLETE"]) == "true") {
+    $receipt = $response['RESPONSE']["RECEIPT"];
+    if ($receipt['RESPONSECODE'] < 50 && strtolower($receipt['COMPLETE']) == "true") {
         // approved
-        $status = $payment->get("orderSuccessStatus");
+        $status = $payment->get('orderSuccessStatus');
         if ($order->xlite->AOMEnabled) {
             $order->set("orderStatus", $status);
         } else {
             $order->set("status", $status);
         }
 
-        $order->setComplex("details.referenceNum", $receipt["REFERENCENUM"]);
-        $order->setComplex("details.responseCode", $receipt["RESPONSECODE"]);
-        $order->setComplex("details.authCode", $receipt["AUTHCODE"]);
-        $order->setComplex("details.message", $receipt["MESSAGE"]);
-        $order->setComplex("details.avs", $payment->getAVSMessageText($receipt["AVSRESULTCODE"]));
-        $order->setComplex("details.cvd", $payment->getCVDMessageText($receipt["CVDRESULTCODE"]));
+        $order->setComplex("details.referenceNum", $receipt['REFERENCENUM']);
+        $order->setComplex("details.responseCode", $receipt['RESPONSECODE']);
+        $order->setComplex("details.authCode", $receipt['AUTHCODE']);
+        $order->setComplex("details.message", $receipt['MESSAGE']);
+        $order->setComplex("details.avs", $payment->getAVSMessageText($receipt['AVSRESULTCODE']));
+        $order->setComplex("details.cvd", $payment->getCVDMessageText($receipt['CVDRESULTCODE']));
 
         $orderLabels = array(
             "referenceNum"	=> "Reference Num",
@@ -315,14 +315,14 @@ function func_eSelect_performAuthPurchase($order, $cc_info, &$payment, $amount, 
         $order->update();
     } else {
         // declined
-        $status = $payment->get("orderFailStatus");
+        $status = $payment->get('orderFailStatus');
         if ($order->xlite->AOMEnabled) {
             $order->set("orderStatus", $status);
         } else {
             $order->set("status", $status);
         }
 
-        $order->setComplex("details.error", _replace_security_info($receipt["MESSAGE"]));
+        $order->setComplex("details.error", _replace_security_info($receipt['MESSAGE']));
         $order->setComplex("detailLabels.error", "Error");
 
         $order->update();
@@ -350,7 +350,7 @@ function func_eSelect_getState($profile, $field, $customField)
     $stateName = "";
     $state = new XLite_Model_State();
     if ($state->find("state_id='".$profile->get($field)."'")) {
-        $stateName = $state->get("code");
+        $stateName = $state->get('code');
     } else { // state not found
         $stateName = $profile->get($customField);
     }
@@ -559,16 +559,16 @@ function func_eSelect_mpgCvdInfo($params)
 
 function func_eSelect_mpgSendRequest(&$payment, &$data)
 {
-    $params = $payment->get("params");
+    $params = $payment->get('params');
 
-    $xmlString .= "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?><request><store_id>".$params["store_id"]."</store_id><api_token>".$params["api_token"]."</api_token>$data</request>";
+    $xmlString .= "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?><request><store_id>".$params['store_id']."</store_id><api_token>".$params['api_token']."</api_token>$data</request>";
 
     $request = new XLite_Model_HTTPS();
     $request->data          = $xmlString;
     $request->method        = 'POST';
     $request->conttype      = "text/xml";
     $request->urlencoded    = true;
-    $request->url = $payment->get("monerisMPG_URL");
+    $request->url = $payment->get('monerisMPG_URL');
 
 if (ESELECT_MPG_DEBUG_LOG) {
 $payment->xlite->logger->log("send MPG request:");
@@ -638,9 +638,9 @@ function func_eSelect_mpiTransactionXML(/*$transactions*/$txn)
 
 function func_eSelect_mpiSendRequest(&$payment, &$data)
 {
-    $params = $payment->get("params");
+    $params = $payment->get('params');
 
-    $xmlString = "<?xml version=\"1.0\"?><MpiRequest><store_id>".$params["store_id"]."</store_id><api_token>".$params["api_token"]."</api_token>$data</MpiRequest>";
+    $xmlString = "<?xml version=\"1.0\"?><MpiRequest><store_id>".$params['store_id']."</store_id><api_token>".$params['api_token']."</api_token>$data</MpiRequest>";
 
     $request = new XLite_Model_HTTPS();
     $request->data          = $xmlString;
@@ -648,7 +648,7 @@ function func_eSelect_mpiSendRequest(&$payment, &$data)
     $request->conttype      = "text/xml";
     $request->urlencoded    = true;
 
-    $request->url = $payment->get("monerisMPI_URL");
+    $request->url = $payment->get('monerisMPI_URL');
 
 if (ESELECT_MPI_DEBUG_LOG) {
 $payment->xlite->logger->log("send MPI request:");
@@ -698,7 +698,7 @@ document.downloadForm.submit();
 -->
 </SCRIPT>" .
 '<body onload="OnLoadEvent()">
-<form name="downloadForm" action="' . $responseData["ACSURL"] . '" method="POST">
+<form name="downloadForm" action="' . $responseData['ACSURL'] . '" method="POST">
 <noscript>
 <br>
 <br>
@@ -713,9 +713,9 @@ transaction.</h3>
 <input type="submit" value="Submit">
 </center>
 </noscript>
-<input type="hidden" name="PaReq" value="' . $responseData["PAREQ"] . '">
-<input type="hidden" name="MD" value="' . $responseData["MD"] . '">
-<input type="hidden" name="TermUrl" value="' . $responseData["TERMURL"] .'">
+<input type="hidden" name="PaReq" value="' . $responseData['PAREQ'] . '">
+<input type="hidden" name="MD" value="' . $responseData['MD'] . '">
+<input type="hidden" name="TermUrl" value="' . $responseData['TERMURL'] .'">
 </form>
 </body>
 </html>';

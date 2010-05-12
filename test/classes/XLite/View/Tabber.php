@@ -97,7 +97,7 @@ class XLite_View_Tabber extends XLite_View_Abstract
     {
         $pages = array();
 
-        $url = $this->get("url");
+        $url = $this->get('url');
         $switch = $this->getParam(self::PARAM_SWITCH);
         $functionName = $this->getParam(self::PARAM_TAB_PAGES);
         $dialogPages = XLite::getController()->$functionName();
@@ -184,8 +184,8 @@ class XLite_View_Tabber extends XLite_View_Abstract
 
         foreach($this->tabPagesInfo as $page_idx => $pagesInfo) {
 
-    		$this->tabPagesInfo[$page_idx]["titlesLengthMax"] = $pagesTitlesLengthMax;
-            $this->tabPagesInfo[$page_idx]["titlesFullness"] = ceil($this->tabPagesInfo[$page_idx]["titlesLength"] * 100 / $this->tabPagesInfo[$page_idx]["titlesLengthMax"]);
+    		$this->tabPagesInfo[$page_idx]['titlesLengthMax'] = $pagesTitlesLengthMax;
+            $this->tabPagesInfo[$page_idx]['titlesFullness'] = ceil($this->tabPagesInfo[$page_idx]['titlesLength'] * 100 / $this->tabPagesInfo[$page_idx]['titlesLengthMax']);
 
     	}
 
@@ -209,6 +209,6 @@ class XLite_View_Tabber extends XLite_View_Abstract
     		return false;
     	}
 
-    	return ($this->tabPagesInfo[$page_idx]["titlesFullness"] > $widthPercents) ? true : false;
+    	return ($this->tabPagesInfo[$page_idx]['titlesFullness'] > $widthPercents) ? true : false;
     }
 }

@@ -45,7 +45,7 @@ class XLite_Module_ProductOptions_Controller_Admin_GlobalProductOptions extends 
             $names = array();
             $names_hash = array();
             for ($i = 0; $i < count($this->_categories); $i++) {
-                $name = $this->_categories[$i]->get("stringPath");
+                $name = $this->_categories[$i]->get('stringPath');
                 while (isset($names_hash[$name])) {
                     $name .= " ";
                 }
@@ -72,19 +72,19 @@ class XLite_Module_ProductOptions_Controller_Admin_GlobalProductOptions extends 
         $option->setCategoriesList($this->categories);
         $option->update();
 
-        $this->params["option_id"] = $option->get("option_id");
-        $this->option_id = $option->get("option_id");
+        $this->params['option_id'] = $option->get('option_id');
+        $this->option_id = $option->get('option_id');
     }
 
     function getAllParams($exeptions = null)
     {
         $result = parent::getAllParams();
         if (isset($this->action)) {
-        	if (!isset($this->option_id) && isset($result["option_id"])) {
-        		unset($result["option_id"]);
+        	if (!isset($this->option_id) && isset($result['option_id'])) {
+        		unset($result['option_id']);
         	}
         	if (isset($this->option_id)) {
-        		$result["option_id"] = $this->option_id;
+        		$result['option_id'] = $this->option_id;
         	}
         }
        	return $result;
@@ -114,11 +114,11 @@ class XLite_Module_ProductOptions_Controller_Admin_GlobalProductOptions extends 
         if (isset($this->option_id) && isset($this->global_options) && is_array($this->global_options)) {
             $po = new XLite_Module_ProductOptions_Model_ProductOption($this->option_id);
             $categories = "";
-            if (isset($this->global_options["categories"])) {
-                $categories = $this->global_options["categories"];
-                unset($this->global_options["categories"]);
+            if (isset($this->global_options['categories'])) {
+                $categories = $this->global_options['categories'];
+                unset($this->global_options['categories']);
             }
-            if ($this->global_options["global_categories"]) {
+            if ($this->global_options['global_categories']) {
                 $categories = "";
             }
             $po->set("properties", $this->global_options);

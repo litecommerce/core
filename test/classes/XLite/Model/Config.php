@@ -71,32 +71,32 @@ class XLite_Model_Config extends XLite_Model_Abstract implements XLite_Base_ISin
     // IS methods {{{
     function isText()
     {
-        return $this->get("type") == "text";
+        return $this->get('type') == "text";
     }
 
     function isCheckbox()
     {
-        return $this->get("type") == "checkbox";
+        return $this->get('type') == "checkbox";
     }
 
     function isCountry()
     {
-        return $this->get("type") == "country";
+        return $this->get('type') == "country";
     }
 
     function isState()
     {
-        return $this->get("type") == "state";
+        return $this->get('type') == "state";
     }
 
     function isChecked()
     {
-        return $this->get("value") == 'Y';
+        return $this->get('value') == 'Y';
     }
 
     function isSelect()
     {
-        return $this->get("type") == "select";
+        return $this->get('type') == "select";
     }
     
     function isSelected($property, $value = null, $prop = null)
@@ -106,17 +106,17 @@ class XLite_Model_Config extends XLite_Model_Abstract implements XLite_Base_ISin
 
     function isName($name)
     {
-        return $this->get("name") == $name;
+        return $this->get('name') == $name;
     }
 
     function isTextArea()
     {
-        return $this->get("type") == "textarea";
+        return $this->get('type') == "textarea";
     }
     
     function isSeparator()
     {
-        return $this->get("type") == "separator";
+        return $this->get('type') == "separator";
     }
     
     
@@ -134,23 +134,23 @@ class XLite_Model_Config extends XLite_Model_Abstract implements XLite_Base_ISin
         $row = new $this->configClass;
         $r = $row->iterate();
         while ($row->next($r)) {
-            $category = $row->get("category");
+            $category = $row->get('category');
             if (!isset($config->$category)) {
                 $config->$category = new XLite_Base();
             }
-            $name = $row->get("name");
-            if ($row->get("type") == "checkbox") {
-                $config->$category->$name = $row->get("value") == 'Y' ? true : false;
-            } else if ($row->get("type") == "serialized") {
-                $config->$category->$name = unserialize($row->get("value"));
+            $name = $row->get('name');
+            if ($row->get('type') == "checkbox") {
+                $config->$category->$name = $row->get('value') == 'Y' ? true : false;
+            } else if ($row->get('type') == "serialized") {
+                $config->$category->$name = unserialize($row->get('value'));
             } else {
-                $config->$category->$name = $row->get("value");
+                $config->$category->$name = $row->get('value');
             }
         }
         $config->Company->locationCountry = new XLite_Model_Country($config->Company->location_country);
         $config->Company->locationState = new XLite_Model_State($config->Company->location_state);
-        if ($config->Company->locationState->get("state_id") == -1) {
-            $config->Company->locationState->set("state", $config->Company->get("custom_location_state"));
+        if ($config->Company->locationState->get('state_id') == -1) {
+            $config->Company->locationState->set("state", $config->Company->get('custom_location_state'));
         }
         $config->General->defaultCountry = new XLite_Model_Country($config->General->default_country);
         $config->Memberships->memberships = array();

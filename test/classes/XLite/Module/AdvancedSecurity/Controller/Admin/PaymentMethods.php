@@ -41,7 +41,7 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_PaymentMethods extends XLit
         $pm = XLite_Model_PaymentMethod::factory('CreditCard');
 
         $gpg = new XLite_Module_AdvancedSecurity_Model_GPG();
-        return ($pm->get("enabled") && (!$gpg->get("publicKey") || !$gpg->get("secretKey"))) ? true : false;
+        return ($pm->get('enabled') && (!$gpg->get('publicKey') || !$gpg->get('secretKey'))) ? true : false;
     }
 
 }

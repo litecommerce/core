@@ -38,7 +38,7 @@ class XLite_Module_DemoMode_Controller_Admin_ChangeSkin extends XLite_Controller
     function getCurrentSkin()
     {
         $skin_name = "";
-        switch ($this->session->get("customSkin")) {
+        switch ($this->session->get('customSkin')) {
             case "1":
                 $skin_name = "3-columns modern";
             break;

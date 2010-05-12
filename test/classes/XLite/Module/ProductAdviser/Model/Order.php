@@ -47,7 +47,7 @@ class XLite_Module_ProductAdviser_Model_Order extends XLite_Model_Order implemen
     {
         parent::checkedOut();
 
-        $items = $this->get("items");
+        $items = $this->get('items');
 
         if (is_array($items)) {
 
@@ -55,9 +55,9 @@ class XLite_Module_ProductAdviser_Model_Order extends XLite_Model_Order implemen
 
             foreach ($items as $item) {
                 if ($item->isValid()) {
-            	    $product = $item->get("product");
+            	    $product = $item->get('product');
             	    if (is_object($product)) {
-            	    	$products[$product->get("product_id")] = true;
+            	    	$products[$product->get('product_id')] = true;
             	    }
                 }
             }
@@ -80,7 +80,7 @@ class XLite_Module_ProductAdviser_Model_Order extends XLite_Model_Order implemen
                             $statistic->create();
 
                         } else {
-            	        	$statistic->set("counter", $statistic->get("counter")+1);
+            	        	$statistic->set("counter", $statistic->get('counter')+1);
                             $statistic->update();
                         }
 
@@ -93,7 +93,7 @@ class XLite_Module_ProductAdviser_Model_Order extends XLite_Model_Order implemen
                             $statistic->create();
 
                         } else {
-                        	$statistic->set("counter", $statistic->get("counter")+1);
+                        	$statistic->set("counter", $statistic->get('counter')+1);
                             $statistic->update();
             	        }
                     } // for
@@ -114,31 +114,31 @@ class XLite_Module_ProductAdviser_Model_Order extends XLite_Model_Order implemen
      */
     public function updateInventory($item)
     {
-    	$requiredAmount = $item->get("amount");
+    	$requiredAmount = $item->get('amount');
     	parent::updateInventory($item);
 
-        if ($this->xlite->get("PA_InventorySupport") && $this->config->ProductAdviser->customer_notifications_enabled) {
+        if ($this->xlite->get('PA_InventorySupport') && $this->config->ProductAdviser->customer_notifications_enabled) {
 
-            if ($item->get("outOfStock")) {
+            if ($item->get('outOfStock')) {
 
                 $rejectedItemInfo = new StdClass();
             	$rejectedItem = $item;
-            	$product = $item->get("product");
-            	$rejectedItemInfo->product_id = $product->get("product_id");
+            	$product = $item->get('product');
+            	$rejectedItemInfo->product_id = $product->get('product_id');
                 $rejectedItem->set("product", $product);
 
-                if ($this->xlite->get("ProductOptionsEnabled") && $product->hasOptions()) {
+                if ($this->xlite->get('ProductOptionsEnabled') && $product->hasOptions()) {
 
             	 	if (isset($this->product_options)) {
                 		$rejectedItem->set("productOptions", $this->product_options);
                     }
 
-            		$rejectedItemInfo->productOptions = $rejectedItem->get("productOptions");
+            		$rejectedItemInfo->productOptions = $rejectedItem->get('productOptions');
                 }
 
-                $rejectedItemInfo->itemKey = $rejectedItem->get("key");
+                $rejectedItemInfo->itemKey = $rejectedItem->get('key');
                 $rejectedItemInfo->requiredAmount = $requiredAmount;
-                $rejectedItemInfo->availableAmount = $rejectedItem->get("amount");
+                $rejectedItemInfo->availableAmount = $rejectedItem->get('amount');
 
             	$this->session->set("rejectedItem", $rejectedItemInfo);
                 $this->xlite->set("rejectedItemPresented", true);

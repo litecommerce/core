@@ -40,17 +40,17 @@ class XLite_Module_Promotion_Model_PaymentMethod_BonusPoints extends XLite_Model
     
     function handleRequest(XLite_Model_Cart $cart)
     {
-        $payedByPoints = $_POST["payedByPoints"];
-        $details = $cart->get("details");
+        $payedByPoints = $_POST['payedByPoints'];
+        $details = $cart->get('details');
         if ($cart->getComplex('origProfile.bonusPoints') < $payedByPoints) {
-            $details["error"] = "No enought points";
+            $details['error'] = "No enought points";
             $cart->set("details", $details);
             $cart->update();
             return self::PAYMENT_FAILURE;
         }
         $totalBonusPoints = $cart->getTotalBonusPoints();
         if ($totalBonusPoints < $payedByPoints) { // too much
-            $details["error"] = "Too much bonus points for this order";
+            $details['error'] = "Too much bonus points for this order";
             $cart->set("details", $details);
             $cart->update();
             return self::PAYMENT_FAILURE;
@@ -58,7 +58,7 @@ class XLite_Module_Promotion_Model_PaymentMethod_BonusPoints extends XLite_Model
 
         $cart->set("payedByPoints", min($payedByPoints * $this->config->getComplex('Promotion.bonusPointsCost'), $cart->getMaxPayByPoints()));
         $cart->calcTotals();
-        if ($cart->get("total") > 0) {
+        if ($cart->get('total') > 0) {
             $cart->set("payment_method", ""); // choose payment method once again
         	$cart->update();
             header("Location: cart.php?target=checkout&mode=paymentMethod");
@@ -72,8 +72,8 @@ class XLite_Module_Promotion_Model_PaymentMethod_BonusPoints extends XLite_Model
 
     function is($name)
     {
-        if ($name == "enabled" && !$this->xlite->is("adminZone")) {
-            if ($this->auth->is("logged")) {
+        if ($name == "enabled" && !$this->xlite->is('adminZone')) {
+            if ($this->auth->is('logged')) {
                 if ($this->auth->getComplex('profile.bonusPoints') == 0) {
                     // no bonus points, no payment method
                     return false;

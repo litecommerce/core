@@ -37,7 +37,7 @@ class XLite_Module_Egoods_Model_PinCode extends XLite_Model_Abstract
 {
     public $alias = "pin_codes";
 
-    public $primaryKey = array("pin_id");
+    public $primaryKey = array('pin_id');
     public $defaultOrder = "pin_id";
 
     public $fields = array
@@ -80,18 +80,18 @@ class XLite_Module_Egoods_Model_PinCode extends XLite_Model_Abstract
     function _export($layout, $delimiter) 
     {
         $data = array();
-        $values = $this->get("properties");
+        $values = $this->get('properties');
 
         foreach ($layout as $field) {
             if ($field == "NULL") {
                 $data[] = "";
             } elseif ($field == "product") {
                 $product = new XLite_Model_Product($values['product_id']);
-                $data[] = $this->_stripSpecials($product->get("name"));
+                $data[] = $this->_stripSpecials($product->get('name'));
             } elseif ($field == "category") {
                 $product = new XLite_Model_Product($values['product_id']);
                 $category = new XLite_Model_Category();
-                $data[] =  $category->createCategoryField($product->get("categories"));
+                $data[] =  $category->createCategoryField($product->get('categories'));
             } elseif (isset($values[$field])) {
                 $data[] =  $this->_stripSpecials($values[$field]);
             }
@@ -101,7 +101,7 @@ class XLite_Module_Egoods_Model_PinCode extends XLite_Model_Abstract
 
     public function import(array $options) 
     {
-        $properties = $options["properties"];
+        $properties = $options['properties'];
         
         static $line_no;
         !isset($line_no) ? $line_no = 1 : $line_no++;
@@ -115,14 +115,14 @@ class XLite_Module_Egoods_Model_PinCode extends XLite_Model_Abstract
             return false;
         }
         $pin = new XLite_Module_Egoods_Model_PinCode();
-        $found = $pin->find("pin = '".$properties['pin']."' AND product_id =". $product->get("product_id"));
+        $found = $pin->find("pin = '".$properties['pin']."' AND product_id =". $product->get('product_id'));
 
         $pin->set("pin", $properties['pin']);
         $pin->set("enabled", $properties['enabled']);
-        $pin->set("product_id", $product->get("product_id"));
+        $pin->set("product_id", $product->get('product_id'));
 
         if ($found) {
-        	if ($options["update_existing"]) {
+        	if ($options['update_existing']) {
             	echo "Updating";
             	$pin->update();
             } else {
@@ -132,9 +132,9 @@ class XLite_Module_Egoods_Model_PinCode extends XLite_Model_Abstract
             echo "Creating";
             $pin->create();
         }
-        echo "  PIN code \"" . $pin->get("pin") . "\"";
+        echo "  PIN code \"" . $pin->get('pin') . "\"";
 
-        echo " for product <a href=\"admin.php?target=product&product_id=".$product->get("product_id")."\">\"" . $product->get("name") . "\"</a><br>";
+        echo " for product <a href=\"admin.php?target=product&product_id=".$product->get('product_id')."\">\"" . $product->get('name') . "\"</a><br>";
 
     }
 }

@@ -275,7 +275,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
 
     function isTableExists($table) 
     {
-        $tables = $this->getAll("SHOW TABLES");
+        $tables = $this->getAll('SHOW TABLES');
         foreach ($tables as $key => $tab) {
             if (in_array($table, $tab)) {
                 return true;
@@ -288,7 +288,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
     {
         $i = $this->getAll("SHOW INDEX FROM $table");
         foreach ($i as $row) {
-            if ($index == $row["Key_name"]) {
+            if ($index == $row['Key_name']) {
                 return true;
             }
         }
@@ -299,7 +299,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
     {
         $fields = $this->getAll("SHOW FIELDS FROM $table");
         foreach ($fields as $fieldDescription) {
-            if ($field == $fieldDescription["Field"]) {
+            if ($field == $fieldDescription['Field']) {
                 return true;
             }
         }
@@ -416,7 +416,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
     function getTableSchema($table) 
     {
         // do not cache queries
-        $cacheEnabled = $this->get("cacheEnabled");
+        $cacheEnabled = $this->get('cacheEnabled');
         $this->set("cacheEnabled", false);
 
         $schema  = "DROP TABLE IF EXISTS $table;\n";
@@ -493,14 +493,14 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
         // get table info if necessary
         if (!isset($stat[$table])) {
             foreach ($this->getTableInfo($table) as $data) {
-                $stat[$table]["count"] = $this->getOne("SELECT COUNT(*) FROM $table");
-                $stat[$table]["number"][$data["name"]] = $this->_isNumber($data["type"]);
+                $stat[$table]['count'] = $this->getOne("SELECT COUNT(*) FROM $table");
+                $stat[$table]['number'][$data['name']] = $this->_isNumber($data['type']);
             }
-            $stat[$table]["from"] = 0;
+            $stat[$table]['from'] = 0;
         }
-        $limit = $stat[$table]["from"] + BACKUP_LIMIT_COUNT;
-        $sql = "SELECT * FROM $table LIMIT ". $stat[$table]["from"] .", ".BACKUP_LIMIT_COUNT;
-        $stat[$table]["from"] = $limit;
+        $limit = $stat[$table]['from'] + BACKUP_LIMIT_COUNT;
+        $sql = "SELECT * FROM $table LIMIT ". $stat[$table]['from'] .", ".BACKUP_LIMIT_COUNT;
+        $stat[$table]['from'] = $limit;
 
         $search  = array("\x00", "\x0a", "\x0d", "\x1a", "*/", "/*");
         $replace = array('\0', '\n', '\r', '\Z', "\*\/", "\/\*");
@@ -514,7 +514,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
                 if (!isset($row[$name])) {
                     $values[] = 'NULL';
                 } elseif ($row[$name] == '0' || $row[$name] != '') {
-                    if ($stat[$table]["number"][$name]) {
+                    if ($stat[$table]['number'][$name]) {
                         $values[] = $row[$name];
                     } else {
                         $values[] = "'" . str_replace($search, $replace, str_replace('\'', '\\\'', str_replace('\\', '\\\\', $row[$name]))) . "'";
@@ -562,7 +562,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
     function getTables() 
     {
         $tables = array();
-        foreach ($this->getAll("SHOW TABLES") as $table) {
+        foreach ($this->getAll('SHOW TABLES') as $table) {
             $data = array_values($table);
             if (strncmp($data[0], self::DBTABLE_PREFIX, strlen(self::DBTABLE_PREFIX))==0) {
                 $tables[] = $data[0];

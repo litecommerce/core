@@ -37,9 +37,9 @@ class XLite_Module_WholesaleTrading_View_RegisterForm extends XLite_View_Registe
 {
     function fillForm()
     {
-        $p = $this->get("profile");
-        if ($this->xlite->is("adminZone") && is_object($p)) {
-            if ($p->get("membership_exp_date") > 0) {
+        $p = $this->get('profile');
+        if ($this->xlite->is('adminZone') && is_object($p)) {
+            if ($p->get('membership_exp_date') > 0) {
                 $this->set("membership_exp_type", "custom");
             } else {
                 $this->set("membership_exp_type", "never");
@@ -53,9 +53,9 @@ class XLite_Module_WholesaleTrading_View_RegisterForm extends XLite_View_Registe
     {
         $params = parent::getAllParams();
         // remove duplicate form parameters: date select and hidden form parameters
-        unset($params["membership_exp_dateDay"]);
-        unset($params["membership_exp_dateMonth"]);
-        unset($params["membership_exp_dateYear"]);
+        unset($params['membership_exp_dateDay']);
+        unset($params['membership_exp_dateMonth']);
+        unset($params['membership_exp_dateYear']);
 
         return $params;
     }

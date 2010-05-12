@@ -56,17 +56,17 @@ class XLite_Module_ProductAdviser_Model_ProductRecentlyViewed extends XLite_Mode
 
     function collectGarbage()
     {
-        if ($this->xlite->get("RecentlyViewedCleaned")) {
+        if ($this->xlite->get('RecentlyViewedCleaned')) {
             return;
         }
         $t1 = $this->db->getTableByAlias($this->alias);
-        $t2 = $this->db->getTableByAlias("sessions");
+        $t2 = $this->db->getTableByAlias('sessions');
         $sql = "SELECT $t1.sid FROM $t1 LEFT JOIN $t2 ON $t1.sid=$t2.id WHERE $t2.id IS NULL";
         $expired = $this->db->getAll($sql);
         if (is_array($expired) && count($expired) > 0) {
         	$hash = array();
         	foreach($expired as $sid) {
-        		$sid = $sid["sid"];
+        		$sid = $sid['sid'];
         		if (!isset($hash[$sid])) {
         			$hash[$sid] = true;
                     $sql = "DELETE FROM $t1 WHERE sid='$sid'";
@@ -80,7 +80,7 @@ class XLite_Module_ProductAdviser_Model_ProductRecentlyViewed extends XLite_Mode
 
     function cleanCurrentGarbage()
     {
-        if ($this->xlite->get("CurrentRecentlyViewedCleaned")) {
+        if ($this->xlite->get('CurrentRecentlyViewedCleaned')) {
             return;
         }
         $t1 = $this->db->getTableByAlias($this->alias);
@@ -94,7 +94,7 @@ class XLite_Module_ProductAdviser_Model_ProductRecentlyViewed extends XLite_Mode
     function getProduct()
     {
         if (is_null($this->product)) {
-            $this->product = new XLite_Model_Product($this->get("product_id"));
+            $this->product = new XLite_Model_Product($this->get('product_id'));
         }
         return $this->product;
     }

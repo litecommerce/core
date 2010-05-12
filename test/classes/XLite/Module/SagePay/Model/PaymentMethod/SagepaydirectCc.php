@@ -126,7 +126,7 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepaydirectCc extends XLite_Mod
 
     function handleConfigRequest() 
     {
-        $params = $_POST["params"];
+        $params = $_POST['params'];
 
         $statuses = array("auth", "reject", "success_no3d", "success_3dok", "success_3dfail");
         foreach ($statuses as $name) {
@@ -135,9 +135,9 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepaydirectCc extends XLite_Mod
             if ($this->xlite->AOMEnabled) {
                 $status = new XLite_Module_AOM_Model_OrderStatus();
                 if ($status->find("status='".$params[$field]."'")) {
-                    if ($status->get("parent")) {
-                        $params[$field] = $status->get("parent");
-                        $result = $status->get("status");
+                    if ($status->get('parent')) {
+                        $params[$field] = $status->get('parent');
+                        $result = $status->get('status');
                     }
                 }
             }
@@ -153,29 +153,29 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepaydirectCc extends XLite_Mod
     {
         $request = array();
 
-        $request["CardHolder"] = $this->cc_info["cc_name"];
-        $request["CardNumber"] = $this->cc_info["cc_number"];
-        $request["ExpiryDate"] = $this->cc_info["cc_date"];
-        $request["CV2"]        = $this->cc_info["cc_cvv2"];
-        $request["CardType"]   = $this->cc_info["cc_type"];
+        $request['CardHolder'] = $this->cc_info['cc_name'];
+        $request['CardNumber'] = $this->cc_info['cc_number'];
+        $request['ExpiryDate'] = $this->cc_info['cc_date'];
+        $request['CV2']        = $this->cc_info['cc_cvv2'];
+        $request['CardType']   = $this->cc_info['cc_type'];
 
         // Add additional informations
-        switch ($request["CardType"]) {
+        switch ($request['CardType']) {
             case "SW":
-                $request["CardType"] = "SWITCH";
+                $request['CardType'] = "SWITCH";
             break;
             case "SO":
-                $request["CardType"] = "SOLO";
-                if (isset($this->cc_info["cc_start_date"])) {
-                    $request["StartDate"] = $this->cc_info["cc_start_date"];
+                $request['CardType'] = "SOLO";
+                if (isset($this->cc_info['cc_start_date'])) {
+                    $request['StartDate'] = $this->cc_info['cc_start_date'];
                 }
-                if (isset($this->cc_info["cc_issue"])) {
-                    $request["IssueNumber"] = $this->cc_info["cc_issue"];
+                if (isset($this->cc_info['cc_issue'])) {
+                    $request['IssueNumber'] = $this->cc_info['cc_issue'];
                 }
             break;
             case "AMEX":
-                if (isset($this->cc_info["cc_start_date"])) {
-                    $request["StartDate"] = $this->cc_info["cc_start_date"];
+                if (isset($this->cc_info['cc_start_date'])) {
+                    $request['StartDate'] = $this->cc_info['cc_start_date'];
                 }
             break;
         }
@@ -185,6 +185,6 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepaydirectCc extends XLite_Mod
 
     function getClientIP()
     {
-        return $_SERVER["REMOTE_ADDR"];
+        return $_SERVER['REMOTE_ADDR'];
     }
 }

@@ -105,7 +105,7 @@ class XLite_Module_AdvancedSecurity_Main extends XLite_Module_Abstract
     public function init()
     {
         parent::init();
-        if ($this->xlite->is("adminZone")) {
+        if ($this->xlite->is('adminZone')) {
         }
     }
 }

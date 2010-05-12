@@ -44,41 +44,41 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeneralStats extends XLite_
             $fd = $this->getComplex('period.fromDate');
             $td = $this->getComplex('period.toDate');
             // total orders
-            $this->gs["placed"] = $order->db->getOne("SELECT COUNT(*) FROM $table WHERE status!='T' AND date BETWEEN $fd AND $td");
+            $this->gs['placed'] = $order->db->getOne("SELECT COUNT(*) FROM $table WHERE status!='T' AND date BETWEEN $fd AND $td");
             // queued
-            $this->gs["queued"] = $order->db->getOne("SELECT COUNT(*) FROM $table WHERE status='Q' AND date BETWEEN $fd AND $td");
+            $this->gs['queued'] = $order->db->getOne("SELECT COUNT(*) FROM $table WHERE status='Q' AND date BETWEEN $fd AND $td");
             // processed
-            $this->gs["processed"] = $order->db->getOne("SELECT COUNT(*) FROM $table WHERE status='P' AND date BETWEEN $fd AND $td");
+            $this->gs['processed'] = $order->db->getOne("SELECT COUNT(*) FROM $table WHERE status='P' AND date BETWEEN $fd AND $td");
             // incomplete
-            $this->gs["incomplete"] = $order->db->getOne("SELECT COUNT(*) FROM $table WHERE status='I' AND date BETWEEN $fd AND $td");
+            $this->gs['incomplete'] = $order->db->getOne("SELECT COUNT(*) FROM $table WHERE status='I' AND date BETWEEN $fd AND $td");
             // failed
-            $this->gs["failed"] = $order->db->getOne("SELECT COUNT(*) FROM $table WHERE status='F' AND date BETWEEN $fd AND $td");
+            $this->gs['failed'] = $order->db->getOne("SELECT COUNT(*) FROM $table WHERE status='F' AND date BETWEEN $fd AND $td");
             // declined
-            $this->gs["declined"] = $order->db->getOne("SELECT COUNT(*) FROM $table WHERE status='D' AND date BETWEEN $fd AND $td");
+            $this->gs['declined'] = $order->db->getOne("SELECT COUNT(*) FROM $table WHERE status='D' AND date BETWEEN $fd AND $td");
             // completed
-            $this->gs["completed"] = $order->db->getOne("SELECT COUNT(*) FROM $table WHERE status='C' AND date BETWEEN $fd AND $td");
+            $this->gs['completed'] = $order->db->getOne("SELECT COUNT(*) FROM $table WHERE status='C' AND date BETWEEN $fd AND $td");
             // subtotal
-            $this->gs["subtotal"] = $order->db->getOne("SELECT SUM(subtotal) FROM $table WHERE status!='T' AND date BETWEEN $fd AND $td");
+            $this->gs['subtotal'] = $order->db->getOne("SELECT SUM(subtotal) FROM $table WHERE status!='T' AND date BETWEEN $fd AND $td");
 
             // total tax
-            $this->gs["total_tax"] = $order->db->getOne("SELECT SUM(tax) FROM $table WHERE status!='T' AND date BETWEEN $fd AND $td");
+            $this->gs['total_tax'] = $order->db->getOne("SELECT SUM(tax) FROM $table WHERE status!='T' AND date BETWEEN $fd AND $td");
             // taxes in details
             $allTaxes = $order->db->getAll("SELECT taxes FROM $table WHERE status!='T' AND date BETWEEN $fd AND $td");
             foreach ($allTaxes as $k => $v) {
-                $taxes = unserialize($v["taxes"]);
+                $taxes = unserialize($v['taxes']);
                 foreach ($taxes as $taxName => $taxAmount) {
                     if ($taxName != "Tax") {
-                        if (!isset($this->gs["taxDetails"][$taxName])) {
-                            $this->gs["taxDetails"][$taxName] = $taxAmount;
+                        if (!isset($this->gs['taxDetails'][$taxName])) {
+                            $this->gs['taxDetails'][$taxName] = $taxAmount;
                         } else {
-                            $this->gs["taxDetails"][$taxName] += $taxAmount;
+                            $this->gs['taxDetails'][$taxName] += $taxAmount;
                         }
                     }
                 }
             }
 
             // shipping cost
-            $this->gs["total_shipping"] = $order->db->getOne("SELECT SUM(shipping_cost) FROM $table WHERE status!='T' AND date BETWEEN $fd AND $td");
+            $this->gs['total_shipping'] = $order->db->getOne("SELECT SUM(shipping_cost) FROM $table WHERE status!='T' AND date BETWEEN $fd AND $td");
 
             // Promotion add-on
             // discounts
@@ -89,8 +89,8 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeneralStats extends XLite_
                 $discount = 0;
                 $payedByPoints = 0;
             }
-            $this->gs["discount"] = $discount;
-            $this->gs["payedByPoints"] = $payedByPoints;
+            $this->gs['discount'] = $discount;
+            $this->gs['payedByPoints'] = $payedByPoints;
             
             // GiftCertificates add-on
             if ($this->getComplex('xlite.mm.activeModules.GiftCertificates')) {
@@ -98,7 +98,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeneralStats extends XLite_
             } else {
                 $payedByGC = 0;
             }
-            $this->gs["payedByGC"] = $payedByGC;
+            $this->gs['payedByGC'] = $payedByGC;
             
             // Wholesalers add-on
             if ($this->getComplex('xlite.mm.activeModules.WholesaleTrading')) {
@@ -106,13 +106,13 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeneralStats extends XLite_
             } else {
                 $global_discount = 0;
             }
-            $this->gs["global_discount"] = $global_discount;
+            $this->gs['global_discount'] = $global_discount;
 
             // calc total discount
-            $this->gs["total_discounts"] = $discount + $payedByPoints + $payedByGC + $global_discount;
+            $this->gs['total_discounts'] = $discount + $payedByPoints + $payedByGC + $global_discount;
 
             // gross total
-            $this->gs["gross_total"] = $order->db->getOne("SELECT SUM(total) FROM $table WHERE status!='T' AND date BETWEEN $fd AND $td");
+            $this->gs['gross_total'] = $order->db->getOne("SELECT SUM(total) FROM $table WHERE status!='T' AND date BETWEEN $fd AND $td");
 
             // calculate extra sales info (for modules)
             $this->calcExtraGS();
@@ -120,8 +120,8 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeneralStats extends XLite_
             // members
             $profile = new XLite_Model_Profile();
             $table = $profile->db->getTableByAlias($profile->alias);
-            $this->gs["active_accounts"] = $profile->db->getOne("SELECT COUNT(*) FROM $table WHERE status='E' AND order_id=0");
-            $this->gs["new_accounts"] = $profile->db->getOne("SELECT COUNT(*) FROM $table WHERE status='E' AND first_login BETWEEN $fd AND $td AND order_id=0");
+            $this->gs['active_accounts'] = $profile->db->getOne("SELECT COUNT(*) FROM $table WHERE status='E' AND order_id=0");
+            $this->gs['new_accounts'] = $profile->db->getOne("SELECT COUNT(*) FROM $table WHERE status='E' AND first_login BETWEEN $fd AND $td AND order_id=0");
         }
         return $this->gs;
     }

@@ -47,11 +47,11 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
     {
         $this->params[] = "pageID";
 
-        if (!isset($_REQUEST["sort_mode"])) {
+        if (!isset($_REQUEST['sort_mode'])) {
             // restore current filter
-            $sm = $this->session->get("coupon_search_mode");
+            $sm = $this->session->get('coupon_search_mode');
             if (is_array($sm) && (!empty($sm))) {
-                $_REQUEST["sort_mode"] = $sm;
+                $_REQUEST['sort_mode'] = $sm;
             }
         }
 
@@ -171,13 +171,13 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
     function action_add() 
     {
         $dc = new XLite_Module_Promotion_Model_DiscountCoupon();
-        if ($dc->find("coupon='" . $this->get("coupon") . "' AND order_id='0'")) {
+        if ($dc->find("coupon='" . $this->get('coupon') . "' AND order_id='0'")) {
             $this->valid = false;
             $this->couponExists = true;
         } else {
             $_POST['discount'] = abs($_POST['discount']);
             $dc->set("properties", $_POST);
-            $dc->set("expire", $this->get("expire"));
+            $dc->set("expire", $this->get('expire'));
             $dc->create();
         }
 
@@ -186,8 +186,8 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
 
     function action_update() 
     {
-        if (isset($_POST["status"])) {
-            foreach ($_POST["status"] as $coupon_id => $status) {
+        if (isset($_POST['status'])) {
+            foreach ($_POST['status'] as $coupon_id => $status) {
                 $dc = new XLite_Module_Promotion_Model_DiscountCoupon($coupon_id);
                 $dc->set("status", $status);
                 $dc->update();
@@ -199,7 +199,7 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
 
     function action_delete() 
     {
-        $dc = new XLite_Module_Promotion_Model_DiscountCoupon($this->get("coupon_id"));
+        $dc = new XLite_Module_Promotion_Model_DiscountCoupon($this->get('coupon_id'));
         $dc->delete();
 
         $this->_action_postprocess();
@@ -219,7 +219,7 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
     {
         if (!$dc->getChildrenCount()) return false;
         if ($this->xlite->getComplex('config.Promotion.auto_expand_coupon_orders')) return true;
-        if ($dc->get("coupon_id") != $this->get("children_coupon_id")) return false;
+        if ($dc->get('coupon_id') != $this->get('children_coupon_id')) return false;
         return true;
     }
 }

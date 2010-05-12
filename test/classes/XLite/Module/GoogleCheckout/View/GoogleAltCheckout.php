@@ -54,13 +54,13 @@ class XLite_Module_GoogleCheckout_View_GoogleAltCheckout extends XLite_View_Abst
     {
         if (!isset($this->GCMerchantID)) {
             $pm = XLite_Model_PaymentMethod::factory('google_checkout');
-            $isAdminZone = $this->xlite->is("adminZone");
+            $isAdminZone = $this->xlite->is('adminZone');
             $this->xlite->set("adminZone", true);
-            $enabled = (bool) $pm->get("enabled");
+            $enabled = (bool) $pm->get('enabled');
             $this->xlite->set("adminZone", $isAdminZone);
             if ($enabled) {
-                $params = $pm->get("params");
-                $this->GCMerchantID = $params["merchant_id"];
+                $params = $pm->get('params');
+                $this->GCMerchantID = $params['merchant_id'];
                 $this->CurrentSkin = strval($this->getComplex('dialog.config.Skins.skin'));
             } else {
                 $this->GCMerchantID = null;
@@ -81,7 +81,7 @@ class XLite_Module_GoogleCheckout_View_GoogleAltCheckout extends XLite_View_Abst
         );
         $cart = $this->getComplex('dialog.cart');
         $dialogTarget = $this->getComplex('dialog.target');
-        if (is_object($cart) && !$cart->is("empty") && !in_array($dialogTarget, $targets)) {
+        if (is_object($cart) && !$cart->is('empty') && !in_array($dialogTarget, $targets)) {
             if (in_array($dialogTarget, $targetsProfile)) {
                 $this->setComplex("dialog.google_checkout_profile", true);
             }

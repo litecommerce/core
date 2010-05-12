@@ -43,7 +43,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnersTree extends XLite_Module_
     function getRoot()
     {
         if (is_null($this->root)) {
-            $this->root = new XLite_Model_Profile($this->get("partner_id"));
+            $this->root = new XLite_Model_Profile($this->get('partner_id'));
         }
         return $this->root;
     }

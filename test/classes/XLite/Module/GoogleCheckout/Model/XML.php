@@ -45,13 +45,13 @@ class XLite_Module_GoogleCheckout_Model_XML extends XLite_Model_XML
                 return false;
     		break;
     		case "complete+":
-                if (isset($values[$i]["value"])) {
-                    $value = $values[$i]["value"];
+                if (isset($values[$i]['value'])) {
+                    $value = $values[$i]['value'];
                 } else {
                     $value = null;
                 }
-                if (isset($values[$i]["attributes"])) {
-                    $attributes = $values[$i]["attributes"];
+                if (isset($values[$i]['attributes'])) {
+                    $attributes = $values[$i]['attributes'];
                 } else {
                     $attributes = null;
                 }
@@ -65,13 +65,13 @@ class XLite_Module_GoogleCheckout_Model_XML extends XLite_Model_XML
     		case "complete-":
                 $attrID = null;
                 if (!is_null($attributes)) {
-                	if (isset($attributes["ID"])) {
+                	if (isset($attributes['ID'])) {
                 		$attrID = "ID";
                 	}
-                	if (isset($attributes["NAME"])) {
+                	if (isset($attributes['NAME'])) {
                 		$attrID = "NAME";
                 	}
-                    if (isset($attributes["CODE"])) {
+                    if (isset($attributes['CODE'])) {
                         $attrID = "CODE";
                     }
                 }
@@ -107,10 +107,10 @@ class XLite_Module_GoogleCheckout_Model_XML extends XLite_Model_XML
     {
         $tree = array();
         while ($i < count($values)) {
-            $type = $values[$i]["type"];
-            $tag = $values[$i]["tag"];
-            if (isset($values[$i]["attributes"])) {
-                $attributes = $values[$i]["attributes"];
+            $type = $values[$i]['type'];
+            $tag = $values[$i]['tag'];
+            if (isset($values[$i]['attributes'])) {
+                $attributes = $values[$i]['attributes'];
             } else {
                 $attributes = null;
             }

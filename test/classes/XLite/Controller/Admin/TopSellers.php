@@ -61,11 +61,11 @@ class XLite_Controller_Admin_TopSellers extends XLite_Controller_Admin_Stats
                 "paid" => $statRec);
 
         $order = new XLite_Model_Order();
-        $date = $this->get("monthDate");
+        $date = $this->get('monthDate');
         array_map(array($this, "collect"), $order->findAll("(status='P' OR status='C') AND date>=$date"));
-        $this->sort("todayItems");
-        $this->sort("weekItems");
-        $this->sort("monthItems");
+        $this->sort('todayItems');
+        $this->sort('weekItems');
+        $this->sort('monthItems');
 
         parent::handleRequest();
     }
@@ -77,14 +77,14 @@ class XLite_Controller_Admin_TopSellers extends XLite_Controller_Admin_Stats
 
     function collect($order)
     {
-        $items = $order->get("items");
-        if ($order->get("date") >= $this->get("todayDate")) {
+        $items = $order->get('items');
+        if ($order->get('date') >= $this->get('todayDate')) {
             $this->todayItems = array_merge($this->todayItems, $items);
         }
-        if ($order->get("date") >= $this->get("weekDate")) {
+        if ($order->get('date') >= $this->get('weekDate')) {
             $this->weekItems = array_merge($this->weekItems, $items);
         }
-        if ($order->get("date") >= $this->get("monthDate")) {
+        if ($order->get('date') >= $this->get('monthDate')) {
             $this->monthItems = array_merge($this->monthItems, $items);
         }
     }
@@ -93,16 +93,16 @@ class XLite_Controller_Admin_TopSellers extends XLite_Controller_Admin_Stats
     {
         $this->topProducts[$name] = array();
         foreach ((array) $this->get($name) as $item) {
-            $id = $item->get("product_id");
+            $id = $item->get('product_id');
             if (!$id) continue;
             if (!isset($this->topProducts[$name][$id])) {
                 $this->topProducts[$name][$id] = array(
                         "id" => $id,
-                        "name" => $item->get("name"),
-                        "amount" => $item->get("amount")
+                        "name" => $item->get('name'),
+                        "amount" => $item->get('amount')
                         );
             } else {
-                $this->topProducts[$name][$id]["amount"] += $item->get("amount");
+                $this->topProducts[$name][$id]['amount'] += $item->get('amount');
             }
         }
         usort($this->topProducts[$name], array($this, "cmpProducts"));

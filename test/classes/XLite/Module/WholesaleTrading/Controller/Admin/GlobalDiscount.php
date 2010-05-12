@@ -54,7 +54,7 @@ class XLite_Module_WholesaleTrading_Controller_Admin_GlobalDiscount extends XLit
 
     function action_update()
     {
-        $gd = new XLite_Module_WholesaleTrading_Model_GlobalDiscount($_POST["discount_id"]);
+        $gd = new XLite_Module_WholesaleTrading_Model_GlobalDiscount($_POST['discount_id']);
         $gd->set('subtotal', $_POST['gd_subtotal']);
         $gd->set('discount', abs($_POST['gd_value']));
         $gd->set('discount_type', $_POST['gd_type']);
@@ -64,7 +64,7 @@ class XLite_Module_WholesaleTrading_Controller_Admin_GlobalDiscount extends XLit
 
     function action_delete()
     {
-        $gd = new XLite_Module_WholesaleTrading_Model_GlobalDiscount($_POST["discount_id"]);
+        $gd = new XLite_Module_WholesaleTrading_Model_GlobalDiscount($_POST['discount_id']);
         $gd->delete();
     }
 }

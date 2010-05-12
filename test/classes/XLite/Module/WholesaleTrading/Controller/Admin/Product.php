@@ -38,12 +38,12 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Product extends XLite_Contr
     public function __construct(array $params)
     {
         parent::__construct($params);
-        $this->pages["access_list"] = "Product access";
-        $this->pageTemplates["access_list"] = "modules/WholesaleTrading/product_access/access_list.tpl";
-        $this->pages["wholesale_pricing"] = "Wholesale pricing";
-        $this->pageTemplates["wholesale_pricing"] = "modules/WholesaleTrading/wholesale_pricing.tpl";
-        $this->pages["purchase_limit"] = "Purchase limit";
-        $this->pageTemplates["purchase_limit"] = "modules/WholesaleTrading/purchase.tpl";
+        $this->pages['access_list'] = "Product access";
+        $this->pageTemplates['access_list'] = "modules/WholesaleTrading/product_access/access_list.tpl";
+        $this->pages['wholesale_pricing'] = "Wholesale pricing";
+        $this->pageTemplates['wholesale_pricing'] = "modules/WholesaleTrading/wholesale_pricing.tpl";
+        $this->pages['purchase_limit'] = "Purchase limit";
+        $this->pageTemplates['purchase_limit'] = "modules/WholesaleTrading/purchase.tpl";
     }
 
     function action_update_access()
@@ -94,25 +94,25 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Product extends XLite_Contr
     {
         $wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
         $wp->set("product_id", $this->product_id);
-        $wp->set("price", $_REQUEST["wp_price"]);
-        $wp->set("amount", $_REQUEST["wp_amount"]);
-        $wp->set("membership", $_REQUEST["wp_membership"]);
+        $wp->set("price", $_REQUEST['wp_price']);
+        $wp->set("amount", $_REQUEST['wp_amount']);
+        $wp->set("membership", $_REQUEST['wp_membership']);
         $wp->create();
     }
 
     function action_delete_wholesale_price()
     {
-        $wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing($_REQUEST["wprice_id"]);
+        $wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing($_REQUEST['wprice_id']);
         $wp->delete();
     }
 
     function action_update_wholesale_pricing()
     {
-        $wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing($_REQUEST["wprice_id"]);
+        $wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing($_REQUEST['wprice_id']);
         $wp->set("product_id", $this->product_id);
-        $wp->set("price", $_REQUEST["w_price"]);
-        $wp->set("amount", $_REQUEST["w_amount"]);
-        $wp->set("membership", $_REQUEST["w_membership"]);
+        $wp->set("price", $_REQUEST['w_price']);
+        $wp->set("amount", $_REQUEST['w_amount']);
+        $wp->set("membership", $_REQUEST['w_membership']);
         $wp->update();
     }
 
@@ -124,8 +124,8 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Product extends XLite_Contr
             $action = "update";
         }
         $pl->set("product_id", $this->product_id);
-        $pl->set("min", $_REQUEST["min_purchase"]);
-        $pl->set("max", $_REQUEST["max_purchase"]);
+        $pl->set("min", $_REQUEST['min_purchase']);
+        $pl->set("max", $_REQUEST['max_purchase']);
         $pl->$action();
     }
     
@@ -144,7 +144,7 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Product extends XLite_Contr
 
     function action_info()
     {
-        $_POST["validaty_period"] = $_POST["vp_modifier"] . $_POST["vperiod"];
+        $_POST['validaty_period'] = $_POST['vp_modifier'] . $_POST['vperiod'];
         parent::action_info();
     }
 

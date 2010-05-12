@@ -84,7 +84,7 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
     function getProduct()  
     {
         if (!isset($this->product)) {
-            $this->product = new XLite_Model_Product($this->get("product_id"));
+            $this->product = new XLite_Model_Product($this->get('product_id'));
         }
 
         return $this->product;
@@ -115,8 +115,8 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
     function changeOrderItem(&$orderItem) 
     {
         $isChanged = false;
-        if ($this->xlite->get("WholesaleTradingEnabled")) {
-            $orderItem->set("amount", $this->get("amount"));
+        if ($this->xlite->get('WholesaleTradingEnabled')) {
+            $orderItem->set("amount", $this->get('amount'));
             $isChanged = true;
         }
 
@@ -136,7 +136,7 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
             case "listPrice" :
             case "price" :
             case "weight":
-                $orderItem = $this->get("orderItem");
+                $orderItem = $this->get('orderItem');
                 if ($this->changeOrderItem($orderItem)) {
                     $value = $orderItem->get($name);
                     break;
@@ -166,13 +166,13 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
         return array(
             'target' => 'product',
             'action' => '',
-            'arguments' => array('product_id' => $this->get("product_id"))
+            'arguments' => array('product_id' => $this->get('product_id'))
         );
     }
 
     function getTotal() 
     {
-        return $this->get("price") * $this->get("amount");
+        return $this->get('price') * $this->get('amount');
     }
     
     function hasImage() 
@@ -182,7 +182,7 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
     
     function hasOptions()  
     {
-        return $this->get("options");
+        return $this->get('options');
     }
     
     /* returns two-dimensional array like this
@@ -194,9 +194,9 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
     function getOptionExceptionsAsArray() {
         $exceptions = array();
 
-        foreach ($this->getProduct()->get("optionExceptions") as $oneException) {
+        foreach ($this->getProduct()->get('optionExceptions') as $oneException) {
             $tempArray = array();
-            foreach (explode(";", $oneException->get("exception")) as $exceptionElement) {
+            foreach (explode(";", $oneException->get('exception')) as $exceptionElement) {
                 list($class, $option) = explode("=", $exceptionElement, 2);
                 $tempArray[$class] = $option;
             }
@@ -221,7 +221,7 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
 
         $value = false;
 
-        if ($this->xlite->get("ProductOptionsEnabled")) {
+        if ($this->xlite->get('ProductOptionsEnabled')) {
             $selectedOptions = $this->getSelectedOptionsAsArray();
 
             foreach ($this->getOptionExceptionsAsArray() as $exception) {
@@ -246,7 +246,7 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
     }
     
     function isOptionsExist() {
-        if (!$this->xlite->get("ProductOptionsEnabled")) {
+        if (!$this->xlite->get('ProductOptionsEnabled')) {
             // if ProductOptions disabled - all options are exists
             return true;
         }
@@ -255,14 +255,14 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
         
         $result = true;
         foreach ($product->getProductOptions() as $productOptions) {
-            if ($productOptions->get("opttype") == "Text" || $productOptions->get("opttype") == "Textarea") 
+            if ($productOptions->get('opttype') == "Text" || $productOptions->get('opttype') == "Textarea") 
                 continue;
 
-            $class = $productOptions->get("optclass");
+            $class = $productOptions->get('optclass');
             if (isset($selectedOptions[$class])) {
                 // check that pruduct options still have this option
                 $option = $selectedOptions[$class];
-                $options = $productOptions->get("options");
+                $options = $productOptions->get('options');
                 // $options - string like this - "Green\n\Blue\nRed" or "Green\r\nBlue\r\nRed"
                 if (!preg_match("/(\r|(\r\n)|\n)?$option(\r|(\r\n)|\n)?/", $options)) {
                     $result = false;
@@ -276,16 +276,16 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
     
        function getProductOptions() 
     {
-        $options = $this->get("options");
+        $options = $this->get('options');
 
         return empty($options) ? array() : unserialize($options);
     }
 
     function setProductOptions(&$options)  
     {
-        $orderItem = $this->get("orderItem");
+        $orderItem = $this->get('orderItem');
         $orderItem->setProductOptions($options);
-        $this->set("options", $orderItem->get("options"));
+        $this->set("options", $orderItem->get('options'));
     }
 
 }

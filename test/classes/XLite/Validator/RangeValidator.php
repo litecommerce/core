@@ -42,10 +42,10 @@ class XLite_Validator_RangeValidator extends XLite_Validator_Abstract
         if (!parent::isValid()) {
             return false;
         }
-        if (isset($_POST[$this->get("field")])) {
-            $_POST[$this->get("field")] = trim($_POST[$this->get("field")]);
+        if (isset($_POST[$this->get('field')])) {
+            $_POST[$this->get('field')] = trim($_POST[$this->get('field')]);
             // validate
-            return $_POST[$this->get("field")]>=$this->get("min") && $_POST[$this->get("field")]<=$this->get("max");
+            return $_POST[$this->get('field')]>=$this->get('min') && $_POST[$this->get('field')]<=$this->get('max');
         }
         return true;
     }

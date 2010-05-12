@@ -67,7 +67,7 @@ if (get_magic_quotes_gpc()) {
 ?>
 <html>
 <body>
-<form action="<?php echo $_POST["submit_url"]; ?>" method="POST" name="ePDQ_form">
+<form action="<?php echo $_POST['submit_url']; ?>" method="POST" name="ePDQ_form">
 <?php
     foreach ($_POST as $key=>$value) {
         if ($key == "submit_url") continue;

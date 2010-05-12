@@ -38,13 +38,13 @@ class XLite_Module_InventoryTracking_Model_OrderItem extends XLite_Model_OrderIt
     public function __construct() 
     {
         parent::__construct();
-        $this->fields["product_sku"] = "";
+        $this->fields['product_sku'] = "";
     }
 
     function set($name, $value) 
     {
         $result = parent::set($name, $value);
-        if (!$this->xlite->get("ProductOptionsEnabled")) return $result;
+        if (!$this->xlite->get('ProductOptionsEnabled')) return $result;
         if ($name == "options") {
             $this->assignProductSku();
         }
@@ -54,18 +54,18 @@ class XLite_Module_InventoryTracking_Model_OrderItem extends XLite_Model_OrderIt
     function assignProductSku() 
     {
         $this->set("product_sku", parent::get('sku'));
-        if (!$this->xlite->get("ProductOptionsEnabled")) return false;
+        if (!$this->xlite->get('ProductOptionsEnabled')) return false;
         if (!$this->getComplex('product.tracking')) return false;
 
-        $options = (array) $this->get("productOptions");
+        $options = (array) $this->get('productOptions');
         if (empty($options)) return false;
 
-        $key = $this->get("key");
+        $key = $this->get('key');
         $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
-        $inventories = (array) $inventory->findAll("inventory_id LIKE '".$this->get("product_id")."|%'", "order_by");
+        $inventories = (array) $inventory->findAll("inventory_id LIKE '".$this->get('product_id')."|%'", "order_by");
         foreach ($inventories as $i) {
             if ($i->keyMatch($key)) {
-                $sku = $i->get("inventory_sku");
+                $sku = $i->get('inventory_sku');
                 if (!empty($sku)) {
                     $this->set("product_sku", $sku);
                     return true;

@@ -64,25 +64,25 @@ class XLite_Model_ProductInventory extends XLite_Model_Product implements XLite_
         static $line;
         if (!isset($line)) $line = 1; else $line++;
 
-        $properties = $options["properties"];
+        $properties = $options['properties'];
         $this->_convertProperties($properties);
         $product = new XLite_Model_Product();
 
         // search for product by SKU
-        if (!empty($properties["sku"]) && $product->find("sku='".addslashes($properties["sku"])."'")) {
+        if (!empty($properties['sku']) && $product->find("sku='".addslashes($properties['sku'])."'")) {
             // update
             $this->updateProductInventory($line, $product, $properties);
         }
         // search for product by NAME
-        elseif (empty($properties["sku"]) && !empty($properties["name"]) && $product->find("name='".addslashes($properties["name"])."'")) {
+        elseif (empty($properties['sku']) && !empty($properties['name']) && $product->find("name='".addslashes($properties['name'])."'")) {
             // update
             $this->updateProductInventory($line, $product, $properties);
         }
         // die if product not found
         else {
             echo "<b>line# $line:</b> <font color=red>Product not found:</font> ";
-            echo !empty($properties["sku"]) ? "SKU: $properties[sku] " : "";
-            echo !empty($properties["name"]) ? "NAME: $properties[name] " : "";
+            echo !empty($properties['sku']) ? "SKU: $properties[sku] " : "";
+            echo !empty($properties['name']) ? "NAME: $properties[name] " : "";
             echo "<br>\n";
             echo '<br><a href="admin.php?target=update_inventory&page=pricing"><u>Click here to return to admin interface</u></a>';
             die();
@@ -91,7 +91,7 @@ class XLite_Model_ProductInventory extends XLite_Model_Product implements XLite_
 
     function updateProductInventory($line, $product, $properties)
     {
-        echo "<b>line# $line:</b> updating product ".$product->get("name")."<br>\n";
+        echo "<b>line# $line:</b> updating product ".$product->get('name')."<br>\n";
         $product->setProperties($properties);
         $product->update();
     }

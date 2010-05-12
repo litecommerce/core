@@ -224,24 +224,24 @@ class XLite_Module_UPSOnlineTools_Model_ContainerLevel extends XLite_Base
     function export()
     {
         $vars = array();
-        $vars["level_id"] = $this->level_id;
-        $vars["bottom"] = $this->getBottomHeight();
-        $vars["height"] = $this->height;
+        $vars['level_id'] = $this->level_id;
+        $vars['bottom'] = $this->getBottomHeight();
+        $vars['height'] = $this->height;
 
 /*
         foreach((array)$this->subspaces as $subspace) {
-            $vars["subspaces"][] = $subspace->export();
+            $vars['subspaces'][] = $subspace->export();
         }
 //*/
 
         foreach ((array)$this->items as $item) {
-            $vars["items"][] = $item->export();
+            $vars['items'][] = $item->export();
         }
 
         // ignore, do not export: used_spaces;
 
         foreach ((array)$this->dirt_spaces as $dirt_space) {
-            $vars["dirt_spaces"][] = $dirt_space->export();
+            $vars['dirt_spaces'][] = $dirt_space->export();
         }
 
         return $vars;

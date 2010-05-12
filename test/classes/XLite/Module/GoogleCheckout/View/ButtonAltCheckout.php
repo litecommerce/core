@@ -52,7 +52,7 @@ class XLite_Module_GoogleCheckout_View_ButtonAltCheckout extends XLite_View_Butt
         	$this->gacObject->initGoogleData();
         }
 
-        if (isset($this->gacObject->GCMerchantID) && $this->getComplex('dialog.target') == "cart" && strtolower($this->get("label")) == "checkout") {
+        if (isset($this->gacObject->GCMerchantID) && $this->getComplex('dialog.target') == "cart" && strtolower($this->get('label')) == "checkout") {
             $this->template = "modules/GoogleCheckout/button_alt_checkout.tpl";
         }
 

@@ -40,14 +40,14 @@ class XLite_Module_WholesaleTrading_Model_Profile extends XLite_Model_Profile im
 
     public function __construct($p_id = null)
     {
-        $this->fields["membership_exp_date"] = 0;
-        $this->fields["tax_id"] = '';
-        $this->fields["vat_number"] = '';
-        $this->fields["gst_number"] = '';
-        $this->fields["pst_number"] = '';
-        $this->fields["membership_history"] = '';
-        $this->_securefields["membership_exp_date"] = "";
-        $this->_securefields["membership_history"] = "";
+        $this->fields['membership_exp_date'] = 0;
+        $this->fields['tax_id'] = '';
+        $this->fields['vat_number'] = '';
+        $this->fields['gst_number'] = '';
+        $this->fields['pst_number'] = '';
+        $this->fields['membership_history'] = '';
+        $this->_securefields['membership_exp_date'] = "";
+        $this->_securefields['membership_history'] = "";
         parent::__construct($p_id);
     }
 
@@ -59,8 +59,8 @@ class XLite_Module_WholesaleTrading_Model_Profile extends XLite_Model_Profile im
         }
         if (is_array($history)) {
             foreach($history as $mh_idx => $mh) {
-                if (isset($mh["membership_exp_date"]) && intval($mh["membership_exp_date"]) <= 0) {
-                    $history[$mh_idx]["membership_exp_date"] = 0;
+                if (isset($mh['membership_exp_date']) && intval($mh['membership_exp_date']) <= 0) {
+                    $history[$mh_idx]['membership_exp_date'] = 0;
                 }
             }
         }
@@ -72,8 +72,8 @@ class XLite_Module_WholesaleTrading_Model_Profile extends XLite_Model_Profile im
     {
         $readStatus = parent::read();
 
-        if (isset($this->properties["membership_history"])) {
-    		$this->properties["membership_history"] = $this->_initMembershipHistory($this->properties["membership_history"]);
+        if (isset($this->properties['membership_history'])) {
+    		$this->properties['membership_history'] = $this->_initMembershipHistory($this->properties['membership_history']);
         }
 
         if ($readStatus && ($this->get('membership_exp_date') > 0) && (time() > $this->get('membership_exp_date')) ) {
@@ -84,7 +84,7 @@ class XLite_Module_WholesaleTrading_Model_Profile extends XLite_Model_Profile im
             $mail->adminMail = false;
             $mail->compose(
                     $this->config->getComplex('Company.orders_department'),
-                    $this->get("login"),
+                    $this->get('login'),
                     "modules/WholesaleTrading/membership_expired");
             $mail->send();
 
@@ -102,15 +102,15 @@ class XLite_Module_WholesaleTrading_Model_Profile extends XLite_Model_Profile im
             $this->update();
 
             // Restore membership from history
-            $history = $this->get("membership_history");
+            $history = $this->get('membership_history');
             if ( is_array($history) && count($history) > 0 ) {
                 while (count($history) > 0) {
                     $value = array_pop($history);
-                    $exp_date = $value["membership_exp_date"];
+                    $exp_date = $value['membership_exp_date'];
                     if ( $exp_date > 0 && time() > $exp_date )
                         continue;
 
-                    $this->set("membership", $value["membership"]);
+                    $this->set("membership", $value['membership']);
                     $this->set("membership_exp_date", $exp_date);
                     $this->update();
                     break;
@@ -145,7 +145,7 @@ class XLite_Module_WholesaleTrading_Model_Profile extends XLite_Model_Profile im
                 $value = array();
             parent::set($name, serialize($value));
         } else {
-            $oldMembership = $this->get("membership");
+            $oldMembership = $this->get('membership');
             parent::set($name, $value);
             if ( $name == "membership" ) {
                 if (!$this->_membershipChanged && $value != $oldMembership) {
@@ -159,11 +159,11 @@ class XLite_Module_WholesaleTrading_Model_Profile extends XLite_Model_Profile im
     function _beforeSave()
     {
         if ($this->_membershipChanged) {
-            $this->membershipChanged($this->_oldMembership, $this->get("membership"));
+            $this->membershipChanged($this->_oldMembership, $this->get('membership'));
             $this->_membershipChanged = false;
         }
-        if (is_array($this->properties["membership_history"])) {
-            $this->properties["membership_history"] = serialize($this->properties["membership_history"]);
+        if (is_array($this->properties['membership_history'])) {
+            $this->properties['membership_history'] = serialize($this->properties['membership_history']);
         }
 
         parent::_beforeSave();
@@ -187,7 +187,7 @@ class XLite_Module_WholesaleTrading_Model_Profile extends XLite_Model_Profile im
         $mail->adminMail = false;
         $mail->compose(
                 $this->config->getComplex('Company.orders_department'),
-                $this->get("login"),
+                $this->get('login'),
                 $template);
         $mail->send();
     }

@@ -90,7 +90,7 @@ class XLite_Module_AdvancedSearch_Controller_Admin_AdvancedSearch extends XLite_
 
     function action_add()  
     {
-        if (isset($this->new_price) && is_array($this->new_price) && strlen($this->new_price["start"]) > 0 && strlen($this->new_price["end"]) > 0) {
+        if (isset($this->new_price) && is_array($this->new_price) && strlen($this->new_price['start']) > 0 && strlen($this->new_price['end']) > 0) {
             $prices = unserialize($this->config->getComplex('AdvancedSearch.prices'));
             $prices[] = $this->new_price;
             $config = new XLite_Model_Config();
@@ -99,7 +99,7 @@ class XLite_Module_AdvancedSearch_Controller_Admin_AdvancedSearch extends XLite_
             $config->set('value',serialize($prices));
             $config->update();
         }
-        if (isset($this->new_weight) && is_array($this->new_weight) && strlen($this->new_weight["start"]) > 0 && strlen($this->new_weight["end"]) > 0) {
+        if (isset($this->new_weight) && is_array($this->new_weight) && strlen($this->new_weight['start']) > 0 && strlen($this->new_weight['end']) > 0) {
             $weights = unserialize($this->config->getComplex('AdvancedSearch.weights'));
             $weights[] = $this->new_weight;
             $config = new XLite_Model_Config();

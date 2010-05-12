@@ -39,8 +39,8 @@ class XLite_Module_MultiCategories_Controller_Admin_AddProduct extends XLite_Con
     {
         parent::action_add();
         if (isset($this->product_categories) && !empty($this->product_categories)) {
-            $product = $this->get("product");
-            $categories = $product->get("categories");
+            $product = $this->get('product');
+            $categories = $product->get('categories');
             for ($i = 0; $i < count($categories); $i++) {
                 $product->deleteCategory($categories[$i]);
             }

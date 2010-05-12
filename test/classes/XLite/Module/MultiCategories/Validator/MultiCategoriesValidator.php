@@ -43,9 +43,9 @@ class XLite_Module_MultiCategories_Validator_MultiCategoriesValidator extends XL
             return false;
         }
 
-        $result = (!empty($_POST[$this->get("field")]) && is_array($_POST[$this->get("field")]) && !(count($_POST[$this->get("field")]) == 1 && empty($_POST[$this->get("field")][0]))) || !isset($_POST[$this->get("field")]);
-        if (isset($_POST["action"])) {
-        	$field_name = ($_POST["action"] == "add") ? "product_categories" : "categories";
+        $result = (!empty($_POST[$this->get('field')]) && is_array($_POST[$this->get('field')]) && !(count($_POST[$this->get('field')]) == 1 && empty($_POST[$this->get('field')][0]))) || !isset($_POST[$this->get('field')]);
+        if (isset($_POST['action'])) {
+        	$field_name = ($_POST['action'] == "add") ? "product_categories" : "categories";
         	if (!isset($_POST[$field_name])) {
         		$result = false;
         	}

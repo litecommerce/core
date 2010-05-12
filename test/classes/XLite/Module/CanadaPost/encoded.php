@@ -9,11 +9,11 @@
 
 function Shipping_cps_getRates($_this, $order)
 {
-    if ((is_null($order->get("profile")) && !$_this->config->getComplex('General.def_calc_shippings_taxes')) || $order->get("weight") == 0 || $_this->config->getComplex('Company.location_country') != 'CA') {
+    if ((is_null($order->get('profile')) && !$_this->config->getComplex('General.def_calc_shippings_taxes')) || $order->get('weight') == 0 || $_this->config->getComplex('Company.location_country') != 'CA') {
         return array();
     }
 
-    $options = $_this->get("options");
+    $options = $_this->get('options');
     if (empty($options->merchant_id)) {
         return array();
     }
@@ -23,17 +23,17 @@ function Shipping_cps_getRates($_this, $order)
     $originalCountry = $_this->config->getComplex('Company.location_country');
     $options->insured ? $itemsPrice = $options->insured * $options->currency_rate : $itemsPrice = $order->get('subtotal') * $options->currency_rate;
     $weight		 = $_this->getKgs($order);
-    $description = $order->get("description");
-    if (is_null($order->get("profile"))) {
+    $description = $order->get('description');
+    if (is_null($order->get('profile'))) {
     	$destinationCountry = $_this->config->getComplex('General.default_country');
     	$destinationZipcode = $_this->config->getComplex('General.default_zipcode');
     	$destinationState   = "Other";
     	$destinationCity    = "City";
     } else {
-    	$profile 	 = $order->get("profile");
-    	$destinationCountry = $profile->get("shipping_country");
-    	$destinationCity    = $profile->get("shipping_city");
-    	$destinationZipcode = $profile->get("shipping_zipcode");
+    	$profile 	 = $order->get('profile');
+    	$destinationCountry = $profile->get('shipping_country');
+    	$destinationCity    = $profile->get('shipping_city');
+    	$destinationZipcode = $profile->get('shipping_zipcode');
     	$destinationState   = $profile->getComplex('shippingState.code');
     	if (empty($destinationState)) $destinationState = "Other";
     }
@@ -73,24 +73,24 @@ function Shipping_cps_parseResponse($_this,$response,$destination)
     $xml = new XLite_Model_XML();
     $tree = $xml->parse($response);
 
-    if (isset($tree["EPARCEL"]["ERROR"])) {
-    	$_this->error = $tree["EPARCEL"]["ERROR"]["STATUSCODE"];
+    if (isset($tree['EPARCEL']["ERROR"])) {
+    	$_this->error = $tree['EPARCEL']["ERROR"]['STATUSCODE'];
         $_this->xmlError = true;
         $_this->response = $response;
         return array();
     }
 
-    $response = $tree["EPARCEL"]['RATESANDSERVICESRESPONSE'];
+    $response = $tree['EPARCEL']['RATESANDSERVICESRESPONSE'];
     $rates = array();
-    $options = $_this->get("options");
+    $options = $_this->get('options');
     $options->currency_rate ? $currency_rate = $options->currency_rate : $currency_rate = 1;
 
-    foreach($response["PRODUCT"] as $_rate) {
+    foreach($response['PRODUCT'] as $_rate) {
         $shipping = $_this->getService('cps','Canada Post ' . $_rate['NAME'],$destination);
         $id = $shipping->get('shipping_id');
         $rates[$id] = new XLite_Model_ShippingRate();
         $rates[$id]->shipping = $shipping;
-        $rates[$id]->rate = (double)trim($_rate["RATE"]) / $currency_rate;
+        $rates[$id]->rate = (double)trim($_rate['RATE']) / $currency_rate;
     }
     return $rates;
 }

@@ -38,15 +38,15 @@ class XLite_Module_DetailedImages_Controller_Admin_ImportCatalog extends XLite_C
     public function __construct(array $params = array())
     {
         parent::__construct($params);
-        $this->pages["detailed_images"] = "Import images";
-        $this->pageTemplates["detailed_images"] = "modules/DetailedImages/import.tpl";
+        $this->pages['detailed_images'] = "Import images";
+        $this->pageTemplates['detailed_images'] = "modules/DetailedImages/import.tpl";
     }
     
     function action_import_detailed_images()
     {
         $this->startDump();
         // save column layout
-        $this->action_layout("detailed_images_layout");
+        $this->action_layout('detailed_images_layout');
 
         $options = array(
                 "file" => $this->getUploadedFile(),

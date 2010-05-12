@@ -53,13 +53,13 @@ class XLite_Module_Egoods_Model_Mailer extends XLite_Model_Mailer
         $this->set("customHeaders", $customHeaders);
 
         $dir .= '/';
-        $this->set("subject", $this->compile($dir.$this->get("subjectTemplate")));
-        $this->set("signature", $this->compile($this->get("signatureTemplate")));
-        $this->set("body", $this->compile($dir.$this->get("bodyTemplate"), false));
+        $this->set("subject", $this->compile($dir.$this->get('subjectTemplate')));
+        $this->set("signature", $this->compile($this->get('signatureTemplate')));
+        $this->set("body", $this->compile($dir.$this->get('bodyTemplate'), false));
 
         // find all images and fetch them; replace with cid:...
         $imageParser = new XLite_Model_MailImageParser();
-        $imageParser->source = $this->get("body");
+        $imageParser->source = $this->get('body');
         $imageParser->webdir = $this->xlite->getShopUrl("");
         $imageParser->parse();
 
@@ -71,16 +71,16 @@ class XLite_Module_Egoods_Model_Mailer extends XLite_Model_Mailer
             $this->mail = new PHPMailer();
         }
 
-        $this->mail->SetLanguage($this->get("langLocale"),
-                                 $this->get("langPath"));
+        $this->mail->SetLanguage($this->get('langLocale'),
+                                 $this->get('langPath'));
         $this->mail->IsHTML(true);
-        $this->mail->AddAddress($this->get("to"));
+        $this->mail->AddAddress($this->get('to'));
         $this->mail->Encoding = "quoted-printable";
-        $this->mail->From     = $this->get("from");
-        $this->mail->FromName = $this->get("from");
-        $this->mail->Subject  = $this->get("subject");
-        $this->mail->AltBody  = strip_tags($this->get("body"));
-        $this->mail->Body     = $this->get("body");
+        $this->mail->From     = $this->get('from');
+        $this->mail->FromName = $this->get('from');
+        $this->mail->Subject  = $this->get('subject');
+        $this->mail->AltBody  = strip_tags($this->get('body'));
+        $this->mail->Body     = $this->get('body');
 
         // add custom headers
         foreach ($customHeaders as $hdr) {
@@ -88,19 +88,19 @@ class XLite_Module_Egoods_Model_Mailer extends XLite_Model_Mailer
         }
         
         // attach document images
-        $images = $this->get("images");
+        $images = $this->get('images');
         if (is_array($images)) {
             foreach ($images as $img) {
                 // Append to $attachment array
                 $cur = count($this->mail->attachment);
-                $this->mail->attachment[$cur][0] = $img["data"];
-                $this->mail->attachment[$cur][1] = $img["name"];
-                $this->mail->attachment[$cur][2] = $img["name"];
+                $this->mail->attachment[$cur][0] = $img['data'];
+                $this->mail->attachment[$cur][1] = $img['name'];
+                $this->mail->attachment[$cur][2] = $img['name'];
                 $this->mail->attachment[$cur][3] = "base64";
-                $this->mail->attachment[$cur][4] = $img["mime"];
+                $this->mail->attachment[$cur][4] = $img['mime'];
                 $this->mail->attachment[$cur][5] = true; // isStringAttachment
                 $this->mail->attachment[$cur][6] = "inline";
-                $this->mail->attachment[$cur][7] = $img["name"]."@mail.lc"; // CID
+                $this->mail->attachment[$cur][7] = $img['name']."@mail.lc"; // CID
             }
         }
     }

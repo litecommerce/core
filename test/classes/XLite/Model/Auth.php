@@ -371,7 +371,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     {
         switch($name) {
             case "shipping_state":
-                return ((intval($properties[$name]) <= 0) && empty($properties["shipping_custom_state"]));
+                return ((intval($properties[$name]) <= 0) && empty($properties['shipping_custom_state']));
             default:
                 return (empty($properties[$name]));
         }
@@ -384,9 +384,9 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     */
     function copyBillingInfo($profile) 
     {
-        $properties = $profile->get("properties");
-        if (empty($properties["shipping_firstname"])) {
-            $properties["shipping_title"] = "";
+        $properties = $profile->get('properties');
+        if (empty($properties['shipping_firstname'])) {
+            $properties['shipping_title'] = "";
         }
         foreach ($properties as $key => $value) {
             $keywords = preg_split("/_/", $key);
@@ -409,17 +409,17 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     function register($profile) 
     {
         // check whether the user is registered
-        if ($profile->isExists($profile->get("login"))) {
+        if ($profile->isExists($profile->get('login'))) {
             // user already exists
             return USER_EXISTS;
         }
-        if (!$profile->get("status")) {
+        if (!$profile->get('status')) {
             // enable profile (set status to "E") if not enabled
             $profile->enable();
         }
-        if (strlen($profile->get("password")) > 0) {
+        if (strlen($profile->get('password')) > 0) {
             $profile->set("password", 
-            self::encryptPassword($profile->get("password")));
+            self::encryptPassword($profile->get('password')));
             $anonymous = false;
         } else {
             $this->setComplex("session.anonymous", true);
@@ -429,12 +429,12 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         $this->copyBillingInfo($profile);
 
         // get referer
-        if (isset($_SERVER["HTTP_REFERER"])) {
-            if (!isset($_COOKIE["LCReferrerCookie"])) {
-                $referer = $_SERVER["HTTP_REFERER"];
+        if (isset($_SERVER['HTTP_REFERER'])) {
+            if (!isset($_COOKIE['LCReferrerCookie'])) {
+                $referer = $_SERVER['HTTP_REFERER'];
                 setcookie("LCReferrerCookie", $referer, time() + 3600 * 24 * 180, "/", XLite::getInstance()->getOptions(array('host_details', 'http_host')));
             } else {
-                $referer = $_COOKIE["LCReferrerCookie"];
+                $referer = $_COOKIE['LCReferrerCookie'];
             }
             // save referer
             $profile->set("referer", $referer);
@@ -446,9 +446,9 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
             $mailer = new XLite_Model_Mailer();
             // pass this data to the mailer
             $mailer->profile = $profile;
-            $mailer->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
+            $mailer->set("charset", $this->xlite->config->Company->locationCountry->get('charset'));
             $mailer->compose($this->getComplex('config.Company.site_administrator'),
-                             $profile->get("login"),
+                             $profile->get('login'),
                              "signin_notification"
                              );
             $mailer->send();
@@ -474,22 +474,22 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     {
         // check whether another user exists with the same login
         $another = new XLite_Model_Profile();
-        $login = addslashes($profile->get("login"));
-        $profile_id = $profile->get("profile_id");
+        $login = addslashes($profile->get('login'));
+        $profile_id = $profile->get('profile_id');
         if ($another->find("login='$login' AND profile_id!='$profile_id'")) {
             return USER_EXISTS;
         }
-        if ($this->session->get("anonymous")) {
+        if ($this->session->get('anonymous')) {
             $this->clearAnonymousPassword($profile);
         } else {
-            $another = new XLite_Model_Profile($profile->get("profile_id"));
-            if (strlen($another->get("password")) == 0) {
+            $another = new XLite_Model_Profile($profile->get('profile_id'));
+            if (strlen($another->get('password')) == 0) {
                 $this->clearAnonymousPassword($profile);
             }
         }
-        if (strlen($profile->get("password")) > 0) {
+        if (strlen($profile->get('password')) > 0) {
             $profile->set("password", 
-            self::encryptPassword($profile->get("password")));
+            self::encryptPassword($profile->get('password')));
         } else {
             $this->clearAnonymousPassword($profile);
         }
@@ -514,10 +514,10 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         // send mail notification to customer
         $mailer = new XLite_Model_Mailer();
         $mailer->set("profile", $profile);
-        $mailer->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
+        $mailer->set("charset", $this->xlite->config->Company->locationCountry->get('charset'));
         $mailer->compose(
                 $this->getComplex('config.Company.users_department'),
-                $profile->get("login"),
+                $profile->get('login'),
                 "profile_modified"
                 );
         $mailer->send();
@@ -535,8 +535,8 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     function clearAnonymousPassword($profile)
     {
         $profile->set("password", null);
-        if (isset($_REQUEST["password"])) {
-            unset($_REQUEST["password"]);
+        if (isset($_REQUEST['password'])) {
+            unset($_REQUEST['password']);
         }
     }
 
@@ -578,17 +578,17 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         $profile->read();
         // get current profile from session
         $current = $this->getComplex('session.profile_id');
-        if ($current == $profile->get("profile_id")) {
+        if ($current == $profile->get('profile_id')) {
             // log off first
             $this->logoff();
         }
         // send mail notification about deleted profile to customer
         $mailer = new XLite_Model_Mailer();
         $mailer->set("profile", $profile);
-        $mailer->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
+        $mailer->set("charset", $this->xlite->config->Company->locationCountry->get('charset'));
         $mailer->compose(
                 $this->getComplex('config.Company.users_department'),
-                $profile->get("login"),
+                $profile->get('login'),
                 "profile_deleted"
                 );
         $mailer->send();
@@ -620,7 +620,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     */
     function remindLogin() 
     {
-        return isset($_COOKIE["last_login"]) ? $_COOKIE["last_login"] : "";
+        return isset($_COOKIE['last_login']) ? $_COOKIE['last_login'] : "";
     }
 
     /**
@@ -636,7 +636,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
 
         if (
             (is_int($profile) && ACCESS_DENIED === $profile)
-            || ($profile instanceof Profile && !$profile->is("admin"))
+            || ($profile instanceof Profile && !$profile->is('admin'))
         ) {
 
             $this->sendFailedAdminLogin($profile);
@@ -666,10 +666,10 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     {
         // send mail notification about failed login to administrator
         $mailer = new XLite_Model_Mailer();
-        $mailer->set("login", isset($_POST["login"]) ? $_POST["login"] : "unknown");
-        $mailer->set("REMOTE_ADDR", isset($_SERVER["REMOTE_ADDR"]) ? $_SERVER["REMOTE_ADDR"] : "unknown");
-        $mailer->set("HTTP_X_FORWARDED_FOR", isset($_SERVER["HTTP_X_FORWARDED_FOR"]) ? $_SERVER["HTTP_X_FORWARDED_FOR"] : "unknown");
-        $mailer->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
+        $mailer->set("login", isset($_POST['login']) ? $_POST['login'] : "unknown");
+        $mailer->set("REMOTE_ADDR", isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : "unknown");
+        $mailer->set("HTTP_X_FORWARDED_FOR", isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : "unknown");
+        $mailer->set("charset", $this->xlite->config->Company->locationCountry->get('charset'));
         $mailer->compose(
                             $this->getComplex('config.Company.site_administrator'),
                             $this->getComplex('config.Company.site_administrator'),
@@ -800,10 +800,10 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
             return false;
         }
         $mailer = new XLite_Model_Mailer();
-        $mailer->url = $this->xlite->getShopUrl("cart.php?target=recover_password&action=confirm&email=".urlencode($profile->get("login"))."&request_id=".$profile->get("password"));
-        $mailer->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
+        $mailer->url = $this->xlite->getShopUrl("cart.php?target=recover_password&action=confirm&email=".urlencode($profile->get('login'))."&request_id=".$profile->get('password'));
+        $mailer->set("charset", $this->xlite->config->Company->locationCountry->get('charset'));
         $mailer->compose($this->config->getComplex('Company.users_department'),
-                         $profile->get("login"),
+                         $profile->get('login'),
                          "recover_request"
                          );
         $mailer->send();
@@ -813,7 +813,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     function recoverPassword($email, $requestID) 
     {
         $profile = new XLite_Model_Profile();
-        if (!$profile->find("login='$email'") || $profile->get("password") != $requestID) {
+        if (!$profile->find("login='$email'") || $profile->get('password') != $requestID) {
             return false;
         }
 
@@ -827,7 +827,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         $mailer->set("charset", $profile->getComplex('billingCountry.charset'));
         $mailer->compose(
                 $this->getComplex('config.Company.users_department'),
-                $profile->get("login"),
+                $profile->get('login'),
                 "recover_recover"
                 );
         $mailer->send();

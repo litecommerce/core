@@ -351,11 +351,11 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsLi
 
         $timeLimit = time();
         $timeCondition = $this->config->ProductAdviser->period_new_arrivals * 3600;
-        $category_id = $_category->get("category_id");
+        $category_id = $_category->get('category_id');
 
         $obj = new XLite_Module_ProductAdviser_Model_ProductNewArrivals();
         $arrival_table = $this->db->getTableByAlias($obj->alias);
-        $links_table = $this->db->getTableByAlias("product_links");
+        $links_table = $this->db->getTableByAlias('product_links');
 
         $fromSQL = array(
             $links_table . ' AS links',
@@ -371,7 +371,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsLi
         $querySQL = 'SELECT arrivals.product_id, arrivals.updated FROM ' . implode(', ', $fromSQL) . ' WHERE ' . implode(' AND ', $whereSQL) . ' ORDER BY arrivals.updated DESC';
 
         foreach ($this->db->getAll($querySQL) as $row) {
-            $product_id = $row["product_id"];
+            $product_id = $row['product_id'];
 
             $obj = new XLite_Module_ProductAdviser_Model_ProductNewArrivals($product_id);
             if ($this->checkArrivalCondition($_category, $obj)) {
@@ -385,7 +385,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsLi
 
                 if (!isset($this->_new_arrival_products[$product_id])) {
                     $this->_new_arrival_products[$product_id] = new XLite_Model_Product($product_id);
-                    $this->_new_arrival_products_updated[$product_id] = $row["updated"];
+                    $this->_new_arrival_products_updated[$product_id] = $row['updated'];
                 }
             }
         }
@@ -416,16 +416,16 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsLi
     protected function checkArrivalCondition($category, $ps)
     {
         $product_id = $this->getDialogProductId();
-        $product = new XLite_Model_Product($ps->get("product_id"));
+        $product = new XLite_Model_Product($ps->get('product_id'));
 
-        $addSign = (isset($product_id) && $product->get("product_id") == $product_id) ? false : true;
+        $addSign = (isset($product_id) && $product->get('product_id') == $product_id) ? false : true;
         if ($addSign) {
             $addSign &= $product->filter();
-            $addSign &= $product->is("available");
+            $addSign &= $product->is('available');
             // additional check
-            if (!$product->is("available") || (isset($product->properties) && is_array($product->properties) && !isset($product->properties["enabled"]))) {
+            if (!$product->is('available') || (isset($product->properties) && is_array($product->properties) && !isset($product->properties['enabled']))) {
                 // removing link to non-existing product
-                if (intval($ps->get("product_id")) > 0) {
+                if (intval($ps->get('product_id')) > 0) {
                     $ps->delete();
                 }
                 $addSign &= false;

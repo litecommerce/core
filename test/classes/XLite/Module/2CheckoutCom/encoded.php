@@ -20,8 +20,8 @@ function PaymentMethod_2checkout_handleRequest($_this, $cart)
     $cart->set("detailLabels.x_response_reason_code", "2Checkout.com Responce Reason Code");
 
     if (isset($_POST['x_amount'])) {
-    	$total = sprintf("%.2f", $cart->get("total"));
-        $postTotal = sprintf("%.2f", $_POST["x_amount"]);
+    	$total = sprintf("%.2f", $cart->get('total'));
+        $postTotal = sprintf("%.2f", $_POST['x_amount']);
         if ($total != $postTotal) {
             $cart->set("details.error", "Hacking attempt!");
             $cart->setComplex("detailLabels.error", "Error");
@@ -61,14 +61,14 @@ function PaymentMethod_2checkout_handleRequest($_this, $cart)
         $cart->setComplex("details.cvvMessage", $_this->cvverr[$_POST['x_cvv_code']]);
         $cart->set("detailLabels.cvvMessage", "CVV message");
     } else {
-        $details = $cart->get("details");
-        if (isset($details["cvvMessage"])) {
-        	unset($details["cvvMessage"]);
+        $details = $cart->get('details');
+        if (isset($details['cvvMessage'])) {
+        	unset($details['cvvMessage']);
         }
         $cart->set("details", $details);
-        $details = $cart->get("detailLabels");
-        if (isset($details["cvvMessage"])) {
-        	unset($details["cvvMessage"]);
+        $details = $cart->get('detailLabels');
+        if (isset($details['cvvMessage'])) {
+        	unset($details['cvvMessage']);
         }
         $cart->set("detailLabels", $details);
     }
@@ -76,14 +76,14 @@ function PaymentMethod_2checkout_handleRequest($_this, $cart)
         $cart->setComplex("details.avsMessage", $_this->avserr[$_POST['x_avs_code']]);
         $cart->set("detailLabels.avsMessage", "AVS message");
     } else {
-        $details = $cart->get("details");
-        if (isset($details["avsMessage"])) {
-        	unset($details["avsMessage"]);
+        $details = $cart->get('details');
+        if (isset($details['avsMessage'])) {
+        	unset($details['avsMessage']);
         }
         $cart->set("details", $details);
-        $details = $cart->get("detailLabels");
-        if (isset($details["avsMessage"])) {
-        	unset($details["avsMessage"]);
+        $details = $cart->get('detailLabels');
+        if (isset($details['avsMessage'])) {
+        	unset($details['avsMessage']);
         }
         $cart->set("detailLabels", $details);
     }
@@ -93,7 +93,7 @@ function PaymentMethod_2checkout_handleRequest($_this, $cart)
     $cart->update();
     $_this->xlite->session->writeClose();
 
-    $location = "cart.php?target=checkout&action=return&order_id=".$cart->get("order_id");
+    $location = "cart.php?target=checkout&action=return&order_id=".$cart->get('order_id');
     $location = $cart->xlite->getShopUrl($location);
     //header("Location: $location");
     PaymentMethod_2checkout_html_location($location);
@@ -107,7 +107,7 @@ function PaymentMethod_2checkout_v2_handleRequest($_this, $cart, $security_check
     $status = "P";
     $error = null;
 
-    $response_code = ($_POST["credit_card_processed"] == "Y") ? 1 : (($_POST["credit_card_processed"] == "K") ? 3 : 2);
+    $response_code = ($_POST['credit_card_processed'] == "Y") ? 1 : (($_POST['credit_card_processed'] == "K") ? 3 : 2);
     switch ($response_code) {
         case 1:
             // success
@@ -126,17 +126,17 @@ function PaymentMethod_2checkout_v2_handleRequest($_this, $cart, $security_check
         $cart->setComplex("detailLabels.error", "Error");
     }
 
-    if (!empty($_POST["tcoid"]))	{
-        $cart->setComplex("details.tcoid", $_POST["tcoid"]);
+    if (!empty($_POST['tcoid']))	{
+        $cart->setComplex("details.tcoid", $_POST['tcoid']);
         $cart->set("detailLabels.tcoid", "2Checkout.com Transaction ID");
     }
-    if (!empty($_POST["order_number"])) {
-        $cart->setComplex("details.order_number", $_POST["order_number"]);
+    if (!empty($_POST['order_number'])) {
+        $cart->setComplex("details.order_number", $_POST['order_number']);
         $cart->set("detailLabels.order_number", "2Checkout.com Order number");
     }
-    if (isset($_POST["2co_product_id"])) {
-        $_POST["product_id"] = $_POST["2co_product_id"];
-        unset($_POST["2co_product_id"]);
+    if (isset($_POST['2co_product_id'])) {
+        $_POST['product_id'] = $_POST['2co_product_id'];
+        unset($_POST['2co_product_id']);
     }
 
     $full_response = array();
@@ -153,10 +153,10 @@ function PaymentMethod_2checkout_v2_handleRequest($_this, $cart, $security_check
     $_this->xlite->session->writeClose();
 
     if (!$security_check) {
-        die("<font color=red><b>Security check failed!</b></font> Please contact administrator <b>" . $_this->config->getComplex('Company.site_administrator') . "</b> .<hr>Click <a href=\"" . $_this->xlite->getShopUrl("cart.php?target=checkout&mode=error&order_id=".$cart->get("order_id")) . "\"><u>here</u></a> to return into your cart.");
+        die("<font color=red><b>Security check failed!</b></font> Please contact administrator <b>" . $_this->config->getComplex('Company.site_administrator') . "</b> .<hr>Click <a href=\"" . $_this->xlite->getShopUrl("cart.php?target=checkout&mode=error&order_id=".$cart->get('order_id')) . "\"><u>here</u></a> to return into your cart.");
     }
 
-    $location = "cart.php?target=checkout&action=return&order_id=".$cart->get("order_id");
+    $location = "cart.php?target=checkout&action=return&order_id=".$cart->get('order_id');
     $location = $cart->xlite->getShopUrl($location);
     //header("Location: $location");
     PaymentMethod_2checkout_html_location($location);
@@ -168,9 +168,9 @@ function PaymentMethod_2checkout_html_location($url, $redirectTime=3)
     echo "If the page is not updated in a $redirectTime seconds, please follow this link: <A href=\"" . $url . "\"><u>continue &gt;&gt;</u></A>";
     echo "<META http-equiv=\"Refresh\" content=\"$redirectTime;URL=$url\">";
 
-    if (preg_match("/Apache(.*)Win/", getenv("SERVER_SOFTWARE"))) {
+    if (preg_match("/Apache(.*)Win/", getenv('SERVER_SOFTWARE'))) {
         echo str_repeat(" ", 2500);
-    } elseif (preg_match("/(.*)MSIE(.*)\)$/", getenv("HTTP_USER_AGENT"))) {
+    } elseif (preg_match("/(.*)MSIE(.*)\)$/", getenv('HTTP_USER_AGENT'))) {
         echo str_repeat(" ", 256);
     }
 

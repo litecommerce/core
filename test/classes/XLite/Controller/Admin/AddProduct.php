@@ -49,7 +49,7 @@ class XLite_Controller_Admin_AddProduct extends XLite_Controller_Admin_Abstract
 
     function action_add()
     {
-        $product = $this->get("product");
+        $product = $this->get('product');
         $properties = XLite_Core_Request::getInstance()->getData();
 
         // Sanitize
@@ -67,7 +67,7 @@ class XLite_Controller_Admin_AddProduct extends XLite_Controller_Admin_Abstract
         $product->create();
 
         $this->action_images();
-        if ($this->get("valid") == false) {
+        if ($this->get('valid') == false) {
         	$product->delete();
         	return;
         }
@@ -78,18 +78,18 @@ class XLite_Controller_Admin_AddProduct extends XLite_Controller_Admin_Abstract
         }
 
         // update/create extra fields
-        $extraFields = (array)$this->get("extra_fields");
+        $extraFields = (array)$this->get('extra_fields');
         if (!empty($extraFields)) {
             foreach ($extraFields as $id => $value) {
                 if (strlen($value)) {
                     $fv = new XLite_Model_FieldValue();
-                    $found = $fv->find("field_id=$id AND product_id=".$product->get("product_id"));
+                    $found = $fv->find("field_id=$id AND product_id=".$product->get('product_id'));
                     $fv->set("value", $value);
                     if ($found) {
                         $fv->update();
                     } else {
                         $fv->set("field_id", $id);
-                        $fv->set("product_id", $product->get("product_id"));
+                        $fv->set("product_id", $product->get('product_id'));
                         $fv->create();
                     }
                 }
@@ -97,7 +97,7 @@ class XLite_Controller_Admin_AddProduct extends XLite_Controller_Admin_Abstract
         }
 
         $this->set("mode", "notification");
-        $this->set("product_id", $product->get("product_id"));
+        $this->set("product_id", $product->get('product_id'));
     }
 
     function action_images()
@@ -118,7 +118,7 @@ class XLite_Controller_Admin_AddProduct extends XLite_Controller_Admin_Abstract
     function getProduct()
     {
         if (is_null($this->product)) {
-            $this->product = new XLite_Model_Product($this->get("product_id"));
+            $this->product = new XLite_Model_Product($this->get('product_id'));
         }
         return $this->product;
     }

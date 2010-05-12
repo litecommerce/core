@@ -141,7 +141,7 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
 
     public function __construct()
     {
-        $this->_uniqueKey = uniqid("order_item_");
+        $this->_uniqueKey = uniqid('order_item_');
         parent::__construct();
     }
 
@@ -154,20 +154,20 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
 
         } else {
         	if ($this->config->Taxes->prices_include_tax) {
-        		$this->set("price", $this->formatCurrency($product->get("taxedPrice")));
+        		$this->set("price", $this->formatCurrency($product->get('taxedPrice')));
         	} else {
-            	$this->set("price", $product->get("price"));
+            	$this->set("price", $product->get('price'));
         	}
 
-            $this->set("product_id", $product->get("product_id"));
-            $this->set("product_name", $product->get("name"));
-            $this->set("product_sku", $product->get("sku"));
+            $this->set("product_id", $product->get('product_id'));
+            $this->set("product_name", $product->get('name'));
+            $this->set("product_sku", $product->get('sku'));
         }
     }
 
     function create()
     {
-        $this->set("item_id", $this->get("key"));
+        $this->set("item_id", $this->get('key'));
         parent::create();
     }
     
@@ -176,7 +176,7 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
     */
     function getKey()
     {
-        return $this->get("product_id"); // . product_options
+        return $this->get('product_id'); // . product_options
     }
 
     function updateAmount($amount)
@@ -235,19 +235,19 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
     function getOrderby()
     {
         $sql = "SELECT MAX(orderby)+1 FROM %s WHERE order_id=%d";
-        $sql = sprintf($sql, $this->get("table"), $this->get("order_id"));
+        $sql = sprintf($sql, $this->get('table'), $this->get('order_id'));
 
         return $this->db->getOne($sql);
     }
 
     function getDiscountablePrice()
     {
-        return $this->get("price");
+        return $this->get('price');
     }
 
     function getTaxableTotal()
     {
-        return $this->get("total");
+        return $this->get('total');
     }
 
     function getPrice()
@@ -285,8 +285,8 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
     {
         $this->realProduct = null;
     	$product = new XLite_Model_Product();
-        $product->find("product_id='".$this->get("product_id")."'");
-    	if ($product->get("product_id") == $this->get("product_id")) {
+        $product->find("product_id='".$this->get('product_id')."'");
+    	if ($product->get('product_id') == $this->get('product_id')) {
     		$this->realProduct = $product;
             return true;
         }
@@ -391,15 +391,15 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
 
     function getShortDescription($limit = 30)
     {
-        if (strlen($this->get("sku"))) {
-            $desc = $this->get("sku");
+        if (strlen($this->get('sku'))) {
+            $desc = $this->get('sku');
         } else {
-            $desc = substr($this->get("name"), 0, $limit);
+            $desc = substr($this->get('name'), 0, $limit);
         }
-        if ($this->get("amount") == 1) {
+        if ($this->get('amount') == 1) {
             return $desc;
         } else {
-            return $desc . ' (' . $this->get("amount") . ')';
+            return $desc . ' (' . $this->get('amount') . ')';
         }
     }
 
@@ -414,11 +414,11 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
     */
     function isValid()
     {
-        $product = $this->get("product");
+        $product = $this->get('product');
         if (is_object($product)) {
-            $res = $this->isComplex('product.exists') && $this->getComplex('product.product_id') && $this->get("amount")>0;
+            $res = $this->isComplex('product.exists') && $this->getComplex('product.product_id') && $this->get('amount')>0;
         } else {
-            $res = $this->get("amount")>0;
+            $res = $this->get('amount')>0;
         }
         return $res;
     }

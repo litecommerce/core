@@ -55,7 +55,7 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
     function initView() 
     {
         parent::initView();
-        if ($this->get("mode") == "export_myob" || $this->get("mode") == "export_pt") {
+        if ($this->get('mode') == "export_myob" || $this->get('mode') == "export_pt") {
             $this->setComplex("searchOrdersForm.visible", false);
         }
     }
@@ -96,31 +96,31 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
     
     function action_export_myob() 
     {
-        if (is_null($this->get("export_result"))) {
+        if (is_null($this->get('export_result'))) {
             // redirect to export dialog
             $this->set("mode", "export_myob");
         } else {
             // export data
             $this->updateConfig("income_account", "deposit_account");
-            $this->export("myob");
+            $this->export('myob');
         }
     }
 
     function action_export_pt() 
     {
-        if (is_null($this->get("export_result"))) {
+        if (is_null($this->get('export_result'))) {
             // redirect to export dialog
             $this->set("mode", "export_pt");
         } else {
             // export data
             $this->updateConfig("receivable_account", "sales_account", "cash_account");
-            $this->export("pt");
+            $this->export('pt');
         }
     }
     
     function addDistribution($order, $itemType = "item") 
     {
-        $orderID = $order->get("order_id");
+        $orderID = $order->get('order_id');
         if (isset($this->distributions[$orderID])) {
             $this->distributions[$orderID]++;
         } else {
@@ -130,7 +130,7 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
 
     function getTotalDistribution($order) 
     {
-        $orderID = $order->get("order_id");
+        $orderID = $order->get('order_id');
         return isset($this->distributions[$orderID]) ? $this->distributions[$orderID] : 0;
     }
     
@@ -148,7 +148,7 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
 
         if (!isset($lines)) $lines = array();
 
-        $orderID = $order->get("order_id");
+        $orderID = $order->get('order_id');
         if (isset($lines[$orderID])) {
             $lines[$orderID]++;
         } else {
@@ -174,9 +174,9 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
     function getExportFormats() 
     {
         $formats = parent::getExportFormats();
-        $formats["export_qb"] = "QuickBooks 2003";
-        $formats["export_myob"] = "MYOB Accounting 2005 (v14)";
-        $formats["export_pt"] = "Peachtree Complete Accounting 2004";
+        $formats['export_qb'] = "QuickBooks 2003";
+        $formats['export_myob'] = "MYOB Accounting 2005 (v14)";
+        $formats['export_pt'] = "Peachtree Complete Accounting 2004";
         return $formats;
     }
 

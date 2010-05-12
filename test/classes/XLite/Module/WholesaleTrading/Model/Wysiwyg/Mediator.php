@@ -54,7 +54,7 @@ class XLite_Module_WholesaleTrading_Model_Wysiwyg_Mediator extends XLite_Model_W
         $layout = XLite_Model_Layout::getInstance();
 
         $list = $layout->list;
-        unset($list["common/select_membership.tpl"]);
+        unset($list['common/select_membership.tpl']);
         $layout->list = $list;
     }
 }

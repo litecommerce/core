@@ -114,12 +114,12 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
 
     function getPageTemplate()
     {
-        return isset($this->pageTemplates[$this->get("editor")]) ? $this->pageTemplates[$this->get("editor")] : null;
+        return isset($this->pageTemplates[$this->get('editor')]) ? $this->pageTemplates[$this->get('editor')] : null;
     }
     
     function getUrl(array $params = array()) 
     {
-        if ($this->get("editor") != "advanced") {
+        if ($this->get('editor') != "advanced") {
             $this->set("zone", null);
             $this->set("locale", null);
         }
@@ -132,13 +132,13 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
     */
     function getBasicTemplates() 
     {
-        $zone   = $this->get("zone");
-        $locale = $this->get("locale");
+        $zone   = $this->get('zone');
+        $locale = $this->get('locale');
         $templates = array();
         if (is_readable("skins/$zone/$locale/templates.ini")) {
             $templates_ini = parse_ini_file("skins/$zone/$locale/templates.ini", true);
             foreach ($templates_ini as $key=>$val) {
-                $filename = trim($val["filename"]);
+                $filename = trim($val['filename']);
                 if (!empty($filename))
                     $templates[] = $filename;
             }
@@ -151,7 +151,7 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
             $pages[] = new XLite_Model_FileNode("skins/$zone/$locale/".$name, null, SHOW_FULL_PATH);
         }
 
-        if ($this->get("valid") == false) {
+        if ($this->get('valid') == false) {
             foreach($pages as $page_idx => $page) {
             	if (isset($this->basicTemplatesRO[$page->path]) && $this->basicTemplatesRO[$page->path]) {
             		$pages[$page_idx]->set("read_only_access", true);
@@ -165,8 +165,8 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
     function getShortcuts() 
     {
         $shortcuts = array();
-        $zone   = $this->get("zone");
-        $locale = $this->get("locale");
+        $zone   = $this->get('zone');
+        $locale = $this->get('locale');
         if ($zone == "mail") {
             $shortcuts = array( new XLite_Model_FileNode("skins/mail/$locale/order_processed/body.tpl", null, SHOW_FULL_PATH), 
                     );
@@ -211,9 +211,9 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
     {
         $node = XLite_Core_Request::getInstance()->node;
         $path = XLite_Core_Request::getInstance()->path;
-        $data["subject"] = new XLite_Model_FileNode("$node/subject.tpl");
-        $data["body"] = new XLite_Model_FileNode("$node/body.tpl");
-        $data["signature"] = new XLite_Model_FileNode("$path/signature.tpl");
+        $data['subject'] = new XLite_Model_FileNode("$node/subject.tpl");
+        $data['body'] = new XLite_Model_FileNode("$node/body.tpl");
+        $data['signature'] = new XLite_Model_FileNode("$path/signature.tpl");
         return $data;
     }
 
@@ -277,8 +277,8 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
     	$this->getExtraPages();
     	if (is_array($this->extraPages)) {
             foreach ($this->extraPages as $ep) {
-                $page = $ep->get("page");
-                $title = $ep->get("title");
+                $page = $ep->get('page');
+                $title = $ep->get('title');
                 $content = $ep->getComplex('template.content');
 
                 XLite_Core_Request::getInstance()->page = $page;
@@ -324,7 +324,7 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
 
     function action_page_remove() 
     {
-        $extraPage = $this->get("extraPage");
+        $extraPage = $this->get('extraPage');
         if (!is_null($extraPage) && is_object($extraPage)) {
             $extraPage->remove();
         }
@@ -346,10 +346,10 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
 
     function action_advanced_update() 
     {
-        $file = $this->get("file");
+        $file = $this->get('file');
         $file->update();
         $this->afterAdvanced();
-        $this->set("returnUrl", $this->get("url") . "&mode=edit&file=" . $file->get("path"));
+        $this->set("returnUrl", $this->get('url') . "&mode=edit&file=" . $file->get('path'));
         if ($file->writePermitted) {
             $this->set("valid", false);
             $this->set("mode", "edit");
@@ -384,27 +384,27 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
 
     function action_new_file() 
     {
-        $file = $this->get("file");
-        $path   = $file->get("path");
-        $zone   = $this->get("zone");
-        $locale = $this->get("locale");
-        if ($file->get("node") == ".") {
+        $file = $this->get('file');
+        $path   = $file->get('path');
+        $zone   = $this->get('zone');
+        $locale = $this->get('locale');
+        if ($file->get('node') == ".") {
             $path = (is_null($this->node) || $this->node == "") ?
                                    "skins/$zone/$locale/$path" :
                                             "$this->node/$path";
             $file->set("path", $path);
         }
         $file->create();
-        $this->set("returnUrl", $this->get("url") . "&mode=edit&file=" . $path);
+        $this->set("returnUrl", $this->get('url') . "&mode=edit&file=" . $path);
     }
 
     function action_new_dir() 
     {
-        $file = $this->get("file");
-        $path   = $file->get("path");
-        $zone   = $this->get("zone");
-        $locale = $this->get("locale");
-        if ($file->get("node") == ".") {
+        $file = $this->get('file');
+        $path   = $file->get('path');
+        $zone   = $this->get('zone');
+        $locale = $this->get('locale');
+        if ($file->get('node') == ".") {
             $path = (is_null($this->node) || $this->node == "") ? 
                                    "skins/$zone/$locale/$path" :
                                             "$this->node/$path";
@@ -416,7 +416,7 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
 
     function action_restore_all() 
     {
-        $file = $this->get("file");
+        $file = $this->get('file');
         $file->set("path", "skins_original");
         $file->set("newPath", "skins");
         $file->copy();
@@ -428,7 +428,7 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
 
     function action_restore() 
     {
-        $file = $this->get("file");
+        $file = $this->get('file');
         $to = XLite_Core_Request::getInstance()->selected_file;
         $schema_file = preg_replace("/^(skins)/", sprintf("schemas/templates/%s",$this->config->getComplex('Skin.skin')), $to);
         $from = (file_exists($schema_file) ? $schema_file : preg_replace("/^(skins)/", "skins_original", $to));
@@ -439,7 +439,7 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
     function afterAdvanced() 
     {
         if (!is_null($this->node) && trim($this->node) != "") {
-            $this->set("returnUrl", $this->get("url") . "&node=$this->node");
+            $this->set("returnUrl", $this->get('url') . "&node=$this->node");
         }
     }
 

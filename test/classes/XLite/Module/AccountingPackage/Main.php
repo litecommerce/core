@@ -95,7 +95,7 @@ class XLite_Module_AccountingPackage_Main extends XLite_Module_Abstract
     {
         parent::init();
         // admin backoffice - specific class decorations
-        if ($this->xlite->is("adminZone")) {
+        if ($this->xlite->is('adminZone')) {
         }
     }
 }

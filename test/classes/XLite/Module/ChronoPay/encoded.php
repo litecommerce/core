@@ -25,7 +25,7 @@ function PaymentMethod_chronopay_handleRequest($_this, $cart)
     // PaymentMethod::chronopay_handleRequest() code
     $transaction_id = $_REQUEST['transaction_id'];
     $transaction_type = $_REQUEST['transaction_type'];
-    if(!$_REQUEST['error'] && isset($_REQUEST["cs1"]) && is_numeric($_REQUEST["cs1"]) && $_REQUEST["cs1"] > 0 && isset($_REQUEST["cs2"]) && $_REQUEST["cs2"] == "chronopay")  {
+    if(!$_REQUEST['error'] && isset($_REQUEST['cs1']) && is_numeric($_REQUEST['cs1']) && $_REQUEST['cs1'] > 0 && isset($_REQUEST['cs2']) && $_REQUEST['cs2'] == "chronopay")  {
         if($transaction_type == 'onetime' || $transaction_type == 'initial' || $transaction_type== 'rebill') {
             $cart->setComplex('details.transaction_type', $_REQUEST['transaction_type']);
             $cart->set('detailLabels.transaction_type', 'Transaction Type');
@@ -43,7 +43,7 @@ function PaymentMethod_chronopay_handleRequest($_this, $cart)
             $cart->update();
         }
     }else {
-        $cart->set('details.error', 'Payment Error'.$_REQUEST["error_descr"]);
+        $cart->set('details.error', 'Payment Error'.$_REQUEST['error_descr']);
         $cart->setComplex('detailLabels.error', 'Error');
         $cart->set('status', 'F');
         $cart->update();
@@ -53,14 +53,14 @@ function PaymentMethod_chronopay_handleRequest($_this, $cart)
 
 function PaymentMethod_chronopay_callback()
 {
-    if (isset($_REQUEST["cs1"]) && is_numeric($_REQUEST["cs1"]) && $_REQUEST["cs1"] > 0 && isset($_REQUEST["cs2"]) && $_REQUEST["cs2"] == "chronopay") {
-        $cart = new XLite_Model_Order($_REQUEST["cs1"]);
-        $pm = $cart->get("paymentMethod");
+    if (isset($_REQUEST['cs1']) && is_numeric($_REQUEST['cs1']) && $_REQUEST['cs1'] > 0 && isset($_REQUEST['cs2']) && $_REQUEST['cs2'] == "chronopay") {
+        $cart = new XLite_Model_Order($_REQUEST['cs1']);
+        $pm = $cart->get('paymentMethod');
 
         # security issue
-        if ($pm->get("payment_method") != "chronopay" || !$pm->getComplex('params.secure_ip') || !isset($_SERVER['REMOTE_ADDR']) || $_SERVER['REMOTE_ADDR'] != $pm->getComplex('params.secure_ip')) {
-            $_REQUEST["error_descr"] = " (Wrong ChronoPay payment gateway IP)";
-            $_REQUEST["error"] = "1";
+        if ($pm->get('payment_method') != "chronopay" || !$pm->getComplex('params.secure_ip') || !isset($_SERVER['REMOTE_ADDR']) || $_SERVER['REMOTE_ADDR'] != $pm->getComplex('params.secure_ip')) {
+            $_REQUEST['error_descr'] = " (Wrong ChronoPay payment gateway IP)";
+            $_REQUEST['error'] = "1";
         }
 
         if(isset($_REQUEST['amp;action']))

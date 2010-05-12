@@ -147,7 +147,7 @@ abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstr
 
     /**
      * Get the full URL of the page
-     * Example: getShopUrl("cart.php") = "http://domain/dir/cart.php 
+     * Example: getShopUrl('cart.php') = "http://domain/dir/cart.php 
      * 
      * @param string $url    relative URL  
      * @param bool   $secure flag to use HTTPS

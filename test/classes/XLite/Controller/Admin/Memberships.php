@@ -39,7 +39,7 @@ class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_Abstract
     
     function action_update() 
     {
-        if ($this->get("update_memberships")) {
+        if ($this->get('update_memberships')) {
             $profilesData = array(
                 'profiles'   => array(),
                 'membership' => array()
@@ -48,17 +48,17 @@ class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_Abstract
             $memberships = $membership->findAll();
             foreach($memberships as $id => $membership_) {
                 $profile = new XLite_Model_Profile();
-                $profilesData['profiles'][$id] = $this->getMembershipProfiles($membership_->get("membership"));
-                $profilesData['membership'][$id] = $membership_->get("membership");
+                $profilesData['profiles'][$id] = $this->getMembershipProfiles($membership_->get('membership'));
+                $profilesData['membership'][$id] = $membership_->get('membership');
             }
-            $memberships = $this->get("update_memberships");
+            $memberships = $this->get('update_memberships');
             foreach($memberships as $id => $membership_) {
                 $membership = new XLite_Model_Membership($id);
                 $membership_['membership'] = $membership->stripInvalidData($membership_['membership']);
                 if (strlen($membership_['membership']) <= 0) {
-                    if (strlen($membership->get("membership")) <= 0) {
+                    if (strlen($membership->get('membership')) <= 0) {
                         // delete old empty membership
-                        $this->updateProfilesMembership($this->getMembershipProfiles($membership->get("membership")), $membership->get("membership"), '', true);
+                        $this->updateProfilesMembership($this->getMembershipProfiles($membership->get('membership')), $membership->get('membership'), '', true);
                         $membership->delete();
                     }
                     // don't save this membership
@@ -70,7 +70,7 @@ class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_Abstract
                 $membership->set("properties", $membership_);
                 $membership->update();
                 if (isset($profilesData['profiles'][$id])) {
-                    $this->updateProfilesMembership($profilesData['profiles'][$id], $profilesData['membership'][$id], $membership->get("membership"));
+                    $this->updateProfilesMembership($profilesData['profiles'][$id], $profilesData['membership'][$id], $membership->get('membership'));
                 }
             }
         }
@@ -78,9 +78,9 @@ class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_Abstract
 
     function action_delete() 
     {
-        if ($this->get("deleted_memberships")) {
+        if ($this->get('deleted_memberships')) {
             @set_time_limit(0);
-            $memberships = $this->get("deleted_memberships");
+            $memberships = $this->get('deleted_memberships');
             foreach($memberships as $membership_id) {
                 $membership = new XLite_Model_Membership($membership_id);
                 $m = $membership->get('membership');
@@ -92,8 +92,8 @@ class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_Abstract
 
     function action_add() 
     {
-        if ($this->get("new_membership")) {
-            $new_membership = $this->get("new_membership");
+        if ($this->get('new_membership')) {
+            $new_membership = $this->get('new_membership');
             $membership = new XLite_Model_Membership();
 
             $new_membership['membership'] = $membership->stripInvalidData($new_membership['membership']);
@@ -103,12 +103,12 @@ class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_Abstract
             }
 
             $membership->set("properties",$new_membership);
-            if (strlen($membership->get("orderby")) == 0) {
+            if (strlen($membership->get('orderby')) == 0) {
                 $newPos = 0;
     			$memberships = $membership->findAll();
     			foreach($memberships as $id => $membership_) {
-    				if ($membership_->get("orderby") > $newPos) {
-    					$newPos = $membership_->get("orderby");
+    				if ($membership_->get('orderby') > $newPos) {
+    					$newPos = $membership_->get('orderby');
     				}
     			}
     			$newPos += 10;

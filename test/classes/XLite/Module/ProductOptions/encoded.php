@@ -18,10 +18,10 @@ function func_get_product_options($_this)
 {
     $result = array();
 
-    if ($_this->is("empty")) {
+    if ($_this->is('empty')) {
         return $result;
     }
-    $options = explode("\n", $_this->get("options"));
+    $options = explode("\n", $_this->get('options'));
     $option_id = 0;
     foreach ($options as $option_line) {
         $option_line = trim(chop($option_line));
@@ -65,7 +65,7 @@ function func_get_product_options($_this)
         }
 // END		
         $opt = new StdClass();
-        $opt->class     = $_this->get("optclass");
+        $opt->class     = $_this->get('optclass');
         $opt->option_id = $option_id++;
         $opt->option    = trim($option);
         $opt->surcharge = $surcharge;

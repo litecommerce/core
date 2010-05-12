@@ -165,7 +165,7 @@ class XLite_Module_AdvancedSearch_View_SearchResult extends XLite_View_SearchRes
 
             $orderby = null;
                                                             
-            if (isset($properties["price"])) {
+            if (isset($properties['price'])) {
                 $price = explode(',', $properties['price'], 2);
                 $properties['start_price'] = $price[0];
                 $properties['end_price'] = (isset($price[0]) && !empty($price[1])) ? $price[1] : null;

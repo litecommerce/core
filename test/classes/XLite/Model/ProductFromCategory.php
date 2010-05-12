@@ -50,8 +50,8 @@ class XLite_Model_ProductFromCategory extends XLite_Model_Product
     */
     function _buildSelect($where = null, $orderby = null, $groupby = null, $limit = null)
     {
-        $table = $this->db->getTableByAlias("products");
-        $link_table = $this->db->getTableByAlias("product_links");
+        $table = $this->db->getTableByAlias('products');
+        $link_table = $this->db->getTableByAlias('product_links');
         $sql = "SELECT links.product_id FROM $table, $link_table links WHERE $table.product_id=links.product_id AND links.category_id='$this->catId'";
         if (!empty($where)) {
             $sql .= " AND $where";
@@ -78,8 +78,8 @@ class XLite_Model_ProductFromCategory extends XLite_Model_Product
 
     function getProductsNumber($enabled=true, $where="")
     {
-        $table  = $this->db->getTableByAlias("products");
-        $link_table = $this->db->getTableByAlias("product_links");
+        $table  = $this->db->getTableByAlias('products');
+        $link_table = $this->db->getTableByAlias('product_links');
         $sql  = "SELECT COUNT(*) FROM $table, $link_table links";
         $sql .= " WHERE $table.product_id=links.product_id";
         $sql .= " AND links.category_id='$this->catId'";

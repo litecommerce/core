@@ -48,11 +48,11 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Order extends XLite_Controlle
         parent::init();
 
         // Disable edit order if shipping method UPSOnlineTools
-        if (DISABLE_UPS_EDIT_ORDER === true && $this->getComplex('order.shippingMethod.class') == "ups" && $this->xlite->get("AOMEnabled")) {
-            unset($this->pages["order_edit"]);
-            unset($this->pageTemplates["order_edit"]);
-            if ($this->get("page") == "order_edit") {
-                $this->redirect("admin.php?target=order&order_id=".$this->get("order_id")."&page=order_info");
+        if (DISABLE_UPS_EDIT_ORDER === true && $this->getComplex('order.shippingMethod.class') == "ups" && $this->xlite->get('AOMEnabled')) {
+            unset($this->pages['order_edit']);
+            unset($this->pageTemplates['order_edit']);
+            if ($this->get('page') == "order_edit") {
+                $this->redirect("admin.php?target=order&order_id=".$this->get('order_id')."&page=order_info");
                 return;
             }
         }
@@ -60,7 +60,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Order extends XLite_Controlle
 
     function getTemplate()
     {
-        if ($this->get("mode") == "container_details") {
+        if ($this->get('mode') == "container_details") {
             // container details
             return "modules/UPSOnlineTools/container_details.tpl";
         }
@@ -75,18 +75,18 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Order extends XLite_Controlle
 
     function countUPSContainers()
     {
-        return count((array)$this->get("upscontainers"));
+        return count((array)$this->get('upscontainers'));
     }
 
 
     function hasUPSValidContainers()
     {
-        $order = $this->get("order");
+        $order = $this->get('order');
         if ($order->getComplex('shippingMethod.class') != "ups") {
             return false;
         }
 
-        $containers = $this->get("upscontainers");
+        $containers = $this->get('upscontainers');
         return (is_array($containers) && count($containers) > 0) ? true : false;
     }
 
@@ -95,7 +95,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Order extends XLite_Controlle
     {
         $sm = new XLite_Module_UPSOnlineTools_Model_Shipping_Ups();
         $desc = $sm->getUPSContainerDims($container_type);
-        return $desc["name"];
+        return $desc['name'];
     }
 
 
@@ -103,16 +103,16 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Order extends XLite_Controlle
     {
         require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
 
-        $order_id = $this->get("order_id");
-        $containers = $this->get("uPSContainers");
+        $order_id = $this->get('order_id');
+        $containers = $this->get('uPSContainers');
 
         $items_list = array();
         $extra_items = array();
 
         foreach ($containers as $container) {
-            foreach ((array)$container["levels"] as $level) {
-                foreach ((array)$level["items"] as $item) {
-                    $global_id = $item["global_id"];
+            foreach ((array)$container['levels'] as $level) {
+                foreach ((array)$level['items'] as $item) {
+                    $global_id = $item['global_id'];
                     if (isset($items_list[$global_id]))
                         continue;
 
@@ -121,11 +121,11 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Order extends XLite_Controlle
             }
 
             // extra items
-            if (is_array($container["extra_item_ids"])) {
-                foreach ($container["extra_item_ids"] as $item_id) {
+            if (is_array($container['extra_item_ids'])) {
+                foreach ($container['extra_item_ids'] as $item_id) {
                     $temp = array();
-                    $temp["item_id"] = $item_id;
-                    $temp["global_id"] = "-";
+                    $temp['item_id'] = $item_id;
+                    $temp['global_id'] = "-";
 
                     $extra_items[] = $temp;
                 }
@@ -143,17 +143,17 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Order extends XLite_Controlle
         foreach ($items_list as $k=>$item) {
             $oi = new XLite_Model_OrderItem();
 
-            if (!$oi->find("item_id='".$item["item_id"]."' AND order_id='$order_id'"))
+            if (!$oi->find("item_id='".$item['item_id']."' AND order_id='$order_id'"))
                 continue;
 
-            $items_list[$k]["amount"] = $oi->get("amount");
-            $product = $oi->get("product");
+            $items_list[$k]['amount'] = $oi->get('amount');
+            $product = $oi->get('product');
 
             foreach ($export_fields as $field_name) {
                 $items_list[$k][$field_name] = $product->get($field_name);
             }
 
-            $items_list[$k]["weight_lbs"] = UPSOnlineTools_convertWeight($product->get("weight"), $this->config->getComplex('General.weight_unit'), "lbs", 2);
+            $items_list[$k]['weight_lbs'] = UPSOnlineTools_convertWeight($product->get('weight'), $this->config->getComplex('General.weight_unit'), "lbs", 2);
         }
 
         return array_values($items_list);
@@ -161,26 +161,26 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Order extends XLite_Controlle
 
     function countUPSOrderItems()
     {
-        return count((array)$this->get("UPSOrderItems"));
+        return count((array)$this->get('UPSOrderItems'));
     }
 
     function displayLevel($container_id, $level)
     {
-        $level_id = $level["level_id"];
+        $level_id = $level['level_id'];
 
         require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
 
-        $order = $this->get("order");
+        $order = $this->get('order');
 
         if (
             XLite_Module_UPSOnlineTools_Main::isGDlibEnabled()
             && $this->config->UPSOnlineTools->display_gdlib
         ) {
             // GDlib
-            return '<img src="cart.php?target=image&mode=ups_container_level_details&order_id='.$order->get("order_id").'&container='.$container_id.'&level='.$level_id.'&id='.$this->xlite->session->getID().'" border=2 alt="Container #'.($container_id + 1).', Layer #'.($level_id + 1).'">';
+            return '<img src="cart.php?target=image&mode=ups_container_level_details&order_id='.$order->get('order_id').'&container='.$container_id.'&level='.$level_id.'&id='.$this->xlite->session->getID().'" border=2 alt="Container #'.($container_id + 1).', Layer #'.($level_id + 1).'">';
         }
 
-        $containers = $order->get("ups_containers");
+        $containers = $order->get('ups_containers');
 
         if (!isset($containers[$container_id])) {
             return "<b>Resource not found!</b>";
@@ -188,17 +188,17 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Order extends XLite_Controlle
 
         $container = $containers[$container_id];
 
-        if (!isset($container["levels"][$level_id])) {
+        if (!isset($container['levels'][$level_id])) {
             return "<b>Resource not found!</b>";
         }
 
-        $level = $container["levels"][$level_id];
+        $level = $container['levels'][$level_id];
 
 
         // collect product ids
         $pids = array();
-        foreach ($level["items"] as $item) {
-            $pids[] = $item["item_id"];
+        foreach ($level['items'] as $item) {
+            $pids[] = $item['item_id'];
         }
         $pids = array_unique($pids);
 
@@ -206,17 +206,17 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Order extends XLite_Controlle
         $names = array();
         foreach ($pids as $id) {
             $po = new XLite_Model_Product($id);
-            $names[$id] = $po->get("name");
+            $names[$id] = $po->get('name');
         }
 
         // assign product name to title
-        foreach ($level["items"] as $k=>$v) {
-            $id = $v["item_id"];
-            $level["items"][$k]["title"] = $names[$id];
+        foreach ($level['items'] as $k=>$v) {
+            $id = $v['item_id'];
+            $level['items'][$k]['title'] = $names[$id];
         }
 
         // display container details based on <div>...</div>
-        $result = UPSOnlineTools_displayLevel_div($container["width"], $container["length"], $level["items"], $level["dirt_spaces"], $this->config->getComplex('UPSOnlineTools.visual_container_width'), $level_id);
+        $result = UPSOnlineTools_displayLevel_div($container['width'], $container['length'], $level['items'], $level['dirt_spaces'], $this->config->getComplex('UPSOnlineTools.visual_container_width'), $level_id);
 
         return $result;
     }
@@ -225,8 +225,8 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Order extends XLite_Controlle
     {
         require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
 
-        $order = $this->get("order");
-        $containers = $order->get("ups_containers");
+        $order = $this->get('order');
+        $containers = $order->get('ups_containers');
 
         if (!isset($containers[$container_id])) {
             return "<b>Resource not found!</b>";

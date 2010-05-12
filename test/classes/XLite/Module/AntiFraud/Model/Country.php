@@ -39,7 +39,7 @@ class XLite_Module_AntiFraud_Model_Country extends XLite_Model_Country implement
 
     public function __construct($id = null)  
     {
-        $this->fields["risk_country"] = 0;
+        $this->fields['risk_country'] = 0;
         parent::__construct($id);
     }
 
@@ -53,16 +53,16 @@ class XLite_Module_AntiFraud_Model_Country extends XLite_Model_Country implement
             }
         }
 
-        $result = $this->get("risk_country");
-        $order = $this->get("order");
+        $result = $this->get('risk_country');
+        $order = $this->get('order');
         if (isset($order)) {
             $af_data = $order->getComplex('details.af_data');
             if (isset($af_data) && is_array($af_data)) {
-                if (isset($af_data["CHECK_IP_COUNTRY"])) {
-                    $result += ($af_data["CHECK_IP_COUNTRY"] != $this->get("code")) ? 2 : 0;
+                if (isset($af_data['CHECK_IP_COUNTRY'])) {
+                    $result += ($af_data['CHECK_IP_COUNTRY'] != $this->get('code')) ? 2 : 0;
                 }
-                if (isset($af_data["CHECK_IP_DISTANCE"])) {
-                    $result += ($af_data["CHECK_IP_DISTANCE"] > $this->config->getComplex('AntiFraud.antifraud_safe_distance')) ? 4 : 0;
+                if (isset($af_data['CHECK_IP_DISTANCE'])) {
+                    $result += ($af_data['CHECK_IP_DISTANCE'] > $this->config->getComplex('AntiFraud.antifraud_safe_distance')) ? 4 : 0;
                 }
             }
         }

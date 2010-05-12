@@ -37,15 +37,15 @@ class XLite_Module_AOM_Model_OrderItem extends XLite_Model_OrderItem implements 
 {
     public function __construct($id = null) 
     {
-        $this->fields["product_name"] = '';
-        $this->fields["product_sku"] = '';
-        $this->fields["aom_extra"] = '';
+        $this->fields['product_name'] = '';
+        $this->fields['product_sku'] = '';
+        $this->fields['aom_extra'] = '';
         parent::__construct($id);
     }
 
     function get($name)  
     {
-        if($this->xlite->is("adminZone")) {
+        if($this->xlite->is('adminZone')) {
             $value = parent::get($name);
             if (($name == "product_name" || $name == "product_sku") && empty($value)) {
                 preg_match("/^product_(.+)$/",$name, $matches);
@@ -61,16 +61,16 @@ class XLite_Module_AOM_Model_OrderItem extends XLite_Model_OrderItem implements 
                 break;
 
                 case "properties":
-                    $value["aom_extra"] = unserialize($value["aom_extra"]);
-                    if (!is_array($value["aom_extra"])) {
-                        $value["aom_extra"] = array();
+                    $value['aom_extra'] = unserialize($value['aom_extra']);
+                    if (!is_array($value['aom_extra'])) {
+                        $value['aom_extra'] = array();
                     }
                 break;
 
                 case "product.price":
-       				$product = $this->get("product");
-   					if (!$product->is("available") || $this->xlite->AOM_product_originalPrice) {
-   						$value = $this->get("originalPrice");
+       				$product = $this->get('product');
+   					if (!$product->is('available') || $this->xlite->AOM_product_originalPrice) {
+   						$value = $this->get('originalPrice');
    					}
                 break;
                 
@@ -85,14 +85,14 @@ class XLite_Module_AOM_Model_OrderItem extends XLite_Model_OrderItem implements 
 
     function set($name, $value)
     {
-        if($this->xlite->is("adminZone")) {
+        if($this->xlite->is('adminZone')) {
             if ($name == "aom_extra") {
                 $val = (is_array($value)) ? $value : array();
                 $value = serialize($val);
             }
         }
 
-        if ($this->xlite->get("preserveOriginalPrices") && $name == "price") {
+        if ($this->xlite->get('preserveOriginalPrices') && $name == "price") {
         	$value = $this->getOriginalPrice();
         }
 
@@ -101,27 +101,27 @@ class XLite_Module_AOM_Model_OrderItem extends XLite_Model_OrderItem implements 
 
     function isOriginalPrice()
     {
-        $val = $this->get("aom_extra");
-        return ( empty($val["original_price"]) ) ? false : true;
+        $val = $this->get('aom_extra');
+        return ( empty($val['original_price']) ) ? false : true;
     }
 
     function getOriginalPrice()
     {
-        $val = $this->get("aom_extra");
-        return ( empty($val["original_price"]) ) ? 0 : $val["original_price"];
+        $val = $this->get('aom_extra');
+        return ( empty($val['original_price']) ) ? 0 : $val['original_price'];
     }
 
     function setOriginalPrice($value)
     {
-        $val = $this->get("aom_extra");
-        $val["original_price"] = ( empty($value) ) ? 0 : $value;
+        $val = $this->get('aom_extra');
+        $val['original_price'] = ( empty($value) ) ? 0 : $value;
         $this->set("aom_extra", $val);
     }
 
     function getKey() 
     {
         $keyValue = parent::getKey();
-        if ($this->xlite->get("ProductOptionsEnabled") && strlen($keyValue) > 250) {
+        if ($this->xlite->get('ProductOptionsEnabled') && strlen($keyValue) > 250) {
             $keyValue = md5($keyValue);
         }
 
@@ -131,7 +131,7 @@ class XLite_Module_AOM_Model_OrderItem extends XLite_Model_OrderItem implements 
     function getUniqueKey()
     {
         $key = parent::getKey();
-        $key .= "|".$this->get("bonusItem");
+        $key .= "|".$this->get('bonusItem');
         return urlencode($key);
     }
 
@@ -140,9 +140,9 @@ class XLite_Module_AOM_Model_OrderItem extends XLite_Model_OrderItem implements 
         parent::setProduct($product);
 
         if (!is_null($product)) {
-            $this->set("product_name", $product->get("name"));
-            $this->set("product_sku", $product->get("sku"));
-            $this->set("originalPrice", $product->get("price"));
+            $this->set("product_name", $product->get('name'));
+            $this->set("product_sku", $product->get('sku'));
+            $this->set("originalPrice", $product->get('price'));
         }
         
  	}
@@ -151,7 +151,7 @@ class XLite_Module_AOM_Model_OrderItem extends XLite_Model_OrderItem implements 
     {
         if ($this->xlite->getComplex('mm.activeModules.WholesaleTrading')) {
             $wholesale = new XLite_Module_WholesaleTrading_Model_WholesalePricing() 	;
-            return count($wholesale->findAll("product_id='" . $this->getComplex('product.product_id') . "' AND amount<= '" . $this->get("amount") . "' AND (membership='all' OR membership='" . $this->getComplex('order.profile.membership') . "')"));
+            return count($wholesale->findAll("product_id='" . $this->getComplex('product.product_id') . "' AND amount<= '" . $this->get('amount') . "' AND (membership='all' OR membership='" . $this->getComplex('order.profile.membership') . "')"));
         } else {
             return false;
         }
@@ -159,7 +159,7 @@ class XLite_Module_AOM_Model_OrderItem extends XLite_Model_OrderItem implements 
 
     function getProductOptionValue($optclass)
     {
-        $productOptions = $this->get("productOptions");
+        $productOptions = $this->get('productOptions');
         if (is_array($productOptions)) {
             foreach ($productOptions as $option) {
                 if ($option->class == $optclass) {

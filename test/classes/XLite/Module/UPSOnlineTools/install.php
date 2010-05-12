@@ -6,7 +6,7 @@
 * @version $Id$
 */
 
-if (!function_exists("file_put_contents")) 
+if (!function_exists('file_put_contents')) 
 {
     function file_put_contents($file, $content) 
     {
@@ -22,7 +22,7 @@ if (!function_exists("file_put_contents"))
     }
 }
 
-if (!function_exists("file_get_contents")) 
+if (!function_exists('file_get_contents')) 
 {
     function file_get_contents($f) 
     {
@@ -37,7 +37,7 @@ if (!function_exists("file_get_contents"))
         return $retval;
     }
 }
-if (!function_exists("start_patching"))
+if (!function_exists('start_patching'))
 {
     function start_patching($title)
     {
@@ -69,7 +69,7 @@ PRE {FONT-FAMILY: Courier, "Courier New"; COLOR: #000000; FONT-SIZE: 12px;}
     }
 }
 
-if (!function_exists("end_patching"))
+if (!function_exists('end_patching'))
 {
     function end_patching()
     {
@@ -83,7 +83,7 @@ if (!function_exists("end_patching"))
     }
 }
 
-if (!function_exists("is_template_patched"))
+if (!function_exists('is_template_patched'))
 {
     function is_template_patched($location, $check_str)
     {
@@ -95,7 +95,7 @@ if (!function_exists("is_template_patched"))
     }
 }
 
-if (!function_exists("already_patched"))
+if (!function_exists('already_patched'))
 {
     function already_patched($location)
     {
@@ -107,7 +107,7 @@ if (!function_exists("already_patched"))
     }
 }
 
-if (!function_exists("file_not_exists"))
+if (!function_exists('file_not_exists'))
 {
     function file_not_exists($location)
     {
@@ -122,7 +122,7 @@ if (!function_exists("file_not_exists"))
     }
 }
 
-if (!function_exists("pattern_not_found"))
+if (!function_exists('pattern_not_found'))
 {
     function pattern_not_found()
     {
@@ -135,7 +135,7 @@ if (!function_exists("pattern_not_found"))
     }
 }
 
-if (!function_exists("patch_template"))
+if (!function_exists('patch_template'))
 {
     function patch_template($location, $check_str=null, $find_str=null, $replace_str=null, $add_str=null)
     {
@@ -180,7 +180,7 @@ if (!function_exists("patch_template"))
     }
 }
 
-start_patching("UPSOnlineTools");
+start_patching('UPSOnlineTools');
 
 
 // Admin area

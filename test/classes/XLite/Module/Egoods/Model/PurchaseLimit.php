@@ -39,9 +39,9 @@ class XLite_Module_Egoods_Model_PurchaseLimit extends XLite_Module_WholesaleTrad
         $value = parent::get($property);
 
         if ($property == "max") {
-            $product = new XLite_Model_Product($this->get("product_id"));
-            if ($product->is("egood")) {
-                if ($product->is("pin")) {
+            $product = new XLite_Model_Product($this->get('product_id'));
+            if ($product->is('egood')) {
+                if ($product->is('pin')) {
                     $pin = new XLite_Module_Egoods_Model_PinCode();
                     $freePinCounts = $pin->getFreePinCount($this->get('product_id'));
     			    if ($value > $freePinCounts) {

@@ -28,16 +28,16 @@
             } else {
                 $order->setComplex("details.status", $request->response);
                 $order->set("detailLabels.status", "APC response :");
-                $order->setComplex("details.transaction_id", $_POST["transaction_id"]);
+                $order->setComplex("details.transaction_id", $_POST['transaction_id']);
     		    $order->set("detailLabels.transaction_id", "Transaction ID :");
                 if (preg_match("/AUTHORISED/S",$request->response))
                     $order->set("status","P");
                 else
                     $order->set("status","F");
             }
-        	if (isset($_POST["amount"])) {
-        		$total = sprintf("%.2f", doubleval($order->get("total")));
-        		$totalPost = sprintf("%.2f", doubleval($_POST["amount"]));
+        	if (isset($_POST['amount'])) {
+        		$total = sprintf("%.2f", doubleval($order->get('total')));
+        		$totalPost = sprintf("%.2f", doubleval($_POST['amount']));
                 if ($total != $totalPost) {
                     $order->set("details.error", "Hacking attempt!");
                     $order->setComplex("detailLabels.error", "Error");

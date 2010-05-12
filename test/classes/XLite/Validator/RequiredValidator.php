@@ -43,9 +43,9 @@ class XLite_Validator_RequiredValidator extends XLite_Validator_Abstract
             return false;
         }
 
-        $result = !empty($_POST[$this->get("field")]) || !isset($_POST[$this->get("field")]);
-        if ($result && isset($_POST[$this->get("field")])) {
-        	$field = trim($_POST[$this->get("field")]);
+        $result = !empty($_POST[$this->get('field')]) || !isset($_POST[$this->get('field')]);
+        if ($result && isset($_POST[$this->get('field')])) {
+        	$field = trim($_POST[$this->get('field')]);
         	$result &= !empty($field);
         }
         return $result;

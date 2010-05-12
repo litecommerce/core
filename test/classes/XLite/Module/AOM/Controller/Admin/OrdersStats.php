@@ -48,23 +48,23 @@ class XLite_Module_AOM_Controller_Admin_OrdersStats extends XLite_Controller_Adm
         $orderStatuses = $orderStatus->findAll();
         $orderStatusesHash = array();
         foreach($orderStatuses as $orderStatus_) {
-            $orderStatusesHash[] = $orderStatus_->get("status");	// order by Pos.
-            $this->stats["orders"][$orderStatus_->get("status")]["statistics"] = $statRec;
-            $this->stats["orders"][$orderStatus_->get("status")]["name"] = $orderStatus_->get("name");
+            $orderStatusesHash[] = $orderStatus_->get('status');	// order by Pos.
+            $this->stats['orders'][$orderStatus_->get('status')]['statistics'] = $statRec;
+            $this->stats['orders'][$orderStatus_->get('status')]['name'] = $orderStatus_->get('name');
         }
-        $this->stats["total"] = $statRec;
-        $this->stats["paid"] = $statRec;
+        $this->stats['total'] = $statRec;
+        $this->stats['paid'] = $statRec;
         
         $order = new XLite_Model_Order();
-        $date = $this->get("monthDate");
+        $date = $this->get('monthDate');
         // fetch orders for this month
         array_map(array($this, "summarize"), $order->findAll("date>=$date"));
 
         // sort summarized results by order status Pos.
-        $orders = $this->stats["orders"];
-        $this->stats["orders"] = array();
+        $orders = $this->stats['orders'];
+        $this->stats['orders'] = array();
         foreach($orderStatusesHash as $orderStatus_) {
-            $this->stats["orders"][$orderStatus_] = $orders[$orderStatus_];
+            $this->stats['orders'][$orderStatus_] = $orders[$orderStatus_];
         }
 
         return $this->stats;
@@ -72,30 +72,30 @@ class XLite_Module_AOM_Controller_Admin_OrdersStats extends XLite_Controller_Adm
 
     function save($index, $order, $paid = false)
     {
-        if ($order->get("date") >= $this->get("todayDate")) {
-            $this->sum($index, "today", $order->get("total"), $paid);
+        if ($order->get('date') >= $this->get('todayDate')) {
+            $this->sum($index, "today", $order->get('total'), $paid);
         }
-        if ($order->get("date") >= $this->get("weekDate")) {
-            $this->sum($index, "week", $order->get("total"), $paid);
+        if ($order->get('date') >= $this->get('weekDate')) {
+            $this->sum($index, "week", $order->get('total'), $paid);
         }
-        if ($order->get("date") >= $this->get("monthDate")) {
-            $this->sum($index, "month", $order->get("total"), $paid);
+        if ($order->get('date') >= $this->get('monthDate')) {
+            $this->sum($index, "month", $order->get('total'), $paid);
         }
     }
 
     function sum($index, $period, $amount, $paid)
     {
-        $this->stats["orders"][$index]["statistics"][$period]++;
-        $this->stats["total"][$period] += $amount;
+        $this->stats['orders'][$index]['statistics'][$period]++;
+        $this->stats['total'][$period] += $amount;
         if ($paid) {
-            $this->stats["paid"][$period] += $amount;
+            $this->stats['paid'][$period] += $amount;
         }
     }
     
     function summarize($order)
     {
-        $orderStatus = $order->get("orderStatus");
-        $paid = ($orderStatus->get("status") == "P" || $orderStatus->get("status") == "C" || $orderStatus->get("parent") == "P" || $orderStatus->get("parent") == "C" ? true : false);
-        $this->save($orderStatus->get("status"), $order, $paid);
+        $orderStatus = $order->get('orderStatus');
+        $paid = ($orderStatus->get('status') == "P" || $orderStatus->get('status') == "C" || $orderStatus->get('parent') == "P" || $orderStatus->get('parent') == "C" ? true : false);
+        $this->save($orderStatus->get('status'), $order, $paid);
     }
 }

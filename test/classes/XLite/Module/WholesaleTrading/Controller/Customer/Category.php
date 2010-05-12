@@ -44,7 +44,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
     // FIXME - correct the "bulk categories" functionality and this code too
     /*function init() 
     {
-        if (in_array($_REQUEST["category_id"], explode(";", $this->getComplex('config.WholesaleTrading.bulk_categories')))) {
+        if (in_array($_REQUEST['category_id'], explode(";", $this->getComplex('config.WholesaleTrading.bulk_categories')))) {
             $layout = XLite_Model_Layout::getInstance();
             $layout->addLayout("category_products.tpl", "modules/WholesaleTrading/bulk_category_products.tpl");
         }
@@ -56,8 +56,8 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
 
     function action_bulk() 
     {
-        $products = $_REQUEST["product_qty"];
-        $opt_products = $_REQUEST["opt_product_qty"];
+        $products = $_REQUEST['product_qty'];
+        $opt_products = $_REQUEST['opt_product_qty'];
 
         if (empty($products) && empty($opt_products)) {
             $this->valid = false;
@@ -75,7 +75,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
         if (!empty($opt_products)) {
             foreach($opt_products as $key=>$value) {
                 $p = new XLite_Model_Product($key);
-                if (!$p->get("tracking")) {
+                if (!$p->get('tracking')) {
                     foreach ($value as $idx=>$option_qty) {
                         $qty += $option_qty;
                     }
@@ -115,9 +115,9 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
             if (is_array($value)) { // product with options
                 foreach ($value as $idx=>$qty) {
                     if ($qty > 0) {
-                        $_REQUEST["OptionSetIndex"][$key] = $idx;
-                        $_REQUEST["amount"] = $qty;
-                        $_REQUEST["product_id"] = $key;
+                        $_REQUEST['OptionSetIndex'][$key] = $idx;
+                        $_REQUEST['amount'] = $qty;
+                        $_REQUEST['product_id'] = $key;
                         $cart = new XLite_Controller_Customer_Cart();
                         $cart->init();
                         $this->xlite->set("dont_update_cart", true);
@@ -127,11 +127,11 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
                     }
                 }
             } else if ($value > 0) {
-                $_REQUEST["amount"] = $value;
+                $_REQUEST['amount'] = $value;
                 $add = true;
             }
             if ($add == true) {
-                $_REQUEST["product_id"] = $key;
+                $_REQUEST['product_id'] = $key;
                 $cart = new XLite_Controller_Customer_Cart();
                 $cart->init();
                 $this->xlite->set("dont_update_cart", true);
@@ -148,8 +148,8 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
 
     function action_calculate_price() 
     {
-        $products = $_REQUEST["product_qty"];
-        $opt_products = $_REQUEST["opt_product_qty"];
+        $products = $_REQUEST['product_qty'];
+        $opt_products = $_REQUEST['opt_product_qty'];
 
         if (empty($products) && empty($opt_products)) {
             $this->valid = false;
@@ -174,7 +174,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
                 foreach ($value as $idx=>$qty) {
                     if ($qty != "" && $qty > 0) {
                         $p = new XLite_Model_Product($key);
-                        if ($this->xlite->get("ProductOptionsEnabled") && $p->hasOptions()) {
+                        if ($this->xlite->get('ProductOptionsEnabled') && $p->hasOptions()) {
                             $price = $p->getFullPrice($qty,$idx);
                             $this->wholesale_prices[$key][$idx] = $price;
                             $this->totals[$key][$idx] =  $price * $qty;
@@ -213,12 +213,12 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
     function quantity($product_id, $key=null) 
     {
         if ($key !== null) {
-            if (isset($_POST["opt_product_qty"][$product_id][$key])) {
-                return $_POST["opt_product_qty"][$product_id][$key];
+            if (isset($_POST['opt_product_qty'][$product_id][$key])) {
+                return $_POST['opt_product_qty'][$product_id][$key];
             }
         } else {
-            if (isset($_POST["product_qty"][$product_id])) {
-                return $_POST["product_qty"][$product_id];
+            if (isset($_POST['product_qty'][$product_id])) {
+                return $_POST['product_qty'][$product_id];
             }
         }
         return 1;
@@ -226,7 +226,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
 
     function option_selected($p_id, $key) 
     {
-        return ($key == $_POST["OptionSetIndex"][$p_id]);
+        return ($key == $_POST['OptionSetIndex'][$p_id]);
     }
 
     function _check_product($product_id, $qty, $option_idx) 
@@ -248,23 +248,23 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
             $p = new XLite_Model_Product($product_id);
             if (($amount < $pl->get('min') && $qty > 0) ) {
                 $hasError = true;
-                $error["type"] = 'min';
-                $error["amount"] = $pl->get('min');
+                $error['type'] = 'min';
+                $error['amount'] = $pl->get('min');
             } else if (($pl->get('max') > 0 && $pl->get('max') < $amount) ) {
                 $hasError = true;
-                $error["type"] = 'max';
-                $error["amount"] = $pl->get('max');
+                $error['type'] = 'max';
+                $error['amount'] = $pl->get('max');
             }
             if ($hasError) {
-                $error["pr_name"] = $p->get("name");
-                $error["product_id"] = $product_id;
+                $error['pr_name'] = $p->get('name');
+                $error['product_id'] = $product_id;
 /*				if ($option_idx !== null) {
-                    $error["option_idx"] = $option_idx;
+                    $error['option_idx'] = $option_idx;
                 }
-                if ($this->xlite->get("ProductOptionsEnabled") && $p->hasOptions()) {
-                    $options_set = $p->get("expandedItems");
+                if ($this->xlite->get('ProductOptionsEnabled') && $p->hasOptions()) {
+                    $options_set = $p->get('expandedItems');
                     foreach($options_set as $key => $_opt) {
-                        $error["options"][$_opt[0]->class] = $_opt[]->option;
+                        $error['options'][$_opt[0]->class] = $_opt[]->option;
                     }
                 }*/
                 return (object)$error;
@@ -272,28 +272,28 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
         }
 
         // check for inventory
-        if ($this->xlite->get("InventoryTrackingEnabled")) {
+        if ($this->xlite->get('InventoryTrackingEnabled')) {
             $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
             $p = new XLite_Model_Product($product_id);
             
-            if ($this->xlite->get("ProductOptionsEnabled") && $p->hasOptions() && isset($option_idx)) {
+            if ($this->xlite->get('ProductOptionsEnabled') && $p->hasOptions() && isset($option_idx)) {
                 if ($amount > $p->getAmountByOptions($option_idx) && $p->getAmountByOptions($option_idx) > -1) {
                     $p = new XLite_Model_Product($product_id);
-                    $error["pr_name"] = $p->get("name");
-                    $error["type"] = 'max';
-                    $error["amount"] = $p->getAmountByOptions($option_idx);
-                    $options_set = $p->get("expandedItems");
+                    $error['pr_name'] = $p->get('name');
+                    $error['type'] = 'max';
+                    $error['amount'] = $p->getAmountByOptions($option_idx);
+                    $options_set = $p->get('expandedItems');
                     foreach($options_set[$option_idx] as $_opt) {
-                        $error["options"][$_opt->class] = $_opt->option;
+                        $error['options'][$_opt->class] = $_opt->option;
                     }
                     return (object)$error;
                 }
             } else {
                 if ($inventory->find("inventory_id='$product_id' AND enabled=1")) {
                     if ($amount > $inventory->get('amount')) {
-                        $error["pr_name"] = $p->get("name");
-                        $error["type"] = 'max';
-                        $error["amount"] = $inventory->get('amount');
+                        $error['pr_name'] = $p->get('name');
+                        $error['type'] = 'max';
+                        $error['amount'] = $inventory->get('amount');
                         return (object)$error;
                     }
                 }
@@ -328,23 +328,23 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
     function productSelected($product_id, $key=null) 
     {
         if ($key !== null) {
-            return isset($_POST["opt_product_qty"][$product_id][$key]);
+            return isset($_POST['opt_product_qty'][$product_id][$key]);
         }
-        return isset($_POST["product_selected"][$product_id]);
+        return isset($_POST['product_selected'][$product_id]);
     }
 
     function isProductOutOfStock($product_id, $option_idx = null)
     {
-        if (!$this->xlite->get("InventoryTrackingEnabled")) return false;
+        if (!$this->xlite->get('InventoryTrackingEnabled')) return false;
         $product = new XLite_Model_Product($product_id);
-        if ($this->xlite->get("ProductOptionsEnabled") && $product->hasOptions() && $product->get("tracking") && (!is_null($option_idx))) {
+        if ($this->xlite->get('ProductOptionsEnabled') && $product->hasOptions() && $product->get('tracking') && (!is_null($option_idx))) {
             $avail = $product->getAmountByOptions($option_idx);
             if ($avail == -1) return false; // unlimited
             elseif ($avail > 0) return false; // in stock
             else return true; // out of stock
         } else {
             $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
-            $product_id = $product->get("product_id");
+            $product_id = $product->get('product_id');
             if ($inventory->find("inventory_id='$product_id' AND enabled=1")) {
                 return $inventory->get('amount') <= 0;
             }
@@ -354,11 +354,11 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
 
     function getProductExpandedItems($product)
     {
-        $items = (array) $product->get("expandedItems");
-        if ($this->xlite->get("InventoryTrackingEnabled") && $this->getComplex('config.InventoryTracking.exclude_product') && 
-            $this->xlite->get("ProductOptionsEnabled") && $product->hasOptions() && $product->get("tracking")) {
+        $items = (array) $product->get('expandedItems');
+        if ($this->xlite->get('InventoryTrackingEnabled') && $this->getComplex('config.InventoryTracking.exclude_product') && 
+            $this->xlite->get('ProductOptionsEnabled') && $product->hasOptions() && $product->get('tracking')) {
             // remove out-of-stock options combinations from the expanded items list
-            $product_id = $product->get("product_id");
+            $product_id = $product->get('product_id');
             foreach ($items as $key=>$value) {
                 if ($this->isProductOutOfStock($product_id, $key)) {
                     unset($items[$key]);

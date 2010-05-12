@@ -53,8 +53,8 @@ class XLite_Validator_StateValidator extends XLite_Validator_Abstract
         if (isset($_POST[$field]) && isset($_POST[$countryField]) && $_POST[$field] != '') {
             $state = new XLite_Model_State($_POST[$field]);
             $country = new XLite_Model_Country($_POST[$countryField]);
-            return $state->get("country_code") == '' || 
-                $state->get("country_code") == $country->get("code");
+            return $state->get('country_code') == '' || 
+                $state->get('country_code') == $country->get('code');
         }
         return true;
     }

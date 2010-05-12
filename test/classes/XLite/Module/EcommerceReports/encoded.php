@@ -4,19 +4,19 @@ function func_EcommerceReports_getRawProducts(&$dlg)
     if (is_null($dlg->rawProducts)) {
         $dlg->rawProducts = array();
         $product_ids = $dlg->getProductIDs();
-        $categories = (array)$dlg->get("selected_categories");
+        $categories = (array)$dlg->get('selected_categories');
         $products_from_categories = array(); // products from selected categories
         if (!empty($categories)) {
             $ids = implode(",", $categories);
             $pc = new XLite_Model_ProductFromCategory();
-            $productTable = $pc->db->getTableByAlias("products");
-            $linkTable = $dlg->db->getTableByAlias("product_links");
+            $productTable = $pc->db->getTableByAlias('products');
+            $linkTable = $dlg->db->getTableByAlias('product_links');
             $sql = "SELECT links.product_id " .
                 "  FROM $productTable, $linkTable links " . 
                 " WHERE $productTable.product_id=links.product_id " .
                 "       AND links.category_id IN ($ids)";
             foreach ((array)$pc->db->getAll($sql) as $row) {
-                $products_from_categories[] = $row["product_id"];
+                $products_from_categories[] = $row['product_id'];
             }
         }
         $products = array_merge($product_ids, $products_from_categories);
@@ -30,16 +30,16 @@ function func_EcommerceReports_getRawItems($dlg, $unique=true)
 {
     if (is_null($dlg->rawItems)) {
         $dlg->rawItems = array();
-        $rawProducts = $dlg->get("rawProducts");
+        $rawProducts = $dlg->get('rawProducts');
         if (!empty($rawProducts)) {
             $ids = implode(",", $rawProducts);
             $fromDate = $dlg->getComplex('period.fromDate');
             $toDate   = $dlg->getComplex('period.toDate');
             $product = new XLite_Model_Product();
-            $ot = $product->db->getTableByAlias("orders");
-            $it = $product->db->getTableByAlias("order_items");
-            $pt = $product->db->getTableByAlias("profiles");
-            if ($dlg->get("split_options")) {
+            $ot = $product->db->getTableByAlias('orders');
+            $it = $product->db->getTableByAlias('order_items');
+            $pt = $product->db->getTableByAlias('profiles');
+            if ($dlg->get('split_options')) {
                 $options = ", $it.options ";
             }
             $inCountries = $dlg->getInCountries($pt);

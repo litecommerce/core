@@ -62,9 +62,9 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerPayments extends XLite_M
             $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
             $table = $pp->db->getTableByAlias($pp->alias);
             $partnerID = $this->getComplex('auth.profile.profile_id');
-            if ($this->get("period") == "period") {
-                $startDate = $this->get("startDate");
-                $endDate = $this->get("endDate") + 24 * 3600;
+            if ($this->get('period') == "period") {
+                $startDate = $this->get('startDate');
+                $endDate = $this->get('endDate') + 24 * 3600;
                 $date = " AND paid_date>=$startDate AND paid_date<=$endDate ";
             }
             $sql = "SELECT sum(commissions) AS amount, paid_date   ".
@@ -78,7 +78,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerPayments extends XLite_M
                    "WHERE partner_id=$partnerID AND paid=1 ".
                    $date;
             $total = $pp->db->getAll($sql);
-            $this->totalPaid = $total[0]["total"];
+            $this->totalPaid = $total[0]['total'];
         }
         return $this->payments;
     }

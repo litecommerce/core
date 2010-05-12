@@ -134,9 +134,9 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
 
         // auto-login request
 /*
-        if (!$this->auth->is("logged") && isset(XLite_Core_Request::getInstance()->login) && isset(XLite_Core_Request::getInstance()->password)) {
+        if (!$this->auth->is('logged') && isset(XLite_Core_Request::getInstance()->login) && isset(XLite_Core_Request::getInstance()->password)) {
             if($this->auth->adminLogin(XLite_Core_Request::getInstance()->login, XLite_Core_Request::getInstance()->password) === ACCESS_DENIED) {
-                die("ACCESS DENIED");
+                die('ACCESS DENIED');
             }
         }
 */
@@ -192,7 +192,7 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
 
     function getSecure()
     {
-        if ($this->session->get("no_https")) {
+        if ($this->session->get('no_https')) {
             return false;
         }
         return $this->getComplex('config.Security.admin_security');
@@ -209,7 +209,7 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
 
     function getCharset()
     {
-        return $this->xlite->config->Company->locationCountry->get("charset");
+        return $this->xlite->config->Company->locationCountry->get('charset');
     }
 
     function startDump()
@@ -230,7 +230,7 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
 ?>  <title><?php echo $title; ?></title>
 <?php   }
 ?>
-    <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->get("charset"); ?>">
+    <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->get('charset'); ?>">
     <LINK href="skins/<?php echo $this->xlite->getComplex('layout.skin'); ?>/en/style.css"  rel=stylesheet type=text/css>
 </HEAD>
 <BODY leftmargin="0" topmargin="0" rightmargin="0" bottommargin="0" marginwidth="0" marginheight="0"><?php
@@ -270,14 +270,16 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
     {
         $this->silent = false;
 
-        $code =<<<EOT
-<script language="javascript">
+        $code = <<<EOT
+<script type="text/javascript">
+<!--
 loaded = true;
 window.scroll(0, 0);
-var Element = document.getElementById("ActionPageHeader");
+var Element = document.getElementById('ActionPageHeader');
 if (Element) {
     Element.style.display = "none";
 }
+-->
 </script>
 EOT;
         echo $code;
@@ -285,7 +287,7 @@ EOT;
 
     function displayPageFooter()
     {
-        $urls = (array)$this->get("pageReturnUrl");
+        $urls = (array)$this->get('pageReturnUrl');
 
         foreach ($urls as $url) {
             echo "<br>".$url."<br>";
@@ -353,7 +355,7 @@ EOT;
                 $post_password = $this->xlite->auth->encryptPassword($post_password);
                 $profile = new XLite_Model_Profile();
                 if ($profile->find("login='".addslashes($post_login)."' AND ". "password='".addslashes($post_password)."'")) {
-                    if ($profile->get("enabled") && $profile->is("admin")) {
+                    if ($profile->get('enabled') && $profile->is('admin')) {
                         return true;
                     }
                 }

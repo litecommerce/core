@@ -40,19 +40,19 @@ class XLite_Module_WholesaleTrading_Controller_Admin_ImportCatalog extends XLite
     public function __construct(array $params = array())
     {
         parent::__construct($params);
-        $this->pages["import_wholesale_pricing"] = "Import wholesale pricing";
-        $this->pageTemplates["import_wholesale_pricing"] = "modules/WholesaleTrading/import_wholesale_pricing.tpl";
-        $this->pages["import_product_access"] = "Import product access";
-        $this->pageTemplates["import_product_access"] = "modules/WholesaleTrading/import_product_access.tpl";
-        $this->pages["import_purchase_limit"] = "Import purchase limit";
-        $this->pageTemplates["import_purchase_limit"] = "modules/WholesaleTrading/import_purchase_limit.tpl";
+        $this->pages['import_wholesale_pricing'] = "Import wholesale pricing";
+        $this->pageTemplates['import_wholesale_pricing'] = "modules/WholesaleTrading/import_wholesale_pricing.tpl";
+        $this->pages['import_product_access'] = "Import product access";
+        $this->pageTemplates['import_product_access'] = "modules/WholesaleTrading/import_product_access.tpl";
+        $this->pages['import_purchase_limit'] = "Import purchase limit";
+        $this->pageTemplates['import_purchase_limit'] = "modules/WholesaleTrading/import_purchase_limit.tpl";
     }
 
     function init()
     {
     	parent::init();
 
-    	switch ($this->get("page")) {
+    	switch ($this->get('page')) {
     		case "import_wholesale_pricing":
     			$wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
                 $wp->collectGarbage();

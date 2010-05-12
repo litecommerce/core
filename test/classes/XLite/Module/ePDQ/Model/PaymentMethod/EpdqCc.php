@@ -54,7 +54,7 @@ class XLite_Module_ePDQ_Model_PaymentMethod_EpdqCc extends XLite_Model_PaymentMe
         $currency = $this->getComplex('params.param04');
         $auth     = $this->getComplex('params.param05');
         $cpi_logo = $this->getComplex('params.param06');
-        $ordr = $cart->get("order_id");
+        $ordr = $cart->get('order_id');
 
 #the following parameters have been obtained earlier in the merchant's webstore: clientid, passphrase, oid, currencycode, total
         $_params="clientid=" . $clientid;
@@ -62,7 +62,7 @@ class XLite_Module_ePDQ_Model_PaymentMethod_EpdqCc extends XLite_Model_PaymentMe
         $_params.="&oid=" . $ordr;
         $_params.="&chargetype=" . $auth;
         $_params.="&currencycode=" . $currency;
-        $_params.="&total=" . $cart->get("total");
+        $_params.="&total=" . $cart->get('total');
 
 #perform the HTTP Post
 

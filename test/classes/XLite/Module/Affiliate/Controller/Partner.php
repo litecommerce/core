@@ -61,7 +61,7 @@ class XLite_Module_Affiliate_Controller_Partner extends XLite_Controller_Abstrac
     function init()
     {
         parent::init();
-        if ($_SERVER["REQUEST_METHOD"] == "GET" && $this->get("target") != "banner" && $this->get("target") != "product_banner" && !$this->xlite->is("adminZone") && isset($_GET["partner"]) && (!isset($_COOKIE["PartnerID"]) || (isset($_COOKIE["PartnerID"]) && $_COOKIE["PartnerID"] != $_GET["partner"]))) {
+        if ($_SERVER['REQUEST_METHOD'] == "GET" && $this->get('target') != "banner" && $this->get('target') != "product_banner" && !$this->xlite->is('adminZone') && isset($_GET['partner']) && (!isset($_COOKIE['PartnerID']) || (isset($_COOKIE['PartnerID']) && $_COOKIE['PartnerID'] != $_GET['partner']))) {
             $stats = new XLite_Module_Affiliate_Model_BannerStats();
             $stats->logClick();
             // issue a partner cookie
@@ -69,17 +69,17 @@ class XLite_Module_Affiliate_Controller_Partner extends XLite_Controller_Abstrac
                 // store for "lifetime" days
                 $expire = time() + $this->getComplex('config.Affiliate.partner_cookie_lifetime') * 3600 * 24;
                 $domain = func_parse_host(XLite::getInstance()->getOptions(array('host_details', 'http_host')));
-                setcookie("PartnerID", $_GET["partner"], $expire, "/", $domain);
-                setcookie("PartnerClick", $stats->get("stat_id"), $expire, "/", $domain);
+                setcookie("PartnerID", $_GET['partner'], $expire, "/", $domain);
+                setcookie("PartnerClick", $stats->get('stat_id'), $expire, "/", $domain);
             }
-            $this->session->set("PartnerID", $_GET["partner"]);
-            $this->session->set("PartnerClick", $stats->get("stat_id"));
+            $this->session->set("PartnerID", $_GET['partner']);
+            $this->session->set("PartnerClick", $stats->get('stat_id'));
         }
     }
 
     protected function redirect($url = null)
     {
-        if ($this->get("mode") == "access_denied") {
+        if ($this->get('mode') == "access_denied") {
             $this->set("mode", "accessDenied");
         }
 
@@ -135,7 +135,7 @@ class XLite_Module_Affiliate_Controller_Partner extends XLite_Controller_Abstrac
 
     function getAccessLevel()
     {
-        return $this->auth->get("partnerAccessLevel");
+        return $this->auth->get('partnerAccessLevel');
     }
 
     function getSecure()

@@ -15,11 +15,11 @@ function func_moduleEgoods_send_files($order)
                     "modules/Egoods/instructions");
             
             $linksAvailable = false;
-            $product = $items[$i]->get("product");
+            $product = $items[$i]->get('product');
             if (isset($product) && is_object($product)) {
                 $egoods = $product->getEgoods();
     			for($j=0; $j<count($egoods); $j++) {
-    				if ($egoods[$j]->get("delivery") == "L") {
+    				if ($egoods[$j]->get('delivery') == "L") {
     					$linksAvailable = true;
     					break;
     				}

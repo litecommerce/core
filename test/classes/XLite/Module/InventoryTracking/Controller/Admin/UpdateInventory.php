@@ -40,8 +40,8 @@ class XLite_Module_InventoryTracking_Controller_Admin_UpdateInventory extends XL
     public function __construct(array $params)
     {
         parent::__construct($params);
-        $this->pages["amount"] = "Update amount";
-        $this->pageTemplates["amount"] = "modules/InventoryTracking/update_amount.tpl";
+        $this->pages['amount'] = "Update amount";
+        $this->pageTemplates['amount'] = "modules/InventoryTracking/update_amount.tpl";
     }
 
     function handleRequestAmount()
@@ -54,8 +54,8 @@ class XLite_Module_InventoryTracking_Controller_Admin_UpdateInventory extends XL
         global $DATA_DELIMITERS;
 
         // save export layout
-        $this->action_layout("amount_layout");
-        $this->startDownload("product_amount.csv");
+        $this->action_layout('amount_layout');
+        $this->startDownload('product_amount.csv');
         $this->inventory->export($this->amount_layout, $DATA_DELIMITERS[$this->delimiter]);
         exit();
     }

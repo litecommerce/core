@@ -39,7 +39,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_ProductSales extends XLite_
     {
         if (is_null($this->productSales)) {
             $this->productSales = array();
-            $items = $this->get("rawItems");
+            $items = $this->get('rawItems');
             array_map(array($this, 'sumProductSales'), $items);
             usort($this->productSales, array($this, "cmpProducts"));
             $productSales = array_reverse($this->productSales);
@@ -59,29 +59,29 @@ class XLite_Module_EcommerceReports_Controller_Admin_ProductSales extends XLite_
 
     function sumProductSales($item) 
     {
-        $id = $item["product_id"] . (strlen($item["options"]) ? md5($item["options"]) : "");
+        $id = $item['product_id'] . (strlen($item['options']) ? md5($item['options']) : "");
         $orderItem = new XLite_Model_OrderItem();
-        $found = $orderItem->find("order_id=".$item["order_id"]." AND item_id='".addslashes($item["item_id"])."'");
-        $order = new XLite_Model_Order($item["order_id"]);
+        $found = $orderItem->find("order_id=".$item['order_id']." AND item_id='".addslashes($item['item_id'])."'");
+        $order = new XLite_Model_Order($item['order_id']);
         $orderItem->set("order", $order);
-        $item['price'] = $orderItem->get("price");
+        $item['price'] = $orderItem->get('price');
          
         if (!isset($this->productSales[$id])) {
             $this->productSales[$id] = $item;
-            $this->productSales[$id]["total"] = 0;
-            $this->productSales[$id]["order_item"] = $orderItem;
+            $this->productSales[$id]['total'] = 0;
+            $this->productSales[$id]['order_item'] = $orderItem;
         } else {
-            $this->productSales[$id]["amount"] += $item["amount"];
+            $this->productSales[$id]['amount'] += $item['amount'];
         }
 
-        $this->productSales[$id]["total"] += $item["amount"] * $item["price"];
-        $this->productSales[$id]["avg_price"] = $this->productSales[$id]["total"] / $this->productSales[$id]["amount"];
+        $this->productSales[$id]['total'] += $item['amount'] * $item['price'];
+        $this->productSales[$id]['avg_price'] = $this->productSales[$id]['total'] / $this->productSales[$id]['amount'];
     }
     
     function sumTotal($field) 
     {
         $total = 0;
-        foreach ($this->get("productSales") as $sale) {
+        foreach ($this->get('productSales') as $sale) {
             $total += $sale[$field];
         }
         return $total;

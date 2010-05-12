@@ -43,10 +43,10 @@ class XLite_Validator_ShippingMethodValidator extends XLite_Validator_RequiredVa
             return false;
         }
 
-        $result = !empty($_POST[$this->get("field")]) || !isset($_POST[$this->get("field")]);
-        if ($result && isset($_POST[$this->get("field")]) && !$this->xlite->get("action_add_valid")) {
+        $result = !empty($_POST[$this->get('field')]) || !isset($_POST[$this->get('field')]);
+        if ($result && isset($_POST[$this->get('field')]) && !$this->xlite->get('action_add_valid')) {
             $shipping = new XLite_Model_Shipping();
-            if ($shipping->find("class='offline' AND destination='".$_POST["destination"]."' AND name='".addslashes($_POST[$this->get("field")])."'")) {
+            if ($shipping->find("class='offline' AND destination='".$_POST['destination']."' AND name='".addslashes($_POST[$this->get('field')])."'")) {
             	$this->set("shipping_already_exists", true);
             	$result = false;
             }

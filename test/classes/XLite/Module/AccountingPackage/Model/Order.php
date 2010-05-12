@@ -38,7 +38,7 @@ class XLite_Module_AccountingPackage_Model_Order extends XLite_Model_Order imple
     function getDetailsString()
     {
         $str = array();
-        $details = $this->get("details");
+        $details = $this->get('details');
         if (is_array($details)) {
             foreach ($details as $name => $val) {
                 $name = $this->getDetailLabel($name);

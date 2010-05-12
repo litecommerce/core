@@ -49,7 +49,7 @@ class XLite_Module_ProductAdviser_Model_RelatedProduct extends XLite_Model_Abstr
     function filter()
     {
     	if (is_null($this->product)) {
-        	$this->product = new XLite_Model_Product($this->get("product_id"));
+        	$this->product = new XLite_Model_Product($this->get('product_id'));
         }
     	if (is_object($this->product)) {
         	return $this->product->filter();

@@ -47,19 +47,19 @@ class XLite_Module_InventoryTracking_Controller_Admin_ProductList extends XLite_
             $this->productsList = parent::getProducts();
             if (!is_array($this->productsList)) $this->productsList = array();
 
-            if (!in_array($this->get("inventory"), array('low','out'))) return $this->productsList;
+            if (!in_array($this->get('inventory'), array('low','out'))) return $this->productsList;
 
-            if ($this->get("inventory") == 'out') $condition = "AND amount <= 0";
-            elseif ($this->get("inventory") == 'low') $condition = "AND amount > 0 AND amount <= low_avail_limit";
+            if ($this->get('inventory') == 'out') $condition = "AND amount <= 0";
+            elseif ($this->get('inventory') == 'low') $condition = "AND amount > 0 AND amount <= low_avail_limit";
 
             foreach ($this->productsList as $k=>$product) {
                 if (!is_object($product)) {
                     $product = new XLite_Model_Product($product['data']['product_id']);
                 }
-                $product_id = $product->get("product_id");
+                $product_id = $product->get('product_id');
 
                 $inv = new XLite_Module_InventoryTracking_Model_Inventory();
-                if ($this->xlite->get("ProductOptionsEnabled") && $product->get("productOptions") && $product->get("tracking")) {
+                if ($this->xlite->get('ProductOptionsEnabled') && $product->get('productOptions') && $product->get('tracking')) {
                     $inventories = (array) $inv->findAll("inventory_id LIKE '$product_id" . "|%' AND enabled=1 $condition");
                     if (empty($inventories)) {
                         unset($this->productsList[$k]);

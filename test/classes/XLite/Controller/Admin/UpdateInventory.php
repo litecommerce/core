@@ -84,9 +84,9 @@ class XLite_Controller_Admin_UpdateInventory extends XLite_Controller_Admin_Abst
         global $DATA_DELIMITERS;
         
         // save layout
-        $this->action_layout("inventory_layout");
+        $this->action_layout('inventory_layout');
         // export
-        $this->startDownload("product_pricing.csv");
+        $this->startDownload('product_pricing.csv');
         $this->inventory->export($this->inventory_layout, $DATA_DELIMITERS[$this->delimiter]);
         exit();
     }
@@ -102,11 +102,11 @@ class XLite_Controller_Admin_UpdateInventory extends XLite_Controller_Admin_Abst
     function import_pricing()
     {
         $this->startDump();
-        $options["file"] =  $this->getUploadedFile();
-        $options["delimiter"] = $this->delimiter;
-        $options["text_qualifier"] = $this->text_qualifier;
-        $options["layout"] = $this->inventory_layout;
-        $options["return_error"] = true;
+        $options['file'] =  $this->getUploadedFile();
+        $options['delimiter'] = $this->delimiter;
+        $options['text_qualifier'] = $this->text_qualifier;
+        $options['layout'] = $this->inventory_layout;
+        $options['return_error'] = true;
         $this->inventory->import($options);
         $this->importError = $this->inventory->importError;
 

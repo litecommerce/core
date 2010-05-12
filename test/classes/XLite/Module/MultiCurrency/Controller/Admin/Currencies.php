@@ -36,7 +36,7 @@
 class XLite_Module_MultiCurrency_Controller_Admin_Currencies extends XLite_Controller_Admin_Abstract
 {
     
-    public $params = array("target");
+    public $params = array('target');
     public $countries = null;
     public $allCurrencies = null;
     public $defaultCurrency = null;
@@ -72,7 +72,7 @@ class XLite_Module_MultiCurrency_Controller_Admin_Currencies extends XLite_Contr
 
     function action_update_default()  
     {
-        $currency = $this->get("defaultCurrency");
+        $currency = $this->get('defaultCurrency');
         $properties = $this->currency;
         $currency->set("code",$properties['code']);
         $currency->set("name",$properties['name']);
@@ -104,7 +104,7 @@ class XLite_Module_MultiCurrency_Controller_Admin_Currencies extends XLite_Contr
     function action_update()  
     {
         foreach($this->currencies as $currency_) {
-            $currency = new XLite_Module_MultiCurrency_Model_CurrencyCountries($currency_["currency_id"]);
+            $currency = new XLite_Module_MultiCurrency_Model_CurrencyCountries($currency_['currency_id']);
             $currency_['countries'] = serialize(isset($currency_['countries']) ? $currency_['countries'] : array());
         	$currency_['enabled'] = isset($currency_['enabled']) ? "1" : "0";
             $currency->set("properties",$currency_);

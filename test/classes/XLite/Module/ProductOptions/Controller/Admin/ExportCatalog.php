@@ -38,8 +38,8 @@ class XLite_Module_ProductOptions_Controller_Admin_ExportCatalog extends XLite_C
     public function __construct(array $params)
     {
         parent::__construct($params);
-        $this->pages["export_product_options"] = "Export product options";
-        $this->pageTemplates["export_product_options"] = "modules/ProductOptions/export_product_options.tpl";
+        $this->pages['export_product_options'] = "Export product options";
+        $this->pageTemplates['export_product_options'] = "modules/ProductOptions/export_product_options.tpl";
     }
 
     function action_export_product_options()
@@ -48,8 +48,8 @@ class XLite_Module_ProductOptions_Controller_Admin_ExportCatalog extends XLite_C
 
         // save layout & export
         $dlg = new XLite_Controller_Admin_ImportCatalog();
-        $dlg->action_layout("product_options_layout");
-        $this->startDownload("product_options.csv");
+        $dlg->action_layout('product_options_layout');
+        $this->startDownload('product_options.csv');
         $po = new XLite_Module_ProductOptions_Model_ProductOption();
         $po->export($this->product_options_layout, $DATA_DELIMITERS[$this->delimiter], $where = null, $orderby = "product_id");
         exit();

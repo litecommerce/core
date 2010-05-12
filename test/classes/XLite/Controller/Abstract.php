@@ -330,7 +330,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 
     /**
      * Get the full URL of the page
-     * Example: getShopUrl("cart.php") = "http://domain/dir/cart.php 
+     * Example: getShopUrl('cart.php') = "http://domain/dir/cart.php 
      * 
      * @param string $url    relative URL  
      * @param bool   $secure flag to use HTTPS
@@ -765,7 +765,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     {
         @set_time_limit(0);
         $this->set("silent", true);
-        if (!isset($_REQUEST["mode"]) || $_REQUEST["mode"]!="cp") {
+        if (!isset($_REQUEST['mode']) || $_REQUEST['mode']!="cp") {
             func_refresh_start();
             $this->dumpStarted = true;
         }
@@ -813,8 +813,8 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 
     function getPageTemplate()
     {
-        if (isset($this->pageTemplates[$this->get("page")])) {
-            return $this->pageTemplates[$this->get("page")];
+        if (isset($this->pageTemplates[$this->get('page')])) {
+            return $this->pageTemplates[$this->get('page')];
         }
         return null;
     }
@@ -839,17 +839,17 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     {
         $file = null;
 
-        if (is_uploaded_file($_FILES["userfile"]['tmp_name'])) {
-            $file = $_FILES["userfile"]['tmp_name'];
-        } elseif (is_readable($_POST["localfile"])) {
-            $file = $_POST["localfile"];
+        if (is_uploaded_file($_FILES['userfile']['tmp_name'])) {
+            $file = $_FILES['userfile']['tmp_name'];
+        } elseif (is_readable($_POST['localfile'])) {
+            $file = $_POST['localfile'];
         } else {
             $this->doDie("FAILED: data file unspecified");
         }
         // security check
         $name = $_FILES['userfile']['name'];
         if (strstr($name, '../') || strstr($name, '..\\')) {
-            $this->doDie("ACCESS DENIED");
+            $this->doDie('ACCESS DENIED');
         }
         return $file;
     }
@@ -858,10 +858,10 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     {
         $check = true;
 
-        if (is_uploaded_file($_FILES["userfile"]['tmp_name'])) {
-            $file = $_FILES["userfile"]['tmp_name'];
-        } elseif (is_readable($_POST["localfile"])) {
-            $file = $_POST["localfile"];
+        if (is_uploaded_file($_FILES['userfile']['tmp_name'])) {
+            $file = $_FILES['userfile']['tmp_name'];
+        } elseif (is_readable($_POST['localfile'])) {
+            $file = $_POST['localfile'];
         } else {
             return false;
         }

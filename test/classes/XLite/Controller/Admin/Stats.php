@@ -45,7 +45,7 @@ class XLite_Controller_Admin_Stats extends XLite_Controller_Admin_Abstract
     function getTodayDate()
     {
         if (is_null($this->todayDate)) {
-            $this->todayDate = mktime(0, 0 ,0 , date("m"), date("d"), date("Y"));
+            $this->todayDate = mktime(0, 0 ,0 , date('m'), date('d'), date('Y'));
         }
         return $this->todayDate;
     }
@@ -53,7 +53,7 @@ class XLite_Controller_Admin_Stats extends XLite_Controller_Admin_Abstract
     function getWeekDate()
     {
         if (is_null($this->weekDate)) {
-            $this->weekDate  = mktime(0, 0 ,0 , date("m"), date("d") + (((date("w") == 0) ? -7 : ( -1 * date("w"))) + 1), date("Y"));
+            $this->weekDate  = mktime(0, 0 ,0 , date('m'), date('d') + (((date('w') == 0) ? -7 : ( -1 * date('w'))) + 1), date('Y'));
         }
         return $this->weekDate;
     }
@@ -61,7 +61,7 @@ class XLite_Controller_Admin_Stats extends XLite_Controller_Admin_Abstract
     function getMonthDate()
     {
         if (is_null($this->monthDate)) {
-            $this->monthDate = mktime(0, 0 ,0 , date("m"), 1, date("Y"));
+            $this->monthDate = mktime(0, 0 ,0 , date('m'), 1, date('Y'));
         }
         return $this->monthDate;
     }

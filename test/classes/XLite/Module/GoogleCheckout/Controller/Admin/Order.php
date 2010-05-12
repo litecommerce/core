@@ -41,9 +41,9 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
 
     function init()
     {
-        if ($this->xlite->get("AOMEnabled")) {
-            $this->pages["google_checkout"] = "Google Checkout";
-            $this->pageTemplates["google_checkout"] = "modules/GoogleCheckout/order.tpl";
+        if ($this->xlite->get('AOMEnabled')) {
+            $this->pages['google_checkout'] = "Google Checkout";
+            $this->pageTemplates['google_checkout'] = "modules/GoogleCheckout/order.tpl";
         } else {
             $this->pages = array(
                     "order_info"	=> "Order #%s Info",
@@ -62,33 +62,33 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
 
         parent::init();
 
-        if (!$this->xlite->get("AOMEnabled")) {
+        if (!$this->xlite->get('AOMEnabled')) {
             foreach($this->pages as $key => $page) {
                 $this->pages[$key] = sprintf($page,$this->order_id);
             }
         }
 
-        if (!$this->is("validGoogleOrder")) {
-            unset($this->pages["google_checkout"]);
-            unset($this->pageTemplates["google_checkout"]);
+        if (!$this->is('validGoogleOrder')) {
+            unset($this->pages['google_checkout']);
+            unset($this->pageTemplates['google_checkout']);
             return;
         } else {
-            if ($this->xlite->get("AOMEnabled")) {
-    			unset($this->pages["order_edit"]);
-    			unset($this->pageTemplates["order_edit"]);
-    			if ($this->get("page") == "order_edit") {
-                    $this->redirect("admin.php?target=order&order_id=".$this->get("order_id")."&page=order_info");
+            if ($this->xlite->get('AOMEnabled')) {
+    			unset($this->pages['order_edit']);
+    			unset($this->pageTemplates['order_edit']);
+    			if ($this->get('page') == "order_edit") {
+                    $this->redirect("admin.php?target=order&order_id=".$this->get('order_id')."&page=order_info");
     				return;
     			}
             }
         }
 
-        if ($this->get("action")) {
-            $this->payment_method = new XLite_Model_PaymentMethod("google_checkout");
+        if ($this->get('action')) {
+            $this->payment_method = new XLite_Model_PaymentMethod('google_checkout');
             require_once LC_MODULES_DIR . 'GoogleCheckout' . LC_DS . 'encoded.php';
         }
 
-        $this->googleId = addslashes($this->get("orderGoogleId"));
+        $this->googleId = addslashes($this->get('orderGoogleId'));
     }
 
     function getOrderGoogleId()
@@ -180,9 +180,9 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
 
     function action_gcheckout_charge_order()
     {
-        $result = GoogleCheckout_OrderCharge($this->payment_method, $this->googleId, $this->get("charge_amount"));
+        $result = GoogleCheckout_OrderCharge($this->payment_method, $this->googleId, $this->get('charge_amount'));
         if ($result === true) {
-            $this->setGoogleSuccess("order_charge");
+            $this->setGoogleSuccess('order_charge');
         } else {
             $this->setGoogleError("order_charge_failed", $result);
         }
@@ -190,9 +190,9 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
 
     function action_gcheckout_refund_order()
     {
-        $result = GoogleCheckout_OrderRefund($this->payment_method, $this->googleId, $this->get("refund_amount"), $this->get("refund_reason"), $this->get("refund_comment"));
+        $result = GoogleCheckout_OrderRefund($this->payment_method, $this->googleId, $this->get('refund_amount'), $this->get('refund_reason'), $this->get('refund_comment'));
         if ($result === true) {
-            $this->setGoogleSuccess("order_refund");
+            $this->setGoogleSuccess('order_refund');
         } else {
             $this->setGoogleError("order_refund_failed", $result);
         }
@@ -200,9 +200,9 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
 
     function action_gcheckout_cancel_order()
     {
-        $result = GoogleCheckout_OrderCancel($this->payment_method, $this->googleId, $this->get("cancel_reason"), $this->get("cancel_comment"));
+        $result = GoogleCheckout_OrderCancel($this->payment_method, $this->googleId, $this->get('cancel_reason'), $this->get('cancel_comment'));
         if ($result === true) {
-            $this->setGoogleSuccess("order_cancel");
+            $this->setGoogleSuccess('order_cancel');
         } else {
             $this->setGoogleError("order_cancel_failed", $result);
         }
@@ -212,7 +212,7 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
     {
         $result = GoogleCheckout_OrderProcess($this->payment_method, $this->googleId);
         if ($result === true) {
-            $this->setGoogleSuccess("order_processed");
+            $this->setGoogleSuccess('order_processed');
         } else {
             $this->setGoogleError("order_process_failed", $result);
         }
@@ -220,14 +220,14 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
 
     function action_gcheckout_tracking_data()
     {
-        $tracking = trim(addslashes($this->get("tracking_no")));
-        $carrier = $this->get("google_carrier");
+        $tracking = trim(addslashes($this->get('tracking_no')));
+        $carrier = $this->get('google_carrier');
 
         $result = GoogleCheckout_OrderAddTrackingData($this->payment_method, $this->googleId, $tracking, $carrier);
         if ($result === true) {
-            $order = $this->get("order");
+            $order = $this->get('order');
 
-            $message_code  = ($order->get("tracking") ? "order_update_tracking" : "order_add_tracking");
+            $message_code  = ($order->get('tracking') ? "order_update_tracking" : "order_add_tracking");
             $order->set("tracking", $tracking);
             $order->set("google_carrier", $carrier);
             $order->update();
@@ -240,10 +240,10 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
 
     function action_gcheckout_deliver_order()
     {
-        $result = GoogleCheckout_OrderDeliver($this->payment_method, $this->googleId, (($this->get("deliver_email")) ? true : false));
+        $result = GoogleCheckout_OrderDeliver($this->payment_method, $this->googleId, (($this->get('deliver_email')) ? true : false));
 
         if ($result === true) {
-            $this->setGoogleSuccess("order_deliver");
+            $this->setGoogleSuccess('order_deliver');
         } else {
             $this->setGoogleError("order_deliver_failed", $result);
         }
@@ -251,11 +251,11 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
 
     function action_gcheckout_send_messge()
     {
-        $message = addslashes(trim($this->get("message")));
-        $result = GoogleCheckout_OrderSendMessage($this->payment_method, $this->googleId, $message, (($this->get("message_email") ? true : false)));
+        $message = addslashes(trim($this->get('message')));
+        $result = GoogleCheckout_OrderSendMessage($this->payment_method, $this->googleId, $message, (($this->get('message_email') ? true : false)));
 
         if ($result === true) {
-            $this->setGoogleSuccess("message_sent");
+            $this->setGoogleSuccess('message_sent');
         } else {
             $this->setGoogleError("message_send_failed", $result);
         }
@@ -266,11 +266,11 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
         $result = GoogleCheckout_OrderArchive($this->payment_method, $this->googleId);
 
         if ($result === true) {
-            $order = $this->get("order");
+            $order = $this->get('order');
             $order->setComplex("google_details.google_archived", 1);
             $order->update();
 
-            $this->setGoogleSuccess("order_archived");
+            $this->setGoogleSuccess('order_archived');
         } else {
             $this->setGoogleError("order_archive_failed", $result);
         }
@@ -281,11 +281,11 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
         $result = GoogleCheckout_OrderUnArchive($this->payment_method, $this->googleId);
 
         if ($result === true) {
-            $order = $this->get("order");
+            $order = $this->get('order');
             $order->setComplex("google_details.google_archived", 0);
             $order->update();
 
-            $this->setGoogleSuccess("order_unarchived");
+            $this->setGoogleSuccess('order_unarchived');
         } else {
             $this->setGoogleError("order_unarchive_failed", $result);
         }
@@ -310,7 +310,7 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
 
     function getGoogleCancelReasons()
     {
-        return $this->get("googleRefundReasons");
+        return $this->get('googleRefundReasons');
     }
 
     function getGoogleCarriersList()

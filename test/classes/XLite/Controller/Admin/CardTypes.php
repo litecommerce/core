@@ -52,20 +52,20 @@ class XLite_Controller_Admin_CardTypes extends XLite_Controller_Admin_Abstract
             }
         }
 
-        $this->obligatorySetStatus("deleted");
+        $this->obligatorySetStatus('deleted');
     }
 
     function action_add()
     {
         if ( empty(XLite_Core_Request::getInstance()->code) ) {
             $this->set("valid", false);
-            $this->obligatorySetStatus("code");
+            $this->obligatorySetStatus('code');
             return;
         }
 
         if ( empty(XLite_Core_Request::getInstance()->card_type) ) {
             $this->set("valid", false);
-            $this->obligatorySetStatus("card_type");
+            $this->obligatorySetStatus('card_type');
             return;
         }
 
@@ -80,25 +80,25 @@ class XLite_Controller_Admin_CardTypes extends XLite_Controller_Admin_Abstract
         $card->set("properties", XLite_Core_Request::getInstance()->getData());
         if ($card->isExists()) {
             $this->set("valid", false);
-            $this->obligatorySetStatus("exists");
+            $this->obligatorySetStatus('exists');
             return;
         }
         
         $card->create();
 
-        $this->obligatorySetStatus("added");
+        $this->obligatorySetStatus('added');
     }
     
     function action_update()
     {
         foreach (XLite_Core_Request::getInstance()->card_types as $id => $data) {
-            $data["enabled"] = array_key_exists("enabled", $data) ? 1 : 0;
-            $data["cvv2"]    = array_key_exists("cvv2",    $data) ? 1 : 0;
+            $data['enabled'] = array_key_exists("enabled", $data) ? 1 : 0;
+            $data['cvv2']    = array_key_exists("cvv2",    $data) ? 1 : 0;
             $card = new XLite_Model_Card();
             $card->set("properties", $data);
             $card->update();
         }
 
-        $this->obligatorySetStatus("updated");
+        $this->obligatorySetStatus('updated');
     }
 }

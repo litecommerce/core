@@ -35,11 +35,11 @@
  */
 class XLite_Controller_Admin_RecentLogin extends XLite_Controller_Admin_Abstract
 {
-    public $params = array("target");
+    public $params = array('target');
 
     function getSecure()
     {
-        if ($this->session->get("no_https")) {
+        if ($this->session->get('no_https')) {
             return false;
         }
         return $this->getComplex('config.Security.admin_security');

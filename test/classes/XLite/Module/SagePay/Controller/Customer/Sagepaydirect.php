@@ -44,9 +44,9 @@ class XLite_Module_SagePay_Controller_Customer_Sagepaydirect extends XLite_Contr
         parent::init();
         
         if ($this->action == "return") {
-            if (!$this->auth->is("logged")) {
+            if (!$this->auth->is('logged')) {
                 // not logged - redirect to the cart
-                $this->redirect("cart.php");
+                $this->redirect('cart.php');
             } else {
                 $this->action_return();
             }
@@ -56,18 +56,18 @@ class XLite_Module_SagePay_Controller_Customer_Sagepaydirect extends XLite_Contr
 
     function action_return()
     {
-        $oid = $this->session->get("SagePayDirectQueued");
+        $oid = $this->session->get('SagePayDirectQueued');
     
-        if ($oid && $this->get("PaRes") && $this->get("MD")) {
+        if ($oid && $this->get('PaRes') && $this->get('MD')) {
             $this->order = null;
-            $_REQUEST["order_id"] = $oid;
+            $_REQUEST['order_id'] = $oid;
 
             $this->session->set("SagePayDirectQueued", null);
             $this->session->set("last_order_id", $oid);
             $this->session->set("order_id", $oid);
             $this->session->writeClose();
 
-            $order = $this->get("order");
+            $order = $this->get('order');
             $payment = XLite_Model_PaymentMethod::factory('sagepaydirect_cc');
 
             require_once LC_MODULES_DIR . 'SagePay' . LC_DS . 'encoded.php';

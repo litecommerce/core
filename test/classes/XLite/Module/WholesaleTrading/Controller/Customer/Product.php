@@ -38,9 +38,9 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Product extends XLite_Co
     // FIXME - must be completely revised; do not uncomment
     /*function init()
     {
-        $this->get("product");
+        $this->get('product');
         if (is_object($this->product)) {
-            if ($this->product->get("product_id") <= 0) {
+            if ($this->product->get('product_id') <= 0) {
                 // recover product_id if unset by read() method
                 $this->product->set("product_id", $_REQUEST['product_id']);
             }
@@ -51,7 +51,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Product extends XLite_Co
             } else {
                 // perform direct sale check if the product does not exist
                 $this->product->_checkExistanceRequired = true;
-                if (!$this->product->is("directSaleAvailable")) {
+                if (!$this->product->is('directSaleAvailable')) {
                     $this->redirect("cart.php?mode=add_error");
                     exit;
                 }
@@ -63,19 +63,19 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Product extends XLite_Co
 
     function _conditionActionBuynow()
     {
-        $product = $this->get("product");
+        $product = $this->get('product');
         if (!is_object($product)) return false;
 
         $product->set("product_id", $this->product_id);
-        if (!$product->is("directSaleAvailable")) {
+        if (!$product->is('directSaleAvailable')) {
         	$this->set("returnUrl", "cart.php?mode=add_error");
             return false;
         }
 
         // min/max purchase amount check
         $pl = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
-        if ($pl->find("product_id=" . $product->get("product_id"))) {
-            $category_id = $this->get("category_id");
+        if ($pl->find("product_id=" . $product->get('product_id'))) {
+            $category_id = $this->get('category_id');
             if (!isset($category_id)) {
                 $category_id = $product->getComplex('Category.category_id');
                 $this->set("category_id", $category_id);

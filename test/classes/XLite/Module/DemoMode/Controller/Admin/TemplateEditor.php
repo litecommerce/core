@@ -37,9 +37,9 @@ class XLite_Module_DemoMode_Controller_Admin_TemplateEditor extends XLite_Contro
 {
     function init()
     {
-        if (isset($_REQUEST["scheme_manager"])) {
+        if (isset($_REQUEST['scheme_manager'])) {
             $dialog = new XLite_Module_DemoMode_Controller_Admin_DemoMode();
-            $_REQUEST["target"] = "demo_mode";
+            $_REQUEST['target'] = "demo_mode";
             $dialog->init();
             $dialog->display();
             die;

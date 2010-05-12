@@ -45,7 +45,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Profile extends XLite_Co
     function action_register()
     {
         parent::action_register();
-        if ($this->registerForm->is("valid")) {
+        if ($this->registerForm->is('valid')) {
             $product = new XLite_Model_Product();
             if ($this->registerForm->getComplex('profile.pending_membership') != "" && $product->find("selling_membership='" . $this->registerForm->getComplex('profile.pending_membership') . "'")) {
                 $oi = new XLite_Model_OrderItem();

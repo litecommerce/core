@@ -129,7 +129,7 @@ class XLite_Module_eSelect_Model_PaymentMethod_EselectCc extends XLite_Model_Pay
     function getOrderStatus($type, $default = 'Q')
     {
         $param  = 'status_' . $type;
-        $params = $this->get("params");
+        $params = $this->get('params');
 
         return (isset($params['sub' . $param]) && $this->xlite->AOMEnabled) ?
                     $params['sub' . $param] : (isset($params[$param]) ? $params[$param] : $default);

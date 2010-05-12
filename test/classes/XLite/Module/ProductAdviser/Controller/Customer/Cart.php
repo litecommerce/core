@@ -49,24 +49,24 @@ class XLite_Module_ProductAdviser_Controller_Customer_Cart extends XLite_Control
     {
         parent::action_add();
 
-        if ($this->xlite->get("PA_InventorySupport") && $this->config->ProductAdviser->customer_notifications_enabled) {
+        if ($this->xlite->get('PA_InventorySupport') && $this->config->ProductAdviser->customer_notifications_enabled) {
 
-            if (!is_null($this->cart->get("outOfStock"))) {
+            if (!is_null($this->cart->get('outOfStock'))) {
 
     			$rejectedItemInfo = new StdClass();
             	$rejectedItem = new XLite_Model_OrderItem();
-            	$product = $this->get("product");
-            	$rejectedItemInfo->product_id = $product->get("product_id");
+            	$product = $this->get('product');
+            	$rejectedItemInfo->product_id = $product->get('product_id');
                 $rejectedItem->set("product", $product);
 
-            	if ($this->xlite->get("ProductOptionsEnabled") && $product->hasOptions() && isset($this->product_options)) {
+            	if ($this->xlite->get('ProductOptionsEnabled') && $product->hasOptions() && isset($this->product_options)) {
                 	$rejectedItem->set("productOptions", $this->product_options);
-            		$rejectedItemInfo->productOptions = $rejectedItem->get("productOptions");
+            		$rejectedItemInfo->productOptions = $rejectedItem->get('productOptions');
                 }
 
                 $this->session->set("rejectedItem", $rejectedItemInfo);
 
-    		} elseif (!$this->xlite->get("rejectedItemPresented")) {
+    		} elseif (!$this->xlite->get('rejectedItemPresented')) {
             		$this->session->set("rejectedItem", null);
     		}
     	}
@@ -82,11 +82,11 @@ class XLite_Module_ProductAdviser_Controller_Customer_Cart extends XLite_Control
      */
     public function getRejectedItem()
     {
-        if (!($this->xlite->get("PA_InventorySupport") && $this->config->ProductAdviser->customer_notifications_enabled)) {
+        if (!($this->xlite->get('PA_InventorySupport') && $this->config->ProductAdviser->customer_notifications_enabled)) {
             return null;
         }
 
-        if (!$this->session->isRegistered("rejectedItem")) {
+        if (!$this->session->isRegistered('rejectedItem')) {
             if (!is_null($this->rejectedItemInfo)) {
                 return ($this->rejectedItemInfo);
             }
@@ -96,7 +96,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Cart extends XLite_Control
 
         if (is_null($this->rejectedItemInfo)) {
 
-            $rejectedItemInfo = $this->session->get("rejectedItem");
+            $rejectedItemInfo = $this->session->get('rejectedItem');
             $this->session->set("rejectedItem", null);
             $this->rejectedItemInfo = new XLite_Base();
             $this->rejectedItemInfo->set("product_id", $rejectedItemInfo->product_id);
@@ -140,14 +140,14 @@ class XLite_Module_ProductAdviser_Controller_Customer_Cart extends XLite_Control
         $check = array();
         $check[] = "type='" . CUSTOMER_NOTIFICATION_PRODUCT . "'";
 
-        if ($this->auth->is("logged")) {
-            $profile = $this->auth->get("profile");
-            $profile_id = $profile->get("profile_id");
-            $email = $profile->get("login");
+        if ($this->auth->is('logged')) {
+            $profile = $this->auth->get('profile');
+            $profile_id = $profile->get('profile_id');
+            $email = $profile->get('login');
         } else {
             $profile_id = 0;
-            if ($this->session->isRegistered("customerEmail")) {
-                $email = $this->session->get("customerEmail");
+            if ($this->session->isRegistered('customerEmail')) {
+                $email = $this->session->get('customerEmail');
             }
         }
         $check[] = "profile_id='$profile_id'";
@@ -170,7 +170,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Cart extends XLite_Control
         if (isset($rejectedItemInfo->amount)) {
             $notification->set("quantity", $rejectedItemInfo->amount);
         }
-        $check[] = "notify_key='" . addslashes($notification->get("productKey")) . "'";
+        $check[] = "notify_key='" . addslashes($notification->get('productKey')) . "'";
 
         $check = implode(" AND ", $check);
 

@@ -57,8 +57,8 @@ class XLite_Controller_Admin_ImageEdit extends XLite_Controller_Admin_Abstract
 
     function getEditor()
     {
-        $zone   = $this->get("zone");
-        $locale = $this->get("locale");
+        $zone   = $this->get('zone');
+        $locale = $this->get('locale');
         if (!isset($this->editor)) {
             $this->editor = new XLite_Model_ImageEditor_ImageEditor("skins/$zone/$locale/images.ini");
         }

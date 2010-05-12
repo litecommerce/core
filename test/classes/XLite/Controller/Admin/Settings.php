@@ -81,7 +81,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
      */
     public function isGDLibLoaded()
     {
-        return extension_loaded('gd') && function_exists("gd_info");
+        return extension_loaded('gd') && function_exists('gd_info');
     }
 
 
@@ -93,7 +93,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
 
     function handleRequest()
     {
-        if($this->get("page") == "Captcha" && ($this->getComplex('xlite.config.Security.captcha_protection_system') != "Y" || !$this->isGDLibLoaded())){
+        if($this->get('page') == "Captcha" && ($this->getComplex('xlite.config.Security.captcha_protection_system') != "Y" || !$this->isGDLibLoaded())){
             $this->redirect("admin.php?target=settings");
         }
 
@@ -120,7 +120,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
 
     function getOptions()
     {
-        $settings = $this->get("settings");
+        $settings = $this->get('settings');
         return $settings->getByCategory($this->page);
     }
     
@@ -153,7 +153,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
 
     function isOpenBasedirRestriction()
     {
-        $res = (string) @ini_get("open_basedir");
+        $res = (string) @ini_get('open_basedir');
         return ($res != "");
     }
     
@@ -168,17 +168,17 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
             case 'mysql_server'    : return mysql_get_server_info(); break;
             case 'mysql_client'    : return mysql_get_client_info(); break;
             case 'root_folder'    : return getcwd(); break;
-            case 'web_server'    : if(isset($_SERVER["SERVER_SOFTWARE"])) return $_SERVER["SERVER_SOFTWARE"]; else  return ""; break;
+            case 'web_server'    : if(isset($_SERVER['SERVER_SOFTWARE'])) return $_SERVER['SERVER_SOFTWARE']; else  return ""; break;
             case 'xml_parser'    :     ob_start();
                                     phpinfo(INFO_MODULES);
                                     $php_info = ob_get_contents();
                                     ob_end_clean();
                                     if( preg_match('/EXPAT.+>([\.\d]+)/mi', $php_info, $m) )
                                         return $m[1];
-                                    return function_exists("xml_parser_create")?"found":"";
+                                    return function_exists('xml_parser_create')?"found":"";
                                     break;
             case 'gdlib'        :   
-                                    if (!$this->is("GDLibLoaded")) {
+                                    if (!$this->is('GDLibLoaded')) {
                                         return "";
                                     } else {
                                         ob_start();
@@ -189,8 +189,8 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
                                             $gdVersion = $m[1];
                                         } else {
                                             $gdVersion = @gd_info();
-                                            if (is_array($gdVersion) && isset($gdVersion["GD Version"])) {
-                                                $gdVersion = $gdVersion["GD Version"];
+                                            if (is_array($gdVersion) && isset($gdVersion['GD Version'])) {
+                                                $gdVersion = $gdVersion['GD Version'];
                                             } else {
                                                 $gdVersion = "unknown";
                                             }
@@ -203,34 +203,34 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
             case 'libcurl'        : 
                                     $libcurlVersion = curl_version();
                                     if (is_array($libcurlVersion)) {
-                                        $libcurlVersion = $libcurlVersion["version"];
+                                        $libcurlVersion = $libcurlVersion['version'];
                                     }
                                     return $libcurlVersion;
             case 'curl'            : return $this->ext_curl_version(); break;
             case 'openssl'        : return $this->openssl_version(); break;
             case 'check_files'  :
                                     $result = array();
-                                    $files = array("cart.html");
+                                    $files = array('cart.html');
                                     foreach ($files as $file) {
                                         $mode = $this->getFilePermission($file);
                                         $modeStr = $this->getFilePermissionStr($file);
                                         $res = array("file" => $file, "error" => "");
                                         if (!is_file($file)) {
-                                            $res["error"] = "does_not_exist";
+                                            $res['error'] = "does_not_exist";
                                             $result[] = $res;
                                             continue;
                                         }
                                         $perm = substr(sprintf('%o', @fileperms($file)), -4);
                                         if($perm != $modeStr){
                                             if(!@chmod($file, $mode)){
-                                                $res["error"] = "cannot_chmod";
+                                                $res['error'] = "cannot_chmod";
                                                 $result[] = $res;
                                                 continue;
                                             }
                                         } else {
                                             if($this->getComplex('xlite.suMode') != 0) {
                                                 if(!@chmod($file, $mode)){
-                                                    $res["error"] = "wrong_owner";
+                                                    $res['error'] = "wrong_owner";
                                                     $result[] = $res;
                                                     continue;
                                                 }
@@ -260,7 +260,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
                                         }
 
                                         if (!is_dir($dir)) {
-                                            $res["error"] = "cannot_create";
+                                            $res['error'] = "cannot_create";
                                             $result[] = $res;
                                             continue;
                                         }
@@ -268,14 +268,14 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
                                         $perm = substr(sprintf('%o', @fileperms($dir)), -4);
                                         if($perm != $modeStr){
                                             if(!@chmod($dir, $mode)){
-                                                $res["error"] = "cannot_chmod";
+                                                $res['error'] = "cannot_chmod";
                                                 $result[] = $res;
                                                 continue;
                                             }
                                         } else {
                                             if($this->getComplex('xlite.suMode') != 0 || strpos($dir, "var") !== false) {
                                                 if(!@chmod($dir, $mode)){
-                                                    $res["error"] = "wrong_owner";
+                                                    $res['error'] = "wrong_owner";
                                                     $result[] = $res;
                                                     continue;
                                                 }
@@ -288,8 +288,8 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
                                         }
 
                                         if(!empty($subdirs)){
-                                            $res["error"] = "cannot_chmod_subdirs";
-                                            $res["subdirs"] = $subdirs;
+                                            $res['error'] = "cannot_chmod_subdirs";
+                                            $res['subdirs'] = $subdirs;
                                             $result[] = $res;
                                             continue;
                                         }
@@ -386,7 +386,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
 
     function action_update_htaccess()
     {
-        $ids = (array) $this->get("ind");
+        $ids = (array) $this->get('ind');
         foreach($ids as $id => $v){
             $htaccess = new XLite_Model_Htaccess($id);
             $htaccess->reImage();
@@ -395,7 +395,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
 
     function action_restore_htaccess()
     {
-        $ids = (array) $this->get("ind");
+        $ids = (array) $this->get('ind');
         foreach($ids as $id => $v){
             $htaccess = new XLite_Model_Htaccess($id);
             $htaccess->restoreFile();
@@ -404,7 +404,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
 
     function ext_curl_version()
     {
-        $curlBinary = @func_find_executable("curl");
+        $curlBinary = @func_find_executable('curl');
         @exec("$curlBinary --version", $output);
         $version = @$output[0];
         if(preg_match('/curl ([^ $]+)/', $version, $ver))
@@ -415,7 +415,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
     
     function openssl_version()
     {
-        $opensslBinary = @func_find_executable("openssl");
+        $opensslBinary = @func_find_executable('openssl');
         return @exec("$opensslBinary version");
     }
 
@@ -466,7 +466,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
         $checkUrl = $this->xlite->getShopUrl($this->buildUrl('upgrade', 'version'));
         $this->_answeredVersionError = false;
         $response = $this->httpRequest($checkUrl);
-        if ($this->get("lite_version") != $response) {
+        if ($this->get('lite_version') != $response) {
             $this->_answeredVersionError = true;
         }
         $this->_answeredVersion = $response;
@@ -486,10 +486,10 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
     
     function action_update()
     {
-        $options = $this->get("options");
+        $options = $this->get('options');
         for ($i=0; $i<count($options); $i++) {
-            $name = $options[$i]->get("name");
-            $type = $options[$i]->get("type");
+            $name = $options[$i]->get('name');
+            $type = $options[$i]->get('type');
             if ($type=='checkbox') {
                 $val = empty(XLite_Core_Request::getInstance()->$name) ? 'N' : 'Y';
             } elseif ($type == "serialized" && isset(XLite_Core_Request::getInstance()->$name) && is_array(XLite_Core_Request::getInstance()->$name)) {
@@ -545,7 +545,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
 
     function action_approve_ip()
     {
-        $ids = (array) $this->get("waiting_ips");
+        $ids = (array) $this->get('waiting_ips');
         foreach($ids as $id){
             $waiting_ip = new XLite_Model_WaitingIP($id);
             $waiting_ip->approveIP();
@@ -556,7 +556,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
 
     function action_delete_ip()
     {
-        $ids = (array) $this->get("waiting_ips");
+        $ids = (array) $this->get('waiting_ips');
         foreach($ids as $id){
             $waiting_ip = new XLite_Model_WaitingIP($id);
             $waiting_ip->delete();
@@ -570,12 +570,12 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
 
     function action_add_new_ip()
     {
-        $ip = $this->get("byte_1") . "." . $this->get("byte_2") . "." . $this->get("byte_3") . "." . $this->get("byte_4");
-        $comment = $this->get("comment");
+        $ip = $this->get('byte_1') . "." . $this->get('byte_2') . "." . $this->get('byte_3') . "." . $this->get('byte_4');
+        $comment = $this->get('comment');
         $valid_ips_object = new XLite_Model_Config();
         if(!$valid_ips_object->find("category = 'SecurityIP' AND name = 'allow_admin_ip'"))
             return;
-        $list = unserialize($valid_ips_object->get("value"));
+        $list = unserialize($valid_ips_object->get('value'));
 
         if(!is_array($list) || count($list) < 1){
             $list = array();
@@ -583,8 +583,8 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
         
         foreach($list as $ip_array){
             if($ip_array['ip'] == $ip){
-                $this->set("returnUrl", "admin.php?target=" . $this->get("target")
-                            . "&page=" . $this->get("page") . "&ip_error=1");
+                $this->set("returnUrl", "admin.php?target=" . $this->get('target')
+                            . "&page=" . $this->get('page') . "&ip_error=1");
                 return;
             }
         }
@@ -599,14 +599,14 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
     function action_delete_allowed_ip()
     {
         $new_list = array();
-        $ids = (array) $this->get("allowed_ips");
+        $ids = (array) $this->get('allowed_ips');
         foreach($this->getAllowedList() as $id => $ip){
             if(!in_array($id, $ids))
                 $new_list[] = $ip;
         }
 
         if(count($new_list) < 1){
-            $admin_ip = isset($_SERVER["REMOTE_ADDR"]) ? $_SERVER["REMOTE_ADDR"] : "";
+            $admin_ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : "";
             $new_list[] = array("ip" => $admin_ip, "comment" => "Default admin IP");
         }
 
@@ -621,14 +621,14 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
 
     function action_update_allowed_ip()
     {
-        $comments = (array) $this->get("comment");
+        $comments = (array) $this->get('comment');
         $valid_ips_object = new XLite_Model_Config();
         if(!$valid_ips_object->find("category = 'SecurityIP' AND name = 'allow_admin_ip'"))
             return;
-        $list = unserialize($valid_ips_object->get("value"));
+        $list = unserialize($valid_ips_object->get('value'));
         foreach($list as $id => $ip){
             $comment = $comments[$id];
-            $list[$id]["comment"] = $comment;
+            $list[$id]['comment'] = $comment;
         }
 
         $valid_ips_object->set("value", serialize($list));
@@ -647,7 +647,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
         if (is_array($list))
             return $list;
         else
-            return array("Not supported");
+            return array('Not supported');
     }
 
     function getCurrentTimeZone()

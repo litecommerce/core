@@ -43,7 +43,7 @@ class XLite_Module_AustraliaPost_Model_Shipping_Aupost extends XLite_Model_Shipp
 
     function getWeightInGrams($order, $weight_unit=null) 
     {
-        $weight = (is_object($order)) ? $order->get("weight") : $order;
+        $weight = (is_object($order)) ? $order->get('weight') : $order;
         $weight_unit = (isset($weight_unit)) ? $weight_unit : $this->config->getComplex('General.weight_unit');
 
         switch ($weight_unit) {
@@ -61,7 +61,7 @@ class XLite_Module_AustraliaPost_Model_Shipping_Aupost extends XLite_Model_Shipp
 
     function cleanCache()  
     {
-        $this->_cleanCache("aupost_cache");
+        $this->_cleanCache('aupost_cache');
     }
 
     function getModuleName()  
@@ -110,7 +110,7 @@ class XLite_Module_AustraliaPost_Model_Shipping_Aupost extends XLite_Model_Shipp
 
         $serialized = array();
         foreach ($rates as $rate) {
-            $serialized[] = $rate->shipping->get("shipping_id") . ":" . $rate->shipping->shipping_time;
+            $serialized[] = $rate->shipping->get('shipping_id') . ":" . $rate->shipping->shipping_time;
         }
         $serialized = implode(",", $serialized);
 
@@ -129,9 +129,9 @@ class XLite_Module_AustraliaPost_Model_Shipping_Aupost extends XLite_Model_Shipp
             $condition = join(" AND ", $condition);
             $cacheRow = $this->db->getRow("SELECT shipping_dates FROM $cacheTable WHERE $condition");
             if (!is_null($cacheRow)) {
-            	$shipping_dates = explode(",", $cacheRow["shipping_dates"]);
+            	$shipping_dates = explode(",", $cacheRow['shipping_dates']);
             	foreach($result as $shr_key => $shr) {
-            		$id = $shr->shipping->get("shipping_id");
+            		$id = $shr->shipping->get('shipping_id');
             		foreach($shipping_dates as $shd) {
             			$shd = explode(":", $shd);
             			if ($id == $shd[0]) {

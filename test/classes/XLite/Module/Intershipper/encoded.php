@@ -20,17 +20,17 @@ function Shipping_intershipper_parseResponse($_this, $response, $destination)
     $_this->response = htmlspecialchars($response);
 
     // check for error
-    if (isset($tree["SHIPMENT"]["ERROR"])) {
-        $_this->error = $tree["SHIPMENT"]["ERROR"];
+    if (isset($tree['SHIPMENT']["ERROR"])) {
+        $_this->error = $tree['SHIPMENT']["ERROR"];
         return array();
     }
     // enumerate services
     $rates = array();
-    if (isset($tree["SHIPMENT"]["PACKAGE"][1]["QUOTE"])) {
-        foreach ($tree["SHIPMENT"]["PACKAGE"][1]["QUOTE"] as $quote) {
-            $carrier = $_this->carriers[$quote["CARRIER"]["CODE"]];
-            $service = $quote["SERVICE"]["NAME"];
-            $serviceCode = $quote["SERVICE"]["CODE"];
+    if (isset($tree['SHIPMENT']["PACKAGE"][1]['QUOTE'])) {
+        foreach ($tree['SHIPMENT']["PACKAGE"][1]['QUOTE'] as $quote) {
+            $carrier = $_this->carriers[$quote['CARRIER']["CODE"]];
+            $service = $quote['SERVICE']["NAME"];
+            $serviceCode = $quote['SERVICE']["CODE"];
             if (isset($_this->translations[$serviceCode])) {
                 $service = $_this->translations[$serviceCode];
             }
@@ -49,10 +49,10 @@ function Shipping_intershipper_parseResponse($_this, $response, $destination)
             $serviceName = "$carrier $service";
             // TODO - add 4 argument for getService()
             $shipping = $_this->getService("intershipper", $serviceName, $destination);
-            $id = $shipping->get("shipping_id");
+            $id = $shipping->get('shipping_id');
             $rates[$id] = new XLite_Model_ShippingRate();
             $rates[$id]->shipping = $shipping;
-            $rates[$id]->rate = (double)$quote["RATE"]["AMOUNT"] / 100.0;
+            $rates[$id]->rate = (double)$quote['RATE']["AMOUNT"] / 100.0;
         }
     }
     return $rates;
@@ -62,7 +62,7 @@ function Shipping_intershipper_getRates($_this, $order)
 {
     // original code of Shipping_intershipper::getRates()
     
-    if (is_null($order->get("profile")) && !$_this->config->getComplex('General.def_calc_shippings_taxes')) {
+    if (is_null($order->get('profile')) && !$_this->config->getComplex('General.def_calc_shippings_taxes')) {
         return array();
     }
 
@@ -74,7 +74,7 @@ function Shipping_intershipper_getRates($_this, $order)
     $weight = $_this->getOunces($order);
     $ZipOrigination = $_this->config->getComplex('Company.location_zipcode');
     $CountryOrigination = $_this->config->getComplex('Company.location_country');
-    if (is_null($order->get("profile"))) {
+    if (is_null($order->get('profile'))) {
         $ZipDestination = $_this->config->getComplex('General.default_zipcode');
         $CountryDestination = $_this->config->getComplex('General.default_country');
     } else {
@@ -82,8 +82,8 @@ function Shipping_intershipper_getRates($_this, $order)
         $CountryDestination = $order->getComplex('profile.shipping_country');
     }
 
-    if ($order->get("payment_method") == "COD") {
-        $cod = $order->get("subtotal");
+    if ($order->get('payment_method') == "COD") {
+        $cod = $order->get('subtotal');
     } else {
         $cod = 0;
     }

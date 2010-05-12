@@ -23,14 +23,14 @@ function func_calc_discount($order)
     if (!is_null($ds = $order->getDC()) && $dc->checkCondition($order)) {
         if ($order->getComplex('DC.applyTo') == "total") {
             // return only total discount
-            $subtotal = $order->get("discountableTotal");
+            $subtotal = $order->get('discountableTotal');
             switch ($order->getComplex('DC.type')) {
                 case "absolute": $d = min($subtotal, $order->getComplex('DC.discount')); break;
                 case "percent": $d = $subtotal * $order->getComplex('DC.discount') / 100; break;
             }
         }
     }
-    $d = min($order->get("subtotal"), $d);
+    $d = min($order->get('subtotal'), $d);
     $order->set("discount", $order->formatCurrency($d));
 }
 

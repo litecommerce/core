@@ -82,15 +82,15 @@ class XLite_Module_UPSOnlineTools_Model_ContainerItem extends XLite_Base
     function export()
     {
         $vars = array();
-        $vars["left"] = $this->left;
-        $vars["top"] = $this->top;
-        $vars["width"] = $this->width;
-        $vars["length"] = $this->length;
-        $vars["height"] = $this->height;
-        $vars["weight"] = $this->weight;
+        $vars['left'] = $this->left;
+        $vars['top'] = $this->top;
+        $vars['width'] = $this->width;
+        $vars['length'] = $this->length;
+        $vars['height'] = $this->height;
+        $vars['weight'] = $this->weight;
 
-        $vars["item_id"] = $this->item_id;
-        $vars["global_id"] = $this->global_id;
+        $vars['item_id'] = $this->item_id;
+        $vars['global_id'] = $this->global_id;
 
         return $vars;
     }

@@ -187,8 +187,8 @@ class XLite_Model_Product extends XLite_Model_Abstract
     */
     function collectGarbage() 
     {
-        $products_table = $this->db->getTableByAlias("products");
-        $product_links_table = $this->db->getTableByAlias("product_links");
+        $products_table = $this->db->getTableByAlias('products');
+        $product_links_table = $this->db->getTableByAlias('product_links');
         $sql = "SELECT p.product_id " . 
                "FROM $products_table p " . 
                "LEFT OUTER JOIN $product_links_table l " . 
@@ -196,7 +196,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
                "WHERE l.product_id IS NULL";
         $result = $this->db->getAll($sql);
         foreach ($result as $info) {
-            $product = new XLite_Model_Product($info["product_id"]);
+            $product = new XLite_Model_Product($info['product_id']);
             $product->_collectGarbage();
         }
 
@@ -268,24 +268,24 @@ class XLite_Model_Product extends XLite_Model_Abstract
     function cloneObject() 
     {
         $p = parent::cloneObject();
-        $id = $p->get("product_id");
+        $id = $p->get('product_id');
         $image = $this->getImage();
         $image->copyTo($id);
         $image = $this->getThumbnail();
         $image->copyTo($id);
         $ef = new XLite_Model_ExtraField();
-        $it = $ef->findAll("product_id='". $this->get("product_id")."'");
+        $it = $ef->findAll("product_id='". $this->get('product_id')."'");
         foreach($it as $extra_field) {
             $ef = $extra_field->cloneObject();
             $ef->set("product_id", $id);
             $ef->update();
 
             $fv = new XLite_Model_FieldValue();
-            if ($fv->find("field_id='".$extra_field->get("field_id")."' AND product_id='".$this->get("product_id")."'")) {
+            if ($fv->find("field_id='".$extra_field->get('field_id')."' AND product_id='".$this->get('product_id')."'")) {
                 $fv->read();
                 $fv_new = $fv;
                 $fv_new->set("product_id", $id);
-                $fv_new->set("field_id", $ef->get("field_id"));
+                $fv_new->set("field_id", $ef->get('field_id'));
                 $fv_new->create();
             }
         }
@@ -347,7 +347,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
                 if (!isset($this->_CategoriesFromProducts)) {
                     $this->_CategoriesFromProducts = new XLite_Model_CategoriesFromProducts();
                 }
-                $this->_CategoriesFromProducts->prodId = $this->get("product_id");
+                $this->_CategoriesFromProducts->prodId = $this->get('product_id');
                 $result = $this->_CategoriesFromProducts->findAll($where, $orderby);
                 if (!XLite::isAdminZone() || $useCache) {
                     $categories[$id][$where][$orderby] = $result;
@@ -371,7 +371,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
 
     function isQuickCategoriesNumber()
     {
-        $statusGlobal = $this->xlite->get("GlobalQuickCategoriesNumber");
+        $statusGlobal = $this->xlite->get('GlobalQuickCategoriesNumber');
 
         return isset($statusGlobal) ? $statusGlobal : (bool)$this->config->General->direct_product_url;
     }
@@ -386,7 +386,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
             $orderby = $this->defaultOrder;
         }
 
-        $id = $this->get("product_id");
+        $id = $this->get('product_id');
         // reset cached result for admin zone
         if (XLite::isAdminZone() || !$useCache) {
             if (isset($categoriesNumber[$id][$where][$orderby])) {
@@ -409,7 +409,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
 
             if ($this->isPersistent) {
                 $p = new XLite_Model_CategoriesFromProducts();
-                $p->prodId = $this->get("product_id");
+                $p->prodId = $this->get('product_id');
                 $categoriesNumber[$id][$where][$orderby] = $p->count($where);
 
             } else {
@@ -429,9 +429,9 @@ class XLite_Model_Product extends XLite_Model_Abstract
         }
 
         global $categories;
-        $id = $this->get("product_id");
+        $id = $this->get('product_id');
         // reset cached result for admin zone
-        if ($this->xlite->is("adminZone") || !$useCache) {
+        if ($this->xlite->is('adminZone') || !$useCache) {
             if (isset($categories[$id][$where][$orderby])) {
                 unset($categories[$id][$where][$orderby]);
             }
@@ -449,8 +449,8 @@ class XLite_Model_Product extends XLite_Model_Abstract
     {
         if ($this->isPersistent && is_object($c)) {
             $p = new XLite_Model_CategoriesFromProducts();
-            $p->prodId = $this->get("product_id");
-            if ($p->findAll("links.category_id='" . $c->get("category_id") . "'")) {
+            $p->prodId = $this->get('product_id');
+            if ($p->findAll("links.category_id='" . $c->get('category_id') . "'")) {
                 return true;
             }
         }
@@ -462,9 +462,9 @@ class XLite_Model_Product extends XLite_Model_Abstract
     */
     function addCategory($category) 
     {
-        $link_table = $this->db->getTableByAlias("product_links");
-        if (!$this->db->getOne("SELECT COUNT(*) FROM $link_table WHERE product_id=".$this->get("product_id")." AND category_id=".$category->get("category_id"))) {
-            $this->db->query("INSERT INTO $link_table (product_id,category_id) VALUES ('".$this->get("product_id")."', '".$category->get("category_id")."')");
+        $link_table = $this->db->getTableByAlias('product_links');
+        if (!$this->db->getOne("SELECT COUNT(*) FROM $link_table WHERE product_id=".$this->get('product_id')." AND category_id=".$category->get('category_id'))) {
+            $this->db->query("INSERT INTO $link_table (product_id,category_id) VALUES ('".$this->get('product_id')."', '".$category->get('category_id')."')");
         }
     }
 
@@ -473,7 +473,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
     */
     function setCategory($category) 
     {
-        $categories = $this->get("categories");
+        $categories = $this->get('categories');
         for ($i = 0; $i < count($categories); $i++) {
             $this->deleteCategory($categories[$i]);
         }
@@ -485,13 +485,13 @@ class XLite_Model_Product extends XLite_Model_Abstract
     */
     function deleteCategory($category) 
     {
-        $link_table = $this->db->getTableByAlias("product_links");
-        $this->db->query("DELETE FROM $link_table WHERE product_id='".$this->get("product_id")."' AND category_id='".$category->get("category_id")."'");
+        $link_table = $this->db->getTableByAlias('product_links');
+        $this->db->query("DELETE FROM $link_table WHERE product_id='".$this->get('product_id')."' AND category_id='".$category->get('category_id')."'");
     }
 
     function hasImage() 
     {
-        return $this->get("image_type")!="";
+        return $this->get('image_type')!="";
     }
 
     function getThumbnailURL() 
@@ -507,18 +507,18 @@ class XLite_Model_Product extends XLite_Model_Abstract
     function getTaxedPrice() 
     {
         if (!$this->config->Taxes->prices_include_tax) {
-            return parent::get("price");
+            return parent::get('price');
         }
 
         if (!isset($this->_taxRates)) {
             $this->_taxRates = new XLite_Model_TaxRates();
         }
-        if ($this->auth->is("logged")) {
+        if ($this->auth->is('logged')) {
             $cart = XLite_Model_Cart::getInstance();
             if (!$cart->isEmpty()) {
-                $profile = $cart->get("profile");
+                $profile = $cart->get('profile');
             } else {
-                $profile = $this->auth->get("profile");
+                $profile = $this->auth->get('profile');
             }
         } else {
             $profile = new XLite_Model_Profile();
@@ -529,17 +529,17 @@ class XLite_Model_Product extends XLite_Model_Abstract
         $order = new XLite_Model_Order();
         $order->set("profile", $profile);
         $this->_taxRates->set("order", $order);
-        $this->_taxRates->_conditionValues["product class"] = $this->get("tax_class");
+        $this->_taxRates->_conditionValues['product class'] = $this->get('tax_class');
         // categories
         $categories = array();
-        foreach ($this->get("categories") as $category) {
-            $categories[] = $category->get("category_id");
+        foreach ($this->get('categories') as $category) {
+            $categories[] = $category->get('category_id');
         }
-        $this->_taxRates->_conditionValues["category"] = join(',', $categories);
-        $this->_taxRates->_conditionValues["cost"] = $price = $this->get("price");
+        $this->_taxRates->_conditionValues['category'] = join(',', $categories);
+        $this->_taxRates->_conditionValues['cost'] = $price = $this->get('price');
         $this->_taxRates->calculateTaxes();
         $this->_taxes = $this->_taxRates->getAllTaxes();
-        return $price + (isset($this->_taxes["Tax"]) ? $this->_taxes["Tax"] : 0);
+        return $price + (isset($this->_taxes['Tax']) ? $this->_taxes['Tax'] : 0);
     }
 
     function getListPrice() 
@@ -551,9 +551,9 @@ class XLite_Model_Product extends XLite_Model_Abstract
     {
         if ($this->config->Taxes->prices_include_tax) {
             if (!isset($this->_taxes)) {
-                $this->get("listPrice");
+                $this->get('listPrice');
             }
-            if (isset($this->_taxes["Tax"]) && $this->_taxes["Tax"]!=0) {
+            if (isset($this->_taxes['Tax']) && $this->_taxes['Tax']!=0) {
                 return $this->config->getComplex('Taxes.include_tax_message');
             }
         }
@@ -562,7 +562,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
 
     function isAvailable() 
     {
-        return $this->is("exists") && $this->filter();
+        return $this->is('exists') && $this->filter();
     }
 
     function populateExtraFields()
@@ -580,7 +580,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
                     $found = false;
                     foreach($product_categories as $cat)
                     {
-                        if (in_array($cat->get("category_id"), $extraFields_categories))
+                        if (in_array($cat->get('category_id'), $extraFields_categories))
                         {
                             $found = true;
                             break;
@@ -598,7 +598,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
                 if ($found)
                 {
                     $ef_child = new XLite_Model_ExtraField();
-                    if (!$ef_child->find("product_id='".$this->get("product_id")."' AND parent_field_id='".$extraField->get("field_id")."'"))
+                    if (!$ef_child->find("product_id='".$this->get('product_id')."' AND parent_field_id='".$extraField->get('field_id')."'"))
                     {
                         $obj_fields = array_keys($extraField->properties);
                         foreach($obj_fields as $obj_field)
@@ -620,8 +620,8 @@ class XLite_Model_Product extends XLite_Model_Abstract
                                 $ef_child->setComplex($obj_field, $obj_field_value);
                             }
                         }
-                        $ef_child->set("product_id", $this->get("product_id"));
-                        $ef_child->set("parent_field_id", $extraField->get("field_id"));
+                        $ef_child->set("product_id", $this->get('product_id'));
+                        $ef_child->set("parent_field_id", $extraField->get('field_id'));
                         $ef_child->create();
                     }
                 }
@@ -632,7 +632,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
     function getExtraFields($enabledOnly=null) 
     {
         if (is_null($enabledOnly)) {
-            $enabledOnly = !$this->xlite->is("adminZone");
+            $enabledOnly = !$this->xlite->is('adminZone');
         }
         $extraFields = array();
         $ef = new XLite_Model_ExtraField();
@@ -641,44 +641,44 @@ class XLite_Model_Product extends XLite_Model_Abstract
         } else {
             $filter = '';
         }
-        $extraFields = $ef->findAll("product_id=".$this->get("product_id") ." OR product_id=0");
+        $extraFields = $ef->findAll("product_id=".$this->get('product_id') ." OR product_id=0");
         // removing parents
         $extraFieldsRoot = array();
         foreach ($extraFields as $idx => $extraField) {
-            if ($extraField->get("parent_field_id") == 0) {
-                $extraFieldsRoot[$extraField->get("field_id")] = $idx;
+            if ($extraField->get('parent_field_id') == 0) {
+                $extraFieldsRoot[$extraField->get('field_id')] = $idx;
             }
         }
         foreach ($extraFields as $idx => $extraField) {
-            if ($extraField->get("parent_field_id") != 0 && isset($extraFieldsRoot[$extraField->get("parent_field_id")])) {
-                unset($extraFields[$extraFieldsRoot[$extraField->get("parent_field_id")]]);
+            if ($extraField->get('parent_field_id') != 0 && isset($extraFieldsRoot[$extraField->get('parent_field_id')])) {
+                unset($extraFields[$extraFieldsRoot[$extraField->get('parent_field_id')]]);
             }
         }
         $extraFieldsWrongGlobal = array();
         foreach ($extraFields as $idx => $extraField) {
-            if ($extraField->get("product_id") == 0) {
+            if ($extraField->get('product_id') == 0) {
                 $categories = $this->getCategories();
                 if (is_array($categories)) {
                     foreach($categories as $cat) {
-                        if (!$extraField->isCategorySelected($cat->get("category_id"))) {
-                            $extraFieldsWrongGlobal[$extraField->get("field_id")] = $idx;
+                        if (!$extraField->isCategorySelected($cat->get('category_id'))) {
+                            $extraFieldsWrongGlobal[$extraField->get('field_id')] = $idx;
                         }
                     }
                 }
             }
         }
         foreach ($extraFields as $idx => $extraField) {
-            if ($extraField->get("product_id") == 0 && isset($extraFieldsWrongGlobal[$extraField->get("field_id")])) {
-                unset($extraFields[$extraFieldsWrongGlobal[$extraField->get("field_id")]]);
+            if ($extraField->get('product_id') == 0 && isset($extraFieldsWrongGlobal[$extraField->get('field_id')])) {
+                unset($extraFields[$extraFieldsWrongGlobal[$extraField->get('field_id')]]);
             }
         }
         // fill with stored / default values
         foreach ($extraFields as $idx => $extraField) {
             $fv = new XLite_Model_FieldValue();
-            if ($fv->find("field_id=".$extraField->get("field_id")." AND product_id=".$this->get("product_id"))) {
-                $extraFields[$idx]->set("value", $fv->get("value"));
+            if ($fv->find("field_id=".$extraField->get('field_id')." AND product_id=".$this->get('product_id'))) {
+                $extraFields[$idx]->set("value", $fv->get('value'));
             } else {
-                $extraFields[$idx]->set("value", $extraField->get("default_value"));
+                $extraFields[$idx]->set("value", $extraField->get('default_value'));
             }
         }
         return $extraFields;
@@ -686,7 +686,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
         
     function toXML() 
     {
-        $id = "product_" . $this->get("product_id");
+        $id = "product_" . $this->get('product_id');
         $xml = parent::toXML();
         return "<product id=\"$id\">\n$xml</product>\n";
     }
@@ -696,25 +696,25 @@ class XLite_Model_Product extends XLite_Model_Abstract
         $xml = "";
 
         // dump product categories
-        $categories = $this->get("categories");
+        $categories = $this->get('categories');
         $xml .="<categories>\n";
         foreach ($categories as $category) {
-            $xml .= "<category id=\"category_".$category->get("category_id")."\"/>\n";
+            $xml .= "<category id=\"category_".$category->get('category_id')."\"/>\n";
         }
         $xml .= "</categories>\n";
  
         if ($this->hasThumbnail()) {
             // include thumbnail in XML dump
             $thumbnail = $this->getThumbnail();
-            if ($thumbnail->get("source") == "D") {
-                $xml .= "<thumbnail><![CDATA[".base64_encode($thumbnail->get("data"))."]]></thumbnail>\n";
+            if ($thumbnail->get('source') == "D") {
+                $xml .= "<thumbnail><![CDATA[".base64_encode($thumbnail->get('data'))."]]></thumbnail>\n";
             }
         }
         if ($this->hasImage()) {
             // include image in XML dump
             $image = $this->getImage();
-            if ($image->get("source") == "D") {
-                $xml .= "<image><![CDATA[".base64_encode($image->get("data"))."]]></image>\n";
+            if ($image->get('source') == "D") {
+                $xml .= "<image><![CDATA[".base64_encode($image->get('data'))."]]></image>\n";
                 
             }
         }
@@ -734,8 +734,8 @@ class XLite_Model_Product extends XLite_Model_Abstract
         }
         // build import fields list
         $fields = array();
-        $fields["NULL"] = false;
-        $fields["category"] = false;
+        $fields['NULL'] = false;
+        $fields['category'] = false;
         $result = array();
         // get object properties ad prepare import fields list
         foreach ($this->fields as $name => $value) {
@@ -743,8 +743,8 @@ class XLite_Model_Product extends XLite_Model_Abstract
             $fields[$name] = false;
         }
         // add "images" fields
-        $fields["thumbnail"] = false;
-        $fields["image"] = false;
+        $fields['thumbnail'] = false;
+        $fields['image'] = false;
         // get count(fields) of fields array
         foreach ($fields as $field) {
             $result[] = $fields;
@@ -783,8 +783,8 @@ class XLite_Model_Product extends XLite_Model_Abstract
         if ($this->hasThumbnail()) {
             $tn = $this->getThumbnail();
             // include only thumbnail name from file system
-            if ($tn->get("source") == "F") {
-                $thumbnail = $tn->get("data");
+            if ($tn->get('source') == "F") {
+                $thumbnail = $tn->get('data');
             }
         }
         return $thumbnail;
@@ -796,8 +796,8 @@ class XLite_Model_Product extends XLite_Model_Abstract
         if ($this->hasImage()) {
             $img = $this->getImage();
             // include only thumbnail name from file system
-            if ($img->get("source") == "F") {
-                $image = $img->get("data");
+            if ($img->get('source') == "F") {
+                $image = $img->get('data');
             }
         }
         return $image;
@@ -808,7 +808,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
         if (!isset($this->_CategoriesFromProducts)) {
             $this->_CategoriesFromProducts = new XLite_Model_CategoriesFromProducts();
         }
-        return $this->_CategoriesFromProducts->createCategoryField($this->get("categories"));
+        return $this->_CategoriesFromProducts->createCategoryField($this->get('categories'));
     }
 
     // END PRODUCT EXPORT functions }}}
@@ -817,7 +817,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
 
     function import(array $options) 
     {
-        if (isset($options["delete_products"]) && $options["delete_products"] === true) {
+        if (isset($options['delete_products']) && $options['delete_products'] === true) {
             $this->deleteAll();
         }
         parent::import($options);
@@ -859,16 +859,16 @@ class XLite_Model_Product extends XLite_Model_Abstract
             foreach ($cat->parseCategoryField($categoryString, true) as $path) {
                 if ($createCategories) {
                     $category = $cat->createRecursive($path);
-                    $categoryIds[] = $category->get("category_id");
+                    $categoryIds[] = $category->get('category_id');
                 } else {
                     $category = $cat->findCategory($path);
                     if (!is_null($category)) {
-                        $categoryIds[] = $category->get("category_id");
+                        $categoryIds[] = $category->get('category_id');
                     }
                 }
             }
             if (count($categoryIds)) {
-                $link_table = $this->db->getTableByAlias("categories");
+                $link_table = $this->db->getTableByAlias('categories');
                 $where = "$link_table.category_id in (".implode(',',$categoryIds).")";
                 $p = new XLite_Model_Product();
                 foreach($p->findAll($fname."='$slashedName'") as $product) {
@@ -907,16 +907,16 @@ class XLite_Model_Product extends XLite_Model_Abstract
 
     function _import(array $options) 
     {
-        $properties       = $options["properties"];
-        $default_category = $options["default_category"];
+        $properties       = $options['properties'];
+        $default_category = $options['default_category'];
         $image = new XLite_Model_Image();
-        $images_directory = ($options["images_directory"] != "") ? $options["images_directory"] : XLite_Model_Image::IMAGES_DIR;
-        $save_images      = $options["save_images"];
-        $uniq_identifier  = $options["unique_identifier"];
+        $images_directory = ($options['images_directory'] != "") ? $options['images_directory'] : XLite_Model_Image::IMAGES_DIR;
+        $save_images      = $options['save_images'];
+        $uniq_identifier  = $options['unique_identifier'];
 
         $this->_convertProperties($properties);
         $existent = false;
-        $product = $this->findImportedProduct($properties["sku"], $properties["category"], $properties["name"], true, $uniq_identifier);
+        $product = $this->findImportedProduct($properties['sku'], $properties['category'], $properties['name'], true, $uniq_identifier);
         if (is_null($product)) {
             $product = new XLite_Model_Product();
         }
@@ -933,7 +933,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
             echo "Create product: ";
             $product->create();
         }
-        echo  $product->get("name") . "<br>\n";
+        echo  $product->get('name') . "<br>\n";
  
         // Update product thumbnail and image
         if (!empty($images_directory)) {
@@ -952,11 +952,11 @@ class XLite_Model_Product extends XLite_Model_Abstract
             $this->xlite->config = $cfg->readConfig();
             $this->config = $this->xlite->config;
         }
-        if (!empty($properties["thumbnail"])) {
-            $this->_importImage($product, "thumbnail", $properties["thumbnail"], $save_images);
+        if (!empty($properties['thumbnail'])) {
+            $this->_importImage($product, "thumbnail", $properties['thumbnail'], $save_images);
         }
-        if (!empty($properties["image"])) {
-            $this->_importImage($product, "image", $properties["image"], $save_images);
+        if (!empty($properties['image'])) {
+            $this->_importImage($product, "image", $properties['image'], $save_images);
         }
 
         // Update create product categories
@@ -967,8 +967,8 @@ class XLite_Model_Product extends XLite_Model_Abstract
     function _convertProperties(&$p) 
     {
         // X-CART Gold/Pro compatibility check for product import
-        if (!empty($p["enabled"]) && ($p["enabled"] == "Y" || $p["enabled"] == "N")) {
-            $p["enabled"] = $p["enabled"] == "Y" ? 1 : 0;
+        if (!empty($p['enabled']) && ($p['enabled'] == "Y" || $p['enabled'] == "N")) {
+            $p['enabled'] = $p['enabled'] == "Y" ? 1 : 0;
         }
     }
 
@@ -996,8 +996,8 @@ class XLite_Model_Product extends XLite_Model_Abstract
     {
         $category_id = null;
         $category = new XLite_Model_Category();
-        if (!empty($properties["category"])) {
-            $newCategories = $category->parseCategoryField($properties["category"], true);
+        if (!empty($properties['category'])) {
+            $newCategories = $category->parseCategoryField($properties['category'], true);
             // convert paths to categories
             for ($i=0; $i<count($newCategories); $i++) {
                 $newCategories[$i] = $category->createRecursive($newCategories[$i]);
@@ -1005,18 +1005,18 @@ class XLite_Model_Product extends XLite_Model_Abstract
         } elseif (!is_null($default_category) && $category->find("category_id='$default_category'")) {
             $newCategories = array( new XLite_Model_Category($default_category));
         } else {
-            echo "Category unspecified or invalid data for product ".$product->get("name") . "<br>Properties dump:<pre>";
+            echo "Category unspecified or invalid data for product ".$product->get('name') . "<br>Properties dump:<pre>";
             print_r($properties);
             die("</pre>");
         }
         // get product categories
-        $categories = $product->get("categories");
+        $categories = $product->get('categories');
         foreach ($categories as $cat) {
             $product->deleteCategory($cat);
         }
         foreach ($newCategories as $c) {
             $product->addCategory($c);
-            echo ">> Product category set to " . $c->get("name") . "<br>\n";
+            echo ">> Product category set to " . $c->get('name') . "<br>\n";
         }
     }
 
@@ -1024,7 +1024,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
 
     function create()
     {
-        $flag = $this->xlite->get("ProductGarbageCleaned");
+        $flag = $this->xlite->get('ProductGarbageCleaned');
         if (!$flag) {
             $this->xlite->set("ProductGarbageCleaned", true);
             $this->collectGarbage();
@@ -1105,7 +1105,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
             $categories = $category->getSubcategories();
             if (!empty($subcategory_search)) {
                 for ($i=0; $i<count($categories); $i++) {
-                    $res1 = $this->advancedSearch($substring, $sku, $categories[$i]->get("category_id"), true, true, $onlyindexes);
+                    $res1 = $this->advancedSearch($substring, $sku, $categories[$i]->get('category_id'), true, true, $onlyindexes);
                     $result = array_merge($result, $this->_assocArray($res1, "product_id"));
                 }
             }

@@ -39,7 +39,7 @@ class XLite_Module_MultiCategories_Controller_Admin_Product extends XLite_Contro
     {
         parent::action_info();
         $product = new XLite_Model_Product($this->product_id);
-        $categories = $product->get("categories");
+        $categories = $product->get('categories');
         for ($i = 0; $i < count($categories); $i++) {
             $product->deleteCategory($categories[$i]);
         }

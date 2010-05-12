@@ -95,8 +95,8 @@ class XLite_Controller_Customer_Help extends XLite_Controller_Customer_Abstract
 
     function fillForm()
     {
-        if ($this->get("mode") == "contactus" ) {
-            if ($this->auth->is("logged")) {
+        if ($this->get('mode') == "contactus" ) {
+            if ($this->auth->is('logged')) {
                 // fill in contact us form with default values
                 $this->set("email", $this->auth->getComplex('profile.login'));
                 $this->set("firstname", $this->auth->getComplex('profile.billing_firstname'));
@@ -118,29 +118,29 @@ class XLite_Controller_Customer_Help extends XLite_Controller_Customer_Abstract
 
     function getState()
     {
-        $s = new XLite_Model_State($this->get("state_id"));
-        return $s->get("state");
+        $s = new XLite_Model_State($this->get('state_id'));
+        return $s->get('state');
     }
 
     function getCountry()
     {
-        $c = new XLite_Model_Country($this->get("country_id"));
-        return $c->get("country");
+        $c = new XLite_Model_Country($this->get('country_id'));
+        return $c->get('country');
     }
     
     function action_contactus()
     {
         $mailer = new XLite_Model_Mailer();
         $mailer->mapRequest();
-        $st = new XLite_Model_State($_REQUEST["contactus_state"]);
-        if ($st->get("state_id") == -1) {
-            $st->set("state", $_REQUEST["contactus_custom_state"]);
+        $st = new XLite_Model_State($_REQUEST['contactus_state']);
+        if ($st->get('state_id') == -1) {
+            $st->set("state", $_REQUEST['contactus_custom_state']);
         }
-        $mailer->set("state", $st->get("state")); // fetch state name
-        $cn = new XLite_Model_Country($_REQUEST["contactus_country"]);
-        $mailer->set("country", $cn->get("country")); // fetch country name
-        $mailer->set("charset", $cn->get("charset"));
-        $mailer->compose($this->get("email"), $this->config->getComplex('Company.support_department'), "contactus");
+        $mailer->set("state", $st->get('state')); // fetch state name
+        $cn = new XLite_Model_Country($_REQUEST['contactus_country']);
+        $mailer->set("country", $cn->get('country')); // fetch country name
+        $mailer->set("charset", $cn->get('charset'));
+        $mailer->compose($this->get('email'), $this->config->getComplex('Company.support_department'), "contactus");
         $mailer->send();
         $this->set("mode", "contactusMessage");
     }

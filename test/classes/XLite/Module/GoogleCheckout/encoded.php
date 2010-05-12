@@ -69,7 +69,7 @@ function GoogleCheckout_parseResponse($_this, $response)
 
 function GoogleCheckout_sendRequest($_this, &$payment, &$data)
 {
-    $auth = base64_encode($payment["merchant_id"].":".$payment["merchant_key"]);
+    $auth = base64_encode($payment['merchant_id'].":".$payment['merchant_key']);
     $h = array(
         "Authorization" => "Basic ".$auth,
         "Accept" => "application/xml"
@@ -82,7 +82,7 @@ function GoogleCheckout_sendRequest($_this, &$payment, &$data)
     $https->urlencoded  = true;
     $https->headers		= $h;
     // Use testing sanbox or live environment
-    if ($payment["testmode"] == "Y") {
+    if ($payment['testmode'] == "Y") {
     	$gcheckout_env = "sandbox";
     	$gcheckout_sbx = "checkout/";
     }
@@ -90,7 +90,7 @@ function GoogleCheckout_sendRequest($_this, &$payment, &$data)
     	$gcheckout_env = "checkout";
     	$gcheckout_sbx = "";
     }
-    $https->url = "https://$gcheckout_env.google.com:443/{$gcheckout_sbx}cws/v2/Merchant/".$payment["merchant_id"]."/request";
+    $https->url = "https://$gcheckout_env.google.com:443/{$gcheckout_sbx}cws/v2/Merchant/".$payment['merchant_id']."/request";
 
     $_this->error = null;
     $_this->xlite->logger->log("Sending request to: " . $https->url);
@@ -123,7 +123,7 @@ function GoogleCheckout_getXML_Object()
 
 function GoogleCheckout_sendGoogleCheckoutRequest($_this, $order)
 {
-    $params = $_this->get("params");
+    $params = $_this->get('params');
 
     $session_id = base64_encode(strrev($_this->session->getID()));
     $order->setComplex("google_details.gid", $session_id);
@@ -143,15 +143,15 @@ function GoogleCheckout_sendGoogleCheckoutRequest($_this, $order)
 function GoogleCheckout_getGoogleCheckoutXML_Calculation($_this, $address, $shipping, $discounts)
 {
     // switch to customer area
-    $_old_admin_zone = $_this->xlite->get("adminZone");
+    $_old_admin_zone = $_this->xlite->get('adminZone');
     $_this->xlite->set("adminZone", false);
 
     $cart = XLite_Model_Cart::getInstance();
-    $cart = new XLite_Model_Cart($_this->get("order_id")); // do not insert &
+    $cart = new XLite_Model_Cart($_this->get('order_id')); // do not insert &
 
     $pmGC = XLite_Model_PaymentMethod::factory('google_checkout');
-    $params = $pmGC->get("params");
-    $currency = $params["currency"];
+    $params = $pmGC->get('params');
+    $currency = $params['currency'];
     $xmlDiscounts = array();
 
 // debug code
@@ -159,15 +159,15 @@ function GoogleCheckout_getGoogleCheckoutXML_Calculation($_this, $address, $ship
 //$discounts[] = array("CODE" => "22");
 
     // Process coupon discount
-    if ($_this->xlite->get("PromotionEnabled") && is_array($discounts) && count($discounts) > 0 && is_null($_this->get("DC"))) {
-        if (!is_null($_this->get("DC"))) {
+    if ($_this->xlite->get('PromotionEnabled') && is_array($discounts) && count($discounts) > 0 && is_null($_this->get('DC'))) {
+        if (!is_null($_this->get('DC'))) {
 //			$_this->DC->delete();
 //			$_this->DC = null;
         }
 
         $coupon_applied = false;
         foreach ($discounts as $id=>$discount) {
-            $coupon_code = addslashes(trim($discount["CODE"]));
+            $coupon_code = addslashes(trim($discount['CODE']));
             $discount_value = 0;
 
             // validate discount coupon
@@ -180,29 +180,29 @@ function GoogleCheckout_getGoogleCheckoutXML_Calculation($_this, $address, $ship
             if (!$coupon->find("coupon='".addslashes($coupon_code)."' AND order_id='0'"))
                 continue;
 
-            $discounts[$id]["type"] = "coupon";
+            $discounts[$id]['type'] = "coupon";
 
             if (!$coupon->checkCondition($_this)) {
                 continue;
             }
 
-            if ($coupon->get("applyTo") != "total" && $coupon->get("type") != "freeship") {
+            if ($coupon->get('applyTo') != "total" && $coupon->get('type') != "freeship") {
                 continue;
             }
 
             if ($coupon_applied) {
-                $discounts[$id]["redundancy"] = true;
+                $discounts[$id]['redundancy'] = true;
                 continue;
             }
 
-            if (in_array($coupon->get("applyTo"), array("product", "category"))) {
+            if (in_array($coupon->get('applyTo'), array("product", "category"))) {
                 $total_items_amount = 0;
-                foreach ($_this->get("items") as $item) {
-                    $total_items_amount += $item->get("total");
+                foreach ($_this->get('items') as $item) {
+                    $total_items_amount += $item->get('total');
                 }
             }
 
-            $_this->set("discountCoupon", $coupon->get("coupon_id"));
+            $_this->set("discountCoupon", $coupon->get('coupon_id'));
             $_this->DC = $coupon;
 
             // calc discount value for valid coupon
@@ -210,14 +210,14 @@ function GoogleCheckout_getGoogleCheckoutXML_Calculation($_this, $address, $ship
 
             // calc discount value
             $discount_value = 0;
-            if (in_array($coupon->get("applyTo"), array("product", "category"))) {
+            if (in_array($coupon->get('applyTo'), array("product", "category"))) {
                 $discounted_items_amount = 0;
-                foreach ($_this->get("items") as $item) {
-                    $discounted_items_amount += $item->get("total");
+                foreach ($_this->get('items') as $item) {
+                    $discounted_items_amount += $item->get('total');
                 }
                 $discount_value = max(0, ($total_items_amount - $discounted_items_amount));
             } else {
-                $discount_value = $_this->get("discount");
+                $discount_value = $_this->get('discount');
             }
 
 
@@ -240,26 +240,26 @@ EOT;
 
 
     // process GiftCertificates
-    if ($_this->xlite->get("GiftCertificatesEnabled") && is_array($discounts) && count($discounts) > 0) {
+    if ($_this->xlite->get('GiftCertificatesEnabled') && is_array($discounts) && count($discounts) > 0) {
         $cert_applied = false;
         foreach ($discounts as $id=>$discount) {
-            $cert_code = addslashes(trim($discount["CODE"]));
+            $cert_code = addslashes(trim($discount['CODE']));
 
             $cert = new XLite_Module_GiftCertificates_Model_GiftCertificate();
             if (!$cert->find("gcid='".addslashes($cert_code)."'"))
                 continue;
 
-            $discounts[$id]["type"] = "cert";
+            $discounts[$id]['type'] = "cert";
 
-            if ($cert->validate() != XLite_Module_GiftCertificates_Model_GiftCertificate::GC_OK || $cert->get("debit") <= 0)
+            if ($cert->validate() != XLite_Module_GiftCertificates_Model_GiftCertificate::GC_OK || $cert->get('debit') <= 0)
                 continue;
 
             if ($cert_applied) {
-                $discounts[$id]["redundancy"] = true;
+                $discounts[$id]['redundancy'] = true;
                 continue;
             }
 
-            $cert_value = $cert->get("debit");
+            $cert_value = $cert->get('debit');
 
             $xmlDiscounts[] = <<<EOT
                 <gift-certificate-result>
@@ -279,11 +279,11 @@ EOT;
     // fill unused discounts
     if (is_array($discounts) && count($discounts) > 0) {
         foreach ($discounts as $id=>$discount) {
-            $coupon_code = trim($discount["CODE"]);
+            $coupon_code = trim($discount['CODE']);
 
             $message = "";
-            if ($discount["redundancy"]) {
-                $discount_type = (($discount["type"] == "coupon") ? "discount coupon" : "gift certificate");
+            if ($discount['redundancy']) {
+                $discount_type = (($discount['type'] == "coupon") ? "discount coupon" : "gift certificate");
                 $message = "Only one $discount_type can be applied during Google Checkout. Although the discount coupon is valid, it cannot be applied.";
             } else {
                 $message = "The discount coupon/gift certificate has already been used by someone else or cannot be applied due to the condition it requires is not met. It has been removed from your cart.";
@@ -316,7 +316,7 @@ EOT;
 
         // Create fake customer profile
         $profile = new XLite_Model_Profile();
-        $profile->set("shipping_city", $addr["CITY"]);
+        $profile->set("shipping_city", $addr['CITY']);
         $profile->set("shipping_zipcode", $addr["POSTAL-CODE"]);
         $profile->set("shipping_country", $addr["COUNTRY-CODE"]);
 
@@ -326,8 +326,8 @@ EOT;
         // state
         $state_id = 0;
         $state = new XLite_Model_State();
-        if ($state->find("code='".addslashes($addr["REGION"])."'")) {
-            $state_id = $state->get("state_id");
+        if ($state->find("code='".addslashes($addr['REGION'])."'")) {
+            $state_id = $state->get('state_id');
         }
 
         $profile->set("shipping_state", $state_id);
@@ -343,7 +343,7 @@ EOT;
         // Assign shipping method and get calculation
         $classes = GoogleCheckout_getShippingClassesSQL_STRING();
         foreach ($shipping as $shipping_params) {
-            $shipping_method = $shipping_params["NAME"];
+            $shipping_method = $shipping_params['NAME'];
 
             $shipable = "false";
             $shipping_cost = 0;
@@ -353,15 +353,15 @@ EOT;
             if ($allow_shipping && is_array($shipping_rates) && count($shipping_rates) > 0) {
                 $shippingMethod = new XLite_Model_Shipping();
 
-                if ($shippingMethod->find("name='".addslashes($shipping_method)."' AND enabled='1' AND class IN($classes)") && array_key_exists($shippingMethod->get("shipping_id"), $shipping_rates)) {
+                if ($shippingMethod->find("name='".addslashes($shipping_method)."' AND enabled='1' AND class IN($classes)") && array_key_exists($shippingMethod->get('shipping_id'), $shipping_rates)) {
                     // If order shipable - calculate shipping and tax cost
                     $_this->setShippingMethod($shippingMethod);
                     $_this->calcTotal();
 
-                    $shipping_cost = (($_this->is("shipped")) ? $_this->get("shippingCost") : 0);
+                    $shipping_cost = (($_this->is('shipped')) ? $_this->get('shippingCost') : 0);
                     $shipping_cost = sprintf("%.02f", $shipping_cost);
 
-                    $tax_cost = sprintf("%.02f", $_this->get("tax"));
+                    $tax_cost = sprintf("%.02f", $_this->get('tax'));
                     $shipable = "true";
                 }
             }
@@ -385,7 +385,7 @@ EOT;
     }	// Prepare shipping rates
 
     // Unset applied coupons
-    if ($_this->xlite->get("PromotionEnabled")) {
+    if ($_this->xlite->get('PromotionEnabled')) {
         $_this->set("discountCoupon", null);
         $_this->DC = null;
     }
@@ -405,11 +405,11 @@ function GoogleCheckout_getCouponApplyDescription($coupon)
 {
     $msg = "";
 
-    $coupon_code = $coupon->get("coupon");
-    if ($coupon->get("type") == "freeship") {
+    $coupon_code = $coupon->get('coupon');
+    if ($coupon->get('type') == "freeship") {
         $msg = "Free shipping coupon #$coupon_code has been applied.";
     } else {
-        switch ($coupon->get("applyTo")) {
+        switch ($coupon->get('applyTo')) {
             case "product":
                 $msg = "Coupon #$coupon_code has been applied to product '".$coupon->getComplex('product.name')."'.";
             break;
@@ -429,7 +429,7 @@ function GoogleCheckout_getCouponApplyDescription($coupon)
 function GoogleCheckout_getShippingClassesSQL_STRING()
 {
     $so = new XLite_Model_Shipping();
-    $modules = $so->get("modules");
+    $modules = $so->get('modules');
 
     $keys = array();
     if (is_array($modules) && count($modules) > 0) {
@@ -467,28 +467,28 @@ function GoogleCheckout_new_order_notification($_this, $xmlData)
 
     // Apply Discount coupon
     $coupon = $_this->getXMLDataByPath($xmlData, "ORDER-ADJUSTMENT/MERCHANT-CODES/COUPON-ADJUSTMENT");
-    if ($_this->xlite->get("PromotionEnabled") && $coupon && is_null($order->getDC())) {
+    if ($_this->xlite->get('PromotionEnabled') && $coupon && is_null($order->getDC())) {
         $dc = new XLite_Module_Promotion_Model_DiscountCoupon();
-        $dc->find("coupon='".addslashes($coupon["CODE"])."'");
+        $dc->find("coupon='".addslashes($coupon['CODE'])."'");
 
         if ($order->google_checkout_setDC($dc)) {
             $order->set("discount", $coupon["APPLIED-AMOUNT"]);
         } else {
-            $_this->xlite->logger->log("NEW-ORDER-NOTIFICATION: Discount coupon #".$coupon["CODE"]." not applied.");
+            $_this->xlite->logger->log("NEW-ORDER-NOTIFICATION: Discount coupon #".$coupon['CODE']." not applied.");
         }
     }
 
     // Apply Gift certificate
     $gift_cert = $_this->getXMLDataByPath($xmlData, "ORDER-ADJUSTMENT/MERCHANT-CODES/GIFT-CERTIFICATE-ADJUSTMENT");
-    if ($_this->xlite->get("GiftCertificatesEnabled") && $gift_cert) {
+    if ($_this->xlite->get('GiftCertificatesEnabled') && $gift_cert) {
         $cert = new XLite_Module_GiftCertificates_Model_GiftCertificate();
-        $cert->find("gcid='".addslashes($gift_cert["CODE"])."'");
+        $cert->find("gcid='".addslashes($gift_cert['CODE'])."'");
         $result = $order->set("GC", $cert);
 
         if ($result == XLite_Module_GiftCertificates_Model_GiftCertificate::GC_OK) {
             $order->set("payedByGC", $gift_cert["APPLIED-AMOUNT"]);
         } else {
-            $_this->xlite->logger->log("NEW-ORDER-NOTIFICATION: Gift certificate #".$gift_cert["CODE"]." not applied.");
+            $_this->xlite->logger->log("NEW-ORDER-NOTIFICATION: Gift certificate #".$gift_cert['CODE']." not applied.");
         }
     }
 
@@ -553,20 +553,20 @@ $_this->xlite->logger->log("name='".addslashes($shipping_info["SHIPPING-NAME"]).
 
     // get profile
     $is_new_profile = false;
-    $profile = $order->get("profile");
+    $profile = $order->get('profile');
     if (is_null($profile)) {
         $profile = new XLite_Model_Profile();
         $is_new_profile = true;
     } else {
         $order->setProfileCopy($profile);
         $order->update();
-        $profile = $order->get("profile");
+        $profile = $order->get('profile');
     }
 
 if ($is_new_profile) {
-    $_this->xlite->logger->log("CREATE NEW PROFILE");
+    $_this->xlite->logger->log('CREATE NEW PROFILE');
 } else {
-    $_this->xlite->logger->log("UPDATE PROFILE");
+    $_this->xlite->logger->log('UPDATE PROFILE');
 }
 
     // set billing information
@@ -574,18 +574,18 @@ if ($is_new_profile) {
     $profile->set("billing_firstname", $billing_addr["CONTACT-NAME"]);
     $profile->set("billing_lastname", "");
     $profile->set("billing_company", $billing_addr["COMPANY-NAME"]);
-    $profile->set("billing_phone", $billing_addr["PHONE"]);
-    $profile->set("billing_fax", $billing_addr["FAX"]);
-    $profile->set("billing_address", $billing_addr["ADDRESS1"]." ".$billing_addr["ADDRESS2"]);
-    $profile->set("billing_city", $billing_addr["CITY"]);
+    $profile->set("billing_phone", $billing_addr['PHONE']);
+    $profile->set("billing_fax", $billing_addr['FAX']);
+    $profile->set("billing_address", $billing_addr['ADDRESS1']." ".$billing_addr['ADDRESS2']);
+    $profile->set("billing_city", $billing_addr['CITY']);
     $profile->set("billing_country", $billing_addr["COUNTRY-CODE"]);
     $profile->set("billing_zipcode", $billing_addr["POSTAL-CODE"]);
 
     $state = new XLite_Model_State();
-    if ($state->find("code='".trim(addslashes($billing_addr["REGION"]))."'")) {
-        $profile->set("billing_state", $state->get("state_id"));
+    if ($state->find("code='".trim(addslashes($billing_addr['REGION']))."'")) {
+        $profile->set("billing_state", $state->get('state_id'));
     } else {
-        $profile->set("billing_custom_state", trim($billing_addr["REGION"]));
+        $profile->set("billing_custom_state", trim($billing_addr['REGION']));
     }
 
     // set shipping information
@@ -593,32 +593,32 @@ if ($is_new_profile) {
     $profile->set("shipping_firstname", $shipping_addr["CONTACT-NAME"]);
     $profile->set("shipping_lastname", "");
     $profile->set("shipping_company", (($shipping_addr["COMPANY-NAME"]) ? $shipping_addr["COMPANY-NAME"] : ""));
-    $profile->set("shipping_phone", (($shipping_addr["PHONE"]) ? $shipping_addr["PHONE"] : ""));
-    $profile->set("shipping_fax", (($shipping_addr["FAX"]) ? $shipping_addr["FAX"] : ""));
-    $profile->set("shipping_address", $shipping_addr["ADDRESS1"]." ".$shipping_addr["ADDRESS2"]);
-    $profile->set("shipping_city", $shipping_addr["CITY"]);
+    $profile->set("shipping_phone", (($shipping_addr['PHONE']) ? $shipping_addr['PHONE'] : ""));
+    $profile->set("shipping_fax", (($shipping_addr['FAX']) ? $shipping_addr['FAX'] : ""));
+    $profile->set("shipping_address", $shipping_addr['ADDRESS1']." ".$shipping_addr['ADDRESS2']);
+    $profile->set("shipping_city", $shipping_addr['CITY']);
     $profile->set("shipping_country", $shipping_addr["COUNTRY-CODE"]);
     $profile->set("shipping_zipcode", $shipping_addr["POSTAL-CODE"]);
 
     $state = new XLite_Model_State();
-    if ($state->find("code='".trim(addslashes($shipping_addr["REGION"]))."'")) {
-        $profile->set("shipping_state", $state->get("state_id"));
+    if ($state->find("code='".trim(addslashes($shipping_addr['REGION']))."'")) {
+        $profile->set("shipping_state", $state->get('state_id'));
     } else {
-        $profile->set("shipping_custom_state", trim($shipping_addr["REGION"]));
+        $profile->set("shipping_custom_state", trim($shipping_addr['REGION']));
     }
 
-    $profile->set("login", $billing_addr["EMAIL"]);
+    $profile->set("login", $billing_addr['EMAIL']);
     $profile->set("access_level", 0);
 
     if ($pm->getComplex('params.disable_customer_notif')) {
-        $old_dc_mailer = $_this->xlite->get("GoogleCheckoutDCNMailer");
+        $old_dc_mailer = $_this->xlite->get('GoogleCheckoutDCNMailer');
         $_this->xlite->set("GoogleCheckoutDCNMailer", true);
     }
 
     // Register if new profile
     if ($is_new_profile) {
         $profile->create();
-        $profile->set("order_id", $order->get("order_id"));
+        $profile->set("order_id", $order->get('order_id'));
 
         $order->set("profile", $profile);
         $order->update();
@@ -633,12 +633,12 @@ if ($is_new_profile) {
 
     $session_id = strrev(base64_decode($order->getComplex('google_details.gid')));
     if ($session_id) {
-        $sql_table = $_this->db->getTableByAlias("sessions");
+        $sql_table = $_this->db->getTableByAlias('sessions');
         $sql = "SELECT data FROM $sql_table WHERE id='$session_id';";
         $data = (array)unserialize($_this->db->getOne($sql));
 
-        if (isset($data["order_id"])) {
-            unset($data["order_id"]);
+        if (isset($data['order_id'])) {
+            unset($data['order_id']);
         }
 
         $sql = "UPDATE $sql_table SET data='".serialize((array)$data)."' WHERE id='$session_id'";
@@ -709,12 +709,12 @@ function GoogleCheckout_order_state_change_notification($_this, $xmlData)
 
     // Set order CHARGEABLE
     if ($state_new == "CHARGEABLE" && $state_prev == "REVIEWING") {
-        $status = $_this->get("chargeableStatus");
+        $status = $_this->get('chargeableStatus');
         $order->set("status", (($status) ?  $status : "Q"));
         $order->setComplex("google_details.chargeable_set", true);
         $order->update();
 
-        $_this->xlite->logger->log("ORDER-STATE-CHANGE-NOTIFICATION: Order #".$order->get("order_id")." CHARGEABLE.");
+        $_this->xlite->logger->log("ORDER-STATE-CHANGE-NOTIFICATION: Order #".$order->get('order_id')." CHARGEABLE.");
         GoogleCheckout_process_chargeable_order($_this, $order);
 
         return true;
@@ -722,24 +722,24 @@ function GoogleCheckout_order_state_change_notification($_this, $xmlData)
 
     // Set order CHARGED
     if ($state_new == "CHARGED" && $state_prev == "CHARGING") {
-        $status = $_this->get("chargedStatus");
+        $status = $_this->get('chargedStatus');
         $order->set("status", (($status) ?  $status : "P"));
         $order->update();
 
-        $_this->xlite->logger->log("ORDER-STATE-CHANGE-NOTIFICATION: Order #".$order->get("order_id")." CHARGED.");
+        $_this->xlite->logger->log("ORDER-STATE-CHANGE-NOTIFICATION: Order #".$order->get('order_id')." CHARGED.");
         return true;
     }
 
     // Set order CANCELLED
     if (in_array($state_new, array("PAYMENT_DECLINED", "CANCELLED", "CANCELLED_BY_GOOGLE"))) {
-        $status = $_this->get("failedStatus");
+        $status = $_this->get('failedStatus');
         $order->set("status", (($status) ?  $status : "F"));
-        $order->set("details.error", $xmlData["REASON"]." ".$state_new);
+        $order->set("details.error", $xmlData['REASON']." ".$state_new);
         $order->setComplex("detailLabels.error", "Error");
         $order->set("google_status", "C");
         $order->update();
 
-        $_this->xlite->logger->log("ORDER-STATE-CHANGE-NOTIFICATION: Cancel order #".$order->get("order_id")." declined by reason: '".$xmlData["REASON"]."'");
+        $_this->xlite->logger->log("ORDER-STATE-CHANGE-NOTIFICATION: Cancel order #".$order->get('order_id')." declined by reason: '".$xmlData['REASON']."'");
         return true;
     }
 
@@ -773,7 +773,7 @@ function GoogleCheckout_order_refund_amount_notification($_this, $xmlData)
         return false;
     }
 
-    if ($order->get("google_status") != "C") {
+    if ($order->get('google_status') != "C") {
         if (abs($order->getComplex('google_details.total_charge_amount') - $xmlData["TOTAL-REFUND-AMOUNT"]) == 0) {
             $order->set("google_status", "R");
         } else {
@@ -794,7 +794,7 @@ function GoogleCheckout_order_refund_amount_notification($_this, $xmlData)
 
 function GoogleCheckout_OrderCancel($_this, $googleId, $_reason, $_comment)
 {
-    $params = $_this->get("params");
+    $params = $_this->get('params');
 
     $reason = GoogleCheckout_encode_utf8_string($_reason);
     $comment = GoogleCheckout_encode_utf8_string($_comment);
@@ -810,14 +810,14 @@ function GoogleCheckout_OrderCancel($_this, $googleId, $_reason, $_comment)
 EOT;
 
     $response = GoogleCheckout_sendRequest($_this, $params, $xmlRequest);
-    return ($response["ERROR"]["ERROR-MESSAGE"]) ? false : true;
+    return ($response['ERROR']["ERROR-MESSAGE"]) ? false : true;
 }
 
 
 function GoogleCheckout_OrderCharge($_this, $googleId, $_amount)
 {
-    $params = $_this->get("params");
-    $currency = $params["currency"];
+    $params = $_this->get('params');
+    $currency = $params['currency'];
 
     $amount = sprintf("%.02f", $_amount);
     $_this->xlite->logger->log("Charge Google order #$googleId");
@@ -830,12 +830,12 @@ function GoogleCheckout_OrderCharge($_this, $googleId, $_amount)
 EOT;
 
     $response = GoogleCheckout_sendRequest($_this, $params, $xmlRequest);
-    return ($response["ERROR"]["ERROR-MESSAGE"]) ? false : true;
+    return ($response['ERROR']["ERROR-MESSAGE"]) ? false : true;
 }
 
 function GoogleCheckout_OrderSendMessage($_this, $googleId, $_message, $_send_email)
 {
-    $params = $_this->get("params");
+    $params = $_this->get('params');
 
     $send_email = (($_send_email == true) ? "true" : "false");
     $message = GoogleCheckout_encode_utf8_string($_message);
@@ -851,12 +851,12 @@ function GoogleCheckout_OrderSendMessage($_this, $googleId, $_message, $_send_em
 EOT;
 
     $response = GoogleCheckout_sendRequest($_this, $params, $xmlRequest);
-    return (($response["ERROR"]["ERROR-MESSAGE"]) ? $response["ERROR"]["ERROR-MESSAGE"] : true);
+    return (($response['ERROR']["ERROR-MESSAGE"]) ? $response['ERROR']["ERROR-MESSAGE"] : true);
 }
 
 function GoogleCheckout_OrderArchive($_this, $googleId)
 {
-    $params = $_this->get("params");
+    $params = $_this->get('params');
 
     $xmlRequest = <<<EOT
 <?xml version="1.0" encoding="UTF-8"?>
@@ -864,12 +864,12 @@ function GoogleCheckout_OrderArchive($_this, $googleId)
 EOT;
 
     $response = GoogleCheckout_sendRequest($_this, $params, $xmlRequest);
-    return (($response["ERROR"]["ERROR-MESSAGE"]) ? $response["ERROR"]["ERROR-MESSAGE"] : true);
+    return (($response['ERROR']["ERROR-MESSAGE"]) ? $response['ERROR']["ERROR-MESSAGE"] : true);
 }
 
 function GoogleCheckout_OrderUnArchive($_this, $googleId)
 {
-    $params = $_this->get("params");
+    $params = $_this->get('params');
 
     $xmlRequest = <<<EOT
 <?xml version="1.0" encoding="UTF-8"?>
@@ -877,12 +877,12 @@ function GoogleCheckout_OrderUnArchive($_this, $googleId)
 EOT;
 
     $response = GoogleCheckout_sendRequest($_this, $params, $xmlRequest);
-    return (($response["ERROR"]["ERROR-MESSAGE"]) ? $response["ERROR"]["ERROR-MESSAGE"] : true);
+    return (($response['ERROR']["ERROR-MESSAGE"]) ? $response['ERROR']["ERROR-MESSAGE"] : true);
 }
 
 function GoogleCheckout_OrderProcess($_this, $googleId)
 {
-    $params = $_this->get("params");
+    $params = $_this->get('params');
 
     $xmlRequest = <<<EOT
 <?xml version="1.0" encoding="UTF-8"?>
@@ -890,12 +890,12 @@ function GoogleCheckout_OrderProcess($_this, $googleId)
 EOT;
 
     $response = GoogleCheckout_sendRequest($_this, $params, $xmlRequest);
-    return (($response["ERROR"]["ERROR-MESSAGE"]) ? $response["ERROR"]["ERROR-MESSAGE"] : true);
+    return (($response['ERROR']["ERROR-MESSAGE"]) ? $response['ERROR']["ERROR-MESSAGE"] : true);
 }
 
 function GoogleCheckout_OrderMerchantOrderNumber($_this, $googleId, $_number)
 {
-    $params = $_this->get("params");
+    $params = $_this->get('params');
 
     $number = GoogleCheckout_encode_utf8_string($_number);
 
@@ -907,15 +907,15 @@ function GoogleCheckout_OrderMerchantOrderNumber($_this, $googleId, $_number)
 EOT;
 
     $response = GoogleCheckout_sendRequest($_this, $params, $xmlRequest);
-    return (($response["ERROR"]["ERROR-MESSAGE"]) ? $response["ERROR"]["ERROR-MESSAGE"] : true);
+    return (($response['ERROR']["ERROR-MESSAGE"]) ? $response['ERROR']["ERROR-MESSAGE"] : true);
 }
 
 function GoogleCheckout_OrderAddTrackingData($_this, $googleId, $_tracking, $_carrier)
 {
-    $params = $_this->get("params");
+    $params = $_this->get('params');
 
     $order = GoogleCheckout_getOrderByGoogleId($googleId);
-    $carrier = (($_carrier) ? $_carrier : GoogleCheckout_encode_utf8_string($order->get("googleShippingCarrirer")));
+    $carrier = (($_carrier) ? $_carrier : GoogleCheckout_encode_utf8_string($order->get('googleShippingCarrirer')));
     $tracking = GoogleCheckout_encode_utf8_string($_tracking);
 
     $xmlRequest = <<<EOT
@@ -929,16 +929,16 @@ function GoogleCheckout_OrderAddTrackingData($_this, $googleId, $_tracking, $_ca
 EOT;
 
     $response = GoogleCheckout_sendRequest($_this, $params, $xmlRequest);
-    return (($response["ERROR"]["ERROR-MESSAGE"]) ? $response["ERROR"]["ERROR-MESSAGE"] : true);
+    return (($response['ERROR']["ERROR-MESSAGE"]) ? $response['ERROR']["ERROR-MESSAGE"] : true);
 }
 
 function GoogleCheckout_OrderDeliver($_this, $googleId, $_send_email)
 {
-    $params = $_this->get("params");
+    $params = $_this->get('params');
 
     $order = GoogleCheckout_getOrderByGoogleId($googleId);
-    $carrier = GoogleCheckout_encode_utf8_string($order->get("googleShippingCarrirer"));
-    $tracking = GoogleCheckout_encode_utf8_string($order->get("tracking"));
+    $carrier = GoogleCheckout_encode_utf8_string($order->get('googleShippingCarrirer'));
+    $tracking = GoogleCheckout_encode_utf8_string($order->get('tracking'));
     $send_email = (($_send_email == true) ? "true" : "false");
 
     $xmlRequest = <<<EOT
@@ -953,13 +953,13 @@ function GoogleCheckout_OrderDeliver($_this, $googleId, $_send_email)
 EOT;
 
     $response = GoogleCheckout_sendRequest($_this, $params, $xmlRequest);
-    return (($response["ERROR"]["ERROR-MESSAGE"]) ? $response["ERROR"]["ERROR-MESSAGE"] : true);
+    return (($response['ERROR']["ERROR-MESSAGE"]) ? $response['ERROR']["ERROR-MESSAGE"] : true);
 }
 
 function GoogleCheckout_OrderRefund($_this, $googleId, $_amount, $_reason, $_comment)
 {
-    $params = $_this->get("params");
-    $currency = $params["currency"];
+    $params = $_this->get('params');
+    $currency = $params['currency'];
 
     $amount = sprintf("%.02f", $_amount);
     $reason = GoogleCheckout_encode_utf8_string($_reason);
@@ -976,7 +976,7 @@ EOT;
 
 
     $response = GoogleCheckout_sendRequest($_this, $params, $xmlRequest);
-    return (($response["ERROR"]["ERROR-MESSAGE"]) ? $response["ERROR"]["ERROR-MESSAGE"] : true);
+    return (($response['ERROR']["ERROR-MESSAGE"]) ? $response['ERROR']["ERROR-MESSAGE"] : true);
 }
 
 
@@ -998,7 +998,7 @@ function GoogleCheckout_process_chargeable_order($_this, $order)
         // Deferred notifications order-state-change-notification and
         // risk-information-notification both received.
 
-        $googleId = $order->get("google_id");
+        $googleId = $order->get('google_id');
 
         // Check merchant calculation flag
         if (!$order->getComplex('google_details.calc') && $_this->getComplex('params.merchant_calc')) {
@@ -1010,13 +1010,13 @@ function GoogleCheckout_process_chargeable_order($_this, $order)
         }
 
         // Check risks
-        $details = $order->get("google_details");
-        if (!in_array($details["avs"], (array)$_this->getComplex('params.check_avs')) || !in_array($details["cvn"], (array)$_this->getComplex('params.check_cvn')) || ($_this->getComplex('params.check_prot') && !$details["eligible"])) {
+        $details = $order->get('google_details');
+        if (!in_array($details['avs'], (array)$_this->getComplex('params.check_avs')) || !in_array($details['cvn'], (array)$_this->getComplex('params.check_cvn')) || ($_this->getComplex('params.check_prot') && !$details['eligible'])) {
             $order->set("detailLabels.riskCheck", "Risk check");
             $order->setComplex("details.riskCheck", "FAILED");
             $order->update();
 
-            $_this->xlite->logger->log("ORDER #".$order->get("order_id")." - Failed risk check.");
+            $_this->xlite->logger->log("ORDER #".$order->get('order_id')." - Failed risk check.");
             return false;
         }
 
@@ -1026,8 +1026,8 @@ function GoogleCheckout_process_chargeable_order($_this, $order)
         $order->update();
 
         // Charge order
-        $_this->xlite->logger->log("CHARGE order ".$order->get("order_id")." - Failed risk check.");
-        GoogleCheckout_OrderCharge($_this, $googleId, $order->get("google_total"));
+        $_this->xlite->logger->log("CHARGE order ".$order->get('order_id')." - Failed risk check.");
+        GoogleCheckout_OrderCharge($_this, $googleId, $order->get('google_total'));
 
         return true;
     }

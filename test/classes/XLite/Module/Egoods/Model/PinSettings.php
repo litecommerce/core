@@ -37,7 +37,7 @@ class XLite_Module_Egoods_Model_PinSettings extends XLite_Model_Abstract
 {
     public $alias = "pin_settings";
 
-    public $primaryKey = array("product_id");
+    public $primaryKey = array('product_id');
     public $defaultOrder = "product_id";
 
     public $fields = array(

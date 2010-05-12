@@ -37,7 +37,7 @@ class XLite_Module_Egoods_Controller_Admin_Stats extends XLite_Controller_Admin_
 {
     public function __construct(array $params) 
     {
-        $this->pages["download_statistics"] = "Egoods statistics";
+        $this->pages['download_statistics'] = "Egoods statistics";
         parent::__construct($params);
     }
 }

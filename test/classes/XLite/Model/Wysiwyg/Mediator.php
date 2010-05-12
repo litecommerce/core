@@ -108,15 +108,15 @@ class XLite_Model_Wysiwyg_Mediator extends XLite_Base
         $exportParser = new XLite_Model_Wysiwyg_ExportParser();
         $exportParser->widgetClass = $this->widgetClass;
         $exportParser->wysiwygMediator = $this;
-        if (strpos($widget->get("templateFile"), '}')) {
+        if (strpos($widget->get('templateFile'), '}')) {
         	if ($this->showMemoryUsage) {
                 $this->__buildFullTreeCounter--;
             }
             return;
         }
-        if ($widget->get("template") && file_exists($widget->get("templateFile"))) {
-            print "Processing template " . $widget->get("templateFile") . "... ";
-            $exportParser->_parseTemplate($widget->get("templateFile"), $widget->get("attributesEvaled"));
+        if ($widget->get('template') && file_exists($widget->get('templateFile'))) {
+            print "Processing template " . $widget->get('templateFile') . "... ";
+            $exportParser->_parseTemplate($widget->get('templateFile'), $widget->get('attributesEvaled'));
             if ($exportParser->errorMessage) {
                 print "<font color=red>[FAILURE: $exportParser->errorMessage]</font>";
                 if ($this->showMemoryUsage && function_exists('memory_get_usage')) {
@@ -133,8 +133,8 @@ class XLite_Model_Wysiwyg_Mediator extends XLite_Base
                 print "\n";
                 $widget->widgets = array();
                 for ($i=0; $i<count($exportParser->widgets); $i++) {
-                    if (isset($exportParser->widgets[$i]->attributes["module"])) {
-                        $module =$exportParser->widgets[$i]->attributes["module"];
+                    if (isset($exportParser->widgets[$i]->attributes['module'])) {
+                        $module =$exportParser->widgets[$i]->attributes['module'];
                         if (is_null($this->xlite->get("mm.activeModules.$module"))) {
                             continue;
                         }
@@ -210,7 +210,7 @@ class XLite_Model_Wysiwyg_Mediator extends XLite_Base
             if (isset($w->attributes['target'])) {
                 $target = $w->attributes['target'];
             }
-            if (isset($this->root) && $this->root->get("template") == $w->get("template")) {
+            if (isset($this->root) && $this->root->get('template') == $w->get('template')) {
                 break;
             }
             $w = $w->parentWidget;
@@ -225,7 +225,7 @@ class XLite_Model_Wysiwyg_Mediator extends XLite_Base
             if (isset($w->attributes['mode'])) {
                 $mode = $w->attributes['mode'];
             }
-            if (isset($this->root) && $this->root->get("template") == $w->get("template")){
+            if (isset($this->root) && $this->root->get('template') == $w->get('template')){
                 break;
             }
             $w = $w->parentWidget;
@@ -235,22 +235,22 @@ class XLite_Model_Wysiwyg_Mediator extends XLite_Base
 
     function _generateParentWidget(&$w, $editing = false)
     {
-//        print "_generateParentWidget(".$w->get("template") . ")\n";
+//        print "_generateParentWidget(".$w->get('template') . ")\n";
         // replace all <widget> with _generateWidget()
-        if (!file_exists($w->get("templateFile"))) {
+        if (!file_exists($w->get('templateFile'))) {
             return '';
         }
         $fc = new XLite_Model_Wysiwyg_ExportParser();
-        $fc->source = $fc->translateTemplate(file_get_contents($w->get("templateFile")));
+        $fc->source = $fc->translateTemplate(file_get_contents($w->get('templateFile')));
         for ($i=0; $i<count($w->widgets); $i++) {
             $ww = $w->widgets[$i];
             $widgetHtmlCode = $this->_generateWidget($ww);
             // strip end of line if the widget is invisible on this page
-            $endOffset = $ww->get("endOffset");
+            $endOffset = $ww->get('endOffset');
             if ($widgetHtmlCode == "" && substr($fc->source,$endOffset,1) == "\n") {
                 $endOffset ++; // eat eol
             }
-            $fc->subst($ww->get("startOffset"), $endOffset, $widgetHtmlCode);
+            $fc->subst($ww->get('startOffset'), $endOffset, $widgetHtmlCode);
         }
         $src = $fc->substitute();
         if ($editing) {
@@ -263,77 +263,77 @@ class XLite_Model_Wysiwyg_Mediator extends XLite_Base
 
     function _generateEditingWidget(&$w)
     {
-//        print "_generateEditingWidget(".$w->get("template") . $w->get("templateType") . ")\n";
+//        print "_generateEditingWidget(".$w->get('template') . $w->get('templateType') . ")\n";
         // replace all <widget> with special code
-        if (!file_exists($w->get("templateFile"))) {
+        if (!file_exists($w->get('templateFile'))) {
             return '';
         }
         $fc = new XLite_Model_Wysiwyg_ExportParser();
-        $fc->source = $fc->translateTemplate(file_get_contents($w->get("templateFile")));
+        $fc->source = $fc->translateTemplate(file_get_contents($w->get('templateFile')));
         for ($i=0; $i<count($w->widgets); $i++) {
             $ww = $w->widgets[$i];
-            $fc->subst($ww->get("startOffset"), $ww->get("endOffset"), $this->_generateWidgetReference($ww, true));
+            $fc->subst($ww->get('startOffset'), $ww->get('endOffset'), $this->_generateWidgetReference($ww, true));
         }
         $text = $fc->substitute();
-        switch ($w->get("templateType")) {
+        switch ($w->get('templateType')) {
         case "plain":
         case "paragraph":
-            return '<table border=0 width=100%><tr><td height=19 background="' . $this->get("imagesDir") . '/' . EDIT_START_IMG . '" template="' . $w->get("template"). '"></td></tr><tr><td>' .
+            return '<table border=0 width=100%><tr><td height=19 background="' . $this->get('imagesDir') . '/' . EDIT_START_IMG . '" template="' . $w->get('template'). '"></td></tr><tr><td>' .
             $text .  
-            '</td></tr><tr><td height=9 background="' . $this->get("imagesDir") . '/' . EDIT_END_IMG . '"></td></tr></table>';
+            '</td></tr><tr><td height=9 background="' . $this->get('imagesDir') . '/' . EDIT_END_IMG . '"></td></tr></table>';
         case "in-table":
-            return '<tr><td colspan=10 height=19 background="' . $this->get("imagesDir") . '/' . EDIT_START_IMG . '" template="' . $w->get("template"). '"></td></tr><tr><td>' .
+            return '<tr><td colspan=10 height=19 background="' . $this->get('imagesDir') . '/' . EDIT_START_IMG . '" template="' . $w->get('template'). '"></td></tr><tr><td>' .
             $text .  
-            '</td></tr><tr><td colspan=10 height=9 background="' . $this->get("imagesDir") . '/' . EDIT_END_IMG . '"></td></tr>';
+            '</td></tr><tr><td colspan=10 height=9 background="' . $this->get('imagesDir') . '/' . EDIT_END_IMG . '"></td></tr>';
         }
     }
     
     function _generateWidgetReference(&$w, $editing = false)
     {
-//        print "_generateWidgetReference(".$w->get("template") . ")\n";
+//        print "_generateWidgetReference(".$w->get('template') . ")\n";
         if (!$w->hasDefinedTemplate() && $editing) {
             // show abstract widget image
-            return '<img align=absmiddle border=0 src="' . $this->get("imagesDir") . '/' . DUMMY_WIDGET_IMG . '"' . $w->get("attributesInTag") . '>';
+            return '<img align=absmiddle border=0 src="' . $this->get('imagesDir') . '/' . DUMMY_WIDGET_IMG . '"' . $w->get('attributesInTag') . '>';
         }
-        $t = $w->get("template");
+        $t = $w->get('template');
         if (isset($this->templateEditableParams[$t])) {
             $text = $this->_generateParentWidget($w, $editing);
             if ($editing) {
-                switch ($w->get("templateType")) {
+                switch ($w->get('templateType')) {
                 case "plain":
-/*                    return '<img align=absmiddle border=0 src="' . $this->get("imagesDir") . '/' . WIDGET_START_SHORT_IMG . '"' . $w->get("attributesInTag") . '>' . $text . '<img align=absmiddle border=0 src="' . $this->get("imagesDir") . '/' . WIDGET_END_SHORT_IMG . '">';*/
+/*                    return '<img align=absmiddle border=0 src="' . $this->get('imagesDir') . '/' . WIDGET_START_SHORT_IMG . '"' . $w->get('attributesInTag') . '>' . $text . '<img align=absmiddle border=0 src="' . $this->get('imagesDir') . '/' . WIDGET_END_SHORT_IMG . '">';*/
                 case "paragraph":
-                    return '<table border=0 width=100%><tr><td height=19 background="' . $this->get("imagesDir") . '/' . WIDGET_START_IMG . '"' . $w->get("attributesInTag") . '></td></tr><tr><td>' .
+                    return '<table border=0 width=100%><tr><td height=19 background="' . $this->get('imagesDir') . '/' . WIDGET_START_IMG . '"' . $w->get('attributesInTag') . '></td></tr><tr><td>' .
                     $text . 
-                    '</td></tr><tr><td height=9 background="' . $this->get("imagesDir") . '/' . WIDGET_END_IMG . '"></td></tr></table>';
+                    '</td></tr><tr><td height=9 background="' . $this->get('imagesDir') . '/' . WIDGET_END_IMG . '"></td></tr></table>';
                 case "in-table":
-                    return '<tr><td colspan=10 height=19 background="' . $this->get("imagesDir") . '/' . WIDGET_START_IMG . '"' . $w->get("attributesInTag") . '></td></tr><tr><td>' .
+                    return '<tr><td colspan=10 height=19 background="' . $this->get('imagesDir') . '/' . WIDGET_START_IMG . '"' . $w->get('attributesInTag') . '></td></tr><tr><td>' .
                     $text .  
-                    '</td></tr><tr><td colspan=10 height=9 background="' . $this->get("imagesDir") . '/' . WIDGET_END_IMG . '"></td></tr>';
+                    '</td></tr><tr><td colspan=10 height=9 background="' . $this->get('imagesDir') . '/' . WIDGET_END_IMG . '"></td></tr>';
                 }
             } else {
                 return $text;
             }
         } else {
         	$imageFileName = $this->getImageFileName($w);
-            $image = $this->get("imagesDir") . "/". $imageFileName;
+            $image = $this->get('imagesDir') . "/". $imageFileName;
 
             $postfix = "";
             if ( !is_readable(HTML_BUILDER_PATH . "widgets/" . $imageFileName) ) {
-                $image = $this->get("imagesDir") . "/dummy_widget.gif";
+                $image = $this->get('imagesDir') . "/dummy_widget.gif";
                 $path_parts = pathinfo($imageFileName);
-                if (basename($path_parts["basename"], $path_parts["extension"]) != ".") {
+                if (basename($path_parts['basename'], $path_parts['extension']) != ".") {
                     $this->dummy_images[] = HTML_BUILDER_PATH . "widgets/" . $imageFileName;
-                    $postfix = "<!--Should be: " . $this->get("imagesDir") . "/". $imageFileName . "-->";
+                    $postfix = "<!--Should be: " . $this->get('imagesDir') . "/". $imageFileName . "-->";
                 }
             }
-            return $this->_generateWidgetLink($w, '<a href="' . $this->getWidgetLink($w) . '"><img align=absmiddle border=0 src="' . $image . '"' . $w->get("attributesInTag") . '></a>' . $postfix);
+            return $this->_generateWidgetLink($w, '<a href="' . $this->getWidgetLink($w) . '"><img align=absmiddle border=0 src="' . $image . '"' . $w->get('attributesInTag') . '></a>' . $postfix);
         }
     }
     
     function _generateWidgetLink($w, $img)
     {
-        switch ($w->get("templateType")) {
+        switch ($w->get('templateType')) {
         case "plain":
             return $img;
         case "paragraph":
@@ -345,7 +345,7 @@ class XLite_Model_Wysiwyg_Mediator extends XLite_Base
     
     function _getEditableParams($w)
     {
-        $t = $w->get("template");
+        $t = $w->get('template');
         $params = array();
         if (isset($this->templateEditableParams[$t])){
         foreach ($this->templateEditableParams[$t] as $name) {
@@ -358,22 +358,22 @@ class XLite_Model_Wysiwyg_Mediator extends XLite_Base
     }
     function _generateEditParamStart($name, $modifier)
     {
-        return '<img align=absmiddle border=0 src="' . $this->get("imagesDir") . '/' . EDIT_PARAM_START_IMG . '" name="' . $name . '" modifier="' . $modifier . '">';
+        return '<img align=absmiddle border=0 src="' . $this->get('imagesDir') . '/' . EDIT_PARAM_START_IMG . '" name="' . $name . '" modifier="' . $modifier . '">';
     }
     function _generateEditParamEnd($name, $modifier)
     {
-        return '<img align=absmiddle border=0 src="'.$this->get("imagesDir") . '/' . EDIT_PARAM_END_IMG . '">';
+        return '<img align=absmiddle border=0 src="'.$this->get('imagesDir') . '/' . EDIT_PARAM_END_IMG . '">';
     }
 
     function getWidgetFile($w)
     {
-        $template = $w->get("template");
+        $template = $w->get('template');
         if (substr($template, -4) == ".tpl") {
             $template = substr($template, 0, strlen($template)-4);
         }
 
-        if (isset($this->templateReferenceParams[$w->get("template")])) {
-            foreach($this->templateReferenceParams[$w->get("template")] as $name) {
+        if (isset($this->templateReferenceParams[$w->get('template')])) {
+            foreach($this->templateReferenceParams[$w->get('template')] as $name) {
                 $template .= '-'.strtr($w->attributesEvaled[$name], " /\\.", "____");
             }
         }
@@ -393,19 +393,19 @@ class XLite_Model_Wysiwyg_Mediator extends XLite_Base
 
     function _linkTree(&$parent, &$tree)
     {
-        $t = $tree->get("template");
+        $t = $tree->get('template');
         if (!isset($this->widgetMap[$t])) {
             $this->widgetMap[$t] = $tree;
         }
         if ($this->hasParams($tree)) {
-            $p = $parent->get("template");
+            $p = $parent->get('template');
             $pp = $parent;
         } else {
             $p = $t;
             $pp = $tree;
         }
         for ($i=0; $i<count($tree->widgets); $i++) {
-            $tt = $tree->widgets[$i]->get("template");
+            $tt = $tree->widgets[$i]->get('template');
             if (!isset($this->linkedTemplates[$p])) {
                 if (!isset($this->templateMap[$tt])) {
                     $this->templateMap[$tt] = array();
@@ -428,10 +428,10 @@ class XLite_Model_Wysiwyg_Mediator extends XLite_Base
         // put cart.php as a redirect
         mkdirRecursive(HTML_BUILDER_PATH);
         if (($fd = @fopen(HTML_BUILDER_PATH . "/cart.php", "wb"))) {
-            $url = $this->xlite->getShopUrl("cart.php");
+            $url = $this->xlite->getShopUrl('cart.php');
             @fwrite($fd, <<<EOT
 <?php
-header("Location: $url?" . \$_SERVER["QUERY_STRING"]);
+header("Location: $url?" . \$_SERVER['QUERY_STRING']);
 ?>
 EOT
             );
@@ -480,14 +480,14 @@ EOT
         if (is_scalar($w)) {
             $template = $w;
         } else {
-            $template = $w->get("template");
+            $template = $w->get('template');
         }
         return isset($this->templateEditableParams[$template] )|| isset($this->templateReferenceParams[$template]);
     }
 
     function _export(&$tree)
     {
-        $t = $tree->get("template");
+        $t = $tree->get('template');
         if (!$t) {
             return;
         }
@@ -502,7 +502,7 @@ EOT
         $this->pageTarget = $this->getWidgetTarget($tree);
         $this->pageMode = $this->getWidgetMode($tree);
         $tree->editing = true;
-        $this->_exportPage($this->root, $tree, $this->getTemplateLink($tree->get("template")));
+        $this->_exportPage($this->root, $tree, $this->getTemplateLink($tree->get('template')));
         $tree->editing = false;
         $tree->parent = true;
         // create pages for subwidgets
@@ -542,10 +542,10 @@ EOT;
     
     function _getComment(&$root, $link = false)
     {
-        $node = new XLite_Model_FileNode($root->get("templateFile"));
-        $comment = $node->get("comment");
+        $node = new XLite_Model_FileNode($root->get('templateFile'));
+        $comment = $node->get('comment');
         if (!$comment) {
-            $comment = $root->get("template");
+            $comment = $root->get('template');
         }
         return $comment;
     }
@@ -553,11 +553,11 @@ EOT;
     function _generateNavigation(&$page)
     {
         $navigation = '<b>' . $this->_getComment($page) . "</b>";
-        if (!isset($this->templateMap[$page->get("template")])) {
+        if (!isset($this->templateMap[$page->get('template')])) {
             return $navigation;
         }
         $navigation .= "&nbsp;|&nbsp;";
-        $parents = $this->templateMap[$page->get("template")];
+        $parents = $this->templateMap[$page->get('template')];
         if (count($parents)>1) {
             $navigation .= 'Used from';
             // enumerate all widgets the given template is called from
@@ -567,7 +567,7 @@ EOT;
             return $navigation;
         }
         $path = '';
-        $t = $page->get("template");
+        $t = $page->get('template');
         while (isset($this->templateMap[$t]) && count($this->templateMap[$t])==1) {
             foreach ($this->templateMap[$t] as $t => $qt) {}
             if ($path!=='') {
@@ -590,7 +590,7 @@ EOT;
     {
         $wysiwygImporter = new XLite_Model_Wysiwyg_ImportParser();
         $wysiwygImporter->set("source", $page);
-        $wysiwygImporter->set("imagesDir", $this->get("imagesDir"));
+        $wysiwygImporter->set("imagesDir", $this->get('imagesDir'));
         $wysiwygImporter->parse();
         $this->templateName = $wysiwygImporter->templateName;
         if (isset($this->layout->list[$this->templateName])) {
@@ -630,11 +630,11 @@ EOT;
                 print "to $templateName...";
                 $template = new $this->templateClass;
                 $template->set("path", $templateName);
-                if (!file_exists($template->get("file"))) {
-                    print " <font color=red>[FAILURE: no such file " . $template->get("file") . "]</font>";
+                if (!file_exists($template->get('file'))) {
+                    print " <font color=red>[FAILURE: no such file " . $template->get('file') . "]</font>";
                     $this->errors++;
-                } else if (!is_writable($template->get("file"))) {
-                    print " <font color=red>[FAILURE: file " .$template->get("file") . " is not writable]</font>";
+                } else if (!is_writable($template->get('file'))) {
+                    print " <font color=red>[FAILURE: file " .$template->get('file') . " is not writable]</font>";
                     $this->errors++;
                 } else {
                     $templateSource = $this->template;
@@ -661,7 +661,7 @@ EOT;
             return;
 
         $amount = (int) $amount;
-        $current_limit = @ini_get("memory_limit");
+        $current_limit = @ini_get('memory_limit');
         $current_limit_byte = func_convert_to_byte($current_limit);
         if (function_exists('memory_get_usage') && ($current_limit_byte - memory_get_usage() < $amount * 1024 * 1024)) {
             @ini_set("memory_limit", $current_limit_byte + (int) $amount * 1024 * 1024);

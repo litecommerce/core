@@ -57,8 +57,8 @@ class XLite_Model_ShippingRate extends XLite_Model_Abstract
 
     function getShipping()
     {
-        if (is_null($this->shipping) && $this->get("shipping_id")) {
-            $this->shipping = new XLite_Model_Shipping($this->get("shipping_id"));
+        if (is_null($this->shipping) && $this->get('shipping_id')) {
+            $this->shipping = new XLite_Model_Shipping($this->get('shipping_id'));
         }
         return $this->shipping;
     }
@@ -66,7 +66,7 @@ class XLite_Model_ShippingRate extends XLite_Model_Abstract
     function setShipping($shipping)
     {
         $this->shipping = $shipping;
-        $this->set("shipping_id", $shipping->get("shipping_id"));
+        $this->set("shipping_id", $shipping->get('shipping_id'));
     }
 
 }

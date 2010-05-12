@@ -41,7 +41,7 @@ class XLite_Module_UPSOnlineTools_Model_OrderItem extends XLite_Model_OrderItem 
 
     function getDeclaredValue()
     {
-        return $this->getComplex('product.declaredValue') * $this->get("amount");
+        return $this->getComplex('product.declaredValue') * $this->get('amount');
     }
 
     function getPackItem()
@@ -50,7 +50,7 @@ class XLite_Module_UPSOnlineTools_Model_OrderItem extends XLite_Model_OrderItem 
             return $this->packItem;
         }
 
-        $p = $this->get("product");
+        $p = $this->get('product');
 
         // dimension
         $this->packItem = new XLite_Module_UPSOnlineTools_Model_PackItem();
@@ -59,21 +59,21 @@ class XLite_Module_UPSOnlineTools_Model_OrderItem extends XLite_Model_OrderItem 
         }
 
         // weight
-        $weight = UPSOnlineTools_convertWeight($p->get("weight"), $this->config->getComplex('General.weight_unit'), "lbs", 2);
+        $weight = UPSOnlineTools_convertWeight($p->get('weight'), $this->config->getComplex('General.weight_unit'), "lbs", 2);
         if ($weight === false) {
             $weight = $this->packItem->getComplex('product.weight');
         }
         $this->packItem->set("weight", $weight);
 
         // declared_value
-        $declared_value = $p->get("declaredValue");
+        $declared_value = $p->get('declaredValue');
 
         // misc
-        $this->packItem->set("handle_care", $p->get("ups_handle_care"));
-        $this->packItem->set("OrderItemId", $this->get("item_id"));
-        $this->packItem->set("packaging", $p->get("ups_packaging"));
+        $this->packItem->set("handle_care", $p->get('ups_handle_care'));
+        $this->packItem->set("OrderItemId", $this->get('item_id'));
+        $this->packItem->set("packaging", $p->get('ups_packaging'));
         $this->packItem->set("declaredValue", $declared_value);
-        $this->packItem->set("additional_handling", $p->get("ups_add_handling"));
+        $this->packItem->set("additional_handling", $p->get('ups_add_handling'));
 
         return $this->packItem;
     }

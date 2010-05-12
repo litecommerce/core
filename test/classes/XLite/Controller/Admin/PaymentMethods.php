@@ -61,12 +61,12 @@ class XLite_Controller_Admin_PaymentMethods extends XLite_Controller_Admin_Abstr
 
         foreach ($this->data as $id => $data) {
             if (array_key_exists("enabled", $data)) {
-                $data["enabled"] = 1;
+                $data['enabled'] = 1;
             } else {
-                $data["enabled"] = 0;
+                $data['enabled'] = 0;
             }
 
-            if ($data["payment_method"] == $default_offline_payment && !$data["enabled"]) {
+            if ($data['payment_method'] == $default_offline_payment && !$data['enabled']) {
         		$cfg = new XLite_Model_Config();
                 $cfg->createOption("Payments", "default_offline_payment", "");
             }

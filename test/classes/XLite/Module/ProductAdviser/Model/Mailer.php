@@ -37,7 +37,7 @@ class XLite_Module_ProductAdviser_Model_Mailer extends XLite_Model_Mailer implem
 {
     function set($property, $value)
     {
-        if (($property == "subject" || $property == "signature" || $property == "body") && $this->get("ignoreDefaultSubjectBody")) {
+        if (($property == "subject" || $property == "signature" || $property == "body") && $this->get('ignoreDefaultSubjectBody')) {
             return;
         }
         parent::set($property, $value);

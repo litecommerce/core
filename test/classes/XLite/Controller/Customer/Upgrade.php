@@ -38,7 +38,7 @@ class XLite_Controller_Customer_Upgrade extends XLite_Controller_Customer_Abstra
     function init()
     {
         parent::init();
-        if (!$this->get("action")) {
+        if (!$this->get('action')) {
             $this->redirect("cart.php?target=main");
         }
     }

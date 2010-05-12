@@ -239,24 +239,24 @@ class XLite_Module_UPSOnlineTools_Model_Container extends XLite_Base
     function export()
     {
         $vars = array();
-        $vars["container_id"] = $this->container_id;
-        $vars["width"] = $this->width;
-        $vars["length"] = $this->length;
-        $vars["height"] = $this->height;
-        $vars["weight"] = $this->getWeight();
-        $vars["weight_limit"] = $this->weight_limit;
-        $vars["container_type"] = $this->container_type;
-        $vars["additional_handling"] = (($this->isAdditionalHandling()) ? 1 : 0);
-        $vars["declared_value"] = $this->getDeclaredValue();
+        $vars['container_id'] = $this->container_id;
+        $vars['width'] = $this->width;
+        $vars['length'] = $this->length;
+        $vars['height'] = $this->height;
+        $vars['weight'] = $this->getWeight();
+        $vars['weight_limit'] = $this->weight_limit;
+        $vars['container_type'] = $this->container_type;
+        $vars['additional_handling'] = (($this->isAdditionalHandling()) ? 1 : 0);
+        $vars['declared_value'] = $this->getDeclaredValue();
 
         $_levels = array();
         foreach ((array)$this->levels as $level) {
             $_levels[] = $level->export();
         }
-        $vars["levels"] = $_levels;
+        $vars['levels'] = $_levels;
 
         if (!is_null($this->extra_item_ids)) {
-            $vars["extra_item_ids"] = $this->extra_item_ids;
+            $vars['extra_item_ids'] = $this->extra_item_ids;
         }
 
         return $vars;

@@ -11,7 +11,7 @@
 
         // Store values for X-Cart $cart variable here
         $cart = array ();
-        $cart["total_cost"] = $lite_cart->get ("total");
+        $cart['total_cost'] = $lite_cart->get ("total");
 
         // Fill parameters fields here
         $module_params = $paymentMethod->get('params');
@@ -31,10 +31,10 @@
         $userinfo ["b_country"] = $lite_cart->getComplex('profile.billing_country');
         $userinfo ["phone"] = $lite_cart->getComplex('profile.billing_phone');
         $userinfo ["email"] = $lite_cart->getComplex('profile.login');
-        $userinfo ["card_number"] = $paymentMethod->cc_info["cc_number"];
-        $userinfo ["card_expire"] = $paymentMethod->cc_info["cc_date"];
-        $userinfo ["card_cvv2"] = $paymentMethod->cc_info["cc_cvv2"];
-        $userinfo ["card_name"] = $paymentMethod->cc_info["cc_name"];
+        $userinfo ["card_number"] = $paymentMethod->cc_info['cc_number'];
+        $userinfo ["card_expire"] = $paymentMethod->cc_info['cc_date'];
+        $userinfo ["card_cvv2"] = $paymentMethod->cc_info['cc_cvv2'];
+        $userinfo ["card_name"] = $paymentMethod->cc_info['cc_name'];
 
         if ($debug) {
             echo "userinfo:<pre>"; print_r($userinfo); echo "</pre><br>";
@@ -47,13 +47,13 @@
             "cvvMessage" => "CVV message",
             "avsMessage" => "AVS message"
         );
-        $conn_attempts = (int) $cart_details["connectionAttempts"];
+        $conn_attempts = (int) $cart_details['connectionAttempts'];
         if (is_null($conn_attempts)) {
             $conn_attempts = 1;
         } else {
             $conn_attempts++;
         }
-        $cart_details["connectionAttempts"] = $conn_attempts;
+        $cart_details['connectionAttempts'] = $conn_attempts;
 
         if ($debug) echo "Connection attempt: $conn_attempts<br>";
 
@@ -111,30 +111,30 @@
 
 @set_time_limit(100);
 
-$pp_login = $module_params["param01"];
-$pp_test = ($module_params["testmode"]=="N")?(""):("TRUE");
+$pp_login = $module_params['param01'];
+$pp_test = ($module_params['testmode']=="N")?(""):("TRUE");
 // LiteCommece code {{{
-//$script = ($module_params["testmode"]=="N")?("gateway/xmlpayment.asp"):("gateway/xmltest/TestPage.asp");
-$test_server = $module_params["param09"];
-$live_server = $module_params["param08"];
-$pay_server = ($module_params["testmode"]=="N")?($live_server):($test_server);
+//$script = ($module_params['testmode']=="N")?("gateway/xmlpayment.asp"):("gateway/xmltest/TestPage.asp");
+$test_server = $module_params['param09'];
+$live_server = $module_params['param08'];
+$pay_server = ($module_params['testmode']=="N")?($live_server):($test_server);
 
 
 $post = "";
 $post .= "<ewaygateway>";
 $post .= "<ewayCustomerID>".$pp_login."</ewayCustomerID>";
-$post .= "<ewayTotalAmount>".(100*$cart["total_cost"])."</ewayTotalAmount>";
-$post .= "<ewayCustomerFirstName>".$userinfo["firstname"]."</ewayCustomerFirstName>";
-$post .= "<ewayCustomerLastName>".$userinfo["lastname"]."</ewayCustomerLastName>";
-$post .= "<ewayCustomerEmail>".$userinfo["email"]."</ewayCustomerEmail>";
-$post .= "<ewayCustomerAddress>".$userinfo["b_address"]."</ewayCustomerAddress>";
-$post .= "<ewayCustomerPostcode>".$userinfo["b_zipcode"]."</ewayCustomerPostcode>";
+$post .= "<ewayTotalAmount>".(100*$cart['total_cost'])."</ewayTotalAmount>";
+$post .= "<ewayCustomerFirstName>".$userinfo['firstname']."</ewayCustomerFirstName>";
+$post .= "<ewayCustomerLastName>".$userinfo['lastname']."</ewayCustomerLastName>";
+$post .= "<ewayCustomerEmail>".$userinfo['email']."</ewayCustomerEmail>";
+$post .= "<ewayCustomerAddress>".$userinfo['b_address']."</ewayCustomerAddress>";
+$post .= "<ewayCustomerPostcode>".$userinfo['b_zipcode']."</ewayCustomerPostcode>";
 $post .= "<ewayCustomerInvoiceDescription>".$descr."</ewayCustomerInvoiceDescription>";
-$post .= "<ewayCustomerInvoiceRef>".$module_params["param03"].join("-",$secure_oid)."</ewayCustomerInvoiceRef>";
-$post .= "<ewayCardHoldersName>".$userinfo["card_name"]."</ewayCardHoldersName>";
-$post .= "<ewayCardNumber>".$userinfo["card_number"]."</ewayCardNumber>";
-$post .= "<ewayCardExpiryMonth>".substr($userinfo["card_expire"],0,2)."</ewayCardExpiryMonth>";
-$post .= "<ewayCardExpiryYear>".substr($userinfo["card_expire"],2,2)."</ewayCardExpiryYear>";
+$post .= "<ewayCustomerInvoiceRef>".$module_params['param03'].join("-",$secure_oid)."</ewayCustomerInvoiceRef>";
+$post .= "<ewayCardHoldersName>".$userinfo['card_name']."</ewayCardHoldersName>";
+$post .= "<ewayCardNumber>".$userinfo['card_number']."</ewayCardNumber>";
+$post .= "<ewayCardExpiryMonth>".substr($userinfo['card_expire'],0,2)."</ewayCardExpiryMonth>";
+$post .= "<ewayCardExpiryYear>".substr($userinfo['card_expire'],2,2)."</ewayCardExpiryYear>";
 $post .= "<ewayTrxnNumber></ewayTrxnNumber>";
 $post .= "<ewayOption1></ewayOption1>";
 $post .= "<ewayOption2></ewayOption2>";
@@ -186,7 +186,7 @@ $bill_output[billmes].= " (TrnxNum=".$out[1].")";
         
         $status = "I";
 
-        if ($bill_output["code"] != 1) {
+        if ($bill_output['code'] != 1) {
             $error = $bill_output ["billmes"];
             $status = "F";
         } else {
@@ -196,16 +196,16 @@ $bill_output[billmes].= " (TrnxNum=".$out[1].")";
         }
 
         if ($bill_output ["cvvmes"])
-            $cart_details["cvvMessage"] = $bill_output["cvvmes"];
+            $cart_details['cvvMessage'] = $bill_output['cvvmes'];
         else
-            $cart_details["cvvMessage"] = null;
+            $cart_details['cvvMessage'] = null;
 
         if ($bill_output ["avsmes"])
-            $cart_details["avsMessage"] = $bill_output["avsmes"];
+            $cart_details['avsMessage'] = $bill_output['avsmes'];
         else
-            $cart_details["avsMessage"] = null;
+            $cart_details['avsMessage'] = null;
 
-        $cart_details["error"] = $error;
+        $cart_details['error'] = $error;
         $lite_cart->set("status", $status);
         $lite_cart->set('details', $cart_details);
         $lite_cart->set('detailLabels', $cart_labels);

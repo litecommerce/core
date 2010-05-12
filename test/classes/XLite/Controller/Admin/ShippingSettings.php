@@ -56,7 +56,7 @@ class XLite_Controller_Admin_ShippingSettings extends XLite_Controller_Admin_Abs
         $shippings = $shipping->findAll();
         $this->_shippings = array();
         foreach($shippings as $shipping) {
-            if (in_array($shipping->get("class"), $modules) && $shipping->get("enabled")) {
+            if (in_array($shipping->get('class'), $modules) && $shipping->get('enabled')) {
                 $this->_shippings[] = $shipping;
             }
         }

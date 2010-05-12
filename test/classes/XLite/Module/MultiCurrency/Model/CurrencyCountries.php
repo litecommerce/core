@@ -52,7 +52,7 @@ class XLite_Module_MultiCurrency_Model_CurrencyCountries extends XLite_Model_Abs
 
     function inCurrencyCountries($country_code) 
     {
-        $countries = unserialize($this->get("countries"));
+        $countries = unserialize($this->get('countries'));
         if (empty($countries)) return false;
         return in_array($country_code, $countries);
     }

@@ -37,7 +37,7 @@ class XLite_Module_Egoods_Model_DownloadsStatistics extends XLite_Model_Abstract
 {
     public $alias = "downloads_statistics";
 
-    public $primaryKey = array("file_id");
+    public $primaryKey = array('file_id');
     public $defaultOrder = "file_id";
 
     public $fields = array(

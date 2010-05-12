@@ -55,10 +55,10 @@ class XLite_Model_Membership extends XLite_Model_Abstract
         $config = new XLite_Model_Config();
 
         $config->find("name = 'membershipsCollection' AND category = 'Memberships'");
-        $this->memberships = $memberships = unserialize($config->get("value"));
+        $this->memberships = $memberships = unserialize($config->get('value'));
 
         $config->find("name = 'memberships' AND category = 'Memberships'");
-        $oldMemberships = unserialize($config->get("value"));
+        $oldMemberships = unserialize($config->get('value'));
         if (!is_array($memberships)) {
             if (is_array($oldMemberships) && count($oldMemberships) > 0) {
                 $id = 1;
@@ -94,7 +94,7 @@ class XLite_Model_Membership extends XLite_Model_Abstract
     public function __construct() 
     {
         parent::__construct();
-        $memberships = $this->get("memberships");
+        $memberships = $this->get('memberships');
         $args = func_get_args();
         if (count($args)) {
             if (!is_null($args[0])) {
@@ -106,7 +106,7 @@ class XLite_Model_Membership extends XLite_Model_Abstract
     function create() 
     {
         $max = 1;
-        $memberships = $this->get("memberships");
+        $memberships = $this->get('memberships');
         if ($memberships) {
             foreach($memberships as $membership) {
                 if ($membership['membership_id'] >= $max) {
@@ -115,10 +115,10 @@ class XLite_Model_Membership extends XLite_Model_Abstract
             }
         }
         $this->set("membership_id",$max);
-        $membershipData = $this->get("properties");
+        $membershipData = $this->get('properties');
         $membershipData['membership'] = $this->stripInvalidData($membershipData['membership']);
-        if (strlen($membershipData["membership"]) > 32) {
-        	$membershipData["membership"] = substr($membershipData["membership"], 0, 32);
+        if (strlen($membershipData['membership']) > 32) {
+        	$membershipData['membership'] = substr($membershipData['membership'], 0, 32);
         }
         $memberships[$max] = $membershipData;
         $memberships = (array) $this->sortMemberships($memberships);
@@ -129,13 +129,13 @@ class XLite_Model_Membership extends XLite_Model_Abstract
     function update() 
     {
         $config = new XLite_Model_Config();
-        $memberships = $this->get("memberships");
-        $membershipData = $this->get("properties");
+        $memberships = $this->get('memberships');
+        $membershipData = $this->get('properties');
         $membershipData['membership'] = $this->stripInvalidData($membershipData['membership']);
-        if (strlen($membershipData["membership"]) > 32) {
-        	$membershipData["membership"] = substr($membershipData["membership"], 0, 32);
+        if (strlen($membershipData['membership']) > 32) {
+        	$membershipData['membership'] = substr($membershipData['membership'], 0, 32);
         }
-        $memberships[$this->get("membership_id")] = $membershipData;
+        $memberships[$this->get('membership_id')] = $membershipData;
         $memberships = (array) $this->sortMemberships($memberships);
         $config->createOption("Memberships","membershipsCollection", serialize($memberships));
     }
@@ -143,8 +143,8 @@ class XLite_Model_Membership extends XLite_Model_Abstract
     function delete() 
     {
         $config = new XLite_Model_Config();
-        $memberships = $this->get("memberships");
-        unset($memberships[$this->get("membership_id")]);
+        $memberships = $this->get('memberships');
+        unset($memberships[$this->get('membership_id')]);
         $memberships = (array) $this->sortMemberships($memberships);
         $config->createOption("Memberships","membershipsCollection", serialize($memberships));
     }
@@ -162,7 +162,7 @@ class XLite_Model_Membership extends XLite_Model_Abstract
 
     function sortMemberships($memberships = null)
     {
-        if (!is_array($memberships)) $memberships = (array) $this->get("memberships");
+        if (!is_array($memberships)) $memberships = (array) $this->get('memberships');
 
         uasort($memberships, array($this, "cmp"));
         return $memberships;
@@ -178,7 +178,7 @@ class XLite_Model_Membership extends XLite_Model_Abstract
     {
         $count = 0;
         if (is_null($this->countRequested)) {
-            $prop = $this->get("properties");
+            $prop = $this->get('properties');
             if (is_array($prop)) {
                 $profile = new XLite_Model_Profile();
                 $where = $profile->_buildWhere("(pending_membership<>membership AND pending_membership='".$prop['membership']."')");
@@ -196,7 +196,7 @@ class XLite_Model_Membership extends XLite_Model_Abstract
     {
         $count = 0;
         if (is_null($this->countGranted)) {
-            $prop  = $this->get("properties");
+            $prop  = $this->get('properties');
             if (is_array($prop)) {
                 $profile = new XLite_Model_Profile();
                 $where = $profile->_buildWhere("membership='".$prop['membership']."'");

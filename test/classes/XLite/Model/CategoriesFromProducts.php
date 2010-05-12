@@ -45,7 +45,7 @@ class XLite_Model_CategoriesFromProducts extends XLite_Model_Category
             $fields[] = $table.".".$field." $field";
         }
         $fields = implode(',', $fields);
-        $link_table = $this->db->getTableByAlias("product_links");
+        $link_table = $this->db->getTableByAlias('product_links');
         $sql = "SELECT $fields FROM $table, $link_table links WHERE $table.category_id=links.category_id AND links.product_id='$this->prodId'";
         if (!empty($where)) {
             $sql .= " AND $where";

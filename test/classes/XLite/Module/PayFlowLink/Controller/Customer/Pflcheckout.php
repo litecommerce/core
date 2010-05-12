@@ -39,14 +39,14 @@ class XLite_Module_PayFlowLink_Controller_Customer_Pflcheckout extends XLite_Con
 
     function init()
     {
-    	if ($_REQUEST["target"] == "pflcheckout") {
+    	if ($_REQUEST['target'] == "pflcheckout") {
     		$this->registerForm = new XLite_Base();
     	}
 
     	parent::init();
 
         // go to cart view if cart is empty
-        if ($this->target == "pflcheckout" && $this->cart->is("empty")) {
+        if ($this->target == "pflcheckout" && $this->cart->is('empty')) {
             $this->redirect("cart.php?target=cart");
             return;
         }
@@ -59,7 +59,7 @@ class XLite_Module_PayFlowLink_Controller_Customer_Pflcheckout extends XLite_Con
         $this->cart->set("status", "Q");
         $this->cart->update();
 
-        $pm = $this->cart->get("PaymentMethod");
+        $pm = $this->cart->get('PaymentMethod');
 
 ?>
 <HTML>
@@ -67,7 +67,7 @@ class XLite_Module_PayFlowLink_Controller_Customer_Pflcheckout extends XLite_Con
 <FORM name="frm" action="<?php echo $this->cart->getComplex('paymentMethod.params.gateway_url'); ?>" method="POST">
 <INPUT type=hidden name="login" value="<?php echo $this->cart->getComplex('paymentMethod.params.login'); ?>">
 <INPUT type=hidden name="partner" value="<?php echo $this->cart->getComplex('paymentMethod.params.partner'); ?>">
-<INPUT type=hidden name="amount" value="<?php echo $this->cart->get("total"); ?>">
+<INPUT type=hidden name="amount" value="<?php echo $this->cart->get('total'); ?>">
 <INPUT type=hidden name=type value=S>
 <INPUT type=hidden name=orderform value=true>
 <INPUT type=hidden name=method value=cc>

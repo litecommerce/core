@@ -61,11 +61,11 @@ class XLite_Module_AdvancedSecurity_Model_Order extends XLite_Model_Order implem
     {
         $details = parent::getDetails();
         $oldDetails = $details;
-        if ($this->xlite->is("adminZone") && (!$this->_detailsModified)) {
-            if (!is_null($this->session->get("masterPassword"))) {
+        if ($this->xlite->is('adminZone') && (!$this->_detailsModified)) {
+            if (!is_null($this->session->get('masterPassword'))) {
                 $details = $this->getSecureDetails();
             }
-        } elseif (!$this->xlite->is("adminZone") && !is_null($this->_secureDetails)) {
+        } elseif (!$this->xlite->is('adminZone') && !is_null($this->_secureDetails)) {
             $details = $this->_secureDetails;
         }
         if (!(isset($oldDetails) && is_array($oldDetails))) {
@@ -81,7 +81,7 @@ class XLite_Module_AdvancedSecurity_Model_Order extends XLite_Model_Order implem
     function getSecureDetails() 
     {
         if (is_null($this->_secureDetails)) {
-            $d = parent::get("secureDetails");
+            $d = parent::get('secureDetails');
             if ($d == '') {
                 $this->_secureDetails = parent::getDetails();
             } else {
@@ -129,12 +129,12 @@ class XLite_Module_AdvancedSecurity_Model_Order extends XLite_Model_Order implem
 
     function update()
     {
-        $details = $this->get("details");
-        if (!empty($details) && $this->get("payment_method") == "CreditCard" && $this->getComplex('config.AdvancedSecurity.gpg_crypt_db')) {
-            if (!$this->xlite->is("adminZone")) { // customer is placing order
+        $details = $this->get('details');
+        if (!empty($details) && $this->get('payment_method') == "CreditCard" && $this->getComplex('config.AdvancedSecurity.gpg_crypt_db')) {
+            if (!$this->xlite->is('adminZone')) { // customer is placing order
                 $this->setSecureDetails($details);
                 // check if GnuPG failed to encrypt data (invalid pubkey?)
-                $check = parent::get("secureDetails");
+                $check = parent::get('secureDetails');
                 if (empty($check)) {
                     $this->set("status", "F");
                     return;
@@ -144,7 +144,7 @@ class XLite_Module_AdvancedSecurity_Model_Order extends XLite_Model_Order implem
                     $details[$label] = ORDER_CRYPTED_MESSAGE;
                 }
                 $this->set("details", $details);
-            } elseif (!is_null($this->session->get("masterPassword"))) {
+            } elseif (!is_null($this->session->get('masterPassword'))) {
                 $this->setSecureDetails($details);
                 $labels = $this->getDetailLabels();
                 foreach ($labels as $label => $value) {
@@ -160,7 +160,7 @@ class XLite_Module_AdvancedSecurity_Model_Order extends XLite_Model_Order implem
 
     function encrypt()
     {
-        $secureDetails = parent::get("secureDetails");
+        $secureDetails = parent::get('secureDetails');
         if ($this->gpg->isEncoded($secureDetails)) {
             return;
         }
@@ -176,7 +176,7 @@ class XLite_Module_AdvancedSecurity_Model_Order extends XLite_Model_Order implem
 
     function decrypt($passphrase)
     {
-        $secureDetails = parent::get("secureDetails");
+        $secureDetails = parent::get('secureDetails');
         if (!$this->gpg->isEncoded($secureDetails)) {
             return;
         }

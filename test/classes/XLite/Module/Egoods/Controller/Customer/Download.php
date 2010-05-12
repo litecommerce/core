@@ -35,7 +35,7 @@
  */
 class XLite_Module_Egoods_Controller_Customer_Download extends XLite_Controller_Abstract
 {
-    public $params = array("mode");
+    public $params = array('mode');
 
     function action_download()
     {
@@ -57,7 +57,7 @@ class XLite_Module_Egoods_Controller_Customer_Download extends XLite_Controller_
             
             // check for product download availability
             if (!$dl->is('active')) {
-                $reason = $dl->get("deniedReason");
+                $reason = $dl->get('deniedReason');
                 $this->set('returnUrl', 'cart.php?target=download&mode=file_access_denied&reason=' . $reason);
                 return;
             }
@@ -85,7 +85,7 @@ class XLite_Module_Egoods_Controller_Customer_Download extends XLite_Controller_
             $ds = new XLite_Module_Egoods_Model_DownloadsStatistics();
             $ds->set('file_id', $df->get('file_id'));
             $ds->set('date', $time);
-            $ds->set('headers', "HTTP_REFERER=" . $_SERVER["HTTP_REFERER"] . ", REMOTE_ADDR=" . $_SERVER["REMOTE_ADDR"]);
+            $ds->set('headers', "HTTP_REFERER=" . $_SERVER['HTTP_REFERER'] . ", REMOTE_ADDR=" . $_SERVER['REMOTE_ADDR']);
             $ds->create();
             exit();
         } else {
@@ -125,7 +125,7 @@ class XLite_Module_Egoods_Controller_Customer_Download extends XLite_Controller_
         $ds = new XLite_Module_Egoods_Model_DownloadsStatistics();
         $ds->set('file_id', $df->get('file_id'));
         $ds->set('date', $time);
-        $ds->set('headers', "HTTP_REFERER=" . $_SERVER["HTTP_REFERER"] . ", REMOTE_ADDR=" . $_SERVER["REMOTE_ADDR"]);
+        $ds->set('headers', "HTTP_REFERER=" . $_SERVER['HTTP_REFERER'] . ", REMOTE_ADDR=" . $_SERVER['REMOTE_ADDR']);
         $ds->create();
         exit();
     }

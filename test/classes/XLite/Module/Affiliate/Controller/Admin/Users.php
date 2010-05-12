@@ -46,7 +46,7 @@ class XLite_Module_Affiliate_Controller_Admin_Users extends XLite_Controller_Adm
                 if (!is_object($user)) {
                     $user = new XLite_Model_Profile($user['data']['profile_id']);
                 }
-                if ($user->is("pendingPartner")) {
+                if ($user->is('pendingPartner')) {
                     $this->pendingPartners[] = $user;
                 }
             }

@@ -60,7 +60,7 @@ class XLite_Controller_Admin_Order extends XLite_Controller_Admin_Abstract
     function getOrder()
     {
         if (is_null($this->order)) {
-            $this->order = new XLite_Model_Order($this->get("order_id"));
+            $this->order = new XLite_Model_Order($this->get('order_id'));
         }
         return $this->order;
     }
@@ -70,10 +70,10 @@ class XLite_Controller_Admin_Order extends XLite_Controller_Admin_Abstract
         $status = $this->xlite->config->getComplex('General.clear_cc_info');
         $postData = XLite_Core_Request::getInstance()->getData();
 
-        if ($status != "N" && ($postData["status"] == $status && $status != $this->order->get("status"))) {
-            $postData["details"]["cc_number"] = "--- Removed ---";
-            $postData["details"]["cc_date"] = "--- Removed ---";
-            $postData["details"]["cc_cvv2"] = "--- Removed ---";
+        if ($status != "N" && ($postData['status'] == $status && $status != $this->order->get('status'))) {
+            $postData['details']["cc_number"] = "--- Removed ---";
+            $postData['details']["cc_date"] = "--- Removed ---";
+            $postData['details']["cc_cvv2"] = "--- Removed ---";
         }
         $this->getOrder()->set('properties', $postData);
         $this->order->update();

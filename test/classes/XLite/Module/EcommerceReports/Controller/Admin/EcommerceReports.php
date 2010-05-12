@@ -105,13 +105,13 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports extends XL
             if ($this->search_period == 6) {
                 $this->period = array(
                     "fromDate" => mktime(0, 0, 0,
-                        $this->get("startDateMonth"),
-                        $this->get("startDateDay"),
-                        $this->get("startDateYear")),
+                        $this->get('startDateMonth'),
+                        $this->get('startDateDay'),
+                        $this->get('startDateYear')),
                     "toDate"   => mktime(23, 59, 59,
-                        $this->get("endDateMonth"),
-                        $this->get("endDateDay"),
-                        $this->get("endDateYear"))
+                        $this->get('endDateMonth'),
+                        $this->get('endDateDay'),
+                        $this->get('endDateYear'))
                 );
             } else {
                 list($startDateRaw, $endDateRaw) = $this->getDatesRaw($this->search_period);
@@ -223,7 +223,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports extends XL
     {
         static $currentDate;
 
-        $step = "_next" . ucfirst($this->get("stat_step"));
+        $step = "_next" . ucfirst($this->get('stat_step'));
         if (isset($currentDate) && $currentDate == $this->getComplex('period.toDate')) {
             return false;
         }
@@ -236,10 +236,10 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports extends XL
 
     function _nextDay($ts)
     {
-        if ($ts["day"] + 1 > $ts["days"]) {
-            $date = @mktime(0, 0, 0, $ts["month"] + 1, 1, $ts["year"]);
+        if ($ts['day'] + 1 > $ts['days']) {
+            $date = @mktime(0, 0, 0, $ts['month'] + 1, 1, $ts['year']);
         } else {
-            $date = @mktime(0, 0, 0, $ts["month"], $ts["day"] + 1, $ts["year"]);
+            $date = @mktime(0, 0, 0, $ts['month'], $ts['day'] + 1, $ts['year']);
         }
         return $date;
     }
@@ -247,49 +247,49 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports extends XL
     function _nextWeek($ts)
     {
         $adj = 7;
-        if ($ts["weekday"] != 1) { // is NOT a Monday
-            $adj = 8 - $ts["weekday"];
+        if ($ts['weekday'] != 1) { // is NOT a Monday
+            $adj = 8 - $ts['weekday'];
         }
-        $date = @mktime(0, 0, 0, $ts["month"], $ts["day"] + $adj, $ts["year"]);
+        $date = @mktime(0, 0, 0, $ts['month'], $ts['day'] + $adj, $ts['year']);
         return $date;
     }
 
     function _nextQuarter($ts)
     {
         $quarters = array(1 => 1, 2 => 4, 3 => 7, 4 => 10);
-        if ($ts["quarter"] == 4) {
-            $date = @mktime(0, 0, 0, 1, 1, $ts["year"] + 1);
+        if ($ts['quarter'] == 4) {
+            $date = @mktime(0, 0, 0, 1, 1, $ts['year'] + 1);
         } else {
-            $date = @mktime(0, 0, 0, $quarters[$ts["quarter"] + 1], 1, $ts["year"]);
+            $date = @mktime(0, 0, 0, $quarters[$ts['quarter'] + 1], 1, $ts['year']);
         }
         return $date;
     }
 
     function _nextMonth($ts)
     {
-        if ($ts["month"] + 1 > 12) {
-            $date = @mktime(0, 0, 0, 1, 1, $ts["year"] + 1);
+        if ($ts['month'] + 1 > 12) {
+            $date = @mktime(0, 0, 0, 1, 1, $ts['year'] + 1);
         } else {
-            $date = @mktime(0, 0, 0, $ts["month"] + 1, 1, $ts["year"]);
+            $date = @mktime(0, 0, 0, $ts['month'] + 1, 1, $ts['year']);
         }
         return $date;
     }
 
     function _nextYear($ts)
     {
-        $date = @mktime(0, 0, 0, 1, 1, $ts["year"] + 1);
+        $date = @mktime(0, 0, 0, 1, 1, $ts['year'] + 1);
         return $date;
     }
 
     function tsToDate($stamp)
     {
         $ts = array();
-        $ts["day"] = @date("j", $stamp);
-        $ts["weekday"] = @date("w", $stamp);
-        $ts["days"] = ($dt = @date("t", $stamp)) == 0 ? 7 : $dt;
-        $ts["month"] = @date("n", $stamp);
-        $ts["quarter"] = ceil($ts["month"] / 3);
-        $ts["year"] = @date("Y", $stamp);
+        $ts['day'] = @date("j", $stamp);
+        $ts['weekday'] = @date("w", $stamp);
+        $ts['days'] = ($dt = @date("t", $stamp)) == 0 ? 7 : $dt;
+        $ts['month'] = @date("n", $stamp);
+        $ts['quarter'] = ceil($ts['month'] / 3);
+        $ts['year'] = @date("Y", $stamp);
         return $ts;
     }
 
@@ -301,7 +301,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports extends XL
     function getProductIDs() 
     {
         $ids = array();
-        $pid = $this->get("product_id");
+        $pid = $this->get('product_id');
         if (!empty($pid)) {
             $ids = array($pid);
         }

@@ -54,8 +54,8 @@ class XLite_Module_AOM_Model_Wysiwyg_Mediator extends XLite_Model_Wysiwyg_Mediat
         $layout = XLite_Model_Layout::getInstance();
 
         $list = $layout->list;
-        unset($list["order/order.tpl"]);
-        unset($list["order/search_form.tpl"]);
+        unset($list['order/order.tpl']);
+        unset($list['order/search_form.tpl']);
         $layout->list = $list;
     }
 }

@@ -66,8 +66,8 @@ class XLite_Controller_Admin_ShippingRates extends XLite_Controller_Admin_Shippi
         $shippings = $shipping->findAll();
         $validShippings = array("-1");
         foreach($shippings as $shipping) {
-            if (in_array($shipping->get("class"), $modules) && $shipping->get("enabled")) {
-                $validShippings[] = $shipping->get("shipping_id");
+            if (in_array($shipping->get('class'), $modules) && $shipping->get('enabled')) {
+                $validShippings[] = $shipping->get('shipping_id');
             }
         }
 
@@ -76,7 +76,7 @@ class XLite_Controller_Admin_ShippingRates extends XLite_Controller_Admin_Shippi
         $excluded_shipping_rates = array();
         foreach ($shipping_rates as $key => $val) {
             $shipping_rates[$key]->pos = $i++;
-            if (!in_array($val->get("shipping_id"), $validShippings)) {
+            if (!in_array($val->get('shipping_id'), $validShippings)) {
             	$excluded_shipping_rates[$key] = true;
             }
         }
@@ -102,7 +102,7 @@ class XLite_Controller_Admin_ShippingRates extends XLite_Controller_Admin_Shippi
 
     function action_update()
     {
-        $shippingRates = $this->get("shippingRates");
+        $shippingRates = $this->get('shippingRates');
         foreach(XLite_Core_Request::getInstance()->rate as $key => $rate_data) {
             if (array_key_exists($key, $shippingRates)) {
                 $rate = new XLite_Model_ShippingRate();
@@ -121,7 +121,7 @@ class XLite_Controller_Admin_ShippingRates extends XLite_Controller_Admin_Shippi
 
     function action_delete()
     {
-        $shippingRates = $this->get("shippingRates");
+        $shippingRates = $this->get('shippingRates');
         $rate = $shippingRates[XLite_Core_Request::getInstance()->deleted_rate];
         $rate->delete();
     }

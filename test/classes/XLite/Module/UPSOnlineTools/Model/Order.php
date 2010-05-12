@@ -73,9 +73,9 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
 
     function assignFirstShippingRate()
     {
-        $rates = $this->get("shippingRates");
+        $rates = $this->get('shippingRates');
         $new_rate = array_shift($rates);
-        $this->set("shippingMethod", $new_rate->get("shipping"));
+        $this->set("shippingMethod", $new_rate->get('shipping'));
     }
 
     function getCarrier()
@@ -83,19 +83,19 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
         if (!isset($this->_carrier)) {
             $carriers = $this->getCarriers();
 
-            if ($this->get("shipping_id")) {
+            if ($this->get('shipping_id')) {
                 $sm = new XLite_Model_Shipping();
 
                 // return NULL if shipping method not available
-                if (!$sm->find("shipping_id='".$this->get("shipping_id")."' AND enabled='1'")) {
+                if (!$sm->find("shipping_id='".$this->get('shipping_id')."' AND enabled='1'")) {
                     $this->assignFirstShippingRate();
                     $this->_carrier = null;
                     return "";
                 }
 
-                $sm = XLite_Model_Shipping::getInstanceByName($sm->get('class'), $this->get("shipping_id"));
+                $sm = XLite_Model_Shipping::getInstanceByName($sm->get('class'), $this->get('shipping_id'));
 
-                return $this->_carrier = $sm->get("class");
+                return $this->_carrier = $sm->get('class');
             }
 
             $this->_carrier = 1 < count($carriers)
@@ -236,13 +236,13 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
         }
 
         $result = array();
-        $items = $this->get("items");
+        $items = $this->get('items');
         foreach ($items as $item_idx => $item) {
             $result[] = array
             (
                 $item_idx,
-                $item->get("key"),
-                $item->get("amount")
+                $item->get('key'),
+                $item->get('amount')
             );
         }
 
@@ -253,10 +253,10 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
     {
         $items = array();
         $global_id = 1;
-        foreach ((array)$this->get("items") as $item) {
+        foreach ((array)$this->get('items') as $item) {
             $obj = $item->getPackItem();
             $obj->GlobalId = $global_id;
-            $items = array_merge($items, array_fill(0, $item->get("amount"), $obj));
+            $items = array_merge($items, array_fill(0, $item->get('amount'), $obj));
             $global_id++;
         }
 
@@ -269,7 +269,7 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
 
         // build list of all used packaging
         $packaging_ids = array($this->xlite->getComplex('config.UPSOnlineTools.packaging_type'));
-        foreach ((array)$this->get("items") as $item) {
+        foreach ((array)$this->get('items') as $item) {
             $packaging_ids[] = $item->getComplex('product.ups_packaging');
         }
         $packaging_ids = array_unique($packaging_ids);
@@ -298,7 +298,7 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
         foreach ($packaging_ids as $packaging_id) {
             $itemsProcess = array();
             foreach ($items as $item) {
-                $packaging = $item->get("packaging");
+                $packaging = $item->get('packaging');
 
                 if ($packaging == self::PACKAGING_TYPE_NONE) {
                     $packaging = $this->xlite->getComplex('config.UPSOnlineTools.packaging_type');
@@ -359,7 +359,7 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
 
         $this->set("ups_containers", $ups_containers);
 
-        if (!$this->xlite->get("PromotionEnabled")) {
+        if (!$this->xlite->get('PromotionEnabled')) {
             $this->update();
         }
 
@@ -375,7 +375,7 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
 
         $container_index = 1;
         foreach ((array)$export_data as $conId=>$con) {
-            $export_data[$conId]["container_id"] = $container_index++;
+            $export_data[$conId]['container_id'] = $container_index++;
         }
         return $export_data;
     }
@@ -486,7 +486,7 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
                 $pack = $sm->getUPSContainerDims($packaging_type);
 
                 $const_items = $items;
-                $ups_containers = UPSOnlineTools_solve_binpack($pack["width"], $pack["length"], $pack["height"], $pack["weight_limit"], $items);
+                $ups_containers = UPSOnlineTools_solve_binpack($pack['width'], $pack['length'], $pack['height'], $pack['weight_limit'], $items);
 
                 // if can't place all items in defined container - fit container size
                 if ($ups_containers === false || count($ups_containers) != 1 || count($items) > 0) {
@@ -529,7 +529,7 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
                 $sm = new XLite_Module_UPSOnlineTools_Model_Shipping_Ups();
                 $pack = $sm->getUPSContainerDims($packaging_type);
 
-                $ups_containers = UPSOnlineTools_solve_binpack($pack["width"], $pack["length"], $pack["height"], $pack["weight_limit"], $items);
+                $ups_containers = UPSOnlineTools_solve_binpack($pack['width'], $pack['length'], $pack['height'], $pack['weight_limit'], $items);
 
                 if ($ups_containers === false/* || count($items) > 0*/) {
                     // return "oversized" items
@@ -555,7 +555,7 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
 
                 foreach ((array)$container->getLevels() as $level) {
                     foreach ((array)$level->getItems() as $item) {
-                        $item_id = $item->get("item_id");
+                        $item_id = $item->get('item_id');
 
                         $oi = new XLite_Model_OrderItem();
                         if ($oi->find("item_id='".addslashes($item_id)."'")) {

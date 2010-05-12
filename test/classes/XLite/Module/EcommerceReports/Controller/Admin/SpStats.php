@@ -42,7 +42,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Modul
             $table = $this->getComplex('order.table');
             $ids = $this->order->db->getAll("SELECT shipping_id, COUNT(*) as num_used FROM $table WHERE status!='T' GROUP BY shipping_id ORDER BY num_used DESC");
             foreach ($ids as $id) {
-                $sid = $id["shipping_id"];
+                $sid = $id['shipping_id'];
                 $this->shippingMethods[] = $this->getShippingMethod($sid);
             }
         }
@@ -67,7 +67,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Modul
             $table = $this->getComplex('order.table');
             $pms = $this->order->db->getAll("SELECT payment_method, COUNT(*) as num_used FROM $table WHERE status!='T' GROUP BY payment_method ORDER BY num_used DESC");
             foreach ($pms as $id) {
-                $pn = $id["payment_method"];
+                $pn = $id['payment_method'];
                 $this->paymentMethods[] = $this->getPaymentMethod($pn);
             }
         }
@@ -101,25 +101,25 @@ class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Modul
 
     function sumOrders($row) 
     {
-        $sid = $row["shipping_id"];
-        $pid = $row["payment_method"];
-        $sok = $this->get("shipping_id") == "all" ? true : $this->get("shipping_id") == $sid;
-        $pok = $this->get("payment_method") == "all" ? true : $this->get("payment_method") == $pid;
+        $sid = $row['shipping_id'];
+        $pid = $row['payment_method'];
+        $sok = $this->get('shipping_id') == "all" ? true : $this->get('shipping_id') == $sid;
+        $pok = $this->get('payment_method') == "all" ? true : $this->get('payment_method') == $pid;
         if ($sok && $pok) {
             $hash = $sid."-".$pid;
             if (!isset($this->orders[$hash])) {
                 $od = array();
-                $od["orders"] = 1;
-                $od["total"] = $row["total"];
-                $od["percent"] = round(100 / $this->totalOrders, 2);
-                $od["payment_method"] = $this->getPaymentMethod($row["payment_method"]);
-                $od["shipping_method"] = $this->getShippingMethod($row["shipping_id"]);
+                $od['orders'] = 1;
+                $od['total'] = $row['total'];
+                $od['percent'] = round(100 / $this->totalOrders, 2);
+                $od['payment_method'] = $this->getPaymentMethod($row['payment_method']);
+                $od['shipping_method'] = $this->getShippingMethod($row['shipping_id']);
                 $this->orders[$hash] = $od;
             } else {
                 $od = $this->orders[$hash];
-                $od["orders"]++;
-                $od["total"] += $row["total"];
-                $od["percent"] = round($od["orders"] * 100 / $this->totalOrders, 2);
+                $od['orders']++;
+                $od['total'] += $row['total'];
+                $od['percent'] = round($od['orders'] * 100 / $this->totalOrders, 2);
             }
         }
     }
@@ -136,7 +136,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Modul
     {
         $total = 0;
         foreach($od as $o) {
-            $total += $o["orders"];
+            $total += $o['orders'];
         }
         return $total;
     }

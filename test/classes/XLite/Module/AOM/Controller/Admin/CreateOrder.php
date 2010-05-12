@@ -45,15 +45,15 @@ class XLite_Module_AOM_Controller_Admin_CreateOrder extends XLite_Controller_Adm
 
     function init() 
     {
-        $ordersUpdated = $this->session->get("ordersUpdated") ? $this->session->get("ordersUpdated") : array();
+        $ordersUpdated = $this->session->get('ordersUpdated') ? $this->session->get('ordersUpdated') : array();
         parent::init();
-        if(isset($ordersUpdated[$this->get("order_id")])) {
-            $order = $this->get("cloneOrder");
+        if(isset($ordersUpdated[$this->get('order_id')])) {
+            $order = $this->get('cloneOrder');
             if (!$order->isEmpty()) {
-                $this->pages["order_preview"] = "Review and Save Order";
+                $this->pages['order_preview'] = "Review and Save Order";
             } else {
                 if ($this->page == "order_preview") {
-                    $this->redirect("admin.php?target=create_order&order_id=".$this->get("order_id")."&page=order_edit");
+                    $this->redirect("admin.php?target=create_order&order_id=".$this->get('order_id')."&page=order_edit");
                 }
             }
         }
@@ -66,7 +66,7 @@ class XLite_Module_AOM_Controller_Admin_CreateOrder extends XLite_Controller_Adm
 
     function getCloneProfile() 
     {
-        if (!$this->get("order_id")) {
+        if (!$this->get('order_id')) {
             return null;
         }
         return parent::getProfile();
@@ -82,32 +82,32 @@ class XLite_Module_AOM_Controller_Admin_CreateOrder extends XLite_Controller_Adm
         $orderHistory = new XLite_Module_AOM_Model_OrderHistory();
         $orderHistory->log($order, null, null,"create_order");
                         
-        $this->set("returnUrl","admin.php?target=create_order&page=order_edit&mode=products&order_id=".$order->get("order_id"));
+        $this->set("returnUrl","admin.php?target=create_order&page=order_edit&mode=products&order_id=".$order->get('order_id'));
     }
 
     function action_save_changes() 
     {
-        $order = new XLite_Model_Order($this->get("order_id"));
+        $order = new XLite_Model_Order($this->get('order_id'));
         $order->set("orderStatus",$_POST['substatus']);
-        if ($order->get("payment_method") == "CreditCard") {
+        if ($order->get('payment_method') == "CreditCard") {
             $this->addDetails($order);
         }
         $order->update();
         $this->cloneUpdated(true);
-        $this->set("returnUrl","admin.php?target=order&order_id=".$this->get("order_id")."&page=order_info");
+        $this->set("returnUrl","admin.php?target=order&order_id=".$this->get('order_id')."&page=order_info");
     }
     
 
     function preUpdateProducts()
     {
- 	    $order = $this->get("cloneOrder");
-        $this->originalShippingId = $order->get("shipping_id");
+ 	    $order = $this->get('cloneOrder');
+        $this->originalShippingId = $order->get('shipping_id');
     }
 
     function postUpdateProducts()
     {
         if ($this->originalShippingId == -1) {
- 	    	$order = $this->get("cloneOrder");
+ 	    	$order = $this->get('cloneOrder');
             $order->set("shipping_id", -1);
             $order->set("shipping_cost", 0);
             $order->set("tax", 0);

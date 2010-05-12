@@ -48,12 +48,12 @@ class XLite_Module_Affiliate_Model_PlanCommission extends XLite_Model_Abstract
 
     function getProduct()
     {
-        return new XLite_Model_Product($this->get("item_id"));
+        return new XLite_Model_Product($this->get('item_id'));
     }
 
     function getCategory()
     {
-        return new XLite_Model_Category($this->get("item_id"));
+        return new XLite_Model_Category($this->get('item_id'));
     }
 
     function getBasicCommission()
@@ -92,8 +92,8 @@ class XLite_Module_Affiliate_Model_PlanCommission extends XLite_Model_Abstract
         $this->order = $order;
         $commissions = 0;
         $ap = new XLite_Module_Affiliate_Model_AffiliatePlan($order->getComplex('partner.plan'));
-        if ($ap->is("enabled")) {
-            $commissions = $this->get("orderCommissions");
+        if ($ap->is('enabled')) {
+            $commissions = $this->get('orderCommissions');
         }
         return $commissions;
     }

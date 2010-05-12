@@ -140,15 +140,15 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
 
     function connect()
     {
-        echo "Establishing connection to MySQL server <b>".$this->get("hostspec")."</b> as user <b>".$this->get("username")."</b> ...<br>";
-        $this->_connection = @mysql_connect($this->get("hostspec"), $this->get("username"), $this->get("password"));
+        echo "Establishing connection to MySQL server <b>".$this->get('hostspec')."</b> as user <b>".$this->get('username')."</b> ...<br>";
+        $this->_connection = @mysql_connect($this->get('hostspec'), $this->get('username'), $this->get('password'));
         if ($this->_connection === false) {
-            $this->error = "Can't connect to <b>" . $this->get("hostspec") . "</b> using user name <b>" . $this->get("username") . "</b>";
+            $this->error = "Can't connect to <b>" . $this->get('hostspec') . "</b> using user name <b>" . $this->get('username') . "</b>";
         } else {
-        	echo "Trying to use database <b>".$this->get("database")."</b> ...<br>";
-            $db_selected = mysql_select_db($this->get("database"), $this->_connection);
+        	echo "Trying to use database <b>".$this->get('database')."</b> ...<br>";
+            $db_selected = mysql_select_db($this->get('database'), $this->_connection);
             if ($db_selected === false) {
-            	$this->error = "Can't connect to <b>" . $this->get("database") . "</b> database (".mysql_error().")";
+            	$this->error = "Can't connect to <b>" . $this->get('database') . "</b> database (".mysql_error().")";
             	$this->_connection = false;
             }
         }
@@ -259,26 +259,26 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
         $this->categoriesHash = array();
     	$sqlQuery = "SELECT *, c.categoryid FROM xcart_categories c LEFT OUTER JOIN";
         
-        if ($this->get("db_version") == '41') {
+        if ($this->get('db_version') == '41') {
             $sqlQuery .= " xcart_images_C i ON c.categoryid=i.id LEFT OUTER JOIN xcart_category_memberships cm ON c.categoryid=cm.categoryid LEFT OUTER JOIN xcart_memberships m ON m.membershipid=cm.membershipid";
         } else {
             $sqlQuery .= " xcart_icons i ON c.categoryid=i.categoryid";
         }
        
-        if ($this->get("db_version") != 3) {
+        if ($this->get('db_version') != 3) {
         $sqlQuery .= " order by c.categoryid_path";
         }
         $this->importTable($sqlQuery, "category");
         
         $sqlQuery = "SELECT p.*, t.*, t.image as image2, t.image_type as image2_type, pr.price, p.productid FROM xcart_products as p LEFT OUTER JOIN";
-        if ($this->get("db_version") == '41') {
+        if ($this->get('db_version') == '41') {
             $sqlQuery .= " xcart_images_T as t ON p.productid=t.id LEFT OUTER JOIN xcart_pricing as pr ON p.productid=pr.productid AND pr.quantity=1 AND pr.membershipid='0'";
         } else {
             $sqlQuery .= " xcart_thumbnails t on p.productid=t.productid left outer join xcart_pricing pr on p.productid=pr.productid and pr.quantity=1 and pr.membership=''";
         }
         $this->importTable($sqlQuery, "product");
 
-        if ($this->get("db_version") != 3) {
+        if ($this->get('db_version') != 3) {
         	$this->importTable("select * from xcart_products_categories", "products_categories");
         }
 
@@ -288,7 +288,7 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
             $this->importTable("select * from xcart_product_options_ex", "optionexception");
         }
         if (!is_null($this->xlite->getComplex('mm.activeModules.DetailedImages'))) {
-            if ($this->get("db_version") == '41') {
+            if ($this->get('db_version') == '41') {
                 $this->importTable("select * from xcart_images_D", "detailedimage");
             } else {
                 $this->importTable("select * from xcart_images", "detailedimage");
@@ -328,7 +328,7 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
                     "children" => $this->childrenFromAssoc($row));
             $this->data = $data;
             $this->mapData($data, $path);
-            $this->saveRow($this->childrenToAssoc($data["children"]), $path);
+            $this->saveRow($this->childrenToAssoc($data['children']), $path);
         }
         echo "<b> Done.</b><br>";
         return true;
@@ -347,7 +347,7 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
     {
         $assoc = array();
         foreach ($children as $child) {
-            $assoc[$child["value"]] = $child["children"][0]["value"];
+            $assoc[$child['value']] = $child['children'][0]['value'];
         }
         return $assoc;
     }
@@ -368,41 +368,41 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
     			// connecting to LC database
     			$obj->db->connect();
     		}
-            if ($obj->find("product_id='" . $row["productid"] . "'")) {
+            if ($obj->find("product_id='" . $row['productid'] . "'")) {
             	$c = new XLite_Model_Category();
-            	if ($c->find("category_id='" . $row["categoryid"] . "'")) {
+            	if ($c->find("category_id='" . $row['categoryid'] . "'")) {
         			$obj->addCategory($c);
                     $obj->update();
             	}
             }
             unset($obj);
         } else if ($path == 'product') {
-            if (empty($row["sku"])) {
-                $cond = "name='".addslashes($row["name"])."'";
+            if (empty($row['sku'])) {
+                $cond = "name='".addslashes($row['name'])."'";
             } else {
-                $cond = "name='".addslashes($row["name"])."' AND sku='' OR sku='".addslashes($row["sku"])."'";
+                $cond = "name='".addslashes($row['name'])."' AND sku='' OR sku='".addslashes($row['sku'])."'";
             }
         } else if ($path == 'category'){
-        	if ($this->get("db_version") != 3) {
-        		$this->categoriesHash[$row["category_id"]] = $row["name"];
-        		if (strcmp(strval($row["categoryid_path"]), strval($row["category_id"])) != 0) {
-        			$categories_path = explode("/", $row["categoryid_path"]);
+        	if ($this->get('db_version') != 3) {
+        		$this->categoriesHash[$row['category_id']] = $row['name'];
+        		if (strcmp(strval($row['categoryid_path']), strval($row['category_id'])) != 0) {
+        			$categories_path = explode("/", $row['categoryid_path']);
         			foreach ($categories_path as $cat_path_key => $cat_path) {
         				$categories_path[$cat_path_key] = $this->categoriesHash[$cat_path];
         			}
-                    $row["name"] = implode("/", $categories_path);
+                    $row['name'] = implode("/", $categories_path);
         		}
         	}
-            $categoryName = $row["name"];
+            $categoryName = $row['name'];
             if (substr($categoryName, strlen($categoryName) - 1, 1) != "/") {
             	$categoryName .= "/";
             }
             $obj = $obj->createRecursive($categoryName);
-            if ($obj->get("name")=='') {
-                die("name=".$row["name"]." catid=".$obj->get("category_id"));
+            if ($obj->get('name')=='') {
+                die("name=".$row['name']." catid=".$obj->get('category_id'));
             }
-            $row["name"] = $obj->get("name");
-            $cond = "category_id='".addslashes($obj->get("category_id"))."'";
+            $row['name'] = $obj->get('name');
+            $cond = "category_id='".addslashes($obj->get('category_id'))."'";
         } else if ($path == 'profile'){
             foreach ($row as $key=>$val) {
                 $key = trim($key);
@@ -421,7 +421,7 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
                         // for LC version lower than 2.2
                         $state = new XLite_Model_State();
                         if ($state->find("code='$val'") || $state->find("state='$val'")) {
-                            $state_code = $state->get("state_id");
+                            $state_code = $state->get('state_id');
                         } else {
                             $state_code = -1;
                         }
@@ -431,19 +431,19 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
                 }
             }
 
-            $cond = "login='".addslashes($row["login"])."'";
+            $cond = "login='".addslashes($row['login'])."'";
         } else if ($path == 'productoption') {
             $optid = $row['option_id'];
             $cond  = "product_id='$row[product_id]' AND optclass='$row[optclass]'";
             if (in_array($optid, $this->importedProductOptions) && $obj->find($cond)) {
-                $obj->set("options", $obj->get("options")."\n".$row['options']);
+                $obj->set("options", $obj->get('options')."\n".$row['options']);
                 $obj->update();
                 unset($obj);
             } else {
                 $this->importedProductOptions[] = $optid;
             }
-            $row["opttype"] = $row["options"]=='' ? 'Text' : 'SelectBox';
-            $row["cols"] = 25;
+            $row['opttype'] = $row['options']=='' ? 'Text' : 'SelectBox';
+            $row['cols'] = 25;
         } else if ($path == 'optionexception') {
             $cond = "product_id='$row[product_id]' AND exception='$row[exception]'";
         } else if ($path == 'detailedimage') {
@@ -513,14 +513,14 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
             }
             if (is_array($map)) {
                 // map each element of $data
-                $children = $data["children"];
+                $children = $data['children'];
                 for ($i=0; $i<count($children); $i++) {
-                    if (array_key_exists($children[$i]["value"], $map)) {
+                    if (array_key_exists($children[$i]['value'], $map)) {
                         // there is a mapping for this value
-                        $this->mapScalar($children[$i], $map[$children[$i]["value"]]);
+                        $this->mapScalar($children[$i], $map[$children[$i]['value']]);
                     }
-                    if (array_key_exists($children[$i]["value"], $newfields)) {
-                        $child = array("value", $newfields[$children[$i]["value"]], "children" => $children[$i]["children"]);
+                    if (array_key_exists($children[$i]['value'], $newfields)) {
+                        $child = array("value", $newfields[$children[$i]['value']], "children" => $children[$i]['children']);
                         $children[] = $child;
                     }
                 }
@@ -529,13 +529,13 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
                 $this->mapScalar($data, $map);
             }
         }
-        $children = $data["children"];
+        $children = $data['children'];
 
         foreach ($newfields as $originalField => $newField) {
             for ($i=0; $i<count($children); $i++) {
-                if ($children[$i]["value"] == $originalField) {
+                if ($children[$i]['value'] == $originalField) {
                 	$childrenNew = $children[$i];
-                	$childrenNew["value"] = $newField;
+                	$childrenNew['value'] = $newField;
                 	$children[] = $childrenNew;
                 	break;
                 }
@@ -543,7 +543,7 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
         }
 
         for ($i=0; $i<count($children); $i++) {
-            $childPath = $path . "." . $children[$i]["value"];
+            $childPath = $path . "." . $children[$i]['value'];
             $this->mapData($children[$i], $childPath);
         }
     }
@@ -554,14 +554,14 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
             $this->$mapping($value); // call a mapping function
             return;
         }
-        $value["value"] = $mapping; // replace by constant
+        $value['value'] = $mapping; // replace by constant
     }
 
     function map_categoryid(&$id)
     {
         $this->map_id("category", $id);
-        if ($id["children"][0]["value"]) {
-            $this->category_links[] = $id["children"][0]["value"];
+        if ($id['children'][0]['value']) {
+            $this->category_links[] = $id['children'][0]['value'];
         }
     }
     
@@ -577,10 +577,10 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
     
     function map_id($class, &$v) 
     {
-        $id = $v["children"][0]["value"]; // get a single value
+        $id = $v['children'][0]['value']; // get a single value
         if ($id) {
             if (isset($this->id_map[$class][$id])) {
-                $v["children"][0]["value"] = $this->id_map[$class][$id];
+                $v['children'][0]['value'] = $this->id_map[$class][$id];
             }
         }
     }
@@ -589,14 +589,14 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
 
     function map_membership(&$data)
     {
-        $ms = $data["value"];
+        $ms = $data['value'];
         $this->memberships[$ms] = true;
     }
     
     function map_password(&$data)
     {
-        $password = $this->text_decrypt($data["children"][0]["value"]);
-        $data["children"][0]["value"] = md5($password);
+        $password = $this->text_decrypt($data['children'][0]['value']);
+        $data['children'][0]['value'] = md5($password);
     }
 
     function text_decrypt_symbol($s, $i) 

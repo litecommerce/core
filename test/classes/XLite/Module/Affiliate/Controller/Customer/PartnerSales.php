@@ -63,11 +63,11 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerSales extends XLite_Modu
             $this->salesStats = array();
             $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
             $salesStats = $pp->searchSales(
-                    $this->get("startDate"),
-                    $this->get("endDate") + 24 * 3600,
-                    $this->get("product_id"),
+                    $this->get('startDate'),
+                    $this->get('endDate') + 24 * 3600,
+                    $this->get('product_id'),
                     $this->getComplex('auth.profile.profile_id'),
-                    $this->get("payment_status"),
+                    $this->get('payment_status'),
                     null,
                     null,
                     null,
@@ -84,19 +84,19 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerSales extends XLite_Modu
         if (is_null($this->topProducts)) {
             $this->topProducts = array();
             // getSalesStats must be called first to collect order items
-            foreach ((array)$this->get("items") as $item) {
-                $id = $item->get("product_id");
+            foreach ((array)$this->get('items') as $item) {
+                $id = $item->get('product_id');
                 if (!isset($this->topProducts[$id])) {
                     $this->topProducts[$id] = array(
-                            "name" => $item->get("name"),
-                            "amount" => $item->get("amount"),
-                            "total" => $item->get("total"),
-                            "commissions" => $item->get("commissions")
+                            "name" => $item->get('name'),
+                            "amount" => $item->get('amount'),
+                            "total" => $item->get('total'),
+                            "commissions" => $item->get('commissions')
                             );
                 } else {
-                    $this->topProducts[$id]["amount"] += $item->get("amount");
-                    $this->topProducts[$id]["amount"]["total"] = sprintf("%.02f", doubleval($this->topProducts[$id]["amount"]["total"] + $item->get("total")));
-                    $this->topProducts[$id]["amount"]["commissions"] = sprintf("%.02f", doubleval($this->topProducts[$id]["amount"]["commissions"] + $item->get("commissions")));
+                    $this->topProducts[$id]['amount'] += $item->get('amount');
+                    $this->topProducts[$id]['amount']["total"] = sprintf("%.02f", doubleval($this->topProducts[$id]['amount']["total"] + $item->get('total')));
+                    $this->topProducts[$id]['amount']["commissions"] = sprintf("%.02f", doubleval($this->topProducts[$id]['amount']["commissions"] + $item->get('commissions')));
                 }
             }
             usort($this->topProducts, array($this, "cmpProducts"));
@@ -117,22 +117,22 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerSales extends XLite_Modu
     
     function sumSale($pp)
     {
-        if ($pp->get("affiliate") == 0) {  // it's a partner buyer
+        if ($pp->get('affiliate') == 0) {  // it's a partner buyer
             $this->salesStats[] = $pp;
             foreach ($pp->getComplex('order.items') as $item) {
-                $this->qty += $item->get("amount");
+                $this->qty += $item->get('amount');
             }
             if ($pp->isComplex('order.processed')) {
                 $this->items = array_merge($this->items, $pp->getComplex('order.items'));
             }
             $this->salesTotal += $pp->getComplex('order.subtotal');
         } else { // it's a partner affiliate
-            if ($pp->get("paid")) { // 
-                $this->affiliatePaid += $pp->get("commissions");
+            if ($pp->get('paid')) { // 
+                $this->affiliatePaid += $pp->get('commissions');
             } else {
-                $this->affiliatePending += $pp->get("commissions");
+                $this->affiliatePending += $pp->get('commissions');
             }
         }
-        $this->commissionsTotal += $pp->get("commissions");
+        $this->commissionsTotal += $pp->get('commissions');
     }
 }

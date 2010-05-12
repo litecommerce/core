@@ -38,19 +38,19 @@ class XLite_Module_WholesaleTrading_Controller_Admin_ExportCatalog extends XLite
     public function __construct(array $params)
     {
         parent::__construct($params);
-        $this->pages["export_wholesale_pricing"] = "Export wholesale pricing";
-        $this->pageTemplates["export_wholesale_pricing"] = "modules/WholesaleTrading/export_wholesale_pricing.tpl";
-        $this->pages["export_product_access"] = "Export product access";
-        $this->pageTemplates["export_product_access"] = "modules/WholesaleTrading/export_product_access.tpl";
-        $this->pages["export_purchase_limit"] = "Export purchase limit";
-        $this->pageTemplates["export_purchase_limit"] = "modules/WholesaleTrading/export_purchase_limit.tpl";
+        $this->pages['export_wholesale_pricing'] = "Export wholesale pricing";
+        $this->pageTemplates['export_wholesale_pricing'] = "modules/WholesaleTrading/export_wholesale_pricing.tpl";
+        $this->pages['export_product_access'] = "Export product access";
+        $this->pageTemplates['export_product_access'] = "modules/WholesaleTrading/export_product_access.tpl";
+        $this->pages['export_purchase_limit'] = "Export purchase limit";
+        $this->pageTemplates['export_purchase_limit'] = "modules/WholesaleTrading/export_purchase_limit.tpl";
     }
 
     function init()
     {
     	parent::init();
 
-    	switch ($this->get("page")) {
+    	switch ($this->get('page')) {
     		case "export_wholesale_pricing":
     			$wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
                 $wp->collectGarbage();
@@ -128,8 +128,8 @@ class XLite_Module_WholesaleTrading_Controller_Admin_ExportCatalog extends XLite
 
         // save layout & export
         $dlg = new XLite_Controller_Admin_ImportCatalog();
-        $dlg->action_layout("wholesale_pricing_layout");
-        $this->startDownload("wholesale_pricing.csv");
+        $dlg->action_layout('wholesale_pricing_layout');
+        $this->startDownload('wholesale_pricing.csv');
         $wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
         $wp->export($this->wholesale_pricing_layout, $DATA_DELIMITERS[$this->delimiter], null, "product_id");
         exit();
@@ -141,8 +141,8 @@ class XLite_Module_WholesaleTrading_Controller_Admin_ExportCatalog extends XLite
 
         // save layout & export
         $dlg = new XLite_Controller_Admin_ImportCatalog();
-        $dlg->action_layout("product_access_layout");
-        $this->startDownload("product_access.csv");
+        $dlg->action_layout('product_access_layout');
+        $this->startDownload('product_access.csv');
         
         $pa = new XLite_Module_WholesaleTrading_Model_ProductAccess();
         $pa->export($this->product_access_layout, $DATA_DELIMITERS[$this->delimiter], null, 'product_id');
@@ -154,8 +154,8 @@ class XLite_Module_WholesaleTrading_Controller_Admin_ExportCatalog extends XLite
 
         // save layout & export
         $dlg = new XLite_Controller_Admin_ImportCatalog();
-        $dlg->action_layout("purchase_limit_layout");
-        $this->startDownload("purchase_limit.csv");
+        $dlg->action_layout('purchase_limit_layout');
+        $this->startDownload('purchase_limit.csv');
         $pl = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
         $pl->export($this->purchase_limit_layout, $DATA_DELIMITERS[$this->delimiter], null, "product_id");
         exit();

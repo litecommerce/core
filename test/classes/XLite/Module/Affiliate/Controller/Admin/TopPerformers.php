@@ -57,18 +57,18 @@ class XLite_Module_Affiliate_Controller_Admin_TopPerformers extends XLite_Module
             $ss = new XLite_Module_Affiliate_Model_BannerStats();
             $this->stats = array();
             $this->stats = $ss->searchTopPerformers(
-                $this->get("startDate"),
-                $this->get("endDate")+24*3600,
-                $this->get("report_by"));
+                $this->get('startDate'),
+                $this->get('endDate')+24*3600,
+                $this->get('report_by'));
             usort($this->stats, array($this, "cmpStats"));
             $this->stats = array_reverse($this->stats);
             foreach ($this->stats as $sid => $stat) {
-                if (isset($stat["partner_id"])) {
+                if (isset($stat['partner_id'])) {
                     $partner = new XLite_Model_Profile();
-                    if (!$partner->find("profile_id=".$stat["partner_id"])) {
+                    if (!$partner->find("profile_id=".$stat['partner_id'])) {
                         $partner->set("login", "Unknown");
                     }
-                    $this->stats[$sid]["partner"] = $partner;
+                    $this->stats[$sid]['partner'] = $partner;
                 }
             }
         }

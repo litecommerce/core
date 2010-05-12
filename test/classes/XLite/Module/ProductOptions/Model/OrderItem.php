@@ -142,7 +142,7 @@ class XLite_Module_ProductOptions_Model_OrderItem extends XLite_Model_OrderItem 
         foreach ($this->getProduct()->get('optionExceptions') as $k => $v) {
 
             $ex_found = 0;
-            foreach (explode(';', $v->get("exception")) as $subvalue) {
+            foreach (explode(';', $v->get('exception')) as $subvalue) {
                 $exception = explode ('=', $subvalue, 2);
                 $subkey = trim($exception[0]);
 
@@ -256,7 +256,7 @@ class XLite_Module_ProductOptions_Model_OrderItem extends XLite_Model_OrderItem 
                 $full_price = $p->getFullPrice($this->get('amount'));
                 if (doubleval($full_price) == $full_price) {
                     if ($this->config->Taxes->prices_include_tax) {
-                        $full_price = $p->get("price"); // restore product full price without taxes
+                        $full_price = $p->get('price'); // restore product full price without taxes
                     }
 
                     $price = $full_price;

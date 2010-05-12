@@ -62,15 +62,15 @@ class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_Abstract
 
     function checkCondition($order)
     {
-        switch ($this->get("applyTo")) {
+        switch ($this->get('applyTo')) {
             case "total":
-                return ( $order->get("subtotal") >= $this->get("minamount") ) ? true : false;
+                return ( $order->get('subtotal') >= $this->get('minamount') ) ? true : false;
             break;
 
             case "product":
                 $cart = XLite_Model_Cart::getInstance();
-                foreach($cart->get("items") as $item) {
-                    if ($item->get("product_id") == $this->get("product_id")) {
+                foreach($cart->get('items') as $item) {
+                    if ($item->get('product_id') == $this->get('product_id')) {
                         return true;
                     }
                 }
@@ -80,10 +80,10 @@ class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_Abstract
             case "category":
         		require_once LC_MODULES_DIR . 'Promotion' . LC_DS . 'encoded.php';
 
-                $category = $this->get("category");
+                $category = $this->get('category');
                 $cart = XLite_Model_Cart::getInstance();
-                foreach($cart->get("items") as $item) {
-                    if (func_in_category_recursive($item->get("product"), $category)) {
+                foreach($cart->get('items') as $item) {
+                    if (func_in_category_recursive($item->get('product'), $category)) {
                         return true;
                     }
                 }
@@ -101,9 +101,9 @@ class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_Abstract
     function getPeer()
     {
         $peer = new XLite_Module_Promotion_Model_DiscountCoupon();
-        $condition = "coupon='".$this->get("coupon")."' AND parent_id='0'";
-        if ($this->get("new_link_mode")) {
-            $condition = "coupon_id='".$this->get("parent_id")."'";
+        $condition = "coupon='".$this->get('coupon')."' AND parent_id='0'";
+        if ($this->get('new_link_mode')) {
+            $condition = "coupon_id='".$this->get('parent_id')."'";
         }
 
         if (!$peer->find($condition)) {
@@ -118,10 +118,10 @@ class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_Abstract
         	return $this->category;
         }
 
-        if ($this->get("category_id")) {
-            $this->category = new XLite_Model_Category($this->get("category_id"));
+        if ($this->get('category_id')) {
+            $this->category = new XLite_Model_Category($this->get('category_id'));
             if (is_object($this->category)) {
-                if (!$this->category->find("category_id='".$this->get("category_id")."'")) {
+                if (!$this->category->find("category_id='".$this->get('category_id')."'")) {
             		$this->category = null;
             	}
             } else {
@@ -135,7 +135,7 @@ class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_Abstract
 
     function isTimesOverused()
     {
-        return ($this->get("times") > $this->get("timesUsed")) ? false : true;
+        return ($this->get('times') > $this->get('timesUsed')) ? false : true;
     }
 
     function getOrder()
@@ -144,10 +144,10 @@ class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_Abstract
         	return $this->order;
         }
 
-        if ($this->get("order_id")) {
-            $this->order = new XLite_Model_Order($this->get("order_id"));
+        if ($this->get('order_id')) {
+            $this->order = new XLite_Model_Order($this->get('order_id'));
             if (is_object($this->order)) {
-                if (!$this->order->find("order_id='".$this->get("order_id")."'")) {
+                if (!$this->order->find("order_id='".$this->get('order_id')."'")) {
             		$this->order = null;
             	}
             } else {
@@ -165,10 +165,10 @@ class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_Abstract
         	return $this->product;
         }
 
-        if ($this->get("product_id")) {
-            $this->product = new XLite_Model_Product($this->get("product_id"));
+        if ($this->get('product_id')) {
+            $this->product = new XLite_Model_Product($this->get('product_id'));
             if (is_object($this->product)) {
-                if (!$this->product->find("product_id='".$this->get("product_id")."'")) {
+                if (!$this->product->find("product_id='".$this->get('product_id')."'")) {
             		$this->product = null;
             	}
             } else {
@@ -184,13 +184,13 @@ class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_Abstract
     {
         if (is_null($this->_children)) {
             if (empty($coupon)) $coupon = $this->get('coupon');
-            $condition = "coupon='$coupon' AND (parent_id='0' OR parent_id='".$this->get("coupon_id")."')";
-            if ($this->get("new_link_mode")) {
-                $condition = "parent_id='".$this->get("coupon_id")."'";
+            $condition = "coupon='$coupon' AND (parent_id='0' OR parent_id='".$this->get('coupon_id')."')";
+            if ($this->get('new_link_mode')) {
+                $condition = "parent_id='".$this->get('coupon_id')."'";
             }
             $this->_children = (array) $this->findAll("order_id<>'0' AND $condition", "order_id");
             foreach($this->_children as $child_key => $child) {
-                if (is_null($child->get("order")) || $child->getComplex('order.status') == "T") {
+                if (is_null($child->get('order')) || $child->getComplex('order.status') == "T") {
                     unset($this->_children[$child_key]);
                 }
             }
@@ -206,9 +206,9 @@ class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_Abstract
             $orders_table = $o->getTable();
 
             if (empty($coupon)) $coupon = $this->get('coupon');
-            $condition = "coupon='$coupon' AND (parent_id='0' OR parent_id='".$this->get("coupon_id")."')";
-            if ($this->get("new_link_mode")) {
-                $condition = "parent_id='".$this->get("coupon_id")."'";
+            $condition = "coupon='$coupon' AND (parent_id='0' OR parent_id='".$this->get('coupon_id')."')";
+            if ($this->get('new_link_mode')) {
+                $condition = "parent_id='".$this->get('coupon_id')."'";
             }
             $count_query = <<<EOT
             SELECT count(*) 
@@ -235,7 +235,7 @@ EOT;
 
     function update() 
     {
-        if (($this->get("order_id") == 0) && (!$this->get("new_link_mode")) && 
+        if (($this->get('order_id') == 0) && (!$this->get('new_link_mode')) && 
             ($this->_oldCouponCode != $this->get('coupon')) &&
             (!is_null($this->_oldCouponCode))) {
             $this->reattachChildren($this->_oldCouponCode);
@@ -259,12 +259,12 @@ EOT;
         $children = $this->getChildren($coupon);
         foreach ((array)$children as $child) {
             $child->set("new_link_mode", 1); // in order to avoid recursive calls
-            $child->set("parent_id", $this->get("coupon_id"));
+            $child->set("parent_id", $this->get('coupon_id'));
             $child->update();
         }
     }
     
     function isExpired() {
-        return $this->get("expire") < time();
+        return $this->get('expire') < time();
     }
 }

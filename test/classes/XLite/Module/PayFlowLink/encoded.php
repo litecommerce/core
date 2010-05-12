@@ -22,7 +22,7 @@ $cart->set('detailLabels', $cart_labels);
 
     $cart->set("status", "I");
     $cart->update();
-    $_this->session->set("order_id", $cart->get("order_id"));
+    $_this->session->set("order_id", $cart->get('order_id'));
     $_this->session->writeClose();
 
     $cart->setComplex("details.authcode", $_GET['acode']); $cart->setComplex("detailLabels.authcode", "AuthCode");
@@ -34,7 +34,7 @@ $cart->set('detailLabels', $cart_labels);
     $cart->set("status", $status);
 
     $cart->update();
-    header("Location: cart.php?target=checkout&action=return&order_id=".$cart->get("order_id"));
+    header("Location: cart.php?target=checkout&action=return&order_id=".$cart->get('order_id'));
 }
 
 ?>

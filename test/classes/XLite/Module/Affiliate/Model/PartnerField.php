@@ -53,15 +53,15 @@ class XLite_Module_Affiliate_Model_PartnerField extends XLite_Model_Abstract
 
     function filter()
     {
-        if (!$this->xlite->is("adminZone")) {
-            return (boolean) $this->get("enabled");
+        if (!$this->xlite->is('adminZone')) {
+            return (boolean) $this->get('enabled');
         }
         return parent::filter();
     }
 
     function getFieldOptions()
     {
-        $array = explode("\n", $this->get("value"));
+        $array = explode("\n", $this->get('value'));
         for ($i = 0; $i < count($array); $i++) {
             $array[$i] = trim($array[$i]);
         }

@@ -45,7 +45,7 @@ class XLite_Validator_CaptchaValidator extends XLite_Validator_Abstract
 
     function isValid()
     {
-        $id = $this->get("id");
+        $id = $this->get('id');
 
         if(!$this->isActiveCaptchaPage($id))
             return true;
@@ -57,15 +57,15 @@ class XLite_Validator_CaptchaValidator extends XLite_Validator_Abstract
         if(!isset($_POST['action']))
             return true;
 
-        $code = $this->session->get("captcha_".$this->get("id"));
-        if(!isset($code) && $this->xlite->get("captchaValidated")) {
+        $code = $this->session->get("captcha_".$this->get('id'));
+        if(!isset($code) && $this->xlite->get('captchaValidated')) {
             return true;
         }
-        $code_submitted = strtoupper(trim($_POST[$this->get("field")]));
+        $code_submitted = strtoupper(trim($_POST[$this->get('field')]));
 
-        $result = (isset($_POST[$this->get("field")]) && !empty($_POST[$this->get("field")]) && $code == $code_submitted);
+        $result = (isset($_POST[$this->get('field')]) && !empty($_POST[$this->get('field')]) && $code == $code_submitted);
         if ($result) {
-        	$this->session->set("captcha_".$this->get("id"), null);
+        	$this->session->set("captcha_".$this->get('id'), null);
         	$this->xlite->set("captchaValidated", true);
         }
         return $result;

@@ -98,7 +98,7 @@ class XLite_Module_Affiliate_Main extends XLite_Module_Abstract
 
         // common class decorations
         // admin backoffice - specific class decorations
-        if ($this->xlite->is("adminZone")) {
+        if ($this->xlite->is('adminZone')) {
         }
         // customer frontend - specific class decorations
         else {

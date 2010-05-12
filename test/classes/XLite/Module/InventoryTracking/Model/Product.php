@@ -68,8 +68,8 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
 
     public function __construct($id = null)
     {
-        $this->fields["tracking"] = 0;
-        $this->fields["sku_variants"] = '';
+        $this->fields['tracking'] = 0;
+        $this->fields['sku_variants'] = '';
         parent::__construct($id);
     }
 
@@ -77,7 +77,7 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
     {
         if (is_null($this->inventory)) {
             $this->inventory = new XLite_Module_InventoryTracking_Model_Inventory();
-            $found = $this->inventory->find("inventory_id='".$this->get("product_id")."' AND enabled=1");
+            $found = $this->inventory->find("inventory_id='".$this->get('product_id')."' AND enabled=1");
             $this->inventory->set("found", $found);
         }
         return $this->inventory;
@@ -88,7 +88,7 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
         $result = parent::filter();
 
         // check for active inventory card amount
-        if (!$this->xlite->is("adminZone") && $this->getComplex('config.InventoryTracking.exclude_product')) {
+        if (!$this->xlite->is('adminZone') && $this->getComplex('config.InventoryTracking.exclude_product')) {
             $result &= $this->isInStock();
         }
 
@@ -156,7 +156,7 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
     {
         // delete inventory card for this product
         $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
-        $product_id = $this->get("product_id");
+        $product_id = $this->get('product_id');
         $inventories = $inventory->findAll("inventory_id='$product_id' OR inventory_id LIKE '$product_id" . "|%'");
         if (is_array($inventories)) {
             foreach($inventories as $inventory_) {
@@ -168,7 +168,7 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
 
     function parseInventoryOptions($properties)
     {
-        $options = $properties["options"];
+        $options = $properties['options'];
         $options = explode("\r\n",$options);
         foreach($options as $key => $option) {
            if (strpos($option, "=")) {
@@ -252,37 +252,37 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
     
     function cloneInventory($product, $options = false)
     {
-         $id = $product->get("product_id");
+         $id = $product->get('product_id');
 
          if (!$options)
         {
             $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
-            if(!$inventory->find("inventory_id = '".$this->get("product_id")."'")) {
+            if(!$inventory->find("inventory_id = '".$this->get('product_id')."'")) {
                 return $product;
             }
             $inventory->read();
             $clone_inventory = $inventory;
             $clone_inventory->set("inventory_id", $id);
             $clone_inventory->create();
-            $product->set("tracking", $this->get("tracking"));
+            $product->set("tracking", $this->get('tracking'));
             $product->update();
             return $product;
         } else 
         {
             $inventories = new XLite_Module_InventoryTracking_Model_Inventory();
-            $options_inventory = $inventories->findAll("inventory_id LIKE '".$this->get("product_id")."|%'", "order_by");
+            $options_inventory = $inventories->findAll("inventory_id LIKE '".$this->get('product_id')."|%'", "order_by");
             foreach ($options_inventory as $option_inventory) {
                 $option_inventory->read();
                 $inventories = $option_inventory;
 
-                $inventory_id = explode("|", $inventories->get("inventory_id"), 2);
+                $inventory_id = explode("|", $inventories->get('inventory_id'), 2);
                 $inventory_id[0] = $id;
                 $inventory_id = implode("|", $inventory_id);
                 
                 $inventories->set("inventory_id", $inventory_id);
                 $inventories->create();
             }
-            $product->set("tracking", $this->get("tracking"));
+            $product->set("tracking", $this->get('tracking'));
             $product->update();
 
             return $product;
@@ -306,9 +306,9 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
     function createDefaultInventory()
     {
         
-        if (!$this->xlite->get("ITisCloneProduct") && $this->config->getComplex('InventoryTracking.create_inventory')) {
+        if (!$this->xlite->get('ITisCloneProduct') && $this->config->getComplex('InventoryTracking.create_inventory')) {
             $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
-            $inventory->set("inventory_id",$this->get("product_id"));
+            $inventory->set("inventory_id",$this->get('product_id'));
             $inventory->set("amount",$this->config->getComplex('InventoryTracking.inventory_amount'));
             $inventory->set("low_avail_limit",$this->config->getComplex('InventoryTracking.low_amount'));
             $inventory->set("enabled",1);
@@ -329,14 +329,14 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
     {
         parent::collectGarbage();
 
-        $products_table = $this->db->getTableByAlias("products");
-        $inventories_table = $this->db->getTableByAlias("inventories");
+        $products_table = $this->db->getTableByAlias('products');
+        $inventories_table = $this->db->getTableByAlias('inventories');
         $sql = "SELECT i.inventory_id FROM $inventories_table i LEFT OUTER JOIN $products_table p ON i.inventory_id=p.product_id WHERE p.product_id IS NULL";
         $result = $this->db->getAll($sql);
 
         if (is_array($result) && count($result) > 0) {
             foreach ($result as $info) {
-                $pi = new XLite_Module_InventoryTracking_Model_Inventory($info["inventory_id"]);
+                $pi = new XLite_Module_InventoryTracking_Model_Inventory($info['inventory_id']);
                 $pi->delete();
             }
         }
@@ -344,7 +344,7 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
 
     function advancedSearch($substring, $sku = null, $category_id = null, $subcategory_search = false, $fulltext = false, $onlyindexes = false) 
     {
-        if ($this->xlite->get("ProductOptionsEnabled")) {
+        if ($this->xlite->get('ProductOptionsEnabled')) {
             return $this->advancedSearchWithSku($substring, $sku, $category_id, $subcategory_search, $fulltext, $onlyindexes);
         }
         return parent::advancedSearch($substring, $sku, $category_id, $subcategory_search, $fulltext, $onlyindexes);
@@ -391,7 +391,7 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
             $categories = $category->getSubcategories();
             if ($subcategory_search) {
                 for ($i=0; $i<count($categories); $i++) {
-                    $res1 = $this->advancedSearchWithSku($substring, $sku, $categories[$i]->get("category_id"), true, true, $onlyindexes);
+                    $res1 = $this->advancedSearchWithSku($substring, $sku, $categories[$i]->get('category_id'), true, true, $onlyindexes);
                     $result = array_merge($result, $this->_assocArray($res1, "product_id"));
                 }
             }
@@ -416,7 +416,7 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
 /**
     function changeInventorySku($old_sku, $new_sku) 
     {
-        $skus = $this->get("sku_variants");
+        $skus = $this->get('sku_variants');
         $sku_array = explode("|", $skus);
 
         // remove empty elements
@@ -453,14 +453,14 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
 
     function updateInventorySku() 
     {
-        $product_id = addslashes($this->get("product_id"));
+        $product_id = addslashes($this->get('product_id'));
         $inv = new XLite_Module_InventoryTracking_Model_Inventory();
         $invs = $inv->findAll("inventory_id LIKE '$product_id|%'");
         $sku_variants = "|";
         foreach ($invs as $i) {
-            $sku = $i->get("inventory_sku");
+            $sku = $i->get('inventory_sku');
             if (!empty($sku)) {
-                $sku_variants .= $i->get("inventory_sku")."|";
+                $sku_variants .= $i->get('inventory_sku')."|";
             }
         }
         $this->set("sku_variants", $sku_variants);
@@ -472,11 +472,11 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
         // check for AdvancedSearch module version compatibility:
         $parent_class = get_parent_class($this);
         $classMethods = array_map("strtolower", get_class_methods($parent_class));
-        if (!in_array(strtolower("_constructSearchArray"), $classMethods)) return array();
+        if (!in_array(strtolower('_constructSearchArray'), $classMethods)) return array();
 
         $result = parent::_constructSearchArray($start_price, $end_price, $start_weight, $end_weight, $sku);
         if (empty($sku)) return $result;
-        if (!$this->xlite->get("ProductOptionsEnabled")) return $result;
+        if (!$this->xlite->get('ProductOptionsEnabled')) return $result;
 
         // extend default advanced search conditions:
         $old_sku_condition = "sku LIKE '%".addslashes($sku)."%'";

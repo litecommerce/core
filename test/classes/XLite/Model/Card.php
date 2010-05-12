@@ -42,7 +42,7 @@ class XLite_Model_Card extends XLite_Model_Abstract
     */	
     public $alias = "card_types";
 
-    public $primaryKey = array("code");
+    public $primaryKey = array('code');
 
     /**
     * default payment method orider field
@@ -124,13 +124,13 @@ class XLite_Model_Card extends XLite_Model_Abstract
 
     function isCVV2()
     {
-        return (bool) $this->get("cvv2");
+        return (bool) $this->get('cvv2');
     }
 
     function filter()
     {
-        if (!$this->xlite->is("adminZone")) {
-            if (!$this->get("enabled")) {
+        if (!$this->xlite->is('adminZone')) {
+            if (!$this->get('enabled')) {
                 return false;
             }
         }

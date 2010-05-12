@@ -109,33 +109,33 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
         } else {
             $this->xlite->set("PAPartialWidget", true);
         }
-        if ($this->xlite->is("adminZone")) {
+        if ($this->xlite->is('adminZone')) {
         }*/
 
         /////////////////////////////////////
         // "RelatedProducts" section
-        if ($this->xlite->is("adminZone")) {
+        if ($this->xlite->is('adminZone')) {
         }
         /////////////////////////////////////
 
         /////////////////////////////////////
         // "Recently viewed" section
-        if ($this->xlite->is("adminZone")) {
-            $this->validateConfig("number_recently_viewed");
+        if ($this->xlite->is('adminZone')) {
+            $this->validateConfig('number_recently_viewed');
         }
         /////////////////////////////////////
 
         /////////////////////////////////////
         // "New Arrivals" section
-        if ($this->xlite->is("adminZone")) {
-            $this->validateConfig("number_new_arrivals");
-            $this->validateConfig("period_new_arrivals");
+        if ($this->xlite->is('adminZone')) {
+            $this->validateConfig('number_new_arrivals');
+            $this->validateConfig('period_new_arrivals');
         }
         /////////////////////////////////////
 
         /////////////////////////////////////
         // "Product also buy" section
-        if ($this->xlite->is("adminZone")) {
+        if ($this->xlite->is('adminZone')) {
             if ($this->config->getComplex('ProductAdviser.admin_products_also_buy_enabled') != "Y") {
                 $cfg = new XLite_Model_Config();
                 $cfg->createOption("ProductAdviser", "products_also_buy_enabled", "N");
@@ -145,7 +145,7 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
 
         /////////////////////////////////////
         // "Customer Notifications" section
-        if ($this->xlite->is("adminZone")) {
+        if ($this->xlite->is('adminZone')) {
             $this->validateConfig("number_notifications", 1);
             $customer_notifications_enabled = ($this->config->getComplex('ProductAdviser.customer_notifications_mode') == "0") ? "N" : "Y";
             $cfg = new XLite_Model_Config();
@@ -156,10 +156,10 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
         $inventorySupport = @class_exists('XLite_Module_InventoryTracking_Model_Inventory');
         $this->xlite->set("PA_InventorySupport", $inventorySupport);
         if ($inventorySupport) {
-            if (!$this->xlite->is("adminZone")) {
+            if (!$this->xlite->is('adminZone')) {
             }
         }
-        if ($this->xlite->is("adminZone")) {
+        if ($this->xlite->is('adminZone')) {
         }
         $this->xlite->set("ProductAdviserEnabled", true);
     }

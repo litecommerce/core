@@ -54,7 +54,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Cont
         $w = new XLite_View_Abstract();
         $w->component = $this;
         $w->set("template", "modules/Affiliate/payments.tpl");
-        $this->startDownload("payments.csv");
+        $this->startDownload('payments.csv');
         $w->init();
         $w->display();
 
@@ -91,7 +91,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Cont
 
     function action_mark_paid() 
     {
-        foreach ((array)$this->get("payment_paid") as $id) {
+        foreach ((array)$this->get('payment_paid') as $id) {
             $p = new XLite_Module_Affiliate_Model_PartnerPayment();
             $p->pay($id);
         }
@@ -105,10 +105,10 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Cont
             $payments = $pp->findAll();
             // summarize payments
             array_map(array($this, 'summarize'), $payments);
-            if ($this->get("account_filter") == "ready") {
+            if ($this->get('account_filter') == "ready") {
                 $payments2 = array();
                 foreach ($this->payments as $payment) {
-                    if ($payment["ready"]) {
+                    if ($payment['ready']) {
                         $payments2[] = $payment;
                     }
                 }
@@ -121,24 +121,24 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Cont
     
     function summarize($payment) 
     {
-        $id = $payment->get("partner_id");
+        $id = $payment->get('partner_id');
         if (!isset($this->payments[$id])) {
             $this->payments[$id] = array();
-            $this->payments[$id]["partner"] = $payment->get("partner");
-            $this->payments[$id]["min_limit"] = $payment->getComplex('partner.partnerPlan.payment_limit');
-            $this->payments[$id]["approved"] = 0;
-            $this->payments[$id]["pending"] = 0;
-            $this->payments[$id]["paid"] = 0;
-            $this->payments[$id]["ready"] = false;
+            $this->payments[$id]['partner'] = $payment->get('partner');
+            $this->payments[$id]['min_limit'] = $payment->getComplex('partner.partnerPlan.payment_limit');
+            $this->payments[$id]['approved'] = 0;
+            $this->payments[$id]['pending'] = 0;
+            $this->payments[$id]['paid'] = 0;
+            $this->payments[$id]['ready'] = false;
         }
         if (!$payment->isComplex('order.processed')) {
-            $this->payments[$id]["pending"] = sprintf("%.02f", doubleval($this->payments[$id]["pending"] + $payment->get("commissions")));
-        } elseif ($payment->get("paid")) {
-            $this->payments[$id]["paid"] = sprintf("%.02f", doubleval($this->payments[$id]["paid"] + $payment->get("commissions")));
-        } elseif (!$payment->get("paid")) {
-            $this->payments[$id]["approved"] = sprintf("%.02f", doubleval($this->payments[$id]["approved"] + $payment->get("commissions")));
-            $this->payments[$id]["ready"] = ($this->payments[$id]["approved"] >= $this->payments[$id]["min_limit"]);
-            if ($this->payments[$id]["ready"]) {
+            $this->payments[$id]['pending'] = sprintf("%.02f", doubleval($this->payments[$id]['pending'] + $payment->get('commissions')));
+        } elseif ($payment->get('paid')) {
+            $this->payments[$id]['paid'] = sprintf("%.02f", doubleval($this->payments[$id]['paid'] + $payment->get('commissions')));
+        } elseif (!$payment->get('paid')) {
+            $this->payments[$id]['approved'] = sprintf("%.02f", doubleval($this->payments[$id]['approved'] + $payment->get('commissions')));
+            $this->payments[$id]['ready'] = ($this->payments[$id]['approved'] >= $this->payments[$id]['min_limit']);
+            if ($this->payments[$id]['ready']) {
                 $this->hasReady = true;
             }
         }

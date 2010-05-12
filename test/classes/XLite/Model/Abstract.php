@@ -326,7 +326,7 @@ class XLite_Model_Abstract extends XLite_Base
                 eval("\$new = clone \$this;");
             } else {
                 $new = new self;
-                $new->set("properties", $this->get("properties"));
+                $new->set("properties", $this->get('properties'));
             }*/
             $new->setComplex($this->autoIncrement, null);
             $new->create();
@@ -569,7 +569,7 @@ class XLite_Model_Abstract extends XLite_Base
             }
 
             if (!empty($options['delimiter'])) {
-                $options["delimiter"] = $DATA_DELIMITERS[$options['delimiter']];
+                $options['delimiter'] = $DATA_DELIMITERS[$options['delimiter']];
             }
 
             $qualifier = null;

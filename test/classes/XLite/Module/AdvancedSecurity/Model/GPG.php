@@ -58,12 +58,12 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
         }
         // attempt to find executable
         else {
-            $this->exe = func_find_executable("gpg");
+            $this->exe = func_find_executable('gpg');
         }
         if (!$this->exe) {
             $this->executable = false;
         } else {
-            $this->executable = function_exists("is_executable") ? @is_executable($this->exe) : true;
+            $this->executable = function_exists('is_executable') ? @is_executable($this->exe) : true;
             $this->exe = $this->validatePath($this->exe);
             if (!$this->exe) $this->executable = false;
         }
@@ -80,8 +80,8 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
         $this->homedir = $home;
     }
     // look for envuronment variable
-    elseif (isset($_ENV["GNUPGHOME"]) && @file_exists($_ENV["GNUPGHOME"])) {
-        $this->homedir = $_ENV["GNUPGHOME"];
+    elseif (isset($_ENV['GNUPGHOME']) && @file_exists($_ENV['GNUPGHOME'])) {
+        $this->homedir = $_ENV['GNUPGHOME'];
     }
         $this->writable = stristr(PHP_OS, "win") ? true : @is_writable($home);
 
@@ -94,7 +94,7 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
         // Temporary directory
         // 
 
-        $upload_tmp_dir = ini_get("upload_tmp_dir");
+        $upload_tmp_dir = ini_get('upload_tmp_dir');
         if (isset($_ENV['TMPDIR'])) {
             $this->tmpdir = $_ENV['TMPDIR'];
         } elseif (is_dir('/tmp')) {
@@ -124,7 +124,7 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
 
         $valid_names = array();
         if ($cfg->find("category='AdvancedSecurity' AND name='executable_cache'")) {
-            $valid_names = @unserialize($cfg->get("value"));
+            $valid_names = @unserialize($cfg->get('value'));
         }
         if (!is_array($valid_names)) $valid_names = array();
 
@@ -137,10 +137,10 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
             // adjust UNIX-like file names:
             $cmd_file = preg_replace("/[ ]/", '&slash;\0', $cmd_file);
             $cmd_file = preg_replace("/&slash;/", '\\', $cmd_file);
-        } elseif (class_exists("COM")) {
+        } elseif (class_exists('COM')) {
             // adjust Windows long file names using COM:
             // create FSO instance
-            $exFSO = new COM("Scripting.FileSystemObject");
+            $exFSO = new COM('Scripting.FileSystemObject');
             if (!is_object($exFSO)) {
                 // Error: Could not create Scripting.FileSystemObject
                 return false;
@@ -219,7 +219,7 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
 
     function decrypt($content, $password = null) 
     {
-        $passphrase = is_null($password) ? $this->session->get("masterPassword") : $password;
+        $passphrase = is_null($password) ? $this->session->get('masterPassword') : $password;
         $src = tempnam($this->homedir, "src"); // encrypted data
         $dst = tempnam($this->homedir, "dst"); // decrypted data
         $cmd = $this->exe . " --yes --no-tty --batch --disable-mdc --no-random-seed-file --no-verbose --no-greeting --armor --no-secmem-warning --no-permission-warning --no-options --quiet --passphrase-fd 0 --no-random-seed-file --homedir $this->homedir --recipient \"$this->recipient\" --decrypt --output $dst $src";
@@ -261,11 +261,11 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
     function uploadKeys() 
     {
         // import keys to keyring
-        if (is_uploaded_file($_FILES["gpg_public_file"]["tmp_name"]) && is_uploaded_file($_FILES["gpg_secret_file"]["tmp_name"])) {
-            $cmd = $this->exe . " --yes --no-tty --batch --disable-mdc --no-random-seed-file --no-verbose --no-greeting --no-secmem-warning --no-permission-warning --no-options --quiet --no-random-seed-file --homedir " . $this->homedir . " --import " . $_FILES["gpg_public_file"]["tmp_name"] . " " . $_FILES["gpg_secret_file"]["tmp_name"];
+        if (is_uploaded_file($_FILES['gpg_public_file']["tmp_name"]) && is_uploaded_file($_FILES['gpg_secret_file']["tmp_name"])) {
+            $cmd = $this->exe . " --yes --no-tty --batch --disable-mdc --no-random-seed-file --no-verbose --no-greeting --no-secmem-warning --no-permission-warning --no-options --quiet --no-random-seed-file --homedir " . $this->homedir . " --import " . $_FILES['gpg_public_file']["tmp_name"] . " " . $_FILES['gpg_secret_file']["tmp_name"];
             $this->execGPG($cmd);
-            @unlink($_FILES["gpg_public_file"]["tmp_name"]);
-            @unlink($_FILES["gpg_secret_file"]["tmp_name"]);
+            @unlink($_FILES['gpg_public_file']["tmp_name"]);
+            @unlink($_FILES['gpg_secret_file']["tmp_name"]);
             $this->cleanup();
             return $this->getPublicKey() && $this->getSecretKey();
         }
@@ -282,7 +282,7 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
     function getPublicKey() 
     {
         if (is_null($this->_publicKey)) {
-            $this->_publicKey = $this->_getKeyData("public");
+            $this->_publicKey = $this->_getKeyData('public');
         }
         return $this->_publicKey;
     }
@@ -290,7 +290,7 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
     function getSecretKey() 
     {
         if (is_null($this->_secretKey)) {
-            $this->_secretKey = $this->_getKeyData("secret");
+            $this->_secretKey = $this->_getKeyData('secret');
         }
         return $this->_secretKey;
     }
@@ -312,7 +312,7 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
     function getPublicKeyInfo() 
     {
         if (is_null($this->_publicKeyInfo)) {
-            $this->_publicKeyInfo = $this->_getKeyInfo("public");
+            $this->_publicKeyInfo = $this->_getKeyInfo('public');
         }
         return $this->_publicKeyInfo;
     }
@@ -320,7 +320,7 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
     function getSecretKeyInfo() 
     {
         if (is_null($this->_secretKeyInfo)) {
-            $this->_secretKeyInfo = $this->_getKeyInfo("secret");
+            $this->_secretKeyInfo = $this->_getKeyInfo('secret');
         }
         return $this->_secretKeyInfo;
     }
@@ -348,17 +348,17 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
     function isPasswordValid($pass = null) 
     {
         $password = is_null($pass) ? $this->getComplex('session.masterPassword') : $pass;
-        return $this->decrypt($this->encrypt("test"), $password) == "test";
+        return $this->decrypt($this->encrypt('test'), $password) == "test";
     }
 
     function isConfigurationValid()
     {
-        if (!($this->get("homedir") && $this->get("writable"))) return false;
-        if (!($this->get("exe") && $this->get("executable"))) return false;
-        if (!$this->get("recipient")) return false;
-        if (!$this->get("publicKey")) return false;
-        if (!$this->get("secretKey")) return false;
-        if (!$this->encrypt("Test text for encryption.")) return false;
+        if (!($this->get('homedir') && $this->get('writable'))) return false;
+        if (!($this->get('exe') && $this->get('executable'))) return false;
+        if (!$this->get('recipient')) return false;
+        if (!$this->get('publicKey')) return false;
+        if (!$this->get('secretKey')) return false;
+        if (!$this->encrypt('Test text for encryption.')) return false;
         return true;
     }
 }

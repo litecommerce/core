@@ -41,7 +41,7 @@ class XLite_Module_WholesaleTrading_Model_PurchaseLimit extends XLite_Model_Abst
     */	
     public $alias = "purchase_limit";
 
-    public $primaryKey = array("product_id");
+    public $primaryKey = array('product_id');
     
     public $importError = "";
 
@@ -66,17 +66,17 @@ class XLite_Module_WholesaleTrading_Model_PurchaseLimit extends XLite_Model_Abst
     function _export($layout, $delimiter) {
         $data = array();
 
-        $values = $this->get("properties");
+        $values = $this->get('properties');
 
         foreach ($layout as $field) {
             if ($field == "NULL") {
                 $data[] = "";
             } elseif ($field == "product") {
-                $product = new XLite_Model_Product($values["product_id"]);
-                $data[] = $product->get("name");
+                $product = new XLite_Model_Product($values['product_id']);
+                $data[] = $product->get('name');
             } elseif ($field == "sku") {
-                $product = new XLite_Model_Product($values["product_id"]);
-                $data[] = $product->get("sku");
+                $product = new XLite_Model_Product($values['product_id']);
+                $data[] = $product->get('sku');
             } elseif (isset($values[$field])) {
                 $data[] =  $this->_stripSpecials($values[$field]);
             }
@@ -88,25 +88,25 @@ class XLite_Module_WholesaleTrading_Model_PurchaseLimit extends XLite_Model_Abst
         static $line_no;
         if (!isset($line_no)) $line_no = 1; else $line_no++;
         
-        $properties       = $options["properties"];
+        $properties       = $options['properties'];
         $wp = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
         $product = new XLite_Model_Product();
 
-        $product = $product->findImportedProduct($properties['sku'], '',$properties['product'], false, $options["unique_identifier"]);
+        $product = $product->findImportedProduct($properties['sku'], '',$properties['product'], false, $options['unique_identifier']);
         if (!is_null($product)) {
-            $found = $wp->find("product_id = " . $product->get("product_id"));
-            $wp->set("product_id", $product->get("product_id"));
-            $wp->set("min",$properties["min"]);
-            $wp->set("max",$properties["max"]);
+            $found = $wp->find("product_id = " . $product->get('product_id'));
+            $wp->set("product_id", $product->get('product_id'));
+            $wp->set("min",$properties['min']);
+            $wp->set("max",$properties['max']);
     
             echo "<b>Importing CSV file line# $line_no: </b>";
     
             if ($found) {
-                echo "Update purchase limit for '".$product->get("name")."' product";
+                echo "Update purchase limit for '".$product->get('name')."' product";
                 $wp->update();
             } else {
                 $wp->create();
-                echo "Create purchase limit for '".$product->get("name")."' product";
+                echo "Create purchase limit for '".$product->get('name')."' product";
             }
             echo "<br>\n";
         } else {
@@ -132,7 +132,7 @@ EOSQL;
         $collection = $this->db->getAll($sql);
         foreach ($collection as $item) {
             $pl = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
-            if ($pl->find("product_id='".$item["product_id"]."'")) {
+            if ($pl->find("product_id='".$item['product_id']."'")) {
             	$pl->delete();
             }
         }

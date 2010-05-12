@@ -44,9 +44,9 @@ class XLite_Module_SagePay_Controller_Customer_Sagepayform extends XLite_Control
 
         parent::init();
 
-        if ($this->action == "return" && !$this->auth->is("logged")) {
+        if ($this->action == "return" && !$this->auth->is('logged')) {
             // not logged - redirect to the cart
-            $this->redirect("cart.php");
+            $this->redirect('cart.php');
         }
     }
 

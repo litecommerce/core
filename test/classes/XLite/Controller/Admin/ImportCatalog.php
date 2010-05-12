@@ -48,7 +48,7 @@ class XLite_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_Abstra
     function handleRequest()
     {
         if (substr($this->action, 0, 6) == "import" && !$this->checkUploadedFile()) {
-            if ($_FILES["userfile"]['tmp_name'] != "" && !is_uploaded_file($_FILES["userfile"]['tmp_name'])) {
+            if ($_FILES['userfile']['tmp_name'] != "" && !is_uploaded_file($_FILES['userfile']['tmp_name'])) {
                 $this->set("invalid_userfile", true);
                 $this->set("invalid_userfile_state", "invalid_upload_file");
             }
@@ -58,7 +58,7 @@ class XLite_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_Abstra
                 $this->set("invalid_localfile_state", "invalid_file");
             }
             
-            if ($_FILES["userfile"]['tmp_name'] == "" && XLite_Core_Request::getInstance()->localfile == "") {
+            if ($_FILES['userfile']['tmp_name'] == "" && XLite_Core_Request::getInstance()->localfile == "") {
                 $this->set("invalid_userfile", true);
                 $this->set("invalid_userfile_state", "empty_file");
             }

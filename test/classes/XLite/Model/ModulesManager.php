@@ -225,7 +225,7 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
     public function updateModules(array $moduleIDs, $type = null)
     {
         foreach ($this->getModules($type) as $module) {
-            $this->changeModuleStatus($module, in_array($module->get("module_id"), $moduleIDs));
+            $this->changeModuleStatus($module, in_array($module->get('module_id'), $moduleIDs));
         }
 
         $this->rebuildCache();

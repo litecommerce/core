@@ -72,13 +72,13 @@ class XLite_Model_ImageEditor_ImageEditor extends XLite_Base
     function uploadImage($image_field, $image_name)
     {
         // fetch images first
-        $images = $this->get("images");
+        $images = $this->get('images');
         // upload/update image
-        $image_file_name = $this->images[$image_name]["filename"];
+        $image_file_name = $this->images[$image_name]['filename'];
         $upload = new XLite_Model_Upload($_FILES[$image_field]);
         $move   = $upload->move($image_file_name);
         if ($move && !LC_OS_IS_WIN) {
-            $real_img_name = realpath(".") . '/' . $image_file_name;
+            $real_img_name = realpath('.') . '/' . $image_file_name;
             @chmod($real_img_name, get_filesystem_permissions(0666));
         } elseif (!$move) {
             $this->uploadError = $upload->getErrorMessage();

@@ -42,6 +42,6 @@ class XLite_Module_Affiliate_View_Banner extends XLite_View_Abstract
 
     function getTemplate()
     {
-        return "modules/Affiliate/banner_" . $this->get("type") . ".tpl";
+        return "modules/Affiliate/banner_" . $this->get('type') . ".tpl";
     }
 }

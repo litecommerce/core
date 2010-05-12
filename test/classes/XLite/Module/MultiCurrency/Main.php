@@ -114,8 +114,8 @@ class XLite_Module_MultiCurrency_Main extends XLite_Module_Abstract
     
     function uninstall()  
     {
-        func_cleanup_cache("classes");
-        func_cleanup_cache("skins");
+        func_cleanup_cache('classes');
+        func_cleanup_cache('skins');
 
         parent::uninstall();
     }

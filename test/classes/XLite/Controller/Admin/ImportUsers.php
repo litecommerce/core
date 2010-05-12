@@ -40,7 +40,7 @@ class XLite_Controller_Admin_ImportUsers extends XLite_Controller_Admin_Abstract
     function init()
     {
         $p = new XLite_Model_Profile();
-        $this->import_fields = $p->get("importFields");
+        $this->import_fields = $p->get('importFields');
         parent::init();
     }
     

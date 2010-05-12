@@ -49,45 +49,45 @@ class XLite_Controller_Admin_Countries extends XLite_Controller_Admin_Abstract
         $country = new XLite_Model_Country();
         if (!empty(XLite_Core_Request::getInstance()->countries)) {
             foreach ($country->readAll() as $country) {
-                $code = $country->get("code");
+                $code = $country->get('code');
                 if (array_key_exists($code, XLite_Core_Request::getInstance()->countries)) {
                     $_tmp = XLite_Core_Request::getInstance()->countries;
                     $data = $_tmp[$code];
-                    $data["eu_member"] = isset($data["eu_member"]) ? 'Y' : 'N';
-                    $data["enabled"] = isset($data["enabled"]) ? 1 : 0;
+                    $data['eu_member'] = isset($data['eu_member']) ? 'Y' : 'N';
+                    $data['enabled'] = isset($data['enabled']) ? 1 : 0;
                     $country->set("properties", $data);
                     $country->update();
                 }
             }
         }
 
-        $this->obligatorySetStatus("updated");
+        $this->obligatorySetStatus('updated');
     }
 
     function action_add()
     {
         if ( empty(XLite_Core_Request::getInstance()->code) ) {
             $this->set("valid", false);
-            $this->obligatorySetStatus("code");
+            $this->obligatorySetStatus('code');
             return;
         }
 
         $country = new XLite_Model_Country();
         if ( $country->find("code='" . XLite_Core_Request::getInstance()->code . "'") ) {
             $this->set("valid", false);
-            $this->obligatorySetStatus("exists");
+            $this->obligatorySetStatus('exists');
             return;
         }
 
         if ( empty(XLite_Core_Request::getInstance()->country) ) {
             $this->set("valid", false);
-            $this->obligatorySetStatus("country");
+            $this->obligatorySetStatus('country');
             return;
         }
 
         if ( empty(XLite_Core_Request::getInstance()->charset) ) {
             $this->set("valid", false);
-            $this->obligatorySetStatus("charset");
+            $this->obligatorySetStatus('charset');
             return;
         }
 
@@ -96,7 +96,7 @@ class XLite_Controller_Admin_Countries extends XLite_Controller_Admin_Abstract
         $country->set("enabled", isset(XLite_Core_Request::getInstance()->enabled) ? 1 : 0);
         $country->create();
 
-        $this->obligatorySetStatus("added");
+        $this->obligatorySetStatus('added');
     }
 
     function action_delete()
@@ -110,6 +110,6 @@ class XLite_Controller_Admin_Countries extends XLite_Controller_Admin_Abstract
             }
         }
 
-        $this->obligatorySetStatus("deleted");
+        $this->obligatorySetStatus('deleted');
     }
 }

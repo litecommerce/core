@@ -46,8 +46,8 @@ class XLite_Module_Promotion_Model_BonusPrice extends XLite_Model_Abstract
 
     function getProduct()
     {
-        if ($this->get("product_id")) {
-            $product = new XLite_Model_Product($this->get("product_id"));
+        if ($this->get('product_id')) {
+            $product = new XLite_Model_Product($this->get('product_id'));
         } else {
             $product = null;
         }
@@ -56,8 +56,8 @@ class XLite_Module_Promotion_Model_BonusPrice extends XLite_Model_Abstract
 
     function getCategory()
     {
-        if ($this->get("category_id")) {
-            $category = new XLite_Model_Category($this->get("category_id"));
+        if ($this->get('category_id')) {
+            $category = new XLite_Model_Category($this->get('category_id'));
         } else {
             $category = null;
         }

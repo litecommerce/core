@@ -67,7 +67,7 @@ class XLite_Controller_Admin_States extends XLite_Controller_Admin_Abstract
             return $this->states;
         }
         $state = new XLite_Model_State();
-        $this->states = $state->findAll("country_code='".$this->get("country_code")."'");
+        $this->states = $state->findAll("country_code='".$this->get('country_code')."'");
         return $this->states;
     }
 
@@ -83,34 +83,34 @@ class XLite_Controller_Admin_States extends XLite_Controller_Admin_Abstract
             }
         }
 
-        if (empty($postData["country_code"])) {
+        if (empty($postData['country_code'])) {
             $this->set("valid", false);
-            $this->obligatorySetStatus("country_code");
+            $this->obligatorySetStatus('country_code');
             return;
         }
 
-        if (empty($postData["code"])) {
+        if (empty($postData['code'])) {
             $this->set("valid", false);
-            $this->obligatorySetStatus("code");
+            $this->obligatorySetStatus('code');
             return;
         }
 
-        if (empty($postData["state"])) {
+        if (empty($postData['state'])) {
             $this->set("valid", false);
-            $this->obligatorySetStatus("state");
+            $this->obligatorySetStatus('state');
             return;
         }
 
         $state = new XLite_Model_State();
-        if ( $state->find("state='".addslashes($postData["state"])."' AND code='".addslashes($postData["code"])."'") ) {
+        if ( $state->find("state='".addslashes($postData['state'])."' AND code='".addslashes($postData['code'])."'") ) {
             $this->set("valid", false);
-            $this->obligatorySetStatus("exists");
+            $this->obligatorySetStatus('exists');
             return;
         }
 
         $state->set("properties", $postData);
         $state->create();
-        $this->obligatorySetStatus("added");
+        $this->obligatorySetStatus('added');
     }
 
     function action_update()
@@ -125,7 +125,7 @@ class XLite_Controller_Admin_States extends XLite_Controller_Admin_Abstract
             $state->set("properties", $state_data);
             $state->update();
         }
-        $this->obligatorySetStatus("updated");
+        $this->obligatorySetStatus('updated');
     }
 
     function action_delete()
@@ -138,6 +138,6 @@ class XLite_Controller_Admin_States extends XLite_Controller_Admin_Abstract
             $state = new XLite_Model_State($state_id);
             $state->delete();
         }
-        $this->obligatorySetStatus("deleted");
+        $this->obligatorySetStatus('deleted');
     }
 }

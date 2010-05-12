@@ -43,32 +43,32 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Product extends XLite_Control
     {
         require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
 
-        $product = $this->get("product");
+        $product = $this->get('product');
 
-        if ($product->get("ups_packaging") > 0) {
+        if ($product->get('ups_packaging') > 0) {
             $properties = array(
-                "width" => $product->get("ups_width"),
-                "height" => $product->get("ups_height"),
-                "length" => $product->get("ups_length"),
-                "handle_care" => $product->get("ups_handle_care")
+                "width" => $product->get('ups_width'),
+                "height" => $product->get('ups_height'),
+                "length" => $product->get('ups_length'),
+                "handle_care" => $product->get('ups_handle_care')
             );
             $item = new XLite_Module_UPSOnlineTools_Model_PackItem();
             $item->set("properties", $properties);
             $fake_items[] = $item;
 
-            $packaging = $this->get("currentPackaging");
+            $packaging = $this->get('currentPackaging');
 
             // oversize check
-            $skiped = UPSOnlineTools_orientItems($packaging["width"], $packaging["length"], $packaging["height"], $fake_items);
+            $skiped = UPSOnlineTools_orientItems($packaging['width'], $packaging['length'], $packaging['height'], $fake_items);
             if (is_array($skiped) && count($skiped) > 0) {
                 $this->product_oversize = true;
             }
 
             // overweight check
             require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
-            $weight = UPSOnlineTools_convertWeight($product->get("weight"), $this->config->getComplex('General.weight_unit'), "lbs", 2);
+            $weight = UPSOnlineTools_convertWeight($product->get('weight'), $this->config->getComplex('General.weight_unit'), "lbs", 2);
 
-            if ($packaging["weight_limit"] > 0 && $weight > $packaging["weight_limit"]) {
+            if ($packaging['weight_limit'] > 0 && $weight > $packaging['weight_limit']) {
                 $this->product_overweight = true;
             }
         }
@@ -79,8 +79,8 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Product extends XLite_Control
     public function __construct(array $params)
     {
         parent::__construct($params);
-        $this->pages["ups_settings"] = "UPS Settings";
-        $this->pageTemplates["ups_settings"] = "modules/UPSOnlineTools/product.tpl";
+        $this->pages['ups_settings'] = "UPS Settings";
+        $this->pageTemplates['ups_settings'] = "modules/UPSOnlineTools/product.tpl";
     }
 
     function action_settings_update()
@@ -99,12 +99,12 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Product extends XLite_Control
             $properties[$field] = max(XLite_Module_UPSOnlineTools_Model_PackItem::MIN_DIM_SIZE, $this->get($field));
         }
 
-        $properties["ups_packaging"] = $this->get("ups_packaging");
-        $properties["ups_handle_care"] = (($this->get("ups_handle_care")) ? 1 : 0);
-        $properties["ups_add_handling"] = (($this->get("ups_add_handling")) ? 1 : 0);
-        $properties["ups_declared_value_set"] = (($this->get("ups_declared_value_price")) ? 0 : 1);
+        $properties['ups_packaging'] = $this->get('ups_packaging');
+        $properties['ups_handle_care'] = (($this->get('ups_handle_care')) ? 1 : 0);
+        $properties['ups_add_handling'] = (($this->get('ups_add_handling')) ? 1 : 0);
+        $properties['ups_declared_value_set'] = (($this->get('ups_declared_value_price')) ? 0 : 1);
 
-        $product = $this->get("product");
+        $product = $this->get('product');
         $product->set("properties", $properties);
         $product->update();
     }
@@ -115,7 +115,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Product extends XLite_Control
 
 
         $list = array();
-        foreach ((array)$ups->get("upscontainerslist") as $key=>$name) {
+        foreach ((array)$ups->get('upscontainerslist') as $key=>$name) {
             $list[$key] = $ups->getUPSContainerDims($key);
         }
 

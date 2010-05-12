@@ -107,7 +107,7 @@ class XLite_Model_Htaccess extends XLite_Model_Abstract
 
     function reImage()
     {
-        $file = $this->get("filename");
+        $file = $this->get('filename');
         if(!($fp = @fopen($file, "r")))
                         return;
         $fs = intval(@filesize($file));
@@ -124,11 +124,11 @@ class XLite_Model_Htaccess extends XLite_Model_Abstract
 
     function restoreFile()
     {
-        $file = $this->get("filename");
+        $file = $this->get('filename');
         if(!($fp = @fopen($file, "w")))
             return;
 
-        $content = $this->get("content");
+        $content = $this->get('content');
         @fwrite($fp, $content);
         @fclose($fp);
     }
@@ -152,7 +152,7 @@ class XLite_Model_Htaccess extends XLite_Model_Abstract
         foreach((array) $this->findAll("", "filename") as $htaccess){
                 $error = $htaccess->verify();
                 if($error != ""){
-                    $error_result = array("file" => $htaccess->get("filename"), "error" => $error);
+                    $error_result = array("file" => $htaccess->get('filename'), "error" => $error);
                     $error_results[] = $error_result;
                 }
         }
@@ -168,8 +168,8 @@ class XLite_Model_Htaccess extends XLite_Model_Abstract
 
         foreach((array) $this->findAll("", "filename") as $htaccess){
             $result = array(
-                        "id" => $htaccess->get("id"),
-                        "filename" => $htaccess->get("filename"),
+                        "id" => $htaccess->get('id'),
+                        "filename" => $htaccess->get('filename'),
                         "status" => $htaccess->getStatus()
                         );
 
@@ -184,7 +184,7 @@ class XLite_Model_Htaccess extends XLite_Model_Abstract
     {
         $error = "";
 
-        $filename = $this->get("filename");
+        $filename = $this->get('filename');
         if(!file_exists($filename))
             return HTACCESS_NOT_EXISTS;
 
@@ -195,7 +195,7 @@ class XLite_Model_Htaccess extends XLite_Model_Abstract
             else
                     $content = "";
             $file_hash = $this->makeHash($content);
-            $db_hash = $this->get("hash");
+            $db_hash = $this->get('hash');
             if($file_hash != $db_hash){
                 return HTACCESS_WRONG;
             }
@@ -228,7 +228,7 @@ class XLite_Model_Htaccess extends XLite_Model_Abstract
         $mail = new XLite_Model_Mailer();
         $mail->errors = $errors;
         $mail->adminMail = true;
-        $mail->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
+        $mail->set("charset", $this->xlite->config->Company->locationCountry->get('charset'));
         $mail->compose(
                 $this->config->getComplex('Company.site_administrator'),
                 $this->config->getComplex('Company.site_administrator'),

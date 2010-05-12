@@ -94,7 +94,7 @@ class XLite_Module_Froogle_Main extends XLite_Module_Abstract
     public function init()
     {
         parent::init();
-        if ($this->xlite->is("adminZone")) {
+        if ($this->xlite->is('adminZone')) {
         	$this->xlite->set("BaseHasImprovedExport", $this->isImprovedExport());
         }
     }

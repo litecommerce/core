@@ -40,10 +40,10 @@ class XLite_Validator_PatternValidator extends XLite_Validator_Abstract
         if (!parent::isValid()) {
             return false;
         }
-        if (isset($_POST[$this->get("field")])) {
-            $_POST[$this->get("field")] = trim($_POST[$this->get("field")]);
+        if (isset($_POST[$this->get('field')])) {
+            $_POST[$this->get('field')] = trim($_POST[$this->get('field')]);
             // validate
-            return preg_match($this->get("pattern"), $_POST[$this->get("field")]);
+            return preg_match($this->get('pattern'), $_POST[$this->get('field')]);
         }
         return true;
     }

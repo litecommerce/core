@@ -51,14 +51,14 @@ class XLite_Module_Affiliate_Model_AffiliatePlan extends XLite_Model_Abstract
         // delete plan commissions
         $pc = new XLite_Module_Affiliate_Model_PlanCommission();
         $table = $this->db->getTableByAlias($pc->alias);
-        $this->db->query("DELETE FROM $table WHERE plan_id=".$this->get("plan_id"));
+        $this->db->query("DELETE FROM $table WHERE plan_id=".$this->get('plan_id'));
         parent::delete();
     }
     
     function filter()
     {
-        if (!$this->xlite->is("adminZone")) {
-            return (boolean) $this->get("enabled");
+        if (!$this->xlite->is('adminZone')) {
+            return (boolean) $this->get('enabled');
         }
         return parent::filter();
     }

@@ -163,7 +163,7 @@ class XLite_Model_Shipping extends XLite_Model_Abstract
         parent::__construct($id);
 
         // unset the class, if it is not registerred within active shipping modules
-        if ($id && ($class = $this->get("class")) && !isset(self::$registeredShippingModules[$class])) {
+        if ($id && ($class = $this->get('class')) && !isset(self::$registeredShippingModules[$class])) {
             $this->set("class", null);
         }
     }
@@ -177,7 +177,7 @@ class XLite_Model_Shipping extends XLite_Model_Abstract
      */
     public function getModuleName()
     {
-        $this->doDie("getModuleName is not implemented for abstract class Shipping");
+        $this->doDie('getModuleName is not implemented for abstract class Shipping');
     }
 
     /**
@@ -243,7 +243,7 @@ class XLite_Model_Shipping extends XLite_Model_Abstract
         $result = false;
 
         if (is_array($rates)) {
-            $shippingId = $order->get("shipping_id");
+            $shippingId = $order->get('shipping_id');
             if (isset($rates[$shippingId])) {
                 $result = $rates[$shippingId]->rate;
             }

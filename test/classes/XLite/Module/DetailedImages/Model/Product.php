@@ -46,7 +46,7 @@ class XLite_Module_DetailedImages_Model_Product extends XLite_Model_Product impl
     {
         $image = new XLite_Module_DetailedImages_Model_DetailedImage();
 
-        return $image->findImages($this->get("product_id"));
+        return $image->findImages($this->get('product_id'));
     }
 
     /**
@@ -77,20 +77,20 @@ class XLite_Module_DetailedImages_Model_Product extends XLite_Model_Product impl
         foreach ($this->getDetailedImages() as $image) {
 
             $newImage = new XLite_Module_DetailedImages_Model_DetailedImage();
-            $newImage->set("alt", $image->get("alt"));
-            $newImage->set("enabled", $image->get("enabled"));
-            $newImage->set("order_by", $image->get("order_by"));
-            $newImage->set("product_id", $product->get("product_id"));
+            $newImage->set("alt", $image->get('alt'));
+            $newImage->set("enabled", $image->get('enabled'));
+            $newImage->set("order_by", $image->get('order_by'));
+            $newImage->set("product_id", $product->get('product_id'));
             $newImage->create();
 
-            $obj = $this->get("image");
+            $obj = $this->get('image');
             if (!method_exists($obj, " copyImageFile")) {
 
                 // use correct image copy routine for LC version lower than 2.2
-                $image->deepCopyTo($newImage->get("image_id"));
+                $image->deepCopyTo($newImage->get('image_id'));
 
             } else {
-                $obj->copyTo($newImage->get("image_id"));
+                $obj->copyTo($newImage->get('image_id'));
             }
         }
 

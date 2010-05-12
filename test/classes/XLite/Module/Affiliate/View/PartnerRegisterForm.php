@@ -39,7 +39,7 @@ class XLite_Module_Affiliate_View_PartnerRegisterForm extends XLite_View_Registe
     {
         parent::fillForm();
         $this->pending_plan = $this->config->getComplex('Affiliate.default_plan');
-        if (!$this->xlite->is("adminZone") && $this->auth->is("logged")) {
+        if (!$this->xlite->is('adminZone') && $this->auth->is('logged')) {
             $this->_savedParent = (isset($this->parent)) ? $this->parent : null;
             $this->set("properties", $this->auth->getComplex('profile.properties'));
             if (isset($this->_savedParent)) {
@@ -54,8 +54,8 @@ class XLite_Module_Affiliate_View_PartnerRegisterForm extends XLite_View_Registe
     function action_register()
     {
         parent::action_register();
-        if (isset($_POST["pending_plan"])) { // partner's profile POST'ed..
-            if ($this->is("userExists") && !$this->auth->is("logged")) {
+        if (isset($_POST['pending_plan'])) { // partner's profile POST'ed..
+            if ($this->is('userExists') && !$this->auth->is('logged')) {
                 // new partner profile but existing user
                 return;
             }
@@ -72,18 +72,18 @@ class XLite_Module_Affiliate_View_PartnerRegisterForm extends XLite_View_Registe
     
     function getProfile()
     {
-        if (!$this->xlite->is("adminZone") && $this->auth->is("logged")) {
-            $this->profile = $this->auth->get("profile");
+        if (!$this->xlite->is('adminZone') && $this->auth->is('logged')) {
+            $this->profile = $this->auth->get('profile');
         }
         if (is_null($this->profile)) {
-            $this->profile = new XLite_Model_Profile(isset($_REQUEST["profile_id"]) ? $_REQUEST["profile_id"] : null);
+            $this->profile = new XLite_Model_Profile(isset($_REQUEST['profile_id']) ? $_REQUEST['profile_id'] : null);
         }
         return $this->profile;
     }
     
     function isShowPartnerFields()
     {
-        return !is_null($this->profile) && ($this->profile->is("declinedPartner") || $this->profile->is("pendingPartner") || $this->profile->is("partner"));
+        return !is_null($this->profile) && ($this->profile->is('declinedPartner') || $this->profile->is('pendingPartner') || $this->profile->is('partner'));
     }
 
     function getPartnerFields()

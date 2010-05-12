@@ -59,7 +59,7 @@ class XLite_Model_Wysiwyg_MediatorWidget extends XLite_View_Abstract
                 $class = $params['class'];
                 if (func_class_exists($class)) {
                     $component = new $class();
-                    $this->set("template", $component->get("template"));
+                    $this->set("template", $component->get('template'));
                 }
             }
         }
@@ -69,13 +69,13 @@ class XLite_Model_Wysiwyg_MediatorWidget extends XLite_View_Abstract
         if (isset($this->attributes['template'])) {
             return $this->attributes['template'] == $this->attributesEvaled['template']; // no expressions in 'template' attribute
         } else {
-            return $this->get("template") && file_exists($this->get("templateFile"));
+            return $this->get('template') && file_exists($this->get('templateFile'));
         }
     }
     function getAttributesInTag()
     {
         $result = '';
-        foreach ($this->get("attributes") as $name => $val) {
+        foreach ($this->get('attributes') as $name => $val) {
             if (is_null($val)) {
                 $result .= ' ' . $name;
             } else {
@@ -88,7 +88,7 @@ class XLite_Model_Wysiwyg_MediatorWidget extends XLite_View_Abstract
     function getTemplateType()
     {
         if (is_null($this->templateType)) {
-            $t = $this->get("templateFile");
+            $t = $this->get('templateFile');
             if ($t && file_exists($t)) {
                 $src = strtolower(file_get_contents($t));
                 $tags = array('table', 'p', 'hr', 'center', 'br', 'h1', 'h2', 'h3', 'html', 'widget', 'div');

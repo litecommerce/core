@@ -42,16 +42,16 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
     public function __construct(array $params)
     {
         parent::__construct($params);
-        $this->pages["inventory_tracking"] = "Inventory tracking";
-        $this->pageTemplates["inventory_tracking"] = "modules/InventoryTracking/product.tpl";
+        $this->pages['inventory_tracking'] = "Inventory tracking";
+        $this->pageTemplates['inventory_tracking'] = "modules/InventoryTracking/product.tpl";
     }
 
     function init()
     {
-        if (isset($_REQUEST["product_id"]) && intval($_REQUEST["product_id"]) > 0) {
-            $product = new XLite_Model_Product($_REQUEST["product_id"]);
-        	if(!$this->xlite->get("ProductOptionsEnabled") || ($this->xlite->get("ProductOptionsEnabled") && !$product->hasOptions())) {
-            	if ($product->get("tracking") != 0 ) {
+        if (isset($_REQUEST['product_id']) && intval($_REQUEST['product_id']) > 0) {
+            $product = new XLite_Model_Product($_REQUEST['product_id']);
+        	if(!$this->xlite->get('ProductOptionsEnabled') || ($this->xlite->get('ProductOptionsEnabled') && !$product->hasOptions())) {
+            	if ($product->get('tracking') != 0 ) {
                 	$product->set("tracking", 0);
                     $product->update();
                 }
@@ -64,7 +64,7 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
     {
         if (is_null($this->orderItem)) {
             $this->orderItem = new XLite_Model_OrderItem();
-            $this->orderItem->set("product", $this->get("product"));
+            $this->orderItem->set("product", $this->get('product'));
         }
         return $this->orderItem;
     }
@@ -97,8 +97,8 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
 
     function action_update_product_inventory()
     {
-        $inventory = $this->get("inventory");
-        if ($this->is("cardFound")) {
+        $inventory = $this->get('inventory');
+        if ($this->is('cardFound')) {
             $inventory->update();
         } else {
             $inventory->create();
@@ -108,14 +108,14 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
     function getInventories()
     {
         $inventories = array();
-        if (!$this->xlite->get("ProductOptionsEnabled")) {
+        if (!$this->xlite->get('ProductOptionsEnabled')) {
             return $inventories;
         }
         $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
         $inventories = $inventory->findAll("inventory_id LIKE '".$this->product_id."|%'");
         for ($k = 0; $k < count($inventories); $k++) {
-            $inventory_id = $inventories[$k]->get("inventory_id");
-            $this->set("maxOrderBy", max($this->get("maxOrderBy"), $inventories[$k]->get("order_by")));
+            $inventory_id = $inventories[$k]->get('inventory_id');
+            $this->set("maxOrderBy", max($this->get('maxOrderBy'), $inventories[$k]->get('order_by')));
             $options = explode("|", $inventory_id);
             $id  = $options[0];
             $opt = array();
@@ -131,7 +131,7 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
     function getProductOptions()
     {
         $productOptions = array();
-        if (!$this->xlite->get("ProductOptionsEnabled")) {
+        if (!$this->xlite->get('ProductOptionsEnabled')) {
             return $productOptions;
         }
         $po = new XLite_Module_ProductOptions_Model_ProductOption();
@@ -141,7 +141,7 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
 
     function updateProductInventorySku() 
     {
-        $product_id = addslashes($this->get("product_id"));
+        $product_id = addslashes($this->get('product_id'));
         $p = new XLite_Model_Product();
         if ($p->find("product_id='$product_id'")) {
             $p->updateInventorySku();
@@ -172,8 +172,8 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
         $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
         $options[] = $this->product_id;
         foreach ($this->optdata as $class => $optdata) {
-            if (isset($optdata["used"])) {
-                $options[] = stripslashes(isset($optdata["option"]) ?  "$class:" . $optdata["option"] : $class);
+            if (isset($optdata['used'])) {
+                $options[] = stripslashes(isset($optdata['option']) ?  "$class:" . $optdata['option'] : $class);
             }
         }
        	if (!$inventory->find("inventory_id='".addslashes(implode("|", $options))."'"))

@@ -38,8 +38,8 @@ class XLite_Module_ProductOptions_Controller_Admin_ImportCatalog extends XLite_C
     public function __construct(array $params = array())
     {
         parent::__construct($params);
-        $this->pages["import_product_options"] = "Import product options";
-        $this->pageTemplates["import_product_options"] = "modules/ProductOptions/import_product_options.tpl";
+        $this->pages['import_product_options'] = "Import product options";
+        $this->pageTemplates['import_product_options'] = "modules/ProductOptions/import_product_options.tpl";
     }
 
     function action_import_product_options()

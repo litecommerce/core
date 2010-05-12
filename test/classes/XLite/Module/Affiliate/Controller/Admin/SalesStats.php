@@ -57,11 +57,11 @@ class XLite_Module_Affiliate_Controller_Admin_SalesStats extends XLite_Module_Af
         if (is_null($this->salesStats)) {
             $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
             $this->salesStats = $pp->searchSales (
-                    $this->get("startDate"),
-                    $this->get("endDate") + 24 * 3600,
-                    $this->get("product_id"),
-                    $this->get("partner_id"),
-                    $this->get("payment_status")
+                    $this->get('startDate'),
+                    $this->get('endDate') + 24 * 3600,
+                    $this->get('product_id'),
+                    $this->get('partner_id'),
+                    $this->get('payment_status')
                     );
             array_map(array($this, 'sumSale'), $st = $this->salesStats);
         }
@@ -73,19 +73,19 @@ class XLite_Module_Affiliate_Controller_Admin_SalesStats extends XLite_Module_Af
         if (is_null($this->topProducts)) {
             $this->topProducts = array();
             // getSalesStats must be called first to collect order items
-            foreach ((array)$this->get("items") as $item) {
-                $id = $item->get("product_id");
+            foreach ((array)$this->get('items') as $item) {
+                $id = $item->get('product_id');
                 if (!isset($this->topProducts[$id])) {
                     $this->topProducts[$id] = array(
-                            "name" => $item->get("name"),
-                            "amount" => $item->get("amount"),
-                            "total" => $item->get("total"),
-                            "commissions" => $item->get("commissions")
+                            "name" => $item->get('name'),
+                            "amount" => $item->get('amount'),
+                            "total" => $item->get('total'),
+                            "commissions" => $item->get('commissions')
                             );
                 } else {
-                    $this->topProducts[$id]["amount"] += $item->get("amount");
-                    $this->topProducts[$id]["total"] = sprintf("%.02f", doubleval($this->topProducts[$id]["total"] + $item->get("total")));
-                    $this->topProducts[$id]["commissions"] = sprintf("%.02f", doubleval($this->topProducts[$id]["commissions"] + $item->get("commissions")));
+                    $this->topProducts[$id]['amount'] += $item->get('amount');
+                    $this->topProducts[$id]['total'] = sprintf("%.02f", doubleval($this->topProducts[$id]['total'] + $item->get('total')));
+                    $this->topProducts[$id]['commissions'] = sprintf("%.02f", doubleval($this->topProducts[$id]['commissions'] + $item->get('commissions')));
                 }
             }
             if (is_array($this->topProducts) && count($this->topProducts) > 0) {
@@ -111,12 +111,12 @@ class XLite_Module_Affiliate_Controller_Admin_SalesStats extends XLite_Module_Af
     function sumSale($pp)
     {
         foreach ($pp->getComplex('order.items') as $item) {
-            $this->qty += $item->get("amount");
+            $this->qty += $item->get('amount');
         }
         if ($pp->isComplex('order.processed')) {
                 $this->items = is_array($this->items) ? array_merge($this->items, $pp->getComplex('order.items')) : $pp->getComplex('order.items');
         }
         $this->salesTotal += $pp->getComplex('order.subtotal');
-        $this->commissionsTotal += $pp->get("commissions");
+        $this->commissionsTotal += $pp->get('commissions');
     }
 }

@@ -50,12 +50,12 @@ class XLite_Model_ExtraPage extends XLite_Base
 
     public function __construct()
     {
-        $this->pagesTemplate = $this->get("templatePrefix") . "pages.tpl";
-        $this->locationTemplate = $this->get("templatePrefix") . "location.tpl";
-        //$this->menuTemplate = $this->get("templatePrefix") . "help/body.tpl";
-        $this->menuTemplate = $this->get("templatePrefix") . "help/pages_links.tpl";
-        $this->menuTemplateDef = $this->get("templatePrefix") . "help/pages_links_def.tpl";
-        $this->linksTemplate = $this->get("templatePrefix") . "pages_links.tpl";
+        $this->pagesTemplate = $this->get('templatePrefix') . "pages.tpl";
+        $this->locationTemplate = $this->get('templatePrefix') . "location.tpl";
+        //$this->menuTemplate = $this->get('templatePrefix') . "help/body.tpl";
+        $this->menuTemplate = $this->get('templatePrefix') . "help/pages_links.tpl";
+        $this->menuTemplateDef = $this->get('templatePrefix') . "help/pages_links_def.tpl";
+        $this->linksTemplate = $this->get('templatePrefix') . "pages_links.tpl";
     }
 
     function getLocale() 
@@ -77,8 +77,8 @@ class XLite_Model_ExtraPage extends XLite_Base
     function getTemplatePrefix()
     {
         if (is_null($this->templatePrefix)) {
-            $zone   = $this->get("zone");
-            $locale = $this->get("locale");
+            $zone   = $this->get('zone');
+            $locale = $this->get('locale');
             $this->templatePrefix = "skins/$zone/$locale/";
         }
         return $this->templatePrefix;
@@ -104,7 +104,7 @@ class XLite_Model_ExtraPage extends XLite_Base
                     $p = new XLite_Model_ExtraPage();
                     $p->page = $page;
                     $p->title = func_htmldecode($title);
-                    $fd = @fopen($this->get("templatePrefix") . $page . ".tpl", "rb");
+                    $fd = @fopen($this->get('templatePrefix') . $page . ".tpl", "rb");
                     if ($fd) {
                     	fclose($fd);
                     	$p->template = new XLite_Model_Template($page . ".tpl");
@@ -195,11 +195,11 @@ class XLite_Model_ExtraPage extends XLite_Base
     function add()
     {
         $this->page = $this->_createUniqueName($this->title, trim($this->page));
-        $this->addLine($this->getPageLinkContent("location"), $this->locationTemplate);
-        $this->addLine($this->getPageLinkContent("pages"), $this->pagesTemplate);
-        $this->addLine($this->getPageLinkContent("menu"), $this->menuTemplate);
-        $this->addLine($this->getPageLinkContent("links"), $this->linksTemplate);
-        $this->createFile($this->get("templatePrefix") . $this->page . ".tpl", $this->content);
+        $this->addLine($this->getPageLinkContent('location'), $this->locationTemplate);
+        $this->addLine($this->getPageLinkContent('pages'), $this->pagesTemplate);
+        $this->addLine($this->getPageLinkContent('menu'), $this->menuTemplate);
+        $this->addLine($this->getPageLinkContent('links'), $this->linksTemplate);
+        $this->createFile($this->get('templatePrefix') . $this->page . ".tpl", $this->content);
     }
 
     /**
@@ -207,20 +207,20 @@ class XLite_Model_ExtraPage extends XLite_Base
     */
     function modify()
     {
-        $this->replaceLine($this->getPageLinkPattern("location"), $this->getPageLinkContent("location"), $this->locationTemplate);
-        $this->replaceLine($this->getPageLinkPattern("pages"), $this->getPageLinkContent("pages"), $this->pagesTemplate);
-        $this->replaceLine($this->getPageLinkPattern("menu"), $this->getPageLinkContent("menu"), $this->menuTemplate);
-        $this->replaceLine($this->getPageLinkPattern("links"), $this->getPageLinkContent("links"), $this->linksTemplate);
-        $this->createFile($this->get("templatePrefix") . $this->page . ".tpl", $this->content);
+        $this->replaceLine($this->getPageLinkPattern('location'), $this->getPageLinkContent('location'), $this->locationTemplate);
+        $this->replaceLine($this->getPageLinkPattern('pages'), $this->getPageLinkContent('pages'), $this->pagesTemplate);
+        $this->replaceLine($this->getPageLinkPattern('menu'), $this->getPageLinkContent('menu'), $this->menuTemplate);
+        $this->replaceLine($this->getPageLinkPattern('links'), $this->getPageLinkContent('links'), $this->linksTemplate);
+        $this->createFile($this->get('templatePrefix') . $this->page . ".tpl", $this->content);
     }
 
     function remove()
     {
-        $this->replaceLine($this->getPageLinkPattern("location"), "", $this->locationTemplate);
-        $this->replaceLine($this->getPageLinkPattern("pages"), "", $this->pagesTemplate);
-        $this->replaceLine($this->getPageLinkPattern("menu"), "", $this->menuTemplate);
-        $this->replaceLine($this->getPageLinkPattern("links"), "", $this->linksTemplate);
-        @unlink($this->get("templatePrefix") . $this->page . ".tpl");
+        $this->replaceLine($this->getPageLinkPattern('location'), "", $this->locationTemplate);
+        $this->replaceLine($this->getPageLinkPattern('pages'), "", $this->pagesTemplate);
+        $this->replaceLine($this->getPageLinkPattern('menu'), "", $this->menuTemplate);
+        $this->replaceLine($this->getPageLinkPattern('links'), "", $this->linksTemplate);
+        @unlink($this->get('templatePrefix') . $this->page . ".tpl");
     }
 
     function addLine($line, $file)
@@ -320,12 +320,12 @@ class XLite_Model_ExtraPage extends XLite_Base
     {
         // replace layout with customer layout
      	/*$layout = XLite_Model_Layout::getInstance();
-        $skin = $layout->get("skin");
-        $layout->set("skin", $this->customerLayout->get("skin"));*/
+        $skin = $layout->get('skin');
+        $layout->set("skin", $this->customerLayout->get('skin'));*/
 
         $component = new XLite_View_ExtraPage(
             array(
-                XLite_View_ExtraPage::PARAM_TEMPLATE => $template->get("templateFile"),
+                XLite_View_ExtraPage::PARAM_TEMPLATE => $template->get('templateFile'),
                 XLite_View_ExtraPage::PARAM_DATA     => $template,
             )
         );

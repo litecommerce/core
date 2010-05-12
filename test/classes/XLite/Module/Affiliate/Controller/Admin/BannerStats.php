@@ -58,13 +58,13 @@ class XLite_Module_Affiliate_Controller_Admin_BannerStats extends XLite_Module_A
         if (is_null($this->stats)) {
             $stats = new XLite_Module_Affiliate_Model_BannerStats();
             $this->stats = $stats->search(
-                    $this->get("partner_id"),
-                    $this->get("startDate"),
-                    $this->get("endDate")+24*3600, 
-                    $this->get("sort_by"),
-                    $this->get("default_banner"),
-                    $this->get("product_banner"),
-                    $this->get("direct_link"));
+                    $this->get('partner_id'),
+                    $this->get('startDate'),
+                    $this->get('endDate')+24*3600, 
+                    $this->get('sort_by'),
+                    $this->get('default_banner'),
+                    $this->get('product_banner'),
+                    $this->get('direct_link'));
             // calculate stats total using callback
             array_map(array($this, 'sum'), $st = $this->stats);
         }
@@ -73,10 +73,10 @@ class XLite_Module_Affiliate_Controller_Admin_BannerStats extends XLite_Module_A
 
     function sum($rec)
     {
-        $this->statsTotal["views"] += $rec["views"];
-        $this->statsTotal["clicks"] += $rec["clicks"];
-        if ($this->statsTotal["views"] != 0) {
-            $this->statsTotal["rate"] = sprintf("%.02f", doubleval($this->statsTotal["clicks"] / $this->statsTotal["views"]));
+        $this->statsTotal['views'] += $rec['views'];
+        $this->statsTotal['clicks'] += $rec['clicks'];
+        if ($this->statsTotal['views'] != 0) {
+            $this->statsTotal['rate'] = sprintf("%.02f", doubleval($this->statsTotal['clicks'] / $this->statsTotal['views']));
         }
     }
 }

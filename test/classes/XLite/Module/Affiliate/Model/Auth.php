@@ -37,7 +37,7 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLit
 {
     function isAuthenticated($profile)
     {
-        return $profile->find("login='".addslashes($profile->get("login"))."' AND status='E' AND password='".$this->encryptPassword($profile->get("password"))."' AND order_id=0");
+        return $profile->find("login='".addslashes($profile->get('login'))."' AND status='E' AND password='".$this->encryptPassword($profile->get('password'))."' AND order_id=0");
     }
 
     function registerPartner($profile)
@@ -45,7 +45,7 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLit
         // if profile already exists, check password
         // register it otherwise
         $result = $this->register($profile);
-        if ($result == USER_EXISTS && !$profile->find("login='".addslashes($profile->get("login"))."' AND status='E' AND password='".$this->encryptPassword($_POST["password"])."'")) {
+        if ($result == USER_EXISTS && !$profile->find("login='".addslashes($profile->get('login'))."' AND status='E' AND password='".$this->encryptPassword($_POST['password'])."'")) {
             return ACCESS_DENIED;
         } elseif ($result == USER_EXISTS) {
             // unset existing profile password before update
@@ -64,7 +64,7 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLit
         $mailer->profile = $profile;
         // mailto customer with a new signup notification
         $mailer->compose($this->getComplex('config.Company.site_administrator'),
-                $profile->get("login"),
+                $profile->get('login'),
                 $this->getComplex('config.Affiliate.moderated') ? "modules/Affiliate/partner_signin_notification" : "modules/Affiliate/partner_signin_confirmation"
                 );
         $mailer->send();
@@ -85,14 +85,14 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLit
 
     function declinePartner($profile)
     {
-        $profile->set("access_level", $this->get("declinedPartnerAccessLevel"));
+        $profile->set("access_level", $this->get('declinedPartnerAccessLevel'));
         $profile->update();
         // sent notification to customer
         $mailer = new XLite_Model_Mailer();
         $mailer->profile = $profile;
         $mailer->compose(
                 $this->getComplex('config.Company.site_administrator'),
-                $profile->get("login"),
+                $profile->get('login'),
                 "modules/Affiliate/partner_declined"
                 );
         $mailer->send();
@@ -100,14 +100,14 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLit
     
     function pendPartner($profile)
     {
-        if ($profile->get("access_level") < $this->get("pendingPartnerAccessLevel")) {
-            $profile->set("access_level", $this->get("pendingPartnerAccessLevel"));
+        if ($profile->get('access_level') < $this->get('pendingPartnerAccessLevel')) {
+            $profile->set("access_level", $this->get('pendingPartnerAccessLevel'));
         }
         // mailto customer with a new signup notification
         $mailer = new XLite_Model_Mailer();
         $mailer->profile = $profile;
         $mailer->compose($this->getComplex('config.Company.site_administrator'),
-                $profile->get("login"),
+                $profile->get('login'),
                 "modules/Affiliate/partner_signin_notification"
                 );
         $mailer->send();
@@ -116,15 +116,15 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLit
     
     function approvePartner($profile)
     {
-        if ($profile->get("access_level") < $this->getPartnerAccessLevel()) {
+        if ($profile->get('access_level') < $this->getPartnerAccessLevel()) {
             $profile->set("access_level", $this->getPartnerAccessLevel());
         }
-        $profile->set("plan", $profile->get("pending_plan"));
+        $profile->set("plan", $profile->get('pending_plan'));
         // mailto customer with a new signup notification
         $mailer = new XLite_Model_Mailer();
         $mailer->profile = $profile;
         $mailer->compose($this->getComplex('config.Company.site_administrator'),
-                $profile->get("login"),
+                $profile->get('login'),
                 "modules/Affiliate/partner_signin_confirmation"
                 );
         $mailer->send();
@@ -133,15 +133,15 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLit
     
     function isPartner($profile)
     {
-        return $profile->get("access_level") == $this->getPartnerAccessLevel();
+        return $profile->get('access_level') == $this->getPartnerAccessLevel();
     }
     function isPendingPartner($profile)
     {
-        return $profile->get("access_level") == $this->getPendingPartnerAccessLevel();
+        return $profile->get('access_level') == $this->getPendingPartnerAccessLevel();
     }
     function isDeclinedPartner($profile)
     {
-        return $profile->get("access_level") == $this->getDeclinedPartnerAccessLevel();
+        return $profile->get('access_level') == $this->getDeclinedPartnerAccessLevel();
     }
 
     function getPartnerAccessLevel()
@@ -165,9 +165,9 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLit
     function getUserTypes()
     {
         $userTypes = parent::getUserTypes();
-        $userTypes["partner"] = "Partner";
-        $userTypes["pendingPartner"] = "Pending Partner";
-        $userTypes["declinedPartner"] = "Declined Partner";
+        $userTypes['partner'] = "Partner";
+        $userTypes['pendingPartner'] = "Pending Partner";
+        $userTypes['declinedPartner'] = "Declined Partner";
         return $userTypes;
     }
 }

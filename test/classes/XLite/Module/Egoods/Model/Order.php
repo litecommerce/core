@@ -72,7 +72,7 @@ class XLite_Module_Egoods_Model_Order extends XLite_Model_Order implements XLite
                 
                 $pin_settings = new XLite_Module_Egoods_Model_PinSettings($items[$i]->getComplex('product.product_id'));
                 $pin = new XLite_Module_Egoods_Model_PinCode();
-                if ($pin->getFreePinCount($items[$i]->getComplex('product.product_id'))<= $pin_settings->get("low_available_limit") && $pin_settings->get("low_available_limit")) {
+                if ($pin->getFreePinCount($items[$i]->getComplex('product.product_id'))<= $pin_settings->get('low_available_limit') && $pin_settings->get('low_available_limit')) {
                     $mail = new XLite_Module_Egoods_Model_Mailer();
                     $mail->item = $items[$i];
                     $product = new XLite_Model_Product();
@@ -99,7 +99,7 @@ class XLite_Module_Egoods_Model_Order extends XLite_Model_Order implements XLite
         for ($i = 0; $i < count($items); $i++) {
             if ($items[$i]->is('pin') && $items[$i]->getComplex('product.pin_type') == "D") {
                 $pins = new XLite_Module_Egoods_Model_PinCode();
-                foreach ($pins->findAll("order_id='" . $this->get("order_id") . "' AND item_id='" . $items[$i]->get("item_id") . "'") as $pin) {
+                foreach ($pins->findAll("order_id='" . $this->get('order_id') . "' AND item_id='" . $items[$i]->get('item_id') . "'") as $pin) {
                     $pin->set('item_id', '');
                     $pin->set('order_id', 0);
                     $pin->update();
@@ -135,7 +135,7 @@ class XLite_Module_Egoods_Model_Order extends XLite_Model_Order implements XLite
     
     function Egoods_declined()
     {
-        $items = $this->get("items");
+        $items = $this->get('items');
         for ($i = 0; $i < count($items); $i++) {
             $items[$i]->unStoreLinks();
         }

@@ -37,7 +37,7 @@ class XLite_Module_Affiliate_Controller_Admin_DeclinePartner extends XLite_Contr
 {
     function action_decline_partner()
     {
-        $profile = $this->get("profile");
+        $profile = $this->get('profile');
         $profile->set("properties", $_POST);
         $this->auth->declinePartner($profile);
     }
@@ -45,7 +45,7 @@ class XLite_Module_Affiliate_Controller_Admin_DeclinePartner extends XLite_Contr
     function getProfile()
     {
         if (is_null($this->profile)) {
-            $this->profile = new XLite_Model_Profile($_REQUEST["profile_id"]);
+            $this->profile = new XLite_Model_Profile($_REQUEST['profile_id']);
         }
         return $this->profile;
     }

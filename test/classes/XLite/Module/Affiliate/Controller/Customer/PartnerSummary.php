@@ -64,20 +64,20 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerSummary extends XLite_Mo
                     );
             $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
             foreach ((array)$pp->findAll("partner_id=".$this->getComplex('auth.profile.profile_id')) as $payment) {
-                if ($payment->get("affiliate") == 0) {
-                    $this->sales["total"]++;
+                if ($payment->get('affiliate') == 0) {
+                    $this->sales['total']++;
                 }
-                if ($payment->get("affiliate") == 0 && !$payment->isComplex('order.processed')) {
-                    $this->sales["queued"]++;
+                if ($payment->get('affiliate') == 0 && !$payment->isComplex('order.processed')) {
+                    $this->sales['queued']++;
                 }
                 if (!$payment->isComplex('order.processed')) {
-                    $this->sales["pending"] += $payment->get("commissions");
+                    $this->sales['pending'] += $payment->get('commissions');
                 }
-                if ($payment->isComplex('order.processed') && !$payment->get("paid")) {
-                    $this->sales["approved"] += $payment->get("commissions");
+                if ($payment->isComplex('order.processed') && !$payment->get('paid')) {
+                    $this->sales['approved'] += $payment->get('commissions');
                 }
-                if ($payment->get("paid")) {
-                    $this->sales["paid"] += $payment->get("commissions");
+                if ($payment->get('paid')) {
+                    $this->sales['paid'] += $payment->get('commissions');
                 }
             }
         }

@@ -86,22 +86,22 @@ class XLite_Module_DemoMode_Main extends XLite_Module_Abstract
         XLite_Model_Session::getInstance()->set('superUser', true);
 
         $mm = new XLite_Model_Module();
-        if ($this->xlite->is("adminZone")) {
+        if ($this->xlite->is('adminZone')) {
             $this->addLayout("welcome.tpl", "modules/DemoMode/welcome.tpl");
         } else {
         }
         $cfg = new XLite_Model_Config();
         $this->xlite->config = $cfg->readConfig();
-        if (!$this->session->get("superUser")) {
+        if (!$this->session->get('superUser')) {
             global $options;
-            $options["decorator_details"]["compileDir"] = "var/run/classes/" . $this->session->getID() . "/";
+            $options['decorator_details']["compileDir"] = "var/run/classes/" . $this->session->getID() . "/";
         }
     }
 
     function update()
     {
         $module = new XLite_Model_Module();
-        $module->set("properties", $this->get("properties"));
+        $module->set("properties", $this->get('properties'));
         $module->update();
     }
     

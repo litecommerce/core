@@ -53,8 +53,8 @@ class XLite_Model_WaitingIP extends XLite_Model_Abstract
     {
         list($usec, $sec) = explode(' ', microtime());
         $seed = (float) $sec + ((float) $usec * 1000000);
-        if (isset($_SERVER["REMOTE_ADDR"])) $seed += (float) ip2long($_SERVER["REMOTE_ADDR"]);
-        if (isset($_SERVER["REMOTE_PORT"])) $seed += (float) $_SERVER["REMOTE_PORT"];
+        if (isset($_SERVER['REMOTE_ADDR'])) $seed += (float) ip2long($_SERVER['REMOTE_ADDR']);
+        if (isset($_SERVER['REMOTE_PORT'])) $seed += (float) $_SERVER['REMOTE_PORT'];
         srand($seed);
         $key = md5(uniqid(rand(), true));
         return $key;
@@ -76,7 +76,7 @@ class XLite_Model_WaitingIP extends XLite_Model_Abstract
         $mail = new XLite_Model_Mailer();
         $mail->waiting_ip = $this;
         $mail->adminMail = true;
-        $mail->set("charset", $this->xlite->config->Company->locationCountry->get("charset"));
+        $mail->set("charset", $this->xlite->config->Company->locationCountry->get('charset'));
         $mail->compose(
                 $this->config->getComplex('Company.site_administrator'),
                 $this->config->getComplex('Company.site_administrator'),
@@ -87,14 +87,14 @@ class XLite_Model_WaitingIP extends XLite_Model_Abstract
     function canNotify()
     {
         $now = time();
-        $last_date = (int) $this->get("last_date");
+        $last_date = (int) $this->get('last_date');
 
         return (($now - $last_date) >= NOTIFY_INTERVAL);
     }
 
     function approveIP()
     {
-        $ip = $this->get("ip");
+        $ip = $this->get('ip');
         $valid_ips_object = new XLite_Model_Config();
 
         if(!$valid_ips_object->find("category = 'SecurityIP' AND name = 'allow_admin_ip'")) {
@@ -103,7 +103,7 @@ class XLite_Model_WaitingIP extends XLite_Model_Abstract
             return;
         }
 
-        $list = unserialize($valid_ips_object->get("value"));
+        $list = unserialize($valid_ips_object->get('value'));
         foreach($list as $ip_array) {
             if($ip_array['ip'] == $ip) {
             	return;

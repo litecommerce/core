@@ -71,7 +71,7 @@ class XLite_Controller_Admin_ChangeSkin extends XLite_Controller_Admin_Abstract
     {
         $skins = array("3-columns_classic", "3-columns_modern", "2-columns_classic", "2-columns_modern");
         if (!in_array($this->config->getComplex('Skin.skin'), $skins)) {
-            if (!array_key_exists($this->config->getComplex('Skin.skin'), $this->get("skins"))) {
+            if (!array_key_exists($this->config->getComplex('Skin.skin'), $this->get('skins'))) {
                 return true;
             }
         }
@@ -81,8 +81,8 @@ class XLite_Controller_Admin_ChangeSkin extends XLite_Controller_Admin_Abstract
 
     function getSchemasList()
     {
-        $node["name"] = "Standard";
-        $node["path"] = $this->_schemasRepository;
+        $node['name'] = "Standard";
+        $node['path'] = $this->_schemasRepository;
         $list[] = $node;
 
         return $list;
@@ -100,8 +100,8 @@ class XLite_Controller_Admin_ChangeSkin extends XLite_Controller_Admin_Abstract
         }
     
         $this->_skins = array();
-        foreach ($this->get("schemasList") as $schema) {
-            if ($dir = @opendir($schema["path"] . "/templates")) {
+        foreach ($this->get('schemasList') as $schema) {
+            if ($dir = @opendir($schema['path'] . "/templates")) {
                 $files = array();
     	    	$orig_files = array();
         	    while (($file = readdir($dir)) !== false) {
@@ -135,11 +135,11 @@ class XLite_Controller_Admin_ChangeSkin extends XLite_Controller_Admin_Abstract
             		}
                 }
     			foreach($files as $key => $value) {
-        			$preview = $schema["path"] . "/templates/".$value["name"]."/preview.gif";
+        			$preview = $schema['path'] . "/templates/".$value['name']."/preview.gif";
     				if (is_readable($preview)) {
-    					$files[$key]["preview"] = $preview;
+    					$files[$key]['preview'] = $preview;
     				}
-        			$files[$key]["name"] = str_replace("_", " ", $value["name"]);
+        			$files[$key]['name'] = str_replace("_", " ", $value['name']);
         		}
 
                 $this->_skins = array_merge($this->_skins, $files);
@@ -174,28 +174,28 @@ class XLite_Controller_Admin_ChangeSkin extends XLite_Controller_Admin_Abstract
     function checkBeforeChange()
     {
         $this->checkFiles($this->_templatesRepository, "", $this->_templatesDirectory);
-        $log = $this->checkFiles($this->get("schemasRepository")."/templates/".$this->layout, "", $this->_templatesDirectory);
+        $log = $this->checkFiles($this->get('schemasRepository')."/templates/".$this->layout, "", $this->_templatesDirectory);
 
         foreach ($log as $k=>$v)
             $log[$k] = array_unique($log[$k]);
 
-        if ( count($log["write"]) > 0 ) {
+        if ( count($log['write']) > 0 ) {
             echo "<font color='red'><b>The following files have insufficient write permissions and cannot be overwritten:</b></font><br>";
-            foreach ($log["write"] as $v) {
+            foreach ($log['write'] as $v) {
                 echo "<font color='black'>$v</font><BR>";
             }
             echo "<br>";
         }
 
-        if ( count($log["read"]) > 0 ) {
+        if ( count($log['read']) > 0 ) {
             echo "<font color='red'><b>The following files have insufficient read permissions and cannot be read:</b></font><br>";
-            foreach ($log["read"] as $v) {
+            foreach ($log['read'] as $v) {
                 echo "<font color='black'>$v</font><BR>";
             }
             echo "<br>";
         }
 
-        if ( count($log["read"]) > 0 || count($log["write"]) > 0 )
+        if ( count($log['read']) > 0 || count($log['write']) > 0 )
             return false;
 
         return true;
@@ -213,19 +213,19 @@ class XLite_Controller_Admin_ChangeSkin extends XLite_Controller_Admin_Abstract
         while ( ($file = readdir($handle)) !== false ) {
             if ( is_file($source_dir."/".$file) ) {
                 if ( !is_readable("$source_dir/$file") ) {
-                    $log["read"][] = "$source_dir$parent_dir/$file";
+                    $log['read'][] = "$source_dir$parent_dir/$file";
                 }
                 if (file_exists("$destination_dir$parent_dir/$file") && !is_writeable("$destination_dir$parent_dir/$file") ) {
-                    $log["write"][] = "$destination_dir$parent_dir/$file";
+                    $log['write'][] = "$destination_dir$parent_dir/$file";
                 }
             } else if ( is_dir($source_dir."/".$file) && $file != "." && $file != ".." ) {
                 if( !file_exists("$destination_dir$parent_dir/$file") ) {
                     if ( !is_writeable("$destination_dir$parent_dir") )
-                        $log["write"][] = "$destination_dir$parent_dir";
+                        $log['write'][] = "$destination_dir$parent_dir";
                         continue;
                 } else {
                     if (file_exists("$destination_dir$parent_dir/$file") && !is_writeable("$destination_dir$parent_dir/$file") ) {
-                        $log["write"][] = "$destination_dir$parent_dir/$file";
+                        $log['write'][] = "$destination_dir$parent_dir/$file";
                         continue;
                     }
                 }
@@ -287,7 +287,7 @@ class XLite_Controller_Admin_ChangeSkin extends XLite_Controller_Admin_Abstract
         $module = new XLite_Model_Module();
         $result = $module->iterate();
         while ($module->next($result)) {
-            $name = $module->get("name");
+            $name = $module->get('name');
             if (file_exists("./".$this->_modulesPath."/".$name."/install.php")) {
                 echo "Changing some skins to work with " .$name. " module correctly...<br>";
                 @include_once LC_MODULES_DIR . $name . 'install.php';
@@ -331,8 +331,8 @@ To install the selected skin, please correct the problem and start the installat
         if ( $this->ignore_errors != "yes" ) {
             if ( !$this->CheckBeforeChange() ) {
                 echo '<font color="red"><b>Note: The files listed above do not have sufficient write permissions.</b></font><br> For further details on changing file permissions, run "man chmod" command in your UNIX system or see your SSH/FTP/Shell client reference manual.<br>';
-                echo '<p><a href="'.$this->get("url").'"><u><b>Return to admin zone</b></u></a>';
-                echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php?target=change_skin&action=update&layout='.$this->layout.'&ignore_errors=yes&xlite_form_id='.$this->get("xliteFormID").'><u>Continue anyway</u></a>';
+                echo '<p><a href="'.$this->get('url').'"><u><b>Return to admin zone</b></u></a>';
+                echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php?target=change_skin&action=update&layout='.$this->layout.'&ignore_errors=yes&xlite_form_id='.$this->get('xliteFormID').'><u>Continue anyway</u></a>';
                 func_refresh_end();
                 exit();
             }
@@ -340,7 +340,7 @@ To install the selected skin, please correct the problem and start the installat
 
     	echo "<BR><B>Creating directories...</B><BR>\n";
 
-    	$ck_res &= $this->createDirs($this->get("directoriesToCreate"));
+    	$ck_res &= $this->createDirs($this->get('directoriesToCreate'));
 
         $teDialog = new XLite_Controller_Admin_TemplateEditor();
         $teDialog->getExtraPages();
@@ -351,7 +351,7 @@ To install the selected skin, please correct the problem and start the installat
      	
     	echo "<BR><B>Installing layout skin...</B><BR>\n";
         // switch templates_repository to layout folder
-    	$ck_res &= $this->copyFiles($this->get("schemasRepository")."/templates/".$this->layout, "", $this->_templatesDirectory);
+    	$ck_res &= $this->copyFiles($this->get('schemasRepository')."/templates/".$this->layout, "", $this->_templatesDirectory);
 
         echo "<br><br>";
  
@@ -376,6 +376,6 @@ To install the selected skin, please correct the problem and start the installat
 
     function getPageReturnUrl()
     {
-        return array('<a href="'.$this->get("url").'"><u>Return to admin zone</u></a>');
+        return array('<a href="'.$this->get('url').'"><u>Return to admin zone</u></a>');
     }
 }

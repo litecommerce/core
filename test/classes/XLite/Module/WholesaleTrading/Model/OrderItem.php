@@ -39,18 +39,18 @@ class XLite_Module_WholesaleTrading_Model_OrderItem extends XLite_Model_OrderIte
 
     public function __construct()
     {
-        $this->fields["wholesale_price"] = 0;
+        $this->fields['wholesale_price'] = 0;
         parent::__construct();
     }
 
     function _getStoredWholesalePrice()
     {
-        return $this->xlite->get("useStoredWholesale");
+        return $this->xlite->get('useStoredWholesale');
     }
 
     function _needStoredWholesalePrice()
     {
-        return !$this->xlite->get("dontStoreWholesale");
+        return !$this->xlite->get('dontStoreWholesale');
     }
 
     function _needSetWholesalePrice()
@@ -69,41 +69,41 @@ class XLite_Module_WholesaleTrading_Model_OrderItem extends XLite_Model_OrderIte
     function _getWholesalePrice($parentPrice = false)
     {
         if ($parentPrice) {
-            return parent::get("price");
+            return parent::get('price');
         }
 
         if ($this->_getStoredWholesalePrice()) {
-        	$price = $this->get("wholesale_price");
+        	$price = $this->get('wholesale_price');
         	if ($price >= 0) {
-            	return $this->get("wholesale_price");
+            	return $this->get('wholesale_price');
             }
         }
         
         // if not a product, return parent value
         if (!$this->getComplex('product.product_id')) {
-            return parent::get("price");
+            return parent::get('price');
         }
-        $product = $this->get("product");
+        $product = $this->get('product');
         if (!isset($this->wholesale_prices)) {
             $wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
-            $this->wholesale_prices = $wp->getProductPrices($product->get("product_id"), $this->get("amount"), "OR membership='" . $this->getComplex('order.profile.membership') . "'");
+            $this->wholesale_prices = $wp->getProductPrices($product->get('product_id'), $this->get('amount'), "OR membership='" . $this->getComplex('order.profile.membership') . "'");
         }
         if (count($this->wholesale_prices) == 0) {
-            $price = parent::get("price");
-    		if (strval($this->formatCurrency($this->get("wholesale_price"))) != strval($this->formatCurrency($price)) && $this->_needStoredWholesalePrice()) {
+            $price = parent::get('price');
+    		if (strval($this->formatCurrency($this->get('wholesale_price'))) != strval($this->formatCurrency($price)) && $this->_needStoredWholesalePrice()) {
     			$this->_setWholesalePrice($price);
     		}
             return $price;
         }
 
-        $price = $this->wholesale_prices[count($this->wholesale_prices) - 1]->get("price");
+        $price = $this->wholesale_prices[count($this->wholesale_prices) - 1]->get('price');
         if ($this->config->getComplex('Taxes.prices_include_tax')) {
             $product->set("price", $price);
             if (!$this->_skipTaxingWholesalePrice) {
-                $price = $product->get("listPrice");
+                $price = $product->get('listPrice');
             }
         }
-        if (strval($this->formatCurrency($this->get("wholesale_price"))) != strval($this->formatCurrency($price)) && $this->_needStoredWholesalePrice()) {
+        if (strval($this->formatCurrency($this->get('wholesale_price'))) != strval($this->formatCurrency($price)) && $this->_needStoredWholesalePrice()) {
             $this->_setWholesalePrice($price);
         }
         

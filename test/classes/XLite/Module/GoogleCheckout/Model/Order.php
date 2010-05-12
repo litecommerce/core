@@ -40,11 +40,11 @@ class XLite_Module_GoogleCheckout_Model_Order extends XLite_Model_Order implemen
     public function __construct($id=null)
     {
         parent::__construct($id);
-        $this->fields["google_id"] = '';
-        $this->fields["google_total"] = 0;
-        $this->fields["google_details"] = "";
-        $this->fields["google_status"] = '';    // '_empty_' - not set, 'P' - partial refund, R - full refund, 'C' - canceled
-        $this->fields["google_carrier"] = "";
+        $this->fields['google_id'] = '';
+        $this->fields['google_total'] = 0;
+        $this->fields['google_details'] = "";
+        $this->fields['google_status'] = '';    // '_empty_' - not set, 'P' - partial refund, R - full refund, 'C' - canceled
+        $this->fields['google_carrier'] = "";
     }
 
     function getGoogleCheckoutXML($name)
@@ -67,11 +67,11 @@ class XLite_Module_GoogleCheckout_Model_Order extends XLite_Model_Order implemen
             $itemsXML[] = $item->getGoogleCheckoutXML();
         }
 
-        $currency = $this->xlite->get("gcheckout_currency");
+        $currency = $this->xlite->get('gcheckout_currency');
 
         // Send Global discount as order item with negative price
-        if ($this->xlite->get("WholesaleTradingEnabled") && $this->get("global_discount") > 0) {
-            $discountTotal = - $this->get("global_discount");
+        if ($this->xlite->get('WholesaleTradingEnabled') && $this->get('global_discount') > 0) {
+            $discountTotal = - $this->get('global_discount');
             $itemDescription = "Shopping cart global discount.";
 
             $itemsXML[] = <<<EOT
@@ -85,16 +85,16 @@ EOT;
         }
 
         // Allow to use discounts as cart items
-        if (!$this->xlite->get("gcheckout_remove_discounts")) {
+        if (!$this->xlite->get('gcheckout_remove_discounts')) {
             // Send Discount Coupon as cart item with negative price
-            if ($this->xlite->get("PromotionEnabled") && $this->getDC()) {
+            if ($this->xlite->get('PromotionEnabled') && $this->getDC()) {
                 $coupon = $this->getDC();
 
                 require_once LC_MODULES_DIR . 'GoogleCheckout' . LC_DS . 'encoded.php';
 
-                $itemName = "Discount coupon #".$coupon->get("coupon");
+                $itemName = "Discount coupon #".$coupon->get('coupon');
                 $itemDescription = GoogleCheckout_getCouponApplyDescription($coupon);
-                $unitPrice = sprintf("%.02f", -doubleval($this->get("discount")));
+                $unitPrice = sprintf("%.02f", -doubleval($this->get('discount')));
 
                 $itemsXML[] = <<<EOT
         <item>
@@ -107,8 +107,8 @@ EOT;
             }
 
             // Send Gift Certificate Payment as order item with negative price
-            if ($this->xlite->get("GiftCertificatesEnabled") && $this->get("payedByGC") > 0) {
-                $discountValue = - $this->get("payedByGC");
+            if ($this->xlite->get('GiftCertificatesEnabled') && $this->get('payedByGC') > 0) {
+                $discountValue = - $this->get('payedByGC');
                 $itemName = "Gift Certificate Payment";
                 $itemDescription = "The order is paid for with a gift certificate partially or completely.";
 
@@ -123,8 +123,8 @@ EOT;
             }
 
             // Send Payed by points Payment as order item with negative price
-            if ($this->xlite->get("PromotionEnabled") && $this->get("payedByPoints") > 0) {
-                $discountValue = - $this->get("payedByPoints");
+            if ($this->xlite->get('PromotionEnabled') && $this->get('payedByPoints') > 0) {
+                $discountValue = - $this->get('payedByPoints');
                 $itemName = "Bonus Points Payment";
                 $itemDescription = "The order is paid for with bonus points partially or completely.";
 
@@ -146,8 +146,8 @@ EOT;
     {
         $shippings = array();
         $so = new XLite_Model_Shipping();
-        foreach ($so->get("modules") as $module) {
-            $shipping_class = $module->get("class");
+        foreach ($so->get('modules') as $module) {
+            $shipping_class = $module->get('class');
 
             $shipping = new XLite_Model_Shipping();
             $shippings = array_merge($shippings, $shipping->findAll("enabled=1 AND class='$shipping_class'"));
@@ -218,26 +218,26 @@ EOT;
 
     function google_checkout_setDC($dc)
     {
-        if (!$this->xlite->get("PromotionEnabled"))
+        if (!$this->xlite->get('PromotionEnabled'))
             return false;
 
         // unset existing discount coupon
-        if (!is_null($this->get("DC"))) {
+        if (!is_null($this->get('DC'))) {
             $this->DC->delete();
             $this->DC = null;
         }
 
         if (!is_null($dc)) {
             $coupon = new XLite_Module_Promotion_Model_DiscountCoupon();
-            if ( function_exists("func_is_clone_deprecated") && func_is_clone_deprecated() ) {
+            if ( function_exists('func_is_clone_deprecated') && func_is_clone_deprecated() ) {
                 $clone = $dc->cloneObject();
             } else {
                 $clone = $dc->clone();
             }
 
-            $clone->set("order_id", $this->get("order_id"));
+            $clone->set("order_id", $this->get('order_id'));
             $clone->update();
-            $this->set("discountCoupon", $dc->get("coupon_id"));
+            $this->set("discountCoupon", $dc->get('coupon_id'));
             $this->DC = $clone;
 
         } else {
@@ -278,13 +278,13 @@ EOT;
         }
 
         $result = array();
-        $items = $this->get("items");
+        $items = $this->get('items');
         foreach ($items as $item_idx => $item) {
             $result[] = array
             (
                 $item_idx,
-                $item->get("key"),
-                $item->get("amount")
+                $item->get('key'),
+                $item->get('amount')
             );
         }
 
@@ -293,11 +293,11 @@ EOT;
 
     function googleDisableNotification($status)
     {
-        if ($this->get("payment_method") != "google_checkout") {
+        if ($this->get('payment_method') != "google_checkout") {
             return;
         }
 
-        $disableCustomerNotif = $this->xlite->get("GoogleCheckoutDCN");
+        $disableCustomerNotif = $this->xlite->get('GoogleCheckoutDCN');
         if (!isset($disableCustomerNotif)) {
             $pmGC = XLite_Model_PaymentMethod::factory('google_checkout');
             $disableCustomerNotif = $pmGC->getComplex('params.disable_customer_notif');
@@ -315,7 +315,7 @@ EOT;
             return $this->get('google_carrier');
         }
 
-        switch ($this->get("shippingMethod")->get('class')) {
+        switch ($this->get('shippingMethod')->get('class')) {
             case 'ups':
                 $result = 'UPS';
                 break;
@@ -398,7 +398,7 @@ EOT;
 
     function isGoogleDiscountCouponsAvailable()
     {
-        if ($this->xlite->get("PromotionEnabled") && ($this->config->getComplex('Promotion.allowDC'))) {
+        if ($this->xlite->get('PromotionEnabled') && ($this->config->getComplex('Promotion.allowDC'))) {
             if (!is_null($this->getDC())) {
                 return false;
             }
@@ -425,7 +425,7 @@ EOT;
 
     function isGoogleGiftCertificatesAvailable()
     {
-        if ($this->xlite->get("GiftCertificatesEnabled") && is_null($this->getGC())) {
+        if ($this->xlite->get('GiftCertificatesEnabled') && is_null($this->getGC())) {
             $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate();
             $certs = $gc->findAll();
             foreach ($certs as $cert) {
@@ -443,7 +443,7 @@ EOT;
 
     function isShowGoogleCheckoutNotes()
     {
-        if ($this->xlite->get("gcheckout_remove_discounts")) {
+        if ($this->xlite->get('gcheckout_remove_discounts')) {
             if ($this->isShowRemoveDiscountsNote()) {
                 return true;
             }
@@ -454,18 +454,18 @@ EOT;
 
     function isShowRemoveDiscountsNote()
     {
-        if (!$this->xlite->get("gcheckout_remove_discounts")) {
+        if (!$this->xlite->get('gcheckout_remove_discounts')) {
             return false;
         }
 
         if (
-            $this->xlite->get("PromotionEnabled")
-            && (!is_null($this->getDC()) || $this->get("payedByPoints") > 0)
+            $this->xlite->get('PromotionEnabled')
+            && (!is_null($this->getDC()) || $this->get('payedByPoints') > 0)
         ) {
             return true;
         }
 
-        if ($this->xlite->get("GiftCertificatesEnabled") && !is_null($this->getGC())) {
+        if ($this->xlite->get('GiftCertificatesEnabled') && !is_null($this->getGC())) {
             return true;
         }
 

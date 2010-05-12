@@ -45,20 +45,20 @@ class XLite_Module_SecureTrading_Model_PaymentMethod_Securetrading extends XLite
         PaymentMethod_securetrading_handleRequest($this, $order, true);
     }
     function getTotalCost($cart)	{
-        return $cart->get("total")*100;
+        return $cart->get('total')*100;
     }
     function getBillingState($cart) {
         $state = new XLite_Model_State($cart->getComplex('profile.billing_state'));
-        return $state->get("state");
+        return $state->get('state');
     }
     function getCountry($cart)	{
         $country = new XLite_Model_Country($cart->getComplex('profile.billing_country'));
-        return $country->get("country");
+        return $country->get('country');
     }
     function getMerchantEmail() {
         return $this->config->getComplex('Company.orders_department');
     }
     function getReturnURL($cart)	{
-        return $this->xlite->getShopUrl("cart.php?target=checkout&action=return&order_id=" . $cart->get("order_id"));
+        return $this->xlite->getShopUrl("cart.php?target=checkout&action=return&order_id=" . $cart->get('order_id'));
     }
 }

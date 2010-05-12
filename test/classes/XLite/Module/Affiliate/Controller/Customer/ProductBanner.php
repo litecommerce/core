@@ -64,6 +64,6 @@ class XLite_Module_Affiliate_Controller_Customer_ProductBanner extends XLite_Con
 
     function getReferrer()
     {
-        return isset($_SERVER["HTTP_REFERER"]) ? $_SERVER["HTTP_REFERER"] : "";
+        return isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : "";
     }
 }

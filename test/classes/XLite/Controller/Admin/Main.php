@@ -37,7 +37,7 @@ class XLite_Controller_Admin_Main extends XLite_Controller_Admin_Abstract
 {
     function handleRequest()
     {
-        if ($this->auth->is("logged")) {
+        if ($this->auth->is('logged')) {
             if ($this->auth->getComplex('profile.billing_firstname') == "") {
                 // switch first-time logged admin to edit profile page
                 $this->redirect("admin.php?target=profile&profile_id=".$this->auth->getComplex('profile.profile_id'));
@@ -49,9 +49,9 @@ class XLite_Controller_Admin_Main extends XLite_Controller_Admin_Abstract
     
     function getWelcome()
     {
-        if ($this->get("mode") == "access_denied") {
+        if ($this->get('mode') == "access_denied") {
             return false;
         }
-        return $this->is("adminLogged") ? false : true;
+        return $this->is('adminLogged') ? false : true;
     }
 }

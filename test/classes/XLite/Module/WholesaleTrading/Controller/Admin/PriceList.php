@@ -88,8 +88,8 @@ class XLite_Module_WholesaleTrading_Controller_Admin_PriceList extends XLite_Con
         if (!isset($this->wholesale_pricing[$product_id])) {
             $wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
             $where = "product_id=" . $product_id;
-            if ($_REQUEST["membership"] != 'all') {
-                $where .= " and (membership='all' or membership='" . $_REQUEST["membership"] . "')";
+            if ($_REQUEST['membership'] != 'all') {
+                $where .= " and (membership='all' or membership='" . $_REQUEST['membership'] . "')";
             }
             $this->wholesale_pricing[$product_id] = $wp->findAll($where);
         }

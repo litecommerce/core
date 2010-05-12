@@ -41,7 +41,7 @@ class XLite_Module_AntiFraud_Controller_Admin_Fraud extends XLite_Controller_Adm
 
     function getTemplate() 
     {
-        if($this->get("mode") == "track") 
+        if($this->get('mode') == "track") 
             return "modules/AntiFraud/track.tpl";
         else
             return "main.tpl";
@@ -50,7 +50,7 @@ class XLite_Module_AntiFraud_Controller_Admin_Fraud extends XLite_Controller_Adm
     function getOrder()
     {
         if (is_null($order)) 
-            $order = new XLite_Model_Order($this->get("order_id"));
+            $order = new XLite_Model_Order($this->get('order_id'));
         return $order;
     }
         
@@ -76,11 +76,11 @@ class XLite_Module_AntiFraud_Controller_Admin_Fraud extends XLite_Controller_Adm
     {
       	if (is_null($this->response) && isset($this->distance)) {
             $this->response = $this->check_ip($this->distance);
-            if (isset($this->response["result"]["error"]) && $this->response["result"]["error"]) {
-                $this->response["result"]["some_problems"] = true;
+            if (isset($this->response['result']["error"]) && $this->response['result']["error"]) {
+                $this->response['result']["some_problems"] = true;
             }
-            if (isset($this->response["data"]["check_error"]) && $this->response["data"]["check_error"]) {
-                $this->response["result"]["some_problems"] = true;
+            if (isset($this->response['data']["check_error"]) && $this->response['data']["check_error"]) {
+                $this->response['result']["some_problems"] = true;
             }
         }
         return $this->response;
@@ -89,17 +89,17 @@ class XLite_Module_AntiFraud_Controller_Admin_Fraud extends XLite_Controller_Adm
     function check_ip($check_distance)
     {
         $post = array();
-        $post["service_key"] = $this->config->getComplex('AntiFraud.antifraud_license');
-        $post["ip"] = $this->get("ip");
+        $post['service_key'] = $this->config->getComplex('AntiFraud.antifraud_license');
+        $post['ip'] = $this->get('ip');
     
-        $properties = $this->get("properties");
+        $properties = $this->get('properties');
 
         if ($check_distance) {
-            $post["city"] = $properties["city"];
-        	$post["state"] = $properties["state"];
-            $post["country"] = $properties["country"];
-     	    if (isset($properties["zipcode"]) && !empty($properties["zipcode"]))
-            	$post["zipcode"] = $properties["zipcode"];
+            $post['city'] = $properties['city'];
+        	$post['state'] = $properties['state'];
+            $post['country'] = $properties['country'];
+     	    if (isset($properties['zipcode']) && !empty($properties['zipcode']))
+            	$post['zipcode'] = $properties['zipcode'];
         }
         
         $request = new XLite_Model_HTTPS();
@@ -119,8 +119,8 @@ class XLite_Module_AntiFraud_Controller_Admin_Fraud extends XLite_Controller_Adm
         list($result,$data) = explode("\n", $request->response);
         $result = unserialize($result);
         $data	= unserialize($data);
-        if ($result["available_request"] == $result["used_request"])
-            $result["error"] = "LICENSE_KEY_EXPIRED";
+        if ($result['available_request'] == $result['used_request'])
+            $result['error'] = "LICENSE_KEY_EXPIRED";
         return array("result" => $result, "data" => $data);
     }
 }

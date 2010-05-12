@@ -37,7 +37,7 @@ class XLite_Module_Egoods_Model_DownloadableLink extends XLite_Model_Abstract
 {
     public $alias = "downloadable_links";
 
-    public $primaryKey = array("access_key");
+    public $primaryKey = array('access_key');
     public $defaultOrder = "file_id";
 
     public $fields = array(

@@ -69,14 +69,14 @@ class XLite_Controller_Admin_CssEdit extends XLite_Controller_Admin_Abstract
         if (isset($this->editor)) {
             return $this->editor;
         }
-        $this->editor = new XLite_Model_CssEditor($this->get("cssFile"));
+        $this->editor = new XLite_Model_CssEditor($this->get('cssFile'));
         return $this->editor;
     }
 
     function getCssFile()
     {
-        $skin   = $this->get("zone");
-        $locale = $this->get("locale");
+        $skin   = $this->get('zone');
+        $locale = $this->get('locale');
         return "skins/$skin/$locale/style.css";
     }
 
@@ -90,7 +90,7 @@ class XLite_Controller_Admin_CssEdit extends XLite_Controller_Admin_Abstract
      */
     protected function doActionSave()
     {
-        $editor = $this->get("editor");
+        $editor = $this->get('editor');
         $editor->setComplex("style.style.$this->style_id", $this->style);
 
         $editor->save();
@@ -107,7 +107,7 @@ class XLite_Controller_Admin_CssEdit extends XLite_Controller_Admin_Abstract
      */
     protected function doActionRestoreDefault()
     {
-        $editor = $this->get("editor");
+        $editor = $this->get('editor');
         $editor->restoreDefault();
     }
 

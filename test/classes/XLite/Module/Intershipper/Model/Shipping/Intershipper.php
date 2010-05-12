@@ -142,7 +142,7 @@ class XLite_Module_Intershipper_Model_Shipping_Intershipper extends XLite_Model_
 
     function cleanCache()
     {
-        $this->_cleanCache("ints_cache");
+        $this->_cleanCache('ints_cache');
     }
     
     function _parseResponse($response, $destination)

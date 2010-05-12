@@ -38,7 +38,7 @@ class XLite_Module_WholesaleTrading_Model_Category extends XLite_Model_Category 
     function get($name)
     {
         $value = parent::get($name);
-        if ($name == "membership" && !$this->xlite->is("adminZone")) {
+        if ($name == "membership" && !$this->xlite->is('adminZone')) {
             if ($value == "all") {
                 $value = "%";
             }

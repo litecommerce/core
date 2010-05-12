@@ -102,7 +102,7 @@ class XLite_Module_Froogle_Model_Product extends XLite_Model_Product implements 
 
             $data = implode("\t", $data);
             print "$data";
-            if ($this->xlite->get("BaseHasImprovedExport")) {
+            if ($this->xlite->get('BaseHasImprovedExport')) {
             	print "\n";
             }
             ob_flush();
@@ -113,12 +113,12 @@ class XLite_Module_Froogle_Model_Product extends XLite_Model_Product implements 
 
     function getFroogleProductUrl()
     {
-        return $this->xlite->getShopUrl("cart.php") . "?target=product&product_id=" . $this->get("product_id");
+        return $this->xlite->getShopUrl('cart.php') . "?target=product&product_id=" . $this->get('product_id');
     }
 
     function getFroogleName()
     {
-        $name = trim($this->_stripSpecials($this->get("name")), '"');
+        $name = trim($this->_stripSpecials($this->get('name')), '"');
         if (strlen($name) > 80) {
             $name = substr($name, 0, 75) . "...";
         }
@@ -128,7 +128,7 @@ class XLite_Module_Froogle_Model_Product extends XLite_Model_Product implements 
 
     function getFroogleDescription()
     {
-        $description = trim($this->_stripSpecials($this->get("description")), '"');
+        $description = trim($this->_stripSpecials($this->get('description')), '"');
         if(strlen($description) > 1000) {
             $description = substr($description, 0, 995) . "...";
         }
@@ -141,8 +141,8 @@ class XLite_Module_Froogle_Model_Product extends XLite_Model_Product implements 
         $image = "";
         if ($this->hasImage()) {
             $img = $this->getImage();
-            if ($img->get("source") == "F") {
-                $image = $this->xlite->getShopUrl("images/") . $img->get("data");
+            if ($img->get('source') == "F") {
+                $image = $this->xlite->getShopUrl('images/') . $img->get('data');
             }
         }
 
@@ -154,13 +154,13 @@ class XLite_Module_Froogle_Model_Product extends XLite_Model_Product implements 
         $label = "";
         switch ($this->getComplex('config.Froogle.export_label')) {
             case "meta_tags":
-                $label = $this->_stripSpecials($this->get("meta_tags"));
+                $label = $this->_stripSpecials($this->get('meta_tags'));
             break;
             case "meta_title":
-                $label = $this->_stripSpecials($this->get("meta_title"));
+                $label = $this->_stripSpecials($this->get('meta_title'));
             break;
             case "meta_desc":
-                $label = $this->_stripSpecials($this->get("meta_desc"));
+                $label = $this->_stripSpecials($this->get('meta_desc'));
             break;
             case "custom":
                 $label = $this->getComplex('config.Froogle.export_custom_label');
@@ -170,9 +170,9 @@ class XLite_Module_Froogle_Model_Product extends XLite_Model_Product implements 
                 if (!isset($this->_CategoriesFromProducts)) {
                     $this->_CategoriesFromProducts = new XLite_Model_CategoriesFromProducts();
                 }
-                $this->_CategoriesFromProducts->prodId = $this->get("product_id");
+                $this->_CategoriesFromProducts->prodId = $this->get('product_id');
                 if ($this->_CategoriesFromProducts->find("")) {
-                    $label = str_replace("/", " > ", trim($this->_stripSpecials($this->_CategoriesFromProducts->get("stringPath")), '"'));
+                    $label = str_replace("/", " > ", trim($this->_stripSpecials($this->_CategoriesFromProducts->get('stringPath')), '"'));
                 } else {
                     $label = "";
                 }
@@ -185,9 +185,9 @@ class XLite_Module_Froogle_Model_Product extends XLite_Model_Product implements 
     function getFrooglePrice()
     {
         if (!$this->config->getComplex('Taxes.prices_include_tax')) {
-            $price = $this->get("price");
+            $price = $this->get('price');
         } else {
-            $price = $this->get("listPrice");
+            $price = $this->get('listPrice');
         }
 
         return sprintf("%.02f", $this->formatCurrency($price));
@@ -214,15 +214,15 @@ class XLite_Module_Froogle_Model_Product extends XLite_Model_Product implements 
         $out = $this->xlite->getComplex('config.Froogle.froogle_id_format');
 
         if (strpos($out, "%psku") !== false) {
-            $out = str_replace("%psku", $this->get("sku"), $out);
+            $out = str_replace("%psku", $this->get('sku'), $out);
         }
 
         if (strpos($out, "%pname") !== false) {
-            $out = str_replace("%pname", $this->get("name"), $out);
+            $out = str_replace("%pname", $this->get('name'), $out);
         }
 
         if (strpos($out, "%pid") !== false) {
-            $out = str_replace("%pid", $this->get("product_id"), $out);
+            $out = str_replace("%pid", $this->get('product_id'), $out);
         }
 
         return $out;
@@ -234,7 +234,7 @@ class XLite_Module_Froogle_Model_Product extends XLite_Model_Product implements 
 
     function formatCurrency($price)
     {
-    	$isNewFC = $this->xlite->get("FroogleNewFC");
+    	$isNewFC = $this->xlite->get('FroogleNewFC');
     	if (!isset($isNewFC)) {
             $classMethods = array_map("strtolower", get_class_methods(get_parent_class(get_class($this))));
             $isNewFC = in_array("formatcurrency", $classMethods);

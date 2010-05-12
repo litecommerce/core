@@ -56,7 +56,7 @@ class XLite_Controller_Admin_Login extends XLite_Controller_Admin_Abstract
     function fillForm()
     {
         parent::fillForm();
-        $login = $this->get("login");
+        $login = $this->get('login');
         if ( empty($login) )
             $this->set("login", $this->auth->remindLogin());
     }
@@ -105,7 +105,7 @@ class XLite_Controller_Admin_Login extends XLite_Controller_Admin_Abstract
     {
         if ($this->auth->isLogged()) {
             $profile = $this->auth->getProfile();
-            $sidebar_box_statuses = $profile->get("sidebar_boxes");
+            $sidebar_box_statuses = $profile->get('sidebar_boxes');
 
             if (strlen($sidebar_box_statuses) > 0) {
                 $sidebar_box_statuses = unserialize($sidebar_box_statuses);
@@ -127,7 +127,7 @@ class XLite_Controller_Admin_Login extends XLite_Controller_Admin_Abstract
     
     function getSecure()
     {
-        if ($this->session->get("no_https")) {
+        if ($this->session->get('no_https')) {
             return false;
         }
         return $this->getComplex('config.Security.admin_security');

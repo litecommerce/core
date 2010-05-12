@@ -53,7 +53,7 @@ class XLite_Controller_Admin_SearchStat extends XLite_Controller_Admin_Stats
             $searchStat = new XLite_Model_SearchStat();
             $this->searchStat = $searchStat->findAll(
                 null,
-                isset($this->orders[$this->get("listOrder")]) ? $this->orders[$this->get("listOrder")] : null
+                isset($this->orders[$this->get('listOrder')]) ? $this->orders[$this->get('listOrder')] : null
             );
         }
         return $this->searchStat;

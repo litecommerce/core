@@ -11,19 +11,19 @@
 
         // Store values for X-Cart $cart variable here
         $cart = array ();
-        $cart["total_cost"] = $lite_cart->get ("total");
-        $cart["discount"] = $lite_cart->get ("discount");
-        $cart["subtotal"] = $lite_cart->get ("subtotal");
+        $cart['total_cost'] = $lite_cart->get ("total");
+        $cart['discount'] = $lite_cart->get ("discount");
+        $cart['subtotal'] = $lite_cart->get ("subtotal");
 
-        if (isset($cart["discount"])) {
-            $cart["total_cost"] += $cart["discount"];
+        if (isset($cart['discount'])) {
+            $cart['total_cost'] += $cart['discount'];
         }
 
-        $cart["sh_n_tax"] = doubleval(sprintf("%.2f", ($cart[total_cost] - $cart[subtotal])));
-        $cart["sh_n_tax"] = ($cart["sh_n_tax"] < 0) ? 0 : $cart["sh_n_tax"];
+        $cart['sh_n_tax'] = doubleval(sprintf("%.2f", ($cart[total_cost] - $cart[subtotal])));
+        $cart['sh_n_tax'] = ($cart['sh_n_tax'] < 0) ? 0 : $cart['sh_n_tax'];
         
-        if (isset($cart["discount"])) {
-            $cart["subtotal"] -= $cart["discount"];
+        if (isset($cart['discount'])) {
+            $cart['subtotal'] -= $cart['discount'];
         }
         // Fill parameters fields here
         $module_params = $paymentMethod->get('params');
@@ -42,10 +42,10 @@
         $userinfo ["b_country"] = $lite_cart->getComplex('profile.billing_country');
         $userinfo ["phone"] = $lite_cart->getComplex('profile.billing_phone');
         $userinfo ["email"] = $lite_cart->getComplex('profile.login');
-        $userinfo ["card_number"] = $paymentMethod->cc_info["cc_number"];
-        $userinfo ["card_expire"] = $paymentMethod->cc_info["cc_date"];
-        $userinfo ["card_cvv2"] = $paymentMethod->cc_info["cc_cvv2"];
-        $userinfo ["card_name"] = $paymentMethod->cc_info["cc_name"];
+        $userinfo ["card_number"] = $paymentMethod->cc_info['cc_number'];
+        $userinfo ["card_expire"] = $paymentMethod->cc_info['cc_date'];
+        $userinfo ["card_cvv2"] = $paymentMethod->cc_info['cc_cvv2'];
+        $userinfo ["card_name"] = $paymentMethod->cc_info['cc_name'];
 
         if ($debug) {
             echo "userinfo:<pre>"; print_r($userinfo); echo "</pre><br>";
@@ -57,13 +57,13 @@
             "avsMessage" => "AVS message",
             "connectionAttempts" => "Connection attempts"
         );
-        $conn_attempts = (int) $cart_details["connectionAttempts"];
+        $conn_attempts = (int) $cart_details['connectionAttempts'];
         if (is_null($conn_attempts)) {
             $conn_attempts = 1;
         } else {
             $conn_attempts++;
         }
-        $cart_details["connectionAttempts"] = $conn_attempts;
+        $cart_details['connectionAttempts'] = $conn_attempts;
 
         if ($debug) echo "Connection attempt: $conn_attempts<br>";
 
@@ -79,7 +79,7 @@
         }
 
         // for the post_func
-        $GLOBALS["debug"] = $debug;
+        $GLOBALS['debug'] = $debug;
         
         // executable path
         $certdir = "./var/tmp";
@@ -127,12 +127,12 @@
 # $Id$
 #
 
-$vs_mid = $module_params["param01"];
-$vs_path = $module_params["param02"];
-$vs_host = $module_params["param03"];
-$vs_port = $module_params["param04"];
-$vs_curr = $module_params["param05"];
-$vs_prx = $module_params["param06"];
+$vs_mid = $module_params['param01'];
+$vs_path = $module_params['param02'];
+$vs_host = $module_params['param03'];
+$vs_port = $module_params['param04'];
+$vs_curr = $module_params['param05'];
+$vs_prx = $module_params['param06'];
 
 $post = "";
 $post[] = "ics_path=".$vs_path;
@@ -140,37 +140,37 @@ $post[] = "server_host=".$vs_host;
 $post[] = "server_port=".$vs_port;
 $post[] = "ics_applications=ics_auth,ics_bill";
 $post[] = "merchant_id=".$vs_mid;
-$post[] = "customer_firstname=".$userinfo["firstname"];
-$post[] = "customer_lastname=".$userinfo["lastname"];
-$post[] = "customer_email=".$userinfo["email"];
-$post[] = "customer_phone=".$userinfo["phone"];
-$post[] = "bill_address1=".$userinfo["b_address"];
-$post[] = "bill_city=".$userinfo["b_city"];
-$post[] = "bill_state=".$userinfo["b_state"];
-$post[] = "bill_zip=".$userinfo["b_zipcode"];
-$post[] = "bill_country=".$userinfo["b_country"];
-$post[] = "customer_cc_number=".$userinfo["card_number"];
-$post[] = "customer_cc_expmo=".substr($userinfo["card_expire"],0,2);
-$post[] = "customer_cc_expyr=".(2000+substr($userinfo["card_expire"],2,2));
+$post[] = "customer_firstname=".$userinfo['firstname'];
+$post[] = "customer_lastname=".$userinfo['lastname'];
+$post[] = "customer_email=".$userinfo['email'];
+$post[] = "customer_phone=".$userinfo['phone'];
+$post[] = "bill_address1=".$userinfo['b_address'];
+$post[] = "bill_city=".$userinfo['b_city'];
+$post[] = "bill_state=".$userinfo['b_state'];
+$post[] = "bill_zip=".$userinfo['b_zipcode'];
+$post[] = "bill_country=".$userinfo['b_country'];
+$post[] = "customer_cc_number=".$userinfo['card_number'];
+$post[] = "customer_cc_expmo=".substr($userinfo['card_expire'],0,2);
+$post[] = "customer_cc_expyr=".(2000+substr($userinfo['card_expire'],2,2));
 $post[] = "merchant_ref_number=".join("-",$secure_oid);
 $post[] = "currency=".$vs_curr;
-if (isset($userinfo["card_cvv2"]) && strlen($userinfo["card_cvv2"]) > 0) {
-    $post[] = "customer_cc_cv_number=".$userinfo["card_cvv2"];
+if (isset($userinfo['card_cvv2']) && strlen($userinfo['card_cvv2']) > 0) {
+    $post[] = "customer_cc_cv_number=".$userinfo['card_cvv2'];
 } else {
     $post[] = "customer_cc_cv_indicator=0";
 }
 
 #$i=0;$post[] = "offer".$i."=offerid".($i++)."^product_name:".strtr($product[product],"^:","  ")."^merchant_product_sku:".strtr($product[productcode],"^:","  ")."^product_code:^amount:".$product[price]."^quantity:".$product[amount];
 //$post[] = "offer0=offerid0^product_name:Products^merchant_product_sku:^product_code:^amount:". $cart['subtotal'] ."^quantity:1";
-//$post[] = "offer1=offerid1^product_name:Shipping_etc^merchant_product_sku:^product_code:^amount:".$cart["sh_n_tax"]."^quantity:1";
+//$post[] = "offer1=offerid1^product_name:Shipping_etc^merchant_product_sku:^product_code:^amount:".$cart['sh_n_tax']."^quantity:1";
 
-$post[] = "offer0=offerid0^product_name:Shopping_cart^merchant_product_sku:^product_code:^amount:". $lite_cart->get("total") ."^quantity:1";
+$post[] = "offer0=offerid0^product_name:Shopping_cart^merchant_product_sku:^product_code:^amount:". $lite_cart->get('total') ."^quantity:1";
 
 # Execute ICS
 #$tmpfile = func_temp_store('');
 
 $tmpfile = @tempnam($certdir,"lctmp");
-$execline = func_find_executable("perl")." ./classes/modules/CyberSource/csrc.pl process 1> ".$tmpfile." 2>&1";
+$execline = func_find_executable('perl')." ./classes/modules/CyberSource/csrc.pl process 1> ".$tmpfile." 2>&1";
 
 $fp = popen($execline, "w");
 fputs($fp,join("\n",$post)); pclose($fp);
@@ -211,7 +211,7 @@ exit;
         
         $status = "I";
 
-        if ($bill_output["code"] != 1) {
+        if ($bill_output['code'] != 1) {
             $error = $bill_output ["billmes"];
             $status = "F";
         } else {
@@ -221,11 +221,11 @@ exit;
         }
 
         if ($bill_output ["avsmes"])
-            $cart_details["avsMessage"] = $bill_output ["avsmes"];
+            $cart_details['avsMessage'] = $bill_output ["avsmes"];
         else
-            $cart_details["avsMessage"] = null;
+            $cart_details['avsMessage'] = null;
 
-        $cart_details["error"] = $error;
+        $cart_details['error'] = $error;
         
         $lite_cart->set('details', $cart_details);
         $lite_cart->set('detailLabels', $cart_labels);

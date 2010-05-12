@@ -127,24 +127,24 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
             $extraField = new XLite_Model_ExtraField();
             if (true == ($globalExtraFields = $extraField->findAll("product_id = 0 AND (" . $search_query.")"))) {
                 foreach($globalExtraFields as $gef) 
-                    if (!is_null($gef->get("categories"))) {
-                        $categories = explode("|", $gef->get("categories"));
+                    if (!is_null($gef->get('categories'))) {
+                        $categories = explode("|", $gef->get('categories'));
                         foreach($categories as $cat_id) {
                             $category = new XLite_Model_Category($cat_id);
-                            $field_ids = array_merge($field_ids, $this->getIds($category->get("products")));
+                            $field_ids = array_merge($field_ids, $this->getIds($category->get('products')));
                         }
                     }
             }
-            $productMethods = array_map("strtolower", get_class_methods($extraField->get("product")));
+            $productMethods = array_map("strtolower", get_class_methods($extraField->get('product')));
             $isNewEF = in_array("isglobal", $productMethods);
             if (true == ($extraFields = $extraField->findAll("product_id <> 0 AND (" . $search_query.")"))) {
                 foreach($extraFields as $ef) {
                     if ($isNewEF) {
-                        $field_ids = array_merge($field_ids, array($ef->get("product_id")));
+                        $field_ids = array_merge($field_ids, array($ef->get('product_id')));
                     } else {
                         $product = $ef->getProduct();
                         if ($product->isExists()) {
-                            $field_ids = array_merge($field_ids, array($ef->get("product_id")));
+                            $field_ids = array_merge($field_ids, array($ef->get('product_id')));
                         } else {
                             $ef->delete();
                         }
@@ -158,11 +158,11 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
             if (true == ($fieldValues = $fieldValue->findAll($search_query))) {
                 foreach($fieldValues as $fv) {
                     if ($isNewEF) {
-                        $field_ids = array_merge($field_ids, array($fv->get("product_id")));
+                        $field_ids = array_merge($field_ids, array($fv->get('product_id')));
                     } else {
-                        $product = new XLite_Model_Product($fv->get("product_id"));
+                        $product = new XLite_Model_Product($fv->get('product_id'));
                         if ($product->isExists()) {
-                            $field_ids = array_merge($field_ids, array($fv->get("product_id")));
+                            $field_ids = array_merge($field_ids, array($fv->get('product_id')));
                         } else {
                             $fv->delete();
                         }
@@ -173,7 +173,7 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
 
         $option_ids = array();
 
-        if ($_options && $this->xlite->get("ProductOptionsEnabled")) {
+        if ($_options && $this->xlite->get('ProductOptionsEnabled')) {
             $field_values = array
             (
                 "optclass" => true, 
@@ -233,7 +233,7 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
         $ids = array();
         if (is_array($items)) {
             foreach($items as $item) {
-                $ids[] = $item->get("product_id");
+                $ids[] = $item->get('product_id');
             }
         }
         return !empty($ids) ? $ids : array();
@@ -261,7 +261,7 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
         if ($subcategory_search) {
             $categories = $category->getSubcategories();
                 for ($i=0; $i<count($categories); $i++) {
-                    $category_products = $this->getCategoryProducts($categories[$i]->get("category_id"), $search_query, $subcategory_search);
+                    $category_products = $this->getCategoryProducts($categories[$i]->get('category_id'), $search_query, $subcategory_search);
                     $products = array_merge($products, array_values($category_products));
                 }
         }

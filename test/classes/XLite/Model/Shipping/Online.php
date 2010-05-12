@@ -70,7 +70,7 @@ class XLite_Model_Shipping_Online extends XLite_Model_Shipping
             $c->set("name", $field);
             $c->set("value", $options->$field);
             $this->config->$category->$field = $options->$field;
-            if ($c->is("exists")) {
+            if ($c->is('exists')) {
                 $c->update();
             } else {
                 $c->create();
@@ -116,7 +116,7 @@ class XLite_Model_Shipping_Online extends XLite_Model_Shipping
                         + doubleval($rateObject->get('flat'))
                         + doubleval($rateObject->get('per_item')) * $items
                         + doubleval($rateObject->get('percent')) * $total / 100
-                        + doubleval($rateObject->get("per_lbs")) * $weight;
+                        + doubleval($rateObject->get('per_lbs')) * $weight;
 
                     $result[$rateObject->shipping->get('shipping_id')] = $rateObject;
                 }
@@ -144,8 +144,8 @@ class XLite_Model_Shipping_Online extends XLite_Model_Shipping
     {
         $cacheTable = $this->db->getTableByAlias($table);
         // garbage collection
-        if ($this->get("shippingCacheExpiration") > 0) {
-            $this->db->query("DELETE FROM $cacheTable WHERE date<".(time()-$this->get("shippingCacheExpiration")));
+        if ($this->get('shippingCacheExpiration') > 0) {
+            $this->db->query("DELETE FROM $cacheTable WHERE date<".(time()-$this->get('shippingCacheExpiration')));
         }
 
         // check cache for fresh values
@@ -156,7 +156,7 @@ class XLite_Model_Shipping_Online extends XLite_Model_Shipping
         $condition = join(" AND ", $condition);
         $cacheRow = $this->db->getRow("SELECT rates FROM $cacheTable WHERE $condition");
         if (!is_null($cacheRow)) {
-            return $this->unserializeCacheRates($cacheRow["rates"]);
+            return $this->unserializeCacheRates($cacheRow['rates']);
         }
         return false;
     }
@@ -185,7 +185,7 @@ class XLite_Model_Shipping_Online extends XLite_Model_Shipping
     function getOunces($order)
     {
         
-        $w = $order->get("weight");
+        $w = $order->get('weight');
         switch ($this->config->getComplex('General.weight_unit')) {
         case 'lbs': return ceil($w*16.0);
         case 'oz':  return ceil($w*1.0);

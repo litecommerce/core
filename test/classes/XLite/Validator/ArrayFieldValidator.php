@@ -43,7 +43,7 @@ class XLite_Validator_ArrayFieldValidator extends XLite_Validator_Abstract
             return false;
         }
 
-        preg_match('/^(.+)\[(.+)\]$/',$this->get("field"),$field);
+        preg_match('/^(.+)\[(.+)\]$/',$this->get('field'),$field);
   	    $result = !isset($_POST["$field[1]"]["$field[2]"]) || (trim($_POST[$field[1]][$field[2]]) != "");
         return $result;
     }
@@ -51,19 +51,19 @@ class XLite_Validator_ArrayFieldValidator extends XLite_Validator_Abstract
     function isValidationUnnecessary()
     {
         $class = strtolower(get_class($this));
-        preg_match('/^(.+)\[(.+)\]$/',$this->get("field"), $field);
+        preg_match('/^(.+)\[(.+)\]$/',$this->get('field'), $field);
         return (!isset($_POST['VALIDATE'][$class][$field[1]][$field[2]]));
     }
 
     function display()
     {
-        if ($this->is("visible")) {
+        if ($this->is('visible')) {
             $class = strtolower(get_class($this));
-            preg_match('/^(.+)\[(.+)\]$/',$this->get("field"),$field);
+            preg_match('/^(.+)\[(.+)\]$/',$this->get('field'),$field);
             echo "<input type='hidden' name='VALIDATE[$class][" . $field[1] . "][" . $field[2] ."]' value='1'>\n";
         }
         
-        if (!$this->is("valid")) {
+        if (!$this->is('valid')) {
             parent::display();
         }
     }

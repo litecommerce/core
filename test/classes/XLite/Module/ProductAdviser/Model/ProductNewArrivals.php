@@ -42,7 +42,7 @@ class XLite_Module_ProductAdviser_Model_ProductNewArrivals extends XLite_Model_A
         "new"				=> "N",
         "updated"			=> 0,
     );
-    public $primaryKey = array("product_id");
+    public $primaryKey = array('product_id');
     public $alias = "products_new_arrivals";
     public $defaultOrder = "new DESC, updated DESC, added DESC";
 

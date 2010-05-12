@@ -47,9 +47,9 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
             $product_id > 0
             && $this->config->ProductAdviser->number_recently_viewed > 0
         ) {
-    		$referer = (isset($_SERVER["HTTP_REFERER"])) ? $_SERVER["HTTP_REFERER"] : "NO_HTTP_REFERER";
+    		$referer = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : "NO_HTTP_REFERER";
             $referer = md5($referer);
-            $referers = ($this->session->isRegistered("HTTP_REFERER")) ? $this->session->get("HTTP_REFERER") : array();
+            $referers = ($this->session->isRegistered('HTTP_REFERER')) ? $this->session->get('HTTP_REFERER') : array();
 
             if (!is_array($referers)) {
             	$referers = array();
@@ -69,7 +69,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
                 $statistic->set("last_viewed", time());
 
             	if ($statistic->find("sid='$sid' AND product_id='$product_id'")) {
-            		$statistic->set("views_number", intval($statistic->get("views_number"))+1);
+            		$statistic->set("views_number", intval($statistic->get('views_number'))+1);
                     $statistic->update();
 
             	} else {
@@ -83,24 +83,24 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
 
         if ($this->xlite->PA_InventorySupport && $this->config->ProductAdviser->customer_notifications_enabled) {
 
-            if ($this->getProduct()->getComplex('inventory.amount') == 0 && $this->getProduct()->get("tracking") == 0) {
+            if ($this->getProduct()->getComplex('inventory.amount') == 0 && $this->getProduct()->get('tracking') == 0) {
 
                 // Product is out-of-stock
     			$this->rejectedItemInfo = new XLite_Base();
-    			$this->rejectedItemInfo->set("product_id", $this->getProduct()->get("product_id"));
-    			$this->rejectedItemInfo->set("product", new XLite_Model_Product($this->getProduct()->get("product_id")));
+    			$this->rejectedItemInfo->set("product_id", $this->getProduct()->get('product_id'));
+    			$this->rejectedItemInfo->set("product", new XLite_Model_Product($this->getProduct()->get('product_id')));
 
             	if ($this->isNotificationSaved($this->rejectedItemInfo)) {
         			$this->rejectedItemInfo = null;
             	}
 
-            } elseif ($this->getProduct()->get("tracking") != 0) {
+            } elseif ($this->getProduct()->get('tracking') != 0) {
 
                 // Quantity tracking is enabled
-                if ($this->session->isRegistered("rejectedItem")) {
-                	$rejectedItemInfo = $this->session->get("rejectedItem");
+                if ($this->session->isRegistered('rejectedItem')) {
+                	$rejectedItemInfo = $this->session->get('rejectedItem');
 
-                	if ($rejectedItemInfo->product_id != $this->getProduct()->get("product_id")) {
+                	if ($rejectedItemInfo->product_id != $this->getProduct()->get('product_id')) {
                 		$this->rejectedItemInfo = null;
                 		$this->session->set("rejectedItem", null);
 
@@ -149,13 +149,13 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
             $email = '';
 
             $profile_id = 0;
-            if ($this->auth->is("logged")) {
-                $profile = $this->auth->get("profile");
-    			$profile_id = $profile->get("profile_id");
-        		$email = $profile->get("login");
+            if ($this->auth->is('logged')) {
+                $profile = $this->auth->get('profile');
+    			$profile_id = $profile->get('profile_id');
+        		$email = $profile->get('login');
 
-            } elseif ($this->session->isRegistered("customerEmail")) {
-    			$email = $this->session->get("customerEmail");
+            } elseif ($this->session->isRegistered('customerEmail')) {
+    			$email = $this->session->get('customerEmail');
             }
 
     	    $check[] = "profile_id = '$profile_id'";
@@ -182,7 +182,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
     			$notification->set("quantity", $rejectedItemInfo->amount);
         	}
 
-    	    $check[] = "notify_key = '" . addslashes($notification->get("productKey")) . "'";
+    	    $check[] = "notify_key = '" . addslashes($notification->get('productKey')) . "'";
 
     		$result = $notification->find(implode(' AND ', $check));
         }
@@ -202,15 +202,15 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
 
             $email = '';
 
-    		if ($this->auth->is("logged")) {
-    			$profile = $this->auth->get("profile");
-        		$profile_id = $profile->get("profile_id");
-        		$email = $profile->get("login");
+    		if ($this->auth->is('logged')) {
+    			$profile = $this->auth->get('profile');
+        		$profile_id = $profile->get('profile_id');
+        		$email = $profile->get('login');
 
     		} else {
         		$profile_id = 0;
-        		if ($this->session->isRegistered("customerEmail")) {
-        			$email = $this->session->get("customerEmail");
+        		if ($this->session->isRegistered('customerEmail')) {
+        			$email = $this->session->get('customerEmail');
         		}
     		}
             $check[] = "profile_id='$profile_id'";
@@ -218,8 +218,8 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
 
     		$notification = new XLite_Module_ProductAdviser_Model_Notification();
     		$notification->set("type", CUSTOMER_NOTIFICATION_PRICE);
-        	$notification->set("product_id", $this->get("product_id"));
-            $check[] = "notify_key='" . addslashes($notification->get("productKey")) . "'";
+        	$notification->set("product_id", $this->get('product_id'));
+            $check[] = "notify_key='" . addslashes($notification->get('productKey')) . "'";
 
             $check = implode(" AND ", $check);
             $this->priceNotified = $notification->find($check);

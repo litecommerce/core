@@ -109,9 +109,9 @@ class XLite_Module_2CheckoutCom_Main extends XLite_Module_Abstract
         $this->registerPaymentMethod('2Checkout');
 
         $pm = XLite_Model_PaymentMethod::factory('2Checkout');
-        $params = $pm->get("params");
-        if (!isset($params["version"])) {
-            $params["version"] = "2";
+        $params = $pm->get('params');
+        if (!isset($params['version'])) {
+            $params['version'] = "2";
             $pm->set("params", $params);
             $pm->update();
         }

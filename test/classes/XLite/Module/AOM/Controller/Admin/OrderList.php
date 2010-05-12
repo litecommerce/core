@@ -48,8 +48,8 @@ class XLite_Module_AOM_Controller_Admin_OrderList extends XLite_Controller_Admin
             $order->collectGarbage();
 
 // search dates  
-        if ($this->get("period") != 6) {
-            list($startDate, $endDate) = $this->getPeriodDates($this->get("period"));
+        if ($this->get('period') != 6) {
+            list($startDate, $endDate) = $this->getPeriodDates($this->get('period'));
             $this->set("startDate", $startDate);
             $this->set("endDate", $endDate);
         }
@@ -57,26 +57,26 @@ class XLite_Module_AOM_Controller_Admin_OrderList extends XLite_Controller_Admin
 
             $orders = $order->search(
                     null,
-                    $this->get("start_order_id"),
-                    $this->get("end_order_id"),
-                    $this->get("status"),
-                    $this->get("startDate"),
-                    $this->get("endDate")+24*3600,
-                    $this->get("start_total"),
-                    $this->get("end_total"),
-                    $this->get("shipping_id"),
-                    $this->get("payment_method"));
+                    $this->get('start_order_id'),
+                    $this->get('end_order_id'),
+                    $this->get('status'),
+                    $this->get('startDate'),
+                    $this->get('endDate')+24*3600,
+                    $this->get('start_total'),
+                    $this->get('end_total'),
+                    $this->get('shipping_id'),
+                    $this->get('payment_method'));
             $this->orders = $orders;
 
 // search by profiles 
 
-        if ($this->get("login")||$this->get("person_info"))	{
+        if ($this->get('login')||$this->get('person_info'))	{
             $profile = new XLite_Model_Profile();
             $profile->_range = null;
             $person_search = "";
-            if ($this->get("person_info")) {
+            if ($this->get('person_info')) {
                 $field_values = array ("billing_firstname", "billing_lastname", "billing_company", "billing_phone", "billing_fax", "billing_address", "billing_city", "billing_state", "billing_country", "billing_zipcode", "shipping_firstname", "shipping_lastname", "shipping_company", "shipping_phone", "shipping_fax",  "shipping_address", "shipping_city", "shipping_state", "shipping_country", "shipping_zipcode");
-                $keywords = explode(" ", addslashes($this->get("person_info")));
+                $keywords = explode(" ", addslashes($this->get('person_info')));
         	    $person_search = array();
             	foreach($field_values as $field_value) {
                 	$query = array();
@@ -86,15 +86,15 @@ class XLite_Module_AOM_Controller_Admin_OrderList extends XLite_Controller_Admin
         		}
             	$person_search = implode(" OR ",$person_search);
             }
-            $profiles = $profile->findAll("login LIKE '%".addslashes($this->get("login"))."%' AND order_id <> 0" . ($person_search ? " AND ($person_search)" : ""));
+            $profiles = $profile->findAll("login LIKE '%".addslashes($this->get('login'))."%' AND order_id <> 0" . ($person_search ? " AND ($person_search)" : ""));
             if (!(is_array($profiles) && count($profiles))) 
                 $profiles = array();
             $this->orders = array();
             if (is_array($orders) && count($orders)) {
                 foreach($orders as $order) {
-                    $order_id = $order->get("order_id");
+                    $order_id = $order->get('order_id');
                     foreach($profiles as $profile) {
-                        if ($order_id == $profile->get("order_id")) {
+                        if ($order_id == $profile->get('order_id')) {
                             $this->orders[] = $order;
                         }
                     }
@@ -106,25 +106,25 @@ class XLite_Module_AOM_Controller_Admin_OrderList extends XLite_Controller_Admin
 // search products 
 
             $products = array();
-            if ($this->get("product_name")) {
+            if ($this->get('product_name')) {
                 $product = new XLite_Model_Product();
-                $product_name = addslashes($this->get("product_name"));
+                $product_name = addslashes($this->get('product_name'));
                 $products = $product->findAll("name LIKE '%$product_name%' OR sku LIKE '%$product_name%'");
                 $item = new XLite_Model_OrderItem();
                 $items 	 = $item->findAll("product_name LIKE '%$product_name%' OR product_sku LIKE '%$product_name%'");
                 $product_ids = array();
                 foreach($products as $product)
-                    $product_ids[] = $product->get("product_id");
+                    $product_ids[] = $product->get('product_id');
                 $item_ids = array();
                 foreach($items as $item) 
-                    $item_ids[] = $item->get("product_id");
+                    $item_ids[] = $item->get('product_id');
                 $product_ids = array_unique(array_merge($product_ids,$item_ids));
                 $orders = $this->orders;
                 $this->orders = array();
                 foreach($orders as $order) {
                     $marked = false;
-                    foreach($order->get("items") as $item) 
-                        if (in_array($item->get("product_id"),$product_ids)) 
+                    foreach($order->get('items') as $item) 
+                        if (in_array($item->get('product_id'),$product_ids)) 
                             $marked = true;
                     if ($marked == true) 
                         $this->orders[] = $order;
@@ -172,8 +172,8 @@ class XLite_Module_AOM_Controller_Admin_OrderList extends XLite_Controller_Admin
         $shippings = $shipping->findAll();
         $validShippings = array("-1");
         foreach($shippings as $shipping) {
-            if (in_array($shipping->get("class"), $modules) && $shipping->get("enabled")) {
-                $validShippings[] = $shipping->get("shipping_id");
+            if (in_array($shipping->get('class'), $modules) && $shipping->get('enabled')) {
+                $validShippings[] = $shipping->get('shipping_id');
             }
         }
 
@@ -182,7 +182,7 @@ class XLite_Module_AOM_Controller_Admin_OrderList extends XLite_Controller_Admin
         $excluded_shipping_rates = array();
         foreach ($shipping_rates as $key => $val) {
             $shipping_rates[$key]->pos = $i++;
-            if (!in_array($val->get("shipping_id"), $validShippings)) {
+            if (!in_array($val->get('shipping_id'), $validShippings)) {
             	$excluded_shipping_rates[$key] = true;
             }
         }

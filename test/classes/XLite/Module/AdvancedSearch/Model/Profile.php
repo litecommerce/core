@@ -37,7 +37,7 @@ class XLite_Module_AdvancedSearch_Model_Profile extends XLite_Model_Profile impl
 {
     public function __construct($id = null)
     {
-        $this->fields["search_settings"] = "";
+        $this->fields['search_settings'] = "";
         parent::__construct($id);
     }
 

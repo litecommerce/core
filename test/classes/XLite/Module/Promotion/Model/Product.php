@@ -38,7 +38,7 @@ class XLite_Module_Promotion_Model_Product extends XLite_Model_Product implement
     function delete()
     {
         $so = new XLite_Module_Promotion_Model_SpecialOffer();
-        $soDeletedProducts = $so->findAll("product_id='" . $this->get("product_id") . "'");
+        $soDeletedProducts = $so->findAll("product_id='" . $this->get('product_id') . "'");
         if (is_array($soDeletedProducts) && count($soDeletedProducts) > 0) {
             foreach($soDeletedProducts as $sodp) {
                 $sodp->markInvalid();
@@ -46,19 +46,19 @@ class XLite_Module_Promotion_Model_Product extends XLite_Model_Product implement
         }
 
         $bp = new XLite_Module_Promotion_Model_BonusPrice();
-        $bpDeletedProducts = $bp->findAll("product_id='" . $this->get("product_id") . "'");
+        $bpDeletedProducts = $bp->findAll("product_id='" . $this->get('product_id') . "'");
         if (is_array($bpDeletedProducts) && count($bpDeletedProducts) > 0) {
             foreach($bpDeletedProducts as $bpdp) {
-                $sodp = new XLite_Module_Promotion_Model_SpecialOffer($bpdp->get("offer_id"));
+                $sodp = new XLite_Module_Promotion_Model_SpecialOffer($bpdp->get('offer_id'));
                 $sodp->markInvalid();
             }
         }
 
         $bp = new XLite_Module_Promotion_Model_SpecialOfferProduct();
-        $bpDeletedProducts = $bp->findAll("product_id='" . $this->get("product_id") . "'");
+        $bpDeletedProducts = $bp->findAll("product_id='" . $this->get('product_id') . "'");
         if (is_array($bpDeletedProducts) && count($bpDeletedProducts) > 0) {
             foreach($bpDeletedProducts as $bpdp) {
-                $sodp = new XLite_Module_Promotion_Model_SpecialOffer($bpdp->get("offer_id"));
+                $sodp = new XLite_Module_Promotion_Model_SpecialOffer($bpdp->get('offer_id'));
                 $sodp->markInvalid();
             }
         }

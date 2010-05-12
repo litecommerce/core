@@ -61,15 +61,15 @@ class XLite_Module_MultiCurrency_View_Abstract extends XLite_View_Abstract imple
     {
         $price_format 	= $this->config->getComplex('General.price_format');
         $price		 	= is_Object($base) ? $base->get($field) : $base;
-        $default		= $this->get("defaultCurrency");
-        $currencies 	= $this->get("currencies");
+        $default		= $this->get('defaultCurrency');
+        $currencies 	= $this->get('currencies');
         
-        $this->config->setComplex("General.price_format", $default->get("price_format"));
+        $this->config->setComplex("General.price_format", $default->get('price_format'));
         $result = parent::price_format($price, $field, $thousand_delim, $decimal_delim);
         if (!empty($currencies) && ($this->isTargetAllowed())) {
             $additional = "";
             foreach ($currencies as $currency) {
-                $this->config->setComplex("General.price_format", $currency->get("price_format"));
+                $this->config->setComplex("General.price_format", $currency->get('price_format'));
                 $currency_price = $price * $currency->get('exchange_rate');
                 $currency_price = parent::price_format($currency_price, $field, $thousand_delim, $decimal_delim);
                 if ($this->auth->is('logged')&&$this->config->getComplex('MultiCurrency.country_currency')) {
@@ -88,9 +88,9 @@ class XLite_Module_MultiCurrency_View_Abstract extends XLite_View_Abstract imple
     function isTargetAllowed() 
     {
         $result = true;
-        $target = $this->get("target");
-        if ($this->xlite->is("adminZone")) {
-            $page = $this->get("page");
+        $target = $this->get('target');
+        if ($this->xlite->is('adminZone')) {
+            $page = $this->get('page');
             if ((in_array($target, array('order', 'create_order'))) && (in_array($page, array('order_info','order_preview')))) {
                 $result = false;
             }

@@ -60,7 +60,7 @@ class XLite_Controller_Admin_Files extends XLite_Controller_Admin_Abstract
     function action_tar()
     {
         $tar = new Archive_Tar('STDOUT');
-        $this->startDownload("backup.tar");
+        $this->startDownload('backup.tar');
         $files = array();
         if ($handle = opendir('.')) {
             while (false !== ($file = readdir($handle))) {
@@ -81,9 +81,9 @@ class XLite_Controller_Admin_Files extends XLite_Controller_Admin_Abstract
     function action_tar_skins()
     {
         $tar = new Archive_Tar('STDOUT');
-        $this->startDownload("backup.tar");
-        $tar->_exceptions = array(".anchors.ini");
-        $tar->create("var/html");
+        $this->startDownload('backup.tar');
+        $tar->_exceptions = array('.anchors.ini');
+        $tar->create('var/html');
         $tar->_close();
     }
 
@@ -96,7 +96,7 @@ class XLite_Controller_Admin_Files extends XLite_Controller_Admin_Abstract
         // change file permissions
         $files = $tar->listContent();
         foreach ($files as $file) {
-            $fn = "var/html/".$file["filename"];
+            $fn = "var/html/".$file['filename'];
             if (is_dir($fn)) {
                 @chmod($fn, get_filesystem_permissions(0777));
             } else {

@@ -84,7 +84,7 @@ class XLite_Module_GreetVisitor_Main extends XLite_Module_Abstract
     {
         parent::init();
 
-        if ($this->xlite->is("adminZone")) {
+        if ($this->xlite->is('adminZone')) {
             // admin backoffice - specific class decorations
         } else {
             // customer frontend - specific class decorations

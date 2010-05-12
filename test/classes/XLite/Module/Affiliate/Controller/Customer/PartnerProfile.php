@@ -70,12 +70,12 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerProfile extends XLite_Mo
 
     function getTemplate() 
     {
-        if ($this->get("mode") == "sent") {
+        if ($this->get('mode') == "sent") {
             return "modules/Affiliate/login.tpl";
         }
         
-        if ($this->get("mode") == "register") {
-            if ($this->auth->is("logged")) {
+        if ($this->get('mode') == "register") {
+            if ($this->auth->is('logged')) {
                 $this->redirect("cart.php?target=partner");
             } else {
                 return "modules/Affiliate/login.tpl";
@@ -86,7 +86,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerProfile extends XLite_Mo
     
     function getAccessLevel() 
     {
-        if ($this->get("mode") == "register" || $this->get("mode") == "sent" || ($this->get("mode") == "delete" && $this->get("submode") == "confirmed")) {
+        if ($this->get('mode') == "register" || $this->get('mode') == "sent" || ($this->get('mode') == "delete" && $this->get('submode') == "confirmed")) {
             return 0;
         } else {
             return parent::getAccessLevel();
@@ -99,20 +99,20 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerProfile extends XLite_Mo
             $this->set("returnUrl", "cart.php?target=partner_profile&mode=register");
         } else {
             $this->registerForm->action_register();
-            $this->set("mode", $this->registerForm->get("mode"));
+            $this->set("mode", $this->registerForm->get('mode'));
         }
     }
 
     function action_modify()
     {
         $this->profileForm->action_modify();
-        $this->set("mode", $this->profileForm->get("mode"));
+        $this->set("mode", $this->profileForm->get('mode'));
     }
 
     function action_delete()
     {
-        if ($this->auth->is("logged")) {
-            $this->profile = $this->auth->get("profile");
+        if ($this->auth->is('logged')) {
+            $this->profile = $this->auth->get('profile');
             $this->auth->deletePartner($this->profile);
             $this->set("mode", "delete");
             $this->set("submode", "confirmed");

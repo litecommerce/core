@@ -38,9 +38,9 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Users extends XLite_Control
 
     function init()
     {
-    	if (!(isset($_REQUEST["search"]) && strtolower($_REQUEST["search"]) == "search")) {
+    	if (!(isset($_REQUEST['search']) && strtolower($_REQUEST['search']) == "search")) {
     		// List All
-    		$_REQUEST["membership"] = "all";
+    		$_REQUEST['membership'] = "all";
     	}
         parent::init();
         $this->params[] = "search";

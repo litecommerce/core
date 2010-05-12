@@ -40,8 +40,8 @@ class XLite_Module_DemoMode_Core_FlexyCompiler extends XLite_Core_FlexyCompiler 
     {
     	parent::postprocess();
 
-        if ($this->session->isRegistered("customSkin")) {
-            $customSkin = intval(strval($this->session->get("customSkin")));
+        if ($this->session->isRegistered('customSkin')) {
+            $customSkin = intval(strval($this->session->get('customSkin')));
             if ($customSkin > 0) {
                 $customSkin = "default" . $customSkin;
                 $this->phpcode = str_replace("/default/", "/" . $customSkin . "/", $this->phpcode);

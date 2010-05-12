@@ -62,10 +62,10 @@ class XLite_Module_2CheckoutCom_Model_PaymentMethod_2Checkout extends XLite_Mode
 
     function handleRequest(XLite_Model_Cart $cart)
     {
-        $params = $this->get("params");
-        if ($params["version"] != 2) {
+        $params = $this->get('params');
+        if ($params['version'] != 2) {
     		// Authorize.Net now returns all POST in lowercase.
-            if (!isset($_POST["securenumber"]) || $_POST["securenumber"] != $cart->getComplex('details.secureNumber')) {
+            if (!isset($_POST['securenumber']) || $_POST['securenumber'] != $cart->getComplex('details.secureNumber')) {
                 die("<font color=red><b>Security check failed!</b></font> Please contact administrator <b>" . $this->config->getComplex('Company.site_administrator') . "</b> .");
             }
             require_once LC_MODULES_DIR . '2CheckoutCom' . LC_DS . 'encoded.php';
@@ -73,21 +73,21 @@ class XLite_Module_2CheckoutCom_Model_PaymentMethod_2Checkout extends XLite_Mode
         } else {
     		$security_check = true;
 
-    		$order_number = ($params["test_mode"]=="Y") ? 1 : $_POST["order_number"];
-    		$securekey = strtoupper(md5($params["secret_word"].$params["account_number"].$order_number.$_POST["total"]));
-    		if ($securekey != $_POST["key"]) {
+    		$order_number = ($params['test_mode']=="Y") ? 1 : $_POST['order_number'];
+    		$securekey = strtoupper(md5($params['secret_word'].$params['account_number'].$order_number.$_POST['total']));
+    		if ($securekey != $_POST['key']) {
     			$security_check = false;
     		}
 
-    		if ($cart->get("total") != $_POST["total"]) {
+    		if ($cart->get('total') != $_POST['total']) {
                 $security_check = false;
             }
 
-    		if (isset($_SERVER["HTTP_REFERER"])) {
+    		if (isset($_SERVER['HTTP_REFERER'])) {
     			$referers = array("www.2checkout.com", "2checkout.com", "www2.2checkout.com");
     			$referer_check = false;
     			foreach ($referers as $referer) {
-    				if (!(preg_match("/https?:\/\/([^\/]*)$referer/i", $_SERVER["HTTP_REFERER"]) == false)) {
+    				if (!(preg_match("/https?:\/\/([^\/]*)$referer/i", $_SERVER['HTTP_REFERER']) == false)) {
     					$referer_check = true;
     					break;
     				}
