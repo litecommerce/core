@@ -36,6 +36,7 @@
 class XLite_Module_GoogleCheckout_View_GoogleAltCheckout extends XLite_View_Abstract
 {
     public $GCMerchantID = null;
+    public $GCMerchantKey = null;
     public $CurrentSkin = null;
 
     /**
@@ -61,6 +62,7 @@ class XLite_Module_GoogleCheckout_View_GoogleAltCheckout extends XLite_View_Abst
             if ($enabled) {
                 $params = $pm->get('params');
                 $this->GCMerchantID = $params['merchant_id'];
+                $this->GCMerchantKey = $params['merchant_key'];
                 $this->CurrentSkin = strval($this->getComplex('dialog.config.Skins.skin'));
             } else {
                 $this->GCMerchantID = null;
@@ -86,11 +88,9 @@ class XLite_Module_GoogleCheckout_View_GoogleAltCheckout extends XLite_View_Abst
                 $this->setComplex("dialog.google_checkout_profile", true);
             }
             $this->initGoogleData();
-            if (isset($this->GCMerchantID)) {
-                return true;
-            } else {
-                return false;
-            }
+
+            return isset($this->GCMerchantID);
+
         } else {
             return false;
         }

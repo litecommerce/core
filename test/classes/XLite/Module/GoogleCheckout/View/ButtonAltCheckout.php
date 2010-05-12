@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_GoogleCheckout_View_ButtonAltCheckout extends XLite_View_Button
-    {
+{
 
     /**
      * Widget param names
@@ -42,35 +42,102 @@ class XLite_Module_GoogleCheckout_View_ButtonAltCheckout extends XLite_View_Butt
     const PARAM_SIZE  = 'size';
     const PARAM_BACKGROUND = 'background';
 
-    public $buttonUrl = null;
-    public $gacObject = null;
+    /**
+     * Button mage URL 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $buttonUrl = null;
 
-    function init()
+    /**
+     * Service object
+     * 
+     * @var    XLite_Module_GoogleCheckout_View_GoogleAltCheckout
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $gacObject = null;
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
     {
-        if (!isset($this->gacObject)) {
-    		$this->gacObject = new XLite_Module_GoogleCheckout_View_GoogleAltCheckout();
-        	$this->gacObject->initGoogleData();
-        }
-
-        if (isset($this->gacObject->GCMerchantID) && $this->getComplex('dialog.target') == "cart" && strtolower($this->get('label')) == "checkout") {
-            $this->template = "modules/GoogleCheckout/button_alt_checkout.tpl";
-        }
-
-        parent::init();
+        return 'modules/GoogleCheckout/shopping_cart/button.tpl';
     }
 
-    function getGoogleCheckoutButtonUrl()
+    /**
+     * Get Google Checkout button image URL 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getGoogleCheckoutButtonUrl()
     {
-        if (!isset($this->buttonUrl)) {
-        	$this->buttonUrl = $this->gacObject->getGoogleCheckoutButtonUrl($this->getParam(self::PARAM_SIZE), $this->getParam(self::PARAM_BACKGROUND));
+        if (is_null($this->buttonUrl)) {
+            $this->buttonUrl = $this->getGacObject()->getGoogleCheckoutButtonUrl(
+                $this->getParam(self::PARAM_SIZE),
+                $this->getParam(self::PARAM_BACKGROUND)
+            );
         }
 
         return $this->buttonUrl;
     }
 
-    function isGoogleAllowPay()
+    /**
+     * Check - allow pay with Google checkout or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isGoogleAllowPay()
     {
-        return $this->gacObject->isGoogleAllowPay();
+        return $this->getGacObject()->isGoogleAllowPay();
+    }
+
+    /**
+     * Get service object 
+     * 
+     * @return XLite_Module_GoogleCheckout_View_GoogleAltCheckout
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getGacObject()
+    {
+        if (is_null($this->gacObject)) {
+            $this->gacObject = new XLite_Module_GoogleCheckout_View_GoogleAltCheckout();
+            $this->gacObject->initGoogleData();
+        }
+
+        return $this->gacObject;
+    }
+
+    /**
+     * Check widget vidibility
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isVisible()
+    {
+        return parent::isVisible()
+            && $this->getGacObject()->GCMerchantID
+            && $this->getGacObject()->GCMerchantKey;
     }
 
     /**

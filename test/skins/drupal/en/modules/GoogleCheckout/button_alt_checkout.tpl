@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<table border="0" cellpadding="0" cellspacing="0">
+<table cellpadding="0" cellspacing="0">
 <tr><td align="center">
 {* ORIGINAL BUTTON TEMPLATE *}
 <TABLE border="0" cellpadding="0" cellspacing="0">

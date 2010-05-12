@@ -12,6 +12,6 @@
  *}
 <div class="alt-checkout-button google-checkout-button">
   <p>- or use -</p>
-  <a href="{buildUrl(#gcheckout#,#checkout#)}" IF="googleAllowPay"><img src="{googleCheckoutButtonUrl}" alt="Google Checkout" /></a>
-  <img src="{googleCheckoutButtonUrl}" width="180" height="46" alt="Google Checkout" class="disabled" IF="!googleAllowPay" />
+  <a href="{buildUrl(#gcheckout#,#checkout#)}" IF="isGoogleAllowPay()"><img src="{googleCheckoutButtonUrl}" alt="Google Checkout" /></a>
+  <img src="{getGoogleCheckoutButtonUrl()}" width="160" height="43" alt="Google Checkout" class="disabled" IF="isGoogleAllowPay()" />
 </div>
