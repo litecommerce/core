@@ -13,7 +13,7 @@
 <widget class="XLite_Module_GiftCertificates_View_AddStatesInfo" />
 
 {* Add gift certificate page *}
-<script language="JavaScript1.2" type="text/javascript">
+<script type="text/javascript">
 function checkEmailAddress(field) {
 	var goodEmail = field.value.match(/\b(^(\S+@).+((\.com)|(\.net)|(\.edu)|(\.mil)|(\.gov)|(\.org)|(\.biz)|(\...))$)\b/gi);
     
@@ -265,22 +265,15 @@ Specify the amount in currency.<br><br>
 <tr>
 <td nowrap align=right>State</td>
 <td><font class="Star">*</font></td>
-{if:versionUpper2_1}
     <td>
-        <widget class="XLite_View_StateSelect" field="recipient_state" onChange="javascript: changeState(this, 'recipient');" fieldId="recipient_state_select">
+        <widget class="XLite_View_StateSelect" field="recipient_state" fieldId="recipient_state_select" state="{recipient_state}" isLinked=1 />
     </td>
     <td>
-        <widget class="XLite_Validator_StateValidator" field="recipient_state" countryField="recipient_country">
+        <widget class="XLite_Validator_StateValidator" field="recipient_state" countryField="recipient_country" />
     </td>
-{else:}
-    <td>
-        <widget class="XLite_View_StateSelect" field="recipient_state" fieldId="recipient_state_select">
-    </td>
-{end:}
 </tr>
 
-{if:versionUpper2_1}
-<tr id="recipient_custom_state_body">
+<tr>
 	<td align=right>Other state</td>
 	<td>&nbsp;</td>
 	<td><input type="text" name="recipient_custom_state" value="{recipient_custom_state:r}" size="32" maxlength="64">
@@ -289,23 +282,16 @@ Specify the amount in currency.<br><br>
 		&nbsp;
 	</td>
 </tr>
-{end:}
 
 <tr>
 <td nowrap align=right>Country</td>
 <td><font class="Star">*</font></td>
-{if:versionUpper2_1}
 <td>
-    <widget class="XLite_View_CountrySelect" field="recipient_country" onChange="javascript: populateStates(this,'recipient');" fieldId="recipient_country_select">
+    <widget class="XLite_View_CountrySelect" field="recipient_country" fieldId="recipient_country_select" country="{recipient_country}" />
 </td>
 <td>
     <widget class="XLite_Validator_RequiredValidator" field="recipient_country">
 </td>
-{else:}
-<td>
-    <widget class="XLite_View_CountrySelect" field="recipient_country"  fieldId="recipient_country_select">
-</td>
-{end:}
 </tr>
 
 <tr>
@@ -324,19 +310,3 @@ Specify the amount in currency.<br><br>
 <widget IF="isGCAdded()" class="XLite_View_Button" href="javascript: formSubmit()" label="Update"/>
 <widget IF="!isGCAdded()" class="XLite_View_Button" href="javascript: formSubmit()" label="Add to cart"/>
 </center>
-
-<script lang="text/javascript">
-function initStates() {        
-	var elm = document.getElementById('recipient_state_select');
-	if (elm)
-	{
-		changeState(elm, "recipient");
-	}
-}
-
-var elm = document.getElementById("recipient_country_select");
-if (elm) {
-    populateStates(elm,"recipient",true);
-}
-initStates();
-</script>

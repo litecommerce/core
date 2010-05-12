@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Country selector
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,8 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-
-<select class="FixedSelect" name="{field}" size="1" onChange="{onChange}" id="{fieldId}">
+<select name="{field}" onchange="{onchange}" id="{fieldId}">
    <option value="">Select one..</option>
-   <option FOREACH="getCountries(),k,v" value="{v.code:r}" selected="{v.code=value}">{v.country:h}</option>
+   <option FOREACH="getCountries(),v" value="{v.code:r}" selected="{v.code=country}">{v.country:h}</option>
 </select>

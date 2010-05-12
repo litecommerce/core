@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * State selection template
+ * Select state
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,9 +10,30 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-
-<select {if:!nonFixed}class="FixedSelect"{end:} name="{getParam(#field#)}" size="1" onChange="{onChange}" id="{getParam(#fieldId#)}">
+<select name="{field}" onchange="{onchange}" id="{fieldId}" class="field-state">
    <option value="0">Select one..</option>
-   <option value="-1" selected="{isSelected(getParam(#value#),#-1#)}">Other</option>
-   <option FOREACH="states,k,v" value="{v.state_id:r}" selected="{isSelected(v.state_id,getParam(#value#))}">{v.state:h}</option>
+   <option value="-1" selected="{state=-1}">Other</option>
+   <option FOREACH="getStates(),v" value="{v.state_id:r}" selected="{v.state_id=state}">{v.state:h}</option>
 </select>
+<script IF="isDefineStates()" type="text/javascript">
+var CountriesStates = [];
+{foreach:getCountriesStates(),country_code,val}
+CountriesStates.{country_code} = [
+{foreach:val,state_code,v}
+{ state_code: "{state_code}", state: "{v}" },
+{end:}
+  false
+];
+{end:}
+</script>
+<script IF="isLinked" type="text/javascript">
+$(document).ready(
+  function() {
+    $('.field-state[name="{field}"]').each(
+      function () {
+        new StateSelectorController(this);
+      }
+    );
+  }
+);
+</script>

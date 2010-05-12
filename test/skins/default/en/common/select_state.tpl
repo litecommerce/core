@@ -1,17 +1,39 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
- *
- * @author    Creative Development LLC <info@cdev.ru>
+ * Select state
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<select class="FixedSelect" name="{field}" size="1" onChange="{onChange}" id="{fieldId}">
+<select name="{field}" onchange="{onchange}" id="{fieldId}" class="field-state">
    <option value="0">Select one..</option>
-   <option value="-1" selected="{value=-1}">Other</option>
-   <option FOREACH="states,k,v" value="{v.state_id:r}" selected="{v.state_id=value}">{v.state:h}</option>
+   <option value="-1" selected="{state=-1}">Other</option>
+   <option FOREACH="getStates(),v" value="{v.state_id:r}" selected="{v.state_id=state}">{v.state:h}</option>
 </select>
+<script IF="isDefineStates()" type="text/javascript">
+var CountriesStates = [];
+{foreach:getCountriesStates(),country_code,val}
+CountriesStates.{country_code} = [
+{foreach:val,state_code,v}
+{ state_code: "{state_code}", state: "{v}" },
+{end:}
+  false
+];
+{end:}
+</script>
+<script IF="isLinked" type="text/javascript">
+$(document).ready(
+  function() {
+    $('.field-state[name="{field}"]').each(
+      function () {
+        new StateSelectorController(this);
+      }
+    );
+  }
+);
+</script>

@@ -140,9 +140,9 @@ INSERT INTO xlite_config VALUES ('company_phone','Phone','(555) 555-5555','Compa
 -- UPDATE xlite_config SET orderby='410', comment="Phone" WHERE category='Company' AND name='company_phone';
 INSERT INTO xlite_config VALUES ('company_fax','Fax','(555) 555-5555','Company',420,'text');
 -- UPDATE xlite_config SET orderby='420', comment="Fax" WHERE category='Company' AND name='company_fax';
-INSERT INTO xlite_config VALUES ('location_state','State','0','Company',430,'state');
+INSERT INTO xlite_config VALUES ('location_state','State','17','Company',430,'state');
 -- UPDATE xlite_config SET orderby='430', comment="State" WHERE category='Company' AND name='location_state';
-INSERT INTO xlite_config VALUES ('custom_location_state','Other state (specify)','','Company',435,'text');
+INSERT INTO xlite_config VALUES ('location_custom_state','Other state (specify)','','Company',435,'text');
 INSERT INTO xlite_config VALUES ('location_zipcode','Zip/postal code','50001','Company',440,'text');
 -- UPDATE xlite_config SET orderby='440', comment="Zip/postal code" WHERE category='Company' AND name='location_zipcode';
 INSERT INTO xlite_config VALUES ('location_country','Country','US','Company',450,'country');

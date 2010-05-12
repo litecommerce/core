@@ -211,23 +211,6 @@ var bordersDir = '{gc.bordersDir}';
     </tr>
 
   </table>
-<script type="text/javascript">
-<!--
-$(document).ready(
-  function() {
-    var elm = document.getElementById('recipient_country_select');
-    if (elm) {
-      populateStates(elm, 'recipient', true);
-    }
-
-    elm = document.getElementById('recipient_state_select');
-    if (elm) {
-      changeState(elm, 'recipient');
-    }
-  }
-);
--->
-</script>
   {end:}
 
   <div class="buttons-row center">

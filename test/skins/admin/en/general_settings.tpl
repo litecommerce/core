@@ -15,14 +15,8 @@
   <input type="hidden" name="action" value="update">
   <input type="hidden" name="page" value="{page}">
 
-  <widget template="js/select_states_begin_js.tpl" />
-
   <table cellSpacing="2" cellpadding="2" width="100%">
     {foreach:options,option}
-      {if:option.name=#custom_location_state#}
-        <tbody id="custom_location_state_body">
-      {end:}
-
       <tr>
         {if:!option.isSeparator()}
           {if:!option.type=#serialized#}<td align="right" width="50%">{option.comment:h}: </td>{end:}
@@ -49,15 +43,11 @@
             {end:}
 
             {if:option.isCountry()}
-              <widget class="XLite_View_CountrySelect" field="{option.name}" value="{option.value}" onchange="javascript: populateStates(this,'location_state');" fieldId="{option.name}_select" />
+              <widget class="XLite_View_CountrySelect" field="{option.name}" country="{option.value}" fieldId="{option.name}_select" />
             {end:}
 
             {if:option.isState()}
-              {if:option.name=#location_state#}
-                <widget class="XLite_View_StateSelect" field="{option.name}" value="{option.value}" onchange="changeCompanyState(this, 'custom_location_state_body');" fieldId="{option.name}_select" />
-              {else:}
-                <widget class="XLite_View_StateSelect" field="{option.name}" value="{option.value}" fieldId="{option.name}_select" />
-              {end:}
+              <widget class="XLite_View_StateSelect" field="{option.name}" state="{option.value}" fieldId="{option.name}_select" isLinked=1 />
             {end:}
 
             {if:option.isName(#mail_backend#)}
@@ -217,10 +207,6 @@ function setUnitSymbol(symbol) {
 
       </tr>
 
-      {if:option.name=#custom_location_state#}
-        </tbody>
-      {end:}
-
     {end:}
 
     {if:page=#Captcha#}
@@ -245,8 +231,6 @@ function setUnitSymbol(symbol) {
       {end:}
     {end:}
   </table>
-
-  <widget template="js/select_states_end_js.tpl" />
 
 </form>
 

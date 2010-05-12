@@ -307,44 +307,30 @@ function borderChanged()
       <tr>
         <td nowrap align=right>State</td>
         <td><font class="Star">*</font></td>
-{if:versionUpper2_1}
         <td>
-          <widget class="XLite_View_StateSelect" field="recipient_state" value="{recipient_state}" onChange="javascript: changeState(this, 'recipient');" fieldId="recipient_state_select" />
+          <widget class="XLite_View_StateSelect" field="recipient_state" state="{recipient_state}" fieldId="recipient_state_select" isLinked=1 />
         </td>
         <td>
           <widget class="XLite_Validator_StateValidator" field="recipient_state" value="{recipient_state}" countryField="recipient_country" />
         </td>
-{else:}
-        <td>
-          <widget class="XLite_View_StateSelect" field="recipient_state" value="{recipient_state}" fieldId="recipient_state_select" />
-        </td>
-{end:}
       </tr>
 
-{if:versionUpper2_1}
-      <tr id="recipient_custom_state_body">
+      <tr>
       	<td align=right>Other state</td>
       	<td>&nbsp;</td>
       	<td><input type="text" name="recipient_custom_state" value="{recipient_custom_state:r}" size="32" maxlength="64" /></td>
       	<td>&nbsp;</td>
       </tr>
-{end:}
 
       <tr>
         <td nowrap align=right>Country</td>
         <td><font class="Star">*</font></td>
-{if:versionUpper2_1}
         <td>
-          <widget class="XLite_View_CountrySelect" field="recipient_country" value="{recipient_country}" onChange="javascript: populateStates(this,'recipient_state');" fieldId="recipient_country_select" />
+          <widget class="XLite_View_CountrySelect" field="recipient_country" country="{recipient_country}" fieldId="recipient_country_select" />
         </td>
         <td>
           <widget class="XLite_Validator_RequiredValidator" field="recipient_country" value="{recipient_country}" />
         </td>
-{else:}
-        <td>
-          <widget class="XLite_View_CountrySelect" field="recipient_country"  value="{recipient_country}" fieldId="recipient_country_select" />
-        </td>
-{end:}
       </tr>
 
       <tr>
@@ -383,20 +369,3 @@ function borderChanged()
   </table>
 
 </form>
-
-<script lang="text/javascript">
-function initStates() {        
-	var elm = document.getElementById('recipient_state_select');
-	if (elm)
-	{
-		changeState(elm, "recipient");
-	}
-}
-
-var elm = document.getElementById("recipient_country_select");
-if (elm) {
-    populateStates(elm,"recipient_state",true);
-}
-initStates();
-</script>
-

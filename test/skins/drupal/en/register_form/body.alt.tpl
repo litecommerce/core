@@ -173,7 +173,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
         <widget class="XLite_Validator_StateValidator" field="billing_state" countryField="billing_country">
     </td>
 </tr>
-<tr valign="middle" id="billing_custom_state_body">
+<tr valign="middle">
 	<td align="right">Other state (specify)</td>
 	<td>&nbsp;</td>
 	<td><input type="text" name="billing_custom_state" value="{billing_custom_state:r}" size="32" maxlength="64">
@@ -302,7 +302,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
         <widget class="XLite_Validator_StateValidator" field="shipping_state" countryField="shipping_country">
     </td>
 </tr>
-<tr valign="middle" id="shipping_custom_state_body">
+<tr valign="middle">
 	<td align="right">Other state (specify)</td>
 	<td>&nbsp;</td>
 	<td><input type="text" name="shipping_custom_state" value="{shipping_custom_state:r}" size="32" maxlength="64">

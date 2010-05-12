@@ -150,7 +150,7 @@ class XLite_Model_Config extends XLite_Model_Abstract implements XLite_Base_ISin
         $config->Company->locationCountry = new XLite_Model_Country($config->Company->location_country);
         $config->Company->locationState = new XLite_Model_State($config->Company->location_state);
         if ($config->Company->locationState->get('state_id') == -1) {
-            $config->Company->locationState->set("state", $config->Company->get('custom_location_state'));
+            $config->Company->locationState->set('state', $config->Company->location_custom_state);
         }
         $config->General->defaultCountry = new XLite_Model_Country($config->General->default_country);
         $config->Memberships->memberships = array();

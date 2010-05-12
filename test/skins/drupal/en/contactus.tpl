@@ -13,7 +13,7 @@
 <p align=justify>You can send a message to us using the form below. We will reply as soon as possible!</p>
 
 
-<script language="JavaScript" type="text/javascript">
+<script type="text/javascript">
 function checkEmailAddress(field) {
 var goodEmail = field.value.match({emailValidatorRegExp});
     
@@ -98,7 +98,7 @@ if (goodEmail) {
 </td>
 </tr>
 
-<tr valign="middle" id="contactus_custom_state_body">
+<tr valign="middle">
 <td class=FormButton>Other state (specify)</td>
 <td>&nbsp;</td>
 <td nowrap><input type="text" name="contactus_custom_state" value="{contactus_custom_state:r}" size="32" maxlength="64">

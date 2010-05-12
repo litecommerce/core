@@ -174,7 +174,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
             unset($state);
 
         } else {
-            $originState = $this->config->Company->custom_location_state;
+            $originState = $this->config->Company->location_custom_state;
         }
 
         // Get destination state

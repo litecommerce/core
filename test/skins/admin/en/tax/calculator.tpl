@@ -18,17 +18,15 @@
 </head>
 <body class="PopUp" LEFTMARGIN=3 TOPMARGIN=3 RIGHTMARGIN=3 BOTTOMMARGIN=3 MARGINWIDTH=0 MARGINHEIGHT=0>
 
-<widget template="js/select_states_begin_js.tpl">
-
 <table border=0 cellpadding=3 cellspacing=3>
 <form action="admin.php" method="POST">
 <input type="hidden" name="target" value="taxes">
 <input type="hidden" name="action" value="calculator">
 <tr>
-	<td>Country:&nbsp;</td><td><widget class="XLite_View_CountrySelect" field="billing_country" value="{country}" onChange="javascript: populateStates(this,'billing_state');" fieldId="billing_country_select"></td>
+	<td>Country:&nbsp;</td><td><widget class="XLite_View_CountrySelect" field="billing_country" country="{country}" fieldId="billing_country_select" /></td>
 </tr>
 <tr>
-	<td>State:&nbsp;</td><td><widget class="XLite_View_StateSelect" field="billing_state" value="{state}" fieldId="billing_state_select"></td>
+	<td>State:&nbsp;</td><td><widget class="XLite_View_StateSelect" field="billing_state" state="{state}" fieldId="billing_state_select" isLinked=1 /></td>
 </tr>
 <tr>
 	<td>City:&nbsp;</td><td><input type="text" name="city" value="{city}"></td>
@@ -66,6 +64,5 @@
 <p>
 <a href="javascript: window.close()"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> Close tax calculator</a><br>
 {end:}
-<widget template="js/select_states_end_js.tpl">
 
 </body>
