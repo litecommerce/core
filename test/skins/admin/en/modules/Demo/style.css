@@ -17,10 +17,11 @@
   border-bottom: 1px solid #d2d2cf;
   font-weight: bold;
   width: 100%;
-  position: absolute;
+  position: fixed;
   top: 0px;
   left: 0px;
   right: 0px;
   text-align: center;
+  z-index: 90000;
 }
 
