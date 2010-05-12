@@ -41,9 +41,9 @@ class XLite_Module_Affiliate_Model_OrderItem extends XLite_Model_OrderItem imple
         parent::__construct();
     }
 
-	// FIXME - check it (see old version)
-	function getAffiliateProduct()
-	{
-		return new XLite_Model_Product($this->get("product_id"));
-	}
+    // FIXME - check it (see old version)
+    function getAffiliateProduct()
+    {
+        return new XLite_Model_Product($this->get("product_id"));
+    }
 }

@@ -42,13 +42,13 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
         $this->pageTemplates["product_options"] = "modules/ProductOptions/product_options.tpl";
     }
 
-	function action_update_limit()
-	{
-		$product = new XLite_Model_Product($this->product_id);
-		$limit = isset($this->expansion_limit) ? 1 : 0;
-		$product->set('expansion_limit', $limit);
-		$product->update();	
-	}
+    function action_update_limit()
+    {
+        $product = new XLite_Model_Product($this->product_id);
+        $limit = isset($this->expansion_limit) ? 1 : 0;
+        $product->set('expansion_limit', $limit);
+        $product->update();
+    }
 
     // PRODUCT OPTION METHODS {{{
 
@@ -63,9 +63,9 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
                 $this->option->set("product_id", $this->product_id);
             }
             if (isset($this->optdata)) {
-				foreach ((array)$this->optdata as $key=>$value) {
-					$this->optdata[$key] = preg_replace("/\|/", "-", $value);
-				}
+                foreach ((array)$this->optdata as $key=>$value) {
+                    $this->optdata[$key] = preg_replace("/\|/", "-", $value);
+                }
                 $this->option->set("properties", $this->optdata);
             }
             if (isset($this->opttype) && $this->opttype == "Text" && isset($this->text)) {
@@ -76,7 +76,7 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
             }
         }
         return $this->option;
-    } 
+    }
     
     function action_update_product_option() 
     {
@@ -85,17 +85,17 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
 
         $this->params["option_id"] = $option->get("option_id");
         $this->option_id = $option->get("option_id");
-    } 
+    }
 
     function action_delete_product_option() 
     {
         $option = $this->get("productOption");
         $option->delete();
 
-		if (isset($this->option_id)) {
-			unset($this->option_id);
-		}
-    } 
+        if (isset($this->option_id)) {
+            unset($this->option_id);
+        }
+    }
 
     function action_add_product_option() 
     {
@@ -108,7 +108,7 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
 
         $this->params["option_id"] = $option->get("option_id");
         $this->option_id = $option->get("option_id");
-    } 
+    }
     
     
 
@@ -129,19 +129,19 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
             }
         }
         return $this->optionException;
-    } 
+    }
 
     function action_update_option_exception() 
     {
         $exception = $this->get("optionException");
         $exception->update();
-    } 
+    }
 
     function action_delete_option_exception() 
     {
         $exception = $this->get("optionException");
         $exception->delete();
-    } 
+    }
 
     function action_add_option_exception() 
     {
@@ -153,7 +153,7 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
         if (!$exception->find("product_id='".$exception->get("product_id")."' AND exception='".addslashes($exception->get("exception"))."'")) {
         	$exception->create();
         }
-    } 
+    }
     
     
 
@@ -181,19 +181,19 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
 
     
 
-	function isOddRow($row)
-	{
-		return (($row % 2) == 0) ? true : false;
-	}
+    function isOddRow($row)
+    {
+        return (($row % 2) == 0) ? true : false;
+    }
 
-	function getRowClass($row,$odd_css_class,$even_css_class = null)
-	{
-		return ($this->isOddRow($row)) ? $odd_css_class : $even_css_class;
-	}
+    function getRowClass($row,$odd_css_class,$even_css_class = null)
+    {
+        return ($this->isOddRow($row)) ? $odd_css_class : $even_css_class;
+    }
 
     function action_info()
     {
-		$product = new XLite_Model_Product($this->product_id);
+        $product = new XLite_Model_Product($this->product_id);
         $oldCategories = array();
         $categories = $product->get("categories");
         if (is_array($categories)) {
@@ -204,7 +204,7 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
 
     	parent::action_info();
 
-		$product->updateGlobalProductOptions($oldCategories);
+        $product->updateGlobalProductOptions($oldCategories);
     }
 
     function getAllParams($exeptions = null)

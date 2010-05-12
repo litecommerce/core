@@ -34,17 +34,17 @@
  * @since   3.0.0
  */
 class XLite_Module_ProductAdviser_Model_RelatedProduct extends XLite_Model_Abstract
-{	
-	public $fields = array
-	(
-		"product_id" 				=> 0,
-		"related_product_id" 		=> 0,
-		"order_by" 					=> 0
-	);	
-	public $primaryKey = array("related_product_id", "product_id");	
-	public $defaultOrder = "order_by";	
-	public $alias = "related_products";	
-	public $product = null;
+{
+    public $fields = array
+    (
+        "product_id" 				=> 0,
+        "related_product_id" 		=> 0,
+        "order_by" 					=> 0
+    );
+    public $primaryKey = array("related_product_id", "product_id");
+    public $defaultOrder = "order_by";
+    public $alias = "related_products";
+    public $product = null;
 
     function filter()
     {
@@ -58,11 +58,11 @@ class XLite_Module_ProductAdviser_Model_RelatedProduct extends XLite_Model_Abstr
         }
     }
 
-	function cleanRelations($product_id)
-	{
-		$objs = $this->findAll("product_id='$product_id' OR related_product_id='$product_id'");
-		foreach ($objs as $obj) {
-			$obj->delete();
-		}
-	}
+    function cleanRelations($product_id)
+    {
+        $objs = $this->findAll("product_id='$product_id' OR related_product_id='$product_id'");
+        foreach ($objs as $obj) {
+            $obj->delete();
+        }
+    }
 }

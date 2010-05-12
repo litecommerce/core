@@ -34,18 +34,18 @@
  * @since   3.0.0
  */
 class XLite_Module_ProductAdviser_View_CRPAddToCart extends XLite_View_Button
-{	
-	public $p_id = null;
-	
+{
+    public $p_id = null;
+    
     function gethref()
     {
-		$product = new XLite_Model_Product($this->get("p_id"));
+        $product = new XLite_Model_Product($this->get("p_id"));
         if (class_exists('XLite_Module_ProductOptions_Model_ProductOption') && $product->hasOptions()) {
-			$product->checkSafetyMode();
-			$c_id = $product->getComplex('category.category_id');
-			return "cart.php?target=product&product_id=".$this->get("p_id")."&category_id=".$c_id;
+            $product->checkSafetyMode();
+            $c_id = $product->getComplex('category.category_id');
+            return "cart.php?target=product&product_id=".$this->get("p_id")."&category_id=".$c_id;
         } else {
-			return "javascript: document.add_to_cart.product_id.value=".$this->get("p_id")."; if (isValid()) document.add_to_cart.submit()";		
-		}
+            return "javascript: document.add_to_cart.product_id.value=".$this->get("p_id")."; if (isValid()) document.add_to_cart.submit()";
+        }
     }
 }

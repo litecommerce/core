@@ -37,102 +37,102 @@ class XLite_Module_Egoods_Model_Order extends XLite_Model_Order implements XLite
 {
     protected function processed() 
     {
-		$this->Egoods_processed();
-		parent::processed();
-    }  
+        $this->Egoods_processed();
+        parent::processed();
+    }
 
-	function Egoods_processed()
-	{
-		require_once LC_MODULES_DIR . 'Egoods' . LC_DS . 'encoded.php';
-		func_moduleEgoods_send_files($this);
-		func_moduleEgoods_send_pins($this);
-	}
+    function Egoods_processed()
+    {
+        require_once LC_MODULES_DIR . 'Egoods' . LC_DS . 'encoded.php';
+        func_moduleEgoods_send_files($this);
+        func_moduleEgoods_send_pins($this);
+    }
 
     // assign pin codes to order items
-	
-	protected function checkedOut()
-	{
-		$this->Egoods_checkedOut();
-		parent::checkedOut();	
-	}
-	
-	function Egoods_checkedOut()
-	{
-		$items = $this->get('items');
-		for ($i = 0; $i < count($items); $i++) {
-			if ($items[$i]->is('pin') && $items[$i]->getComplex('product.pin_type') == "D") {
-				for ($j = 0; $j < $items[$i]->get('amount'); $j++) {
-					$pin = new XLite_Module_Egoods_Model_PinCode();
-					if ($pin->find('enabled=1 and product_id=' . $items[$i]->getComplex('product.product_id') . " and item_id='' and order_id=0")) {
-						$pin->set('item_id', $items[$i]->get('item_id'));
-						$pin->set('order_id', $this->get('order_id'));
-						$pin->update();
-					}
-				}
-				
-				$pin_settings = new XLite_Module_Egoods_Model_PinSettings($items[$i]->getComplex('product.product_id'));
-				$pin = new XLite_Module_Egoods_Model_PinCode();
-				if ($pin->getFreePinCount($items[$i]->getComplex('product.product_id'))<= $pin_settings->get("low_available_limit") && $pin_settings->get("low_available_limit")) {
-					$mail = new XLite_Module_Egoods_Model_Mailer();
-					$mail->item = $items[$i];
-					$product = new XLite_Model_Product();
-					$product->find("product_id = " . $items[$i]->getComplex('product.product_id'));
-					$mail->product = $product;
-					$mail->free_pins = $pin->getFreePinCount($items[$i]->getComplex('product.product_id'));
-					$mail->compose($this->config->getComplex('Company.site_administrator'), $this->config->getComplex('Company.site_administrator'), "modules/Egoods/low_available_limit");
-					$mail->send();
-				}
-			}
-		}
-	}
+    
+    protected function checkedOut()
+    {
+        $this->Egoods_checkedOut();
+        parent::checkedOut();
+    }
+    
+    function Egoods_checkedOut()
+    {
+        $items = $this->get('items');
+        for ($i = 0; $i < count($items); $i++) {
+            if ($items[$i]->is('pin') && $items[$i]->getComplex('product.pin_type') == "D") {
+                for ($j = 0; $j < $items[$i]->get('amount'); $j++) {
+                    $pin = new XLite_Module_Egoods_Model_PinCode();
+                    if ($pin->find('enabled=1 and product_id=' . $items[$i]->getComplex('product.product_id') . " and item_id='' and order_id=0")) {
+                        $pin->set('item_id', $items[$i]->get('item_id'));
+                        $pin->set('order_id', $this->get('order_id'));
+                        $pin->update();
+                    }
+                }
+                
+                $pin_settings = new XLite_Module_Egoods_Model_PinSettings($items[$i]->getComplex('product.product_id'));
+                $pin = new XLite_Module_Egoods_Model_PinCode();
+                if ($pin->getFreePinCount($items[$i]->getComplex('product.product_id'))<= $pin_settings->get("low_available_limit") && $pin_settings->get("low_available_limit")) {
+                    $mail = new XLite_Module_Egoods_Model_Mailer();
+                    $mail->item = $items[$i];
+                    $product = new XLite_Model_Product();
+                    $product->find("product_id = " . $items[$i]->getComplex('product.product_id'));
+                    $mail->product = $product;
+                    $mail->free_pins = $pin->getFreePinCount($items[$i]->getComplex('product.product_id'));
+                    $mail->compose($this->config->getComplex('Company.site_administrator'), $this->config->getComplex('Company.site_administrator'), "modules/Egoods/low_available_limit");
+                    $mail->send();
+                }
+            }
+        }
+    }
     
     // free assigned pin codes in case of failure
-	protected function uncheckedOut()
-	{
-		$this->Egoods_uncheckedOut();
-		parent::uncheckedOut();	
-	}	
-    
-	function Egoods_uncheckedOut()
+    protected function uncheckedOut()
     {
-		$items = $this->get('items');
-		for ($i = 0; $i < count($items); $i++) {
-			if ($items[$i]->is('pin') && $items[$i]->getComplex('product.pin_type') == "D") {
+        $this->Egoods_uncheckedOut();
+        parent::uncheckedOut();
+    }
+    
+    function Egoods_uncheckedOut()
+    {
+        $items = $this->get('items');
+        for ($i = 0; $i < count($items); $i++) {
+            if ($items[$i]->is('pin') && $items[$i]->getComplex('product.pin_type') == "D") {
                 $pins = new XLite_Module_Egoods_Model_PinCode();
                 foreach ($pins->findAll("order_id='" . $this->get("order_id") . "' AND item_id='" . $items[$i]->get("item_id") . "'") as $pin) {
                     $pin->set('item_id', '');
                     $pin->set('order_id', 0);
                     $pin->update();
                 }
-			}
-		}
+            }
+        }
     }
 
     function isShippingAvailable()
     {
-		$items = $this->getItems();
-		$egoodsOnly = true;
-		if (is_array($items)) {
-			for ($i = 0; $i < count($items); $i++) {
-				if (!$items[$i]->isEgood()) {
-					$egoodsOnly = false;
-					break;
-				}
-			}
-		}
-		if ($egoodsOnly) {
-			return false;
-		}
+        $items = $this->getItems();
+        $egoodsOnly = true;
+        if (is_array($items)) {
+            for ($i = 0; $i < count($items); $i++) {
+                if (!$items[$i]->isEgood()) {
+                    $egoodsOnly = false;
+                    break;
+                }
+            }
+        }
+        if ($egoodsOnly) {
+            return false;
+        }
 
-		return parent::isShippingAvailable();
+        return parent::isShippingAvailable();
     }
 
     function declined()
     {
-        $this->Egoods_declined(); 
+        $this->Egoods_declined();
         parent::declined();
     }
-	
+    
     function Egoods_declined()
     {
         $items = $this->get("items");

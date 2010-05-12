@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Validator_MembershipValidator extends XLite_Validator_Abstract
-{	
+{
     public $template = "common/membership_validator.tpl";
     
     function isValid()
@@ -42,35 +42,35 @@ class XLite_Validator_MembershipValidator extends XLite_Validator_Abstract
         if (!parent::isValid()) {
             return false;
         }
-		
-		if (!isset($_POST["action"])) {
-			return true;
-		}
-		
-		if ($_POST["action"] != $this->action) {
-			return true;
-		}
+        
+        if (!isset($_POST["action"])) {
+            return true;
+        }
+        
+        if ($_POST["action"] != $this->action) {
+            return true;
+        }
 
-		$dialog = $this->get("dialog");
-		if (is_object($dialog) && $dialog->get("actionProcessed")) {
-			return true;
-		}
+        $dialog = $this->get("dialog");
+        if (is_object($dialog) && $dialog->get("actionProcessed")) {
+            return true;
+        }
 
-		preg_match('/^(.+)\[(.+)\]$/',$this->get("field"),$field);
+        preg_match('/^(.+)\[(.+)\]$/',$this->get("field"),$field);
         $result = !empty($_POST[$field[1]][$field[2]]) || !isset($_POST[$field[1]][$field[2]]);
         if ($result && isset($_POST[$field[1]][$field[2]])) {
             $membershipData = $_POST[$field[1]][$field[2]];
     		if (strlen($membershipData) == 0) {
     			return false;
     		}
-			$membership = new XLite_Model_Membership();
-			if ($membershipData != $membership->stripInvalidData($membershipData)) {
-				$this->set("dataInvalid", true);
-				return false;
-			}
+            $membership = new XLite_Model_Membership();
+            if ($membershipData != $membership->stripInvalidData($membershipData)) {
+                $this->set("dataInvalid", true);
+                return false;
+            }
 
     		if (strlen($membershipData) > 32) {
-				$this->set("dataInvalid", true);
+                $this->set("dataInvalid", true);
     			return false;
     		}
     		$memberships = $membership->findAll();

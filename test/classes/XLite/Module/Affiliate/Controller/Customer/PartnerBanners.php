@@ -34,11 +34,11 @@
  * @since   3.0.0
  */
 class XLite_Module_Affiliate_Controller_Customer_PartnerBanners extends XLite_Module_Affiliate_Controller_Partner
-{	
+{
     public $params = array('target', 'mode', 'category_id');
 
 
-	/**
+    /**
      * Add the base part of the location path
      * 
      * @return void
@@ -49,12 +49,12 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerBanners extends XLite_Mo
     {
         parent::addBaseLocation();
 
-		$this->locationPath->addNode(
-			new XLite_Model_Location('Banners', $this->get('mode') ? $this->buildURL('partner_banners') : null)
-		);
+        $this->locationPath->addNode(
+            new XLite_Model_Location('Banners', $this->get('mode') ? $this->buildURL('partner_banners') : null)
+        );
     }
 
-	/**
+    /**
      * Common method to determine current location 
      * 
      * @return array

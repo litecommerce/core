@@ -40,30 +40,30 @@ define('DIALOG_SORT_MODE_USED', 3);
  * @since   3.0.0
  */
 class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Controller_Admin_Abstract
-{	
-	public $couponExists = false;
+{
+    public $couponExists = false;
 
-	function init()
-	{
-		$this->params[] = "pageID";
+    function init()
+    {
+        $this->params[] = "pageID";
 
-		if (!isset($_REQUEST["sort_mode"])) {
-			// restore current filter
-			$sm = $this->session->get("coupon_search_mode");
-			if (is_array($sm) && (!empty($sm))) {
-				$_REQUEST["sort_mode"] = $sm;
-			}
-		}
+        if (!isset($_REQUEST["sort_mode"])) {
+            // restore current filter
+            $sm = $this->session->get("coupon_search_mode");
+            if (is_array($sm) && (!empty($sm))) {
+                $_REQUEST["sort_mode"] = $sm;
+            }
+        }
 
-		parent::init();
-	}
+        parent::init();
+    }
 
-	function fillForm() 
+    function fillForm() 
     {
     	if (!isset($this->sort_mode)) {
-			$this->sort_mode = array(0=>true);
-		}
-		
+            $this->sort_mode = array(0=>true);
+        }
+        
         // default coupon properties for add form
         $this->set("properties", array(
             "coupon" => $this->generateCouponCode(),
@@ -75,49 +75,49 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
             "expire"   => time() + DEFAULT_DC_EXPIRATION,
             "minamount"=> "0.00"));
         parent::fillForm();
-		// save current filter
-		$this->session->set("coupon_search_mode", $this->sort_mode);
-    } 
+        // save current filter
+        $this->session->set("coupon_search_mode", $this->sort_mode);
+    }
 
-	function isSortSelected($sortMode)
-	{
-	    $sortMode = intval($sortMode);
-		if (isset($this->sort_mode) && is_array($this->sort_mode) && isset($this->sort_mode[$sortMode]) && $this->sort_mode[$sortMode]) {
-			return true;
-		}
-		return false;
-	}
+    function isSortSelected($sortMode)
+    {
+        $sortMode = intval($sortMode);
+        if (isset($this->sort_mode) && is_array($this->sort_mode) && isset($this->sort_mode[$sortMode]) && $this->sort_mode[$sortMode]) {
+            return true;
+        }
+        return false;
+    }
 
     function prepareSortConditions()
     {
-		$sortConditions = array();
+        $sortConditions = array();
 
-		if (!$this->isSortSelected(DIALOG_SORT_MODE_ALL)) {
-			$sortConditionsRules = array
-			(
-				DIALOG_SORT_MODE_ACTIVE		=> "status='A'",
-				DIALOG_SORT_MODE_DISABLED	=> "status='D'",
-				DIALOG_SORT_MODE_USED		=> "status='U'",
-			);
-			foreach($sortConditionsRules as $rule => $ruleCond) {
-				if ($this->isSortSelected($rule)) {
-					$sortConditions[] = $ruleCond;
-				}
-			}
-		}
+        if (!$this->isSortSelected(DIALOG_SORT_MODE_ALL)) {
+            $sortConditionsRules = array
+            (
+                DIALOG_SORT_MODE_ACTIVE		=> "status='A'",
+                DIALOG_SORT_MODE_DISABLED	=> "status='D'",
+                DIALOG_SORT_MODE_USED		=> "status='U'",
+            );
+            foreach($sortConditionsRules as $rule => $ruleCond) {
+                if ($this->isSortSelected($rule)) {
+                    $sortConditions[] = $ruleCond;
+                }
+            }
+        }
 
-		return $sortConditions;
+        return $sortConditions;
     }
 
-	function getCouponsNumber()
+    function getCouponsNumber()
     {
     	$this->getCoupons();
-		$couponsNumber = 0;
-		if (is_array($this->_couponsArray)) {
-			$couponsNumber = count($this->_couponsArray);
-		}
+        $couponsNumber = 0;
+        if (is_array($this->_couponsArray)) {
+            $couponsNumber = count($this->_couponsArray);
+        }
 
-		return $couponsNumber;
+        return $couponsNumber;
     }
 
     function getCoupons() 
@@ -126,100 +126,100 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
     		return $this->_couponsArray;
     	}
 
-		$dc = new XLite_Module_Promotion_Model_DiscountCoupon();
+        $dc = new XLite_Module_Promotion_Model_DiscountCoupon();
 
-		$condition = array("order_id='0'");
-		$sortConditions = $this->prepareSortConditions();
-		if (count($sortConditions) > 0) {
-			$sortConditions = "(" . implode(" OR ", $sortConditions) . ")";
-			$condition[] = $sortConditions;
-		}
+        $condition = array("order_id='0'");
+        $sortConditions = $this->prepareSortConditions();
+        if (count($sortConditions) > 0) {
+            $sortConditions = "(" . implode(" OR ", $sortConditions) . ")";
+            $condition[] = $sortConditions;
+        }
 
-		$condition = implode(" AND ", $condition);
+        $condition = implode(" AND ", $condition);
 
-		$dc->fetchKeysOnly = true;
-		$dc->fetchObjIdxOnly = true;
+        $dc->fetchKeysOnly = true;
+        $dc->fetchObjIdxOnly = true;
 
-		$coupons = $dc->findAll($condition);
+        $coupons = $dc->findAll($condition);
 
-		$this->_couponsArray = $coupons;
-		return $coupons;
-	} 
+        $this->_couponsArray = $coupons;
+        return $coupons;
+    }
 
-	function generateCouponCode() { 
-		return generate_code();
-	} 
+    function generateCouponCode() {
+        return generate_code();
+    }
 
-	function _action_postprocess()
-	{
-		if (!$this->isSortSelected(DIALOG_SORT_MODE_ALL)) {
-			$sortConditionsRules = array
-			(
-				DIALOG_SORT_MODE_ACTIVE		=> "sort_mode%5B1%5D",
-				DIALOG_SORT_MODE_DISABLED	=> "sort_mode%5B2%5D",
-				DIALOG_SORT_MODE_USED		=> "sort_mode%5B3%5D",
-			);
-			foreach($sortConditionsRules as $rule => $ruleCond) {
-				if ($this->isSortSelected($rule)) {
-					$this->params[] = $ruleCond;
-					$this->setComplex($ruleCond, $rule);
-				}
-			}
-		}
-	}
+    function _action_postprocess()
+    {
+        if (!$this->isSortSelected(DIALOG_SORT_MODE_ALL)) {
+            $sortConditionsRules = array
+            (
+                DIALOG_SORT_MODE_ACTIVE		=> "sort_mode%5B1%5D",
+                DIALOG_SORT_MODE_DISABLED	=> "sort_mode%5B2%5D",
+                DIALOG_SORT_MODE_USED		=> "sort_mode%5B3%5D",
+            );
+            foreach($sortConditionsRules as $rule => $ruleCond) {
+                if ($this->isSortSelected($rule)) {
+                    $this->params[] = $ruleCond;
+                    $this->setComplex($ruleCond, $rule);
+                }
+            }
+        }
+    }
 
-	function action_add() 
+    function action_add() 
     {
         $dc = new XLite_Module_Promotion_Model_DiscountCoupon();
         if ($dc->find("coupon='" . $this->get("coupon") . "' AND order_id='0'")) {
             $this->valid = false;
             $this->couponExists = true;
         } else {
-			$_POST['discount'] = abs($_POST['discount']);
+            $_POST['discount'] = abs($_POST['discount']);
             $dc->set("properties", $_POST);
             $dc->set("expire", $this->get("expire"));
             $dc->create();
         }
 
-		$this->_action_postprocess();
-    } 
+        $this->_action_postprocess();
+    }
 
-	function action_update() 
-	{
-		if (isset($_POST["status"])) {
-			foreach ($_POST["status"] as $coupon_id => $status) {
-				$dc = new XLite_Module_Promotion_Model_DiscountCoupon($coupon_id);
-				$dc->set("status", $status);
-				$dc->update();
-			}
-		}
+    function action_update() 
+    {
+        if (isset($_POST["status"])) {
+            foreach ($_POST["status"] as $coupon_id => $status) {
+                $dc = new XLite_Module_Promotion_Model_DiscountCoupon($coupon_id);
+                $dc->set("status", $status);
+                $dc->update();
+            }
+        }
 
-		$this->_action_postprocess();
-	} 
+        $this->_action_postprocess();
+    }
 
-	function action_delete() 
-	{
-		$dc = new XLite_Module_Promotion_Model_DiscountCoupon($this->get("coupon_id"));
-		$dc->delete();
+    function action_delete() 
+    {
+        $dc = new XLite_Module_Promotion_Model_DiscountCoupon($this->get("coupon_id"));
+        $dc->delete();
 
-		$this->_action_postprocess();
-	} 
+        $this->_action_postprocess();
+    }
 
-	function isOddRow($row)
-	{
-		return (($row % 2) == 0) ? true : false;
-	}
+    function isOddRow($row)
+    {
+        return (($row % 2) == 0) ? true : false;
+    }
 
-	function getRowClass($row,$odd_css_class, $even_css_class = null)
-	{
-		return ($this->isOddRow($row)) ? $odd_css_class : $even_css_class;
-	}
+    function getRowClass($row,$odd_css_class, $even_css_class = null)
+    {
+        return ($this->isOddRow($row)) ? $odd_css_class : $even_css_class;
+    }
 
-	function canShowChildren($dc)
-	{
-		if (!$dc->getChildrenCount()) return false;
-		if ($this->xlite->getComplex('config.Promotion.auto_expand_coupon_orders')) return true;
-		if ($dc->get("coupon_id") != $this->get("children_coupon_id")) return false;
-		return true;
-	}
+    function canShowChildren($dc)
+    {
+        if (!$dc->getChildrenCount()) return false;
+        if ($this->xlite->getComplex('config.Promotion.auto_expand_coupon_orders')) return true;
+        if ($dc->get("coupon_id") != $this->get("children_coupon_id")) return false;
+        return true;
+    }
 }

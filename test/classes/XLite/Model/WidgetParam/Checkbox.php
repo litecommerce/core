@@ -35,7 +35,7 @@
  */
 class XLite_Model_WidgetParam_Checkbox extends XLite_Model_WidgetParam_Abstract
 {
-	/**
+    /**
      * Param type
      *
      * @var    string
@@ -44,7 +44,7 @@ class XLite_Model_WidgetParam_Checkbox extends XLite_Model_WidgetParam_Abstract
      */
     protected $type = 'checkbox';
 
-	/**
+    /**
      * Return list of conditions to check
      *
      * @param mixed $value value to validate

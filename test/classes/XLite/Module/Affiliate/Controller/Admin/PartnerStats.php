@@ -34,9 +34,9 @@
  * @since   3.0.0
  */
 class XLite_Module_Affiliate_Controller_Admin_PartnerStats extends XLite_Controller_Admin_Abstract
-{	
-    public $params = array('target');	
-    public $page = "banner_stats";	
+{
+    public $params = array('target');
+    public $page = "banner_stats";
     public $pages = array('banner_stats' => 'Banner statistics',
                        'sales_stats' => 'Referred sales',
                        'top_performers' => 'Top performers',
@@ -53,5 +53,5 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerStats extends XLite_Control
             $this->set("partner_id", "");
         }
         parent::fillForm();
-    } 
+    }
 }

@@ -45,7 +45,7 @@ abstract class XLite_Module_ProductAdviser_Core_CMSConnector extends XLite_Core_
      */
     protected function __construct()
     {
-		parent::__construct();
+        parent::__construct();
 
         $this->widgetsList['XLite_Module_ProductAdviser_View_NewArrivals']     = 'New arrivals';
         $this->widgetsList['XLite_Module_ProductAdviser_View_RecentlyViewed']  = 'Recently viewed products';

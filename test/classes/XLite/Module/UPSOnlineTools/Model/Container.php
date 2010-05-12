@@ -53,21 +53,21 @@ class XLite_Module_UPSOnlineTools_Model_Container extends XLite_Base
     const OPTIMIZE_PRESET_5 = 11; // self::OPTIMIZE_HORIZONTAL | self::OPTIMIZE_VERTICAL;
     const OPTIMIZE_PRESET_6 = 15; // self::OPTIMIZE_HORIZONTAL | self::OPTIMIZE_VERTICAL | self::OPTIMIZE_REVERSE;
  
-    public $container_id;    
-    public $width, $length, $height;    
-    public $weight_limit;    
-    public $weight;    
-    public $levels;    
+    public $container_id;
+    public $width, $length, $height;
+    public $weight_limit;
+    public $weight;
+    public $levels;
 
-    public $threshold;    
-    public $optimize_method;    
+    public $threshold;
+    public $optimize_method;
 
     public $container_type;
 
     // shipping params    
-    public $additional_handling = false;    
-    public $declared_value = 0;    
-    public $declared_value_set = false;    
+    public $additional_handling = false;
+    public $declared_value = 0;
+    public $declared_value_set = false;
 
     public $extra_item_ids = null;
 

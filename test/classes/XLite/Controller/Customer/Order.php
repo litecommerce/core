@@ -43,7 +43,7 @@ class XLite_Controller_Customer_Order extends XLite_Controller_Customer_Abstract
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $params = array('target', 'order_id');    
+    public $params = array('target', 'order_id');
 
     /**
      * Order (cache)
@@ -53,7 +53,7 @@ class XLite_Controller_Customer_Order extends XLite_Controller_Customer_Abstract
      * @see    ____var_see____
      * @since  3.0.0
      */
-    private $order = null;    
+    private $order = null;
 
     /**
      * Add the base part of the location path
@@ -77,7 +77,7 @@ class XLite_Controller_Customer_Order extends XLite_Controller_Customer_Abstract
      * @since  3.0.0
      */
     protected function getLocation()
-    {   
+    {
         return 'Order details';
     }
 

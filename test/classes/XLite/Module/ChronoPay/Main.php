@@ -69,7 +69,7 @@ class XLite_Module_ChronoPay_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'ChronoPay WEB payment gateway';
-    }	
+    }
 
     /**
      * Determines if we need to show settings form link
@@ -103,19 +103,19 @@ class XLite_Module_ChronoPay_Main extends XLite_Module_Abstract
      * @since  3.0
      */
     public function init() 
-	{
-		parent::init();
+    {
+        parent::init();
 
         
         $this->registerPaymentMethod('chronopay');
-	} 
+    }
 
-	function uninstall() 
-	{
-		func_cleanup_cache('skins');
-		func_cleanup_cache('classes');
+    function uninstall() 
+    {
+        func_cleanup_cache('skins');
+        func_cleanup_cache('classes');
 
-		parent::uninstall();
-	} 
-	
+        parent::uninstall();
+    }
+    
 }

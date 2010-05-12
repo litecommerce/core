@@ -43,7 +43,7 @@ class XLite_Model_Module extends XLite_Model_Abstract
     const MODULE_PAYMENT   = 1;
     const MODULE_SHIPPING  = 2;
     const MODULE_SKIN      = 3;
-	const MODULE_CONNECTOR = 4;
+    const MODULE_CONNECTOR = 4;
     const MODULE_GENERAL   = 5;
     const MODULE_3RD_PARTY = 6;
 
@@ -130,15 +130,15 @@ class XLite_Model_Module extends XLite_Model_Abstract
      */
     public function getSettingsFormLink()
     {
-		return is_null($link = $this->__call('getSettingsForm')) ? 'admin.php?target=module&page=' . $this->get('name') : $link;
+        return is_null($link = $this->__call('getSettingsForm')) ? 'admin.php?target=module&page=' . $this->get('name') : $link;
     }
 
-	public function __call($method, array $args = array())
-	{
-		if (!@class_exists($className = 'XLite_Module_' . $this->get('name') . '_Main')) {
-			require_once LC_MODULES_DIR . $this->get('name') . LC_DS . 'Main.php' ;
-		}
+    public function __call($method, array $args = array())
+    {
+        if (!@class_exists($className = 'XLite_Module_' . $this->get('name') . '_Main')) {
+            require_once LC_MODULES_DIR . $this->get('name') . LC_DS . 'Main.php' ;
+        }
 
-		return call_user_func_array(array($className, $method), $args);
-	}
+        return call_user_func_array(array($className, $method), $args);
+    }
 }

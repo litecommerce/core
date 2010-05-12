@@ -35,8 +35,8 @@
  */
 class XLite_Module_AOM_View_Abstract extends XLite_View_Abstract implements XLite_Base_IDecorator
 {
-	function invertSign($value)
-	{
-		return sprintf("%02f", (-($value)));
-	}
-} 
+    function invertSign($value)
+    {
+        return sprintf("%02f", (-($value)));
+    }
+}

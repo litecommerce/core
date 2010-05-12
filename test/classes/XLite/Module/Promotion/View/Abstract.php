@@ -36,20 +36,20 @@
  */
 class XLite_Module_Promotion_View_Abstract extends XLite_View_Abstract implements XLite_Base_IDecorator
 {
-	/**
-	 * invertSign 
-	 * 
-	 * @param float $value 
-	 *  
-	 * @return float
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function invertSign($value)
-	{
-		return -$value;
-	}
+    /**
+     * invertSign 
+     * 
+     * @param float $value 
+     *  
+     * @return float
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function invertSign($value)
+    {
+        return -$value;
+    }
 
     /**
      * Return widget default template

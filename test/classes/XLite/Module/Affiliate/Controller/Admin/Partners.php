@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_Affiliate_Controller_Admin_Partners extends XLite_Controller_Admin_Abstract
-{	
+{
     public $params = array("target", "search", "filter", "partnerStatus", "plan_id", "plan", "startDateMonth", "startDateDay", "startDateYear", "endDateMonth", "endDateDay", "endDateYear", "itemsPerPage");
 
     function fillForm()
@@ -70,7 +70,7 @@ class XLite_Module_Affiliate_Controller_Admin_Partners extends XLite_Controller_
                         $partner->update();
                     }
                 }
-            }    
+            }
         }
     }
     
@@ -88,10 +88,10 @@ class XLite_Module_Affiliate_Controller_Admin_Partners extends XLite_Controller_
             }
             if (!is_null($this->get("partnerStatus")) && trim($this->get("partnerStatus")) != "") {
                 $where[] = " access_level = ". trim($this->get("partnerStatus"));
-            } else {    
+            } else {
                 $where[] = " (access_level = ".   $this->getComplex('auth.partnerAccessLevel') .
                            " OR access_level = ". $this->getComplex('auth.pendingPartnerAccessLevel') . 
-                           " OR access_level = ". $this->getComplex('auth.declinedPartnerAccessLevel') . ")"; 
+                           " OR access_level = ". $this->getComplex('auth.declinedPartnerAccessLevel') . ")";
             }
             if (!is_null($this->get("pending_plan")) && trim($this->get("pending_plan")) != "") {
                 $where[] = " pending_plan = ".$this->get("pending_plan");

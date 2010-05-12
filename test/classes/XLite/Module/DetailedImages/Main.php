@@ -69,7 +69,7 @@ class XLite_Module_DetailedImages_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'Allows to add detailed product images for better representation of the product';
-    }	
+    }
 
     /**
      * Perform some actions at startup

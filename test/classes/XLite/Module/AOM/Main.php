@@ -69,7 +69,7 @@ class XLite_Module_AOM_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'This module provides your online store with an advanced order management tool';
-    }	
+    }
     /**
      * Determines if we need to show settings form link
      *

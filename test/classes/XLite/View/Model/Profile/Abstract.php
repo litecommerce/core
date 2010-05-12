@@ -348,7 +348,7 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
      * @since  3.0.0
      */
     protected function performActionCreate(array $data = array())
-    {   
+    {
         return $this->checkPassword($data) ? parent::performActionCreate($data) : false;
     }
 
@@ -361,7 +361,7 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
      * @since  3.0.0
      */
     protected function performActionUpdate(array $data = array())
-    {   
+    {
         return $this->checkPassword($data) ? parent::performActionUpdate($data) : false;
     }
 

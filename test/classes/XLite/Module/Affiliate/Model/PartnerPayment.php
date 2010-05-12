@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
-{	
+{
     public $fields = array (
             "payment_id" => null,
             "partner_id" => 0,
@@ -44,22 +44,22 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
             "add_date"   => 0,
             "paid_date"  => 0,
             "affiliate"  => 0
-            );	
+            );
 
-    public $autoIncrement = "payment_id";	
-    public $alias = "partner_payments";	
-    public $defaultOrder = "add_date, affiliate";	
+    public $autoIncrement = "payment_id";
+    public $alias = "partner_payments";
+    public $defaultOrder = "add_date, affiliate";
 
-    public $partner;	
-    public $parent;	
-    public $order;	
+    public $partner;
+    public $parent;
+    public $order;
     public $affiliates;
 
     function charge($order) 
     {
         require_once LC_MODULES_DIR . 'Affiliate' . LC_DS . 'encoded.php';
         return func_Affiliate_charge($this, $order);
-    } 
+    }
 
     function set($name, $value) 
     {
@@ -70,7 +70,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
             $this->set("paid_date", time());
         }
         parent::set($name, $value);
-    } 
+    }
 
     // sends payment nofitication
     function notifyPartner() 
@@ -83,7 +83,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
                 $mail->getComplex('partner.login'),
                 "modules/Affiliate/partner_order_processed");
         $mail->send();
-    } 
+    }
 
     function filter() 
     {
@@ -95,7 +95,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
         }
         */
         return parent::filter();
-    } 
+    }
 
     function getPartner() 
     {
@@ -103,7 +103,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
             $this->partner = new XLite_Model_Profile($this->get("partner_id"));
         }
         return $this->partner;
-    } 
+    }
 
     function getAffiliates() 
     {
@@ -116,7 +116,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
             }
         }
         return $this->affiliates;
-    } 
+    }
     
     function getParent() 
     {
@@ -124,7 +124,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
             $this->parent = new XLite_Model_Profile($this->get("affiliate"));
         }
         return $this->parent;
-    } 
+    }
 
     function getOrder() 
     {
@@ -132,7 +132,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
             $this->order = new XLite_Model_Order($this->get("order_id"));
         }
         return $this->order;
-    } 
+    }
     
     function searchSales($startDate, $endDate, $productID, $partnerID, $paymentStatus, $orderStatus = null, $id1 = null, $id2 = null, $searchAffiliates = false)  
     {
@@ -158,7 +158,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
         // exclude affiliate payments?
         if (!$searchAffiliates) {
             $where[] = "affiliate=0";
-        }    
+        }
         $result = $this->findAll(implode(" AND ", $where));
         // filter payments by order status
         $result1 = array();
@@ -181,7 +181,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
             $result = $result2;
         }
         return $result;
-    } 
+    }
 
     function pay($partnerID) 
     {
@@ -192,11 +192,11 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
                     if (!$pp->get("paid") && $pp->get("partner_id") == $partnerID) {
                     	$pp->set("paid", 1);
                     	$pp->update();
-					}
+                    }
                 }
-            }    
+            }
         }
-    } 
+    }
 
     function _import(array $options) 
     {
@@ -223,5 +223,5 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
         } else {
             echo "<font color=red>Error:</font> order #ID is invalid (not numeric value)<br>";
         }
-    } 
+    }
 }

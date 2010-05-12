@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_Affiliate_Model_Banner extends XLite_Model_Abstract
-{	
+{
     public $fields = array(
             "banner_id"    => 0,
             "name"         => "",
@@ -50,12 +50,12 @@ class XLite_Module_Affiliate_Model_Banner extends XLite_Model_Abstract
             "height"       => 0,
             "banner_width" => 0,
             "banner_height"=> 0,
-            );	
+            );
 
-    public $autoIncrement = "banner_id";	
-    public $alias = "banners";	
-    public $defaultOrder = "banner_id";	
-    public $image = null;    
+    public $autoIncrement = "banner_id";
+    public $alias = "banners";
+    public $defaultOrder = "banner_id";
+    public $image = null;
 
     function getImage()
     {
@@ -65,10 +65,10 @@ class XLite_Module_Affiliate_Model_Banner extends XLite_Model_Abstract
         return $this->image;
     }
 
-	function getDefaultSource()
-	{
-		return 'D';
-	}
+    function getDefaultSource()
+    {
+        return 'D';
+    }
 
     function filter()
     {

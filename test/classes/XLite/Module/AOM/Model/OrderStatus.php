@@ -34,29 +34,29 @@
  * @since   3.0.0
  */
 class XLite_Module_AOM_Model_OrderStatus extends XLite_Model_Abstract
-{	
-	public $fields = array(
-		'status_id'	=> '',
-		'status'	=> '',
-		'name'		=> '',
-		'notes'		=> '',
-		'parent'	=> '',
-		'email'		=> 	0, 
-		'cust_email' => 0,
-		'orderby'	=> '');	
-		
-	public $alias		= 'order_statuses';	
-	public $primaryKey = array('status_id');	
-	public $defaultOrder = "orderby, parent, status";
+{
+    public $fields = array(
+        'status_id'	=> '',
+        'status'	=> '',
+        'name'		=> '',
+        'notes'		=> '',
+        'parent'	=> '',
+        'email'		=> 	0, 
+        'cust_email' => 0,
+        'orderby'	=> '');
+        
+    public $alias		= 'order_statuses';
+    public $primaryKey = array('status_id');
+    public $defaultOrder = "orderby, parent, status";
 
-	function getParentStatus()
-	{
-		if ($this->get("parent") == '')	{
-			return null;
-		} else {
-			$parent = new XLite_Module_AOM_Model_OrderStatus();
-			$parent->find("status = '". $this->get("parent") ."'");
-			return $parent;
-		}
-	} 
+    function getParentStatus()
+    {
+        if ($this->get("parent") == '')	{
+            return null;
+        } else {
+            $parent = new XLite_Module_AOM_Model_OrderStatus();
+            $parent->find("status = '". $this->get("parent") ."'");
+            return $parent;
+        }
+    }
 }

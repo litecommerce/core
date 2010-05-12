@@ -76,7 +76,7 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'ProductAdviser add-on introduces multiple cross-selling features and a customer notification mechanism';
-    }	
+    }
 
     /**
      * Determines if we need to show settings form link
@@ -98,88 +98,88 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
      * @since  3.0
      */
     public function init() 
-	{
-		parent::init();
+    {
+        parent::init();
 
-		// FIXME - trying to instantiate abstract class
-		// TODO - check if this code is really needed
-		/*$w = new XLite_View_Abstract();
-		$widgetMethods = array_map("strtolower", get_class_methods($w));
-		if (!in_array("isarraypointernth", $widgetMethods)) {
-		} else {
-			$this->xlite->set("PAPartialWidget", true);
-		}
+        // FIXME - trying to instantiate abstract class
+        // TODO - check if this code is really needed
+        /*$w = new XLite_View_Abstract();
+        $widgetMethods = array_map("strtolower", get_class_methods($w));
+        if (!in_array("isarraypointernth", $widgetMethods)) {
+        } else {
+            $this->xlite->set("PAPartialWidget", true);
+        }
         if ($this->xlite->is("adminZone")) {
-		}*/
+        }*/
 
-		/////////////////////////////////////
-		// "RelatedProducts" section
-		if ($this->xlite->is("adminZone")) {
-		}
-		/////////////////////////////////////
+        /////////////////////////////////////
+        // "RelatedProducts" section
+        if ($this->xlite->is("adminZone")) {
+        }
+        /////////////////////////////////////
 
-		/////////////////////////////////////
-		// "Recently viewed" section
-		if ($this->xlite->is("adminZone")) {
-			$this->validateConfig("number_recently_viewed");
-		}
-		/////////////////////////////////////
+        /////////////////////////////////////
+        // "Recently viewed" section
+        if ($this->xlite->is("adminZone")) {
+            $this->validateConfig("number_recently_viewed");
+        }
+        /////////////////////////////////////
 
-		/////////////////////////////////////
-		// "New Arrivals" section
-		if ($this->xlite->is("adminZone")) {
-			$this->validateConfig("number_new_arrivals");
-			$this->validateConfig("period_new_arrivals");
-		}
-		/////////////////////////////////////
+        /////////////////////////////////////
+        // "New Arrivals" section
+        if ($this->xlite->is("adminZone")) {
+            $this->validateConfig("number_new_arrivals");
+            $this->validateConfig("period_new_arrivals");
+        }
+        /////////////////////////////////////
 
-		/////////////////////////////////////
-		// "Product also buy" section
-		if ($this->xlite->is("adminZone")) {
-			if ($this->config->getComplex('ProductAdviser.admin_products_also_buy_enabled') != "Y") {
-				$cfg = new XLite_Model_Config();
+        /////////////////////////////////////
+        // "Product also buy" section
+        if ($this->xlite->is("adminZone")) {
+            if ($this->config->getComplex('ProductAdviser.admin_products_also_buy_enabled') != "Y") {
+                $cfg = new XLite_Model_Config();
                 $cfg->createOption("ProductAdviser", "products_also_buy_enabled", "N");
-			}
-		}
-		/////////////////////////////////////
+            }
+        }
+        /////////////////////////////////////
 
-		/////////////////////////////////////
-		// "Customer Notifications" section
-		if ($this->xlite->is("adminZone")) {
-			$this->validateConfig("number_notifications", 1);
-			$customer_notifications_enabled = ($this->config->getComplex('ProductAdviser.customer_notifications_mode') == "0") ? "N" : "Y";
-			$cfg = new XLite_Model_Config();
+        /////////////////////////////////////
+        // "Customer Notifications" section
+        if ($this->xlite->is("adminZone")) {
+            $this->validateConfig("number_notifications", 1);
+            $customer_notifications_enabled = ($this->config->getComplex('ProductAdviser.customer_notifications_mode') == "0") ? "N" : "Y";
+            $cfg = new XLite_Model_Config();
             $cfg->createOption("ProductAdviser", "customer_notifications_enabled", $customer_notifications_enabled);
-		}
-		/////////////////////////////////////
+        }
+        /////////////////////////////////////
 
         $inventorySupport = @class_exists('XLite_Module_InventoryTracking_Model_Inventory');
         $this->xlite->set("PA_InventorySupport", $inventorySupport);
-		if ($inventorySupport) {
-			if (!$this->xlite->is("adminZone")) {
-			}
-		}
-		if ($this->xlite->is("adminZone")) {
-		}
-		$this->xlite->set("ProductAdviserEnabled", true);
-	}
+        if ($inventorySupport) {
+            if (!$this->xlite->is("adminZone")) {
+            }
+        }
+        if ($this->xlite->is("adminZone")) {
+        }
+        $this->xlite->set("ProductAdviserEnabled", true);
+    }
 
-	function validateConfig($option, $limit=0)
-	{
-		$number_orig = $this->config->getComplex('ProductAdviser.' . $option);
-		$number = intval($number_orig);
-		$number_updated = false;
-		if ($number < $limit) {
-			$number = $limit;
+    function validateConfig($option, $limit=0)
+    {
+        $number_orig = $this->config->getComplex('ProductAdviser.' . $option);
+        $number = intval($number_orig);
+        $number_updated = false;
+        if ($number < $limit) {
+            $number = $limit;
             $number_updated = true;
-		} else {
-			if (strval($number) != strval($number_orig)) {
+        } else {
+            if (strval($number) != strval($number_orig)) {
             	$number_updated = true;
-			}
-		}
-		if ($number_updated) {
-			$cfg = new XLite_Model_Config();
+            }
+        }
+        if ($number_updated) {
+            $cfg = new XLite_Model_Config();
             $cfg->createOption("ProductAdviser", $option, $number);
-		}
-	}
+        }
+    }
 }

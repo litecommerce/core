@@ -122,7 +122,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeneralStats extends XLite_
             $table = $profile->db->getTableByAlias($profile->alias);
             $this->gs["active_accounts"] = $profile->db->getOne("SELECT COUNT(*) FROM $table WHERE status='E' AND order_id=0");
             $this->gs["new_accounts"] = $profile->db->getOne("SELECT COUNT(*) FROM $table WHERE status='E' AND first_login BETWEEN $fd AND $td AND order_id=0");
-        }    
+        }
         return $this->gs;
     }
 

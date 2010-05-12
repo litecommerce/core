@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_XCartImport_Controller_Admin_XcartImport extends XLite_Controller_Admin_Abstract
-{	
+{
     public $importedProductOptions;
     
     function fillForm()
@@ -66,7 +66,7 @@ class XLite_Module_XCartImport_Controller_Admin_XcartImport extends XLite_Contro
             while (list($table) = mysql_fetch_row($res)) {
                 if (substr($table, 0, 6) == 'xcart_') {
                     // drop table
-                    echo "removing $table<br>\n"; 
+                    echo "removing $table<br>\n";
                     func_flush();
                     mysql_query("drop table $table");
                 }
@@ -75,7 +75,7 @@ class XLite_Module_XCartImport_Controller_Admin_XcartImport extends XLite_Contro
 ?>
 X-Cart data has been removed.<br>
 <?php
-			echo "<hr><a href=\"admin.php?target=xcart_import\">Return to admin interface.</a>";
+            echo "<hr><a href=\"admin.php?target=xcart_import\">Return to admin interface.</a>";
             $this->set("silent", true);
     }
 
@@ -98,7 +98,7 @@ X-Cart data has been removed.<br>
         if (!$this->connect()) {
             echo "<br><font color=red>" . $this->error . "</font><br>";
             $this->valid = false; // invalid form
-			echo "<hr><a href=\"admin.php?target=xcart_import\">Return to admin interface.</a>";
+            echo "<hr><a href=\"admin.php?target=xcart_import\">Return to admin interface.</a>";
             $this->set("silent", true);
             return;
         } else {
@@ -116,7 +116,7 @@ X-Cart data has been removed.<br>
             // save memberships
             $ms = array_keys($this->memberships);
             $c = new XLite_Model_Config();
-			$c->db->connect();
+            $c->db->connect();
             $c->set("category", "Memberships");
             $c->set("name", "memberships");
             $c->set("value", serialize($ms));
@@ -194,11 +194,11 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
             "free_tax" => "tax_class",
             "image" => "thumbnail->data",
             "image_type" => "thumbnail->type",
-			"image2" => "image->data",
-			"image2_type" => "image->type", 
+            "image2" => "image->data",
+            "image2_type" => "image->type", 
            ),
-		  "productoption" => array(
-		    "classid"     => "option_id",
+          "productoption" => array(
+            "classid"     => "option_id",
             "productid"   => "product_id",
             "class"       => "optclass",
             "classtext"   => "opttext",
@@ -206,20 +206,20 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
             "is_modifier" => "opttype",
             "option_name" => "options"
            ),
-		  "productoption.product_id" => "map_productid", 
-		  "optionexception" => array(
-		    "productid" => "product_id"
-		   ),
-		  "optionexception.product_id" => "map_productid", 
-		  "detailedimage" => array(
-		    "id" => "product_id",
-			"productid" => "product_id",
-			"avail" => "enabled",
-			"orderby" => "order_by",
-			"image" => "image->data"
-		   ),
+          "productoption.product_id" => "map_productid", 
+          "optionexception" => array(
+            "productid" => "product_id"
+           ),
+          "optionexception.product_id" => "map_productid", 
+          "detailedimage" => array(
+            "id" => "product_id",
+            "productid" => "product_id",
+            "avail" => "enabled",
+            "orderby" => "order_by",
+            "image" => "image->data"
+           ),
           "detailedimage.enabled" => $this->boolean_map,
-		  "detailedimage.product_id" => "map_productid", 
+          "detailedimage.product_id" => "map_productid", 
           "profile" => array(
             "login" => "IGNORE",
             "b_address" => "billing_address",
@@ -238,7 +238,7 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
             "s_country" => "shipping_country",
             "s_zipcode" => "shipping_zipcode",
             "email" => "login",
-			"company" => "billing_company",
+            "company" => "billing_company",
           ),
           "profile.new_fields" => array(
             "billing_phone" => "shipping_phone",
@@ -246,7 +246,7 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
             "billing_title" => "shipping_title",
             "billing_firstname" => "shipping_firstname",
             "billing_lastname" => "shipping_lastname",
-			"billing_company" => "shipping_company"),
+            "billing_company" => "shipping_company"),
           "profile.password" => "map_password",
           "profile.status" => array("Y" => "E","N" => "D", "y" => "E", "n" => "D"),
           "products_categories.categoryid" => "map_categoryid",
@@ -261,7 +261,7 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
         
         if ($this->get("db_version") == '41') {
             $sqlQuery .= " xcart_images_C i ON c.categoryid=i.id LEFT OUTER JOIN xcart_category_memberships cm ON c.categoryid=cm.categoryid LEFT OUTER JOIN xcart_memberships m ON m.membershipid=cm.membershipid";
-		} else {
+        } else {
             $sqlQuery .= " xcart_icons i ON c.categoryid=i.categoryid";
         }
        
@@ -272,28 +272,28 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
         
         $sqlQuery = "SELECT p.*, t.*, t.image as image2, t.image_type as image2_type, pr.price, p.productid FROM xcart_products as p LEFT OUTER JOIN";
         if ($this->get("db_version") == '41') {
-            $sqlQuery .= " xcart_images_T as t ON p.productid=t.id LEFT OUTER JOIN xcart_pricing as pr ON p.productid=pr.productid AND pr.quantity=1 AND pr.membershipid='0'"; 
+            $sqlQuery .= " xcart_images_T as t ON p.productid=t.id LEFT OUTER JOIN xcart_pricing as pr ON p.productid=pr.productid AND pr.quantity=1 AND pr.membershipid='0'";
         } else {
             $sqlQuery .= " xcart_thumbnails t on p.productid=t.productid left outer join xcart_pricing pr on p.productid=pr.productid and pr.quantity=1 and pr.membership=''";
         }
         $this->importTable($sqlQuery, "product");
 
-		if ($this->get("db_version") != 3) {
+        if ($this->get("db_version") != 3) {
         	$this->importTable("select * from xcart_products_categories", "products_categories");
-		}
+        }
 
-		if (!is_null($this->xlite->getComplex('mm.activeModules.ProductOptions'))) {
-			$this->importedProductOptions = array();
+        if (!is_null($this->xlite->getComplex('mm.activeModules.ProductOptions'))) {
+            $this->importedProductOptions = array();
             $this->importTable("SELECT c.classid, c.productid, c.class, c.classtext, c.orderby, c.is_modifier, o.option_name FROM xcart_classes as c LEFT OUTER JOIN xcart_class_options as o ON c.classid = o.classid;", "productoption");
-			$this->importTable("select * from xcart_product_options_ex", "optionexception");
-		}
-		if (!is_null($this->xlite->getComplex('mm.activeModules.DetailedImages'))) {
-			if ($this->get("db_version") == '41') {
-				$this->importTable("select * from xcart_images_D", "detailedimage");
-			} else {
-				$this->importTable("select * from xcart_images", "detailedimage");
-			}
-		}
+            $this->importTable("select * from xcart_product_options_ex", "optionexception");
+        }
+        if (!is_null($this->xlite->getComplex('mm.activeModules.DetailedImages'))) {
+            if ($this->get("db_version") == '41') {
+                $this->importTable("select * from xcart_images_D", "detailedimage");
+            } else {
+                $this->importTable("select * from xcart_images", "detailedimage");
+            }
+        }
     }
 
     function importUsers()
@@ -350,7 +350,7 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
             $assoc[$child["value"]] = $child["children"][0]["value"];
         }
         return $assoc;
-    }   
+    }
 
     function saveRow($row, $path)
     {
@@ -360,7 +360,7 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
     			// connecting to LC database
     			$obj->db->connect();
     		}
-		}
+        }
 
         if ($path == 'products_categories') {
             $obj = new XLite_Model_Product();
@@ -375,7 +375,7 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
                     $obj->update();
             	}
             }
-			unset($obj);
+            unset($obj);
         } else if ($path == 'product') {
             if (empty($row["sku"])) {
                 $cond = "name='".addslashes($row["name"])."'";
@@ -404,37 +404,37 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
             $row["name"] = $obj->get("name");
             $cond = "category_id='".addslashes($obj->get("category_id"))."'";
         } else if ($path == 'profile'){
-			foreach ($row as $key=>$val) {
-				$key = trim($key);
+            foreach ($row as $key=>$val) {
+                $key = trim($key);
 
-				if (in_array($key, array("billing_state", "shipping_state"))) {
-					if (method_exists($obj, "_convertState")) {
-						$state_code = $obj->_convertState($val);
+                if (in_array($key, array("billing_state", "shipping_state"))) {
+                    if (method_exists($obj, "_convertState")) {
+                        $state_code = $obj->_convertState($val);
 
-						if ($state_code < 0) {
-							// If import state code not exists, set custom_state for profile
-							preg_match("/^(\w+)_state$/", $key, $out);
-							$prefix = $out[1];
-							$row[$prefix."_custom_state"] = $val;
-						}
-					} else {
-						// for LC version lower than 2.2
-						$state = new XLite_Model_State();
-						if ($state->find("code='$val'") || $state->find("state='$val'")) {
-							$state_code = $state->get("state_id");
-						} else {
-							$state_code = -1;
-						}
-					}
+                        if ($state_code < 0) {
+                            // If import state code not exists, set custom_state for profile
+                            preg_match("/^(\w+)_state$/", $key, $out);
+                            $prefix = $out[1];
+                            $row[$prefix."_custom_state"] = $val;
+                        }
+                    } else {
+                        // for LC version lower than 2.2
+                        $state = new XLite_Model_State();
+                        if ($state->find("code='$val'") || $state->find("state='$val'")) {
+                            $state_code = $state->get("state_id");
+                        } else {
+                            $state_code = -1;
+                        }
+                    }
 
-					$row[$key] = $state_code;
-				}
-			}
+                    $row[$key] = $state_code;
+                }
+            }
 
             $cond = "login='".addslashes($row["login"])."'";
-		} else if ($path == 'productoption') {
+        } else if ($path == 'productoption') {
             $optid = $row['option_id'];
-			$cond  = "product_id='$row[product_id]' AND optclass='$row[optclass]'";
+            $cond  = "product_id='$row[product_id]' AND optclass='$row[optclass]'";
             if (in_array($optid, $this->importedProductOptions) && $obj->find($cond)) {
                 $obj->set("options", $obj->get("options")."\n".$row['options']);
                 $obj->update();
@@ -444,10 +444,10 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
             }
             $row["opttype"] = $row["options"]=='' ? 'Text' : 'SelectBox';
             $row["cols"] = 25;
-		} else if ($path == 'optionexception') {
-			$cond = "product_id='$row[product_id]' AND exception='$row[exception]'";
-		} else if ($path == 'detailedimage') {
-			$cond = "";
+        } else if ($path == 'optionexception') {
+            $cond = "product_id='$row[product_id]' AND exception='$row[exception]'";
+        } else if ($path == 'detailedimage') {
+            $cond = "";
         } else {
             func_die("Incorrect path $path");
         }
@@ -469,7 +469,7 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
             if ($cond && $obj->find($cond)) {
                 if ($id) {
                     $this->id_map[$path][$id] = $obj->get($obj->autoIncrement);
-                }    
+                }
                 $obj->set("properties", $row);
                 $obj->update();
             } else {
@@ -477,10 +477,10 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
                 $obj->create();
                 if ($id) {
                     $this->id_map[$path][$id] = $obj->get($obj->autoIncrement);
-                }    
+                }
             }
             foreach($row as $key => $value) {
-                if (strpos($key, '->')) { 
+                if (strpos($key, '->')) {
                     list($prop, $key) = explode('->', $key);
                     $getter = "get$prop";
                     $o = $obj->$getter();
@@ -496,8 +496,8 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
             }
             if ($id) {
                 echo "$id,\n";
-            }    
-		}
+            }
+        }
 
         // restoring DB connection
         $this->connect();
@@ -531,7 +531,7 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
         }
         $children = $data["children"];
 
-		foreach ($newfields as $originalField => $newField) {
+        foreach ($newfields as $originalField => $newField) {
             for ($i=0; $i<count($children); $i++) {
                 if ($children[$i]["value"] == $originalField) {
                 	$childrenNew = $children[$i];
@@ -540,7 +540,7 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
                 	break;
                 }
             }
-		}
+        }
 
         for ($i=0; $i<count($children); $i++) {
             $childPath = $path . "." . $children[$i]["value"];
@@ -562,13 +562,13 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
         $this->map_id("category", $id);
         if ($id["children"][0]["value"]) {
             $this->category_links[] = $id["children"][0]["value"];
-        }    
+        }
     }
     
     function map_productid(&$id)
     {
         $this->map_id("product", $id);
-	}
+    }
 
     function map_profileid(&$id)
     {
@@ -583,7 +583,7 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
                 $v["children"][0]["value"] = $this->id_map[$class][$id];
             }
         }
-    }	
+    }
     
     public $category_links = array();
 
@@ -601,7 +601,7 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
 
     function text_decrypt_symbol($s, $i) 
     {
-		// $s is a text-encoded string, $i is index of 2-char code. function returns number in range 0-255
+        // $s is a text-encoded string, $i is index of 2-char code. function returns number in range 0-255
         global $START_CHAR_CODE;
 
         return (ord(substr($s, $i, 1)) - $START_CHAR_CODE)*16 + ord(substr($s, $i+1, 1)) - $START_CHAR_CODE;

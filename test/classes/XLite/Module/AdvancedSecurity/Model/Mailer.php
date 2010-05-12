@@ -41,38 +41,38 @@ class XLite_Module_AdvancedSecurity_Model_Mailer extends XLite_Model_Mailer impl
         // encrypt message with a public key if necessary
         if ($this->get("adminMail") && $this->get("order") && $this->getComplex('order.details')) {
             $gpg = new XLite_Module_AdvancedSecurity_Model_GPG();
-			if ($this->getComplex('config.AdvancedSecurity.gpg_crypt_mail')) {
-	            $this->logger->log("Module_AdvancedSecurity_Mailer::getBody() encrypt message");
+            if ($this->getComplex('config.AdvancedSecurity.gpg_crypt_mail')) {
+                $this->logger->log("Module_AdvancedSecurity_Mailer::getBody() encrypt message");
     	        // send as a plain mail
         	    $this->mail->IsHTML(false);
             	$this->mail->Encoding = "7bit";
-	            $this->mail->AltBody = "";
+                $this->mail->AltBody = "";
     	        $this->mail->Body = $gpg->encrypt($this->decodeHTML($this->get("body")));
-			}
+            }
 
-			if ($this->getComplex('config.Email.show_cc_info')) {
-				$filename = "details.txt.gpg";
-				$data = $this->getComplex('order.properties.secureDetailsText');
-				if (!empty($data)) {
-					$cur = count($this->mail->attachment);
-					$this->mail->attachment[$cur][0] = $data;
-					$this->mail->attachment[$cur][1] = $filename;
-					$this->mail->attachment[$cur][2] = $filename;
-					$this->mail->attachment[$cur][3] = "base64";
-					$this->mail->attachment[$cur][4] = "application/pgp-encrypted";
-					$this->mail->attachment[$cur][5] = true; // isStringAttachment
-					$this->mail->attachment[$cur][6] = "inline";
-					$this->mail->attachment[$cur][7] = $filename."@mail.lc"; // CID
-				}
-			}
+            if ($this->getComplex('config.Email.show_cc_info')) {
+                $filename = "details.txt.gpg";
+                $data = $this->getComplex('order.properties.secureDetailsText');
+                if (!empty($data)) {
+                    $cur = count($this->mail->attachment);
+                    $this->mail->attachment[$cur][0] = $data;
+                    $this->mail->attachment[$cur][1] = $filename;
+                    $this->mail->attachment[$cur][2] = $filename;
+                    $this->mail->attachment[$cur][3] = "base64";
+                    $this->mail->attachment[$cur][4] = "application/pgp-encrypted";
+                    $this->mail->attachment[$cur][5] = true; // isStringAttachment
+                    $this->mail->attachment[$cur][6] = "inline";
+                    $this->mail->attachment[$cur][7] = $filename."@mail.lc"; // CID
+                }
+            }
         }
     }
 
     function decodeHTML($string)
     {
-        $trans_tbl = get_html_translation_table (HTML_ENTITIES); 
-        $trans_tbl = array_flip ($trans_tbl); 
-        return str_replace("&nbsp;", "", strip_tags(strtr($string, $trans_tbl))); 
+        $trans_tbl = get_html_translation_table (HTML_ENTITIES);
+        $trans_tbl = array_flip ($trans_tbl);
+        return str_replace("&nbsp;", "", strip_tags(strtr($string, $trans_tbl)));
     }
 
 }

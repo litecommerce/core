@@ -69,7 +69,7 @@ class XLite_Module_WishList_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'This module introduces "Wish List" and "Send to Friend" features';
-    }	
+    }
 
     /**
      * Perform some actions at startup
@@ -82,5 +82,5 @@ class XLite_Module_WishList_Main extends XLite_Module_Abstract
     {
         parent::init();
         $this->xlite->set("WishListEnabled", true);
-	}
+    }
 }

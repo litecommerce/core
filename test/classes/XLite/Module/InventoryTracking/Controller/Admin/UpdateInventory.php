@@ -35,7 +35,7 @@
  */
 class XLite_Module_InventoryTracking_Controller_Admin_UpdateInventory extends XLite_Controller_Admin_UpdateInventory implements XLite_Base_IDecorator
 {
-	protected $inventory = null;
+    protected $inventory = null;
 
     public function __construct(array $params)
     {
@@ -68,17 +68,17 @@ class XLite_Module_InventoryTracking_Controller_Admin_UpdateInventory extends XL
             "layout" => $this->amount_layout,
             "delimiter" => $this->delimiter,
             "text_qualifier"    => $this->text_qualifier,
-			"return_error" => true,
+            "return_error" => true,
             );
-        $this->inventory->import($options);    
-		$this->importError = $this->inventory->importError;
+        $this->inventory->import($options);
+        $this->importError = $this->inventory->importError;
 
-		$text = "Import process failed.";
-		if (!$this->importError) $text = "Product amount imported successfully.";
-		$text = $this->importError.'<br>'.$text.' <a href="admin.php?target=update_inventory&page=amount"><u>Click here to return to admin interface</u></a><br><br>';
+        $text = "Import process failed.";
+        if (!$this->importError) $text = "Product amount imported successfully.";
+        $text = $this->importError.'<br>'.$text.' <a href="admin.php?target=update_inventory&page=amount"><u>Click here to return to admin interface</u></a><br><br>';
 
-		echo $text;
-		func_refresh_end();
-		exit();
+        echo $text;
+        func_refresh_end();
+        exit();
     }
 }

@@ -34,104 +34,104 @@
  * @since   3.0.0
  */
 class XLite_Module_Egoods_Controller_Customer_Download extends XLite_Controller_Abstract
-{	
+{
     public $params = array("mode");
 
-	function action_download()
-	{
-		if (isset($_REQUEST['acc']) && !empty($_REQUEST['acc'])) {
-			$this->downloadByAccessKey();
-		} else if (isset($_REQUEST['file_id']) && !empty($_REQUEST['file_id'])) {
-			$this->downloadByFileId();
-		}
-	}
+    function action_download()
+    {
+        if (isset($_REQUEST['acc']) && !empty($_REQUEST['acc'])) {
+            $this->downloadByAccessKey();
+        } else if (isset($_REQUEST['file_id']) && !empty($_REQUEST['file_id'])) {
+            $this->downloadByFileId();
+        }
+    }
 
-	function downloadByAccessKey() 
-	{
-		$access_key = $_REQUEST['acc'];
-		$dl = new XLite_Module_Egoods_Model_DownloadableLink();
-		$time = time();
-		
-		// check if the link with given access key exists
-		if ($dl->find("access_key='" . $access_key . "'")) {
-			
-			// check for product download availability
-			if (!$dl->is('active')) {
-				$reason = $dl->get("deniedReason");
-				$this->set('returnUrl', 'cart.php?target=download&mode=file_access_denied&reason=' . $reason); 
-				return;
-			}
-			
-			$df = new XLite_Module_Egoods_Model_DownloadableFile($dl->get('file_id'));
-			// check for file
-			if (!is_file($df->get('data'))) {
-				$this->set('returnUrl', 'cart.php?target=download&mode=file_not_found&filename=' . 
-					basename($df->get('data')) . 
-					"&requested_url=" . $this->retriveRequestedUrl()
-				);
-				return;
-			}
-			
-			// download the file
-			$this->set("silent", true);
-			$this->startDownload(basename($df->get('data')));
-			$this->readFile($df->get('data'));
+    function downloadByAccessKey() 
+    {
+        $access_key = $_REQUEST['acc'];
+        $dl = new XLite_Module_Egoods_Model_DownloadableLink();
+        $time = time();
+        
+        // check if the link with given access key exists
+        if ($dl->find("access_key='" . $access_key . "'")) {
+            
+            // check for product download availability
+            if (!$dl->is('active')) {
+                $reason = $dl->get("deniedReason");
+                $this->set('returnUrl', 'cart.php?target=download&mode=file_access_denied&reason=' . $reason);
+                return;
+            }
+            
+            $df = new XLite_Module_Egoods_Model_DownloadableFile($dl->get('file_id'));
+            // check for file
+            if (!is_file($df->get('data'))) {
+                $this->set('returnUrl', 'cart.php?target=download&mode=file_not_found&filename=' . 
+                    basename($df->get('data')) . 
+                    "&requested_url=" . $this->retriveRequestedUrl()
+                );
+                return;
+            }
+            
+            // download the file
+            $this->set("silent", true);
+            $this->startDownload(basename($df->get('data')));
+            $this->readFile($df->get('data'));
 
-			// decrase downloads limit
-			$dl->set('available_downloads', $dl->get('available_downloads') - 1);
-			$dl->update();
-			
-			// save download statistics
-			$ds = new XLite_Module_Egoods_Model_DownloadsStatistics();
-			$ds->set('file_id', $df->get('file_id'));
-			$ds->set('date', $time);
-			$ds->set('headers', "HTTP_REFERER=" . $_SERVER["HTTP_REFERER"] . ", REMOTE_ADDR=" . $_SERVER["REMOTE_ADDR"]);
-			$ds->create();
-			exit();
-		} else {
-			$this->set('returnUrl', 'cart.php?target=download&mode=file_access_denied');
-		}
-	} 
+            // decrase downloads limit
+            $dl->set('available_downloads', $dl->get('available_downloads') - 1);
+            $dl->update();
+            
+            // save download statistics
+            $ds = new XLite_Module_Egoods_Model_DownloadsStatistics();
+            $ds->set('file_id', $df->get('file_id'));
+            $ds->set('date', $time);
+            $ds->set('headers', "HTTP_REFERER=" . $_SERVER["HTTP_REFERER"] . ", REMOTE_ADDR=" . $_SERVER["REMOTE_ADDR"]);
+            $ds->create();
+            exit();
+        } else {
+            $this->set('returnUrl', 'cart.php?target=download&mode=file_access_denied');
+        }
+    }
 
-	function downloadByFileId() 
-	{
-		$file_id = $_REQUEST['file_id'];
-		$time = time();
-		$df = new XLite_Module_Egoods_Model_DownloadableFile($file_id);
-		$product_id = $df->get('product_id');
-		
-		$product = new XLite_Model_Product($product_id);
-		if (!$product->isFreeForMembership($this->getComplex('cart.profile.membership'))) {
-			$this->set('returnUrl', 'cart.php?target=download&mode=file_access_denied&reason=M');
-			return;
-		}
-		
+    function downloadByFileId() 
+    {
+        $file_id = $_REQUEST['file_id'];
+        $time = time();
+        $df = new XLite_Module_Egoods_Model_DownloadableFile($file_id);
+        $product_id = $df->get('product_id');
+        
+        $product = new XLite_Model_Product($product_id);
+        if (!$product->isFreeForMembership($this->getComplex('cart.profile.membership'))) {
+            $this->set('returnUrl', 'cart.php?target=download&mode=file_access_denied&reason=M');
+            return;
+        }
+        
 
-			// check for file
-		if (!is_file($df->get('data'))) {
-			$this->set('returnUrl', 'cart.php?target=download&mode=file_not_found&filename=' . 
-				basename($df->get('data')) . 
-				"&requested_url=" . $this->retriveRequestedUrl()
-			);
-			return;
-		}
-		
-		// download the file
-		$this->set("silent", true);
-		$this->startDownload(basename($df->get('data')));
-		$this->readFile($df->get('data'));
+            // check for file
+        if (!is_file($df->get('data'))) {
+            $this->set('returnUrl', 'cart.php?target=download&mode=file_not_found&filename=' . 
+                basename($df->get('data')) . 
+                "&requested_url=" . $this->retriveRequestedUrl()
+            );
+            return;
+        }
+        
+        // download the file
+        $this->set("silent", true);
+        $this->startDownload(basename($df->get('data')));
+        $this->readFile($df->get('data'));
 
-		// save download statistics
-		$ds = new XLite_Module_Egoods_Model_DownloadsStatistics();
-		$ds->set('file_id', $df->get('file_id'));
-		$ds->set('date', $time);
-		$ds->set('headers', "HTTP_REFERER=" . $_SERVER["HTTP_REFERER"] . ", REMOTE_ADDR=" . $_SERVER["REMOTE_ADDR"]);
-		$ds->create();
-		exit();
-	} 
+        // save download statistics
+        $ds = new XLite_Module_Egoods_Model_DownloadsStatistics();
+        $ds->set('file_id', $df->get('file_id'));
+        $ds->set('date', $time);
+        $ds->set('headers', "HTTP_REFERER=" . $_SERVER["HTTP_REFERER"] . ", REMOTE_ADDR=" . $_SERVER["REMOTE_ADDR"]);
+        $ds->create();
+        exit();
+    }
 
-	function readFile($name)
-	{
+    function readFile($name)
+    {
         $handle = @fopen($name, "rb");
         if ($handle) {
             while (!feof($handle)) {
@@ -139,11 +139,11 @@ class XLite_Module_Egoods_Controller_Customer_Download extends XLite_Controller_
               echo $contents;
             }
             fclose($handle);
-		}		
-	}
+        }
+    }
 
-	function retriveRequestedUrl()
-	{
-		return urlencode($_SERVER['QUERY_STRING']);
-	}
+    function retriveRequestedUrl()
+    {
+        return urlencode($_SERVER['QUERY_STRING']);
+    }
 }

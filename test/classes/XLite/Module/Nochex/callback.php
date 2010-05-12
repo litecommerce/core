@@ -38,14 +38,14 @@
 * @access public
 */
 
-	$_REQUEST["target"] = "callback";
-	$_REQUEST["action"]	= "callback";
-	$_REQUEST["order_id"] = $_GET["order_id"];
+    $_REQUEST["target"] = "callback";
+    $_REQUEST["action"]	= "callback";
+    $_REQUEST["order_id"] = $_GET["order_id"];
 
-	// FIXME - is it needed?
-	// chdir("../../..");
+    // FIXME - is it needed?
+    // chdir("../../..");
 
-	include_once LC_ROOT_DIR . 'cart.php';	
+    include_once LC_ROOT_DIR . 'cart.php';
 
 // WARNING:
 // Please ensure that you have no whitespaces / empty lines below this message.

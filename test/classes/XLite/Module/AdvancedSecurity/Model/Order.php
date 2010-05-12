@@ -36,23 +36,23 @@ func_define('ORDER_CRYPTED_MESSAGE', '-- This data is encrypted. Please enter ma
  * @since   3.0.0
  */
 class XLite_Module_AdvancedSecurity_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
-{	
-    public $gpg;	
-	public $_detailsModified = false; // shows if the order details were modified
+{
+    public $gpg;
+    public $_detailsModified = false; // shows if the order details were modified
 
-	protected $_secureDetails = null;
+    protected $_secureDetails = null;
 
     public function __construct($id = null)
     {
         $this->fields['secureDetails'] = ''; // GPG encrypted order details
-		$this->fields['secureDetailsText'] = ''; // GPG encrypted order details for sending to admin via email
+        $this->fields['secureDetailsText'] = ''; // GPG encrypted order details for sending to admin via email
         parent::__construct($id);
         $this->gpg = new XLite_Module_AdvancedSecurity_Model_GPG();
     }
 
     function setDetails($value)
-    {   
-		$this->_detailsModified = true;
+    {
+        $this->_detailsModified = true;
         parent::setDetails($value);
         $this->_secureDetails = null;
     }
@@ -74,7 +74,7 @@ class XLite_Module_AdvancedSecurity_Model_Order extends XLite_Model_Order implem
         if (!(isset($details) && is_array($details))) {
         	$details = array();
         }
-		$details = array_merge($oldDetails, $details);
+        $details = array_merge($oldDetails, $details);
         return $details;
     }
 
@@ -89,43 +89,43 @@ class XLite_Module_AdvancedSecurity_Model_Order extends XLite_Model_Order implem
                 $this->_secureDetails = unserialize($this->gpg->decrypt($d));
                 if ($this->_secureDetails === false) { // decrypt failed
                     $this->_secureDetails = parent::getDetails();
-                } 
+                }
             }
         }
         return $this->_secureDetails;
-    } 
+    }
 
     function setSecureDetails($value) 
     {
         $this->_secureDetails = $value;
         // encrypt details with a public key
         parent::set("secureDetails", $this->gpg->encrypt(serialize($value)));
-		$this->_secureDetailsText = $this->prepareSecureDetailsText($value);
-		parent::set("secureDetailsText", $this->gpg->encrypt($this->_secureDetailsText));
-    } 
+        $this->_secureDetailsText = $this->prepareSecureDetailsText($value);
+        parent::set("secureDetailsText", $this->gpg->encrypt($this->_secureDetailsText));
+    }
 
-	function prepareSecureDetailsText($details)
-	{
-		if (empty($details)) return "";
-		$text = "Secure Order Details:\n";
-		$text.= "---------------------\n";
-		foreach ((array)$details as $name=>$value) {
-			$title = ucwords(str_replace("cc", "credit card", str_replace("_", " ", $name)));
-			$text .= sprintf("%-25s %s\n", "$title:", $value);
-		}
-		return $text;
-	}
+    function prepareSecureDetailsText($details)
+    {
+        if (empty($details)) return "";
+        $text = "Secure Order Details:\n";
+        $text.= "---------------------\n";
+        foreach ((array)$details as $name=>$value) {
+            $title = ucwords(str_replace("cc", "credit card", str_replace("_", " ", $name)));
+            $text .= sprintf("%-25s %s\n", "$title:", $value);
+        }
+        return $text;
+    }
 
-	function __clone()
-	{
-		$clone = parent::__clone();
+    function __clone()
+    {
+        $clone = parent::__clone();
 
-		$clone->set('details', $this->get('details'));
-		// if the master password is not enterred, the secure details are copied as is from the original order
-		$clone->properties['secureDetails'] = $this->properties['secureDetails'];
-		$clone->update();
-		return $clone;
-	}
+        $clone->set('details', $this->get('details'));
+        // if the master password is not enterred, the secure details are copied as is from the original order
+        $clone->properties['secureDetails'] = $this->properties['secureDetails'];
+        $clone->update();
+        return $clone;
+    }
 
     function update()
     {
@@ -139,23 +139,23 @@ class XLite_Module_AdvancedSecurity_Model_Order extends XLite_Model_Order implem
                     $this->set("status", "F");
                     return;
                 }
-				$labels = $this->getDetailLabels();
+                $labels = $this->getDetailLabels();
                 foreach ($labels as $label => $value) {
                     $details[$label] = ORDER_CRYPTED_MESSAGE;
                 }
                 $this->set("details", $details);
             } elseif (!is_null($this->session->get("masterPassword"))) {
                 $this->setSecureDetails($details);
-				$labels = $this->getDetailLabels();
+                $labels = $this->getDetailLabels();
                 foreach ($labels as $label => $value) {
                     $details[$label] = ORDER_CRYPTED_MESSAGE;
                 }
                 $this->set("details", $details);
             }
-        }    
+        }
         parent::update();
-		// order details are not changed anymore:
-		$this->_detailsModified = false; 
+        // order details are not changed anymore:
+        $this->_detailsModified = false;
     }
 
     function encrypt()
@@ -164,7 +164,7 @@ class XLite_Module_AdvancedSecurity_Model_Order extends XLite_Model_Order implem
         if ($this->gpg->isEncoded($secureDetails)) {
             return;
         }
-		$labels = $this->getDetailLabels();
+        $labels = $this->getDetailLabels();
         $details = parent::getDetails();
         $this->setSecureDetails($details);
         foreach ($labels as $label => $value) {

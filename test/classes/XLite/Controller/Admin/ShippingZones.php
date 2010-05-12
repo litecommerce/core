@@ -53,7 +53,7 @@ class XLite_Controller_Admin_ShippingZones extends XLite_Controller_Admin_Shippi
         // move selected states
         if (isset(XLite_Core_Request::getInstance()->states)) {
             $zone->set("states", XLite_Core_Request::getInstance()->states);
-        }    
+        }
     }
 
     function action_update_countries()
@@ -69,6 +69,6 @@ class XLite_Controller_Admin_ShippingZones extends XLite_Controller_Admin_Shippi
         // move selected countries
         if (isset(XLite_Core_Request::getInstance()->countries)) {
             $zone->set("countries", XLite_Core_Request::getInstance()->countries);
-        }    
+        }
     }
 }

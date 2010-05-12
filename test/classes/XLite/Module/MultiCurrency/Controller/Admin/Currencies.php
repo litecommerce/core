@@ -34,93 +34,93 @@
  * @since   3.0.0
  */
 class XLite_Module_MultiCurrency_Controller_Admin_Currencies extends XLite_Controller_Admin_Abstract
-{	 
-	
-	public $params = array("target");	
-	public $countries = null;	
-	public $allCurrencies = null;	
-	public $defaultCurrency = null;
+{
+    
+    public $params = array("target");
+    public $countries = null;
+    public $allCurrencies = null;
+    public $defaultCurrency = null;
 
-	function getDefaultCurrency() 
-	{
-		if (is_null($this->defaultCurrency)) {
-	        $this->defaultCurrency = new XLite_Module_MultiCurrency_Model_CurrencyCountries();
+    function getDefaultCurrency() 
+    {
+        if (is_null($this->defaultCurrency)) {
+            $this->defaultCurrency = new XLite_Module_MultiCurrency_Model_CurrencyCountries();
        		$found = $this->defaultCurrency->find("base = 1");
-			if (!$found) {
-				$this->defaultCurrency = new XLite_Module_MultiCurrency_Model_CurrencyCountries();
-				$this->defaultCurrency->set("code","USD");
-				$this->defaultCurrency->set("name","US dollar");
-				$this->defaultCurrency->set("exchange_rate",1);
-				$this->defaultCurrency->set("price_format",$this->config->getComplex('General.price_format'));
-				$this->defaultCurrency->set("base",1);
-				$this->defaultCurrency->set("enabled",1);
-				$this->defaultCurrency->set("countries",serialize(array()));
-				$this->defaultCurrency->create();
-			}
-		}
-		return $this->defaultCurrency;
-	} 
+            if (!$found) {
+                $this->defaultCurrency = new XLite_Module_MultiCurrency_Model_CurrencyCountries();
+                $this->defaultCurrency->set("code","USD");
+                $this->defaultCurrency->set("name","US dollar");
+                $this->defaultCurrency->set("exchange_rate",1);
+                $this->defaultCurrency->set("price_format",$this->config->getComplex('General.price_format'));
+                $this->defaultCurrency->set("base",1);
+                $this->defaultCurrency->set("enabled",1);
+                $this->defaultCurrency->set("countries",serialize(array()));
+                $this->defaultCurrency->create();
+            }
+        }
+        return $this->defaultCurrency;
+    }
 
-	function getAllCurrencies()  
-	{
+    function getAllCurrencies()  
+    {
         if (is_null($this->allCurrencies)) {
             $currency = new XLite_Module_MultiCurrency_Model_CurrencyCountries();
             $this->allCurrencies = $currency->findAll("base = 0");
         }
         return $this->allCurrencies;
-	} // }}
+    } // }}
 
-	function action_update_default()  
-	{
-		$currency = $this->get("defaultCurrency");
-		$properties = $this->currency;
-		$currency->set("code",$properties['code']);
-	    $currency->set("name",$properties['name']);
+    function action_update_default()  
+    {
+        $currency = $this->get("defaultCurrency");
+        $properties = $this->currency;
+        $currency->set("code",$properties['code']);
+        $currency->set("name",$properties['name']);
     	$currency->set("price_format",$properties['price_format']);
-		$currency->update();
+        $currency->update();
 
-	} 
-	
-	function getCountries()  
-	{
-		if (is_null($this->countries)) {
-			$country = new XLite_Model_Country();
-			$this->countries = $country->findAll("enabled = 1");	
-		}		
-		return $this->countries;
-	} 
-	
-	function action_add()  
-	{
-		$currency = new XLite_Module_MultiCurrency_Model_CurrencyCountries();
-		$properties = $this->currency;
-		$properties['countries'] = serialize(isset($properties['countries']) ? $properties['countries'] : array());
-		$properties['enabled'] = "1";
-		$currency->set("properties",$properties);
-		$currency->create();
+    }
+    
+    function getCountries()  
+    {
+        if (is_null($this->countries)) {
+            $country = new XLite_Model_Country();
+            $this->countries = $country->findAll("enabled = 1");
+        }
+        return $this->countries;
+    }
+    
+    function action_add()  
+    {
+        $currency = new XLite_Module_MultiCurrency_Model_CurrencyCountries();
+        $properties = $this->currency;
+        $properties['countries'] = serialize(isset($properties['countries']) ? $properties['countries'] : array());
+        $properties['enabled'] = "1";
+        $currency->set("properties",$properties);
+        $currency->create();
 
-	} 
-	
-	function action_update()  
-	{
-		foreach($this->currencies as $currency_) {
-			$currency = new XLite_Module_MultiCurrency_Model_CurrencyCountries($currency_["currency_id"]);
-			$currency_['countries'] = serialize(isset($currency_['countries']) ? $currency_['countries'] : array());
+    }
+    
+    function action_update()  
+    {
+        foreach($this->currencies as $currency_) {
+            $currency = new XLite_Module_MultiCurrency_Model_CurrencyCountries($currency_["currency_id"]);
+            $currency_['countries'] = serialize(isset($currency_['countries']) ? $currency_['countries'] : array());
         	$currency_['enabled'] = isset($currency_['enabled']) ? "1" : "0";
-			$currency->set("properties",$currency_);
-			$currency->update();
-		}
+            $currency->set("properties",$currency_);
+            $currency->update();
+        }
 
-	} 
+    }
 
-	function action_delete() 
-	{
-		if (isset($this->deleted)) { 
-			foreach($this->deleted as $currency_id) {
-				$currency = new XLite_Module_MultiCurrency_Model_CurrencyCountries($currency_id);
-				$currency->delete();
-			}
-		}
-	} 
+    function action_delete() 
+    {
+        if (isset($this->deleted)) {
+            foreach($this->deleted as $currency_id) {
+                $currency = new XLite_Module_MultiCurrency_Model_CurrencyCountries($currency_id);
+                $currency->delete();
+            }
+        }
+    }
 
-} 
+}

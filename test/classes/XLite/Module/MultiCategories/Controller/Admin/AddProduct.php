@@ -35,9 +35,9 @@
  */
 class XLite_Module_MultiCategories_Controller_Admin_AddProduct extends XLite_Controller_Admin_AddProduct implements XLite_Base_IDecorator
 {
-	function action_add()
-	{
-		parent::action_add();
+    function action_add()
+    {
+        parent::action_add();
         if (isset($this->product_categories) && !empty($this->product_categories)) {
             $product = $this->get("product");
             $categories = $product->get("categories");
@@ -51,7 +51,7 @@ class XLite_Module_MultiCategories_Controller_Admin_AddProduct extends XLite_Con
                 }
             }
         }
-	}
+    }
 
     function isSelectedCategory($categoryID)
     {

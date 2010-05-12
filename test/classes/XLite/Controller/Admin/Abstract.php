@@ -126,7 +126,7 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
     public function getAccessLevel()
     {
         return $this->auth->getAdminAccessLevel();
-    }    
+    }
 
     function handleRequest()
     {
@@ -203,7 +203,7 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
         if ($this->auth->isLogged() && is_null($this->recentAdmins)) {
             $profile = new XLite_Model_Profile();
             $this->recentAdmins = $profile->findAll("access_level>='".$this->getComplex('auth.adminAccessLevel')."' AND last_login>'0'", "last_login ASC", null, "0, 7");
-        }    
+        }
         return $this->recentAdmins;
     }
 
@@ -321,7 +321,7 @@ EOT;
                 in_array("*", $ignoreTargets[XLite_Core_Request::getInstance()->target]) 
                 || (isset(XLite_Core_Request::getInstance()->action) && in_array(XLite_Core_Request::getInstance()->action, $ignoreTargets[XLite_Core_Request::getInstance()->target]))
             )
-        ) { 
+        ) {
             return true;
         }
 
@@ -361,7 +361,7 @@ EOT;
         }
         
         return false;
-    } 
+    }
 
     // FIXME - check if it's needed
     function getSidebarBoxStatus($boxHead = null)

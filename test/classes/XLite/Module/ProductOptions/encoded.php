@@ -34,35 +34,35 @@ function func_get_product_options($_this)
         } else {
             $option = substr($option_line, 0);
         }
-		
+        
 // BEGIN
-		$surcharge = "";
-		$weight_modifier = "";
-		$changes_line = strstr($option_line, "=");
+        $surcharge = "";
+        $weight_modifier = "";
+        $changes_line = strstr($option_line, "=");
         $changes_line = str_replace("=", "", $changes_line);
         $changes_line = str_replace(" ", "", $changes_line);
-		if ($changes_line != "") {
-			$changes = explode(";", $changes_line);
-			foreach ($changes as $line) {
-				if ($line{0} == "w") { // change weight
-					$weight_modifier = substr($line, 1);
+        if ($changes_line != "") {
+            $changes = explode(";", $changes_line);
+            foreach ($changes as $line) {
+                if ($line{0} == "w") { // change weight
+                    $weight_modifier = substr($line, 1);
         			$weight_modifier_type = (strstr($weight_modifier, "%") ? "weight_percent" : "weight_absolute");
         			$weight_modifier = str_replace("%", "", $weight_modifier);
 
-				} else { // change price
-					$surcharge = $line;
+                } else { // change price
+                    $surcharge = $line;
         			$surcharge_type = (strstr($surcharge, "%") ? "percent" : "absolute");
         			$surcharge = str_replace("%", "", $surcharge);
-				}
-			}
+                }
+            }
    			if ($surcharge == "") {
        			$surcharge = "0";
    			}
    			if ($weight_modifier == "") {
       			$weight_modifier = "0";
-				$weight_modifier_type = "weight_null";
+                $weight_modifier_type = "weight_null";
    			}
-		}
+        }
 // END		
         $opt = new StdClass();
         $opt->class     = $_this->get("optclass");
@@ -73,18 +73,18 @@ function func_get_product_options($_this)
         $opt->surcharge_sign = ($opt->surcharge_sign == "+" || $opt->surcharge_sign == "-") ? $opt->surcharge_sign : "";
         $opt->surcharge_abs = sprintf("%.2f",abs($surcharge));
         $opt->isZero = $surcharge == 0;
-		if (isset($surcharge_type)) $opt->$surcharge_type = true;
+        if (isset($surcharge_type)) $opt->$surcharge_type = true;
 
 // BEGIN
-		$opt->weight_modifier = $weight_modifier;
+        $opt->weight_modifier = $weight_modifier;
         $opt->weight_modifier_sign = substr($weight_modifier, 0, 1);
         $opt->weight_modifier_sign = ($opt->weight_modifier_sign == "+" || $opt->weight_modifier_sign == "-") ? $opt->weight_modifier_sign : "";
         $opt->weight_modifier_abs = abs($weight_modifier);
-		if (isset($weight_modifier_type) && $weight_modifier_type) {
+        if (isset($weight_modifier_type) && $weight_modifier_type) {
             $opt->$weight_modifier_type = true;
         }
-		$opt->isWeightZero = $weight_modifier == "" || $weight_modifier == "0";
-		$opt->modifyParams = (!$opt->isWeightZero || !$opt->isZero);
+        $opt->isWeightZero = $weight_modifier == "" || $weight_modifier == "0";
+        $opt->modifyParams = (!$opt->isWeightZero || !$opt->isZero);
 // END
 
         $result[] = $opt;

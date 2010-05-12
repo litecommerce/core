@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Controller_Admin_ImportUsers extends XLite_Controller_Admin_Abstract
-{	
+{
     public $import_error = false;
 
     function init()
@@ -62,13 +62,13 @@ class XLite_Controller_Admin_ImportUsers extends XLite_Controller_Admin_Abstract
             "file"              => $this->getUploadedFile(),
             "layout"            => $this->user_layout,
             "delimiter"         => $this->delimiter,
-			"text_qualifier"    => $this->text_qualifier,
+            "text_qualifier"    => $this->text_qualifier,
             "md5_import"        => $this->md5_import,
-			"return_error"		=> true,
+            "return_error"		=> true,
             );
         $p = new XLite_Model_Profile();
         $p->import($options);
-		$this->importError = $p->importError;
+        $this->importError = $p->importError;
     }
 
     function change_layout($layout_name = "user_layout")
@@ -90,13 +90,13 @@ class XLite_Controller_Admin_ImportUsers extends XLite_Controller_Admin_Abstract
         $this->change_layout($layout_name);
     }
 
-	function getPageReturnUrl()
-	{
-		if ($this->action == "import") {
-			$text = ($this->importError)?"Import process failed.":"Users are imported successfully.";
-			return array($this->importError.'<br>'.$text.' <a href="admin.php?target=import_users"><u>Click here to return to admin interface</u></a>');
-		} else {
-			return parent::getPageReturnUrl();
-		}
-	}
+    function getPageReturnUrl()
+    {
+        if ($this->action == "import") {
+            $text = ($this->importError)?"Import process failed.":"Users are imported successfully.";
+            return array($this->importError.'<br>'.$text.' <a href="admin.php?target=import_users"><u>Click here to return to admin interface</u></a>');
+        } else {
+            return parent::getPageReturnUrl();
+        }
+    }
 }

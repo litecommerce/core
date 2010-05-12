@@ -69,7 +69,7 @@ class XLite_Module_Egoods_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'Support for downloadable product sales (e-books, audio and video files, software and PIN codes)';
-    }	
+    }
     /**
      * Determines if we need to show settings form link
      *
@@ -80,7 +80,7 @@ class XLite_Module_Egoods_Main extends XLite_Module_Abstract
     public static function showSettingsForm()
     {
         return true;
-    }	
+    }
 
     /**
      * Perform some actions at startup
@@ -93,6 +93,6 @@ class XLite_Module_Egoods_Main extends XLite_Module_Abstract
     {
         parent::init();
 
-		$this->xlite->set("EgoodsEnabled",true);
+        $this->xlite->set("EgoodsEnabled",true);
     }
 }

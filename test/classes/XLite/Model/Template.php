@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Model_Template extends XLite_Model_FileNode
-{	
+{
     public $file; // file name	
     public $comment; // template comment (null if not available)	
     public $content; // template file content (null if not read)

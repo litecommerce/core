@@ -35,25 +35,25 @@
  */
 class XLite_Controller_Admin_PaymentMethods extends XLite_Controller_Admin_Abstract
 {
-	protected $configurableMethods = null;
+    protected $configurableMethods = null;
 
-	function hasConfigurableMethods()
-	{
-		if (is_null($this->configurableMethods)) {
+    function hasConfigurableMethods()
+    {
+        if (is_null($this->configurableMethods)) {
 
-			$this->configurableMethods = false;
-			$pm = new XLite_Model_PaymentMethod();
-			
-			foreach($pm->readAll() as $pm) {
-				if (!is_null($pm->configurationTemplate)) {
-					$this->configurableMethods = true;
-					break;
-				}
-			}
-		}
+            $this->configurableMethods = false;
+            $pm = new XLite_Model_PaymentMethod();
+            
+            foreach($pm->readAll() as $pm) {
+                if (!is_null($pm->configurationTemplate)) {
+                    $this->configurableMethods = true;
+                    break;
+                }
+            }
+        }
 
-	    return $this->configurableMethods;
-	}
+        return $this->configurableMethods;
+    }
 
     function action_update()
     {
@@ -80,8 +80,8 @@ class XLite_Controller_Admin_PaymentMethods extends XLite_Controller_Admin_Abstr
 
     function action_default_payment()
     {
-		$cfg = new XLite_Model_Config();
+        $cfg = new XLite_Model_Config();
         $cfg->createOption("Payments", "default_offline_payment", $this->default_payment);
-		$cfg->createOption("Payments", "default_select_payment", $this->default_select_payment);
+        $cfg->createOption("Payments", "default_select_payment", $this->default_select_payment);
     }
 }

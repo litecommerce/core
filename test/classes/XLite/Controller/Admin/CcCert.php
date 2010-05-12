@@ -34,37 +34,37 @@
  * @since   3.0.0
  */
 class XLite_Controller_Admin_CcCert extends XLite_Controller_Admin_Abstract
-{	
+{
 
-	public $params = array("target", "cc_processor");
-	
-	function action_update()
-	{
-		$tf_name = $_FILES["cert_file"]['tmp_name'];
-		if (is_uploaded_file($tf_name)) {
-			$filename = $_FILES["cert_file"]["name"];
-			$content = file_get_contents($tf_name);
-			@unlink($tf_name);
-			$this->saveParam("file_name", $filename);
-			$this->saveParam("cert_text", $content);
-		}
-		$this->set('returnUrl', "admin.php?target=payment_method&payment_method=" . $this->get('cc_processor'));
-	}
+    public $params = array("target", "cc_processor");
+    
+    function action_update()
+    {
+        $tf_name = $_FILES["cert_file"]['tmp_name'];
+        if (is_uploaded_file($tf_name)) {
+            $filename = $_FILES["cert_file"]["name"];
+            $content = file_get_contents($tf_name);
+            @unlink($tf_name);
+            $this->saveParam("file_name", $filename);
+            $this->saveParam("cert_text", $content);
+        }
+        $this->set('returnUrl', "admin.php?target=payment_method&payment_method=" . $this->get('cc_processor'));
+    }
 
-	function saveParam($name, $value)
-	{
-		$cfg = new XLite_Model_Config();
-		$update = false;
-		if ($cfg->find("category='" . $this->get('cc_processor') . "' and name='" . $name . "'")) {
-			$update = true;
-		}
-		$cfg->set("category", $this->get('cc_processor'));
-		$cfg->set("name", $name);
-		$cfg->set("value", $value);
-		if (true === $update) {
-			$cfg->update();
-		} else {
-			$cfg->create();
-		}
-	}
+    function saveParam($name, $value)
+    {
+        $cfg = new XLite_Model_Config();
+        $update = false;
+        if ($cfg->find("category='" . $this->get('cc_processor') . "' and name='" . $name . "'")) {
+            $update = true;
+        }
+        $cfg->set("category", $this->get('cc_processor'));
+        $cfg->set("name", $name);
+        $cfg->set("value", $value);
+        if (true === $update) {
+            $cfg->update();
+        } else {
+            $cfg->create();
+        }
+    }
 }

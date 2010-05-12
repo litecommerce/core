@@ -47,7 +47,7 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
         $this->_securefields["plan"] = "";
         $this->_securefields["reason"] = "";
         parent::__construct($id);
-    } 
+    }
 
     function set($name, $value) 
     {
@@ -55,7 +55,7 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
             $value = serialize($value);
         }
         parent::set($name, $value);
-    } 
+    }
 
     function get($name) 
     {
@@ -67,7 +67,7 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
             }
         }
         return $value;
-    } 
+    }
 
     function getParentProfile() 
     {
@@ -78,7 +78,7 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
             }
         }
         return $this->parentProfile;
-    } 
+    }
 
     // IS_A methods {{{
     function isDeclinedPartner()
@@ -101,7 +101,7 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
             $this->partnerPlan = new XLite_Module_Affiliate_Model_AffiliatePlan($this->get("plan"));
         }
         return $this->partnerPlan;
-    } 
+    }
 
     function getParents() 
     {
@@ -121,7 +121,7 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
             } while ($found && $level++ < $tiers);
         }
         return $parents;
-    } 
+    }
 
     function getAffiliates() 
     {
@@ -129,9 +129,9 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
             $this->affiliates = array();
             $level = 2;
             $this->buildAffiliatesTree($this->affiliates, $level);
-        }    
+        }
         return $this->affiliates;
-   } 
+   }
 
     function buildAffiliatesTree(&$affiliates, $level) 
     {
@@ -143,7 +143,7 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
             $affiliates[] = $child;
             $child->buildAffiliatesTree($affiliates, $level + 1);
         }
-    } 
+    }
 
     function getPartnerCommissions() 
     {
@@ -156,7 +156,7 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
             }
         }
         return $this->partnerCommissions;
-    } 
+    }
 
     function getAffiliateCommissions() 
     {
@@ -169,7 +169,7 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
             }
         }
         return $this->affiliateCommissions;
-    } 
+    }
 
     function getBranchCommissions() 
     {
@@ -184,5 +184,5 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
 
         }
         return $this->branchCommissions;
-    } 
+    }
 }

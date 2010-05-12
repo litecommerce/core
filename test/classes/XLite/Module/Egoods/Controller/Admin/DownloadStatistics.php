@@ -35,36 +35,36 @@
  */
 class XLite_Module_Egoods_Controller_Admin_DownloadStatistics extends XLite_Controller_Admin_Stats
 {
-	function getStat()
-	{
-		if (!isset($this->stats)) {
-			$ds = new XLite_Module_Egoods_Model_DownloadsStatistics();
-			$this->stats = $ds->findAll();
-		}
-		return $this->stats;
-	}
+    function getStat()
+    {
+        if (!isset($this->stats)) {
+            $ds = new XLite_Module_Egoods_Model_DownloadsStatistics();
+            $this->stats = $ds->findAll();
+        }
+        return $this->stats;
+    }
 
-	function getProductName($file_id, $trim=25)
-	{
-		$df = new XLite_Module_Egoods_Model_DownloadableFile($file_id);
-		$product = new XLite_Model_Product($df->get('product_id'));
-		$name = $product->get('name');
-		if (strlen($name) <= $trim) {
-			return $name;
-		} else {
-			return substr($name, 0, $trim) . "...";
-		}
-	}
+    function getProductName($file_id, $trim=25)
+    {
+        $df = new XLite_Module_Egoods_Model_DownloadableFile($file_id);
+        $product = new XLite_Model_Product($df->get('product_id'));
+        $name = $product->get('name');
+        if (strlen($name) <= $trim) {
+            return $name;
+        } else {
+            return substr($name, 0, $trim) . "...";
+        }
+    }
 
-	function getProductHref($file_id)
-	{
-		$df = new XLite_Module_Egoods_Model_DownloadableFile($file_id);
-		$product = new XLite_Model_Product($df->get('product_id'));
-		return "admin.php?target=product&product_id=" . $product->get('product_id') . "&page=downloadable_files";
-	}
+    function getProductHref($file_id)
+    {
+        $df = new XLite_Module_Egoods_Model_DownloadableFile($file_id);
+        $product = new XLite_Model_Product($df->get('product_id'));
+        return "admin.php?target=product&product_id=" . $product->get('product_id') . "&page=downloadable_files";
+    }
 
-	function getPageTemplate()
-	{
-		return "modules/Egoods/download_statisics.tpl";
-	}
+    function getPageTemplate()
+    {
+        return "modules/Egoods/download_statisics.tpl";
+    }
 }

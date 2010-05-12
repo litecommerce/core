@@ -292,7 +292,7 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controlle
         }
 
         return $result;
-    } 
+    }
     
     /**
      * Update wishlist item 

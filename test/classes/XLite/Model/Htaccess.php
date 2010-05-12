@@ -38,16 +38,16 @@ define('CHECK_INTERVAL', 1 * 24 * 60);
  * @since   3.0.0
  */
 class XLite_Model_Htaccess extends XLite_Model_Abstract
-{	
+{
     public $fields = array(
                     "id" => "0",
                     "filename" => "",
                     "content" => "",
                     "hash" => ""
-                    );	
+                    );
 
-    public $autoIncrement = "id";	
-    public $alias = "htaccess";	
+    public $autoIncrement = "id";
+    public $alias = "htaccess";
 
     public $htaccess_list = array(
                             "var/.htaccess",
@@ -67,7 +67,7 @@ class XLite_Model_Htaccess extends XLite_Model_Abstract
 
     function hasImage()
     {
-       return $this->find(""); 
+       return $this->find("");
     }
 
     function makeImage()
@@ -154,7 +154,7 @@ class XLite_Model_Htaccess extends XLite_Model_Abstract
                 if($error != ""){
                     $error_result = array("file" => $htaccess->get("filename"), "error" => $error);
                     $error_results[] = $error_result;
-                } 
+                }
         }
 
         if(count($error_results) >= 1){

@@ -36,7 +36,7 @@ define('SHIPPING_CACHE_EXPIRATION', 3600 * 12); // half of a day
  * @since   3.0.0
  */
 class XLite_Model_Shipping_Online extends XLite_Model_Shipping
-{	
+{
     public $optionsTable;
 
     public function getOptions()
@@ -119,7 +119,7 @@ class XLite_Model_Shipping_Online extends XLite_Model_Shipping
                         + doubleval($rateObject->get("per_lbs")) * $weight;
 
                     $result[$rateObject->shipping->get('shipping_id')] = $rateObject;
-                }    
+                }
             }
         }
 
@@ -144,9 +144,9 @@ class XLite_Model_Shipping_Online extends XLite_Model_Shipping
     {
         $cacheTable = $this->db->getTableByAlias($table);
         // garbage collection
-		if ($this->get("shippingCacheExpiration") > 0) {
-	        $this->db->query("DELETE FROM $cacheTable WHERE date<".(time()-$this->get("shippingCacheExpiration"))); 
-		}
+        if ($this->get("shippingCacheExpiration") > 0) {
+            $this->db->query("DELETE FROM $cacheTable WHERE date<".(time()-$this->get("shippingCacheExpiration")));
+        }
 
         // check cache for fresh values
         $condition = array();
@@ -207,8 +207,8 @@ class XLite_Model_Shipping_Online extends XLite_Model_Shipping
         return preg_replace("/[ -]/", "", $zip);
     }
     
-	function getShippingCacheExpiration()
-	{
-		return SHIPPING_CACHE_EXPIRATION;
-	}
+    function getShippingCacheExpiration()
+    {
+        return SHIPPING_CACHE_EXPIRATION;
+    }
 }

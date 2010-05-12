@@ -54,9 +54,9 @@ abstract class XLite_View_Sort_Abstract extends XLite_View_Abstract
      * @since  3.0.0                 
      */                              
     protected function getDefaultTemplate()
-    {                                      
-        return 'common/sort.tpl';     
-    } 
+    {
+        return 'common/sort.tpl';
+    }
 
     /**
      * Define widget parameters

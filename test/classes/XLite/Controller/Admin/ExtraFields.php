@@ -34,8 +34,8 @@
  * @since   3.0.0
  */
 class XLite_Controller_Admin_ExtraFields extends XLite_Controller_Admin_Abstract
-{	
-	public $_categories = null;
+{
+    public $_categories = null;
 
     function fillForm()
     {
@@ -69,7 +69,7 @@ class XLite_Controller_Admin_ExtraFields extends XLite_Controller_Admin_Abstract
             array_multisort($names, $this->_categories);
         }
         return $this->_categories;
-    } 
+    }
 
     function getExtraFields()
     {
@@ -119,7 +119,7 @@ class XLite_Controller_Admin_ExtraFields extends XLite_Controller_Admin_Abstract
                 } else {
                     if($ef->get("categories") != ""){
                         if($rewrite){
-                            $ef->set("categories_old", "");  
+                            $ef->set("categories_old", "");
                         } else {
                         }
                     } else {

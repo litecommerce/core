@@ -69,7 +69,7 @@ class XLite_Module_Demo_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'Demo mode';
-    }    
+    }
 
     /**
      * Perform some actions at startup

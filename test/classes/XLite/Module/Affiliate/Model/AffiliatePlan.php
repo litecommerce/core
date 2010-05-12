@@ -34,16 +34,16 @@
  * @since   3.0.0
  */
 class XLite_Module_Affiliate_Model_AffiliatePlan extends XLite_Model_Abstract
-{	
+{
     public $fields = array(
             "plan_id" => 0,
             "title" => "",
             "payment_limit" => 100,
             "enabled" => 1,
-            );	
+            );
 
-    public $alias = "partner_plans";	
-    public $autoIncrement = "plan_id";	
+    public $alias = "partner_plans";
+    public $autoIncrement = "plan_id";
     public $defaultOrder = "title";
     
     function delete()

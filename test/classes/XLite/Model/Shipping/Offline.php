@@ -101,7 +101,7 @@ class XLite_Model_Shipping_Offline extends XLite_Model_Shipping
 
                 if (isset($rate)) {
                     $rates[$method->get('shipping_id')] = $rate;
-                }    
+                }
             }
 
             // TODO: sort by rate

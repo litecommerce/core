@@ -34,24 +34,24 @@
  * @since   3.0.0
  */
 class XLite_Module_Intershipper_Model_Shipping_Intershipper extends XLite_Model_Shipping_Online
-{	
-    public $error = "";	
-    public $xmlError = false;	
+{
+    public $error = "";
+    public $xmlError = false;
     public $translations = array(
         "UGN" => "Ground (Non-Machinable)",
         "UGM" => "Ground (Machinable)",
         "UWE" => "World Wide Express",
         "UWP" => "Worldwide Express Plus",
         "UWX" => "World Wide Expedited",
-        "UGD" => "Next Day Air");	
+        "UGD" => "Next Day Air");
         
     public $carriers = array(    
         "DHL" => "DHL",
         "FDX" => "FedEx",
         "UPS" => "UPS",
-        "USP" => "USPS");	
+        "USP" => "USPS");
 
-    public $configCategory = "Intershipper";	
+    public $configCategory = "Intershipper";
     public $optionsFields = array("userid","password","delivery","pickup","length","width","height","dunit","packaging","contents","insvalue");
 
     function getModuleName()
@@ -75,7 +75,7 @@ class XLite_Module_Intershipper_Model_Shipping_Intershipper extends XLite_Model_
         require_once LC_EXT_LIB_DIR . 'HTTP' . LC_DS . 'Request2.php';
 
         $http = new HTTP_Request2('http://www.intershipper.com/Interface/Intershipper/XML/v2.0/HTTP.jsp', HTTP_Request2::METHOD_POST);
-		$http->setConfig('timeout', 5);
+        $http->setConfig('timeout', 5);
 
         $http->addPostParameter('Version', '2.0.0.0');
         $http->addPostParameter('ShipmentID', ''); // must be empty?
@@ -121,14 +121,14 @@ class XLite_Module_Intershipper_Model_Shipping_Intershipper extends XLite_Model_
     function _queryRates($weight, $ZipOrigination, $CountryOrigination, 
                          $ZipDestination, $CountryDestination,$options, $cod)
     {
-		try {
-	        $http = $this->_prepareRequest($weight, $ZipOrigination, 
+        try {
+            $http = $this->_prepareRequest($weight, $ZipOrigination, 
     	        $CountryOrigination, $ZipDestination, $CountryDestination,$options, $cod);
         	$response = $http->send()->getBodyt();
 
-		} catch (Exception $e) {
-			// TODO - add error processing
-			$response = false;
+        } catch (Exception $e) {
+            // TODO - add error processing
+            $response = false;
         }
 
         // parse response 

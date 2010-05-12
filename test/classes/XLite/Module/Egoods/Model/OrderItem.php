@@ -35,82 +35,82 @@
  */
 class XLite_Module_Egoods_Model_OrderItem extends XLite_Model_OrderItem implements XLite_Base_IDecorator
 {
-	public function __construct()
-	{
+    public function __construct()
+    {
         $this->fields["pincodes"] = "";
-		$this->fields["egoods"] = "";
+        $this->fields["egoods"] = "";
         parent::__construct();
-	}
-	
-	function isEgood()
-	{
-		return $this->isComplex('product.egood');
-	}
+    }
+    
+    function isEgood()
+    {
+        return $this->isComplex('product.egood');
+    }
 
-	function isPin()
-	{
-		return $this->isComplex('product.pin');
-	}
+    function isPin()
+    {
+        return $this->isComplex('product.pin');
+    }
 
-	function getPinCodes()
-	{
-		if(!isset($this->pin_codes)) {
-			$this->pin_codes = explode(",", $this->get('pincodes'));
-		}
-		return $this->pin_codes;
-	}
+    function getPinCodes()
+    {
+        if(!isset($this->pin_codes)) {
+            $this->pin_codes = explode(",", $this->get('pincodes'));
+        }
+        return $this->pin_codes;
+    }
 
-	function createPins()
-	{
-		require_once LC_MODULES_DIR . 'Egoods' . LC_DS . 'encoded.php';
-		$pins = func_moduleEgoods_getPinCodes($this);
-		if (is_array($pins)) {
-			$this->set('pincodes', implode(',', $pins));
-		} else {
-			$this->set('pincodes', "");
-		}	
-		$this->update();
-	}
+    function createPins()
+    {
+        require_once LC_MODULES_DIR . 'Egoods' . LC_DS . 'encoded.php';
+        $pins = func_moduleEgoods_getPinCodes($this);
+        if (is_array($pins)) {
+            $this->set('pincodes', implode(',', $pins));
+        } else {
+            $this->set('pincodes', "");
+        }
+        $this->update();
+    }
 
-	function updateAmount($amount)
-	{
-		$amount = (int)$amount;
+    function updateAmount($amount)
+    {
+        $amount = (int)$amount;
 
-		if ($this->is('egood') && $amount > 0) {
-		    if ($this->is('pin')) {
-			    $pin = new XLite_Module_Egoods_Model_PinCode();
+        if ($this->is('egood') && $amount > 0) {
+            if ($this->is('pin')) {
+                $pin = new XLite_Module_Egoods_Model_PinCode();
     			if ($amount > $pin->getFreePinCount($this->getComplex('product.product_id'))) {
-	    			$amount = $pin->getFreePinCount($this->getComplex('product.product_id'));
-		    		if ($amount <= 0) {
-			    		$amount = 1;
-				    }
+        			$amount = $pin->getFreePinCount($this->getComplex('product.product_id'));
+            		if ($amount <= 0) {
+                		$amount = 1;
+                    }
     			}
-		    } else {
+            } else {
                 $amount = 1;
             }
-        }    
+        }
 
-		parent::updateAmount($amount);
-	}
+        parent::updateAmount($amount);
+    }
 
-	function isShipped()
-	{
-		if ($this->is('pin') || $this->is('egood')) {
-			return false;
-		}
-		return parent::isShipped();
-	}
+    function isShipped()
+    {
+        if ($this->is('pin') || $this->is('egood')) {
+            return false;
+        }
+        return parent::isShipped();
+    }
 
-	function storeLinks()
-	{
-		$product = $this->get('product');
-		$links = $product->createLinks();
-		$this->set('egoods', implode(',', $links));
-		$this->update();
-	}
+    function storeLinks()
+    {
+        $product = $this->get('product');
+        $links = $product->createLinks();
+        $this->set('egoods', implode(',', $links));
+        $this->update();
+    }
 
-	function unStoreLinks()
-	{
+    function unStoreLinks()
+    {
         $ids = explode(",", $this->get("egoods"));
         $link = new XLite_Module_Egoods_Model_DownloadableLink();
         foreach ($ids as $link_id) {
@@ -121,38 +121,38 @@ class XLite_Module_Egoods_Model_OrderItem extends XLite_Model_OrderItem implemen
         }
         $this->set("egoods", "");
         $this->update();
-	}
+    }
 
-	function hasValidLinks()
-	{
-		return ($this->get('egoods') == '') ? false : true;
-	}
+    function hasValidLinks()
+    {
+        return ($this->get('egoods') == '') ? false : true;
+    }
 
-	function getEgoods()
-	{
-		if (!isset($this->_egoods)) {
-			$egoods_links = explode(',', $this->get('egoods'));
-			foreach($egoods_links as $link_id) {
-				$link = new XLite_Module_Egoods_Model_DownloadableLink($link_id);
-				$file = new XLite_Module_Egoods_Model_DownloadableFile($link->get('file_id'));
-				$record = array();
-				$record['name'] = basename($file->get('data'));
-				$record['link'] = $this->xlite->getShopUrl("cart.php?target=download&action=download&acc=") . $link_id;
-				$record['expires'] = $link->get('expire_on');
-				$record['exp_time'] = $this->getComplex('xlite.config.Egoods.exp_days');
-				$record['downloads'] = $link->get('available_downloads');
-				$record['delivery'] = $file->get('delivery');
-				$this->_egoods []= $record;
-			}
-		}
-		return $this->_egoods;
-	}
+    function getEgoods()
+    {
+        if (!isset($this->_egoods)) {
+            $egoods_links = explode(',', $this->get('egoods'));
+            foreach($egoods_links as $link_id) {
+                $link = new XLite_Module_Egoods_Model_DownloadableLink($link_id);
+                $file = new XLite_Module_Egoods_Model_DownloadableFile($link->get('file_id'));
+                $record = array();
+                $record['name'] = basename($file->get('data'));
+                $record['link'] = $this->xlite->getShopUrl("cart.php?target=download&action=download&acc=") . $link_id;
+                $record['expires'] = $link->get('expire_on');
+                $record['exp_time'] = $this->getComplex('xlite.config.Egoods.exp_days');
+                $record['downloads'] = $link->get('available_downloads');
+                $record['delivery'] = $file->get('delivery');
+                $this->_egoods []= $record;
+            }
+        }
+        return $this->_egoods;
+    }
 
-	function hasValidPins()
-	{
-		if ($this->get('pincodes') != '') {
-			return true;
-		}
-		return false;
-	}
+    function hasValidPins()
+    {
+        if ($this->get('pincodes') != '') {
+            return true;
+        }
+        return false;
+    }
 }

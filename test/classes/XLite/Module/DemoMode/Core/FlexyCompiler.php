@@ -37,7 +37,7 @@ class XLite_Module_DemoMode_Core_FlexyCompiler extends XLite_Core_FlexyCompiler 
 {
     // Flexy substitutions
     function postprocess()
-    {   
+    {
     	parent::postprocess();
 
         if ($this->session->isRegistered("customSkin")) {
@@ -45,7 +45,7 @@ class XLite_Module_DemoMode_Core_FlexyCompiler extends XLite_Core_FlexyCompiler 
             if ($customSkin > 0) {
                 $customSkin = "default" . $customSkin;
                 $this->phpcode = str_replace("/default/", "/" . $customSkin . "/", $this->phpcode);
-            }  
+            }
         }
     }
 }

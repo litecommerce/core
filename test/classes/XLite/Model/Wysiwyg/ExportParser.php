@@ -34,9 +34,9 @@
  * @since   3.0.0
  */
 class XLite_Model_Wysiwyg_ExportParser extends XLite_Core_FlexyCompiler 
-{	
-    public $widgetClass = null;	
-    public $wysiwygMediator = null;	
+{
+    public $widgetClass = null;
+    public $wysiwygMediator = null;
     public $configVars = null;
 
     function _parseTemplate($file, $params)
@@ -91,12 +91,12 @@ class XLite_Model_Wysiwyg_ExportParser extends XLite_Core_FlexyCompiler
                     $w->set("attributes", $attributes);
                     $w->set("attributesEvaled", $attributesEvaled);
                     if (isset($attributes["name"])) {
-						if (!$w->get("template")) {
-							$tw = $namedWidgets[$attributes["name"]];
-							if ($tw) {
-								$w->set("template", $tw->get("template"));
-							}
-						}
+                        if (!$w->get("template")) {
+                            $tw = $namedWidgets[$attributes["name"]];
+                            if ($tw) {
+                                $w->set("template", $tw->get("template"));
+                            }
+                        }
 
                         $namedWidgets[$attributes["name"]] = $w;
                     }
@@ -154,4 +154,4 @@ class XLite_Model_Wysiwyg_ExportParser extends XLite_Core_FlexyCompiler
         $this->errorMessage = "File $this->file, line $line, col $col: $message";
         return false;
     }
-} 
+}

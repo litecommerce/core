@@ -34,45 +34,45 @@
  * @since   3.0.0
  */
 class XLite_Module_AntiFraud_Model_Country extends XLite_Model_Country implements XLite_Base_IDecorator
-{	
-	public $riskCountry = null;
+{
+    public $riskCountry = null;
 
-	public function __construct($id = null)  
-	{
-		$this->fields["risk_country"] = 0; 
-		parent::__construct($id);
-	} 
+    public function __construct($id = null)  
+    {
+        $this->fields["risk_country"] = 0;
+        parent::__construct($id);
+    }
 
-	function isRiskCountry($check=null) 
-	{
-		if (isset($this->riskCountry)) {
-			if (!isset($check)) {
-				return $this->riskCountry;
-			} else {
-				return (($this->riskCountry & $check) > 0) ? true : false;
-			}
-		}
+    function isRiskCountry($check=null) 
+    {
+        if (isset($this->riskCountry)) {
+            if (!isset($check)) {
+                return $this->riskCountry;
+            } else {
+                return (($this->riskCountry & $check) > 0) ? true : false;
+            }
+        }
 
-		$result = $this->get("risk_country");
-		$order = $this->get("order");
-		if (isset($order)) {
-			$af_data = $order->getComplex('details.af_data');
-			if (isset($af_data) && is_array($af_data)) {
-				if (isset($af_data["CHECK_IP_COUNTRY"])) {
-					$result += ($af_data["CHECK_IP_COUNTRY"] != $this->get("code")) ? 2 : 0;
-				}
-				if (isset($af_data["CHECK_IP_DISTANCE"])) {
-					$result += ($af_data["CHECK_IP_DISTANCE"] > $this->config->getComplex('AntiFraud.antifraud_safe_distance')) ? 4 : 0;
-				}
-			}
-		}
+        $result = $this->get("risk_country");
+        $order = $this->get("order");
+        if (isset($order)) {
+            $af_data = $order->getComplex('details.af_data');
+            if (isset($af_data) && is_array($af_data)) {
+                if (isset($af_data["CHECK_IP_COUNTRY"])) {
+                    $result += ($af_data["CHECK_IP_COUNTRY"] != $this->get("code")) ? 2 : 0;
+                }
+                if (isset($af_data["CHECK_IP_DISTANCE"])) {
+                    $result += ($af_data["CHECK_IP_DISTANCE"] > $this->config->getComplex('AntiFraud.antifraud_safe_distance')) ? 4 : 0;
+                }
+            }
+        }
 
-		$this->riskCountry = $result;
-		if (!isset($check)) {
-			return $this->riskCountry;
-		} else {
-			return (($this->riskCountry & $check) > 0) ? true : false;
-		}
-	} 
-	
-} 
+        $this->riskCountry = $result;
+        if (!isset($check)) {
+            return $this->riskCountry;
+        } else {
+            return (($this->riskCountry & $check) > 0) ? true : false;
+        }
+    }
+    
+}

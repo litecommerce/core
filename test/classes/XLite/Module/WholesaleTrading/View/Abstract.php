@@ -36,46 +36,46 @@
 abstract class XLite_Module_WholesaleTrading_View_Abstract extends XLite_View_Abstract implements XLite_Base_IDecorator
 {
     function price_format($base, $field = "", $thousand_delim = null, $decimal_delim = null)
-	{
-		if (is_Object($base) && $base->get($field) === $this->getComplex('config.WholesaleTrading.price_denied_message')) {
-			return $this->getComplex('config.WholesaleTrading.price_denied_message');
-		} else if ($base === $this->getComplex('config.WholesaleTrading.price_denied_message')) {
-			return $this->getComplex('config.WholesaleTrading.price_denied_message');
-		}
+    {
+        if (is_Object($base) && $base->get($field) === $this->getComplex('config.WholesaleTrading.price_denied_message')) {
+            return $this->getComplex('config.WholesaleTrading.price_denied_message');
+        } else if ($base === $this->getComplex('config.WholesaleTrading.price_denied_message')) {
+            return $this->getComplex('config.WholesaleTrading.price_denied_message');
+        }
 
-		return parent::price_format($base, $field, $thousand_delim, $decimal_delim);
-	}
+        return parent::price_format($base, $field, $thousand_delim, $decimal_delim);
+    }
 
-	function disabled($disabled)
-	{
-		if ($disabled) {
-			print("disabled");
-		}
-	}	
+    function disabled($disabled)
+    {
+        if ($disabled) {
+            print("disabled");
+        }
+    }
 
-	function checked($checked)
-	{
-		if ($checked) {
-			return "checked";
-		}
-	}
+    function checked($checked)
+    {
+        if ($checked) {
+            return "checked";
+        }
+    }
 
-	function isEven($val)
-	{
-		return ($val % 2 == 0);
-	}
+    function isEven($val)
+    {
+        return ($val % 2 == 0);
+    }
 
-	function selectString($first, $second, $print_first)
-	{
-		if ($print_first) {
-			print $first;
-		} else {
-			print $second;
-		}	
-	}
+    function selectString($first, $second, $print_first)
+    {
+        if ($print_first) {
+            print $first;
+        } else {
+            print $second;
+        }
+    }
 
-	function invertSign($value)
-	{
-		return -$value;
-	}
+    function invertSign($value)
+    {
+        return -$value;
+    }
 }

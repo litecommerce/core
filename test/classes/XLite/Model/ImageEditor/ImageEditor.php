@@ -34,10 +34,10 @@
  * @since   3.0.0
  */
 class XLite_Model_ImageEditor_ImageEditor extends XLite_Base
-{	
-    public $images      = array();	
-    public $images_path;	
-    public $error       = false;	
+{
+    public $images      = array();
+    public $images_path;
+    public $error       = false;
     public $uploadError = '';
 
     public function __construct($iniFile = null)
@@ -81,7 +81,7 @@ class XLite_Model_ImageEditor_ImageEditor extends XLite_Base
             $real_img_name = realpath(".") . '/' . $image_file_name;
             @chmod($real_img_name, get_filesystem_permissions(0666));
         } elseif (!$move) {
-            $this->uploadError = $upload->getErrorMessage(); 
+            $this->uploadError = $upload->getErrorMessage();
         }
 
         return $upload->getCode();

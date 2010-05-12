@@ -46,4 +46,4 @@ class XLite_View_ExportXLS extends XLite_View_Abstract
     {
         return 'order/export_xls.tpl';
     }
-} 
+}

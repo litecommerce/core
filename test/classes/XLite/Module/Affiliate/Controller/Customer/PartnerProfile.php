@@ -34,13 +34,13 @@
  * @since   3.0.0
  */
 class XLite_Module_Affiliate_Controller_Customer_PartnerProfile extends XLite_Module_Affiliate_Controller_Partner
-{	
+{
     public $params = array("target", "mode", "submode", "returnUrl","parent"); // mode ::= register | modify | success | delete	
-    public $mode = "register";	
+    public $mode = "register";
     public $submode = "warning"; // delete profile status: warning | confirmed | cancelled
 
 
-	/**
+    /**
      * Common method to determine current location 
      * 
      * @return array
@@ -78,11 +78,11 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerProfile extends XLite_Mo
             if ($this->auth->is("logged")) {
                 $this->redirect("cart.php?target=partner");
             } else {
-                return "modules/Affiliate/login.tpl"; 
+                return "modules/Affiliate/login.tpl";
             }
         }
         return parent::getTemplate();
-    } 
+    }
     
     function getAccessLevel() 
     {
@@ -91,7 +91,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerProfile extends XLite_Mo
         } else {
             return parent::getAccessLevel();
         }
-    } 
+    }
 
     function action_register()
     {
@@ -100,7 +100,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerProfile extends XLite_Mo
         } else {
             $this->registerForm->action_register();
             $this->set("mode", $this->registerForm->get("mode"));
-        } 
+        }
     }
 
     function action_modify()

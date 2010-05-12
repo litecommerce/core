@@ -34,10 +34,10 @@
  * @since   3.0.0
  */
 class XLite_Module_Promotion_Controller_Admin_SpecialOffers extends XLite_Controller_Admin_Abstract
-{	
+{
     public $specialOffers = null;
 
-	function getSpecialOffers()
+    function getSpecialOffers()
     {
         switch ($this->get("sort")) {
             case "date_asc":
@@ -73,60 +73,60 @@ class XLite_Module_Promotion_Controller_Admin_SpecialOffers extends XLite_Contro
             default:
                 $s_order = "date ASC";
                 break;
-        }    
+        }
         if (is_null($this->specialOffers)) {
             $sp = new XLite_Module_Promotion_Model_SpecialOffer();
-			$sp->collectGarbage();
+            $sp->collectGarbage();
             $this->specialOffers = $sp->findAll("status <> 'Trash'", $s_order);
         }
-		foreach($this->specialOffers as $key => $offer) {
-			if ($this->specialOffers[$key]->get("end_date") < time())
-				$this->specialOffers[$key]->set("status","Expired"); 
-			if ($this->specialOffers[$key]->get("status") == "Expired")
-				$this->specialOffers[$key]->set("enabled",0);
-				$this->specialOffers[$key]->update();
-		}
+        foreach($this->specialOffers as $key => $offer) {
+            if ($this->specialOffers[$key]->get("end_date") < time())
+                $this->specialOffers[$key]->set("status","Expired");
+            if ($this->specialOffers[$key]->get("status") == "Expired")
+                $this->specialOffers[$key]->set("enabled",0);
+                $this->specialOffers[$key]->update();
+        }
         return $this->specialOffers;
-	}
+    }
 
-	function action_update()
-	{
-		// set 'active' fields
-		$so = new XLite_Module_Promotion_Model_SpecialOffer();
-		foreach ($so->findAll() as $specialOffer) {
-			if (isset($_POST["active"]) && $_POST["active"][$specialOffer->get("offer_id")]) {
-				$specialOffer->set("enabled", 1);
-			} else {
-				$specialOffer->set("enabled", 0);
-			}
-			$specialOffer->update();
-		}
-	}
+    function action_update()
+    {
+        // set 'active' fields
+        $so = new XLite_Module_Promotion_Model_SpecialOffer();
+        foreach ($so->findAll() as $specialOffer) {
+            if (isset($_POST["active"]) && $_POST["active"][$specialOffer->get("offer_id")]) {
+                $specialOffer->set("enabled", 1);
+            } else {
+                $specialOffer->set("enabled", 0);
+            }
+            $specialOffer->update();
+        }
+    }
 
-	function action_delete()
-	{
-		if (!empty($this->offer_ids)) {
-			foreach($this->offer_ids as $key => $value) {
-		       $so = new XLite_Module_Promotion_Model_SpecialOffer($key);
-		       $so->delete();
-			}
-		}
-	}
+    function action_delete()
+    {
+        if (!empty($this->offer_ids)) {
+            foreach($this->offer_ids as $key => $value) {
+               $so = new XLite_Module_Promotion_Model_SpecialOffer($key);
+               $so->delete();
+            }
+        }
+    }
 
-	function action_clone()
-	{
+    function action_clone()
+    {
         if (!empty($this->offer_ids)) {
             foreach($this->offer_ids as $key => $value) {
                	$so = new XLite_Module_Promotion_Model_SpecialOffer($key);
-				if ( function_exists("func_is_clone_deprecated") && func_is_clone_deprecated() ) {
-	               	$clone = $so->cloneObject();
-				} else {
-					$clone = $so->clone();
-				}
-			 	$clone->set("title",$so->get("title")." (CLONE)");
-				$clone->update();	
+                if ( function_exists("func_is_clone_deprecated") && func_is_clone_deprecated() ) {
+                   	$clone = $so->cloneObject();
+                } else {
+                    $clone = $so->clone();
+                }
+             	$clone->set("title",$so->get("title")." (CLONE)");
+                $clone->update();
             }
         }
-	}
+    }
 
 }

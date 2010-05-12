@@ -55,7 +55,7 @@ function func_Affiliate_charge(&$payment, $order)
             $payment->update();
         } else {
             $payment->create();
-        }    
+        }
         // process partner parents
         $affiliate = $order->getComplex('partner.profile_id');
         foreach ((array)$order->getComplex('partner.parents') as $level => $parent) {
@@ -80,7 +80,7 @@ function func_Affiliate_charge(&$payment, $order)
         }
     }
     return $commissions;
-} 
+}
 
 function func_Affiliate_calc_order_commissions(&$planCommission) 
 {
@@ -107,7 +107,7 @@ function func_Affiliate_calc_order_commissions(&$planCommission)
         }
     }
     return round((double)$orderCommissions + 0.00000000001, 2);
-} 
+}
 
 function func_Affiliate_calc_commission_rate($pc, $item) 
 {
@@ -126,7 +126,7 @@ function func_Affiliate_calc_commission_rate($pc, $item)
         $item->update();
     }
     return $result;
-} 
+}
 
 // WARNING :
 // Please ensure that you have no whitespaces / empty lines below this message.

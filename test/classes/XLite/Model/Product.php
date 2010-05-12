@@ -62,7 +62,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
         'tax_class'         => '',
         'free_shipping'     => 0,
         'clean_url'         => '',
-    );    
+    );
 
     /**
      * Auto-increment file name
@@ -92,7 +92,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $defaultOrder = 'order_by, name';    
+    public $defaultOrder = 'order_by, name';
 
     /**
      * Product image 
@@ -202,12 +202,12 @@ class XLite_Model_Product extends XLite_Model_Abstract
 
         $ef = new XLite_Model_ExtraField();
         $ef->collectGarbage();
-    } 
+    }
 
     function _collectGarbage() 
     {
         $this->delete();
-    } 
+    }
 
     /**
      * Delete product
@@ -288,9 +288,9 @@ class XLite_Model_Product extends XLite_Model_Abstract
                 $fv_new->set("field_id", $ef->get("field_id"));
                 $fv_new->create();
             }
-        } 
+        }
         return $p;
-    } 
+    }
 
     function _beforeAdvancedSearch($substring, $sku = null, $category_id = null, $subcategory_search = false, $fulltext = false, $onlyindexes = false)
     {
@@ -313,7 +313,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
     {
         if (empty($orderby)) {
             $orderby = $this->defaultOrder;
-        }    
+        }
 
         global $categories;
 
@@ -340,7 +340,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
 
             if (!empty($categories[$id][$where][$orderby]) && !is_array($categories[$id][$where][$orderby])) {
                 $categories[$id][$where][$orderby] = $useCache ? array() : null;
-            } 
+            }
 
             if ($this->isPersistent) {
 
@@ -384,9 +384,9 @@ class XLite_Model_Product extends XLite_Model_Abstract
 
         if (empty($orderby)) {
             $orderby = $this->defaultOrder;
-        }    
+        }
 
-        $id = $this->get("product_id");    
+        $id = $this->get("product_id");
         // reset cached result for admin zone
         if (XLite::isAdminZone() || !$useCache) {
             if (isset($categoriesNumber[$id][$where][$orderby])) {
@@ -405,7 +405,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
 
             if (!is_array($categoriesNumber[$id][$where][$orderby])) {
                 $categoriesNumber[$id][$where][$orderby] = array();
-            } 
+            }
 
             if ($this->isPersistent) {
                 $p = new XLite_Model_CategoriesFromProducts();
@@ -426,7 +426,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
     {
         if (empty($orderby)) {
             $orderby = $this->defaultOrder;
-        }    
+        }
 
         global $categories;
         $id = $this->get("product_id");
@@ -440,7 +440,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
             $this->getCategories($where, $orderby, $useCache);
         }
         return $categories[$id][$where][$orderby][0];
-    } 
+    }
 
     /**
     * Checks that the product belongs to the given category directly (no subcategories).
@@ -455,7 +455,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
             }
         }
         return false;
-    } 
+    }
 
     /**
     * Includes the product into the specified category.
@@ -466,7 +466,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
         if (!$this->db->getOne("SELECT COUNT(*) FROM $link_table WHERE product_id=".$this->get("product_id")." AND category_id=".$category->get("category_id"))) {
             $this->db->query("INSERT INTO $link_table (product_id,category_id) VALUES ('".$this->get("product_id")."', '".$category->get("category_id")."')");
         }
-    } 
+    }
 
     /**
     * Sets the product category.
@@ -478,7 +478,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
             $this->deleteCategory($categories[$i]);
         }
         $this->addCategory($category);
-    } 
+    }
 
     /**
     * Removes the category <-> product link for the specified category.
@@ -487,22 +487,22 @@ class XLite_Model_Product extends XLite_Model_Abstract
     {
         $link_table = $this->db->getTableByAlias("product_links");
         $this->db->query("DELETE FROM $link_table WHERE product_id='".$this->get("product_id")."' AND category_id='".$category->get("category_id")."'");
-    } 
+    }
 
     function hasImage() 
     {
         return $this->get("image_type")!="";
-    } 
+    }
 
     function getThumbnailURL() 
     {
         return $this->getComplex('thumbnail.url');
-    } 
+    }
 
     function getImageURL() 
     {
         return $this->getComplex('image.url');
-    } 
+    }
 
     function getTaxedPrice() 
     {
@@ -540,12 +540,12 @@ class XLite_Model_Product extends XLite_Model_Abstract
         $this->_taxRates->calculateTaxes();
         $this->_taxes = $this->_taxRates->getAllTaxes();
         return $price + (isset($this->_taxes["Tax"]) ? $this->_taxes["Tax"] : 0);
-    } 
+    }
 
     function getListPrice() 
     {
         return $this->getTaxedPrice();
-    } 
+    }
 
     function getPriceMessage() 
     {
@@ -558,12 +558,12 @@ class XLite_Model_Product extends XLite_Model_Abstract
             }
         }
         return "";
-    } 
+    }
 
     function isAvailable() 
     {
         return $this->is("exists") && $this->filter();
-    } 
+    }
 
     function populateExtraFields()
     {
@@ -682,14 +682,14 @@ class XLite_Model_Product extends XLite_Model_Abstract
             }
         }
         return $extraFields;
-    } 
+    }
         
     function toXML() 
     {
         $id = "product_" . $this->get("product_id");
         $xml = parent::toXML();
         return "<product id=\"$id\">\n$xml</product>\n";
-    } 
+    }
     
     function fieldsToXML() 
     {
@@ -719,7 +719,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
             }
         }
         return parent::fieldsToXML() . $xml;
-    } 
+    }
 
     // PRODUCT EXPORT functions {{{
 
@@ -731,7 +731,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
         $layout = array();
         if (isset($this->config->ImportExport->product_layout)) {
             $layout = explode(',', $this->config->ImportExport->product_layout);
-        }    
+        }
         // build import fields list
         $fields = array();
         $fields["NULL"] = false;
@@ -740,7 +740,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
         // get object properties ad prepare import fields list
         foreach ($this->fields as $name => $value) {
             if ($name == "product_id" || $name == "category_id" || $name == "thumbnail_type" || $name == "image_type") continue;
-            $fields[$name] = false; 
+            $fields[$name] = false;
         }
         // add "images" fields
         $fields["thumbnail"] = false;
@@ -754,11 +754,11 @@ class XLite_Model_Product extends XLite_Model_Abstract
             if (isset($layout[$id])) {
                 $selected = $layout[$id];
                 $result[$id][$selected] = true;
-            }    
+            }
         }
 
         return $result;
-    } 
+    }
 
     function _export($layout, $delimiter) 
     {
@@ -775,33 +775,33 @@ class XLite_Model_Product extends XLite_Model_Abstract
             }
         }
         return $data;
-    } 
+    }
 
     function _exportThumbnail() 
     {
         $thumbnail = "";
         if ($this->hasThumbnail()) {
-            $tn = $this->getThumbnail(); 
+            $tn = $this->getThumbnail();
             // include only thumbnail name from file system
             if ($tn->get("source") == "F") {
                 $thumbnail = $tn->get("data");
             }
         }
         return $thumbnail;
-    } 
+    }
     
     function _exportImage() 
     {
         $image = "";
         if ($this->hasImage()) {
-            $img = $this->getImage(); 
+            $img = $this->getImage();
             // include only thumbnail name from file system
             if ($img->get("source") == "F") {
                 $image = $img->get("data");
             }
         }
         return $image;
-    } 
+    }
 
     function _exportCategory($layout=null, $delimiter=null) 
     {
@@ -809,7 +809,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
             $this->_CategoriesFromProducts = new XLite_Model_CategoriesFromProducts();
         }
         return $this->_CategoriesFromProducts->createCategoryField($this->get("categories"));
-    } 
+    }
 
     // END PRODUCT EXPORT functions }}}
 
@@ -821,7 +821,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
             $this->deleteAll();
         }
         parent::import($options);
-    } 
+    }
 
     function findImportedProduct($_sku, $categoryString, $_productName, $createCategories, $field="") 
     {
@@ -883,7 +883,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
             return $product;
         }
         return null;
-    } 
+    }
 
     /**
      * Find product by clean URL
@@ -962,7 +962,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
         // Update create product categories
         $this->_importCategory($product, $properties, $default_category);
         $product->populateExtraFields();
-    } 
+    }
 
     function _convertProperties(&$p) 
     {
@@ -970,7 +970,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
         if (!empty($p["enabled"]) && ($p["enabled"] == "Y" || $p["enabled"] == "N")) {
             $p["enabled"] = $p["enabled"] == "Y" ? 1 : 0;
         }
-    } 
+    }
 
     function _importImage($product, $type, $name, $save_images) 
     {
@@ -990,7 +990,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
             $image->set("type", $image->getImageType($image_path));
             $image->update();
         }
-    } 
+    }
     
     function _importCategory($product, $properties, $default_category) 
     {
@@ -1018,7 +1018,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
             $product->addCategory($c);
             echo ">> Product category set to " . $c->get("name") . "<br>\n";
         }
-    } 
+    }
 
     // END PRODUCT IMPORT functions }}}
 
@@ -1163,5 +1163,5 @@ class XLite_Model_Product extends XLite_Model_Abstract
         return 'asc';
     }
 
-} 
+}
 

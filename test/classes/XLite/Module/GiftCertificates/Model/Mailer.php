@@ -57,5 +57,5 @@ class XLite_Module_GiftCertificates_Model_Mailer extends XLite_Model_Mailer impl
         $this->set('mailMode', null);
 
         return $text;
-    } 
+    }
 }

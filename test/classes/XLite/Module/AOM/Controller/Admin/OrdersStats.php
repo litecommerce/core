@@ -38,24 +38,24 @@ class XLite_Module_AOM_Controller_Admin_OrdersStats extends XLite_Controller_Adm
     function getPageTemplate()
     {
         return "modules/AOM/orders_stats.tpl";
-	}
-	
+    }
+    
     function getStats()
     {
         // typedef
         $statRec = array("today" => 0, "week" => 0, "month" => 0);
-		$orderStatus = new XLite_Module_AOM_Model_OrderStatus();
-		$orderStatuses = $orderStatus->findAll();
-		$orderStatusesHash = array();
-		foreach($orderStatuses as $orderStatus_) {
-			$orderStatusesHash[] = $orderStatus_->get("status");	// order by Pos.
-			$this->stats["orders"][$orderStatus_->get("status")]["statistics"] = $statRec;
-			$this->stats["orders"][$orderStatus_->get("status")]["name"] = $orderStatus_->get("name");
-		}
-		$this->stats["total"] = $statRec;
-		$this->stats["paid"] = $statRec;
+        $orderStatus = new XLite_Module_AOM_Model_OrderStatus();
+        $orderStatuses = $orderStatus->findAll();
+        $orderStatusesHash = array();
+        foreach($orderStatuses as $orderStatus_) {
+            $orderStatusesHash[] = $orderStatus_->get("status");	// order by Pos.
+            $this->stats["orders"][$orderStatus_->get("status")]["statistics"] = $statRec;
+            $this->stats["orders"][$orderStatus_->get("status")]["name"] = $orderStatus_->get("name");
+        }
+        $this->stats["total"] = $statRec;
+        $this->stats["paid"] = $statRec;
         
-		$order = new XLite_Model_Order();
+        $order = new XLite_Model_Order();
         $date = $this->get("monthDate");
         // fetch orders for this month
         array_map(array($this, "summarize"), $order->findAll("date>=$date"));
@@ -63,11 +63,11 @@ class XLite_Module_AOM_Controller_Admin_OrdersStats extends XLite_Controller_Adm
         // sort summarized results by order status Pos.
         $orders = $this->stats["orders"];
         $this->stats["orders"] = array();
-		foreach($orderStatusesHash as $orderStatus_) {
-			$this->stats["orders"][$orderStatus_] = $orders[$orderStatus_];
-		}
+        foreach($orderStatusesHash as $orderStatus_) {
+            $this->stats["orders"][$orderStatus_] = $orders[$orderStatus_];
+        }
 
-		return $this->stats;
+        return $this->stats;
     }
 
     function save($index, $order, $paid = false)
@@ -94,8 +94,8 @@ class XLite_Module_AOM_Controller_Admin_OrdersStats extends XLite_Controller_Adm
     
     function summarize($order)
     {
-		$orderStatus = $order->get("orderStatus");
-		$paid = ($orderStatus->get("status") == "P" || $orderStatus->get("status") == "C" || $orderStatus->get("parent") == "P" || $orderStatus->get("parent") == "C" ? true : false);
-		$this->save($orderStatus->get("status"), $order, $paid);
+        $orderStatus = $order->get("orderStatus");
+        $paid = ($orderStatus->get("status") == "P" || $orderStatus->get("status") == "C" || $orderStatus->get("parent") == "P" || $orderStatus->get("parent") == "C" ? true : false);
+        $this->save($orderStatus->get("status"), $order, $paid);
     }
 }

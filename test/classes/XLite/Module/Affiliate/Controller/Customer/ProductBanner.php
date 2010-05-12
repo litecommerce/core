@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_Affiliate_Controller_Customer_ProductBanner extends XLite_Controller_Abstract
-{	
+{
     public $template = "modules/Affiliate/product_banner.tpl";
 
     function getProduct()

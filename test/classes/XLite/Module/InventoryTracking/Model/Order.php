@@ -129,7 +129,7 @@ class XLite_Module_InventoryTracking_Model_Order extends XLite_Model_Order imple
                 );
                 foreach ($items as $subitem) {
                     // manual declration - findAll() do not this declaration
-                    $subitem->order = $this; 
+                    $subitem->order = $this;
                 }
 
                 $suitableItems = array();

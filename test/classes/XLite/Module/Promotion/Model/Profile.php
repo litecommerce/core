@@ -37,19 +37,19 @@ class XLite_Module_Promotion_Model_Profile extends XLite_Model_Profile implement
 {
     public function __construct($param = null)
     {
-		$this->fields["bonusPoints"] = 0;
-		$this->_securefields["bonusPoints"] = 0;
+        $this->fields["bonusPoints"] = 0;
+        $this->_securefields["bonusPoints"] = 0;
         parent::__construct($param);
     }
 
-	function get($name)
-	{
-		if ($name == "bonusPointsDollar") {
-			
-			return $this->config->getComplex('Promotion.bonusPointsCost') * $this->get("bonusPoints");
-		} else {
-			return parent::get($name);
-		}
-	}
+    function get($name)
+    {
+        if ($name == "bonusPointsDollar") {
+            
+            return $this->config->getComplex('Promotion.bonusPointsCost') * $this->get("bonusPoints");
+        } else {
+            return parent::get($name);
+        }
+    }
 
 }

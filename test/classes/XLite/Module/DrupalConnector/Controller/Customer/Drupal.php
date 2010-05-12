@@ -35,7 +35,7 @@
  */
 class XLite_Controller_Customer_Drupal extends XLite_Controller_Customer_Abstract
 {
-	/**
+    /**
      * Do not perform any action 
      * 
      * @return void
@@ -44,6 +44,6 @@ class XLite_Controller_Customer_Drupal extends XLite_Controller_Customer_Abstrac
      */
     public function handleRequest()
     {
-	}
+    }
 }
 

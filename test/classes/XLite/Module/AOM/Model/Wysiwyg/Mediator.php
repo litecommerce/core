@@ -38,24 +38,24 @@ class XLite_Module_AOM_Model_Wysiwyg_Mediator extends XLite_Model_Wysiwyg_Mediat
     
     function export($templates)
     {
-		$this->AOM_remove_admin_layouts();
-		return parent::export($templates);
+        $this->AOM_remove_admin_layouts();
+        return parent::export($templates);
     }
 
 
-	function import()
-	{
-		$this->AOM_remove_admin_layouts();
-		return parent::import();
-	}
+    function import()
+    {
+        $this->AOM_remove_admin_layouts();
+        return parent::import();
+    }
 
-	function AOM_remove_admin_layouts()
-	{
-		$layout = XLite_Model_Layout::getInstance();
+    function AOM_remove_admin_layouts()
+    {
+        $layout = XLite_Model_Layout::getInstance();
 
-		$list = $layout->list;
-		unset($list["order/order.tpl"]);
-		unset($list["order/search_form.tpl"]);
-		$layout->list = $list;
-	}
+        $list = $layout->list;
+        unset($list["order/order.tpl"]);
+        unset($list["order/search_form.tpl"]);
+        $layout->list = $list;
+    }
 }

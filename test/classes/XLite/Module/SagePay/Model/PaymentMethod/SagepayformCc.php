@@ -34,9 +34,9 @@
  * @since   3.0.0
  */
 class XLite_Module_SagePay_Model_PaymentMethod_SagepayformCc extends XLite_Model_PaymentMethod_CreditCard
-{	
-    public $processorName = "SagePay VSP Form";	
-	public $hasConfigurationForm = true;	
+{
+    public $processorName = "SagePay VSP Form";
+    public $hasConfigurationForm = true;
     public $configurationTemplate = "modules/SagePay/config.tpl";
 
     function handleRequest(XLite_Model_Cart $cart)
@@ -45,64 +45,64 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepayformCc extends XLite_Model
         PaymentMethod_SagePayForm_handleRequest($this, $cart);
     }
 
-	function getFormTemplate()
-	{
-		return "modules/SagePay/checkout.tpl";
-	}
+    function getFormTemplate()
+    {
+        return "modules/SagePay/checkout.tpl";
+    }
 
-	function getSuccessUrl($order_id)
-	{
-		return $this->xlite->getShopUrl("cart.php?target=sagepayform_checkout&action=return", $this->getComplex('config.Security.customer_security'));
-	}
+    function getSuccessUrl($order_id)
+    {
+        return $this->xlite->getShopUrl("cart.php?target=sagepayform_checkout&action=return", $this->getComplex('config.Security.customer_security'));
+    }
 
-	function getFailureUrl($order_id)
-	{
-		return $this->xlite->getShopUrl("cart.php?target=sagepayform_checkout&action=return&failed=1", $this->getComplex('config.Security.customer_security'));
-	}
+    function getFailureUrl($order_id)
+    {
+        return $this->xlite->getShopUrl("cart.php?target=sagepayform_checkout&action=return&failed=1", $this->getComplex('config.Security.customer_security'));
+    }
 
-	function get($name)
-	{
-		if ($name == "params") {
-			$pm = XLite_Model_PaymentMethod::factory('sagepaydirect_cc');
-			return $pm->get("params");
-		}
-		if (preg_match("/order.*status/i", $name, $matches)) {
-			$pm = XLite_Model_PaymentMethod::factory('sagepaydirect_cc');
-			return $pm->get($matches[0]);
-		}
+    function get($name)
+    {
+        if ($name == "params") {
+            $pm = XLite_Model_PaymentMethod::factory('sagepaydirect_cc');
+            return $pm->get("params");
+        }
+        if (preg_match("/order.*status/i", $name, $matches)) {
+            $pm = XLite_Model_PaymentMethod::factory('sagepaydirect_cc');
+            return $pm->get($matches[0]);
+        }
 
-		return parent::get($name);
-	}
+        return parent::get($name);
+    }
 
 
 //////////// Fill "SagePay VSP Form" form methods ////////////
-	function getVendorName()
-	{
-		return $this->getComplex('params.vendor_name');
-	}
+    function getVendorName()
+    {
+        return $this->getComplex('params.vendor_name');
+    }
 
-	function getFormPostUrl($is_simulator=false)
-	{
-		if ($is_simulator) {
+    function getFormPostUrl($is_simulator=false)
+    {
+        if ($is_simulator) {
             return "https://test.sagepay.com/Simulator/VSPFormGateway.asp";
-		}
+        }
         $subtag = (($this->getComplex('params.testmode') == "N") ? "live" : "test");
-		return "https://$subtag.sagepay.com/gateway/service/vspform-register.vsp";
-	}
+        return "https://$subtag.sagepay.com/gateway/service/vspform-register.vsp";
+    }
 
-	function getCryptedInfo($cart)
-	{
-		require_once LC_MODULES_DIR . 'SagePay' . LC_DS . 'encoded.php';
+    function getCryptedInfo($cart)
+    {
+        require_once LC_MODULES_DIR . 'SagePay' . LC_DS . 'encoded.php';
 
-		return func_SagePayForm_compileInfoCrypt($this, $cart);
-	}
+        return func_SagePayForm_compileInfoCrypt($this, $cart);
+    }
 
-	function getPaymentType()
-	{
-		if (in_array($this->getComplex('params.trans_type'), array("PAYMENT", "DEFERRED", "AUTHENTICATE")))
-			return $this->getComplex('params.trans_type');
+    function getPaymentType()
+    {
+        if (in_array($this->getComplex('params.trans_type'), array("PAYMENT", "DEFERRED", "AUTHENTICATE")))
+            return $this->getComplex('params.trans_type');
 
-		return "AUTHENTICATE";
-	}
+        return "AUTHENTICATE";
+    }
 
 }

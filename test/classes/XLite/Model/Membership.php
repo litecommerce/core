@@ -34,37 +34,37 @@
  * @since   3.0.0
  */
 class XLite_Model_Membership extends XLite_Model_Abstract
-{	
+{
     public $fields = array
     (
     	"membership_id" => 0,
         "membership"	=> "",
         "orderby"		=> ""
-    );	
-	public $isRead         = true;			
-	public $memberships    = null;			
-    public $countRequested = null;	
+    );
+    public $isRead         = true;
+    public $memberships    = null;
+    public $countRequested = null;
     public $countGranted   = null;
 
-	function getMemberships() 
-	{
+    function getMemberships() 
+    {
         if (!is_null($this->memberships)) {
-			return $this->memberships;
-		}
+            return $this->memberships;
+        }
 
         $config = new XLite_Model_Config();
 
-		$config->find("name = 'membershipsCollection' AND category = 'Memberships'");
-		$this->memberships = $memberships = unserialize($config->get("value"));
+        $config->find("name = 'membershipsCollection' AND category = 'Memberships'");
+        $this->memberships = $memberships = unserialize($config->get("value"));
 
-		$config->find("name = 'memberships' AND category = 'Memberships'");
-		$oldMemberships = unserialize($config->get("value"));
-		if (!is_array($memberships)) {
-			if (is_array($oldMemberships) && count($oldMemberships) > 0) {
-				$id = 1;
-				$new_memberships = array();
-				foreach($oldMemberships as $membership) {
-					if (!is_array($membership)) {
+        $config->find("name = 'memberships' AND category = 'Memberships'");
+        $oldMemberships = unserialize($config->get("value"));
+        if (!is_array($memberships)) {
+            if (is_array($oldMemberships) && count($oldMemberships) > 0) {
+                $id = 1;
+                $new_memberships = array();
+                foreach($oldMemberships as $membership) {
+                    if (!is_array($membership)) {
     					$new_memberships[$id] = array
     					(
     						"orderby" => ($id * 10),
@@ -74,105 +74,105 @@ class XLite_Model_Membership extends XLite_Model_Abstract
     				} else {
     					$new_memberships[$id] = $membership;
     				}
-					$id ++;
-				}
-				$this->memberships = $new_memberships;
+                    $id ++;
+                }
+                $this->memberships = $new_memberships;
 
                 $config = new XLite_Model_Config();
         		$config->createOption("Memberships","membershipsCollection", serialize($this->memberships), "serialized");
-			} else {
-				$this->memberships = array();
+            } else {
+                $this->memberships = array();
 
                 $config = new XLite_Model_Config();
         		$config->createOption("Memberships","membershipsCollection", serialize($this->memberships), "serialized");
-			}
-		}
-		
-		return $this->memberships;
-	}  
-	
-	public function __construct() 
-	{
-		parent::__construct();
-		$memberships = $this->get("memberships");
-		$args = func_get_args();
-		if (count($args)) {
-			if (!is_null($args[0])) {
-				$this->set("properties", $memberships[$args[0]]);
-			}
-		}
-	} 
-
-	function create() 
-	{
-		$max = 1; 
+            }
+        }
+        
+        return $this->memberships;
+    }
+    
+    public function __construct() 
+    {
+        parent::__construct();
         $memberships = $this->get("memberships");
-		if ($memberships) {
-			foreach($memberships as $membership) {
-				if ($membership['membership_id'] >= $max) {
-					$max = $membership['membership_id'] + 1;
-				}
-			}
-		}
-		$this->set("membership_id",$max); 
+        $args = func_get_args();
+        if (count($args)) {
+            if (!is_null($args[0])) {
+                $this->set("properties", $memberships[$args[0]]);
+            }
+        }
+    }
+
+    function create() 
+    {
+        $max = 1;
+        $memberships = $this->get("memberships");
+        if ($memberships) {
+            foreach($memberships as $membership) {
+                if ($membership['membership_id'] >= $max) {
+                    $max = $membership['membership_id'] + 1;
+                }
+            }
+        }
+        $this->set("membership_id",$max);
         $membershipData = $this->get("properties");
-		$membershipData['membership'] = $this->stripInvalidData($membershipData['membership']);
+        $membershipData['membership'] = $this->stripInvalidData($membershipData['membership']);
         if (strlen($membershipData["membership"]) > 32) {
         	$membershipData["membership"] = substr($membershipData["membership"], 0, 32);
         }
-		$memberships[$max] = $membershipData;
-		$memberships = (array) $this->sortMemberships($memberships);
+        $memberships[$max] = $membershipData;
+        $memberships = (array) $this->sortMemberships($memberships);
         $config = new XLite_Model_Config();
-		$config->createOption("Memberships","membershipsCollection", serialize($memberships));    
-	} 
+        $config->createOption("Memberships","membershipsCollection", serialize($memberships));
+    }
 
-	function update() 
-	{
-	    $config = new XLite_Model_Config();
+    function update() 
+    {
+        $config = new XLite_Model_Config();
         $memberships = $this->get("memberships");
         $membershipData = $this->get("properties");
-		$membershipData['membership'] = $this->stripInvalidData($membershipData['membership']);
+        $membershipData['membership'] = $this->stripInvalidData($membershipData['membership']);
         if (strlen($membershipData["membership"]) > 32) {
         	$membershipData["membership"] = substr($membershipData["membership"], 0, 32);
         }
-		$memberships[$this->get("membership_id")] = $membershipData;
-		$memberships = (array) $this->sortMemberships($memberships);
-		$config->createOption("Memberships","membershipsCollection", serialize($memberships));
-    } 
+        $memberships[$this->get("membership_id")] = $membershipData;
+        $memberships = (array) $this->sortMemberships($memberships);
+        $config->createOption("Memberships","membershipsCollection", serialize($memberships));
+    }
 
-	function delete() 
-	{
-		$config = new XLite_Model_Config();
+    function delete() 
+    {
+        $config = new XLite_Model_Config();
         $memberships = $this->get("memberships");
-		unset($memberships[$this->get("membership_id")]);
-		$memberships = (array) $this->sortMemberships($memberships);
-		$config->createOption("Memberships","membershipsCollection", serialize($memberships));    
-	} 
+        unset($memberships[$this->get("membership_id")]);
+        $memberships = (array) $this->sortMemberships($memberships);
+        $config->createOption("Memberships","membershipsCollection", serialize($memberships));
+    }
 
  	function findAll($where = null, $orderby = null, $groupby = null, $limit = null) 
-	{
-		$result = array();
-		$memberships = (array) $this->sortMemberships();
-		foreach($memberships as $membership_id => $membership_) {
-			$membership = new XLite_Model_Membership($membership_id);
-			$result[$membership_id] = $membership;	
-		}
-		return $result;
-	} 	
+    {
+        $result = array();
+        $memberships = (array) $this->sortMemberships();
+        foreach($memberships as $membership_id => $membership_) {
+            $membership = new XLite_Model_Membership($membership_id);
+            $result[$membership_id] = $membership;
+        }
+        return $result;
+    }
 
-	function sortMemberships($memberships = null)
-	{
-		if (!is_array($memberships)) $memberships = (array) $this->get("memberships");
+    function sortMemberships($memberships = null)
+    {
+        if (!is_array($memberships)) $memberships = (array) $this->get("memberships");
 
-		uasort($memberships, array($this, "cmp"));
-		return $memberships;
-	}
+        uasort($memberships, array($this, "cmp"));
+        return $memberships;
+    }
 
-	function cmp($a, $b) 
-	{
-		if  ($a['orderby'] == $b['orderby']) return 0;
-		return ($a['orderby'] > $b['orderby']) ? 1 : -1;
-	} 
+    function cmp($a, $b) 
+    {
+        if  ($a['orderby'] == $b['orderby']) return 0;
+        return ($a['orderby'] > $b['orderby']) ? 1 : -1;
+    }
 
     function getRequestedCount() 
     {
@@ -190,7 +190,7 @@ class XLite_Model_Membership extends XLite_Model_Abstract
         }
 
         return $count;
-    } 
+    }
 
     function getGrantedCount() 
     {
@@ -208,24 +208,24 @@ class XLite_Model_Membership extends XLite_Model_Abstract
         }
 
         return $count;
-    } 
+    }
 
-	/*
-	 * remove from the $value characters, that are slashed by mysql_real_escape_string()
-	 * they are: x00, \n, \r, \, ', " and \x1a
-	 */
-	function stripInvalidData($value) 
-	{
-		$expression = $this->getStripRegExp();
-		$value = preg_replace("/$expression/", " ", $value);
-		$value = trim($value);
-		return $value;
-	}
+    /*
+     * remove from the $value characters, that are slashed by mysql_real_escape_string()
+     * they are: x00, \n, \r, \, ', " and \x1a
+     */
+    function stripInvalidData($value) 
+    {
+        $expression = $this->getStripRegExp();
+        $value = preg_replace("/$expression/", " ", $value);
+        $value = trim($value);
+        return $value;
+    }
 
-	function getStripRegExp()
-	{
-		$expression = "[\\x00\\n\\r\\\\'\"\\x1a]+";
-		return $expression;
-	}
+    function getStripRegExp()
+    {
+        $expression = "[\\x00\\n\\r\\\\'\"\\x1a]+";
+        return $expression;
+    }
 
-} 
+}

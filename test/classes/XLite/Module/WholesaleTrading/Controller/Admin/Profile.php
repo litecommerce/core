@@ -49,7 +49,7 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Profile extends XLite_Contr
     {
         $obj = new XLite_Module_WholesaleTrading_Model_Profile();
         return $obj->isShowWholesalerFields();
-	}
+    }
 
     /**
      * Do action 'register'
@@ -60,14 +60,14 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Profile extends XLite_Contr
      * @since  3.0.0
      */
 /*	protected function doActionRegister()
-	{
-		parent::doActionRegister();
+    {
+        parent::doActionRegister();
 
         if ($this->statusData['success']) {
 
             $profile = $this->getProfile();
 
-			$exp_type = XLite_Core_Request::getInstance()->membership_exp_type;
+            $exp_type = XLite_Core_Request::getInstance()->membership_exp_type;
             $exp_date = mktime(
                 0, 0, 0,
                 XLite_Core_Request::getInstance()->membership_exp_dateMonth,
@@ -81,10 +81,10 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Profile extends XLite_Contr
                 $exp_date = 0;
             }
 
-			$profile->set('membership_exp_date', $exp_date);
-			$profile->update();
-		}
-	}
+            $profile->set('membership_exp_date', $exp_date);
+            $profile->update();
+        }
+    }
 
     /**
      * Do action 'modify'
@@ -95,11 +95,11 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Profile extends XLite_Contr
      * @since  3.0.0
      */
 /*	protected function doActionModify()
-	{
-		$oldProfile = $this->getProfile();
-		$oldMembership = $oldProfile->get('membership');
+    {
+        $oldProfile = $this->getProfile();
+        $oldMembership = $oldProfile->get('membership');
 
-		parent::doActionModify();
+        parent::doActionModify();
 
         $profile = $this->getProfile();
 
@@ -130,28 +130,28 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Profile extends XLite_Contr
                     }
         		}
 
-				if ((!empty($oldMembership)) || ($oldProfile->get('membership_exp_date') > 0)) {
+                if ((!empty($oldMembership)) || ($oldProfile->get('membership_exp_date') > 0)) {
     				$history_node = array();
     				$history_node['membership'] = $oldMembership;
     				$history_node['membership_exp_date'] = $oldProfile->get('membership_exp_date');
-					$history_node['date'] = time();
-					$history_node['current'] = false;
-					$history[] = $history_node;
+                    $history_node['date'] = time();
+                    $history_node['current'] = false;
+                    $history[] = $history_node;
     			}
 
-				$history_node = array();
-				$history_node['membership'] = $newMembership;
-				$history_node['membership_exp_date'] = $exp_date;
-				$history_node['date'] = time();
-				$history_node['current'] = true;
-				$history[] = $history_node;
+                $history_node = array();
+                $history_node['membership'] = $newMembership;
+                $history_node['membership_exp_date'] = $exp_date;
+                $history_node['date'] = time();
+                $history_node['current'] = true;
+                $history[] = $history_node;
 
-				$profile->set('membership_history', $history);
-				$profile->set('membership_exp_date', $exp_date);
-				$profile->update();
+                $profile->set('membership_history', $history);
+                $profile->set('membership_exp_date', $exp_date);
+                $profile->update();
             }
-		}
-	}
+        }
+    }
 
     /**
      * Get membership history 
@@ -162,19 +162,19 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Profile extends XLite_Contr
      * @since  3.0.0
      */
 /*	protected function getMembershipHistory()
-	{
+    {
         $profile = $this->getProfile();
 
         if (!is_object($profile)) {
-			return;
-		}
+            return;
+        }
 
-		$history = $profile->get('membership_history');
-		if (is_array($history) && count($history) > 0) {
-			$history = array_reverse($history);
-		}
+        $history = $profile->get('membership_history');
+        if (is_array($history) && count($history) > 0) {
+            $history = array_reverse($history);
+        }
 
-		return $history;
-	}*/
+        return $history;
+    }*/
 }
 

@@ -35,21 +35,21 @@
  */
 class XLite_Module_DrupalConnector_Controller_Customer_Invoice extends XLite_Controller_Customer_Invoice implements XLite_Base_IDecorator
 {
-	/**
-	 * Get additional bread crumbs list
-	 * 
-	 * @return array
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function getAdditionalBreadcrumbs()
-	{
-		return array(
-			array('Orders history', $this->buildUrl('order_list')),
+    /**
+     * Get additional bread crumbs list
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getAdditionalBreadcrumbs()
+    {
+        return array(
+            array('Orders history', $this->buildUrl('order_list')),
             array('Order', $this->buildUrl('order', '', array('order_id' => XLite_Core_Request::getInstance()->order_id))),
-		);
-	}
+        );
+    }
 
     /**
      * Check order access 

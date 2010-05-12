@@ -35,44 +35,44 @@
  */
 class XLite_Module_UPSOnlineTools_Controller_Customer_Image extends XLite_Controller_Customer_Image implements XLite_Base_IDecorator
 {
-	function handleRequest()
-	{
-		if ($this->get("mode") == "ups_container_level_details") {
-			if ($this->session->getID() != $this->get("id")) {
-				// access denied
-				exit();
-			}
+    function handleRequest()
+    {
+        if ($this->get("mode") == "ups_container_level_details") {
+            if ($this->session->getID() != $this->get("id")) {
+                // access denied
+                exit();
+            }
 
-			$order = new XLite_Model_Order($this->get("order_id"));
-			$containers = $order->get("ups_containers");
+            $order = new XLite_Model_Order($this->get("order_id"));
+            $containers = $order->get("ups_containers");
 
-			$container_id = $this->get("container");
-			$level_id = $this->get("level");
+            $container_id = $this->get("container");
+            $level_id = $this->get("level");
 
-			if (!isset($containers[$container_id])) {
-				// container not exists
-				exit();
-			}
+            if (!isset($containers[$container_id])) {
+                // container not exists
+                exit();
+            }
 
-			$container = $containers[$container_id];
+            $container = $containers[$container_id];
 
-			if (!isset($container["levels"][$level_id])) {
-				// level not set 
-				exit();
-			}
+            if (!isset($container["levels"][$level_id])) {
+                // level not set 
+                exit();
+            }
 
-			$level = $container["levels"][$level_id];
+            $level = $container["levels"][$level_id];
 
-			require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
-			$cont = UPSOnlineTools_displayLevel_gdlib($container["width"], $container["length"], $level["items"], $level["dirt_spaces"], $this->config->getComplex('UPSOnlineTools.visual_container_width'));
+            require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
+            $cont = UPSOnlineTools_displayLevel_gdlib($container["width"], $container["length"], $level["items"], $level["dirt_spaces"], $this->config->getComplex('UPSOnlineTools.visual_container_width'));
 
-			header("Content-type: image/jpeg");
-			echo $cont;
+            header("Content-type: image/jpeg");
+            echo $cont;
 
-			exit();
-		}
+            exit();
+        }
 
-		return parent::handleRequest();
-	}
+        return parent::handleRequest();
+    }
 
 }

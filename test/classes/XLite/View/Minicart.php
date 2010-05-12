@@ -75,9 +75,9 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
      * @since  3.0.0                                
      */                                                
     protected function getHead()                       
-    {                                                  
-        return 'Your shopping cart';                   
-    }                                                  
+    {
+        return 'Your shopping cart';
+    }
 
     /**
      * Get widget templates directory

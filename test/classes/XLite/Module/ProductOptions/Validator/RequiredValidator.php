@@ -36,10 +36,10 @@
  * @since   3.0.0
  */
 class XLite_Module_ProductOptions_Validator_RequiredValidator extends XLite_Validator_Abstract
-{	
-	const PARAM_OPTION_ID  = 'option_id';
-	const PARAM_FIELD_NAME = 'field';
-	const PARAM_ACTION     = 'action';
+{
+    const PARAM_OPTION_ID  = 'option_id';
+    const PARAM_FIELD_NAME = 'field';
+    const PARAM_ACTION     = 'action';
 
 
     /**
@@ -66,10 +66,10 @@ class XLite_Module_ProductOptions_Validator_RequiredValidator extends XLite_Vali
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-			self::PARAM_OPTION_ID   => new XLite_Model_WidgetParam_Int('Option Id', null),
-			self::PARAM_FIELD_NAME  => new XLite_Model_WidgetParam_String('Field', null),
-			self::PARAM_ACTION      => new XLite_Model_WidgetParam_String('Action', null)
-		);
+            self::PARAM_OPTION_ID   => new XLite_Model_WidgetParam_Int('Option Id', null),
+            self::PARAM_FIELD_NAME  => new XLite_Model_WidgetParam_String('Field', null),
+            self::PARAM_ACTION      => new XLite_Model_WidgetParam_String('Action', null)
+        );
     }
 
 
@@ -82,29 +82,29 @@ class XLite_Module_ProductOptions_Validator_RequiredValidator extends XLite_Vali
      * @since  3.0.0
      */
     public function isValid()
-	{
-		$result = false;
+    {
+        $result = false;
 
         if (parent::isValid()) {
 
-			$fieldName = $this->getParam(self::PARAM_FIELD_NAME);
+            $fieldName = $this->getParam(self::PARAM_FIELD_NAME);
 
-			if (strpos($fieldName, '[') !== false) {
-				$fieldName = explode('[', $fieldName, 2);
+            if (strpos($fieldName, '[') !== false) {
+                $fieldName = explode('[', $fieldName, 2);
 
-				if (substr($fieldName[1], 0, 1) == ']') {
-					$fieldName[1] = $this->getParam(self::PARAM_OPTION_ID) . $fieldName[1];
-				}
+                if (substr($fieldName[1], 0, 1) == ']') {
+                    $fieldName[1] = $this->getParam(self::PARAM_OPTION_ID) . $fieldName[1];
+                }
 
-				$fieldName[1] = '[' . $fieldName[1];
-				@eval('$fieldData = $_POST[' . $fieldName[0] . ']'. $fieldName[1] . ';');
-				$result = !empty($fieldData) || !isset($fieldData);
+                $fieldName[1] = '[' . $fieldName[1];
+                @eval('$fieldData = $_POST[' . $fieldName[0] . ']'. $fieldName[1] . ';');
+                $result = !empty($fieldData) || !isset($fieldData);
 
-			} else {
-	        	$result = !empty(XLite_Core_Request::getInstance()->$fieldName) || !isset(XLite_Core_Request::getInstance()->$fieldName);
+            } else {
+            	$result = !empty(XLite_Core_Request::getInstance()->$fieldName) || !isset(XLite_Core_Request::getInstance()->$fieldName);
     	    }
 
-			if (!$result) {
+            if (!$result) {
 
                 if (
                      ( isset(XLite_Core_Request::getInstance()->action)
@@ -115,10 +115,10 @@ class XLite_Module_ProductOptions_Validator_RequiredValidator extends XLite_Vali
                        && isset(XLite_Core_Request::getInstance()->option_id)
                        && $this->getParam(self::PARAM_OPTION_ID) != XLite_Core_Request::getInstance()->option_id )
                     ) {
-	            	$result = true;
-	        	}
-			}
-		}
+                	$result = true;
+            	}
+            }
+        }
 
         return $result;
     }

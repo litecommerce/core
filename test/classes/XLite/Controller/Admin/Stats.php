@@ -34,9 +34,9 @@
  * @since   3.0.0
  */
 class XLite_Controller_Admin_Stats extends XLite_Controller_Admin_Abstract
-{	
-    public $params = array('target');	
-    public $page = "orders_stats";	
+{
+    public $params = array('target');
+    public $page = "orders_stats";
     public $pages = array('orders_stats' => 'Order statistics',
                        'top_sellers' => 'Top sellers',
                        'searchStat' => 'Search statistics',
@@ -48,7 +48,7 @@ class XLite_Controller_Admin_Stats extends XLite_Controller_Admin_Abstract
             $this->todayDate = mktime(0, 0 ,0 , date("m"), date("d"), date("Y"));
         }
         return $this->todayDate;
-    }        
+    }
 
     function getWeekDate()
     {

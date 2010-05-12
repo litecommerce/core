@@ -73,7 +73,7 @@ class XLite_Module_PayPalPro_Controller_Customer_ExpressCheckout extends XLite_C
     {
         $pm = XLite_Model_PaymentMethod::factory('paypalpro_express');
 
-        $response = $pm->sendExpressCheckoutRequest($this->getCart()); 
+        $response = $pm->sendExpressCheckoutRequest($this->getCart());
 
         if ($response['ACK'] == 'Success' && !empty($response['TOKEN'])) {
 
@@ -250,7 +250,7 @@ class XLite_Module_PayPalPro_Controller_Customer_ExpressCheckout extends XLite_C
 
                 $this->updateCart();
 
-            } 
+            }
         }
 
         $this->set('returnUrl', $this->buildUrl('checkout'));

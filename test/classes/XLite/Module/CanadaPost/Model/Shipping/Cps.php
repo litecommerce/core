@@ -34,11 +34,11 @@
  * @since   3.0.0
  */
 class XLite_Module_CanadaPost_Model_Shipping_Cps extends XLite_Model_Shipping_Online 
-{	
+{
 
-	public $configCategory = "CanadaPost";	
-	public $optionsFields	= array("merchant_id","length","width","height","packed","insured","currency_rate","test_server");	
-    public $error = "";	
+    public $configCategory = "CanadaPost";
+    public $optionsFields	= array("merchant_id","length","width","height","packed","insured","currency_rate","test_server");
+    public $error = "";
     public $xmlError = false;
 
     function getKgs($order) 
@@ -51,79 +51,79 @@ class XLite_Module_CanadaPost_Model_Shipping_Cps extends XLite_Model_Shipping_On
         case 'g':   return $w*0.001;
         }
         return 0;
-    } 
+    }
 
-	function cleanCache()  
-	{
-		$this->_cleanCache("cps_cache");
-	} 
+    function cleanCache()  
+    {
+        $this->_cleanCache("cps_cache");
+    }
 
     function getModuleName()  
     {
         return "Canada Post";
-    }  
+    }
 
-	function getRates(XLite_Model_Order $order) 
-	{
-		include_once LC_MODULES_DIR . 'CanadaPost' . LC_DS . 'encoded.php';
-		return Shipping_cps_getRates($this,$order);
-	} 
-	
-	function queryRates($options,$originalZipcode,$originalCountry,$itemsPrice,$weight,$description,$packed,$destinationCity,$destinationZipcode,$destinationState, $destinationCountry) 
-	{
-		$request = new XLite_Model_HTTPS();
-		$request->url = "sellonline.canadapost.ca:30000";
-		$request->method = "POST";
-		$request->data = $this->createRequest($options,$originalZipcode,$originalCountry,$itemsPrice,$weight,$description,$packed,$destinationCity,$destinationZipcode,$destinationState, $destinationCountry);
-		$request->request();
+    function getRates(XLite_Model_Order $order) 
+    {
+        include_once LC_MODULES_DIR . 'CanadaPost' . LC_DS . 'encoded.php';
+        return Shipping_cps_getRates($this,$order);
+    }
+    
+    function queryRates($options,$originalZipcode,$originalCountry,$itemsPrice,$weight,$description,$packed,$destinationCity,$destinationZipcode,$destinationState, $destinationCountry) 
+    {
+        $request = new XLite_Model_HTTPS();
+        $request->url = "sellonline.canadapost.ca:30000";
+        $request->method = "POST";
+        $request->data = $this->createRequest($options,$originalZipcode,$originalCountry,$itemsPrice,$weight,$description,$packed,$destinationCity,$destinationZipcode,$destinationState, $destinationCountry);
+        $request->request();
         if ($request->request() == XLite_Model_HTTPS::HTTPS_ERROR) {
             $this->error = $request->error;
             return array();
         }
 
-		$originalCountry == $destinationCountry ? $destination = "L" 
-												: $destination = "I";
+        $originalCountry == $destinationCountry ? $destination = "L" 
+                                                : $destination = "I";
 
-		return $this->parseResponse($request->response,$destination);
-	} 
+        return $this->parseResponse($request->response,$destination);
+    }
 
-	function createRequest($options,$originalZipCode,$originalCountry,$itemsPrice,$weight,$description,$packed,$destinationCity,$destinationZipcode,$destinationState, $destinationCountry)  
-	{
-		$description = htmlspecialchars($description); 
-		$options->test_server ? $merchant_id = "CPC_DEMO_XML" 
-							  : $merchant_id = $options->merchant_id;
-		return <<<EOT
+    function createRequest($options,$originalZipCode,$originalCountry,$itemsPrice,$weight,$description,$packed,$destinationCity,$destinationZipcode,$destinationState, $destinationCountry)  
+    {
+        $description = htmlspecialchars($description);
+        $options->test_server ? $merchant_id = "CPC_DEMO_XML" 
+                              : $merchant_id = $options->merchant_id;
+        return <<<EOT
 <?xml version='1.0'?>
 <eparcel>
 <language>en</language>
 <ratesAndServicesRequest>
-	<merchantCPCID>$merchant_id</merchantCPCID>
-	<fromPostalCode>$originalZipCode</fromPostalCode>
-	<itemsPrice>$itemsPrice</itemsPrice>
-	<lineItems>
-		<item>
-			<quantity>1</quantity>
-			<weight>$weight</weight>
-			<length>$options->length</length>
-			<width>$options->width</width>
-			<height>$options->height</height>
-			<description>$description</description> 
-			$packed	
-		</item>
-	</lineItems>
-	<city>$destinationCity</city>
-	<provOrState>$destinationState</provOrState>
-	<country>$destinationCountry</country>	
-	<postalCode>$destinationZipcode</postalCode>
+    <merchantCPCID>$merchant_id</merchantCPCID>
+    <fromPostalCode>$originalZipCode</fromPostalCode>
+    <itemsPrice>$itemsPrice</itemsPrice>
+    <lineItems>
+        <item>
+            <quantity>1</quantity>
+            <weight>$weight</weight>
+            <length>$options->length</length>
+            <width>$options->width</width>
+            <height>$options->height</height>
+            <description>$description</description> 
+            $packed	
+        </item>
+    </lineItems>
+    <city>$destinationCity</city>
+    <provOrState>$destinationState</provOrState>
+    <country>$destinationCountry</country>	
+    <postalCode>$destinationZipcode</postalCode>
 </ratesAndServicesRequest>	
 </eparcel>
 EOT;
-	} 
+    }
 
-	function parseResponse($response,$destination) 
-	{
-		include_once LC_MODULES_DIR . 'CanadaPost' . LC_DS . 'encoded.php';
-		return Shipping_cps_parseResponse($this, $response,$destination);
-	}  
+    function parseResponse($response,$destination) 
+    {
+        include_once LC_MODULES_DIR . 'CanadaPost' . LC_DS . 'encoded.php';
+        return Shipping_cps_parseResponse($this, $response,$destination);
+    }
 
-} 
+}

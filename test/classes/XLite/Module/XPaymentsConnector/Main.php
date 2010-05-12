@@ -69,7 +69,7 @@ class XLite_Module_XPaymentsConnector_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'X-Payments connector';
-    }    
+    }
 
     /**
      * Determines if we need to show settings form link

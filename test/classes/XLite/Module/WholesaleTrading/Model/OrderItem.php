@@ -34,43 +34,43 @@
  * @since   3.0.0
  */
 class XLite_Module_WholesaleTrading_Model_OrderItem extends XLite_Model_OrderItem implements XLite_Base_IDecorator
-{	
-	public $_itemChanged = false;
+{
+    public $_itemChanged = false;
 
-	public function __construct()
-	{
-		$this->fields["wholesale_price"] = 0;
-		parent::__construct();
-	}
+    public function __construct()
+    {
+        $this->fields["wholesale_price"] = 0;
+        parent::__construct();
+    }
 
-	function _getStoredWholesalePrice()
-	{
-		return $this->xlite->get("useStoredWholesale");
-	}
+    function _getStoredWholesalePrice()
+    {
+        return $this->xlite->get("useStoredWholesale");
+    }
 
-	function _needStoredWholesalePrice()
-	{
-		return !$this->xlite->get("dontStoreWholesale");
-	}
+    function _needStoredWholesalePrice()
+    {
+        return !$this->xlite->get("dontStoreWholesale");
+    }
 
-	function _needSetWholesalePrice()
-	{
-		return $this->isPersistent && !$this->_itemChanged;
-	}
+    function _needSetWholesalePrice()
+    {
+        return $this->isPersistent && !$this->_itemChanged;
+    }
 
-	function _setWholesalePrice($price)
-	{
-		$this->set("wholesale_price", $price);
-		if ($this->_needSetWholesalePrice()) {
-			$this->update();
-		}
-	}
+    function _setWholesalePrice($price)
+    {
+        $this->set("wholesale_price", $price);
+        if ($this->_needSetWholesalePrice()) {
+            $this->update();
+        }
+    }
 
-	function _getWholesalePrice($parentPrice = false)
-	{
-		if ($parentPrice) {
+    function _getWholesalePrice($parentPrice = false)
+    {
+        if ($parentPrice) {
             return parent::get("price");
-		}
+        }
 
         if ($this->_getStoredWholesalePrice()) {
         	$price = $this->get("wholesale_price");
@@ -84,34 +84,34 @@ class XLite_Module_WholesaleTrading_Model_OrderItem extends XLite_Model_OrderIte
             return parent::get("price");
         }
         $product = $this->get("product");
-		if (!isset($this->wholesale_prices)) {
-			$wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
-			$this->wholesale_prices = $wp->getProductPrices($product->get("product_id"), $this->get("amount"), "OR membership='" . $this->getComplex('order.profile.membership') . "'");
-		}	
-		if (count($this->wholesale_prices) == 0) {
-			$price = parent::get("price");
+        if (!isset($this->wholesale_prices)) {
+            $wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
+            $this->wholesale_prices = $wp->getProductPrices($product->get("product_id"), $this->get("amount"), "OR membership='" . $this->getComplex('order.profile.membership') . "'");
+        }
+        if (count($this->wholesale_prices) == 0) {
+            $price = parent::get("price");
     		if (strval($this->formatCurrency($this->get("wholesale_price"))) != strval($this->formatCurrency($price)) && $this->_needStoredWholesalePrice()) {
     			$this->_setWholesalePrice($price);
     		}
-			return $price;
-		}
+            return $price;
+        }
 
-		$price = $this->wholesale_prices[count($this->wholesale_prices) - 1]->get("price");
-		if ($this->config->getComplex('Taxes.prices_include_tax')) {
-			$product->set("price", $price);
-			if (!$this->_skipTaxingWholesalePrice) {
-				$price = $product->get("listPrice");
-			}
-		}
-		if (strval($this->formatCurrency($this->get("wholesale_price"))) != strval($this->formatCurrency($price)) && $this->_needStoredWholesalePrice()) {
-			$this->_setWholesalePrice($price);
-		}
-		
-		return $price;
-	}
+        $price = $this->wholesale_prices[count($this->wholesale_prices) - 1]->get("price");
+        if ($this->config->getComplex('Taxes.prices_include_tax')) {
+            $product->set("price", $price);
+            if (!$this->_skipTaxingWholesalePrice) {
+                $price = $product->get("listPrice");
+            }
+        }
+        if (strval($this->formatCurrency($this->get("wholesale_price"))) != strval($this->formatCurrency($price)) && $this->_needStoredWholesalePrice()) {
+            $this->_setWholesalePrice($price);
+        }
+        
+        return $price;
+    }
 
-	function get($name)
-	{
+    function get($name)
+    {
         if ($name == "price") {
             return $this->_getWholesalePrice();
         } else if ($name == "parentPrice") {
@@ -119,20 +119,20 @@ class XLite_Module_WholesaleTrading_Model_OrderItem extends XLite_Model_OrderIte
         } else {
             return parent::get($name);
         }
-	}
+    }
 
-	function set($name, $value)
-	{
-		if (($name != "wholesale_price") && (in_array($name, $this->fields))) {
-			$this->_itemChanged = true;
-		}
-		parent::set($name, $value);
-	}
+    function set($name, $value)
+    {
+        if (($name != "wholesale_price") && (in_array($name, $this->fields))) {
+            $this->_itemChanged = true;
+        }
+        parent::set($name, $value);
+    }
 
-	function update()
-	{
-		parent::update();
-		$this->_itemChanged = false;
-	}
+    function update()
+    {
+        parent::update();
+        $this->_itemChanged = false;
+    }
 
 }

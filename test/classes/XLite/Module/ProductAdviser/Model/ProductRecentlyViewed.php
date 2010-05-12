@@ -34,34 +34,34 @@
  * @since   3.0.0
  */
 class XLite_Module_ProductAdviser_Model_ProductRecentlyViewed extends XLite_Model_Abstract
-{	
-	public $fields = array
-	(
-		"sid"			=> "",
-		"product_id" 	=> 0,
-		"views_number"	=> 0,
-		"last_viewed"	=> 0,
-	);	
-	public $primaryKey = array("sid", "product_id");	
-	public $alias = "products_recently_viewed";	
-	public $defaultOrder = "views_number DESC, last_viewed DESC";	
-	public $product = null;
+{
+    public $fields = array
+    (
+        "sid"			=> "",
+        "product_id" 	=> 0,
+        "views_number"	=> 0,
+        "last_viewed"	=> 0,
+    );
+    public $primaryKey = array("sid", "product_id");
+    public $alias = "products_recently_viewed";
+    public $defaultOrder = "views_number DESC, last_viewed DESC";
+    public $product = null;
 
-	public function __construct()
-	{
-		parent::__construct();
+    public function __construct()
+    {
+        parent::__construct();
 
-		$this->collectGarbage();
-	}
+        $this->collectGarbage();
+    }
 
     function collectGarbage()
     {
-		if ($this->xlite->get("RecentlyViewedCleaned")) {
-			return;
-		}
-		$t1 = $this->db->getTableByAlias($this->alias);
-		$t2 = $this->db->getTableByAlias("sessions");
-		$sql = "SELECT $t1.sid FROM $t1 LEFT JOIN $t2 ON $t1.sid=$t2.id WHERE $t2.id IS NULL";
+        if ($this->xlite->get("RecentlyViewedCleaned")) {
+            return;
+        }
+        $t1 = $this->db->getTableByAlias($this->alias);
+        $t2 = $this->db->getTableByAlias("sessions");
+        $sql = "SELECT $t1.sid FROM $t1 LEFT JOIN $t2 ON $t1.sid=$t2.id WHERE $t2.id IS NULL";
         $expired = $this->db->getAll($sql);
         if (is_array($expired) && count($expired) > 0) {
         	$hash = array();
@@ -69,41 +69,41 @@ class XLite_Module_ProductAdviser_Model_ProductRecentlyViewed extends XLite_Mode
         		$sid = $sid["sid"];
         		if (!isset($hash[$sid])) {
         			$hash[$sid] = true;
-					$sql = "DELETE FROM $t1 WHERE sid='$sid'";
+                    $sql = "DELETE FROM $t1 WHERE sid='$sid'";
         			$this->db->query($sql);
         		}
         	}
         }
 
-		$this->xlite->set("RecentlyViewedCleaned", true);
+        $this->xlite->set("RecentlyViewedCleaned", true);
     }
 
     function cleanCurrentGarbage()
     {
-		if ($this->xlite->get("CurrentRecentlyViewedCleaned")) {
-			return;
-		}
-		$t1 = $this->db->getTableByAlias($this->alias);
-		$sid = $this->session->getID();
-		$sql = "DELETE FROM $t1 WHERE sid='$sid'";
-		$this->db->query($sql);
+        if ($this->xlite->get("CurrentRecentlyViewedCleaned")) {
+            return;
+        }
+        $t1 = $this->db->getTableByAlias($this->alias);
+        $sid = $this->session->getID();
+        $sql = "DELETE FROM $t1 WHERE sid='$sid'";
+        $this->db->query($sql);
 
-		$this->xlite->set("CurrentRecentlyViewedCleaned", true);
+        $this->xlite->set("CurrentRecentlyViewedCleaned", true);
     }
 
-	function getProduct()
-	{
-		if (is_null($this->product)) {
-			$this->product = new XLite_Model_Product($this->get("product_id"));
-		}
-		return $this->product;
-	}
+    function getProduct()
+    {
+        if (is_null($this->product)) {
+            $this->product = new XLite_Model_Product($this->get("product_id"));
+        }
+        return $this->product;
+    }
 
-	function cleanRelations($product_id)
-	{
-		$objs = $this->findAll("product_id='$product_id'");
-		foreach ($objs as $obj) {
-			$obj->delete();
-		}
-	}
+    function cleanRelations($product_id)
+    {
+        $objs = $this->findAll("product_id='$product_id'");
+        foreach ($objs as $obj) {
+            $obj->delete();
+        }
+    }
 }

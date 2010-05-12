@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Controller_Customer_GetWidget extends XLite_Controller_Customer_Abstract
-{	
+{
     /**
      * Current page template 
      * 
@@ -68,7 +68,7 @@ class XLite_Controller_Customer_GetWidget extends XLite_Controller_Customer_Abst
      * @since  3.0.0
      */
     public function handleRequest()
-	{
+    {
         $request = XLite_Core_Request::getInstance();
 
         foreach ($this->getAJAXParamsTranslationTable() as $ajaxParam => $requestParam) {
@@ -131,17 +131,17 @@ class XLite_Controller_Customer_GetWidget extends XLite_Controller_Customer_Abst
         return parent::getViewer(true);
     }
 
-	/**
-	 * Get class name
-	 * 
-	 * @return string
-	 * @access public
-	 * @since  3.0.0
-	 */
-	public function getClass()
-	{
+    /**
+     * Get class name
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getClass()
+    {
         $param = self::PARAM_AJAX_CLASS;
 
-		return XLite_Core_Request::getInstance()->$param;
-	}
+        return XLite_Core_Request::getInstance()->$param;
+    }
 }

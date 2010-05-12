@@ -36,13 +36,13 @@
 class XLite_Controller_Admin_Upgrade extends XLite_Controller_Admin_Abstract
 {
 
-	function init()
-	{
-		parent::init();
-		if (!$this->get("action")) {
-			$this->redirect("admin.php?target=login");
-		}
-	}
+    function init()
+    {
+        parent::init();
+        if (!$this->get("action")) {
+            $this->redirect("admin.php?target=login");
+        }
+    }
 
     /**
     * View current version
@@ -68,9 +68,9 @@ class XLite_Controller_Admin_Upgrade extends XLite_Controller_Admin_Abstract
         $this->set("silent", true);
     }
 
-	function getAccessLevel()
-	{
-		return 0;
-	}
+    function getAccessLevel()
+    {
+        return 0;
+    }
 
 }

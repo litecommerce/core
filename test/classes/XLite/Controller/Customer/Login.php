@@ -35,7 +35,7 @@
  */
 class XLite_Controller_Customer_Login extends XLite_Controller_Customer_Abstract
 {
-	/**
+    /**
      * Common method to determine current location 
      * 
      * @return string
@@ -121,10 +121,10 @@ class XLite_Controller_Customer_Login extends XLite_Controller_Customer_Abstract
             $this->set("returnUrl", $url);
         }
 
-		$cart = XLite_Model_Cart::getInstance();
-		$cart->set("profile_id", $this->profile->get("profile_id"));
+        $cart = XLite_Model_Cart::getInstance();
+        $cart->set("profile_id", $this->profile->get("profile_id"));
 
-		$this->recalcCart();
+        $this->recalcCart();
     }
 
     function getShopUrl($url, $secure = false, $pure_url = false)
@@ -141,7 +141,7 @@ class XLite_Controller_Customer_Login extends XLite_Controller_Customer_Abstract
         	if ($this->config->getComplex('Security.logoff_clear_cart') == "Y") {
             	$this->getCart()->delete();
         	} else {
-				$this->recalcCart();
+                $this->recalcCart();
         	}
         }
     }

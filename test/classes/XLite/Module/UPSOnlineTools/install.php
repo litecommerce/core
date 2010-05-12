@@ -29,7 +29,7 @@ if (!function_exists("file_get_contents"))
         ob_start();
         $retval = @readfile($f);
         if (false !== $retval) 
-        { 
+        {
         	// no readfile error
             $retval = ob_get_contents();
         }
@@ -39,9 +39,9 @@ if (!function_exists("file_get_contents"))
 }
 if (!function_exists("start_patching"))
 {
-	function start_patching($title)
-	{
-	?>
+    function start_patching($title)
+    {
+    ?>
 </PRE>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
@@ -63,49 +63,49 @@ PRE {FONT-FAMILY: Courier, "Courier New"; COLOR: #000000; FONT-SIZE: 12px;}
 <TD nowrap><B>&nbsp;&nbsp;Modifying templates ...&nbsp;</TD>
 <TD nowrap><B>&nbsp;&nbsp;Status&nbsp;</TD>
 </TR>
-	<?php
-		global $patching_table_row;
-		$patching_table_row = 1;
-	}
+    <?php
+        global $patching_table_row;
+        $patching_table_row = 1;
+    }
 }
 
 if (!function_exists("end_patching"))
 {
-	function end_patching()
-	{
-	?>
+    function end_patching()
+    {
+    ?>
 </TABLE>
 <P>
 </BODY>
 </HTML>
 <PRE>
 <?php
-	}
+    }
 }
 
 if (!function_exists("is_template_patched"))
 {
-	function is_template_patched($location, $check_str)
-	{
-		global $patching_table_row;
-		$patching_table_row = ($patching_table_row) ? 0 : 1;
+    function is_template_patched($location, $check_str)
+    {
+        global $patching_table_row;
+        $patching_table_row = ($patching_table_row) ? 0 : 1;
 
         $src = @file_get_contents($location);
         return (strpos($src, $check_str) === false) ? false : true;
-	}
+    }
 }
 
 if (!function_exists("already_patched"))
 {
-	function already_patched($location)
-	{
-		global $patching_table_row;
-	    echo "<TR class=\"" . (($patching_table_row) ? "Middle" : "Center") . "\"><TD nowrap>&nbsp;$location&nbsp;</TD><TD nowrap>&nbsp;";
-		echo "<FONT COLOR=red><B>already patched</B></FONT>";
-	    echo "&nbsp;</TD></TR>\n";
+    function already_patched($location)
+    {
+        global $patching_table_row;
+        echo "<TR class=\"" . (($patching_table_row) ? "Middle" : "Center") . "\"><TD nowrap>&nbsp;$location&nbsp;</TD><TD nowrap>&nbsp;";
+        echo "<FONT COLOR=red><B>already patched</B></FONT>";
+        echo "&nbsp;</TD></TR>\n";
 //	    $patching_table_row = ($patching_table_row) ? 0 : 1;
-	}
-} 
+    }
+}
 
 if (!function_exists("file_not_exists"))
 {
@@ -119,7 +119,7 @@ if (!function_exists("file_not_exists"))
             echo "&nbsp;</TD></TR>\n";
             return;
         }
-	}
+    }
 }
 
 if (!function_exists("pattern_not_found"))
@@ -129,40 +129,40 @@ if (!function_exists("pattern_not_found"))
         global $patching_table_row;
         echo "<TR class=\"" . (($patching_table_row) ? "Middle" : "Center") . "\"><TD nowrap>&nbsp;$location&nbsp;</TD></TD><TD nowrap>&nbsp;";
 
-		$replace_message = "<FONT COLOR=red><B>&nbsp;(replace failed)&nbsp;</B></FONT>";
-		echo "<FONT COLOR=green><B>success</B></FONT>$replace_message";
-		echo "&nbsp;</TD></TR>\n";
-	}
+        $replace_message = "<FONT COLOR=red><B>&nbsp;(replace failed)&nbsp;</B></FONT>";
+        echo "<FONT COLOR=green><B>success</B></FONT>$replace_message";
+        echo "&nbsp;</TD></TR>\n";
+    }
 }
 
 if (!function_exists("patch_template"))
 {
-	function patch_template($location, $check_str=null, $find_str=null, $replace_str=null, $add_str=null)
-	{
-		global $patching_table_row;
-	    echo "<TR class=\"" . (($patching_table_row) ? "Middle" : "Center") . "\"><TD nowrap>&nbsp;$location&nbsp;</TD></TD><TD nowrap>&nbsp;";
+    function patch_template($location, $check_str=null, $find_str=null, $replace_str=null, $add_str=null)
+    {
+        global $patching_table_row;
+        echo "<TR class=\"" . (($patching_table_row) ? "Middle" : "Center") . "\"><TD nowrap>&nbsp;$location&nbsp;</TD></TD><TD nowrap>&nbsp;";
 
-		if (!file_exists($location)) {
-			echo "<FONT COLOR=red><B>not exists</B></FONT>";
-			echo "&nbsp;</TD></TR>\n";
-			return;
-		}
+        if (!file_exists($location)) {
+            echo "<FONT COLOR=red><B>not exists</B></FONT>";
+            echo "&nbsp;</TD></TR>\n";
+            return;
+        }
 
-		$src = @file_get_contents($location);
-		$src = preg_replace("/\r\n/m","\n", $src);
-	    if (!isset($check_str) || strpos($src, $check_str) === false) 
-	    {
-	    	$replace_message = "";
-	    	if (isset($find_str) && isset($replace_str))
+        $src = @file_get_contents($location);
+        $src = preg_replace("/\r\n/m","\n", $src);
+        if (!isset($check_str) || strpos($src, $check_str) === false) 
+        {
+        	$replace_message = "";
+        	if (isset($find_str) && isset($replace_str))
     		{
     			$old_src = $src;
-				$src = str_replace($find_str, $replace_str, $src);
-				if (strcmp($old_src, $src) == 0)
-				{
-					$replace_message = "<FONT COLOR=red><B>&nbsp;(replace failed)&nbsp;</B></FONT>";
-				}
+                $src = str_replace($find_str, $replace_str, $src);
+                if (strcmp($old_src, $src) == 0)
+                {
+                    $replace_message = "<FONT COLOR=red><B>&nbsp;(replace failed)&nbsp;</B></FONT>";
+                }
     		}
-		
+        
        	 	if (isset($add_str))
        	 	{
        	 		$src .= $add_str;
@@ -170,14 +170,14 @@ if (!function_exists("patch_template"))
     	
        	 	file_put_contents($location, $src);
        	 	echo "<FONT COLOR=green><B>success</B></FONT>$replace_message";
-       	} 
+       	}
        	else 
        	{
        		echo "<FONT COLOR=red><B>already patched</B></FONT>";
     	}
        	echo "&nbsp;</TD></TR>\n";
 //		$patching_table_row = ($patching_table_row) ? 0 : 1;
-	}
+    }
 }
 
 start_patching("UPSOnlineTools");
@@ -249,35 +249,35 @@ else
 //------------------------------------------------
 $location = "skins/admin/en/shipping/methods.tpl";
 if (!is_template_patched($location, "<tr><td class=\"AdminTitle\" colspan=5>{module.getModuleName()}</td></tr>")) {
-	if (!is_template_patched($location, "UPSOnlineTools/settings_link.tpl"))
-	{
+    if (!is_template_patched($location, "UPSOnlineTools/settings_link.tpl"))
+    {
     	$find_str = <<<EOT
-		<td class="AdminHead" colspan=5>{module.getModuleName()}</td>
-	</tr>
-	<tr><td>&nbsp;</td></tr>
+        <td class="AdminHead" colspan=5>{module.getModuleName()}</td>
+    </tr>
+    <tr><td>&nbsp;</td></tr>
 EOT;
     	$replace_str = <<<EOT
-		<td class="AdminHead" colspan=5>{module.getModuleName()}</td>
-	</tr>
-	<tr><td align="right">&nbsp;<widget module="UPSOnlineTools" template="modules/UPSOnlineTools/settings_link.tpl" IF="module.class=#ups#"/></td></tr>
+        <td class="AdminHead" colspan=5>{module.getModuleName()}</td>
+    </tr>
+    <tr><td align="right">&nbsp;<widget module="UPSOnlineTools" template="modules/UPSOnlineTools/settings_link.tpl" IF="module.class=#ups#"/></td></tr>
 EOT;
-	    patch_template($location, null, $find_str, $replace_str);
-	}
-	else
-	{
-	    already_patched($location);
-	}
+        patch_template($location, null, $find_str, $replace_str);
+    }
+    else
+    {
+        already_patched($location);
+    }
 } else {
-	if (!is_template_patched($location, "UPSOnlineTools/settings_link.tpl"))
-	{
+    if (!is_template_patched($location, "UPSOnlineTools/settings_link.tpl"))
+    {
     	$find_str = "<tr><td class=\"AdminTitle\" colspan=5>{module.getModuleName()}</td></tr>";
     	$replace_str = "<tr><td class=\"AdminTitle\" colspan=5>{module.getModuleName()}</td></tr>\n<tr><td align=\"right\">&nbsp;<widget module=\"UPSOnlineTools\" template=\"modules/UPSOnlineTools/settings_link.tpl\" IF=\"module.class=#ups#\"/></td></tr>";
-	    patch_template($location, null, $find_str, $replace_str);
-	}
-	else
-	{
-	    already_patched($location);
-	}
+        patch_template($location, null, $find_str, $replace_str);
+    }
+    else
+    {
+        already_patched($location);
+    }
 }
 
 //------------------------------------------------
@@ -300,30 +300,30 @@ else
 //------------------------------------------------
 $location = "skins/admin/en/shipping/methods.tpl";
 if (!file_exists($location)) {
-	file_not_exists($location);
+    file_not_exists($location);
 } else {
-	$content = file_get_contents($location);
-	if (!preg_match('/document\.shipping_method_\{module.class\}.submit\(\)\;\"\>(?(?!\<\/tr\>).)*?\<\/tr\>/si', $content, $out)) {
-		pattern_not_found();
-	} else {
-		if (!is_template_patched($location, "UPSOnlineTools/settings_disclaimer.tpl"))
-		{
-		    $find_str = array_shift($out);
-		    $replace_str = <<<EOT
+    $content = file_get_contents($location);
+    if (!preg_match('/document\.shipping_method_\{module.class\}.submit\(\)\;\"\>(?(?!\<\/tr\>).)*?\<\/tr\>/si', $content, $out)) {
+        pattern_not_found();
+    } else {
+        if (!is_template_patched($location, "UPSOnlineTools/settings_disclaimer.tpl"))
+        {
+            $find_str = array_shift($out);
+            $replace_str = <<<EOT
 $find_str
 <widget module="UPSOnlineTools" template="modules/UPSOnlineTools/settings_disclaimer.tpl" IF="module.class=#ups#"/>
 EOT;
-		    patch_template($location, null, $find_str, $replace_str);
-		} else {
-			already_patched($location);
-		}
-	}
+            patch_template($location, null, $find_str, $replace_str);
+        } else {
+            already_patched($location);
+        }
+    }
 }
 
 //------------------------------------------------
 $location = "skins/admin/en/order/order.tpl";
 if (!is_template_patched($location, "UPSOnlineTools"))
-{   
+{
     $find_str = <<<EOT
 <b><a href="admin.php?target=order&mode=invoice&order_id={order.order_id}" target="_blank"><input type="image" src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> Print invoice</a></b>
 EOT;
@@ -332,7 +332,7 @@ EOT;
 <widget module="UPSOnlineTools" template="modules/UPSOnlineTools/show_container_details.tpl">
 EOT;
     patch_template($location, null, $find_str, $replace_str);
-}   
+}
 else
 {
     already_patched($location);
@@ -341,19 +341,19 @@ else
 //------------------------------------------------
 $location = "skins/admin/en/modules/AOM/order.tpl";
 if (file_exists($location)) {
-	if (!is_template_patched($location, "UPSOnlineTools"))
-	{
+    if (!is_template_patched($location, "UPSOnlineTools"))
+    {
     	$find_str = <<<EOT
 <input class="ProductDetailsTitle" type="button" value=" Print invoice " onClick="window.open('admin.php?target=order&mode=invoice&order_id={order.order_id}')">
 EOT;
-	    $replace_str = <<<EOT
+        $replace_str = <<<EOT
 <input class="ProductDetailsTitle" type="button" value=" Print invoice " onClick="window.open('admin.php?target=order&mode=invoice&order_id={order.order_id}')">
-			<widget module="UPSOnlineTools" template="modules/UPSOnlineTools/show_container_details.tpl" style="button">
+            <widget module="UPSOnlineTools" template="modules/UPSOnlineTools/show_container_details.tpl" style="button">
 EOT;
-	    patch_template($location, null, $find_str, $replace_str);
-	} else {
-	    already_patched($location);
-	}
+        patch_template($location, null, $find_str, $replace_str);
+    } else {
+        already_patched($location);
+    }
 }
 
 
@@ -362,8 +362,8 @@ EOT;
 $location = "skins/default/en/main.tpl";
 
 if (is_template_patched($location, 'head="New customer" body="register_form.tpl"')) {
-	if (!is_template_patched($location, 'name="registerForm" IF="!showAV"'))
-	{
+    if (!is_template_patched($location, 'name="registerForm" IF="!showAV"'))
+    {
     	$find_str = <<<EOT
 <widget target="profile" mode="register" class="CRegisterForm" template="common/dialog.tpl" head="New customer" body="register_form.tpl" name="registerForm">
 EOT;
@@ -377,8 +377,8 @@ EOT;
         already_patched($location);
     }
 } else {
-	if (!is_template_patched($location, 'head="New member" IF="!showAV"'))
-	{
+    if (!is_template_patched($location, 'head="New member" IF="!showAV"'))
+    {
     	$find_str = 'head="New member"';
     	$replace_str = 'head="New member" IF="!showAV"';
         patch_template($location, null, $find_str, $replace_str);
@@ -410,8 +410,8 @@ else
 $location = "skins/default/en/main.tpl";
 if (!is_template_patched($location, '<widget module="UPSOnlineTools" template="modules/UPSOnlineTools/main.tpl">'))
 {
-	if (is_template_patched($location, '<!-- [/profile] }}} -->'))
-	{
+    if (is_template_patched($location, '<!-- [/profile] }}} -->'))
+    {
     	$find_str = <<<EOT
 <!-- [/profile] }}} -->
 EOT;
@@ -458,8 +458,8 @@ else
 //------------------------------------------------
 $location = "skins/default/en/main.tpl";
 if (is_template_patched($location, 'head="New customer" body="register_form.tpl"')) {
-	if (!is_template_patched($location, 'allowAnonymous="{config.General.enable_anon_checkout}" IF="!showAV"'))
-	{
+    if (!is_template_patched($location, 'allowAnonymous="{config.General.enable_anon_checkout}" IF="!showAV"'))
+    {
     	$find_str = <<<EOT
 <widget target="checkout" mode="register" class="CRegisterForm" template="common/dialog.tpl" body="register_form.tpl" head="Customer Information" name="registerForm" allowAnonymous="{config.General.enable_anon_checkout}">
 EOT;
@@ -467,11 +467,11 @@ EOT;
 <widget target="checkout" mode="register" class="CRegisterForm" template="common/dialog.tpl" body="register_form.tpl" head="Customer Information" name="registerForm" allowAnonymous="{config.General.enable_anon_checkout}" IF="!showAV"/>
 EOT;
     	patch_template($location, null, $find_str, $replace_str);
-	}
-	else
-	{
+    }
+    else
+    {
     	already_patched($location);
-	}
+    }
 }
 
 //------------------------------------------------
@@ -530,8 +530,8 @@ else
 $location = "skins/default/en/shopping_cart/delivery.tpl";
 if (is_template_patched($location, "<p IF=\"cart.shippingAvailable&cart.shipped&cart.getShippingRates()\" align=\"right\">"))
 {
-	if (!is_template_patched($location, "UPSOnlineTools"))
-	{
+    if (!is_template_patched($location, "UPSOnlineTools"))
+    {
     	$find_str = <<<EOT
 <p IF="cart.shippingAvailable&cart.shipped&cart.getShippingRates()" align="right">
 EOT;
@@ -541,14 +541,14 @@ EOT;
 <span IF="!xlite.UPSOnlineToolsEnabled">
 EOT;
     	patch_template($location, null, $find_str, $replace_str);
-	}
-	else
-	{
+    }
+    else
+    {
     	already_patched($location);
-	}
+    }
 
-	if (!is_template_patched($location, '</span> {* /UPSOnlineTools *}'))
-	{
+    if (!is_template_patched($location, '</span> {* /UPSOnlineTools *}'))
+    {
     	$find_str = <<<EOT
 </select>
 </p>
@@ -559,14 +559,14 @@ EOT;
 </p>
 EOT;
     	patch_template($location, null, $find_str, $replace_str);
-	}
-	else
-	{
+    }
+    else
+    {
     	already_patched($location);
-	}
+    }
 } elseif (is_template_patched($location, "<p IF=\"cart.shippingAvailable&cart.shipped\" align=\"right\">")) {
-	if (!is_template_patched($location, "UPSOnlineTools"))
-	{
+    if (!is_template_patched($location, "UPSOnlineTools"))
+    {
     	$find_str = <<<EOT
 <p IF="cart.shippingAvailable&cart.shipped" align="right">
 EOT;
@@ -576,14 +576,14 @@ EOT;
 <span IF="!xlite.UPSOnlineToolsEnabled">
 EOT;
     	patch_template($location, null, $find_str, $replace_str);
-	}
-	else
-	{
+    }
+    else
+    {
     	already_patched($location);
-	}
+    }
 
-	if (!is_template_patched($location, '</span> {* /UPSOnlineTools *}'))
-	{
+    if (!is_template_patched($location, '</span> {* /UPSOnlineTools *}'))
+    {
     	$find_str = <<<EOT
 </select>
 </p>
@@ -594,14 +594,14 @@ EOT;
 </p>
 EOT;
     	patch_template($location, null, $find_str, $replace_str);
-	}
-	else
-	{
+    }
+    else
+    {
     	already_patched($location);
-	}
+    }
 } else {
-	if (!is_template_patched($location, "UPSOnlineTools"))
-	{
+    if (!is_template_patched($location, "UPSOnlineTools"))
+    {
     	$find_str = <<<EOT
 <p IF="cart.shippingAvailable" align="right">
 EOT;
@@ -611,14 +611,14 @@ EOT;
 <span IF="!xlite.UPSOnlineToolsEnabled">
 EOT;
     	patch_template($location, null, $find_str, $replace_str);
-	}
-	else
-	{
+    }
+    else
+    {
     	already_patched($location);
-	}
+    }
 
-	if (!is_template_patched($location, '</span> {* /UPSOnlineTools *}'))
-	{
+    if (!is_template_patched($location, '</span> {* /UPSOnlineTools *}'))
+    {
     	$find_str = <<<EOT
 </select>
 </p>
@@ -629,50 +629,50 @@ EOT;
 </p>
 EOT;
     	patch_template($location, null, $find_str, $replace_str);
-	}
-	else
-	{
+    }
+    else
+    {
     	already_patched($location);
-	}
+    }
 }
 
 //------------------------------------------------
 $location = "skins/default/en/modules/Promotion/delivery.tpl";
 if (file_exists($location)) {
-	if (!is_template_patched($location, "UPSOnlineTools"))
-	{
+    if (!is_template_patched($location, "UPSOnlineTools"))
+    {
     	$find_str = <<<EOT
 <p IF="cart.shippingAvailable&cart.shipped" align="right">
 EOT;
-	    $replace_str = <<<EOT
+        $replace_str = <<<EOT
 <p IF="cart.shippingAvailable&cart.shipped" align="right">
 <widget module="UPSOnlineTools" template="modules/UPSOnlineTools/delivery.tpl">
 <div IF="!xlite.UPSOnlineToolsEnabled">
 EOT;
-	    patch_template($location, null, $find_str, $replace_str);
-	} else {
+        patch_template($location, null, $find_str, $replace_str);
+    } else {
     	already_patched($location);
-	}
+    }
 }
 
 //------------------------------------------------
 $location = "skins/default/en/modules/Promotion/delivery.tpl";
 if (file_exists($location)) {
-	if (!is_template_patched($location, '</div> {* /UPSOnlineTools *}'))
-	{
+    if (!is_template_patched($location, '</div> {* /UPSOnlineTools *}'))
+    {
     	$find_str = <<<EOT
 </select>
 </p>
 EOT;
-	    $replace_str = <<<EOT
+        $replace_str = <<<EOT
 </select>
 </div> {* /UPSOnlineTools *}
 </p>
 EOT;
-	    patch_template($location, null, $find_str, $replace_str);
-	} else {
+        patch_template($location, null, $find_str, $replace_str);
+    } else {
     	already_patched($location);
-	}
+    }
 }
 
 

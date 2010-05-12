@@ -62,7 +62,7 @@ class XLite_View_Model_Profile_Checkout extends XLite_View_Model_Profile_Abstrac
         return $result;
     }
 
-	/**
+    /**
      * Return name of web form widget class
      *
      * @return string

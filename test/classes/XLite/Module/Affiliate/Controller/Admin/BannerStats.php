@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_Affiliate_Controller_Admin_BannerStats extends XLite_Module_Affiliate_Controller_Admin_PartnerStats
-{	
+{
     public $statsTotal = array("views" => 0, "click" => 0, "rate" => 0);
 
     function fillForm()
@@ -77,6 +77,6 @@ class XLite_Module_Affiliate_Controller_Admin_BannerStats extends XLite_Module_A
         $this->statsTotal["clicks"] += $rec["clicks"];
         if ($this->statsTotal["views"] != 0) {
             $this->statsTotal["rate"] = sprintf("%.02f", doubleval($this->statsTotal["clicks"] / $this->statsTotal["views"]));
-        }    
+        }
     }
 }

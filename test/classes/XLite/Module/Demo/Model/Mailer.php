@@ -38,7 +38,7 @@ class XLite_Module_Demo_Model_Mailer extends XLite_Model_Mailer implements XLite
      */
     public function send()
     {
-		XLite_Module_Demo_Main::doForbidOperation('Sending mail is disabled in demo mode');
+        XLite_Module_Demo_Main::doForbidOperation('Sending mail is disabled in demo mode');
 
         if (isset($this->templatesSkin)) {
 
@@ -47,7 +47,7 @@ class XLite_Module_Demo_Model_Mailer extends XLite_Model_Mailer implements XLite
             $layout->set('skin', $this->templatesSkin);
             $this->templatesSkin = null;
         }
-	}
+    }
 
 }
 

@@ -34,9 +34,9 @@
  * @since   3.0.0
  */
 class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
-{    
-    public $product   = null;    
-    public $orderItem = null;    
+{
+    public $product   = null;
+    public $orderItem = null;
        
     public $fields = array (
         "item_id"     => 0,
@@ -46,10 +46,10 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
         "purchased"   => 0,
         "options"     => 0,
         "order_by"    => 0,
-    );    
+    );
         
-    public $alias        = "wishlist_products";    
-    public $defaultOrder = "order_by";    
+    public $alias        = "wishlist_products";
+    public $defaultOrder = "order_by";
     public $primaryKey   = array("item_id","wishlist_id");
 
 
@@ -85,10 +85,10 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
     {
         if (!isset($this->product)) {
             $this->product = new XLite_Model_Product($this->get("product_id"));
-        }    
+        }
 
-        return $this->product;    
-    } 
+        return $this->product;
+    }
 
     /**
      * Return the Thumbnai image instance for this product 
@@ -107,10 +107,10 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
         if (!isset($this->orderItem)) {
             $this->orderItem = new XLite_Model_OrderItem();
             $this->orderItem->set("product", $this->getProduct());
-        }                                                
+        }
         
-        return $this->orderItem;                                        
-    } 
+        return $this->orderItem;
+    }
 
     function changeOrderItem(&$orderItem) 
     {
@@ -126,7 +126,7 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
         }
 
         return $isChanged;
-    } 
+    }
 
     function get($name) 
     {
@@ -138,7 +138,7 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
             case "weight":
                 $orderItem = $this->get("orderItem");
                 if ($this->changeOrderItem($orderItem)) {
-                    $value = $orderItem->get($name);    
+                    $value = $orderItem->get($name);
                     break;
                 }
 
@@ -154,36 +154,36 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
         }
 
         return $value;
-    } 
+    }
 
     function getImageURL() 
     {
         return $this->getProduct()->getImageURL();
-    } 
+    }
 
     function getUrl() 
     {
         return array(
-			'target' => 'product',
-			'action' => '',
-			'arguments' => array('product_id' => $this->get("product_id"))
-		);
-    } 
+            'target' => 'product',
+            'action' => '',
+            'arguments' => array('product_id' => $this->get("product_id"))
+        );
+    }
 
     function getTotal() 
     {
         return $this->get("price") * $this->get("amount");
-    } 
+    }
     
     function hasImage() 
     {
         return $this->getProduct()->hasImage();
-     } 
+     }
     
     function hasOptions()  
     {
         return $this->get("options");
-    } 
+    }
     
     /* returns two-dimensional array like this
         ( 
@@ -268,7 +268,7 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
                     $result = false;
                     break;
                 }
-            }            
+            }
         }
 
         return $result;
@@ -279,13 +279,13 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
         $options = $this->get("options");
 
         return empty($options) ? array() : unserialize($options);
-    } 
+    }
 
     function setProductOptions(&$options)  
     {
         $orderItem = $this->get("orderItem");
         $orderItem->setProductOptions($options);
         $this->set("options", $orderItem->get("options"));
-    } 
+    }
 
-} 
+}

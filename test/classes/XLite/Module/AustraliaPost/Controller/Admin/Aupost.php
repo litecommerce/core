@@ -34,59 +34,59 @@
  * @since   3.0.0
  */
 class XLite_Module_AustraliaPost_Controller_Admin_Aupost extends XLite_Controller_Admin_ShippingSettings
-{	
-	public $params = array("target", "updated");	
-	public $page		="aupost";		
-	public $updated 	= false;		
-	public $testResult = false;	
-	public $settings;		
-	public $rates 		= array();
+{
+    public $params = array("target", "updated");
+    public $page		="aupost";
+    public $updated 	= false;
+    public $testResult = false;
+    public $settings;
+    public $rates 		= array();
 
-	public function __construct(array $params)  
-	{
-		parent::__construct($params);
+    public function __construct(array $params)  
+    {
+        parent::__construct($params);
 
-		$aupost = new XLite_Module_AustraliaPost_Model_Shipping_Aupost();
-		$this->settings = $aupost->get("options");
-	} 
-	
-	function action_update()  
-	{
-		$aupost = new XLite_Module_AustraliaPost_Model_Shipping_Aupost();
-		$currency_rate = $_POST["currency_rate"];
-		if (((double) $currency_rate) <= 0) {
-			$_POST["currency_rate"] = 1;
-		}
-		$aupost->set("options", (object)$_POST);
-		$this->set("updated", true);
+        $aupost = new XLite_Module_AustraliaPost_Model_Shipping_Aupost();
+        $this->settings = $aupost->get("options");
+    }
+    
+    function action_update()  
+    {
+        $aupost = new XLite_Module_AustraliaPost_Model_Shipping_Aupost();
+        $currency_rate = $_POST["currency_rate"];
+        if (((double) $currency_rate) <= 0) {
+            $_POST["currency_rate"] = 1;
+        }
+        $aupost->set("options", (object)$_POST);
+        $this->set("updated", true);
 
-	} 
-	
-	function action_test()  
-	{
-		if (empty($this->weight)) 
-			$this->weight = 1; 
-		if (empty($this->sourceZipcode)) 
-			$this->sourceZipcode = $this->config->getComplex('Company.location_zipcode');
-		if (empty($this->destinationZipcode)) 
-			$this->destinationZipcode = $this->config->getComplex('Company.location_zipcode');
+    }
+    
+    function action_test()  
+    {
+        if (empty($this->weight)) 
+            $this->weight = 1;
+        if (empty($this->sourceZipcode)) 
+            $this->sourceZipcode = $this->config->getComplex('Company.location_zipcode');
+        if (empty($this->destinationZipcode)) 
+            $this->destinationZipcode = $this->config->getComplex('Company.location_zipcode');
         if (empty($this->destinationCountry)) 
-			$this->destinationCountry = $this->config->getComplex('General.default_country');
+            $this->destinationCountry = $this->config->getComplex('General.default_country');
  
-		$this->aupost = new XLite_Module_AustraliaPost_Model_Shipping_Aupost();
-		$options = $this->aupost->get("options");
+        $this->aupost = new XLite_Module_AustraliaPost_Model_Shipping_Aupost();
+        $options = $this->aupost->get("options");
 
-		$this->rates = $this->aupost->queryRates
-		(
-			$options, 
-			$this->sourceZipcode,
-			$this->destinationZipcode,
-			$this->destinationCountry,
-			$this->weight,
-			$this->weight_unit
-		);
-		$this->testResult = true;	
-		$this->valid	  = false;
-	} 
+        $this->rates = $this->aupost->queryRates
+        (
+            $options, 
+            $this->sourceZipcode,
+            $this->destinationZipcode,
+            $this->destinationCountry,
+            $this->weight,
+            $this->weight_unit
+        );
+        $this->testResult = true;
+        $this->valid	  = false;
+    }
 
-} 
+}

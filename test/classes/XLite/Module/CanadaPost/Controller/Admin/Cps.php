@@ -34,63 +34,63 @@
  * @since   3.0.0
  */
 class XLite_Module_CanadaPost_Controller_Admin_Cps extends XLite_Controller_Admin_ShippingSettings
-{	
-	public $params = array("target", "updated");	
-	public $page		="cps";		
-	public $updated 	= false;		
-	public $testResult = false;	
-	public $settings;		
-	public $rates 		= array();
+{
+    public $params = array("target", "updated");
+    public $page		="cps";
+    public $updated 	= false;
+    public $testResult = false;
+    public $settings;
+    public $rates 		= array();
 
-	public function __construct(array $params)  
-	{
-		parent::__construct($params);
+    public function __construct(array $params)  
+    {
+        parent::__construct($params);
 
-		$cps = new XLite_Module_CanadaPost_Model_Shipping_Cps();
-		$this->settings = $cps->get("options");
-	} 
-	
-	function action_update()  
-	{
-		$cps = new XLite_Module_CanadaPost_Model_Shipping_Cps();
-		if (!isset($_POST['test_server'])) {
-			$_POST['test_server'] = 0;
-		}	
-		$cps->set("options",(object)$_POST);
-		$this->set("updated", true);
+        $cps = new XLite_Module_CanadaPost_Model_Shipping_Cps();
+        $this->settings = $cps->get("options");
+    }
+    
+    function action_update()  
+    {
+        $cps = new XLite_Module_CanadaPost_Model_Shipping_Cps();
+        if (!isset($_POST['test_server'])) {
+            $_POST['test_server'] = 0;
+        }
+        $cps->set("options",(object)$_POST);
+        $this->set("updated", true);
 
-	} 
-	
-	function action_test()  
-	{
-		if (empty($this->weight)) 
-			$this->weight = 1; 
-		if (empty($this->destinationZipcode)) 
-			$this->destinationZipcode = $this->config->getComplex('Company.location_zipcode');
+    }
+    
+    function action_test()  
+    {
+        if (empty($this->weight)) 
+            $this->weight = 1;
+        if (empty($this->destinationZipcode)) 
+            $this->destinationZipcode = $this->config->getComplex('Company.location_zipcode');
         if (empty($this->destinationCountry)) 
-			$this->destinationCountry = $this->config->getComplex('Company.location_country');
+            $this->destinationCountry = $this->config->getComplex('Company.location_country');
         $state = new XLite_Model_State($this->destinationState);
-		$state = $state->get("code");
-		if (empty($state)) $state = "Other";
+        $state = $state->get("code");
+        if (empty($state)) $state = "Other";
  
-		$this->cps = new XLite_Module_CanadaPost_Model_Shipping_Cps();
-		$options = $this->cps->get("options");
-		$options->packed == 'Y' ? $packed = "<readyToShip/>" : $packed = "";
+        $this->cps = new XLite_Module_CanadaPost_Model_Shipping_Cps();
+        $options = $this->cps->get("options");
+        $options->packed == 'Y' ? $packed = "<readyToShip/>" : $packed = "";
 
-		$this->rates = $this->cps->queryRates(
-				$options, 
-				$this->config->getComplex('Company.location_zipcode'), 
-				$this->config->getComplex('Company.location_country'), 
-				0, 
-				$this->weight,
-				"Test ",
-				$packed, 
-				$this->destinationCity,
-				$this->destinationZipcode,
-				$state,
-				$this->destinationCountry);
-		$this->testResult = true;	
-		$this->valid	  = false;
-	} 
+        $this->rates = $this->cps->queryRates(
+                $options, 
+                $this->config->getComplex('Company.location_zipcode'), 
+                $this->config->getComplex('Company.location_country'), 
+                0, 
+                $this->weight,
+                "Test ",
+                $packed, 
+                $this->destinationCity,
+                $this->destinationZipcode,
+                $state,
+                $this->destinationCountry);
+        $this->testResult = true;
+        $this->valid	  = false;
+    }
 
-} 
+}

@@ -35,7 +35,7 @@
  */
 class XLite_Module_WholesaleTrading_Controller_Admin_AddProduct extends XLite_Controller_Admin_AddProduct implements XLite_Base_IDecorator
 {
-	function getValidatyModifier()
+    function getValidatyModifier()
     {
         return substr($this->getProduct()->get('validaty_period'), 0, 1);
     }
@@ -44,10 +44,10 @@ class XLite_Module_WholesaleTrading_Controller_Admin_AddProduct extends XLite_Co
     {
         return substr($this->getProduct()->get('validaty_period'), 1);
     }
-	
+    
     function action_add()
     {
-		$_POST["validaty_period"] = $_POST["vp_modifier"] . $_POST["vperiod"];
-		parent::action_add();
+        $_POST["validaty_period"] = $_POST["vp_modifier"] . $_POST["vperiod"];
+        parent::action_add();
     }
 }

@@ -44,13 +44,13 @@ class XLite_Module_WishList_Model_WishList extends XLite_Model_Abstract
      * @see    ____var_see____
      * @since  3.0.0
      */
-	public $fields = array (
-		'wishlist_id' => 0,
-		'profile_id'  => 0,
-		'order_by'	  => 0,
+    public $fields = array (
+        'wishlist_id' => 0,
+        'profile_id'  => 0,
+        'order_by'	  => 0,
         'date'		  => ''
     );
-		
+        
     /**
      * alias 
      * 
@@ -99,7 +99,7 @@ class XLite_Module_WishList_Model_WishList extends XLite_Model_Abstract
      * @see    ____var_see____
      * @since  3.0.0
      */
-	public $profile	= null;
+    public $profile	= null;
 
     /**
      * getProducts 
@@ -109,13 +109,13 @@ class XLite_Module_WishList_Model_WishList extends XLite_Model_Abstract
      * @see    ____func_see____
      * @since  3.0.0
      */
-	public function getProducts()
-	{
+    public function getProducts()
+    {
         $wishlist_product = new XLite_Module_WishList_Model_WishListProduct();
 
         return $wishlist_product->findAll('wishlist_id = ' . $this->get('wishlist_id'));
     }
-	
+    
     /**
      * getProfile 
      * 
@@ -124,14 +124,14 @@ class XLite_Module_WishList_Model_WishList extends XLite_Model_Abstract
      * @see    ____func_see____
      * @since  3.0.0
      */
-	public function getProfile()
-	{
-		if (is_null($this->profile)) { 
-			$this->profile = new XLite_Model_Profile($this->get('profile_id'));	
+    public function getProfile()
+    {
+        if (is_null($this->profile)) {
+            $this->profile = new XLite_Model_Profile($this->get('profile_id'));
         }
 
-		return $this->profile;
-	}
+        return $this->profile;
+    }
 
     /**
      * collectGarbage 
@@ -141,20 +141,20 @@ class XLite_Module_WishList_Model_WishList extends XLite_Model_Abstract
      * @see    ____func_see____
      * @since  3.0.0
      */
-	public function collectGarbage()
-	{
-		$wishlist = new XLite_Module_WishList_Model_WishList();
+    public function collectGarbage()
+    {
+        $wishlist = new XLite_Module_WishList_Model_WishList();
         $wishlists = $wishlist->findAll();
 
-		if (is_array($wishlists)) {
-			foreach($wishlists as $wishlist_) {
+        if (is_array($wishlists)) {
+            foreach($wishlists as $wishlist_) {
                 if (!$wishlist_->get('products')) {
                     $wishlist_->delete();
                 }
             }
-		}
-	}
-	
+        }
+    }
+    
     /**
      * Search wishlists
      * 
@@ -171,17 +171,17 @@ class XLite_Module_WishList_Model_WishList extends XLite_Model_Abstract
      * @see    ____func_see____
      * @since  3.0.0
      */
-	public function search($start_id, $end_id, $profile, $sku, $name, $startDate, $endDate)
-	{
-		$where = array();
+    public function search($start_id, $end_id, $profile, $sku, $name, $startDate, $endDate)
+    {
+        $where = array();
 
-		if (!empty($start_id)) {
+        if (!empty($start_id)) {
             $where[] = 'wishlist_id >=' . intval($start_id);
         }
         if (!empty($end_id)) {
             $where[] = 'wishlist_id <=' . intval($end_id);
         }
-	    if ($profile) {
+        if ($profile) {
             $where[] = 'profile_id = \'' . $profile->get('profile_id') . '\'';
         }
         if ($startDate) {
@@ -191,23 +191,23 @@ class XLite_Module_WishList_Model_WishList extends XLite_Model_Abstract
             $where[] = 'date <= ' .$endDate;
         }
 
-		$wishlists = $this->findAll(implode(' AND ', $where), 'date DESC');
+        $wishlists = $this->findAll(implode(' AND ', $where), 'date DESC');
 
         if (!empty($sku) || !empty($name)) {
 
             $product = new XLite_Model_Product();
 
-			$found = array();
+            $found = array();
             $found_product = $product->findImportedProduct($sku, '', '', false);
 
-			if ($found_product) {
-                $found[] = 'product_id = ' . $found_product->get('product_id');  
+            if ($found_product) {
+                $found[] = 'product_id = ' . $found_product->get('product_id');
             }
 
             $found_product = $product->findImportedProduct('', '', $name, false);
 
             if ($found_product) {
-                $found[] = 'product_id = ' . $found_product->get('product_id');      
+                $found[] = 'product_id = ' . $found_product->get('product_id');
             }
 
             if (empty($found)) {
@@ -221,20 +221,20 @@ class XLite_Module_WishList_Model_WishList extends XLite_Model_Abstract
             $wishlist_ids = array();
 
             foreach ($wishlist_products as $wishlist_product) {
-				if (!in_array($wishlist_product->get('wishlist_id'), $wishlist_ids)) {
-                    $wishlist_ids[] = $wishlist_product->get('wishlist_id'); 
+                if (!in_array($wishlist_product->get('wishlist_id'), $wishlist_ids)) {
+                    $wishlist_ids[] = $wishlist_product->get('wishlist_id');
                 }
             }
 
-			foreach($wishlists as $key => $wishlist) {
+            foreach($wishlists as $key => $wishlist) {
                 if (!in_array($wishlist->get('wishlist_id'), $wishlist_ids)) {
                     unset($wishlists[$key]);
                 }
             }
-        } 
+        }
 
-		return $wishlists;  
-	}
+        return $wishlists;
+    }
 
     /**
      * Get default search conditions 
@@ -248,10 +248,10 @@ class XLite_Module_WishList_Model_WishList extends XLite_Model_Abstract
     {
         return array(
             'startId'       => '',
-			'endId'         => '',
-			'email'			=> '',
-			'sku'			=> '',
-			'productTitle'	=> '',
+            'endId'         => '',
+            'email'			=> '',
+            'sku'			=> '',
+            'productTitle'	=> '',
             'startDate'     => '',
             'endDate'       => '',
             'sortCriterion' => 'date',

@@ -35,13 +35,13 @@
  */
 class XLite_Controller_Admin_CardTypes extends XLite_Controller_Admin_Abstract
 {
-	function obligatorySetStatus($status)
-	{
-		if (!in_array("status", $this->params)) {
-			$this->params[] = "status";
-		}
-		$this->set("status", $status);
-	}
+    function obligatorySetStatus($status)
+    {
+        if (!in_array("status", $this->params)) {
+            $this->params[] = "status";
+        }
+        $this->set("status", $status);
+    }
 
     function action_delete()
     {
@@ -52,29 +52,29 @@ class XLite_Controller_Admin_CardTypes extends XLite_Controller_Admin_Abstract
             }
         }
 
-		$this->obligatorySetStatus("deleted");
+        $this->obligatorySetStatus("deleted");
     }
 
     function action_add()
     {
-		if ( empty(XLite_Core_Request::getInstance()->code) ) {
-			$this->set("valid", false);
-			$this->obligatorySetStatus("code");
-			return;
-		}
+        if ( empty(XLite_Core_Request::getInstance()->code) ) {
+            $this->set("valid", false);
+            $this->obligatorySetStatus("code");
+            return;
+        }
 
-		if ( empty(XLite_Core_Request::getInstance()->card_type) ) {
-			$this->set("valid", false);
-			$this->obligatorySetStatus("card_type");
-			return;
-		}
+        if ( empty(XLite_Core_Request::getInstance()->card_type) ) {
+            $this->set("valid", false);
+            $this->obligatorySetStatus("card_type");
+            return;
+        }
 
         // checkboxes
         if (!isset(XLite_Core_Request::getInstance()->cvv2)) {
-			XLite_Core_Request::getInstance()->cvv2 = 0;
+            XLite_Core_Request::getInstance()->cvv2 = 0;
         }
         if (!isset(XLite_Core_Request::getInstance()->enabled)) {
-			XLite_Core_Request::getInstance()->enabled = 0;
+            XLite_Core_Request::getInstance()->enabled = 0;
         }
         $card = new XLite_Model_Card();
         $card->set("properties", XLite_Core_Request::getInstance()->getData());
@@ -86,7 +86,7 @@ class XLite_Controller_Admin_CardTypes extends XLite_Controller_Admin_Abstract
         
         $card->create();
 
-		$this->obligatorySetStatus("added");
+        $this->obligatorySetStatus("added");
     }
     
     function action_update()
@@ -94,11 +94,11 @@ class XLite_Controller_Admin_CardTypes extends XLite_Controller_Admin_Abstract
         foreach (XLite_Core_Request::getInstance()->card_types as $id => $data) {
             $data["enabled"] = array_key_exists("enabled", $data) ? 1 : 0;
             $data["cvv2"]    = array_key_exists("cvv2",    $data) ? 1 : 0;
-            $card = new XLite_Model_Card(); 
+            $card = new XLite_Model_Card();
             $card->set("properties", $data);
             $card->update();
         }
 
-		$this->obligatorySetStatus("updated");
+        $this->obligatorySetStatus("updated");
     }
 }

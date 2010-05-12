@@ -35,28 +35,28 @@
  */
 class XLite_Module_UPSOnlineTools_Model_Product extends XLite_Model_Product implements XLite_Base_IDecorator
 {
-	public function __construct($id=null)
-	{
-		parent::__construct($id);
-		$this->fields["ups_width"] = 1;
-		$this->fields["ups_height"] = 1;
-		$this->fields["ups_length"] = 1;
-		$this->fields["ups_handle_care"] = 0;
-		$this->fields["ups_add_handling"] = 0;
-		$this->fields["ups_declared_value"] = 0;
-		$this->fields["ups_declared_value_set"] = 0;
-		$this->fields["ups_packaging"] = 0;
-	}
+    public function __construct($id=null)
+    {
+        parent::__construct($id);
+        $this->fields["ups_width"] = 1;
+        $this->fields["ups_height"] = 1;
+        $this->fields["ups_length"] = 1;
+        $this->fields["ups_handle_care"] = 0;
+        $this->fields["ups_add_handling"] = 0;
+        $this->fields["ups_declared_value"] = 0;
+        $this->fields["ups_declared_value_set"] = 0;
+        $this->fields["ups_packaging"] = 0;
+    }
 
-	function getDeclaredValue()
-	{
-		return ($this->get("ups_declared_value_set")) ? $this->get("ups_declared_value") : $this->get("price");
-	}
+    function getDeclaredValue()
+    {
+        return ($this->get("ups_declared_value_set")) ? $this->get("ups_declared_value") : $this->get("price");
+    }
 
-	function getWeightConv($unit)
-	{
-		require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
-		return UPSOnlineTools_convertWeight($this->get("weight"), $this->config->getComplex('General.weight_unit'), $unit, 2);
-	}
+    function getWeightConv($unit)
+    {
+        require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
+        return UPSOnlineTools_convertWeight($this->get("weight"), $this->config->getComplex('General.weight_unit'), $unit, 2);
+    }
 
 }

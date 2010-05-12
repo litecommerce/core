@@ -34,14 +34,14 @@
  * @since   3.0.0
  */
 class XLite_Controller_Admin_ExportCatalog extends XLite_Controller_Admin_Abstract
-{	
-    public $params = array('target', 'page');	
+{
+    public $params = array('target', 'page');
     public $pages = array('products' => 'Export products',
                        'extra_fields' => 'Export extra fields'
-                       );	
+                       );
     public $pageTemplates = array('products' => 'product/export.tpl',
                                'extra_fields' => 'product/export_fields.tpl'
-                               );	
+                               );
     public $page = "products";
 
     function handleRequest()
@@ -98,14 +98,14 @@ class XLite_Controller_Admin_ExportCatalog extends XLite_Controller_Admin_Abstra
      	$p = new XLite_Model_Product();
      	$products = $p->findAll();
         foreach ($products as $product_idx => $product) {
-			$products[$product_idx]->populateExtraFields();
-		}
+            $products[$product_idx]->populateExtraFields();
+        }
 
-		$global_extra_field = new XLite_Model_ExtraField();
-		foreach($global_extra_field->findAll("product_id = 0") as $gef) {
-			 print func_construct_csv($gef->_export($this->fields_layout, $DATA_DELIMITERS[$this->delimiter]), $DATA_DELIMITERS[$this->delimiter], '"');
+        $global_extra_field = new XLite_Model_ExtraField();
+        foreach($global_extra_field->findAll("product_id = 0") as $gef) {
+             print func_construct_csv($gef->_export($this->fields_layout, $DATA_DELIMITERS[$this->delimiter]), $DATA_DELIMITERS[$this->delimiter], '"');
              print "\n";
-		}
+        }
 
         foreach ($products as $product_idx => $product) {
             foreach($products[$product_idx]->getExtraFields(false) as $ef) {

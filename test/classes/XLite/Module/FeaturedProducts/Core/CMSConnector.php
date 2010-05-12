@@ -45,7 +45,7 @@ abstract class XLite_Module_FeaturedProducts_Core_CMSConnector extends XLite_Cor
      */
     protected function __construct()
     {
-		parent::__construct();
+        parent::__construct();
 
         $this->widgetsList['XLite_Module_FeaturedProducts_View_FeaturedProducts'] = 'Featured products';
     }

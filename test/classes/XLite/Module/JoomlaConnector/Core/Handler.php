@@ -35,7 +35,7 @@
  */
 abstract class XLite_Module_JoomlaConnector_Core_Handler extends XLite_Core_Handler implements XLite_Base_IDecorator
 {
-	/**
+    /**
      * Compose URL from target, action and additional params
      *
      * @param string $target page identifier
@@ -48,7 +48,7 @@ abstract class XLite_Module_JoomlaConnector_Core_Handler extends XLite_Core_Hand
      */
     protected function getJoomlaURL($target, $action = '', array $params = array())
     {
-		// TODO - this function must not be called!
+        // TODO - this function must not be called!
         return parent::buildURL($target, $action, $params) . '&============';
     }
 
@@ -67,7 +67,7 @@ abstract class XLite_Module_JoomlaConnector_Core_Handler extends XLite_Core_Hand
     public function buildURL($target = '', $action = '', array $params = array())
     {
         return XLite_Module_JoomlaConnector_Handler::getInstance()->checkCurrentCMS()
-			? self::getJoomlaURL($target, $action, $params) 
-			: parent::buildURL($target, $action, $params);
+            ? self::getJoomlaURL($target, $action, $params) 
+            : parent::buildURL($target, $action, $params);
     }
 }

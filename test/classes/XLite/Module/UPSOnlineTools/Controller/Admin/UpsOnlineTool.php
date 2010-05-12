@@ -37,27 +37,27 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsOnlineTool extends XLite_C
 {
 
     function getCurrentStep()
-	{
+    {
         return intval($this->session->get('ups_step'));
     }
 
     function getLicense(&$ret)
-	{
+    {
         $obj = new XLite_Module_UPSOnlineTools_Model_Shipping_Ups();
 
         return $obj->getAgreement($ret);
     }
 
     function getHaveAccount()
-	{
+    {
         return $this->config->UPSOnlineTools->UPS_username
-			&& $this->config->UPSOnlineTools->UPS_password
-			&& $this->config->UPSOnlineTools->UPS_accesskey;
+            && $this->config->UPSOnlineTools->UPS_password
+            && $this->config->UPSOnlineTools->UPS_accesskey;
     }
 
     protected function processStep2()
-	{
-		$result = true;
+    {
+        $result = true;
 
         if ($this->get('confirmed') != 'Y') {
             $this->set('returnUrl', $this->buildUrl('ups_online_tool', '', array('error' => 'license')));
@@ -72,11 +72,11 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsOnlineTool extends XLite_C
     }
 
     protected function processStep3()
-	{
+    {
         $obj = new XLite_Module_UPSOnlineTools_Model_Shipping_Ups();
         $ret = $this->getReg();
 
-		$result = true;
+        $result = true;
         $error = false;
 
         if ($obj->setAccount($ret, $error)) {
@@ -88,22 +88,22 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsOnlineTool extends XLite_C
     }
 
     function action_next()
-	{
+    {
         $cs = $this->getCurrentStep();
         $func = 'processStep' . $cs;
         if (!method_exists($this, $func) || $this->$func()) {
-	        $cs++;
+            $cs++;
     	    $this->session->set('ups_step', $cs);
-		}
+        }
     }
 
     protected function doActionCancel()
-	{
+    {
         $tmp = $this->session->set('ups_step', 0);
     }
 
     function action_showlicense()
-	{
+    {
         $result = $this->getLicense($license);
         echo $license;
 
@@ -127,7 +127,7 @@ DO YOU AGREE TO ACCESS THE UPS SYSTEMS IN ACCORDANCE WITH AND BE BOUND BY EACHOF
         buttons = doc.getElementById('manage_buttons');
         if (buttons) {
             buttons.style.display = '';
-		}
+        }
     }
 
 function setConfirmed(val)
@@ -139,7 +139,7 @@ function setConfirmed(val)
         obj = doc.getElementById('confirmedLicense');
         if (obj) {
             obj.value = val;
-		}
+        }
     }
 }
 -->
@@ -158,7 +158,7 @@ EOT;
             $this->session->set('ups_message', '');
         }
 
-        return $this->message; 
+        return $this->message;
     }
 
     function getReg()
@@ -174,8 +174,8 @@ EOT;
         }
 
         if (empty($ret['software_installer'])) {
-			$ret['software_installer'] = 'yes';
-		}
+            $ret['software_installer'] = 'yes';
+        }
 
         return $ret;
     }

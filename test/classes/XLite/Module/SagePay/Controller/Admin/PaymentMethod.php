@@ -35,10 +35,10 @@
  */
 class XLite_Module_SagePay_Controller_Admin_PaymentMethod extends XLite_Controller_Admin_PaymentMethod implements XLite_Base_IDecorator
 {
-	function getPM()
-	{
-		if ($_REQUEST["payment_method"] == "sagepayform_cc")	
-			$_REQUEST["payment_method"] = "sagepaydirect_cc";
-		return parent::getPM();
-	}
+    function getPM()
+    {
+        if ($_REQUEST["payment_method"] == "sagepayform_cc")	
+            $_REQUEST["payment_method"] = "sagepaydirect_cc";
+        return parent::getPM();
+    }
 }

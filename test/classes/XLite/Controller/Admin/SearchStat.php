@@ -34,9 +34,9 @@
  * @since   3.0.0
  */
 class XLite_Controller_Admin_SearchStat extends XLite_Controller_Admin_Stats
-{	
-    public $params = array("target", "listOrder");	
-    public $order = "query";	
+{
+    public $params = array("target", "listOrder");
+    public $order = "query";
     public $orders = array(
             "query" => "query",
             "count" => "count desc",
@@ -52,9 +52,9 @@ class XLite_Controller_Admin_SearchStat extends XLite_Controller_Admin_Stats
         if (is_null($this->searchStat)) {
             $searchStat = new XLite_Model_SearchStat();
             $this->searchStat = $searchStat->findAll(
-				null,
-				isset($this->orders[$this->get("listOrder")]) ? $this->orders[$this->get("listOrder")] : null
-			);
+                null,
+                isset($this->orders[$this->get("listOrder")]) ? $this->orders[$this->get("listOrder")] : null
+            );
         }
         return $this->searchStat;
     }

@@ -39,7 +39,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
      * Avaliable checkout steps (modes)
      */
    
-    const CHECKOUT_MODE_ERROR          = 'error'; 
+    const CHECKOUT_MODE_ERROR          = 'error';
     const CHECKOUT_MODE_NOT_ALLOWED    = 'notAllowed';
     const CHECKOUT_MODE_REGISTER       = 'register';
     const CHECKOUT_MODE_ZERO_TOTAL     = 'zeroTotal';
@@ -287,7 +287,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
      * @since  3.0.0
      */
     protected function getLocation()
-    {               
+    {
         return 'Checkout';
     }
 
@@ -616,14 +616,14 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 
 
     // mode ::= null | register | notAllowed | noShipping | paymentMethod | details | success | error    
-    /*public $params = array("target");    
+    /*public $params = array("target");
     public $mode = null;*/
 
 
 
     function _initCCInfo()
     {
-        if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "checkout") { 
+        if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "checkout") {
             if (isset($_REQUEST["cc_info"]) && is_array($_REQUEST["cc_info"])) {
                 if (isset($_REQUEST["cc_info_cc_date_Month"]) && isset($_REQUEST["cc_info_cc_date_Year"])) {
                     $_REQUEST["cc_info"]["cc_date"] = sprintf("%02d%s", intval($_REQUEST["cc_info_cc_date_Month"]), substr($_REQUEST["cc_info_cc_date_Year"],2));

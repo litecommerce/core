@@ -34,20 +34,20 @@
  * @since   3.0.0
  */
 class XLite_Module_ProductAdviser_Controller_Customer_Main extends XLite_Controller_Customer_Main implements XLite_Base_IDecorator
-{	
-	public $priceNotified = array();
+{
+    public $priceNotified = array();
 
-	function getPriceNotificationSaved($product_id = 0)
-	{
-		if (!$this->config->getComplex('ProductAdviser.customer_notifications_enabled')) {
-			return true;
-		}
+    function getPriceNotificationSaved($product_id = 0)
+    {
+        if (!$this->config->getComplex('ProductAdviser.customer_notifications_enabled')) {
+            return true;
+        }
 
-		if (!isset($this->priceNotified[$product_id])) {
+        if (!isset($this->priceNotified[$product_id])) {
         	$check = array();
             $check[] = "type='" . CUSTOMER_NOTIFICATION_PRICE . "'";
 
-			$email = '';
+            $email = '';
 
     		if ($this->auth->is("logged")) {
     			$profile = $this->auth->get("profile");
@@ -68,20 +68,20 @@ class XLite_Module_ProductAdviser_Controller_Customer_Main extends XLite_Control
             $check[] = "notify_key='" . addslashes($notification->get("productKey")) . "'";
 
             $check = implode(" AND ", $check);
-			$this->priceNotified[$product_id] = $notification->find($check);
-		}
+            $this->priceNotified[$product_id] = $notification->find($check);
+        }
     	return $this->priceNotified[$product_id];
-	}
+    }
 
-	function isPriceNotificationEnabled()
-	{
-		$mode = $this->config->getComplex('ProductAdviser.customer_notifications_mode');
-		return (($mode & 1) != 0) ? true : false;
-	}
+    function isPriceNotificationEnabled()
+    {
+        $mode = $this->config->getComplex('ProductAdviser.customer_notifications_mode');
+        return (($mode & 1) != 0) ? true : false;
+    }
 
-	function isProductNotificationEnabled()
-	{
-		$mode = $this->config->getComplex('ProductAdviser.customer_notifications_mode');
-		return (($mode & 2) != 0) ? true : false;
-	}
+    function isProductNotificationEnabled()
+    {
+        $mode = $this->config->getComplex('ProductAdviser.customer_notifications_mode');
+        return (($mode & 2) != 0) ? true : false;
+    }
 }

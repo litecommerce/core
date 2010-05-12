@@ -143,29 +143,29 @@ class XLite_View_Price extends XLite_View_Abstract
         return round(($product->get('sale_price') - $product->get('listPrice')) / $product->get('sale_price') * 100, 0);
     }
 
-	/**
-	 * Get product 
-	 * 
-	 * @return XLite_Model_Product
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function getProduct()
-	{
-		return $this->getParam(self::PARAM_PRODUCT);
-	}
+    /**
+     * Get product 
+     * 
+     * @return XLite_Model_Product
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProduct()
+    {
+        return $this->getParam(self::PARAM_PRODUCT);
+    }
 
-	/**
-	 * Check - display only price or not
-	 * 
-	 * @return boolean
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function isDisplayOnlyPrice()
-	{
-		return $this->getParam(self::PARAM_DISPLAY_ONLY_PRICE);
-	}
+    /**
+     * Check - display only price or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isDisplayOnlyPrice()
+    {
+        return $this->getParam(self::PARAM_DISPLAY_ONLY_PRICE);
+    }
 }

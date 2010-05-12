@@ -69,9 +69,9 @@ class XLite_Module_AdvancedSecurity_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'This module provides strong cryptographic protection for email and sensitive data of LiteCommerce store';
-    }	
+    }
 
-    public $isFree = true;	
+    public $isFree = true;
     /**
      * Determines if we need to show settings form link
      *

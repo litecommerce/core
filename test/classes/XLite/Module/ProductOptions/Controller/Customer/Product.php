@@ -37,7 +37,7 @@ class XLite_Module_ProductOptions_Controller_Customer_Product extends XLite_Cont
 {
     function action_buynow()
     {
-        $product = $this->get("product"); 
+        $product = $this->get("product");
         if (!$product->hasOptions()) {
             parent::action_buynow();
         }

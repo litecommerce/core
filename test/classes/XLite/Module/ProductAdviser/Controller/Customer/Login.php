@@ -35,7 +35,7 @@
  */
 class XLite_Module_ProductAdviser_Controller_Customer_Login extends XLite_Controller_Customer_Login implements XLite_Base_IDecorator
 {
-	public $from = '';
+    public $from = '';
 
     function init()
     {
@@ -50,10 +50,10 @@ class XLite_Module_ProductAdviser_Controller_Customer_Login extends XLite_Contro
     {
         parent::action_login();
 
-		if ($this->auth->is("logged") && $this->session->isRegistered("NotifyMePended") && $this->session->isRegistered("NotifyMeInfo")) {
+        if ($this->auth->is("logged") && $this->session->isRegistered("NotifyMePended") && $this->session->isRegistered("NotifyMeInfo")) {
     		$this->session->set("NotifyMePended", null);
     		$this->session->set("NotifyMeReturn", true);
             $this->set("returnUrl", "cart.php?target=notify_me");
-		}
+        }
     }
 }

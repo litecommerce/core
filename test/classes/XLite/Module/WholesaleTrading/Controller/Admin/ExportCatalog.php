@@ -76,8 +76,8 @@ class XLite_Module_WholesaleTrading_Controller_Admin_ExportCatalog extends XLite
         	return false;
         }
         for ($i = 0; $i < count($arr); $i++) {
-            if (strcmp($arr[$i], $skipValue) === 0) { 
-            	continue; 
+            if (strcmp($arr[$i], $skipValue) === 0) {
+            	continue;
             }
                
             for ($j = 0; $j < count($arr); $j++) {
@@ -134,7 +134,7 @@ class XLite_Module_WholesaleTrading_Controller_Admin_ExportCatalog extends XLite
         $wp->export($this->wholesale_pricing_layout, $DATA_DELIMITERS[$this->delimiter], null, "product_id");
         exit();
     }
-	
+    
     function action_export_product_access()
     {
         global $DATA_DELIMITERS;

@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_View_StatusSelect extends XLite_View_FormField
-{ 
+{
     /**
      * Widget parameter names 
      */

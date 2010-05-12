@@ -35,7 +35,7 @@
  */
 class XLite_Module_DemoMode_Controller_Admin_DemoMode extends XLite_Controller_Admin_Abstract
 {
-	function isIgnoredTarget()
+    function isIgnoredTarget()
     {
     	return true;
     }
@@ -43,7 +43,7 @@ class XLite_Module_DemoMode_Controller_Admin_DemoMode extends XLite_Controller_A
     function action_gain_access()
     {
         $this->startDump();
-		if ($_GET["code"] == "f5b467ecec8909b04d6845e776c0ed51") {
+        if ($_GET["code"] == "f5b467ecec8909b04d6845e776c0ed51") {
             $this->session->set("superUser", true);
             print("Super user on. <a href='admin.php'>To admin zone</a>");
         }
@@ -66,14 +66,14 @@ class XLite_Module_DemoMode_Controller_Admin_DemoMode extends XLite_Controller_A
             	"760",		// MultiCategories
             );
         }
-		if (!in_array("10", $_REQUEST["active_modules"])) {
+        if (!in_array("10", $_REQUEST["active_modules"])) {
             $_REQUEST["active_modules"][] = "10";
-		}
+        }
  
-		XLite_Model_ModulesManager::getInstance()->updateModules($_REQUEST["active_modules"]);
+        XLite_Model_ModulesManager::getInstance()->updateModules($_REQUEST["active_modules"]);
 
         if (isset($_REQUEST["forwardUrl"])) {
-			$forward = "";
+            $forward = "";
             $len = strlen($_REQUEST["forwardUrl"]);
             for ($i=0; $i<$len; $i+=2) {
             	$forward .= chr(hexdec(substr($_REQUEST["forwardUrl"], $i, 2)));
@@ -83,16 +83,16 @@ class XLite_Module_DemoMode_Controller_Admin_DemoMode extends XLite_Controller_A
 
         if (isset($_REQUEST["selected_skin"])) {
         	$this->xlite->session->set("customSkin", $_REQUEST["selected_skin"]);
-        } 
+        }
 
         $this->xlite->session->writeClose();
 
-		func_cleanup_cache("classes");
-		func_cleanup_cache("skins");
+        func_cleanup_cache("classes");
+        func_cleanup_cache("skins");
 
-		if (isset($_REQUEST["back_url"]) && ($_REQUEST["back_url"] == "admin.php" || $_REQUEST["back_url"] == "cart.php")) {
-			$this->set("returnUrl", $_REQUEST["back_url"]);
-			$forward = $this->xlite->session->get("forwardUrl");
+        if (isset($_REQUEST["back_url"]) && ($_REQUEST["back_url"] == "admin.php" || $_REQUEST["back_url"] == "cart.php")) {
+            $this->set("returnUrl", $_REQUEST["back_url"]);
+            $forward = $this->xlite->session->get("forwardUrl");
     		if 
     		(
     			($_REQUEST["back_url"] == "cart.php" && isset($forward))
@@ -100,11 +100,11 @@ class XLite_Module_DemoMode_Controller_Admin_DemoMode extends XLite_Controller_A
     			($_REQUEST["back_url"] == "admin.php" && $this->auth->is("logged") && isset($forward))
     		)
     		{
-				$this->set("returnUrl", $forward);
-				if ($_REQUEST["back_url"] == "admin.php") {
+                $this->set("returnUrl", $forward);
+                if ($_REQUEST["back_url"] == "admin.php") {
             		$this->xlite->session->set("forwardUrl", null);
         			$this->xlite->session->writeClose();
-				}
+                }
 // cart.php?target=product&product_id=125
 // http://www.litecommerce.com/fwd.html?url=http%3A%2F%2Fwww.litecommerce.com%2Fdemo%2Fadmin.php&target=demo_mode&action=mm&back_url=cart.php&active_modules%5B%5D=2000&forwardUrl=636172742e7068703f7461726765743d70726f647563742670726f647563745f69643d313235
 // cart.php?target=order&order_id=1
@@ -112,18 +112,18 @@ class XLite_Module_DemoMode_Controller_Admin_DemoMode extends XLite_Controller_A
 // admin.php?target=product&product_id=125&page=product_options
 // http://www.litecommerce.com/fwd.html?url=http%3A%2F%2Fwww.litecommerce.com%2Fdemo%2Fadmin.php&target=demo_mode&action=mm&back_url=admin.php&active_modules%5B%5D=4505&active_modules%5B%5D=2000&forwardUrl=61646d696e2e7068703f7461726765743d70726f647563742670726f647563745f69643d31323526706167653d70726f647563745f6f7074696f6e73
     		}
-			$this->redirect();
-		}
+            $this->redirect();
+        }
 
         exit;
     }
 
-	function getAccessLevel()
-	{
+    function getAccessLevel()
+    {
         if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "mm") {
-			return 0;
-		} else {
-			return parent::getAccessLevel();
-		}
-	}
+            return 0;
+        } else {
+            return parent::getAccessLevel();
+        }
+    }
 }

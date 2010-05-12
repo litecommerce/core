@@ -34,12 +34,12 @@
  * @since   3.0.0
  */
 class XLite_Module_ProductOptions_Model_OptionValidator extends XLite_Model_Abstract
-{	
+{
     public $fields = array(
             "product_id"  => 0,
             "javascript_code"  => ""
-            );	
+            );
 
-    public $primaryKey = array("product_id");	
+    public $primaryKey = array("product_id");
     public $alias = "product_options_js";
 }

@@ -35,7 +35,7 @@
  */
 class XLite_Module_Promotion_Controller_Customer_Checkout extends XLite_Controller_Customer_Checkout implements XLite_Base_IDecorator
 {
-	/**
+    /**
      * Common method to determine current location 
      * 
      * @return array
@@ -58,7 +58,7 @@ class XLite_Module_Promotion_Controller_Customer_Checkout extends XLite_Controll
         return $location;
     }
 
-	/**
+    /**
      * Initialize controller 
      * 
      * @return void
@@ -69,32 +69,32 @@ class XLite_Module_Promotion_Controller_Customer_Checkout extends XLite_Controll
     {
         parent::init();
 
-		// TODO - check if there is a more convenient way to do this 
-		if (self::CHECKOUT_MODE_ZERO_TOTAL == XLite_Core_Request::getInstance()->mode) {
-			$this->set('skipValidateDiscountCoupon', true);
-		}
-	}
+        // TODO - check if there is a more convenient way to do this 
+        if (self::CHECKOUT_MODE_ZERO_TOTAL == XLite_Core_Request::getInstance()->mode) {
+            $this->set('skipValidateDiscountCoupon', true);
+        }
+    }
 
-	function _handleCouponFailed()
+    function _handleCouponFailed()
     {
         if ($this->session->isRegistered("couponFailed")) {
         	if (isset($_REQUEST["mode"]) && $_REQUEST["mode"] == "couponFailed") {
-				$dc = new XLite_Module_Promotion_Model_DiscountCoupon();
-				$found = $dc->find("coupon='".$this->session->get("couponFailed")."'");
-				if ($found) {
-					$this->set("discountCoupon", $dc);
-				}
+                $dc = new XLite_Module_Promotion_Model_DiscountCoupon();
+                $found = $dc->find("coupon='".$this->session->get("couponFailed")."'");
+                if ($found) {
+                    $this->set("discountCoupon", $dc);
+                }
         	} else {
         		$this->session->set("couponFailed", null);
         	}
         }
     }
     
-	function handleRequest()
+    function handleRequest()
     {
         if ($this->cart->validateDiscountCoupon() == 'used' && !$this->get("skipValidateDiscountCoupon") && (!isset($_REQUEST["action"]) || $_REQUEST["action"] != "return")) {
             //$this->session->set("couponFailed", $this->cart->get("DC"));
-			$dc = $this->cart->get("DC");
+            $dc = $this->cart->get("DC");
         	$this->session->set("couponFailed", $dc->get("coupon"));
             $this->cart->set("DC", null); // remove coupon
             $this->updateCart();
@@ -134,25 +134,25 @@ class XLite_Module_Promotion_Controller_Customer_Checkout extends XLite_Controll
 
         parent::handleRequest();
     }
-	
-	function getBonusList()
-	{
-		// collect products & prices
-		$this->bonusList = $this->cart->getBonusList();
+    
+    function getBonusList()
+    {
+        // collect products & prices
+        $this->bonusList = $this->cart->getBonusList();
         $this->session->set("bonusListDisplayed", 1);
         return $this->bonusList;
-	}
+    }
 
-	/**
-	* Format number as interger
-	*/
+    /**
+    * Format number as interger
+    */
 
-	function integer($num)
-	{
-		return (double) ($num);
-	}
+    function integer($num)
+    {
+        return (double) ($num);
+    }
 
-	function isSecure()
+    function isSecure()
     {
     	switch($this->mode) {
     		case "couponFailed":

@@ -35,72 +35,72 @@
  */
 class XLite_Module_ProductAdviser_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
 {
-	/**
-	 * checkedOut 
-	 * 
-	 * @return void
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function checkedOut()
-	{
-		parent::checkedOut();
+    /**
+     * checkedOut 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkedOut()
+    {
+        parent::checkedOut();
 
-		$items = $this->get("items");
+        $items = $this->get("items");
 
-		if (is_array($items)) {
+        if (is_array($items)) {
 
-			$products = array();
+            $products = array();
 
-			foreach ($items as $item) {
-				if ($item->isValid()) {
-	        	    $product = $item->get("product");
-	        	    if (is_object($product)) {
-	        	    	$products[$product->get("product_id")] = true;
-	        	    }
-				}
-			}
+            foreach ($items as $item) {
+                if ($item->isValid()) {
+            	    $product = $item->get("product");
+            	    if (is_object($product)) {
+            	    	$products[$product->get("product_id")] = true;
+            	    }
+                }
+            }
 
-			if (count($products) > 0) {
+            if (count($products) > 0) {
 
-			    $products = array_keys($products); 
-			    sort($products);
+                $products = array_keys($products);
+                sort($products);
 
-				foreach ($products as $product_id_idx => $product_id) {
+                foreach ($products as $product_id_idx => $product_id) {
 
-					for ($i = $product_id_idx + 1; $i < count($products); $i++) {
+                    for ($i = $product_id_idx + 1; $i < count($products); $i++) {
 
-						$statistic = new XLite_Module_ProductAdviser_Model_ProductAlsoBuy();
+                        $statistic = new XLite_Module_ProductAdviser_Model_ProductAlsoBuy();
 
-						if (!$statistic->find("product_id='".$product_id."' AND product_id_also_buy='".$products[$i]."'")) {
-			            	$statistic->set("product_id", $product_id);
-			            	$statistic->set("product_id_also_buy", $products[$i]);
-			            	$statistic->set("counter", 1);
-							$statistic->create();
+                        if (!$statistic->find("product_id='".$product_id."' AND product_id_also_buy='".$products[$i]."'")) {
+                        	$statistic->set("product_id", $product_id);
+                        	$statistic->set("product_id_also_buy", $products[$i]);
+                        	$statistic->set("counter", 1);
+                            $statistic->create();
 
-			            } else {
-		    	        	$statistic->set("counter", $statistic->get("counter")+1);
-			                $statistic->update();
-			            }
+                        } else {
+            	        	$statistic->set("counter", $statistic->get("counter")+1);
+                            $statistic->update();
+                        }
 
-						$statistic = new XLite_Module_ProductAdviser_Model_ProductAlsoBuy();
+                        $statistic = new XLite_Module_ProductAdviser_Model_ProductAlsoBuy();
 
-			            if (!$statistic->find("product_id='".$products[$i]."' AND product_id_also_buy='".$product_id."'")) {
-			            	$statistic->set("product_id", $products[$i]);
-			            	$statistic->set("product_id_also_buy", $product_id);
-			            	$statistic->set("counter", 1);
-							$statistic->create();
+                        if (!$statistic->find("product_id='".$products[$i]."' AND product_id_also_buy='".$product_id."'")) {
+                        	$statistic->set("product_id", $products[$i]);
+                        	$statistic->set("product_id_also_buy", $product_id);
+                        	$statistic->set("counter", 1);
+                            $statistic->create();
 
-			            } else {
-			            	$statistic->set("counter", $statistic->get("counter")+1);
-			                $statistic->update();
-		    	        }
-					} // for
-				} // foreach
-			}
-		}
-	}
+                        } else {
+                        	$statistic->set("counter", $statistic->get("counter")+1);
+                            $statistic->update();
+            	        }
+                    } // for
+                } // foreach
+            }
+        }
+    }
 
     /**
      * updateInventory 
@@ -117,32 +117,32 @@ class XLite_Module_ProductAdviser_Model_Order extends XLite_Model_Order implemen
     	$requiredAmount = $item->get("amount");
     	parent::updateInventory($item);
 
-		if ($this->xlite->get("PA_InventorySupport") && $this->config->ProductAdviser->customer_notifications_enabled) {
+        if ($this->xlite->get("PA_InventorySupport") && $this->config->ProductAdviser->customer_notifications_enabled) {
 
-			if ($item->get("outOfStock")) {
+            if ($item->get("outOfStock")) {
 
-				$rejectedItemInfo = new StdClass();
-	        	$rejectedItem = $item;
-	        	$product = $item->get("product");
-	        	$rejectedItemInfo->product_id = $product->get("product_id");
-				$rejectedItem->set("product", $product);
+                $rejectedItemInfo = new StdClass();
+            	$rejectedItem = $item;
+            	$product = $item->get("product");
+            	$rejectedItemInfo->product_id = $product->get("product_id");
+                $rejectedItem->set("product", $product);
 
-				if ($this->xlite->get("ProductOptionsEnabled") && $product->hasOptions()) {
+                if ($this->xlite->get("ProductOptionsEnabled") && $product->hasOptions()) {
 
-	        	 	if (isset($this->product_options)) {
-	            		$rejectedItem->set("productOptions", $this->product_options);
-					}
+            	 	if (isset($this->product_options)) {
+                		$rejectedItem->set("productOptions", $this->product_options);
+                    }
 
-	        		$rejectedItemInfo->productOptions = $rejectedItem->get("productOptions");
-				}
+            		$rejectedItemInfo->productOptions = $rejectedItem->get("productOptions");
+                }
 
-				$rejectedItemInfo->itemKey = $rejectedItem->get("key");
-				$rejectedItemInfo->requiredAmount = $requiredAmount;
-				$rejectedItemInfo->availableAmount = $rejectedItem->get("amount");
+                $rejectedItemInfo->itemKey = $rejectedItem->get("key");
+                $rejectedItemInfo->requiredAmount = $requiredAmount;
+                $rejectedItemInfo->availableAmount = $rejectedItem->get("amount");
 
-	        	$this->session->set("rejectedItem", $rejectedItemInfo);
-				$this->xlite->set("rejectedItemPresented", true);
-			}
-		}
+            	$this->session->set("rejectedItem", $rejectedItemInfo);
+                $this->xlite->set("rejectedItemPresented", true);
+            }
+        }
     }
 }

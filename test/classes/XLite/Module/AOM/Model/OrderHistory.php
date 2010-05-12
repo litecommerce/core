@@ -37,224 +37,224 @@ func_define('ORDER_HISTORY_CHANGED_MESSAGE', 'Changed');
  * @since   3.0.0
  */
 class XLite_Module_AOM_Model_OrderHistory extends XLite_Model_Abstract
-{	
-	public $fields = array("order_history_id" 	=> '',
-						"order_id"			=> '',
-						"login"				=> '',	
-						"date"				=> '',
-						"changes"			=> '',	
-						"secureChanges"		=> '');	
+{
+    public $fields = array("order_history_id" 	=> '',
+                        "order_id"			=> '',
+                        "login"				=> '',	
+                        "date"				=> '',
+                        "changes"			=> '',	
+                        "secureChanges"		=> '');
 
-	public $autoIncrement = "order_history_id";	
-	public $alias = "order_history";						
-	public $_changes = null;	
+    public $autoIncrement = "order_history_id";
+    public $alias = "order_history";
+    public $_changes = null;
 
-	public $secure_prefix = array("cc_");
+    public $secure_prefix = array("cc_");
 
-	function get($name) {
-		if ($name == 'changes') 
-			return $this->getChanges();
-		return parent::get($name);
-	}
-	
-	function getChanges() 
-	{
+    function get($name) {
+        if ($name == 'changes') 
+            return $this->getChanges();
+        return parent::get($name);
+    }
+    
+    function getChanges() 
+    {
         if (is_null($this->_changes)) {
-			$this->_changes = unserialize(parent::get("changes"));
+            $this->_changes = unserialize(parent::get("changes"));
 
-			$val = parent::get("secureChanges");
-			if ( trim($val) != "" ) {
-				$gpg = new XLite_Module_AdvancedSecurity_Model_GPG();
-				$secureChanges = unserialize($gpg->decrypt($val));
-	
-				if ( is_array($secureChanges) ) {
-					$this->_changes = ( is_array($this->_changes) ) ? $secureChanges + $this->_changes : $secureChanges;
-				}
-			}
-		}
+            $val = parent::get("secureChanges");
+            if ( trim($val) != "" ) {
+                $gpg = new XLite_Module_AdvancedSecurity_Model_GPG();
+                $secureChanges = unserialize($gpg->decrypt($val));
+    
+                if ( is_array($secureChanges) ) {
+                    $this->_changes = ( is_array($this->_changes) ) ? $secureChanges + $this->_changes : $secureChanges;
+                }
+            }
+        }
 
-		return $this->_changes;
-	} 
+        return $this->_changes;
+    }
 
-	function set($name, $value)
-	{
+    function set($name, $value)
+    {
         if ( $name == "changes" ) {
-			$this->setChanges($value);
-			return;
-		}
-		parent::set($name, $value);
-	}
+            $this->setChanges($value);
+            return;
+        }
+        parent::set($name, $value);
+    }
 
-	function setChanges($value)
-	{
+    function setChanges($value)
+    {
         if ( !is_array($value) )
-			$value = array();
+            $value = array();
 
-		$secureChanges = "";
+        $secureChanges = "";
 
-		if (!$this->xlite->getComplex('config.AOM.cc_info_history')) {
-			foreach ($value as $key=>$val) {
-				if ( is_array($val) ) {
-					foreach ($val as $k=>$v) {
-						if ($this->isSecureKey($k)) {
-							$value[$key][$k] = ORDER_HISTORY_CHANGED_MESSAGE;
-						}
-					}
-				}
-			}
-		}
+        if (!$this->xlite->getComplex('config.AOM.cc_info_history')) {
+            foreach ($value as $key=>$val) {
+                if ( is_array($val) ) {
+                    foreach ($val as $k=>$v) {
+                        if ($this->isSecureKey($k)) {
+                            $value[$key][$k] = ORDER_HISTORY_CHANGED_MESSAGE;
+                        }
+                    }
+                }
+            }
+        }
 
-		if ( $this->xlite->getComplex('config.AOM.cc_info_history') && $this->xlite->mm->getComplex('activeModules.AdvancedSecurity') && $this->xlite->is("adminZone") && $this->getComplex('config.AdvancedSecurity.gpg_crypt_db') ) {
-			foreach ($value as $key=>$val) {
-				if ( is_array($val) ) {
-					foreach ($val as $k=>$v) {
-						if ( $this->isSecureKey($k) ) {
-							$secureChanges[$key][$k] = $v;
-							$value[$key][$k] = ORDER_HISTORY_CRYPTED_MESSAGE;
-						}
-					}
-				}
-			}
+        if ( $this->xlite->getComplex('config.AOM.cc_info_history') && $this->xlite->mm->getComplex('activeModules.AdvancedSecurity') && $this->xlite->is("adminZone") && $this->getComplex('config.AdvancedSecurity.gpg_crypt_db') ) {
+            foreach ($value as $key=>$val) {
+                if ( is_array($val) ) {
+                    foreach ($val as $k=>$v) {
+                        if ( $this->isSecureKey($k) ) {
+                            $secureChanges[$key][$k] = $v;
+                            $value[$key][$k] = ORDER_HISTORY_CRYPTED_MESSAGE;
+                        }
+                    }
+                }
+            }
 
-			$gpg = new XLite_Module_AdvancedSecurity_Model_GPG();
-			$secureChanges = $gpg->encrypt(serialize($secureChanges));
-		}
+            $gpg = new XLite_Module_AdvancedSecurity_Model_GPG();
+            $secureChanges = $gpg->encrypt(serialize($secureChanges));
+        }
 
-		parent::set("changes", serialize($value));
-		parent::set("secureChanges", $secureChanges);
-	}
+        parent::set("changes", serialize($value));
+        parent::set("secureChanges", $secureChanges);
+    }
 
-	function isSecureKey($key)
-	{
-		foreach ($this->secure_prefix as $prefix)
-			if ( substr($key, 0, strlen($prefix)) == $prefix )
-				return true;
+    function isSecureKey($key)
+    {
+        foreach ($this->secure_prefix as $prefix)
+            if ( substr($key, 0, strlen($prefix)) == $prefix )
+                return true;
 
-		return false;
-	}
+        return false;
+    }
 
-	function log($order, $cloneOrder = null, $ordersItems = null, $action = null)  
-	{
-		$history = array();
-		if ($action == "create_order")
-		{
-			$history["order"]["created"] = $order->get("order_id");
-		}
-		
-		if ($action == "split_order") 
-		{ 
-			if ($order->get("order_id") > $cloneOrder->get("order_id")) {
-				$history["order"]["split"]["parent"] = $cloneOrder->get("order_id");
+    function log($order, $cloneOrder = null, $ordersItems = null, $action = null)  
+    {
+        $history = array();
+        if ($action == "create_order")
+        {
+            $history["order"]["created"] = $order->get("order_id");
+        }
+        
+        if ($action == "split_order") 
+        {
+            if ($order->get("order_id") > $cloneOrder->get("order_id")) {
+                $history["order"]["split"]["parent"] = $cloneOrder->get("order_id");
                 $history["order"]["split"]["child"]  = $order->get("order_id");
-			} else {
-				$history["order"]["split"]["parent"] = $order->get("order_id");
-				$history["order"]["split"]["child"]	 = $cloneOrder->get("order_id");
-			}
-		}
-		
-		if ($action == "clone_order")
-		{
-			$history["order"]["cloned"] = $cloneOrder->get("order_id");
-		}
-		
-		if (!is_null($ordersItems))	{
-			foreach($ordersItems as $items) {
-				if (is_null($items['orderItem']) && !is_null($items['cloneItem'])) 
-					$history['items']['added'][] = $items['cloneItem']->get("product_name");
+            } else {
+                $history["order"]["split"]["parent"] = $order->get("order_id");
+                $history["order"]["split"]["child"]	 = $cloneOrder->get("order_id");
+            }
+        }
+        
+        if ($action == "clone_order")
+        {
+            $history["order"]["cloned"] = $cloneOrder->get("order_id");
+        }
+        
+        if (!is_null($ordersItems))	{
+            foreach($ordersItems as $items) {
+                if (is_null($items['orderItem']) && !is_null($items['cloneItem'])) 
+                    $history['items']['added'][] = $items['cloneItem']->get("product_name");
                 if (is_null($items['cloneItem']) && !is_null($items['orderItem'])) 
-                    $history['items']['deleted'][] = $items['orderItem']->get("product_name");     				
-			} 
-			foreach($ordersItems as $items) {
-				if (!is_null($items['cloneItem']) && !is_null($items['orderItem'])) {
-					$cloneItem = $items['cloneItem']->get("properties");
-					$orderItem = $items['orderItem']->get("properties");
-					if ($cloneItem["price"] != $orderItem["price"]) 
-					$history['items']['updated']['price'][] = array("name" => $orderItem["product_name"],"oldPrice" => $orderItem['price'],"newPrice" => $cloneItem['price']);
+                    $history['items']['deleted'][] = $items['orderItem']->get("product_name");
+            }
+            foreach($ordersItems as $items) {
+                if (!is_null($items['cloneItem']) && !is_null($items['orderItem'])) {
+                    $cloneItem = $items['cloneItem']->get("properties");
+                    $orderItem = $items['orderItem']->get("properties");
+                    if ($cloneItem["price"] != $orderItem["price"]) 
+                    $history['items']['updated']['price'][] = array("name" => $orderItem["product_name"],"oldPrice" => $orderItem['price'],"newPrice" => $cloneItem['price']);
                     if ($cloneItem["amount"] != $orderItem["amount"])       
-					$history['items']['updated']['amount'][] = array("name" => $orderItem["product_name"],"oldAmount" => $orderItem['amount'],"newAmount" => $cloneItem['amount']);
-				}
-			}
-			if (empty($history)) $history["items"]["not_changed"] = true;
-		}
-		if (!is_null($order) && !is_null($cloneOrder) && $action == null) {
-				$fields = array("subtotal","shipping_cost","payment_method","discount", "global_discount", "payedByGC", "total", "payedByPoints");
-				foreach($fields as $field) 
-					if ($order->get($field) != $cloneOrder->get($field)) {
-						$history["totals"][$field] = $order->get($field);
-						$history["changedTotals"][$field] = $cloneOrder->get($field);
-					}
+                    $history['items']['updated']['amount'][] = array("name" => $orderItem["product_name"],"oldAmount" => $orderItem['amount'],"newAmount" => $cloneItem['amount']);
+                }
+            }
+            if (empty($history)) $history["items"]["not_changed"] = true;
+        }
+        if (!is_null($order) && !is_null($cloneOrder) && $action == null) {
+                $fields = array("subtotal","shipping_cost","payment_method","discount", "global_discount", "payedByGC", "total", "payedByPoints");
+                foreach($fields as $field) 
+                    if ($order->get($field) != $cloneOrder->get($field)) {
+                        $history["totals"][$field] = $order->get($field);
+                        $history["changedTotals"][$field] = $cloneOrder->get($field);
+                    }
 
-				// Log taxes changes
-				$taxes = $order->get("displayTaxes");
-				$cloneTaxes = $cloneOrder->get("displayTaxes");
-				if ( is_array($taxes) ) {
-					foreach ($taxes as $tax=>$value) {
-						if ( $cloneTaxes[$tax] != $value ) {
-							$history["totals"][$tax] = $value;
-							$history["changedTotals"][$tax] = $cloneTaxes[$tax];
-						}
-					}
-				}
+                // Log taxes changes
+                $taxes = $order->get("displayTaxes");
+                $cloneTaxes = $cloneOrder->get("displayTaxes");
+                if ( is_array($taxes) ) {
+                    foreach ($taxes as $tax=>$value) {
+                        if ( $cloneTaxes[$tax] != $value ) {
+                            $history["totals"][$tax] = $value;
+                            $history["changedTotals"][$tax] = $cloneTaxes[$tax];
+                        }
+                    }
+                }
 
-				$profile = $order->get("profile");
-				if ($profile) {
-					$cloneProfile = $cloneOrder->get("profile");
-					foreach ($profile->get("properties") as $key => $value)
-						if (($cloneProfile->get("$key") != $value) && !($key == 'order_id' || $key == 'profile_id'))
-						{
-							$history["profile"][$key] = $value; 
-							$history["changedProfile"][$key] = $cloneProfile->get("$key");
-						}
-					}
-		}
-		if (!is_null($order) && isset($_POST['substatus'])) {
-			if ($order->get("notes") != $_POST['notes']) {
-				$history['notes'] = $order->get("notes");
-				$history['changedNotes'] = $_POST['notes'];
-			}
-			if ($order->get("admin_notes") != $_POST['admin_notes']) {
-				$history['admin_notes'] = $order->get("admin_notes");
-	            $history['changedAdmin_notes'] = $_POST['admin_notes'];
-			}
-			if ($_POST['details']) {
-				if ( !is_null($this->session->get("masterPassword")) ) {
-					$temp_details = $order->getSecureDetails();
-				} else {
-					$temp_details = $order->get("details");
-				}
-				foreach($_POST['details'] as $ckey => $changedDetail) {
-					foreach($temp_details as $key => $detail) {
-						if ($key == $ckey && $detail != $changedDetail)
-						{
-							$details[$key] = $detail;
-							$changedDetails[$ckey] = $changedDetail;	
-						}
-					}
-				}
-			}			
-			if (!empty($details)) {		
-				$history['details'] = $details;
-				$history['changedDetails'] = $changedDetails;
-			}
+                $profile = $order->get("profile");
+                if ($profile) {
+                    $cloneProfile = $cloneOrder->get("profile");
+                    foreach ($profile->get("properties") as $key => $value)
+                        if (($cloneProfile->get("$key") != $value) && !($key == 'order_id' || $key == 'profile_id'))
+                        {
+                            $history["profile"][$key] = $value;
+                            $history["changedProfile"][$key] = $cloneProfile->get("$key");
+                        }
+                    }
+        }
+        if (!is_null($order) && isset($_POST['substatus'])) {
+            if ($order->get("notes") != $_POST['notes']) {
+                $history['notes'] = $order->get("notes");
+                $history['changedNotes'] = $_POST['notes'];
+            }
+            if ($order->get("admin_notes") != $_POST['admin_notes']) {
+                $history['admin_notes'] = $order->get("admin_notes");
+                $history['changedAdmin_notes'] = $_POST['admin_notes'];
+            }
+            if ($_POST['details']) {
+                if ( !is_null($this->session->get("masterPassword")) ) {
+                    $temp_details = $order->getSecureDetails();
+                } else {
+                    $temp_details = $order->get("details");
+                }
+                foreach($_POST['details'] as $ckey => $changedDetail) {
+                    foreach($temp_details as $key => $detail) {
+                        if ($key == $ckey && $detail != $changedDetail)
+                        {
+                            $details[$key] = $detail;
+                            $changedDetails[$ckey] = $changedDetail;
+                        }
+                    }
+                }
+            }
+            if (!empty($details)) {
+                $history['details'] = $details;
+                $history['changedDetails'] = $changedDetails;
+            }
             $changedStatus = new XLite_Module_AOM_Model_OrderStatus();
             $changedStatus->find("status = '".$_POST["substatus"]."'");
-			if ($order->getComplex('orderStatus.name') != $changedStatus->get("name"))	{
-		    	$history['status'] = $order->getComplex('orderStatus.name');
-				$history['changedStatus'] = $changedStatus->get("name");
-			}
-		}
+            if ($order->getComplex('orderStatus.name') != $changedStatus->get("name"))	{
+            	$history['status'] = $order->getComplex('orderStatus.name');
+                $history['changedStatus'] = $changedStatus->get("name");
+            }
+        }
 
-		if ( count($history) == 1 && $history["items"]["not_changed"] == "1" ) {
-			$history = array();
-		}               
+        if ( count($history) == 1 && $history["items"]["not_changed"] == "1" ) {
+            $history = array();
+        }
 
-		if (!empty($history)) {
+        if (!empty($history)) {
             $orderHistory = new XLite_Module_AOM_Model_OrderHistory();
-			$orderHistory->set("order_id",$order->get("order_id"));
-			$orderHistory->set("login",$this->auth->getComplex('profile.login'));
-			$orderHistory->set("changes", $history);
-			$orderHistory->set("date",time());
-			$orderHistory->create();
-		}	
-	} 
+            $orderHistory->set("order_id",$order->get("order_id"));
+            $orderHistory->set("login",$this->auth->getComplex('profile.login'));
+            $orderHistory->set("changes", $history);
+            $orderHistory->set("date",time());
+            $orderHistory->create();
+        }
+    }
 }

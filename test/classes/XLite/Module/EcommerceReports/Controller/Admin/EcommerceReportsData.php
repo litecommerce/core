@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReportsData extends XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics
-{	
+{
     public $type = "bars"; // type := bars | lines	
     public $limit = 50;    // limit for type "bars"	
     public $signature = "Sales dynamics";
@@ -88,7 +88,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReportsData extend
         // build cloud of product IDs
         $p = new XLite_Model_Product();
         // get min price and total products cost
-		$table = $this->db->getTableByAlias("products");
+        $table = $this->db->getTableByAlias("products");
         $minPrice = ceil($p->db->getOne("SELECT MIN(price) FROM $table"));
         $maxPrice = ceil($p->db->getOne("SELECT MAX(price) FROM $table"));
         $sumPrice = ceil($p->db->getOne("SELECT SUM(price) FROM $table"));
@@ -187,5 +187,5 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReportsData extend
         func_refresh_end();
 
         exit();
-    } 
+    }
 }

@@ -35,15 +35,15 @@
  */
 class XLite_Module_FeaturedProducts_Model_Category extends XLite_Model_Category implements XLite_Base_IDecorator
 {
-	/**
-	 * Cached featured products list
-	 * 
-	 * @var    array
-	 * @access protected
-	 * @see    ____var_see____
-	 * @since  3.0.0
-	 */
-	protected $featuredProducts = null;
+    /**
+     * Cached featured products list
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $featuredProducts = null;
 
 
     /**
@@ -84,19 +84,19 @@ class XLite_Module_FeaturedProducts_Model_Category extends XLite_Model_Category 
      * @see    ____func_see____
      * @since  3.0.0
      */
-	public function addFeaturedProducts($products)
-	{
+    public function addFeaturedProducts($products)
+    {
         if (is_array($products)) {
             foreach ($products as $product) {
     			$fp = new XLite_Module_FeaturedProducts_Model_FeaturedProduct();
     			$fp->set("category_id", $this->get("category_id"));
        			$fp->set("product_id", $product->get("product_id"));
         		if (!$fp->isExists()) {
-		    		$fp->create();
+            		$fp->create();
     			}
     		}
         }
-	}
+    }
 
     /**
      * Delete specified products from the featured products list
@@ -108,8 +108,8 @@ class XLite_Module_FeaturedProducts_Model_Category extends XLite_Model_Category 
      * @see    ____func_see____
      * @since  3.0.0
      */
-	public function deleteFeaturedProducts($products)
-	{
+    public function deleteFeaturedProducts($products)
+    {
         if (is_array($products)) {
             foreach ($products as $product) {
     			$fp = new XLite_Module_FeaturedProducts_Model_FeaturedProduct();
@@ -118,7 +118,7 @@ class XLite_Module_FeaturedProducts_Model_Category extends XLite_Model_Category 
     			$fp->delete();
     		}
         }
-	}
+    }
 
     /**
      * Delete product
@@ -128,9 +128,9 @@ class XLite_Module_FeaturedProducts_Model_Category extends XLite_Model_Category 
      * @see    ____func_see____
      * @since  3.0.0
      */
-	public function delete()
-	{
-		$this->deleteFeaturedProducts($this->getFeaturedProducts());
-		parent::delete();
-	}
+    public function delete()
+    {
+        $this->deleteFeaturedProducts($this->getFeaturedProducts());
+        parent::delete();
+    }
 }

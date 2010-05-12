@@ -69,9 +69,9 @@ class XLite_Module_MultiCategories_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'Allows to arrange products in several categories';
-    }	
+    }
 
-    public $isFree = true;	
+    public $isFree = true;
 
     /**
      * Perform some actions at startup
@@ -84,8 +84,8 @@ class XLite_Module_MultiCategories_Main extends XLite_Module_Abstract
     {
         parent::init();
 
-		if ($this->xlite->is("adminZone")) {
-		}
+        if ($this->xlite->is("adminZone")) {
+        }
         
     }
 }

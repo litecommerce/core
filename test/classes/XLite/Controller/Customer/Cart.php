@@ -53,7 +53,7 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
      * @since  3.0.0
      */
     protected function getLocation()
-    {   
+    {
         return 'Shopping cart';
     }
 
@@ -233,7 +233,7 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
 
         if (!$this->getProduct()->filter()) {
             $this->set('valid', false);
-            $result = false;    
+            $result = false;
         }
 
         return $result;

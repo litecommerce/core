@@ -37,12 +37,12 @@ class XLite_Module_AntiFraud_Model_Order extends XLite_Model_Order implements XL
 {
     function getAntiFraudData()
     {
-		$this->xlite->logger->log("->AntiFraud_Order::getAntiFraudData");
+        $this->xlite->logger->log("->AntiFraud_Order::getAntiFraudData");
     	if (is_null($this->getComplex('details.af_result.total_trust_score')))
     	{
-			if ($this->xlite->get("AFcallbackProcessing")) {
-				$this->xlite->logger->log("->AntiFraud_Order::AFcallbackProcessing");
-			} else {
+            if ($this->xlite->get("AFcallbackProcessing")) {
+                $this->xlite->logger->log("->AntiFraud_Order::AFcallbackProcessing");
+            } else {
     			$proxy_ip = $this->getProxyIP();
     			if (!empty($proxy_ip)) {
     				$customer_ip = $proxy_ip;
@@ -58,91 +58,91 @@ class XLite_Module_AntiFraud_Model_Order extends XLite_Model_Order implements XL
     			$this->xlite->logger->log("->AntiFraud_Order::checkFraud");
     		}
     	}
-		$this->xlite->logger->log("<-AntiFraud_Order::getAntiFraudData");
+        $this->xlite->logger->log("<-AntiFraud_Order::getAntiFraudData");
     }
 
     function isAntiFraudForceQueued()
     {
-		if ($this->getComplex('details.af_result.total_trust_score') >= $this->config->getComplex('AntiFraud.antifraud_risk_factor') && $this->config->getComplex('AntiFraud.antifraud_force_queued') == 'Y') {
-			$this->xlite->logger->log("->AntiFraud_Order::isAntiFraudForceQueued(1)");
-			return true;
-		} else {
-			$this->xlite->logger->log("->AntiFraud_Order::isAntiFraudForceQueued(0)");
-			return false;
-		}
+        if ($this->getComplex('details.af_result.total_trust_score') >= $this->config->getComplex('AntiFraud.antifraud_risk_factor') && $this->config->getComplex('AntiFraud.antifraud_force_queued') == 'Y') {
+            $this->xlite->logger->log("->AntiFraud_Order::isAntiFraudForceQueued(1)");
+            return true;
+        } else {
+            $this->xlite->logger->log("->AntiFraud_Order::isAntiFraudForceQueued(0)");
+            return false;
+        }
     }
 
-	function isStatusChanged2Processed($oldStatus, $newStatus)
-	{
-		if ($oldStatus != 'P' && $oldStatus != 'C' && ($newStatus =='P' || $newStatus == 'C')) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	function statusChanged($oldStatus, $newStatus) 
-	{
-		$this->xlite->logger->log("->AntiFraud_Order::statusChanged[".$oldStatus."][".$newStatus."]");
-		if ($this->xlite->is("adminZone")) {
-			$this->xlite->logger->log("->AntiFraud_Order::adminZone");
-		} else {
-			$this->xlite->logger->log("->AntiFraud_Order::!adminZone");
+    function isStatusChanged2Processed($oldStatus, $newStatus)
+    {
+        if ($oldStatus != 'P' && $oldStatus != 'C' && ($newStatus =='P' || $newStatus == 'C')) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    function statusChanged($oldStatus, $newStatus) 
+    {
+        $this->xlite->logger->log("->AntiFraud_Order::statusChanged[".$oldStatus."][".$newStatus."]");
+        if ($this->xlite->is("adminZone")) {
+            $this->xlite->logger->log("->AntiFraud_Order::adminZone");
+        } else {
+            $this->xlite->logger->log("->AntiFraud_Order::!adminZone");
 
-		    $this->getAntiFraudData();
+            $this->getAntiFraudData();
 
     		if ($this->isStatusChanged2Processed($oldStatus, $newStatus)) {
-				// switching to PROCESSED
+                // switching to PROCESSED
     			if ($this->isAntiFraudForceQueued()) {
     				$this->xlite->logger->log("->AntiFraud_Order::status=Q");
     				$newStatus = "Q";
     				$this->set("status", $newStatus);
-				}
+                }
     		}
-		}
+        }
 
-		parent::statusChanged($oldStatus, $newStatus);
-	} 
+        parent::statusChanged($oldStatus, $newStatus);
+    }
 
-	function getAddress()
-	{
-		$address = $this->getComplex('details.customer_ip');
-		preg_match('/^<(.*)>$/',$address,$address);
-		return isset($address[1]) ? $address[1] : '';
-	}	
+    function getAddress()
+    {
+        $address = $this->getComplex('details.customer_ip');
+        preg_match('/^<(.*)>$/',$address,$address);
+        return isset($address[1]) ? $address[1] : '';
+    }
 
-	function checkFraud()
-	{
-		$profile = $this->get('profile');
+    function checkFraud()
+    {
+        $profile = $this->get('profile');
 
-		$post = array();
-		$post["ip"] 		= $this->get('address');
-		$post["proxy_ip"] 	= $this->getComplex('details.proxy_ip');
-		$post["email"] 		= preg_replace("/^[^@]+@/Ss","",$profile->get('login'));
-		$post["country"] 	= $profile->get('billing_country');
-		$post["state"] 		= $profile->getComplex('billingState.code');
-		$post["city"] 		= $profile->get('billing_city');
-		$post["zipcode"] 	= $profile->get('billing_zipcode');
-		$post["phone"] 		= $profile->get('billing_phone');
-		$post["service_key"] = $this->config->getComplex('AntiFraud.antifraud_license');
-		$post["safe_distance"] = $this->config->getComplex('AntiFraud.antifraud_safe_distance');
+        $post = array();
+        $post["ip"] 		= $this->get('address');
+        $post["proxy_ip"] 	= $this->getComplex('details.proxy_ip');
+        $post["email"] 		= preg_replace("/^[^@]+@/Ss","",$profile->get('login'));
+        $post["country"] 	= $profile->get('billing_country');
+        $post["state"] 		= $profile->getComplex('billingState.code');
+        $post["city"] 		= $profile->get('billing_city');
+        $post["zipcode"] 	= $profile->get('billing_zipcode');
+        $post["phone"] 		= $profile->get('billing_phone');
+        $post["service_key"] = $this->config->getComplex('AntiFraud.antifraud_license');
+        $post["safe_distance"] = $this->config->getComplex('AntiFraud.antifraud_safe_distance');
 
-		$request = new XLite_Model_HTTPS();
-		$request->url = $this->config->getComplex('AntiFraud.antifraud_url')."/antifraud_service.php";
-		$request->data = $post;
-		$request->request();
-		
-		if ($request->error) {
-			$this->setComplex("details.error", $request->error);
-			$this->set("detailLabels.error","HTTPS error");
-			return null;
-		} else {
+        $request = new XLite_Model_HTTPS();
+        $request->url = $this->config->getComplex('AntiFraud.antifraud_url')."/antifraud_service.php";
+        $request->data = $post;
+        $request->request();
+        
+        if ($request->error) {
+            $this->setComplex("details.error", $request->error);
+            $this->set("detailLabels.error","HTTPS error");
+            return null;
+        } else {
 
     		list($result,$data) = explode("\n",$request->response);
     		$result = unserialize($result);
     		$data 	= unserialize($data);
 
-    		$risk_factor_multiplier = 1; 
+    		$risk_factor_multiplier = 1;
     		$found = new XLite_Model_Order($this->get("order_id"));
 
     		if ($this->config->getComplex('AntiFraud.antifraud_order_total') > 0 && $this->get("total") > 0 &&  $this->get("total") > $this->config->getComplex('AntiFraud.antifraud_order_total'))	{
@@ -187,70 +187,70 @@ class XLite_Module_AntiFraud_Model_Order extends XLite_Model_Order implements XL
     			$result["total_trust_score"] = 10;
     		}
     	
-			$this->setComplex("details.af_result", $result);	
-			$this->setComplex("details.af_data", $data); 
-		}
+            $this->setComplex("details.af_result", $result);
+            $this->setComplex("details.af_data", $data);
+        }
 
-		return $result;
-	}
-	
-	function getProxyIP() 
-	{
-		
-		if (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])) {
-		    return $_SERVER["HTTP_X_FORWARDED_FOR"];
-		} elseif (!empty($_SERVER["HTTP_X_FORWARDED"])) {
-		    return $_SERVER["HTTP_X_FORWARDED"];
-		} elseif (!empty($_SERVER["HTTP_FORWARDED_FOR"])) {
-		    return $_SERVER["HTTP_FORWARDED_FOR"];
-		} elseif (!empty($_SERVER["HTTP_FORWARDED"])){
-		    return $_SERVER["HTTP_FORWARDED"];
-		} elseif (!empty($_SERVER["HTTP_CLIENT_IP"])) {
-		    return $_SERVER["HTTP_CLIENT_IP"];
-		} elseif (!empty($_SERVER["HTTP_X_COMING_FROM"])) {
-		    return $_SERVER["HTTP_X_COMING_FROM"];
-		} elseif (!empty($_SERVER["HTTP_COMING_FROM"])) {
-		    return $_SERVER["HTTP_COMING_FROM"];
-		} else 
-			return '';	
-	} 
-	
-	function getCustomerIP() 
-	{
-		return $_SERVER["REMOTE_ADDR"];	
-	} 
+        return $result;
+    }
+    
+    function getProxyIP() 
+    {
+        
+        if (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])) {
+            return $_SERVER["HTTP_X_FORWARDED_FOR"];
+        } elseif (!empty($_SERVER["HTTP_X_FORWARDED"])) {
+            return $_SERVER["HTTP_X_FORWARDED"];
+        } elseif (!empty($_SERVER["HTTP_FORWARDED_FOR"])) {
+            return $_SERVER["HTTP_FORWARDED_FOR"];
+        } elseif (!empty($_SERVER["HTTP_FORWARDED"])){
+            return $_SERVER["HTTP_FORWARDED"];
+        } elseif (!empty($_SERVER["HTTP_CLIENT_IP"])) {
+            return $_SERVER["HTTP_CLIENT_IP"];
+        } elseif (!empty($_SERVER["HTTP_X_COMING_FROM"])) {
+            return $_SERVER["HTTP_X_COMING_FROM"];
+        } elseif (!empty($_SERVER["HTTP_COMING_FROM"])) {
+            return $_SERVER["HTTP_COMING_FROM"];
+        } else 
+            return '';
+    }
+    
+    function getCustomerIP() 
+    {
+        return $_SERVER["REMOTE_ADDR"];
+    }
 
-	function isAFServiceValue($value)
-	{
-		switch ($value) {
-			case "IP_NOT_FOUND":
-			case "POSTAL_CODE_NOT_FOUND":
-			case "COUNTRY_NOT_FOUND":
-			case "CITY_NOT_FOUND":
-			case "IP_REQUIRED":
-			case "DOMAIN_REQUIRED":
-			case "EMPTY_SERVICE_KEY":
-			case "NOT_AVAILABLE_SERVICE":
-			case "NO_ACTIVE_LICENSES":
-			case "NOT_ALLOWED_SHOP_IP":
-			return true;
-			default:
-			return false;
-		}
-	}
+    function isAFServiceValue($value)
+    {
+        switch ($value) {
+            case "IP_NOT_FOUND":
+            case "POSTAL_CODE_NOT_FOUND":
+            case "COUNTRY_NOT_FOUND":
+            case "CITY_NOT_FOUND":
+            case "IP_REQUIRED":
+            case "DOMAIN_REQUIRED":
+            case "EMPTY_SERVICE_KEY":
+            case "NOT_AVAILABLE_SERVICE":
+            case "NO_ACTIVE_LICENSES":
+            case "NOT_ALLOWED_SHOP_IP":
+            return true;
+            default:
+            return false;
+        }
+    }
 
     function getTotalTrustScore()
     {
-		$score = $this->getComplex('details.af_result.total_trust_score');
+        $score = $this->getComplex('details.af_result.total_trust_score');
         return round($score, 1);
     }
 
     function update()
     {
-		if ($this->xlite->is("adminZone") && $this->config->getComplex('AntiFraud.always_keep_info')) {
+        if ($this->xlite->is("adminZone") && $this->config->getComplex('AntiFraud.always_keep_info')) {
         	$afFields = array("customer_ip", "proxy_ip", "af_result", "processed_orders", "declined_orders", "af_data");
 
-			$oldOrder = new XLite_Model_Order($this->get("order_id"));
+            $oldOrder = new XLite_Model_Order($this->get("order_id"));
         	$oldDetails = $oldOrder->get("details");
         	$details = $this->get("details");
         	$detailsUpdated = false;
@@ -263,7 +263,7 @@ class XLite_Module_AntiFraud_Model_Order extends XLite_Model_Order implements XL
         	if ($detailsUpdated) {
         		$this->set("details", $details);
         	}
-		}
+        }
         parent::update();
     }
 }

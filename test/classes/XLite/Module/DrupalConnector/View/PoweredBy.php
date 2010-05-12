@@ -45,12 +45,12 @@ class XLite_Module_DrupalConnector_View_PoweredBy extends XLite_View_PoweredBy i
      */
     public function isLink()
     {
-		if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
-			$result = drupal_is_front_page();
+        if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
+            $result = drupal_is_front_page();
 
-		} else {
-			$result = parent::isLink();
-		}
+        } else {
+            $result = parent::isLink();
+        }
 
         return $result;
     }

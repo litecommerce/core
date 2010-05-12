@@ -69,7 +69,7 @@ class XLite_Module_AccountingPackage_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'Integration with QuickBooks, Peachtree and MYOB';
-    }	
+    }
 
     /**
      * Determines if we need to show settings form link
@@ -81,7 +81,7 @@ class XLite_Module_AccountingPackage_Main extends XLite_Module_Abstract
     public static function showSettingsForm()
     {
         return true;
-    }	
+    }
     public $isFree = true;
 
     /**

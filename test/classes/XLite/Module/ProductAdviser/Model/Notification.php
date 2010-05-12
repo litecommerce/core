@@ -34,30 +34,30 @@
  * @since   3.0.0
  */
 class XLite_Module_ProductAdviser_Model_Notification extends XLite_Model_Abstract
-{	
-	public $fields = array
-	(
-		"notify_id" 		=> 0,
-		"type" 				=> "",
-		"status"			=> CUSTOMER_REQUEST_QUEUED,
-		"notify_key"		=> "",
-		"date" 				=> 0,
-		"profile_id" 		=> 0,
-		"email" 			=> "",
-		"person_info" 		=> "",
-		"product_id" 		=> 0,
-		"product_options" 	=> "",
-		"quantity" 			=> 0,
-		"price" 			=> 0,
-	);	
-	public $primaryKey = array("notify_id");	
-    public $autoIncrement = "notify_id";	
-	public $defaultOrder = "date";	
-	public $alias = "customers_notifications";	
+{
+    public $fields = array
+    (
+        "notify_id" 		=> 0,
+        "type" 				=> "",
+        "status"			=> CUSTOMER_REQUEST_QUEUED,
+        "notify_key"		=> "",
+        "date" 				=> 0,
+        "profile_id" 		=> 0,
+        "email" 			=> "",
+        "person_info" 		=> "",
+        "product_id" 		=> 0,
+        "product_options" 	=> "",
+        "quantity" 			=> 0,
+        "price" 			=> 0,
+    );
+    public $primaryKey = array("notify_id");
+    public $autoIncrement = "notify_id";
+    public $defaultOrder = "date";
+    public $alias = "customers_notifications";
 
-	public $ntfProduct = null;	
-	public $errorPresent = false;	
-	public $errorDescription;
+    public $ntfProduct = null;
+    public $errorPresent = false;
+    public $errorDescription;
 
     function _beforeSave() 
     {
@@ -105,7 +105,7 @@ class XLite_Module_ProductAdviser_Model_Notification extends XLite_Model_Abstrac
     	switch ($this->get("type")) {
     		case CUSTOMER_NOTIFICATION_PRODUCT:
     			$keyValue[] = $this->get("product_id");
-				$po = $this->get("product_options");
+                $po = $this->get("product_options");
     			if (!empty($po) && is_array($po)) {
         			$poStr = array();
         			foreach($po as $class => $v) {
@@ -113,15 +113,15 @@ class XLite_Module_ProductAdviser_Model_Notification extends XLite_Model_Abstrac
         			}
         			$keyValue[] = implode("|", $poStr);
     			}
-	    		break;
+        		break;
 
     		case CUSTOMER_NOTIFICATION_PRICE:
     			$keyValue[] = $this->get("product_id");
-	    		break;
+        		break;
     	}
 
-		$keyValue = implode("|", $keyValue);
-		return $keyValue;
+        $keyValue = implode("|", $keyValue);
+        return $keyValue;
     }
 
     function getProduct()
@@ -130,19 +130,19 @@ class XLite_Module_ProductAdviser_Model_Notification extends XLite_Model_Abstrac
     		return null;
 
     	if (is_null($this->ntfProduct)) {
-			$p = new XLite_Model_Product($this->get("product_id"));
-			if (!$p->is("exists")) {
-				$this->errorPresent = true;
-				$this->errorDescription = "Product was deleted.";
-				return null;
-			}
+            $p = new XLite_Model_Product($this->get("product_id"));
+            if (!$p->is("exists")) {
+                $this->errorPresent = true;
+                $this->errorDescription = "Product was deleted.";
+                return null;
+            }
 
-			$po = $this->get("product_options");
-			if (!empty($po)) {
-				if (!is_array($po)) {
-					$po = unserialize($po);
-				}
-				if (is_array($po)) {
+            $po = $this->get("product_options");
+            if (!empty($po)) {
+                if (!is_array($po)) {
+                    $po = unserialize($po);
+                }
+                if (is_array($po)) {
         			$poStr = array();
         			foreach($po as $class => $option) {
         				$poStr[] = $class . ": " . $option["option"];
@@ -151,24 +151,24 @@ class XLite_Module_ProductAdviser_Model_Notification extends XLite_Model_Abstrac
         		}
     		}
 
-			$quantity = $this->get("quantity");
-			$p->set("quantity", 0);
+            $quantity = $this->get("quantity");
+            $p->set("quantity", 0);
         	if ($this->xlite->get("PA_InventorySupport")) {
     			$inventory = new XLite_Module_InventoryTracking_Model_Inventory();
     			if ($inventory->find("inventory_id='".addslashes($this->getProductKey())."'")) {
         			$p->set("quantity", $inventory->get("amount"));
     			}
-			}
-			$this->ntfProduct = $p;
+            }
+            $this->ntfProduct = $p;
     	}
-		
-		return $this->ntfProduct;
+        
+        return $this->ntfProduct;
     }
 
     function filter()
     {
-		if ($this->xlite->get("NotificationProductNameFilter")) {
-			$sub_str = strtolower($this->xlite->get("NotificationProductNameFilter"));
+        if ($this->xlite->get("NotificationProductNameFilter")) {
+            $sub_str = strtolower($this->xlite->get("NotificationProductNameFilter"));
     		$product = $this->getProduct();
     		if (is_null($product)) {
     			return false;
@@ -176,7 +176,7 @@ class XLite_Module_ProductAdviser_Model_Notification extends XLite_Model_Abstrac
     		if (!(strpos(strtolower($product->get("name")), $sub_str) !== false || strpos(strtolower($product->get("sku")), $sub_str) !== false)) {
     			return false;
     		}
-		}
+        }
     	return parent::filter();
     }
 

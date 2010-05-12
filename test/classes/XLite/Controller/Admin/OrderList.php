@@ -35,7 +35,7 @@
  * @since   3.0.0
  */
 class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_Abstract
-{	
+{
     public $params = array('target', 'mode', 'order_id', 'login', 'status');
 
     /**
@@ -76,7 +76,7 @@ class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_Abstract
      * @see    ____var_see____
      * @since  3.0.0
      */
-	protected $orders = null;
+    protected $orders = null;
 
     /**
      * fillForm 
@@ -166,47 +166,47 @@ class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_Abstract
      */
     protected function getOrders()
     {
-		$origProfile = true;
+        $origProfile = true;
         $enhacedSearch = false;
         $onlyNormalProfile = false;
 
-		if (is_null($this->orders)) {
+        if (is_null($this->orders)) {
 
             $order = new XLite_Model_Order();
             $order->collectGarbage();
-			$order->fetchKeysOnly = false;
-			$order->fetchObjIdxOnly = $this->isQuickSearch();
+            $order->fetchKeysOnly = false;
+            $order->fetchObjIdxOnly = $this->isQuickSearch();
 
             $login = XLite_Core_Request::getInstance()->login;
 
             if (!empty($login)) {
 
                 $profile = new XLite_Model_Profile();
-				$profile->_range = null;
+                $profile->_range = null;
 
                 if (!$profile->find("login='" . addslashes($login) . "' AND order_id != '0'")) {
-					$this->noSuchUser = true;
+                    $this->noSuchUser = true;
 
                 	if ($profile->find("login='" . addslashes($login) . "' AND order_id = '0'")) {
                     	$this->noSuchUser = false;
-						$origProfile = false;
+                        $origProfile = false;
 
                 	} else {
                         $where = "login LIKE '%" . addslashes($login) . "%'";
-						$users = $profile->findAll($where);
+                        $users = $profile->findAll($where);
 
                         if (is_array($users) && count($users) > 0) {
-							$this->noSuchUser = false;
+                            $this->noSuchUser = false;
                         	$enhacedSearch = true;
                         }
                 	}
-				}
+                }
 
             } else {
                 $profile = null;
             }
 
-			if (!$enhacedSearch) {
+            if (!$enhacedSearch) {
 
             	if ((!empty($login) && $profile->get('profile_id')) || empty($login)) {
                     $this->orders = $order->search(
@@ -217,14 +217,14 @@ class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_Abstract
                             $this->getDateValue('endDate') + 24 * 3600,
                             $origProfile
                         );
-				}
+                }
 
             	if (0 == count($this->orders) && is_object($profile)) {
                     $where = "login='" . addslashes($login) . "'";
                     $users = $profile->findAll($where);
                     $onlyNormalProfile = true;
             	}
-			}
+            }
 
             if ($enhacedSearch || (!$enhacedSearch && 0 == count($this->orders))) {
             	$orders = $order->search(
@@ -235,48 +235,48 @@ class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_Abstract
                         $this->getDateValue('endDate') + 24 * 3600
                     );
 
-				$this->orders = array();
+                $this->orders = array();
 
-				if (is_array($orders) && count($orders) > 0) {
+                if (is_array($orders) && count($orders) > 0) {
 
-					for ($i = 0; $i < count($orders); $i++) {
+                    for ($i = 0; $i < count($orders); $i++) {
 
                 		if ($order->isObjectDescriptor($orders[$i])) {
                 			$orders[$i] = $order->descriptorToObject($orders[$i]);
-						}
+                        }
 
-						$profileId = $orders[$i]->get('profile_id');
-						$origProfileId = $orders[$i]->get('orig_profile_id');
+                        $profileId = $orders[$i]->get('profile_id');
+                        $origProfileId = $orders[$i]->get('orig_profile_id');
 
-						for ($j = 0; $j < count($users); $j++) {
+                        for ($j = 0; $j < count($users); $j++) {
 
-							$uid = $users[$j]->get('profile_id');
+                            $uid = $users[$j]->get('profile_id');
 
-							if (!$onlyNormalProfile) {
+                            if (!$onlyNormalProfile) {
 
     							if ($uid == $profileId || $uid == $origProfileId) {
     								$this->orders[] = $orders[$i];
     								break;
-								}
+                                }
 
-							} elseif ($uid == $profileId) {
+                            } elseif ($uid == $profileId) {
     								$this->orders[] = $orders[$i];
     								break;
     						}
-						}
-					}
-				}
+                        }
+                    }
+                }
             }
 
-			if ($this->action == "export_xls") {
+            if ($this->action == "export_xls") {
 
-				foreach($this->orders as $ord_idx => $order) {
+                foreach($this->orders as $ord_idx => $order) {
 
-					$taxes = 0;
+                    $taxes = 0;
 
             		foreach($order->getDisplayTaxes() as $tax_name => $tax) {
             			$taxes += $tax;
-					}
+                    }
 
             		$this->orders[$ord_idx]->set("tax", $taxes);
             	}
@@ -352,8 +352,8 @@ class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_Abstract
      * @see    ____func_see____
      * @since  3.0.0
      */
-	protected function doActionExportXls()
-	{
+    protected function doActionExportXls()
+    {
         $w = new XLite_View_ExportXLS();
         $w->component = $this;
         $this->startDownload("orders.xls");
@@ -370,7 +370,7 @@ class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_Abstract
 
         // do not output anything
         $this->set("silent", true);
-	}
+    }
 
     /**
      * columnCount 
@@ -410,15 +410,15 @@ class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_Abstract
      * @see    ____func_see____
      * @since  3.0.0
      */
-	protected function doActionDelete()
-	{
-		if (isset(XLite_Core_Request::getInstance()->order_ids)) {
-			foreach (XLite_Core_Request::getInstance()->order_ids as $oid => $value) {
-				$order = new XLite_Model_Order($oid);
-				$order->remove();
-			}
-		}
-	}
+    protected function doActionDelete()
+    {
+        if (isset(XLite_Core_Request::getInstance()->order_ids)) {
+            foreach (XLite_Core_Request::getInstance()->order_ids as $oid => $value) {
+                $order = new XLite_Model_Order($oid);
+                $order->remove();
+            }
+        }
+    }
 
     /**
      * getExportFormats 

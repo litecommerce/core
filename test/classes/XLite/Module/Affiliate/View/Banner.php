@@ -34,10 +34,10 @@
  * @since   3.0.0
  */
 class XLite_Module_Affiliate_View_Banner extends XLite_View_Abstract
-{	
+{
     public $type = "iframe"; // type ::= iframe | js | ssi	
-    public $src = null;	
-    public $width = 120;	
+    public $src = null;
+    public $width = 120;
     public $height = 240;
 
     function getTemplate()

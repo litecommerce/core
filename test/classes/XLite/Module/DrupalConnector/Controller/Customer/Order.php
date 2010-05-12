@@ -35,20 +35,20 @@
  */
 class XLite_Module_DrupalConnector_Controller_Customer_Order extends XLite_Controller_Customer_Order implements XLite_Base_IDecorator
 {
-	/**
-	 * Get additional bread crumbs list
-	 * 
-	 * @return array
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function getAdditionalBreadcrumbs()
-	{
-		return array(
-			array('Orders history', $this->buildUrl('order_list')),
-		);
-	}
+    /**
+     * Get additional bread crumbs list
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getAdditionalBreadcrumbs()
+    {
+        return array(
+            array('Orders history', $this->buildUrl('order_list')),
+        );
+    }
 
     /**
      * Check order access 
@@ -60,6 +60,6 @@ class XLite_Module_DrupalConnector_Controller_Customer_Order extends XLite_Contr
      */
     protected function checkOrderAccess()
     {
-        return user_access('administer users') || parent::checkOrderAccess(); 
+        return user_access('administer users') || parent::checkOrderAccess();
     }
 }

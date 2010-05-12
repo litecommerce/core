@@ -34,13 +34,13 @@
  * @since   3.0.0
  */
 class XLite_Model_ProductFromCategory extends XLite_Model_Product
-{	
+{
     public $fetchKeysOnly = true;
 
     public function __construct($catId = null)
     {
         parent::__construct();
-        $this->catId = $catId; 
+        $this->catId = $catId;
     }
 
     /*
@@ -63,18 +63,18 @@ class XLite_Model_ProductFromCategory extends XLite_Model_Product
     }
 
     function _buildRead() 
-    {       
+    {
         $condition = array();
         foreach ($this->primaryKey as $field) {
             $condition[] = "$field='".addslashes($this->properties[$field])."'";
-        }   
+        }
         $condition = implode(" AND ", $condition);
         
         $this->fetchKeysOnly = false;
         $sql = parent::_buildSelect($condition);
         $this->fetchKeysOnly = true;
         return $sql;
-    }  
+    }
 
     function getProductsNumber($enabled=true, $where="")
     {
@@ -98,6 +98,6 @@ class XLite_Model_ProductFromCategory extends XLite_Model_Product
     */
     function hasProducts($enabled=true)
     {
-        return (bool) $this->getProductsNumber(); 
+        return (bool) $this->getProductsNumber();
     }
 }

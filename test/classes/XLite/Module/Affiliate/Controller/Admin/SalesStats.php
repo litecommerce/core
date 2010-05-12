@@ -34,9 +34,9 @@
  * @since   3.0.0
  */
 class XLite_Module_Affiliate_Controller_Admin_SalesStats extends XLite_Module_Affiliate_Controller_Admin_PartnerStats
-{	
-    public $qty = 0;	
-    public $saleTotal = 0;	
+{
+    public $qty = 0;
+    public $saleTotal = 0;
     public $commissionsTotal = 0;
 
     function getPageTemplate()
@@ -86,7 +86,7 @@ class XLite_Module_Affiliate_Controller_Admin_SalesStats extends XLite_Module_Af
                     $this->topProducts[$id]["amount"] += $item->get("amount");
                     $this->topProducts[$id]["total"] = sprintf("%.02f", doubleval($this->topProducts[$id]["total"] + $item->get("total")));
                     $this->topProducts[$id]["commissions"] = sprintf("%.02f", doubleval($this->topProducts[$id]["commissions"] + $item->get("commissions")));
-                }    
+                }
             }
             if (is_array($this->topProducts) && count($this->topProducts) > 0) {
                 usort($this->topProducts, array($this, "cmpProducts"));
@@ -115,7 +115,7 @@ class XLite_Module_Affiliate_Controller_Admin_SalesStats extends XLite_Module_Af
         }
         if ($pp->isComplex('order.processed')) {
                 $this->items = is_array($this->items) ? array_merge($this->items, $pp->getComplex('order.items')) : $pp->getComplex('order.items');
-        }    
+        }
         $this->salesTotal += $pp->getComplex('order.subtotal');
         $this->commissionsTotal += $pp->get("commissions");
     }

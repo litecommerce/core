@@ -35,10 +35,10 @@
  */
 class XLite_Module_WishList_Controller_Customer_Product extends XLite_Controller_Customer_Product implements XLite_Base_IDecorator
 {
-	function getSenderName() 
-	{
-		return isset($this->sender_name) ? $this->sender_name : $this->auth->getComplex('profile.billing_firstname')." ".$this->auth->getComplex('profile.billing_lastname');
-	}  
+    function getSenderName() 
+    {
+        return isset($this->sender_name) ? $this->sender_name : $this->auth->getComplex('profile.billing_firstname')." ".$this->auth->getComplex('profile.billing_lastname');
+    }
 
   	function getSenderEmail() 
     {
@@ -46,12 +46,12 @@ class XLite_Module_WishList_Controller_Customer_Product extends XLite_Controller
     }
 
 
-	function action_send_friend() 
+    function action_send_friend() 
     {
         $Mailer = new XLite_Model_Mailer();
-	    $Mailer->sender_name  = $this->sender_name;
-	    $Mailer->sender_email = $this->sender_email;
-	    $Mailer->recipient_email = $this->recipient_email;
+        $Mailer->sender_name  = $this->sender_name;
+        $Mailer->sender_email = $this->sender_email;
+        $Mailer->recipient_email = $this->recipient_email;
         $product = new XLite_Model_Product($this->product_id);
  		$Mailer->product = $product;
         $Mailer->url = $this->getShopUrl("cart.php?target=product&product_id=".$this->product_id);
@@ -59,6 +59,6 @@ class XLite_Module_WishList_Controller_Customer_Product extends XLite_Controller
         $Mailer->send();
 
         $this->params[] = "mode";
-		$this->set("mode","MessageSent");
-	  } 
+        $this->set("mode","MessageSent");
+      }
 }

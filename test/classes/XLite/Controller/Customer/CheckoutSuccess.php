@@ -34,12 +34,12 @@
  * @since   3.0.0
  */
 class XLite_Controller_Customer_CheckoutSuccess extends XLite_Controller_Customer_Abstract
-{	
-    public $params = array("target", "order_id");	
+{
+    public $params = array("target", "order_id");
     public $order = null;
 
 
-	/**
+    /**
      * Common method to determine current location 
      * 
      * @return string
@@ -47,12 +47,12 @@ class XLite_Controller_Customer_CheckoutSuccess extends XLite_Controller_Custome
      * @since  3.0.0
      */     
     protected function getLocation()
-    {   
+    {
         return 'Checkout';
     }
 
 
-	/**
+    /**
      * Get page title
      *
      * @return string
@@ -86,11 +86,11 @@ class XLite_Controller_Customer_CheckoutSuccess extends XLite_Controller_Custome
         return $this->order;
     }
 
-	function getCharset()
-	{
-		$charset = $this->getComplex('order.profile.billingCountry.charset');
-		return ($charset) ? $charset : parent::getCharset();
-	}
+    function getCharset()
+    {
+        $charset = $this->getComplex('order.profile.billingCountry.charset');
+        return ($charset) ? $charset : parent::getCharset();
+    }
 
     function getSecure()
     {

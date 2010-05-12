@@ -503,7 +503,7 @@ class XLite_Module_XPaymentsConnector_Model_PaymentMethod_XPayment extends XLite
         }
 
         return $this->conf;
-    }    
+    }
 
     protected function request($target, $action, array $data = array(), array $schema = array())
     {

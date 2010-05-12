@@ -35,25 +35,25 @@
  */
 class XLite_Module_Promotion_Controller_Admin_Taxes extends XLite_Controller_Admin_Taxes implements XLite_Base_IDecorator
 {
-	/*
-	 * This function required for configuring discounts taxing policy
-	 */
-	function isDiscountUsedForTaxes()
-	{
-		return true;
-	}
+    /*
+     * This function required for configuring discounts taxing policy
+     */
+    function isDiscountUsedForTaxes()
+    {
+        return true;
+    }
 
-	function action_add_tax()	
-	{
-		parent::action_add_tax();
-		$cfg = new XLite_Model_Config();
-		$cfg->createOption("Taxes", "discounts_after_taxes", $_POST['discounts_after_taxes']);
-	}
+    function action_add_tax()	
+    {
+        parent::action_add_tax();
+        $cfg = new XLite_Model_Config();
+        $cfg->createOption("Taxes", "discounts_after_taxes", $_POST['discounts_after_taxes']);
+    }
 
-	function action_update_options()
-	{
-		parent::action_update_options();
-		$cfg = new XLite_Model_Config();
-		$cfg->createOption("Taxes", "discounts_after_taxes", $_POST['discounts_after_taxes']);
-	}
+    function action_update_options()
+    {
+        parent::action_update_options();
+        $cfg = new XLite_Model_Config();
+        $cfg->createOption("Taxes", "discounts_after_taxes", $_POST['discounts_after_taxes']);
+    }
 }

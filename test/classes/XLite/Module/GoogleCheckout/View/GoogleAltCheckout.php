@@ -34,8 +34,8 @@
  * @since   3.0.0
  */
 class XLite_Module_GoogleCheckout_View_GoogleAltCheckout extends XLite_View_Abstract
-{    
-    public $GCMerchantID = null;    
+{
+    public $GCMerchantID = null;
     public $CurrentSkin = null;
 
     /**

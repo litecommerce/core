@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Model_ExtraField extends XLite_Model_Abstract
-{	
+{
     public $fields = array(
             "field_id" => 0,    // primary key
             "product_id" => 0,
@@ -42,13 +42,13 @@ class XLite_Model_ExtraField extends XLite_Model_Abstract
             "default_value"    => "",
             "enabled"  => 1,
             "order_by" => 0,
-			"parent_field_id" => 0,
-			"categories" => "",
-            );	
+            "parent_field_id" => 0,
+            "categories" => "",
+            );
 
-    public $autoIncrement = "field_id";	
-    public $alias         = "extra_fields";	
-    public $defaultOrder  = "order_by,name";	
+    public $autoIncrement = "field_id";
+    public $alias         = "extra_fields";
+    public $defaultOrder  = "order_by,name";
 
     public $importFields = array(
         "NULL" => false,
@@ -65,7 +65,7 @@ class XLite_Model_ExtraField extends XLite_Model_Abstract
     function getProduct() 
     {
         return new XLite_Model_Product($this->get("product_id"));
-    } 
+    }
     
     function delete()
     {
@@ -105,19 +105,19 @@ class XLite_Model_ExtraField extends XLite_Model_Abstract
             	$this->setCategoriesList($this->get("categories"));
             }
 
-			if ($this->get("product_id") == 0) {
-				$ef_children = new XLite_Model_ExtraField();
-				$ef_children = $ef_children->findAll("parent_field_id='".$this->get("field_id")."'");
-				if (is_array($ef_children) && count($ef_children) > 0) {
-					$categories_list = explode("|", $this->get("categories"));
-					foreach ($ef_children as $ef_child) {
-						$ef_child->setCategoriesList($categories_list);
-						$ef_child->update();
-					}
-				}
-			}
+            if ($this->get("product_id") == 0) {
+                $ef_children = new XLite_Model_ExtraField();
+                $ef_children = $ef_children->findAll("parent_field_id='".$this->get("field_id")."'");
+                if (is_array($ef_children) && count($ef_children) > 0) {
+                    $categories_list = explode("|", $this->get("categories"));
+                    foreach ($ef_children as $ef_child) {
+                        $ef_child->setCategoriesList($categories_list);
+                        $ef_child->update();
+                    }
+                }
+            }
 
-			$categories = $this->get("categories");
+            $categories = $this->get("categories");
     		$categories_old = $this->get("categories_old");
             if (isset($categories) && isset($categories_old) && strcmp($categories, $categories_old) != 0) {
     			$categories = explode("|", $categories);
@@ -145,7 +145,7 @@ class XLite_Model_ExtraField extends XLite_Model_Abstract
             }
     	}
 
-		parent::update();
+        parent::update();
     }
 
     function filter()
@@ -177,25 +177,25 @@ class XLite_Model_ExtraField extends XLite_Model_Abstract
                     $data[] = $this->getComplex('product.sku');
                     break;
                 case "category":
-					$properties = $this->get("properties");
-					if($properties['product_id']==0) {
-						if (!empty($properties['categories'])) 
-						{
-							$categories = array();
-							$categories = explode('|',$properties['categories']);
-							foreach($categories as $category) 
-							{
-								$cat = new XLite_Model_Category($category);
-								$cat_path .= '|'.$cat->getStringPath();
-							}
-							$data[] = substr($cat_path, 1);
-						}
-						else $data[] = "";	
-					}
-					else { 
-	                    $product = $this->get("product");
+                    $properties = $this->get("properties");
+                    if($properties['product_id']==0) {
+                        if (!empty($properties['categories'])) 
+                        {
+                            $categories = array();
+                            $categories = explode('|',$properties['categories']);
+                            foreach($categories as $category) 
+                            {
+                                $cat = new XLite_Model_Category($category);
+                                $cat_path .= '|'.$cat->getStringPath();
+                            }
+                            $data[] = substr($cat_path, 1);
+                        }
+                        else $data[] = "";
+                    }
+                    else {
+                        $product = $this->get("product");
     	                $data[] = $product->_exportCategory();
-					} 
+                    }
                     break;
                 case "product":
                     $data[] = $this->getComplex('product.name');
@@ -206,87 +206,87 @@ class XLite_Model_ExtraField extends XLite_Model_Abstract
             }
         }
         return $data;
-    } 
+    }
 
     function _import(array $options) 
     {
         $properties = $options["properties"];
-		//import global extra fields 
-	
-		if ($properties['sku']==NULL && $properties['product']==NULL)	
-		{
-			$global_extra_field = new XLite_Model_ExtraField();
-			$found = $global_extra_field->find("name='".addslashes($properties['name'])."' AND product_id=0");
-			$global_extra_field->set("default_value", $properties["default_value"]);
-			$global_extra_field->set("name", $properties["name"]);
-			$global_extra_field->set("enabled", $properties["enabled"]);
-			$global_extra_field->set("order_by", $properties["order_by"]);	
-			$global_extra_field->set("product_id", 0);
-			$global_extra_field->set("parent_field_id", 0);
-			
-			if ($properties["category"] == NULL)
-				$global_extra_field->set("categories",""); 
-			else 
-			{
-				$category = new XLite_Model_Category();
-				foreach($category->parseCategoryField($properties["category"],true) as $path)	
-				{
-					$cat = $category->findCategory($path);
-					if(!is_null($cat)) $categories .= "|".$cat->get("category_id");
-				}
-				$categories = substr($categories,1);
-				$global_extra_field->set("categories", $categories);
-			}
-			
-			if(!$found)	{
-				$global_extra_field->create();
-			} else {
-				$global_extra_field->update();
-			}
-	
-			$extra_fields = new XLite_Model_ExtraField();
-			$extra_fields_ = $extra_fields->findAll("name='".addslashes($properties["name"])."' AND product_id<>0");
-			if (!empty($extra_fields_))
-				foreach($extra_fields_ as $extra_field_) 
-				{
-					$extra_field_->set("parent_field_id", $global_extra_field->get("field_id"));
-					$extra_field_->update();
-				}
-					
-		} else {
-			$product = new XLite_Model_Product();
+        //import global extra fields 
+    
+        if ($properties['sku']==NULL && $properties['product']==NULL)	
+        {
+            $global_extra_field = new XLite_Model_ExtraField();
+            $found = $global_extra_field->find("name='".addslashes($properties['name'])."' AND product_id=0");
+            $global_extra_field->set("default_value", $properties["default_value"]);
+            $global_extra_field->set("name", $properties["name"]);
+            $global_extra_field->set("enabled", $properties["enabled"]);
+            $global_extra_field->set("order_by", $properties["order_by"]);
+            $global_extra_field->set("product_id", 0);
+            $global_extra_field->set("parent_field_id", 0);
+            
+            if ($properties["category"] == NULL)
+                $global_extra_field->set("categories","");
+            else 
+            {
+                $category = new XLite_Model_Category();
+                foreach($category->parseCategoryField($properties["category"],true) as $path)	
+                {
+                    $cat = $category->findCategory($path);
+                    if(!is_null($cat)) $categories .= "|".$cat->get("category_id");
+                }
+                $categories = substr($categories,1);
+                $global_extra_field->set("categories", $categories);
+            }
+            
+            if(!$found)	{
+                $global_extra_field->create();
+            } else {
+                $global_extra_field->update();
+            }
+    
+            $extra_fields = new XLite_Model_ExtraField();
+            $extra_fields_ = $extra_fields->findAll("name='".addslashes($properties["name"])."' AND product_id<>0");
+            if (!empty($extra_fields_))
+                foreach($extra_fields_ as $extra_field_) 
+                {
+                    $extra_field_->set("parent_field_id", $global_extra_field->get("field_id"));
+                    $extra_field_->update();
+                }
+                    
+        } else {
+            $product = new XLite_Model_Product();
         	$product = $product->findImportedProduct($properties["sku"], $properties["category"], $properties["product"], false /* do not create categories */);
-			if (is_null($product)) {
-				echo "<font color=red>Product not found for line ".$this->lineNo."</font><br>";
-			}	
-			else {
-				$productID = $product->get("product_id");
-				$field = new XLite_Model_ExtraField();
-				$global_extra_field = new XLite_Model_ExtraField();
-				$global_found = $global_extra_field->find("name='".addslashes($properties["name"])."' AND product_id=0");
-				if ($global_found)
-					$field->set("parent_field_id", $global_extra_field->get("field_id"));
-				else 
-					$field->set("parent_field_id", 0);
+            if (is_null($product)) {
+                echo "<font color=red>Product not found for line ".$this->lineNo."</font><br>";
+            }
+            else {
+                $productID = $product->get("product_id");
+                $field = new XLite_Model_ExtraField();
+                $global_extra_field = new XLite_Model_ExtraField();
+                $global_found = $global_extra_field->find("name='".addslashes($properties["name"])."' AND product_id=0");
+                if ($global_found)
+                    $field->set("parent_field_id", $global_extra_field->get("field_id"));
+                else 
+                    $field->set("parent_field_id", 0);
 
     		    $found = $field->find("name='".addslashes($properties["name"])."' AND product_id=$productID");
-		        if (!$found) {
+                if (!$found) {
         		    echo "&gt; Field \"".$properties["name"]."\" created for product # $productID<br>\n";
-		            $field->create();
-		        } else {
-		            echo "&gt; Field \"".$properties["name"]."\" updated for product # $productID<br>\n";
-		        }
+                    $field->create();
+                } else {
+                    echo "&gt; Field \"".$properties["name"]."\" updated for product # $productID<br>\n";
+                }
 
-		        $field->set("default_value", $properties["default_value"]);
-				$field->set("value", $properties["value"]);
-		        $field->set("enabled", $properties["enabled"]);
-				$field->set("order_by", $properties["order_by"]);
-		        $field->set("name", $properties["name"]);
-		        $field->set("product_id", $productID);
-		        $field->update();
+                $field->set("default_value", $properties["default_value"]);
+                $field->set("value", $properties["value"]);
+                $field->set("enabled", $properties["enabled"]);
+                $field->set("order_by", $properties["order_by"]);
+                $field->set("name", $properties["name"]);
+                $field->set("product_id", $productID);
+                $field->update();
 
-				$fieldID = $field->get("field_id");
-				// search and update or create field value
+                $fieldID = $field->get("field_id");
+                // search and update or create field value
         		if (!empty($properties["value"]) && strlen($properties["value"])) {
             		$fv = new XLite_Model_FieldValue();
             		$found = $fv->find("field_id=$fieldID AND product_id=$productID");
@@ -297,21 +297,21 @@ class XLite_Model_ExtraField extends XLite_Model_Abstract
             		}
             		$fv->set("value", $properties["value"]);
                 	$fv->update();
-				}
-			}	
-		}	
-    } 
-	
-	function isGlobal()
-	{
-			$categories = $this->getCategories();
-			return empty($categories);
-	}
-	
-	function getCategories()
-	{
-		if (!isset($this->categories))
-		{
+                }
+            }
+        }
+    }
+    
+    function isGlobal()
+    {
+            $categories = $this->getCategories();
+            return empty($categories);
+    }
+    
+    function getCategories()
+    {
+        if (!isset($this->categories))
+        {
     		$categories = explode("|", $this->get("categories"));
     		if (!is_array($categories))
     		{
@@ -323,24 +323,24 @@ class XLite_Model_ExtraField extends XLite_Model_Abstract
     		}
 
             $this->categories = $categories;
-		}
-		return $this->categories;
-	}
+        }
+        return $this->categories;
+    }
 
-	function setCategoriesList($categories)
-	{
-		if (is_array($categories))
-		{
-			$categories = array_values($categories);
+    function setCategoriesList($categories)
+    {
+        if (is_array($categories))
+        {
+            $categories = array_values($categories);
             $categories = implode("|", $categories);
-		}
-		else
-		{
-			$categories = "";
-		}
+        }
+        else
+        {
+            $categories = "";
+        }
 
-		$this->set("categories", $categories);
-	}
+        $this->set("categories", $categories);
+    }
 
     function isCategorySelected($categoryID)
     {
@@ -389,10 +389,10 @@ class XLite_Model_ExtraField extends XLite_Model_Abstract
             $ef = new XLite_Model_ExtraField($info["field_id"]);
             $ef->_collectGarbage();
         }
-    } 
+    }
 
     function _collectGarbage() 
     {
         $this->delete();
-    } 
+    }
 }

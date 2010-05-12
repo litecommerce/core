@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Controller_Admin_Users extends XLite_Controller_Admin_Abstract
-{	
+{
     /**
      * params 
      * 
@@ -45,15 +45,15 @@ class XLite_Controller_Admin_Users extends XLite_Controller_Admin_Abstract
      */
     public $params = array('target', 'mode');
 
-	/**
-	 * users 
-	 * 
-	 * @var    array
-	 * @access protected
-	 * @see    ____var_see____
-	 * @since  3.0.0
-	 */
-	protected $users = null;
+    /**
+     * users 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $users = null;
 
     /**
      * init 
@@ -74,50 +74,50 @@ class XLite_Controller_Admin_Users extends XLite_Controller_Admin_Abstract
         }
     }
 
-	/**
-	 * Do action 'search' - save search parameters in the session
-	 * 
-	 * @return void
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function doActionSearch()
-	{
-		$searchParams = $this->session->get('admin_users_search');
+    /**
+     * Do action 'search' - save search parameters in the session
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionSearch()
+    {
+        $searchParams = $this->session->get('admin_users_search');
 
-		if (!is_array($searchParams)) {
-			$searchParams = $this->getDefaultSearchConditions();
-		}
+        if (!is_array($searchParams)) {
+            $searchParams = $this->getDefaultSearchConditions();
+        }
 
-		if (isset(XLite_Core_Request::getInstance()->substring)) {
+        if (isset(XLite_Core_Request::getInstance()->substring)) {
             $searchParams['substring'] = XLite_Core_Request::getInstance()->substring;
-		}
+        }
 
-		if (isset(XLite_Core_Request::getInstance()->membership)) {
+        if (isset(XLite_Core_Request::getInstance()->membership)) {
             $searchParams['membership'] = XLite_Core_Request::getInstance()->membership;
-		}
+        }
 
-		if (isset(XLite_Core_Request::getInstance()->user_type)) {
+        if (isset(XLite_Core_Request::getInstance()->user_type)) {
             $searchParams['user_type'] = XLite_Core_Request::getInstance()->user_type;
-		}
+        }
 
-		$this->session->set('admin_users_search', $searchParams);
+        $this->session->set('admin_users_search', $searchParams);
 
-		$this->set('returnUrl', $this->buildUrl('users', '', array('mode' => 'search')));
-	}
+        $this->set('returnUrl', $this->buildUrl('users', '', array('mode' => 'search')));
+    }
 
-	/**
-	 * Do action 'search' - save search parameters in the session
-	 * 
-	 * @return void
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function doActionList() {
-		$this->set('returnUrl', $this->buildUrl('users', '', array('mode' => 'list')));
-	}
+    /**
+     * Do action 'search' - save search parameters in the session
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionList() {
+        $this->set('returnUrl', $this->buildUrl('users', '', array('mode' => 'list')));
+    }
 
     /**
      * getSearchQuery 
@@ -136,21 +136,21 @@ class XLite_Controller_Admin_Users extends XLite_Controller_Admin_Abstract
         $search = array();
         $logic = ' ' . trim($logic) . ' ';
 
-		foreach($field_values as $field_value => $condition) {
+        foreach($field_values as $field_value => $condition) {
 
-			if ($condition) {
+            if ($condition) {
 
-				$query = array();
+                $query = array();
 
                 foreach ($keywords as $keyword) {
-					$query[] = $field_value . " LIKE '%" . addslashes($keyword) . "%' ";
-				}
+                    $query[] = $field_value . " LIKE '%" . addslashes($keyword) . "%' ";
+                }
 
                 $search[] = (count($keywords) > 1 ? '(' . implode($logic, $query) . ')' :  implode('', $query));
             }
-		}
+        }
 
-		$search_query = implode(' OR ',$search);
+        $search_query = implode(' OR ',$search);
 
         return $search_query;
     }
@@ -164,69 +164,69 @@ class XLite_Controller_Admin_Users extends XLite_Controller_Admin_Abstract
      * @since  3.0.0
      */
     protected function getUsers()
-	{
-		$mode = (isset(XLite_Core_Request::getInstance()->mode) ? XLite_Core_Request::getInstance()->mode : '');
+    {
+        $mode = (isset(XLite_Core_Request::getInstance()->mode) ? XLite_Core_Request::getInstance()->mode : '');
 
         if ('' == $mode || 'orders' == $mode) {
             return array();
-		}
+        }
 
-		if (is_null($this->users)) {
+        if (is_null($this->users)) {
 
-			$where = array();
+            $where = array();
 
-			if ('list' == $mode) {
-				$searchParams = $this->getDefaultSearchConditions();
+            if ('list' == $mode) {
+                $searchParams = $this->getDefaultSearchConditions();
 
-			} else {
-				$searchParams = $this->getConditions();
-			}
+            } else {
+                $searchParams = $this->getConditions();
+            }
 
             // build WHERE condition for profile info
-			if (!empty($searchParams['substring'])) {
+            if (!empty($searchParams['substring'])) {
 
-				$substring = stripslashes($searchParams['substring']);
+                $substring = stripslashes($searchParams['substring']);
         		$keywords = explode(' ', trim($substring));
-				$field_values = array(
-					'login'              => true,
-					'billing_firstname'  => true,
-					'billing_lastname'   => true,
+                $field_values = array(
+                    'login'              => true,
+                    'billing_firstname'  => true,
+                    'billing_lastname'   => true,
                     'shipping_firstname' => true,
-					'shipping_lastname'  => true
-				);
+                    'shipping_lastname'  => true
+                );
 
-				$where[] = '(' . $this->getSearchQuery($field_values, $keywords, 'OR') . ')';
-			}
+                $where[] = '(' . $this->getSearchQuery($field_values, $keywords, 'OR') . ')';
+            }
 
             if ('%' == $searchParams['membership']) { // default is ALL
-				$where[] = "membership LIKE '%'";
+                $where[] = "membership LIKE '%'";
 
             } elseif ('' == $searchParams['membership']) { // NO membership set
-				$where[] = "membership = ''";
+                $where[] = "membership = ''";
 
             } elseif ('pending_membership' == $searchParams['membership']) { // pending
-				$where[] = '(pending_membership != membership AND LENGTH(pending_membership) > 0)';
+                $where[] = '(pending_membership != membership AND LENGTH(pending_membership) > 0)';
 
             } else { // search for the specified members otherwise
                 $where[] = "membership = '" . addslashes($searchParams['membership']) . "'";
-			}
+            }
 
             // build WHERE condition for usertype
-			$access_level = $this->auth->getAccessLevel($searchParams['user_type']);
+            $access_level = $this->auth->getAccessLevel($searchParams['user_type']);
 
             if (!is_null($access_level)) {
-				$where[] = 'access_level = ' . $access_level;
+                $where[] = 'access_level = ' . $access_level;
 
             } elseif (is_null($access_level) && 'all' != $searchParams['user_type']) {
                 $where[] = 'access_level = -1';
-			}
+            }
 
             $profile = new XLite_Model_Profile();
-			$profile->fetchKeysOnly = true;
-			$profile->fetchObjIdxOnly = false;
+            $profile->fetchKeysOnly = true;
+            $profile->fetchObjIdxOnly = false;
 
             $this->users = $profile->findAll($this->_buildWhere($where), 'login');
-		}
+        }
 
         return $this->users;
     }
@@ -271,88 +271,88 @@ class XLite_Controller_Admin_Users extends XLite_Controller_Admin_Abstract
     {
         $profile = new XLite_Model_Profile($this->profile_id);
         $profile->read();
-		$login = $profile->get('login');
+        $login = $profile->get('login');
 
         if (strlen($login) > 0) {
             $login = urlencode($login);
             $year = $this->config->Company->start_year;
-			$date = getdate(time());
-			$urlParams = array(
-				'mode'           => 'search',
-				'login'          => $login,
-				'startDateDay'   => 1,
-				'startDateMonth' => 1,
-				'startDateYear'  => $year,
-				'endDateDay'     => $date['mday'],
-				'endDateMonth'   => $date['mon'],
-				'endDateYear'    => $date['year']
-			);
+            $date = getdate(time());
+            $urlParams = array(
+                'mode'           => 'search',
+                'login'          => $login,
+                'startDateDay'   => 1,
+                'startDateMonth' => 1,
+                'startDateYear'  => $year,
+                'endDateDay'     => $date['mday'],
+                'endDateMonth'   => $date['mon'],
+                'endDateYear'    => $date['year']
+            );
 
-			$this->set('returnUrl', $this->buildUrl('order_list', '', $urlParams));
+            $this->set('returnUrl', $this->buildUrl('order_list', '', $urlParams));
 
         } else {
         	$this->set('returnUrl', $this->backUrl);
         }
-	}
+    }
 
-	/**
-	 * Get search conditions
-	 * 
-	 * @return array
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function getConditions()
-	{
-		$searchParams = $this->session->get('admin_users_search');
+    /**
+     * Get search conditions
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getConditions()
+    {
+        $searchParams = $this->session->get('admin_users_search');
 
-		if (!is_array($searchParams)) {
-			$searchParams = $this->getDefaultSearchConditions();
-			$this->session->set('searchParams', $searchParams);
-		}
+        if (!is_array($searchParams)) {
+            $searchParams = $this->getDefaultSearchConditions();
+            $this->session->set('searchParams', $searchParams);
+        }
 
-		return $searchParams;
-	}
+        return $searchParams;
+    }
 
-	/**
-	 * Get search condition parameter by name
-	 * 
-	 * @param string $paramName 
-	 *  
-	 * @return void
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function getCondition($paramName)
-	{
-		$return = null;
-		$searchParams = $this->getConditions();
+    /**
+     * Get search condition parameter by name
+     * 
+     * @param string $paramName 
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCondition($paramName)
+    {
+        $return = null;
+        $searchParams = $this->getConditions();
 
-		if (isset($searchParams[$paramName])) {
-			$return = $searchParams[$paramName];
-		}
+        if (isset($searchParams[$paramName])) {
+            $return = $searchParams[$paramName];
+        }
 
-		return $return;
-	}
+        return $return;
+    }
 
-	/**
-	 * Get the default search conditions array
-	 * 
-	 * @return array
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function getDefaultSearchConditions()
-	{
-		return array(
-			'substring'  => '',
-			'membership' => '%',
-			'user_type'  => 'all'
-		);
-	}
+    /**
+     * Get the default search conditions array
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultSearchConditions()
+    {
+        return array(
+            'substring'  => '',
+            'membership' => '%',
+            'user_type'  => 'all'
+        );
+    }
 
 }
 

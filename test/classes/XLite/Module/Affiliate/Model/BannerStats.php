@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
-{	
+{
     public $fields = array(
             "stat_id"    => 0,
             "stat_type"  => "",    // stat_type := C | V, click and view
@@ -43,11 +43,11 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
             "banner_id"  => 0,
             "date"       => 0,
             "referrer"   => '',
-            );	
+            );
 
-    public $autoIncrement = "stat_id";	
-    public $alias = "banner_stats";	
-    public $defaultOrder = "date";	
+    public $autoIncrement = "stat_id";
+    public $alias = "banner_stats";
+    public $defaultOrder = "date";
 
     public $partner = null;
 
@@ -63,7 +63,7 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
         $this->set("referrer",   $_SERVER["HTTP_REFERER"]);
         $this->set("date",       time());
         $this->create();
-    } 
+    }
 
     function logClick() 
     {
@@ -75,11 +75,11 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
         $this->set("referrer", $referrer);
         $this->set("date", time());
         $this->create();
-    } 
+    }
 
     function searchTopPerformers($startDate, $endDate, $reportBy) 
     {
-		$startDate = intval($startDate);
+        $startDate = intval($startDate);
         $endDate = intval($endDate);
 
         // select partners orders
@@ -164,7 +164,7 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
             }
             return $clicks;
         }
-    } 
+    }
 
     function search($partner_id, $startDate, $endDate, $sort_by, $homeBanner, $productBanner, $directLink) 
     {
@@ -234,7 +234,7 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
             $result[$i]["rate"] = "0.00";
             if ($result[$i]["views"] != 0) {
                 $result[$i]["rate"] =  sprintf("%.02f", doubleval($result[$i]["clicks"] / $result[$i]["views"]));
-            }    
+            }
             if (isset($result[$i]["banner_id"])) {
                 $banner = new XLite_Module_Affiliate_Model_Banner();
                 $banner->set("deleted", !$banner->find("banner_id=".$result[$i]["banner_id"]));
@@ -257,14 +257,14 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
             if (isset($r["banner"]) && isset($homeBanner) ||
                 isset($r["product"]) && isset($productBanner) ||
                 $r["direct_link"] && isset($directLink))
-            {    
+            {
                 $result2[$k] = $r;
             }
         }
         $result = $result2;
         sort($result);
         return array_reverse($result);
-    } 
+    }
 
     function getPartner() 
     {
@@ -275,5 +275,5 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
             }
         }
         return $this->partner;
-    } 
+    }
 }

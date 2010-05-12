@@ -36,7 +36,7 @@ define('NOTIFY_INTERVAL', 24 * 60 * 60);
  * @since   3.0.0
  */
 class XLite_Model_WaitingIP extends XLite_Model_Abstract
-{	
+{
     public $fields = array(
                     "id" => "0",
                     "ip" => "",
@@ -44,9 +44,9 @@ class XLite_Model_WaitingIP extends XLite_Model_Abstract
                     "first_date" => "0",
                     "last_date" => "0",
                     "count" => "0"
-                    );	
+                    );
 
-    public $autoIncrement = "id";	
+    public $autoIncrement = "id";
     public $alias = "waitingips";
 
     function generateUniqueKey()
@@ -99,7 +99,7 @@ class XLite_Model_WaitingIP extends XLite_Model_Abstract
 
         if(!$valid_ips_object->find("category = 'SecurityIP' AND name = 'allow_admin_ip'")) {
         	$admin_ip = serialize(array());
-			$valid_ips_object->createOption("SecurityIP", "allow_admin_ip", $admin_ip, "serialized");
+            $valid_ips_object->createOption("SecurityIP", "allow_admin_ip", $admin_ip, "serialized");
             return;
         }
 

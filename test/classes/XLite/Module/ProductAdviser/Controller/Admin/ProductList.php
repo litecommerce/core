@@ -34,8 +34,8 @@
  * @since   3.0.0
  */
 class XLite_Module_ProductAdviser_Controller_Admin_ProductList extends XLite_Controller_Admin_ProductList implements XLite_Base_IDecorator
-{	
-	public $notifyPresentedHash = array();
+{
+    public $notifyPresentedHash = array();
 
     function init()
     {
@@ -78,7 +78,7 @@ class XLite_Module_ProductAdviser_Controller_Admin_ProductList extends XLite_Con
     		$notification = new XLite_Module_ProductAdviser_Model_Notification();
     		$this->notifyPresentedHash[$product_id] = $notification->count($check);
     	}
-		return $this->notifyPresentedHash[$product_id];
+        return $this->notifyPresentedHash[$product_id];
     }
 
     function getProducts()
@@ -111,7 +111,7 @@ class XLite_Module_ProductAdviser_Controller_Admin_ProductList extends XLite_Con
         		}
             	$this->productsFound = count($this->productsList);
     		}
-		}
+        }
         return $this->productsList;
     }
 }

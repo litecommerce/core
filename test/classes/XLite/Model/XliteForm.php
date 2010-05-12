@@ -40,7 +40,7 @@ class XLite_Model_XliteForm extends XLite_Model_Abstract
     * @var string $alias The forms database table alias.
     * @access public
     */	
-    public $alias = "forms";	
+    public $alias = "forms";
 
     public $primaryKey = array("form_id", "session_id");
 
@@ -59,33 +59,33 @@ class XLite_Model_XliteForm extends XLite_Model_Abstract
         'date'       => 0
     );
 
-	function collectGarbage($session_id = null)
-	{
-		if (!is_null($session_id)) {
-			$session_id = addslashes($session_id);
-			$where = "session_id='$session_id'";
-			$count = $this->count($where);
-		} else {
-			$count = $this->count();
-		}
-		$max_count = $this->getMaxFormsPerSession();
-		if ($count > $max_count) {
-			// don't delete more than 100 at once
-			$delete_count = min(100, $count - $max_count);
-			$table = $this->getTable();
+    function collectGarbage($session_id = null)
+    {
+        if (!is_null($session_id)) {
+            $session_id = addslashes($session_id);
+            $where = "session_id='$session_id'";
+            $count = $this->count($where);
+        } else {
+            $count = $this->count();
+        }
+        $max_count = $this->getMaxFormsPerSession();
+        if ($count > $max_count) {
+            // don't delete more than 100 at once
+            $delete_count = min(100, $count - $max_count);
+            $table = $this->getTable();
 
-			$where = (!is_null($session_id))?"WHERE session_id='$session_id'":"";
-			$query = "SELECT date FROM $table $where ORDER BY date LIMIT $delete_count, 1";
-			$delete_date = $this->db->getOne($query);
+            $where = (!is_null($session_id))?"WHERE session_id='$session_id'":"";
+            $query = "SELECT date FROM $table $where ORDER BY date LIMIT $delete_count, 1";
+            $delete_date = $this->db->getOne($query);
 
-			$where = (!is_null($session_id))?"WHERE session_id='$session_id' AND date < '$delete_date'":"WHERE date < '$delete_date'";
-			$query = "DELETE FROM $table $where LIMIT $delete_count";
-			$this->db->query($query);
-		}
-	}
+            $where = (!is_null($session_id))?"WHERE session_id='$session_id' AND date < '$delete_date'":"WHERE date < '$delete_date'";
+            $query = "DELETE FROM $table $where LIMIT $delete_count";
+            $this->db->query($query);
+        }
+    }
 
-	function getMaxFormsPerSession()
-	{
-		return (0 >= ($maxCount = XLite::getInstance()->getOptions(array('HTML_Template_Flexy', 'max_forms_per_session')))) ? 100 : $maxCount;
-	}
+    function getMaxFormsPerSession()
+    {
+        return (0 >= ($maxCount = XLite::getInstance()->getOptions(array('HTML_Template_Flexy', 'max_forms_per_session')))) ? 100 : $maxCount;
+    }
 }

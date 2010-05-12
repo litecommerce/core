@@ -35,7 +35,7 @@
  * @since   3.0.0
  */
 class XLite_Controller_Admin_ProductList extends XLite_Controller_Admin_Abstract
-{	
+{
     /**
      * params 
      * 
@@ -44,7 +44,7 @@ class XLite_Controller_Admin_ProductList extends XLite_Controller_Admin_Abstract
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $params = array('target', 'mode', 'search_productsku', 'substring', 'search_category', 'subcategory_search', 'pageID', 'status');	
+    public $params = array('target', 'mode', 'search_productsku', 'substring', 'search_category', 'subcategory_search', 'pageID', 'status');
 
     /**
      * productsList 
@@ -181,11 +181,11 @@ class XLite_Controller_Admin_ProductList extends XLite_Controller_Admin_Abstract
      */
     protected function doActionUpdate()
     {
-		foreach ($this->product_orderby as $product_id => $order_by) {
-			$p = new XLite_Model_Product($product_id);
-			$p->set('order_by', $order_by);
-			$p->set('price', $this->product_price[$product_id]);
-			$p->update();
+        foreach ($this->product_orderby as $product_id => $order_by) {
+            $p = new XLite_Model_Product($product_id);
+            $p->set('order_by', $order_by);
+            $p->set('price', $this->product_price[$product_id]);
+            $p->update();
         }
 
         $this->set('status', 'updated');
@@ -244,8 +244,8 @@ class XLite_Controller_Admin_ProductList extends XLite_Controller_Admin_Abstract
      * @see    ____func_see____
      * @since  3.0.0
      */
-	protected function doActionClone()
-	{
+    protected function doActionClone()
+    {
         if (isset(XLite_Core_Request::getInstance()->product_ids) && is_array(XLite_Core_Request::getInstance()->product_ids)) {
 
             foreach (XLite_Core_Request::getInstance()->product_ids as $product_id) {
@@ -258,9 +258,9 @@ class XLite_Controller_Admin_ProductList extends XLite_Controller_Admin_Abstract
 
     			$product->set('name', $product->get('name') . ' (CLONE)');
     			$product->update();
-				$this->set('status', 'cloned');
+                $this->set('status', 'cloned');
             }
         }
-	}
+    }
 }
 

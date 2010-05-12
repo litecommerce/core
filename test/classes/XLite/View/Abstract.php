@@ -569,7 +569,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      */
     public function isVisible()
     {
-        return $this->getParam(self::PARAM_VISIBLE) && $this->checkTarget() && $this->checkMode(); 
+        return $this->getParam(self::PARAM_VISIBLE) && $this->checkTarget() && $this->checkMode();
     }
 
     /**

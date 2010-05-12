@@ -48,7 +48,7 @@ class XLite_Module_WishList_Controller_Customer_Abstract extends XLite_Controlle
      * @access protected
      * @since  3.0.0
      */
-	protected $wishlist = null;
+    protected $wishlist = null;
 
 
     /**
@@ -58,8 +58,8 @@ class XLite_Module_WishList_Controller_Customer_Abstract extends XLite_Controlle
      * @access public
      * @since  3.0.0
      */
-	public function getWishList()
-	{
+    public function getWishList()
+    {
         $profile = XLite_Model_Auth::getInstance()->getProfile(XLite_Core_Request::getInstance()->profile_id);
 
         if (!isset($this->wishlist) && isset($profile)) {
@@ -76,5 +76,5 @@ class XLite_Module_WishList_Controller_Customer_Abstract extends XLite_Controlle
         }
 
         return $this->wishlist;
-	}
+    }
 }

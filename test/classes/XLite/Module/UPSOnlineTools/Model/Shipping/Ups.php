@@ -114,7 +114,7 @@ class XLite_Module_UPSOnlineTools_Model_Shipping_Ups extends XLite_Model_Shippin
     public function setAccount(array $userinfo, &$error)
     {
         $devlicense = $this->config->UPSOnlineTools->devlicense;
-        $upsLicenseText = ''; 
+        $upsLicenseText = '';
         if ($this->getLicense($upsLicenseText)) {
             return 2;
         }

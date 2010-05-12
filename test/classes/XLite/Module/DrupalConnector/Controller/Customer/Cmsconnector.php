@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_DrupalConnector_Controller_Customer_Cmsconnector extends XLite_Controller_Customer_Abstract
-{	
+{
     public $params = array('target', 'id');
 
     /**
@@ -58,21 +58,21 @@ class XLite_Module_DrupalConnector_Controller_Customer_Cmsconnector extends XLit
      */
     function action_landing()
     {
-		$link = new XLite_Module_DrupalConnector_Model_LandingLink();
+        $link = new XLite_Module_DrupalConnector_Model_LandingLink();
 
-		if (
-			$this->get('id')
-			&& is_string($this->get('id'))
-			&& preg_match(XLite_Module_DrupalConnector_Model_LandingLink::ID_PATTERN, $this->get('id'))
-			&& $link->find('link_id = \'' . $this->get('id') . '\'')
-		) {
-			$this->xlite->session->setID($link->get('session_id'));
-			$this->xlite->session->_fetchData();
+        if (
+            $this->get('id')
+            && is_string($this->get('id'))
+            && preg_match(XLite_Module_DrupalConnector_Model_LandingLink::ID_PATTERN, $this->get('id'))
+            && $link->find('link_id = \'' . $this->get('id') . '\'')
+        ) {
+            $this->xlite->session->setID($link->get('session_id'));
+            $this->xlite->session->_fetchData();
 
-			$link->delete();
-		}
+            $link->delete();
+        }
 
-		$this->set('returnUrl', 'admin.php');
+        $this->set('returnUrl', 'admin.php');
         $this->redirect();
     }
 

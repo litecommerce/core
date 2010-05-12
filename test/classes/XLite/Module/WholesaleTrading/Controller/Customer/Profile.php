@@ -35,50 +35,50 @@
  */
 class XLite_Module_WholesaleTrading_Controller_Customer_Profile extends XLite_Controller_Customer_Profile implements XLite_Base_IDecorator
 {
-	function init()
-	{
-		parent::init();
-		$this->params[] = "payed_membership";
-		$this->params[] = "membership_name";
-	}
-	
+    function init()
+    {
+        parent::init();
+        $this->params[] = "payed_membership";
+        $this->params[] = "membership_name";
+    }
+    
     function action_register()
     {
-		parent::action_register();
+        parent::action_register();
         if ($this->registerForm->is("valid")) {
             $product = new XLite_Model_Product();
-			if ($this->registerForm->getComplex('profile.pending_membership') != "" && $product->find("selling_membership='" . $this->registerForm->getComplex('profile.pending_membership') . "'")) {
-				$oi = new XLite_Model_OrderItem();
-				$oi->set('product', $product);
-				$this->cart->addItem($oi);
-				$this->updateCart();
-				$this->payed_membership = true;
-				$this->membership_name = $this->registerForm->getComplex('profile.pending_membership');
-			}
+            if ($this->registerForm->getComplex('profile.pending_membership') != "" && $product->find("selling_membership='" . $this->registerForm->getComplex('profile.pending_membership') . "'")) {
+                $oi = new XLite_Model_OrderItem();
+                $oi->set('product', $product);
+                $this->cart->addItem($oi);
+                $this->updateCart();
+                $this->payed_membership = true;
+                $this->membership_name = $this->registerForm->getComplex('profile.pending_membership');
+            }
         }
     }
 
-	function expDate($period)
-	{
-		$modifier = array(
-			"month" => "m",
-			"day"	=> "d",
-			"year"	=> "Y"
-		);
-		
-		return date($modifier[$period], $this->auth->getComplex('profile.membership_exp_date'));
-	}
+    function expDate($period)
+    {
+        $modifier = array(
+            "month" => "m",
+            "day"	=> "d",
+            "year"	=> "Y"
+        );
+        
+        return date($modifier[$period], $this->auth->getComplex('profile.membership_exp_date'));
+    }
 
-	function isShowWholesalerFields()
-	{
-		if (
-			$this->getComplex('xlite.config.WholesaleTrading.WholesalerFieldsTaxId') 	== "Y" ||
-			$this->getComplex('xlite.config.WholesaleTrading.WholesalerFieldsVat') 	== "Y" ||
-			$this->getComplex('xlite.config.WholesaleTrading.WholesalerFieldsGst') 	== "Y" ||
-			$this->getComplex('xlite.config.WholesaleTrading.WholesalerFieldsPst') 	== "Y" 
-			) {
-				return true;
-			}
-			return false;
-	}
+    function isShowWholesalerFields()
+    {
+        if (
+            $this->getComplex('xlite.config.WholesaleTrading.WholesalerFieldsTaxId') 	== "Y" ||
+            $this->getComplex('xlite.config.WholesaleTrading.WholesalerFieldsVat') 	== "Y" ||
+            $this->getComplex('xlite.config.WholesaleTrading.WholesalerFieldsGst') 	== "Y" ||
+            $this->getComplex('xlite.config.WholesaleTrading.WholesalerFieldsPst') 	== "Y" 
+            ) {
+                return true;
+            }
+            return false;
+    }
 }

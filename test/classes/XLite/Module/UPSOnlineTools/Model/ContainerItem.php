@@ -34,65 +34,65 @@
  * @since   3.0.0
  */
 class XLite_Module_UPSOnlineTools_Model_ContainerItem extends XLite_Base
-{	
-	public $item_id;	
-	public $global_id;	
+{
+    public $item_id;
+    public $global_id;
 
-	public $left, $top;	
-	public $width, $length, $height;	
-	public $weight;
+    public $left, $top;
+    public $width, $length, $height;
+    public $weight;
 
-	function setPosition($_left, $_top)
-	{
-		$this->left = $_left;
-		$this->top = $_top;
-	}
+    function setPosition($_left, $_top)
+    {
+        $this->left = $_left;
+        $this->top = $_top;
+    }
     
-	function setDimensions($_width, $_length, $_height)
-	{
-		$this->width = $_width;
-		$this->length = $_length;
-		$this->height = $_height;
-	}
+    function setDimensions($_width, $_length, $_height)
+    {
+        $this->width = $_width;
+        $this->length = $_length;
+        $this->height = $_height;
+    }
 
-	function setWeight($_weight)
-	{
-		$this->weight = round($_weight, 2);
-	}
+    function setWeight($_weight)
+    {
+        $this->weight = round($_weight, 2);
+    }
 
-	function getWeight()
-	{
-		return round($this->weight, 2);
-	}
+    function getWeight()
+    {
+        return round($this->weight, 2);
+    }
 
-	function getHeight()
-	{
-		return $this->height;
-	}
+    function getHeight()
+    {
+        return $this->height;
+    }
 
-	function getOrderItem()
-	{
-		$item_id = $this->item_id;
-		$oi = new XLite_Model_OrderItem();
-		$oi->find("item_id='".addslashes($item_id)."'");
+    function getOrderItem()
+    {
+        $item_id = $this->item_id;
+        $oi = new XLite_Model_OrderItem();
+        $oi->find("item_id='".addslashes($item_id)."'");
 
-		return $oi;
-	}
+        return $oi;
+    }
 
-	function export()
-	{
-		$vars = array();
-		$vars["left"] = $this->left;
-		$vars["top"] = $this->top;
-		$vars["width"] = $this->width;
-		$vars["length"] = $this->length;
-		$vars["height"] = $this->height;
-		$vars["weight"] = $this->weight;
+    function export()
+    {
+        $vars = array();
+        $vars["left"] = $this->left;
+        $vars["top"] = $this->top;
+        $vars["width"] = $this->width;
+        $vars["length"] = $this->length;
+        $vars["height"] = $this->height;
+        $vars["weight"] = $this->weight;
 
-		$vars["item_id"] = $this->item_id;
-		$vars["global_id"] = $this->global_id;
+        $vars["item_id"] = $this->item_id;
+        $vars["global_id"] = $this->global_id;
 
-		return $vars;
-	}
+        return $vars;
+    }
 
 }

@@ -69,9 +69,9 @@ class XLite_Module_GreetVisitor_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'This module greets customer by his name when he returns to the site';
-    }	
+    }
 
-    public $isFree = true;	
+    public $isFree = true;
 
     /**
      * Perform some actions at startup

@@ -34,12 +34,12 @@
  * @since   3.0.0
  */
 class XLite_Module_WholesaleTrading_View_AccessSelect extends XLite_View_Abstract
-{    
-    public $field;    
-    public $formName;    
-    protected $selectedGroups = null;    
-    public $allOption = false;    
-    public $noneOption = false;    
+{
+    public $field;
+    public $formName;
+    protected $selectedGroups = null;
+    public $allOption = false;
+    public $noneOption = false;
 
     /**
      * Return widget default template
@@ -49,9 +49,9 @@ class XLite_Module_WholesaleTrading_View_AccessSelect extends XLite_View_Abstrac
      * @since  3.0.0
      */
     protected function getDefaultTemplate()
-	{
-		return 'modules/WholesaleTrading/product_access/access_select.tpl';
-	}
+    {
+        return 'modules/WholesaleTrading/product_access/access_select.tpl';
+    }
 
     public function getSelectedGroups()
     {

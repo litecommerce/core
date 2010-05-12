@@ -48,10 +48,10 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeographicSales extends XLi
                 usort($productSales, array($this, "cmpProducts"));
                 $ps = array_reverse($productSales);
                 $this->geoSales[$gl] = $ps;
-            }    
+            }
         }
         return $this->geoSales;
-    } 
+    }
 
     function getInCountries($table) 
     {
@@ -65,7 +65,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeographicSales extends XLi
         $codes = implode(',', $countryCodes);
         $prefix = $this->get("group_by");
         return " AND {$table}.{$prefix}_country IN ($codes) ";
-    } 
+    }
 
     function getInStates($table) 
     {
@@ -73,27 +73,27 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeographicSales extends XLi
         if (!count($stateIds)) {
             return parent::getInStates($table);
         }
-		if (in_array(-1, $stateIds)) {
-			array_push($stateIds, 0);
-		}
+        if (in_array(-1, $stateIds)) {
+            array_push($stateIds, 0);
+        }
         $ids = implode(',', $stateIds);
         $prefix = $this->get("group_by");
         return " AND {$table}.{$prefix}_state IN ($ids) ";
-    } 
+    }
     
     function sumProductSales($item) 
     {
-        $gid = $this->getGeoIndex($item);        
+        $gid = $this->getGeoIndex($item);
         if (!isset($this->geoSales[$gid])) {
             $this->geoSales[$gid] = array();
-        }    
+        }
         $productSales = $this->geoSales[$gid];
         $id = $item["product_id"] . (strlen($item["options"]) ? md5($item["options"]) : "");
-		$orderItem = new XLite_Model_OrderItem();
-		$orderItem->find("order_id=".$item["order_id"]." AND item_id='".addslashes($item["item_id"])."'");
-		$order = new XLite_Model_Order($item["order_id"]);
-		$orderItem->set("order", $order);
-		$item["price"] = $orderItem->get("price");
+        $orderItem = new XLite_Model_OrderItem();
+        $orderItem->find("order_id=".$item["order_id"]." AND item_id='".addslashes($item["item_id"])."'");
+        $order = new XLite_Model_Order($item["order_id"]);
+        $orderItem->set("order", $order);
+        $item["price"] = $orderItem->get("price");
         if (!isset($productSales[$id])) {
             $productSales[$id] = $item;
             $productSales[$id]["total"] = 0;
@@ -103,7 +103,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeographicSales extends XLi
         }
         $productSales[$id]["total"] += $item["amount"] * $item["price"];
         $productSales[$id]["avg_price"] = $productSales[$id]["total"] / $productSales[$id]["amount"];
-    } 
+    }
     
     function getGeoIndex($item) 
     {
@@ -121,7 +121,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeographicSales extends XLi
             $country = "All";
         }
         return $country . " / " . $state;
-    } 
+    }
     
     function getProductsFound() 
     {
@@ -130,7 +130,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeographicSales extends XLi
             $found += count($gs);
         }
         return $found;
-    } 
+    }
     
     function getCountries() 
     {
@@ -139,7 +139,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeographicSales extends XLi
             $this->countries = $country->findAll();
         }
         return $this->countries;
-    } 
+    }
 
     function getStates() 
     {
@@ -148,6 +148,6 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeographicSales extends XLi
             $this->states = $state->findAll();
         }
         return $this->states;
-    } 
+    }
     
 }

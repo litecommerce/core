@@ -83,32 +83,32 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
         return parent::set($property, $value);
     }
 
-	/**
-	 * Return reference to the associated order object
-	 * 
-	 * @return XLite_Model_Order
-	 * @access public
-	 * @since  3.0.0
-	 */
-	public function getOrder()
-	{
-		return XLite_Model_CachingFactory::getObject(
+    /**
+     * Return reference to the associated order object
+     * 
+     * @return XLite_Model_Order
+     * @access public
+     * @since  3.0.0
+     */
+    public function getOrder()
+    {
+        return XLite_Model_CachingFactory::getObject(
             __METHOD__ . $this->_uniqueKey,
             'XLite_Model_Order',
             array($this->get('order_id'))
         );
-	}
+    }
 
-	/**
-	 * A reference to the product object 
-	 * 
-	 * @return XLite_Model_Product
-	 * @access public
-	 * @since  3.0.0
-	 */
-	public function getProduct()
+    /**
+     * A reference to the product object 
+     * 
+     * @return XLite_Model_Product
+     * @access public
+     * @since  3.0.0
+     */
+    public function getProduct()
     {
-		return XLite_Model_CachingFactory::getObject(__METHOD__ . $this->_uniqueKey, 'XLite_Model_Product', array($this->get('product_id')));
+        return XLite_Model_CachingFactory::getObject(__METHOD__ . $this->_uniqueKey, 'XLite_Model_Product', array($this->get('product_id')));
     }
 
     /**
@@ -133,17 +133,17 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
         'product_name'  => '',
         'product_sku'  => '',
         'price'       => '0',
-        'amount'      => '1');	
+        'amount'      => '1');
 
-    public $primaryKey = array('order_id', 'item_id');	
-    public $alias = 'order_items';	
+    public $primaryKey = array('order_id', 'item_id');
+    public $alias = 'order_items';
     public $defaultOrder = "orderby";
 
-	public function __construct()
-	{
-		$this->_uniqueKey = uniqid("order_item_");
-		parent::__construct();
-	}
+    public function __construct()
+    {
+        $this->_uniqueKey = uniqid("order_item_");
+        parent::__construct();
+    }
 
     public function setProduct($product)
     {
@@ -283,14 +283,14 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
 
     function getRealProduct()
     {
-		$this->realProduct = null;
+        $this->realProduct = null;
     	$product = new XLite_Model_Product();
         $product->find("product_id='".$this->get("product_id")."'");
     	if ($product->get("product_id") == $this->get("product_id")) {
     		$this->realProduct = $product;
-			return true;
-		}
-		return false;
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -307,7 +307,7 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
     {
         $result = null;
 
-		if (in_array($name, array('name', 'brief_description', 'description', 'sku'))) {
+        if (in_array($name, array('name', 'brief_description', 'description', 'sku'))) {
             $product = $this->get('product');
 
         	if (
@@ -315,7 +315,7 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
                 && $this->getRealProduct()
                 && (!isset($product->properties[$name]) || !$this->realProduct->get('enabled'))
             ) {
-			    $result = $this->realProduct->get($name);
+                $result = $this->realProduct->get($name);
 
             } elseif ($name == 'name' || $name == 'sku') {
                 $result = $this->get("product_$name");
@@ -330,7 +330,7 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
 
         return $result;
     }
-	
+    
     /**
      * Check - has item thumbnail or not
      * 
@@ -339,12 +339,12 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
      * @see    ____func_see____
      * @since  3.0.0
      */
-	public function hasThumbnail()
-	{
-		return (!$this->isValid() && $this->getRealProduct())
+    public function hasThumbnail()
+    {
+        return (!$this->isValid() && $this->getRealProduct())
             ? $this->realProduct->hasThumbnail()
             : $this->getProduct()->hasThumbnail();
-	}
+    }
 
     /**
      * Get item thumbnail URL
@@ -354,12 +354,12 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
      * @see    ____func_see____
      * @since  3.0.0
      */
-	public function getThumbnailURL()
-	{
-		return (!$this->isValid() && $this->getRealProduct())
+    public function getThumbnailURL()
+    {
+        return (!$this->isValid() && $this->getRealProduct())
             ? $this->realProduct->getThumbnailURL()
             : $this->getProduct()->getThumbnailURL();
-	}
+    }
 
     /**
      * Get item thumbnail
@@ -403,25 +403,25 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
         }
     }
 
-	/**
-	* Validates the order item (e.g. the product_id supplied is an existing
-	* product id, the amount is greater than zero etc.).
-	* You cannot add an invalid item to a cart (prevented in Order::addItem()).
-	* This procedure disabled possible work-arounds of standard dialog 
-	* restrictions and is not intended to, say, restrict product options
-	* and other cases when the cart must show an error/explanation message
-	* to customer.
-	*/
-	function isValid()
-	{
-	    $product = $this->get("product");
-	    if (is_object($product)) {
-			$res = $this->isComplex('product.exists') && $this->getComplex('product.product_id') && $this->get("amount")>0;
-		} else {
-			$res = $this->get("amount")>0;
-		}
+    /**
+    * Validates the order item (e.g. the product_id supplied is an existing
+    * product id, the amount is greater than zero etc.).
+    * You cannot add an invalid item to a cart (prevented in Order::addItem()).
+    * This procedure disabled possible work-arounds of standard dialog 
+    * restrictions and is not intended to, say, restrict product options
+    * and other cases when the cart must show an error/explanation message
+    * to customer.
+    */
+    function isValid()
+    {
+        $product = $this->get("product");
+        if (is_object($product)) {
+            $res = $this->isComplex('product.exists') && $this->getComplex('product.product_id') && $this->get("amount")>0;
+        } else {
+            $res = $this->get("amount")>0;
+        }
         return $res;
-	}
+    }
 
     /**
     * Decide whether to use shopping_cart/item.tpl widget to display
@@ -442,7 +442,7 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
      */
     public function getURL()
     {
-		return XLite_Core_Converter::getInstance()->buildURL(
+        return XLite_Core_Converter::getInstance()->buildURL(
             'product',
             '',
             array(
@@ -451,9 +451,9 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
         );
     }
 
-	public function hasOptions()
-	{
-		return false;
-	}
+    public function hasOptions()
+    {
+        return false;
+    }
 }
 

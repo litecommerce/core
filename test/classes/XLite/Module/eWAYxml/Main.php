@@ -69,7 +69,7 @@ class XLite_Module_eWAYxml_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'eWAYxml credit card payment processor';
-    }	
+    }
 
     /**
      * Perform some actions at startup
@@ -79,30 +79,30 @@ class XLite_Module_eWAYxml_Main extends XLite_Module_Abstract
      * @since  3.0
      */
     public function init()
-	{
-	
-		parent::init();
-	
-		
-		$this->registerPaymentMethod('eway_xml');
-	}
+    {
+    
+        parent::init();
+    
+        
+        $this->registerPaymentMethod('eway_xml');
+    }
 }
 
 
 function ewx_func_https_request ($method, $url, $vars) {
-	$request = new XLite_Model_HTTPS();
+    $request = new XLite_Model_HTTPS();
 
-	$request->url = $url;
-	$request->data = $vars;
-	$request->urlencoded = true;
+    $request->url = $url;
+    $request->data = $vars;
+    $request->urlencoded = true;
 
-	if ($GLOBALS["debug"]) {
-		echo "request->data:<pre>"; print_r($request->data); echo "</pre><br>";
-	}
-	$request->request ();
+    if ($GLOBALS["debug"]) {
+        echo "request->data:<pre>"; print_r($request->data); echo "</pre><br>";
+    }
+    $request->request ();
 
-	if ($GLOBALS["debug"]) {
-		echo "request->response:<pre>"; print_r($request->response); echo "</pre><br>";
-	}
-	return array ("", $request->response);
+    if ($GLOBALS["debug"]) {
+        echo "request->response:<pre>"; print_r($request->response); echo "</pre><br>";
+    }
+    return array ("", $request->response);
 }

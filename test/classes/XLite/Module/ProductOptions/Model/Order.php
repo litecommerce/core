@@ -40,9 +40,9 @@ class XLite_Module_ProductOptions_Model_Order extends XLite_Model_Order implemen
     	global $calcAllTaxesInside;
 
         $calcAllTaxesInside = true;
-		$result = parent::calcAllTaxes();
+        $result = parent::calcAllTaxes();
         $calcAllTaxesInside = false;
 
         return $result;
-	}
+    }
 }

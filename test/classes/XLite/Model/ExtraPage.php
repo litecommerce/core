@@ -34,19 +34,19 @@
  * @since   3.0.0
  */
 class XLite_Model_ExtraPage extends XLite_Base
-{	
-    public $templatePrefix; // = "skins/$zone/en/";	
+{
+    public $templatePrefix; // = "skins/$zone/en/";
     public $page; // a page identifier	
-    public $title;	
+    public $title;
     public $content; // a page content	
     public $template; // the page's template	
-    public $pageLine = "<widget template=\"common/dialog.tpl\" body=\"%s.tpl\" head=\"%s\" visible=\"{page=#%s#}\">";	
+    public $pageLine = "<widget template=\"common/dialog.tpl\" body=\"%s.tpl\" head=\"%s\" visible=\"{page=#%s#}\">";
 
     public $isRead = false;
 
-	protected $zone = null;
+    protected $zone = null;
 
-	protected $locale = null;
+    protected $locale = null;
 
     public function __construct()
     {
@@ -64,7 +64,7 @@ class XLite_Model_ExtraPage extends XLite_Base
             $this->locale = XLite::getInstance()->getOptions(array('skin_details', 'locale'));
         }
         return $this->locale;
-    } 
+    }
 
     function getZone()
     {
@@ -164,7 +164,7 @@ class XLite_Model_ExtraPage extends XLite_Base
                 $line = "";
                 break;
         }
-		return $line;
+        return $line;
     }
 
     function getPageLinkPattern($tpl = null)
@@ -186,7 +186,7 @@ class XLite_Model_ExtraPage extends XLite_Base
                 $line = "";
                 break;
         }
-		return $line;
+        return $line;
     }
 
     /**
@@ -221,7 +221,7 @@ class XLite_Model_ExtraPage extends XLite_Base
         $this->replaceLine($this->getPageLinkPattern("menu"), "", $this->menuTemplate);
         $this->replaceLine($this->getPageLinkPattern("links"), "", $this->linksTemplate);
         @unlink($this->get("templatePrefix") . $this->page . ".tpl");
-    }   
+    }
 
     function addLine($line, $file)
     {
@@ -261,8 +261,8 @@ class XLite_Model_ExtraPage extends XLite_Base
     }
 
     function createFile($file, $content = '')
-    { 
-		$this->writePermitted = false;
+    {
+        $this->writePermitted = false;
         $fd = @fopen($file, "wb");
         if ($fd) {
         	fwrite($fd, str_replace("\r", '', $content));
@@ -271,7 +271,7 @@ class XLite_Model_ExtraPage extends XLite_Base
         } else {
         	$this->writePermitted = true;
         }
-    }    
+    }
     
     function _createUniqueName($title, $pname = "")
     {
@@ -281,8 +281,8 @@ class XLite_Model_ExtraPage extends XLite_Base
             $name = preg_replace("/^([0-9])/", "_\\1", $name);
         } else {
             $name = $pname;
-        }    
-        $pages = $this->getPages(); 
+        }
+        $pages = $this->getPages();
         // ensure the page is unique
         $suff = '';
         do {
@@ -299,20 +299,20 @@ class XLite_Model_ExtraPage extends XLite_Base
         return $name.$suff;
     }
 
-	function getCustomerLayout()
-	{
-		if (!is_null($this->customerLayout)) {
-			return $this->customerLayout;
-		}
+    function getCustomerLayout()
+    {
+        if (!is_null($this->customerLayout)) {
+            return $this->customerLayout;
+        }
 
         $this->customerLayout = new XLite_Model_Layout();
 
         // FIXME - to delete
-		/*$this->xlite->set("adminZone", false);
+        /*$this->xlite->set("adminZone", false);
         $this->customerLayout->initFromGlobals();
-		$this->xlite->set("adminZone", true);*/
+        $this->xlite->set("adminZone", true);*/
 
-		return $this->customerLayout;
+        return $this->customerLayout;
     }
 
     // FIXME
@@ -333,7 +333,7 @@ class XLite_Model_ExtraPage extends XLite_Base
 
         $attributes = $this->getPageLinkAttributes();
         foreach ($attributes as $attr) {
-			$component->set($attr, $template->get($attr));
+            $component->set($attr, $template->get($attr));
         }
 
         $text = $component->getContent();
@@ -344,10 +344,10 @@ class XLite_Model_ExtraPage extends XLite_Base
         return $text;
     }
 
-	function getRelativeTemplatePath($file)
-	{
-		$skin_details = XLite::getInstance()->getOptions('skin_details');
+    function getRelativeTemplatePath($file)
+    {
+        $skin_details = XLite::getInstance()->getOptions('skin_details');
 
-		return str_replace('skins/' . $skin_details['skin'] . '/' . $skin_details['locale'] . '/', '', $file);
-	}
+        return str_replace('skins/' . $skin_details['skin'] . '/' . $skin_details['locale'] . '/', '', $file);
+    }
 }

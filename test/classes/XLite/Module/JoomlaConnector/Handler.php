@@ -35,7 +35,7 @@
  */
 class XLite_Module_JoomlaConnector_Handler extends XLite_Core_CMSConnector
 {
-	/**
+    /**
      * Method to access the singleton
      *
      * @return XLite_Module_JoomlaConnector_Handler
@@ -47,19 +47,19 @@ class XLite_Module_JoomlaConnector_Handler extends XLite_Core_CMSConnector
         return self::getInternalInstance(__CLASS__);
     }
 
-	/**
-	 * Return name of current CMS 
-	 * 
-	 * @return string
-	 * @access public
-	 * @since  1.0.0
-	 */
-	public function getCMSName()
-	{
-		return '____JOOMLA____';
-	}
+    /**
+     * Return name of current CMS 
+     * 
+     * @return string
+     * @access public
+     * @since  1.0.0
+     */
+    public function getCMSName()
+    {
+        return '____JOOMLA____';
+    }
 
-	/**
+    /**
      * Return the default controller name 
      * 
      * @return string
@@ -71,7 +71,7 @@ class XLite_Module_JoomlaConnector_Handler extends XLite_Core_CMSConnector
         return null;
     }
 
-	/**
+    /**
      * Get landing link
      *
      * @return string
@@ -81,6 +81,6 @@ class XLite_Module_JoomlaConnector_Handler extends XLite_Core_CMSConnector
      */
     public function getLandingLink()
     {
-		return null;
-	}
+        return null;
+    }
 }

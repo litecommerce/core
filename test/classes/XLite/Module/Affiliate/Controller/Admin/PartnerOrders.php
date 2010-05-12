@@ -34,8 +34,8 @@
  * @since   3.0.0
  */
 class XLite_Module_Affiliate_Controller_Admin_PartnerOrders extends XLite_Controller_Admin_Abstract
-{	
-    public $params = array('target', 'mode', 'order_id1', 'order_id2', 'partner_id', 'status', 'payment_status');	
+{
+    public $params = array('target', 'mode', 'order_id1', 'order_id2', 'partner_id', 'status', 'payment_status');
     public $crlf = "\r\n";
 
     function action_export() 
@@ -49,13 +49,13 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerOrders extends XLite_Contro
 
         // do not output anything
         $this->set("silent", true);
-    } 
+    }
     
     function getDelimiter() 
     {
         global $DATA_DELIMITERS;
         return $DATA_DELIMITERS[$this->delimiter];
-    } 
+    }
 
     function getSales() 
     {
@@ -75,17 +75,17 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerOrders extends XLite_Contro
             $this->salesCount = count($this->sales);
         }
         return $this->sales;
-    } 
+    }
 
     function getSalesCount() 
     {
         return count($this->get("sales"));
-    } 
+    }
     
     function getOrder() 
     {
         return $this->getComplex('sale.order');
-    } 
+    }
     
     function fillForm() 
     {
@@ -97,5 +97,5 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerOrders extends XLite_Contro
             $this->set("partner_id", "");
         }
         parent::fillForm();
-    } 
+    }
 }

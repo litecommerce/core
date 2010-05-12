@@ -47,18 +47,18 @@ class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Modul
             }
         }
         return $this->shippingMethods;
-    } 
+    }
 
     function getShippingMethod($sid) 
     {
         $sm = new XLite_Model_Shipping();
         if (!$sm->find("shipping_id=$sid")) {
             $sm->set("shipping_id", $sid);
-			$name = ($sid == 0)?"Free shipping":"Unknown (id:$sid)";
-			$sm->set("name", $name);
+            $name = ($sid == 0)?"Free shipping":"Unknown (id:$sid)";
+            $sm->set("name", $name);
         }
         return $sm;
-    } 
+    }
     
     function getPaymentMethods() 
     {
@@ -72,7 +72,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Modul
             }
         }
         return $this->paymentMethods;
-    } 
+    }
 
     function getPaymentMethod($pn) 
     {
@@ -82,7 +82,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Modul
             $pm->set("name", $pn);
         }
         return $pm;
-    } 
+    }
 
     function getOrders() 
     {
@@ -97,7 +97,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Modul
             array_map(array($this, 'sumOrders'), $rawOrders);
         }
         return $this->orders;
-    } 
+    }
 
     function sumOrders($row) 
     {
@@ -114,7 +114,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Modul
                 $od["percent"] = round(100 / $this->totalOrders, 2);
                 $od["payment_method"] = $this->getPaymentMethod($row["payment_method"]);
                 $od["shipping_method"] = $this->getShippingMethod($row["shipping_id"]);
-                $this->orders[$hash] = $od; 
+                $this->orders[$hash] = $od;
             } else {
                 $od = $this->orders[$hash];
                 $od["orders"]++;
@@ -122,7 +122,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Modul
                 $od["percent"] = round($od["orders"] * 100 / $this->totalOrders, 2);
             }
         }
-    } 
+    }
 
     function getOrder() 
     {
@@ -130,7 +130,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Modul
             $this->order = new XLite_Model_Order();
         }
         return $this->order;
-    } 
+    }
 
     function countOrders($od) 
     {
@@ -139,5 +139,5 @@ class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Modul
             $total += $o["orders"];
         }
         return $total;
-    } 
+    }
 }

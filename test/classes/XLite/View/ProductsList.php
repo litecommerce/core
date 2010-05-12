@@ -554,7 +554,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
             $this->commonParams = array('action' => '') + $this->getRequestParams();
         }
 
-        return $this->commonParams; 
+        return $this->commonParams;
     }
 
     /**
@@ -897,9 +897,9 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
      * @since  3.0.0 
      */ 
     protected function getGridItemWidth() 
-    { 
-        return floor(100 / $this->getParam(self::PARAM_GRID_COLUMNS)) - 6; 
-    } 
+    {
+        return floor(100 / $this->getParam(self::PARAM_GRID_COLUMNS)) - 6;
+    }
 
     /**
      * Return the maximal icon width

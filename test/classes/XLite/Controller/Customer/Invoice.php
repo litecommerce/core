@@ -43,7 +43,7 @@ class XLite_Controller_Customer_Invoice extends XLite_Controller_Customer_Abstra
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $params = array('target', 'order_id');    
+    public $params = array('target', 'order_id');
 
     /**
      * Order (cache)
@@ -53,7 +53,7 @@ class XLite_Controller_Customer_Invoice extends XLite_Controller_Customer_Abstra
      * @see    ____var_see____
      * @since  3.0.0
      */
-    private $order = null;    
+    private $order = null;
 
     /**
      * Common method to determine current location 
@@ -63,7 +63,7 @@ class XLite_Controller_Customer_Invoice extends XLite_Controller_Customer_Abstra
      * @since  3.0.0
      */
     protected function getLocation()
-    {   
+    {
         return 'Invoice';
     }
 

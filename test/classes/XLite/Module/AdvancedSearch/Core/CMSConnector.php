@@ -35,20 +35,20 @@
  */
 abstract class XLite_Module_AdvancedSearch_Core_CMSConnector extends XLite_Core_CMSConnector implements XLite_Base_IDecorator
 {
-	/**
-	 * Constructor
-	 * 
-	 * @return void
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function __construct()
-	{
+    /**
+     * Constructor
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function __construct()
+    {
         parent::__construct();
 
         $this->widgetsList['XLite_Module_AdvancedSearch_View_AdvancedSearch'] = 'Advanced search';
 
         $this->pageTypes['advanced_search'] = 'Advanced search';
-	}
+    }
 }

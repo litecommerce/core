@@ -39,9 +39,9 @@ class XLite_Model_ActionStatus extends XLite_Base
      * Allowed statuses 
      */
 
-	const STATUS_UNDEFINED = -1;
-	const STATUS_ERROR     = 0;
-	const STATUS_SUCCESS   = 1;
+    const STATUS_UNDEFINED = -1;
+    const STATUS_ERROR     = 0;
+    const STATUS_SUCCESS   = 1;
 
 
     /**
@@ -51,7 +51,7 @@ class XLite_Model_ActionStatus extends XLite_Base
      * @access protected
      * @since  3.0.0
      */
-	protected $status = self::STATUS_UNDEFINED;
+    protected $status = self::STATUS_UNDEFINED;
 
     /**
      * Code 

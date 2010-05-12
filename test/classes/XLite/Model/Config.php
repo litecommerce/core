@@ -34,8 +34,8 @@
  * @since   3.0.0
  */
 class XLite_Model_Config extends XLite_Model_Abstract implements XLite_Base_ISingleton
-{	
-	protected $parsedData = null;
+{
+    protected $parsedData = null;
 
     public $fields = array(
         'category' => '',
@@ -44,11 +44,11 @@ class XLite_Model_Config extends XLite_Model_Abstract implements XLite_Base_ISin
         'value' => '',
         'category' => '',
         'orderby' => '0',
-        'type' => 'text');	
+        'type' => 'text');
     
-    public $primaryKey = array('category', 'name');	
-    public $alias = 'config';	
-    public $defaultOrder = "orderby";	
+    public $primaryKey = array('category', 'name');
+    public $alias = 'config';
+    public $defaultOrder = "orderby";
     public $configClass = "XLite_Model_Config";
     
     // GET methods {{{
@@ -126,12 +126,12 @@ class XLite_Model_Config extends XLite_Model_Abstract implements XLite_Base_ISin
     */
     public function readConfig($force = false)
     {
-		if (!is_null($this->parsedData) && !$force) {
-			return $this->parsedData;
-		}
+        if (!is_null($this->parsedData) && !$force) {
+            return $this->parsedData;
+        }
 
         $config = new XLite_Base();
-		$row = new $this->configClass;
+        $row = new $this->configClass;
         $r = $row->iterate();
         while ($row->next($r)) {
             $category = $row->get("category");
@@ -143,31 +143,31 @@ class XLite_Model_Config extends XLite_Model_Abstract implements XLite_Base_ISin
                 $config->$category->$name = $row->get("value") == 'Y' ? true : false;
             } else if ($row->get("type") == "serialized") {
                 $config->$category->$name = unserialize($row->get("value"));
-            } else {    
+            } else {
                 $config->$category->$name = $row->get("value");
-            }    
+            }
         }
         $config->Company->locationCountry = new XLite_Model_Country($config->Company->location_country);
         $config->Company->locationState = new XLite_Model_State($config->Company->location_state);
-		if ($config->Company->locationState->get("state_id") == -1) {
-			$config->Company->locationState->set("state", $config->Company->get("custom_location_state"));
-		}
+        if ($config->Company->locationState->get("state_id") == -1) {
+            $config->Company->locationState->set("state", $config->Company->get("custom_location_state"));
+        }
         $config->General->defaultCountry = new XLite_Model_Country($config->General->default_country);
-		$config->Memberships->memberships = array();
-		if (isset($config->Memberships->membershipsCollection)) {
-			if (is_array($config->Memberships->membershipsCollection)) {
+        $config->Memberships->memberships = array();
+        if (isset($config->Memberships->membershipsCollection)) {
+            if (is_array($config->Memberships->membershipsCollection)) {
     			foreach($config->Memberships->membershipsCollection as $membership) {
     				$config->Memberships->memberships[] = $membership['membership'];
     			}
     		} else {
-				$config->Memberships->membershipsCollection = array();
+                $config->Memberships->membershipsCollection = array();
     		}
-		} else {
-			$config->Memberships->membershipsCollection = array();
-		}
+        } else {
+            $config->Memberships->membershipsCollection = array();
+        }
 
-        return ($this->parsedData = $config); 
-    } 
+        return ($this->parsedData = $config);
+    }
 
     function createOption($category, $name, $value, $type = null, $comment = null, $orderby = null) 
     {
@@ -199,15 +199,15 @@ class XLite_Model_Config extends XLite_Model_Abstract implements XLite_Base_ISin
             }
             $config->create();
         }
-    } 
+    }
 
 
-	public function update()
-	{
-		parent::update();
+    public function update()
+    {
+        parent::update();
 
-		$this->readConfig(true);
-	}
+        $this->readConfig(true);
+    }
 
     /**
      * Get class instance 
@@ -217,7 +217,7 @@ class XLite_Model_Config extends XLite_Model_Abstract implements XLite_Base_ISin
      * @see    ____func_see____
      * @since  3.0.0
      */
-	public static function getInstance()
+    public static function getInstance()
     {
         return self::getInternalInstance(__CLASS__);
     }

@@ -34,8 +34,8 @@
  * @since   3.0.0
  */
 class XLite_Module_Egoods_Model_Mailer extends XLite_Model_Mailer
-{	
-	public $clean_after_send = true;
+{
+    public $clean_after_send = true;
 
     public function __construct() 
     {
@@ -43,7 +43,7 @@ class XLite_Module_Egoods_Model_Mailer extends XLite_Model_Mailer
         // Initialize PHPMailer
         require_once LC_ROOT_DIR . 'lib' . LC_DS . 'PHPMailer' . LC_DS . 'class.phpmailer.php';
         $this->mail = new PHPMailer();
-    } 
+    }
 
     function compose($from, $to, $dir, $customHeaders = array()) 
     {
@@ -65,11 +65,11 @@ class XLite_Module_Egoods_Model_Mailer extends XLite_Model_Mailer
 
         $this->set("body", $imageParser->result);
         $this->set("images", $imageParser->images);
-		
-		if (is_null($this->mail)) {
-			require_once LC_ROOT_DIR . 'lib' . LC_DS . 'PHPMailer' . LC_DS . 'class.phpmailer.php';
-			$this->mail = new PHPMailer();
-		}	
+        
+        if (is_null($this->mail)) {
+            require_once LC_ROOT_DIR . 'lib' . LC_DS . 'PHPMailer' . LC_DS . 'class.phpmailer.php';
+            $this->mail = new PHPMailer();
+        }
 
         $this->mail->SetLanguage($this->get("langLocale"),
                                  $this->get("langPath"));
@@ -103,19 +103,19 @@ class XLite_Module_Egoods_Model_Mailer extends XLite_Model_Mailer
                 $this->mail->attachment[$cur][7] = $img["name"]."@mail.lc"; // CID
             }
         }
-    } 
+    }
 
-	function send()
-	{
-		parent::send();
-		if ($this->clean_after_send) {
-			$this->mail = null;
-		}	
-	}
+    function send()
+    {
+        parent::send();
+        if ($this->clean_after_send) {
+            $this->mail = null;
+        }
+    }
 
-	function cleanMail()
-	{
-		require_once LC_ROOT_DIR . 'lib' . LC_DS . 'PHPMailer' . LC_DS . 'class.phpmailer.php';
-		$this->mail = new PHPMailer();
-	}
+    function cleanMail()
+    {
+        require_once LC_ROOT_DIR . 'lib' . LC_DS . 'PHPMailer' . LC_DS . 'class.phpmailer.php';
+        $this->mail = new PHPMailer();
+    }
 }

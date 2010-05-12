@@ -29,17 +29,17 @@
 class XLite_Module_Demo_Model_Config extends XLite_Model_Config
 implements XLite_Base_IDecorator, XLite_Base_ISingleton
 {
-	/**
-	 * Get configuration categories 
-	 * 
-	 * @return array
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function getCategories()
+    /**
+     * Get configuration categories 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCategories()
     {
-		return array_diff(parent::getCategories(), array('Environment'));
+        return array_diff(parent::getCategories(), array('Environment'));
     }
 
     /**

@@ -37,34 +37,34 @@ class XLite_Module_WholesaleTrading_Controller_Admin_GlobalDiscount extends XLit
 {
     function getGlobalDiscounts()
     {
-		$gd = new XLite_Module_WholesaleTrading_Model_GlobalDiscount();
-		$gd->defaultOrder = "subtotal";
-		return $gd->findAll();
-	}
-											
-	function action_add()
-	{
-		$gd = new XLite_Module_WholesaleTrading_Model_GlobalDiscount();
-		$gd->set('subtotal', $_POST['discount_subtotal']);
-		$gd->set('discount', abs($_POST['discount_value']));
-		$gd->set('discount_type', $_POST['discount_type']);
-		$gd->set('membership', $_POST['discount_membership']);
-		$gd->create();
-	}
+        $gd = new XLite_Module_WholesaleTrading_Model_GlobalDiscount();
+        $gd->defaultOrder = "subtotal";
+        return $gd->findAll();
+    }
+                                            
+    function action_add()
+    {
+        $gd = new XLite_Module_WholesaleTrading_Model_GlobalDiscount();
+        $gd->set('subtotal', $_POST['discount_subtotal']);
+        $gd->set('discount', abs($_POST['discount_value']));
+        $gd->set('discount_type', $_POST['discount_type']);
+        $gd->set('membership', $_POST['discount_membership']);
+        $gd->create();
+    }
 
-	function action_update()
-	{
-		$gd = new XLite_Module_WholesaleTrading_Model_GlobalDiscount($_POST["discount_id"]);
-		$gd->set('subtotal', $_POST['gd_subtotal']);
-		$gd->set('discount', abs($_POST['gd_value']));
-		$gd->set('discount_type', $_POST['gd_type']);
-	    $gd->set('membership', $_POST['gd_membership']);
-		$gd->update();
-	}
+    function action_update()
+    {
+        $gd = new XLite_Module_WholesaleTrading_Model_GlobalDiscount($_POST["discount_id"]);
+        $gd->set('subtotal', $_POST['gd_subtotal']);
+        $gd->set('discount', abs($_POST['gd_value']));
+        $gd->set('discount_type', $_POST['gd_type']);
+        $gd->set('membership', $_POST['gd_membership']);
+        $gd->update();
+    }
 
-	function action_delete()
-	{
-		$gd = new XLite_Module_WholesaleTrading_Model_GlobalDiscount($_POST["discount_id"]);
-		$gd->delete();
-	}
+    function action_delete()
+    {
+        $gd = new XLite_Module_WholesaleTrading_Model_GlobalDiscount($_POST["discount_id"]);
+        $gd->delete();
+    }
 }

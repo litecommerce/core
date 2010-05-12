@@ -34,14 +34,14 @@
  * @since   3.0.0
  */
 class XLite_Module_Affiliate_Controller_Customer_PartnerSales extends XLite_Module_Affiliate_Controller_Partner
-{	
-    public $qty              = 0;	
-    public $saleTotal        = 0;	
-    public $commissionsTotal = 0;	
-    public $affiliatePending = 0;	
+{
+    public $qty              = 0;
+    public $saleTotal        = 0;
+    public $commissionsTotal = 0;
+    public $affiliatePending = 0;
     public $affiliatePaid    = 0;
 
-	/**
+    /**
      * Common method to determine current location 
      * 
      * @return array
@@ -97,7 +97,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerSales extends XLite_Modu
                     $this->topProducts[$id]["amount"] += $item->get("amount");
                     $this->topProducts[$id]["amount"]["total"] = sprintf("%.02f", doubleval($this->topProducts[$id]["amount"]["total"] + $item->get("total")));
                     $this->topProducts[$id]["amount"]["commissions"] = sprintf("%.02f", doubleval($this->topProducts[$id]["amount"]["commissions"] + $item->get("commissions")));
-                }    
+                }
             }
             usort($this->topProducts, array($this, "cmpProducts"));
             $topProducts = array_chunk(array_reverse($this->topProducts), 10);
@@ -124,7 +124,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerSales extends XLite_Modu
             }
             if ($pp->isComplex('order.processed')) {
                 $this->items = array_merge($this->items, $pp->getComplex('order.items'));
-            }    
+            }
             $this->salesTotal += $pp->getComplex('order.subtotal');
         } else { // it's a partner affiliate
             if ($pp->get("paid")) { // 

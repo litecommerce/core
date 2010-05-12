@@ -289,7 +289,7 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
     {
         if (!preg_match('/^[0-9a-f]{31,32}$/Sis', $id)) {
             $this->doDie('Session::setID(): Incorrect session ID has been detected: ' . $id);
-        }      
+        }
         $this->options['id'] = $id;
     }
     
@@ -331,7 +331,7 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
     }
 
     function getShopURL($secure = false)
-    {   
+    {
         $proto   = $secure ? 'https://' : 'http://';
         $host    = $secure ? $this->options['https_host'] :
                              $this->options['http_host'];

@@ -34,63 +34,63 @@
  * @since   3.0.0
  */
 class XLite_Module_GoogleCheckout_View_ButtonAltCheckout extends XLite_View_Button
-	{	
+    {
 
-	/**
+    /**
      * Widget param names
      */
     const PARAM_SIZE  = 'size';
-	const PARAM_BACKGROUND = 'background';
+    const PARAM_BACKGROUND = 'background';
 
-	public $buttonUrl = null;	
-	public $gacObject = null;
+    public $buttonUrl = null;
+    public $gacObject = null;
 
-	function init()
-	{
-		if (!isset($this->gacObject)) {
+    function init()
+    {
+        if (!isset($this->gacObject)) {
     		$this->gacObject = new XLite_Module_GoogleCheckout_View_GoogleAltCheckout();
         	$this->gacObject->initGoogleData();
-		}
+        }
 
-		if (isset($this->gacObject->GCMerchantID) && $this->getComplex('dialog.target') == "cart" && strtolower($this->get("label")) == "checkout") {
-			$this->template = "modules/GoogleCheckout/button_alt_checkout.tpl";
-		}
+        if (isset($this->gacObject->GCMerchantID) && $this->getComplex('dialog.target') == "cart" && strtolower($this->get("label")) == "checkout") {
+            $this->template = "modules/GoogleCheckout/button_alt_checkout.tpl";
+        }
 
-		parent::init();
-	}
+        parent::init();
+    }
 
-	function getGoogleCheckoutButtonUrl()
-	{
-		if (!isset($this->buttonUrl)) {
+    function getGoogleCheckoutButtonUrl()
+    {
+        if (!isset($this->buttonUrl)) {
         	$this->buttonUrl = $this->gacObject->getGoogleCheckoutButtonUrl($this->getParam(self::PARAM_SIZE), $this->getParam(self::PARAM_BACKGROUND));
-		}
+        }
 
-		return $this->buttonUrl;
-	}
+        return $this->buttonUrl;
+    }
 
-	function isGoogleAllowPay()
-	{
-		return $this->gacObject->isGoogleAllowPay();
-	}
+    function isGoogleAllowPay()
+    {
+        return $this->gacObject->isGoogleAllowPay();
+    }
 
-	/**
-	 * Define widget parameters
-	 *
-	 * @return void
-	 * @access protected
-	 * @since  1.0.0
-	 */
-	protected function defineWidgetParams()
-	{
-		parent::defineWidgetParams();
-		$this->widgetParams += array(
-			self::PARAM_SIZE => new XLite_Model_WidgetParam_String(
-				'Button size', 'medium', false
-			),
-			self::PARAM_BACKGROUND => new XLite_Model_WidgetParam_String(
-				'Background (white/transparent)', 'white', false
-			),
-		);
-	}
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+        $this->widgetParams += array(
+            self::PARAM_SIZE => new XLite_Model_WidgetParam_String(
+                'Button size', 'medium', false
+            ),
+            self::PARAM_BACKGROUND => new XLite_Model_WidgetParam_String(
+                'Background (white/transparent)', 'white', false
+            ),
+        );
+    }
 
 }

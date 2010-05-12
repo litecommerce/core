@@ -35,14 +35,14 @@
 */
 class XLite_Module_FeaturedProducts_Main extends XLite_Module_Abstract
 {
-	const FEATURED_PRODUCTS_TABLE = 'xlite_featured_products';
+    const FEATURED_PRODUCTS_TABLE = 'xlite_featured_products';
 
-	/**
+    /**
      * Module type
      *
      * @var    int
-	 * @access public
-	 * @see    ____func_see____
+     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public static function getType()
@@ -54,8 +54,8 @@ class XLite_Module_FeaturedProducts_Main extends XLite_Module_Abstract
      * Module version
      *
      * @var    string
-	 * @access public
-	 * @see    ____func_see____
+     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public static function getVersion()
@@ -67,21 +67,21 @@ class XLite_Module_FeaturedProducts_Main extends XLite_Module_Abstract
      * Module description
      *
      * @var    string
-	 * @access public
-	 * @see    ____func_see____
+     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public static function getDescription()
     {
         return 'This module enables featured products list';
-	}
+    }
 
     /**
      * Determines if we need to show settings form link
      *
      * @return bool
-	 * @access public
-	 * @see    ____func_see____
+     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public static function showSettingsForm()

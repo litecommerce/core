@@ -69,7 +69,7 @@ class XLite_Module_InventoryTracking_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'Inventory tracking module';
-    }	
+    }
 
     /**
      * Determines if we need to show settings form link
@@ -96,6 +96,6 @@ class XLite_Module_InventoryTracking_Main extends XLite_Module_Abstract
         if ($this->xlite->is("adminZone")) {
         }
 
-		$this->xlite->set("InventoryTrackingEnabled",true);
+        $this->xlite->set("InventoryTrackingEnabled",true);
     }
 }

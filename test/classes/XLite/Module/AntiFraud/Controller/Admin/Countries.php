@@ -35,12 +35,12 @@
  */
 class XLite_Module_AntiFraud_Controller_Admin_Countries extends XLite_Controller_Admin_Countries implements XLite_Base_IDecorator
 {
-	function action_update()
-	{
-		foreach ((array)$_POST["countries"] as $code=>$value) {
-			$_POST["countries"][$code]["risk_country"] = isset($value["risk_country"]) ? 1 : 0;
-		}
-		parent::action_update();
-	}
+    function action_update()
+    {
+        foreach ((array)$_POST["countries"] as $code=>$value) {
+            $_POST["countries"][$code]["risk_country"] = isset($value["risk_country"]) ? 1 : 0;
+        }
+        parent::action_update();
+    }
 
-} 
+}

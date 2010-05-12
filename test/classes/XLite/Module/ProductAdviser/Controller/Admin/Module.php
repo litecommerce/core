@@ -35,13 +35,13 @@
  */
 class XLite_Module_ProductAdviser_Controller_Admin_Module extends XLite_Controller_Admin_Module implements XLite_Base_IDecorator
 {
-	function init()
-	{
-		parent::init();
+    function init()
+    {
+        parent::init();
 
-		if ($this->page == "ProductAdviser") {
+        if ($this->page == "ProductAdviser") {
         	$lay = XLite_Model_Layout::getInstance();
         	$lay->addLayout("general_settings.tpl", "modules/ProductAdviser/config.tpl");
         }
-	}
+    }
 }

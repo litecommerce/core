@@ -1,5 +1,5 @@
 <?php
-	
+    
 if (!function_exists("file_put_contents"))
 {
     function file_put_contents($file, $content)
@@ -34,9 +34,9 @@ if (!function_exists("file_get_contents"))
 
 if (!function_exists("start_patching"))
 {
-	function start_patching($title)
-	{
-	?>
+    function start_patching($title)
+    {
+    ?>
 </PRE>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
@@ -58,69 +58,69 @@ PRE {FONT-FAMILY: Courier, "Courier New"; COLOR: #000000; FONT-SIZE: 12px;}
 <TD nowrap><B>&nbsp;&nbsp;Modifying templates ...&nbsp;</TD>
 <TD nowrap><B>&nbsp;&nbsp;Status&nbsp;</TD>
 </TR>
-	<?php
-		global $patching_table_row;
-		$patching_table_row = 0;
-	}
+    <?php
+        global $patching_table_row;
+        $patching_table_row = 0;
+    }
 }
 
 if (!function_exists("end_patching"))
 {
-	function end_patching()
-	{
-	?>
+    function end_patching()
+    {
+    ?>
 </TABLE>
 <P>
 </BODY>
 </HTML>
 <PRE>
 <?php
-	}
+    }
 }
 
 if (!function_exists("is_template_patched"))
 {
-	function is_template_patched($location, $check_str)
-	{
+    function is_template_patched($location, $check_str)
+    {
         $src = @file_get_contents($location);
         return (strpos($src, $check_str) === false) ? false : true;
-	}
+    }
 }
 
 if (!function_exists("already_patched"))
 {
-	function already_patched($location)
-	{
-		global $patching_table_row;
-	    echo "<TR class=\"" . (($patching_table_row) ? "Middle" : "Center") . "\"><TD nowrap>&nbsp;$location&nbsp;</TD><TD nowrap>&nbsp;";
-		echo "<FONT COLOR=blue><B>already patched</B></FONT>";
-	    echo "&nbsp;</TD></TR>\n";
-	    $patching_table_row = ($patching_table_row) ? 0 : 1;
-	}
-} 
+    function already_patched($location)
+    {
+        global $patching_table_row;
+        echo "<TR class=\"" . (($patching_table_row) ? "Middle" : "Center") . "\"><TD nowrap>&nbsp;$location&nbsp;</TD><TD nowrap>&nbsp;";
+        echo "<FONT COLOR=blue><B>already patched</B></FONT>";
+        echo "&nbsp;</TD></TR>\n";
+        $patching_table_row = ($patching_table_row) ? 0 : 1;
+    }
+}
 
 if (!function_exists("patch_template"))
 {
-	function patch_template($location, $check_str=null, $find_str=null, $replace_str=null, $add_str=null)
-	{
-		global $patching_table_row;
-	    echo "<TR class=\"" . (($patching_table_row) ? "Middle" : "Center") . "\"><TD nowrap>&nbsp;$location&nbsp;</TD></TD><TD nowrap>&nbsp;";
+    function patch_template($location, $check_str=null, $find_str=null, $replace_str=null, $add_str=null)
+    {
+        global $patching_table_row;
+        echo "<TR class=\"" . (($patching_table_row) ? "Middle" : "Center") . "\"><TD nowrap>&nbsp;$location&nbsp;</TD></TD><TD nowrap>&nbsp;";
 
-		$src = @file_get_contents($location);
-		$src = preg_replace("/\r\n/m","\n", $src);
-	    if (!isset($check_str) || strpos($src, $check_str) === false) 
-	    {
-	    	$replace_message = "";
-	    	if (isset($find_str) && isset($replace_str))
+        $src = @file_get_contents($location);
+        $src = preg_replace("/\r\n/m","\n", $src);
+        if (!isset($check_str) || strpos($src, $check_str) === false) 
+        {
+        	$replace_message = "";
+        	if (isset($find_str) && isset($replace_str))
     		{
     			$old_src = $src;
-				$src = str_replace($find_str, $replace_str, $src);
-				if (strcmp($old_src, $src) == 0)
-				{
-					$replace_message = "<FONT COLOR=red><B>&nbsp;(replace failed)&nbsp;</B></FONT>";
-				}
+                $src = str_replace($find_str, $replace_str, $src);
+                if (strcmp($old_src, $src) == 0)
+                {
+                    $replace_message = "<FONT COLOR=red><B>&nbsp;(replace failed)&nbsp;</B></FONT>";
+                }
     		}
-		
+        
        	 	if (isset($add_str))
        	 	{
        	 		$src .= $add_str;
@@ -128,16 +128,16 @@ if (!function_exists("patch_template"))
     	
        	 	file_put_contents($location, $src);
        	 	echo "<FONT COLOR=green><B>success</B></FONT>$replace_message";
-       	} 
+       	}
        	else 
        	{
        		echo "<FONT COLOR=blue><B>already patched</B></FONT>";
     	}
        	echo "&nbsp;</TD></TR>\n";
-		$patching_table_row = ($patching_table_row) ? 0 : 1;
-	}
+        $patching_table_row = ($patching_table_row) ? 0 : 1;
+    }
 }
-	
+    
 start_patching("AustraliaPost");
 
 // patching "skins/admin/en/main.tpl"

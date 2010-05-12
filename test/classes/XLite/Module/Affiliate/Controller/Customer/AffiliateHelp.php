@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_Affiliate_Controller_Customer_AffiliateHelp extends XLite_Controller_Customer_Help
-{	
-	public $params = array("target","mode");	
-	public $template = "modules/Affiliate/main.tpl";
+{
+    public $params = array("target","mode");
+    public $template = "modules/Affiliate/main.tpl";
 }

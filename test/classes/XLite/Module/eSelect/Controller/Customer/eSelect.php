@@ -35,50 +35,50 @@
  */
 class XLite_Module_eSelect_Controller_Customer_eSelect extends XLite_Controller_Customer_Checkout
 {
-	function init()
-	{
-		if (!is_object($this->registerForm) || is_null($this->registerForm)) {
-			$this->registerForm = new XLite_Base();
-		}
+    function init()
+    {
+        if (!is_object($this->registerForm) || is_null($this->registerForm)) {
+            $this->registerForm = new XLite_Base();
+        }
 
-		parent::init();
+        parent::init();
 
-		if ($this->action == "return" && !$this->auth->is("logged")) {
-			// not logged - redirect to the cart
-			$this->redirect("cart.php");
-		}
-	}
+        if ($this->action == "return" && !$this->auth->is("logged")) {
+            // not logged - redirect to the cart
+            $this->redirect("cart.php");
+        }
+    }
 
-	function action_return()
-	{
-		$oid = $this->session->get("eSelectQueued");
+    function action_return()
+    {
+        $oid = $this->session->get("eSelectQueued");
 
-		if ($this->session->get("eSelectQueued") && isset($oid) && $this->get("PaRes")) {
-			$this->order = null;
-			$_REQUEST["order_id"] = $oid;
+        if ($this->session->get("eSelectQueued") && isset($oid) && $this->get("PaRes")) {
+            $this->order = null;
+            $_REQUEST["order_id"] = $oid;
 
-			$this->session->set("eSelectQueued", null);
-			$this->session->set("last_order_id", $oid);
-			$this->session->set("order_id", $oid);
-			$this->session->writeClose();
+            $this->session->set("eSelectQueued", null);
+            $this->session->set("last_order_id", $oid);
+            $this->session->set("order_id", $oid);
+            $this->session->writeClose();
 
-			$order = $this->get("order");
-			$payment = XLite_Model_PaymentMethod::factory('eselect_cc');
+            $order = $this->get("order");
+            $payment = XLite_Model_PaymentMethod::factory('eselect_cc');
 
-			require_once LC_MODULES_DIR . 'eSelect' . LC_DS . 'encoded.php';
-			func_eSelect_action_return($this, $order, $payment);
-		}
+            require_once LC_MODULES_DIR . 'eSelect' . LC_DS . 'encoded.php';
+            func_eSelect_action_return($this, $order, $payment);
+        }
 
-		$this->order = null;
+        $this->order = null;
 
-		parent::action_return();
+        parent::action_return();
 
-		if ($oid) {
-			$this->session->set("last_order_id", $oid);
-			$this->session->set("order_id", $oid);
-			$this->session->writeClose();
-		}
+        if ($oid) {
+            $this->session->set("last_order_id", $oid);
+            $this->session->set("order_id", $oid);
+            $this->session->writeClose();
+        }
 
-	}
+    }
 
 }

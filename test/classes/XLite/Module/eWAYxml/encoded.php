@@ -34,26 +34,26 @@
         $userinfo ["card_number"] = $paymentMethod->cc_info["cc_number"];
         $userinfo ["card_expire"] = $paymentMethod->cc_info["cc_date"];
         $userinfo ["card_cvv2"] = $paymentMethod->cc_info["cc_cvv2"];
-		$userinfo ["card_name"] = $paymentMethod->cc_info["cc_name"];
+        $userinfo ["card_name"] = $paymentMethod->cc_info["cc_name"];
 
         if ($debug) {
             echo "userinfo:<pre>"; print_r($userinfo); echo "</pre><br>";
         }
 
         // Count payment attempts
-		$cart_details = $lite_cart->get('details');
-		$cart_labels = array(
-			"connectionAttempts" => "Connection attempts",
-			"cvvMessage" => "CVV message",
-			"avsMessage" => "AVS message"
-		);
+        $cart_details = $lite_cart->get('details');
+        $cart_labels = array(
+            "connectionAttempts" => "Connection attempts",
+            "cvvMessage" => "CVV message",
+            "avsMessage" => "AVS message"
+        );
         $conn_attempts = (int) $cart_details["connectionAttempts"];
         if (is_null($conn_attempts)) {
             $conn_attempts = 1;
         } else {
             $conn_attempts++;
         }
-		$cart_details["connectionAttempts"] = $conn_attempts;
+        $cart_details["connectionAttempts"] = $conn_attempts;
 
         if ($debug) echo "Connection attempt: $conn_attempts<br>";
 
@@ -165,10 +165,10 @@ preg_match("/<ewayTrxnStatus>(.*)<\/ewayTrxnStatus>/",$return,$out);
 
 if($out[1] == "True")
 {	preg_match("/<ewayAuthCode>(.*)<\/ewayAuthCode>/",$return,$out);
-	$bill_output[code] = 1; $bill_output[billmes] = $out[1]; }
+    $bill_output[code] = 1; $bill_output[billmes] = $out[1]; }
 else
 {	preg_match("/<ewayTrxnError>(.*)<\/ewayTrxnError>/",$return,$out);
-	$bill_output[code] = 2; $bill_output[billmes] = $out[1]; }
+    $bill_output[code] = 2; $bill_output[billmes] = $out[1]; }
 
 preg_match("/<ewayTrxnNumber>(.*)<\/ewayTrxnNumber>/",$return,$out);
 $bill_output[billmes].= " (TrnxNum=".$out[1].")";
@@ -196,19 +196,19 @@ $bill_output[billmes].= " (TrnxNum=".$out[1].")";
         }
 
         if ($bill_output ["cvvmes"])
-			$cart_details["cvvMessage"] = $bill_output["cvvmes"];
+            $cart_details["cvvMessage"] = $bill_output["cvvmes"];
         else
-			$cart_details["cvvMessage"] = null;
+            $cart_details["cvvMessage"] = null;
 
         if ($bill_output ["avsmes"])
-			$cart_details["avsMessage"] = $bill_output["avsmes"];
+            $cart_details["avsMessage"] = $bill_output["avsmes"];
         else
-			$cart_details["avsMessage"] = null;
+            $cart_details["avsMessage"] = null;
 
         $cart_details["error"] = $error;
         $lite_cart->set("status", $status);
-		$lite_cart->set('details', $cart_details);
-		$lite_cart->set('detailLabels', $cart_labels);
+        $lite_cart->set('details', $cart_details);
+        $lite_cart->set('detailLabels', $cart_labels);
         $lite_cart->update();
     }
 ?>

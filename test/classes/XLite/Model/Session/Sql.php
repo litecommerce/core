@@ -94,7 +94,7 @@ class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_
     */
     function _initialize()
     {
-        $this->_sendHeaders(); 
+        $this->_sendHeaders();
 
         return $this->create();
     }
@@ -146,7 +146,7 @@ class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_
 
         } else {
             $this->_data[$name] = serialize($value);
-        }    
+        }
 
         return true;
     }

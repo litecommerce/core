@@ -34,11 +34,11 @@
  * @since   3.0.0
  */
 class XLite_Module_AustraliaPost_Model_Shipping_Aupost extends XLite_Model_Shipping_Online 
-{	
+{
 
-	public $configCategory = "AustraliaPost";	
-	public $optionsFields	= array("length","width","height","currency_rate");	
-    public $error = "";	
+    public $configCategory = "AustraliaPost";
+    public $optionsFields	= array("length","width","height","currency_rate");
+    public $error = "";
     public $xmlError = false;
 
     function getWeightInGrams($order, $weight_unit=null) 
@@ -57,45 +57,45 @@ class XLite_Module_AustraliaPost_Model_Shipping_Aupost extends XLite_Model_Shipp
         		return $weight;
         }
         return 0;
-    } 
+    }
 
-	function cleanCache()  
-	{
-		$this->_cleanCache("aupost_cache");
-	} 
+    function cleanCache()  
+    {
+        $this->_cleanCache("aupost_cache");
+    }
 
     function getModuleName()  
     {
         return "Australia Post";
-    }  
+    }
 
-	function getRates(XLite_Model_Order $order) 
-	{
-		include_once LC_MODULES_DIR . 'AustraliaPost' . LC_DS . 'encoded.php';
-		return Shipping_aupost_getRates($this,$order);
-	} 
-	
-	function queryRates($options, $originalZipcode, $destinationZipcode, $destinationCountry, $weight, $weight_unit=null) 
-	{
-		include_once LC_MODULES_DIR . 'AustraliaPost' . LC_DS . 'encoded.php';
-		return Shipping_aupost_queryRates($this, $options, $originalZipcode, $destinationZipcode, $destinationCountry, $weight, $weight_unit);
-	} 
+    function getRates(XLite_Model_Order $order) 
+    {
+        include_once LC_MODULES_DIR . 'AustraliaPost' . LC_DS . 'encoded.php';
+        return Shipping_aupost_getRates($this,$order);
+    }
+    
+    function queryRates($options, $originalZipcode, $destinationZipcode, $destinationCountry, $weight, $weight_unit=null) 
+    {
+        include_once LC_MODULES_DIR . 'AustraliaPost' . LC_DS . 'encoded.php';
+        return Shipping_aupost_queryRates($this, $options, $originalZipcode, $destinationZipcode, $destinationCountry, $weight, $weight_unit);
+    }
 
-	function parseResponse($rates_data, $destination) 
-	{
-		include_once LC_MODULES_DIR . 'AustraliaPost' . LC_DS . 'encoded.php';
-		return Shipping_aupost_parseResponse($this, $rates_data, $destination);
+    function parseResponse($rates_data, $destination) 
+    {
+        include_once LC_MODULES_DIR . 'AustraliaPost' . LC_DS . 'encoded.php';
+        return Shipping_aupost_parseResponse($this, $rates_data, $destination);
 
-	}  
+    }
 
     function get($property)
-	{
-		if ($property == "name" && isset($this->shipping_time)) {
-			return parent::get("$property") . " (" . $this->shipping_time . " day" . (($this->shipping_time > 1) ? "s" : "") . ")";
-		} else {
-			return parent::get($property);
-		}
-	}
+    {
+        if ($property == "name" && isset($this->shipping_time)) {
+            return parent::get("$property") . " (" . $this->shipping_time . " day" . (($this->shipping_time > 1) ? "s" : "") . ")";
+        } else {
+            return parent::get($property);
+        }
+    }
 
     function _cacheResult($table, $fields, &$rates)
     {
@@ -145,4 +145,4 @@ class XLite_Module_AustraliaPost_Model_Shipping_Aupost extends XLite_Model_Shipp
 
     	return $result;
     }
-} 
+}

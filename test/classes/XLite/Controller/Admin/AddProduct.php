@@ -34,15 +34,15 @@
  * @since   3.0.0
  */
 class XLite_Controller_Admin_AddProduct extends XLite_Controller_Admin_Abstract
-{	
-    public $params = array("target", "mode", "product_id");	
+{
+    public $params = array("target", "mode", "product_id");
     public $product = null;
 
     function init()
     {
-		if (!(isset(XLite_Core_Request::getInstance()->product_id) && !isset(XLite_Core_Request::getInstance()->action) && isset(XLite_Core_Request::getInstance()->mode) && XLite_Core_Request::getInstance()->mode == "notification")) {
-			XLite_Core_Request::getInstance()->product_id = null;
-		}
+        if (!(isset(XLite_Core_Request::getInstance()->product_id) && !isset(XLite_Core_Request::getInstance()->action) && isset(XLite_Core_Request::getInstance()->mode) && XLite_Core_Request::getInstance()->mode == "notification")) {
+            XLite_Core_Request::getInstance()->product_id = null;
+        }
 
     	parent::init();
     }
@@ -86,7 +86,7 @@ class XLite_Controller_Admin_AddProduct extends XLite_Controller_Admin_Abstract
                     $found = $fv->find("field_id=$id AND product_id=".$product->get("product_id"));
                     $fv->set("value", $value);
                     if ($found) {
-                        $fv->update(); 
+                        $fv->update();
                     } else {
                         $fv->set("field_id", $id);
                         $fv->set("product_id", $product->get("product_id"));
@@ -108,7 +108,7 @@ class XLite_Controller_Admin_AddProduct extends XLite_Controller_Admin_Abstract
         	$this->set("thumbnail_read_only", true);
         }
 
-        $img = $this->getComplex('product.image'); 
+        $img = $this->getComplex('product.image');
         if ($img->handleRequest() != XLite_Model_Image::IMAGE_OK && $img->_shouldProcessUpload) {
         	$this->set("valid", false);
         	$this->set("image_read_only", true);

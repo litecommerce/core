@@ -36,11 +36,11 @@
  * @since   3.0.0
  */
 class XLite_Controller_Admin_Files extends XLite_Controller_Admin_Abstract
-{	
-    public $count = 0; //total files count;	
+{
+    public $count = 0; //total files count;
     public $action = "default";
     
-	// FIXME - check this function 
+    // FIXME - check this function 
     function handleRequest()
     {
         require_once LC_ROOT_DIR . 'lib' . LC_DS . 'Archive' . LC_DS . 'Tar.php';
@@ -62,18 +62,18 @@ class XLite_Controller_Admin_Files extends XLite_Controller_Admin_Abstract
         $tar = new Archive_Tar('STDOUT');
         $this->startDownload("backup.tar");
         $files = array();
-        if ($handle = opendir('.')) { 
-            while (false !== ($file = readdir($handle))) { 
+        if ($handle = opendir('.')) {
+            while (false !== ($file = readdir($handle))) {
                 if ($file{0} != "." && $file != "var") {
                     $files[] = $file;
                 }
             }
-        }    
-		if (isset(XLite_Core_Request::getInstance()->mode) && XLite_Core_Request::getInstance()->mode == "full") {
-			// backup database as well
-			$this->db->backup(SQL_DUMP_FILE, false);
-			$files[] = SQL_DUMP_FILE;
-		}
+        }
+        if (isset(XLite_Core_Request::getInstance()->mode) && XLite_Core_Request::getInstance()->mode == "full") {
+            // backup database as well
+            $this->db->backup(SQL_DUMP_FILE, false);
+            $files[] = SQL_DUMP_FILE;
+        }
         $tar->create($files);
         $tar->_close();
     }
@@ -101,31 +101,31 @@ class XLite_Controller_Admin_Files extends XLite_Controller_Admin_Abstract
                 @chmod($fn, get_filesystem_permissions(0777));
             } else {
                 @chmod($fn, get_filesystem_permissions(0666));
-            }    
+            }
         }
         print "OK";
         @unlink('skins.tar');
-		die();
+        die();
     }
     
-    function get_files($dir) { 
-        if ($handle = opendir($dir)) { 
-            while (false !== ($file = readdir($handle))) { 
+    function get_files($dir) {
+        if ($handle = opendir($dir)) {
+            while (false !== ($file = readdir($handle))) {
                 if ($file != "." && $file != "..") {
                     if ($dir == '.') {
                         $full_name = $file;
                     } else {
                         $full_name = $dir . "/" . $file;
-                    }       
+                    }
                     if (is_dir($full_name)) {
                         $this->get_files($full_name);
                     } else {
                         $this->count++;
-                        echo $full_name . "\r\n"; 
-                    }   
-                } 
+                        echo $full_name . "\r\n";
+                    }
+                }
             }
-            closedir($handle); 
+            closedir($handle);
         }
     }
 }

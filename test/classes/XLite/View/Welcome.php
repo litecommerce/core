@@ -58,7 +58,7 @@ class XLite_View_Welcome extends XLite_View_Abstract
     }
 
 
-	/**
+    /**
      * Check widget visibility 
      * 
      * @return bool

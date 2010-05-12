@@ -39,7 +39,7 @@ class XLite_Module_Affiliate_Model_Order extends XLite_Model_Order implements XL
     {
         $this->fields["partnerClick"] = 0;
         parent::__construct($id);
-    } 
+    }
     
     /**
     * handles partner click, if present
@@ -48,11 +48,11 @@ class XLite_Module_Affiliate_Model_Order extends XLite_Model_Order implements XL
     {
         parent::queued();
         $this->chargePartnerCommissions();
-    } 
+    }
 
-	function Affiliate_processed() 
-	{
-		if ($this->_oldStatus != 'Q') {
+    function Affiliate_processed() 
+    {
+        if ($this->_oldStatus != 'Q') {
             $this->chargePartnerCommissions();
         }
         if ($this->get("partnerClick") != 0) {
@@ -62,19 +62,19 @@ class XLite_Module_Affiliate_Model_Order extends XLite_Model_Order implements XL
                 $pp->notifyPartner();
             }
         }
-	} 
-	
+    }
+    
     protected function processed() 
     {
         parent::processed();
-		$this->Affiliate_processed();
-    } 
+        $this->Affiliate_processed();
+    }
 
     function storePartnerClick()
     {
         if ($this->get("partnerClick") == 0) { // first time order's placed 
 
-			$partnerClick = false;
+            $partnerClick = false;
 
             if ($this->session->isRegistered("PartnerClick")) {
                 $partnerClick = $this->session->get("PartnerClick");
@@ -103,7 +103,7 @@ class XLite_Module_Affiliate_Model_Order extends XLite_Model_Order implements XL
 
     function chargePartnerCommissions() 
     {
-		$this->storePartnerClick();
+        $this->storePartnerClick();
 
         if ($this->get("partnerClick") != 0) { // click found for this order
             // charge and save partner's commissions
@@ -115,7 +115,7 @@ class XLite_Module_Affiliate_Model_Order extends XLite_Model_Order implements XL
                 $pp->charge($this);
             }
         }
-    } 
+    }
 
     function delete() 
     {
@@ -125,5 +125,5 @@ class XLite_Module_Affiliate_Model_Order extends XLite_Model_Order implements XL
         foreach ($payments as $p) {
             $p->delete();
         }
-    } 
+    }
 }

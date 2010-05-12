@@ -35,7 +35,7 @@
  */
 class XLite_Module_DemoMode_Controller_Admin_Login extends XLite_Controller_Admin_Login
 implements XLite_Base_IDecorator
-{    
+{
     public $login = 'demo@litecommerce.com';
 
     public $password = 'master';

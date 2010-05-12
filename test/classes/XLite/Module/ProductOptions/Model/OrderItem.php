@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_ProductOptions_Model_OrderItem extends XLite_Model_OrderItem implements XLite_Base_IDecorator
-{    
+{
     public $options = array();
 
     /**
@@ -298,4 +298,4 @@ class XLite_Module_ProductOptions_Model_OrderItem extends XLite_Model_OrderItem 
 
         return $subweight;
     }
-} 
+}

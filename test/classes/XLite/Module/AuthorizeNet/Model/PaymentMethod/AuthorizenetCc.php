@@ -212,7 +212,7 @@ extends XLite_Model_PaymentMethod_CreditCardWebBased
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $processor = null;    
+    protected $processor = null;
  
     /**
      * Configuration template 
@@ -222,7 +222,7 @@ extends XLite_Model_PaymentMethod_CreditCardWebBased
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $configurationTemplate = 'modules/AuthorizeNet/config.tpl';    
+    public $configurationTemplate = 'modules/AuthorizeNet/config.tpl';
 
     /**
      * Processor name 
@@ -268,7 +268,7 @@ extends XLite_Model_PaymentMethod_CreditCardWebBased
         mt_srand();
         $sequence = mt_rand(1, 1000);
 
-        $tstamp = isset($params['offset']) ? intval($params['offset']) : 0; 
+        $tstamp = isset($params['offset']) ? intval($params['offset']) : 0;
         $tstamp = time() - $tstamp;
 
         $hash = $this->getHMAC(

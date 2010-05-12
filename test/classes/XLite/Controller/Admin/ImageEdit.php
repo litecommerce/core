@@ -42,10 +42,10 @@ class XLite_Controller_Admin_ImageEdit extends XLite_Controller_Admin_Abstract
     function getLocale() 
     {
         if (is_null($this->locale)) {
-            $this->locale = XLite::getInstance()->getOptions(array('skin_details', 'locale')); 
+            $this->locale = XLite::getInstance()->getOptions(array('skin_details', 'locale'));
         }
         return $this->locale;
-    } 
+    }
 
     function getZone()
     {

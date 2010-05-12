@@ -52,12 +52,12 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Order extends XLite_Control
     {
         // AOM
         if ($this->page == "order_edit" || $this->page == "order_preview") {
-		    if ($this->action != "save_changes") {
-				$this->xlite->set("dontStoreWholesale", true);
-			}
-		} else {
-			$this->xlite->set("useStoredWholesale", true);
-		}
+            if ($this->action != "save_changes") {
+                $this->xlite->set("dontStoreWholesale", true);
+            }
+        } else {
+            $this->xlite->set("useStoredWholesale", true);
+        }
         return parent::getOrder();
     }
 }

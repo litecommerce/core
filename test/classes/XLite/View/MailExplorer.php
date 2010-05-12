@@ -35,20 +35,20 @@
  * @since   3.0.0
  */
 class XLite_View_MailExplorer extends XLite_View_ColumnList
-{	
-	/**
-	 * locale 
-	 * 
-	 * @var    mixed
-	 * @access protected
-	 * @see    ____var_see____
-	 * @since  3.0.0
-	 */
-	protected $locale = null;
+{
+    /**
+     * locale 
+     * 
+     * @var    mixed
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $locale = null;
 
-    public $subject = "subject.tpl";	
-    public $body = "body.tpl";	
-    public $signature = "signature.tpl";	
+    public $subject = "subject.tpl";
+    public $body = "body.tpl";
+    public $signature = "signature.tpl";
     public $templates = array();
 
     /**
@@ -67,7 +67,7 @@ class XLite_View_MailExplorer extends XLite_View_ColumnList
     {
         if (is_null($this->locale)) {
             $this->locale = XLite::getInstance()->getOptions(array('skin_details', 'locale'));
-		}
+        }
 
         return $this->locale;
     }
@@ -83,35 +83,35 @@ class XLite_View_MailExplorer extends XLite_View_ColumnList
         if (!empty($this->templates)) {
             return $this->templates;
         }
-		
-		// search templates
+        
+        // search templates
         $path = $this->getPath();
-		$this->findMail($path);
+        $this->findMail($path);
 
         return $this->templates;
     }
 
     protected function findMail($path)
     {
-		if ($handle = @opendir($path)) {
+        if ($handle = @opendir($path)) {
 
-			while (false !== ($file = readdir($handle))) {
+            while (false !== ($file = readdir($handle))) {
 
                 if ('.' == $file{0}) {
                     continue;
-				}    
+                }
 
                 if (is_dir($path . '/' . $file) && file_exists($path . '/' . $file . '/' . $this->body)) {
                     $body = new XLite_Model_FileNode($path . '/' . $file . '/' . $this->body);
                     array_unshift($this->templates, new XLite_Model_FileNode($path . '/' . $file, $body->get('comment')));
-				}
+                }
 
                 if (is_dir($path . '/' . $file)) {
                     $this->findMail($path . '/' . $file);
                 }
-			}
+            }
 
-            closedir($handle); 
+            closedir($handle);
         }
     }
 }

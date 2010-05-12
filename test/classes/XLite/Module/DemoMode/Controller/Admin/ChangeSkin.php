@@ -35,56 +35,56 @@
  */
 class XLite_Module_DemoMode_Controller_Admin_ChangeSkin extends XLite_Controller_Admin_ChangeSkin implements XLite_Base_IDecorator
 {
-	function getCurrentSkin()
-	{
-		$skin_name = "";
-		switch ($this->session->get("customSkin")) {
-			case "1":
-				$skin_name = "3-columns modern";
-			break;
+    function getCurrentSkin()
+    {
+        $skin_name = "";
+        switch ($this->session->get("customSkin")) {
+            case "1":
+                $skin_name = "3-columns modern";
+            break;
 
-			case "2":
-				$skin_name = "2-columns classic";
-			break;
+            case "2":
+                $skin_name = "2-columns classic";
+            break;
 
-			case "3":
-				$skin_name = "3-columns classic";
-			break;
+            case "3":
+                $skin_name = "3-columns classic";
+            break;
 
-			default:
-				$skin_name = "2-columns modern";
-			break;
-		}
+            default:
+                $skin_name = "2-columns modern";
+            break;
+        }
 
-		return $skin_name;
-	}
+        return $skin_name;
+    }
 
-	function isDisplayWarning()
-	{
-		return false;
-	}
+    function isDisplayWarning()
+    {
+        return false;
+    }
 
-	function action_update()
-	{
-		switch ($this->layout) {
-			default:
-			case "2-columns_modern":
-				$skin_code = 0;
-			break;
+    function action_update()
+    {
+        switch ($this->layout) {
+            default:
+            case "2-columns_modern":
+                $skin_code = 0;
+            break;
 
-			case "3-columns_modern":
-				$skin_code = 1;
-			break;
+            case "3-columns_modern":
+                $skin_code = 1;
+            break;
 
-			case "2-columns_classic":
-				$skin_code = 2;
-			break;
+            case "2-columns_classic":
+                $skin_code = 2;
+            break;
 
-			case "3-columns_classic":
-				$skin_code = 3;
-			break;
-		}
+            case "3-columns_classic":
+                $skin_code = 3;
+            break;
+        }
 
-		$this->session->set("customSkin", $skin_code);
-	}
+        $this->session->set("customSkin", $skin_code);
+    }
 }

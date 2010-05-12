@@ -68,7 +68,7 @@ class XLite_Model_HTTPS extends XLite_Base
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $data = array();    
+    protected $data = array();
 
     /**
      * Request content type
@@ -78,7 +78,7 @@ class XLite_Model_HTTPS extends XLite_Base
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $conttype = 'application/x-www-form-urlencoded';    
+    protected $conttype = 'application/x-www-form-urlencoded';
 
     /**
      * PEM certificate file
@@ -88,7 +88,7 @@ class XLite_Model_HTTPS extends XLite_Base
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $cert = null;    
+    protected $cert = null;
 
     /**
      * SSL private key file
@@ -98,7 +98,7 @@ class XLite_Model_HTTPS extends XLite_Base
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $kcert = null;    
+    protected $kcert = null;
 
     /**
      * Force use SSL 3
@@ -158,7 +158,7 @@ class XLite_Model_HTTPS extends XLite_Base
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $response = null;    
+    protected $response = null;
 
     /**
      * Response error message
@@ -208,7 +208,7 @@ class XLite_Model_HTTPS extends XLite_Base
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $curlErrorCode = 0;    
+    protected $curlErrorCode = 0;
 
     /**
      * Urlencoded data or not
@@ -218,7 +218,7 @@ class XLite_Model_HTTPS extends XLite_Base
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $urlencoded = false;    
+    protected $urlencoded = false;
 
     /**
      * Request headers 
@@ -477,7 +477,7 @@ class XLite_Model_HTTPS extends XLite_Base
 
         if (self::HTTPS_SUCCESS == $result) {
             $this->error = '';
-        }    
+        }
 
         return $result;
     }
@@ -505,7 +505,7 @@ class XLite_Model_HTTPS extends XLite_Base
             }
             $result = join('&', $params);
 
-        } elseif ($this->urlencoded) { 
+        } elseif ($this->urlencoded) {
             $result = $this->data;
 
         } else {
@@ -912,7 +912,7 @@ class XLite_Model_HTTPS extends XLite_Base
         $url = new Net_URL2($this->url);
         if ($url->port == 80) {
             $url->port = 443;
-        }    
+        }
 
         $args = array(
             '-connect ' . $url->host . ':' . $url->port,

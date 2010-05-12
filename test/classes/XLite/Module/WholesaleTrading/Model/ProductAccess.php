@@ -39,9 +39,9 @@ class XLite_Module_WholesaleTrading_Model_ProductAccess extends XLite_Model_Abst
     * @var string $alias The product access database table alias.
     * @access public
     */	
-    public $alias = "product_access";	
+    public $alias = "product_access";
 
-    public $primaryKey = array("product_id");	
+    public $primaryKey = array("product_id");
     
     public $importError = "";
 
@@ -50,49 +50,49 @@ class XLite_Module_WholesaleTrading_Model_ProductAccess extends XLite_Model_Abst
     * @access private
     */	
     public $fields = array(
-			"product_id"		=> 0,
-			"show_group"		=> 'all',
-			"show_price_group"	=> 'all',
-			"sell_group"		=> 'all'
-        );	
-
-    public $importFields = array(
-			"NULL"				=> false,
-            "sku"       		=> false,
-			"product"           => false,
-            "show_group"		=> false,
-			"show_price_group"	=> false,
-			"sell_group"		=> false
+            "product_id"		=> 0,
+            "show_group"		=> 'all',
+            "show_price_group"	=> 'all',
+            "sell_group"		=> 'all'
         );
 
-	function groupInAccessList($group, $access, $expand_all=true)
-	{
-		// $group - membership level
-		// $access - show, show price, sell
-		$acc_list = explode(',', $this->get($access));
+    public $importFields = array(
+            "NULL"				=> false,
+            "sku"       		=> false,
+            "product"           => false,
+            "show_group"		=> false,
+            "show_price_group"	=> false,
+            "sell_group"		=> false
+        );
 
-		$result = false;
-		if (
-			true === $expand_all
-			&& (in_array("all", $acc_list) || ($this->auth->is("logged") && in_array("registered", $acc_list)))
-		) {
-			$result = true;
-	
-		} elseif($group != '') {
-			$result = in_array($group, $acc_list);
-		}
+    function groupInAccessList($group, $access, $expand_all=true)
+    {
+        // $group - membership level
+        // $access - show, show price, sell
+        $acc_list = explode(',', $this->get($access));
 
-		return $result;
-	}
-
-	function _export($layout, $delimiter) 
-	{
-		$data = array();
-		$values = $this->get("properties");
+        $result = false;
+        if (
+            true === $expand_all
+            && (in_array("all", $acc_list) || ($this->auth->is("logged") && in_array("registered", $acc_list)))
+        ) {
+            $result = true;
     
-		foreach ($layout as $field) {
+        } elseif($group != '') {
+            $result = in_array($group, $acc_list);
+        }
+
+        return $result;
+    }
+
+    function _export($layout, $delimiter) 
+    {
+        $data = array();
+        $values = $this->get("properties");
+    
+        foreach ($layout as $field) {
             if ($field == "NULL") {
-				$data[] = "";
+                $data[] = "";
             } elseif ($field == "product") {
                 $product = new XLite_Model_Product($values["product_id"]);
                 $data[] = $product->get("name");
@@ -100,11 +100,11 @@ class XLite_Module_WholesaleTrading_Model_ProductAccess extends XLite_Model_Abst
                 $product = new XLite_Model_Product($values["product_id"]);
                 $data[] = $product->get("sku");
             } elseif (isset($values[$field])) {
-				$data[] =  $this->_stripSpecials($values[$field]);
-			}
-		}
+                $data[] =  $this->_stripSpecials($values[$field]);
+            }
+        }
         return $data;
-	}  
+    }
 
     function _import(array $options) 
     {
@@ -123,8 +123,8 @@ class XLite_Module_WholesaleTrading_Model_ProductAccess extends XLite_Model_Abst
             $pa->set('show_price_group', $properties['show_price_group']);
             $pa->set('sell_group',       $properties['sell_group']);
             
-		    echo "<b>Importing CSV file line# $line_no: </b>";
-		    
+            echo "<b>Importing CSV file line# $line_no: </b>";
+            
             if ($found) {
             	echo "Update access for product ";
             	$pa->update();
@@ -133,11 +133,11 @@ class XLite_Module_WholesaleTrading_Model_ProductAccess extends XLite_Model_Abst
             	$pa->create();
         	}
         	echo  $product->get('name') . "<br>\n";
-		} else {
+        } else {
             $this->importError = "Product not found. CSV file line # $line_no";
             echo $this->importError;
-		}
-    }  
+        }
+    }
 
     function collectGarbage()
     {

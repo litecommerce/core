@@ -34,63 +34,63 @@
  * @since   3.0.0
  */
 class XLite_Module_SagePay_Model_PaymentMethod_SagepaydirectCc extends XLite_Model_PaymentMethod_CreditCard
-{	
-	public $configurationTemplate = "modules/SagePay/config.tpl";	
-    public $hasConfigurationForm = true;	
+{
+    public $configurationTemplate = "modules/SagePay/config.tpl";
+    public $hasConfigurationForm = true;
     public $processorName = "SagePay VSP Direct";
 
     function process($cart)
     {
-		require_once LC_MODULES_DIR . 'SagePay' . LC_DS . 'encoded.php';
-		return func_SagePayDirect_process($this, $cart);
+        require_once LC_MODULES_DIR . 'SagePay' . LC_DS . 'encoded.php';
+        return func_SagePayDirect_process($this, $cart);
     }
 
-	function prepareUrl($url)
-	{
-		return htmlspecialchars($url);
-	}
+    function prepareUrl($url)
+    {
+        return htmlspecialchars($url);
+    }
 
-	function getReturnUrl()  
-	{
-		$url = $this->xlite->getShopUrl("cart.php?target=sagepaydirect_checkout&action=return", $this->getComplex('config.Security.customer_security'));
-		return $this->prepareUrl($url);
-	}   
+    function getReturnUrl()  
+    {
+        $url = $this->xlite->getShopUrl("cart.php?target=sagepaydirect_checkout&action=return", $this->getComplex('config.Security.customer_security'));
+        return $this->prepareUrl($url);
+    }
 
-	function getServiceUrl($type="purchase", $is_simulator=false)
-	{
-		if ($is_simulator) {
-			switch ($type) {
-				case "callback":
+    function getServiceUrl($type="purchase", $is_simulator=false)
+    {
+        if ($is_simulator) {
+            switch ($type) {
+                case "callback":
                     return "https://test.sagepay.com:443/Simulator/VSPDirectCallback.asp";
-				case "refund":
+                case "refund":
                     return "https://test.sagepay.com:443/Simulator/VSPServerGateway.asp?Service=VendorRefundTx";
-				case "release":
+                case "release":
                     return "https://test.sagepay.com:443/Simulator/VSPServerGateway.asp?Service=VendorReleaseTx";
-				case "repeat":
+                case "repeat":
                     return "https://test.sagepay.com:443/Simulator/VSPServerGateway.asp?Service=VendorRepeatTx";
-				 case "purchase":
-				 default:
+                 case "purchase":
+                 default:
                      return "https://test.sagepay.com:443/Simulator/VSPDirectGateway.asp";
-			}
-		}
+            }
+        }
 
-		$subtag = (($this->getComplex('params.testmode') == "N") ? "live" : "test");
-		switch ($type) {
-			case "callback":
+        $subtag = (($this->getComplex('params.testmode') == "N") ? "live" : "test");
+        switch ($type) {
+            case "callback":
                 return "https://$subtag.sagepay.com:443/gateway/service/direct3dcallback.vsp";
-			case "refund":
+            case "refund":
                 return "https://$subtag.sagepay.com:443/gateway/service/refund.vsp";
-			case "release":
+            case "release":
                 return "https://$subtag.sagepay.com:443/gateway/service/release.vsp";
-			case "repeat":
+            case "repeat":
                 return "https://$subtag.sagepay.com:443/gateway/service/repeat.vsp";
-			case "purchase":
-			default:
+            case "purchase":
+            default:
                 return "https://$subtag.sagepay.com:443/gateway/service/vspdirect-register.vsp";
-		}
-	}
+        }
+    }
 
-	function getOrderStatus($type, $default = 'Q')
+    function getOrderStatus($type, $default = 'Q')
     {
         $param  = 'status_' . $type;
         $params = $this->get('params');
@@ -99,59 +99,59 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepaydirectCc extends XLite_Mod
                     $params['sub' . $param] : (isset($params[$param]) ? $params[$param] : $default);
     }
 
-	function getOrderAuthStatus() 
-	{
-		return $this->getOrderStatus('auth');
-	} 
+    function getOrderAuthStatus() 
+    {
+        return $this->getOrderStatus('auth');
+    }
 
-	function getOrderRejectStatus() 
-	{
-		return $this->getOrderStatus('reject', 'F');
-	} 
+    function getOrderRejectStatus() 
+    {
+        return $this->getOrderStatus('reject', 'F');
+    }
 
-	function getOrderSuccessNo3dStatus() 
-	{
-		return $this->getOrderStatus('success_no3d', 'P');
-	} 
+    function getOrderSuccessNo3dStatus() 
+    {
+        return $this->getOrderStatus('success_no3d', 'P');
+    }
 
-	function getOrderSuccess3dOkStatus() 
-	{
-		return $this->getOrderStatus('success_3dok', 'P');
-	} 
+    function getOrderSuccess3dOkStatus() 
+    {
+        return $this->getOrderStatus('success_3dok', 'P');
+    }
 
-	function getOrderSuccess3dFailStatus() 
-	{
-		return $this->getOrderStatus('success_3dfail');
-	} 
+    function getOrderSuccess3dFailStatus() 
+    {
+        return $this->getOrderStatus('success_3dfail');
+    }
 
-	function handleConfigRequest() 
-	{
-		$params = $_POST["params"];
+    function handleConfigRequest() 
+    {
+        $params = $_POST["params"];
 
-		$statuses = array("auth", "reject", "success_no3d", "success_3dok", "success_3dfail");
-		foreach ($statuses as $name) {
-			$field = "status_" . $name;
-			$result = $params[$field];
-			if ($this->xlite->AOMEnabled) {
-				$status = new XLite_Module_AOM_Model_OrderStatus();
-				if ($status->find("status='".$params[$field]."'")) {
-					if ($status->get("parent")) {
-						$params[$field] = $status->get("parent");
-						$result = $status->get("status");
-					}
-				}
-			}
-			$params["sub".$field] = $result;
-		}
+        $statuses = array("auth", "reject", "success_no3d", "success_3dok", "success_3dfail");
+        foreach ($statuses as $name) {
+            $field = "status_" . $name;
+            $result = $params[$field];
+            if ($this->xlite->AOMEnabled) {
+                $status = new XLite_Module_AOM_Model_OrderStatus();
+                if ($status->find("status='".$params[$field]."'")) {
+                    if ($status->get("parent")) {
+                        $params[$field] = $status->get("parent");
+                        $result = $status->get("status");
+                    }
+                }
+            }
+            $params["sub".$field] = $result;
+        }
 
-		$pm = XLite_Model_PaymentMethod::factory('sagepaydirect_cc');
-		$pm->set("params", $params);
-		$pm->update();
-	} 
+        $pm = XLite_Model_PaymentMethod::factory('sagepaydirect_cc');
+        $pm->set("params", $params);
+        $pm->update();
+    }
 
     function getCCDetails()
     {
-		$request = array();
+        $request = array();
 
         $request["CardHolder"] = $this->cc_info["cc_name"];
         $request["CardNumber"] = $this->cc_info["cc_number"];
@@ -180,11 +180,11 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepaydirectCc extends XLite_Mod
             break;
         }
 
-		return $request;
+        return $request;
     }
 
-	function getClientIP()
-	{
-		return $_SERVER["REMOTE_ADDR"];
-	}
+    function getClientIP()
+    {
+        return $_SERVER["REMOTE_ADDR"];
+    }
 }

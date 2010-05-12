@@ -34,19 +34,19 @@
  * @since   3.0.0
  */
 class XLite_Controller_Admin_UpdateInventory extends XLite_Controller_Admin_Abstract
-{	
-    public $params = array('target', 'page');	
-    public $pages = array('pricing' => 'Update pricing');	
-    public $pageTemplates = array('pricing' => 'product/update_inventory.tpl');	
-    public $page = "pricing";   
+{
+    public $params = array('target', 'page');
+    public $pages = array('pricing' => 'Update pricing');
+    public $pageTemplates = array('pricing' => 'product/update_inventory.tpl');
+    public $page = "pricing";
 
-	protected $inventory = null;                
+    protected $inventory = null;
 
     function handleRequest()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             @set_time_limit(0);
-        }            
+        }
         $handler = "handleRequest$this->page";
         method_exists($this, $handler) or die("undefined handler $handler");
         $this->$handler();
@@ -61,7 +61,7 @@ class XLite_Controller_Admin_UpdateInventory extends XLite_Controller_Admin_Abst
 
     function handleRequestPricing()
     {
-        $this->inventory = XLite_Model_ProductInventory::getInstance(); 
+        $this->inventory = XLite_Model_ProductInventory::getInstance();
     }
 
     function action_export()
@@ -106,16 +106,16 @@ class XLite_Controller_Admin_UpdateInventory extends XLite_Controller_Admin_Abst
         $options["delimiter"] = $this->delimiter;
         $options["text_qualifier"] = $this->text_qualifier;
         $options["layout"] = $this->inventory_layout;
-		$options["return_error"] = true;
+        $options["return_error"] = true;
         $this->inventory->import($options);
-		$this->importError = $this->inventory->importError;
+        $this->importError = $this->inventory->importError;
 
-		$text = "Import process failed.";
-		if (!$this->importError) $text = "Product pricing imported successfully.";
-		$text = $this->importError.'<br>'.$text.' <a href="admin.php?target=update_inventory"><u>Click here to return to admin interface</u></a><br><br>';
+        $text = "Import process failed.";
+        if (!$this->importError) $text = "Product pricing imported successfully.";
+        $text = $this->importError.'<br>'.$text.' <a href="admin.php?target=update_inventory"><u>Click here to return to admin interface</u></a><br><br>';
 
-		echo $text;
-		func_refresh_end();
-		exit();
+        echo $text;
+        func_refresh_end();
+        exit();
     }
 }

@@ -34,50 +34,50 @@
  * @since   3.0.0
  */
 class XLite_Module_AntiFraud_Controller_Admin_Order extends XLite_Controller_Admin_Order implements XLite_Base_IDecorator
-{	
-	public $order = null;	
-	public $country = null;
-	
-	function init() 
-	{
-		$this->params[] = "mode";
-		parent::init();
-	}
+{
+    public $order = null;
+    public $country = null;
+    
+    function init() 
+    {
+        $this->params[] = "mode";
+        parent::init();
+    }
 
-	function action_fraud_notify()
-	{
-		$post = array();
-		$post["mode"] = "add_ip";
-		$post["ip"]	= $this->getComplex('order.address');
-		$post["shop_host"] = func_parse_host(XLite::getInstance()->getOptions(array('host_details', 'http_host')));
-		$post["reason"] = strip_tags($this->get("fraud_comment"));
-		$post["service_key"] = $this->config->getComplex('AntiFraud.antifraud_license');
-		$request = new XLite_Model_HTTPS();
-        $request->data = $post; 
+    function action_fraud_notify()
+    {
+        $post = array();
+        $post["mode"] = "add_ip";
+        $post["ip"]	= $this->getComplex('order.address');
+        $post["shop_host"] = func_parse_host(XLite::getInstance()->getOptions(array('host_details', 'http_host')));
+        $post["reason"] = strip_tags($this->get("fraud_comment"));
+        $post["service_key"] = $this->config->getComplex('AntiFraud.antifraud_license');
+        $request = new XLite_Model_HTTPS();
+        $request->data = $post;
         $request->url = $this->config->getComplex('AntiFraud.antifraud_url')."/add_fraudulent_ip.php";
-		$request->request();
+        $request->request();
 
-		$request->response ? $this->set("mode","sent") : $this->set("mode","failed");
-	}
+        $request->response ? $this->set("mode","sent") : $this->set("mode","failed");
+    }
 
-	function getOrder()
-	{
-		if (is_null($this->order)) {
-			$this->order = new XLite_Model_Order($this->get("order_id"));
-		} 
-		return $this->order;
-	}	
+    function getOrder()
+    {
+        if (is_null($this->order)) {
+            $this->order = new XLite_Model_Order($this->get("order_id"));
+        }
+        return $this->order;
+    }
 
-	function compare($val1, $val2) 
-	{
-		return ($val1 >= $val2) ? 1 : 0; 	
-	}
-	
+    function compare($val1, $val2) 
+    {
+        return ($val1 >= $val2) ? 1 : 0;
+    }
+    
     function getCountry()
     {
         if (!is_null($this->country)) {
             return $this->country;
-        }   
+        }
 
         $order = $this->get("order");
         $this->country = new XLite_Model_Country($order->getComplex('profile.billing_country'));
@@ -85,10 +85,10 @@ class XLite_Module_AntiFraud_Controller_Admin_Order extends XLite_Controller_Adm
         return $this->country;
     }
 
-	function action_check_fraud() 
-	{
-		$order = $this->get("order");
-		$order->checkFraud();
-		$order->update();
-	}
+    function action_check_fraud() 
+    {
+        $order = $this->get("order");
+        $order->checkFraud();
+        $order->update();
+    }
 }

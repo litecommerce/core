@@ -34,8 +34,8 @@
 * @version $Id$
 */
 class XLite_Module_ProductAdviser_Controller_Customer_RecentlyViewed extends XLite_Controller_Customer_Abstract
-{	
-	/**
+{
+    /**
      * Get current location 
      * 
      * @return string 

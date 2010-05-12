@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLite_Controller_Customer_Abstract
-{    
+{
     /**
      * Controller parameters
      * 
@@ -43,7 +43,7 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $params = array('target', 'submode', 'substring');    
+    public $params = array('target', 'submode', 'substring');
 
     /**
      * Products list (cache)
@@ -53,7 +53,7 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $products = null;    
+    protected $products = null;
 
     /**
      * Search conditions
@@ -133,7 +133,7 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
     public function getProducts()
     {
         if (is_null($this->products)) {
-            $this->products = array(); 
+            $this->products = array();
 
             $properties = $this->getComplex('properties.search');
             if (is_null($properties)) {

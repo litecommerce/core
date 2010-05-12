@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_Affiliate_View_RichBanner extends XLite_View_Abstract
-{    
+{
     /**
      * Return widget default template
      *
@@ -78,6 +78,6 @@ EOT;
             $body = str_replace("\r", "", $body);
             $body = str_replace("\n", "", $body);
             print addslashes($body);
-        }    
+        }
     }
 }

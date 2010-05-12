@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Validator_ArrayFieldValidator extends XLite_Validator_Abstract
-{	
+{
     public $template = "common/required_validator.tpl";
 
     function isValid()
@@ -43,7 +43,7 @@ class XLite_Validator_ArrayFieldValidator extends XLite_Validator_Abstract
             return false;
         }
 
-		preg_match('/^(.+)\[(.+)\]$/',$this->get("field"),$field);
+        preg_match('/^(.+)\[(.+)\]$/',$this->get("field"),$field);
   	    $result = !isset($_POST["$field[1]"]["$field[2]"]) || (trim($_POST[$field[1]][$field[2]]) != "");
         return $result;
     }

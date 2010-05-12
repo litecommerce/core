@@ -53,7 +53,7 @@ class XLite_View_Date extends XLite_View_FormField
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $params = array();    
+    protected $params = array();
 
     /**
      * Lower year 
@@ -63,7 +63,7 @@ class XLite_View_Date extends XLite_View_FormField
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $lowerYear = 2000;    
+    protected $lowerYear = 2000;
 
     /**
      * Higher year
@@ -73,7 +73,7 @@ class XLite_View_Date extends XLite_View_FormField
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $higherYear = 2035;    
+    protected $higherYear = 2035;
 
 
     /**

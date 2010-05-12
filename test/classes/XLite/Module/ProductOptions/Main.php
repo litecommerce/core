@@ -69,7 +69,7 @@ class XLite_Module_ProductOptions_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'Support for product options, enabling you to provide customers with a choice of product variants';
-    }	
+    }
 
     /**
      * Determines if we need to show settings form link
@@ -94,6 +94,6 @@ class XLite_Module_ProductOptions_Main extends XLite_Module_Abstract
     {
         parent::init();
 
-		$this->xlite->set("ProductOptionsEnabled", true);
-	}
+        $this->xlite->set("ProductOptionsEnabled", true);
+    }
 }

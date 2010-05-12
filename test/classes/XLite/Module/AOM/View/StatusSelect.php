@@ -34,17 +34,17 @@
  * @since   3.0.0
  */
 class XLite_Module_AOM_View_StatusSelect extends XLite_View_StatusSelect implements XLite_Base_IDecorator
-{	
-    public $allOption 	= false;	 
-	public $statuses	= null;	
-	public $template	= "modules/AOM/common/select_status.tpl";
+{
+    public $allOption 	= false;
+    public $statuses	= null;
+    public $template	= "modules/AOM/common/select_status.tpl";
 
     function getStatuses()
     {
         if (is_null($this->statuses)) {
             $status = new XLite_Module_AOM_Model_OrderStatus();
             $this->statuses = $status->findAll();
-        }    
-		return $this->statuses;
-	}
+        }
+        return $this->statuses;
+    }
 }

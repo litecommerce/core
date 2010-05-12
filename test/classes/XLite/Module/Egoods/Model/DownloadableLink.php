@@ -34,82 +34,82 @@
  * @since   3.0.0
  */
 class XLite_Module_Egoods_Model_DownloadableLink extends XLite_Model_Abstract
-{	
-	public $alias = "downloadable_links";	
+{
+    public $alias = "downloadable_links";
 
-	public $primaryKey = array("access_key");	
-	public $defaultOrder = "file_id";	
+    public $primaryKey = array("access_key");
+    public $defaultOrder = "file_id";
 
-	public $fields = array(
-			"access_key"			=> '',
-			"file_id"				=> 0,
-			"available_downloads"	=> 9999,
-			"exp_time"				=> 0,
-			"expire_on"				=> 'T', // T - Time, D - downloads, B - time&downloads
-			"link_type"				=> 'M', // M - Manual, A - Automatic
-			);
+    public $fields = array(
+            "access_key"			=> '',
+            "file_id"				=> 0,
+            "available_downloads"	=> 9999,
+            "exp_time"				=> 0,
+            "expire_on"				=> 'T', // T - Time, D - downloads, B - time&downloads
+            "link_type"				=> 'M', // M - Manual, A - Automatic
+            );
 
-	function create()
-	{
-		if (is_null($this->get('access_key')) || $this->get('access_key') == '') {
-			$this->set('access_key', md5(microtime(true)));
-		}	
-		parent::create();
-	}
+    function create()
+    {
+        if (is_null($this->get('access_key')) || $this->get('access_key') == '') {
+            $this->set('access_key', md5(microtime(true)));
+        }
+        parent::create();
+    }
 
-	function printDate($mod1, $mod2, $mod3, $delim = '/')
-	{
-		return date( "$mod1$delim$mod2$delim$mod3", $this->get('exp_time'));
-	}
+    function printDate($mod1, $mod2, $mod3, $delim = '/')
+    {
+        return date( "$mod1$delim$mod2$delim$mod3", $this->get('exp_time'));
+    }
 
-	function isActive()
-	{
-		switch ($this->get('expire_on')) {
-			case 'T':
-				if (time() < $this->get('exp_time')) {
-					return true;
-				}	
-			break;
+    function isActive()
+    {
+        switch ($this->get('expire_on')) {
+            case 'T':
+                if (time() < $this->get('exp_time')) {
+                    return true;
+                }
+            break;
 
-			case 'D':
-				if ($this->get('available_downloads') > 0) {
-					return true;
-				}
-			break;
+            case 'D':
+                if ($this->get('available_downloads') > 0) {
+                    return true;
+                }
+            break;
 
-			case 'B':
-				if (time() < $this->get('exp_time') && $this->get('available_downloads') > 0) {
-					return true;
-				}
-			break;	
-		}
-		return false;
-	}
+            case 'B':
+                if (time() < $this->get('exp_time') && $this->get('available_downloads') > 0) {
+                    return true;
+                }
+            break;
+        }
+        return false;
+    }
 
-	function getDeniedReason()
-	{
-		switch ($this->get('expire_on')) {
-			case 'T':
-				if (time() >= $this->get('exp_time')) {
-					return 'T';
-				}	
-			break;
+    function getDeniedReason()
+    {
+        switch ($this->get('expire_on')) {
+            case 'T':
+                if (time() >= $this->get('exp_time')) {
+                    return 'T';
+                }
+            break;
 
-			case 'D':
-				if ($this->get('available_downloads') < 1) {
-					return 'D';
-				}
-			break;
+            case 'D':
+                if ($this->get('available_downloads') < 1) {
+                    return 'D';
+                }
+            break;
 
-			case 'B':
-				if (time() > $this->get('exp_time')) {
-					return 'T';
-				}
-				if ($this->get('available_downloads') < 1) {
-					return 'D';
-				}
-			break;	
-		}
-		return '';
-	}
+            case 'B':
+                if (time() > $this->get('exp_time')) {
+                    return 'T';
+                }
+                if ($this->get('available_downloads') < 1) {
+                    return 'D';
+                }
+            break;
+        }
+        return '';
+    }
 }

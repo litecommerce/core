@@ -38,8 +38,8 @@ define('STYLE', 2);
  * @since   3.0.0
  */
 class XLite_Model_CssEditor extends XLite_Base
-{	
-    public $cssFile;	
+{
+    public $cssFile;
     public $style = array();
 
     public function __construct($cssFile = null)
@@ -53,7 +53,7 @@ class XLite_Model_CssEditor extends XLite_Base
         $style = $this->get("style");
         if (isset($style["style"])) {
             $items = array_keys($style["style"]);
-        }    
+        }
         return $items;
     }
 
@@ -78,7 +78,7 @@ class XLite_Model_CssEditor extends XLite_Base
                 $this->style["comment"][] = $result["comment"];
                 $this->style["element"][] = $result["element"];
                 $this->style["style"][] = $result["style"];
-            }    
+            }
         }
     }
 
@@ -89,10 +89,10 @@ class XLite_Model_CssEditor extends XLite_Base
         for ($i = 0; $i < count($this->style["element"]); $i ++) {
             if (!empty($this->style["comment"][$i])) {
                 $style .= "/*\n" . $this->style["comment"][$i] ."\n*/\n";
-            }   
+            }
             $style .= $this->style["element"][$i] .
             " {\n\t" . $this->style["style"][$i] . "\n}\n\n";
-        }   
+        }
         // save CSS file
         $file = $this->get("cssFile");
         $fp = fopen($file, "wb") or die("Write failed for file $file".
@@ -118,7 +118,7 @@ class XLite_Model_CssEditor extends XLite_Base
             $comment = preg_replace("/\*\//s", "", $comment);
             $result["comment"] = $comment;
             $class = preg_replace("/\/\*(.*)\*\//s", "", $class);
-        }    
+        }
         preg_match("/([^\{]+)\{([^\}]+)/i", $class, $found);
         if (!isset($found[CLASS_NAME]) || !isset($found[STYLE])) {
             return null;
@@ -126,7 +126,7 @@ class XLite_Model_CssEditor extends XLite_Base
         $result["element"] = trim($found[CLASS_NAME]);
         $result["style"] = $this->removeSpaces(trim(strtr($found[STYLE], "\n", " ")));
         return $result;
-    }   
+    }
 
     function restoreDefault()
     {
@@ -135,15 +135,15 @@ class XLite_Model_CssEditor extends XLite_Base
         is_readable($orig) or die("$orig: file not found");
         if (is_writeable($file)) {
             unlink($file);
-        }	
+        }
         copyFile($orig, $file) or die("unable to copy $orig to $file");
     }
 
-	function removeSpaces($source)
-	{
-		while(preg_match("/  /", $source)) {
-			$source = preg_replace("/  /", " ", $source);
-		}
-		return $source;
-	}
+    function removeSpaces($source)
+    {
+        while(preg_match("/  /", $source)) {
+            $source = preg_replace("/  /", " ", $source);
+        }
+        return $source;
+    }
 }

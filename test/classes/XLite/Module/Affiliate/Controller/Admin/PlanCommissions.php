@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_Affiliate_Controller_Admin_PlanCommissions extends XLite_Controller_Admin_Abstract
-{	
+{
     public $params = array("target", "plan_id");
     
     function action_update_commission()
@@ -72,7 +72,7 @@ class XLite_Module_Affiliate_Controller_Admin_PlanCommissions extends XLite_Cont
     function action_basic_commission()
     {
         $pc = $this->get("basicCommission");
-        $pc->set("properties", $_POST);        
+        $pc->set("properties", $_POST);
         if ($this->foundBasicCommission) {
             $pc->update();
         } else {

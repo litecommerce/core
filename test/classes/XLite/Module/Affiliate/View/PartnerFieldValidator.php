@@ -34,14 +34,14 @@
  * @since   3.0.0
  */
 class XLite_Module_Affiliate_View_PartnerFieldValidator extends XLite_Validator_Abstract
-{	
+{
     public $template = "common/required_validator.tpl";
     
     function isVisible()
     {
         if (is_null($this->get("field_id"))) {
             return true;
-        }    
+        }
         foreach ($this->get("fields") as $pf) {
             if ($pf->get("field_id") == $this->get("field_id")) {
                 return $pf->get("required");
@@ -65,7 +65,7 @@ class XLite_Module_Affiliate_View_PartnerFieldValidator extends XLite_Validator_
                     return false;
                 }
             }
-        }    
+        }
         return true;
     }
 }

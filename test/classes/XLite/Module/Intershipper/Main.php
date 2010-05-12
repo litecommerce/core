@@ -69,7 +69,7 @@ class XLite_Module_Intershipper_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'Intershipper real-time shipping calculation';
-    }	
+    }
     /**
      * Determines if we need to show settings form link
      *
@@ -80,7 +80,7 @@ class XLite_Module_Intershipper_Main extends XLite_Module_Abstract
     public static function showSettingsForm()
     {
         return true;
-    }	
+    }
 
     /**
      * Return link to settings form

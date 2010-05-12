@@ -42,15 +42,15 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Users extends XLite_Control
     		// List All
     		$_REQUEST["membership"] = "all";
     	}
-		parent::init();
-		$this->params[] = "search";
+        parent::init();
+        $this->params[] = "search";
     }
 
     function getUsers()
     {
-		if ($this->membership == "all") {
-			$this->membership = "%"; // default is ALL
-		}
+        if ($this->membership == "all") {
+            $this->membership = "%"; // default is ALL
+        }
     	return parent::getUsers();
     }
 }

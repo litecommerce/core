@@ -34,37 +34,37 @@
  * @since   3.0.0
  */
 class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_Abstract
-{	
+{
     public $params = array("target", "mode", "submode", "returnUrl"); // mode ::= register | modify | success | delete	 
     public $mode = "register"; // default mode	
     public $submode = "warning"; // delete profile status: warning | confirmed | cancelled
 
-	/**
-	 * getCountriesStates 
-	 * 
-	 * @return array
-	 * @access public
-	 * @since  3.0.0
-	 */
-	public function getCountriesStates()
+    /**
+     * getCountriesStates 
+     * 
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getCountriesStates()
     {
-		$statesInfo = XLite_Model_Factory::create('XLite_Model_Country')->getCountryStatesListSchema('enabled = \'1\'');
+        $statesInfo = XLite_Model_Factory::create('XLite_Model_Country')->getCountryStatesListSchema('enabled = \'1\'');
 
-		foreach (XLite_Model_Factory::create('XLite_Model_State')->findAll() as $state) {
+        foreach (XLite_Model_Factory::create('XLite_Model_State')->findAll() as $state) {
 
-			$countryCode = $state->get('country_code');
+            $countryCode = $state->get('country_code');
 
-			if (isset($statesInfo[$countryCode])) {
-				$statesInfo[$countryCode]['number']++;
-				$statesInfo[$countryCode]['data'][$state->get('state_id')] = $state->get('state');
-			}
-		}
+            if (isset($statesInfo[$countryCode])) {
+                $statesInfo[$countryCode]['number']++;
+                $statesInfo[$countryCode]['data'][$state->get('state_id')] = $state->get('state');
+            }
+        }
 
-		return $statesInfo;
+        return $statesInfo;
     }
 
 
-	/**
+    /**
      * Common method to determine current location 
      * 
      * @return array
@@ -73,43 +73,43 @@ class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_Abstra
      */
     protected function getLocation()
     {
-		$location = parent::getLocation();
+        $location = parent::getLocation();
 
-		switch ($this->get('mode')) {
-			case 'login':
-				$location = 'Authentication';
-				break;
-			case 'modify':
-				$location = 'Modify profile';
+        switch ($this->get('mode')) {
+            case 'login':
+                $location = 'Authentication';
                 break;
-			case 'delete':
-				$location = 'Delete profile';
+            case 'modify':
+                $location = 'Modify profile';
                 break;
-			case 'register':
-			case 'success':
-				$location = 'New member';
+            case 'delete':
+                $location = 'Delete profile';
                 break;
-		}
+            case 'register':
+            case 'success':
+                $location = 'New member';
+                break;
+        }
 
-		return $location;
+        return $location;
     }
 
 
-	function fillForm()
-	{
-		parent::fillForm();
+    function fillForm()
+    {
+        parent::fillForm();
 
-		$login = $this->get("login");
-		if ( $this->get("mode") == "login" && empty($login) ) {
-			$this->set("login", $this->auth->remindLogin());
-		}
-	}
+        $login = $this->get("login");
+        if ( $this->get("mode") == "login" && empty($login) ) {
+            $this->set("login", $this->auth->remindLogin());
+        }
+    }
 
     function _initAuthProfile()
     {
         if (isset($this->profileForm) && !is_null($this->auth->get("profile"))) {
             $this->profileForm->profile = $this->auth->get("profile");
-			$this->profileForm->fillForm();
+            $this->profileForm->fillForm();
         }
     }
 
@@ -117,21 +117,21 @@ class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_Abstra
     {
         parent::init();
 
-		if (isset($this->profileForm) && $this->profileForm->isFromCheckout()) {
+        if (isset($this->profileForm) && $this->profileForm->isFromCheckout()) {
 
             $cart = XLite_Model_Cart::getInstance();
-			$cart->isEmpty() ? $this->_initAuthProfile() : $this->profileForm->profile = $cart->get('profile');
+            $cart->isEmpty() ? $this->_initAuthProfile() : $this->profileForm->profile = $cart->get('profile');
 
-		} else {
+        } else {
 
-			$this->_initAuthProfile();
+            $this->_initAuthProfile();
         }
     }
     
     function handleRequest()
     {
         if (($this->get("mode") == "modify" || $this->get("mode") == "account") && !$this->auth->is("logged"))
-        {     
+        {
             // can't modify profile if not logged - create one
             $this->set("mode", "register");
             $this->redirect();
@@ -175,20 +175,20 @@ class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_Abstra
         $this->set("mode", $this->profileForm->get("mode"));
 
         if ($this->registerForm->is("valid")) {
-			$cart = XLite_Model_Cart::getInstance();
-			if (!$cart->isEmpty()) {
-				$cart->set("profile_id", $this->profileForm->profile->get("profile_id"));
-				$cart->setProfile($this->profileForm->profile);
-				$cart->update();
+            $cart = XLite_Model_Cart::getInstance();
+            if (!$cart->isEmpty()) {
+                $cart->set("profile_id", $this->profileForm->profile->get("profile_id"));
+                $cart->setProfile($this->profileForm->profile);
+                $cart->update();
         		$this->recalcCart();
-			}
-		}
+            }
+        }
     }
 
     function action_delete()
     {
         if ($this->auth->is("logged")) {
-			$this->profile = $this->auth->get("profile");
+            $this->profile = $this->auth->get("profile");
             if ($this->profile->isAdmin()) {
                 $this->set("mode", "delete");
                 $this->set("submode", "cancelled");

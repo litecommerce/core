@@ -35,11 +35,11 @@
  * @since      3.0.0
  */
 class XLite_View_Tabber extends XLite_View_Abstract
-{	
+{
     /*
      * Widget parameters names
      */
-	const PARAM_BODY      = 'body';
+    const PARAM_BODY      = 'body';
     const PARAM_SWITCH    = 'switch';
     const PARAM_TAB_PAGES = 'tabPages';
 
@@ -77,12 +77,12 @@ class XLite_View_Tabber extends XLite_View_Abstract
     {
         parent::defineWidgetParams();
 
-		$this->widgetParams += array(
-			self::PARAM_BODY      => new XLite_Model_WidgetParam_String('Body template file', '', false),
+        $this->widgetParams += array(
+            self::PARAM_BODY      => new XLite_Model_WidgetParam_String('Body template file', '', false),
             self::PARAM_SWITCH    => new XLite_Model_WidgetParam_String('Switch', 'page', false),
             self::PARAM_TAB_PAGES => new XLite_Model_WidgetParam_String('Name of function that returns tab pages', 'getTabPages', false)
 
-		);
+        );
     }
 
     /**
@@ -108,7 +108,7 @@ class XLite_View_Tabber extends XLite_View_Abstract
                 $pageURL = preg_replace("/".$switch."=(\w+)/", $switch."=".$page, $url);
                 $p->set("url", $pageURL);
                 $p->set("title", $title);
-                $page_switch = sprintf("$switch=$page"); 
+                $page_switch = sprintf("$switch=$page");
                 $p->set("selected", (preg_match("/" . preg_quote($page_switch) . "(\Z|&)/Ss", $url)));
                 $pages[] = $p;
             }
@@ -134,11 +134,11 @@ class XLite_View_Tabber extends XLite_View_Abstract
      */
     protected function getSplittedPages($splitParameter = 0)
     {
-		$pages = $this->getTabberPages();
+        $pages = $this->getTabberPages();
         $pagesTitlesTotalLength = 0;
 
     	foreach($pages as $page) {
-			$pagesTitlesTotalLength += strlen($page->title);
+            $pagesTitlesTotalLength += strlen($page->title);
     	}
 
         // Split pages array into {$splitParameter} arrays
@@ -184,7 +184,7 @@ class XLite_View_Tabber extends XLite_View_Abstract
 
         foreach($this->tabPagesInfo as $page_idx => $pagesInfo) {
 
-    		$this->tabPagesInfo[$page_idx]["titlesLengthMax"] = $pagesTitlesLengthMax; 
+    		$this->tabPagesInfo[$page_idx]["titlesLengthMax"] = $pagesTitlesLengthMax;
             $this->tabPagesInfo[$page_idx]["titlesFullness"] = ceil($this->tabPagesInfo[$page_idx]["titlesLength"] * 100 / $this->tabPagesInfo[$page_idx]["titlesLengthMax"]);
 
     	}
@@ -211,4 +211,4 @@ class XLite_View_Tabber extends XLite_View_Abstract
 
     	return ($this->tabPagesInfo[$page_idx]["titlesFullness"] > $widthPercents) ? true : false;
     }
-} 
+}

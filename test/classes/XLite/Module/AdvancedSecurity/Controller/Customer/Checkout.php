@@ -38,21 +38,21 @@ class XLite_Module_AdvancedSecurity_Controller_Customer_Checkout extends XLite_C
     
     function getPaymentMethods()
     {
-		$methods = parent::getPaymentMethods();
+        $methods = parent::getPaymentMethods();
 
-		$gpg = new XLite_Module_AdvancedSecurity_Model_GPG();
-		if ($gpg->get("publicKey") && $gpg->get("secretKey"))
-			return $methods;
+        $gpg = new XLite_Module_AdvancedSecurity_Model_GPG();
+        if ($gpg->get("publicKey") && $gpg->get("secretKey"))
+            return $methods;
 
-		$values = array();
-		foreach ($methods as $method) {
-			if ($method->get("payment_method") == "CreditCard")
-				continue;
+        $values = array();
+        foreach ($methods as $method) {
+            if ($method->get("payment_method") == "CreditCard")
+                continue;
 
-			$values[] = $method;
-		}
+            $values[] = $method;
+        }
 
-		return $values;
+        return $values;
     }
 
 }

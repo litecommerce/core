@@ -35,43 +35,43 @@
  */
 class XLite_Module_GoogleCheckout_Model_OrderItem extends XLite_Model_OrderItem implements XLite_Base_IDecorator
 {
-	function getGoogleCheckoutCurrency()
-	{
-		return $this->xlite->get("gcheckout_currency");
-	}
+    function getGoogleCheckoutCurrency()
+    {
+        return $this->xlite->get("gcheckout_currency");
+    }
 
-	function getGoogleCheckoutXML()
-	{
-		$name = $this->get("name");
-		$descr = $this->get("brief_description");
+    function getGoogleCheckoutXML()
+    {
+        $name = $this->get("name");
+        $descr = $this->get("brief_description");
 
-		// Product options
-		if ($this->xlite->get("ProductOptionsEnabled") && $this->hasOptions()) {
-			$options = (array)$this->get("productOptions");
+        // Product options
+        if ($this->xlite->get("ProductOptionsEnabled") && $this->hasOptions()) {
+            $options = (array)$this->get("productOptions");
 
-			$opt_short = array();
-			$opt_long = array();
-			foreach ($options as $option) {
-				$opt_short[] = $option->option;
-				$opt_long[] = $option->class.": ".$option->option;
-			}
+            $opt_short = array();
+            $opt_long = array();
+            foreach ($options as $option) {
+                $opt_short[] = $option->option;
+                $opt_long[] = $option->class.": ".$option->option;
+            }
 
-			if (is_array($opt_long) && count($opt_long) > 0) {
-				$descr = "(".implode("; ", $opt_long).") ".$descr;
-			}
-		}
+            if (is_array($opt_long) && count($opt_long) > 0) {
+                $descr = "(".implode("; ", $opt_long).") ".$descr;
+            }
+        }
 
-		$itemNname = $this->GoogleCheckout_encode_string($name);
-		$itemDescription = $this->GoogleCheckout_encode_string($descr);
-		if (strlen($itemDescription) == 0) {
-			$itemDescription = $this->GoogleCheckout_encode_string($this->get("description"));
-		}
-		$unitPrice = sprintf("%.02f", doubleval($this->get("price")));
-		$quantity = $this->get("amount");
-		$currency = $this->getGoogleCheckoutCurrency();
+        $itemNname = $this->GoogleCheckout_encode_string($name);
+        $itemDescription = $this->GoogleCheckout_encode_string($descr);
+        if (strlen($itemDescription) == 0) {
+            $itemDescription = $this->GoogleCheckout_encode_string($this->get("description"));
+        }
+        $unitPrice = sprintf("%.02f", doubleval($this->get("price")));
+        $quantity = $this->get("amount");
+        $currency = $this->getGoogleCheckoutCurrency();
         $itemSKU = $this->GoogleCheckout_encode_string($this->get("sku"));
 
-		return <<<EOT
+        return <<<EOT
                 <item>
                     <item-name>$itemNname</item-name>
                     <item-description>$itemDescription</item-description>
@@ -81,11 +81,11 @@ class XLite_Module_GoogleCheckout_Model_OrderItem extends XLite_Model_OrderItem 
                     <tax-table-selector>US Taxes</tax-table-selector>
                 </item>
 EOT;
-	}
+    }
 
-	function GoogleCheckout_encode_string($str)
-	{
-		require_once LC_MODULES_DIR . 'GoogleCheckout' . LC_DS . 'encoded.php';
-		return GoogleCheckout_encode_utf8_string($str);
-	}
+    function GoogleCheckout_encode_string($str)
+    {
+        require_once LC_MODULES_DIR . 'GoogleCheckout' . LC_DS . 'encoded.php';
+        return GoogleCheckout_encode_utf8_string($str);
+    }
 }

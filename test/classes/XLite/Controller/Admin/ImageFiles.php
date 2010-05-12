@@ -37,52 +37,52 @@ class XLite_Controller_Admin_ImageFiles extends XLite_Controller_Admin_Abstract
 {
     function getImagesDir()
     {
-		$images = $this->get("imageClasses");
-        return ($this->getComplex('xlite.config.Images.images_directory') != "") ? $this->getComplex('xlite.config.Images.images_directory') : XLite_Model_Image::IMAGES_DIR;        
+        $images = $this->get("imageClasses");
+        return ($this->getComplex('xlite.config.Images.images_directory') != "") ? $this->getComplex('xlite.config.Images.images_directory') : XLite_Model_Image::IMAGES_DIR;
     }
 
-	function action_move_to_filesystem($from = false)
-	{
+    function action_move_to_filesystem($from = false)
+    {
         $this->startDump();
-		$images = $this->get("imageClasses");
-		$imageClass = $images[XLite_Core_Request::getInstance()->index];
-		$n = $imageClass->getImage()->moveToFilesystem($from);
-		$m = $this->xlite->get("realyMovedImages");
+        $images = $this->get("imageClasses");
+        $imageClass = $images[XLite_Core_Request::getInstance()->index];
+        $n = $imageClass->getImage()->moveToFilesystem($from);
+        $m = $this->xlite->get("realyMovedImages");
 
-		echo "<br><b>$m image" . (($m != 1) ? "s":"") . " from $n image" . (($n != 1) ? "s":"") . " " . (($m != 1) ? "are":"is") . " moved.</b><br>";
-	}
+        echo "<br><b>$m image" . (($m != 1) ? "s":"") . " from $n image" . (($n != 1) ? "s":"") . " " . (($m != 1) ? "are":"is") . " moved.</b><br>";
+    }
 
-	function action_move_to_database()
-	{
-		$this->action_move_to_filesystem(true);
-	}
+    function action_move_to_database()
+    {
+        $this->action_move_to_filesystem(true);
+    }
 
-	function action_update_default_source()
-	{
-		$images = $this->get("imageClasses");
-		$imageClass = $images[XLite_Core_Request::getInstance()->index];
-		$imageClass->getImage()->setDefaultSource($this->get("default_source"));
-	}
+    function action_update_default_source()
+    {
+        $images = $this->get("imageClasses");
+        $imageClass = $images[XLite_Core_Request::getInstance()->index];
+        $imageClass->getImage()->setDefaultSource($this->get("default_source"));
+    }
 
     /**
     * Returns image types formatted as array of class Image
     * with an additional field $image->imageClass - a string which displays
     * the image class.
     */
-	function getImageClasses()
-	{
+    function getImageClasses()
+    {
         return XLite_Model_Image::getInstance()->get("imageClasses");
-	}
-	
-	function getPageReturnUrl()
-	{
-		return array('<a href="'.$this->get("url").'"><u>Return to admin zone</u></a>');
-	}
+    }
+    
+    function getPageReturnUrl()
+    {
+        return array('<a href="'.$this->get("url").'"><u>Return to admin zone</u></a>');
+    }
 
     function action_update_images_dir()
     {
         $images_directory = $this->get("images_dir");
-		$images = $this->get("imageClasses");
+        $images = $this->get("imageClasses");
         $images_directory = ($images_directory != "") ? $images_directory : XLite_Model_Image::IMAGES_DIR;
 
         $cfg = new XLite_Model_Config();

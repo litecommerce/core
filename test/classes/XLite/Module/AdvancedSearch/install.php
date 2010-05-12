@@ -34,9 +34,9 @@ if (!function_exists("file_get_contents"))
 
 if (!function_exists("start_patching"))
 {
-	function start_patching($title)
-	{
-	?>
+    function start_patching($title)
+    {
+    ?>
 </PRE>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
@@ -58,69 +58,69 @@ PRE {FONT-FAMILY: Courier, "Courier New"; COLOR: #000000; FONT-SIZE: 12px;}
 <TD nowrap><B>&nbsp;&nbsp;Modifying templates ...&nbsp;</TD>
 <TD nowrap><B>&nbsp;&nbsp;Status&nbsp;</TD>
 </TR>
-	<?php
-		global $patching_table_row;
-		$patching_table_row = 0;
-	}
+    <?php
+        global $patching_table_row;
+        $patching_table_row = 0;
+    }
 }
 
 if (!function_exists("end_patching"))
 {
-	function end_patching()
-	{
-	?>
+    function end_patching()
+    {
+    ?>
 </TABLE>
 <P>
 </BODY>
 </HTML>
 <PRE>
 <?php
-	}
+    }
 }
 
 if (!function_exists("is_template_patched"))
 {
-	function is_template_patched($location, $check_str)
-	{
+    function is_template_patched($location, $check_str)
+    {
         $src = @file_get_contents($location);
         return (strpos($src, $check_str) === false) ? false : true;
-	}
+    }
 }
 
 if (!function_exists("already_patched"))
 {
-	function already_patched($location)
-	{
-		global $patching_table_row;
-	    echo "<TR class=\"" . (($patching_table_row) ? "Middle" : "Center") . "\"><TD nowrap>&nbsp;$location&nbsp;</TD><TD nowrap>&nbsp;";
-		echo "<FONT COLOR=\"blue\"><B>already patched</B></FONT>";
-	    echo "&nbsp;</TD></TR>\n";
-	    $patching_table_row = ($patching_table_row) ? 0 : 1;
-	}
-} 
+    function already_patched($location)
+    {
+        global $patching_table_row;
+        echo "<TR class=\"" . (($patching_table_row) ? "Middle" : "Center") . "\"><TD nowrap>&nbsp;$location&nbsp;</TD><TD nowrap>&nbsp;";
+        echo "<FONT COLOR=\"blue\"><B>already patched</B></FONT>";
+        echo "&nbsp;</TD></TR>\n";
+        $patching_table_row = ($patching_table_row) ? 0 : 1;
+    }
+}
 
 if (!function_exists("patch_template"))
 {
-	function patch_template($location, $check_str=null, $find_str=null, $replace_str=null, $add_str=null)
-	{
-		global $patching_table_row;
-	    echo "<TR class=\"" . (($patching_table_row) ? "Middle" : "Center") . "\"><TD nowrap>&nbsp;$location&nbsp;</TD></TD><TD nowrap>&nbsp;";
+    function patch_template($location, $check_str=null, $find_str=null, $replace_str=null, $add_str=null)
+    {
+        global $patching_table_row;
+        echo "<TR class=\"" . (($patching_table_row) ? "Middle" : "Center") . "\"><TD nowrap>&nbsp;$location&nbsp;</TD></TD><TD nowrap>&nbsp;";
 
-		$src = @file_get_contents($location);
-		$src = preg_replace("/\r\n/m","\n", $src);
-	    if (!isset($check_str) || strpos($src, $check_str) === false) 
-	    {
-	    	$replace_message = "";
-	    	if (isset($find_str) && isset($replace_str))
+        $src = @file_get_contents($location);
+        $src = preg_replace("/\r\n/m","\n", $src);
+        if (!isset($check_str) || strpos($src, $check_str) === false) 
+        {
+        	$replace_message = "";
+        	if (isset($find_str) && isset($replace_str))
     		{
     			$old_src = $src;
-				$src = str_replace($find_str, $replace_str, $src);
-				if (strcmp($old_src, $src) == 0)
-				{
-					$replace_message = "<FONT COLOR=red><B>&nbsp;(replace failed)&nbsp;</B></FONT>";
-				}
+                $src = str_replace($find_str, $replace_str, $src);
+                if (strcmp($old_src, $src) == 0)
+                {
+                    $replace_message = "<FONT COLOR=red><B>&nbsp;(replace failed)&nbsp;</B></FONT>";
+                }
     		}
-		
+        
        	 	if (isset($add_str))
        	 	{
        	 		$src .= $add_str;
@@ -128,47 +128,47 @@ if (!function_exists("patch_template"))
     	
        	 	file_put_contents($location, $src);
        	 	echo "<FONT COLOR=green><B>success</B></FONT>$replace_message";
-       	} 
+       	}
        	else 
        	{
        		echo "<FONT COLOR=\"blue\"><B>already patched</B></FONT>";
     	}
        	echo "&nbsp;</TD></TR>\n";
-		$patching_table_row = ($patching_table_row) ? 0 : 1;
-	}
+        $patching_table_row = ($patching_table_row) ? 0 : 1;
+    }
 }
 
 if (!function_exists("copy_schema_template"))
 {
-	function copy_schema_template($template, $schema, $module, $zone = "default", $locale = "en")
-	{
-		global $patching_table_row;
-		if (empty($schema) || in_array($schema, array("3-columns_classic", "3-columns_modern", "2-columns_classic", "2-columns_modern"))) $schema = "standard";
+    function copy_schema_template($template, $schema, $module, $zone = "default", $locale = "en")
+    {
+        global $patching_table_row;
+        if (empty($schema) || in_array($schema, array("3-columns_classic", "3-columns_modern", "2-columns_classic", "2-columns_modern"))) $schema = "standard";
 
-	    echo "<TR class=\"" . (($patching_table_row) ? "Middle" : "Center") . "\"><TD nowrap>&nbsp;Replacing&nbsp;$template&nbsp;for&nbsp;<b>$schema</b>&nbsp;skin</TD><TD nowrap>&nbsp;";
-	    $patching_table_row = ($patching_table_row) ? 0 : 1;
+        echo "<TR class=\"" . (($patching_table_row) ? "Middle" : "Center") . "\"><TD nowrap>&nbsp;Replacing&nbsp;$template&nbsp;for&nbsp;<b>$schema</b>&nbsp;skin</TD><TD nowrap>&nbsp;";
+        $patching_table_row = ($patching_table_row) ? 0 : 1;
 
-		$from = "skins/$zone/$locale/modules/$module/schemas/templates/$schema/$zone/$locale/modules/$module/$template";
-		$to = "skins/$zone/$locale/modules/$module/$template";
+        $from = "skins/$zone/$locale/modules/$module/schemas/templates/$schema/$zone/$locale/modules/$module/$template";
+        $to = "skins/$zone/$locale/modules/$module/$template";
 
-		if (file_exists($from)) {
-			if (@copy($from, $to)) {
-				echo "<FONT COLOR=\"green\"><B>success</B></FONT>";
-			} else {
-				echo "<FONT COLOR=\"red\"><B>failed</B></FONT>";
-			}
-		} else {
-			echo "<FONT COLOR=\"blue\"><B>skipped</B></FONT>";
-		}
-	    echo "&nbsp;</TD></TR>\n";
-	}
+        if (file_exists($from)) {
+            if (@copy($from, $to)) {
+                echo "<FONT COLOR=\"green\"><B>success</B></FONT>";
+            } else {
+                echo "<FONT COLOR=\"red\"><B>failed</B></FONT>";
+            }
+        } else {
+            echo "<FONT COLOR=\"blue\"><B>skipped</B></FONT>";
+        }
+        echo "&nbsp;</TD></TR>\n";
+    }
 }
 
 $MODULE_NAME = "AdvancedSearch";
 start_patching($MODULE_NAME);
 
 if (is_object($this)) {
-	$schema = (!empty($this->layout))?$this->layout:($this->xlite->getComplex('config.Skin.skin'));
+    $schema = (!empty($this->layout))?$this->layout:($this->xlite->getComplex('config.Skin.skin'));
 }
 
 //////////////////////////////////////
@@ -187,18 +187,18 @@ $location = "skins/default/en/main.tpl";
 
 if (!is_template_patched($location, "AdvancedSearch"))
 {
-	if (is_template_patched($location,"<!-- [tabs] }}} -->")) {
-		$find_str = <<<EOT
+    if (is_template_patched($location,"<!-- [tabs] }}} -->")) {
+        $find_str = <<<EOT
 <!-- [/modules] }}} -->
 EOT;
-		$replace_str = <<<EOT
+        $replace_str = <<<EOT
 <widget module="AdvancedSearch" mode="" target="advanced_search" head="Search for products" template="common/dialog.tpl" body="modules/AdvancedSearch/advanced_search.tpl">
 <widget module="AdvancedSearch" target="advanced_search" mode="found" template="common/dialog.tpl" body="search_result.tpl" head="Search Result">
 <!-- [/modules] }}} -->
 EOT;
-		patch_template($location, null, $find_str, $replace_str);
-	} else {
-		$find_str = <<<EOT
+        patch_template($location, null, $find_str, $replace_str);
+    } else {
+        $find_str = <<<EOT
 <widget template="location.tpl" name="locationWidget">
 EOT;
     	$replace_str = <<<EOT
@@ -207,7 +207,7 @@ EOT;
 <widget module="AdvancedSearch" target="advanced_search" mode="found" template="common/dialog.tpl" body="search_result.tpl" head="Search Result">
 EOT;
     	patch_template($location, null, $find_str, $replace_str);
-	}
+    }
 }
 else
 {
@@ -218,7 +218,7 @@ $location = "skins/default/en/search_products.tpl";
 
 if (!is_template_patched($location, "AdvancedSearchEnabled"))
 {
-	if (is_template_patched("skins/default/en/main.tpl", "<!-- [tabs] }}} -->")) {
+    if (is_template_patched("skins/default/en/main.tpl", "<!-- [tabs] }}} -->")) {
     	$find_str = <<<EOT
 <TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0>
 EOT;
@@ -226,15 +226,15 @@ EOT;
 <TABLE IF="!xlite.AdvancedSearchEnabled" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 EOT;
     	patch_template($location, null, $find_str, $replace_str);
-	} else {
-		$find_str = <<<EOT
+    } else {
+        $find_str = <<<EOT
 <table border=0 cellpadding=0 cellspacing=0>
 EOT;
-		$replace_str = <<<EOT
+        $replace_str = <<<EOT
 <table if="!xlite.AdvancedSearchEnabled" border=0 cellpadding=0 cellspacing=0>
 EOT;
-		patch_template($location, null, $find_str, $replace_str);
-	}
+        patch_template($location, null, $find_str, $replace_str);
+    }
 
     if (is_template_patched("skins/default/en/main.tpl", "<!-- [tabs] }}} -->")) {
     	$find_str = <<<EOT
@@ -263,9 +263,9 @@ EOT;
     <TD background="images/rect_button_bg.gif"><A href="javascript:void(0);" onclick="javascript: document.search_form.submit();" title="Search"><FONT class="FormButton">Go</FONT></A></TD>
     <TD><IMG SRC="images/rect_button_2.gif" WIDTH=11 HEIGHT=18 BORDER="0"></TD>
     </TR>
-	</TABLE>
-	<!-- [/button] -->
-	</td>
+    </TABLE>
+    <!-- [/button] -->
+    </td>
     <td>
         &nbsp;&nbsp;<img src="images/modules/AdvancedSearch/plus_advanced.gif">&nbsp;<a href="cart.php?target=advanced_search" title="Advanced Search" style="TEXT-DECORATION: underline; font-size : 9px">Advanced</a></td>
     </td>
@@ -275,7 +275,7 @@ EOT;
 </TABLE>
 EOT;
     	patch_template($location, null, $find_str, $replace_str);
-	} else {
+    } else {
     	$find_str = <<<EOT
 </form>
 </table>
@@ -316,7 +316,7 @@ EOT;
 </TABLE>
 EOT;
     	patch_template($location, null, $find_str, $replace_str);
-	}
+    }
 }
 else
 {
@@ -344,7 +344,7 @@ else
 $location = "skins/default/en/location.tpl";
 
 if (!is_template_patched($location, "AdvancedSearch"))
-{   
+{
     $find_str = <<<EOT
 <span IF="target=#search#">&nbsp;::&nbsp;Search Result</span>
 EOT;
@@ -353,7 +353,7 @@ EOT;
 <widget module="AdvancedSearch" template="modules/AdvancedSearch/location.tpl">
 EOT;
     patch_template($location, null, $find_str, $replace_str);
-}   
+}
 else
 {
     already_patched($location);
@@ -381,7 +381,7 @@ $location = "skins/default/en/search_result.tpl";
 
 if (!is_template_patched($location, "AdvancedSearchEnabled"))
 {
-	$find_str = <<<EOT
+    $find_str = <<<EOT
 <span IF="!products">
 No products found on your query. Please try to re-formulate the query.
 </span>

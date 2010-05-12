@@ -35,7 +35,7 @@
  */
 class XLite_Model_WidgetParam_File extends XLite_Model_WidgetParam_Abstract
 {
-	/**
+    /**
      * Param type
      *
      * @var    string

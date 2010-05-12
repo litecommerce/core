@@ -34,40 +34,40 @@
  * @since   3.0.0
  */
 class XLite_Module_Promotion_Controller_Customer_Cart extends XLite_Controller_Customer_Cart implements XLite_Base_IDecorator
-{	
-	public $discountCouponResult = false;
+{
+    public $discountCouponResult = false;
 
-	function handleRequest()
-	{
-		$discountCoupon = $this->cart->get("DC");
-		if ($discountCoupon)
-			if (!$discountCoupon->checkCondition($this->cart)) {
-				$dc = $this->cart->get("DC");
+    function handleRequest()
+    {
+        $discountCoupon = $this->cart->get("DC");
+        if ($discountCoupon)
+            if (!$discountCoupon->checkCondition($this->cart)) {
+                $dc = $this->cart->get("DC");
             	$this->session->set("couponFailed", $dc->get("coupon"));
-	            $this->cart->set("DC", null); // remove coupon
-	            $this->updateCart();
-				$this->redirect("cart.php?target=checkout&mode=couponFailed");
-	            return;
-			}
-		
+                $this->cart->set("DC", null); // remove coupon
+                $this->updateCart();
+                $this->redirect("cart.php?target=checkout&mode=couponFailed");
+                return;
+            }
+        
         if ($this->get("target") == 'cart') {
-		    $this->session->set("bonusListDisplayed", null);
+            $this->session->set("bonusListDisplayed", null);
         }
-		parent::handleRequest();
-	}
-	
+        parent::handleRequest();
+    }
+    
     function action_discount_coupon_delete()
-	{
-		$this->cart->set("DC", null);
+    {
+        $this->cart->set("DC", null);
         $this->updateCart();
-	}
-	
+    }
+    
     function action_discount_coupon()
     {
         $this->coupon = addSlashes(trim($this->coupon));
-		$this->discountCouponResult = $this->cart->validateDiscountCoupon($this->coupon);
-		$dc = new XLite_Module_Promotion_Model_DiscountCoupon();
-		$found = $dc->find("coupon='".$this->coupon."' AND order_id='0'");
+        $this->discountCouponResult = $this->cart->validateDiscountCoupon($this->coupon);
+        $dc = new XLite_Module_Promotion_Model_DiscountCoupon();
+        $found = $dc->find("coupon='".$this->coupon."' AND order_id='0'");
         if ($this->discountCouponResult||!$dc->checkCondition($this->cart)) {
             $this->valid = false;
             // show error message
@@ -83,10 +83,10 @@ class XLite_Module_Promotion_Controller_Customer_Cart extends XLite_Controller_C
             $this->doDie("Internal error: DC not found");
         }
     }
-	
-	function isShowDCForm()
-	{
-		return is_null($this->cart->get("DC")) && !$this->cart->is("empty") && $this->config->getComplex('Promotion.allowDC');
-	}
+    
+    function isShowDCForm()
+    {
+        return is_null($this->cart->get("DC")) && !$this->cart->is("empty") && $this->config->getComplex('Promotion.allowDC');
+    }
 
 }

@@ -211,7 +211,7 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_PaypalproExpress extends XLite_
                     'errorDescription',
                     'Description',
                     $this->getXMLResponseValue('base:Errors/base:LongMessage', $response)
-                );  
+                );
 
             } else {
 

@@ -35,7 +35,7 @@
  */
 class XLite_View_CheckoutStep_Pseudo_NoPayment extends XLite_View_CheckoutStep_Pseudo_Abstract
 {
-	/**
+    /**
      * Return title
      *
      * @return string

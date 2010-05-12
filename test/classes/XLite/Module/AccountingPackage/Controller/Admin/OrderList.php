@@ -34,9 +34,9 @@
  * @since   3.0.0
  */
 class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Controller_Admin_OrderList implements XLite_Base_IDecorator
-{	
-    public $delimiter  = "\t";	
-    public $crlf       = "\r\n";	
+{
+    public $delimiter  = "\t";
+    public $crlf       = "\r\n";
     public $dateParams = array(
             'startDateMonth',
             'startDateDay',
@@ -50,7 +50,7 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
     {
         parent::__construct($params);
         $this->params = array_merge($this->params, $this->dateParams);
-    } 
+    }
 
     function initView() 
     {
@@ -58,7 +58,7 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
         if ($this->get("mode") == "export_myob" || $this->get("mode") == "export_pt") {
             $this->setComplex("searchOrdersForm.visible", false);
         }
-    } 
+    }
     
     function updateConfig() 
     {
@@ -77,7 +77,7 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
                 }
             }
         }
-    } 
+    }
     
     function isQuickSearch()
     {
@@ -92,7 +92,7 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
     {
         require_once LC_MODULES_DIR . 'AccountingPackage' . LC_DS . 'encoded.php';
         AccountingPackage_export_qb($this);
-    } 
+    }
     
     function action_export_myob() 
     {
@@ -104,7 +104,7 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
             $this->updateConfig("income_account", "deposit_account");
             $this->export("myob");
         }
-    } 
+    }
 
     function action_export_pt() 
     {
@@ -116,7 +116,7 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
             $this->updateConfig("receivable_account", "sales_account", "cash_account");
             $this->export("pt");
         }
-    } 
+    }
     
     function addDistribution($order, $itemType = "item") 
     {
@@ -126,13 +126,13 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
         } else {
             $this->distributions[$orderID] = 1;
         }
-    } 
+    }
 
     function getTotalDistribution($order) 
     {
         $orderID = $order->get("order_id");
         return isset($this->distributions[$orderID]) ? $this->distributions[$orderID] : 0;
-    } 
+    }
     
     function getDateDue($date, $format = null) 
     {
@@ -140,7 +140,7 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
             $format = $this->getComplex('config.General.date_format');
         }
         return strftime($format, $date);
-    } 
+    }
 
     function getCurrentDistribution($order) 
     {
@@ -155,21 +155,21 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
             $lines[$orderID] = 1;
         }
         return $lines[$orderID];
-    } 
+    }
     
     function export($format) 
     {
-		$price_format = $this->config->getComplex('General.price_format');
+        $price_format = $this->config->getComplex('General.price_format');
         $this->config->setComplex("General.price_format", "%s");
         require_once LC_MODULES_DIR . 'AccountingPackage' . LC_DS . 'encoded.php';
         AccountingPackage_export($this, $format);
-		$this->config->setComplex("General.price_format", $price_format);
-    } 
+        $this->config->setComplex("General.price_format", $price_format);
+    }
 
     function found($order, $name) 
     {
         return !is_null($order->get($name)) && $order->get($name) > 0;
-    } 
+    }
 
     function getExportFormats() 
     {
@@ -178,7 +178,7 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
         $formats["export_myob"] = "MYOB Accounting 2005 (v14)";
         $formats["export_pt"] = "Peachtree Complete Accounting 2004";
         return $formats;
-    } 
+    }
 
     function CSVQuoting($string)
     {

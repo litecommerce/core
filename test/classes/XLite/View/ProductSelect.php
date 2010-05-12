@@ -40,7 +40,7 @@
  * @since   3.0.0
  */
 class XLite_View_ProductSelect extends XLite_View_Abstract
-{	
+{
     /*
      * Widget parameters names
      */
@@ -106,15 +106,15 @@ class XLite_View_ProductSelect extends XLite_View_Abstract
         return $this->getParam(self::PARAM_FORM_NAME) . $this->getParam(self::PARAM_FORM_FIELD);
     }
     
-	/**
-	 * getProduct 
-	 * 
-	 * @return void
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function getProduct()
+    /**
+     * getProduct 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getProduct()
     {
         if (is_null($this->product)) {
 
@@ -127,7 +127,7 @@ class XLite_View_ProductSelect extends XLite_View_Abstract
         }
 
         return $this->product;
-	}
+    }
 
 }
 

@@ -34,14 +34,14 @@
  * @since   3.0.0
  */
 class XLite_Module_eWAYxml_Model_PaymentMethod_EwayXml extends XLite_Model_PaymentMethod_CreditCard
-{	
-	public $configurationTemplate = "modules/eWAYxml/config.tpl";	
-    public $hasConfigurationForm = true;	
+{
+    public $configurationTemplate = "modules/eWAYxml/config.tpl";
+    public $hasConfigurationForm = true;
     public $processorName = "eWAYxml";
 
     function process($cart)
     {
-		require_once LC_MODULES_DIR . 'eWAYxml' . LC_DS . 'encoded.php';
+        require_once LC_MODULES_DIR . 'eWAYxml' . LC_DS . 'encoded.php';
         return func_eWAYxml_process($cart, $this);
     }
 }

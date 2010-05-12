@@ -48,10 +48,10 @@ class XLite_Module_ProductAdviser_View_Pager extends XLite_View_Pager
 
     function get($name)
     {
-    	$result = parent::get($name); 
+    	$result = parent::get($name);
 
     	if ($name == "pageID" && parent::get("pageIDX")) {
-    		$result = isset($_REQUEST[parent::get("pageIDX")]) ? $_REQUEST[parent::get("pageIDX")] : 0; 
+    		$result = isset($_REQUEST[parent::get("pageIDX")]) ? $_REQUEST[parent::get("pageIDX")] : 0;
         	if (count($this->get("pages")) <= $result) {
             	$result = count($this->get("pages")) - 1;
             }
@@ -74,32 +74,32 @@ class XLite_Module_ProductAdviser_View_Pager extends XLite_View_Pager
     	if (parent::get("pageIDX")) {
             $result = array();
             $params = $this->getComplex('dialog.allParams');
-			$params["pageID"] = null;
-			if (parent::get("extraParameter") && isset($_REQUEST[parent::get("extraParameter")])) {
-				$params[parent::get("extraParameter")] = $_REQUEST[parent::get("extraParameter")];
-			}
+            $params["pageID"] = null;
+            if (parent::get("extraParameter") && isset($_REQUEST[parent::get("extraParameter")])) {
+                $params[parent::get("extraParameter")] = $_REQUEST[parent::get("extraParameter")];
+            }
             $dialog = $this->get("dialog");
             for ($i = 0; $i < count($this->get("pages")); $i++) {
                 if ($i == 0) {
                     $params[parent::get("pageIDX")] = null; // exclude pageID for the first page
                 } else {
                     $params[parent::get("pageIDX")] = $i;
-                }    
+                }
                 $result[$i+1] = $dialog->getUrl($params);
             }
     	} else {
             $result = array();
             $params = $this->getComplex('dialog.allParams');
-			if (parent::get("extraParameter") && isset($_REQUEST[parent::get("extraParameter")])) {
-				$params[parent::get("extraParameter")] = $_REQUEST[parent::get("extraParameter")];
-			}
+            if (parent::get("extraParameter") && isset($_REQUEST[parent::get("extraParameter")])) {
+                $params[parent::get("extraParameter")] = $_REQUEST[parent::get("extraParameter")];
+            }
             $dialog = $this->get("dialog");
             for ($i = 0; $i < count($this->get("pages")); $i++) {
                 if ($i == 0) {
                     $params["pageID"] = null; // exclude pageID for the first page
                 } else {
                     $params["pageID"] = $i;
-                }    
+                }
                 $result[$i+1] = $dialog->getUrl($params);
             }
         }

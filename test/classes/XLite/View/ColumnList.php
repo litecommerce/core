@@ -35,14 +35,14 @@
  * @since   3.0.0
  */
 class XLite_View_ColumnList extends XLite_View_Abstract
-{	
+{
     /*
      * Widget parameters names
      */
     const PARAM_COLUMN_COUNT = 'columnCount';
 
 
-	/**
+    /**
      * columns 
      * FIXME - must be protected
      * 
@@ -106,22 +106,22 @@ class XLite_View_ColumnList extends XLite_View_Abstract
      * @since  3.0.0
      */
     protected function getColumnsData($column)
-	{
-		$data = array();
+    {
+        $data = array();
 
-		if ($this->getParam(self::PARAM_COLUMN_COUNT) > 1) {
+        if ($this->getParam(self::PARAM_COLUMN_COUNT) > 1) {
             $data = $this->get('data');
             $columns = $this->getParam(self::PARAM_COLUMN_COUNT);
             $cnt = ceil(count($data) / $columns);
-			$pages = array_chunk($data, $cnt);
+            $pages = array_chunk($data, $cnt);
 
             if (isset($pages[$column])) {
                 $data = $pages[$column];
-			}
+            }
 
-		} else {
-			$data = $this->get('data');
-		}
+        } else {
+            $data = $this->get('data');
+        }
 
         return $data;
     }

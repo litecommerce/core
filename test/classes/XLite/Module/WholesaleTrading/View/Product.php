@@ -45,7 +45,7 @@ class XLite_Module_WholesaleTrading_View_Product extends XLite_View_Product impl
     public function isAvailableForSale()
     {
         return $this->getProduct()->is('saleAvailable')
-			? parent::isAvailableForSale()
-			: false;
+            ? parent::isAvailableForSale()
+            : false;
     }
 }

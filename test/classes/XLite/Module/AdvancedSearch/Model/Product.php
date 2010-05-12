@@ -78,22 +78,22 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
     {
         $this->__beforeAdvancedSearch($substring, $orderby, $sku, $_category_id, $subcategory_search, $onlyindexes, $_logic, $_name, $_description, $_brief_description, $_meta_tags, $_extra_fields, $_options, $start_price, $end_price, $start_weight, $end_weight);
 
-        $substring = addslashes($substring);    
+        $substring = addslashes($substring);
         $keywords = explode(' ', trim($substring));
         switch($_logic) {
             case 2: 
-                $logic = 'AND'; 
+                $logic = 'AND';
 
             	break;
 
             case 3: 
                 $logic = 'OR';
-                $keywords = array($substring); 
+                $keywords = array($substring);
 
             	break;
 
-			default:
-				$logic = 'OR';
+            default:
+                $logic = 'OR';
         }
         
         $field_values = array
@@ -107,14 +107,14 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
         $search_query = $this->getSearchQuery($field_values, $keywords, $logic);
 
         if (!empty($_category_id)) {
-            $products = in_array(true, $field_values) ? $this->getCategoryProducts($_category_id, $search_query, $subcategory_search) : array(); 
+            $products = in_array(true, $field_values) ? $this->getCategoryProducts($_category_id, $search_query, $subcategory_search) : array();
         } else {
             $product = new XLite_Model_Product();
             $product->fetchKeysOnly = true;
             $products = in_array(true, $field_values) ? $product->findAll($search_query, $orderby) : array();
         }
 
-        $field_ids = array(); 
+        $field_ids = array();
         
         if ($_extra_fields && strlen($keywords[0]) > 0) {
             $field_values = array
@@ -122,9 +122,9 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
                 "name" => true, 
                 "default_value" => true
             );
-            $search_query = $this->getSearchQuery($field_values, $keywords, $logic); 
+            $search_query = $this->getSearchQuery($field_values, $keywords, $logic);
             
-            $extraField = new XLite_Model_ExtraField();    
+            $extraField = new XLite_Model_ExtraField();
             if (true == ($globalExtraFields = $extraField->findAll("product_id = 0 AND (" . $search_query.")"))) {
                 foreach($globalExtraFields as $gef) 
                     if (!is_null($gef->get("categories"))) {
@@ -133,7 +133,7 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
                             $category = new XLite_Model_Category($cat_id);
                             $field_ids = array_merge($field_ids, $this->getIds($category->get("products")));
                         }
-                    }    
+                    }
             }
             $productMethods = array_map("strtolower", get_class_methods($extraField->get("product")));
             $isNewEF = in_array("isglobal", $productMethods);
@@ -184,7 +184,7 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
 
             $productOption = new XLite_Module_ProductOptions_Model_ProductOption();
             $productOption->fetchKeysOnly = true;
-            $productOptions = $productOption->findAll("product_id <> 0 AND (" . $search_query. ")"); 
+            $productOptions = $productOption->findAll("product_id <> 0 AND (" . $search_query. ")");
             $option_ids = $this->getIds($productOptions);
         }
         
@@ -205,16 +205,16 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
             $ids = array_unique(array_intersect($ids, $this->getIds($product_limit)));
         }
                                                  
-        $products = array();    
+        $products = array();
         if (!empty($ids))
             foreach ($ids as $id) {
                 $product = new XLite_Model_Product($id);
-                $products[$id] = $product; 
-            } 
+                $products[$id] = $product;
+            }
         return $products;
         
 
-    } 
+    }
 
     function _constructSearchArray($start_price, $end_price, $start_weight, $end_weight, $sku) 
     {
@@ -226,7 +226,7 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
         if (!is_null($sku))             $search[] = "sku LIKE '%".addslashes($sku)."%'";
 
         return $search;
-    } 
+    }
 
     function getIds($items) 
     {
@@ -237,7 +237,7 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
             }
         }
         return !empty($ids) ? $ids : array();
-    } 
+    }
     
     function getSearchQuery($field_values, $keywords, $logic)  
     {
@@ -249,10 +249,10 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
                     $query[] = "$field_value LIKE '%$keyword%'";
                 $search[] = (count($keywords) > 1 ? "(" . implode(" $logic ", $query) . ")" :  implode("", $query));
             }
-        }    
+        }
         $search_query = implode(" OR ", $search);
         return $search_query;
-    }  
+    }
 
     function getCategoryProducts(&$category_id, $search_query,  $subcategory_search = false) 
     {
@@ -263,9 +263,9 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
                 for ($i=0; $i<count($categories); $i++) {
                     $category_products = $this->getCategoryProducts($categories[$i]->get("category_id"), $search_query, $subcategory_search);
                     $products = array_merge($products, array_values($category_products));
-                }    
+                }
         }
-        return $products;    
-    } 
+        return $products;
+    }
 
 }

@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product implements XLite_Base_IDecorator
-{    
+{
     /**
      * Product options list (cache)
      * 
@@ -59,7 +59,7 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product impl
     {
         parent::__construct($id);
 
-        $this->fields['expansion_limit'] = 0;    
+        $this->fields['expansion_limit'] = 0;
     }
     
     /**
@@ -230,7 +230,7 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product impl
             // Clone options exceptions
             $foo = new XLite_Module_ProductOptions_Model_OptionException();
             $exceptions = $foo->findAll("product_id = '" . $this->get("product_id") . "'");
-            foreach ($exceptions as $exception) {            
+            foreach ($exceptions as $exception) {
                 $optionException = new XLite_Module_ProductOptions_Model_OptionException();
                 $optionException->set("product_id", $id);
                 $optionException->set("exception", $exception->get("exception"));
@@ -240,7 +240,7 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product impl
             if ($this->xlite->get("InventoryTrackingEnabled")&& $this->config->InventoryTracking->clone_inventory) {
                 $this->cloneInventory($p, true);
             }
-        }    
+        }
         return $p;
     }
 
@@ -283,7 +283,7 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product impl
                     $obj = new $class($info["object_key"]);
                     $obj->delete();
                 }
-            }            
+            }
         }
     }
 
@@ -374,4 +374,4 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product impl
             }
         }
     }
-} 
+}

@@ -49,7 +49,7 @@ class XLite_Module_FeaturedProducts_Controller_Admin_Categories extends XLite_Co
 
         if (!isset(XLite_Core_Request::getInstance()->search_category)) {
             XLite_Core_Request::getInstance()->search_category = XLite_Core_Request::getInstance()->category_id;
-        }    
+        }
     }
 
     /**
@@ -60,19 +60,19 @@ class XLite_Module_FeaturedProducts_Controller_Admin_Categories extends XLite_Co
      * @see    ____func_see____
      * @since  3.0.0
      */
-	protected function doActionAddFeaturedProducts()
-	{
-		if (isset(XLite_Core_Request::getInstance()->product_ids)) {
+    protected function doActionAddFeaturedProducts()
+    {
+        if (isset(XLite_Core_Request::getInstance()->product_ids)) {
             $products = array();
 
-			foreach (XLite_Core_Request::getInstance()->product_ids as $product_id => $value) {
-				$products[] = new XLite_Model_Product($product_id);
+            foreach (XLite_Core_Request::getInstance()->product_ids as $product_id => $value) {
+                $products[] = new XLite_Model_Product($product_id);
             }
 
-			$category = new XLite_Model_Category($this->category_id);
-			$category->addFeaturedProducts($products);
-		}
-	}
+            $category = new XLite_Model_Category($this->category_id);
+            $category->addFeaturedProducts($products);
+        }
+    }
 
     /**
      * getProducts 
@@ -100,44 +100,44 @@ class XLite_Module_FeaturedProducts_Controller_Admin_Categories extends XLite_Co
         return $result;
     }
 
-	/**
-	 * Process action 'update_featured_products'
-	 * 
-	 * @return void
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function doActionUpdateFeaturedProducts()
-	{
-		// Delete featured products if it was requested
-		$deleteProducts = XLite_Core_Request::getInstance()->delete;
-		
-		if (!is_null($deleteProducts) && is_array($deleteProducts) && !empty($deleteProducts)) {
+    /**
+     * Process action 'update_featured_products'
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionUpdateFeaturedProducts()
+    {
+        // Delete featured products if it was requested
+        $deleteProducts = XLite_Core_Request::getInstance()->delete;
+        
+        if (!is_null($deleteProducts) && is_array($deleteProducts) && !empty($deleteProducts)) {
 
-			foreach (array_keys($deleteProducts) as $productId) {
-				$products[] = new XLite_Model_Product($productId);
-			}
+            foreach (array_keys($deleteProducts) as $productId) {
+                $products[] = new XLite_Model_Product($productId);
+            }
 
-			$category = new XLite_Model_Category(XLite_Core_Request::getInstance()->category_id);
+            $category = new XLite_Model_Category(XLite_Core_Request::getInstance()->category_id);
 
-			if ($category->isExists() || 0 === intval(XLite_Core_Request::getInstance()->category_id)) {
-				$category->deleteFeaturedProducts($products);
-			}
-		}
+            if ($category->isExists() || 0 === intval(XLite_Core_Request::getInstance()->category_id)) {
+                $category->deleteFeaturedProducts($products);
+            }
+        }
 
-		// Update order_by of featured products list is it was requested
-		$orderProducts = XLite_Core_Request::getInstance()->orderbys;
+        // Update order_by of featured products list is it was requested
+        $orderProducts = XLite_Core_Request::getInstance()->orderbys;
 
-		if (!is_null($orderProducts) && is_array($orderProducts) && !empty($orderProducts)) {
+        if (!is_null($orderProducts) && is_array($orderProducts) && !empty($orderProducts)) {
 
-			foreach ($orderProducts as $productId => $orderBy) {
-				$fp = new XLite_Module_FeaturedProducts_Model_FeaturedProduct();
-				$fp->set('category_id', XLite_Core_Request::getInstance()->category_id);
-				$fp->set('product_id', $productId);
-				$fp->set('order_by', $orderBy);
-				$fp->update();
-			}
-		}
-	}
+            foreach ($orderProducts as $productId => $orderBy) {
+                $fp = new XLite_Module_FeaturedProducts_Model_FeaturedProduct();
+                $fp->set('category_id', XLite_Core_Request::getInstance()->category_id);
+                $fp->set('product_id', $productId);
+                $fp->set('order_by', $orderBy);
+                $fp->update();
+            }
+        }
+    }
 }

@@ -42,15 +42,15 @@ class XLite_View_ExtraFields extends XLite_View_Abstract
     const PARAM_PRODUCT = 'product';
 
 
-	/**
-	 * Cached extra fields list
-	 * 
-	 * @var    array
-	 * @access protected
-	 * @see    ____var_see____
-	 * @since  3.0.0
-	 */
-	protected $extraFields = null;
+    /**
+     * Cached extra fields list
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $extraFields = null;
 
 
     /**
@@ -105,24 +105,24 @@ class XLite_View_ExtraFields extends XLite_View_Abstract
      */
     function getExtraFields()
     {
-		if (is_null($this->extraFields)) {
+        if (is_null($this->extraFields)) {
 
-	        $this->extraFields = $this->getParam(self::PARAM_PRODUCT)->getExtraFields();
+            $this->extraFields = $this->getParam(self::PARAM_PRODUCT)->getExtraFields();
 
     	    /* TODO - rework
-	        if ($this->config->General->enable_extra_fields_inherit == "Y") {
+            if ($this->config->General->enable_extra_fields_inherit == "Y") {
     	        $isAdminZone = $this->xlite->get("adminZone");
         	    $this->xlite->set("adminZone", true);
-	        }
+            }
     	    */
 
-	        $product_categories = $this->getParam(self::PARAM_PRODUCT)->getCategories();
+            $product_categories = $this->getParam(self::PARAM_PRODUCT)->getCategories();
 
     	    /* TODO - rework
-	        if ($this->config->getComplex('General.enable_extra_fields_inherit') == "Y") {
+            if ($this->config->getComplex('General.enable_extra_fields_inherit') == "Y") {
     	        $this->xlite->set("adminZone", $isAdminZone);
         	}
-	        */
+            */
 
         	$extraFields_root = array();
             $ids = array();
@@ -130,7 +130,7 @@ class XLite_View_ExtraFields extends XLite_View_Abstract
                 $ids[] = $cat->get('category_id');
             }
 
-	        foreach ($this->extraFields as $idx => $extraField) {
+            foreach ($this->extraFields as $idx => $extraField) {
             	$extraFields_categories = $extraField->getCategories();
                 if (count($extraFields_categories) > 0) {
                     if (count(array_intersect($ids, $extraFields_categories)) == 0) {
@@ -144,9 +144,9 @@ class XLite_View_ExtraFields extends XLite_View_Abstract
 
             foreach ($this->extraFields as $idx => $extraField) {
                 if (
-					isset($extraFields_root[$extraField->get('parent_field_id')])
-					&& isset($this->extraFields[$extraFields_root[$extraField->get('parent_field_id')]])
-				) {
+                    isset($extraFields_root[$extraField->get('parent_field_id')])
+                    && isset($this->extraFields[$extraFields_root[$extraField->get('parent_field_id')]])
+                ) {
                     unset($this->extraFields[$extraFields_root[$extraField->get('parent_field_id')]]);
                 }
             }

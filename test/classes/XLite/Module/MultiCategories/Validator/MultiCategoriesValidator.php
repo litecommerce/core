@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_MultiCategories_Validator_MultiCategoriesValidator extends XLite_Validator_RequiredValidator
-{	
+{
     public $template = "common/required_validator.tpl";
     
     function isValid()

@@ -28,13 +28,13 @@ function PaymentMethod_2checkout_handleRequest($_this, $cart)
             $cart->set("details.errorDescription", "Total amount doesn't match: Order total=".$total.", 2Checkout amount=".$postTotal);
             $cart->set("detailLabels.errorDescription", "Hacking attempt details");
             $cart->set("status","F");
-            $cart->update();   
+            $cart->update();
 
             $_this->xlite->session->writeClose();
 
-			die("<font color=red><b>Security check failed!</b></font> Please contact administrator <b>" . $_this->config->getComplex('Company.site_administrator') . "</b> .");
+            die("<font color=red><b>Security check failed!</b></font> Please contact administrator <b>" . $_this->config->getComplex('Company.site_administrator') . "</b> .");
         }
-	}
+    }
 
     // md5 hash check
     if (isset($_POST['x_Login'])) $x_Login = $_POST['x_Login'];
@@ -56,7 +56,7 @@ function PaymentMethod_2checkout_handleRequest($_this, $cart)
             // failure
             $status = "F";
         }
-    // }    
+    // }
     if (isset($_POST['x_cvv_code'])) {
         $cart->setComplex("details.cvvMessage", $_this->cvverr[$_POST['x_cvv_code']]);
         $cart->set("detailLabels.cvvMessage", "CVV message");
@@ -107,42 +107,42 @@ function PaymentMethod_2checkout_v2_handleRequest($_this, $cart, $security_check
     $status = "P";
     $error = null;
 
-	$response_code = ($_POST["credit_card_processed"] == "Y") ? 1 : (($_POST["credit_card_processed"] == "K") ? 3 : 2);
-	switch ($response_code) {
-		case 1:
+    $response_code = ($_POST["credit_card_processed"] == "Y") ? 1 : (($_POST["credit_card_processed"] == "K") ? 3 : 2);
+    switch ($response_code) {
+        case 1:
             // success
             $status = "P";
-		break;
-		default:
+        break;
+        default:
             // failure
             $status = "F";
-		break;
-	}
-	if (!$security_check) {
-		$status = "F";
+        break;
+    }
+    if (!$security_check) {
+        $status = "F";
         $cart->setComplex("details.security_check", "FAILED!");
         $cart->set("detailLabels.security_check", "2Checkout.com Order Security Check");
-		$cart->set("details.error", "Security Check Failed!");
-		$cart->setComplex("detailLabels.error", "Error");
-	}
+        $cart->set("details.error", "Security Check Failed!");
+        $cart->setComplex("detailLabels.error", "Error");
+    }
 
-	if (!empty($_POST["tcoid"]))	{
+    if (!empty($_POST["tcoid"]))	{
         $cart->setComplex("details.tcoid", $_POST["tcoid"]);
         $cart->set("detailLabels.tcoid", "2Checkout.com Transaction ID");
-	}
-	if (!empty($_POST["order_number"])) {
+    }
+    if (!empty($_POST["order_number"])) {
         $cart->setComplex("details.order_number", $_POST["order_number"]);
         $cart->set("detailLabels.order_number", "2Checkout.com Order number");
-	}
-	if (isset($_POST["2co_product_id"])) {
-		$_POST["product_id"] = $_POST["2co_product_id"];
-		unset($_POST["2co_product_id"]);
-	}
+    }
+    if (isset($_POST["2co_product_id"])) {
+        $_POST["product_id"] = $_POST["2co_product_id"];
+        unset($_POST["2co_product_id"]);
+    }
 
     $full_response = array();
-	foreach ($_POST as $k=>$v) {
-		$full_response[] = "\"$k\": $v";
-	}
+    foreach ($_POST as $k=>$v) {
+        $full_response[] = "\"$k\": $v";
+    }
     $full_response = implode(", ", $full_response);
 
     $cart->setComplex("details.full_response", $full_response);
@@ -152,9 +152,9 @@ function PaymentMethod_2checkout_v2_handleRequest($_this, $cart, $security_check
     $cart->update();
     $_this->xlite->session->writeClose();
 
-	if (!$security_check) {
-		die("<font color=red><b>Security check failed!</b></font> Please contact administrator <b>" . $_this->config->getComplex('Company.site_administrator') . "</b> .<hr>Click <a href=\"" . $_this->xlite->getShopUrl("cart.php?target=checkout&mode=error&order_id=".$cart->get("order_id")) . "\"><u>here</u></a> to return into your cart.");
-	}
+    if (!$security_check) {
+        die("<font color=red><b>Security check failed!</b></font> Please contact administrator <b>" . $_this->config->getComplex('Company.site_administrator') . "</b> .<hr>Click <a href=\"" . $_this->xlite->getShopUrl("cart.php?target=checkout&mode=error&order_id=".$cart->get("order_id")) . "\"><u>here</u></a> to return into your cart.");
+    }
 
     $location = "cart.php?target=checkout&action=return&order_id=".$cart->get("order_id");
     $location = $cart->xlite->getShopUrl($location);
@@ -163,31 +163,31 @@ function PaymentMethod_2checkout_v2_handleRequest($_this, $cart, $security_check
 }
 
 function PaymentMethod_2checkout_html_location($url, $redirectTime=3)
-{    
-	echo "<BR><BR>";
-	echo "If the page is not updated in a $redirectTime seconds, please follow this link: <A href=\"" . $url . "\"><u>continue &gt;&gt;</u></A>";
-	echo "<META http-equiv=\"Refresh\" content=\"$redirectTime;URL=$url\">";
+{
+    echo "<BR><BR>";
+    echo "If the page is not updated in a $redirectTime seconds, please follow this link: <A href=\"" . $url . "\"><u>continue &gt;&gt;</u></A>";
+    echo "<META http-equiv=\"Refresh\" content=\"$redirectTime;URL=$url\">";
 
     if (preg_match("/Apache(.*)Win/", getenv("SERVER_SOFTWARE"))) {
         echo str_repeat(" ", 2500);
-	} elseif (preg_match("/(.*)MSIE(.*)\)$/", getenv("HTTP_USER_AGENT"))) {
+    } elseif (preg_match("/(.*)MSIE(.*)\)$/", getenv("HTTP_USER_AGENT"))) {
         echo str_repeat(" ", 256);
     }
 
-	if (function_exists('ob_flush')) {
-		// for PHP >= 4.2.0
-		ob_flush();
-	}
-	else {
-		// for PHP < 4.2.0
-		if (ob_get_length() !== FALSE) {
-			ob_end_flush();
-		}
-	}
+    if (function_exists('ob_flush')) {
+        // for PHP >= 4.2.0
+        ob_flush();
+    }
+    else {
+        // for PHP < 4.2.0
+        if (ob_get_length() !== FALSE) {
+            ob_end_flush();
+        }
+    }
 
-	flush();
+    flush();
 
-	exit;
+    exit;
 }
 
 ?>

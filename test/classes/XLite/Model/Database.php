@@ -42,7 +42,7 @@ define('SQL_UPLOAD_DIR', 'var/tmp/');
  */
 class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
 {
-	const DBTABLE_PREFIX = 'xlite_';
+    const DBTABLE_PREFIX = 'xlite_';
 
     // properties {{{
 
@@ -62,31 +62,31 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
             'port'     => false,
             'socket'   => false,
             'database' => '',
-			'persistent'	=> 0);
+            'persistent'	=> 0);
 
     /**
     * Database connection resource
     */	
-    public $connection = null;	
-    public $connected = false;	
+    public $connection = null;
+    public $connected = false;
     
-    protected $cache = array();	
+    protected $cache = array();
     protected $cacheEnabled = false;
 
-	protected $profiler = null;
-	protected $profilerEnabled = false;
+    protected $profiler = null;
+    protected $profilerEnabled = false;
 
-	public static function getInstance()
+    public static function getInstance()
     {
         return self::getInternalInstance(__CLASS__);
     }
 
-	public function __construct()
+    public function __construct()
     {
         $this->profiler = XLite_Model_Profiler::getInstance();
-		$this->profilerEnabled = $this->profiler->enabled;
+        $this->profilerEnabled = $this->profiler->enabled;
 
-		$this->connected || $this->connect();
+        $this->connected || $this->connect();
     }
 
     public function connect()
@@ -95,13 +95,13 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
         $time = microtime(true);
         $options = XLite::getInstance()->getOptions('database_details');
 
-		if (!empty($options['socket'])) {
-			$options['hostspec'] .= ':' . $options['socket'];
-		} elseif (!empty($options['port'])) {
-			$options['hostspec'] .= ':' . $options['port'];
-		}
+        if (!empty($options['socket'])) {
+            $options['hostspec'] .= ':' . $options['socket'];
+        } elseif (!empty($options['port'])) {
+            $options['hostspec'] .= ':' . $options['port'];
+        }
 
-		$function = 'mysql_' . ((isset($options['persistent']) && 'on' == strtolower($options['persistent'])) ? 'p' : '') . 'connect';
+        $function = 'mysql_' . ((isset($options['persistent']) && 'on' == strtolower($options['persistent'])) ? 'p' : '') . 'connect';
 
         $this->connection = @$function($options['hostspec'], $options['username'], $options['password']);
         if (!$this->connection) {
@@ -109,127 +109,127 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
         }
         if (!@mysql_select_db($options['database'], $this->connection)) {
             $this->doSQLDie();
-        } 
+        }
 
         $this->connected = true;
 
-		$this->profiler->dbConnectTime = microtime(true) - $time;
+        $this->profiler->dbConnectTime = microtime(true) - $time;
 
-		$this->options = array_merge($this->options, $options);
+        $this->options = array_merge($this->options, $options);
 
         $this->query('SET sql_mode = "MYSQL40"');
     }
 
     protected function getCachedResult($sql)
     {
-		return isset($this->cache[$hash = md5($sql)]) ? $this->cache[$hash] : false;
+        return isset($this->cache[$hash = md5($sql)]) ? $this->cache[$hash] : false;
     }
     
     protected function cacheResult($sql, $result)
     {
-		$this->cache[md5($sql)] = $result;
+        $this->cache[md5($sql)] = $result;
     }
     
-	public function getOne($sql)
-	{
-		if ($this->cacheEnabled && ($result = $this->getCachedResult($sql))) {
-			return $result;
-		}
-
-		list($result) = @mysql_fetch_row($res = $this->query($sql));
-        @mysql_free_result($res);
-
-		if ($this->cacheEnabled) {
-	        $this->cacheResult($sql, $result);
-		}
-
-		return $result;
-	}
-    
-	public function getAll($sql)
-	{
+    public function getOne($sql)
+    {
         if ($this->cacheEnabled && ($result = $this->getCachedResult($sql))) {
             return $result;
         }
 
-		$result = array();
-		$res = $this->query($sql);
-		while ($row = mysql_fetch_assoc($res)) {
-			$result[] = $row;
-		}
-        @mysql_free_result($res); 
-
-		if ($this->cacheEnabled) {
-            $this->cacheResult($sql, $result);
-        }
-
-		return $result;
-	}
-
-	public function getRow($sql)
-	{
-		if ($this->cacheEnabled && ($result = $this->getCachedResult($sql))) {
-            return $result;
-        }
-        
-        $result = null;
-		$row = @mysql_fetch_assoc($res = $this->query($sql));
+        list($result) = @mysql_fetch_row($res = $this->query($sql));
         @mysql_free_result($res);
 
-		$result = false === $row ? null : $row;
-
-		if ($this->cacheEnabled) {
+        if ($this->cacheEnabled) {
             $this->cacheResult($sql, $result);
         }
 
         return $result;
-	}
-
-	public function getColumn($sql, $columnName)
-	{
-		if ($this->cacheEnabled && ($result = $this->getCachedResult($sql))) {
+    }
+    
+    public function getAll($sql)
+    {
+        if ($this->cacheEnabled && ($result = $this->getCachedResult($sql))) {
             return $result;
         }
 
         $result = array();
-		$res = $this->query($sql);
+        $res = $this->query($sql);
         while ($row = mysql_fetch_assoc($res)) {
-			if (isset($row[$columnName])) {
-				$index = $row[$columnName];
-				unset($row[$columnName]);
-    	        $result[$index] = array_merge($row, isset($result[$index]) ? $result[$index] : array());
-			}
+            $result[] = $row;
         }
         @mysql_free_result($res);
 
-		if ($this->cacheEnabled) {
+        if ($this->cacheEnabled) {
             $this->cacheResult($sql, $result);
         }
 
         return $result;
-	}
+    }
 
-	function query($sql)
+    public function getRow($sql)
+    {
+        if ($this->cacheEnabled && ($result = $this->getCachedResult($sql))) {
+            return $result;
+        }
+        
+        $result = null;
+        $row = @mysql_fetch_assoc($res = $this->query($sql));
+        @mysql_free_result($res);
+
+        $result = false === $row ? null : $row;
+
+        if ($this->cacheEnabled) {
+            $this->cacheResult($sql, $result);
+        }
+
+        return $result;
+    }
+
+    public function getColumn($sql, $columnName)
+    {
+        if ($this->cacheEnabled && ($result = $this->getCachedResult($sql))) {
+            return $result;
+        }
+
+        $result = array();
+        $res = $this->query($sql);
+        while ($row = mysql_fetch_assoc($res)) {
+            if (isset($row[$columnName])) {
+                $index = $row[$columnName];
+                unset($row[$columnName]);
+    	        $result[$index] = array_merge($row, isset($result[$index]) ? $result[$index] : array());
+            }
+        }
+        @mysql_free_result($res);
+
+        if ($this->cacheEnabled) {
+            $this->cacheResult($sql, $result);
+        }
+
+        return $result;
+    }
+
+    function query($sql)
     {
         if (!is_resource($this->connection)) {
             $this->doDie('There are no connection to the database');
         }
 
         if ($this->profilerEnabled) {
-	        $this->profiler->addQuery($sql);
-		}
+            $this->profiler->addQuery($sql);
+        }
 
-		$res = @mysql_query($sql, $this->connection);
+        $res = @mysql_query($sql, $this->connection);
         if (!$res) {
             $this->doSQLDie($sql);
         }
 
-		if ($this->profilerEnabled) {
-	        $this->profiler->setQueryTime($sql);
-		}
+        if ($this->profilerEnabled) {
+            $this->profiler->setQueryTime($sql);
+        }
 
         return $res;
-	}
+    }
 
     /**
      * SQL error report
@@ -271,7 +271,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
     public function getTableByAlias($alias) 
     {
         return self::DBTABLE_PREFIX . $alias;
-    } 
+    }
 
     function isTableExists($table) 
     {
@@ -282,7 +282,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
             }
         }
         return false;
-    } 
+    }
     
     function isIndexExists($index, $table) 
     {
@@ -293,7 +293,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
             }
         }
         return false;
-    } 
+    }
 
     function isFieldExists($table, $field) 
     {
@@ -304,7 +304,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
             }
         }
         return false;
-    } 
+    }
 
     // CREATE / ALTER / DROP functions {{{
 
@@ -315,14 +315,14 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
             echo "[TABLE ALREADY EXISTS]\n";
         } else {
             if (mysql_query($sql, $this->connection) === false) {
-				if ($v) echo "[FAILURE:" . mysql_error($this->connection) . "]\n";
-				return false;
-			} else {
+                if ($v) echo "[FAILURE:" . mysql_error($this->connection) . "]\n";
+                return false;
+            } else {
             	if ($v) echo "[OK]\n";
-			}
+            }
         }
-		return true;
-    } 
+        return true;
+    }
 
     function createIndex($index, $table, $sql, $v = true) 
     {
@@ -331,20 +331,20 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
             if ($v) echo "[INDEX ALREADY EXISTS]\n";
         } else {
             if (mysql_query($sql, $this->connection) === false) {
-				if ($v) echo "[FAILURE:" . mysql_error($this->connection) . "]\n";
-				return false;
-			} else {
+                if ($v) echo "[FAILURE:" . mysql_error($this->connection) . "]\n";
+                return false;
+            } else {
             	if ($v) echo "[OK]\n";
-			}
+            }
         }
-		return true;
-    } 
+        return true;
+    }
 
     function dropTable($table, $v = true) 
     {
         mysql_query("DROP TABLE IF EXISTS $table", $this->connection);
         if ($v) echo "Delete table $table ... [OK]\n";
-    } 
+    }
     
     function alterTable($table, $sql, $v = true) 
     {
@@ -362,7 +362,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
             }
         }
         return true;
-    } 
+    }
 
     
 
@@ -376,11 +376,11 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
             if (!$handle = fopen($file, 'w')) {
                 $this->doDie('Failed to open backup file $file for writing');
             }
-        }    
+        }
         // do not cache backup queries
         $this->set("cacheEnabled", false);
         // write backup file heading comments
-		$this->_write($handle, "-- WARNING: Do not change this line <?php die(); ?>\n");
+        $this->_write($handle, "-- WARNING: Do not change this line <?php die(); ?>\n");
         foreach ($this->getTables() as $table) {
             // dump table chema
             if ($verbose) {
@@ -401,17 +401,17 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
         // write backup file ending comments
         $this->_write($handle, "-- WARNING: Do not change this line */ ?>\n");
         is_null($handle) or fclose($handle) && chmod($file, get_filesystem_permissions(0666));
-    } 
+    }
 
     function restore($file) 
     {
         echo "Please wait...<br>\n";
         $error = query_upload($file, $this->db->connection, true, true);
         // cleanup compiled cache
-		echo "<br>\n";
-		XLite_Model_ModulesManager::getInstance()->cleanupCache();
+        echo "<br>\n";
+        XLite_Model_ModulesManager::getInstance()->cleanupCache();
         return $error;
-    } 
+    }
 
     function getTableSchema($table) 
     {
@@ -474,17 +474,17 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
 
         $this->set("cacheEnabled", $cacheEnabled);
         return $schema;
-    } 
+    }
 
     function getTableKeys($table) 
     {
         return $this->getAll("SHOW KEYS FROM $table");
-    } 
+    }
     
     function getTableFields($table) 
     {
         return $this->getAll("SHOW FIELDS FROM $table");
-    } 
+    }
 
     function getTableContent($table) 
     {
@@ -495,7 +495,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
             foreach ($this->getTableInfo($table) as $data) {
                 $stat[$table]["count"] = $this->getOne("SELECT COUNT(*) FROM $table");
                 $stat[$table]["number"][$data["name"]] = $this->_isNumber($data["type"]);
-            }    
+            }
             $stat[$table]["from"] = 0;
         }
         $limit = $stat[$table]["from"] + BACKUP_LIMIT_COUNT;
@@ -513,7 +513,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
             foreach ($row as $name => $value) {
                 if (!isset($row[$name])) {
                     $values[] = 'NULL';
-                } elseif ($row[$name] == '0' || $row[$name] != '') { 
+                } elseif ($row[$name] == '0' || $row[$name] != '') {
                     if ($stat[$table]["number"][$name]) {
                         $values[] = $row[$name];
                     } else {
@@ -526,7 +526,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
             $content .= $schema . implode(', ', $values) . ')' . ";\n";
         }
         return empty($content) ? false : $content;
-    } 
+    }
 
     function getTableInfo($table) 
     {
@@ -557,7 +557,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
         }
         @mysql_free_result($id);
         return $res;
-    } 
+    }
 
     function getTables() 
     {
@@ -566,10 +566,10 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
             $data = array_values($table);
             if (strncmp($data[0], self::DBTABLE_PREFIX, strlen(self::DBTABLE_PREFIX))==0) {
                 $tables[] = $data[0];
-            }    
+            }
         }
         return $tables;
-    } 
+    }
 
     function _write($handle, $content) 
     {
@@ -579,12 +579,12 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
         } elseif (!fwrite($handle, $content, strlen($content))) {
             $this->doDie('<font color="red">Backup file write failed</font>');
         }
-    } 
+    }
 
     function _isNumber($type) 
     {
         return ($type == 'tinyint' || $type == 'smallint' || $type == 'mediumint' || $type == 'int' || $type == 'bigint'  ||$type == 'timestamp') ? true : false;
-    } 
+    }
     
     
 }

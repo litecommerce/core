@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_WishList_Controller_Customer_ChangeOptions extends XLite_Module_ProductOptions_Controller_Customer_ChangeOptions implements XLite_Base_IDecorator
-{	
+{
     /**
      * Assemble return url 
      * 
@@ -52,16 +52,16 @@ class XLite_Module_WishList_Controller_Customer_ChangeOptions extends XLite_Modu
         }
     }
 
-	/**
-	 * Change product options
-	 * 
-	 * @return void
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function doActionChange()
-	{
+    /**
+     * Change product options
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionChange()
+    {
         parent::doActionChange();
 
         if (XLite_Core_Request::getInstance()->source == 'wishlist') {
@@ -72,7 +72,7 @@ class XLite_Module_WishList_Controller_Customer_ChangeOptions extends XLite_Modu
 
             XLite_Core_TopMessage::getInstance()->add('Options has been successfully changed');
         }
-	}
+    }
 
     /**
      * Get cart / wishlist item 

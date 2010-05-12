@@ -34,88 +34,88 @@
  * @since   3.0.0
  */
 class XLite_Module_Egoods_Model_PinCode extends XLite_Model_Abstract
-{	
-	public $alias = "pin_codes";	
+{
+    public $alias = "pin_codes";
 
-	public $primaryKey = array("pin_id");	
-	public $defaultOrder = "pin_id";	
+    public $primaryKey = array("pin_id");
+    public $defaultOrder = "pin_id";
 
-	public $fields = array
-	(
-		"pin_id"		=> 0,
-		"pin"			=> '',
-		"enabled"		=> 0,
-		"product_id"	=> 0,
-		"item_id"		=> '',
-		"order_id"		=> 0
-	);	
+    public $fields = array
+    (
+        "pin_id"		=> 0,
+        "pin"			=> '',
+        "enabled"		=> 0,
+        "product_id"	=> 0,
+        "item_id"		=> '',
+        "order_id"		=> 0
+    );
 
-	public $importFields = array
-	(
-		"NULL"			=> false,
-		"pin"			=> false,
-		"enabled"		=> false,
-		"product"		=> false,
-		"category"		=> false
-	);
+    public $importFields = array
+    (
+        "NULL"			=> false,
+        "pin"			=> false,
+        "enabled"		=> false,
+        "product"		=> false,
+        "category"		=> false
+    );
 
-	function getFreePinCount($product_id) 
-	{
-		$product = new XLite_Model_Product($product_id);
-		if ($product->get('pin_type') == 'D') {
-			return count($this->findAll("item_id='' AND enabled=1 AND order_id=0 AND product_id=" . $product_id));
-		} else if ($product->get('pin_type') == 'E') {
-			return 99999999;
-		}	
-	} 
+    function getFreePinCount($product_id) 
+    {
+        $product = new XLite_Model_Product($product_id);
+        if ($product->get('pin_type') == 'D') {
+            return count($this->findAll("item_id='' AND enabled=1 AND order_id=0 AND product_id=" . $product_id));
+        } else if ($product->get('pin_type') == 'E') {
+            return 99999999;
+        }
+    }
 
-	function isFree() 
-	{
-		if ($this->get('item_id') == '' && $this->get('order_id') == 0) {
-			return true;
-		}
-		return false;
-	} 
+    function isFree() 
+    {
+        if ($this->get('item_id') == '' && $this->get('order_id') == 0) {
+            return true;
+        }
+        return false;
+    }
 
-	function _export($layout, $delimiter) 
-	{
-		$data = array();
-		$values = $this->get("properties");
+    function _export($layout, $delimiter) 
+    {
+        $data = array();
+        $values = $this->get("properties");
 
-		foreach ($layout as $field) {
-			if ($field == "NULL") {
-				$data[] = "";
-			} elseif ($field == "product") {
-				$product = new XLite_Model_Product($values['product_id']);
-				$data[] = $this->_stripSpecials($product->get("name"));
-			} elseif ($field == "category") {
+        foreach ($layout as $field) {
+            if ($field == "NULL") {
+                $data[] = "";
+            } elseif ($field == "product") {
                 $product = new XLite_Model_Product($values['product_id']);
-				$category = new XLite_Model_Category();
-				$data[] =  $category->createCategoryField($product->get("categories"));
-			} elseif (isset($values[$field])) {
-				$data[] =  $this->_stripSpecials($values[$field]);
-			}
-		}
-		return $data;
-	} 
+                $data[] = $this->_stripSpecials($product->get("name"));
+            } elseif ($field == "category") {
+                $product = new XLite_Model_Product($values['product_id']);
+                $category = new XLite_Model_Category();
+                $data[] =  $category->createCategoryField($product->get("categories"));
+            } elseif (isset($values[$field])) {
+                $data[] =  $this->_stripSpecials($values[$field]);
+            }
+        }
+        return $data;
+    }
 
     public function import(array $options) 
     {
         $properties = $options["properties"];
-		
+        
         static $line_no;
         !isset($line_no) ? $line_no = 1 : $line_no++;
 
         echo "<b>Importing CSV file line # $line_no: </b>";
 
-		$product = new XLite_Model_Product();
-		$product = $product->findImportedProduct("",$properties['category'],$properties['product'],false);
-		if (!is_object($product)) {
-			echo "product <b>\"".$properties['product']."\"</b> not found in category <b>\"".$properties['category']."\"</b>. Pin code not imported.<br>";
-			return false;
-		}
-		$pin = new XLite_Module_Egoods_Model_PinCode();
-		$found = $pin->find("pin = '".$properties['pin']."' AND product_id =". $product->get("product_id"));
+        $product = new XLite_Model_Product();
+        $product = $product->findImportedProduct("",$properties['category'],$properties['product'],false);
+        if (!is_object($product)) {
+            echo "product <b>\"".$properties['product']."\"</b> not found in category <b>\"".$properties['category']."\"</b>. Pin code not imported.<br>";
+            return false;
+        }
+        $pin = new XLite_Module_Egoods_Model_PinCode();
+        $found = $pin->find("pin = '".$properties['pin']."' AND product_id =". $product->get("product_id"));
 
         $pin->set("pin", $properties['pin']);
         $pin->set("enabled", $properties['enabled']);
@@ -132,9 +132,9 @@ class XLite_Module_Egoods_Model_PinCode extends XLite_Model_Abstract
             echo "Creating";
             $pin->create();
         }
-		echo "  PIN code \"" . $pin->get("pin") . "\"";
+        echo "  PIN code \"" . $pin->get("pin") . "\"";
 
-		echo " for product <a href=\"admin.php?target=product&product_id=".$product->get("product_id")."\">\"" . $product->get("name") . "\"</a><br>";
+        echo " for product <a href=\"admin.php?target=product&product_id=".$product->get("product_id")."\">\"" . $product->get("name") . "\"</a><br>";
 
-    }  
+    }
 }

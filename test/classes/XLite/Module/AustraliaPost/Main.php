@@ -69,7 +69,7 @@ class XLite_Module_AustraliaPost_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'This module introduces Australia Post real-time shipping cost calculations';
-    }	
+    }
     /**
      * Determines if we need to show settings form link
      *
@@ -93,7 +93,7 @@ class XLite_Module_AustraliaPost_Main extends XLite_Module_Abstract
     {
         return "admin.php?target=aupost";
 
-    } 
+    }
 
     /**
      * Perform some actions at startup

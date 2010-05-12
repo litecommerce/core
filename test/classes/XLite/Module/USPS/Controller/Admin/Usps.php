@@ -56,7 +56,7 @@ class XLite_Module_USPS_Controller_Admin_Usps extends XLite_Controller_Admin_Shi
     // test data
     //     public $ounces = 1;
     //     public $destinationCountry = 'United Kingdom (Great Britain)';
-    //     public $ZipDestination = '73003';    
+    //     public $ZipDestination = '73003';
 
     public $page = 'usps';
 
@@ -78,7 +78,7 @@ class XLite_Module_USPS_Controller_Admin_Usps extends XLite_Controller_Admin_Shi
         'FLAT RATE BOX'      => 'Priority Mail Flat Rate Box',
         'RECTANGULAR'        => 'Priority Mail Rectangular (Large)',
         'NONRECTANGULAR'     => 'Priority Mail Non Rectangular (Large)',
-    );    
+    );
 
     public $fcmailtypes = array(
         'LETTER' => 'Letter',

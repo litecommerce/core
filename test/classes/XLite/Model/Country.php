@@ -44,8 +44,8 @@ class XLite_Model_Country extends XLite_Model_Abstract
      * @access public
      * @since  3.0.0
      */
-	public function getCountryStatesListSchema($where = null)
-	{
+    public function getCountryStatesListSchema($where = null)
+    {
         $schema = array();
 
         foreach ($this->findAll($where) as $country) {
@@ -56,7 +56,7 @@ class XLite_Model_Country extends XLite_Model_Abstract
         }
 
         return $schema;
-	}
+    }
 
 
 
@@ -68,9 +68,9 @@ class XLite_Model_Country extends XLite_Model_Abstract
             'enabled'   => 1,
             'eu_member' => 'N',
             'shipping_zone' => 0
-        );	
-    public $primaryKey = array("code");	    
-    public $alias = "countries";	
+        );
+    public $primaryKey = array("code");
+    public $alias = "countries";
     public $defaultOrder = "country";
 
     public function __construct($code = null)
@@ -78,7 +78,7 @@ class XLite_Model_Country extends XLite_Model_Abstract
         parent::__construct();
         if (!empty($code)) {
             $this->set("code", $code);
-        }    
+        }
     }
 
     function readAll()

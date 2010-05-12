@@ -34,11 +34,11 @@
  * @since   3.0.0
  */
 class XLite_Module_Affiliate_Controller_Customer_PartnerPayments extends XLite_Module_Affiliate_Controller_Partner
-{	
+{
     public $totalPaid = 0.00;
 
 
-	/**
+    /**
      * Common method to determine current location 
      * 
      * @return array
@@ -72,7 +72,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerPayments extends XLite_M
                    "WHERE partner_id=$partnerID AND paid=1 ".
                    $date .
                    "GROUP BY paid_date";
-            $this->payments = $pp->db->getAll($sql);                   
+            $this->payments = $pp->db->getAll($sql);
             $sql = "SELECT sum(commissions) AS total ".
                    "FROM $table ".
                    "WHERE partner_id=$partnerID AND paid=1 ".

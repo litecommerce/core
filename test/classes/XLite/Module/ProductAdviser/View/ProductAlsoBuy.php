@@ -36,14 +36,14 @@
  * @since      3.0.0
  */
 class XLite_Module_ProductAdviser_View_ProductAlsoBuy extends XLite_View_ProductsList
-{	
+{
     /**
      *  Widget parameter names
      */
     const PARAM_PRODUCT_ID = 'product_id';
 
 
-	/**
+    /**
      * Targets this widget is allowed for
      *
      * @var    array
@@ -53,17 +53,17 @@ class XLite_Module_ProductAdviser_View_ProductAlsoBuy extends XLite_View_Product
     protected $allowedTargets = array('product');
 
 
-	/**
-	 * Get widget title
-	 * 
-	 * @return string
-	 * @access public
-	 * @since  3.0.0
-	 */
-	protected function getHead()
-	{
-		return 'People who buy this product also buy';
-	}
+    /**
+     * Get widget title
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    protected function getHead()
+    {
+        return 'People who buy this product also buy';
+    }
 
     /**
      * Define widget parameters
@@ -116,6 +116,6 @@ class XLite_Module_ProductAdviser_View_ProductAlsoBuy extends XLite_View_Product
      */
     public function isVisible()
     {
-		return parent::isVisible() && $this->config->ProductAdviser->products_also_buy_enabled;
+        return parent::isVisible() && $this->config->ProductAdviser->products_also_buy_enabled;
     }
 }

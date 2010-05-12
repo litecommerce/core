@@ -42,7 +42,7 @@ class XLite_Model_LocationPath extends XLite_Base
      * @access protected
      * @since  3.0.0
      */
-	protected $nodes = array();
+    protected $nodes = array();
 
 
     /**
@@ -54,12 +54,12 @@ class XLite_Model_LocationPath extends XLite_Base
      * @access public
      * @since  3.0.0
      */
-	public function __construct(array $nodes = array())
-	{
+    public function __construct(array $nodes = array())
+    {
         if (!empty($nodes)) {
     		$this->nodes = $nodes;
         }
-	}
+    }
 
     /**
      * Add location node 
@@ -70,10 +70,10 @@ class XLite_Model_LocationPath extends XLite_Base
      * @access public
      * @since  3.0.0
      */
-	public function addNode(XLite_Model_Location $node)
-	{
-		$this->nodes[] = $node;
-	}
+    public function addNode(XLite_Model_Location $node)
+    {
+        $this->nodes[] = $node;
+    }
 
     /**
      * Return list of location nodes
@@ -82,8 +82,8 @@ class XLite_Model_LocationPath extends XLite_Base
      * @access public
      * @since  3.0.0
      */
-	public function getNodes()
-	{
-		return $this->nodes;
-	}
+    public function getNodes()
+    {
+        return $this->nodes;
+    }
 }

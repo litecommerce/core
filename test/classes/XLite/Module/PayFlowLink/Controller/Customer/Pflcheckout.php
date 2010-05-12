@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_PayFlowLink_Controller_Customer_Pflcheckout extends XLite_Controller_Customer_Checkout
-{	
+{
     public $registerForm = null;
 
     function init()
@@ -46,18 +46,18 @@ class XLite_Module_PayFlowLink_Controller_Customer_Pflcheckout extends XLite_Con
     	parent::init();
 
         // go to cart view if cart is empty
-		if ($this->target == "pflcheckout" && $this->cart->is("empty")) {
-			$this->redirect("cart.php?target=cart");
-			return;
-		}
+        if ($this->target == "pflcheckout" && $this->cart->is("empty")) {
+            $this->redirect("cart.php?target=cart");
+            return;
+        }
 
-		$this->redirect_PayFlowLink();
+        $this->redirect_PayFlowLink();
     }
 
-	function redirect_PayFlowLink()
-	{
-		$this->cart->set("status", "Q");
-		$this->cart->update();
+    function redirect_PayFlowLink()
+    {
+        $this->cart->set("status", "Q");
+        $this->cart->update();
 
         $pm = $this->cart->get("PaymentMethod");
 
@@ -95,8 +95,8 @@ class XLite_Module_PayFlowLink_Controller_Customer_Pflcheckout extends XLite_Con
 </BODY>
 </HTML>
 <?php
-		$this->success();
-		$this->session->writeClose();
-		exit;
-	}
+        $this->success();
+        $this->session->writeClose();
+        exit;
+    }
 }

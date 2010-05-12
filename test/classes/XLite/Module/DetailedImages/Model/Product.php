@@ -58,97 +58,97 @@ class XLite_Module_DetailedImages_Model_Product extends XLite_Model_Product impl
      */
     public function getDetailedImagesCount()
     {
-		return count($this->getDetailedImages());
+        return count($this->getDetailedImages());
     }
     
     public function delete()
     {
-		foreach ($this->getDetailedImages() as $image) {
-			$image->delete();
-		}
+        foreach ($this->getDetailedImages() as $image) {
+            $image->delete();
+        }
 
         parent::delete();
     }
 
-	public function cloneObject()
-	{
-		$product = parent::cloneObject();
+    public function cloneObject()
+    {
+        $product = parent::cloneObject();
 
-		foreach ($this->getDetailedImages() as $image) {
+        foreach ($this->getDetailedImages() as $image) {
 
-			$newImage = new XLite_Module_DetailedImages_Model_DetailedImage();
-			$newImage->set("alt", $image->get("alt"));
-			$newImage->set("enabled", $image->get("enabled"));
-			$newImage->set("order_by", $image->get("order_by"));
-			$newImage->set("product_id", $product->get("product_id"));
-			$newImage->create();
+            $newImage = new XLite_Module_DetailedImages_Model_DetailedImage();
+            $newImage->set("alt", $image->get("alt"));
+            $newImage->set("enabled", $image->get("enabled"));
+            $newImage->set("order_by", $image->get("order_by"));
+            $newImage->set("product_id", $product->get("product_id"));
+            $newImage->create();
 
-			$obj = $this->get("image");
-			if (!method_exists($obj, " copyImageFile")) {
+            $obj = $this->get("image");
+            if (!method_exists($obj, " copyImageFile")) {
 
-				// use correct image copy routine for LC version lower than 2.2
-				$image->deepCopyTo($newImage->get("image_id"));
+                // use correct image copy routine for LC version lower than 2.2
+                $image->deepCopyTo($newImage->get("image_id"));
 
-			} else {
-				$obj->copyTo($newImage->get("image_id"));
-			}
-		}
+            } else {
+                $obj->copyTo($newImage->get("image_id"));
+            }
+        }
 
-		return $product;
-	}
+        return $product;
+    }
 
-	/**
-	 * Garbage collector
-	 * 
-	 * @return void
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	function collectGarbage()
-	{
-		parent::collectGarbage();
+    /**
+     * Garbage collector
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    function collectGarbage()
+    {
+        parent::collectGarbage();
 
-		$products_table = $this->db->getTableByAlias('products');
-		$detailed_images_table = $this->db->getTableByAlias('images');
+        $products_table = $this->db->getTableByAlias('products');
+        $detailed_images_table = $this->db->getTableByAlias('images');
 
-		$result = $this->db->getAll(
-			'SELECT i.image_id FROM ' . $detailed_images_table . ' as i '
-			. 'LEFT OUTER JOIN ' . $products_table .' as p ON i.product_id = p.product_id '
-			. 'WHERE p.product_id IS NULL'
-		);
+        $result = $this->db->getAll(
+            'SELECT i.image_id FROM ' . $detailed_images_table . ' as i '
+            . 'LEFT OUTER JOIN ' . $products_table .' as p ON i.product_id = p.product_id '
+            . 'WHERE p.product_id IS NULL'
+        );
 
-		if (is_array($result)) {
-			foreach ($result as $info) {
-				$di = new XLite_Module_DetailedImages_Model_DetailedImage($info['image_id']);
-				$di->delete();
-			}
-		}
-	}
+        if (is_array($result)) {
+            foreach ($result as $info) {
+                $di = new XLite_Module_DetailedImages_Model_DetailedImage($info['image_id']);
+                $di->delete();
+            }
+        }
+    }
 
-	/**
-	 * Check - has product zoom image or not
-	 * 
-	 * @return boolean
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function getHasZoom()
-	{
-		return !is_null($this->getZoomImage());
-	}
+    /**
+     * Check - has product zoom image or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getHasZoom()
+    {
+        return !is_null($this->getZoomImage());
+    }
 
-	/**
-	 * Get zoom image 
-	 * 
-	 * @return XLite_Module_DetailedImages_Model_DetailedImage
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function getZoomImage()
-	{
-		$result = null;
+    /**
+     * Get zoom image 
+     * 
+     * @return XLite_Module_DetailedImages_Model_DetailedImage
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getZoomImage()
+    {
+        $result = null;
 
         foreach ($this->getDetailedImages() as $image) {
             if ($image->get('is_zoom') == 'Y') {
@@ -157,6 +157,6 @@ class XLite_Module_DetailedImages_Model_Product extends XLite_Model_Product impl
             }
         }
 
-		return $result;
-	}
+        return $result;
+    }
 }

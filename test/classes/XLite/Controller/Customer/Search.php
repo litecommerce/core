@@ -43,7 +43,7 @@ class XLite_Controller_Customer_Search extends XLite_Controller_Customer_Abstrac
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $params = array('target', 'substring');    
+    protected $params = array('target', 'substring');
 
     /**
      * Products list (cache)
@@ -63,7 +63,7 @@ class XLite_Controller_Customer_Search extends XLite_Controller_Customer_Abstrac
      * @since  3.0.0
      */ 
     protected function getLocation()
-    {       
+    {
         return 'Search Results';
     }
 
@@ -100,7 +100,7 @@ class XLite_Controller_Customer_Search extends XLite_Controller_Customer_Abstrac
             if ($this->get('pageID') == null) {
                 $searchStat = new XLite_Model_SearchStat();
                 $searchStat->add($this->get('substring'), count($this->products));
-            }    
+            }
         }
 
         return $this->products;

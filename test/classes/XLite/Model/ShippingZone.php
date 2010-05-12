@@ -34,11 +34,11 @@
  * @since   3.0.0
  */
 class XLite_Model_ShippingZone extends XLite_Model_Abstract
-{	
+{
     public $fields = array(
         "shipping_zone" => 0
-        );	
-    public $isRead = true;    
+        );
+    public $isRead = true;
 
     public function __construct($zone = null)
     {
@@ -52,8 +52,8 @@ class XLite_Model_ShippingZone extends XLite_Model_Abstract
     {
         $states = $this->db->getTableByAlias("states");
         $countries = $this->db->getTableByAlias("countries");
-        $array1 = $this->db->getAll("SELECT DISTINCT shipping_zone from $states order by shipping_zone"); 
-        $array2 = $this->db->getAll("SELECT DISTINCT shipping_zone from $countries order by shipping_zone"); 
+        $array1 = $this->db->getAll("SELECT DISTINCT shipping_zone from $states order by shipping_zone");
+        $array2 = $this->db->getAll("SELECT DISTINCT shipping_zone from $countries order by shipping_zone");
         $array = array_merge($array1, $array2); // state zones first
         return $this->_zonesArray($array);
     }
@@ -61,14 +61,14 @@ class XLite_Model_ShippingZone extends XLite_Model_Abstract
     function findCountryZones()
     {
         $countries = $this->db->getTableByAlias("countries");
-        $array = $this->db->getAll("SELECT DISTINCT shipping_zone from $countries order by shipping_zone"); 
+        $array = $this->db->getAll("SELECT DISTINCT shipping_zone from $countries order by shipping_zone");
         return $this->_zonesArray($array);
     }
 
     function findStateZones()
     {
         $states = $this->db->getTableByAlias("states");
-        $array = $this->db->getAll("SELECT DISTINCT shipping_zone from $states order by shipping_zone"); 
+        $array = $this->db->getAll("SELECT DISTINCT shipping_zone from $states order by shipping_zone");
         return $this->_zonesArray($array);
     }
 
@@ -100,14 +100,14 @@ class XLite_Model_ShippingZone extends XLite_Model_Abstract
 
     function delete()
     {
-        $this->doDie("Not implemented");    
+        $this->doDie("Not implemented");
     }
 
     function create()
     {
         $states = $this->db->getTableByAlias("states");
         $countries = $this->db->getTableByAlias("countries");
-        $max1 = $this->db->getOne("SELECT MAX(shipping_zone) from $states"); 
+        $max1 = $this->db->getOne("SELECT MAX(shipping_zone) from $states");
         $max2 = $this->db->getOne("SELECT MAX(shipping_zone) from $countries");
         $this->set("shipping_zone", max($max1, $max2)+1);
     }

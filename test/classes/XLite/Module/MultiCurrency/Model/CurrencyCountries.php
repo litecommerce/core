@@ -34,27 +34,27 @@
  * @since   3.0.0
  */
 class XLite_Module_MultiCurrency_Model_CurrencyCountries extends XLite_Model_Abstract
-{	
-	public $fields = array(
-			"currency_id" 	=> 0,
-			"code"			=> "",
-			"name"			=> "",
-			"exchange_rate" => 0.00,
-			"price_format"	=> "", 
-			"base"			=> 0,	
-			"enabled"		=> 0,
-			"order_by"		=> 0,
-			"countries"		=> "");	
+{
+    public $fields = array(
+            "currency_id" 	=> 0,
+            "code"			=> "",
+            "name"			=> "",
+            "exchange_rate" => 0.00,
+            "price_format"	=> "", 
+            "base"			=> 0,	
+            "enabled"		=> 0,
+            "order_by"		=> 0,
+            "countries"		=> "");
 
-    public $autoIncrement = "currency_id";	
-    public $alias = "country_currencies";	
+    public $autoIncrement = "currency_id";
+    public $alias = "country_currencies";
     public $defaultOrder = "base,order_by,code";
 
-	function inCurrencyCountries($country_code) 
-	{
-		$countries = unserialize($this->get("countries"));
-		if (empty($countries)) return false;	
-		return in_array($country_code, $countries);
-	}  
+    function inCurrencyCountries($country_code) 
+    {
+        $countries = unserialize($this->get("countries"));
+        if (empty($countries)) return false;
+        return in_array($country_code, $countries);
+    }
 
-} 
+}

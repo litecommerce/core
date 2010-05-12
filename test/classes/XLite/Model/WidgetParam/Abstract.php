@@ -44,7 +44,7 @@ abstract class XLite_Model_WidgetParam_Abstract extends XLite_Base
     const ATTR_CONTINUE  = 'continue';
 
 
-	/**
+    /**
      * Param type
      *
      * @var    string
@@ -53,23 +53,23 @@ abstract class XLite_Model_WidgetParam_Abstract extends XLite_Base
      */
     protected $type = null;
 
-	/**
-	 * Param value 
-	 * 
-	 * @var    mixed
-	 * @access protected
-	 * @since  3.0
-	 */
-	protected $value = null;
+    /**
+     * Param value 
+     * 
+     * @var    mixed
+     * @access protected
+     * @since  3.0
+     */
+    protected $value = null;
 
-	/**
-	 * Param label 
-	 * 
-	 * @var    string
-	 * @access protected
-	 * @since  3.0
-	 */
-	protected $label = null;
+    /**
+     * Param label 
+     * 
+     * @var    string
+     * @access protected
+     * @since  3.0
+     */
+    protected $label = null;
 
     /**
      * Determines if the param will be diaplayed in CMS as widget setting
@@ -154,19 +154,19 @@ abstract class XLite_Model_WidgetParam_Abstract extends XLite_Base
         return array(empty($result), $result);
     }
     
-	/**
-	 * Return protected property 
-	 * 
-	 * @param string $name property name
-	 *  
-	 * @return mixed
-	 * @access public
-	 * @since  3.0
-	 */
-	public function __get($name)
-	{
-		return isset($this->$name) ? $this->$name : null;
-	}
+    /**
+     * Return protected property 
+     * 
+     * @param string $name property name
+     *  
+     * @return mixed
+     * @access public
+     * @since  3.0
+     */
+    public function __get($name)
+    {
+        return isset($this->$name) ? $this->$name : null;
+    }
 
     /**
      * Set param value

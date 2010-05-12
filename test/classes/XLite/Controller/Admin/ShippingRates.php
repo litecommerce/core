@@ -34,10 +34,10 @@
  * @since   3.0.0
  */
 class XLite_Controller_Admin_ShippingRates extends XLite_Controller_Admin_ShippingSettings
-{	
-    public $params = array('target', 'shipping_zone_range', 'shipping_id_range');	
+{
+    public $params = array('target', 'shipping_zone_range', 'shipping_id_range');
     
-    public $shipping_id_range = "";	
+    public $shipping_id_range = "";
     public $shipping_zone_range = "";
 
     function getPageTemplate()
@@ -60,16 +60,16 @@ class XLite_Controller_Admin_ShippingRates extends XLite_Controller_Admin_Shippi
         $condition = implode(" AND ", $condition);
         $sr = new XLite_Model_ShippingRate();
         $shipping_rates = $sr->findAll($condition);
-		$shipping = new XLite_Model_Shipping();
+        $shipping = new XLite_Model_Shipping();
     	$modules = $shipping->getModules();
     	$modules = (is_array($modules)) ? array_keys($modules) : array();
-		$shippings = $shipping->findAll();
-		$validShippings = array("-1");
-		foreach($shippings as $shipping) {
-			if (in_array($shipping->get("class"), $modules) && $shipping->get("enabled")) {
-				$validShippings[] = $shipping->get("shipping_id");
-			}
-		}
+        $shippings = $shipping->findAll();
+        $validShippings = array("-1");
+        foreach($shippings as $shipping) {
+            if (in_array($shipping->get("class"), $modules) && $shipping->get("enabled")) {
+                $validShippings[] = $shipping->get("shipping_id");
+            }
+        }
 
         // assign numbers
         $i = 1;
@@ -105,16 +105,16 @@ class XLite_Controller_Admin_ShippingRates extends XLite_Controller_Admin_Shippi
         $shippingRates = $this->get("shippingRates");
         foreach(XLite_Core_Request::getInstance()->rate as $key => $rate_data) {
             if (array_key_exists($key, $shippingRates)) {
-				$rate = new XLite_Model_ShippingRate();
-				$rate->set("properties", $rate_data);
-				if ($rate->isExists()) {
-					$rate->update();
-				} else {
-	                $rate = $shippingRates[$key];
+                $rate = new XLite_Model_ShippingRate();
+                $rate->set("properties", $rate_data);
+                if ($rate->isExists()) {
+                    $rate->update();
+                } else {
+                    $rate = $shippingRates[$key];
     	            $rate->delete();
         	        $rate->set("properties", $rate_data);
             	    $rate->create();
-				}
+                }
             }
         }
     }

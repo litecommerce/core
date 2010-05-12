@@ -35,15 +35,15 @@
  */
 class XLite_Module_AOM_Controller_Admin_Module extends XLite_Controller_Admin_Module implements XLite_Base_IDecorator
 {
-	function init()
-	{
-		parent::init();
+    function init()
+    {
+        parent::init();
 
-		if ($this->page == "AOM") {
+        if ($this->page == "AOM") {
         	$lay = XLite_Model_Layout::getInstance();
         	$lay->addLayout("general_settings.tpl", "modules/AOM/config.tpl");
         }
-	}
+    }
 
     /**
      * Update module settings 
@@ -53,23 +53,23 @@ class XLite_Module_AOM_Controller_Admin_Module extends XLite_Controller_Admin_Mo
      * @since  3.0.0
      */
     protected function doActionUpdate()
-	{
-		if ($this->page == "AOM") {
-			$value = (is_array($_REQUEST["order_update_notification"])) ? $_REQUEST["order_update_notification"] : array();
+    {
+        if ($this->page == "AOM") {
+            $value = (is_array($_REQUEST["order_update_notification"])) ? $_REQUEST["order_update_notification"] : array();
 
-			$config = new XLite_Model_Config();
-			$config->createOption("AOM", "order_update_notification", serialize($value));
-		}
+            $config = new XLite_Model_Config();
+            $config->createOption("AOM", "order_update_notification", serialize($value));
+        }
 
-		parent::action_update();
-	}
+        parent::action_update();
+    }
 
-	function isEmailCheckedAOM($email)
-	{
-		$value = $this->xlite->config->getComplex('AOM.order_update_notification');
-		if (!is_array($value))
-			return false;
+    function isEmailCheckedAOM($email)
+    {
+        $value = $this->xlite->config->getComplex('AOM.order_update_notification');
+        if (!is_array($value))
+            return false;
 
-		return (in_array($email, $value)) ? true : false;
-	}
+        return (in_array($email, $value)) ? true : false;
+    }
 }

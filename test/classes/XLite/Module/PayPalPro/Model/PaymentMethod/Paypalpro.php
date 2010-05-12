@@ -311,7 +311,7 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_Paypalpro extends XLite_Model_P
                 $cart->set('status', 'F');
                 $cart->update();
 
-                $result = self::PAYMENT_FAILURE; 
+                $result = self::PAYMENT_FAILURE;
 
             } elseif (
                 0 == strcasecmp($request->payment_status, 'Completed')
@@ -528,7 +528,7 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_Paypalpro extends XLite_Model_P
             }
         }
 
-        return $this->phone[$type];        
+        return $this->phone[$type];
     }
 
     /**

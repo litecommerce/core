@@ -82,7 +82,7 @@ class XLite_Model_Cart extends XLite_Model_Order implements XLite_Base_ISingleto
             } elseif ($this->get("profile_id")) {
                 $this->set("profile",  null);
                 $this->calcTotals();
-            }        
+            }
         }
     }
 
@@ -137,7 +137,7 @@ class XLite_Model_Cart extends XLite_Model_Order implements XLite_Base_ISingleto
             if ($this->auth->getComplex('profile.order_id')) {
                 // anonymous checkout:
                 // use the current profile as order profile
-                $this->set("profile_id", $this->getComplex('profile.profile_id')); 
+                $this->set("profile_id", $this->getComplex('profile.profile_id'));
             } else {
                 $this->set("profileCopy", $this->auth->get("profile"));
             }
@@ -145,6 +145,6 @@ class XLite_Model_Cart extends XLite_Model_Order implements XLite_Base_ISingleto
 
             $this->update();
         }
-    } 
+    }
 }
 

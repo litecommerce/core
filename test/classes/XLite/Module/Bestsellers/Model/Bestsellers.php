@@ -111,7 +111,7 @@ class XLite_Module_Bestsellers_Model_Bestsellers extends XLite_Base
                     . ' WHERE category_id IN (' . implode(', ', $this->ids). ')';
                 $this->ids = array();
 
-                $ids = $category->db->getAll($sql); 
+                $ids = $category->db->getAll($sql);
                 if ($ids) {
 
                     foreach ($ids as $k => $id) {

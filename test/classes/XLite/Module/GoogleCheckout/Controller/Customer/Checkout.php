@@ -38,10 +38,10 @@ class XLite_Module_GoogleCheckout_Controller_Customer_Checkout extends XLite_Con
 
     function init()
     {
-		if (is_object($this->cart) && $this->cart->get("payment_method") == "google_checkout") {
-			$this->cart->setPaymentMethod(null);
-			$this->cart->update();
-		}
+        if (is_object($this->cart) && $this->cart->get("payment_method") == "google_checkout") {
+            $this->cart->setPaymentMethod(null);
+            $this->cart->update();
+        }
 
         parent::init();
     }

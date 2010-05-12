@@ -43,7 +43,7 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $gc = null;    
+    protected $gc = null;
 
     /**
      * Skip shipping cost getter flag
@@ -53,7 +53,7 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $skipShippingCostRecursion = false;    
+    protected $skipShippingCostRecursion = false;
 
     /**
      * Shipped certificates count
@@ -63,7 +63,7 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $shippedCertificates = null;    
+    protected $shippedCertificates = null;
 
     /**
      * Shipped items 
@@ -73,7 +73,7 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $shippedItems = null;    
+    protected $shippedItems = null;
 
     /**
      * Shipping cost 
@@ -188,7 +188,7 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
 
         if (is_null($gc)) {
 
-            $this->gc = null; 
+            $this->gc = null;
             $this->set('gcid', '');
             $this->calcTotals();
             $result = XLite_Module_GiftCertificates_Model_GiftCertificate::GC_OK;
@@ -444,7 +444,7 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
         }
 
         return $this->shippedCertificates;
-    } 
+    }
 
     /**
      * Check - has order shipped items or not
@@ -468,7 +468,7 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
         }
 
         return $this->shippedItems;
-    } 
+    }
 
     /**
      * Check - shipping is available or not

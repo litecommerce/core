@@ -35,12 +35,12 @@
  */
 class XLite_Module_ChronoPay_Controller_Customer_Callback extends XLite_Controller_Customer_Callback implements XLite_Base_IDecorator
 {
-	function handleRequest()
-	{
-		require_once LC_MODULES_DIR . 'ChronoPay' . LC_DS . 'encoded.php';
-		PaymentMethod_chronopay_callback();
+    function handleRequest()
+    {
+        require_once LC_MODULES_DIR . 'ChronoPay' . LC_DS . 'encoded.php';
+        PaymentMethod_chronopay_callback();
 
-		parent::handleRequest();
-	}
-	
+        parent::handleRequest();
+    }
+    
 }

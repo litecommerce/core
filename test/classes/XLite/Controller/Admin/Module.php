@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Controller_Admin_Module extends XLite_Controller_Admin_Abstract
-{	
+{
     /**
      * params 
      * FIXME - must be protected (at first)
@@ -56,7 +56,7 @@ class XLite_Controller_Admin_Module extends XLite_Controller_Admin_Abstract
     protected function getOptions()
     {
         // TODO - check if we need to cache this
-        $config = new XLite_Model_Config(); 
+        $config = new XLite_Model_Config();
 
         return $config->getByCategory($this->page);
     }

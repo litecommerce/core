@@ -90,7 +90,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         'membership'            => '',
         'pending_membership'    => '',
         'sidebar_boxes'         => '',
-    );    
+    );
         
     public $_securefields = array(
         'profile_id'   => 0,
@@ -98,11 +98,11 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         'first_login'  => '0',
         'last_login'   => '0',
         'membership'   => '',
-    );    
+    );
 
     public $_adminSecurefields = array(
         'last_login' => '0'
-    );    
+    );
 
     /**
      * Auto-increment file name
@@ -220,7 +220,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
             }
             $this->setProperties($properties);
         }
-    } 
+    }
 
     /**
      * Returns the specified property of this object. Read the object data from dataase if necessary 
@@ -256,7 +256,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
             $state->set("state", $this->get("billing_custom_state"));
 
         return $state;
-    } 
+    }
     function getShippingState() 
     {
         $state = new XLite_Model_State($this->get("shipping_state"));
@@ -264,32 +264,32 @@ class XLite_Model_Profile extends XLite_Model_Abstract
             $state->set("state", $this->get("shipping_custom_state"));
 
         return $state;
-    } 
+    }
     function getBillingCountry() 
     {
         return new XLite_Model_Country($this->get("billing_country"));
-    } 
+    }
     function getShippingCountry() 
     {
         return new XLite_Model_Country($this->get("shipping_country"));
-    } 
+    }
 
     function enable() 
     {
         $this->set("status", "E");
-    } 
+    }
 
     function disable() 
     {
         $this->set("status", "D");
-    } 
+    }
 
     function isExists($login = '') 
     {
         $p = new XLite_Model_Profile();
 
         return $p->find('login = \'' . addslashes($login) . '\'');
-    } 
+    }
 
     function isValid()
     {
@@ -299,14 +299,14 @@ class XLite_Model_Profile extends XLite_Model_Abstract
     function isAdmin() 
     {
         return XLite_Model_Auth::getInstance()->isAdmin($this);
-    } 
+    }
 
     function toXML() 
     {
         $id = "profile_" . $this->get("profile_id");
         $xml = parent::toXML();
         return "<profile id=\"$id\">\n$xml</profile>\n";
-    } 
+    }
 
     function import(array $options) 
     {
@@ -318,7 +318,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         $c->set("name", "memberships");
         $c->set("value", serialize($this->config->getComplex('Memberships.memberships')));
         $c->update();
-    } 
+    }
 
     /**
     * Import a row from outside. 
@@ -360,7 +360,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
                 $this->config->setComplex("Memberships.memberships", $memberships);
             }
         }
-    } 
+    }
 
     function _convertProperties(array &$p, $md5_import = '') 
     {
@@ -390,7 +390,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         if (isset($p["shipping_country"])) {
             $p["shipping_country"] = $this->_convertCountry($p["shipping_country"]);
         }
-    } 
+    }
 
     function _convertState($value)
     {
@@ -427,7 +427,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
             if ($name == "profile_id" || $name == "order_id" || $name == "sidebar_boxes" || $name == "extra_fields" || $name == "password_hint" || $name == "password_hint_answer") {
                 continue;
             }
-            $fields[$name] = false; 
+            $fields[$name] = false;
         }
         // get count(fields) of fields array
         foreach ($fields as $field) {
@@ -438,10 +438,10 @@ class XLite_Model_Profile extends XLite_Model_Abstract
             if (isset($layout[$id])) {
                 $selected = $layout[$id];
                 $result[$id][$selected] = true;
-            }    
+            }
         }
         return $result;
-    } 
+    }
     
     function _beforeSave()
     {
@@ -462,7 +462,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         $result = $this->isValid();
         if ($result) {
             foreach ($this->addressFields as $name) {
-                if ($this->get('billing_' . $name) != $this->get('shipping_' . $name)) {    
+                if ($this->get('billing_' . $name) != $this->get('shipping_' . $name)) {
                     $result = false;
                     break;
                 }

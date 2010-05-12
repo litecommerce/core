@@ -46,7 +46,7 @@ function AccountingPackage_export_qb(&$dialog)
     $qb->init();
     $qb->display();
     $dialog->set("silent", true); // suppress output
-} 
+}
 
 function AccountingPackage_export(&$dialog, $format) 
 {
@@ -60,7 +60,7 @@ function AccountingPackage_export(&$dialog, $format)
     $qb->display();
     $dialog->set("silent", true); // suppress output
 
-} 
+}
 
 // WARNING :
 // Please ensure that you have no whitespaces / empty lines below this message.

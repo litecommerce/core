@@ -35,9 +35,9 @@
  */
 abstract class XLite_Module_ProductAdviser_View_Abstract extends XLite_View_Abstract implements XLite_Base_IDecorator
 {
-	function getPercents($columns)
-	{
-		return (int) (($columns > 0) ? (round((100 / $columns))) : 0);
-	}
+    function getPercents($columns)
+    {
+        return (int) (($columns > 0) ? (round((100 / $columns))) : 0);
+    }
 
 }

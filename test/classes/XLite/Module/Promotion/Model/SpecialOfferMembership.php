@@ -34,10 +34,10 @@
  * @since   3.0.0
  */
 class XLite_Module_Promotion_Model_SpecialOfferMembership extends XLite_Model_Abstract
-{	
-	public $fields = array (
-		'offer_id'	=> 0,
-		'membership' => '');	
-	public $primaryKey = array ("offer_id","membership");	
-	public $alias = "special_offer_memberships";
+{
+    public $fields = array (
+        'offer_id'	=> 0,
+        'membership' => '');
+    public $primaryKey = array ("offer_id","membership");
+    public $alias = "special_offer_memberships";
 }

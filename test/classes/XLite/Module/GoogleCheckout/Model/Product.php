@@ -35,9 +35,9 @@
  */
 class XLite_Module_GoogleCheckout_Model_Product extends XLite_Model_Product implements XLite_Base_IDecorator
 {
-	public function __construct($id=null)
-	{
-		parent::__construct($id);
-		$this->fields["google_disabled"] = 0;
-	}
+    public function __construct($id=null)
+    {
+        parent::__construct($id);
+        $this->fields["google_disabled"] = 0;
+    }
 }

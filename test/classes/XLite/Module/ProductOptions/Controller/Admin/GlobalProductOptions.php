@@ -34,8 +34,8 @@
  * @since   3.0.0
  */
 class XLite_Module_ProductOptions_Controller_Admin_GlobalProductOptions extends XLite_Controller_Admin_Abstract
-{	
-	public $_categories = null;
+{
+    public $_categories = null;
 
     function getCategories() 
     {
@@ -55,7 +55,7 @@ class XLite_Module_ProductOptions_Controller_Admin_GlobalProductOptions extends 
             array_multisort($names, $this->_categories);
         }
         return $this->_categories;
-    } 
+    }
 
     function action_add()
     {
@@ -74,7 +74,7 @@ class XLite_Module_ProductOptions_Controller_Admin_GlobalProductOptions extends 
 
         $this->params["option_id"] = $option->get("option_id");
         $this->option_id = $option->get("option_id");
-	}	
+    }
 
     function getAllParams($exeptions = null)
     {
@@ -92,41 +92,41 @@ class XLite_Module_ProductOptions_Controller_Admin_GlobalProductOptions extends 
 
     function action_delete()
     {
-		if (isset($this->option_id) && isset($this->global_options) && is_array($this->global_options)) {
-			$po = new XLite_Module_ProductOptions_Model_ProductOption();
-			$child_po = $po->findAll("parent_option_id='".$this->option_id."'");
-			if ($child_po) {
-				foreach($child_po as $option_) {
-					$option_->delete();
-				}
-			}
-			$po->set("option_id", $this->option_id);
-			$po->delete();
+        if (isset($this->option_id) && isset($this->global_options) && is_array($this->global_options)) {
+            $po = new XLite_Module_ProductOptions_Model_ProductOption();
+            $child_po = $po->findAll("parent_option_id='".$this->option_id."'");
+            if ($child_po) {
+                foreach($child_po as $option_) {
+                    $option_->delete();
+                }
+            }
+            $po->set("option_id", $this->option_id);
+            $po->delete();
 
-			if (isset($this->option_id)) {
-				unset($this->option_id);
-			}
-		}
-	}
-	
-	function action_update_product_option()
-	{
-		if (isset($this->option_id) && isset($this->global_options) && is_array($this->global_options)) {
-			$po = new XLite_Module_ProductOptions_Model_ProductOption($this->option_id);
-			$categories = "";
-			if (isset($this->global_options["categories"])) {
-				$categories = $this->global_options["categories"];
-				unset($this->global_options["categories"]);
-			}
-			if ($this->global_options["global_categories"]) {
-				$categories = "";
-			}
-			$po->set("properties", $this->global_options);
-			$po->setCategoriesList($categories);
-			$po->update();
-		}	
-	}
-	
+            if (isset($this->option_id)) {
+                unset($this->option_id);
+            }
+        }
+    }
+    
+    function action_update_product_option()
+    {
+        if (isset($this->option_id) && isset($this->global_options) && is_array($this->global_options)) {
+            $po = new XLite_Module_ProductOptions_Model_ProductOption($this->option_id);
+            $categories = "";
+            if (isset($this->global_options["categories"])) {
+                $categories = $this->global_options["categories"];
+                unset($this->global_options["categories"]);
+            }
+            if ($this->global_options["global_categories"]) {
+                $categories = "";
+            }
+            $po->set("properties", $this->global_options);
+            $po->setCategoriesList($categories);
+            $po->update();
+        }
+    }
+    
     function getGlobalOptions()
     {
         if (is_null($this->globalOptions)) {

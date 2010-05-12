@@ -34,23 +34,23 @@
  * @since   3.0.0
  */
 class XLite_Module_ProductAdviser_Model_ProductNewArrivals extends XLite_Model_Abstract
-{	
-	public $fields = array
-	(
-		"product_id" 		=> 0,
-		"added"				=> 0,
-		"new"				=> "N",
-		"updated"			=> 0,
-	);	
-	public $primaryKey = array("product_id");	
-	public $alias = "products_new_arrivals";	
-	public $defaultOrder = "new DESC, updated DESC, added DESC";
+{
+    public $fields = array
+    (
+        "product_id" 		=> 0,
+        "added"				=> 0,
+        "new"				=> "N",
+        "updated"			=> 0,
+    );
+    public $primaryKey = array("product_id");
+    public $alias = "products_new_arrivals";
+    public $defaultOrder = "new DESC, updated DESC, added DESC";
 
-	function cleanRelations($product_id)
-	{
-		$objs = $this->findAll("product_id='$product_id'");
-		foreach ($objs as $obj) {
-			$obj->delete();
-		}
-	}
+    function cleanRelations($product_id)
+    {
+        $objs = $this->findAll("product_id='$product_id'");
+        foreach ($objs as $obj) {
+            $obj->delete();
+        }
+    }
 }

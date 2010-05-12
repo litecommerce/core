@@ -45,21 +45,21 @@ class XLite_Controller_Admin_ShippingMethods extends XLite_Controller_Admin_Ship
         $shipping = new XLite_Model_Shipping();
         $shipping->set("properties", XLite_Core_Request::getInstance()->getData());
         $shipping->create();
-		$this->xlite->set("action_add_valid", true);
+        $this->xlite->set("action_add_valid", true);
     }
 
     function action_update()
     {
         foreach(XLite_Core_Request::getInstance()->order_by as $shipping_id=>$order_by) {
             $shipping = new XLite_Model_Shipping($shipping_id);
-			$shipping->set("order_by", $order_by);
-			$enabled = 0;
+            $shipping->set("order_by", $order_by);
+            $enabled = 0;
 
-			if (isset(XLite_Core_Request::getInstance()->enabled)) {
-				$_tmp = XLite_Core_Request::getInstance()->enabled;
-				if (isset($_tmp[$shipping_id])) {
-					$enabled = 1;
-				}
+            if (isset(XLite_Core_Request::getInstance()->enabled)) {
+                $_tmp = XLite_Core_Request::getInstance()->enabled;
+                if (isset($_tmp[$shipping_id])) {
+                    $enabled = 1;
+                }
             }
             $shipping->set("enabled", $enabled);
             $shipping->update();

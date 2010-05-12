@@ -34,14 +34,14 @@
  * @since   3.0.0
  */
 class XLite_Module_CyberSource_Model_PaymentMethod_CybersourceCc extends XLite_Model_PaymentMethod_CreditCard
-{	
-	public $configurationTemplate = "modules/CyberSource/config.tpl";	
-    public $hasConfigurationForm = true;	
+{
+    public $configurationTemplate = "modules/CyberSource/config.tpl";
+    public $hasConfigurationForm = true;
     public $processorName = "CyberSource";
 
     function process($cart)
     {
-		require_once LC_MODULES_DIR . 'CyberSource' . LC_DS . 'encoded.php';
+        require_once LC_MODULES_DIR . 'CyberSource' . LC_DS . 'encoded.php';
         return func_CyberSource_process($cart, $this);
     }
 }

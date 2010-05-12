@@ -69,7 +69,7 @@ class XLite_Module_ePDQ_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'ePDQ Payment Gateway';
-    }	
+    }
 
     /**
      * Determines if we need to show settings form link

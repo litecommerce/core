@@ -34,9 +34,9 @@
  * @since   3.0.0
  */
 class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
-{	
-    public $imagesDir = null;	
-    public $template = null;	
+{
+    public $imagesDir = null;
+    public $template = null;
     public $templateName = null;
 
     function postprocess() 
@@ -101,7 +101,7 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
         $editAreaEndOffset = $this->tokens[$editAreaEndPos]['start'];
         $this->source = substr($this->source, 0, $editAreaEndOffset);
         $this->template = $this->translateTemplate(substr($this->substitute(), $editAreaStartOffset));
-    } 
+    }
 
     function translateTemplate($src)
     {
@@ -126,7 +126,7 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
             }
         }
         return $call . $close;
-    } 
+    }
 
     function reverseModifier($str, $modifier) 
     {
@@ -135,7 +135,7 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
         case ':u': $str = urldecode($str); break;
         }
         return $str;
-    } 
+    }
 
     function equalTokenArrays(&$i, $tokens, &$endOffset) 
     {
@@ -153,7 +153,7 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
             $i++;
         }
         return true;
-    } 
+    }
     
     function equalTokens($token1, $token2) 
     {
@@ -170,7 +170,7 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
             }
         }
         return true;
-    } 
+    }
    
     function isEditAreaStart(&$i, &$template, &$endOffset) 
     {
@@ -208,7 +208,7 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
             return true;
         }
         return false;
-    } 
+    }
 
     function isEditAreaEnd(&$i, &$endOffset) 
     {
@@ -249,12 +249,12 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
                 array('type'=>'attribute'), array('type'=>'attribute-value', 'value'=>$this->imagesDir . '/' . EDIT_END_SHORT_IMG),
             ), $endOffset);
 
-    } 
+    }
 
     function isParamEditAreaStart(&$i, &$name, &$modifier, &$endOffset) 
     {
         $old = $i;
-        $match = false; 
+        $match = false;
         if ($this->equalTokenArrays($i, array(
                 array('type'=>'tag','name'=>'img'),
                 array('type'=>'attribute'), array('type'=>'attribute-value'),
@@ -267,17 +267,17 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
              $match = true;
          }
          return $match;
-    } 
+    }
     
     function isParamEditAreaEnd(&$i, &$endOffset)  
     {
         return $this->isEditAreaEnd($i, $endOffset);
-    } 
+    }
     
     function isWidgetStart(&$i, &$params, &$endOffset) 
     {
         $old = $i;
-        $match = false; 
+        $match = false;
         if ($this->equalTokenArrays($i, array(
              array('type'=>'tag','name'=>'table'),
              array('type'=>'attribute'), array('type'=>'attribute-value'),
@@ -295,7 +295,7 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
                  array('type'=>'tag','name'=>'tr'),
                  array('type'=>'tag','name'=>'td'),
                  ), $endOffset)) {
-                $match = true; 
+                $match = true;
             }
         }
         if (!$match && $this->equalTokenArrays($i, array(
@@ -311,7 +311,7 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
                  array('type'=>'close-tag','name'=>'td'),
                  array('type'=>'close-tag','name'=>'tr'),
                  ), $endOffset)) {
-                $match = true; 
+                $match = true;
             }
         }
         if ($match) {
@@ -327,7 +327,7 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
             }
         }
         return $match;
-    } 
+    }
 
     function isWidgetEnd(&$i, &$endOffset) 
     {
@@ -353,12 +353,12 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
             array('type'=>'close-tag','name'=>'td'),
             array('type'=>'close-tag','name'=>'tr'),
              ), $endOffset);
-    } 
+    }
 
     function isWidgetCall(&$i, &$params, &$endOffset) 
     {
         $old = $i;
-        $match = false; 
+        $match = false;
         $parsedWidget = array(
              array('type'=>'tag','name'=>'a'),
              array('type'=>'attribute', 'name'=>'href'), array('type'=>'attribute-value'),
@@ -373,7 +373,7 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
             if (func_starts_with($tag['attributes']['src'], $this->imagesDir . '/') && $this->equalTokenArrays($i, array(
                  array('type'=>'close-tag','name'=>'a'),
                  ), $endOffset)) {
-                $match = true; 
+                $match = true;
             }
         }
         if (!$match && $this->equalTokenArrays($i, array_merge(array(
@@ -384,7 +384,7 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
                  array('type'=>'close-tag','name'=>'a'),
                  array('type'=>'close-tag','name'=>'div'),
                  ), $endOffset)) {
-                $match = true; 
+                $match = true;
             }
         }
         if (!$match && $this->equalTokenArrays($i, array_merge(array(
@@ -396,7 +396,7 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
                  array('type'=>'close-tag','name'=>'td'),
                  array('type'=>'close-tag','name'=>'tr'),
                  ), $endOffset)) {
-                $match = true; 
+                $match = true;
             }
         }
 
@@ -408,7 +408,7 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
               ), $endOffset)) {
             $i = $old;
             $tag = $this->parseTag($i, $endOffset);
-            $match = true; 
+            $match = true;
         }
         if ($match) {
             $params = $tag['attributes'];
@@ -423,7 +423,7 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
             }
         }
         return $match;
-    } 
+    }
 
     function parseTag(&$i, &$endOffset) 
     {
@@ -455,11 +455,11 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
             return $tag;
         }
         return false;
-    } 
+    }
 
     function error($msg) 
     {
         $this->error = $msg;
         return false;
-    } 
+    }
 }

@@ -40,4 +40,4 @@ class XLite_Module_AdvancedSearch_Model_Auth extends XLite_Model_Auth implements
     	parent::loginProfile($profile);
     	$this->session->set("search", null);
     }
-} 
+}

@@ -43,7 +43,7 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificate extends XLi
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $params = array('target', 'gc');    
+    public $params = array('target', 'gc');
 
     /**
      * Gift certificate (cache) 

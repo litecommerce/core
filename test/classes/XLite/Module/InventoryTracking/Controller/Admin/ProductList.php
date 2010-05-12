@@ -39,7 +39,7 @@ class XLite_Module_InventoryTracking_Controller_Admin_ProductList extends XLite_
     {
         $this->params[] = "inventory";
         parent::init();
-    } 
+    }
 
     function getProducts() 
     {
@@ -62,17 +62,17 @@ class XLite_Module_InventoryTracking_Controller_Admin_ProductList extends XLite_
                 if ($this->xlite->get("ProductOptionsEnabled") && $product->get("productOptions") && $product->get("tracking")) {
                     $inventories = (array) $inv->findAll("inventory_id LIKE '$product_id" . "|%' AND enabled=1 $condition");
                     if (empty($inventories)) {
-                        unset($this->productsList[$k]); 
+                        unset($this->productsList[$k]);
                     }
                 } else {
                     // track without options:
                     if (!$inv->find("inventory_id='$product_id' AND enabled=1 $condition")) {
-                        unset($this->productsList[$k]); 
+                        unset($this->productsList[$k]);
                     }
                 }
             }
             $this->productsFound = count($this->productsList);
         }
         return $this->productsList;
-    } 
+    }
 }

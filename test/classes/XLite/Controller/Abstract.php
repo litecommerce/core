@@ -602,7 +602,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     public $pages = array();
 
 
-    protected $params = array('target');    
+    protected $params = array('target');
 
     protected $pageTemplates = array();
 
@@ -670,7 +670,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     public function isValid()
     {
         return $this->valid;
-    } 
+    }
 
     /**
      * Initialize controller
@@ -697,8 +697,8 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
      * @since  3.0.0
      */
     public function mapRequest($request = null)
-    {   
-    }   
+    {
+    }
         
     /** 
      * FIXME - backward compatibility; to delete 
@@ -787,8 +787,8 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
      * @since  3.0.0
      */
     public function getAccessLevel()
-    { 
-        return $this->auth->getCustomerAccessLevel(); 
+    {
+        return $this->auth->getCustomerAccessLevel();
     }
 
     function getProperties()

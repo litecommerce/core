@@ -67,20 +67,20 @@ function Shipping_intershipper_getRates($_this, $order)
     }
 
     $options = $_this->getOptions();
-	if (empty($options->userid)) {
-		return array();
-	}
+    if (empty($options->userid)) {
+        return array();
+    }
 
     $weight = $_this->getOunces($order);
     $ZipOrigination = $_this->config->getComplex('Company.location_zipcode');
     $CountryOrigination = $_this->config->getComplex('Company.location_country');
-	if (is_null($order->get("profile"))) {
+    if (is_null($order->get("profile"))) {
         $ZipDestination = $_this->config->getComplex('General.default_zipcode');
         $CountryDestination = $_this->config->getComplex('General.default_country');
-	} else {
+    } else {
         $ZipDestination = $order->getComplex('profile.shipping_zipcode');
         $CountryDestination = $order->getComplex('profile.shipping_country');
-	}
+    }
 
     if ($order->get("payment_method") == "COD") {
         $cod = $order->get("subtotal");
@@ -115,9 +115,9 @@ function Shipping_intershipper_getRates($_this, $order)
         if (!$_this->error) {
             // store the result in the cache
             $_this->_cacheResult("ints_cache", $fields, $rates);
-			// add shipping markups
-			$rates = $_this->serializeCacheRates($rates);
-			$rates = $_this->unserializeCacheRates($rates);
+            // add shipping markups
+            $rates = $_this->serializeCacheRates($rates);
+            $rates = $_this->unserializeCacheRates($rates);
         }
     }
     $rates = $_this->filterEnabled($rates);

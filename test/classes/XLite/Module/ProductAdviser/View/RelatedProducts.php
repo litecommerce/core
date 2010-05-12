@@ -44,7 +44,7 @@ class XLite_Module_ProductAdviser_View_RelatedProducts extends XLite_View_Produc
     const PARAM_PRODUCT_ID = 'product_id';
 
 
-	/**
+    /**
      * Targets this widget is allowed for
      *
      * @var    array
@@ -53,18 +53,18 @@ class XLite_Module_ProductAdviser_View_RelatedProducts extends XLite_View_Produc
      */
     protected $allowedTargets = array('product');
 
-	/**
-	 * Get widget title
-	 * 
-	 * @return string
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function getHead()
-	{
-		return 'Related products';
-	}
+    /**
+     * Get widget title
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getHead()
+    {
+        return 'Related products';
+    }
 
     /**
      * Define widget parameters

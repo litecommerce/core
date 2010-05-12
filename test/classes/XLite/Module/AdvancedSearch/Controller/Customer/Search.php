@@ -75,7 +75,7 @@ class XLite_Module_AdvancedSearch_Controller_Customer_Search extends XLite_Contr
         }
 
         return $this->products;
-    }    
+    }
 
 }
 

@@ -36,13 +36,13 @@ define('TAX_TOLOWERCASE', 1);
  * @since   3.0.0
  */
 class XLite_Model_TaxRates extends XLite_Base
-{    
+{
     public $_rates;
     /**
     * "default tax schema name" => array of rate rules
     */    
-    public $_predefinedSchemas = array();    
-    public $_taxValues = array();    
+    public $_predefinedSchemas = array();
+    public $_taxValues = array();
     public $_conditionValues = array();
     
     public function __construct()
@@ -294,7 +294,7 @@ array("condition" => "state=District of Columbia", "action" => array(
     array("condition"=>"product class=shipping service", "action"=>"Tax:=0"),
     array("condition"=>"product class=Tax free", "action"=>"Tax:=0")
     ));
-    } 
+    }
 
     function _createVatTax() 
     {
@@ -397,7 +397,7 @@ array("condition" => "state=District of Columbia", "action" => array(
                 ),
             )
         );
-    } 
+    }
 
     function _createCanadianTax() 
     {
@@ -425,7 +425,7 @@ array("condition" => "country=Canada", "open" => true, "action" => array(
 array("condition" => "country=New Zealand", "action" => array("Tax:==GST", "GST:=12.5")),
 array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=10")))
     );
-    } 
+    }
 
     function setPredefinedSchema($name)
     {
@@ -444,7 +444,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
                 if (!is_scalar($value)) {
                     $value = serialize($value);
                 }
-                $conf->set("value", $value); 
+                $conf->set("value", $value);
                 $this->config->setComplex("Taxes.$name", $value);
                 $conf->update();
             }
@@ -552,7 +552,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
                 foreach ($action as $rate) {
                     $this->_interpretAction($rate);
                 }
-            }    
+            }
         } else {
             // tax-name:=value|=expression syntax
             list($tax, $value) = explode(':=', $action);
@@ -779,7 +779,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
                 if (is_array($action)) {
                     $this->_collectActions($action, $actions);
                     continue;
-                } 
+                }
             } else {
                 $action = $node;
             }
@@ -845,7 +845,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
             for ($i=0; $i<count($values); $i++) {
                 $values[$i] = trim($values[$i]);
             }
-            $result[trim($name)] = $values;        
+            $result[trim($name)] = $values;
         }
         return $result;
     }
@@ -881,8 +881,8 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
                     "use_billing_info" => $this->getComplex('config.Taxes.use_billing_info') ? "Y" : "N",
                     "prices_include_tax" => $this->getComplex('config.Taxes.prices_include_tax') ? "Y" : "N",
                     "include_tax_message" => $this->getComplex('config.Taxes.include_tax_message'),
-                    );    
-        }        
+                    );
+        }
 
         $c = new XLite_Model_Config();
         $c->set("category", "Taxes");
@@ -892,7 +892,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
             // create schemas repositary
             $c->set("value", serialize(array($name => $schema)));
             $c->create();
-        } else { 
+        } else {
             // update existing schemas repositary
             $schemas = unserialize($this->getComplex('config.Taxes.schemas'));
             if (is_null($schema)) {
@@ -901,7 +901,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
                 }
             } else {
                 $schemas[$name] = $schema;
-           }     
+           }
             $c->set("value", serialize($schemas));
             $c->update();
         }
@@ -929,7 +929,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
         } else {
             return false;
         }
-        $exp   = ' '.stripslashes($exp).' '; 
+        $exp   = ' '.stripslashes($exp).' ';
         $taxes = $this->getTaxNames();
         if (in_array($tax_name, $taxes)) {
             $index = array_search($tax_name, $taxes);

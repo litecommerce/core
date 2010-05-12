@@ -182,14 +182,14 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
 
     function updateInventory($properties)
     {
-        if ($properties['opttype'] == 'Text'|| $properties['opttype'] == 'Textarea') return;    
+        if ($properties['opttype'] == 'Text'|| $properties['opttype'] == 'Textarea') return;
         
         $option = new XLite_Module_ProductOptions_Model_ProductOption($properties['option_id']);
         $old_properties = $option->get('properties');
         $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
 
         $inventories = $inventory->findAll("inventory_id LIKE '".$properties['product_id']."|%".addslashes($old_properties['optclass'])."%'");
-        if (empty($inventories)) return; 
+        if (empty($inventories)) return;
 
         if($properties['optclass']!=$old_properties['optclass'])    
             foreach($inventories as $inventory_) {
@@ -241,7 +241,7 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
                     }
                 }
                 $inventory->set("properties",$deleted_inventory->get('properties'));
-                $inventory->set("inventory_id",$inventory_id);     
+                $inventory->set("inventory_id",$inventory_id);
                 $deleted_inventory->delete();
                 if (!$deleted_inventory->find("inventory_id = '".$inventory_id."'")) {
                     $inventory->create();
@@ -270,7 +270,7 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
         } else 
         {
             $inventories = new XLite_Module_InventoryTracking_Model_Inventory();
-            $options_inventory = $inventories->findAll("inventory_id LIKE '".$this->get("product_id")."|%'", "order_by");        
+            $options_inventory = $inventories->findAll("inventory_id LIKE '".$this->get("product_id")."|%'", "order_by");
             foreach ($options_inventory as $option_inventory) {
                 $option_inventory->read();
                 $inventories = $option_inventory;
@@ -290,18 +290,18 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
     }
     
     function cloneObject()
-    {    
+    {
         $this->xlite->set("ITisCloneProduct", true);
         $p = parent::cloneObject();
 
         $p->set("tracking", 0);
-        $p->update(); 
+        $p->update();
         if ($this->config->getComplex('InventoryTracking.clone_inventory')) {
             $p  = $this->cloneInventory($p);
         }
         $this->xlite->set("ITisCloneProduct", false);
         return $p;
-    }        
+    }
 
     function createDefaultInventory()
     {
@@ -348,7 +348,7 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
             return $this->advancedSearchWithSku($substring, $sku, $category_id, $subcategory_search, $fulltext, $onlyindexes);
         }
         return parent::advancedSearch($substring, $sku, $category_id, $subcategory_search, $fulltext, $onlyindexes);
-    } 
+    }
 
     function advancedSearchWithSku($substring, $sku = null, $category_id = null, $subcategory_search = false, $fulltext = false, $onlyindexes = false) 
     {
@@ -363,7 +363,7 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
         if (empty($subcategory_search)) { // is an empty string
             $subcategory_search = false;
         }
-        $query = null; 
+        $query = null;
         $table = $this->db->getTableByAlias($this->alias);
         if (!empty($substring)) {
             $substring = addslashes($substring);
@@ -405,13 +405,13 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
             $result = $p->findAll($query);
         }
         return $result;
-    } 
+    }
  
     function getProductSkuCondition($substring, $where = null) 
     {
         $condition = "sku_variants LIKE '%$substring%'";
         return $condition;
-    } 
+    }
 
 /**
     function changeInventorySku($old_sku, $new_sku) 
@@ -448,7 +448,7 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
         $skus = implode("|", $sku_array);
         $this->set("sku_variants", "|$skus|");
         return true;
-    } 
+    }
 /**/
 
     function updateInventorySku() 
@@ -465,7 +465,7 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
         }
         $this->set("sku_variants", $sku_variants);
         $this->update();
-    } 
+    }
 
     function _constructSearchArray($start_price, $end_price, $start_weight, $end_weight, $sku) 
     {
@@ -493,6 +493,6 @@ class XLite_Module_InventoryTracking_Model_Product extends XLite_Model_Product i
         }
 
         return $result;
-    } 
+    }
 
 }

@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports
-{	
+{
     public $crlf = "\r\n";
 
     function getProfiles() 
@@ -42,27 +42,27 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
         if (is_null($this->profiles)) {
             $this->profiles = array();
             // fetch all original profiles
-			$ids = array();
+            $ids = array();
             foreach ($this->get("focusedSales") as $sale) {
             	$orig_profile_id = $sale->get("orig_profile_id");
             	if ($orig_profile_id == 0) {
             		$orig_profile_id = $sale->get("profile_id");
             	}
-				$ids[] = $orig_profile_id;
+                $ids[] = $orig_profile_id;
             }
             // compact
-			$ids = array_unique($ids);
+            $ids = array_unique($ids);
 
-			if ($this->get("match_condition") == "all") {
-				$ids = $this->getFullOwners($ids);
-			}
+            if ($this->get("match_condition") == "all") {
+                $ids = $this->getFullOwners($ids);
+            }
             // create list of original profiles
-			foreach ($ids as $id) {
-				$this->profiles[] = new XLite_Model_Profile($id);
-			}
+            foreach ($ids as $id) {
+                $this->profiles[] = new XLite_Model_Profile($id);
+            }
         }
         return $this->profiles;
-    } 
+    }
     
     function action_profiles() 
     {
@@ -71,7 +71,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
         } elseif ($this->get("export_profiles")) {
             $this->export_profiles();
         }
-    } 
+    }
     
     function send_newsletter() 
     {
@@ -84,12 +84,12 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
         if (!empty($recipients)) {
             echo "Newsletters module required!<br><br>";
         } else {
-            echo "no recipients found, select one or more orders!<br><br>"; 
+            echo "no recipients found, select one or more orders!<br><br>";
         }
         $this->set("silent", true); // do not redirect
         $url = $this->get("url");
         echo "<a href=\"$url\">New search..</a>";
-    } 
+    }
 
     function export_profiles() 
     {
@@ -100,7 +100,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
         $w->init();
         $w->display();
         $this->set("silent", true);
-    } 
+    }
 
     function getTargetProfiles() 
     {
@@ -112,7 +112,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
             }
         }
         return $this->targetProfiles;
-    } 
+    }
     
     function getOrders() 
     {
@@ -124,13 +124,13 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
             }
         }
         return $this->orders;
-    } 
+    }
     
     function getDelimiter() 
     {
         global $DATA_DELIMITERS;
         return $DATA_DELIMITERS[$this->delimiter];
-    } 
+    }
 
     function isDefaultField($field) 
     {
@@ -139,7 +139,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
                 "email",
                 );
         return in_array($field, $defaultFields);
-    } 
+    }
     
     function getExportFields() 
     {
@@ -150,51 +150,51 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
                 "billing_info" => "Billing address details",
                 "shipping_info" => "Shipping address details",
                 );
-    } 
+    }
 
     function getQueryString() 
     {
         return $_SERVER["QUERY_STRING"];
-    } 
+    }
 
     function getFocusedSales() 
     {
-		if (is_null($this->focusedSales)) {
-			$this->focusedSales = array();
+        if (is_null($this->focusedSales)) {
+            $this->focusedSales = array();
 
-			// PASS 1
-			// select raw items
-			$items = $this->get("rawItems");
+            // PASS 1
+            // select raw items
+            $items = $this->get("rawItems");
 
-			// PASS 2
-			// summarize orders info
-			$this->totals = array();
-			$this->orders = array();
-			array_map(array($this, 'sumOrders'), $items);
+            // PASS 2
+            // summarize orders info
+            $this->totals = array();
+            $this->orders = array();
+            array_map(array($this, 'sumOrders'), $items);
 
-			// PASS 3
-			// apply/purchased products filter
-			// orders not passed through filter are marked
-			// order["passed"] == false
-			array_map(array($this, 'filterOrders'), $this->orders);
+            // PASS 3
+            // apply/purchased products filter
+            // orders not passed through filter are marked
+            // order["passed"] == false
+            array_map(array($this, 'filterOrders'), $this->orders);
 
-			//echo "ORDERS<pre>"; print_r($this->orders); echo "</pre>";
-			//echo "TOTALS<pre>"; print_r($this->totals); echo "</pre>";
+            //echo "ORDERS<pre>"; print_r($this->orders); echo "</pre>";
+            //echo "TOTALS<pre>"; print_r($this->totals); echo "</pre>";
 
-			// PASS 4
-			// collect passed orders to focusedSales
-			array_map(array($this, 'collectFocusedSales'), $this->orders);
+            // PASS 4
+            // collect passed orders to focusedSales
+            array_map(array($this, 'collectFocusedSales'), $this->orders);
 
-		}
+        }
         return $this->focusedSales;
-    } 
+    }
 
     function collectFocusedSales($order) 
     {
         if ($order["passed"]) {
             $this->focusedSales[] = new XLite_Model_Order($order["order_id"]);
         }
-    } 
+    }
 
     function filterOrders($order) 
     {
@@ -222,7 +222,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
             $order["passed"] = false;
             return;
         }
-    } 
+    }
 
     function cmp($mod, $val1, $val2) 
     {
@@ -233,7 +233,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
             return false;
         }
         return true;
-    } 
+    }
     
     function filterProduct($product) 
     {
@@ -248,16 +248,16 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
         }
         // no filter found, assume as passed
         return true;
-    } 
+    }
 
     function sumOrders($item) 
     {
         $orderID = $item["order_id"];
-		$created = false;
+        $created = false;
         // summarize order details
         if (!isset($this->orders[$orderID])) {
             // init array w/ orders data
-		    $created = true; 
+            $created = true;
             $this->orders[$orderID] = array(
                 "order_id"   => $orderID,
                 "products"   => array(
@@ -291,7 +291,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
             }
         }
         // summarize profile->order details
-        $profileID = $item["orig_profile_id"]; 
+        $profileID = $item["orig_profile_id"];
         if (!isset($this->totals[$profileID])) {
             $this->totals[$profileID] = array(
                     "total"  => $this->orders[$orderID]["total"],
@@ -301,7 +301,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
             $this->totals[$profileID]["total"] += $this->orders[$orderID]["total"];
             if ($created) $this->totals[$profileID]["number"]++;
         }
-    } 
+    }
 
     function getInMembership($table) 
     {
@@ -311,10 +311,10 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
                 return " AND $table.membership LIKE '%' ";
             } else {
                 return " AND $table.membership='$ms' ";
-            }    
+            }
         }
         return "";
-    } 
+    }
 
     function getInCities($table) 
     {
@@ -331,8 +331,8 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
         if ($location == "shipping" || $location == "") {
             $cities .= " AND $table.shipping_city='$city' ";
         }
-        return $cities; 
-    } 
+        return $cities;
+    }
     
     function getInCountries($table) 
     {
@@ -349,7 +349,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
             }
         }
         return $countries;
-    } 
+    }
     
     function getInStates($table) 
     {
@@ -365,7 +365,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
             }
         }
         return $states;
-    } 
+    }
     
     // SELECT extra fields {{{
     function getSelect($ot, $it, $pt)
@@ -390,13 +390,13 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
         	$dc = new XLite_Module_Promotion_Model_DiscountCoupon();
         	if (is_object($dc) && $dc->find("coupon='$discountCoupon' AND order_id='0'")) {
             	$where .= " AND $ot.discountCoupon='".$dc->get("coupon_id")."' ";
-			}
+            }
         }
         if (($gcid = $this->get("gcid")) != null) {
             $where .= " AND $ot.gcid='".$gcid."' ";
         }
         return $where;
-    } 
+    }
 
     function getProductIDs() 
     {
@@ -411,93 +411,93 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
             }
         }
         return $ids;
-    } 
+    }
 
-	function hasProduct($user_id, $product_id) 
-	{
-		$product = new XLite_Model_Product();
-		$fromDate = $this->getComplex('period.fromDate');
-		$toDate   = $this->getComplex('period.toDate');
-		$ot = $product->db->getTableByAlias("orders");
-		$it = $product->db->getTableByAlias("order_items");
+    function hasProduct($user_id, $product_id) 
+    {
+        $product = new XLite_Model_Product();
+        $fromDate = $this->getComplex('period.fromDate');
+        $toDate   = $this->getComplex('period.toDate');
+        $ot = $product->db->getTableByAlias("orders");
+        $it = $product->db->getTableByAlias("order_items");
 
-		$sql = 	"SELECT $it.product_id ".
-				"	FROM $ot, $it ". 
+        $sql = 	"SELECT $it.product_id ".
+                "	FROM $ot, $it ". 
                 "	WHERE $it.order_id=$ot.order_id ".
-				"		AND $ot.orig_profile_id=$user_id ".
+                "		AND $ot.orig_profile_id=$user_id ".
                 "       AND ($ot.status='C' OR $ot.status='P') ".
                 "       AND $ot.date BETWEEN $fromDate AND $toDate ";
-				
-		$product_ids = (array)$product->db->getAll($sql);
-		$products = array();
-		foreach($product_ids as $found_pid) {
-			$products[] = $found_pid["product_id"];
-		}
-		
-		$product_ids = array_unique($products);
-		return in_array($product_id, $product_ids);
-	} 
+                
+        $product_ids = (array)$product->db->getAll($sql);
+        $products = array();
+        foreach($product_ids as $found_pid) {
+            $products[] = $found_pid["product_id"];
+        }
+        
+        $product_ids = array_unique($products);
+        return in_array($product_id, $product_ids);
+    }
 
-	function hasCategory($user_id, $category_id) 
-	{
-		$product = new XLite_Model_Product();
-		$fromDate = $this->getComplex('period.fromDate');
-		$toDate   = $this->getComplex('period.toDate');
-		$ot = $product->db->getTableByAlias("orders");
-		$it = $product->db->getTableByAlias("order_items");
-		$lt	= $product->db->getTableByAlias("product_links");
+    function hasCategory($user_id, $category_id) 
+    {
+        $product = new XLite_Model_Product();
+        $fromDate = $this->getComplex('period.fromDate');
+        $toDate   = $this->getComplex('period.toDate');
+        $ot = $product->db->getTableByAlias("orders");
+        $it = $product->db->getTableByAlias("order_items");
+        $lt	= $product->db->getTableByAlias("product_links");
 
-		$sql = 	"SELECT $lt.category_id ".
-				"	FROM $ot, $it, $lt ". 
+        $sql = 	"SELECT $lt.category_id ".
+                "	FROM $ot, $it, $lt ". 
                 "	WHERE $it.order_id=$ot.order_id ".
-				"		AND $ot.orig_profile_id=$user_id ".
-				"		AND $lt.product_id=$it.product_id ".
+                "		AND $ot.orig_profile_id=$user_id ".
+                "		AND $lt.product_id=$it.product_id ".
                 "       AND ($ot.status='C' OR $ot.status='P') ".
                 "       AND $ot.date BETWEEN $fromDate AND $toDate ";
-				
-		$categories = (array)$product->db->getAll($sql);
-		$category_ids = array();
-		foreach($categories as $category_info) {
-			$category_ids[] = $category_info["category_id"];
-		}
-		$categories = array_unique($category_ids);
-		
-		return (in_array($category_id, $categories));
-	} 
+                
+        $categories = (array)$product->db->getAll($sql);
+        $category_ids = array();
+        foreach($categories as $category_info) {
+            $category_ids[] = $category_info["category_id"];
+        }
+        $categories = array_unique($category_ids);
+        
+        return (in_array($category_id, $categories));
+    }
 
-	function hasProducts($u_id, $product_ids) 
-	{
-		foreach($product_ids as $pid) {
-			if (!$this->hasProduct($u_id, $pid)) {
-				return false;
-			}
-		}
-		return true;
-	} 
+    function hasProducts($u_id, $product_ids) 
+    {
+        foreach($product_ids as $pid) {
+            if (!$this->hasProduct($u_id, $pid)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-	function hasCategories($u_id, $category_ids) 
-	{
-		if (!is_array($category_ids)) {
-			return true;
-		}
-		foreach($category_ids as $cid) {
-			if (!$this->hasCategory($u_id, $cid)) {
-				return false;
-			}
-		}
-		return true;
-	} 
+    function hasCategories($u_id, $category_ids) 
+    {
+        if (!is_array($category_ids)) {
+            return true;
+        }
+        foreach($category_ids as $cid) {
+            if (!$this->hasCategory($u_id, $cid)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-	function getFullOwners($uids) 
-	{
-		$result = array();
-		foreach ($uids as $uid) {
-			if ($this->hasCategories($uid, $this->get("selected_categories")) &&
-				$this->hasProducts($uid, $this->getProductIDs())) {
-				$result[] = $uid;
-			}
-		}
-		return $result;
-	} 
+    function getFullOwners($uids) 
+    {
+        $result = array();
+        foreach ($uids as $uid) {
+            if ($this->hasCategories($uid, $this->get("selected_categories")) &&
+                $this->hasProducts($uid, $this->getProductIDs())) {
+                $result[] = $uid;
+            }
+        }
+        return $result;
+    }
 
 }

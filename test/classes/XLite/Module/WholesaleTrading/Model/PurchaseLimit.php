@@ -39,9 +39,9 @@ class XLite_Module_WholesaleTrading_Model_PurchaseLimit extends XLite_Model_Abst
     * @var string $alias The product access database table alias.
     * @access public
     */	
-    public $alias = "purchase_limit";	
+    public $alias = "purchase_limit";
 
-    public $primaryKey = array("product_id");	
+    public $primaryKey = array("product_id");
     
     public $importError = "";
 
@@ -50,39 +50,39 @@ class XLite_Module_WholesaleTrading_Model_PurchaseLimit extends XLite_Model_Abst
     * @access private
     */	
     public $fields = array(
-			"product_id"	=> 0,
-			"min"			=> "",
-			"max"			=> "",
-        );	
+            "product_id"	=> 0,
+            "min"			=> "",
+            "max"			=> "",
+        );
     
-	public $importFields = array(
-			"NULL"			=> false,
-			"product"		=> false,
-			"sku"			=> false,	
-			"min"		=> false,
-			"max"			=> false,
-		);
+    public $importFields = array(
+            "NULL"			=> false,
+            "product"		=> false,
+            "sku"			=> false,	
+            "min"		=> false,
+            "max"			=> false,
+        );
     
     function _export($layout, $delimiter) {
-		$data = array();
+        $data = array();
 
-		$values = $this->get("properties");
+        $values = $this->get("properties");
 
-		foreach ($layout as $field) {
-			if ($field == "NULL") {
-				$data[] = "";
-			} elseif ($field == "product") {
-				$product = new XLite_Model_Product($values["product_id"]);
-				$data[] = $product->get("name");
-			} elseif ($field == "sku") {
+        foreach ($layout as $field) {
+            if ($field == "NULL") {
+                $data[] = "";
+            } elseif ($field == "product") {
+                $product = new XLite_Model_Product($values["product_id"]);
+                $data[] = $product->get("name");
+            } elseif ($field == "sku") {
                 $product = new XLite_Model_Product($values["product_id"]);
                 $data[] = $product->get("sku");
-			} elseif (isset($values[$field])) {
-				$data[] =  $this->_stripSpecials($values[$field]);
-			}
-		}
-		return $data;
-	} 
+            } elseif (isset($values[$field])) {
+                $data[] =  $this->_stripSpecials($values[$field]);
+            }
+        }
+        return $data;
+    }
 
     function _import(array $options) {
         static $line_no;
@@ -92,28 +92,28 @@ class XLite_Module_WholesaleTrading_Model_PurchaseLimit extends XLite_Model_Abst
         $wp = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
         $product = new XLite_Model_Product();
 
-		$product = $product->findImportedProduct($properties['sku'], '',$properties['product'], false, $options["unique_identifier"]);
-		if (!is_null($product)) {
-			$found = $wp->find("product_id = " . $product->get("product_id"));
-			$wp->set("product_id", $product->get("product_id"));
-			$wp->set("min",$properties["min"]);
-			$wp->set("max",$properties["max"]);
-	
+        $product = $product->findImportedProduct($properties['sku'], '',$properties['product'], false, $options["unique_identifier"]);
+        if (!is_null($product)) {
+            $found = $wp->find("product_id = " . $product->get("product_id"));
+            $wp->set("product_id", $product->get("product_id"));
+            $wp->set("min",$properties["min"]);
+            $wp->set("max",$properties["max"]);
+    
             echo "<b>Importing CSV file line# $line_no: </b>";
-	
-			if ($found) { 
-				echo "Update purchase limit for '".$product->get("name")."' product";	
-				$wp->update(); 
-			} else {
-				$wp->create();
+    
+            if ($found) {
+                echo "Update purchase limit for '".$product->get("name")."' product";
+                $wp->update();
+            } else {
+                $wp->create();
                 echo "Create purchase limit for '".$product->get("name")."' product";
-			}
-			echo "<br>\n";
-		} else {
+            }
+            echo "<br>\n";
+        } else {
             $this->importError = "Error: trying to create purchase limit for non-existent product. CSV file line #". $line_no;
             echo $this->importError;
-		}
-    } 
+        }
+    }
     
     function collectGarbage()
     {

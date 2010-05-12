@@ -43,14 +43,14 @@ class XLite_Module_Affiliate_Controller_Admin_Users extends XLite_Controller_Adm
         } elseif ($this->user_type == "pendingPartner" && is_null($this->pendingPartners)) {
             $this->pendingPartners = array();
             foreach ($users as $user) {
-				if (!is_object($user)) {
-					$user = new XLite_Model_Profile($user['data']['profile_id']);
-				}
+                if (!is_object($user)) {
+                    $user = new XLite_Model_Profile($user['data']['profile_id']);
+                }
                 if ($user->is("pendingPartner")) {
                     $this->pendingPartners[] = $user;
                 }
             }
-            return $this->pendingPartners;        
+            return $this->pendingPartners;
         }
         return $users;
     }

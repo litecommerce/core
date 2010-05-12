@@ -69,7 +69,7 @@ class XLite_Module_Affiliate_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'This module adds a feature rich affiliate marketing mechanism to your online store';
-    }	
+    }
 
     /**
      * Determines if we need to show settings form link

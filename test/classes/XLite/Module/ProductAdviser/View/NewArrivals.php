@@ -450,7 +450,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsLi
         if (isset($products)) {
             $this->additionalPresent = $this->xlite->NewArrivalsAdditionalPresent;
             return $products;
-        }    
+        }
 
         $category = $this->getDialogCategory();
         $product_id = $this->getDialogProductId();

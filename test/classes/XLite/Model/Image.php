@@ -654,7 +654,7 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
             $this->get('source') == 'F'
             && $source == 'F'
             && $this->getFilePath($this->get('data')) != $this->getFilePath($filename)
-        ) { 
+        ) {
             // rename file
             // check if the new file already exists
             if (file_exists($filepath) && !$force) {
@@ -705,7 +705,7 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
         echo "<font color=red>Invalid image file or file not found: $image_file</font>";
 
         if($_REQUEST['target'] == "import_catalog"){
-            echo '<bt /><br /><a href="admin.php?target=import_catalog"><u>Click here to return to admin interface</u></a>';    
+            echo '<bt /><br /><a href="admin.php?target=import_catalog"><u>Click here to return to admin interface</u></a>';
         }
 
         $this->doDie();

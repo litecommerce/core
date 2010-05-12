@@ -56,41 +56,41 @@ $GLOBALS['TEMPLATE_REFERENCE_PARAMS'] = array(
  * @since   3.0.0
  */
 class XLite_Model_Wysiwyg_Mediator extends XLite_Base
-{	
-    public $widgetClass = "WysiwygMediatorWidget";	
-    public $templateClass = "Template";	
-    public $imagesDir = HTML_BUILDER_IMAGES_DIR;	
-    public $templateEditableParams  = null;	
-    public $templateReferenceParams = null;	
-    public $hrefPrefix = '';	
-    public $pageTarget = null;	
-    public $pageMode = null;	
-	public $dummy_images = array();
-	//var $showMemoryUsage = true;		// uncomment this line to show memory usage	
-	public $__memoryUsageMax = 0;	
-	public $__memoryUsageMin = 0;	
-	public $__buildFullTreeCounter = 0;	
-	public $__buildFullTreeCounterMax = 0;
+{
+    public $widgetClass = "WysiwygMediatorWidget";
+    public $templateClass = "Template";
+    public $imagesDir = HTML_BUILDER_IMAGES_DIR;
+    public $templateEditableParams  = null;
+    public $templateReferenceParams = null;
+    public $hrefPrefix = '';
+    public $pageTarget = null;
+    public $pageMode = null;
+    public $dummy_images = array();
+    //var $showMemoryUsage = true;		// uncomment this line to show memory usage	
+    public $__memoryUsageMax = 0;
+    public $__memoryUsageMin = 0;
+    public $__buildFullTreeCounter = 0;
+    public $__buildFullTreeCounterMax = 0;
 
-	protected $htmlStorage = null;
+    protected $htmlStorage = null;
 
     public function __construct()
     {
-		$this->__memoryUsageMin = 1024.0 * 1024.0 * 1024.0 * 1024.0;
+        $this->__memoryUsageMin = 1024.0 * 1024.0 * 1024.0 * 1024.0;
         $this->templateEditableParams = $GLOBALS['TEMPLATE_EDITABLE_PARAMS'];
         $this->templateReferenceParams = $GLOBALS['TEMPLATE_REFERENCE_PARAMS'];
     }
 
     function _showMemoryUsage()
     {
-		$memoryUsage = memory_get_usage() / 1024 / 1024;
+        $memoryUsage = memory_get_usage() / 1024 / 1024;
 
-		if ($memoryUsage > $this->__memoryUsageMax) {
-			$this->__memoryUsageMax = $memoryUsage;
-		}
-		if ($memoryUsage < $this->__memoryUsageMin) {
-			$this->__memoryUsageMin = $memoryUsage;
-		}
+        if ($memoryUsage > $this->__memoryUsageMax) {
+            $this->__memoryUsageMax = $memoryUsage;
+        }
+        if ($memoryUsage < $this->__memoryUsageMin) {
+            $this->__memoryUsageMin = $memoryUsage;
+        }
      	printf(" (MEMORY - min: %.2f Mb, current: %.2f Mb, max: %.2f Mb) (CALL DEPTH - current: %d, max: %d) ", $this->__memoryUsageMin, $memoryUsage, $this->__memoryUsageMax, $this->__buildFullTreeCounter, $this->__buildFullTreeCounterMax);
     }
 
@@ -110,8 +110,8 @@ class XLite_Model_Wysiwyg_Mediator extends XLite_Base
         $exportParser->wysiwygMediator = $this;
         if (strpos($widget->get("templateFile"), '}')) {
         	if ($this->showMemoryUsage) {
-				$this->__buildFullTreeCounter--;
-			}
+                $this->__buildFullTreeCounter--;
+            }
             return;
         }
         if ($widget->get("template") && file_exists($widget->get("templateFile"))) {
@@ -145,9 +145,9 @@ class XLite_Model_Wysiwyg_Mediator extends XLite_Base
             }
         }
 
-		if ($this->showMemoryUsage) {
-			$this->__buildFullTreeCounter--;
-		}
+        if ($this->showMemoryUsage) {
+            $this->__buildFullTreeCounter--;
+        }
     }
    
     function _replaceVal($src, $params, $openF = '', $closeF = '')
@@ -168,7 +168,7 @@ class XLite_Model_Wysiwyg_Mediator extends XLite_Base
                     $close = '';
                 }
                 switch ($modifier) {
-                case '': $replaceWith = $open . htmlspecialchars($value) . $close; break; 
+                case '': $replaceWith = $open . htmlspecialchars($value) . $close; break;
                 case ':r': $replaceWith = $open . str_replace('\"', '&quot;', $value) . $close; break;
                 case ':h': $replaceWith = $open . $value . $close; break;
                 }
@@ -316,17 +316,17 @@ class XLite_Model_Wysiwyg_Mediator extends XLite_Base
             }
         } else {
         	$imageFileName = $this->getImageFileName($w);
-			$image = $this->get("imagesDir") . "/". $imageFileName;
+            $image = $this->get("imagesDir") . "/". $imageFileName;
 
-			$postfix = "";
-			if ( !is_readable(HTML_BUILDER_PATH . "widgets/" . $imageFileName) ) {
-				$image = $this->get("imagesDir") . "/dummy_widget.gif";
-				$path_parts = pathinfo($imageFileName);
-				if (basename($path_parts["basename"], $path_parts["extension"]) != ".") {
-					$this->dummy_images[] = HTML_BUILDER_PATH . "widgets/" . $imageFileName;
-					$postfix = "<!--Should be: " . $this->get("imagesDir") . "/". $imageFileName . "-->";
-				}
-			}
+            $postfix = "";
+            if ( !is_readable(HTML_BUILDER_PATH . "widgets/" . $imageFileName) ) {
+                $image = $this->get("imagesDir") . "/dummy_widget.gif";
+                $path_parts = pathinfo($imageFileName);
+                if (basename($path_parts["basename"], $path_parts["extension"]) != ".") {
+                    $this->dummy_images[] = HTML_BUILDER_PATH . "widgets/" . $imageFileName;
+                    $postfix = "<!--Should be: " . $this->get("imagesDir") . "/". $imageFileName . "-->";
+                }
+            }
             return $this->_generateWidgetLink($w, '<a href="' . $this->getWidgetLink($w) . '"><img align=absmiddle border=0 src="' . $image . '"' . $w->get("attributesInTag") . '></a>' . $postfix);
         }
     }
@@ -460,16 +460,16 @@ EOT
         }
 
 /*
-		if ( is_array($this->dummy_images) && count($this->dummy_images) > 0 ) {
-			print("\n<font color='red'>Warning: Can't find the following image" . ((count($this->dummy_images) > 1 ) ? "s" : "") .":</font>\n");
-			$this->dummy_images = array_unique($this->dummy_images);
-			$this->dummy_images = array_values($this->dummy_images);
-			$line = 1;
-			foreach ($this->dummy_images as $v) {
-				print($line . ") "  . $v."\n");
-				$line++;
-			}
-		}
+        if ( is_array($this->dummy_images) && count($this->dummy_images) > 0 ) {
+            print("\n<font color='red'>Warning: Can't find the following image" . ((count($this->dummy_images) > 1 ) ? "s" : "") .":</font>\n");
+            $this->dummy_images = array_unique($this->dummy_images);
+            $this->dummy_images = array_values($this->dummy_images);
+            $line = 1;
+            foreach ($this->dummy_images as $v) {
+                print($line . ") "  . $v."\n");
+                $line++;
+            }
+        }
 //*/
 
         return true;
@@ -605,7 +605,7 @@ EOT;
     {
         $this->errors = 0;
         $this->layout = $layout = XLite_Model_Layout::getInstance();
-		$templatesDir = $layout->getPath();
+        $templatesDir = $layout->getPath();
 
         $code = copyRecursive(HTML_BUILDER_PATH . 'images', $templatesDir . 'images');
         if($code == 1 || !is_readable(HTML_BUILDER_PATH . 'images')){
@@ -613,11 +613,11 @@ EOT;
         }
 
         copyFile(HTML_BUILDER_PATH . 'style.css', $templatesDir . 'style.css');
-		$fileList = $this->getComplex('htmlStorage.fileList');
-		if (!is_array($fileList) || count($fileList) == 0) {
-			$this->errors++;
+        $fileList = $this->getComplex('htmlStorage.fileList');
+        if (!is_array($fileList) || count($fileList) == 0) {
+            $this->errors++;
             print "<font color=red>WARNING: Nothing to import or directory " . HTML_BUILDER_PATH . 'images'  . " does not exist or is not readable! </font>";
-		}
+        }
         foreach ($fileList as $name) {
             $this->increase_memory_limit();
 
@@ -647,9 +647,9 @@ EOT;
             }
 
             if ($this->showMemoryUsage && function_exists('memory_get_usage')) {
-				$this->_showMemoryUsage();
+                $this->_showMemoryUsage();
             }
-			print "\n";
+            print "\n";
         }
         return !$this->errors;
     }

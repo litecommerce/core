@@ -34,14 +34,14 @@
  * @since   3.0.0
  */
 class XLite_Module_2CheckoutCom_Model_PaymentMethod_2Checkout extends XLite_Model_PaymentMethod_CreditCard
-{	
+{
     public $cvverr = array(
             "M" => "Match",
             "N" => "Wrong CVV2 code",
             "P" => "CVV2 code was not processed",
             "S" => "Please specify your CVV2 code",
             "U" => "Issuer unable to process request"
-            );	
+            );
     public $avserr = array(
             "A" => "Wrong billing address: Address (Street) matches, ZIP does not",
             "E" => "Wrong billing address",
@@ -54,23 +54,23 @@ class XLite_Module_2CheckoutCom_Model_PaymentMethod_2Checkout extends XLite_Mode
             "X" => "Exact AVS Match",
             "Y" => "Wrong billing address: Address (Street) and 5 digit ZIP match",
             "Z" => "Wrong billing address: 5 digit ZIP matches, Address (Street) does not"
-            );	
+            );
 
-    public $processorName = "2Checkout.com";	
-    public $configurationTemplate = "modules/2CheckoutCom/config.tpl";	
+    public $processorName = "2Checkout.com";
+    public $configurationTemplate = "modules/2CheckoutCom/config.tpl";
     public $formTemplate ="modules/2CheckoutCom/checkout.tpl";
 
     function handleRequest(XLite_Model_Cart $cart)
     {
-		$params = $this->get("params");
-		if ($params["version"] != 2) {
+        $params = $this->get("params");
+        if ($params["version"] != 2) {
     		// Authorize.Net now returns all POST in lowercase.
             if (!isset($_POST["securenumber"]) || $_POST["securenumber"] != $cart->getComplex('details.secureNumber')) {
                 die("<font color=red><b>Security check failed!</b></font> Please contact administrator <b>" . $this->config->getComplex('Company.site_administrator') . "</b> .");
             }
             require_once LC_MODULES_DIR . '2CheckoutCom' . LC_DS . 'encoded.php';
             PaymentMethod_2checkout_handleRequest($this, $cart);
-		} else {
+        } else {
     		$security_check = true;
 
     		$order_number = ($params["test_mode"]=="Y") ? 1 : $_POST["order_number"];
@@ -80,8 +80,8 @@ class XLite_Module_2CheckoutCom_Model_PaymentMethod_2Checkout extends XLite_Mode
     		}
 
     		if ($cart->get("total") != $_POST["total"]) {
-                $security_check = false; 
-            }        
+                $security_check = false;
+            }
 
     		if (isset($_SERVER["HTTP_REFERER"])) {
     			$referers = array("www.2checkout.com", "2checkout.com", "www2.2checkout.com");
@@ -99,7 +99,7 @@ class XLite_Module_2CheckoutCom_Model_PaymentMethod_2Checkout extends XLite_Mode
 
             require_once LC_MODULES_DIR . '2CheckoutCom' . LC_DS . 'encoded.php';
             PaymentMethod_2checkout_v2_handleRequest($this, $cart, $security_check);
-		}		
+        }
     }
 
     function createSecureNumber($order)
@@ -123,12 +123,12 @@ class XLite_Module_2CheckoutCom_Model_PaymentMethod_2Checkout extends XLite_Mode
 
     function stripSpecials($value)
     {
-		$value = parent::_stripSpecials($value);
-		$value = str_replace("\t", " ", $value);
-		$value = str_replace("\r", " ", $value);
-		$value = str_replace("\n", " ", $value);
-		$value = str_replace("\"", "", $value);
-		$value = strip_tags($value);
+        $value = parent::_stripSpecials($value);
+        $value = str_replace("\t", " ", $value);
+        $value = str_replace("\r", " ", $value);
+        $value = str_replace("\n", " ", $value);
+        $value = str_replace("\"", "", $value);
+        $value = strip_tags($value);
         return $value;
     }
 

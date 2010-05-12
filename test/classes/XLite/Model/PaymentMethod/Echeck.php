@@ -34,8 +34,8 @@
  * @since   3.0.0
  */
 class XLite_Model_PaymentMethod_Echeck extends XLite_Model_PaymentMethod
-{	
-    public $formTemplate = "checkout/echeck.tpl";	
+{
+    public $formTemplate = "checkout/echeck.tpl";
     public $secure = true;
 
     function process($cart)
@@ -66,6 +66,6 @@ class XLite_Model_PaymentMethod_Echeck extends XLite_Model_PaymentMethod
         $this->process($cart);
         $status = $cart->get("status");
 
-		return ($status == 'Q' || $status == 'P') ? self::PAYMENT_SUCCESS : self::PAYMENT_FAILURE;
+        return ($status == 'Q' || $status == 'P') ? self::PAYMENT_SUCCESS : self::PAYMENT_FAILURE;
     }
 }

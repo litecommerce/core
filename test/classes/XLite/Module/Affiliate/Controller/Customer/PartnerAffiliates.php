@@ -35,7 +35,7 @@
  */
 class XLite_Module_Affiliate_Controller_Customer_PartnerAffiliates extends XLite_Module_Affiliate_Controller_Partner
 {
-	/**
+    /**
      * Common method to determine current location 
      * 
      * @return array
@@ -44,8 +44,8 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerAffiliates extends XLite
      */
     protected function getLocation()
     {
-		return 'Affiliate tree';
-	}
+        return 'Affiliate tree';
+    }
 
 
     function getRoot()

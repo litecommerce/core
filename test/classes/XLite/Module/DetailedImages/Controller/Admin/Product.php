@@ -69,7 +69,7 @@ implements XLite_Base_IDecorator
         $data = XLite_Core_Request::getInstance()->getData();
         $data['is_zoom'] = isset($data['is_zoom']) ? 'Y' : '';
 
-        $dImg->set('properties', $data); 
+        $dImg->set('properties', $data);
         $dImg->create();
 
         $dImg->getImage()->handleRequest();
@@ -107,6 +107,6 @@ implements XLite_Base_IDecorator
             $img->set('is_zoom', (isset($this->is_zoom) && isset($this->is_zoom[$imageId])) ? 'Y' : '');
 
             $img->update();
-        }    
+        }
     }
 }

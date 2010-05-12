@@ -69,7 +69,7 @@ class XLite_Module_DemoMode_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'Demo mode';
-    }	
+    }
 
     /**
      * Perform some actions at startup
@@ -82,7 +82,7 @@ class XLite_Module_DemoMode_Main extends XLite_Module_Abstract
     {
         parent::init();
 
-		// FIXME - this should be removed for the "real" demo mode
+        // FIXME - this should be removed for the "real" demo mode
         XLite_Model_Session::getInstance()->set('superUser', true);
 
         $mm = new XLite_Model_Module();

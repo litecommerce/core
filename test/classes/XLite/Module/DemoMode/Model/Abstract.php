@@ -35,91 +35,91 @@
  */
 class XLite_Module_DemoMode_Model_Abstract extends XLite_Model_Abstract implements XLite_Base_IDecorator
 {
-	public function __construct($id = null)
-	{
-		parent::__construct($id);
+    public function __construct($id = null)
+    {
+        parent::__construct($id);
 
-		global $safeData;
-		if (!isset($safeData)) {
-			$safeData = XLite_Model_Session::getInstance()->get('safeData');
-			if (is_null($safeData)) {
-				$safeData = array();
-			}
-		}
-	}
-	
-	function _setSessionVar($path, $value)
-	{
-		global $safeData;
-		$ptr = $safeData;
-		foreach ($path as $key) {
-			if (!isset($ptr[$key])) {
-				$ptr[$key] = array();
-			}
-			$ptr = $ptr[$key];
-		}
-		$ptr = $value;
-		XLite_Model_Session::getInstance()->set('safeData', $safeData);
-	}
+        global $safeData;
+        if (!isset($safeData)) {
+            $safeData = XLite_Model_Session::getInstance()->get('safeData');
+            if (is_null($safeData)) {
+                $safeData = array();
+            }
+        }
+    }
+    
+    function _setSessionVar($path, $value)
+    {
+        global $safeData;
+        $ptr = $safeData;
+        foreach ($path as $key) {
+            if (!isset($ptr[$key])) {
+                $ptr[$key] = array();
+            }
+            $ptr = $ptr[$key];
+        }
+        $ptr = $value;
+        XLite_Model_Session::getInstance()->set('safeData', $safeData);
+    }
 
-	function _getSessionVar($path)
-	{
-		global $safeData;
-		$ptr = $safeData;
-		foreach ($path as $key) {
-			if (!isset($ptr[$key])) {
-				return null;
-			}
-			if (is_scalar($ptr)) {
-				return $ptr;
-			}
-			$ptr = $ptr[$key];
-		}	
-		return $ptr;
-	}
+    function _getSessionVar($path)
+    {
+        global $safeData;
+        $ptr = $safeData;
+        foreach ($path as $key) {
+            if (!isset($ptr[$key])) {
+                return null;
+            }
+            if (is_scalar($ptr)) {
+                return $ptr;
+            }
+            $ptr = $ptr[$key];
+        }
+        return $ptr;
+    }
 
-	function _updateProperties(array $properties = array())
-	{
-		if (!XLite_Model_Session::getInstance()->get("superUser")) {
-			$path = array($this->alias, '');
-			foreach ($this->primaryKey as $pkey) {
-				$path[] = $properties[$pkey];
-			}
-			foreach ($properties as $name => $value) {
-				$path[1] = $name;
-				$val = $this->_getSessionVar($path);
-				if (isset($val)) {
-					$properties[$name] = $val;
-				}
-			}
-		}
-		parent::_updateProperties($properties);
-	}
+    function _updateProperties(array $properties = array())
+    {
+        if (!XLite_Model_Session::getInstance()->get("superUser")) {
+            $path = array($this->alias, '');
+            foreach ($this->primaryKey as $pkey) {
+                $path[] = $properties[$pkey];
+            }
+            foreach ($properties as $name => $value) {
+                $path[1] = $name;
+                $val = $this->_getSessionVar($path);
+                if (isset($val)) {
+                    $properties[$name] = $val;
+                }
+            }
+        }
+        parent::_updateProperties($properties);
+    }
 
-	function update()
-	{
-		if (!XLite_Model_Session::getInstance()->get("superUser")) {
-			$path = array($this->alias, '');
-			foreach ($this->primaryKey as $pkey) {
-				$path[] = $this->properties[$pkey];
-			}
-			if ($this->alias == "config" ||
-				$this->alias == "modules" ||
-				$this->alias == "payment_methods" ||
-				$this->alias == "profiles" && $this->get("profile_id") == 1) {
-				$this->_beforeSave();
-				foreach ($this->properties as $key => $value) {
-					if ($this->alias == "payment_methods" && ($key != "orderby" ) || $this->alias != "payment_methods") {
-						$path[1] = $key;
-						$this->_setSessionVar($path, $value);
-					}
-				}
-			} else {
-				parent::update();
-			}
-		} else {
-			parent::update();
-		}
-	}
+    function update()
+    {
+        if (!XLite_Model_Session::getInstance()->get("superUser")) {
+            $path = array($this->alias, '');
+            foreach ($this->primaryKey as $pkey) {
+                $path[] = $this->properties[$pkey];
+            }
+            if ($this->alias == "config" ||
+                $this->alias == "modules" ||
+                $this->alias == "payment_methods" ||
+                $this->alias == "profiles" && $this->get("profile_id") == 1) {
+                $this->_beforeSave();
+                foreach ($this->properties as $key => $value) {
+                    if ($this->alias == "payment_methods" && ($key != "orderby" ) || $this->alias != "payment_methods") {
+                        $path[1] = $key;
+                        $this->_setSessionVar($path, $value);
+                    }
+                }
+            } else {
+                parent::update();
+            }
+        } else {
+            parent::update();
+        }
+    }
 
 }

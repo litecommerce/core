@@ -34,9 +34,9 @@
  * @since   3.0.0
  */
 class XLite_Module_Affiliate_View_PartnerField extends XLite_View_Abstract
-{	
-    public $field = null;	
-    public $formField = null;	
+{
+    public $field = null;
+    public $formField = null;
     public $partner = null;
 
     function getValue()
@@ -48,7 +48,7 @@ class XLite_Module_Affiliate_View_PartnerField extends XLite_View_Abstract
         }
         // value from partner's profile
         elseif (!is_null($this->get("partner.partner_fields.".$this->getComplex('field.field_id')))) {
-            return $this->get("partner.partner_fields.".$this->getComplex('field.field_id')); 
+            return $this->get("partner.partner_fields.".$this->getComplex('field.field_id'));
         }
         // default field value
         else {

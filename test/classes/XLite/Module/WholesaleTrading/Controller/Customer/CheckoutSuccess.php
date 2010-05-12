@@ -37,7 +37,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_CheckoutSuccess extends 
 {
     function getOrder()
     {
-		$this->xlite->set("useStoredWholesale", true);
+        $this->xlite->set("useStoredWholesale", true);
         return parent::getOrder();
     }
 }

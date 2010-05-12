@@ -61,7 +61,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
                 break;
         }
         return $label;
-    } 
+    }
 
     function sumSale($items, $range) 
     {
@@ -72,7 +72,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
             }
         }
         return $sum;
-    } 
+    }
 
     function sumSaleQuantity($items, $range) 
     {
@@ -83,7 +83,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
             }
         }
         return $qty;
-    } 
+    }
 
     function sumSaleNumber($items, $range) 
     {
@@ -94,7 +94,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
             }
         }
         return count($number);
-    } 
+    }
 
     function getSales() 
     {
@@ -121,8 +121,8 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
             $this->sales["y"] = $y;
             $this->sales["labels"] = $labels;
         }
-		return $this->sales;
-    } 
+        return $this->sales;
+    }
 
     function exportSales() 
     {
@@ -148,7 +148,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
 
         // do not output anything
         $this->set("silent", true);
-    } 
+    }
 
     function action_get_data() 
     {
@@ -156,10 +156,10 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
             $this->exportSales();
         }
         parent::action_get_data();
-    } 
+    }
 
     function getStartXML() 
-    {       
+    {
         return '<?xml version="1.0"?>'."\n";;
-    } 
+    }
 }

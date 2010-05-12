@@ -65,13 +65,13 @@ class XLite_Model_ListNode_CheckoutStep extends XLite_Model_ListNode
      * @access public
      * @since  3.0.0
      */
-	public function __construct($key, $widgetClass, $isPassed)
-	{
+    public function __construct($key, $widgetClass, $isPassed)
+    {
         parent::__construct($key);
 
         $this->isPassed    = $isPassed;
         $this->widgetClass = $widgetClass;
-	}
+    }
 
     /**
      * isPassed 

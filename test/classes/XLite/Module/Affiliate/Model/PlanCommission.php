@@ -34,16 +34,16 @@
  * @since   3.0.0
  */
 class XLite_Module_Affiliate_Model_PlanCommission extends XLite_Model_Abstract
-{	
+{
     public $fields = array(
             "plan_id" => 0,
             "commission" => "0.00",
             "commission_type" => '%',
             "item_id" => 0,
             "item_type" => "",
-            );	
+            );
 
-    public $alias = "partner_plan_commissions";	
+    public $alias = "partner_plan_commissions";
     public $primaryKey = array("plan_id", "item_id", "item_type");
 
     function getProduct()
@@ -94,7 +94,7 @@ class XLite_Module_Affiliate_Model_PlanCommission extends XLite_Model_Abstract
         $ap = new XLite_Module_Affiliate_Model_AffiliatePlan($order->getComplex('partner.plan'));
         if ($ap->is("enabled")) {
             $commissions = $this->get("orderCommissions");
-        }            
+        }
         return $commissions;
     }
 }

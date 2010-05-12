@@ -34,8 +34,8 @@
  * @since   3.0.0
  */
 class XLite_Model_ShippingRate extends XLite_Model_Abstract
-{	
-    public $alias = "shipping_rates";	
+{
+    public $alias = "shipping_rates";
     public $fields = array(
         "shipping_id" => "",
         "min_weight" => 0,
@@ -47,12 +47,12 @@ class XLite_Model_ShippingRate extends XLite_Model_Abstract
         "shipping_zone" => 0,
         "flat" => 0,
         "per_item" => 0,
-		"percent" => 0,
-		"per_lbs" => 0);	
-    public $primaryKey = array("shipping_id","min_weight","min_total","min_items", "shipping_zone");	
-    public $defaultOrder = "shipping_id, shipping_zone, min_weight, min_total, min_items";	
+        "percent" => 0,
+        "per_lbs" => 0);
+    public $primaryKey = array("shipping_id","min_weight","min_total","min_items", "shipping_zone");
+    public $defaultOrder = "shipping_id, shipping_zone, min_weight, min_total, min_items";
 
-    public $shipping = null;	
+    public $shipping = null;
     public $rate;
 
     function getShipping()

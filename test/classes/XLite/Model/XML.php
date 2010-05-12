@@ -187,7 +187,7 @@ class XLite_Model_XML extends XLite_Base
                     $postfix = '';
                     while (isset($tree[$tag . $postfix])) {
                         $postfix = '' == $postfix ? 1 : $postfix + 1;
-                    }    
+                    }
 
                     $tree[$tag . $postfix] = $value;
                 }

@@ -75,7 +75,7 @@ class XLite_Module_UPSOnlineTools_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'This module enables the access to UPS OnLine Tools';
-    }    
+    }
 
     /**
      * Determines if we need to show settings form link

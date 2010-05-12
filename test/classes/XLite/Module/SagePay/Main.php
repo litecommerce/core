@@ -69,7 +69,7 @@ class XLite_Module_SagePay_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'VSP Direct and VSP Form credit card payment processor';
-    }	
+    }
 
     /**
      * Determines if we need to show settings form link
@@ -91,9 +91,9 @@ class XLite_Module_SagePay_Main extends XLite_Module_Abstract
      * @since  3.0
      */
     public static function getSettingsForm()
-	{
-		return "admin.php?target=payment_method&payment_method=sagepaydirect_cc";
-	}
+    {
+        return "admin.php?target=payment_method&payment_method=sagepaydirect_cc";
+    }
 
     /**
      * Perform some actions at startup
@@ -106,19 +106,19 @@ class XLite_Module_SagePay_Main extends XLite_Module_Abstract
     {
         parent::init();
 
-		$pm = new XLite_Model_PaymentMethod();
+        $pm = new XLite_Model_PaymentMethod();
         $pm->find('payment_method = \'sagepaydirect_cc\'');
 
-		switch($pm->getComplex('params.solution')) {
-			case "form":
-				$this->registerPaymentMethod('sagepayform_cc');
-			break;
-			default:
-			case "direct":
-				$this->registerPaymentMethod('sagepaydirect_cc');
-			break;
-		}
+        switch($pm->getComplex('params.solution')) {
+            case "form":
+                $this->registerPaymentMethod('sagepayform_cc');
+            break;
+            default:
+            case "direct":
+                $this->registerPaymentMethod('sagepaydirect_cc');
+            break;
+        }
 
-		$this->xlite->set("SagePayEnabled", true);
+        $this->xlite->set("SagePayEnabled", true);
     }
 }

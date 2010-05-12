@@ -50,7 +50,7 @@ implements XLite_Base_IDecorator
 
             parent::getShippings();
 
-            $method = new XLite_Module_UPSOnlineTools_Model_Shipping_Ups(); 
+            $method = new XLite_Module_UPSOnlineTools_Model_Shipping_Ups();
 
             foreach ($this->_shippings as $shippingKey => $shipping) {
                 if ($shipping->get('class') == 'ups') {

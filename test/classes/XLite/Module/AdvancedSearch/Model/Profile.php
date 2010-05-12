@@ -35,10 +35,10 @@
  */
 class XLite_Module_AdvancedSearch_Model_Profile extends XLite_Model_Profile implements XLite_Base_IDecorator
 {
-	public function __construct($id = null)
-	{
-		$this->fields["search_settings"] = "";
-		parent::__construct($id);
-	}
+    public function __construct($id = null)
+    {
+        $this->fields["search_settings"] = "";
+        parent::__construct($id);
+    }
 
-} 
+}

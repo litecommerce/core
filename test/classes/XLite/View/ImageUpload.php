@@ -34,16 +34,16 @@
  * @since      3.0.0
  */
 class XLite_View_ImageUpload extends XLite_View_Abstract
-{	
+{
     /*
      * Widget parameters names
      */
-	const PARAM_FIELD = 'field';
-	const PARAM_ACTION_NAME = 'actionName';
-	const PARAM_FORM_NAME = 'formName';
-	const PARAM_OBJECT = 'object';
+    const PARAM_FIELD = 'field';
+    const PARAM_ACTION_NAME = 'actionName';
+    const PARAM_FORM_NAME = 'formName';
+    const PARAM_OBJECT = 'object';
 
-	public $showDelete = true;	
+    public $showDelete = true;
 
 
     /**
@@ -69,12 +69,12 @@ class XLite_View_ImageUpload extends XLite_View_Abstract
     {
         parent::defineWidgetParams();
 
-		$this->widgetParams += array(
-			self::PARAM_FIELD       => new XLite_Model_WidgetParam_String('Field', ''),
-			self::PARAM_ACTION_NAME => new XLite_Model_WidgetParam_String('Action name', ''),
-			self::PARAM_FORM_NAME   => new XLite_Model_WidgetParam_String('Form name', ''),
-			self::PARAM_OBJECT      => new XLite_Model_WidgetParam_Object('Object', null),
-		);
+        $this->widgetParams += array(
+            self::PARAM_FIELD       => new XLite_Model_WidgetParam_String('Field', ''),
+            self::PARAM_ACTION_NAME => new XLite_Model_WidgetParam_String('Action name', ''),
+            self::PARAM_FORM_NAME   => new XLite_Model_WidgetParam_String('Form name', ''),
+            self::PARAM_OBJECT      => new XLite_Model_WidgetParam_Object('Object', null),
+        );
     }
 
     /**
@@ -109,8 +109,8 @@ class XLite_View_ImageUpload extends XLite_View_Abstract
      * @since  3.0.0
      */
     protected function isFS()
-	{
-		return ('F' == $this->getParam(self::PARAM_OBJECT)->get($this->getParam(self::PARAM_FIELD))->getDefaultSource());
+    {
+        return ('F' == $this->getParam(self::PARAM_OBJECT)->get($this->getParam(self::PARAM_FIELD))->getDefaultSource());
     }
 }
 

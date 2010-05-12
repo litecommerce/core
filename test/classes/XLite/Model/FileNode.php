@@ -56,9 +56,9 @@ class XLite_Model_FileNode extends XLite_Base
         if ($this->comment) {
             if ($this->comment == "EMPTY") {
                 return "";
-            } else {    
+            } else {
                 return $this->comment;
-            }    
+            }
         } else {
             $cnt = is_file($this->path) ? file_get_contents($this->path) : "";
             if (substr($cnt, 0, 2) == "{*") {
@@ -140,7 +140,7 @@ class XLite_Model_FileNode extends XLite_Base
         $this->checkAccess($this->path);
         $this->checkAccess($this->newPath);
         rename($this->path, $this->newPath);
-		is_dir($this->newPath) ? @chmod($this->newPath,get_filesystem_permissions(0755)) : @chmod($this->newPath, get_filesystem_permissions(0666));
+        is_dir($this->newPath) ? @chmod($this->newPath,get_filesystem_permissions(0755)) : @chmod($this->newPath, get_filesystem_permissions(0666));
     }
 
     function update()
@@ -158,7 +158,7 @@ class XLite_Model_FileNode extends XLite_Base
             fwrite($fd, str_replace("\r", '', $this->content));
             if (!empty($this->content)) {
                 fwrite($fd, "\n");
-            }    
+            }
             fclose($fd);
             @chmod($this->path, get_filesystem_permissions(0666));
         } else {

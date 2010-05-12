@@ -41,13 +41,13 @@ define('MAIL_SKINS', 'mail');
  * @since   3.0.0
  */
 class XLite_Model_Upgrade extends XLite_Model_Abstract
-{	
+{
     public $fields = array(
         "from_ver" => "",
         "to_ver" => "",
-        "date" => "0");	
-    public $alias = "upgrades";	
-    public $primaryKey = array("from_ver", "to_ver");	
+        "date" => "0");
+    public $alias = "upgrades";
+    public $primaryKey = array("from_ver", "to_ver");
     public $_interactive = true; // interactive upgrade; show upgrade messages	
     public $failed = false;
 
@@ -70,13 +70,13 @@ class XLite_Model_Upgrade extends XLite_Model_Abstract
     */
     function doUpgrade() 
     {
-		$from_ver = $this->get("from_ver");
-		$to_ver = $this->get("to_ver");
-		$from_ver = str_replace(" build ", ".", $from_ver);
-		$configVersion = $this->config->Version->version;
-		$configVersion = str_replace(" build ", ".", $configVersion);
+        $from_ver = $this->get("from_ver");
+        $to_ver = $this->get("to_ver");
+        $from_ver = str_replace(" build ", ".", $from_ver);
+        $configVersion = $this->config->Version->version;
+        $configVersion = str_replace(" build ", ".", $configVersion);
 
-		echo "<pre>Continuing $from_ver to $to_ver LiteCommerce upgrade:<br><br>\n";
+        echo "<pre>Continuing $from_ver to $to_ver LiteCommerce upgrade:<br><br>\n";
 
         if ($from_ver != $configVersion) {
         	if ($configVersion != "2.2.17") {
@@ -85,15 +85,15 @@ class XLite_Model_Upgrade extends XLite_Model_Abstract
         }
         if (include("upgrade/upgrade".$from_ver."-".$to_ver.".php")) {
             if (!$this->failed) {
-				$this->success();
+                $this->success();
             } else {
-				$this->failure();
-			}
+                $this->failure();
+            }
         }
     }
 
-	function failure()
-	{
+    function failure()
+    {
         if ($this->getInteractive()) {
             if ($this->failed) {
 ?>
@@ -105,32 +105,32 @@ Please correct errors above and click reload or click the button below to force 
 <?php
             }
         }
-	}		
+    }
 
-	function success()
-	{
-		$from_ver = $this->get("from_ver");
-		$from_ver = str_replace(" build ", ".", $from_ver);
-		$configVersion = $this->config->Version->version;
-		$configVersion = str_replace(" build ", ".", $configVersion);
+    function success()
+    {
+        $from_ver = $this->get("from_ver");
+        $from_ver = str_replace(" build ", ".", $from_ver);
+        $configVersion = $this->config->Version->version;
+        $configVersion = str_replace(" build ", ".", $configVersion);
 
-		echo "\n\n<br><br><font color=blue><b>LiteCommerce has been successfully upgraded to version " . $this->get("to_ver") . "</b></font>";
-		
-		if ($from_ver == $configVersion) {
-			$this->set("date", time());
-			if ($this->find("from_ver='" . $this->get("from_ver") . "' AND to_ver='" . $this->get("to_ver") . "'")) {
-				$this->update();
-			} else {
-				$this->create();
-			}
-			// set current version in config->Version->version
-			$c = new XLite_Model_Config();
-			$c->set("category", "Version");
-			$c->set("name", "version");
-			$c->set("value", $this->get("to_ver"));
-			$c->update();
-		}
-	}
+        echo "\n\n<br><br><font color=blue><b>LiteCommerce has been successfully upgraded to version " . $this->get("to_ver") . "</b></font>";
+        
+        if ($from_ver == $configVersion) {
+            $this->set("date", time());
+            if ($this->find("from_ver='" . $this->get("from_ver") . "' AND to_ver='" . $this->get("to_ver") . "'")) {
+                $this->update();
+            } else {
+                $this->create();
+            }
+            // set current version in config->Version->version
+            $c = new XLite_Model_Config();
+            $c->set("category", "Version");
+            $c->set("name", "version");
+            $c->set("value", $this->get("to_ver"));
+            $c->update();
+        }
+    }
 
     function copyFile($from, $to)
     {
@@ -138,14 +138,14 @@ Please correct errors above and click reload or click the button below to force 
         if (file_exists($to)) {
             if (!copyFile($to, $to . ".bak")) {
                 $this->status(false, ": can't save backup copy of $to to $to.bak");
-				$this->failed = true;
+                $this->failed = true;
                 return false;
             }
         }
         $this->status($result = copyFile($from, $to));
-		if (!$result) {
-			$this->failed = true;
-		}
+        if (!$result) {
+            $this->failed = true;
+        }
         return $result;
     }
 
@@ -168,9 +168,9 @@ Please correct errors above and click reload or click the button below to force 
 
     /**
     * Patch a file named $file with the patch $path.
-	* If $re is specified, it contains a regular expression to search for.
-	* If found, than the file has already been patched. patchFile returns
-	* ALREADY_PATCHED in this case.
+    * If $re is specified, it contains a regular expression to search for.
+    * If found, than the file has already been patched. patchFile returns
+    * ALREADY_PATCHED in this case.
     * $patch as an array of patches. Each element is
     * in form of array(COMMAND, ARGUMENT)
     *  COMMAND is:
@@ -184,15 +184,15 @@ Please correct errors above and click reload or click the button below to force 
     function patchFile($file, $patch, $re = '')
     {
         $lines = file($file);
-		// find if patched
-		if ($re) {
-			foreach ($lines as $line) {
-				if (preg_match($re, $line)) {
-					return ALREADY_PATCHED;
-				}
-			}
-		}
-		$patched = false;
+        // find if patched
+        if ($re) {
+            foreach ($lines as $line) {
+                if (preg_match($re, $line)) {
+                    return ALREADY_PATCHED;
+                }
+            }
+        }
+        $patched = false;
         for ($i=0; $i < count($lines)+1; $i++) {
             if ($i < count($lines)) {
                 $lines[$i] = rtrim($lines[$i]); // chop
@@ -201,73 +201,73 @@ Please correct errors above and click reload or click the button below to force 
                 $line = '';
             }
             for ($n=0; $n<count($patch); $n++) {
-				$command = $patch[$n];
+                $command = $patch[$n];
                 switch ($command[0]) {
                     case "insert start":
                         if ($i == 0) {
                             array_unshift($lines, $command[1]);
                             $i++;
-							$patched = true;
+                            $patched = true;
                         }
                     break;
                     case "insert end":
                         if ($i == count($lines)) {
                             array_push($lines, $command[1]);
                             $i++;
-							$patched = true;
+                            $patched = true;
                         }
                     break;
                     case "insert before":
                         if ($this->_compareLines($lines, $i, $command[1])) {
                             array_splice($lines, $i, 0, array($command[2]));
                             $i++;
-							$patched = true;
+                            $patched = true;
                         }
                     break;
                     case "insert after":
                         if ($this->_compareLines($lines, $i, $command[1])) {
-							if (is_array($command[1])) $delta = count($command[1]);
-							else $delta = 1;
+                            if (is_array($command[1])) $delta = count($command[1]);
+                            else $delta = 1;
                             array_splice($lines, $i+$delta, 0, array($command[2]));
                             $i+=$delta+1;
-							$patched = true;
+                            $patched = true;
                         }
                     break;
                     case "replace":
                         if ($this->_compareLines($lines, $i, $command[1])) {
                             $lines[$i] = $command[2];
-							$patched = true;
+                            $patched = true;
                         }
                     break;
-					case "replace substr":
-						$line = str_replace($command[1], $command[2], $lines[$i]);
-						if ($line != $lines[$i]) {
-							$lines[$i] = $line;
-							$patched = true;
-						}
-					break;
+                    case "replace substr":
+                        $line = str_replace($command[1], $command[2], $lines[$i]);
+                        if ($line != $lines[$i]) {
+                            $lines[$i] = $line;
+                            $patched = true;
+                        }
+                    break;
                     case "remove":
                         if ($this->_compareLines($lines, $i, $command[1])) {
                             array_splice($lines, $i, 1);
                             $i--;
-							$patched = true;
+                            $patched = true;
                         }
                         break;
                 }
             }
         }
-		if ($patched) {
-			// write the file down
-			$fd = fopen($file, "w");
-			fwrite($fd, join("\n", $lines));
-			fclose($fd);
-			return PATCH_APPLIED;
-		} else {
-			return CANT_PATCH;
-		}
+        if ($patched) {
+            // write the file down
+            $fd = fopen($file, "w");
+            fwrite($fd, join("\n", $lines));
+            fclose($fd);
+            return PATCH_APPLIED;
+        } else {
+            return CANT_PATCH;
+        }
     }
 
-	// FIXME - not needed?
+    // FIXME - not needed?
     function createConfig($name, $comment, $value, $category, $orderby, $type) 
     {
         echo "Creating config option $name ($category) ... ";
@@ -276,21 +276,21 @@ Please correct errors above and click reload or click the button below to force 
         $sql = "DELETE FROM $this->config_table WHERE name='$name' AND category='$category'";
         if (mysql_query($sql, $this->connection->connection) === false) {
             echo "[FAILURE:" . mysql_error($connection->connection->connection) . "]\n";
-			$this->failed = true;
+            $this->failed = true;
             return false;
         }
         // insert config options
         $sql = "INSERT INTO $this->config_table (name, comment, value, category, orderby, type) VALUES ('$name' , '$comment' , '$value' , '$category' , $orderby , '$type')";
         if (mysql_query($sql, $connection->connection->connection) === false) {
             echo "[FAILURE:" . mysql_error($connection->connection->connection) . "]\n";
-			$this->failed = true;
+            $this->failed = true;
             return false;
         }
         echo "[OK]\n";
         return true;
-    } 
+    }
 
-	// FIXME - not needed?
+    // FIXME - not needed?
     function dropConfig($name, $category) 
     {
         echo "Deleting config option $name ($category) ...";
@@ -300,95 +300,95 @@ Please correct errors above and click reload or click the button below to force 
         $sql = "DELETE FROM $this->config_table WHERE name='$name' AND category='$category'";
         if (mysql_query($sql, $connection->connection->connection) === false) {
             echo "[FAILURE:" . mysql_error($connection->connection->connection) . "]\n";
-			$this->failed = true;
+            $this->failed = true;
             return false;
         }
-        echo "[OK]\n"; 
+        echo "[OK]\n";
         return true;
-    } 
+    }
 
-	// FIXME - not needed?
-	function patchTemplate($zone, $template, $patch, $re = '')
-	{
-		$layout = Layout::getInstance();
-		if ($zone == CUSTOMER_SKINS) {
-			$skins = $layout->getSkins();
-		} else {
-			$skins = array($zone);
-		}
-		foreach ($skins as $skin) {
-			foreach ($layout->getLocales($skin) as $locale) {
-				$file = "skins" . DIRECTORY_SEPARATOR . $skin . DIRECTORY_SEPARATOR . $locale . DIRECTORY_SEPARATOR . $template;
-				if (file_exists($file)) {
-					echo "Patching file $file... ";
-					if (is_writable($file)) {
-						$result = $this->patchFile($file, $patch, $re);
-						if ($result == ALREADY_PATCHED) {
-							$this->status(true, ": already patched");
-						} else if ($result == CANT_PATCH) {
-							$this->status(false, ": template might have been changed.");
-							$this->print_msg("Cannot apply the following changes:\n" . $this->getPatchDescription($patch));
-							return false;
-						} else if ($result == PATCH_APPLIED) {
-							$this->status(true);
-						}
-					} else {
-						$this->status(false, " file is not writable");
-						$this->failed = true;
-						return false;
-					}
-				}
-			}
-		}
-		return true;
-	}
+    // FIXME - not needed?
+    function patchTemplate($zone, $template, $patch, $re = '')
+    {
+        $layout = Layout::getInstance();
+        if ($zone == CUSTOMER_SKINS) {
+            $skins = $layout->getSkins();
+        } else {
+            $skins = array($zone);
+        }
+        foreach ($skins as $skin) {
+            foreach ($layout->getLocales($skin) as $locale) {
+                $file = "skins" . DIRECTORY_SEPARATOR . $skin . DIRECTORY_SEPARATOR . $locale . DIRECTORY_SEPARATOR . $template;
+                if (file_exists($file)) {
+                    echo "Patching file $file... ";
+                    if (is_writable($file)) {
+                        $result = $this->patchFile($file, $patch, $re);
+                        if ($result == ALREADY_PATCHED) {
+                            $this->status(true, ": already patched");
+                        } else if ($result == CANT_PATCH) {
+                            $this->status(false, ": template might have been changed.");
+                            $this->print_msg("Cannot apply the following changes:\n" . $this->getPatchDescription($patch));
+                            return false;
+                        } else if ($result == PATCH_APPLIED) {
+                            $this->status(true);
+                        }
+                    } else {
+                        $this->status(false, " file is not writable");
+                        $this->failed = true;
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
 
-	function getPatchDescription($patch)
-	{
-		$des = "";
-		foreach ($patch as $command) {
-			$des .= "<b>" . $command[0] . "</b> "; // command
-			if (is_array($command[1])) {
-				$des .= "<b>lines\n{</b>\n";
-				foreach ($command[1] as $line) {
-					$des .= htmlspecialchars($line) . "\n";
-				}
-				$des .= "\n<b>}</b>\n";
-			} else {
-				$des .= "\n" . htmlspecialchars($command[1]) . "\n";
-			}
-			if (isset($command[2])) {
-				if (substr($command[0], 0, 7) == "replace") {
-					$des .= "<b>with</b> '" . htmlspecialchars($command[2]) . "'\n";
-				} else {
-					$des .= "<b>the line</b> '" . htmlspecialchars($command[2]) . "'\n";
-				}
-			}
-		}
-		return $des;
-	}
+    function getPatchDescription($patch)
+    {
+        $des = "";
+        foreach ($patch as $command) {
+            $des .= "<b>" . $command[0] . "</b> "; // command
+            if (is_array($command[1])) {
+                $des .= "<b>lines\n{</b>\n";
+                foreach ($command[1] as $line) {
+                    $des .= htmlspecialchars($line) . "\n";
+                }
+                $des .= "\n<b>}</b>\n";
+            } else {
+                $des .= "\n" . htmlspecialchars($command[1]) . "\n";
+            }
+            if (isset($command[2])) {
+                if (substr($command[0], 0, 7) == "replace") {
+                    $des .= "<b>with</b> '" . htmlspecialchars($command[2]) . "'\n";
+                } else {
+                    $des .= "<b>the line</b> '" . htmlspecialchars($command[2]) . "'\n";
+                }
+            }
+        }
+        return $des;
+    }
 
-	function _compareLines(&$fileLines, $i, $patchLine)
-	{
-		if (!is_array($patchLine)) {
-			$patchLines = array($patchLine);
-		} else {
-			$patchLines = $patchLine;
-		}
-		foreach ($patchLines as $patchLine) {
-			if ($patchLine{0} == '/') {
-				if (!preg_match($patchLine, $fileLines[$i])) {
-					return false;
-				}
-			} else {
-				if (trim($fileLines[$i]) != trim($patchLine)) {
-					return false;
-				}
-			}
-			$i++;
-		}
-		return true;
-	}
+    function _compareLines(&$fileLines, $i, $patchLine)
+    {
+        if (!is_array($patchLine)) {
+            $patchLines = array($patchLine);
+        } else {
+            $patchLines = $patchLine;
+        }
+        foreach ($patchLines as $patchLine) {
+            if ($patchLine{0} == '/') {
+                if (!preg_match($patchLine, $fileLines[$i])) {
+                    return false;
+                }
+            } else {
+                if (trim($fileLines[$i]) != trim($patchLine)) {
+                    return false;
+                }
+            }
+            $i++;
+        }
+        return true;
+    }
 
     function log($msg)
     {

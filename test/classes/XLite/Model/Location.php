@@ -42,7 +42,7 @@ class XLite_Model_Location extends XLite_Base
      * @access protected
      * @since  3.0.0
      */
-	protected $name = null;
+    protected $name = null;
 
     /**
      * Breadcrumb link 
@@ -51,7 +51,7 @@ class XLite_Model_Location extends XLite_Base
      * @access protected
      * @since  3.0.0
      */
-	protected $link = null;
+    protected $link = null;
 
 
     /**
@@ -64,11 +64,11 @@ class XLite_Model_Location extends XLite_Base
      * @access public
      * @since  3.0.0
      */
-	public function __construct($name, $link = null)
-	{
-		$this->name = $name;
-		$this->link = $link;
-	}
+    public function __construct($name, $link = null)
+    {
+        $this->name = $name;
+        $this->link = $link;
+    }
 
     /**
      * Return breadcrumb name

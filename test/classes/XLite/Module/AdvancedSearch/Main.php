@@ -69,7 +69,7 @@ class XLite_Module_AdvancedSearch_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'This module introduces advanced product search to the customer front end';
-    }	
+    }
 
     /**
      * Determines if we need to show settings form link
@@ -81,7 +81,7 @@ class XLite_Module_AdvancedSearch_Main extends XLite_Module_Abstract
     public static function showSettingsForm()
     {
         return false;
-    }	
+    }
 
     /**
      * Return link to settings form
@@ -91,9 +91,9 @@ class XLite_Module_AdvancedSearch_Main extends XLite_Module_Abstract
      * @since  3.0
      */
     public static function getSettingsForm()
-	{
-		return "admin.php?target=advanced_search";
-	}
+    {
+        return "admin.php?target=advanced_search";
+    }
 
     /**
      * Perform some actions at startup
@@ -103,9 +103,9 @@ class XLite_Module_AdvancedSearch_Main extends XLite_Module_Abstract
      * @since  3.0
      */
     public function init()
-	{
-		parent::init();
+    {
+        parent::init();
 
         $this->xlite->set("AdvancedSearchEnabled", true);
-	} 
+    }
 }

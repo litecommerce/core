@@ -35,27 +35,27 @@
  */
 class XLite_Controller_Admin_Db extends XLite_Controller_Admin_Abstract
 {
-	/**
-	 * File size limit 
-	 * 
-	 * @return mixed
-	 * @access public
-	 * @since  3.0.0
-	 */
-	public function getUploadMaxFilesize()
-	{
-		return ini_get('upload_max_filesize');
-	}
+    /**
+     * File size limit 
+     * 
+     * @return mixed
+     * @access public
+     * @since  3.0.0
+     */
+    public function getUploadMaxFilesize()
+    {
+        return ini_get('upload_max_filesize');
+    }
 
 
-	public $params = array('target', 'page');	
-	public $page = "db_backup";	
-	public $pages = array( "db_backup" 	=> "Backup database",
-						"db_restore" 	=> "Restore database");	
-	public $pageTemplates = array(	"db_backup" 	=> "db/backup.tpl",
-								"db_restore"	=> "db/restore.tpl");	
-   	public $upload_max_filesize;	
-   	public $sqldump_dir = SQL_DUMP_DIR;	
+    public $params = array('target', 'page');
+    public $page = "db_backup";
+    public $pages = array( "db_backup" 	=> "Backup database",
+                        "db_restore" 	=> "Restore database");
+    public $pageTemplates = array(	"db_backup" 	=> "db/backup.tpl",
+                                "db_restore"	=> "db/restore.tpl");
+   	public $upload_max_filesize;
+   	public $sqldump_dir = SQL_DUMP_DIR;
     public $sqldump_file = SQL_DUMP_FILE;
     
     function handleRequest()
@@ -79,7 +79,7 @@ class XLite_Controller_Admin_Db extends XLite_Controller_Admin_Abstract
         if (
         	$this->action == "backup" 
         	&& 
-			(intval(strval($this->write_to_file)) != 0 && !$this->isFileWritable())
+            (intval(strval($this->write_to_file)) != 0 && !$this->isFileWritable())
         ) {
         	$this->set("valid", false);
         	$this->set("invalid_file", true);
@@ -125,7 +125,7 @@ class XLite_Controller_Admin_Db extends XLite_Controller_Admin_Abstract
             		echo "<br><b>Database backup created successfully</b><br>";
             	}
                 $this->set("silent", true);
-            }    
+            }
         } else {
     		exit;
     	}
@@ -142,13 +142,13 @@ class XLite_Controller_Admin_Db extends XLite_Controller_Admin_Abstract
     function action_restore()
     {
         // restore from FS by default
-        $srcfile = $this->sqldump_file; 
+        $srcfile = $this->sqldump_file;
         $mode = "file";
 
         // check whether to restore from file upload
-		mkdirRecursive(SQL_UPLOAD_DIR);
+        mkdirRecursive(SQL_UPLOAD_DIR);
         if (!isset(XLite_Core_Request::getInstance()->local_file))
-        { 
+        {
             $upload = new XLite_Model_Upload($_FILES['userfile']);
             $srcfile = SQL_UPLOAD_DIR.$upload->getName();
             if (!$upload->move($srcfile)) {
@@ -172,28 +172,28 @@ class XLite_Controller_Admin_Db extends XLite_Controller_Admin_Abstract
             // Windows Control Panel mode. suppress "back" message.
             echo "OK";
         } else {
-			$this->displayPageFooter();
-			func_refresh_end();
+            $this->displayPageFooter();
+            func_refresh_end();
         }
         // do not update session, etc.
         exit();
     }
 
-	function getPageReturnUrl()
-	{
-		$url = "";
-		switch ($this->action) {
-			case "backup":
-				$url = array('<a href="admin.php?target=db&page=db_backup"><u>Return to admin interface.</u></a>');
-			break;
-			case "restore":
-				$url = array('<a href="admin.php?target=db&page=db_restore"><u>Return to admin interface.</u></a>');
-			break;
-			default:
-				$url = parent::getPageReturnUrl();
-		}
+    function getPageReturnUrl()
+    {
+        $url = "";
+        switch ($this->action) {
+            case "backup":
+                $url = array('<a href="admin.php?target=db&page=db_backup"><u>Return to admin interface.</u></a>');
+            break;
+            case "restore":
+                $url = array('<a href="admin.php?target=db&page=db_restore"><u>Return to admin interface.</u></a>');
+            break;
+            default:
+                $url = parent::getPageReturnUrl();
+        }
 
-		return $url;
-	}
+        return $url;
+    }
 
 }

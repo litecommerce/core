@@ -28,9 +28,9 @@ $cart->set('detailLabels', $cart_labels);
     $cart->setComplex("details.authcode", $_GET['acode']); $cart->setComplex("detailLabels.authcode", "AuthCode");
     $cart->setComplex("details.reference", $_GET['ref']); $cart->setComplex("detailLabels.reference", "Reference");
     $cart->setComplex("details.reason", $_GET['resp']); $cart->setComplex("detailLabels.reason", "Response");
-	
-	$status = ($_GET['result']==0 && $_GET['resp']!="CSCDECLINED" && $_GET['resp']!="AVSDECLINED") ? "P" : "F";
-	if ($_GET['result']==126) $status = "Q";
+    
+    $status = ($_GET['result']==0 && $_GET['resp']!="CSCDECLINED" && $_GET['resp']!="AVSDECLINED") ? "P" : "F";
+    if ($_GET['result']==126) $status = "Q";
     $cart->set("status", $status);
 
     $cart->update();

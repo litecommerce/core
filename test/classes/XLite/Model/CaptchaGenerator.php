@@ -216,7 +216,7 @@ class XLite_Model_CaptchaGenerator extends XLite_Base
     {
         for ($i = 0, $x = 0; $i < strlen($code); $i++, $x += $this->symbol_width) {
             $char_im = $this->getCharByIndexFromFont($this->characters[$code[$i]]);
-            imagecopymerge($im, $char_im, $x, 0, 0, 0, $this->symbol_width, $this->height, 100);	
+            imagecopymerge($im, $char_im, $x, 0, 0, 0, $this->symbol_width, $this->height, 100);
         }
         return $im;
     }
@@ -236,38 +236,38 @@ class XLite_Model_CaptchaGenerator extends XLite_Base
             $last  = 90;
         }
 
-	    for ($i = 0; $i < $length; $i++) {
-		    $number = rand($fisrt, $last);
+        for ($i = 0; $i < $length; $i++) {
+            $number = rand($fisrt, $last);
     		if (($number > 57) && ($number < 65)) {
-	    		$i--;
-		    } else {
+        		$i--;
+            } else {
     			$str_num .= chr($number);
-	    	}
+        	}
     	}
-			    
-	    return $str_num;
+                
+        return $str_num;
     }
 
     function generate($code)
     {
         $width = strlen($code) * $this->symbol_width + 20;
         $bg_color = array (
-		    			'red' => 255,
-			    		'green' => 255,
-				    	'blue' => 255,
-					    0 => 255,
+            			'red' => 255,
+                		'green' => 255,
+                    	'blue' => 255,
+                        0 => 255,
     					1 => 255,
-	    				2 => 255
-				    );	
+        				2 => 255
+                    );
 
         $text_color = array (
-		    			'red' => 0,
-			    		'green' => 0,
-				    	'blue' => 0,
-					    0 => 0,
+            			'red' => 0,
+                		'green' => 0,
+                    	'blue' => 0,
+                        0 => 0,
     					1 => 0,
-	    				2 => 0
-	                );
+        				2 => 0
+                    );
         
         $im = imagecreatetruecolor($width, $this->height);
         $bgcolor = imagecolorallocate($im, $bg_color['red'], $bg_color['green'], $bg_color['blue']);

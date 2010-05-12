@@ -5,7 +5,7 @@ function func_EcommerceReports_getRawProducts(&$dlg)
         $dlg->rawProducts = array();
         $product_ids = $dlg->getProductIDs();
         $categories = (array)$dlg->get("selected_categories");
-		$products_from_categories = array(); // products from selected categories
+        $products_from_categories = array(); // products from selected categories
         if (!empty($categories)) {
             $ids = implode(",", $categories);
             $pc = new XLite_Model_ProductFromCategory();
@@ -19,9 +19,9 @@ function func_EcommerceReports_getRawProducts(&$dlg)
                 $products_from_categories[] = $row["product_id"];
             }
         }
-		$products = array_merge($product_ids, $products_from_categories);
-		$products = array_unique($products);
-		$dlg->rawProducts = $products;
+        $products = array_merge($product_ids, $products_from_categories);
+        $products = array_unique($products);
+        $dlg->rawProducts = $products;
     }
     return $dlg->rawProducts;
 }
@@ -47,7 +47,7 @@ function func_EcommerceReports_getRawItems($dlg, $unique=true)
             $inCities = $dlg->getInCities($pt);
             $inMembership = $dlg->getInMembership($pt);
 
-			$options = '';
+            $options = '';
 
             $sql = "SELECT $it.item_id, $it.order_id, $ot.date, ".
                 "          $ot.orig_profile_id, $ot.total, ".
@@ -68,9 +68,9 @@ function func_EcommerceReports_getRawItems($dlg, $unique=true)
                 "          $inCities $inCountries $inStates $inMembership ".
                            $dlg->getWhere($ot, $it, $pt);
 
-				if ($unique) {
-					$sql .= " GROUP BY $it.item_id";
-				}
+                if ($unique) {
+                    $sql .= " GROUP BY $it.item_id";
+                }
 
             $dlg->rawItems = (array)$product->db->getAll($sql);
         }

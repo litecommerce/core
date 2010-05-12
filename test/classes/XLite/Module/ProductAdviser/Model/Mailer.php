@@ -36,10 +36,10 @@
 class XLite_Module_ProductAdviser_Model_Mailer extends XLite_Model_Mailer implements XLite_Base_IDecorator
 {
     function set($property, $value)
-	{
-		if (($property == "subject" || $property == "signature" || $property == "body") && $this->get("ignoreDefaultSubjectBody")) {
-			return;
-		}
-		parent::set($property, $value);
+    {
+        if (($property == "subject" || $property == "signature" || $property == "body") && $this->get("ignoreDefaultSubjectBody")) {
+            return;
+        }
+        parent::set($property, $value);
     }
 }

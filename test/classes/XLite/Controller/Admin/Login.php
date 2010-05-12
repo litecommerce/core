@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Controller_Admin_Login extends XLite_Controller_Admin_Abstract
-{    
+{
     /**
      * getRegularTemplate
      *

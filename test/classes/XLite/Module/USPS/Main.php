@@ -72,7 +72,7 @@ class XLite_Module_USPS_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'USPS real-time shipping calculation';
-    }    
+    }
 
     /**
      * Determines if we need to show settings form link
@@ -85,7 +85,7 @@ class XLite_Module_USPS_Main extends XLite_Module_Abstract
     public static function showSettingsForm()
     {
         return true;
-    }    
+    }
 
     /**
      * Return link to settings form

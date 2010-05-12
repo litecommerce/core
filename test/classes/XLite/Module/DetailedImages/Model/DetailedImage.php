@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstract
-{    
+{
     /**
      * Model fields list
      * 
@@ -52,7 +52,7 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstra
         'enabled'      => 1,
         'order_by'     => 0,
         'is_zoom'      => '',
-	);    
+    );
 
     /**
      * Table alias 
@@ -62,7 +62,7 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstra
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $alias = 'images';    
+    protected $alias = 'images';
 
     /**
      * Auto increment field name
@@ -72,7 +72,7 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstra
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $autoIncrement = 'image_id';    
+    protected $autoIncrement = 'image_id';
 
     /**
      * Default order field name
@@ -82,7 +82,7 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstra
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $defaultOrder = 'order_by';    
+    public $defaultOrder = 'order_by';
 
     /**
      * Image object (cache)
@@ -279,24 +279,24 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstra
         $found = false;
 
         if (
-			!empty($properties['sku'])
-			&& $product->find('sku = \'' . addslashes($properties['sku']) . '\'')
-		) {
+            !empty($properties['sku'])
+            && $product->find('sku = \'' . addslashes($properties['sku']) . '\'')
+        ) {
             // try to find product by SKU
             $found = true;
 
         } elseif (
-			empty($properties['sku']) &&
-			!empty($properties['name']) && $product->find('name = \'' . addslashes($properties['name']) . '\'')
-		) {
+            empty($properties['sku']) &&
+            !empty($properties['name']) && $product->find('name = \'' . addslashes($properties['name']) . '\'')
+        ) {
             // .. or by NAME
-            $found = true;    
+            $found = true;
         }
 
         if (!$found) {
             $this->doDie(
-				'line# ' . $line . ': No product found for detailed image ' . $image
-			);
+                'line# ' . $line . ': No product found for detailed image ' . $image
+            );
         }
 
         $detailed_image = new XLite_Module_DetailedImages_Model_DetailedImage();

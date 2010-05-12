@@ -34,64 +34,64 @@
  * @since   3.0.0
  */
 class XLite_Module_Egoods_Model_DownloadableFile extends XLite_Model_Abstract
-{	
-	public $alias = "downloadable_files";	
-	public $autoIncrement = "file_id";	
+{
+    public $alias = "downloadable_files";
+    public $autoIncrement = "file_id";
 
-	public $primaryKey = array("file_id");	
-	public $defaultOrder = "file_id";
+    public $primaryKey = array("file_id");
+    public $defaultOrder = "file_id";
 
-	/**
-	 * @var array $fields downloadable files properties.
-	 * @access private
-	 */	
-	public $fields = array(
-			"file_id"				=> 0,
-			"product_id"			=> 0,
-			"store_type"			=> 'F',
-			"delivery"				=> 'L', //L - link, M - mail
-			"data"					=> '',
-			);
-			
-	function getLinks()
-	{
-		$links = new XLite_Module_Egoods_Model_DownloadableLink();
-		return $links->findAll('file_id=' . $this->get('file_id'));
-	}
+    /**
+     * @var array $fields downloadable files properties.
+     * @access private
+     */	
+    public $fields = array(
+            "file_id"				=> 0,
+            "product_id"			=> 0,
+            "store_type"			=> 'F',
+            "delivery"				=> 'L', //L - link, M - mail
+            "data"					=> '',
+            );
+            
+    function getLinks()
+    {
+        $links = new XLite_Module_Egoods_Model_DownloadableLink();
+        return $links->findAll('file_id=' . $this->get('file_id'));
+    }
 
-	function getManualLinks()
-	{
-		$links = new XLite_Module_Egoods_Model_DownloadableLink();
-		if (!isset($this->_manual_links)) {
-			$this->_manual_links = $links->findAll('file_id=' . $this->get('file_id') . " and link_type='M'");
-		}	
-		return $this->_manual_links;
-	}
-	
-	function hasManualLinks()
-	{
-		$ml = $this->get('manualLinks');
-		if (count($ml) > 0) {
-			return true;
-		}
-		return false;
-	}
-	
-	function getActiveLinks()
-	{
-		$l = new XLite_Module_Egoods_Model_DownloadableLink();
-		$links = $l->findAll('file_id=' . $this->get('file_id'));
-		$active_links = array();
-		for ($i = 0; $i < count($links); $i ++) {
-			if ($links[$i]->is('Active')) {
-				$active_links [] = $links[$i];
-			}	
-		}
-		return $active_links;
-	}
+    function getManualLinks()
+    {
+        $links = new XLite_Module_Egoods_Model_DownloadableLink();
+        if (!isset($this->_manual_links)) {
+            $this->_manual_links = $links->findAll('file_id=' . $this->get('file_id') . " and link_type='M'");
+        }
+        return $this->_manual_links;
+    }
+    
+    function hasManualLinks()
+    {
+        $ml = $this->get('manualLinks');
+        if (count($ml) > 0) {
+            return true;
+        }
+        return false;
+    }
+    
+    function getActiveLinks()
+    {
+        $l = new XLite_Module_Egoods_Model_DownloadableLink();
+        $links = $l->findAll('file_id=' . $this->get('file_id'));
+        $active_links = array();
+        for ($i = 0; $i < count($links); $i ++) {
+            if ($links[$i]->is('Active')) {
+                $active_links [] = $links[$i];
+            }
+        }
+        return $active_links;
+    }
 
-	function getFileName()
-	{
-		return basename($this->get('data'));
-	}
+    function getFileName()
+    {
+        return basename($this->get('data'));
+    }
 }

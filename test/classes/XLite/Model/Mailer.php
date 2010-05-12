@@ -76,7 +76,7 @@ class XLite_Model_Mailer extends XLite_View_Abstract
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $langLocale = 'en';    
+    protected $langLocale = 'en';
 
     /**
      * Languages directory path (for PHPMailer)
@@ -106,7 +106,7 @@ class XLite_Model_Mailer extends XLite_View_Abstract
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $charset           = 'iso-8859-1';    
+    protected $charset           = 'iso-8859-1';
 
     /**
      * Saved templates skin
@@ -313,7 +313,7 @@ class XLite_Model_Mailer extends XLite_View_Abstract
         // remove html tags & convert html entities to chars
         $txt = strtr(strip_tags($html), $transTbl);
 
-        return preg_replace('/^\s*$/m', '', $txt); 
+        return preg_replace('/^\s*$/m', '', $txt);
     }
 
     /**
@@ -379,7 +379,7 @@ class XLite_Model_Mailer extends XLite_View_Abstract
         // restore old skin
         if ($switchLayout) {
             $layout->set('skin', $skin);
-        }    
+        }
 
         return $text;
     }
@@ -396,10 +396,10 @@ class XLite_Model_Mailer extends XLite_View_Abstract
     {
         $headers = '';
         foreach ($this->headers as $name => $value) {
-            $headers .= $name . ': ' . $value . self::CRLF;   
+            $headers .= $name . ': ' . $value . self::CRLF;
         }
 
-        return $headers; 
+        return $headers;
     }
 }
 

@@ -51,9 +51,9 @@ class XLite_Model_State extends XLite_Model_Abstract
             'code'     => '',
             'country_code'     => '',
             'shipping_zone' => 0
-        );	
+        );
 
-    public $autoIncrement = "state_id";	
+    public $autoIncrement = "state_id";
     public $defaultOrder = "state";
 
     function readAll()

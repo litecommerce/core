@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product implements XLite_Base_IDecorator
-{    
+{
     /**
      * Perform direct sale check if the product does not exist
      * TODO - check if it's really needed or make it protected
@@ -160,17 +160,17 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
             $type = strtolower($option->get("opttype"));
             if ($type == "radio button" || $type == "selectbox") {
                 $dst []= $option->get("productOptions");
-            }    
+            }
         }
 
         if (empty($dst)) {
             $this->expandedProductOptions = $found_options;
             return $found_options;
-        }    
+        }
 
         $this->getSelections($dst, $found_options);
 
-        // remove options marked as exceptions {{{ 
+        // remove options marked as exceptions {{{
         $exceptions_list = $this->get("optionExceptions");
         if (!empty($exceptions_list)) {
             foreach ($exceptions_list as $k => $v) {
@@ -192,7 +192,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
                 for ($i = 0; $i < count($found_options); $i++) {
                     $opt_array = array();
                     foreach ($found_options[$i] as $_opt) {
-                        $opt_array[$_opt->class] = $_opt->option;    
+                        $opt_array[$_opt->class] = $_opt->option;
                     }
                     $ex_size = sizeof($exceptions);
                     $ex_found = 0;
@@ -274,7 +274,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
         foreach ($inventories as $i) {
             if ($i->keyMatch($key)) {
                 return $i->get('amount');
-            }    
+            }
         }
 
         return -1; // -1 means infinity
@@ -502,9 +502,9 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
         $p = parent::cloneObject();
 
         $originalId = $this->get("product_id");
-        $newId = $p->get("product_id");        
+        $newId = $p->get("product_id");
         
-        if ($this->config->getComplex('WholesaleTrading.clone_wholesale_productaccess')) {            
+        if ($this->config->getComplex('WholesaleTrading.clone_wholesale_productaccess')) {
             $productAccess = new XLite_Module_WholesaleTrading_Model_ProductAccess();
             foreach ($productAccess->findAll("product_id=$originalId") as $access) {
                 $foo = new XLite_Module_WholesaleTrading_Model_ProductAccess();
@@ -516,7 +516,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
             }
         }
         
-        if ($this->config->getComplex('WholesaleTrading.clone_wholesale_purchaselimit')) {            
+        if ($this->config->getComplex('WholesaleTrading.clone_wholesale_purchaselimit')) {
             $purchaseLimit = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
             foreach ($purchaseLimit->findAll("product_id=$originalId") as $limit) {
                 $foo = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();

@@ -34,8 +34,8 @@
  * @since   3.0.0
  */
 class XLite_Controller_Admin_RecentLogin extends XLite_Controller_Admin_Abstract
-{	
-	public $params = array("target");
+{
+    public $params = array("target");
 
     function getSecure()
     {

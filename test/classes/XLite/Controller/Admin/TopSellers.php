@@ -34,14 +34,14 @@
  * @since   3.0.0
  */
 class XLite_Controller_Admin_TopSellers extends XLite_Controller_Admin_Stats
-{	
-    public $todayItems = array();	
-    public $weekItems = array();	
-    public $monthItems = array();	
-    public $sort_by = "amount";	
+{
+    public $todayItems = array();
+    public $weekItems = array();
+    public $monthItems = array();
+    public $sort_by = "amount";
     public $counter = array(0,1,2,3,4,5,6,7,8,9);
 
-	protected $topProducts = array();
+    protected $topProducts = array();
 
     function getPageTemplate()
     {
@@ -104,7 +104,7 @@ class XLite_Controller_Admin_TopSellers extends XLite_Controller_Admin_Stats
             } else {
                 $this->topProducts[$name][$id]["amount"] += $item->get("amount");
             }
-        }            
+        }
         usort($this->topProducts[$name], array($this, "cmpProducts"));
         $topProducts = array_chunk(array_reverse($this->topProducts[$name]), 10);
         $this->topProducts[$name] = isset($topProducts[0]) ? $topProducts[0] : null;

@@ -47,9 +47,9 @@ class XLite_View_CategorySelect extends XLite_View_Abstract
 
     protected $categories = null;
 
-    public $field;    
-    public $formName;    
-    public $selectedCategory = null;    
+    public $field;
+    public $formName;
+    public $selectedCategory = null;
 
 
     /**

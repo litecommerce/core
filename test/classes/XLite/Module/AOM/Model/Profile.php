@@ -34,15 +34,15 @@
  * @since   3.0.0
  */
 class XLite_Module_AOM_Model_Profile extends XLite_Model_Profile implements XLite_Base_IDecorator
-{	
-	public $_AOMIgnoreMembershipChanged = false;
+{
+    public $_AOMIgnoreMembershipChanged = false;
 
-	function membershipChanged($oldMembership, $newMembership)
-	{
-		if ($this->_AOMIgnoreMembershipChanged) {
-			return;
-		}
+    function membershipChanged($oldMembership, $newMembership)
+    {
+        if ($this->_AOMIgnoreMembershipChanged) {
+            return;
+        }
 
-		parent::membershipChanged($oldMembership, $newMembership);
-	}
+        parent::membershipChanged($oldMembership, $newMembership);
+    }
 }

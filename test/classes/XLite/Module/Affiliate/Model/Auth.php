@@ -102,7 +102,7 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLit
     {
         if ($profile->get("access_level") < $this->get("pendingPartnerAccessLevel")) {
             $profile->set("access_level", $this->get("pendingPartnerAccessLevel"));
-        }    
+        }
         // mailto customer with a new signup notification
         $mailer = new XLite_Model_Mailer();
         $mailer->profile = $profile;
@@ -118,7 +118,7 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLit
     {
         if ($profile->get("access_level") < $this->getPartnerAccessLevel()) {
             $profile->set("access_level", $this->getPartnerAccessLevel());
-        }    
+        }
         $profile->set("plan", $profile->get("pending_plan"));
         // mailto customer with a new signup notification
         $mailer = new XLite_Model_Mailer();

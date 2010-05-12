@@ -34,9 +34,9 @@
  * @since   3.0.0
  */
 class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Controller_Admin_Abstract
-{	
-    public $crlf = "\r\n";	
-    public $hasReady = false;	
+{
+    public $crlf = "\r\n";
+    public $hasReady = false;
     public $found = 0;
 
     function handleRequest()
@@ -47,7 +47,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Cont
         }
 
         parent::handleRequest();
-    }    
+    }
     
     function action_export_payments() 
     {
@@ -60,13 +60,13 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Cont
 
         // do not output anything
         $this->set("silent", true);
-    } 
+    }
 
     function getDelimiter() 
     {
         global $DATA_DELIMITERS;
         return $DATA_DELIMITERS[$this->delimiter];
-    } 
+    }
 
     function action_payment_upload() 
     {
@@ -75,19 +75,19 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Cont
             "file"              => $this->getUploadedFile(),
             "layout"            => array("order_id", "paid"),
             "delimiter"         => $this->delimiter,
-			"return_error"		=> true,
+            "return_error"		=> true,
             );
         $p = new XLite_Module_Affiliate_Model_PartnerPayment();
         $p->import($options);
-		$this->importError = $p->importError;
+        $this->importError = $p->importError;
 
-		$text = "Upload process failed.";
-		if (!$this->importError) $text = "Payments uploaded successfully.";
-		$text = $this->importError.'<br>'.$text.' <a href="admin.php?target=partner_payments"><u>Click here to return to admin interface</u></a><br><br>';
+        $text = "Upload process failed.";
+        if (!$this->importError) $text = "Payments uploaded successfully.";
+        $text = $this->importError.'<br>'.$text.' <a href="admin.php?target=partner_payments"><u>Click here to return to admin interface</u></a><br><br>';
 
-		echo $text;
-		func_refresh_end();
-    } 
+        echo $text;
+        func_refresh_end();
+    }
 
     function action_mark_paid() 
     {
@@ -95,7 +95,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Cont
             $p = new XLite_Module_Affiliate_Model_PartnerPayment();
             $p->pay($id);
         }
-    } 
+    }
 
     function getPayments() 
     {
@@ -117,7 +117,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Cont
             $this->found = count($this->payments);
         }
         return $this->payments;
-    } 
+    }
     
     function summarize($payment) 
     {
@@ -142,5 +142,5 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Cont
                 $this->hasReady = true;
             }
         }
-    } 
+    }
 }

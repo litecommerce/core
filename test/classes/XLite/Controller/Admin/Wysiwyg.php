@@ -34,9 +34,9 @@
  * @since   3.0.0
  */
 class XLite_Controller_Admin_Wysiwyg extends XLite_Controller_Admin_Abstract
-{	
-    public $builder = null;	
-    public $exportTemplates = array("main.tpl", "common/print_invoice.tpl");	
+{
+    public $builder = null;
+    public $exportTemplates = array("main.tpl", "common/print_invoice.tpl");
     public $shortcuts = array(
             "var/html/main.html"=>"Storefront (aka Main page)", 
             "var/html/register_form.html"=>"User registration form",
@@ -95,7 +95,7 @@ class XLite_Controller_Admin_Wysiwyg extends XLite_Controller_Admin_Abstract
     {
         $this->startDump();
         $this->_resetLayout();
-        if (!isset(XLite_Core_Request::getInstance()->mode) || XLite_Core_Request::getInstance()->mode != "cp") { 
+        if (!isset(XLite_Core_Request::getInstance()->mode) || XLite_Core_Request::getInstance()->mode != "cp") {
             print "<pre>\n";
             if ($this->getBuilder()->import()) {
                 print "\n\nA set of template files generated successfully.\n";
@@ -131,10 +131,10 @@ class XLite_Controller_Admin_Wysiwyg extends XLite_Controller_Admin_Abstract
         print('<a href="admin.php?target=wysiwyg">Click to return to admin interface</a>');
     }
 
-	function getPageReturnUrl()
-	{
-		return array('<a href="admin.php?target=wysiwyg"><u>Click to return to admin interface</u></a>');
-	}
+    function getPageReturnUrl()
+    {
+        return array('<a href="admin.php?target=wysiwyg"><u>Click to return to admin interface</u></a>');
+    }
 
     function isMemoryLimitChangeable()
     {

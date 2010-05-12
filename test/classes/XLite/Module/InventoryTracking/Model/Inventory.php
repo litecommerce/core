@@ -39,9 +39,9 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
     * @var string $alias The credit cards database table alias.
     * @access public
     */	
-    public $alias = "inventories";	
+    public $alias = "inventories";
 
-    public $primaryKey = array("inventory_id");	
+    public $primaryKey = array("inventory_id");
     public $defaultOrder = "inventory_id";
 
     /**
@@ -55,7 +55,7 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
             'low_avail_limit' => 10,
             'enabled'         => 1,
             'order_by'        => 0,
-        );	
+        );
 
     public $importFields = array(
             "NULL" => false,
@@ -67,7 +67,7 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
             "order_by" => false,
             );
 
-	public static function getInstance()
+    public static function getInstance()
     {
         return self::getInternalInstance(__CLASS__);
     }
@@ -75,11 +75,11 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
     public function __construct($id = null) 
     {
         parent::__construct($id);
-		if ($this->xlite->get("ProductOptionsEnabled")) {
+        if ($this->xlite->get("ProductOptionsEnabled")) {
             $this->importFields["product_options"] = false;
             $this->importFields["inventory_sku"] = false;
         }
-    } 
+    }
     
     function _import(array $options) 
     {
@@ -95,7 +95,7 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
         // .. or by NAME
         elseif (empty($properties["sku"]) && !empty($properties["name"]) && $product->find("name='".addslashes($properties["name"])."'")) {
             $found = true;
-        }    
+        }
 
         static $line;
         if (!isset($line)) $line = 1; else $line++;
@@ -105,32 +105,32 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
             // product found
             $inventory_id = $product->get("product_id") . (!empty($properties["product_options"]) ? "|".$properties["product_options"] : "");
             $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
-		    $inventory->set("properties", $properties);
+            $inventory->set("properties", $properties);
 
             if ($inventory->find("inventory_id='$inventory_id'")) {
-	            echo "updating amount for product " . $product->get("name") . "<br>\n";
+                echo "updating amount for product " . $product->get("name") . "<br>\n";
     	        $inventory->update();
-			} else {
-				echo "creating amount for product " . $product->get("name") . "<br>\n";
-				$inventory->set("inventory_id",!empty($properties['product_options']) ? $product->get("product_id")."|".$properties['product_options'] :  $product->get("product_id"));		
-				$inventory->create();
-			}
-			$product->updateInventorySku();
+            } else {
+                echo "creating amount for product " . $product->get("name") . "<br>\n";
+                $inventory->set("inventory_id",!empty($properties['product_options']) ? $product->get("product_id")."|".$properties['product_options'] :  $product->get("product_id"));
+                $inventory->create();
+            }
+            $product->updateInventorySku();
         } else {
             echo "<font color=red>product not found:</font>".(!empty($properties["sku"]) ? " SKU: ".$properties["sku"] : "") . (!empty($properties["name"]) ? " NAME: ".$properties["name"] : "");
             echo '<br /><br /><a href="admin.php?target=update_inventory&page=amount"><u>Click here to return to admin interface</u></a>';
             die;
             
         }
-    } 
+    }
 
     function _export($layout, $delimiter) 
     {
         $data = array();
         $inventory_id = $this->get("inventory_id");
         $pos = strpos($inventory_id, '|');
-		if ($pos&&(!$this->xlite->get("ProductOptionsEnabled")||($this->xlite->get("ProductOptionsEnabled")&&!in_array("product_options",$layout))))
-			return array();
+        if ($pos&&(!$this->xlite->get("ProductOptionsEnabled")||($this->xlite->get("ProductOptionsEnabled")&&!in_array("product_options",$layout))))
+            return array();
         $product_id = $pos === false ? $inventory_id : substr($inventory_id, 0, $pos);
         $product = new XLite_Model_Product($product_id);
         if ($product->find("product_id='$product_id'")) {
@@ -145,7 +145,7 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
                         $data[] = $this->_stripSpecials(substr($inventory_id, $pos + 1));
                     } else {
                         $data[] = "";
-                    }    
+                    }
                 } else {
                     $data[] = $this->_stripSpecials($product->get($field));
                 }
@@ -153,7 +153,7 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
         }
 
         return $data;
-    } 
+    }
     
     function keyMatch($key) 
     {
@@ -163,7 +163,7 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
         $intersect = array_intersect($cardOptions, $keyOptions);
         $diff = array_diff($cardOptions, $intersect);
         return empty($diff);
-    } 
+    }
 
     function parseOptions($id) 
     {
@@ -175,7 +175,7 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
             }
         }
         return $options;
-    } 
+    }
 
     function checkLowLimit($item) 
     {
@@ -195,7 +195,7 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
                     "lowlimit_warning_notification");
             $mailer->send();
         }
-    } 
+    }
 
     function get($property)
     {
@@ -210,7 +210,7 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
     function getAmount()
     {
     	$amount = parent::get("amount");
-		if (!$this->xlite->is("adminZone")) {
+        if (!$this->xlite->is("adminZone")) {
         	return ($amount < 0) ? 0 : $amount;
         } else {
         	return $amount;

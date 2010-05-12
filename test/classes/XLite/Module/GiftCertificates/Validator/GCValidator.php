@@ -53,7 +53,7 @@ class XLite_Module_GiftCertificates_Validator_GCValidator extends XLite_Validato
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $doesnotexist = false;    
+    public $doesnotexist = false;
 
     /**
      * Flag 'Gift certificate expired'
@@ -63,7 +63,7 @@ class XLite_Module_GiftCertificates_Validator_GCValidator extends XLite_Validato
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $expired = false;    
+    public $expired = false;
 
     /**
      * Flag 'Gift certificate not active'
@@ -73,7 +73,7 @@ class XLite_Module_GiftCertificates_Validator_GCValidator extends XLite_Validato
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $notactive = false;    
+    public $notactive = false;
 
     /**
      * Gift certificate id 
@@ -104,7 +104,7 @@ class XLite_Module_GiftCertificates_Validator_GCValidator extends XLite_Validato
 
         } elseif (isset(XLite_Core_Request::getInstance()->$fieldName)) {
 
-            XLite_Core_Request::getInstance()->$fieldName = trim(XLite_Core_Request::getInstance()->$fieldName); 
+            XLite_Core_Request::getInstance()->$fieldName = trim(XLite_Core_Request::getInstance()->$fieldName);
             $this->gcid = XLite_Core_Request::getInstance()->$fieldName;
 
             // Pass validation if cert already related with current order
@@ -125,15 +125,15 @@ class XLite_Module_GiftCertificates_Validator_GCValidator extends XLite_Validato
                         break;
 
                     case XLite_Module_GiftCertificates_Model_GiftCertificate::GC_DOESNOTEXIST: 
-                        $this->doesnotexist = true; 
+                        $this->doesnotexist = true;
                         break;
 
                     case XLite_Module_GiftCertificates_Model_GiftCertificate::GC_EXPIRED: 
-                        $this->expired = true; 
+                        $this->expired = true;
                         break;
 
                     case XLite_Module_GiftCertificates_Model_GiftCertificate::GC_DISABLED: 
-                        $this->notactive = true; 
+                        $this->notactive = true;
                         break;
 
                     default:

@@ -88,22 +88,22 @@ class XLite_Core_Operator extends XLite_Base implements XLite_Base_ISingleton
         return self::getInternalInstance(__CLASS__);
     }
 
-	/**
-	 * redirect 
-	 * 
-	 * @param string $location URL
-	 * @param int    $code     operation code
-	 *  
-	 * @return void
-	 * @access public
-	 * @since  3.0.0
-	 */
-	public function redirect($location, $code = 302)
-	{
+    /**
+     * redirect 
+     * 
+     * @param string $location URL
+     * @param int    $code     operation code
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function redirect($location, $code = 302)
+    {
         if ($this->checkRedirectStatus()) {
             $this->setHeaderLocation($location, $code);
             $this->finish();
         }
-	}
+    }
 }
 

@@ -35,7 +35,7 @@
  * @since   3.0.0
  */
 class XLite_View_FileExplorer extends XLite_View_ColumnList
-{	
+{
     /*
      * Widget parameters names
      */
@@ -45,14 +45,14 @@ class XLite_View_FileExplorer extends XLite_View_ColumnList
 
 
     /**
-	 * locale 
-	 * 
-	 * @var    mixed
-	 * @access protected
-	 * @see    ____var_see____
-	 * @since  3.0.0
-	 */
-	protected $locale = null;
+     * locale 
+     * 
+     * @var    mixed
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $locale = null;
 
 
     /**
@@ -97,7 +97,7 @@ class XLite_View_FileExplorer extends XLite_View_ColumnList
     {
         if (is_null($this->locale)) {
             $this->locale = XLite::getInstance()->getOptions(array('skin_details', 'locale'));
-		}
+        }
 
         return $this->locale;
     }
@@ -148,7 +148,7 @@ class XLite_View_FileExplorer extends XLite_View_ColumnList
         // check for node
         if (isset(XLite_Core_Request::getInstance()->node)) {
             $path = XLite_Core_Request::getInstance()->node;
-        }    
+        }
 
         $childrenDirs = array();
         $childrenFiles = array();
@@ -163,25 +163,25 @@ class XLite_View_FileExplorer extends XLite_View_ColumnList
                     }
                 }
             }
-            closedir($handle); 
-		}
+            closedir($handle);
+        }
 
         array_multisort($childrenDirs);
         $this->dir_count = count($childrenDirs);
         array_multisort($childrenFiles);
-		$children = array_merge($childrenDirs, $childrenFiles);
+        $children = array_merge($childrenDirs, $childrenFiles);
 
         for ($i=0; $i<count($children); $i++) {
             $children[$i] = new XLite_Model_FileNode($path . '/'. $children[$i]);
-		}
+        }
 
         if (preg_match('/^(.*\/.*\/.*)\/[^\/]+$/', $path, $matches)) {
             $par_node = new XLite_Model_FileNode($matches[1]);
             $par_node->name = '..';
             array_unshift($children, $par_node);
-		}
+        }
 
-		$this->children = $children;
+        $this->children = $children;
 
         return $this->children;
     }

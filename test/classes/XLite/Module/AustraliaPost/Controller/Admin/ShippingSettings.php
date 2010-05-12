@@ -35,10 +35,10 @@
  */
 class XLite_Module_AustraliaPost_Controller_Admin_ShippingSettings extends XLite_Controller_Admin_ShippingSettings implements XLite_Base_IDecorator
 {
-	public function __construct(array $params) 
-	{
-		parent::__construct($params);
-		$this->pages["aupost"]	= "Australia Post settings";
-		$this->pageTemplates["aupost"] = "modules/AustraliaPost/config.tpl";
-	}
-} 
+    public function __construct(array $params) 
+    {
+        parent::__construct($params);
+        $this->pages["aupost"]	= "Australia Post settings";
+        $this->pageTemplates["aupost"] = "modules/AustraliaPost/config.tpl";
+    }
+}

@@ -36,7 +36,7 @@
  */
 class XLite_View_Model_Profile_Register extends XLite_View_Model_Profile_Abstract
 {
-	/**
+    /**
      * Return name of web form widget class
      *
      * @return string

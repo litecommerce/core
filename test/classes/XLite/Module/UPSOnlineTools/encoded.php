@@ -503,7 +503,7 @@ function UPSOnlineTools_combine_similar_subspaces_v(&$subspaces)
     do {
         $result = UPSOnlineTools_combine_vertical($subspaces);
         $result |= UPSOnlineTools_combine_horizontal($subspaces);
-        $limit--; 
+        $limit--;
     } while ($result && ($limit > 0));
 
 }

@@ -39,7 +39,7 @@ class XLite_Module_GoogleCheckout_Model_XML extends XLite_Model_XML
     {
     	switch ($type) {
     		case "open+":
-                $i++; 
+                $i++;
                 $value = $this->_compileTree($values, $i);
 
                 return false;
@@ -63,7 +63,7 @@ class XLite_Module_GoogleCheckout_Model_XML extends XLite_Model_XML
     		break;
     		case "open-":
     		case "complete-":
-				$attrID = null;
+                $attrID = null;
                 if (!is_null($attributes)) {
                 	if (isset($attributes["ID"])) {
                 		$attrID = "ID";
@@ -71,20 +71,20 @@ class XLite_Module_GoogleCheckout_Model_XML extends XLite_Model_XML
                 	if (isset($attributes["NAME"])) {
                 		$attrID = "NAME";
                 	}
-					if (isset($attributes["CODE"])) {
-						$attrID = "CODE";
-					}
+                    if (isset($attributes["CODE"])) {
+                        $attrID = "CODE";
+                    }
                 }
                 if (!is_null($attrID)) {
                     if (!isset($tree[$tag])) {
                         $tree[$tag] = array();
                     }
 
-					if (is_null($value)) {
-						$tree[$tag][] = array($attrID => $attributes[$attrID]);
-					} else {
-	                    $tree[$tag][$attributes[$attrID]] = $value;
-					}
+                    if (is_null($value)) {
+                        $tree[$tag][] = array($attrID => $attributes[$attrID]);
+                    } else {
+                        $tree[$tag][$attributes[$attrID]] = $value;
+                    }
                 } else {
                     // repeating tag
                     $postfix = '';
@@ -93,8 +93,8 @@ class XLite_Module_GoogleCheckout_Model_XML extends XLite_Model_XML
                             $postfix = 1;
                         } else {
                             $postfix++;
-                        }    
-                    }    
+                        }
+                    }
                     $tree[$tag.$postfix] = $value;
                 }
 

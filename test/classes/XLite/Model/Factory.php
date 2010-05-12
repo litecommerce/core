@@ -35,16 +35,16 @@
  */
 class XLite_Model_Factory extends XLite_Base implements XLite_Base_ISingleton
 {
-	/**
+    /**
      * It's not possible to instantiate this class using the "new" operator
      *
      * @return void
      * @access protected
      * @since  3.0.0
      */
-	protected function __construct()
-	{
-	}
+    protected function __construct()
+    {
+    }
 
 
     /**

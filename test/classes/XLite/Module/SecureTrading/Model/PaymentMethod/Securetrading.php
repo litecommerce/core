@@ -34,31 +34,31 @@
  * @since   3.0.0
  */
 class XLite_Module_SecureTrading_Model_PaymentMethod_Securetrading extends XLite_Model_PaymentMethod_CreditCard
-{	
+{
 
-	public $configurationTemplate = "modules/SecureTrading/config.tpl";	
-	public $processorName = "SecureTrading";	
-	public $formTemplate = "modules/SecureTrading/checkout.tpl";
+    public $configurationTemplate = "modules/SecureTrading/config.tpl";
+    public $processorName = "SecureTrading";
+    public $formTemplate = "modules/SecureTrading/checkout.tpl";
 
-	function handleRequest(XLite_Model_Cart $order) { 
-		require_once LC_MODULES_DIR . 'SecureTrading' . LC_DS . 'encoded.php';
-		PaymentMethod_securetrading_handleRequest($this, $order, true);
-	}
-	function getTotalCost($cart)	{
-		return $cart->get("total")*100;
-	}
-	function getBillingState($cart) { 
-		$state = new XLite_Model_State($cart->getComplex('profile.billing_state'));
-		return $state->get("state");
-	}
-	function getCountry($cart)	{
-		$country = new XLite_Model_Country($cart->getComplex('profile.billing_country'));
-		return $country->get("country");
-	}
-	function getMerchantEmail() {
-		return $this->config->getComplex('Company.orders_department');
-	}
-	function getReturnURL($cart)	{
-		return $this->xlite->getShopUrl("cart.php?target=checkout&action=return&order_id=" . $cart->get("order_id"));
-	}
+    function handleRequest(XLite_Model_Cart $order) {
+        require_once LC_MODULES_DIR . 'SecureTrading' . LC_DS . 'encoded.php';
+        PaymentMethod_securetrading_handleRequest($this, $order, true);
+    }
+    function getTotalCost($cart)	{
+        return $cart->get("total")*100;
+    }
+    function getBillingState($cart) {
+        $state = new XLite_Model_State($cart->getComplex('profile.billing_state'));
+        return $state->get("state");
+    }
+    function getCountry($cart)	{
+        $country = new XLite_Model_Country($cart->getComplex('profile.billing_country'));
+        return $country->get("country");
+    }
+    function getMerchantEmail() {
+        return $this->config->getComplex('Company.orders_department');
+    }
+    function getReturnURL($cart)	{
+        return $this->xlite->getShopUrl("cart.php?target=checkout&action=return&order_id=" . $cart->get("order_id"));
+    }
 }

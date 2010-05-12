@@ -59,17 +59,17 @@ abstract class XLite_Module_DrupalConnector_Model_Session extends XLite_Model_Se
      */
     public function __construct()
     {
-		parent::__construct();
+        parent::__construct();
 
-		if (defined('LC_CONNECTOR_INITIALIZED')) {
-			$this->options['https_host'] = $_SERVER['HTTP_HOST'];
-			$this->options['http_host']  = $_SERVER['HTTP_HOST'];
+        if (defined('LC_CONNECTOR_INITIALIZED')) {
+            $this->options['https_host'] = $_SERVER['HTTP_HOST'];
+            $this->options['http_host']  = $_SERVER['HTTP_HOST'];
 
             $url = parse_url($_SERVER['REQUEST_URI']);
 
             $this->options['web_dir']    = $url['path'];
             $this->options['web_dir_wo_slash'] = preg_replace('/\/$/Ss', '', $this->options['web_dir']);
-		}
+        }
     }
 
     /**
@@ -84,19 +84,19 @@ abstract class XLite_Module_DrupalConnector_Model_Session extends XLite_Model_Se
      */
     protected static function getInternalInstance($className)
     {
-		return parent::getInternalInstance($className . '_' . LC_SESSION_TYPE);
+        return parent::getInternalInstance($className . '_' . LC_SESSION_TYPE);
     }
 
-	/**
-	 * Destructor
-	 * 
-	 * @return void
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function __destruct()
-	{
-		$this->writeClose();
-	}
+    /**
+     * Destructor
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __destruct()
+    {
+        $this->writeClose();
+    }
 }

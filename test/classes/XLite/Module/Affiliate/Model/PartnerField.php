@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_Affiliate_Model_PartnerField extends XLite_Model_Abstract
-{	
+{
     public $fields = array (
             "field_id" => 0,
             "field_type" => "Text",
@@ -45,10 +45,10 @@ class XLite_Module_Affiliate_Model_PartnerField extends XLite_Model_Abstract
             "orderby" => 0,
             "required" => 1,
             "enabled" => 1,
-            );	
+            );
 
-    public $autoIncrement = "field_id";	
-    public $alias = "partner_fields";	
+    public $autoIncrement = "field_id";
+    public $alias = "partner_fields";
     public $defaultOrder = "orderby";
 
     function filter()

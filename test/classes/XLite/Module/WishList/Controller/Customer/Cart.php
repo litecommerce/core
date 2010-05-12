@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_WishList_Controller_Customer_Cart extends XLite_Controller_Customer_Cart implements XLite_Base_IDecorator
-{    
+{
     /**
      * Add item to cart (from wishlist)
      *
@@ -68,9 +68,9 @@ class XLite_Module_WishList_Controller_Customer_Cart extends XLite_Controller_Cu
                     )
                 );
 
-                return;                
+                return;
 
-            } elseif ($wishlist_product->isOptionsInvalid()) {                
+            } elseif ($wishlist_product->isOptionsInvalid()) {
 
                 // TODO - add top message
                 $this->set(

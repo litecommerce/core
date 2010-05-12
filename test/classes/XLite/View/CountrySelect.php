@@ -37,14 +37,14 @@
  */
 class XLite_View_CountrySelect extends XLite_View_FormField
 {
-	/**
-	 * Widget param names
-	 */
+    /**
+     * Widget param names
+     */
 
-	const PARAM_ALL        = 'all';
-	const PARAM_FIELD_NAME = 'field';
+    const PARAM_ALL        = 'all';
+    const PARAM_FIELD_NAME = 'field';
     const PARAM_VALUE      = 'value';
-	const PARAM_FIELD_ID   = 'fieldId';
+    const PARAM_FIELD_ID   = 'fieldId';
 
 
     /**
@@ -59,7 +59,7 @@ class XLite_View_CountrySelect extends XLite_View_FormField
         return 'common/select_country.tpl';
     }
 
-	/**
+    /**
      * Define widget parameters
      *
      * @return void
@@ -70,25 +70,25 @@ class XLite_View_CountrySelect extends XLite_View_FormField
     {
         parent::defineWidgetParams();
 
-		$this->widgetParams += array(
+        $this->widgetParams += array(
             self::PARAM_ALL        => new XLite_Model_WidgetParam_Bool('All', false),
-			self::PARAM_FIELD_NAME => new XLite_Model_WidgetParam_String('Field name', ''),
-			self::PARAM_FIELD_ID   => new XLite_Model_WidgetParam_String('Field ID', ''),
-			self::PARAM_VALUE      => new XLite_Model_WidgetParam_String('Value', '')
-		);
+            self::PARAM_FIELD_NAME => new XLite_Model_WidgetParam_String('Field name', ''),
+            self::PARAM_FIELD_ID   => new XLite_Model_WidgetParam_String('Field ID', ''),
+            self::PARAM_VALUE      => new XLite_Model_WidgetParam_String('Value', '')
+        );
     }
 
-	/**
-	 * getSearchCondition 
-	 * 
-	 * @return string
-	 * @access protected
-	 * @since  3.0.0
-	 */
-	protected function getSearchCondition()
-	{
-		return $this->getParam(self::PARAM_ALL) ? 'enabled = \'1\'' : null;
-	}
+    /**
+     * getSearchCondition 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getSearchCondition()
+    {
+        return $this->getParam(self::PARAM_ALL) ? 'enabled = \'1\'' : null;
+    }
 
     /**
      * Return countries list
@@ -100,11 +100,11 @@ class XLite_View_CountrySelect extends XLite_View_FormField
     protected function getCountries()
     {
         return XLite_Model_CachingFactory::getObjectFromCallback(
-			__METHOD__,
-			'XLite_Model_Country',
-			'findAll',
-			array($this->getSearchCondition())
-		);
+            __METHOD__,
+            'XLite_Model_Country',
+            'findAll',
+            array($this->getSearchCondition())
+        );
     }
 }
 

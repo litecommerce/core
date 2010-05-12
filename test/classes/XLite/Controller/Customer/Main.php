@@ -34,7 +34,7 @@
  * @since      3.0.0
  */
 class XLite_Controller_Customer_Main extends XLite_Controller_Customer_Abstract
-{	
+{
     /**
      * params 
      * 
@@ -55,21 +55,21 @@ class XLite_Controller_Customer_Main extends XLite_Controller_Customer_Abstract
      */
     public function handleRequest()
     {
-		if ($this->config->General->add_on_mode) {
+        if ($this->config->General->add_on_mode) {
 
             // switch to cart in Add-on mode
-			$addOnModePage = $this->config->General->add_on_mode_page;
+            $addOnModePage = $this->config->General->add_on_mode_page;
 
             if ($addOnModePage != "cart.php") {
-				$this->redirect($addOnModePage);
+                $this->redirect($addOnModePage);
 
             } else {
             	parent::handleRequest();
-			}
+            }
 
         } else {
             parent::handleRequest();
-        }    
+        }
     }
 
     /**
@@ -82,7 +82,7 @@ class XLite_Controller_Customer_Main extends XLite_Controller_Customer_Abstract
      */
     public function init(array $params = array())
     {
-		parent::init($params);
+        parent::init($params);
 
         if (!isset(XLite_Core_Request::getInstance()->action)) {
             $this->session->set("productListURL", $this->get("url"));
@@ -99,14 +99,14 @@ class XLite_Controller_Customer_Main extends XLite_Controller_Customer_Abstract
      */
     public function getExtraPage()
     {
-		if (is_null($this->extraPage)) {
+        if (is_null($this->extraPage)) {
 
-			$this->extraPage = new XLite_Model_ExtraPage();
+            $this->extraPage = new XLite_Model_ExtraPage();
 
             if (isset(XLite_Core_Request::getInstance()->page) && !empty(XLite_Core_Request::getInstance()->page)) {
                 $this->extraPage = $this->extraPage->findPage(XLite_Core_Request::getInstance()->page);
-            }    
-		}
+            }
+        }
 
         return $this->extraPage;
     }

@@ -35,13 +35,13 @@
  */
 class XLite_Controller_Customer_Upgrade extends XLite_Controller_Customer_Abstract
 {
-	function init()
-	{
-		parent::init();
-		if (!$this->get("action")) {
-			$this->redirect("cart.php?target=main");
-		}
-	}
+    function init()
+    {
+        parent::init();
+        if (!$this->get("action")) {
+            $this->redirect("cart.php?target=main");
+        }
+    }
 
     /**
     * View current version
@@ -57,7 +57,7 @@ class XLite_Controller_Customer_Upgrade extends XLite_Controller_Customer_Abstra
         $up = new XLite_Model_Upgrade();
         $up->setProperties($_GET);
         $up->doUpgrade();
-		$this->set("silent", true);
+        $this->set("silent", true);
     }
 
     function action_upgrade_force()
@@ -65,7 +65,7 @@ class XLite_Controller_Customer_Upgrade extends XLite_Controller_Customer_Abstra
         $up = new XLite_Model_Upgrade();
         $up->setProperties($_GET);
         $up->success();
-		$this->set("silent", true);
+        $this->set("silent", true);
     }
 
 }

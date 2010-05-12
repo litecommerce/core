@@ -35,18 +35,18 @@
  */
 class XLite_Module_ProductAdviser_Controller_Customer_NewArrivals extends XLite_Controller_Customer_Abstract
 {
-	/**
-	 * Get current location (for breadcrumbs)
-	 * 
-	 * @return string
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function getLocation()
-	{
-		return 'New Arrivals';
-	}
+    /**
+     * Get current location (for breadcrumbs)
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return 'New Arrivals';
+    }
 
     /**
      * Get page type name
@@ -59,6 +59,6 @@ class XLite_Module_ProductAdviser_Controller_Customer_NewArrivals extends XLite_
     public function getTitle()
     {
         return 'New Arrivals';
-	}
+    }
 
 }

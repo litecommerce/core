@@ -34,15 +34,15 @@
  * @since   3.0.0
  */
 class XLite_Module_ChronoPay_Model_PaymentMethod_Chronopay extends XLite_Model_PaymentMethod_CreditCard
-{	
-	public $configurationTemplate = "modules/ChronoPay/config.tpl";	
-    public $processorName = "ChronoPay";	
+{
+    public $configurationTemplate = "modules/ChronoPay/config.tpl";
+    public $processorName = "ChronoPay";
     public $formTemplate ="modules/ChronoPay/checkout.tpl";
 
     function handleRequest(XLite_Model_Cart $cart)
     {
-		require_once LC_MODULES_DIR . 'ChronoPay' . LC_DS . 'encoded.php';
-		PaymentMethod_chronopay_handleRequest($this, $cart);
-	}
+        require_once LC_MODULES_DIR . 'ChronoPay' . LC_DS . 'encoded.php';
+        PaymentMethod_chronopay_handleRequest($this, $cart);
+    }
 
 }

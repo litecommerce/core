@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Validator_EmailValidator extends XLite_Validator_Abstract
-{	
+{
     /**
      * Widget template 
      * 
@@ -55,16 +55,16 @@ class XLite_Validator_EmailValidator extends XLite_Validator_Abstract
      */
     public function isValid()
     {
-		$field = $this->get('field');
-		$request = XLite_Core_Request::getInstance();
-		if (!is_null($request->$field)) {
-			$request->$field = trim($request->$field);
-		}
+        $field = $this->get('field');
+        $request = XLite_Core_Request::getInstance();
+        if (!is_null($request->$field)) {
+            $request->$field = trim($request->$field);
+        }
 
-		$emailRegExp = "/^([a-zA-Z0-9])+([.a-zA-Z0-9_-])*@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-]+)+$/";
+        $emailRegExp = "/^([a-zA-Z0-9])+([.a-zA-Z0-9_-])*@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-]+)+$/";
 
         return parent::isValid()
-			&& (is_null($request->$field) || preg_match($emailRegExp, $request->$field));
+            && (is_null($request->$field) || preg_match($emailRegExp, $request->$field));
     }
 
 }

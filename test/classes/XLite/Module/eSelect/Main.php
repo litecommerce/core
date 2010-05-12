@@ -69,7 +69,7 @@ class XLite_Module_eSelect_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'eSelect credit card payment processor';
-    }	
+    }
 
     /**
      * Determines if we need to show settings form link
@@ -103,9 +103,9 @@ class XLite_Module_eSelect_Main extends XLite_Module_Abstract
      * @since  3.0
      */
     public function init()
-	{
-		parent::init();
-		
-		$this->registerPaymentMethod('eselect_cc');
-	}
+    {
+        parent::init();
+        
+        $this->registerPaymentMethod('eselect_cc');
+    }
 }

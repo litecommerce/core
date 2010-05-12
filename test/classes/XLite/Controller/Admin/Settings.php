@@ -87,8 +87,8 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
 
 
 
-    public $params = array('target', 'page');    
-    public $page = "General";    
+    public $params = array('target', 'page');
+    public $page = "General";
     public $_waiting_list = null;
 
     function handleRequest()
@@ -299,7 +299,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
                                     return $result;
                                     break;
             default             : return parent::get($name);
-        }    
+        }
     }
 
     function getDirPermission($dir)
@@ -410,8 +410,8 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
         if(preg_match('/curl ([^ $]+)/', $version, $ver))
                 return $ver[1];
         else 
-                return "";    
-    }  
+                return "";
+    }
     
     function openssl_version()
     {
@@ -481,8 +481,8 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
 
     function action_phpinfo()
     {
-        die(phpinfo());    
-    } 
+        die(phpinfo());
+    }
     
     function action_update()
     {

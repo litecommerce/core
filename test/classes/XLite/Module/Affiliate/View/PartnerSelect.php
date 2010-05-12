@@ -34,11 +34,11 @@
  * @since   3.0.0
  */
 class XLite_Module_Affiliate_View_PartnerSelect extends XLite_View_Abstract
-{	
-    public $formField = "partner_id";	
+{
+    public $formField = "partner_id";
     public $allOption = true;
 
-	// FIXME - to remove
+    // FIXME - to remove
     function init()
     {
         parent::init();
@@ -48,7 +48,7 @@ class XLite_Module_Affiliate_View_PartnerSelect extends XLite_View_Abstract
         }
     }
 
-	/**
+    /**
      * Return widget default template
      *
      * @return string

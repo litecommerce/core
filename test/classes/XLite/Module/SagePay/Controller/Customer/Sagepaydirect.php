@@ -36,54 +36,54 @@
 class XLite_Module_SagePay_Controller_Customer_Sagepaydirect extends XLite_Controller_Customer_Checkout
 {
 
-	function init()
-	{
-		if (!is_object($this->registerForm) || is_null($this->registerForm)) {
-			$this->registerForm = new XLite_Base();
-		}
-		parent::init();
-		
+    function init()
+    {
+        if (!is_object($this->registerForm) || is_null($this->registerForm)) {
+            $this->registerForm = new XLite_Base();
+        }
+        parent::init();
+        
         if ($this->action == "return") {
             if (!$this->auth->is("logged")) {
                 // not logged - redirect to the cart
-				$this->redirect("cart.php");
-			} else {
+                $this->redirect("cart.php");
+            } else {
                 $this->action_return();
             }
-		}
+        }
 
-	}
+    }
 
-	function action_return()
-	{
+    function action_return()
+    {
         $oid = $this->session->get("SagePayDirectQueued");
-	
-		if ($oid && $this->get("PaRes") && $this->get("MD")) {
+    
+        if ($oid && $this->get("PaRes") && $this->get("MD")) {
             $this->order = null;
-			$_REQUEST["order_id"] = $oid;
+            $_REQUEST["order_id"] = $oid;
 
-			$this->session->set("SagePayDirectQueued", null);
-			$this->session->set("last_order_id", $oid);
-			$this->session->set("order_id", $oid);
-			$this->session->writeClose();
+            $this->session->set("SagePayDirectQueued", null);
+            $this->session->set("last_order_id", $oid);
+            $this->session->set("order_id", $oid);
+            $this->session->writeClose();
 
-			$order = $this->get("order");
+            $order = $this->get("order");
             $payment = XLite_Model_PaymentMethod::factory('sagepaydirect_cc');
 
-			require_once LC_MODULES_DIR . 'SagePay' . LC_DS . 'encoded.php';
-			func_SagePayDirect_action_return($this, $order, $payment);
-		}
+            require_once LC_MODULES_DIR . 'SagePay' . LC_DS . 'encoded.php';
+            func_SagePayDirect_action_return($this, $order, $payment);
+        }
 
         $this->order = null;
 
-		parent::action_return();
+        parent::action_return();
 
-		if ($oid) {
-			$this->session->set("last_order_id", $oid);
-			$this->session->set("order_id", $oid);
-			$this->session->writeClose();
-		}
+        if ($oid) {
+            $this->session->set("last_order_id", $oid);
+            $this->session->set("order_id", $oid);
+            $this->session->writeClose();
+        }
 
-	}
+    }
 
 }

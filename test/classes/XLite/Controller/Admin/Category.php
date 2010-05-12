@@ -35,18 +35,18 @@
  */
 class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
 {
-    public $page = "category_modify";    
+    public $page = "category_modify";
     public $pages = array
     (
         "category_modify"        => "Add/Modify category",
-    );    
+    );
     public $pageTemplates = array
     (
         "category_modify"          => "categories/add_modify_body.tpl",
         "extra_fields"          => "categories/category_extra_fields.tpl",
-    );    
+    );
 
-    public $params = array('target', 'category_id', 'mode', 'message', 'page');    
+    public $params = array('target', 'category_id', 'mode', 'message', 'page');
     public $order_by = 0;
 
     function init()
@@ -285,11 +285,11 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
                             $ef->create();
                         }
                     }
-                } else {    
+                } else {
                     $ef = new XLite_Model_ExtraField();
                     $ef->set("properties", $_postData);
                     $ef->create();
-                }    
+                }
             }
         }
         // DELETE field
@@ -300,7 +300,7 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
                     $ef = new XLite_Model_ExtraField();
                     if ($ef->find("name='".addslashes($this->get("name"))."' AND product_id=".$product->get("product_id"))) {
                         $ef->delete();
-                    }    
+                    }
                 }
             }
         }
@@ -332,7 +332,7 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
                 $ef->set("categories", $data);
                 $ef->update();
             }
-        } 
+        }
         elseif (!is_null($this->get("update"))) 
         {
             foreach ((array)$this->get("extra_fields") as $id => $data) 

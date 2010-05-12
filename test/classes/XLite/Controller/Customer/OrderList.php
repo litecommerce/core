@@ -53,7 +53,7 @@ class XLite_Controller_Customer_OrderList extends XLite_Controller_Customer_Abst
      * @since  3.0.0
      */
     protected function getLocation()
-    {   
+    {
         return 'Search orders';
     }
 

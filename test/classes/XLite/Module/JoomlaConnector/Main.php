@@ -69,5 +69,5 @@ class XLite_Module_JoomlaConnector_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'Integration with the Joomla CMS';
-    }	
+    }
 }

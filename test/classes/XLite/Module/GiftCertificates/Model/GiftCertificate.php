@@ -105,7 +105,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_Ab
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $ecard = null;    
+    protected $ecard = null;
 
     /**
      * Recipient state (cache)
@@ -115,7 +115,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_Ab
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $recipientState = null;    
+    protected $recipientState = null;
 
     /**
      * Recipient country (cache)

@@ -50,18 +50,18 @@ class XLite_Module_ProductOptions_Controller_Admin_ImportCatalog extends XLite_C
             "layout"            => $this->product_options_layout,
             "delimiter"         => $this->delimiter,
             "text_qualifier"    => $this->text_qualifier,
-			"return_error"		=> true,
+            "return_error"		=> true,
             );
         $p = new XLite_Module_ProductOptions_Model_ProductOption();
         $p->import($options);
-		$this->importError = $p->importError;
+        $this->importError = $p->importError;
 
-		$text = "Import process failed.";
-		if (!$this->importError) $text = "Product options imported successfully.";
-		$text = $this->importError.' <SCRIPT language="javascript"> loaded = true; </SCRIPT> <br>'.$text.' <a href="admin.php?target=import_catalog&page=import_product_options"><u>Click here to return to admin interface</u></a><br><br>';
+        $text = "Import process failed.";
+        if (!$this->importError) $text = "Product options imported successfully.";
+        $text = $this->importError.' <SCRIPT language="javascript"> loaded = true; </SCRIPT> <br>'.$text.' <a href="admin.php?target=import_catalog&page=import_product_options"><u>Click here to return to admin interface</u></a><br><br>';
 
-		echo $text;
-		func_refresh_end();
-		exit();
+        echo $text;
+        func_refresh_end();
+        exit();
     }
 }

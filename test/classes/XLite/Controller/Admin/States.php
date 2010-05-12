@@ -35,22 +35,22 @@
  */
 class XLite_Controller_Admin_States extends XLite_Controller_Admin_Abstract
 {
-	function init()
-	{
-		if (!in_array("country_code", $this->params)) {
-			$this->params[] = "country_code";
-		}
-		parent::init();
-		$this->fillForm();
-	}
+    function init()
+    {
+        if (!in_array("country_code", $this->params)) {
+            $this->params[] = "country_code";
+        }
+        parent::init();
+        $this->fillForm();
+    }
 
-	function obligatorySetStatus($status)
-	{
-		if (!in_array("status", $this->params)) {
-			$this->params[] = "status";
-		}
-		$this->set("status", $status);
-	}
+    function obligatorySetStatus($status)
+    {
+        if (!in_array("status", $this->params)) {
+            $this->params[] = "status";
+        }
+        $this->set("status", $status);
+    }
 
     function fillForm()
     {
@@ -74,39 +74,39 @@ class XLite_Controller_Admin_States extends XLite_Controller_Admin_Abstract
     function action_add()
     {
 
-		$fields = array("country_code", "code", "state");
-		$postData = XLite_Core_Request::getInstance()->getData();
+        $fields = array("country_code", "code", "state");
+        $postData = XLite_Core_Request::getInstance()->getData();
 
-		foreach ($postData as $k=>$v) {
-			if (in_array($k, $fields)) {
-				$postData[$k] = trim($v);
-			}
-		}
+        foreach ($postData as $k=>$v) {
+            if (in_array($k, $fields)) {
+                $postData[$k] = trim($v);
+            }
+        }
 
-		if (empty($postData["country_code"])) {
-			$this->set("valid", false);
-			$this->obligatorySetStatus("country_code");
-			return;
-		}
+        if (empty($postData["country_code"])) {
+            $this->set("valid", false);
+            $this->obligatorySetStatus("country_code");
+            return;
+        }
 
-		if (empty($postData["code"])) {
-			$this->set("valid", false);
-			$this->obligatorySetStatus("code");
-			return;
-		}
+        if (empty($postData["code"])) {
+            $this->set("valid", false);
+            $this->obligatorySetStatus("code");
+            return;
+        }
 
-		if (empty($postData["state"])) {
-			$this->set("valid", false);
-			$this->obligatorySetStatus("state");
-			return;
-		}
+        if (empty($postData["state"])) {
+            $this->set("valid", false);
+            $this->obligatorySetStatus("state");
+            return;
+        }
 
         $state = new XLite_Model_State();
-		if ( $state->find("state='".addslashes($postData["state"])."' AND code='".addslashes($postData["code"])."'") ) {
-			$this->set("valid", false);
-			$this->obligatorySetStatus("exists");
-			return;
-		}
+        if ( $state->find("state='".addslashes($postData["state"])."' AND code='".addslashes($postData["code"])."'") ) {
+            $this->set("valid", false);
+            $this->obligatorySetStatus("exists");
+            return;
+        }
 
         $state->set("properties", $postData);
         $state->create();
@@ -137,7 +137,7 @@ class XLite_Controller_Admin_States extends XLite_Controller_Admin_Abstract
         foreach ($states as $id => $state_id) {
             $state = new XLite_Model_State($state_id);
             $state->delete();
-        }    
+        }
         $this->obligatorySetStatus("deleted");
     }
 }

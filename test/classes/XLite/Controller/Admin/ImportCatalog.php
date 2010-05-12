@@ -34,15 +34,15 @@
  * @since   3.0.0
  */
 class XLite_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_Abstract
-{	
-    public $params = array("target", "page", "import_error");	
+{
+    public $params = array("target", "page", "import_error");
     public $page = "products"; // the default import page	
     public $pages = array('products' => 'Import products',
                        'extra_fields' => 'Import extra fields'
-                       );	
+                       );
     public $pageTemplates = array("products" => "product/import.tpl",
                                "extra_fields" => "product/import_fields.tpl"
-                               );	
+                               );
     public $category_id = null;
 
     function handleRequest()
@@ -102,13 +102,13 @@ class XLite_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_Abstra
             "delete_products"   => isset($this->delete_products) ? true : false,
             "images_directory"  => ($this->images_directory == "") ? $this->getImagesDir() : $this->images_directory,
             "save_images"       => isset($this->save_images) ? true : false,
-			"unique_identifier"	=> $this->unique_identifier,
-			"return_error"		=> true,
+            "unique_identifier"	=> $this->unique_identifier,
+            "return_error"		=> true,
             );
 
         $product = new XLite_Model_Product();
         $product->import($options);
-		$this->importError = $product->importError;
+        $this->importError = $product->importError;
     }
 
     function action_layout($layout_name = "product_layout")
@@ -134,12 +134,12 @@ class XLite_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_Abstra
             "layout"            => $this->fields_layout,
             "delimiter"         => $this->delimiter,
             "text_qualifier"    => $this->text_qualifier,
-			"return_error"		=> true,
+            "return_error"		=> true,
             );
          
         $field = new XLite_Model_ExtraField();
         $field->import($options);
-		$this->importError = $field->importError;
+        $this->importError = $field->importError;
     }
 
     function action_fields_layout()
@@ -158,25 +158,25 @@ class XLite_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_Abstra
         }
     }
 
-	function getPageReturnUrl()
-	{
-		$text = "Import process failed.";
-		$url = "";
-		switch ($this->action) {
-			case "import_products":
-				if (!$this->importError) $text = "Products imported successfully.";
-				$url = array($this->importError.'<br>'.$text.' <a href="admin.php?target=import_catalog"><u>Click here to return to admin interface</u></a>');
-			break;
-			case "import_fields":
-				if (!$this->importError) $text = "Product extra fields imported successfully.";
-				$url = array($this->importError.'<br>'.$text.' <a href="admin.php?target=import_catalog&page=extra_fields"><u>Click here to return to admin interface</u></a>');
-			break;
-			default:
-				$url = parent::getPageReturnUrl();
-		}
+    function getPageReturnUrl()
+    {
+        $text = "Import process failed.";
+        $url = "";
+        switch ($this->action) {
+            case "import_products":
+                if (!$this->importError) $text = "Products imported successfully.";
+                $url = array($this->importError.'<br>'.$text.' <a href="admin.php?target=import_catalog"><u>Click here to return to admin interface</u></a>');
+            break;
+            case "import_fields":
+                if (!$this->importError) $text = "Product extra fields imported successfully.";
+                $url = array($this->importError.'<br>'.$text.' <a href="admin.php?target=import_catalog&page=extra_fields"><u>Click here to return to admin interface</u></a>');
+            break;
+            default:
+                $url = parent::getPageReturnUrl();
+        }
 
-		return $url;
-	}
+        return $url;
+    }
 
     /**
     * @param int     $i          field number
@@ -187,7 +187,7 @@ class XLite_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_Abstra
     {
         if (($this->action == "import_products" || $this->action == "layout") && $id < count($this->product_layout)) {
             return ($this->product_layout[$id] === $value);
-        } 
+        }
         if (($this->action == "import_fields" || $this->action == "fields_layout") && $id < count($this->fields_layout)) {
             return ($this->fields_layout[$id] === $value);
         }

@@ -68,7 +68,7 @@ class XLite_Module_GiftCertificates_Model_ECard extends XLite_Model_Abstract
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $autoIncrement = 'ecard_id';    
+    protected $autoIncrement = 'ecard_id';
 
     /**
      * Default order file name
@@ -78,7 +78,7 @@ class XLite_Module_GiftCertificates_Model_ECard extends XLite_Model_Abstract
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $defaultOrder = 'order_by';    
+    public $defaultOrder = 'order_by';
 
     /**
      * E-card thumbnail (cache)
@@ -88,7 +88,7 @@ class XLite_Module_GiftCertificates_Model_ECard extends XLite_Model_Abstract
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $thumbnail = null;    
+    protected $thumbnail = null;
 
     /**
      * E-card image (cache)

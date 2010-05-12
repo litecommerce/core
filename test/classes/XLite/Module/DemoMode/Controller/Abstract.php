@@ -35,7 +35,7 @@
  */
 class XLite_Module_DemoMode_Controller_Abstract extends XLite_Controller_Abstract implements XLite_Base_IDecorator
 {
-	// FIXME
+    // FIXME
     function init()
     {
         $target = isset($_REQUEST["target"]) ? strtolower($_REQUEST["target"]) : "main";
@@ -60,12 +60,12 @@ class XLite_Module_DemoMode_Controller_Abstract extends XLite_Controller_Abstrac
             $target == "import_catalog" && $action == "import_products" && isset($_REQUEST["delete_products"]) ||
             $target == "profile" && $action == "delete" ||
             $target == "db" && $action != "default" ||
-			$target == "image_files" && $action != "default" ||
-			$target == "image_edit" && $action != "default" ||
-			$target == "css_edit" && $action == "save" ||
-			$target == "css_edit" && $action == "restore_default" ||
-			$target == "xcart_import" && $action != "default" || 
-			$target == "files" || $target == "test" ||
+            $target == "image_files" && $action != "default" ||
+            $target == "image_edit" && $action != "default" ||
+            $target == "css_edit" && $action == "save" ||
+            $target == "css_edit" && $action == "restore_default" ||
+            $target == "xcart_import" && $action != "default" || 
+            $target == "files" || $target == "test" ||
             $target == "advanced_security" && $action != "default" ||
             $target == "template_editor" && $action != "default" && $action != "extra_pages" && $action != "advanced" && $action != "advanced_edit" && $action != "page_edit" ||
             ($target == "modules" && ($action == "install" || $action == "uninstall")) ||

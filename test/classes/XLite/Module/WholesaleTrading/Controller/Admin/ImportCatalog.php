@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_WholesaleTrading_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_ImportCatalog implements XLite_Base_IDecorator
-{	
+{
     public $unique_identifier = null;
 
     public function __construct(array $params = array())
@@ -78,8 +78,8 @@ class XLite_Module_WholesaleTrading_Controller_Admin_ImportCatalog extends XLite
         	return false;
         }
         for ($i = 0; $i < count($arr); $i++) {
-            if (strcmp($arr[$i], $skipValue) === 0) { 
-            	continue; 
+            if (strcmp($arr[$i], $skipValue) === 0) {
+            	continue;
             }
                
             for ($j = 0; $j < count($arr); $j++) {
@@ -133,27 +133,27 @@ class XLite_Module_WholesaleTrading_Controller_Admin_ImportCatalog extends XLite
             "delimiter"         => $this->delimiter,
             "text_qualifier"    => $this->text_qualifier,
             'unique_identifier' => $this->unique_identifier,
-			"return_error"		=> true,
+            "return_error"		=> true,
             );
         $wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
-		if ($this->delete_prices) {
-            $wps = $wp->findAll(); 
+        if ($this->delete_prices) {
+            $wps = $wp->findAll();
             if ($wps) 
                 foreach($wps as $wp_) 
                     $wp_->delete();
         }
         $wp->import($options);
-		$this->importError = $wp->importError;
+        $this->importError = $wp->importError;
 
-		$text = "<font color=red>Import process failed.</font>";
-		if (!$this->importError) $text = "<font color=green>Wholesale pricing imported successfully.</font>";
-		$text = '<br>' . $text . '<br>' . $this->importError . '<br><a href="admin.php?target=import_catalog&page=import_wholesale_pricing"><u>Click here to return to admin interface</u></a><br><br>';
+        $text = "<font color=red>Import process failed.</font>";
+        if (!$this->importError) $text = "<font color=green>Wholesale pricing imported successfully.</font>";
+        $text = '<br>' . $text . '<br>' . $this->importError . '<br><a href="admin.php?target=import_catalog&page=import_wholesale_pricing"><u>Click here to return to admin interface</u></a><br><br>';
 
-		echo $text;
-		func_refresh_end();
-		exit();
+        echo $text;
+        func_refresh_end();
+        exit();
     }
-	
+    
     function action_import_product_access()
     {
         $this->startDump();
@@ -163,19 +163,19 @@ class XLite_Module_WholesaleTrading_Controller_Admin_ImportCatalog extends XLite
             "delimiter"         => $this->delimiter,
             "text_qualifier"    => $this->text_qualifier,
             'unique_identifier' => $this->unique_identifier,
-			"return_error"		=> true,
+            "return_error"		=> true,
             );
         $pa = new XLite_Module_WholesaleTrading_Model_ProductAccess();
         $pa->import($options);
-		$this->importError = $pa->importError;
+        $this->importError = $pa->importError;
 
-		$text = "<font color=red>Import process failed.</font>";
-		if (!$this->importError) $text = "<font color=green>Product access imported successfully.</font>";
-		$text = '<br>' . $text . '<br>' . $this->importError . '<br><a href="admin.php?target=import_catalog&page=import_product_access"><u>Click here to return to admin interface</u></a><br><br>';
+        $text = "<font color=red>Import process failed.</font>";
+        if (!$this->importError) $text = "<font color=green>Product access imported successfully.</font>";
+        $text = '<br>' . $text . '<br>' . $this->importError . '<br><a href="admin.php?target=import_catalog&page=import_product_access"><u>Click here to return to admin interface</u></a><br><br>';
 
-		echo $text;
-		func_refresh_end();
-		exit();
+        echo $text;
+        func_refresh_end();
+        exit();
     }
     
     function action_import_purchase_limit() {
@@ -186,19 +186,19 @@ class XLite_Module_WholesaleTrading_Controller_Admin_ImportCatalog extends XLite
             "delimiter"         => $this->delimiter,
             "text_qualifier"    => $this->text_qualifier,
             'unique_identifier' => $this->unique_identifier,
-			"return_error"		=> true,
+            "return_error"		=> true,
             );
         $pl = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
         $pl->import($options);
-		$this->importError = $pl->importError;
+        $this->importError = $pl->importError;
 
-		$text = "<font color=red>Import process failed.</font>";
-		if (!$this->importError) $text = "<font color=green>Purchase limit imported successfully.</font>";
-		$text = '<br>' . $text . '<br>' . $this->importError. '<br><a href="admin.php?target=import_catalog&page=import_purchase_limit"><u>Click here to return to admin interface</u></a><br><br>';
+        $text = "<font color=red>Import process failed.</font>";
+        if (!$this->importError) $text = "<font color=green>Purchase limit imported successfully.</font>";
+        $text = '<br>' . $text . '<br>' . $this->importError. '<br><a href="admin.php?target=import_catalog&page=import_purchase_limit"><u>Click here to return to admin interface</u></a><br><br>';
 
-		echo $text;
-		func_refresh_end();
-		exit();
+        echo $text;
+        func_refresh_end();
+        exit();
     }
 
     /**

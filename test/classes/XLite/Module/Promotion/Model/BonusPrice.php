@@ -34,34 +34,34 @@
  * @since   3.0.0
  */
 class XLite_Module_Promotion_Model_BonusPrice extends XLite_Model_Abstract
-{	
-	public $fields = array(
-		"offer_id" => 0,
-		"product_id" => 0,
-		"category_id" => 0,
-		"bonusType" => '$',
-		"price" => 0);	
-	public $alias = "special_offer_bonusprices";		
-	public $primaryKey = array("offer_id","product_id");
+{
+    public $fields = array(
+        "offer_id" => 0,
+        "product_id" => 0,
+        "category_id" => 0,
+        "bonusType" => '$',
+        "price" => 0);
+    public $alias = "special_offer_bonusprices";
+    public $primaryKey = array("offer_id","product_id");
 
-	function getProduct()
-	{
-		if ($this->get("product_id")) {
-			$product = new XLite_Model_Product($this->get("product_id"));
-		} else {
+    function getProduct()
+    {
+        if ($this->get("product_id")) {
+            $product = new XLite_Model_Product($this->get("product_id"));
+        } else {
             $product = null;
-        }    
+        }
         return $product;
     }
 
     function getCategory()
     {
-		if ($this->get("category_id")) {
-			$category = new XLite_Model_Category($this->get("category_id"));
-		} else {
-			$category = null;
-		}
+        if ($this->get("category_id")) {
+            $category = new XLite_Model_Category($this->get("category_id"));
+        } else {
+            $category = null;
+        }
         return $category;
-	}
+    }
 
 }

@@ -119,7 +119,7 @@ abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstr
 
 
 
-	/**
+    /**
      * Return current (or default) product object
      * 
      * @return XLite_Model_Product
@@ -128,9 +128,9 @@ abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstr
      */
     public function getProduct()
     {
-		$product = parent::getProduct();
+        $product = parent::getProduct();
 
-        return $product->get('enabled') ? $product : null; 
+        return $product->get('enabled') ? $product : null;
     }
 
     /**
@@ -172,7 +172,7 @@ abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstr
      * @access public
      * @since  3.0.0
      */
-	public function __construct(array $params = array())
+    public function __construct(array $params = array())
     {
         parent::__construct($params);
 
@@ -186,15 +186,15 @@ abstract class XLite_Controller_Customer_Abstract extends XLite_Controller_Abstr
     }
 
 
-	public function isSecure()
+    public function isSecure()
     {
-		$result = parent::isSecure();
+        $result = parent::isSecure();
 
         if (!is_null($this->get('feed')) && $this->get('feed') == 'login') {
-			$result = $this->config->Security->customer_security;
-		}
+            $result = $this->config->Security->customer_security;
+        }
 
-		return $result;
+        return $result;
     }
 
     /**

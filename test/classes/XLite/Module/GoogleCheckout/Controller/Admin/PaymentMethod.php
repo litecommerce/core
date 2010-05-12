@@ -44,23 +44,23 @@ class XLite_Module_GoogleCheckout_Controller_Admin_PaymentMethod extends XLite_C
     	$h = array(
     		"Authorization" => "Basic ".$auth,
     		"Accept" => "application/xml"
-    	);  
+    	);
 
         require_once LC_MODULES_DIR . 'GoogleCheckout' . LC_DS . 'encoded.php';
-		$https = GoogleCheckout_getHTTPS_Object();
+        $https = GoogleCheckout_getHTTPS_Object();
     	$https->data     = $data;
     	$https->method   = "POST";
     	$https->conttype = "application/xml";
     	$https->headers  = $h;
     	$https->url      = $url;
 
-		$this->xlite->logger->log("Request to: " . $url . " with data:\n" . $data);
+        $this->xlite->logger->log("Request to: " . $url . " with data:\n" . $data);
     	if ($https->request() == XLite_Model_HTTPS::HTTPS_ERROR) {
     		$this->error = $https->error;
     		return array();
     	}
 
-		$this->xlite->logger->log("Response:\n" . $https->response);
+        $this->xlite->logger->log("Response:\n" . $https->response);
         if ($https->response != CALLBACK_PASSED_MESSAGE) {
             $this->error = "not passed";
             return array();
@@ -69,80 +69,80 @@ class XLite_Module_GoogleCheckout_Controller_Admin_PaymentMethod extends XLite_C
     	return $https->response;
     }
 
-	function checkCallbackConnection(&$payment)
-	{
-		$this->error = null;
-		$this->sendRequest($payment, $payment->getCallbackURL(), CALLBACK_CHECK_MESSAGE);
-		return ($this->error) ? false : true;
-	}
+    function checkCallbackConnection(&$payment)
+    {
+        $this->error = null;
+        $this->sendRequest($payment, $payment->getCallbackURL(), CALLBACK_CHECK_MESSAGE);
+        return ($this->error) ? false : true;
+    }
 
-	function getAccessLevel()
+    function getAccessLevel()
     {
         return (isset($this->action) && 'callback' == $this->action) ? 0 : parent::getAccessLevel();
     }
 
-	function checkDisableCustomerNotif($value)
-	{
-		return (bool) $value;
-	}
+    function checkDisableCustomerNotif($value)
+    {
+        return (bool) $value;
+    }
 
-	function checkCallbackAuthorization()
-	{
-		$this->set("silent", true);
-		$this->xlite->logger->log("Received callback from GoogleCheckout");
+    function checkCallbackAuthorization()
+    {
+        $this->set("silent", true);
+        $this->xlite->logger->log("Received callback from GoogleCheckout");
 
-		$this->pm = new XLite_Model_PaymentMethod("google_checkout");
+        $this->pm = new XLite_Model_PaymentMethod("google_checkout");
         $params = $this->pm->get("params");
 
-		$this->phpAuthUser = $GLOBALS["_SERVER"]["PHP_AUTH_USER"];
-		$this->phpAuthPW = $GLOBALS["_SERVER"]["PHP_AUTH_PW"];
-		$this->httpRawPostData = $GLOBALS["HTTP_RAW_POST_DATA"];
-		// workaround for a bug in PHP 5.2.2 - see http://bugs.php.net/bug.php?id=41293
-		if (empty($this->httpRawPostData)) {
+        $this->phpAuthUser = $GLOBALS["_SERVER"]["PHP_AUTH_USER"];
+        $this->phpAuthPW = $GLOBALS["_SERVER"]["PHP_AUTH_PW"];
+        $this->httpRawPostData = $GLOBALS["HTTP_RAW_POST_DATA"];
+        // workaround for a bug in PHP 5.2.2 - see http://bugs.php.net/bug.php?id=41293
+        if (empty($this->httpRawPostData)) {
     		$this->httpRawPostData = $GLOBALS["HTTP_RAW_POST_DATA"] = @file_get_contents("php://input");
-		}
+        }
 
-		if (empty($this->httpRawPostData)) {
-			// Google checkout payment module: Script called with no data passed to it.
-			$this->xlite->logger->log("ERROR: Script called with no data passed to it.");
-			exit;
-		}
-		$this->xlite->logger->log("RawPostData:\n" . $this->httpRawPostData);
+        if (empty($this->httpRawPostData)) {
+            // Google checkout payment module: Script called with no data passed to it.
+            $this->xlite->logger->log("ERROR: Script called with no data passed to it.");
+            exit;
+        }
+        $this->xlite->logger->log("RawPostData:\n" . $this->httpRawPostData);
 
-		// check if callback-request has been successfully authorized
-		if ($this->phpAuthUser != $params["merchant_id"] || $this->phpAuthPW != $params["merchant_key"]) {
-			$this->xlite->logger->log("ERROR: Unauthorized access to callback script.");
-			header("WWW-Authenticate: Basic");
-			header("HTTP/1.0 401 Unauthorized");
-			die;
-		}
-	}
+        // check if callback-request has been successfully authorized
+        if ($this->phpAuthUser != $params["merchant_id"] || $this->phpAuthPW != $params["merchant_key"]) {
+            $this->xlite->logger->log("ERROR: Unauthorized access to callback script.");
+            header("WWW-Authenticate: Basic");
+            header("HTTP/1.0 401 Unauthorized");
+            die;
+        }
+    }
 
     function action_callback()
     {
         $this->checkCallbackAuthorization();
 
-		if ($this->httpRawPostData == CALLBACK_CHECK_MESSAGE) {
+        if ($this->httpRawPostData == CALLBACK_CHECK_MESSAGE) {
         	die(CALLBACK_PASSED_MESSAGE);
-		}
+        }
 
         require_once LC_MODULES_DIR . 'GoogleCheckout' . LC_DS . 'encoded.php';
-		$xml = GoogleCheckout_getXML_Object();
-		$parsed = $xml->parse($this->httpRawPostData);
+        $xml = GoogleCheckout_getXML_Object();
+        $parsed = $xml->parse($this->httpRawPostData);
 
-		if (empty($parsed)) {
-			// Google checkout payment module: Received data could not be identified correctly.
-			$this->xlite->logger->log("ERROR: Received data could not be identified correctly.");
-			exit;
-		}
-		ob_start();
-		var_dump($parsed);
-		$parsedData = ob_get_contents();
-		ob_end_clean();
-		$this->xlite->logger->log("Parsed XML callback data:\n" . $parsedData);
-		$this->xlite->logger->log("Callback from IP: ".$GLOBALS["REMOTE_ADDR"]."\n");
+        if (empty($parsed)) {
+            // Google checkout payment module: Received data could not be identified correctly.
+            $this->xlite->logger->log("ERROR: Received data could not be identified correctly.");
+            exit;
+        }
+        ob_start();
+        var_dump($parsed);
+        $parsedData = ob_get_contents();
+        ob_end_clean();
+        $this->xlite->logger->log("Parsed XML callback data:\n" . $parsedData);
+        $this->xlite->logger->log("Callback from IP: ".$GLOBALS["REMOTE_ADDR"]."\n");
 
-		// processing callback
-		$this->pm->handleCallback($parsed);
+        // processing callback
+        $this->pm->handleCallback($parsed);
     }
 }

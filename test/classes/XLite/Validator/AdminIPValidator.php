@@ -39,7 +39,7 @@ define(
  * @since   3.0.0
  */
 class XLite_Validator_AdminIPValidator extends XLite_Validator_Abstract
-{	
+{
     public $template = "common/ip_validator.tpl";
 
     function isValid()

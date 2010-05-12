@@ -35,40 +35,40 @@
  */
 class XLite_Module_FeaturedProducts_Model_Product extends XLite_Model_Product implements XLite_Base_IDecorator
 {
-	/**
-	 * Delete featured product
-	 * 
-	 * @return void
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function delete()
-	{
-		$this->db->query("DELETE FROM " . XLite_Module_FeaturedProducts_Main::FEATURED_PRODUCTS_TABLE . " WHERE product_id='" . $this->get("product_id") . "'");
-		parent::delete();
-	}
+    /**
+     * Delete featured product
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function delete()
+    {
+        $this->db->query("DELETE FROM " . XLite_Module_FeaturedProducts_Main::FEATURED_PRODUCTS_TABLE . " WHERE product_id='" . $this->get("product_id") . "'");
+        parent::delete();
+    }
 
-	/**
-	 * Remove all unused featured product records
-	 * 
-	 * @return void
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function collectGarbage()
-	{
-		parent::collectGarbage();
+    /**
+     * Remove all unused featured product records
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function collectGarbage()
+    {
+        parent::collectGarbage();
 
-		$products_table = $this->db->getTableByAlias("products");
-		$sql = "SELECT f.product_id FROM " . XLite_Module_FeaturedProducts_Main::FEATURED_PRODUCTS_TABLE . " f LEFT OUTER JOIN $products_table p ON f.product_id=p.product_id WHERE p.product_id IS NULL";
-		$result = $this->db->getAll($sql);
+        $products_table = $this->db->getTableByAlias("products");
+        $sql = "SELECT f.product_id FROM " . XLite_Module_FeaturedProducts_Main::FEATURED_PRODUCTS_TABLE . " f LEFT OUTER JOIN $products_table p ON f.product_id=p.product_id WHERE p.product_id IS NULL";
+        $result = $this->db->getAll($sql);
 
-		if (is_array($result) && count($result) > 0) {
-			foreach ($result as $info) {
-				$this->db->query("DELETE FROM " . XLite_Module_FeaturedProducts_Main::FEATURED_PRODUCTS_TABLE . " WHERE product_id='" . $info["product_id"] . "'");
-			}
-		}
-	}
+        if (is_array($result) && count($result) > 0) {
+            foreach ($result as $info) {
+                $this->db->query("DELETE FROM " . XLite_Module_FeaturedProducts_Main::FEATURED_PRODUCTS_TABLE . " WHERE product_id='" . $info["product_id"] . "'");
+            }
+        }
+    }
 }

@@ -35,27 +35,27 @@
  */
 class XLite_Module_AccountingPackage_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
 {
-	function getDetailsString()
-	{
-		$str = array();
-		$details = $this->get("details");
-		if (is_array($details)) {
-			foreach ($details as $name => $val) {
-				$name = $this->getDetailLabel($name);
-				if (!empty($name)) {
-					$str[] = $name . "=" . $val;
-				}
-			}
-		}
-		if (count($str) > 0) {
-			$str = implode(", ", $str);
-			$str = str_replace("\n", " ", $str);
-			$str = str_replace("\r", " ", $str);
-			$str = str_replace("\t", " ", $str);
-		} else {
-			$str = "";
-		}
+    function getDetailsString()
+    {
+        $str = array();
+        $details = $this->get("details");
+        if (is_array($details)) {
+            foreach ($details as $name => $val) {
+                $name = $this->getDetailLabel($name);
+                if (!empty($name)) {
+                    $str[] = $name . "=" . $val;
+                }
+            }
+        }
+        if (count($str) > 0) {
+            $str = implode(", ", $str);
+            $str = str_replace("\n", " ", $str);
+            $str = str_replace("\r", " ", $str);
+            $str = str_replace("\t", " ", $str);
+        } else {
+            $str = "";
+        }
 
-		return $str;
-	}
+        return $str;
+    }
 }

@@ -69,9 +69,9 @@ class XLite_Module_Bestsellers_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'This module enables bestsellers list';
-    }	
+    }
 
-    public $isFree = true;	
+    public $isFree = true;
 
     /**
      * Determines if we need to show settings form link

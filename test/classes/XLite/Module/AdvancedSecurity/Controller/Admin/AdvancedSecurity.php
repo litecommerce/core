@@ -34,8 +34,8 @@
  * @since   3.0.0
  */
 class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XLite_Controller_Admin_Abstract
-{	
-    public $params = array("target", "mode");	
+{
+    public $params = array("target", "mode");
     public $sample = "The quick brown fox jumps over the lazy dog.";
     
     function action_orders() 
@@ -55,7 +55,7 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XL
         }
         $this->session->set("masterPassword", null); // to avoid update conflict
         $order = new XLite_Model_Order();
-        $orders = $order->findAll("payment_method='CreditCard'"); 
+        $orders = $order->findAll("payment_method='CreditCard'");
         $this->startDump();
         for ($i = 0; $i < count($orders); $i++) {
             if ($this->get("decrypt_orders")) {
@@ -71,25 +71,25 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XL
 ?>
 <br><br>Order(s) processed successfully. <a href="admin.php?target=advanced_security#order_management"><u>Click here to return to admin interface</u></a>
 <?php
-    } 
+    }
     
     function testEncrypt() 
     {
         $gpg = $this->get("gpg");
         $this->encryptResult = $gpg->encrypt($this->sample);
-    } 
+    }
 
     function testDecrypt() 
     {
         $gpg = $this->get("gpg");
         $this->decryptResult = $gpg->decrypt($this->encryptResult, $this->get("passphrase"));
-    } 
+    }
     
     function action_test() 
     {
         // see template for testing details
         $this->set("valid", false); // no NOT redirect after test
-    } 
+    }
 
     function action_download_secret_key() 
     {
@@ -103,14 +103,14 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XL
             $this->set("invalidPassword", true);
             $this->set("valid", false);
         }
-    } 
+    }
 
     function getSecurityOptions() 
     {
         $config = new XLite_Model_Config();
         $options = $config->getByCategory("AdvancedSecurity");
         return $options;
-    } 
+    }
     
     function action_options() 
     {
@@ -126,17 +126,17 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XL
                     $val = 'Y';
                 }
             } else {
-				if (isset($_POST[$name])) {
-	                $val = trim($_POST[$name]);
-				} else {
-					continue;
-				}
+                if (isset($_POST[$name])) {
+                    $val = trim($_POST[$name]);
+                } else {
+                    continue;
+                }
             }
 
             $options[$i]->set("value", $val);
             $options[$i]->update();
         }
-    } 
+    }
 
     function action_delete_keys()
     {
@@ -156,5 +156,5 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XL
             $this->gpg = new XLite_Module_AdvancedSecurity_Model_GPG();
         }
         return $this->gpg;
-    } 
+    }
 }

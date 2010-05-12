@@ -93,9 +93,9 @@ class XLite_Module_DrupalConnector_Core_Converter extends XLite_Core_Converter i
             // Drupal URL
     	    $result = self::buildDrupalURL($target, $action, $params);
 
-		}
+        }
 
-		return $result;
+        return $result;
     }
 
     /**

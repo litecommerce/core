@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_Affiliate_Controller_Admin_Banner extends XLite_Controller_Admin_Abstract
-{	
+{
     public $params = array('target', 'banner_id', 'mode', 'type');
     
     function initView()

@@ -51,18 +51,18 @@ class XLite_Module_Egoods_Controller_Admin_ImportCatalog extends XLite_Controlle
             "delimiter"         => $this->delimiter,
             "text_qualifier"    => $this->text_qualifier,
             "update_existing"	=> $this->update_existing,
-			"return_error"		=> true,
+            "return_error"		=> true,
             );
         $pin = new XLite_Module_Egoods_Model_PinCode();
         $pin->import($options);
-		$this->importError = $pin->importError;
+        $this->importError = $pin->importError;
 
-		$text = "Import process failed.";
-		if (!$this->importError) $text = "PIN codes imported successfully.";
-		$text = $this->importError.'<br>'.$text.' <a href="admin.php?target=import_catalog&page=import_pin_codes"><u>Click here to return to admin interface</u></a><br><br>';
+        $text = "Import process failed.";
+        if (!$this->importError) $text = "PIN codes imported successfully.";
+        $text = $this->importError.'<br>'.$text.' <a href="admin.php?target=import_catalog&page=import_pin_codes"><u>Click here to return to admin interface</u></a><br><br>';
 
-		echo $text;
-		func_refresh_end();
-		exit();
+        echo $text;
+        func_refresh_end();
+        exit();
     }
 }

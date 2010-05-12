@@ -34,8 +34,8 @@
  * @since   3.0.0
  */
 class XLite_Module_WholesaleTrading_Controller_Admin_Wholesale extends XLite_Controller_Admin_Abstract
-{	
-    public $params = array("target"); 
+{
+    public $params = array("target");
     
     function action_options() 
     {
@@ -43,32 +43,32 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Wholesale extends XLite_Con
         $options = $config->getByCategory("WholesaleTrading");
         for ($i=0; $i<count($options); $i++) {
             $name = $options[$i]->get("name");
-			if ($name == "bulk_categories") {
-				if (count($_POST["bulk_categories"]) > 0) {
-					$options[$i]->set("value", implode(";", $_POST["bulk_categories"]));
-				} else {
-					$options[$i]->set("value", "");
-				}
-			} else {
-				$type = $options[$i]->get("type");
-				if ($type=='checkbox') {
-					if (empty($_POST[$name])) {
-						$val = 'N';
-					} else {
-						$val = 'Y';
-					}
-				} else {
-					$val = trim($_POST[$name]);
-				}
+            if ($name == "bulk_categories") {
+                if (count($_POST["bulk_categories"]) > 0) {
+                    $options[$i]->set("value", implode(";", $_POST["bulk_categories"]));
+                } else {
+                    $options[$i]->set("value", "");
+                }
+            } else {
+                $type = $options[$i]->get("type");
+                if ($type=='checkbox') {
+                    if (empty($_POST[$name])) {
+                        $val = 'N';
+                    } else {
+                        $val = 'Y';
+                    }
+                } else {
+                    $val = trim($_POST[$name]);
+                }
 
-				$options[$i]->set("value", $val);
-			}
+                $options[$i]->set("value", $val);
+            }
         }
 
         // write changes on success
         for ($i=0; $i<count($options); $i++) {
             $options[$i]->update();
         }
-    } 
+    }
 
 }

@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Controller_Admin_PaymentMethod extends XLite_Controller_Admin_Abstract
-{    
+{
     /**
      * Controller parameters 
      * 
@@ -43,7 +43,7 @@ class XLite_Controller_Admin_PaymentMethod extends XLite_Controller_Admin_Abstra
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $params = array('target', 'payment_method', 'updated', 'error');    
+    public $params = array('target', 'payment_method', 'updated', 'error');
 
     /**
      * Payment methods (cache) 
@@ -53,9 +53,9 @@ class XLite_Controller_Admin_PaymentMethod extends XLite_Controller_Admin_Abstra
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $pm = null;    
+    protected $pm = null;
 
-    public $error = '';    
+    public $error = '';
 
     public $updated = false;
 
@@ -74,7 +74,7 @@ class XLite_Controller_Admin_PaymentMethod extends XLite_Controller_Admin_Abstra
         }
 
         return $this->pm;
-    }    
+    }
 
     /**
      * Update payment method

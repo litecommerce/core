@@ -69,7 +69,7 @@ class XLite_Module_WholesaleTrading_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'This module introduces wholesale trading business logic support';
-    }	
+    }
     /**
      * Determines if we need to show settings form link
      *
@@ -80,7 +80,7 @@ class XLite_Module_WholesaleTrading_Main extends XLite_Module_Abstract
     public static function showSettingsForm()
     {
         return true;
-    }	
+    }
 
     /**
      * Return link to settings form
@@ -90,9 +90,9 @@ class XLite_Module_WholesaleTrading_Main extends XLite_Module_Abstract
      * @since  3.0
      */
     public static function getSettingsForm()
-	{
-		return "admin.php?target=wholesale";
-	}
+    {
+        return "admin.php?target=wholesale";
+    }
 
     /**
      * Perform some actions at startup
@@ -106,11 +106,11 @@ class XLite_Module_WholesaleTrading_Main extends XLite_Module_Abstract
         parent::init();
 
         // common class decorations
-		if ($this->xlite->is("adminZone")) {
-			$this->addLayout("common/select_membership.tpl", "modules/WholesaleTrading/common/select_membership.tpl");
-		}
+        if ($this->xlite->is("adminZone")) {
+            $this->addLayout("common/select_membership.tpl", "modules/WholesaleTrading/common/select_membership.tpl");
+        }
 
 
-		$this->xlite->set("WholesaleTradingEnabled", true);
+        $this->xlite->set("WholesaleTradingEnabled", true);
     }
 }

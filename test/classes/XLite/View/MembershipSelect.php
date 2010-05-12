@@ -34,14 +34,14 @@
  * @since      3.0.0
  */
 class XLite_View_MembershipSelect extends XLite_View_FormField
-{	
+{
      /*
      * Widget parameters names
      */
-	const PARAM_FIELD_NAME = 'field';
-	const PARAM_VALUE      = 'value';
-	const PARAM_ALL_OPTION = 'allOption';
-	const PARAM_PENDING_OPTION = 'pendingOption';
+    const PARAM_FIELD_NAME = 'field';
+    const PARAM_VALUE      = 'value';
+    const PARAM_ALL_OPTION = 'allOption';
+    const PARAM_PENDING_OPTION = 'pendingOption';
 
 
     /**
@@ -67,12 +67,12 @@ class XLite_View_MembershipSelect extends XLite_View_FormField
     {
         parent::defineWidgetParams();
 
-		$this->widgetParams += array(
-			self::PARAM_FIELD_NAME     => new XLite_Model_WidgetParam_String('Field', 'membership', false),
-			self::PARAM_VALUE          => new XLite_Model_WidgetParam_String('Value', '%', false),
-			self::PARAM_ALL_OPTION     => new XLite_Model_WidgetParam_Bool('Display All option', false, false),
-			self::PARAM_PENDING_OPTION => new XLite_Model_WidgetParam_Bool('Display Pending option', false, false)
-		);
+        $this->widgetParams += array(
+            self::PARAM_FIELD_NAME     => new XLite_Model_WidgetParam_String('Field', 'membership', false),
+            self::PARAM_VALUE          => new XLite_Model_WidgetParam_String('Value', '%', false),
+            self::PARAM_ALL_OPTION     => new XLite_Model_WidgetParam_Bool('Display All option', false, false),
+            self::PARAM_PENDING_OPTION => new XLite_Model_WidgetParam_Bool('Display Pending option', false, false)
+        );
     }
 }
 

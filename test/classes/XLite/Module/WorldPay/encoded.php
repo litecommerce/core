@@ -1,6 +1,6 @@
 <?php
     function func_PaymentMethod_worldpay_handleRequest($_this, $cart)
-    {    
+    {
         $status = "P";
 
         $cart->setComplex("details.transStatus", $_POST['transStatus']);
@@ -46,7 +46,7 @@
         $cart->set("status", $status);
         $cart->update();
 
-		$backUrl = $cart->xlite->getShopUrl("cart.php?target=checkout&action=return&order_id=".$cart->get("order_id"), $cart->getComplex('config.Security.customer_security'));
+        $backUrl = $cart->xlite->getShopUrl("cart.php?target=checkout&action=return&order_id=".$cart->get("order_id"), $cart->getComplex('config.Security.customer_security'));
 ?>
 <html>
 <body onLoad="javascript: document.location = '<?php echo $backUrl;?>'">

@@ -30,7 +30,7 @@ function func_calc_discount($order)
             }
         }
     }
-	$d = min($order->get("subtotal"), $d);
+    $d = min($order->get("subtotal"), $d);
     $order->set("discount", $order->formatCurrency($d));
 }
 

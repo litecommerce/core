@@ -34,61 +34,61 @@
  * @since   3.0.0
  */
 class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Controller_Admin_Product implements XLite_Base_IDecorator
-{	
-	public $productsFound = 0;	
-	public $notifyPresentedHash = array();	
-	public $priceNotifyPresented = null;
+{
+    public $productsFound = 0;
+    public $notifyPresentedHash = array();
+    public $priceNotifyPresented = null;
 
-	public function __construct(array $params)
-	{
-		parent::__construct($params);
-		if ($this->is("relatedProductsEnabled")) {
-			$this->pages["related_products"] = "Related products";
-			$this->pageTemplates["related_products"] = "modules/ProductAdviser/RelatedProducts.tpl";
-		}
-	}
+    public function __construct(array $params)
+    {
+        parent::__construct($params);
+        if ($this->is("relatedProductsEnabled")) {
+            $this->pages["related_products"] = "Related products";
+            $this->pageTemplates["related_products"] = "modules/ProductAdviser/RelatedProducts.tpl";
+        }
+    }
 
-	public function getRelatedProducts($productId)
-	{
-		$product = new XLite_Module_ProductAdviser_Model_Product($productId);
-		$relatedProducts = $product->getRelatedProducts();
-		return $relatedProducts;
-	}
+    public function getRelatedProducts($productId)
+    {
+        $product = new XLite_Module_ProductAdviser_Model_Product($productId);
+        $relatedProducts = $product->getRelatedProducts();
+        return $relatedProducts;
+    }
 
-	function getProducts()
-	{
-		if ($this->get("mode") != "search") {
-			return array();
-		}
+    function getProducts()
+    {
+        if ($this->get("mode") != "search") {
+            return array();
+        }
 
-		$p = new XLite_Model_Product();
-		$result = $p->advancedSearch
-		(
-			$this->substring,
-			$this->search_productsku,
-			$this->search_category,
-			$this->subcategory_search
-		);
-		if (is_array($result)) {
-			$removedItems = array();
-			foreach($result as $p_key => $product) {
-				if ($product->get("product_id") == $this->product_id) {
-					$removedItems[$p_key] = true;
-				}
-				if (!is_object($this->product)) {
-					$this->product = new $this->product_id;
-				}
-				if (is_object($this->product)) {
-					$rp = $this->product->getRelatedProducts();
-					if (is_array($rp) && count($rp) > 0) {
-						foreach($rp as $rp_item) {
-							if ($rp_item->getComplex('product.product_id') == $product->get("product_id")) {
+        $p = new XLite_Model_Product();
+        $result = $p->advancedSearch
+        (
+            $this->substring,
+            $this->search_productsku,
+            $this->search_category,
+            $this->subcategory_search
+        );
+        if (is_array($result)) {
+            $removedItems = array();
+            foreach($result as $p_key => $product) {
+                if ($product->get("product_id") == $this->product_id) {
+                    $removedItems[$p_key] = true;
+                }
+                if (!is_object($this->product)) {
+                    $this->product = new $this->product_id;
+                }
+                if (is_object($this->product)) {
+                    $rp = $this->product->getRelatedProducts();
+                    if (is_array($rp) && count($rp) > 0) {
+                        foreach($rp as $rp_item) {
+                            if ($rp_item->getComplex('product.product_id') == $product->get("product_id")) {
                         		$removedItems[$p_key] = true;
-							}
-						}
-					}
-				}
-			}
+                            }
+                        }
+                    }
+                }
+            }
         	if (is_array($result) && $this->new_arrivals_search) {
         		for($i=0; $i<count($result); $i++) {
                     if ($result[$i]->getNewArrival() == 0) {
@@ -101,68 +101,68 @@ class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Control
     				unset($result[$i]);
         		}
     		}
-			$this->productsFound = count($result);
-		}
+            $this->productsFound = count($result);
+        }
 
-		return $result;
-	}
+        return $result;
+    }
 
-	function action_add_related_products()
-	{
-		if (!$this->is("relatedProductsEnabled")) {
-			return;
-		}
+    function action_add_related_products()
+    {
+        if (!$this->is("relatedProductsEnabled")) {
+            return;
+        }
 
-		if (isset($this->product_ids) && is_array($this->product_ids)) {
-			$relatedProducts = array();
-			foreach ($this->product_ids as $product_id => $value) {
-				$relatedProducts[] = new XLite_Model_Product($product_id);
-			}
-			$product = new XLite_Model_Product($this->product_id);
-			$product->addRelatedProducts($relatedProducts);
-		}	
-	}
+        if (isset($this->product_ids) && is_array($this->product_ids)) {
+            $relatedProducts = array();
+            foreach ($this->product_ids as $product_id => $value) {
+                $relatedProducts[] = new XLite_Model_Product($product_id);
+            }
+            $product = new XLite_Model_Product($this->product_id);
+            $product->addRelatedProducts($relatedProducts);
+        }
+    }
 
-	function action_update_related_products()
-	{
-		if (!$this->is("relatedProductsEnabled")) {
-			return;
-		}
+    function action_update_related_products()
+    {
+        if (!$this->is("relatedProductsEnabled")) {
+            return;
+        }
 
-		if (isset($this->updates_product_ids) && is_array($this->updates_product_ids)) {
-			foreach ($this->updates_product_ids as $product_id => $order_by) {
-				$relatedProduct = new XLite_Module_ProductAdviser_Model_RelatedProduct();
-				$relatedProduct->set("product_id", $this->product_id); 
-				$relatedProduct->set("related_product_id", $product_id); 
-				$relatedProduct->set("order_by", $order_by); 
-				$relatedProduct->update();
-			}
-		}	
-	}
+        if (isset($this->updates_product_ids) && is_array($this->updates_product_ids)) {
+            foreach ($this->updates_product_ids as $product_id => $order_by) {
+                $relatedProduct = new XLite_Module_ProductAdviser_Model_RelatedProduct();
+                $relatedProduct->set("product_id", $this->product_id);
+                $relatedProduct->set("related_product_id", $product_id);
+                $relatedProduct->set("order_by", $order_by);
+                $relatedProduct->update();
+            }
+        }
+    }
 
-	function action_delete_related_products()
-	{
-		if (!$this->is("relatedProductsEnabled")) {
-			return;
-		}
+    function action_delete_related_products()
+    {
+        if (!$this->is("relatedProductsEnabled")) {
+            return;
+        }
 
-		if (isset($this->delete_product_ids) && is_array($this->delete_product_ids)) {
-			$relatedProducts = array();
-			foreach ($this->delete_product_ids as $product_id => $value) {
-				$relatedProducts[] = new XLite_Model_Product($product_id);
-			}
-			$product = new XLite_Model_Product($this->product_id);
-			$product->deleteRelatedProducts($relatedProducts);
-		}
-	}
+        if (isset($this->delete_product_ids) && is_array($this->delete_product_ids)) {
+            $relatedProducts = array();
+            foreach ($this->delete_product_ids as $product_id => $value) {
+                $relatedProducts[] = new XLite_Model_Product($product_id);
+            }
+            $product = new XLite_Model_Product($this->product_id);
+            $product->deleteRelatedProducts($relatedProducts);
+        }
+    }
 
-	function action_info()
-	{
-		parent::action_info();
+    function action_info()
+    {
+        parent::action_info();
 
-		if (!isset($this->NewArrivalStatus)) {
-			return;
-		}
+        if (!isset($this->NewArrivalStatus)) {
+            return;
+        }
 
         $stats = new XLite_Module_ProductAdviser_Model_ProductNewArrivals();
         $timeStamp = time();
@@ -173,34 +173,34 @@ class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Control
             $stats->create();
         }
 
-		$statusUpdated = false;
+        $statusUpdated = false;
 
-		switch ($this->NewArrivalStatus) {
-			case 0:		// Unmark
-				$stats->set("new", "N");
-				$stats->set("updated", 0);
+        switch ($this->NewArrivalStatus) {
+            case 0:		// Unmark
+                $stats->set("new", "N");
+                $stats->set("updated", 0);
                 $statusUpdated = true;
-			break;
-			case 1:		// Default period
-				// (Forever || Unmark) --> Default period
-				if ($stats->get("new") == "Y" || ($stats->get("new") == "N" && $stats->get("updated") == 0)) {
-					$stats->set("new", "N");
-					$stats->set("updated", $timeStamp);
+            break;
+            case 1:		// Default period
+                // (Forever || Unmark) --> Default period
+                if ($stats->get("new") == "Y" || ($stats->get("new") == "N" && $stats->get("updated") == 0)) {
+                    $stats->set("new", "N");
+                    $stats->set("updated", $timeStamp);
                 	$statusUpdated = true;
                 }
-			break;
-			case 2:		// Forever
-				$stats->set("new", "Y");
-				$stats->set("updated", $timeStamp);
+            break;
+            case 2:		// Forever
+                $stats->set("new", "Y");
+                $stats->set("updated", $timeStamp);
                 $statusUpdated = true;
-			break;
-		}
-		if ($statusUpdated) {
+            break;
+        }
+        if ($statusUpdated) {
             $stats->update();
-		}
-	}
+        }
+    }
 
-	function action_update_product_inventory()
+    function action_update_product_inventory()
     {
     	parent::action_update_product_inventory();
 
@@ -217,10 +217,10 @@ class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Control
     function checkNotification()
     {
     	$inventoryChangedAmount = $this->xlite->get("inventoryChangedAmount");
-		$this->session->set("inventoryNotify", null);
-		
-		$notification = new XLite_Module_ProductAdviser_Model_Notification();
-		$notification->createInventoryChangedNotification($inventoryChangedAmount);
+        $this->session->set("inventoryNotify", null);
+        
+        $notification = new XLite_Module_ProductAdviser_Model_Notification();
+        $notification->createInventoryChangedNotification($inventoryChangedAmount);
     }
 
     function isNotifyPresent($inventory_id)
@@ -235,7 +235,7 @@ class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Control
     		$notification = new XLite_Module_ProductAdviser_Model_Notification();
     		$this->notifyPresentedHash[$inventory_id] = $notification->count($check);
     	}
-		return $this->notifyPresentedHash[$inventory_id];
+        return $this->notifyPresentedHash[$inventory_id];
     }
 
     function isPriceNotifyPresent()
@@ -250,11 +250,11 @@ class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Control
     		$notification = new XLite_Module_ProductAdviser_Model_Notification();
     		$this->priceNotifyPresented = $notification->count($check);
     	}
-		return $this->priceNotifyPresented;
+        return $this->priceNotifyPresented;
     }
 
-	function isRelatedProductsEnabled()
-	{
-		return (($this->config->getComplex('ProductAdviser.admin_related_products_enabled') == "Y") ? true : false);
-	}
+    function isRelatedProductsEnabled()
+    {
+        return (($this->config->getComplex('ProductAdviser.admin_related_products_enabled') == "Y") ? true : false);
+    }
 }

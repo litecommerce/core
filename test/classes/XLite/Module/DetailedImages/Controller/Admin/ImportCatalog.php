@@ -55,19 +55,19 @@ class XLite_Module_DetailedImages_Controller_Admin_ImportCatalog extends XLite_C
                 "text_qualifier"    => $this->text_qualifier,
                 "images_directory" => $this->images_directory,
                 "save_images" => isset($this->save_images) ? true : false,
-				"return_error" => true,
+                "return_error" => true,
                 );
 
         $detailed_image = new XLite_Module_DetailedImages_Model_DetailedImage();
         $detailed_image->import($options);
-		$this->importError = $detailed_image->importError;
+        $this->importError = $detailed_image->importError;
 
-		$text = "Import process failed.";
-		if (!$this->importError) $text = "Detailed images imported successfully.";
-		$text = $this->importError.'<br><br>'.$text.' <a href="admin.php?target=import_catalog&page=detailed_images"><u>Click here to return to admin interface</u></a><br><br>';
+        $text = "Import process failed.";
+        if (!$this->importError) $text = "Detailed images imported successfully.";
+        $text = $this->importError.'<br><br>'.$text.' <a href="admin.php?target=import_catalog&page=detailed_images"><u>Click here to return to admin interface</u></a><br><br>';
 
-		echo $text;
-		func_refresh_end();
-		exit();
+        echo $text;
+        func_refresh_end();
+        exit();
     }
 }

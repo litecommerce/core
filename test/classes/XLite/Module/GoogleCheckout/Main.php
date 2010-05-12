@@ -69,7 +69,7 @@ class XLite_Module_GoogleCheckout_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'GoogleCheckout module';
-    }	
+    }
 
     /**
      * Determines if we need to show settings form link
@@ -108,32 +108,32 @@ class XLite_Module_GoogleCheckout_Main extends XLite_Module_Abstract
 
         $this->registerPaymentMethod('google_checkout');
 
-		$payment_method = XLite_Model_PaymentMethod::factory('google_checkout');
-		if ($payment_method->getComplex('params.disable_customer_notif')) {
-			$this->xlite->set("gcheckout_disable_customer_notif", true);
-		}
+        $payment_method = XLite_Model_PaymentMethod::factory('google_checkout');
+        if ($payment_method->getComplex('params.disable_customer_notif')) {
+            $this->xlite->set("gcheckout_disable_customer_notif", true);
+        }
 
-		if (!$this->xlite->is("adminZone")) {
-			if ($payment_method->getComplex('params.display_product_note') && $payment_method->is("parent_enabled")) {
-				$this->xlite->set("gcheckout_display_product_note", true);
-			}
+        if (!$this->xlite->is("adminZone")) {
+            if ($payment_method->getComplex('params.display_product_note') && $payment_method->is("parent_enabled")) {
+                $this->xlite->set("gcheckout_display_product_note", true);
+            }
 
-			$currency = $payment_method->getComplex('params.currency');
-			switch ($currency) {
-				case "USD":
-				case "GBP":
-				break;
-				default:
-					$currency = "USD";
-				break;
-			}
-			$this->xlite->set("gcheckout_currency", $currency);
-			$this->xlite->set("gcheckout_remove_discounts", $payment_method->getComplex('params.remove_discounts'));
-		}
-		if ($this->xlite->is("adminZone")) {
-		} else {
-		}
+            $currency = $payment_method->getComplex('params.currency');
+            switch ($currency) {
+                case "USD":
+                case "GBP":
+                break;
+                default:
+                    $currency = "USD";
+                break;
+            }
+            $this->xlite->set("gcheckout_currency", $currency);
+            $this->xlite->set("gcheckout_remove_discounts", $payment_method->getComplex('params.remove_discounts'));
+        }
+        if ($this->xlite->is("adminZone")) {
+        } else {
+        }
 
-		$this->xlite->set("GoogleCheckoutEnabled",true);
+        $this->xlite->set("GoogleCheckoutEnabled",true);
     }
 }

@@ -220,7 +220,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
      */
     protected function getModelObject()
     {
-        return $this->getParam(self::PARAM_MODEL_OBJECT); 
+        return $this->getParam(self::PARAM_MODEL_OBJECT);
     }
 
     /**

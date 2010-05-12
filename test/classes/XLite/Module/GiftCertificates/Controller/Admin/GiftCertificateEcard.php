@@ -53,7 +53,7 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificateEcard extend
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $ecard = null;	
+    protected $ecard = null;
 
     /**
      * Get return URL

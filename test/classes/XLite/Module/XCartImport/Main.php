@@ -69,7 +69,7 @@ class XLite_Module_XCartImport_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'Import data from X-Cart Gold';
-    }	
+    }
 
-    public $isFree = true;	
+    public $isFree = true;
 }

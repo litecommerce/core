@@ -44,9 +44,9 @@ class XLite_Module_UPSOnlineTools_Controller_Abstract extends XLite_Controller_A
             if (count($av_result) > 0 || $this->session->get('ups_av_error')) return true;
         }
         else {
-			$this->session->set('ups_av_result', null);
-			$this->session->set('ups_av_error', null);
-		}
+            $this->session->set('ups_av_result', null);
+            $this->session->set('ups_av_error', null);
+        }
 
         return false;
     }
@@ -61,25 +61,25 @@ class XLite_Module_UPSOnlineTools_Controller_Abstract extends XLite_Controller_A
         return $this->_ups_profile;
     }
 
-	function isSuggestionExists()
-	{
-		$av_result = $this->session->get('ups_av_result');
-		return (count($av_result) > 0) ? true : false;
-	}
+    function isSuggestionExists()
+    {
+        $av_result = $this->session->get('ups_av_result');
+        return (count($av_result) > 0) ? true : false;
+    }
 
-	function isAVError()
-	{
-		return $this->session->get('ups_av_error');
-	}
+    function isAVError()
+    {
+        return $this->session->get('ups_av_error');
+    }
 
-	function getAVErrorMessage()
-	{
-		$errcode = $this->session->get('ups_av_errorcode');
-		if (empty($errcode)) {
-			return "Unable to connect. UPS OnLine&reg; Tools Address Validation service is not available.";
-		} else {
-			return "UPS OnLine&reg; Tools Address Validation returned an error: (".$errcode.") ".$this->session->get('ups_av_errordescr');
-		}
-	}
+    function getAVErrorMessage()
+    {
+        $errcode = $this->session->get('ups_av_errorcode');
+        if (empty($errcode)) {
+            return "Unable to connect. UPS OnLine&reg; Tools Address Validation service is not available.";
+        } else {
+            return "UPS OnLine&reg; Tools Address Validation returned an error: (".$errcode.") ".$this->session->get('ups_av_errordescr');
+        }
+    }
 
 }

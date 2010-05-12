@@ -34,8 +34,8 @@
  * @since   3.0.0
  */
 class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports extends XLite_Controller_Admin_Stats
-{	
-    public $page = "product_sales";	    
+{
+    public $page = "product_sales";
     public $pages = array(
             'general_stats' => 'General statistics',
             'product_sales' => 'Product sales',
@@ -43,14 +43,14 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports extends XL
             'geographic_sales' => 'Sales by geography',
             'sp_stats' => 'Shipping/Payment stats',
             'focused_audience' => 'Focused audience'
-            );	
+            );
     public $rawItems = null;
 
     function init() 
     {
         $this->params[] = "search_period";
         parent::init();
-    } 
+    }
 
     function action_get_data()
     {
@@ -66,7 +66,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports extends XL
             $this->set("startDate", mktime(0,0,0,$date['mon'],1,$date['year']));
         }
         parent::fillForm();
-    } 
+    }
 
     function getCategories() 
     {
@@ -86,7 +86,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports extends XL
             array_multisort($names, $this->categories);
         }
         return $this->categories;
-    } 
+    }
 
     function isSelectedItem($arrayName, $itemID) 
     {
@@ -94,10 +94,10 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports extends XL
         if (is_array($items)) {
             if (in_array($itemID, $items)) {
                 return true;
-            }    
+            }
         }
         return false;
-    } 
+    }
     
     function getPeriod() 
     {
@@ -119,7 +119,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports extends XL
             }
         }
         return $this->period;
-    } 
+    }
 
     function getDatesRaw($period) 
     {
@@ -158,13 +158,13 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports extends XL
         }
 
         return array($startDateRaw, $endDateRaw);
-    } 
+    }
 
     function getRawProducts() 
     {
         require_once LC_MODULES_DIR . 'EcommerceReports' . LC_DS . 'encoded.php';
         return func_EcommerceReports_getRawProducts($this);
-    } 
+    }
 
     function getRawItems($unique=false) 
     {
@@ -172,8 +172,8 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports extends XL
         	require_once LC_MODULES_DIR . 'EcommerceReports' . LC_DS . 'encoded.php';
         	$this->rawItems = func_EcommerceReports_getRawItems($this, $unique);
         }
-		return $this->rawItems;
-    } 
+        return $this->rawItems;
+    }
 
     function getRawItemsNumber()
     {
@@ -188,22 +188,22 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports extends XL
     function getInCities($table) 
     {
         return "";
-    } 
+    }
     
     function getInMembership($table) 
     {
         return "";
-    } 
+    }
     
     function getInCountries($table) 
     {
         return "";
-    } 
+    }
     
     function getInStates($table) 
     {
         return "";
-    } 
+    }
     
     // SELECT extra fields {{{
     function getSelect($ot, $it, $pt)
@@ -217,7 +217,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports extends XL
     function getWhere($ot, $it, $pt)
     {
         return "";
-    } 
+    }
 
     function getNextDate() 
     {
@@ -268,7 +268,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports extends XL
     function _nextMonth($ts)
     {
         if ($ts["month"] + 1 > 12) {
-            $date = @mktime(0, 0, 0, 1, 1, $ts["year"] + 1);         
+            $date = @mktime(0, 0, 0, 1, 1, $ts["year"] + 1);
         } else {
             $date = @mktime(0, 0, 0, $ts["month"] + 1, 1, $ts["year"]);
         }
@@ -291,12 +291,12 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports extends XL
         $ts["quarter"] = ceil($ts["month"] / 3);
         $ts["year"] = @date("Y", $stamp);
         return $ts;
-    } 
+    }
 
     function count($array) 
     {
         return count($array);
-    } 
+    }
 
     function getProductIDs() 
     {
@@ -306,12 +306,12 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports extends XL
             $ids = array($pid);
         }
         return $ids;
-    }         
+    }
 
     function getRowClass($row, $class1, $class2 = null) 
     {
         static $idx;
         if (!isset($idx)) $idx = 0;
         return $idx++ % 2 ? $class1 : $class2;
-    } 
+    }
 }

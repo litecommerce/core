@@ -112,7 +112,7 @@ class XLite_Model_WidgetParam_ObjectId_Category extends XLite_Model_WidgetParam_
      * @since  3.0.0
      */
     public function __construct($label, $value = null, $isSetting = false, $rootIsAllowed = false)
-    {   
+    {
         parent::__construct($label, $value, $isSetting);
         
         $this->rootIsAllowed = $rootIsAllowed;

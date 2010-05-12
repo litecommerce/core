@@ -38,23 +38,23 @@ class XLite_Module_WholesaleTrading_Model_Wysiwyg_Mediator extends XLite_Model_W
     
     function export($templates)
     {
-		$this->WholesaleTrading_remove_admin_layouts();
-		return parent::export($templates);
+        $this->WholesaleTrading_remove_admin_layouts();
+        return parent::export($templates);
     }
 
 
-	function import()
-	{
-		$this->WholesaleTrading_remove_admin_layouts();
-		return parent::import();
-	}
+    function import()
+    {
+        $this->WholesaleTrading_remove_admin_layouts();
+        return parent::import();
+    }
 
-	function WholesaleTrading_remove_admin_layouts()
-	{
-		$layout = XLite_Model_Layout::getInstance();
+    function WholesaleTrading_remove_admin_layouts()
+    {
+        $layout = XLite_Model_Layout::getInstance();
 
-		$list = $layout->list;
-		unset($list["common/select_membership.tpl"]);
-		$layout->list = $list;
-	}
+        $list = $layout->list;
+        unset($list["common/select_membership.tpl"]);
+        $layout->list = $list;
+    }
 }

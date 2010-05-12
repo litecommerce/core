@@ -35,28 +35,28 @@
  */
 class XLite_Module_ProductOptions_Controller_Admin_AddProduct extends XLite_Controller_Admin_AddProduct implements XLite_Base_IDecorator
 {
-	function action_add() 
-	{
-		parent::action_add();
-		$product = new XLite_Model_Product($this->get("product_id"));
-		foreach($product->get("categories") as $category) {
-			$product_categories[] = $category->get("category_id");
-		}
-		$po = new XLite_Module_ProductOptions_Model_ProductOption();
-		$gpo = $po->get("globalOptions");
-		if ($gpo) 
-			foreach($gpo as $global_option) {
-				$gpo_categories = $global_option->getCategories();
-				$intersect = array_intersect($gpo_categories,$product_categories);
-				if (empty($gpo_categories) || (!empty($gpo_categories) && !empty($intersect))) {
-					$po = new XLite_Module_ProductOptions_Model_ProductOption();
-					$po->set("properties",$global_option->get("properties"));
-					$po->set("product_id",$this->get("product_id"));
-					$po->set("parent_option_id",$global_option->get("option_id"));
-					$po->set("categories",null);
-					$po->set("option_id",null);
-					$po->create();
-				}
-			}
-	}
+    function action_add() 
+    {
+        parent::action_add();
+        $product = new XLite_Model_Product($this->get("product_id"));
+        foreach($product->get("categories") as $category) {
+            $product_categories[] = $category->get("category_id");
+        }
+        $po = new XLite_Module_ProductOptions_Model_ProductOption();
+        $gpo = $po->get("globalOptions");
+        if ($gpo) 
+            foreach($gpo as $global_option) {
+                $gpo_categories = $global_option->getCategories();
+                $intersect = array_intersect($gpo_categories,$product_categories);
+                if (empty($gpo_categories) || (!empty($gpo_categories) && !empty($intersect))) {
+                    $po = new XLite_Module_ProductOptions_Model_ProductOption();
+                    $po->set("properties",$global_option->get("properties"));
+                    $po->set("product_id",$this->get("product_id"));
+                    $po->set("parent_option_id",$global_option->get("option_id"));
+                    $po->set("categories",null);
+                    $po->set("option_id",null);
+                    $po->create();
+                }
+            }
+    }
 }

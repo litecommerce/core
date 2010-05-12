@@ -34,67 +34,67 @@
  * @since   3.0.0
  */
 class XLite_Module_UPSOnlineTools_Model_Subspace extends XLite_Base
-{	
-	public $width, $length;	
-	public $left, $top;	
-	public $upper_limit;
+{
+    public $width, $length;
+    public $left, $top;
+    public $upper_limit;
 
-	function init($_width, $_length, $_left=0, $_top=0)
-	{
-		$this->width = $_width;
-		$this->length = $_length;
-		$this->left = $_left;
-		$this->top = $_top;
-	}
+    function init($_width, $_length, $_left=0, $_top=0)
+    {
+        $this->width = $_width;
+        $this->length = $_length;
+        $this->left = $_left;
+        $this->top = $_top;
+    }
 
-	function getSquare()
-	{
-		return $this->width * $this->length;
-	}
+    function getSquare()
+    {
+        return $this->width * $this->length;
+    }
 
-	function getEpsilon()
-	{
-		return ($this->width > $this->length) ? $this->length / $this->width : $this->width / $this->length;
-	}
+    function getEpsilon()
+    {
+        return ($this->width > $this->length) ? $this->length / $this->width : $this->width / $this->length;
+    }
 
-	function isNull()
-	{
-		return ($this->width == 0 || $this->length == 0) ? true : false;
-	}
+    function isNull()
+    {
+        return ($this->width == 0 || $this->length == 0) ? true : false;
+    }
 
-	function isPlaceable($_width, $_length)
-	{
-		if ($_width <= $this->width && $_length <= $this->length)
-			return true;
+    function isPlaceable($_width, $_length)
+    {
+        if ($_width <= $this->width && $_length <= $this->length)
+            return true;
 
-		return false;
-	}
+        return false;
+    }
 
-	function placeBox($_width, $_length)
-	{
-		require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
-		return UPSOnlineTools_placeBox($this, $_width, $_length);
-	}
+    function placeBox($_width, $_length)
+    {
+        require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
+        return UPSOnlineTools_placeBox($this, $_width, $_length);
+    }
 
-	function getUpperLimit()
-	{
-		return $this->upper_limit;
-	}
+    function getUpperLimit()
+    {
+        return $this->upper_limit;
+    }
 
-	function setUpperLimit($_lim)
-	{
-		$this->upper_limit = $_lim;
-	}
+    function setUpperLimit($_lim)
+    {
+        $this->upper_limit = $_lim;
+    }
 
-	function export()
-	{
-		$vars = array();
-		$vars["left"] = $this->left;
-		$vars["top"] = $this->top;
-		$vars["width"] = $this->width;
-		$vars["length"] = $this->length;
+    function export()
+    {
+        $vars = array();
+        $vars["left"] = $this->left;
+        $vars["top"] = $this->top;
+        $vars["width"] = $this->width;
+        $vars["length"] = $this->length;
 
-		return $vars;
-	}
+        return $vars;
+    }
 
 }

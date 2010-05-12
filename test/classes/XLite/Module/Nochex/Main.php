@@ -69,7 +69,7 @@ class XLite_Module_Nochex_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'Nochex payment gateway';
-    }	
+    }
 
     /**
      * Determines if we need to show settings form link

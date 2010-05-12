@@ -54,7 +54,7 @@ class XLite_Controller_Admin_CssEdit extends XLite_Controller_Admin_Abstract
             $this->locale = XLite::getInstance()->getOptions(array('skin_details', 'locale'));
         }
         return $this->locale;
-    } 
+    }
 
     function getZone() 
     {
@@ -62,7 +62,7 @@ class XLite_Controller_Admin_CssEdit extends XLite_Controller_Admin_Abstract
             $this->zone = XLite::getInstance()->getOptions(array('skin_details', 'skin'));
         }
         return $this->zone;
-    } 
+    }
 
     function getEditor()
     {

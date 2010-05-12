@@ -34,7 +34,7 @@
  * @since      3.0.0
  */
 class XLite_Module_FeaturedProducts_Model_FeaturedProduct extends XLite_Model_Abstract
-{    
+{
     /**
      * fields 
      * 
@@ -46,7 +46,7 @@ class XLite_Module_FeaturedProducts_Model_FeaturedProduct extends XLite_Model_Ab
         'product_id'  => 0,
         'category_id' => 0,
         'order_by'    => 0,
-    );    
+    );
     
     /**
      * primaryKey 
@@ -55,7 +55,7 @@ class XLite_Module_FeaturedProducts_Model_FeaturedProduct extends XLite_Model_Ab
      * @access protected
      * @since  3.0.0
      */
-    protected $primaryKey = array('category_id','product_id');    
+    protected $primaryKey = array('category_id','product_id');
     
     /**
      * alias 
@@ -64,7 +64,7 @@ class XLite_Module_FeaturedProducts_Model_FeaturedProduct extends XLite_Model_Ab
      * @access protected
      * @since  3.0.0
      */
-    protected $alias = 'featured_products';    
+    protected $alias = 'featured_products';
     
     /**
      * product 

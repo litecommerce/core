@@ -35,7 +35,7 @@
  * @since   3.0.0
  */
 class XLite_Module_WholesaleTrading_Controller_Customer_Cart extends XLite_Controller_Customer_Cart implements XLite_Base_IDecorator
-{    
+{
     /**
      * Update errors list
      * 
@@ -44,7 +44,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Cart extends XLite_Contr
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $updateErrors = null;    
+    protected $updateErrors = null;
 
     /**
      * Controller parameters
@@ -54,7 +54,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Cart extends XLite_Contr
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $params = array('target', 'mode');    
+    public $params = array('target', 'mode');
 
     /**
      * Add item to cart
@@ -182,15 +182,15 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Cart extends XLite_Contr
                 $limit = $purchase_limit->get('properties');
 
                 if (!empty($limit['min']) && $amount < intval($limit['min'])) {
-                    $this->updateErrors[$key]['min'] = $limit['min'];    
+                    $this->updateErrors[$key]['min'] = $limit['min'];
                     $this->updateErrors[$key]['amount'] = $amount;
-                }    
+                }
 
                 if (!empty($limit['max']) &&  $amount > intval($limit['max'])) {
                     $this->updateErrors[$key]['max'] = $limit['max'];
                     $this->updateErrors[$key]['amount'] = $amount;
-                }    
-            }    
+                }
+            }
         }
 
         if (empty($this->updateErrors)) {

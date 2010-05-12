@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Model_CategoriesFromProducts extends XLite_Model_Category
-{	
+{
     public $prodId;
 
     function _buildSelect($where = null, $orderby = null, $groupby = null, $limit = null)

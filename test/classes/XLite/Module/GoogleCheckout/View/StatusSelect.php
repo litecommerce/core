@@ -35,16 +35,16 @@
  */
 class XLite_Module_GoogleCheckout_View_StatusSelect extends XLite_View_StatusSelect implements XLite_Base_IDecorator
 {
-	function isGoogleCheckoutOrder()
-	{
-		$order = $this->getComplex('dialog.order');
-		if (is_object($order)) {
-			$pm = $order->get("paymentMethod");
-			if ($pm->get("payment_method") == "google_checkout" && $order->get("google_id") > 0) {
-				return true;
-			}
-		}
+    function isGoogleCheckoutOrder()
+    {
+        $order = $this->getComplex('dialog.order');
+        if (is_object($order)) {
+            $pm = $order->get("paymentMethod");
+            if ($pm->get("payment_method") == "google_checkout" && $order->get("google_id") > 0) {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 }

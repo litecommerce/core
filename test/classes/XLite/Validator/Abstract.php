@@ -57,34 +57,34 @@ abstract class XLite_Validator_Abstract extends XLite_View_Abstract
      */
     public function display()
     {
-		if ($this->isVisible()) {
-			$class = strtolower(get_class($this));
-	 		echo '<input type="hidden" name="VALIDATE[' . $class . '][' . $this->get('field') . ']" value="1" />' . "\n";
-		}
+        if ($this->isVisible()) {
+            $class = strtolower(get_class($this));
+     		echo '<input type="hidden" name="VALIDATE[' . $class . '][' . $this->get('field') . ']" value="1" />' . "\n";
+        }
 
         if (!$this->isValid()) {
             parent::display();
         }
     }
 
-	public function isValidationUnnecessary()
-	{
-		$class = strtolower(get_class($this));
+    public function isValidationUnnecessary()
+    {
+        $class = strtolower(get_class($this));
 
-		return !isset(XLite_Core_Request::getInstance()->VALIDATE)
-			|| !isset(XLite_Core_Request::getInstance()->VALIDATE[$class])
-			|| !isset(XLite_Core_Request::getInstance()->VALIDATE[$class][$this->get('field')]);
-	}
+        return !isset(XLite_Core_Request::getInstance()->VALIDATE)
+            || !isset(XLite_Core_Request::getInstance()->VALIDATE[$class])
+            || !isset(XLite_Core_Request::getInstance()->VALIDATE[$class][$this->get('field')]);
+    }
 
-	/**
-	 * Check validation status 
-	 * 
-	 * @return boolean
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function isValid()
+    /**
+     * Check validation status 
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isValid()
     {
         return true;
     }

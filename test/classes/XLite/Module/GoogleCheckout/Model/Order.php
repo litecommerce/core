@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_GoogleCheckout_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
-{    
+{
     public $GoogleCheckout_profile = null;
 
     public function __construct($id=null)

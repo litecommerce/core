@@ -34,9 +34,9 @@
  * @since   3.0.0
  */
 class XLite_Module_PayFlowLink_Model_PaymentMethod_Payflowlink extends XLite_Model_PaymentMethod_CreditCard
-{	
-    public $processorName = "PayFlowLink";	
-    public $configurationTemplate = "modules/PayFlowLink/config.tpl";	
+{
+    public $processorName = "PayFlowLink";
+    public $configurationTemplate = "modules/PayFlowLink/config.tpl";
     public $formTemplate ="modules/PayFlowLink/checkout.tpl";
 
     public function __construct($id = null) 
@@ -48,7 +48,7 @@ class XLite_Module_PayFlowLink_Model_PaymentMethod_Payflowlink extends XLite_Mod
             }
             if (!$this->getComplex('params.gateway_url')) {
                 $this->setComplex("params.gateway_url", "https://payflowlink.paypal.com");
-            }    
+            }
         }
     }
 
@@ -58,13 +58,13 @@ class XLite_Module_PayFlowLink_Model_PaymentMethod_Payflowlink extends XLite_Mod
         PaymentMethod_PayFlowLink_handleRequest($this, $cart);
     }
 
-	function getOrderId($cart)
-	{
-		return $cart->get("order_id");
-	}
+    function getOrderId($cart)
+    {
+        return $cart->get("order_id");
+    }
 
-	function getPaymentURL($cart)
-	{
-		return $this->xlite->ShopUrl('classes/XLite/Module/PayFlowLink/redirect.php'); 
-	}
+    function getPaymentURL($cart)
+    {
+        return $this->xlite->ShopUrl('classes/XLite/Module/PayFlowLink/redirect.php');
+    }
 }

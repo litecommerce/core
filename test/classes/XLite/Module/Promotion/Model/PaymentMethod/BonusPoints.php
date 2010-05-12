@@ -34,43 +34,43 @@
  * @since   3.0.0
  */
 class XLite_Module_Promotion_Model_PaymentMethod_BonusPoints extends XLite_Model_PaymentMethod
-{	
-    public $processorName = "Promotion/bonus points";	
+{
+    public $processorName = "Promotion/bonus points";
     public $formTemplate = "modules/Promotion/checkout.tpl";
-	
+    
     function handleRequest(XLite_Model_Cart $cart)
     {
-		$payedByPoints = $_POST["payedByPoints"];
-		$details = $cart->get("details");
-		if ($cart->getComplex('origProfile.bonusPoints') < $payedByPoints) {
+        $payedByPoints = $_POST["payedByPoints"];
+        $details = $cart->get("details");
+        if ($cart->getComplex('origProfile.bonusPoints') < $payedByPoints) {
             $details["error"] = "No enought points";
             $cart->set("details", $details);
             $cart->update();
-			return self::PAYMENT_FAILURE;
-		}
-		$totalBonusPoints = $cart->getTotalBonusPoints();
-		if ($totalBonusPoints < $payedByPoints) { // too much
+            return self::PAYMENT_FAILURE;
+        }
+        $totalBonusPoints = $cart->getTotalBonusPoints();
+        if ($totalBonusPoints < $payedByPoints) { // too much
             $details["error"] = "Too much bonus points for this order";
             $cart->set("details", $details);
             $cart->update();
-			return self::PAYMENT_FAILURE;
-		}
+            return self::PAYMENT_FAILURE;
+        }
 
-		$cart->set("payedByPoints", min($payedByPoints * $this->config->getComplex('Promotion.bonusPointsCost'), $cart->getMaxPayByPoints()));
-		$cart->calcTotals();
-		if ($cart->get("total") > 0) {
-			$cart->set("payment_method", ""); // choose payment method once again
+        $cart->set("payedByPoints", min($payedByPoints * $this->config->getComplex('Promotion.bonusPointsCost'), $cart->getMaxPayByPoints()));
+        $cart->calcTotals();
+        if ($cart->get("total") > 0) {
+            $cart->set("payment_method", ""); // choose payment method once again
         	$cart->update();
-			header("Location: cart.php?target=checkout&mode=paymentMethod");
+            header("Location: cart.php?target=checkout&mode=paymentMethod");
             return self::PAYMENT_SILENT;
-		} else {
+        } else {
         	$cart->set("status", "P");
         	$cart->update();
             return self::PAYMENT_SUCCESS;
-		}
+        }
     }
 
-	function is($name)
+    function is($name)
     {
         if ($name == "enabled" && !$this->xlite->is("adminZone")) {
             if ($this->auth->is("logged")) {

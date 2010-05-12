@@ -69,9 +69,9 @@ class XLite_Module_Froogle_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'This module allows you export product information into Froogle format';
-    }	
+    }
 
-    public $isFree = true;	
+    public $isFree = true;
     /**
      * Determines if we need to show settings form link
      *
@@ -104,8 +104,8 @@ class XLite_Module_Froogle_Main extends XLite_Module_Abstract
     	$lcVersion = $this->config->getComplex('Version.version');
     	$lcVersion = str_replace(" build ", ".", $lcVersion);
         if (version_compare($lcVersion, "2.2") < 0) {
-			$classMethods = array_map("strtolower", get_class_methods(get_parent_class(get_class($this))));
-			$isNewBase = in_array("_aggregate", $classMethods);
+            $classMethods = array_map("strtolower", get_class_methods(get_parent_class(get_class($this))));
+            $isNewBase = in_array("_aggregate", $classMethods);
 
         	return $isNewBase;
         } else {

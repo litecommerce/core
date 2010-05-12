@@ -53,47 +53,47 @@ class XLite_Controller_Admin_Sbjs extends XLite_Controller_Admin_Abstract
 
     function getSidebarBoxStatus($boxHead = null)
     {
-		$this->getSidebarBoxStatuses();
+        $this->getSidebarBoxStatuses();
 
-		if ($this->isValidSidebarBoxId())
-		{
-		 	if (!isset($this->sidebar_box_statuses[$this->sidebar_box_id]))
-		 	{
-		 		$this->sidebar_box_statuses[$this->sidebar_box_id] = true;
-				$this->setSidebarBoxStatuses();
-		 	}
+        if ($this->isValidSidebarBoxId())
+        {
+         	if (!isset($this->sidebar_box_statuses[$this->sidebar_box_id]))
+         	{
+         		$this->sidebar_box_statuses[$this->sidebar_box_id] = true;
+                $this->setSidebarBoxStatuses();
+         	}
 
-			echo "if (!sidebar_box_statuses) { var sidebar_box_statuses = new Array(); }\nsidebar_box_statuses[\"".$this->sidebar_box_id."\"]=".intval($this->sidebar_box_statuses[$this->sidebar_box_id]).";\n\n";
-		}
+            echo "if (!sidebar_box_statuses) { var sidebar_box_statuses = new Array(); }\nsidebar_box_statuses[\"".$this->sidebar_box_id."\"]=".intval($this->sidebar_box_statuses[$this->sidebar_box_id]).";\n\n";
+        }
     }
 
     function changeSidebarBoxStatus()
     {
-		$this->getSidebarBoxStatuses();
+        $this->getSidebarBoxStatuses();
 
-		if ($this->isValidSidebarBoxId())
-		{
-		 	if (isset($this->sidebar_box_statuses[$this->sidebar_box_id]))
-		 	{
-		 		$this->sidebar_box_statuses[$this->sidebar_box_id] = ($this->sidebar_box_statuses[$this->sidebar_box_id]) ? false : true;
-		 	}
-		 	else
-		 	{
-		 		$this->sidebar_box_statuses[$this->sidebar_box_id] = true;
-		 	}
+        if ($this->isValidSidebarBoxId())
+        {
+         	if (isset($this->sidebar_box_statuses[$this->sidebar_box_id]))
+         	{
+         		$this->sidebar_box_statuses[$this->sidebar_box_id] = ($this->sidebar_box_statuses[$this->sidebar_box_id]) ? false : true;
+         	}
+         	else
+         	{
+         		$this->sidebar_box_statuses[$this->sidebar_box_id] = true;
+         	}
 
 
-			$this->setSidebarBoxStatuses();
+            $this->setSidebarBoxStatuses();
 
-			echo "if (!sidebar_box_statuses) { var sidebar_box_statuses = new Array(); }\nsidebar_box_statuses[\"".$this->sidebar_box_id."\"]=".intval($this->sidebar_box_statuses[$this->sidebar_box_id]).";";
-		}
+            echo "if (!sidebar_box_statuses) { var sidebar_box_statuses = new Array(); }\nsidebar_box_statuses[\"".$this->sidebar_box_id."\"]=".intval($this->sidebar_box_statuses[$this->sidebar_box_id]).";";
+        }
     }
 
     function isValidSidebarBoxId()
     {
-		if (isset($this->sidebar_box_id))
-		{
-			$this->sidebar_box_id = strval($this->sidebar_box_id);
+        if (isset($this->sidebar_box_id))
+        {
+            $this->sidebar_box_id = strval($this->sidebar_box_id);
     		if (strlen($this->sidebar_box_id) > 0)
     		{
     			return true;
@@ -105,30 +105,30 @@ class XLite_Controller_Admin_Sbjs extends XLite_Controller_Admin_Abstract
 
     function getSidebarBoxStatuses()
     {
-		if (!$this->session->isRegistered("sidebar_box_statuses"))
-		{
-			$this->sidebar_box_statuses = array();
+        if (!$this->session->isRegistered("sidebar_box_statuses"))
+        {
+            $this->sidebar_box_statuses = array();
         	if ($this->auth->is("logged")) 
         	{
         		$this->sidebar_box_statuses = unserialize($this->auth->getComplex('profile.sidebar_boxes'));
         	}
-		}
-		else
-		{
-			$this->sidebar_box_statuses = $this->session->get("sidebar_box_statuses");
-		}
+        }
+        else
+        {
+            $this->sidebar_box_statuses = $this->session->get("sidebar_box_statuses");
+        }
     }
 
     function setSidebarBoxStatuses()
     {
         $this->session->set("sidebar_box_statuses", $this->sidebar_box_statuses);
         $this->session->writeClose();
-		
-		if ($this->auth->is("logged"))
-		{
-			$profile = $this->auth->get("profile");
+        
+        if ($this->auth->is("logged"))
+        {
+            $profile = $this->auth->get("profile");
             $profile->set("sidebar_boxes", serialize($this->sidebar_box_statuses));
             $profile->update();
-		}
+        }
     }
 }

@@ -34,7 +34,7 @@
  * @since   3.0.0
  */
 class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controller_Admin_ExportCatalog implements XLite_Base_IDecorator
-{	
+{
     public $fp = null;
 
     public function __construct(array $params)
@@ -52,11 +52,11 @@ class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controll
         $cart = XLite_Model_Cart::getInstance();
         $cart = null;
 
-		$this->goCustomer();
+        $this->goCustomer();
 
-		if ($this->getComplex('config.Froogle.direct_product_url')) {
-			$this->xlite->set("GlobalQuickCategoriesNumber", ($this->getComplex('config.Froogle.direct_product_url') == "always") ? true : false);
-		}
+        if ($this->getComplex('config.Froogle.direct_product_url')) {
+            $this->xlite->set("GlobalQuickCategoriesNumber", ($this->getComplex('config.Froogle.direct_product_url') == "always") ? true : false);
+        }
 
         $uname = $this->getComplex('config.Froogle.froogle_username') ?
                  $this->getComplex('config.Froogle.froogle_username') : "froogle";
@@ -74,7 +74,7 @@ class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controll
         }
         $p = new XLite_Model_Product();
         $p->export("froogle", $delimiter = "\t", $where = 'price > 0', $orderby = "product_id", null);
-		$this->goAdmin();
+        $this->goAdmin();
 
         if ($this->get("mod") == "download") {
             exit(); // nothing to do
@@ -83,7 +83,7 @@ class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controll
         ob_end_flush();
         if ($this->fp) {
             fclose($this->fp);
-        }    
+        }
         $this->fp = null;
 
         print "[OK]<br>";
@@ -98,7 +98,7 @@ class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controll
         $counter++;
         if ($counter % 10 == 0) {
             return ". ";
-        }    
+        }
     }
 
     function _die($reason)
@@ -136,47 +136,47 @@ class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controll
         return function_exists("ftp_connect");
     }
 
-	function goCustomer() 
-	{
-		$this->xlite->set("adminZone", false);
+    function goCustomer() 
+    {
+        $this->xlite->set("adminZone", false);
 
-		// save current (admin) environment and build new (customer)
-		$this->_REQUEST = $_REQUEST;
-		$this->_GET     = $_GET;
-		$this->_POST    = $_POST;
-		$this->_COOKIE  = $_COOKIE;
-		$this->_SERVER  = $_SERVER;
+        // save current (admin) environment and build new (customer)
+        $this->_REQUEST = $_REQUEST;
+        $this->_GET     = $_GET;
+        $this->_POST    = $_POST;
+        $this->_COOKIE  = $_COOKIE;
+        $this->_SERVER  = $_SERVER;
 
-		// reset autoglobals
-		$_REQUEST = array();
-		$_GET     = array();
-		$_POST    = array();
-		$_COOKIE  = array();
+        // reset autoglobals
+        $_REQUEST = array();
+        $_GET     = array();
+        $_POST    = array();
+        $_COOKIE  = array();
 
-		$_SERVER["REQUEST_METHOD"] = "GET";
-		// fake http
-		if (isset($_SERVER['HTTPS'])) {
-			unset($_SERVER['HTTPS']);
-		}
-		$_SERVER['SERVER_PORT'] = "80";
+        $_SERVER["REQUEST_METHOD"] = "GET";
+        // fake http
+        if (isset($_SERVER['HTTPS'])) {
+            unset($_SERVER['HTTPS']);
+        }
+        $_SERVER['SERVER_PORT'] = "80";
 
-		// reset session content
-		$this->_sessionData = $this->session->_data;
-		$this->session->_data = array();
+        // reset session content
+        $this->_sessionData = $this->session->_data;
+        $this->session->_data = array();
 
-		// switch layout to customer's zone
-		$layout = XLite_Model_Layout::getInstance();
-		$layout->set("skin", "default");
+        // switch layout to customer's zone
+        $layout = XLite_Model_Layout::getInstance();
+        $layout->set("skin", "default");
 
-		// empty cart
-		$cart = XLite_Model_Cart::getInstance();
-		$cart = null;
-	} 
+        // empty cart
+        $cart = XLite_Model_Cart::getInstance();
+        $cart = null;
+    }
 
-	function goAdmin() 
-	{
-		// switch XLite back to admin's zone
-		$this->xlite->set("adminZone", true);
-		$this->session->_data = $this->_sessionData;
-	} 
+    function goAdmin() 
+    {
+        // switch XLite back to admin's zone
+        $this->xlite->set("adminZone", true);
+        $this->session->_data = $this->_sessionData;
+    }
 }

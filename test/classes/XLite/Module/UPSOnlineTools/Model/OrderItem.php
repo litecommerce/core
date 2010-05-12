@@ -39,43 +39,43 @@ class XLite_Module_UPSOnlineTools_Model_OrderItem extends XLite_Model_OrderItem 
 {
     protected $packItem = null;
 
-	function getDeclaredValue()
-	{
-		return $this->getComplex('product.declaredValue') * $this->get("amount");
-	}
+    function getDeclaredValue()
+    {
+        return $this->getComplex('product.declaredValue') * $this->get("amount");
+    }
 
-	function getPackItem()
-	{
+    function getPackItem()
+    {
         if (isset($this->packItem)) {
             return $this->packItem;
         }
 
-		$p = $this->get("product"); 
+        $p = $this->get("product");
 
-		// dimension
-		$this->packItem = new XLite_Module_UPSOnlineTools_Model_PackItem();
-		foreach (array("width", "height", "length") as $field) {
-			$this->packItem->setComplex($field, $p->get("ups_".$field));
-		}
+        // dimension
+        $this->packItem = new XLite_Module_UPSOnlineTools_Model_PackItem();
+        foreach (array("width", "height", "length") as $field) {
+            $this->packItem->setComplex($field, $p->get("ups_".$field));
+        }
 
-		// weight
-		$weight = UPSOnlineTools_convertWeight($p->get("weight"), $this->config->getComplex('General.weight_unit'), "lbs", 2);
-		if ($weight === false) {
-			$weight = $this->packItem->getComplex('product.weight');
-		}
-		$this->packItem->set("weight", $weight);
+        // weight
+        $weight = UPSOnlineTools_convertWeight($p->get("weight"), $this->config->getComplex('General.weight_unit'), "lbs", 2);
+        if ($weight === false) {
+            $weight = $this->packItem->getComplex('product.weight');
+        }
+        $this->packItem->set("weight", $weight);
 
-		// declared_value
-		$declared_value = $p->get("declaredValue");
+        // declared_value
+        $declared_value = $p->get("declaredValue");
 
-		// misc
-		$this->packItem->set("handle_care", $p->get("ups_handle_care"));
-		$this->packItem->set("OrderItemId", $this->get("item_id"));
-		$this->packItem->set("packaging", $p->get("ups_packaging"));
-		$this->packItem->set("declaredValue", $declared_value);
-		$this->packItem->set("additional_handling", $p->get("ups_add_handling"));
+        // misc
+        $this->packItem->set("handle_care", $p->get("ups_handle_care"));
+        $this->packItem->set("OrderItemId", $this->get("item_id"));
+        $this->packItem->set("packaging", $p->get("ups_packaging"));
+        $this->packItem->set("declaredValue", $declared_value);
+        $this->packItem->set("additional_handling", $p->get("ups_add_handling"));
 
-		return $this->packItem;
-	}
+        return $this->packItem;
+    }
 
 }

@@ -34,9 +34,9 @@
  * @since   3.0.0
  */
 class XLite_Model_MailImageParser extends XLite_Core_FlexyCompiler
-{    
-    public $webdir;    
-    public $images;    
+{
+    public $webdir;
+    public $images;
     public $counter;
 
     function flexy() { }
@@ -66,7 +66,7 @@ class XLite_Model_MailImageParser extends XLite_Core_FlexyCompiler
             }
         }
         $this->result = $this->substitute();
-    } 
+    }
     
     function substImage($start, $end) 
     {
@@ -77,7 +77,7 @@ class XLite_Model_MailImageParser extends XLite_Core_FlexyCompiler
         $img = str_replace('&amp;', '&', $img);
         $img = str_replace(' ', '%20', $img);
         $this->subst($start, $end,  $this->getImgSubstitution($img));
-    } 
+    }
 
     function getImgSubstitution($img) 
     {
@@ -102,6 +102,6 @@ class XLite_Model_MailImageParser extends XLite_Core_FlexyCompiler
             }
         }
         return 'cid:'.$this->images[$img]['name'].'@mail.lc';
-    } 
+    }
 }
 

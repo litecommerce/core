@@ -34,8 +34,8 @@
  * @since   3.0.0
  */
 class XLite_Validator_CaptchaValidator extends XLite_Validator_Abstract
-{	
-    public $template = "common/captcha_validator.tpl";	
+{
+    public $template = "common/captcha_validator.tpl";
     public $validation_required = array( // array: target => array(action, option_name);
         'help'             => array('action' => 'contactus', 'option' => 'on_contactus'),
         'profile'          => array('action' => 'register',  'option' => 'on_register'),
@@ -59,7 +59,7 @@ class XLite_Validator_CaptchaValidator extends XLite_Validator_Abstract
 
         $code = $this->session->get("captcha_".$this->get("id"));
         if(!isset($code) && $this->xlite->get("captchaValidated")) {
-			return true;
+            return true;
         }
         $code_submitted = strtoupper(trim($_POST[$this->get("field")]));
 

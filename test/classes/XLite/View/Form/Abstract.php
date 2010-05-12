@@ -166,7 +166,7 @@ abstract class XLite_View_Form_Abstract extends XLite_View_Abstract
     {
         foreach ($list as $key => $value) {
             $key = $prefix . '[' . $key . ']';
-            if (is_array($value)) { 
+            if (is_array($value)) {
                 $this->addChain2PlainList($key, $value);
 
             } else {

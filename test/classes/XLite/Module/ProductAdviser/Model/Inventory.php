@@ -71,8 +71,8 @@ There <?php echo ($inventoryCAI == 1) ? "is" : "are"; ?> <b><font color=blue><?p
     function update()
     {
     	if ($this->xlite->get("checkInventoryChangedAfterImport")) {
-			$inventory = new XLite_Module_InventoryTracking_Model_Inventory($this->get("inventory_id"));
-			$oldAmount = $inventory->get("amount");
+            $inventory = new XLite_Module_InventoryTracking_Model_Inventory($this->get("inventory_id"));
+            $oldAmount = $inventory->get("amount");
 
     		$inventoryChangedAmount = $this->properties;
             $inventoryChangedAmount["oldAmount"] = $oldAmount;

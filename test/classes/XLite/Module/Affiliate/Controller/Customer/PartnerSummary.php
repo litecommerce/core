@@ -35,7 +35,7 @@
  */
 class XLite_Module_Affiliate_Controller_Customer_PartnerSummary extends XLite_Module_Affiliate_Controller_Partner
 {
-	/**
+    /**
      * Common method to determine current location 
      * 
      * @return array
@@ -43,7 +43,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerSummary extends XLite_Mo
      * @since  3.0.0 
      */ 
     protected function getLocation()
-    {   
+    {
         return 'Summary statistics';
     }
 
@@ -66,7 +66,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerSummary extends XLite_Mo
             foreach ((array)$pp->findAll("partner_id=".$this->getComplex('auth.profile.profile_id')) as $payment) {
                 if ($payment->get("affiliate") == 0) {
                     $this->sales["total"]++;
-                }    
+                }
                 if ($payment->get("affiliate") == 0 && !$payment->isComplex('order.processed')) {
                     $this->sales["queued"]++;
                 }

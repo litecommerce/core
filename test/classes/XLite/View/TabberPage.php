@@ -34,10 +34,10 @@
  * @since   3.0.0
  */
 class XLite_View_TabberPage extends XLite_Base
-{	
-    public $name;	
-    public $header;	
-    public $widget;	
+{
+    public $name;
+    public $header;
+    public $widget;
     public $selected = false; // set by Tabber	
     public $url; // set by Tabber
 }

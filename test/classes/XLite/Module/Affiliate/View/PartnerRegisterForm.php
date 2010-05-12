@@ -40,7 +40,7 @@ class XLite_Module_Affiliate_View_PartnerRegisterForm extends XLite_View_Registe
         parent::fillForm();
         $this->pending_plan = $this->config->getComplex('Affiliate.default_plan');
         if (!$this->xlite->is("adminZone") && $this->auth->is("logged")) {
-			$this->_savedParent = (isset($this->parent)) ? $this->parent : null;
+            $this->_savedParent = (isset($this->parent)) ? $this->parent : null;
             $this->set("properties", $this->auth->getComplex('profile.properties'));
             if (isset($this->_savedParent)) {
             	$this->set("parent", $this->_savedParent);
@@ -66,9 +66,9 @@ class XLite_Module_Affiliate_View_PartnerRegisterForm extends XLite_View_Registe
             } else {
                 $this->set("valid", true);
                 $this->set("mode", $this->getComplex('config.Affiliate.moderated') ? "sent" : "success"); // go to success page
-            }    
+            }
         }
-    }    
+    }
     
     function getProfile()
     {

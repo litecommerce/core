@@ -39,14 +39,14 @@ class XLite_Controller_Admin_Categories extends XLite_Controller_Admin_Abstract
     
     protected function getCategories()
     {
-		return self::getCategory()->getSubcategories();
+        return self::getCategory()->getSubcategories();
     }
 
     public function action_update()
     {
         $order_by = isset(XLite_Core_Request::getInstance()->category_order) 
-			? XLite_Core_Request::getInstance()->category_order 
-			: array();
+            ? XLite_Core_Request::getInstance()->category_order 
+            : array();
 
         foreach ($order_by as $category_id => $category_order) {
             $category = new XLite_Model_Category($category_id);

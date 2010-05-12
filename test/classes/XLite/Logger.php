@@ -359,7 +359,7 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
                     $args[] = 'callback ' . $this->detectClassName($arg[0]) . '::' . $arg[1];
 
                 } else {
-                    $args[] = 'array{' . count($arg) . '}'; 
+                    $args[] = 'array{' . count($arg) . '}';
                 }
 
             } elseif (is_object($arg)) {

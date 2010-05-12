@@ -34,17 +34,17 @@
  * @since   3.0.0
  */
 class XLite_Controller_Admin_Product extends XLite_Controller_Admin_Abstract
-{	
-    public $params = array('target', 'product_id', 'page', 'backUrl');	
-    public $page = "info";	
-    public $backUrl = "admin.php?target=product_list";	
+{
+    public $params = array('target', 'product_id', 'page', 'backUrl');
+    public $page = "info";
+    public $backUrl = "admin.php?target=product_list";
 
     public $pages = array
     (
     	'info'  => 'Product info',
         'extra_fields' => 'Extra fields',
         'links' => 'HTML links',
-    );	
+    );
 
     public $pageTemplates = array
     (
@@ -58,7 +58,7 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_Abstract
     {
         if (is_null($this->product)) {
             $this->product = new XLite_Model_Product($this->product_id);
-        }    
+        }
 
         if (is_null($this->extraFields)) {
         	$this->getExtraFields();
@@ -69,7 +69,7 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_Abstract
     
     function getExtraFields()
     {
-		$this->product->populateExtraFields();
+        $this->product->populateExtraFields();
 
         if (is_null($this->extraFields)) {
             $ef = new XLite_Model_ExtraField();
@@ -123,13 +123,13 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_Abstract
         $product->update();
         
         // update product image and thumbnail
-		$this->action_images();
+        $this->action_images();
 
         // link product category(ies)
-		if (isset($this->category_id)) {
-			$category = new XLite_Model_Category($this->category_id);
-			$product->set("category", $category);
-		}
+        if (isset($this->category_id)) {
+            $category = new XLite_Model_Category($this->category_id);
+            $product->set("category", $category);
+        }
 
         // update/create extra fields
         $extraFields = (array)$this->get("extra_fields");
@@ -151,30 +151,30 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_Abstract
 
     function action_images()
     {
-        $tn = $this->getComplex('product.thumbnail'); 
+        $tn = $this->getComplex('product.thumbnail');
         if ($tn->handleRequest() != XLite_Model_Image::IMAGE_OK && $tn->_shouldProcessUpload) {
         	$this->set("valid", false);
         	$this->set("thumbnail_read_only", true);
         }
 
-        $img = $this->getComplex('product.image'); 
+        $img = $this->getComplex('product.image');
         if ($img->handleRequest() != XLite_Model_Image::IMAGE_OK && $img->_shouldProcessUpload) {
         	$this->set("valid", false);
         	$this->set("image_read_only", true);
         }
     }
 
-	function action_clone()
-	{
+    function action_clone()
+    {
         $p_product = new XLite_Model_Product($this->product_id);
-		$product = $p_product->cloneObject();
-		foreach($p_product->get('categories') as $category) {
-			$product->addCategory($category);
-		}
-		$product->set('name', $product->get('name') . " (CLONE)");
-		$product->update();
-		$this->set('returnUrl', 'admin.php?target=product&product_id=' . $product->get('product_id'));
-	}
+        $product = $p_product->cloneObject();
+        foreach($p_product->get('categories') as $category) {
+            $product->addCategory($category);
+        }
+        $product->set('name', $product->get('name') . " (CLONE)");
+        $product->update();
+        $this->set('returnUrl', 'admin.php?target=product&product_id=' . $product->get('product_id'));
+    }
 
     /**
      * Check - specified clean URL unique or not

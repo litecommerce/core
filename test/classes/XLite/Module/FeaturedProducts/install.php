@@ -24,7 +24,7 @@ if (!function_exists("file_get_contents"))
         ob_start();
         $retval = @readfile($f);
         if (false !== $retval) 
-        { 
+        {
         	// no readfile error
             $retval = ob_get_contents();
         }
@@ -35,9 +35,9 @@ if (!function_exists("file_get_contents"))
 
 if (!function_exists("start_patching"))
 {
-	function start_patching($title)
-	{
-	?>
+    function start_patching($title)
+    {
+    ?>
 </PRE>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
@@ -59,57 +59,57 @@ PRE {FONT-FAMILY: Courier, "Courier New"; COLOR: #000000; FONT-SIZE: 12px;}
 <TD nowrap><B>&nbsp;&nbsp;Modifying templates ...&nbsp;</TD>
 <TD nowrap><B>&nbsp;&nbsp;Status&nbsp;</TD>
 </TR>
-	<?php
-		global $patching_table_row;
-		$patching_table_row = 0;
-	}
+    <?php
+        global $patching_table_row;
+        $patching_table_row = 0;
+    }
 }
 
 if (!function_exists("end_patching"))
 {
-	function end_patching()
-	{
-	?>
+    function end_patching()
+    {
+    ?>
 </TABLE>
 <P>
 </BODY>
 </HTML>
 <PRE>
 <?php
-	}
+    }
 }
 
 if (!function_exists("copy_schema_template"))
 {
-	function copy_schema_template($template, $schema, $module, $zone = "default", $locale = "en")
-	{
-		global $patching_table_row;
-		if (empty($schema) || in_array($schema, array("3-columns_classic", "3-columns_modern", "2-columns_classic", "2-columns_modern"))) $schema = "standard";
+    function copy_schema_template($template, $schema, $module, $zone = "default", $locale = "en")
+    {
+        global $patching_table_row;
+        if (empty($schema) || in_array($schema, array("3-columns_classic", "3-columns_modern", "2-columns_classic", "2-columns_modern"))) $schema = "standard";
 
-	    echo "<TR class=\"" . (($patching_table_row) ? "Middle" : "Center") . "\"><TD nowrap>&nbsp;Replacing&nbsp;$template&nbsp;for&nbsp;<b>$schema</b>&nbsp;skin</TD><TD nowrap>&nbsp;";
-	    $patching_table_row = ($patching_table_row) ? 0 : 1;
+        echo "<TR class=\"" . (($patching_table_row) ? "Middle" : "Center") . "\"><TD nowrap>&nbsp;Replacing&nbsp;$template&nbsp;for&nbsp;<b>$schema</b>&nbsp;skin</TD><TD nowrap>&nbsp;";
+        $patching_table_row = ($patching_table_row) ? 0 : 1;
 
-		$from = "skins/$zone/$locale/modules/$module/schemas/templates/$schema/$zone/$locale/modules/$module/$template";
-		$to = "skins/$zone/$locale/modules/$module/$template";
+        $from = "skins/$zone/$locale/modules/$module/schemas/templates/$schema/$zone/$locale/modules/$module/$template";
+        $to = "skins/$zone/$locale/modules/$module/$template";
 
-		if (file_exists($from)) {
-			if (@copy($from, $to)) {
-				echo "<FONT COLOR=\"green\"><B>success</B></FONT>";
-			} else {
-				echo "<FONT COLOR=\"red\"><B>failed</B></FONT>";
-			}
-		} else {
-			echo "<FONT COLOR=\"blue\"><B>skipped</B></FONT>";
-		}
-	    echo "&nbsp;</TD></TR>\n";
-	}
+        if (file_exists($from)) {
+            if (@copy($from, $to)) {
+                echo "<FONT COLOR=\"green\"><B>success</B></FONT>";
+            } else {
+                echo "<FONT COLOR=\"red\"><B>failed</B></FONT>";
+            }
+        } else {
+            echo "<FONT COLOR=\"blue\"><B>skipped</B></FONT>";
+        }
+        echo "&nbsp;</TD></TR>\n";
+    }
 }
 
 $MODULE_NAME = "FeaturedProducts";
 start_patching($MODULE_NAME);
 
 if (is_object($this)) {
-	$schema = (!empty($this->layout))?$this->layout:($this->xlite->getComplex('config.Skin.skin'));
+    $schema = (!empty($this->layout))?$this->layout:($this->xlite->getComplex('config.Skin.skin'));
 }
 
 //////////////////////////////////////

@@ -19,10 +19,10 @@
             $cart["total_cost"] += $cart["discount"];
         }
 
-        $cart["sh_n_tax"] = doubleval(sprintf("%.2f", ($cart[total_cost] - $cart[subtotal]))); 
+        $cart["sh_n_tax"] = doubleval(sprintf("%.2f", ($cart[total_cost] - $cart[subtotal])));
         $cart["sh_n_tax"] = ($cart["sh_n_tax"] < 0) ? 0 : $cart["sh_n_tax"];
-		
-		if (isset($cart["discount"])) {
+        
+        if (isset($cart["discount"])) {
             $cart["subtotal"] -= $cart["discount"];
         }
         // Fill parameters fields here
@@ -45,25 +45,25 @@
         $userinfo ["card_number"] = $paymentMethod->cc_info["cc_number"];
         $userinfo ["card_expire"] = $paymentMethod->cc_info["cc_date"];
         $userinfo ["card_cvv2"] = $paymentMethod->cc_info["cc_cvv2"];
-		$userinfo ["card_name"] = $paymentMethod->cc_info["cc_name"];
+        $userinfo ["card_name"] = $paymentMethod->cc_info["cc_name"];
 
         if ($debug) {
             echo "userinfo:<pre>"; print_r($userinfo); echo "</pre><br>";
         }
 
         // Count payment attempts
-		$cart_details = $lite_cart->get('details');
-		$cart_labels = array(
-			"avsMessage" => "AVS message",
-			"connectionAttempts" => "Connection attempts"
-		);
+        $cart_details = $lite_cart->get('details');
+        $cart_labels = array(
+            "avsMessage" => "AVS message",
+            "connectionAttempts" => "Connection attempts"
+        );
         $conn_attempts = (int) $cart_details["connectionAttempts"];
         if (is_null($conn_attempts)) {
             $conn_attempts = 1;
         } else {
             $conn_attempts++;
         }
-		$cart_details["connectionAttempts"] = $conn_attempts;
+        $cart_details["connectionAttempts"] = $conn_attempts;
 
         if ($debug) echo "Connection attempt: $conn_attempts<br>";
 
@@ -83,10 +83,10 @@
         
         // executable path
         $certdir = "./var/tmp";
-		if (!is_dir($certdir)) {
-			mkdir($certdir);
-		} 
-		
+        if (!is_dir($certdir)) {
+            mkdir($certdir);
+        }
+        
         //
         // *************** X-CART CyberSource payment processor code ***************
         //
@@ -155,9 +155,9 @@ $post[] = "customer_cc_expyr=".(2000+substr($userinfo["card_expire"],2,2));
 $post[] = "merchant_ref_number=".join("-",$secure_oid);
 $post[] = "currency=".$vs_curr;
 if (isset($userinfo["card_cvv2"]) && strlen($userinfo["card_cvv2"]) > 0) {
-	$post[] = "customer_cc_cv_number=".$userinfo["card_cvv2"];
+    $post[] = "customer_cc_cv_number=".$userinfo["card_cvv2"];
 } else {
-	$post[] = "customer_cc_cv_indicator=0";
+    $post[] = "customer_cc_cv_indicator=0";
 }
 
 #$i=0;$post[] = "offer".$i."=offerid".($i++)."^product_name:".strtr($product[product],"^:","  ")."^merchant_product_sku:".strtr($product[productcode],"^:","  ")."^product_code:^amount:".$product[price]."^quantity:".$product[amount];
@@ -221,15 +221,15 @@ exit;
         }
 
         if ($bill_output ["avsmes"])
-			$cart_details["avsMessage"] = $bill_output ["avsmes"];
+            $cart_details["avsMessage"] = $bill_output ["avsmes"];
         else
-			$cart_details["avsMessage"] = null;
+            $cart_details["avsMessage"] = null;
 
-		$cart_details["error"] = $error;
-		
-		$lite_cart->set('details', $cart_details);
-		$lite_cart->set('detailLabels', $cart_labels);
+        $cart_details["error"] = $error;
+        
+        $lite_cart->set('details', $cart_details);
+        $lite_cart->set('detailLabels', $cart_labels);
         $lite_cart->set("status", $status);
         $lite_cart->update();
-    }	
+    }
 ?>

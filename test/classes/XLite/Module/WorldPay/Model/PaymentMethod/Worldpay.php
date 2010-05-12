@@ -34,15 +34,15 @@
  * @since   3.0.0
  */
 class XLite_Module_WorldPay_Model_PaymentMethod_Worldpay extends XLite_Model_PaymentMethod_CreditCard
-{	
-	public $configurationTemplate = "modules/WorldPay/config.tpl";	
-	public $formTemplate = "modules/WorldPay/checkout.tpl";	
-	public $processorName = "RBS WorldPay";	
-	public $hasConfugurationForm = true;
+{
+    public $configurationTemplate = "modules/WorldPay/config.tpl";
+    public $formTemplate = "modules/WorldPay/checkout.tpl";
+    public $processorName = "RBS WorldPay";
+    public $hasConfugurationForm = true;
 
     function handleRequest(XLite_Model_Cart $cart)
     {
-		require_once LC_MODULES_DIR . 'WorldPay' . LC_DS . 'encoded.php';
+        require_once LC_MODULES_DIR . 'WorldPay' . LC_DS . 'encoded.php';
         func_PaymentMethod_worldpay_handleRequest($this, $cart);
     }
 
@@ -96,7 +96,7 @@ class XLite_Module_WorldPay_Model_PaymentMethod_Worldpay extends XLite_Model_Pay
                 $this->getComplex('params.currency') . ':' .
                 $this->getCartId($cart->get('order_id'));
             $md5sum = md5($plain);
-			$this->logger->log("Worldpay:getMD5Signature($plain): $md5sum");
+            $this->logger->log("Worldpay:getMD5Signature($plain): $md5sum");
             return $md5sum;
         }
         return NULL;
@@ -107,10 +107,10 @@ class XLite_Module_WorldPay_Model_PaymentMethod_Worldpay extends XLite_Model_Pay
         return number_format($total, 2, '.', '');
     }
 
-	function handleConfigRequest()
-	{
-		if (!isset($_POST['params']['check_total'])) $_POST['params']['check_total'] = 0;
-		if (!isset($_POST['params']['check_currency'])) $_POST['params']['check_currency'] = 0;
-		parent::handleConfigRequest();
-	}
+    function handleConfigRequest()
+    {
+        if (!isset($_POST['params']['check_total'])) $_POST['params']['check_total'] = 0;
+        if (!isset($_POST['params']['check_currency'])) $_POST['params']['check_currency'] = 0;
+        parent::handleConfigRequest();
+    }
 }

@@ -69,7 +69,7 @@ class XLite_Module_PayFlowLink_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'PayFlow Link credit card payment processor';
-    }	
+    }
 
     /**
      * Determines if we need to show settings form link

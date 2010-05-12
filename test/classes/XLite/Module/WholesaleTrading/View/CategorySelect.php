@@ -51,18 +51,18 @@ class XLite_Module_WholesaleTrading_View_CategorySelect extends XLite_View_Categ
         $this->field = $name;
     }
 
-	/**
-	 * Check if category is in the bulk_categories list 
-	 * 
-	 * @param XLite_Model_Category $category
-	 *  
-	 * @return bool
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function isCategorySelected(XLite_Model_Category $category)
-	{
-		return in_array($category->get('category_id'), explode(";", $this->config->WholesaleTrading->bulk_categories));
-	}
+    /**
+     * Check if category is in the bulk_categories list 
+     * 
+     * @param XLite_Model_Category $category
+     *  
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isCategorySelected(XLite_Model_Category $category)
+    {
+        return in_array($category->get('category_id'), explode(";", $this->config->WholesaleTrading->bulk_categories));
+    }
 }

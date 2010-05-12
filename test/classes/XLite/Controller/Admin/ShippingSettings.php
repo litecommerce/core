@@ -34,33 +34,33 @@
  * @since   3.0.0
  */
 class XLite_Controller_Admin_ShippingSettings extends XLite_Controller_Admin_Abstract
-{	
-    public $params = array('target');	
-    public $page = "shipping_methods";	
+{
+    public $params = array('target');
+    public $page = "shipping_methods";
     public $pages = array('shipping_methods' => 'Methods ',
-	     			   'shipping_zones' => 'Zones',
+         			   'shipping_zones' => 'Zones',
                        'shipping_rates' => 'Charges'
-                       );	
+                       );
 
     public $_shippings = null;
 
-	function getShippings()
-	{
-		if (!is_null($this->_shippings)) {
-			return $this->_shippings;
-		}
+    function getShippings()
+    {
+        if (!is_null($this->_shippings)) {
+            return $this->_shippings;
+        }
 
-		$shipping = new XLite_Model_Shipping();
+        $shipping = new XLite_Model_Shipping();
     	$modules = $shipping->getModules();
     	$modules = (is_array($modules)) ? array_keys($modules) : array();
-		$shippings = $shipping->findAll();
-		$this->_shippings = array();
-		foreach($shippings as $shipping) {
-			if (in_array($shipping->get("class"), $modules) && $shipping->get("enabled")) {
-				$this->_shippings[] = $shipping;
-			}
-		}
-		
-		return $this->_shippings;
-	}
+        $shippings = $shipping->findAll();
+        $this->_shippings = array();
+        foreach($shippings as $shipping) {
+            if (in_array($shipping->get("class"), $modules) && $shipping->get("enabled")) {
+                $this->_shippings[] = $shipping;
+            }
+        }
+        
+        return $this->_shippings;
+    }
 }

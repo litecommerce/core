@@ -34,33 +34,33 @@
  * @since   3.0.0
  */
 class XLite_Module_Intershipper_Controller_Admin_Intershipper extends XLite_Controller_Admin_ShippingSettings
-{	
-    public $params = array("target", "updated");	
-    public $settings;	
-    public $error = '';	
-    public $updated = false;	
+{
+    public $params = array("target", "updated");
+    public $settings;
+    public $error = '';
+    public $updated = false;
     public $testResult = false; // this is a test request	
-    public $page = "intershipper";	
+    public $page = "intershipper";
 
     public $deliveries = array(
         "COM" => "Commercial delivery",
         "RES" => "Residential delivery",
-        );	
+        );
     public $pickups = array(
         "DRP" => "Drop of at carrier location",
         "SCD" => "Regularly Scheduled Pickup",
         "PCK" => "Schedule A Special Pickup"
-        );	
+        );
     public $dunits = array(
         "IN" => "Inches",
         "CM" => "Centimeters"
-        );	
+        );
     public $packagings = array(
         "BOX" => "Box",
         "ENV" => "Envelope",
         "LTR" => "Letter",
         "TUB" => "Tube"
-        );	
+        );
     public $contents_types = array(
         "OTR" => "Other: Most shipments will use this code",
         "LQD" => "Liquid",

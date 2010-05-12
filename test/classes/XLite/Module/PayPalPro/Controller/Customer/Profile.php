@@ -51,7 +51,7 @@ implements XLite_Base_IDecorator
         ) {
             $expressCheckout = new XLite_Module_PayPalPro_Controller_Customer_ExpressCheckout();
             $expressCheckout->callActionProfile();
-        } 
+        }
 
         parent::handleRequest();
     }

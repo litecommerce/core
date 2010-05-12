@@ -34,17 +34,17 @@
  * @since   3.0.0
  */
 class XLite_Module_Nochex_Model_PaymentMethod_Nochex extends XLite_Model_PaymentMethod_CreditCard
-{	
-    public $configurationTemplate = "modules/Nochex/config.tpl";	
-    public $formTemplate = "modules/Nochex/checkout.tpl";	
+{
+    public $configurationTemplate = "modules/Nochex/config.tpl";
+    public $formTemplate = "modules/Nochex/checkout.tpl";
     public $processorName = "Nochex";
-	
-	function handleRequest(XLite_Model_Cart $order)
-	{
-		require_once LC_MODULES_DIR . 'Nochex' . LC_DS . 'encoded.php';
-		PaymentMethod_nochex_handleRequest($order,$this);
-	}
-	
+    
+    function handleRequest(XLite_Model_Cart $order)
+    {
+        require_once LC_MODULES_DIR . 'Nochex' . LC_DS . 'encoded.php';
+        PaymentMethod_nochex_handleRequest($order,$this);
+    }
+    
     function getReturnURL($cart)
     {
         return $this->xlite->getShopUrl("cart.php?target=checkout&action=return&order_id=".$cart->get("order_id"));
@@ -52,11 +52,11 @@ class XLite_Module_Nochex_Model_PaymentMethod_Nochex extends XLite_Model_Payment
 
     function getResponderURL($cart)
     {
-		return $this->xlite->getShopUrl("classes/modules/Nochex/callback.php?order_id=".$cart->get("order_id"));
+        return $this->xlite->getShopUrl("classes/modules/Nochex/callback.php?order_id=".$cart->get("order_id"));
     }
 
-	function getTotal($cart)
-	{
-		return sprintf("%.02f", doubleval($cart->get("total")));
-	}
+    function getTotal($cart)
+    {
+        return sprintf("%.02f", doubleval($cart->get("total")));
+    }
 }

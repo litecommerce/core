@@ -35,76 +35,76 @@
  */
 class XLite_Module_WholesaleTrading_Controller_Customer_Product extends XLite_Controller_Customer_Product implements XLite_Base_IDecorator
 {
-	// FIXME - must be completely revised; do not uncomment
+    // FIXME - must be completely revised; do not uncomment
     /*function init()
     {
-		$this->get("product");
-		if (is_object($this->product)) {
-			if ($this->product->get("product_id") <= 0) {
-				// recover product_id if unset by read() method
-				$this->product->set("product_id", $_REQUEST['product_id']);
-			}
-			if (!isset($_REQUEST['action']) || 'buynow' != $_REQUEST['action']) {
-				// don't show the product if it is available for direct sale only
-				$this->product->assignDirectSaleAvailable(false);
-				$this->product = null;
-			} else {
-				// perform direct sale check if the product does not exist
-				$this->product->_checkExistanceRequired = true;
-				if (!$this->product->is("directSaleAvailable")) {
-					$this->redirect("cart.php?mode=add_error");
-					exit;
-				}
-			}
-		}
+        $this->get("product");
+        if (is_object($this->product)) {
+            if ($this->product->get("product_id") <= 0) {
+                // recover product_id if unset by read() method
+                $this->product->set("product_id", $_REQUEST['product_id']);
+            }
+            if (!isset($_REQUEST['action']) || 'buynow' != $_REQUEST['action']) {
+                // don't show the product if it is available for direct sale only
+                $this->product->assignDirectSaleAvailable(false);
+                $this->product = null;
+            } else {
+                // perform direct sale check if the product does not exist
+                $this->product->_checkExistanceRequired = true;
+                if (!$this->product->is("directSaleAvailable")) {
+                    $this->redirect("cart.php?mode=add_error");
+                    exit;
+                }
+            }
+        }
 
-		parent::init();
+        parent::init();
     }*/
 
     function _conditionActionBuynow()
     {
         $product = $this->get("product");
-		if (!is_object($product)) return false;
+        if (!is_object($product)) return false;
 
         $product->set("product_id", $this->product_id);
-		if (!$product->is("directSaleAvailable")) {
+        if (!$product->is("directSaleAvailable")) {
         	$this->set("returnUrl", "cart.php?mode=add_error");
-			return false;
-		}	
+            return false;
+        }
 
-		// min/max purchase amount check
-		$pl = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
-		if ($pl->find("product_id=" . $product->get("product_id"))) {
-			$category_id = $this->get("category_id");
-			if (!isset($category_id)) {
-				$category_id = $product->getComplex('Category.category_id');
-				$this->set("category_id", $category_id);
-			}
-			return false;
-		}	
-		
-		return true;
+        // min/max purchase amount check
+        $pl = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
+        if ($pl->find("product_id=" . $product->get("product_id"))) {
+            $category_id = $this->get("category_id");
+            if (!isset($category_id)) {
+                $category_id = $product->getComplex('Category.category_id');
+                $this->set("category_id", $category_id);
+            }
+            return false;
+        }
+        
+        return true;
     }
 
     function action_buynow()
     {
     	if ($this->_conditionActionBuynow()) {
-			parent::action_buynow();
-		}
+            parent::action_buynow();
+        }
     }
 
-	function getWholesalePricing()
-	{
-		if (is_null($this->wholesale_pricing)) {
-			$product = new XLite_Model_Product($this->getComplex('product.product_id'));
-			$this->wholesale_pricing = $product->getWholesalePricing();
-		}	
-		return $this->wholesale_pricing;
-	}
+    function getWholesalePricing()
+    {
+        if (is_null($this->wholesale_pricing)) {
+            $product = new XLite_Model_Product($this->getComplex('product.product_id'));
+            $this->wholesale_pricing = $product->getWholesalePricing();
+        }
+        return $this->wholesale_pricing;
+    }
 
-	function option_selected($p_id, $key)
-	{
-		return $key == 0;
-	}
+    function option_selected($p_id, $key)
+    {
+        return $key == 0;
+    }
 }
 

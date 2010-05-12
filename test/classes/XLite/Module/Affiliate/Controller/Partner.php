@@ -34,10 +34,10 @@
  * @since   3.0.0
  */
 class XLite_Module_Affiliate_Controller_Partner extends XLite_Controller_Abstract
-{	
+{
     public $template = "modules/Affiliate/main.tpl";
 
-	protected $shopLayout = null;
+    protected $shopLayout = null;
 
 
     /**
@@ -77,7 +77,7 @@ class XLite_Module_Affiliate_Controller_Partner extends XLite_Controller_Abstrac
         }
     }
 
-	protected function redirect($url = null)
+    protected function redirect($url = null)
     {
         if ($this->get("mode") == "access_denied") {
             $this->set("mode", "accessDenied");

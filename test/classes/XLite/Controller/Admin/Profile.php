@@ -113,14 +113,14 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
      */
 /*    public $params = array("target", "mode", "profile_id", "backUrl");
 
-	/**
-	 * Default mode value (register | modify | success | delete)
-	 * 
-	 * @var    string
-	 * @access public
-	 * @see    ____var_see____
-	 * @since  3.0.0
-	 */
+    /**
+     * Default mode value (register | modify | success | delete)
+     * 
+     * @var    string
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
 /*	protected $defaultMode = "modify";
 
     /**
@@ -133,24 +133,24 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
      */
 /*    protected $allowedModes = array('modify', 'register');
 
-	/**
-	 * backUrl 
-	 * 
-	 * @var    string
-	 * @access public
-	 * @see    ____var_see____
-	 * @since  3.0.0
-	 */
+    /**
+     * backUrl 
+     * 
+     * @var    string
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
 /*	public $backUrl = "admin.php?target=users";
 
-	/**
-	 * User profile
-	 * 
-	 * @var    array
-	 * @access protected
-	 * @see    ____var_see____
-	 * @since  3.0.0
-	 */
+    /**
+     * User profile
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
 /*	protected $profile = null;
 
     /**
@@ -281,16 +281,16 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
 /* TODO: remove - do not need to reinitialize sesion when admin creates user 
 
     	if (
-			isset($_REQUEST[XLite_Model_Session::SESSION_DEFAULT_NAME]) 
-			&& !(isset($_GET[XLite_Model_Session::SESSION_DEFAULT_NAME]) || isset($_POST[XLite_Model_Session::SESSION_DEFAULT_NAME]))
-		) {
+            isset($_REQUEST[XLite_Model_Session::SESSION_DEFAULT_NAME]) 
+            && !(isset($_GET[XLite_Model_Session::SESSION_DEFAULT_NAME]) || isset($_POST[XLite_Model_Session::SESSION_DEFAULT_NAME]))
+        ) {
     		unset($_REQUEST[XLite_Model_Session::SESSION_DEFAULT_NAME]);
         }
 
-		$this->xlite->session->set('_' . XLite_Model_Session::SESSION_DEFAULT_NAME, XLite_Model_Session::SESSION_DEFAULT_NAME . '=' . $this->xlite->session->getID());
-		$this->xlite->session->destroy();
-		$this->xlite->session->setID(SESSION_DEFAULT_ID);
-		$this->xlite->session->_initialize();
+        $this->xlite->session->set('_' . XLite_Model_Session::SESSION_DEFAULT_NAME, XLite_Model_Session::SESSION_DEFAULT_NAME . '=' . $this->xlite->session->getID());
+        $this->xlite->session->destroy();
+        $this->xlite->session->setID(SESSION_DEFAULT_ID);
+        $this->xlite->session->_initialize();
  */
 /*        $this->profile = new XLite_Model_Profile();
 
@@ -317,7 +317,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
             // fill in shipping info
             $this->auth->copyBillingInfo($this->profile);
             $this->profile->update();
-			$this->statusData['success'] = true;
+            $this->statusData['success'] = true;
         }
 
         if ('success' == $this->getMode()) {
@@ -367,7 +367,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
             // fill in shipping info
             $this->auth->copyBillingInfo($this->profile);
             $this->profile->update();
-			$this->statusData['success'] = true;
+            $this->statusData['success'] = true;
         }
     }
 

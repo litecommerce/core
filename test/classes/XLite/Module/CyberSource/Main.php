@@ -69,7 +69,7 @@ class XLite_Module_CyberSource_Main extends XLite_Module_Abstract
     public static function getDescription()
     {
         return 'CyberSource credit card payment processor';
-    }	
+    }
 
     /**
      * Determines if we need to show settings form link
@@ -91,9 +91,9 @@ class XLite_Module_CyberSource_Main extends XLite_Module_Abstract
      * @since  3.0
      */
     public static function getSettingsForm()
-	{
-		return "admin.php?target=payment_method&payment_method=cybersource_cc";
-	}
+    {
+        return "admin.php?target=payment_method&payment_method=cybersource_cc";
+    }
 
     /**
      * Perform some actions at startup

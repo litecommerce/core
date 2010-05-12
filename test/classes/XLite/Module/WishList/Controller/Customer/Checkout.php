@@ -35,30 +35,30 @@
  */
 class XLite_Module_WishList_Controller_Customer_Checkout extends XLite_Controller_Customer_Checkout implements XLite_Base_IDecorator
 {
-	function success() 
-	{
-		if ($this->auth->get('profile')) {
-			$wishlist = new XLite_Module_WishList_Model_WishList();
-			$wishlist->find("profile_id = ". $this->auth->getComplex('profile.profile_id'));
-			$wishlist_products = $wishlist->get("products");
-		
-			if (!empty($wishlist_products)) 
-				foreach($this->cart->get("items") as $item) {
-					foreach($wishlist_products as $product) {
-						if ($item->get("item_id")==$product->get("item_id")) {
-	
-							$amount = $item->get("amount");
-							if ($amount > $product->get("amount")) $amount = $product->get("amount");
-							$product->set("amount",$product->get("amount")-$amount);
-							$product->update();
-							
-						if ($product->get("amount")==0)
-							$product->delete();
-						}
-					}
-				}
-		}		
+    function success() 
+    {
+        if ($this->auth->get('profile')) {
+            $wishlist = new XLite_Module_WishList_Model_WishList();
+            $wishlist->find("profile_id = ". $this->auth->getComplex('profile.profile_id'));
+            $wishlist_products = $wishlist->get("products");
+        
+            if (!empty($wishlist_products)) 
+                foreach($this->cart->get("items") as $item) {
+                    foreach($wishlist_products as $product) {
+                        if ($item->get("item_id")==$product->get("item_id")) {
+    
+                            $amount = $item->get("amount");
+                            if ($amount > $product->get("amount")) $amount = $product->get("amount");
+                            $product->set("amount",$product->get("amount")-$amount);
+                            $product->update();
+                            
+                        if ($product->get("amount")==0)
+                            $product->delete();
+                        }
+                    }
+                }
+        }
 
-		parent::success();	
-	} 
+        parent::success();
+    }
 }

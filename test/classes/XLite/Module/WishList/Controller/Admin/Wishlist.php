@@ -35,75 +35,75 @@
  */
 class XLite_Module_WishList_Controller_Admin_Wishlist extends XLite_Controller_Admin_Abstract
 {
-	/**
-	 * wishlist 
-	 * 
-	 * @var    mixed
-	 * @access public
-	 * @see    ____var_see____
-	 * @since  3.0.0
-	 */
-	public $wishlist = null;
+    /**
+     * wishlist 
+     * 
+     * @var    mixed
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $wishlist = null;
 
-	/**
-	 * getRegularTemplate 
-	 * 
-	 * @return void
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function getRegularTemplate()
-	{
-		if ('print' == XLite_Core_Request::getInstance()->mode) {
-			$return = 'modules/WishList/wishlist.tpl';
+    /**
+     * getRegularTemplate 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getRegularTemplate()
+    {
+        if ('print' == XLite_Core_Request::getInstance()->mode) {
+            $return = 'modules/WishList/wishlist.tpl';
 
-		} else {
-			$return = parent::getRegularTemplate();
-		}
+        } else {
+            $return = parent::getRegularTemplate();
+        }
 
-		return $return;
-	}
+        return $return;
+    }
 
-	/**
-	 * getWishlist 
-	 * 
-	 * @return XLite_Module_WishList_Model_WishList
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function getWishlist()
-	{
-		if (is_null($this->wishlist)) {
-			$this->wishlist = new XLite_Module_WishList_Model_WishList(XLite_Core_Request::getInstance()->wishlist_id);
-		}
+    /**
+     * getWishlist 
+     * 
+     * @return XLite_Module_WishList_Model_WishList
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getWishlist()
+    {
+        if (is_null($this->wishlist)) {
+            $this->wishlist = new XLite_Module_WishList_Model_WishList(XLite_Core_Request::getInstance()->wishlist_id);
+        }
 
-		return $this->wishlist;
-	}
-	
-	/**
-	 * Do action 'delete'
-	 * 
-	 * @return void
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function doActionDelete()
-	{
-		$wishlist = new XLite_Module_WishList_Model_WishList(XLite_Core_Request::getInstance()->wishlist_id);
+        return $this->wishlist;
+    }
+    
+    /**
+     * Do action 'delete'
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function doActionDelete()
+    {
+        $wishlist = new XLite_Module_WishList_Model_WishList(XLite_Core_Request::getInstance()->wishlist_id);
 
-		$wishlistProducts = $wishlist->get('products');
+        $wishlistProducts = $wishlist->get('products');
 
-		foreach($wishlistProducts as $product) {
-			$product->delete();
-		}
+        foreach($wishlistProducts as $product) {
+            $product->delete();
+        }
 
-		$wishlist->delete();
+        $wishlist->delete();
 
-		$this->set('returnUrl', $this->buildUrl('wishlists', '', array('mode' => 'search')));
-	}
+        $this->set('returnUrl', $this->buildUrl('wishlists', '', array('mode' => 'search')));
+    }
 
 }
 
