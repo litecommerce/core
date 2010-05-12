@@ -122,6 +122,7 @@ class XLite_View_Checkout extends XLite_View_Dialog
 
         $list[] = 'checkout/check_cc.js';
         $list[] = 'checkout/checkout.js';
+        $list[] = 'shopping_cart/delivery.js';
 
         return $list;
     }

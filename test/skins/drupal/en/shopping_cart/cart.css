@@ -46,5 +46,5 @@
 div.ups-notice {
   background: transparent url(../images/modules/UPSOnlineTools/ups_logo.gif) no-repeat 12px 7px;
   padding-left: 109px;
-  height: 75px;
+  min-height: 75px;
 }

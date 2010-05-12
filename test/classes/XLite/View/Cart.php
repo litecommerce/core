@@ -103,7 +103,12 @@ class XLite_View_Cart extends XLite_View_Dialog
      */
     public function getCSSFiles()
     {
-        return array_merge(parent::getCSSFiles(), array($this->getDir() . '/cart.css'));
+        return array_merge(
+            parent::getCSSFiles(),
+            array(
+                $this->getDir() . '/cart.css',
+            )
+        );
     }
 
     /**
@@ -116,7 +121,13 @@ class XLite_View_Cart extends XLite_View_Dialog
      */
     public function getJSFiles()
     {
-        return array_merge(parent::getJSFiles(), array($this->getDir() . '/cart.js'));
+        return array_merge(
+            parent::getJSFiles(),
+            array(
+                $this->getDir() . '/cart.js',
+                $this->getDir() . '/delivery.js',
+            )
+        );
     }
 }
 
