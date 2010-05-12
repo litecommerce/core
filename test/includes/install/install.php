@@ -354,7 +354,7 @@ function checkPhpSafeMode(&$errorMsg, &$value)
 
     // PHP Safe mode must be Off if PHP is earlier 5.3
 
-    if (func_version_compare(phpversion(), '5.3.0') <= 0 && 'off' != strtolower($value)) {
+    if (func_version_compare(phpversion(), '5.3.0') < 0 && 'off' != strtolower($value)) {
         $result = false;
         $errorMsg = 'PHP safe_mode option value should be Off if PHP is earlier 5.3.0';
     }
