@@ -43,10 +43,6 @@ define('LC_DIR', realpath(dirname(dirname(__FILE__))));
 // See also http://bugs.php.net/bug.php?id=48914
 @date_default_timezone_set(@date_default_timezone_get());
 
-// Display all errors and warnings
-error_reporting(E_ALL);
-ini_set('display_errors', true);	
-
 define('LC_DS', DIRECTORY_SEPARATOR);
 define('LC_ROOT_DIR', rtrim(LC_DIR, LC_DS) . LC_DS);
 
