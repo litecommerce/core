@@ -40,7 +40,7 @@ $(document).ready(
 
     <hr class="line" />
 
-    <widget module="WishList" class="XLite_Module_WishList_View_SendToFriendLink" product="{product}" />
+    {* <widget module="WishList" class="XLite_Module_WishList_View_SendToFriendLink" product="{product}" /> *}
     [addthis-button]
 
   </div>
