@@ -47,9 +47,9 @@ $(document).ready(
 
     <h2 class="fn" style="display: none;">{product.name:h}</h2>
 
-    <div IF="{product.sku}" class="product-sku">
-      <span>SKU:</span>
-      <span>{product.sku}</span>
+    <div IF="{product.sku}" class="identifier product-sku">
+      <span class="type">SKU:</span>
+      <span class="value">{product.sku}</span>
     </div>
 
     <widget module="InventoryTracking" template="modules/InventoryTracking/stock_label.tpl" visible="{product.inventory.found}" />
