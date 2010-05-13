@@ -49,7 +49,7 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_Product
      * @access protected
      * @since  3.0.0
      */
-    protected $allowedTargets = array('main', 'category', 'product', 'cart', 'recently_viewed');
+    protected $allowedTargets = array('main', 'category', 'product', 'cart', 'recently_viewed', 'checkout');
 
     /**
      * The number of products displayed by widget 
