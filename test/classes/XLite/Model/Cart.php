@@ -152,11 +152,16 @@ class XLite_Model_Cart extends XLite_Model_Order implements XLite_Base_ISingleto
         $rates = parent::calcShippingRates();
 
         if ($this->get('shipping_id') && !isset($rates[$this->get('shipping_id')])) {
-            list($k, $v) = each($rates);
-            $this->setShippingMethod($v);
-            $this->calcTotals();
-            $this->update();
-            reset($rates);
+            if (0 < count($rates)) {
+                list($k, $v) = each($rates);
+                $this->setShippingMethod($v);
+                $this->calcTotals();
+                $this->update();
+                reset($rates);
+
+            } else {
+                $this->setShippingMethod(null);
+            }
         }
 
         return $rates;
