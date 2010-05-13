@@ -12,7 +12,12 @@
  *}
 
 <widget class="XLite_View_Form_Checkout_Place" name="checkout" className="checkout-details" />
-  <span class="title">E-mail:</span>&nbsp;&nbsp;{cart.profile.login}<br />
+  <span class="title">E-mail:</span>&nbsp;&nbsp;<span class="text">{cart.profile.login}</span><br />
+
+  <div IF="cart.shippingMethod" class="shipping-method">
+    <span class="title">Shipping method:</span>&nbsp;&nbsp;<span class="text">{cart.shippingMethod.name} ({price_format(cart,#shipping_cost#):h})</span>
+    <widget class="XLite_View_Button_Link" label="Change shipping method" style="change" location="{buildURL(#checkout#,##,_ARRAY_(#mode#^#paymentMethod#))}" />
+  </div>
 
   <div class="billing-address-form">
 
