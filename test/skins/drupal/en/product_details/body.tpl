@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget class="XLite_View_Form_Product_AddToCart" name="add_to_cart" product="{product}" className="product-details" />
+<widget class="XLite_View_Form_Product_AddToCart" name="add_to_cart" product="{product}" className="product-details hproduct" />
 
   <div IF="previousProduct|nextProduct" class="sibliding-links">
     <a IF="previousProduct" class="previous" href="{buildURL(#product#,##,_ARRAY_(#product_id#^previousProduct.product_id))}" title="{previousProduct.name}">Previous product</a>
@@ -20,7 +20,7 @@
 
   <div IF="product.hasImage()" class="product-thumbnail">
     <div IF="!product.getHasZoom()" class="product-thumbnail-box">
-      <widget class="XLite_View_Image" image="{product.getImage()}" className="product-thumbnail" id="product_image_{product.product_id}" maxWidth="100" />
+      <widget class="XLite_View_Image" image="{product.getImage()}" className="photo product-thumbnail" id="product_image_{product.product_id}" maxWidth="100" />
       <widget class="XLite_View_SaveMark" product="{product}" />
 <script type="text/javascript">
 <!--
@@ -44,6 +44,8 @@ $(document).ready(
   </div>
 
   <div class="product-body">
+
+    <h2 class="fn" style="display: none;">{product.name:h}</h2>
 
     <div IF="{product.sku}" class="product-sku">
       <span>SKU:</span>
@@ -83,7 +85,7 @@ $(document).ready(
 
   </table>
 
-  <div class="product-description">{description:h}</div>
+  <div class="description product-description">{description:h}</div>
 
   <widget module="WholesaleTrading" class="XLite_Module_WholesaleTrading_View_ExtendedOptions" product="{product}" />
 

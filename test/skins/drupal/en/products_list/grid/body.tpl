@@ -17,12 +17,12 @@
   {foreach:getProductRows(),row}
     <tr class="info">
       <td FOREACH="row,product">
-        <div class="product" IF="product">
+        <div class="hproduct" IF="product">
           <widget class="XLite_View_AddedToCartMark" product="{product}" />
           <span class="draggable-mark">Drag me to the cart</span>
-          <a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}">
-            <span class="product-thumbnail"><widget class="XLite_View_Image" image="{product.getThumbnail()}" maxWidth="{getIconWidth()}" maxHeight="{getIconHeight()}" alt="{product.name}" IF="isShowThumbnails()" /></span>
-            <span class="product-name">{product.name:h}</span>
+          <a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" class="url">
+            <span class="product-thumbnail"><widget class="XLite_View_Image" image="{product.getThumbnail()}" maxWidth="{getIconWidth()}" maxHeight="{getIconHeight()}" alt="{product.name}" className="photo" IF="isShowThumbnails()" /></span>
+            <span class="fn product-name">{product.name:h}</span>
           </a>
         </div>
       </td>
