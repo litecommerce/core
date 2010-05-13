@@ -35,6 +35,8 @@
  */
 class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Catalog
 {
+    protected $params = array('product_id');
+
     /**
      * Define widget parameters
      *
