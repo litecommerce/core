@@ -206,10 +206,10 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controlle
         }
         
         // Check access
-        if (!$this->auth->is('logged')) {
+        if (!$this->auth->isLogged()) {
 
-            // TODO - add top message
-            $this->set('returnUrl', $this->buildURL('login', '', array('mode' => 'wishlist')));
+            XLite_Core_TopMessage::getInstance()->add('Only registered users can access Wishlist', XLite_Core_TopMessage::WARNING);
+            $this->setReturnUrl($this->buildURL('login', '', array('mode' => 'wishlist')));
             $this->session->set('wishlist_url', $this->buildURL('wishlist', 'move', array('cart_id' => $cartId)));
 
             return;
@@ -218,7 +218,7 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controlle
         // Add item to wishlist
         $item = $items[$cartId];
 
-        $wishlist = $this->get('wishList');
+        $wishlist = $this->getWishList();
 
         $wishlistProduct = new XLite_Module_WishList_Model_WishListProduct();
         $wishlistProduct->set('product_id', $item->getProduct()->get('product_id'));
@@ -269,7 +269,7 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controlle
             $this->cart->delete();
         }
 
-        // TODO - add top message
+        XLite_Core_TopMessage::getInstance()->add('The product has been added to Wishlist');
     }
 
     /**

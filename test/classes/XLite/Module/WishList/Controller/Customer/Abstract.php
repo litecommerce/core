@@ -27,7 +27,7 @@
  */
 
 /**
- * ____description____
+ * Abstract customer interface controller
  * 
  * @package XLite
  * @see     ____class_see____
@@ -50,9 +50,8 @@ class XLite_Module_WishList_Controller_Customer_Abstract extends XLite_Controlle
      */
     protected $wishlist = null;
 
-
     /**
-     * getWishList 
+     * Get wishlist 
      * 
      * @return XLite_Module_WishList_Model_WishList
      * @access public
@@ -60,19 +59,15 @@ class XLite_Module_WishList_Controller_Customer_Abstract extends XLite_Controlle
      */
     public function getWishList()
     {
-        $profile = XLite_Model_Auth::getInstance()->getProfile(XLite_Core_Request::getInstance()->profile_id);
-
-        if (!isset($this->wishlist) && isset($profile)) {
-
+        if (!isset($this->wishlist) && XLite_Model_Auth::getInstance()->isLogged()) {
             $this->wishlist = new XLite_Module_WishList_Model_WishList();
-            $profileId = $profile->get('profile_id');
+            $profileId = XLite_Model_Auth::getInstance()->getProfile()->get('profile_id');
 
             if (!$this->wishlist->find('profile_id = \'' . $profileId . '\'')) {
                 $this->wishlist->set('profile_id', $profileId);
                 $this->wishlist->set('date', time());
                 $this->wishlist->create();
             }
-
         }
 
         return $this->wishlist;
