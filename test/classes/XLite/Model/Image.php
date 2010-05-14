@@ -304,6 +304,34 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
     }
 
     /**
+     * Check - image is readable  or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isReadable()
+    {
+        $result = false;
+
+        switch ($this->get($this->sourceField)) {
+            case 'D';
+                $result = 0 < strlen($this->get($this->dataField));
+                break;
+
+            case 'F':
+                $fn = LC_ROOT_DIR . $this->getFilePath($this->get($this->dataField));
+                $result = file_exists($fn) && is_readable($fn) && 0 < filesize($fn);
+                break;
+
+            default:
+        }
+
+        return $result;
+    }
+
+    /**
      * Show image
      * 
      * @return void
@@ -349,6 +377,7 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
         if (
             !$this->isResizeEnabled()
             || ($neww == $this->get('width') && $newh == $this->get('height'))
+            || !$this->isReadable()
         ) {
             $url = array($neww, $newh, $this->getURL());
 
@@ -359,7 +388,7 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
                 $images_directory = self::IMAGES_DIR;
             }
 
-            $fileName = $this->fieldPrefix . '.' . $this->get('id')
+            $fileName = $this->alias . '.' . $this->fieldPrefix . '.' . $this->get('id')
                 . '.' . $neww . '.' . $newh
                 . '.' . preg_replace('/^image\//Ss', '', $this->get('type'));
             $dirName = LC_ROOT_DIR . $images_directory . LC_DS . self::IMAGES_CACHE_DIR;
@@ -367,14 +396,24 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
             $path = $dirName . LC_DS . $fileName;
             $webPath = $images_directory . '/' . self::IMAGES_CACHE_DIR . '/' . $fileName;
 
+            $success = true;
+
             if (!file_exists($path) || 0 == filesize($path)) {
                 if (!file_exists($dirName)) {
                     mkdirRecursive($dirName);
                 }
-                file_put_contents($path, $this->resize($neww, $newh));
+                $resizedImage = $this->resize($neww, $newh);
+                if ($resizedImage) {
+                    file_put_contents($path, $this->resize($neww, $newh));
+
+                } else {
+                    $success = false;
+                }
             }
 
-            $url = array($neww, $newh, XLite::getInstance()->getShopUrl($webPath));
+            if ($success) {
+                $url = array($neww, $newh, XLite::getInstance()->getShopUrl($webPath));
+            }
 
         }
 
