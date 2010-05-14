@@ -103,12 +103,15 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
                 );
             }
 
-            // switch back to product catalog or to shopping cart
-            $productListUrl = ($this->config->General->add_on_mode && isset($_SERVER['HTTP_REFERER']))
-                ? $_SERVER['HTTP_REFERER']
-                : $this->session->get('productListURL');
+            $productListUrl = null;
 
-            if (!$productListUrl && $this->getProduct()) {
+            if (isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER']) {
+                $productListUrl = $_SERVER['HTTP_REFERER'];
+
+            } elseif ($this->session->get('productListURL')) {
+                $productListUrl = $this->session->get('productListURL');
+
+            } elseif ($this->getProduct()) {
                 $productListUrl = $this->buildUrl(
                     'product',
                     '',
@@ -116,11 +119,13 @@ class XLite_Controller_Customer_Cart extends XLite_Controller_Customer_Abstract
                 );
             }
 
-            if ($this->config->General->redirect_to_cart) {
-                $this->session->set('continueURL', $productListUrl);
+            if ($productListUrl) {
+                if ($this->config->General->redirect_to_cart) {
+                    $this->session->set('continueURL', $productListUrl);
 
-            } else {
-                $this->set('returnUrl', $productListUrl);
+                } else {
+                    $this->setReturnUrl($productListUrl);
+                }
             }
         }
 
