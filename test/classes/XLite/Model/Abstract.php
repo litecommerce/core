@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage Model
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -29,8 +29,15 @@
 /**
 * Delimiters definitions. Used for import / export store data.
 */
-$GLOBALS['DATA_DELIMITERS'] = array("semicolon"=>";","comma"=>",","tab"=>"\t");
-$GLOBALS['TEXT_QUALIFIERS'] = array("double_quote"=>'"',"single_quote"=>"'");
+$GLOBALS['DATA_DELIMITERS'] = array(
+    'semicolon' => ';',
+    'comma'     => ',',
+    'tab'       => "\t",
+);
+$GLOBALS['TEXT_QUALIFIERS'] = array(
+    'double_quote' => '"',
+    'single_quote' => '\'',
+);
 
 /**
  * Base class is an abstract class for all database-mapped objects
@@ -62,9 +69,13 @@ class XLite_Model_Abstract extends XLite_Base
     protected $fields = array();
 
     /**
-    * Object properties values
-    * @var array $properties
-    */
+     * Object properties list
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected $properties = array();
 
     /**
@@ -88,15 +99,23 @@ class XLite_Model_Abstract extends XLite_Base
     protected $autoIncrement = null;
     
     /**
-    * Shows whether the object data have been read from DB or not
-    * @var boolean $isRead
-    */    
+     * Shows whether the object data have been read from DB or not
+     * 
+     * @var    boolean
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     public $isRead = false;
 
     /**
-    * Checks whether the object data exists in DB
-    * @var boolen $isPersistent
-    */    
+     * Checks whether the object data exists in DB
+     * 
+     * @var    boolean
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     public $isPersistent = false;
     
     /**
@@ -120,13 +139,23 @@ class XLite_Model_Abstract extends XLite_Base
     public $_range;
 
     /**
-    * If set to true, findAll will fetch only primary keys (isRead=false)
-    */    
+     * If set to true, findAll will fetch only primary keys (isRead = false)
+     * 
+     * @var    boolean
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     public $fetchKeysOnly = false;
 
     /**
-    * If set to true, findAll will fetch only object' indexes
-    */    
+     * If set to true, findAll will fetch only object' indexes
+     * 
+     * @var    boolean
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     public $fetchObjIdxOnly = false;
 
     /**
@@ -141,15 +170,16 @@ class XLite_Model_Abstract extends XLite_Base
         return $this->isPersistent ? $this->update() : $this->create();
     }
 
-
     /**
-    * Returns the SQL database table name for this object. Uses "alias"
-    * property as a key.
-    *
-    * @access public
-    * @return string The SQL database table name
-    */
-    function getTable() 
+     * Returns the SQL database table name for this object. Uses "alias"
+     * property as a key. 
+     * 
+     * @return srting
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTable() 
     {
         return $this->db->getTableByAlias($this->alias);
     }

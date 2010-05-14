@@ -27,7 +27,7 @@
  */
 
 /**
- * ____description____
+ * Checkout step
  * 
  * @package XLite
  * @see     ____class_see____

@@ -347,6 +347,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
         $rows = array_chunk($this->getPageData(), $this->getParam(self::PARAM_GRID_COLUMNS));
         $last = count($rows)-1;
         $rows[$last] = array_pad($rows[$last], $this->getParam(self::PARAM_GRID_COLUMNS), false);
+
         return $rows;
     }
 
@@ -905,7 +906,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
      * Return the maximal icon width
      * 
      * @return integer
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -918,7 +919,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
      * Return the maximal icon height
      * 
      * @return integer
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

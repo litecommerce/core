@@ -72,12 +72,12 @@ class XLite_View_Price extends XLite_View_Abstract
         );
     }
 
-
     /**
-     * Check if widget is visible
-     *
-     * @return bool
-     * @access protected
+     * Check widget visibility
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function isVisible()
