@@ -15,6 +15,7 @@ SITE_DBPASS="password"
 SITE_DBNAME="database"
 
 SITE_URL="http://www.litecommerce.com"
+SITE_WEB_DIR="/"
 
 # Database access data for LiteCommerce admin interface demo
 LC_DBHOST="localhost"

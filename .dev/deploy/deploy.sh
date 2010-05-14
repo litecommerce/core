@@ -291,7 +291,7 @@ REPLACE_22="auth_code = \"${LC_AUTH_CODE}\""
 FILE_22="${DEPLOYMENT_DIR}/modules/lc_connector/litecommerce/etc/config.demo.php"
 
 FIND_23="^ *# RewriteBase /drupal$"
-REPLACE_23="RewriteBase ${LC_WEB_DIR}"
+REPLACE_23="RewriteBase ${SITE_WEB_DIR}"
 FILE_23="${DEPLOYMENT_DIR}/.htaccess"
 
 
@@ -355,7 +355,7 @@ echo -e "ok\n"
 echo -n "LiteCommerce cache generating..."
 
 rm -rf ${DEPLOYMENT_DIR}/modules/lc_connector/litecommerce/var/run
-RESULT=`$PHP ${DEPLOYMENT_DIR}/modules/lc_connector/litecommerce/includes/prepend.php`
+RESULT=`$PHP ${DEPLOYMENT_DIR}/modules/lc_connector/litecommerce/includes/prepend.php 2>&1`
 [ "x${RESULT}" != "xRe-building cache, please wait..." ] && die "\n$RESULT"
 echo -e "ok\n"
 
@@ -372,9 +372,11 @@ if [ "x${SETUP_PERMISSIONS}" != "x" ]; then
 	find ${DEPLOYMENT_DIR} -type f -exec chmod 644 {} \;
 
 	# Setup writable permissions on somw directories/files
-	chmod 777 ${DEPLOYMENT_DIR}/modules/lc_connector/litecommerce/var
+	chmod 777 ${DEPLOYMENT_DIR}/modules/lc_connector/litecommerce/var ${DEPLOYMENT_DIR}/modules/lc_connector/litecommerce/images
 	find ${DEPLOYMENT_DIR}/modules/lc_connector/litecommerce/var -type d -exec chmod 777 {} \;
 	find ${DEPLOYMENT_DIR}/modules/lc_connector/litecommerce/var -type f -not -name ".*" -exec chmod 666 {} \;
+
+	echo -e "ok\n"
 
 fi
 
