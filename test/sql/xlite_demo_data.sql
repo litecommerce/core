@@ -16,7 +16,6 @@ UPDATE xlite_config SET value = 'fiefeherephderekegeken' WHERE name = 'UPS_passw
 UPDATE xlite_config SET value = 'jpinhliriqhmikhmfififkgi' WHERE name = 'UPS_username';
 
 -- Enable demo modules
---TODO - revert after develop period UPDATE xlite_modules SET enabled=1 where name='DemoMode';
 UPDATE xlite_modules SET enabled = '1' WHERE name IN (
 	'AdvancedSearch',
 	'AuthorizeNet',
