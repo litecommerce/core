@@ -151,6 +151,8 @@ fi
 
 [ "x${XLITE_BUILD_NUMBER}" = "x" ] && BUILD_SUFFIX='' || BUILD_SUFFIX="-build${XLITE_BUILD_NUMBER}"
 
+[ "x${DEMO_VERSION}" != "x" ] && BUILD_SUFFIX="${BUILD_SUFFIX}-demo"
+
 VERSION=${XLITE_VERSION}${BUILD_SUFFIX}
 
 # Display input parameters
@@ -200,6 +202,26 @@ if [ ! $SAFE_MODE ]; then
 		SVN_ERROR="LiteCommerce"
 		echo " [failed]"
 	    echo "Failed: Unable to checkout LiteCommerce. Logs are below:"
+	    echo "** stderr:"
+	    cat LOG_ERR
+	    echo "** stdout:"
+		cat LOG_OUT
+		exit 2
+	fi
+
+	# Do LiteCommerce .dev checkout...
+
+	echo -n "LiteCommerce .dev checkout...";
+
+	if svn export ${XLITE_DEV_SVN} xlite_dev >>LOG_OUT 2>>LOG_ERR; then
+
+		rm -f LOG_ERR LOG_OUT
+		echo " [success]"
+
+	else
+		SVN_ERROR="LiteCommerce .dev"
+		echo " [failed]"
+	    echo "Failed: Unable to checkout LiteCommerce .dev directory. Logs are below:"
 	    echo "** stderr:"
 	    cat LOG_ERR
 	    echo "** stdout:"
@@ -299,7 +321,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 		rm -rf skins/mail/en/modules/${dn}
 	done
 
-	find ./images/* -type f -name "demo_store_*" -exec rm -rf {} \;
+	[ "x${DEMO_VERSION}" = "x" ] && find ./images/* -type f -name "demo_store_*" -exec rm -rf {} \;
 
 	mv skins skins_original
 
@@ -326,9 +348,14 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 
 	cd $OUTPUT_DIR
 
-	tar -czf litecommerce-${VERSION}.tgz ${LITECOMMERCE_DIRNAME}
+	# Do not create LC Standalone distributive when generate demo version
+	if [ "x${DEMO_VERSION}" = "x" ]; then
 
-	echo -e "\n  + LiteCommerce $VERSION distributive is completed"
+		tar -czf litecommerce-${VERSION}.tgz ${LITECOMMERCE_DIRNAME}
+
+		echo -e "\n  + LiteCommerce $VERSION distributive is completed"
+
+	fi
 
 	#
 	# LiteCommerce+Drupal distributive generating...
@@ -348,7 +375,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 	LOGO_IMAGE=${OUTPUT_DIR}/drupal_dev/images/lc_logo-${XLITE_VERSION}.png
 
 	if [ -f $LOGO_IMAGE ]; then
-		cp $LOGO_IMAGE ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/profiles/litecommerce/lc_logo.png
+		[ -d ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/profiles/litecommerce ] && cp $LOGO_IMAGE ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/profiles/litecommerce/lc_logo.png
 		cp $LOGO_IMAGE ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/themes/lccms/logo.png
 	else
 		echo "Warning! Logo image file $LOGO_IMAGE not found"
@@ -367,24 +394,45 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 	find . -type d -exec chmod 755 {} \;
 	find . -type f -exec chmod 644 {} \;
 
-	# Pack LC Connector module disctributive
-	cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/modules
-	tar -czf ${OUTPUT_DIR}/lc_connector-${VERSION}.tgz lc_connector
+	# Do not create some distributives when generate demo version
+	if [ "x${DEMO_VERSION}" = "x" ]; then
 
-	echo "  + LC Connector v.$VERSION module for Drupal is completed"
+		# Pack LC Connector module distributive
+		cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/modules
+		tar -czf ${OUTPUT_DIR}/lc_connector-${VERSION}.tgz lc_connector
 
-	# Pack Bettercrumbs module distributive
-	cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/sites/all/modules
-	tar -czf ${OUTPUT_DIR}/bettercrumbs-${VERSION}.tgz bettercrumbs
+		echo "  + LC Connector v.$VERSION module for Drupal is completed"
 
-	echo "  + Bettercrumbs v.$VERSION module for Drupal is completed"
+		# Pack Bettercrumbs module distributive
+		cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/sites/all/modules
+		tar -czf ${OUTPUT_DIR}/bettercrumbs-${VERSION}.tgz bettercrumbs
 
-	# Pack LCCMS theme
-	cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/themes
-	tar -czf ${OUTPUT_DIR}/lccms_theme-${VERSION}.tgz lccms
+		echo "  + Bettercrumbs v.$VERSION module for Drupal is completed"
 
-	echo "  + LCCMS v.$VERSION theme for Drupal is completed"
+		# Pack LCCMS theme
+		cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/themes
+		tar -czf ${OUTPUT_DIR}/lccms_theme-${VERSION}.tgz lccms
 
+		echo "  + LCCMS v.$VERSION theme for Drupal is completed"
+
+	else
+
+		# Create directory for service files and scripts for demo version
+		mkdir -p ${OUTPUT_DIR}/demo_tools/drupal_sql
+
+		# Copy Drupal SQL-files
+		cp ${OUTPUT_DIR}/drupal_dev/sql/clean.sql ${OUTPUT_DIR}/demo_tools/drupal_sql/
+		cp ${OUTPUT_DIR}/drupal_dev/sql/diff.lcweb.sql ${OUTPUT_DIR}/demo_tools/drupal_sql/
+
+		cp ${OUTPUT_DIR}/xlite_dev/deploy/*.sh ${OUTPUT_DIR}/demo_tools/
+		cp ${OUTPUT_DIR}/xlite_dev/deploy/*.php ${OUTPUT_DIR}/demo_tools/
+
+		cd ${OUTPUT_DIR}
+		tar -czf demo_tools.tgz demo_tools
+		rm -rf demo_tools
+
+	fi
+	
 	# Return to the Drupal root directory
 	cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}
 
@@ -406,6 +454,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 	rm -rf ${OUTPUT_DIR}/${DRUPAL_DIRNAME}
 	rm -rf ${OUTPUT_DIR}/tmp
 	rm -rf ${OUTPUT_DIR}/drupal_dev
+	rm -rf ${OUTPUT_DIR}/xlite_dev
 
 	echo -e "  + Drupal+LiteCommerce v.$VERSION distributive is completed\n"
 
