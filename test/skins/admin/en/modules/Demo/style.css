@@ -10,6 +10,10 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  */
+body {
+  padding-top: 34px;
+}
+
 .demo-header {
   color: #802418;
   background-color: #eaeae6;

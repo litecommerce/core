@@ -98,7 +98,7 @@ class XLite_Module_Demo_Main extends XLite_Module_Abstract
     {
         self::doForbidOperation($message);
 
-        header('Location: ' . XLite_Core_Converter::buildURL('main'));
+        header('Location: ' . XLite_Core_Converter::buildURL(XLite_Core_Request::getInstance()->target));
         exit(0);
     }
 
